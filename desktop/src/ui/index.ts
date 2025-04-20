@@ -1,7 +1,7 @@
-import { loginId } from '@hcengineering/login'
-import { getEmbeddedLabel, getMetadata } from '@hcengineering/platform'
-import presentation, { MessageBox, setDownloadProgress } from '@hcengineering/presentation'
-import settings, { settingId } from '@hcengineering/setting'
+import { loginId } from '@hanzo/login'
+import { getEmbeddedLabel, getMetadata } from '@hanzo/platform'
+import presentation, { MessageBox, setDownloadProgress } from '@hanzo/presentation'
+import settings, { settingId } from '@hanzo/setting'
 import {
   closePanel,
   closePopup,
@@ -12,12 +12,12 @@ import {
   pushRootBarProgressComponent,
   removeRootBarComponent,
   showPopup
-} from '@hcengineering/ui'
+} from '@hanzo/ui'
 
-import { notificationId } from '@hcengineering/notification'
-import { workbenchId, logOut } from '@hcengineering/workbench'
+import { notificationId } from '@hanzo/notification'
+import { workbenchId, logOut } from '@hanzo/workbench'
 
-import { isOwnerOrMaintainer } from '@hcengineering/core'
+import { isOwnerOrMaintainer } from '@hanzo/core'
 import { configurePlatform } from './platform'
 import { defineScreenShare, defineScreenRecorder } from './screenShare'
 import { IPCMainExposed } from './types'

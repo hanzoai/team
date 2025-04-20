@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment, { type Attachment, type Drawing } from '@hcengineering/attachment'
-  import core, { SortingOrder } from '@hcengineering/core'
-  import { DrawingData, FilePreviewPopup, getClient } from '@hcengineering/presentation'
+  import attachment, { type Attachment, type Drawing } from '@hanzo/attachment'
+  import core, { SortingOrder } from '@hanzo/core'
+  import { DrawingData, FilePreviewPopup, getClient } from '@hanzo/presentation'
   import { isAttachment } from '../utils'
 
   export let value: Attachment

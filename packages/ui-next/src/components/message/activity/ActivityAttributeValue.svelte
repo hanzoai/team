@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Icon } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import { AttributeModel } from '@hcengineering/view'
-  import { ActivityAttributeUpdate } from '@hcengineering/communication-types'
+  import { Icon } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { AttributeModel } from '@hanzo/view'
+  import { ActivityAttributeUpdate } from '@hanzo/communication-types'
 
   import { getAttributeValues } from '../../../activity'
   import { IconComponent } from '../../../types'

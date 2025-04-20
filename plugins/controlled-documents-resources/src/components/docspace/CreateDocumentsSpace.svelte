@@ -15,7 +15,7 @@
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
   import core, {
     Data,
     DocumentUpdate,
@@ -28,12 +28,12 @@
     Class,
     notEmpty,
     AccountUuid
-  } from '@hcengineering/core'
-  import presentation, { Card, getClient } from '@hcengineering/presentation'
-  import { StyledTextBox } from '@hcengineering/text-editor-resources'
-  import { EditBox, Label, Toggle } from '@hcengineering/ui'
-  import { SpaceTypeSelector } from '@hcengineering/view-resources'
-  import documents, { DocumentSpace, DocumentSpaceType } from '@hcengineering/controlled-documents'
+  } from '@hanzo/core'
+  import presentation, { Card, getClient } from '@hanzo/presentation'
+  import { StyledTextBox } from '@hanzo/text-editor-resources'
+  import { EditBox, Label, Toggle } from '@hanzo/ui'
+  import { SpaceTypeSelector } from '@hanzo/view-resources'
+  import documents, { DocumentSpace, DocumentSpaceType } from '@hanzo/controlled-documents'
 
   import documentsRes from '../../plugin'
 

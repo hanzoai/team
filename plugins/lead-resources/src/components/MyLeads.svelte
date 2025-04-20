@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { AttachedDoc, Class, DocumentQuery, getCurrentAccount, Ref } from '@hcengineering/core'
-  import { Lead } from '@hcengineering/lead'
-  import { IntlString, Asset } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import task from '@hcengineering/task'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { AttachedDoc, Class, DocumentQuery, getCurrentAccount, Ref } from '@hanzo/core'
+  import { Lead } from '@hanzo/lead'
+  import { IntlString, Asset } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import task from '@hanzo/task'
   import {
     IModeSelector,
     Breadcrumb,
@@ -27,16 +27,16 @@
     resolvedLocationStore,
     SearchInput,
     Header
-  } from '@hcengineering/ui'
-  import { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     FilterBar,
     FilterButton,
     TableBrowser,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hcengineering/view-resources'
-  import { socialIdsByPersonRefStore } from '@hcengineering/contact-resources'
+  } from '@hanzo/view-resources'
+  import { socialIdsByPersonRefStore } from '@hanzo/contact-resources'
   import { createEventDispatcher } from 'svelte'
   import lead from '../plugin'
 

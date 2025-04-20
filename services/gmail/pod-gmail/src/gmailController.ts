@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { isActiveMode, MeasureContext, RateLimiter, systemAccountUuid, WorkspaceUuid } from '@hcengineering/core'
-import type { StorageAdapter } from '@hcengineering/server-core'
+import { isActiveMode, MeasureContext, RateLimiter, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
+import type { StorageAdapter } from '@hanzo/server-core'
 
 import { type Db } from 'mongodb'
 import { decode64 } from './base64'
@@ -22,8 +22,8 @@ import config from './config'
 import { type GmailClient } from './gmail'
 import { type ProjectCredentials, type Token, type User } from './types'
 import { WorkspaceClient } from './workspaceClient'
-import { generateToken } from '@hcengineering/server-token'
-import { getAccountClient } from '@hcengineering/server-client'
+import { generateToken } from '@hanzo/server-token'
+import { getAccountClient } from '@hanzo/server-client'
 
 export class GmailController {
   private readonly workspaces: Map<string, WorkspaceClient> = new Map<string, WorkspaceClient>()

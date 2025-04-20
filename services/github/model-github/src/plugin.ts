@@ -2,20 +2,20 @@
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 
-import { mergeIds, type IntlString, type Resource } from '@hcengineering/platform'
-import { githubId } from '@hcengineering/github'
-import github from '@hcengineering/github-resources/src/plugin'
+import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
+import { githubId } from '@hanzo/github'
+import github from '@hanzo/github-resources/src/plugin'
 
-import { type ChatMessageViewlet } from '@hcengineering/chunter'
-import { type Doc, type Ref, type Space } from '@hcengineering/core'
+import { type ChatMessageViewlet } from '@hanzo/chunter'
+import { type Doc, type Ref, type Space } from '@hanzo/core'
 import {
   type DocCreateFunction,
   type ObjectSearchCategory,
   type DocCreateAnalyticsPropsFunction
-} from '@hcengineering/model-presentation'
-import { type NotificationGroup } from '@hcengineering/notification'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import { type ActionCategory, type Viewlet } from '@hcengineering/view'
+} from '@hanzo/model-presentation'
+import { type NotificationGroup } from '@hanzo/notification'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import { type ActionCategory, type Viewlet } from '@hanzo/view'
 
 export default mergeIds(githubId, github, {
   component: {

@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { IntlString } from '@hcengineering/platform'
-  import { ActivityMessage, ActivityMessagePreviewType } from '@hcengineering/activity'
+  import { IntlString } from '@hanzo/platform'
+  import { ActivityMessage, ActivityMessagePreviewType } from '@hanzo/activity'
 
   import ReactionsPreview from '../reactions/ReactionsPreview.svelte'
   import BasePreview from '../BasePreview.svelte'
-  import { Action } from '@hcengineering/ui'
+  import { Action } from '@hanzo/ui'
 
   export let text: string | undefined = undefined
   export let intlLabel: IntlString | undefined = undefined

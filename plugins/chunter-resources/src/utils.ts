@@ -18,18 +18,18 @@ import activity, {
   type DisplayActivityMessage,
   type DisplayDocUpdateMessage,
   type DocUpdateMessage
-} from '@hcengineering/activity'
-import { isReactionMessage } from '@hcengineering/activity-resources'
-import aiBot from '@hcengineering/ai-bot'
-import { summarizeMessages as aiSummarizeMessages, translate as aiTranslate } from '@hcengineering/ai-bot-resources'
-import { type Channel, type ChatMessage, type DirectMessage, type ThreadMessage } from '@hcengineering/chunter'
-import contact, { getCurrentEmployee, getName, type Employee, type Person } from '@hcengineering/contact'
+} from '@hanzo/activity'
+import { isReactionMessage } from '@hanzo/activity-resources'
+import aiBot from '@hanzo/ai-bot'
+import { summarizeMessages as aiSummarizeMessages, translate as aiTranslate } from '@hanzo/ai-bot-resources'
+import { type Channel, type ChatMessage, type DirectMessage, type ThreadMessage } from '@hanzo/chunter'
+import contact, { getCurrentEmployee, getName, type Employee, type Person } from '@hanzo/contact'
 import {
   employeeByAccountStore,
   employeeByIdStore,
   PersonIcon,
   personRefByAccountUuidStore
-} from '@hcengineering/contact-resources'
+} from '@hanzo/contact-resources'
 import core, {
   getCurrentAccount,
   notEmpty,
@@ -40,17 +40,17 @@ import core, {
   type Ref,
   type Space,
   type Timestamp
-} from '@hcengineering/core'
-import notification, { type DocNotifyContext, type InboxNotification } from '@hcengineering/notification'
+} from '@hanzo/core'
+import notification, { type DocNotifyContext, type InboxNotification } from '@hanzo/notification'
 import {
   InboxNotificationsClientImpl,
   isActivityNotification,
   isMentionNotification
-} from '@hcengineering/notification-resources'
-import { getMetadata, translate, type Asset } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import { languageStore, type AnySvelteComponent } from '@hcengineering/ui'
-import { classIcon, getDocLinkTitle, getDocTitle } from '@hcengineering/view-resources'
+} from '@hanzo/notification-resources'
+import { getMetadata, translate, type Asset } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import { languageStore, type AnySvelteComponent } from '@hanzo/ui'
+import { classIcon, getDocLinkTitle, getDocTitle } from '@hanzo/view-resources'
 import { get, writable, type Unsubscriber } from 'svelte/store'
 
 import ChannelIcon from './components/ChannelIcon.svelte'
@@ -58,7 +58,7 @@ import DirectIcon from './components/DirectIcon.svelte'
 import { openChannelInSidebar, resetChunterLocIfEqual } from './navigation'
 import chunter from './plugin'
 import { shownTranslatedMessagesStore, translatedMessagesStore, translatingMessagesStore } from './stores'
-import love, { type MeetingMinutes } from '@hcengineering/love'
+import love, { type MeetingMinutes } from '@hanzo/love'
 
 export async function getDmName (client: Client, space?: Space): Promise<string> {
   if (space === undefined) {

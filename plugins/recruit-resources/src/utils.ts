@@ -1,7 +1,7 @@
-import contact, { getName } from '@hcengineering/contact'
-import { Hierarchy, type Class, type Client, type Doc, type Ref } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import presentation, { getClient } from '@hcengineering/presentation'
+import contact, { getName } from '@hanzo/contact'
+import { Hierarchy, type Class, type Client, type Doc, type Ref } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import presentation, { getClient } from '@hanzo/presentation'
 import {
   recruitId,
   type Applicant,
@@ -9,13 +9,13 @@ import {
   type Review,
   type Vacancy,
   type VacancyList
-} from '@hcengineering/recruit'
-import { type Poll } from '@hcengineering/survey'
-import { generatePollLocation } from '@hcengineering/survey-resources'
-import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hcengineering/ui'
-import view from '@hcengineering/view'
-import { accessDeniedStore } from '@hcengineering/view-resources'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/recruit'
+import { type Poll } from '@hanzo/survey'
+import { generatePollLocation } from '@hanzo/survey-resources'
+import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hanzo/ui'
+import view from '@hanzo/view'
+import { accessDeniedStore } from '@hanzo/view-resources'
+import { workbenchId } from '@hanzo/workbench'
 import recruit from './plugin'
 
 type RecruitDocument = Vacancy | Applicant | Review

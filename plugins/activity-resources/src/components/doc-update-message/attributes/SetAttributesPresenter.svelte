@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import ui, { Icon, Label, IconEdit } from '@hcengineering/ui'
-  import { AttributeModel } from '@hcengineering/view'
-  import activity, { DocAttributeUpdates, DocUpdateMessageViewlet } from '@hcengineering/activity'
+  import ui, { Icon, Label, IconEdit } from '@hanzo/ui'
+  import { AttributeModel } from '@hanzo/view'
+  import activity, { DocAttributeUpdates, DocUpdateMessageViewlet } from '@hanzo/activity'
 
   import ChangeAttributesTemplate from './ChangeAttributesTemplate.svelte'
   import { getIsTextType } from '../../../utils'
-  import { Ref, Space } from '@hcengineering/core'
+  import { Ref, Space } from '@hanzo/core'
 
   export let viewlet: DocUpdateMessageViewlet | undefined
   export let attributeModel: AttributeModel

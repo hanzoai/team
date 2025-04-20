@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ThreadMessage } from '@hcengineering/chunter'
+  import { ThreadMessage } from '@hanzo/chunter'
   import ThreadMessagePreview from '../threads/ThreadMessagePreview.svelte'
 
   export let message: ThreadMessage

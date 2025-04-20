@@ -15,7 +15,7 @@
 import { get } from 'svelte/store'
 import { fetchEmojis, fetchMessages } from 'emojibase'
 import type { Emoji, Locale } from 'emojibase'
-import { getCurrentAccount } from '@hcengineering/core'
+import { getCurrentAccount } from '@hanzo/core'
 import { deviceOptionsStore as deviceInfo } from '../..'
 import { emojiStore, emojiComponents, emojiCategories, skinTonesCodes } from '.'
 import type { EmojiWithGroup, EmojiHierarchy } from '.'

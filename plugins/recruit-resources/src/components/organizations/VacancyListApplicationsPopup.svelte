@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, DocumentQuery, FindOptions, Ref, Space } from '@hcengineering/core'
-  import recruit, { Applicant } from '@hcengineering/recruit'
-  import { Table } from '@hcengineering/view-resources'
+  import core, { Doc, DocumentQuery, FindOptions, Ref, Space } from '@hanzo/core'
+  import recruit, { Applicant } from '@hanzo/recruit'
+  import { Table } from '@hanzo/view-resources'
 
   export let value: Ref<Space>[]
   export let resultQuery: DocumentQuery<Doc>

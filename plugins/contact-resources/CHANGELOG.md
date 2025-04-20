@@ -1,4 +1,4 @@
-# Change Log - @hcengineering/contact-resources
+# Change Log - @hanzo/contact-resources
 
 This log was last generated on Sun, 08 Aug 2021 10:14:57 GMT and should not be manually modified.
 

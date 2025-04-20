@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,17 +14,17 @@
 // limitations under the License.
 //
 
-import contact, { contactId } from '@hcengineering/contact'
-import { type Client, type Doc } from '@hcengineering/core'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import { type LabelAndProps, type Location } from '@hcengineering/ui/src/types'
+import contact, { contactId } from '@hanzo/contact'
+import { type Client, type Doc } from '@hanzo/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import { type LabelAndProps, type Location } from '@hanzo/ui/src/types'
 import {
   type CreateAggregationManagerFunc,
   type GrouppingManagerResource,
   type FilterFunction,
   type SortFunc,
   type ViewActionAvailabilityFunction
-} from '@hcengineering/view'
+} from '@hanzo/view'
 
 export default mergeIds(contactId, contact, {
   string: {

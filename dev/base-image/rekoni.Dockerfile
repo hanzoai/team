@@ -1,4 +1,4 @@
-FROM hardcoreeng/base
+FROM hanzoai/team
 
 RUN apt-get install -y \
   coreutils \

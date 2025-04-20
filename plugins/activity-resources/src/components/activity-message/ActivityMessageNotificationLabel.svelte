@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label, tooltip } from '@hcengineering/ui'
-  import { DocNotifyContext } from '@hcengineering/notification'
-  import activity, { ActivityMessage } from '@hcengineering/activity'
-  import { getClient } from '@hcengineering/presentation'
-  import { Doc } from '@hcengineering/core'
-  import { getDocLinkTitle, getDocTitle, ObjectIcon } from '@hcengineering/view-resources'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import contact from '@hcengineering/contact'
+  import { Label, tooltip } from '@hanzo/ui'
+  import { DocNotifyContext } from '@hanzo/notification'
+  import activity, { ActivityMessage } from '@hanzo/activity'
+  import { getClient } from '@hanzo/presentation'
+  import { Doc } from '@hanzo/core'
+  import { getDocLinkTitle, getDocTitle, ObjectIcon } from '@hanzo/view-resources'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import contact from '@hanzo/contact'
 
   import ActivityMessagePreview from './ActivityMessagePreview.svelte'
 

@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
-  import { ObjectPresenterType } from '@hcengineering/view'
-  import { Icon, Label } from '@hcengineering/ui'
-  import survey, { Survey, Poll } from '@hcengineering/survey'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { ObjectPresenterType } from '@hanzo/view'
+  import { Icon, Label } from '@hanzo/ui'
+  import survey, { Survey, Poll } from '@hanzo/survey'
   import { hasText } from '../utils'
 
   export let value: Survey | Poll | undefined | null

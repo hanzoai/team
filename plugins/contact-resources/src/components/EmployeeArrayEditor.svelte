@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Employee } from '@hcengineering/contact'
-  import { Ref } from '@hcengineering/core'
-  import type { ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { IntlString } from '@hcengineering/platform'
+  import { Employee } from '@hanzo/contact'
+  import { Ref } from '@hanzo/core'
+  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { IntlString } from '@hanzo/platform'
   import UserBoxList from './UserBoxList.svelte'
 
   export let label: IntlString

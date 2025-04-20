@@ -1,4 +1,4 @@
-import { Organization } from '@hcengineering/contact'
+import { Organization } from '@hanzo/contact'
 import core, {
   PersonId,
   Client,
@@ -9,9 +9,9 @@ import core, {
   Status,
   TxOperations,
   generateId
-} from '@hcengineering/core'
-import recruit, { Applicant, Vacancy } from '@hcengineering/recruit'
-import task, { ProjectType, makeRank } from '@hcengineering/task'
+} from '@hanzo/core'
+import recruit, { Applicant, Vacancy } from '@hanzo/recruit'
+import task, { ProjectType, makeRank } from '@hanzo/task'
 
 export async function createVacancy (
   rawClient: Client,

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor } from '@hcengineering/contact-resources'
-  import core, { AccountUuid, Data, Ref, getCurrentAccount } from '@hcengineering/core'
-  import presentation, { Card, getClient } from '@hcengineering/presentation'
-  import { EditBox, Label, Toggle } from '@hcengineering/ui'
+  import { AccountArrayEditor } from '@hanzo/contact-resources'
+  import core, { AccountUuid, Data, Ref, getCurrentAccount } from '@hanzo/core'
+  import presentation, { Card, getClient } from '@hanzo/presentation'
+  import { EditBox, Label, Toggle } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
-  import { CardSpace, MasterTag } from '@hcengineering/card'
+  import { CardSpace, MasterTag } from '@hanzo/card'
   import card from '../../plugin'
   import TypesSelector from './TypesSelector.svelte'
 

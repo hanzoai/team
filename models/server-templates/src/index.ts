@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import { Mixin, type Builder } from '@hcengineering/model'
-import { TTemplateField } from '@hcengineering/model-templates'
-import { type Resource } from '@hcengineering/platform'
-import serverTemplates, { type TemplateFieldServerFunc } from '@hcengineering/server-templates'
-import templates, { type TemplateField } from '@hcengineering/templates'
+import { Mixin, type Builder } from '@hanzo/model'
+import { TTemplateField } from '@hanzo/model-templates'
+import { type Resource } from '@hanzo/platform'
+import serverTemplates, { type TemplateFieldServerFunc } from '@hanzo/server-templates'
+import templates, { type TemplateField } from '@hanzo/templates'
 
 @Mixin(serverTemplates.mixin.ServerTemplateField, templates.class.TemplateField)
 export class TServerTemplateField extends TTemplateField implements TemplateField {
   serverFunc!: Resource<TemplateFieldServerFunc>
 }
 
-export { serverTemplatesId } from '@hcengineering/server-templates'
+export { serverTemplatesId } from '@hanzo/server-templates'
 
 export function createModel (builder: Builder): void {
   builder.createModel(TServerTemplateField)

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import contact, { Employee, Person, formatName, getName } from '@hcengineering/contact'
+import contact, { Employee, Person, formatName, getName } from '@hanzo/contact'
 import core, {
   concatLink,
   Doc,
@@ -29,7 +29,7 @@ import core, {
   combineAttributes,
   type PersonUuid,
   type AccountUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import love, {
   Invite,
   isOffice,
@@ -43,18 +43,18 @@ import love, {
   Room,
   RoomAccess,
   RoomInfo
-} from '@hcengineering/love'
-import notification from '@hcengineering/notification'
-import { getMetadata, translate } from '@hcengineering/platform'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
-import { getSocialStrings } from '@hcengineering/server-contact'
+} from '@hanzo/love'
+import notification from '@hanzo/notification'
+import { getMetadata, translate } from '@hanzo/platform'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
+import { getSocialStrings } from '@hanzo/server-contact'
 import {
   createPushNotification,
   getNotificationProviderControl,
   isAllowed
-} from '@hcengineering/server-notification-resources'
-import { workbenchId } from '@hcengineering/workbench'
-import view from '@hcengineering/view'
+} from '@hanzo/server-notification-resources'
+import { workbenchId } from '@hanzo/workbench'
+import view from '@hanzo/view'
 
 export async function OnEmployee (txes: Tx[], control: TriggerControl): Promise<Tx[]> {
   const result: Tx[] = []

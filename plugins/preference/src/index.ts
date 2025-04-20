@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Domain, Ref, Space } from '@hcengineering/core'
-import type { Asset, IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+import type { Class, Doc, Domain, Ref, Space } from '@hanzo/core'
+import type { Asset, IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 
 /**
  * @public

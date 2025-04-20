@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -21,15 +21,15 @@ import {
   type Doc,
   type Ref,
   type BlobMetadata
-} from '@hcengineering/core'
-import { Mixin, Model, Prop, TypeRef, TypeString, type Builder } from '@hcengineering/model'
-import core, { TClass, TDoc } from '@hcengineering/model-core'
-import { type Asset, type IntlString, type Resource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { Mixin, Model, Prop, TypeRef, TypeString, type Builder } from '@hanzo/model'
+import core, { TClass, TDoc } from '@hanzo/model-core'
+import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
 // Import types to prevent .svelte components to being exposed to type typescript.
 import {
   type PresentationMiddlewareCreator,
   type PresentationMiddlewareFactory
-} from '@hcengineering/presentation/src/pipeline'
+} from '@hanzo/presentation/src/pipeline'
 import {
   type ComponentPointExtension,
   type CreateExtensionKind,
@@ -44,11 +44,11 @@ import {
   type ObjectSearchContext,
   type ObjectSearchFactory,
   type InstantTransactions
-} from '@hcengineering/presentation/src/types'
-import { type AnyComponent, type ComponentExtensionId } from '@hcengineering/ui/src/types'
+} from '@hanzo/presentation/src/types'
+import { type AnyComponent, type ComponentExtensionId } from '@hanzo/ui/src/types'
 import presentation from './plugin'
 
-export { presentationId } from '@hcengineering/presentation/src/plugin'
+export { presentationId } from '@hanzo/presentation/src/plugin'
 export { default } from './plugin'
 export type {
   CreateExtensionKind,

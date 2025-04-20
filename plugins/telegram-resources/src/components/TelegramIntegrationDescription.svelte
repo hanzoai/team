@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Label } from '@hcengineering/ui'
+  import { Label } from '@hanzo/ui'
 
   import telegram from '../plugin'
 </script>

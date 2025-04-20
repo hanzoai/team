@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import documents, { Document } from '@hcengineering/controlled-documents'
-  import { Employee } from '@hcengineering/contact'
-  import { EmployeeBox, EmployeePresenter, personRefByAccountUuidStore } from '@hcengineering/contact-resources'
-  import core, { Ref, Space, notEmpty } from '@hcengineering/core'
-  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-  import { Button, Icon, Label } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import documents, { Document } from '@hanzo/controlled-documents'
+  import { Employee } from '@hanzo/contact'
+  import { EmployeeBox, EmployeePresenter, personRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import core, { Ref, Space, notEmpty } from '@hanzo/core'
+  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import { Button, Icon, Label } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
 
   import { canChangeDocumentOwner, isDocOwner } from '../../../utils'

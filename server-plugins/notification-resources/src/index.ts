@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import activity, { ActivityMessage, DocUpdateMessage } from '@hcengineering/activity'
-import chunter, { ChatMessage } from '@hcengineering/chunter'
-import contact, { Employee, type Person } from '@hcengineering/contact'
+import activity, { ActivityMessage, DocUpdateMessage } from '@hanzo/activity'
+import chunter, { ChatMessage } from '@hanzo/chunter'
+import contact, { Employee, type Person } from '@hanzo/contact'
 import core, {
   PersonId,
   AnyAttribute,
@@ -46,7 +46,7 @@ import core, {
   notEmpty,
   generateId,
   toIdMap
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   ActivityInboxNotification,
   BaseNotificationType,
@@ -57,13 +57,13 @@ import notification, {
   InboxNotification,
   MentionInboxNotification,
   NotificationType
-} from '@hcengineering/notification'
-import { getResource, translate } from '@hcengineering/platform'
-import { type TriggerControl } from '@hcengineering/server-core'
-import { NOTIFICATION_BODY_SIZE, ReceiverInfo, SenderInfo } from '@hcengineering/server-notification'
-import { markupToText, stripTags } from '@hcengineering/text-core'
-import { Analytics } from '@hcengineering/analytics'
-import { getAccountBySocialId, getEmployeesBySocialIds } from '@hcengineering/server-contact'
+} from '@hanzo/notification'
+import { getResource, translate } from '@hanzo/platform'
+import { type TriggerControl } from '@hanzo/server-core'
+import { NOTIFICATION_BODY_SIZE, ReceiverInfo, SenderInfo } from '@hanzo/server-notification'
+import { markupToText, stripTags } from '@hanzo/text-core'
+import { Analytics } from '@hanzo/analytics'
+import { getAccountBySocialId, getEmployeesBySocialIds } from '@hanzo/server-contact'
 
 import {
   AvailableProvidersCache,

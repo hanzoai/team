@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { IntlString } from '@hcengineering/platform'
-import { ExecutionError } from '@hcengineering/process'
-import { ExecuteResult } from '@hcengineering/server-process'
+import { IntlString } from '@hanzo/platform'
+import { ExecutionError } from '@hanzo/process'
+import { ExecuteResult } from '@hanzo/server-process'
 
 export function isError (value: ExecuteResult | any): value is ExecutionError {
   return (value as ExecutionError).error !== undefined

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { concatLink, type Blob as PlatformBlob, type Ref, type WorkspaceUuid } from '@hcengineering/core'
-import { PlatformError, Severity, Status, getMetadata } from '@hcengineering/platform'
+import { concatLink, type Blob as PlatformBlob, type Ref, type WorkspaceUuid } from '@hanzo/core'
+import { PlatformError, Severity, Status, getMetadata } from '@hanzo/platform'
 import { v4 as uuid } from 'uuid'
 
 import plugin from './plugin'

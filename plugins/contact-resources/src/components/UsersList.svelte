@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, getCurrentEmployee } from '@hcengineering/contact'
-  import { Class, flipSet, getObjectValue, Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { CheckBox, createFocusManager, FocusHandler, ListView } from '@hcengineering/ui'
+  import contact, { Employee, getCurrentEmployee } from '@hanzo/contact'
+  import { Class, flipSet, getObjectValue, Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { CheckBox, createFocusManager, FocusHandler, ListView } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   import UserDetails from './UserDetails.svelte'

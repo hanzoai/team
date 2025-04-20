@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { Model, type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import notification from '@hcengineering/notification'
+import { Model, type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import notification from '@hanzo/notification'
 
-import desktopPreferences, { type DesktopNotificationPreference } from '@hcengineering/desktop-preferences'
+import desktopPreferences, { type DesktopNotificationPreference } from '@hanzo/desktop-preferences'
 
-export { desktopPreferencesId } from '@hcengineering/desktop-preferences'
+export { desktopPreferencesId } from '@hanzo/desktop-preferences'
 
 @Model(desktopPreferences.class.DesktopNotificationPreference, preference.class.Preference)
 export class TDesktopNotificationPreference extends TPreference implements DesktopNotificationPreference {

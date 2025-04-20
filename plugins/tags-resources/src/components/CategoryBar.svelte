@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { TagCategory, TagElement } from '@hcengineering/tags'
-  import { ModernButton, getPlatformColorForTextDef, showPopup, themeStore, ScrollerBar } from '@hcengineering/ui'
+  import { Class, Doc, Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { TagCategory, TagElement } from '@hanzo/tags'
+  import { ModernButton, getPlatformColorForTextDef, showPopup, themeStore, ScrollerBar } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import { getTagStyle, TagElementInfo } from '../utils'

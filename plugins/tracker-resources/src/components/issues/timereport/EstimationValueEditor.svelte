@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import type { ButtonSize } from '@hcengineering/ui'
-  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hcengineering/ui'
-  import { EditBoxPopup } from '@hcengineering/view-resources'
+  import type { IntlString } from '@hanzo/platform'
+  import type { ButtonSize } from '@hanzo/ui'
+  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzo/ui'
+  import { EditBoxPopup } from '@hanzo/view-resources'
   import TimePresenter from './TimePresenter.svelte'
 
   // export let label: IntlString

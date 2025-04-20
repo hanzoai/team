@@ -3,11 +3,11 @@
 -->
 
 <script lang="ts">
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
-  import { type TrainingAttempt, TrainingAttemptState } from '@hcengineering/training'
-  import { DocumentQuery } from '@hcengineering/core'
-  import { type IModeSelector, navigate, rawLocation } from '@hcengineering/ui'
-  import { SpecialView } from '@hcengineering/workbench-resources'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  import { type TrainingAttempt, TrainingAttemptState } from '@hanzo/training'
+  import { DocumentQuery } from '@hanzo/core'
+  import { type IModeSelector, navigate, rawLocation } from '@hanzo/ui'
+  import { SpecialView } from '@hanzo/workbench-resources'
   import type { ComponentProps } from 'svelte'
   import training from '../plugin'
   import { traineesResultsRoute, TraineesResultsRouteTab } from '../routing/routes/traineesResultsRoute'

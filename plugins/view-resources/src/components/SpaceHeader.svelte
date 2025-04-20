@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hcengineering/core'
-  import { IModeSelector, ModeSelector, SearchInput, Header, Breadcrumb, HeaderAdaptive } from '@hcengineering/ui'
-  import type { Asset } from '@hcengineering/platform'
-  import { Viewlet } from '@hcengineering/view'
+  import { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
+  import { IModeSelector, ModeSelector, SearchInput, Header, Breadcrumb, HeaderAdaptive } from '@hanzo/ui'
+  import type { Asset } from '@hanzo/platform'
+  import { Viewlet } from '@hanzo/view'
   import ViewletSelector from './ViewletSelector.svelte'
   import FilterButton from './filter/FilterButton.svelte'
 

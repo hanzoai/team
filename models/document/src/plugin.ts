@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import type { Doc, Ref } from '@hcengineering/core'
-import {} from '@hcengineering/core'
-import { documentId } from '@hcengineering/document'
-import document from '@hcengineering/document-resources/src/plugin'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hcengineering/model-presentation'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import { type TagCategory } from '@hcengineering/tags'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import type { Action, ActionCategory, ViewAction, Viewlet } from '@hcengineering/view'
+import type { Doc, Ref } from '@hanzo/core'
+import {} from '@hanzo/core'
+import { documentId } from '@hanzo/document'
+import document from '@hanzo/document-resources/src/plugin'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/model-presentation'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import { type TagCategory } from '@hanzo/tags'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import type { Action, ActionCategory, ViewAction, Viewlet } from '@hanzo/view'
 
 export default mergeIds(documentId, document, {
   component: {

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { SelectPopup } from '@hcengineering/ui'
-  import { Filter, FilterMode } from '@hcengineering/view'
+  import { getClient } from '@hanzo/presentation'
+  import { SelectPopup } from '@hanzo/ui'
+  import { Filter, FilterMode } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../../plugin'
 

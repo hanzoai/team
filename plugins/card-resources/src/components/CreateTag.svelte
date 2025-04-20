@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { CardEvents, MasterTag, Tag } from '@hcengineering/card'
-  import core, { Class, ClassifierKind, Data, Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { EditBox, Icon, Label } from '@hcengineering/ui'
+  import { CardEvents, MasterTag, Tag } from '@hanzo/card'
+  import core, { Class, ClassifierKind, Data, Ref } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { EditBox, Icon, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let parent: MasterTag | Tag | undefined = undefined
   export let _class: Ref<Class<MasterTag>> | Ref<Class<Tag>>

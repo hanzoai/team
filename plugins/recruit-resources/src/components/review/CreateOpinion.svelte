@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Person } from '@hcengineering/contact'
-  import core, { Account, generateId, Ref } from '@hcengineering/core'
-  import { OK, Status } from '@hcengineering/platform'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import type { Opinion, Review } from '@hcengineering/recruit'
-  import { Project } from '@hcengineering/task'
-  import { StyledTextArea } from '@hcengineering/text-editor-resources'
-  import { EditBox, Status as StatusControl } from '@hcengineering/ui'
+  import type { Person } from '@hanzo/contact'
+  import core, { Account, generateId, Ref } from '@hanzo/core'
+  import { OK, Status } from '@hanzo/platform'
+  import { Card, getClient } from '@hanzo/presentation'
+  import type { Opinion, Review } from '@hanzo/recruit'
+  import { Project } from '@hanzo/task'
+  import { StyledTextArea } from '@hanzo/text-editor-resources'
+  import { EditBox, Status as StatusControl } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../../plugin'
 

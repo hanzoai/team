@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityExtension as ActivityExtensionComponent } from '@hcengineering/activity-resources'
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import activity, { ActivityExtension } from '@hcengineering/activity'
-  import { getClient } from '@hcengineering/presentation'
-  import { AnySvelteComponent, Icon, Label } from '@hcengineering/ui'
-  import { Asset, getResource, IntlString } from '@hcengineering/platform'
-  import view from '@hcengineering/view'
+  import { ActivityExtension as ActivityExtensionComponent } from '@hanzo/activity-resources'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import activity, { ActivityExtension } from '@hanzo/activity'
+  import { getClient } from '@hanzo/presentation'
+  import { AnySvelteComponent, Icon, Label } from '@hanzo/ui'
+  import { Asset, getResource, IntlString } from '@hanzo/platform'
+  import view from '@hanzo/view'
 
   import { getChannelName, getObjectIcon } from '../utils'
   import chunter from '../plugin'

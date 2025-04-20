@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, Ref, Space } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import core, { AnyAttribute, Class, Doc, Ref, Space } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     ActionIcon,
     AnySvelteComponent,
@@ -29,8 +29,8 @@
     getEventPositionElement,
     resizeObserver,
     showPopup
-  } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
   import { onDestroy } from 'svelte'
   import settings from '../plugin'
   import { clearSettingsStore, settingsStore } from '../store'

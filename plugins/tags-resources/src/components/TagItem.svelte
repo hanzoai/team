@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset } from '@hcengineering/platform'
-  import { TagElement, TagReference } from '@hcengineering/tags'
+  import { Asset } from '@hanzo/platform'
+  import { TagElement, TagReference } from '@hanzo/tags'
   import {
     ActionIcon,
     AnySvelteComponent,
@@ -23,7 +23,7 @@
     getPlatformColorDef,
     themeStore,
     tooltip
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import { getTagStyle, tagLevel } from '../utils'

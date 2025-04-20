@@ -34,15 +34,15 @@ import {
   type Blob,
   type WorkspaceIds,
   generateId
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import {
   type DbAdapter,
   type DbAdapterHandler,
   type RawFindIterator,
   type StorageAdapter,
   type StorageAdapterEx
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 
 class StorageBlobAdapter implements DbAdapter {
   constructor (

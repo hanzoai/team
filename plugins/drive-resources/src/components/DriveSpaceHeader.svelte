@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { type Drive } from '@hcengineering/drive'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Button, ButtonWithDropdown, IconAdd, IconDropdown, Loading, SelectPopupValueType } from '@hcengineering/ui'
-  import { FileUploadOptions, getUploadHandlers, UploadHandler } from '@hcengineering/uploader'
+  import { AccountRole, Ref, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { type Drive } from '@hanzo/drive'
+  import { createQuery } from '@hanzo/presentation'
+  import { Button, ButtonWithDropdown, IconAdd, IconDropdown, Loading, SelectPopupValueType } from '@hanzo/ui'
+  import { FileUploadOptions, getUploadHandlers, UploadHandler } from '@hanzo/uploader'
   import drive from '../plugin'
   import { getFolderIdFromFragment } from '../navigation'
   import {
@@ -26,7 +26,7 @@
     uploadFilesToDrivePopup,
     getUploadOptionsByFragment
   } from '../utils'
-  import { getResource } from '@hcengineering/platform'
+  import { getResource } from '@hanzo/platform'
   import { onMount } from 'svelte'
 
   export let currentSpace: Ref<Drive> | undefined

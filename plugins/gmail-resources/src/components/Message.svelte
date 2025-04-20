@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { NewMessage, SharedMessage } from '@hcengineering/gmail'
-  import { AttachmentsPresenter } from '@hcengineering/attachment-resources'
-  import { CheckBox, Label } from '@hcengineering/ui'
+  import type { NewMessage, SharedMessage } from '@hanzo/gmail'
+  import { AttachmentsPresenter } from '@hanzo/attachment-resources'
+  import { CheckBox, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { getTime } from '../utils'
   import gmail from '../plugin'

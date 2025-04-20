@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { EditBox, ModernButton } from '@hcengineering/ui'
-  import { Room, isOffice, type ParticipantInfo } from '@hcengineering/love'
+  import { EditBox, ModernButton } from '@hanzo/ui'
+  import { Room, isOffice, type ParticipantInfo } from '@hanzo/love'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { personByIdStore } from '@hcengineering/contact-resources'
-  import { IntlString } from '@hcengineering/platform'
+  import { personByIdStore } from '@hanzo/contact-resources'
+  import { IntlString } from '@hanzo/platform'
 
   import love from '../plugin'
   import { getRoomName, tryConnect, isConnected } from '../utils'

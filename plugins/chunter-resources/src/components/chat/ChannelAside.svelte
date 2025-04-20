@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { getCurrentAccount, Ref, notEmpty, AccountUuid } from '@hcengineering/core'
-  import presentation from '@hcengineering/presentation'
-  import { Label, showPopup, tooltip } from '@hcengineering/ui'
+  import core, { getCurrentAccount, Ref, notEmpty, AccountUuid } from '@hanzo/core'
+  import presentation from '@hanzo/presentation'
+  import { Label, showPopup, tooltip } from '@hanzo/ui'
 
-  import { Channel, ChunterSpace, ObjectChatPanel } from '@hcengineering/chunter'
-  import { Employee, Person } from '@hcengineering/contact'
+  import { Channel, ChunterSpace, ObjectChatPanel } from '@hanzo/chunter'
+  import { Employee, Person } from '@hanzo/contact'
   import {
     EmployeeBox,
     personRefByPersonIdStore,
     personRefByAccountUuidStore,
     SelectUsersPopup,
     employeeByIdStore
-  } from '@hcengineering/contact-resources'
+  } from '@hanzo/contact-resources'
 
   import ChannelMembers from '../ChannelMembers.svelte'
   import DocAside from './DocAside.svelte'

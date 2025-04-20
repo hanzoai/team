@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { formatName } from '@hcengineering/contact'
-  import { Avatar, personByIdStore } from '@hcengineering/contact-resources'
-  import { getClient, playNotificationSound } from '@hcengineering/presentation'
-  import { Button, Label } from '@hcengineering/ui'
-  import { Invite, RequestStatus, getFreeRoomPlace } from '@hcengineering/love'
+  import { formatName } from '@hanzo/contact'
+  import { Avatar, personByIdStore } from '@hanzo/contact-resources'
+  import { getClient, playNotificationSound } from '@hanzo/presentation'
+  import { Button, Label } from '@hanzo/ui'
+  import { Invite, RequestStatus, getFreeRoomPlace } from '@hanzo/love'
   import love from '../plugin'
   import { infos, myInfo, rooms } from '../stores'
   import { connectRoom } from '../utils'

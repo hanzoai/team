@@ -15,13 +15,13 @@
 //
 -->
 <script lang="ts">
-  import card, { Card } from '@hcengineering/card'
-  import contact from '@hcengineering/contact'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { CollaboratorEditor, HeadingsExtension, ImageUploadOptions } from '@hcengineering/text-editor-resources'
-  import { AnySvelteComponent } from '@hcengineering/ui'
-  import { getCollaborationUser } from '@hcengineering/view-resources'
+  import card, { Card } from '@hanzo/card'
+  import contact from '@hanzo/contact'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { CollaboratorEditor, HeadingsExtension, ImageUploadOptions } from '@hanzo/text-editor-resources'
+  import { AnySvelteComponent } from '@hanzo/ui'
+  import { getCollaborationUser } from '@hanzo/view-resources'
   import { Extensions, FocusPosition } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
 

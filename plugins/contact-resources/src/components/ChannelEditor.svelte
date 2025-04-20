@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel } from '@hcengineering/contact'
-  import { Data } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import { translateCB } from '@hcengineering/platform'
-  import { copyTextToClipboard } from '@hcengineering/presentation'
+  import { Channel } from '@hanzo/contact'
+  import { Data } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { translateCB } from '@hanzo/platform'
+  import { copyTextToClipboard } from '@hanzo/presentation'
   import {
     Button,
     FocusHandler,
@@ -31,9 +31,9 @@
     registerFocus,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { ContextMenu } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { ContextMenu } from '@hanzo/view-resources'
   import { afterUpdate, createEventDispatcher, onMount } from 'svelte'
   import plugin from '../plugin'
   import IconCopy from './icons/Copy.svelte'

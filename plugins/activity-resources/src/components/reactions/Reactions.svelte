@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Reaction } from '@hcengineering/activity'
-  import { Doc, getCurrentAccount, PersonId } from '@hcengineering/core'
-  import { EmojiPopup, IconAdd, showPopup, tooltip, type Emojis } from '@hcengineering/ui'
-  import { includesAny } from '@hcengineering/contact'
+  import { Reaction } from '@hanzo/activity'
+  import { Doc, getCurrentAccount, PersonId } from '@hanzo/core'
+  import { EmojiPopup, IconAdd, showPopup, tooltip, type Emojis } from '@hanzo/ui'
+  import { includesAny } from '@hanzo/contact'
 
   import ReactionsTooltip from './ReactionsTooltip.svelte'
   import { updateDocReactions } from '../../utils'

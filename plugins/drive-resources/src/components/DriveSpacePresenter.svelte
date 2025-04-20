@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref, SortingOrder, Space } from '@hcengineering/core'
-  import { Drive, Folder } from '@hcengineering/drive'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Action, navigate, IconEdit } from '@hcengineering/ui'
-  import { TreeNode, TreeItem, getActions as getContributedActions } from '@hcengineering/view-resources'
-  import { getResource } from '@hcengineering/platform'
+  import { Doc, Ref, SortingOrder, Space } from '@hanzo/core'
+  import { Drive, Folder } from '@hanzo/drive'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Action, navigate, IconEdit } from '@hanzo/ui'
+  import { TreeNode, TreeItem, getActions as getContributedActions } from '@hanzo/view-resources'
+  import { getResource } from '@hanzo/platform'
 
   import drive from '../plugin'
   import { getDriveLink, getFolderIdFromFragment, getFolderLink } from '../navigation'

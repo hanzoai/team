@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ButtonIcon, IconAdd, showPopup } from '@hcengineering/ui'
+  import { ButtonIcon, IconAdd, showPopup } from '@hanzo/ui'
   import CreateSpaceType from './CreateSpaceType.svelte'
-  import { isOwnerOrMaintainer } from '@hcengineering/core'
+  import { isOwnerOrMaintainer } from '@hanzo/core'
 
   function handleAdd (): void {
     showPopup(CreateSpaceType, {}, 'top')

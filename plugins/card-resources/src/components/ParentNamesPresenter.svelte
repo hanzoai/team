@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { concatLink } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { NavLink } from '@hcengineering/presentation'
-  import { getCurrentLocation, locationToUrl } from '@hcengineering/ui'
-  import { cardId, Card, ParentInfo } from '@hcengineering/card'
+  import { concatLink } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { NavLink } from '@hanzo/presentation'
+  import { getCurrentLocation, locationToUrl } from '@hanzo/ui'
+  import { cardId, Card, ParentInfo } from '@hanzo/card'
 
   export let value: Card | undefined
 

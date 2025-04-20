@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Ref, Space } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import { translate } from '@hcengineering/platform'
-  import type { ButtonKind, ButtonSize, TooltipAlignment } from '@hcengineering/ui'
-  import { showPopup, Button, themeStore } from '@hcengineering/ui'
+  import { Class, Ref, Space } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { translate } from '@hanzo/platform'
+  import type { ButtonKind, ButtonSize, TooltipAlignment } from '@hanzo/ui'
+  import { showPopup, Button, themeStore } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import presentation, { SpacesMultiPopup } from '..'
 

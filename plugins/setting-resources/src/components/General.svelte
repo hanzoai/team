@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Configuration } from '@hcengineering/core'
+  import core, { Configuration } from '@hanzo/core'
   import {
     Breadcrumb,
     Header,
@@ -35,13 +35,13 @@
     getLocalWeekStart,
     hasLocalWeekStart,
     type DropdownTextItem
-  } from '@hcengineering/ui'
-  import { loginId } from '@hcengineering/login'
-  import { EditableAvatar, getAccountClient } from '@hcengineering/contact-resources'
-  import { translateCB } from '@hcengineering/platform'
-  import { createQuery, getClient, MessageBox } from '@hcengineering/presentation'
-  import { WorkspaceSetting } from '@hcengineering/setting'
-  import { AvatarType } from '@hcengineering/contact'
+  } from '@hanzo/ui'
+  import { loginId } from '@hanzo/login'
+  import { EditableAvatar, getAccountClient } from '@hanzo/contact-resources'
+  import { translateCB } from '@hanzo/platform'
+  import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
+  import { WorkspaceSetting } from '@hanzo/setting'
+  import { AvatarType } from '@hanzo/contact'
   import settingsRes from '../plugin'
 
   let loading = true

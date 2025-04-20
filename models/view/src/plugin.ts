@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import { type Blob, type BlobMetadata, type Doc, type Ref } from '@hcengineering/core'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+import { type Blob, type BlobMetadata, type Doc, type Ref } from '@hanzo/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 import {
   type FilterFunction,
   type ViewAction,
   type ViewCategoryAction,
   viewId,
   type ViewOptionsAction
-} from '@hcengineering/view'
-import { type FileOrBlob, type FilePreviewExtension } from '@hcengineering/presentation/src/types'
-import { type PresentationMiddlewareFactory } from '@hcengineering/presentation/src/pipeline'
-import view from '@hcengineering/view-resources/src/plugin'
+} from '@hanzo/view'
+import { type FileOrBlob, type FilePreviewExtension } from '@hanzo/presentation/src/types'
+import { type PresentationMiddlewareFactory } from '@hanzo/presentation/src/pipeline'
+import view from '@hanzo/view-resources/src/plugin'
 
 export default mergeIds(viewId, view, {
   actionImpl: {

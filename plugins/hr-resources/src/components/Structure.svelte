@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { DocumentQuery, Ref, WithLookup } from '@hcengineering/core'
-  import type { Department, Staff } from '@hcengineering/hr'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Button, IconAdd, Label, Scroller, SearchEdit, eventToHTMLElement, showPopup } from '@hcengineering/ui'
+  import contact from '@hanzo/contact'
+  import { DocumentQuery, Ref, WithLookup } from '@hanzo/core'
+  import type { Department, Staff } from '@hanzo/hr'
+  import { createQuery } from '@hanzo/presentation'
+  import { Button, IconAdd, Label, Scroller, SearchEdit, eventToHTMLElement, showPopup } from '@hanzo/ui'
   import hr from '../plugin'
   import CreateDepartment from './CreateDepartment.svelte'
   import DepartmentCard from './DepartmentCard.svelte'

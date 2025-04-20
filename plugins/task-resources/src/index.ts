@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -24,9 +24,9 @@ import {
   type Ref,
   type Status,
   type TxOperations
-} from '@hcengineering/core'
-import { type IntlString, type Resources } from '@hcengineering/platform'
-import { createQuery, onClient } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import { type IntlString, type Resources } from '@hanzo/platform'
+import { createQuery, onClient } from '@hanzo/presentation'
 import task, {
   getStatusIndex,
   makeRank,
@@ -35,10 +35,10 @@ import task, {
   type Rank,
   type Task,
   type TaskType
-} from '@hcengineering/task'
-import { getCurrentLocation, navigate, showPopup } from '@hcengineering/ui'
-import { type ViewletDescriptor } from '@hcengineering/view'
-import { CategoryQuery, statusStore } from '@hcengineering/view-resources'
+} from '@hanzo/task'
+import { getCurrentLocation, navigate, showPopup } from '@hanzo/ui'
+import { type ViewletDescriptor } from '@hanzo/view'
+import { CategoryQuery, statusStore } from '@hanzo/view-resources'
 import { get, writable } from 'svelte/store'
 
 import AssignedTasks from './components/AssignedTasks.svelte'

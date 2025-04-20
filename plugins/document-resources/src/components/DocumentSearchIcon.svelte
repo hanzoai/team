@@ -16,8 +16,8 @@
   import DocumentIcon from './DocumentIcon.svelte'
   import document from '../plugin'
 
-  import type { IconProps } from '@hcengineering/view'
-  import type { Asset } from '@hcengineering/platform'
+  import type { IconProps } from '@hanzo/view'
+  import type { Asset } from '@hanzo/platform'
 
   export let icon: Asset
   export let color: number | number[] | undefined

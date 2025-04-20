@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hcengineering/platform'
-  import { upgradeDownloadProgress } from '@hcengineering/presentation'
+  import { getMetadata } from '@hanzo/platform'
+  import { upgradeDownloadProgress } from '@hanzo/presentation'
   import {
     Button,
     Component,
@@ -25,10 +25,10 @@
     fetchMetadataLocalStorage,
     location,
     setMetadataLocalStorage
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { connect, disconnect, versionError } from '../connect'
 
-  import workbench, { workbenchId } from '@hcengineering/workbench'
+  import workbench, { workbenchId } from '@hanzo/workbench'
   import { onDestroy } from 'svelte'
   import workbenchRes from '../plugin'
   import { workspaceCreating } from '../utils'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Client, ClientConnectEvent, MeasureContext, TxPersistenceStore } from '@hcengineering/core'
-import { type Plugin, type Resource, type Metadata, plugin } from '@hcengineering/platform'
+import type { Client, ClientConnectEvent, MeasureContext, TxPersistenceStore } from '@hanzo/core'
+import { type Plugin, type Resource, type Metadata, plugin } from '@hanzo/platform'
 
 /**
  * @public

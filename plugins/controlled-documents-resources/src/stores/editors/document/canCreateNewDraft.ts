@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { DocumentState } from '@hcengineering/controlled-documents'
+import { DocumentState } from '@hanzo/controlled-documents'
 import { combine } from 'effector'
 import { $controlledDocument, $documentAllVersionsDescSorted } from './editor'
 

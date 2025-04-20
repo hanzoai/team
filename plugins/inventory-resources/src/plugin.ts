@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import inventory, { inventoryId } from '@hcengineering/inventory'
-import { type IntlString, mergeIds, type StatusCode } from '@hcengineering/platform'
+import inventory, { inventoryId } from '@hanzo/inventory'
+import { type IntlString, mergeIds, type StatusCode } from '@hanzo/platform'
 
 export default mergeIds(inventoryId, inventory, {
   status: {

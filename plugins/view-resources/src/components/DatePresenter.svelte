@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangePresenter } from '@hcengineering/ui'
-  import { DateRangeMode } from '@hcengineering/core'
+  import { DateRangePresenter } from '@hanzo/ui'
+  import { DateRangeMode } from '@hanzo/core'
 
   export let value: number | null | undefined
   export let onChange: ((value: number | null) => void) | undefined = undefined

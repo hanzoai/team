@@ -20,8 +20,8 @@ import calendar, {
   ReccuringEvent,
   ReccuringInstance,
   Visibility
-} from '@hcengineering/calendar'
-import { Contact } from '@hcengineering/contact'
+} from '@hanzo/calendar'
+import { Contact } from '@hanzo/contact'
 import core, {
   AttachedData,
   Client,
@@ -33,9 +33,9 @@ import core, {
   Ref,
   TxOperations,
   parseSocialIdString
-} from '@hcengineering/core'
-import setting from '@hcengineering/setting'
-import { htmlToMarkup, jsonToHTML, markupToJSON } from '@hcengineering/text'
+} from '@hanzo/core'
+import setting from '@hanzo/setting'
+import { htmlToMarkup, jsonToHTML, markupToJSON } from '@hanzo/text'
 import { deepEqual } from 'fast-equals'
 import { calendar_v3 } from 'googleapis'
 import type { Collection, Db } from 'mongodb'

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hcengineering/ui'
-  import { Diff, DiffFile, DiffFileId, DiffViewMode } from '@hcengineering/diffview'
+  import { Label } from '@hanzo/ui'
+  import { Diff, DiffFile, DiffFileId, DiffViewMode } from '@hanzo/diffview'
   import DiffViewModeDropdown from './DiffViewModeDropdown.svelte'
   import FileDiffView from './FileDiffView.svelte'
   import { parseDiff } from '../parser'

@@ -6,7 +6,7 @@
   TODO:
   * Add since to synchronization
 */
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   PersonId,
   AttachedData,
@@ -21,7 +21,7 @@ import core, {
   makeCollabId,
   makeCollabJsonId,
   makeDocCollabId
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
@@ -29,9 +29,9 @@ import github, {
   GithubProject,
   IntegrationRepositoryData,
   GithubIssue as TGithubIssue
-} from '@hcengineering/github'
-import task, { TaskType, calcRank } from '@hcengineering/task'
-import tracker, { Issue, IssuePriority } from '@hcengineering/tracker'
+} from '@hanzo/github'
+import task, { TaskType, calcRank } from '@hanzo/task'
+import tracker, { Issue, IssuePriority } from '@hanzo/tracker'
 import { Issue as GithubIssue, IssuesEvent, ProjectsV2ItemEvent } from '@octokit/webhooks-types'
 import { Octokit } from 'octokit'
 import config from '../config'

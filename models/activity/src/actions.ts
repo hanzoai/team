@@ -1,5 +1,5 @@
-import type { Builder } from '@hcengineering/model'
-import view, { createAction } from '@hcengineering/model-view'
+import type { Builder } from '@hanzo/model'
+import view, { createAction } from '@hanzo/model-view'
 
 import activity from './plugin'
 

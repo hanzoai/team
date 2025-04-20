@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Doc, DocumentQuery } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { pluginConfigurationStore } from '@hcengineering/presentation'
-  import tracker, { Issue, trackerId } from '@hcengineering/tracker'
-  import { Icon, Label } from '@hcengineering/ui'
+  import { Doc, DocumentQuery } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { pluginConfigurationStore } from '@hanzo/presentation'
+  import tracker, { Issue, trackerId } from '@hanzo/tracker'
+  import { Icon, Label } from '@hanzo/ui'
   import QueryIssuesList from '../edit/QueryIssuesList.svelte'
 
   export let object: Doc

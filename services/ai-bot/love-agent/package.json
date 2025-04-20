@@ -1,9 +1,9 @@
 {
-  "name": "@hcengineering/love-agent",
+  "name": "@hanzo/love-agent",
   "version": "0.6.0",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "files": [
     "lib/**/*",

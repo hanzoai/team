@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { themeStore } from '@hcengineering/theme'
+  import { themeStore } from '@hanzo/theme'
   import { getPlatformColor } from '../colors'
   export let values: Progress[]
   export let min: number = 0

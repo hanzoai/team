@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import chunter, { Channel } from '@hcengineering/chunter'
-import core, { AccountUuid, MeasureContext, Ref, TxOperations, type WorkspaceUuid } from '@hcengineering/core'
-import { getAllUserAccounts, Person } from '@hcengineering/contact'
-import analyticsCollector, { getOnboardingChannelName, OnboardingChannel } from '@hcengineering/analytics-collector'
-import { translate } from '@hcengineering/platform'
+import chunter, { Channel } from '@hanzo/chunter'
+import core, { AccountUuid, MeasureContext, Ref, TxOperations, type WorkspaceUuid } from '@hanzo/core'
+import { getAllUserAccounts, Person } from '@hanzo/contact'
+import analyticsCollector, { getOnboardingChannelName, OnboardingChannel } from '@hanzo/analytics-collector'
+import { translate } from '@hanzo/platform'
 
 interface WorkspaceInfo {
   workspaceId: WorkspaceUuid

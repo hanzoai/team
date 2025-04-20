@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { generateToken } from '@hcengineering/server-token'
-import { systemAccountUuid } from '@hcengineering/core'
-import { getTransactorEndpoint } from '@hcengineering/server-client'
-import { createRestClient, RestClient } from '@hcengineering/api-client'
-import { WorkspaceID } from '@hcengineering/communication-types'
+import { generateToken } from '@hanzo/server-token'
+import { systemAccountUuid } from '@hanzo/core'
+import { getTransactorEndpoint } from '@hanzo/server-client'
+import { createRestClient, RestClient } from '@hanzo/api-client'
+import { WorkspaceID } from '@hanzo/communication-types'
 import {
   createRestClient as createCommunicationRestClient,
   RestClient as CommunicationRestClient
-} from '@hcengineering/communication-rest-client'
+} from '@hanzo/communication-rest-client'
 
 import config from './config'
 

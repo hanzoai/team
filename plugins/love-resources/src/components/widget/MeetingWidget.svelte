@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { closeWidget, minimizeSidebar, WidgetState } from '@hcengineering/workbench-resources'
-  import { createQuery } from '@hcengineering/presentation'
-  import { MeetingMinutes, MeetingStatus, Room } from '@hcengineering/love'
-  import { Loading } from '@hcengineering/ui'
+  import { closeWidget, minimizeSidebar, WidgetState } from '@hanzo/workbench-resources'
+  import { createQuery } from '@hanzo/presentation'
+  import { MeetingMinutes, MeetingStatus, Room } from '@hanzo/love'
+  import { Loading } from '@hanzo/ui'
 
   import love from '../../plugin'
   import VideoTab from './VideoTab.svelte'

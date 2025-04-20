@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import contact from '@hcengineering/contact'
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import task from '@hcengineering/model-task'
-import view, { actionTemplates, createAction } from '@hcengineering/model-view'
-import workbench, { createNavigateAction } from '@hcengineering/model-workbench'
-import { type IntlString } from '@hcengineering/platform'
-import { TrackerEvents, trackerId } from '@hcengineering/tracker'
-import { type KeyBinding } from '@hcengineering/view'
+import contact from '@hanzo/contact'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import task from '@hanzo/model-task'
+import view, { actionTemplates, createAction } from '@hanzo/model-view'
+import workbench, { createNavigateAction } from '@hanzo/model-workbench'
+import { type IntlString } from '@hanzo/platform'
+import { TrackerEvents, trackerId } from '@hanzo/tracker'
+import { type KeyBinding } from '@hanzo/view'
 import tracker from './plugin'
 
-import tags from '@hcengineering/tags'
-import { defaultPriorities, issuePriorities } from '@hcengineering/tracker-resources/src/types'
+import tags from '@hanzo/tags'
+import { defaultPriorities, issuePriorities } from '@hanzo/tracker-resources/src/types'
 
 function createGotoSpecialAction (
   builder: Builder,

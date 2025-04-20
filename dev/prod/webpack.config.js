@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -192,7 +192,7 @@ module.exports = [
   {
     mode: dev ? 'development' : mode,
     entry: {
-      serviceWorker: '@hcengineering/notification/src/serviceWorker.ts'
+      serviceWorker: '@hanzo/notification/src/serviceWorker.ts'
     },
     module: {
       rules: [
@@ -232,7 +232,7 @@ module.exports = [
         }
       : undefined,
     entry: {
-      bundle: ['@hcengineering/theme/styles/global.scss', ...(dev ? ['./src/main-dev.ts'] : ['./src/main.ts'])]
+      bundle: ['@hanzo/theme/styles/global.scss', ...(dev ? ['./src/main-dev.ts'] : ['./src/main.ts'])]
     },
     ignoreWarnings: [
       {
@@ -245,7 +245,7 @@ module.exports = [
       symlinks: true,
       alias: {
         svelte: path.resolve('node_modules', 'svelte/src/runtime'),
-        '@hcengineering/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
+        '@hanzo/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
       },
       fallback: {
         crypto: false

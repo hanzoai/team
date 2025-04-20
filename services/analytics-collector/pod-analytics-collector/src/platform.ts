@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Client } from '@hcengineering/core'
-import { createClient, getTransactorEndpoint } from '@hcengineering/server-client'
+import { Client } from '@hanzo/core'
+import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
 
 export async function connectPlatform (token: string): Promise<Client> {
   const endpoint = await getTransactorEndpoint(token)

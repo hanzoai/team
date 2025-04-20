@@ -14,14 +14,14 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Class, DocumentQuery, Ref, Space } from '@hcengineering/core'
-  import type { IntlString, Asset } from '@hcengineering/platform'
-  import { IModeSelector, resolvedLocationStore } from '@hcengineering/ui'
-  import documents, { type Document, type DocumentSpace, DocumentState } from '@hcengineering/controlled-documents'
+  import { Class, DocumentQuery, Ref, Space } from '@hanzo/core'
+  import type { IntlString, Asset } from '@hanzo/platform'
+  import { IModeSelector, resolvedLocationStore } from '@hanzo/ui'
+  import documents, { type Document, type DocumentSpace, DocumentState } from '@hanzo/controlled-documents'
 
   import Documents from './Documents.svelte'
   import document from '../plugin'
-  import { createQuery } from '@hcengineering/presentation'
+  import { createQuery } from '@hanzo/presentation'
 
   export let _class: Ref<Class<Document>> = document.class.Document
   export let query: DocumentQuery<Document> = {}

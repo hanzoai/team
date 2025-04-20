@@ -2,9 +2,9 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import { type Doc } from '@hcengineering/core'
-import { type IntlString, type Metadata, type Plugin, plugin, type Asset, type Resource } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+import { type Doc } from '@hanzo/core'
+import { type IntlString, type Metadata, type Plugin, plugin, type Asset, type Resource } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 
 export const printId = 'print' as Plugin
 

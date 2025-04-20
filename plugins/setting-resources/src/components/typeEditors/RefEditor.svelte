@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hcengineering/core'
-  import { TypeRef } from '@hcengineering/model'
-  import { getClient } from '@hcengineering/presentation'
-  import { DropdownLabelsIntl, Label } from '@hcengineering/ui'
-  import view from '@hcengineering/view-resources/src/plugin'
-  import card from '@hcengineering/card'
+  import core, { Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hanzo/core'
+  import { TypeRef } from '@hanzo/model'
+  import { getClient } from '@hanzo/presentation'
+  import { DropdownLabelsIntl, Label } from '@hanzo/ui'
+  import view from '@hanzo/view-resources/src/plugin'
+  import card from '@hanzo/card'
   import { createEventDispatcher } from 'svelte'
-  import type { ButtonKind, ButtonSize, DropdownIntlItem } from '@hcengineering/ui'
-  import contactPlugin from '@hcengineering/contact'
+  import type { ButtonKind, ButtonSize, DropdownIntlItem } from '@hanzo/ui'
+  import contactPlugin from '@hanzo/contact'
 
   export let type: RefTo<Doc> | undefined
   export let editable: boolean = true

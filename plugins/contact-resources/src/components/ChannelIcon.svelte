@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel, ChannelProvider } from '@hcengineering/contact'
-  import { Icon, IconSize } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
-  import { classIcon } from '@hcengineering/view-resources'
+  import { Channel, ChannelProvider } from '@hanzo/contact'
+  import { Icon, IconSize } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
+  import { classIcon } from '@hanzo/view-resources'
 
   import contact from '../plugin'
 

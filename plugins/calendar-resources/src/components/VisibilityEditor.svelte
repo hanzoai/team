@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Visibility } from '@hcengineering/calendar'
+  import { Visibility } from '@hanzo/calendar'
   import {
     Button,
     ButtonMenu,
@@ -22,7 +22,7 @@
     eventToHTMLElement,
     showPopup,
     ModernPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
 

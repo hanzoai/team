@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Icon, IconDPCalendar, Label, areDatesEqual, getMonthName } from '@hcengineering/ui'
+  import { Icon, IconDPCalendar, Label, areDatesEqual, getMonthName } from '@hanzo/ui'
   import view from '../../plugin'
   export let value: Date
 

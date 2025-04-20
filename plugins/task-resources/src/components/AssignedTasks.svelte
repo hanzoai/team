@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, getCurrentAccount, Ref, Status, WithLookup } from '@hcengineering/core'
-  import { IntlString, Asset } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Task } from '@hcengineering/task'
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { Class, Doc, DocumentQuery, getCurrentAccount, Ref, Status, WithLookup } from '@hanzo/core'
+  import { IntlString, Asset } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { Task } from '@hanzo/task'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import {
     Component,
     IModeSelector,
@@ -27,15 +27,15 @@
     resolvedLocationStore,
     SearchInput,
     Header
-  } from '@hcengineering/ui'
-  import { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     FilterBar,
     FilterButton,
     statusStore,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import task from '../plugin'
 

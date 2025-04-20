@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/backup-service",
-  "version": "0.6.0",
+  "name": "@hanzo/backup-service",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -23,7 +23,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -40,19 +40,19 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/client-resources": "^0.6.27",
-    "@hcengineering/client": "^0.6.18",
-    "@hcengineering/model": "^0.6.11",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/client-resources": "^0.6.32",
+    "@hanzo/client": "^0.6.23",
+    "@hanzo/model": "^0.6.16",
     "tar-stream": "^3.1.7",
-    "@hcengineering/server-tool": "^0.6.0",
-    "@hcengineering/server-core": "^0.6.1",
-    "@hcengineering/server-storage": "^0.6.0",
-    "@hcengineering/server-backup": "^0.6.0",
-    "@hcengineering/minio": "^0.6.0",
-    "@hcengineering/server-token": "^0.6.11",
-    "@hcengineering/server-client": "^0.6.0"
+    "@hanzo/server-tool": "^0.6.4",
+    "@hanzo/server-core": "^0.6.5",
+    "@hanzo/server-storage": "^0.6.4",
+    "@hanzo/server-backup": "^0.6.4",
+    "@hanzo/minio": "^0.6.4",
+    "@hanzo/server-token": "^0.6.16",
+    "@hanzo/server-client": "^0.6.4"
   }
 }

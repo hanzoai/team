@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, ButtonWithDropdown, IconAdd, IconDropdown, SelectPopupValueType, showPopup } from '@hcengineering/ui'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
+  import { Button, ButtonWithDropdown, IconAdd, IconDropdown, SelectPopupValueType, showPopup } from '@hanzo/ui'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
 
   import documents from '../plugin'
   import CreateDocumentCategory from './CreateDocumentCategory.svelte'

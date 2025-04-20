@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import presentation from '@hcengineering/presentation'
-  import { Modal } from '@hcengineering/ui'
-  import love, { RoomType } from '@hcengineering/love'
+  import presentation from '@hanzo/presentation'
+  import { Modal } from '@hanzo/ui'
+  import love, { RoomType } from '@hanzo/love'
 
   import { currentRoom } from '../stores'
   import RoomComponent from './Room.svelte'

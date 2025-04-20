@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/node-package",
+  "name": "@hanzo/node-package",
   "version": "0.6.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -16,7 +16,7 @@
     "format": "format src"
   },
   "peerDependencies": {
-    "@hcengineering/platform-rig": "*"
+    "@hanzo/platform-rig": "*"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.11.0",

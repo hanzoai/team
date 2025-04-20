@@ -2,11 +2,11 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Question, Rank } from '@hcengineering/questions'
-import { type Class, type Ref } from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import type { ThemeOptions } from '@hcengineering/theme'
+import type { Question, Rank } from '@hanzo/questions'
+import { type Class, type Ref } from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import type { ThemeOptions } from '@hanzo/theme'
 import { LexoRank } from 'lexorank'
 import type { CreateQuestionData } from './createQuestion'
 import { getQuestionMixin } from './getQuestionMixin'

@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Card, type MasterTag } from '@hcengineering/card'
-import type { Doc, Ref } from '@hcengineering/core'
-import { navigate, type Location, getCurrentResolvedLocation } from '@hcengineering/ui'
-import { chatId } from '@hcengineering/chat'
-import { getClient } from '@hcengineering/presentation'
-import { type Message } from '@hcengineering/communication-types'
-import workbench from '@hcengineering/workbench'
-import { openWidget } from '@hcengineering/workbench-resources'
+import { type Card, type MasterTag } from '@hanzo/card'
+import type { Doc, Ref } from '@hanzo/core'
+import { navigate, type Location, getCurrentResolvedLocation } from '@hanzo/ui'
+import { chatId } from '@hanzo/chat'
+import { getClient } from '@hanzo/presentation'
+import { type Message } from '@hanzo/communication-types'
+import workbench from '@hanzo/workbench'
+import { openWidget } from '@hanzo/workbench-resources'
 
 import chat from './plugin'
 import { type ChatWidgetData } from './types'

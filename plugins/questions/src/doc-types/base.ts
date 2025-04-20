@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Employee } from '@hcengineering/contact'
-import { type AttachedDoc, type Ref, type Timestamp } from '@hcengineering/core'
+import type { Employee } from '@hanzo/contact'
+import { type AttachedDoc, type Ref, type Timestamp } from '@hanzo/core'
 
 /**
  * @public

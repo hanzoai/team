@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Ref, Space, WithLookup } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { getClient, reduceCalls } from '@hcengineering/presentation'
-  import { AnyComponent, Component, resolvedLocationStore } from '@hcengineering/ui'
-  import view, { ViewOptions, Viewlet } from '@hcengineering/view'
+  import core, { Class, Doc, Ref, Space, WithLookup } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { getClient, reduceCalls } from '@hanzo/presentation'
+  import { AnyComponent, Component, resolvedLocationStore } from '@hanzo/ui'
+  import view, { ViewOptions, Viewlet } from '@hanzo/view'
   import {
     activeViewlet,
     getViewOptions,
     makeViewletKey,
     updateActiveViewlet,
     viewOptionStore
-  } from '@hcengineering/view-resources'
-  import type { ViewConfiguration } from '@hcengineering/workbench'
+  } from '@hanzo/view-resources'
+  import type { ViewConfiguration } from '@hanzo/workbench'
   import { onDestroy } from 'svelte'
   import SpaceContent from './SpaceContent.svelte'
   import SpaceHeader from './SpaceHeader.svelte'

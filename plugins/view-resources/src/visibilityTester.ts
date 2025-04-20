@@ -20,8 +20,8 @@ import core, {
   type Doc,
   type Space,
   type TypedSpace
-} from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
 import { get } from 'svelte/store'
 import { spaceSpace } from './utils'
 

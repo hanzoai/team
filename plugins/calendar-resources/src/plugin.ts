@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import calendar, { calendarId } from '@hcengineering/calendar'
-import { type IntlString, mergeIds } from '@hcengineering/platform'
+import calendar, { calendarId } from '@hanzo/calendar'
+import { type IntlString, mergeIds } from '@hanzo/platform'
 
 export default mergeIds(calendarId, calendar, {
   string: {

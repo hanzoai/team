@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Card as BoardCard } from '@hcengineering/board'
+  import type { Card as BoardCard } from '@hanzo/board'
   import board from '../../plugin'
-  import { makeRank } from '@hcengineering/task'
-  import core, { AttachedData, generateId, Ref, SortingOrder, Space } from '@hcengineering/core'
-  import { IconAdd, Button, showPopup } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
+  import { makeRank } from '@hanzo/task'
+  import core, { AttachedData, generateId, Ref, SortingOrder, Space } from '@hanzo/core'
+  import { IconAdd, Button, showPopup } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
   import AddCardEditor from './AddCardEditor.svelte'
   import AddMultipleCardsPopup from './AddMultipleCardsPopup.svelte'
 

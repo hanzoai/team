@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { IndexKind, type Domain, type Ref } from '@hcengineering/core'
+import { IndexKind, type Domain, type Ref } from '@hanzo/core'
 import {
   ArrOf,
   Hidden,
@@ -25,10 +25,10 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import core, { TAttachedDoc, TDoc } from '@hcengineering/model-core'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import { type Poll, type Question, type Survey } from '@hcengineering/survey'
+} from '@hanzo/model'
+import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import { type Poll, type Question, type Survey } from '@hanzo/survey'
 import survey from './plugin'
 
 export const DOMAIN_SURVEY = 'survey' as Domain

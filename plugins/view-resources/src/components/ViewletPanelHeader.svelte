@@ -4,9 +4,9 @@
 //
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hcengineering/core'
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import { translateCB } from '@hcengineering/platform'
+  import { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import { translateCB } from '@hanzo/platform'
   import {
     Breadcrumb,
     Header,
@@ -15,8 +15,8 @@
     ModeSelector,
     SearchInput,
     themeStore
-  } from '@hcengineering/ui'
-  import { ViewOptions, Viewlet, ViewletPreference } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { ViewOptions, Viewlet, ViewletPreference } from '@hanzo/view'
 
   import FilterBar from './filter/FilterBar.svelte'
   import FilterButton from './filter/FilterButton.svelte'

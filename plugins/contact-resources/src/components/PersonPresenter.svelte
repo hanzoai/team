@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getName, Person } from '@hcengineering/contact'
-  import { getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import type { LabelAndProps, IconSize } from '@hcengineering/ui'
+  import { getName, Person } from '@hanzo/contact'
+  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import type { LabelAndProps, IconSize } from '@hanzo/ui'
   import { getPersonTooltip, personByIdStore, PersonLabelTooltip } from '..'
   import PersonContent from './PersonContent.svelte'
-  import { getClient } from '@hcengineering/presentation'
-  import { Ref } from '@hcengineering/core'
-  import ui from '@hcengineering/ui'
-  import { ObjectPresenterType } from '@hcengineering/view'
+  import { getClient } from '@hanzo/presentation'
+  import { Ref } from '@hanzo/core'
+  import ui from '@hanzo/ui'
+  import { ObjectPresenterType } from '@hanzo/view'
 
   export let value: Ref<Person> | Person | null | undefined
   export let inline = false

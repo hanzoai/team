@@ -1,4 +1,4 @@
-import { ScreenSource } from '@hcengineering/love'
+import { ScreenSource } from '@hanzo/love'
 
 /**
  * @public

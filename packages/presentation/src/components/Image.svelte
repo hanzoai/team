@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Blob, Ref } from '@hcengineering/core'
-  import { Image } from '@hcengineering/ui'
+  import type { Blob, Ref } from '@hanzo/core'
+  import { Image } from '@hanzo/ui'
   import { getBlobRef } from '../preview'
 
   export let blob: Ref<Blob>

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { GUEST_ACCOUNT } from '@hcengineering/account'
-import { getClient as getAccountClient } from '@hcengineering/account-client'
-import { type WorkspaceIds } from '@hcengineering/core'
-import { type Token } from '@hcengineering/server-token'
+import { GUEST_ACCOUNT } from '@hanzo/account'
+import { getClient as getAccountClient } from '@hanzo/account-client'
+import { type WorkspaceIds } from '@hanzo/core'
+import { type Token } from '@hanzo/server-token'
 
 import config from './config'
 

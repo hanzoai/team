@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import Documents from './Documents.svelte'
 
   const currentUser = getCurrentEmployee()

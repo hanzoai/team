@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentCategory } from '@hcengineering/controlled-documents'
+  import { DocumentCategory } from '@hanzo/controlled-documents'
 
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { getPanelURI, Icon, tooltip } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { getPanelURI, Icon, tooltip } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   import documents from '../../../plugin'
 

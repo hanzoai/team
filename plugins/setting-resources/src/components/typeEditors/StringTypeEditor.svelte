@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IndexKind } from '@hcengineering/core'
-  import { TypeString } from '@hcengineering/model'
+  import { IndexKind } from '@hanzo/core'
+  import { TypeString } from '@hanzo/model'
   import { createEventDispatcher, onMount } from 'svelte'
 
   const dispatch = createEventDispatcher()

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hcengineering/attachment'
-  import { Class, Data, Doc, DocumentQuery, Ref, Space } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { Icon, Label, resizeObserver, Scroller, Spinner, ButtonIcon, IconAdd } from '@hcengineering/ui'
-  import view, { BuildModelKey } from '@hcengineering/view'
-  import { Table } from '@hcengineering/view-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import { FileUploadCallbackParams, uploadFiles } from '@hcengineering/uploader'
+  import { Attachment } from '@hanzo/attachment'
+  import { Class, Data, Doc, DocumentQuery, Ref, Space } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { Icon, Label, resizeObserver, Scroller, Spinner, ButtonIcon, IconAdd } from '@hanzo/ui'
+  import view, { BuildModelKey } from '@hanzo/view'
+  import { Table } from '@hanzo/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { FileUploadCallbackParams, uploadFiles } from '@hanzo/uploader'
   import { createEventDispatcher } from 'svelte'
 
   import attachment from '../plugin'

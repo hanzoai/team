@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -20,8 +20,8 @@ import {
   type SearchQuery,
   type SearchResult,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import type { FullTextAdapter } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import type { FullTextAdapter } from '@hanzo/server-core'
 import { getScoringConfig, mapSearchResultDoc } from './mapper'
 
 export async function searchFulltext (

@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import type { WithLookup } from '@hcengineering/core'
-  import type { ToDo } from '@hcengineering/time'
+  import type { IntlString } from '@hanzo/platform'
+  import type { WithLookup } from '@hanzo/core'
+  import type { ToDo } from '@hanzo/time'
   import { createEventDispatcher } from 'svelte'
   import { dragging } from '../dragging'
   import time from '../plugin'

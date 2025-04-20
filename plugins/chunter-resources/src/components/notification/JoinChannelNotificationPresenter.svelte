@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DisplayDocUpdateMessage } from '@hcengineering/activity'
-  import { BaseMessagePreview } from '@hcengineering/activity-resources'
+  import { DisplayDocUpdateMessage } from '@hanzo/activity'
+  import { BaseMessagePreview } from '@hanzo/activity-resources'
 
   import chunter from '../../plugin'
 

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { PlatformError, Severity, Status } from '@hcengineering/platform'
+import { PlatformError, Severity, Status } from '@hanzo/platform'
 import { Lookup, MeasureContext, ReverseLookups, getObjectValue } from '.'
 import type { Class, Doc, Ref } from './classes'
 
@@ -69,7 +69,7 @@ export abstract class MemDb extends TxProcessor implements Storage {
       if (obj !== undefined && this.hierarchy.isDerived(obj._class, _class)) result.push(obj)
     } else if (query._id?.$in !== undefined) {
       const ids = new Set(query._id.$in)
-      for (const id of ids) {
+      for (const id of Array.from(ids)) {
         const obj = this.objectById.get(id) as T
         if (obj !== undefined && this.hierarchy.isDerived(obj._class, _class)) result.push(obj)
       }

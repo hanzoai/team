@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Request, RequestStatus } from '@hcengineering/request'
-  import { Button, ButtonSize, Label, ProgressCircle, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { DocNavLink } from '@hcengineering/view-resources'
+  import { Request, RequestStatus } from '@hanzo/request'
+  import { Button, ButtonSize, Label, ProgressCircle, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { DocNavLink } from '@hanzo/view-resources'
   import request from '../plugin'
   import RequestDetailPopup from './RequestDetailPopup.svelte'
   import RequestStatusPresenter from './RequestStatusPresenter.svelte'

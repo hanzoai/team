@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 import core, {
   toIdMap,
   type Client,
@@ -23,14 +23,14 @@ import core, {
   type ObjQueryType,
   type Ref,
   type RelatedDocument
-} from '@hcengineering/core'
-import { OK, Severity, Status, type Resources } from '@hcengineering/platform'
-import { getClient, type ObjectSearchResult } from '@hcengineering/presentation'
-import { type Applicant, type Candidate, type Vacancy } from '@hcengineering/recruit'
-import task from '@hcengineering/task'
-import { showPopup } from '@hcengineering/ui'
-import { type Filter } from '@hcengineering/view'
-import { FilterQuery, statusStore } from '@hcengineering/view-resources'
+} from '@hanzo/core'
+import { OK, Severity, Status, type Resources } from '@hanzo/platform'
+import { getClient, type ObjectSearchResult } from '@hanzo/presentation'
+import { type Applicant, type Candidate, type Vacancy } from '@hanzo/recruit'
+import task from '@hanzo/task'
+import { showPopup } from '@hanzo/ui'
+import { type Filter } from '@hanzo/view'
+import { FilterQuery, statusStore } from '@hanzo/view-resources'
 import ApplicantFilter from './components/ApplicantFilter.svelte'
 import ApplicantNamePresenter from './components/ApplicantNamePresenter.svelte'
 import ApplicationItem from './components/ApplicationItem.svelte'

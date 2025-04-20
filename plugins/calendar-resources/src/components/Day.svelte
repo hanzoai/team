@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hcengineering/calendar'
-  // import { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hcengineering/core'
-  import { Label, addZero, getPlatformColorForTextDef, showPopup, themeStore, tooltip } from '@hcengineering/ui'
+  import { Event } from '@hanzo/calendar'
+  // import { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
+  import { Label, addZero, getPlatformColorForTextDef, showPopup, themeStore, tooltip } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
   import EventsPopup from './EventsPopup.svelte'

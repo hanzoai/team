@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import inventory, { Category } from '@hcengineering/inventory'
-  import { createQuery } from '@hcengineering/presentation'
+  import { Ref } from '@hanzo/core'
+  import inventory, { Category } from '@hanzo/inventory'
+  import { createQuery } from '@hanzo/presentation'
   import CategoryPresenter from './CategoryPresenter.svelte'
 
   export let value: Ref<Category>

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hcengineering/attachment'
-  import { Card } from '@hcengineering/card'
-  import { getClient, getFileMetadata } from '@hcengineering/presentation'
-  import { Label } from '@hcengineering/ui'
-  import { FileUploadCallbackParams, uploadFiles } from '@hcengineering/uploader'
+  import attachment from '@hanzo/attachment'
+  import { Card } from '@hanzo/card'
+  import { getClient, getFileMetadata } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
+  import { FileUploadCallbackParams, uploadFiles } from '@hanzo/uploader'
   import UploadDuo from './icons/UploadDuo.svelte'
 
   export let doc: Card

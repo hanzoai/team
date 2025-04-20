@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { systemAccountUuid, MeasureContext } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+import { Analytics } from '@hanzo/analytics'
+import { systemAccountUuid, MeasureContext } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 
 import config from '../config'
 

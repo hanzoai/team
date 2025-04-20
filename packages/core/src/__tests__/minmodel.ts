@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+import type { IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 import type { Arr, Class, Data, Doc, Interface, Mixin, Obj, Ref, Space } from '../classes'
 import { AttachedDoc, ClassifierKind, DOMAIN_MODEL } from '../classes'
 import core from '../component'

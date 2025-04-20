@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hcengineering/contact'
-  import { personRefByPersonIdStore, PersonRefPresenter } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
-  import { createQuery, MessageViewer } from '@hcengineering/presentation'
-  import { Request, RequestDecisionComment } from '@hcengineering/request'
-  import { BooleanIcon, Label, ShowMore } from '@hcengineering/ui'
+  import contact, { Person } from '@hanzo/contact'
+  import { personRefByPersonIdStore, PersonRefPresenter } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
+  import { createQuery, MessageViewer } from '@hanzo/presentation'
+  import { Request, RequestDecisionComment } from '@hanzo/request'
+  import { BooleanIcon, Label, ShowMore } from '@hanzo/ui'
   import request from '../plugin'
 
   export let value: Request

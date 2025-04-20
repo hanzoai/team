@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, type WorkspaceIds } from '@hcengineering/core'
-import type { StorageAdapter } from '@hcengineering/server-core'
+import { type MeasureContext, type WorkspaceIds } from '@hanzo/core'
+import type { StorageAdapter } from '@hanzo/server-core'
 import { Buffer } from 'node:buffer'
 
 // Will use temporary file to store huge content into

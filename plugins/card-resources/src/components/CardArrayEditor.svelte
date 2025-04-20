@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hcengineering/card'
-  import { AnyAttribute, ArrOf, Ref, RefTo } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Card, MasterTag } from '@hanzo/card'
+  import { AnyAttribute, ArrOf, Ref, RefTo } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     Button,
     ButtonKind,
@@ -25,8 +25,8 @@
     IconWithEmoji,
     Label,
     showPopup
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
   import CardsPopup from './CardsPopup.svelte'

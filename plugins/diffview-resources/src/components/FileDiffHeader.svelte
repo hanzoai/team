@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { copyTextToClipboard } from '@hcengineering/presentation'
-  import { Button, Chevron, IconCheck, IconCopy } from '@hcengineering/ui'
-  import diffview, { DiffFile } from '@hcengineering/diffview'
+  import { copyTextToClipboard } from '@hanzo/presentation'
+  import { Button, Chevron, IconCheck, IconCopy } from '@hanzo/ui'
+  import diffview, { DiffFile } from '@hanzo/diffview'
 
   import { formatFileName, isDevNullName } from '../utils'
 

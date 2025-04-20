@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { IntlString } from '@hcengineering/platform'
-  import { Markup, RateLimiter } from '@hcengineering/core'
+  import { IntlString } from '@hanzo/platform'
+  import { Markup, RateLimiter } from '@hanzo/core'
   import { tick, createEventDispatcher, onDestroy } from 'svelte'
-  import { uploadFile, deleteFile, getCommunicationClient } from '@hcengineering/presentation'
-  import { MessageID, CardID, CardType } from '@hcengineering/communication-types'
-  import { AttachmentPresenter } from '@hcengineering/attachment-resources'
+  import { uploadFile, deleteFile, getCommunicationClient } from '@hanzo/presentation'
+  import { MessageID, CardID, CardType } from '@hanzo/communication-types'
+  import { AttachmentPresenter } from '@hanzo/attachment-resources'
 
   import TextInput from '../TextInput.svelte'
   import { defaultMessageInputActions, toMarkdown } from '../../utils'

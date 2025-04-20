@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Calendar, Event, generateEventId, getAllEvents } from '@hcengineering/calendar'
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { Calendar, Event, generateEventId, getAllEvents } from '@hanzo/calendar'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import {
     Class,
     Doc,
@@ -24,9 +24,9 @@
     SortingOrder,
     Timestamp,
     getCurrentAccount
-  } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
   import {
     AnyComponent,
     MonthCalendar,
@@ -36,7 +36,7 @@
     showPopup,
     AnySvelteComponent,
     deviceOptionsStore as deviceInfo
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
 
   import { CalendarMode, DayCalendar, calendarByIdStore, hidePrivateEvents } from '../index'
   import calendar from '../plugin'

@@ -11,20 +11,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import core, { type Doc } from '@hcengineering/core'
-import { Mixin, type Builder } from '@hcengineering/model'
-import { TMethod, TProcessFunction } from '@hcengineering/model-process'
-import type { Resource } from '@hcengineering/platform'
-import process from '@hcengineering/process'
-import serverCore from '@hcengineering/server-core'
+import core, { type Doc } from '@hanzo/core'
+import { Mixin, type Builder } from '@hanzo/model'
+import { TMethod, TProcessFunction } from '@hanzo/model-process'
+import type { Resource } from '@hanzo/platform'
+import process from '@hanzo/process'
+import serverCore from '@hanzo/server-core'
 import serverProcess, {
   type ExecuteFunc,
   type FuncImpl,
   type MethodImpl,
   type TransformFunc
-} from '@hcengineering/server-process'
+} from '@hanzo/server-process'
 
-export { serverProcessId } from '@hcengineering/server-process'
+export { serverProcessId } from '@hanzo/server-process'
 
 @Mixin(serverProcess.mixin.MethodImpl, process.class.Method)
 export class TMethodImpl<T extends Doc> extends TMethod implements MethodImpl<T> {

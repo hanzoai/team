@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttributeModel } from '@hcengineering/view'
-  import { ActivityUpdate, ActivityUpdateType } from '@hcengineering/communication-types'
+  import { AttributeModel } from '@hanzo/view'
+  import { ActivityUpdate, ActivityUpdateType } from '@hanzo/communication-types'
 
   import ActivityUpdateTagViewer from './ActivityUpdateTagViewer.svelte'
   import ActivityUpdateAttributeViewer from './ActivityUpdateAttributeViewer.svelte'

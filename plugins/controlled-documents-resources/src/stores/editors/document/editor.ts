@@ -24,14 +24,14 @@ import {
   type ControlledDocumentSnapshot,
   type Project,
   type ProjectDocument
-} from '@hcengineering/controlled-documents'
-import chunter from '@hcengineering/chunter'
-import { type Ref } from '@hcengineering/core'
-import { getCurrentEmployee } from '@hcengineering/contact'
-import { type Training } from '@hcengineering/training'
-import { type IntlString } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import { type ButtonItem } from '@hcengineering/ui'
+} from '@hanzo/controlled-documents'
+import chunter from '@hanzo/chunter'
+import { type Ref } from '@hanzo/core'
+import { getCurrentEmployee } from '@hanzo/contact'
+import { type Training } from '@hanzo/training'
+import { type IntlString } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import { type ButtonItem } from '@hanzo/ui'
 import { getDocumentTraining } from '../../../docutils'
 import plugin from '../../../plugin'
 import {

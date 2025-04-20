@@ -1,7 +1,7 @@
-import { getClient as getAccountClient } from '@hcengineering/account-client'
-import { Analytics } from '@hcengineering/analytics'
-import client from '@hcengineering/client'
-import { ensureEmployee, setCurrentEmployee } from '@hcengineering/contact'
+import { getClient as getAccountClient } from '@hanzo/account-client'
+import { Analytics } from '@hanzo/analytics'
+import client from '@hanzo/client'
+import { ensureEmployee, setCurrentEmployee } from '@hanzo/contact'
 import core, {
   ClientConnectEvent,
   concatLink,
@@ -16,9 +16,9 @@ import core, {
   type MeasureMetricsContext,
   type SocialId,
   type Version
-} from '@hcengineering/core'
-import login, { loginId, type Pages } from '@hcengineering/login'
-import { broadcastEvent, getMetadata, getResource, OK, setMetadata, translateCB } from '@hcengineering/platform'
+} from '@hanzo/core'
+import login, { loginId, type Pages } from '@hanzo/login'
+import { broadcastEvent, getMetadata, getResource, OK, setMetadata, translateCB } from '@hanzo/platform'
 import presentation, {
   loadServerConfig,
   purgeClient,
@@ -28,7 +28,7 @@ import presentation, {
   setPresentationCookie,
   uiContext,
   upgradeDownloadProgress
-} from '@hcengineering/presentation'
+} from '@hanzo/presentation'
 import {
   desktopPlatform,
   getCurrentLocation,
@@ -36,7 +36,7 @@ import {
   navigate,
   setMetadataLocalStorage,
   themeStore
-} from '@hcengineering/ui'
+} from '@hanzo/ui'
 import { get, writable } from 'svelte/store'
 
 import plugin from './plugin'

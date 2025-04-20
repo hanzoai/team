@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label, Toggle } from '@hcengineering/ui'
+  import { Label, Toggle } from '@hanzo/ui'
   import love from '../plugin'
   import { setShare, isShareWithSound, isSharingEnabled } from '../utils'
 </script>

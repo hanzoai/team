@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { type BlobMetadata, type Blob, type Ref } from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
-import { type PopupAlignment } from '@hcengineering/ui'
+import { Analytics } from '@hanzo/analytics'
+import { type BlobMetadata, type Blob, type Ref } from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
+import { type PopupAlignment } from '@hanzo/ui'
 import { writable } from 'svelte/store'
 
 import plugin from './plugin'

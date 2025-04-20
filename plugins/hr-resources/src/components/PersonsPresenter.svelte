@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hcengineering/contact'
-  import { EmployeePresenter } from '@hcengineering/contact-resources'
-  import { WithLookup } from '@hcengineering/core'
-  import { Staff } from '@hcengineering/hr'
-  import { closeTooltip } from '@hcengineering/ui'
-  import { showMenu } from '@hcengineering/view-resources'
+  import { Employee } from '@hanzo/contact'
+  import { EmployeePresenter } from '@hanzo/contact-resources'
+  import { WithLookup } from '@hanzo/core'
+  import { Staff } from '@hanzo/hr'
+  import { closeTooltip } from '@hanzo/ui'
+  import { showMenu } from '@hanzo/view-resources'
   import hr from '../plugin'
 
   import { flip } from 'svelte/animate'

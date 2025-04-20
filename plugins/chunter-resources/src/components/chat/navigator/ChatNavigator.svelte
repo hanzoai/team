@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Doc, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { Scroller, SearchEdit, Label, ButtonIcon, IconAdd, showPopup, Menu } from '@hcengineering/ui'
-  import { DocNotifyContext } from '@hcengineering/notification'
-  import { SpecialNavModel } from '@hcengineering/workbench'
-  import { NavLink } from '@hcengineering/view-resources'
-  import { TreeSeparator, NavFooter } from '@hcengineering/workbench-resources'
-  import { getResource } from '@hcengineering/platform'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
+  import { AccountRole, Doc, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { Scroller, SearchEdit, Label, ButtonIcon, IconAdd, showPopup, Menu } from '@hanzo/ui'
+  import { DocNotifyContext } from '@hanzo/notification'
+  import { SpecialNavModel } from '@hanzo/workbench'
+  import { NavLink } from '@hanzo/view-resources'
+  import { TreeSeparator, NavFooter } from '@hanzo/workbench-resources'
+  import { getResource } from '@hanzo/platform'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
 
   import chunter from '../../../plugin'
   import ChatNavGroup from './ChatNavGroup.svelte'

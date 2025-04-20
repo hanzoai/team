@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -13,17 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type DocUpdateMessageViewlet } from '@hcengineering/activity'
-import { type ChatMessageViewlet } from '@hcengineering/chunter'
-import { type Doc, type DocManager, type Ref, type StatusCategory } from '@hcengineering/core'
-import { type NotificationGroup, type NotificationType } from '@hcengineering/notification'
-import { mergeIds, type IntlString, type Resource } from '@hcengineering/platform'
-import { type ProjectType } from '@hcengineering/task'
-import { trackerId } from '@hcengineering/tracker'
-import tracker from '@hcengineering/tracker-resources/src/plugin'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import { type Action, type ViewAction, type Viewlet } from '@hcengineering/view'
-import { type Application } from '@hcengineering/workbench'
+import { type DocUpdateMessageViewlet } from '@hanzo/activity'
+import { type ChatMessageViewlet } from '@hanzo/chunter'
+import { type Doc, type DocManager, type Ref, type StatusCategory } from '@hanzo/core'
+import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
+import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
+import { type ProjectType } from '@hanzo/task'
+import { trackerId } from '@hanzo/tracker'
+import tracker from '@hanzo/tracker-resources/src/plugin'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import { type Action, type ViewAction, type Viewlet } from '@hanzo/view'
+import { type Application } from '@hanzo/workbench'
 
 export default mergeIds(trackerId, tracker, {
   string: {

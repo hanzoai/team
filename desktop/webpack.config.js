@@ -25,7 +25,7 @@ module.exports = [
   {
     mode: dev ? 'development' : mode,
     entry: {
-      serviceWorker: '@hcengineering/notification/src/serviceWorker.ts'
+      serviceWorker: '@hanzo/notification/src/serviceWorker.ts'
     },
     module: {
       rules: [
@@ -122,7 +122,7 @@ module.exports = [
   // ------ UI Part --------------------------
   {
     entry: {
-      bundle: ['@hcengineering/theme/styles/global.scss', ...['./src/ui/index.ts']]
+      bundle: ['@hanzo/theme/styles/global.scss', ...['./src/ui/index.ts']]
     },
     ignoreWarnings: [
       {
@@ -135,7 +135,7 @@ module.exports = [
       symlinks: true,
       alias: {
         svelte: path.resolve('node_modules', 'svelte/src/runtime'),
-        '@hcengineering/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
+        '@hanzo/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
       },
       fallback: {
         crypto: false,

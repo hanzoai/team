@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { AttributeModel } from '@hcengineering/view'
-  import { IconSize } from '@hcengineering/ui'
-  import contact from '@hcengineering/contact'
+  import type { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { AttributeModel } from '@hanzo/view'
+  import { IconSize } from '@hanzo/ui'
+  import contact from '@hanzo/contact'
 
   import { getObjectPresenter } from '../utils'
   import ObjectIcon from './ObjectIcon.svelte'

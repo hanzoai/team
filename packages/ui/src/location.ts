@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { clone, type Ref, type Space } from '@hcengineering/core'
-import { type Plugin } from '@hcengineering/platform'
+import { Analytics } from '@hanzo/analytics'
+import { clone, type Ref, type Space } from '@hanzo/core'
+import { type Plugin } from '@hanzo/platform'
 import { derived, get, writable } from 'svelte/store'
 
 import { closePopup } from './popups'

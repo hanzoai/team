@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -18,11 +18,11 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hcengineering/model'
-import { analyticsCollectorId } from '@hcengineering/analytics-collector'
-import { DOMAIN_SPACE } from '@hcengineering/model-core'
-import { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION } from '@hcengineering/model-notification'
-import { DOMAIN_ACTIVITY } from '@hcengineering/model-activity'
+} from '@hanzo/model'
+import { analyticsCollectorId } from '@hanzo/analytics-collector'
+import { DOMAIN_SPACE } from '@hanzo/model-core'
+import { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION } from '@hanzo/model-notification'
+import { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
 
 async function removeOnboardingChannels (client: MigrationClient): Promise<void> {
   const channels = await client.find(DOMAIN_SPACE, { 'analytics:mixin:AnalyticsChannel': { $exists: true } })

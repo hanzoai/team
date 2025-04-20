@@ -15,10 +15,10 @@
 <script lang="ts">
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
 
-  import { Analytics } from '@hcengineering/analytics'
-  import { AttachmentStyledBox } from '@hcengineering/attachment-resources'
-  import { ActionContext, createMarkup, createQuery, getClient } from '@hcengineering/presentation'
-  import core, { Data, Ref, getCurrentAccount, generateId, makeCollabId, WithLookup } from '@hcengineering/core'
+  import { Analytics } from '@hanzo/analytics'
+  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
+  import { ActionContext, createMarkup, createQuery, getClient } from '@hanzo/presentation'
+  import core, { Data, Ref, getCurrentAccount, generateId, makeCollabId, WithLookup } from '@hanzo/core'
   import testManagement, {
     TestProject,
     TestRun,
@@ -28,12 +28,12 @@
     TestManagementEvents,
     TestPlan,
     TestPlanItem
-  } from '@hcengineering/test-management'
-  import { Panel } from '@hcengineering/panel'
-  import { EditBox, ModernButton, Label, navigate } from '@hcengineering/ui'
-  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
-  import { IntlString } from '@hcengineering/platform'
-  import { Attachment } from '@hcengineering/attachment'
+  } from '@hanzo/test-management'
+  import { Panel } from '@hanzo/panel'
+  import { EditBox, ModernButton, Label, navigate } from '@hanzo/ui'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+  import { IntlString } from '@hanzo/platform'
+  import { Attachment } from '@hanzo/attachment'
 
   import { selectedTestCases, selectedTestPlan, resetStore } from './store/testRunStore'
   import NewTestRunAside from './NewTestRunAside.svelte'

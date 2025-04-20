@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import { AccountRole } from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import workbench from '@hcengineering/model-workbench'
-import { chatId } from '@hcengineering/chat'
-import { WidgetType } from '@hcengineering/workbench'
-import { createSystemType } from '@hcengineering/model-card'
+import { AccountRole } from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import workbench from '@hanzo/model-workbench'
+import { chatId } from '@hanzo/chat'
+import { WidgetType } from '@hanzo/workbench'
+import { createSystemType } from '@hanzo/model-card'
 
 import chat from './plugin'
 
-export { chatId } from '@hcengineering/chat'
+export { chatId } from '@hanzo/chat'
 export { chatOperation } from './migration'
 export default chat
 

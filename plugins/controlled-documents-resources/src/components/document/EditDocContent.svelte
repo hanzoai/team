@@ -15,13 +15,13 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy, tick } from 'svelte'
   import { merge } from 'effector'
-  import { type Ref, type Blob, generateId } from '@hcengineering/core'
-  import { getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import view from '@hcengineering/view'
-  import attachment, { Attachment } from '@hcengineering/attachment'
-  import documents, { DocumentState } from '@hcengineering/controlled-documents'
-  import { Editor, Heading } from '@hcengineering/text-editor'
+  import { type Ref, type Blob, generateId } from '@hanzo/core'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import view from '@hanzo/view'
+  import attachment, { Attachment } from '@hanzo/attachment'
+  import documents, { DocumentState } from '@hanzo/controlled-documents'
+  import { Editor, Heading } from '@hanzo/text-editor'
   import {
     CollaboratorEditor,
     TableOfContents,
@@ -33,9 +33,9 @@
     NodeHighlightType,
     highlightUpdateCommand,
     getNodeElement
-  } from '@hcengineering/text-editor-resources'
-  import { navigate, EditBox, Scroller, Label } from '@hcengineering/ui'
-  import { getCollaborationUser, getObjectLinkFragment } from '@hcengineering/view-resources'
+  } from '@hanzo/text-editor-resources'
+  import { navigate, EditBox, Scroller, Label } from '@hanzo/ui'
+  import { getCollaborationUser, getObjectLinkFragment } from '@hanzo/view-resources'
   import plugin from '../../plugin'
 
   import {

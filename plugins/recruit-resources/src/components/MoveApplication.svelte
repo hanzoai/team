@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2023 Anticrm Platform Contributors.
+// Copyright © 2023 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { ExpandRightDouble } from '@hcengineering/contact-resources'
-  import { FindOptions, Status as TaskStatus } from '@hcengineering/core'
-  import { OK, Severity, Status } from '@hcengineering/platform'
-  import presentation, { Card, SpaceSelect, createQuery, getClient } from '@hcengineering/presentation'
-  import type { Applicant, Vacancy } from '@hcengineering/recruit'
-  import { getStates } from '@hcengineering/task'
-  import { typeStore } from '@hcengineering/task-resources'
+  import contact from '@hanzo/contact'
+  import { ExpandRightDouble } from '@hanzo/contact-resources'
+  import { FindOptions, Status as TaskStatus } from '@hanzo/core'
+  import { OK, Severity, Status } from '@hanzo/platform'
+  import presentation, { Card, SpaceSelect, createQuery, getClient } from '@hanzo/presentation'
+  import type { Applicant, Vacancy } from '@hanzo/recruit'
+  import { getStates } from '@hanzo/task'
+  import { typeStore } from '@hanzo/task-resources'
   import ui, {
     Button,
     ColorPopup,
@@ -35,9 +35,9 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
-  import { moveToSpace } from '@hcengineering/view-resources/src/utils'
+  } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
+  import { moveToSpace } from '@hanzo/view-resources/src/utils'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../plugin'
   import ApplicationPresenter from './ApplicationPresenter.svelte'

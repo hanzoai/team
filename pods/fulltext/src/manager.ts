@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import type { Doc, MeasureContext, Space, Tx, TxCUD, WorkspaceInfoWithStatus, WorkspaceUuid } from '@hcengineering/core'
-import { Hierarchy, systemAccountUuid } from '@hcengineering/core'
-import { getAccountClient, getTransactorEndpoint } from '@hcengineering/server-client'
+import type { Doc, MeasureContext, Space, Tx, TxCUD, WorkspaceInfoWithStatus, WorkspaceUuid } from '@hanzo/core'
+import { Hierarchy, systemAccountUuid } from '@hanzo/core'
+import { getAccountClient, getTransactorEndpoint } from '@hanzo/server-client'
 import {
   createContentAdapter,
   QueueTopic,
@@ -18,9 +18,9 @@ import {
   type QueueWorkspaceMessage,
   type QueueWorkspaceReindexMessage,
   type StorageAdapter
-} from '@hcengineering/server-core'
-import { type FulltextDBConfiguration } from '@hcengineering/server-indexer'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { type FulltextDBConfiguration } from '@hanzo/server-indexer'
+import { generateToken } from '@hanzo/server-token'
 
 import { WorkspaceIndexer } from './workspace'
 

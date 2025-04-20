@@ -4,8 +4,8 @@
 //
 -->
 <script lang="ts">
-  import { Icon } from '@hcengineering/ui'
-  import { GithubIntegrationRepository } from '@hcengineering/github'
+  import { Icon } from '@hanzo/ui'
+  import { GithubIntegrationRepository } from '@hanzo/github'
   import github from '../../plugin'
 
   export let value: GithubIntegrationRepository

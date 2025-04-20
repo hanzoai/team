@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import contact, { type Employee, type Channel as PlatformChannel } from '@hcengineering/contact'
+import contact, { type Employee, type Channel as PlatformChannel } from '@hanzo/contact'
 import core, {
   type WorkspaceUuid,
   type PersonId,
@@ -28,10 +28,10 @@ import core, {
   TxProcessor,
   type TxRemoveDoc,
   type TxUpdateDoc
-} from '@hcengineering/core'
-import gmailP, { type NewMessage } from '@hcengineering/gmail'
-import type { StorageAdapter } from '@hcengineering/server-core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import gmailP, { type NewMessage } from '@hanzo/gmail'
+import type { StorageAdapter } from '@hanzo/server-core'
+import { generateToken } from '@hanzo/server-token'
 import { type Db } from 'mongodb'
 import { getClient } from './client'
 import { GmailClient } from './gmail'

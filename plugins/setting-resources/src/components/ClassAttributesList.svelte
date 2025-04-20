@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import core, { AnyAttribute, ArrOf, AttachedDoc, Class, Collection, Doc, Ref, RefTo, Type } from '@hcengineering/core'
-  import { IntlString, getResource } from '@hcengineering/platform'
-  import presentation, { MessageBox, createQuery, getClient } from '@hcengineering/presentation'
+  import core, { AnyAttribute, ArrOf, AttachedDoc, Class, Collection, Doc, Ref, RefTo, Type } from '@hanzo/core'
+  import { IntlString, getResource } from '@hanzo/platform'
+  import presentation, { MessageBox, createQuery, getClient } from '@hanzo/presentation'
   import {
     Action,
     AnySvelteComponent,
@@ -25,8 +25,8 @@
     Menu,
     getEventPositionElement,
     showPopup
-  } from '@hcengineering/ui'
-  import { getContextActions } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { getContextActions } from '@hanzo/view-resources'
   import settings from '../plugin'
   import ClassAttributeRow from './ClassAttributeRow.svelte'
   import EditAttribute from './EditAttribute.svelte'

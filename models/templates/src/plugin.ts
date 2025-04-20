@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,15 +14,15 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref } from '@hcengineering/core'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import { type SettingsCategory } from '@hcengineering/setting'
-import { templatesId } from '@hcengineering/templates'
-import templates from '@hcengineering/templates-resources/src/plugin'
+import { type Doc, type Ref } from '@hanzo/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import { type SettingsCategory } from '@hanzo/setting'
+import { templatesId } from '@hanzo/templates'
+import templates from '@hanzo/templates-resources/src/plugin'
 
-import { type RefInputAction, type RefInputActionItem } from '@hcengineering/model-text-editor'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import { type Action, type ActionCategory } from '@hcengineering/view'
+import { type RefInputAction, type RefInputActionItem } from '@hanzo/model-text-editor'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import { type Action, type ActionCategory } from '@hanzo/view'
 
 export default mergeIds(templatesId, templates, {
   ids: {

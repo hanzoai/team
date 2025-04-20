@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2024-2025 Anticrm Platform Contributors.
+// Copyright © 2024-2025 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { type Doc } from '@hcengineering/core'
-  import { type Person, formatName } from '@hcengineering/contact'
-  import { Avatar, personByIdStore } from '@hcengineering/contact-resources'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { IconSize, tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hcengineering/ui'
+  import { type Doc } from '@hanzo/core'
+  import { type Person, formatName } from '@hanzo/contact'
+  import { Avatar, personByIdStore } from '@hanzo/contact-resources'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { IconSize, tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hanzo/ui'
   import PresenceList from './PresenceList.svelte'
   import { presenceByObjectId, followee, toggleFollowee } from '../store'
 

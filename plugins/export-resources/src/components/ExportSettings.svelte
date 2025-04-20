@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { MessageBox } from '@hcengineering/presentation'
-  import { Breadcrumb, Button, DropdownLabelsIntl, Header, Label, Scroller, showPopup } from '@hcengineering/ui'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { MessageBox } from '@hanzo/presentation'
+  import { Breadcrumb, Button, DropdownLabelsIntl, Header, Label, Scroller, showPopup } from '@hanzo/ui'
   import plugin from '../plugin'
 
   const classItems = [

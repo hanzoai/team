@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TagCategory } from '@hcengineering/tags'
+  import { TagCategory } from '@hanzo/tags'
 
   export let value: TagCategory
 </script>

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
+import { type Resources } from '@hanzo/platform'
 import { formatLink } from './kits/default-kit'
 import { isEditable, isHeadingVisible } from './kits/editor-kit'
 import {
@@ -30,7 +30,7 @@ import { isTextStylingEnabled, openBackgroundColorOptions, openTextColorOptions 
 export { getTargetObjectFromUrl, getReferenceFromUrl, getReferenceLabel } from './components/extension/reference'
 export { TodoItemExtension, TodoListExtension } from './components/extension/todo'
 
-export * from '@hcengineering/presentation/src/types'
+export * from '@hanzo/presentation/src/types'
 export type { EditorKitOptions } from './kits/editor-kit'
 export { default as Collaboration } from './components/Collaboration.svelte'
 export { default as CollaborationDiffViewer } from './components/CollaborationDiffViewer.svelte'

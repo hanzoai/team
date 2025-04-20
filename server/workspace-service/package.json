@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/workspace-service",
-  "version": "0.6.0",
+  "name": "@hanzo/workspace-service",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hardcore Engineering Inc.",
-  "template": "@hcengineering/node-package",
+  "template": "@hanzo/node-package",
   "scripts": {
     "start": "ts-node src/__start.ts",
     "build": "compile",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@types/node": "~20.11.16",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
@@ -41,24 +41,24 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hcengineering/model": "^0.6.11",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/core": "^0.6.32",
+    "@hanzo/model": "^0.6.16",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/core": "^0.6.38",
     "koa": "^2.15.4",
     "koa-router": "^12.0.1",
     "koa-bodyparser": "^4.4.1",
     "@koa/cors": "^5.0.0",
-    "@hcengineering/server-core": "^0.6.1",
-    "@hcengineering/server-tool": "^0.6.0",
-    "@hcengineering/server-storage": "^0.6.0",
-    "@hcengineering/server-pipeline": "^0.6.0",
-    "@hcengineering/server-client": "^0.6.0",
-    "@hcengineering/server-token": "^0.6.11",
-    "@hcengineering/server-notification": "^0.6.1",
-    "@hcengineering/analytics": "^0.6.0",
-    "@hcengineering/account-client": "^0.6.0",
-    "@hcengineering/server-backup": "^0.6.0",
-    "@hcengineering/postgres": "^0.6.0",
-    "@hcengineering/mongo": "^0.6.1"
+    "@hanzo/server-core": "^0.6.5",
+    "@hanzo/server-tool": "^0.6.4",
+    "@hanzo/server-storage": "^0.6.4",
+    "@hanzo/server-pipeline": "^0.6.4",
+    "@hanzo/server-client": "^0.6.4",
+    "@hanzo/server-token": "^0.6.16",
+    "@hanzo/server-notification": "^0.6.5",
+    "@hanzo/analytics": "^0.6.4",
+    "@hanzo/account-client": "^0.6.6",
+    "@hanzo/server-backup": "^0.6.4",
+    "@hanzo/postgres": "^0.6.4",
+    "@hanzo/mongo": "^0.6.5"
   }
 }

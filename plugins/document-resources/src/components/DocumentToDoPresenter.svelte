@@ -1,8 +1,8 @@
 <script lang="ts">
-  import core, { Space } from '@hcengineering/core'
-  import document, { Document } from '@hcengineering/document'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Icon, Label } from '@hcengineering/ui'
+  import core, { Space } from '@hanzo/core'
+  import document, { Document } from '@hanzo/document'
+  import { createQuery } from '@hanzo/presentation'
+  import { Icon, Label } from '@hanzo/ui'
 
   export let value: Document
   export let withoutSpace: boolean

@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import core, { ClassifierKind, Ref, WithLookup, generateId } from '@hcengineering/core'
-  import { getEmbeddedLabel, getMetadata, translate } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import task, { TaskType, updateProjectType, type TaskStatusFactory } from '@hcengineering/task'
-  import tracker, { Project, createStatesData } from '@hcengineering/tracker'
+  import { Analytics } from '@hanzo/analytics'
+  import core, { ClassifierKind, Ref, WithLookup, generateId } from '@hanzo/core'
+  import { getEmbeddedLabel, getMetadata, translate } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import task, { TaskType, updateProjectType, type TaskStatusFactory } from '@hanzo/task'
+  import tracker, { Project, createStatesData } from '@hanzo/tracker'
   import ui, {
     Button,
     IconChevronDown,
     PaletteColorIndexes,
     getEventPopupPositionElement,
     showPopup
-  } from '@hcengineering/ui'
-  import DropdownLabelsPopup from '@hcengineering/ui/src/components/DropdownLabelsPopup.svelte'
-  import { GithubIntegration, GithubIntegrationRepository, githubPullRequestStates } from '@hcengineering/github'
+  } from '@hanzo/ui'
+  import DropdownLabelsPopup from '@hanzo/ui/src/components/DropdownLabelsPopup.svelte'
+  import { GithubIntegration, GithubIntegrationRepository, githubPullRequestStates } from '@hanzo/github'
   import github from '../plugin'
 
   export let integration: WithLookup<GithubIntegration>

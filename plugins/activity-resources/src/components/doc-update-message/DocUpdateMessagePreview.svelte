@@ -18,14 +18,14 @@
     ActivityMessagePreviewType,
     DisplayDocUpdateMessage,
     DocUpdateMessageViewlet
-  } from '@hcengineering/activity'
-  import { Action, Component, Icon } from '@hcengineering/ui'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { IntlString } from '@hcengineering/platform'
-  import { AttachedDoc, Class, Collection, Doc, Ref, Space } from '@hcengineering/core'
-  import { AttributeModel } from '@hcengineering/view'
+  } from '@hanzo/activity'
+  import { Action, Component, Icon } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { IntlString } from '@hanzo/platform'
+  import { AttachedDoc, Class, Collection, Doc, Ref, Space } from '@hanzo/core'
+  import { AttributeModel } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
-  import { buildRemovedDoc, checkIsObjectRemoved } from '@hcengineering/view-resources'
+  import { buildRemovedDoc, checkIsObjectRemoved } from '@hanzo/view-resources'
 
   import { getAttributeModel, getCollectionAttribute } from '../../activityMessagesUtils'
   import BaseMessagePreview from '../activity-message/BaseMessagePreview.svelte'

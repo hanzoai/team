@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type FileUploadOptions, type FileUploadCallback } from '@hcengineering/uploader'
+import { type FileUploadOptions, type FileUploadCallback } from '@hanzo/uploader'
 import Recorder from './components/Recorder.svelte'
-import { showPopup } from '@hcengineering/ui'
-import { type Blob, type Ref } from '@hcengineering/core'
-import { getBlobUrl } from '@hcengineering/presentation'
+import { showPopup } from '@hanzo/ui'
+import { type Blob, type Ref } from '@hanzo/core'
+import { getBlobUrl } from '@hanzo/presentation'
 
 let recorderOppened = false
 

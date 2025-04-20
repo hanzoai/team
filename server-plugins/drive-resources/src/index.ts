@@ -23,9 +23,9 @@ import {
   DocumentQuery,
   FindOptions,
   FindResult
-} from '@hcengineering/core'
-import drive, { type FileVersion, type Folder } from '@hcengineering/drive'
-import type { TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import drive, { type FileVersion, type Folder } from '@hanzo/drive'
+import type { TriggerControl } from '@hanzo/server-core'
 
 /** @public */
 export async function OnFileVersionDelete (

@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import type { Class, Client, Doc, DocumentQuery, Ref, RelatedDocument, WithLookup } from '@hcengineering/core'
-import drive, { type Drive, type File, type FileVersion, type Folder } from '@hcengineering/drive'
-import { type Resources } from '@hcengineering/platform'
-import { type ObjectSearchResult, getFileUrl } from '@hcengineering/presentation'
-import { showPopup, type Location } from '@hcengineering/ui'
+import type { Class, Client, Doc, DocumentQuery, Ref, RelatedDocument, WithLookup } from '@hanzo/core'
+import drive, { type Drive, type File, type FileVersion, type Folder } from '@hanzo/drive'
+import { type Resources } from '@hanzo/platform'
+import { type ObjectSearchResult, getFileUrl } from '@hanzo/presentation'
+import { showPopup, type Location } from '@hanzo/ui'
 
 import CreateDrive from './components/CreateDrive.svelte'
 import DrivePanel from './components/DrivePanel.svelte'

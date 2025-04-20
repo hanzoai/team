@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { type Account, type BrandingMap, type MeasureContext, type Tx } from '@hcengineering/core'
-import { buildStorageFromConfig } from '@hcengineering/server-storage'
+import { type Account, type BrandingMap, type MeasureContext, type Tx } from '@hanzo/core'
+import { buildStorageFromConfig } from '@hanzo/server-storage'
 
-import { ClientSession, startSessionManager } from '@hcengineering/server'
+import { ClientSession, startSessionManager } from '@hanzo/server'
 import {
   type CommunicationApiFactory,
   type PlatformQueue,
@@ -25,10 +25,10 @@ import {
   type SessionManager,
   type StorageConfiguration,
   type Workspace
-} from '@hcengineering/server-core'
-import { type Token } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { type Token } from '@hanzo/server-token'
 
-import { Api as CommunicationApi } from '@hcengineering/communication-server'
+import { Api as CommunicationApi } from '@hanzo/communication-server'
 import {
   createServerPipeline,
   isAdapterSecurity,
@@ -39,21 +39,21 @@ import {
   registerTxAdapterFactory,
   setAdapterSecurity,
   sharedPipelineContextVars
-} from '@hcengineering/server-pipeline'
+} from '@hanzo/server-pipeline'
 
 import {
   createMongoAdapter,
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   shutdownMongo
-} from '@hcengineering/mongo'
+} from '@hanzo/mongo'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions,
   shutdownPostgres
-} from '@hcengineering/postgres'
+} from '@hanzo/postgres'
 import { readFileSync } from 'node:fs'
 import { startHttpServer } from './server_http'
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]

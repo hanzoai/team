@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { SplitLogger, configureAnalytics } from '@hcengineering/analytics-service'
-import { MeasureMetricsContext, newMetrics } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { SplitLogger, configureAnalytics } from '@hanzo/analytics-service'
+import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
 import { join } from 'path'
 
 import config from './config'
-import { initStatisticsContext } from '@hcengineering/server-core'
+import { initStatisticsContext } from '@hanzo/server-core'
 
 const ctx = initStatisticsContext('analytics-collector', {
   factory: () =>

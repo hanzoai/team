@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hcengineering/card'
+  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
   import { createEventDispatcher } from 'svelte'
-  import { NavigationList, NavigationSection } from '@hcengineering/ui-next'
-  import { languageStore, Scroller } from '@hcengineering/ui'
-  import { Ref, SortingOrder, Class } from '@hcengineering/core'
-  import { NotificationContext, SubscriptionLabelID, Label } from '@hcengineering/communication-types'
-  import { SavedView } from '@hcengineering/workbench-resources'
-  import { chatId } from '@hcengineering/chat'
-  import { createQuery, LiveQuery, createLabelsQuery, getClient } from '@hcengineering/presentation'
+  import { NavigationList, NavigationSection } from '@hanzo/ui-next'
+  import { languageStore, Scroller } from '@hanzo/ui'
+  import { Ref, SortingOrder, Class } from '@hanzo/core'
+  import { NotificationContext, SubscriptionLabelID, Label } from '@hanzo/communication-types'
+  import { SavedView } from '@hanzo/workbench-resources'
+  import { chatId } from '@hanzo/chat'
+  import { createQuery, LiveQuery, createLabelsQuery, getClient } from '@hanzo/presentation'
 
   import { cardsToChatSections, NavigatorState, navigatorStateStore, toggleSection } from '../navigator'
 

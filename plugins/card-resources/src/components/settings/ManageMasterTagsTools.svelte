@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ButtonIcon, getCurrentResolvedLocation, IconAdd, navigate, showPopup } from '@hcengineering/ui'
+  import { ButtonIcon, getCurrentResolvedLocation, IconAdd, navigate, showPopup } from '@hanzo/ui'
   import CreateTag from '../CreateTag.svelte'
   import card from '../../plugin'
-  import { clearSettingsStore } from '@hcengineering/setting-resources'
+  import { clearSettingsStore } from '@hanzo/setting-resources'
 
   function handleAdd (): void {
     showPopup(

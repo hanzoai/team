@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Project, ProjectType } from '@hcengineering/task'
-  import { DropdownLabels, resolvedLocationStore } from '@hcengineering/ui'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Project, ProjectType } from '@hanzo/task'
+  import { DropdownLabels, resolvedLocationStore } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
   import { activeProjects, selectedTypeStore, selectedTaskTypeStore, taskTypeStore, typeStore } from '..'
   import TaskKindSelector from './taskTypes/TaskKindSelector.svelte'

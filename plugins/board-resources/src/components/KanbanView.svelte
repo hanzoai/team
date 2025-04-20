@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/board'
+  import { Card } from '@hanzo/board'
   import {
     CategoryType,
     Class,
@@ -25,12 +25,12 @@
     Ref,
     Status,
     WithLookup
-  } from '@hcengineering/core'
-  import { Kanban as KanbanUI } from '@hcengineering/kanban'
-  import { ActionContext, createQuery } from '@hcengineering/presentation'
-  import type { DocWithRank, Project } from '@hcengineering/task'
-  import task, { getStates } from '@hcengineering/task'
-  import { typeStore } from '@hcengineering/task-resources'
+  } from '@hanzo/core'
+  import { Kanban as KanbanUI } from '@hanzo/kanban'
+  import { ActionContext, createQuery } from '@hanzo/presentation'
+  import type { DocWithRank, Project } from '@hanzo/task'
+  import task, { getStates } from '@hanzo/task'
+  import { typeStore } from '@hanzo/task-resources'
   import {
     ListSelectionProvider,
     SelectDirection,
@@ -41,7 +41,7 @@
     setGroupByValues,
     showMenu,
     statusStore
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import { onMount } from 'svelte'
   import KanbanCard from './KanbanCard.svelte'
   import ListHeader from './ListHeader.svelte'

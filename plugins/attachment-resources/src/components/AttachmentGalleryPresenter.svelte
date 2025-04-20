@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Attachment } from '@hcengineering/attachment'
-  import type { WithLookup } from '@hcengineering/core'
-  import { getFileUrl } from '@hcengineering/presentation'
+  import type { Attachment } from '@hanzo/attachment'
+  import type { WithLookup } from '@hanzo/core'
+  import { getFileUrl } from '@hanzo/presentation'
   import filesize from 'filesize'
   import { getType, showAttachmentPreviewPopup } from '../utils'
 

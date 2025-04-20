@@ -1,4 +1,4 @@
-import type { Class, Doc, Domain, Ref } from '@hcengineering/core'
+import type { Class, Doc, Domain, Ref } from '@hanzo/core'
 
 export enum QueueWorkspaceEvent {
   Up = 'up',

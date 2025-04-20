@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery } from '@hcengineering/presentation'
-  import { Label } from '@hcengineering/ui'
-  import { ToDo, WorkSlot } from '@hcengineering/time'
+  import { createQuery } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
+  import { ToDo, WorkSlot } from '@hanzo/time'
   import ToDoPresenter from './ToDoPresenter.svelte'
-  import calendar from '@hcengineering/calendar'
+  import calendar from '@hanzo/calendar'
 
   export let event: WorkSlot
   export let oneRow: boolean = false

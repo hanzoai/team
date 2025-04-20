@@ -9,7 +9,7 @@ import {
   setMic,
   setShare
 } from './utils'
-import { getCurrentLocation, location } from '@hcengineering/ui'
+import { getCurrentLocation, location } from '@hanzo/ui'
 
 let key = 'love' + getCurrentLocation().path?.[2]
 

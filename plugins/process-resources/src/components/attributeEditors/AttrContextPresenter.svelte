@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hcengineering/ui'
-  import { Context, SelectedAttribute } from '@hcengineering/process'
+  import { Label } from '@hanzo/ui'
+  import { Context, SelectedAttribute } from '@hanzo/process'
 
   export let contextValue: SelectedAttribute
   export let context: Context

@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { chatId } from '@hcengineering/chat'
-import chat from '@hcengineering/chat-resources/src/plugin'
-import { type Ref } from '@hcengineering/core'
-import { type Application } from '@hcengineering/model-workbench'
-import { mergeIds } from '@hcengineering/platform'
+import { chatId } from '@hanzo/chat'
+import chat from '@hanzo/chat-resources/src/plugin'
+import { type Ref } from '@hanzo/core'
+import { type Application } from '@hanzo/model-workbench'
+import { mergeIds } from '@hanzo/platform'
 
 export default mergeIds(chatId, chat, {
   app: {

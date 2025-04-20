@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangeMode } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
+  import { DateRangeMode } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
   import { createEventDispatcher, onMount } from 'svelte'
   import { showPopup } from '../popups'
   import { DateOrShift } from '../types'

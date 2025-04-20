@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, generateId } from '@hcengineering/core'
-  import { Context, SelectedContext } from '@hcengineering/process'
-  import { Label, resizeObserver, Scroller, Submenu } from '@hcengineering/ui'
+  import { AnyAttribute, generateId } from '@hanzo/core'
+  import { Context, SelectedContext } from '@hanzo/process'
+  import { Label, resizeObserver, Scroller, Submenu } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import { getValueReduceFunc } from '../../utils'

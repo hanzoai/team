@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import core, { Association, Doc, Ref } from '@hcengineering/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import core, { Association, Doc, Ref } from '@hanzo/core'
   import RelationEditor from './RelationEditor.svelte'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { getEmbeddedLabel } from '@hanzo/platform'
 
   export let object: Doc
   export let readonly: boolean = false

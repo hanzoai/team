@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import uploader, { uploaderId } from '@hcengineering/uploader'
+import { type IntlString, mergeIds } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import uploader, { uploaderId } from '@hanzo/uploader'
 
 export default mergeIds(uploaderId, uploader, {
   component: {

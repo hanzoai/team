@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import core, { type Class, type Client, type Doc, type Mixin, type Ref } from '@hcengineering/core'
-import view, { type AttributeModel } from '@hcengineering/view'
-import { buildRemovedDoc, getAttributePresenter } from '@hcengineering/view-resources'
-import { type Card } from '@hcengineering/card'
+import core, { type Class, type Client, type Doc, type Mixin, type Ref } from '@hanzo/core'
+import view, { type AttributeModel } from '@hanzo/view'
+import { buildRemovedDoc, getAttributePresenter } from '@hanzo/view-resources'
+import { type Card } from '@hanzo/card'
 import {
   type ActivityMessage,
   type ActivityUpdate,
   ActivityUpdateType,
   type Message,
   MessageType
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 
 const valueTypes: ReadonlyArray<Ref<Class<Doc>>> = [
   core.class.TypeString,

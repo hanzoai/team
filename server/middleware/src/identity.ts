@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { aiBotAccountEmail } from '@hcengineering/ai-bot'
-import core, { MeasureContext, Tx, systemAccountUuid, type SessionData, type TxApplyIf } from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
-import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hcengineering/server-core'
+import { aiBotAccountEmail } from '@hanzo/ai-bot'
+import core, { MeasureContext, Tx, systemAccountUuid, type SessionData, type TxApplyIf } from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
+import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hanzo/server-core'
 
 /**
  * @public

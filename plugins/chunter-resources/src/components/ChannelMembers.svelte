@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { ButtonIcon, IconDelete, ModernButton, Scroller } from '@hcengineering/ui'
-  import { IconAddMember, personByIdStore, UserDetails } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
+  import { Person } from '@hanzo/contact'
+  import { ButtonIcon, IconDelete, ModernButton, Scroller } from '@hanzo/ui'
+  import { IconAddMember, personByIdStore, UserDetails } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
   import { createEventDispatcher } from 'svelte'
 
   import chunter from '../plugin'

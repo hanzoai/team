@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, generateId } from '@hcengineering/core'
+import { type MeasureContext, generateId } from '@hanzo/core'
 import { mkdtempSync, rmSync } from 'fs'
 import { rm } from 'fs/promises'
 import { tmpdir } from 'os'

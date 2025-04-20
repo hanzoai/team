@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, getCurrentAccount } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import type { Integration, IntegrationType } from '@hcengineering/setting'
-  import setting from '@hcengineering/setting'
-  import { Header, Breadcrumb } from '@hcengineering/ui'
+  import { Ref, getCurrentAccount } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import type { Integration, IntegrationType } from '@hanzo/setting'
+  import setting from '@hanzo/setting'
+  import { Header, Breadcrumb } from '@hanzo/ui'
   import PluginCard from './PluginCard.svelte'
 
   const typeQuery = createQuery()

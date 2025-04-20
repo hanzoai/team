@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SearchResultDoc } from '@hcengineering/core'
-  import presentation, { SearchResult, reduceCalls, searchFor, type SearchItem } from '@hcengineering/presentation'
-  import { Label, ListView, resizeObserver } from '@hcengineering/ui'
+  import { SearchResultDoc } from '@hanzo/core'
+  import presentation, { SearchResult, reduceCalls, searchFor, type SearchItem } from '@hanzo/presentation'
+  import { Label, ListView, resizeObserver } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { getReferenceLabel, getReferenceObject } from './extension/reference'
 

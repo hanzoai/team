@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Action, Menu, ModernTab, showPopup } from '@hcengineering/ui'
-  import { Widget, WidgetTab } from '@hcengineering/workbench'
-  import { getResource } from '@hcengineering/platform'
+  import { Action, Menu, ModernTab, showPopup } from '@hanzo/ui'
+  import { Widget, WidgetTab } from '@hanzo/workbench'
+  import { getResource } from '@hanzo/platform'
 
   export let tab: WidgetTab
   export let widget: Widget

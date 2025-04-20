@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import { clone, type Class, type Client, type Doc, type Ref } from '@hcengineering/core'
-import survey, { surveyId, type Poll, type PollData, type Survey } from '@hcengineering/survey'
-import { getClient, MessageBox } from '@hcengineering/presentation'
+import { clone, type Class, type Client, type Doc, type Ref } from '@hanzo/core'
+import survey, { surveyId, type Poll, type PollData, type Survey } from '@hanzo/survey'
+import { getClient, MessageBox } from '@hanzo/presentation'
 import {
   type Location,
   type ResolvedLocation,
   getCurrentResolvedLocation,
   getPanelURI,
   showPopup
-} from '@hcengineering/ui'
-import { accessDeniedStore } from '@hcengineering/view-resources'
-import view from '@hcengineering/view'
+} from '@hanzo/ui'
+import { accessDeniedStore } from '@hanzo/view-resources'
+import view from '@hanzo/view'
 
 export function hasText (value: string | undefined | null): boolean {
   return typeof value === 'string' && value.trim().length > 0

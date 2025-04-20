@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import core, { AnyAttribute, Hierarchy, Tx, TxRemoveDoc } from '@hcengineering/core'
-import type { TriggerControl } from '@hcengineering/server-core'
-import view from '@hcengineering/view'
+import core, { AnyAttribute, Hierarchy, Tx, TxRemoveDoc } from '@hanzo/core'
+import type { TriggerControl } from '@hanzo/server-core'
+import view from '@hanzo/view'
 
 /**
  * @public

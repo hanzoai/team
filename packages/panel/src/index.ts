@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,5 +14,5 @@
 // limitations under the License.
 //
 
-import '@hcengineering/platform-rig/profiles/ui/svelte'
+import '@hanzo/platform-rig/profiles/ui/svelte'
 export { default as Panel } from './components/Panel.svelte'

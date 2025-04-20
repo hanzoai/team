@@ -25,10 +25,10 @@ import {
   type MixinData,
   makeCollabId,
   makeDocCollabId
-} from '@hcengineering/core'
-import { setPlatformStatus, translate, unknownError } from '@hcengineering/platform'
-import { copyMarkup } from '@hcengineering/presentation'
-import { themeStore } from '@hcengineering/ui'
+} from '@hanzo/core'
+import { setPlatformStatus, translate, unknownError } from '@hanzo/platform'
+import { copyMarkup } from '@hanzo/presentation'
+import { themeStore } from '@hanzo/ui'
 import documents, {
   type ControlledDocument,
   type Document,
@@ -42,8 +42,8 @@ import documents, {
   DocumentState,
   createChangeControl,
   createControlledDocFromTemplate as controlledDocFromTemplate
-} from '@hcengineering/controlled-documents'
-import { getCurrentEmployee } from '@hcengineering/contact'
+} from '@hanzo/controlled-documents'
+import { getCurrentEmployee } from '@hanzo/contact'
 import documentsRes from './plugin'
 import { getDocumentVersionString } from './utils'
 

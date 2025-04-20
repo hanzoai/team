@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hcengineering/core'
+import { type MeasureContext } from '@hanzo/core'
 import { Readable } from 'stream'
 
 import { type BlobDB } from './db'

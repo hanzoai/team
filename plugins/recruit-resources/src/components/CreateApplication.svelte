@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyledBox } from '@hcengineering/attachment-resources'
-  import chunter from '@hcengineering/chunter'
-  import type { Contact, Employee, Person } from '@hcengineering/contact'
-  import contact from '@hcengineering/contact'
-  import { EmployeeBox, ExpandRightDouble, UserBox } from '@hcengineering/contact-resources'
+  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
+  import chunter from '@hanzo/chunter'
+  import type { Contact, Employee, Person } from '@hanzo/contact'
+  import contact from '@hanzo/contact'
+  import { EmployeeBox, ExpandRightDouble, UserBox } from '@hanzo/contact-resources'
   import core, {
     AccountRole,
     Class,
@@ -33,19 +33,19 @@
     generateId,
     getCurrentAccount,
     hasAccountRole
-  } from '@hcengineering/core'
-  import { OK, Resource, Severity, Status, getResource } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { OK, Resource, Severity, Status, getResource } from '@hanzo/platform'
   import presentation, {
     Card,
     InlineAttributeBar,
     SpaceSelect,
     createQuery,
     getClient
-  } from '@hcengineering/presentation'
-  import { recruitId, type Applicant, type Candidate, type Vacancy, RecruitEvents } from '@hcengineering/recruit'
-  import task, { TaskType, getStates, makeRank } from '@hcengineering/task'
-  import { TaskKindSelector, selectedTypeStore, typeStore } from '@hcengineering/task-resources'
-  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
+  } from '@hanzo/presentation'
+  import { recruitId, type Applicant, type Candidate, type Vacancy, RecruitEvents } from '@hanzo/recruit'
+  import task, { TaskType, getStates, makeRank } from '@hanzo/task'
+  import { TaskKindSelector, selectedTypeStore, typeStore } from '@hanzo/task-resources'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
   import ui, {
     Button,
     ColorPopup,
@@ -58,15 +58,15 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { statusStore } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../plugin'
   import CandidateCard from './CandidateCard.svelte'
   import VacancyCard from './VacancyCard.svelte'
   import VacancyOrgPresenter from './VacancyOrgPresenter.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
   import { getCandidateIdentifier, getSequenceId } from '../utils'
 
   export let space: Ref<Vacancy>

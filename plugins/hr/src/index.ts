@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import type { Contact, Employee } from '@hcengineering/contact'
-import type { Arr, AttachedDoc, Class, Doc, Markup, Mixin, Ref, Type } from '@hcengineering/core'
-import { NotificationType } from '@hcengineering/notification'
-import type { Asset, IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { Viewlet } from '@hcengineering/view'
+import type { Contact, Employee } from '@hanzo/contact'
+import type { Arr, AttachedDoc, Class, Doc, Markup, Mixin, Ref, Type } from '@hanzo/core'
+import { NotificationType } from '@hanzo/notification'
+import type { Asset, IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { Viewlet } from '@hanzo/view'
 
 /**
  * @public

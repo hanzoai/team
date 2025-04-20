@@ -1,8 +1,8 @@
 {
-  "name": "@hcengineering/storybook",
-  "version": "0.1.0",
+  "name": "@hanzo/storybook",
+  "version": "0.1.4",
   "main": ".storybook/main.js",
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "scripts": {
     "build": "echo \"No build specified\"",
@@ -11,9 +11,9 @@
     "test": "echo \"No test specified\""
   },
   "devDependencies": {
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/theme": "^0.6.5",
-    "@hcengineering/ui": "^0.6.15",
+    "@hanzo/platform": "^0.6.11",
+    "@hanzo/theme": "^0.6.5",
+    "@hanzo/ui": "^0.6.16",
     "@storybook/addon-essentials": "^7.0.6",
     "@storybook/addon-interactions": "^7.0.6",
     "@storybook/addon-links": "^7.0.6",

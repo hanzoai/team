@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2024 Anticrm Platform Contributors.
+// Copyright © 2024 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import contact, { type Contact, type Employee } from '@hcengineering/contact'
-  import { type Ref, type WithLookup } from '@hcengineering/core'
-  import { Asset } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { AnySvelteComponent, IconSize } from '@hcengineering/ui'
+  import contact, { type Contact, type Employee } from '@hanzo/contact'
+  import { type Ref, type WithLookup } from '@hanzo/core'
+  import { Asset } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { AnySvelteComponent, IconSize } from '@hanzo/ui'
 
   import { employeeByIdStore, personByIdStore } from '../utils'
   import Avatar from './Avatar.svelte'

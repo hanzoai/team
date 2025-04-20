@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { resizeObserver } from '@hcengineering/ui'
+  import { Analytics } from '@hanzo/analytics'
+  import { resizeObserver } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
   import {
     drawing,

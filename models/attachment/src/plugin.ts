@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import type { ActivityMessage, DocUpdateMessageViewlet } from '@hcengineering/activity'
-import { attachmentId } from '@hcengineering/attachment'
-import attachment from '@hcengineering/attachment-resources/src/plugin'
-import type { Ref, Doc } from '@hcengineering/core'
-import type { IntlString, Resource } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import type { ActionCategory } from '@hcengineering/view'
+import type { ActivityMessage, DocUpdateMessageViewlet } from '@hanzo/activity'
+import { attachmentId } from '@hanzo/attachment'
+import attachment from '@hanzo/attachment-resources/src/plugin'
+import type { Ref, Doc } from '@hanzo/core'
+import type { IntlString, Resource } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import type { ActionCategory } from '@hanzo/view'
 
 export default mergeIds(attachmentId, attachment, {
   component: {

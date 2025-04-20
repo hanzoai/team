@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { generateId } from '@hcengineering/core'
-import type { IntlString, Metadata } from '@hcengineering/platform'
-import { setMetadata, translate } from '@hcengineering/platform'
+import { generateId } from '@hanzo/core'
+import type { IntlString, Metadata } from '@hanzo/platform'
+import { setMetadata, translate } from '@hanzo/platform'
 import autolinker from 'autolinker'
 import { writable } from 'svelte/store'
 import { NotificationPosition, NotificationSeverity, notificationsStore, type Notification } from '.'

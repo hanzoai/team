@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/cloud-package",
+  "name": "@hanzo/cloud-package",
   "version": "0.6.0",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -19,7 +19,7 @@
     "format": "format src"
   },
   "peerDependencies": {
-    "@hcengineering/platform-rig": "*"
+    "@hanzo/platform-rig": "*"
   },
   "devDependencies": {
     "wrangler": "^3.108.1",

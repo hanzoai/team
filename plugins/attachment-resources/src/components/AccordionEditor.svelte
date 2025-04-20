@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Doc, Ref, Space, Class } from '@hcengineering/core'
-  import { Button, Label, IconDownOutline, tooltip } from '@hcengineering/ui'
-  import textEditorPlugin from '@hcengineering/text-editor'
-  import { IsEmptyContentExtension, TextEditor } from '@hcengineering/text-editor-resources'
+  import { Doc, Ref, Space, Class } from '@hanzo/core'
+  import { Button, Label, IconDownOutline, tooltip } from '@hanzo/ui'
+  import textEditorPlugin from '@hanzo/text-editor'
+  import { IsEmptyContentExtension, TextEditor } from '@hanzo/text-editor-resources'
 
   import type { AccordionItem } from '..'
   import AttachmentStyledBox from './AttachmentStyledBox.svelte'

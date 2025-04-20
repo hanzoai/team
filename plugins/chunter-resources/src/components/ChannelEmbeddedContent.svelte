@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hcengineering/core'
-  import { DocNotifyContext } from '@hcengineering/notification'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { ActivityMessage } from '@hcengineering/activity'
+  import { Doc, Ref } from '@hanzo/core'
+  import { DocNotifyContext } from '@hanzo/notification'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { ActivityMessage } from '@hanzo/activity'
 
   import Channel from './Channel.svelte'
   import { ThreadView } from '../index'

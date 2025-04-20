@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -33,8 +33,8 @@ import {
   type Reaction,
   type ReplyProvider,
   type SavedMessage
-} from '@hcengineering/activity'
-import contact, { type Person } from '@hcengineering/contact'
+} from '@hanzo/activity'
+import contact, { type Person } from '@hanzo/contact'
 import core, {
   DOMAIN_MODEL,
   IndexKind,
@@ -48,7 +48,7 @@ import core, {
   type Timestamp,
   type Tx,
   type TxCUD
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,
@@ -65,19 +65,19 @@ import {
   TypePersonId,
   UX,
   type Builder
-} from '@hcengineering/model'
-import { TAttachedDoc, TClass, TDoc } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import presentation from '@hcengineering/model-presentation'
-import view from '@hcengineering/model-view'
-import type { Asset, IntlString, Resource } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+} from '@hanzo/model'
+import { TAttachedDoc, TClass, TDoc } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import presentation from '@hanzo/model-presentation'
+import view from '@hanzo/model-view'
+import type { Asset, IntlString, Resource } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 
 import { buildActions } from './actions'
 import { buildNotifications } from './notification'
 import activity from './plugin'
 
-export { activityId } from '@hcengineering/activity'
+export { activityId } from '@hanzo/activity'
 export { activityOperation, migrateMessagesSpace } from './migration'
 
 export const DOMAIN_ACTIVITY = 'activity' as Domain

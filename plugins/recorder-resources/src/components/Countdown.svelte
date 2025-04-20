@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { onMount, createEventDispatcher } from 'svelte'
-  import { Label } from '@hcengineering/ui'
+  import { Label } from '@hanzo/ui'
   import plugin from '../plugin'
 
   export let count = 3

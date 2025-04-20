@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import activity, { activityId } from '@hcengineering/activity'
-import type { IntlString } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
+import activity, { activityId } from '@hanzo/activity'
+import type { IntlString } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
 
 export default mergeIds(activityId, activity, {
   string: {

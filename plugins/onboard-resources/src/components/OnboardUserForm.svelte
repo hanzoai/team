@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { LoginInfo } from '@hcengineering/login'
-  import { changeUsername } from '@hcengineering/login-resources'
-  import { OK, Severity, Status, unknownError } from '@hcengineering/platform'
+  import { LoginInfo } from '@hanzo/login'
+  import { changeUsername } from '@hanzo/login-resources'
+  import { OK, Severity, Status, unknownError } from '@hanzo/platform'
   import { createEventDispatcher } from 'svelte'
   import onboard from '../plugin'
   import Form from './Form.svelte'

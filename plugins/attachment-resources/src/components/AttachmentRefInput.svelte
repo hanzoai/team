@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment, AttachmentMetadata } from '@hcengineering/attachment'
+  import { Attachment, AttachmentMetadata } from '@hanzo/attachment'
   import {
     Class,
     Doc,
@@ -25,8 +25,8 @@
     Space,
     generateId,
     toIdMap
-  } from '@hcengineering/core'
-  import { Asset, IntlString, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { Asset, IntlString, setPlatformStatus, unknownError } from '@hanzo/platform'
   import {
     DraftController,
     canDisplayLinkPreview,
@@ -39,11 +39,11 @@
     isLinkPreviewEnabled,
     uploadFile,
     LinkPreviewAttachmentMetadata
-  } from '@hcengineering/presentation'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import textEditor, { type RefAction } from '@hcengineering/text-editor'
-  import { AttachIcon, ReferenceInput } from '@hcengineering/text-editor-resources'
-  import { Loading, type AnySvelteComponent } from '@hcengineering/ui'
+  } from '@hanzo/presentation'
+  import { EmptyMarkup } from '@hanzo/text'
+  import textEditor, { type RefAction } from '@hanzo/text-editor'
+  import { AttachIcon, ReferenceInput } from '@hanzo/text-editor-resources'
+  import { Loading, type AnySvelteComponent } from '@hanzo/ui'
   import { createEventDispatcher, onDestroy, tick } from 'svelte'
   import attachment from '../plugin'
   import AttachmentPresenter from './AttachmentPresenter.svelte'

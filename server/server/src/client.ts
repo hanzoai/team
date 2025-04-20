@@ -37,8 +37,8 @@ import {
   type TxCUD,
   type TxResult,
   type WorkspaceDataId
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import {
   BackupClientOps,
   createBroadcastEvent,
@@ -50,8 +50,8 @@ import {
   type SessionRequest,
   type StatisticsElement,
   type Workspace
-} from '@hcengineering/server-core'
-import { type Token } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { type Token } from '@hanzo/server-token'
 import {
   FindMessagesGroupsParams,
   FindMessagesParams,
@@ -60,12 +60,12 @@ import {
   FindNotificationContextParams,
   FindNotificationsParams,
   FindLabelsParams
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import {
   RequestEvent as CommunicationEvent,
   ConnectionInfo as CommunicationCtx,
   EventResult
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 
 const useReserveContext = (process.env.USE_RESERVE_CTX ?? 'true') === 'true'
 

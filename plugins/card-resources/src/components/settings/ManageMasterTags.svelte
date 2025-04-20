@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import { Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { clearSettingsStore } from '@hcengineering/setting-resources'
+  import { MasterTag } from '@hanzo/card'
+  import { Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { clearSettingsStore } from '@hanzo/setting-resources'
   import {
     Icon,
     IconOpenedArrow,
@@ -26,10 +26,10 @@
     getCurrentResolvedLocation,
     navigate,
     resolvedLocationStore
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
   import card from '../../plugin'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
 
   export let categoryName: string
 

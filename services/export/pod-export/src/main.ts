@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import serverToken from '@hcengineering/server-token'
-import { storageConfigFromEnv } from '@hcengineering/server-storage'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import serverToken from '@hanzo/server-token'
+import { storageConfigFromEnv } from '@hanzo/server-storage'
 import config from './config'
 import { createServer, listen } from './server'
 

@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import documents, { DocumentState, type Document, type DocumentTemplate } from '@hcengineering/controlled-documents'
-  import { PersonPresenter } from '@hcengineering/contact-resources'
-  import { DateRangeMode } from '@hcengineering/core'
-  import { DatePresenter, Label, Scroller, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
+  import documents, { DocumentState, type Document, type DocumentTemplate } from '@hanzo/controlled-documents'
+  import { PersonPresenter } from '@hanzo/contact-resources'
+  import { DateRangeMode } from '@hanzo/core'
+  import { DatePresenter, Label, Scroller, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
 
   import documentsRes from '../../../plugin'
   import {

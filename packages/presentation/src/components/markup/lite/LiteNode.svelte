@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MarkupNode } from '@hcengineering/text'
+  import { MarkupNode } from '@hanzo/text'
 
   import LiteNodeContent from './LiteNodeContent.svelte'
   import NodeMarks from '../NodeMarks.svelte'

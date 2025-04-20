@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Card, cardId, type CardSpace, type MasterTag } from '@hcengineering/card'
+import { type Card, cardId, type CardSpace, type MasterTag } from '@hanzo/card'
 import {
   type Class,
   type Client,
@@ -21,18 +21,18 @@ import {
   type RelatedDocument,
   type TxOperations,
   type WithLookup
-} from '@hcengineering/core'
-import { getClient, MessageBox, type ObjectSearchResult } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import { getClient, MessageBox, type ObjectSearchResult } from '@hanzo/presentation'
 import {
   getCurrentResolvedLocation,
   getPanelURI,
   type Location,
   type ResolvedLocation,
   showPopup
-} from '@hcengineering/ui'
-import view from '@hcengineering/view'
-import { accessDeniedStore } from '@hcengineering/view-resources'
-import { type LocationData } from '@hcengineering/workbench'
+} from '@hanzo/ui'
+import view from '@hanzo/view'
+import { accessDeniedStore } from '@hanzo/view-resources'
+import { type LocationData } from '@hanzo/workbench'
 import CardSearchItem from './components/CardSearchItem.svelte'
 import card from './plugin'
 import CreateSpace from './components/navigator/CreateSpace.svelte'

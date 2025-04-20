@@ -1,8 +1,8 @@
 <script lang="ts">
-  import core, { Ref, Space, WithLookup } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Button, Icon, TabList, getCurrentResolvedLocation, location, navigate } from '@hcengineering/ui'
-  import { Viewlet } from '@hcengineering/view'
+  import core, { Ref, Space, WithLookup } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Button, Icon, TabList, getCurrentResolvedLocation, location, navigate } from '@hanzo/ui'
+  import { Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import board from '../plugin'
 

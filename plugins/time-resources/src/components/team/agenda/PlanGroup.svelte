@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Event } from '@hcengineering/calendar'
-  import { calendarByIdStore } from '@hcengineering/calendar-resources'
-  import { IdMap } from '@hcengineering/core'
-  import { ToDo, WorkSlot } from '@hcengineering/time'
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { Event } from '@hanzo/calendar'
+  import { calendarByIdStore } from '@hanzo/calendar-resources'
+  import { IdMap } from '@hanzo/core'
+  import { ToDo, WorkSlot } from '@hanzo/time'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import { groupTeamData } from '../utils'
   import PlanPerson from './PlanPerson.svelte'
 

@@ -27,10 +27,10 @@ import {
   RefTo,
   Type,
   WorkspaceIds
-} from '@hcengineering/core'
-import attachment from '@hcengineering/model-attachment'
-import core from '@hcengineering/model-core'
-import { StorageAdapter } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import attachment from '@hanzo/model-attachment'
+import core from '@hanzo/model-core'
+import { StorageAdapter } from '@hanzo/server-core'
 import { UnifiedAttachment, UnifiedDoc } from './types'
 
 export class UnifiedConverter {

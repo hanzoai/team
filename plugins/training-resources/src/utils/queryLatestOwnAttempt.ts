@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { TrainingAttempt, TrainingRequest } from '@hcengineering/training'
-import { SortingOrder } from '@hcengineering/core'
-import { type LiveQuery } from '@hcengineering/presentation'
+import type { TrainingAttempt, TrainingRequest } from '@hanzo/training'
+import { SortingOrder } from '@hanzo/core'
+import { type LiveQuery } from '@hanzo/presentation'
 import training from '../plugin'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 

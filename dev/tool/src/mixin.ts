@@ -26,9 +26,9 @@ import core, {
   type Ref,
   SortingOrder,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { getMongoClient, getWorkspaceMongoDB } from '@hcengineering/mongo'
-import { connect } from '@hcengineering/server-tool'
+} from '@hanzo/core'
+import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
+import { connect } from '@hanzo/server-tool'
 
 interface PropertyInfo {
   name: string

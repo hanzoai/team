@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type DiffHunk, type DiffLine, DiffLineType, EmptyLine } from '@hcengineering/diffview'
-import { type HighlightOptions, highlightLines } from '@hcengineering/highlight'
+import { type DiffHunk, type DiffLine, DiffLineType, EmptyLine } from '@hanzo/diffview'
+import { type HighlightOptions, highlightLines } from '@hanzo/highlight'
 
 export interface RenderOptions {
   syntaxHighlight: {

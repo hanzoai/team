@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import card, { Card, Tag } from '@hcengineering/card'
-  import { Class, Doc, Mixin, Ref } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import card, { Card, Tag } from '@hanzo/card'
+  import { Class, Doc, Mixin, Ref } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     ButtonIcon,
     CircleButton,
@@ -28,7 +28,7 @@
     ScrollerBar,
     SelectPopup,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import MasterTagSelector from './MasterTagSelector.svelte'
 
   export let doc: Card

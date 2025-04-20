@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { Plugin, Resource, plugin } from '@hcengineering/platform'
-import { ObjectDDParticipantFunc, TriggerFunc } from '@hcengineering/server-core'
-import { TypeMatchFunc } from '@hcengineering/server-notification'
-import { TemplateFieldServerFunc } from '@hcengineering/server-templates'
+import { Plugin, Resource, plugin } from '@hanzo/platform'
+import { ObjectDDParticipantFunc, TriggerFunc } from '@hanzo/server-core'
+import { TypeMatchFunc } from '@hanzo/server-notification'
+import { TemplateFieldServerFunc } from '@hanzo/server-templates'
 
 export * from './types'
 /**

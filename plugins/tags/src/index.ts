@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import type { AttachedDoc, Class, Doc, Ref } from '@hcengineering/core'
-import type { Asset, IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { AnyComponent } from '@hcengineering/ui'
-import { FilterMode } from '@hcengineering/view'
+import type { AttachedDoc, Class, Doc, Ref } from '@hanzo/core'
+import type { Asset, IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { AnyComponent } from '@hanzo/ui'
+import { FilterMode } from '@hanzo/view'
 
 export * from './analytics'
 

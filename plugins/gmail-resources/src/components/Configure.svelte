@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor } from '@hcengineering/contact-resources'
-  import { AccountUuid } from '@hcengineering/core'
-  import presentation, { Card, getClient } from '@hcengineering/presentation'
-  import { Integration } from '@hcengineering/setting'
-  import { Grid, Label, Toggle } from '@hcengineering/ui'
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { AccountArrayEditor } from '@hanzo/contact-resources'
+  import { AccountUuid } from '@hanzo/core'
+  import presentation, { Card, getClient } from '@hanzo/presentation'
+  import { Integration } from '@hanzo/setting'
+  import { Grid, Label, Toggle } from '@hanzo/ui'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import { createEventDispatcher } from 'svelte'
 
   import gmail from '../plugin'

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -15,13 +15,13 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Doc, Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import activity from '@hcengineering/activity'
-  import chunter, { ChatMessage } from '@hcengineering/chunter'
-  import { closeTooltip, Label, Lazy, Spinner, resizeObserver, MiniToggle } from '@hcengineering/ui'
-  import { ObjectPresenter, DocNavLink } from '@hcengineering/view-resources'
-  import { canGroupMessages } from '@hcengineering/activity-resources'
+  import { Doc, Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import activity from '@hanzo/activity'
+  import chunter, { ChatMessage } from '@hanzo/chunter'
+  import { closeTooltip, Label, Lazy, Spinner, resizeObserver, MiniToggle } from '@hanzo/ui'
+  import { ObjectPresenter, DocNavLink } from '@hanzo/view-resources'
+  import { canGroupMessages } from '@hanzo/activity-resources'
 
   import ChatMessageInput from './ChatMessageInput.svelte'
   import ChatMessagePresenter from './ChatMessagePresenter.svelte'

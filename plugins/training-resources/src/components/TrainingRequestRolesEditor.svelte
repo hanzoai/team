@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-  import core, { Ref, type Role } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Button, type ButtonKind, type ButtonSize, Label, showPopup } from '@hcengineering/ui'
+  import core, { Ref, type Role } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { Button, type ButtonKind, type ButtonSize, Label, showPopup } from '@hanzo/ui'
   import training from '../plugin'
   import TrainingRequestRolesEditorPopup from './TrainingRequestRolesEditorPopup.svelte'
 

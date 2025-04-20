@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IssuePriority } from '@hcengineering/tracker'
+  import { IssuePriority } from '@hanzo/tracker'
   import {
     Button,
     ButtonKind,
@@ -23,7 +23,7 @@
     SelectPopup,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import { defaultPriorities, issuePriorities } from '../../utils'

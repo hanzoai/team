@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hcengineering/core'
+import { MeasureContext } from '@hanzo/core'
 import { type Readable } from 'stream'
 import { S3Bucket } from '../s3'
 

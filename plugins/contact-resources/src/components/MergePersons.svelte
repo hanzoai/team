@@ -14,8 +14,8 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import { Analytics } from '@hcengineering/analytics'
-  import { Channel, Person, getName } from '@hcengineering/contact'
+  import { Analytics } from '@hanzo/analytics'
+  import { Channel, Person, getName } from '@hanzo/contact'
   import core, {
     ArrOf,
     Doc,
@@ -26,10 +26,10 @@
     Tx,
     TxOperations,
     TxProcessor
-  } from '@hcengineering/core'
-  import { Card, createQuery, getClient, updateAttribute } from '@hcengineering/presentation'
-  import { Toggle } from '@hcengineering/ui'
-  import { isCollectionAttr } from '@hcengineering/view-resources'
+  } from '@hanzo/core'
+  import { Card, createQuery, getClient, updateAttribute } from '@hanzo/presentation'
+  import { Toggle } from '@hanzo/ui'
+  import { isCollectionAttr } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import contact from '../plugin'
   import Avatar from './Avatar.svelte'

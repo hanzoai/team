@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ObjectMention } from '@hcengineering/view-resources'
-  import { Floor } from '@hcengineering/love'
-  import { Ref } from '@hcengineering/core'
+  import { ObjectMention } from '@hanzo/view-resources'
+  import { Floor } from '@hanzo/love'
+  import { Ref } from '@hanzo/core'
 
   import { floors } from '../stores'
 

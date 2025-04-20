@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import { ComponentExtensions, getClient, LiteMessageViewer } from '@hcengineering/presentation'
-  import { Person } from '@hcengineering/contact'
-  import { Avatar, personByPersonIdStore, SystemAvatar } from '@hcengineering/contact-resources'
-  import core, { PersonId, Doc, Ref, Timestamp, type WithLookup } from '@hcengineering/core'
-  import { Icon, Label, resizeObserver, TimeSince, tooltip } from '@hcengineering/ui'
-  import { Asset, getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import activity, { ActivityMessage, ActivityMessagePreviewType } from '@hcengineering/activity'
-  import { classIcon, DocNavLink } from '@hcengineering/view-resources'
-  import { markupToText } from '@hcengineering/text'
+  import { ComponentExtensions, getClient, LiteMessageViewer } from '@hanzo/presentation'
+  import { Person } from '@hanzo/contact'
+  import { Avatar, personByPersonIdStore, SystemAvatar } from '@hanzo/contact-resources'
+  import core, { PersonId, Doc, Ref, Timestamp, type WithLookup } from '@hanzo/core'
+  import { Icon, Label, resizeObserver, TimeSince, tooltip } from '@hanzo/ui'
+  import { Asset, getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import activity, { ActivityMessage, ActivityMessagePreviewType } from '@hanzo/activity'
+  import { classIcon, DocNavLink } from '@hanzo/view-resources'
+  import { markupToText } from '@hanzo/text'
 
   export let message: ActivityMessage | undefined = undefined
   export let text: string | undefined = undefined

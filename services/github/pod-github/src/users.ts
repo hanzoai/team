@@ -1,4 +1,4 @@
-import type { PersonId } from '@hcengineering/core'
+import type { PersonId } from '@hanzo/core'
 import type { Collection, FindCursor } from 'mongodb'
 import type { GithubUserRecord } from './types'
 

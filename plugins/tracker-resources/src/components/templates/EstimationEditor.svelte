@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Data } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { IssueDraft, IssueTemplate, IssueTemplateChild, TrackerEvents } from '@hcengineering/tracker'
-  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { EditBoxPopup, getObjectId } from '@hcengineering/view-resources'
+  import { Data } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { IssueDraft, IssueTemplate, IssueTemplateChild, TrackerEvents } from '@hanzo/tracker'
+  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { EditBoxPopup, getObjectId } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import TimePresenter from '../issues/timereport/TimePresenter.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let value: IssueTemplateChild | IssueTemplate | Data<IssueTemplate> | IssueDraft
   export let isEditable: boolean = true

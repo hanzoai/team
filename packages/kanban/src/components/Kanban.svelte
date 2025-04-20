@@ -24,10 +24,10 @@
     RateLimiter,
     Ref,
     Space
-  } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { makeRank } from '@hcengineering/rank'
-  import { ScrollBox, Scroller } from '@hcengineering/ui'
+  } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { makeRank } from '@hanzo/rank'
+  import { ScrollBox, Scroller } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { CardDragEvent, DocWithRank, Item } from '../types'
   import KanbanRow from './KanbanRow.svelte'

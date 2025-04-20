@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hcengineering/core'
-  import { Button, IconAdd, Label, showPopup } from '@hcengineering/ui'
-  import { Table } from '@hcengineering/view-resources'
+  import type { Doc, Ref } from '@hanzo/core'
+  import { Button, IconAdd, Label, showPopup } from '@hanzo/ui'
+  import { Table } from '@hanzo/view-resources'
   import recruit from '../../plugin'
   import FileDuo from '../icons/FileDuo.svelte'
   import SectionEmpty from '../SectionEmpty.svelte'

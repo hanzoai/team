@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { AnySvelteComponent, ButtonKind, ButtonSize, IconProps } from '@hcengineering/ui'
-  import { Button, Label, eventToHTMLElement, parseURL, showPopup } from '@hcengineering/ui'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { AnySvelteComponent, ButtonKind, ButtonSize, IconProps } from '@hanzo/ui'
+  import { Button, Label, eventToHTMLElement, parseURL, showPopup } from '@hanzo/ui'
   import { ComponentType } from 'svelte'
   import HyperlinkEditorPopup from './HyperlinkEditorPopup.svelte'
 

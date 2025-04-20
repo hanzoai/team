@@ -16,9 +16,9 @@
 -->
 
 <script lang="ts">
-  import { navigate } from '@hcengineering/ui'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
-  import type { Training } from '@hcengineering/training'
+  import { navigate } from '@hanzo/ui'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  import type { Training } from '@hanzo/training'
   import training from '../plugin'
   import { trainingRoute, TrainingRouteTab } from '../routing/routes/trainingRoute'
   import { canViewTrainingSentRequests, getCurrentEmployeeRef } from '../utils'

@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { classIcon } from '@hcengineering/view-resources'
-  import { Card } from '@hcengineering/card'
-  import { Icon, IconSize } from '@hcengineering/ui-next'
+  import { getClient } from '@hanzo/presentation'
+  import { classIcon } from '@hanzo/view-resources'
+  import { Card } from '@hanzo/card'
+  import { Icon, IconSize } from '@hanzo/ui-next'
 
   import NotifyMarker from './NotifyMarker.svelte'
 

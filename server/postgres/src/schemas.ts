@@ -1,4 +1,4 @@
-import { DOMAIN_MODEL_TX, DOMAIN_RELATION, DOMAIN_SPACE, DOMAIN_TX } from '@hcengineering/core'
+import { DOMAIN_MODEL_TX, DOMAIN_RELATION, DOMAIN_SPACE, DOMAIN_TX } from '@hanzo/core'
 
 export type DataType = 'bigint' | 'bool' | 'text' | 'text[]'
 

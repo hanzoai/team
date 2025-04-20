@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 //
 
-import type { AttachedDoc, Blob, BlobMetadata, Class, Doc, Ref } from '@hcengineering/core'
-import type { Asset, Plugin } from '@hcengineering/platform'
-import { IntlString, plugin, Resource } from '@hcengineering/platform'
-import type { Preference } from '@hcengineering/preference'
-import { AnyComponent } from '@hcengineering/ui'
-import { Widget } from '@hcengineering/workbench'
+import type { AttachedDoc, Blob, BlobMetadata, Class, Doc, Ref } from '@hanzo/core'
+import type { Asset, Plugin } from '@hanzo/platform'
+import { IntlString, plugin, Resource } from '@hanzo/platform'
+import type { Preference } from '@hanzo/preference'
+import { AnyComponent } from '@hanzo/ui'
+import { Widget } from '@hanzo/workbench'
 
 export * from './analytics'
 

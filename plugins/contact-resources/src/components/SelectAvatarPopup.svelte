@@ -15,11 +15,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import MD5 from 'crypto-js/md5'
-  import { AvatarType, checkHasGravatar, type AvatarInfo } from '@hcengineering/contact'
-  import type { Ref } from '@hcengineering/core'
-  import { Blob as PlatformBlob } from '@hcengineering/core'
-  import { Asset } from '@hcengineering/platform'
-  import presentation, { Card, getFileUrl } from '@hcengineering/presentation'
+  import { AvatarType, checkHasGravatar, type AvatarInfo } from '@hanzo/contact'
+  import type { Ref } from '@hanzo/core'
+  import { Blob as PlatformBlob } from '@hanzo/core'
+  import { Asset } from '@hanzo/platform'
+  import presentation, { Card, getFileUrl } from '@hanzo/presentation'
   import {
     AnySvelteComponent,
     ColorDefinition,
@@ -31,8 +31,8 @@
     getPlatformAvatarColors,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import { ColorsPopup } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { ColorsPopup } from '@hanzo/view-resources'
   import contact from '../plugin'
   import { getAvatarTypeDropdownItems } from '../utils'
   import AvatarComponent from './Avatar.svelte'

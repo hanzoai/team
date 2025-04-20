@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, RefTo } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { Ref, RefTo } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
   import recruit from '../plugin'
-  import { Vacancy } from '@hcengineering/recruit'
-  import { SpaceSelect } from '@hcengineering/presentation'
+  import { Vacancy } from '@hanzo/recruit'
+  import { SpaceSelect } from '@hanzo/presentation'
 
   export let value: Ref<Vacancy> | undefined
   export let label: IntlString = recruit.string.Vacancy

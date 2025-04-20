@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import view from '@hcengineering/view'
-  import { getClient } from '@hcengineering/presentation'
-  import { Component } from '@hcengineering/ui'
-  import { Class, Doc, type Ref, type Space } from '@hcengineering/core'
-  import { ActivityNotificationViewlet, DisplayInboxNotification } from '@hcengineering/notification'
+  import view from '@hanzo/view'
+  import { getClient } from '@hanzo/presentation'
+  import { Component } from '@hanzo/ui'
+  import { Class, Doc, type Ref, type Space } from '@hanzo/core'
+  import { ActivityNotificationViewlet, DisplayInboxNotification } from '@hanzo/notification'
 
   export let value: DisplayInboxNotification
   export let object: Doc | undefined

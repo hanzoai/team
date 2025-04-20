@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,11 +14,11 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import type { IntlString } from '@hcengineering/platform'
+  import type { IntlString } from '@hanzo/platform'
   import ui from '../../plugin'
   import Label from '../Label.svelte'
   import DateRangePresenter from './DateRangePresenter.svelte'
-  import { DateRangeMode } from '@hcengineering/core'
+  import { DateRangeMode } from '@hanzo/core'
 
   export let title: IntlString
   export let value: number | null | undefined = null

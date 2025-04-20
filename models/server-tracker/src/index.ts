@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import contact from '@hcengineering/contact'
-import core from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
-import tracker from '@hcengineering/model-tracker'
-import notification from '@hcengineering/notification'
-import serverCore from '@hcengineering/server-core'
-import serverNotification from '@hcengineering/server-notification'
-import serverTracker from '@hcengineering/server-tracker'
-import serverView from '@hcengineering/server-view'
+import contact from '@hanzo/contact'
+import core from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
+import tracker from '@hanzo/model-tracker'
+import notification from '@hanzo/notification'
+import serverCore from '@hanzo/server-core'
+import serverNotification from '@hanzo/server-notification'
+import serverTracker from '@hanzo/server-tracker'
+import serverView from '@hanzo/server-view'
 
-export { serverTrackerId } from '@hcengineering/server-tracker'
+export { serverTrackerId } from '@hanzo/server-tracker'
 
 export function createModel (builder: Builder): void {
   builder.mixin(tracker.class.Issue, core.class.Class, serverNotification.mixin.HTMLPresenter, {

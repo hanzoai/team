@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the 'License');
@@ -15,16 +15,16 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import contact, { Channel, Contact, getName } from '@hcengineering/contact'
-  import { employeeByIdStore } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
-  import { Message, SharedMessage } from '@hcengineering/gmail'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { getResource } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { Integration } from '@hcengineering/setting'
-  import templates, { TemplateDataProvider } from '@hcengineering/templates'
-  import { Button, Dialog, eventToHTMLElement, Icon, Label, showPopup } from '@hcengineering/ui'
+  import contact, { Channel, Contact, getName } from '@hanzo/contact'
+  import { employeeByIdStore } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
+  import { Message, SharedMessage } from '@hanzo/gmail'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { getResource } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import setting, { Integration } from '@hanzo/setting'
+  import templates, { TemplateDataProvider } from '@hanzo/templates'
+  import { Button, Dialog, eventToHTMLElement, Icon, Label, showPopup } from '@hanzo/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import gmail from '../plugin'
   import { convertMessage } from '../utils'

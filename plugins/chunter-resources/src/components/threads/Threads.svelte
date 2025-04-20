@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentAccount, SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Scroller, Loading, Lazy } from '@hcengineering/ui'
-  import activity, { ActivityMessage } from '@hcengineering/activity'
-  import { ActivityMessagePresenter } from '@hcengineering/activity-resources'
-  import notification from '@hcengineering/notification'
-  import attachment from '@hcengineering/attachment'
+  import { getCurrentAccount, SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Scroller, Loading, Lazy } from '@hanzo/ui'
+  import activity, { ActivityMessage } from '@hanzo/activity'
+  import { ActivityMessagePresenter } from '@hanzo/activity-resources'
+  import notification from '@hanzo/notification'
+  import attachment from '@hanzo/attachment'
 
   import chunter from '../../plugin'
   import Header from '../Header.svelte'

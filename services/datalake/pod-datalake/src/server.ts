@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { MeasureContext, metricsAggregate } from '@hcengineering/core'
-import { decodeToken, TokenError } from '@hcengineering/server-token'
+import { Analytics } from '@hanzo/analytics'
+import { MeasureContext, metricsAggregate } from '@hanzo/core'
+import { decodeToken, TokenError } from '@hanzo/server-token'
 
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'

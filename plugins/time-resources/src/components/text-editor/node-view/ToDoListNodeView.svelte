@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { NodeViewContent, NodeViewWrapper } from '@hcengineering/text-editor-resources'
+  import { NodeViewContent, NodeViewWrapper } from '@hanzo/text-editor-resources'
 </script>
 
 <NodeViewWrapper data-drag-handle="">

@@ -1,4 +1,4 @@
-import { Timestamp, generateId } from '@hcengineering/core'
+import { Timestamp, generateId } from '@hanzo/core'
 import calendar, { Event, ReccuringEvent, ReccuringInstance, RecurringRule } from '.'
 
 function getInstance (event: ReccuringEvent, date: Timestamp): ReccuringInstance {

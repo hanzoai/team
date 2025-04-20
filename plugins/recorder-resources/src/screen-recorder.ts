@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import plugin from '@hcengineering/recorder'
+import plugin from '@hanzo/recorder'
 import { Recorder } from './recorder'
 import { TusUploader, type Uploader, type Options } from './uploader'
-import { getMetadata } from '@hcengineering/platform'
+import { getMetadata } from '@hanzo/platform'
 
 export class ScreenRecorder {
   private readonly recorder: Recorder

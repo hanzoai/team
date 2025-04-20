@@ -4,11 +4,11 @@
 //
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { HyperlinkEditor } from '@hcengineering/view-resources'
-  import github, { GithubIntegrationRepository } from '@hcengineering/github'
+  import { Ref } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { HyperlinkEditor } from '@hanzo/view-resources'
+  import github, { GithubIntegrationRepository } from '@hanzo/github'
   import { integrationRepositories } from './utils'
 
   export let value: Ref<GithubIntegrationRepository>

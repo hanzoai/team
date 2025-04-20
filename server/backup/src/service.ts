@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   WorkspaceInfo,
   DOMAIN_TX,
@@ -32,16 +32,16 @@ import core, {
   type WorkspaceInfoWithStatus,
   WorkspaceDataId,
   WorkspaceUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   wrapPipeline,
   type DbConfiguration,
   type Pipeline,
   type PipelineFactory,
   type StorageAdapter
-} from '@hcengineering/server-core'
-import { getAccountClient } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { getAccountClient } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
 import { clearInterval } from 'node:timers'
 import { backup, restore } from '.'
 import { createStorageBackupStorage } from './storage'

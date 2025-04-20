@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Calendar, generateEventId } from '@hcengineering/calendar'
-  import { Employee, getCurrentEmployee } from '@hcengineering/contact'
-  import { UserBoxList } from '@hcengineering/contact-resources'
-  import { Class, DateRangeMode, Doc, Ref, getCurrentAccount } from '@hcengineering/core'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import ui, { DateRangePresenter, EditBox } from '@hcengineering/ui'
+  import { Calendar, generateEventId } from '@hanzo/calendar'
+  import { Employee, getCurrentEmployee } from '@hanzo/contact'
+  import { UserBoxList } from '@hanzo/contact-resources'
+  import { Class, DateRangeMode, Doc, Ref, getCurrentAccount } from '@hanzo/core'
+  import { Card, getClient } from '@hanzo/presentation'
+  import ui, { DateRangePresenter, EditBox } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
 

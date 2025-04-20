@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hcengineering/platform'
-import drive from '@hcengineering/drive'
+import { loadMetadata } from '@hanzo/platform'
+import drive from '@hanzo/drive'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(drive.icon, {

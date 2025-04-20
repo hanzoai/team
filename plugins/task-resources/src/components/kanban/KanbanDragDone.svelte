@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Status } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import type { Project } from '@hcengineering/task'
-  import task, { getStates } from '@hcengineering/task'
-  import { statusStore } from '@hcengineering/view-resources'
+  import { Ref, Status } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import type { Project } from '@hanzo/task'
+  import task, { getStates } from '@hanzo/task'
+  import { statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { typeStore } from '../..'
   import Lost from '../icons/Lost.svelte'

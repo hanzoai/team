@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Label } from '@hcengineering/ui'
+  import type { Class, Doc, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
 
   export let value: Ref<Class<Doc>>
 

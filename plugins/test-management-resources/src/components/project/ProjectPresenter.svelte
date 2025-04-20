@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TestProject } from '@hcengineering/test-management'
+  import { TestProject } from '@hanzo/test-management'
 
   export let value: TestProject | undefined
   export let inline: boolean = false

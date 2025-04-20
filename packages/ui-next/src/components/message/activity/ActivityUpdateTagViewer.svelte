@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { IconDelete } from '@hcengineering/ui'
-  import { ActivityTagUpdate } from '@hcengineering/communication-types'
-  import cardPlugin from '@hcengineering/card'
+  import { getClient } from '@hanzo/presentation'
+  import { IconDelete } from '@hanzo/ui'
+  import { ActivityTagUpdate } from '@hanzo/communication-types'
+  import cardPlugin from '@hanzo/card'
 
   import Icon from '../../Icon.svelte'
   import Label from '../../Label.svelte'

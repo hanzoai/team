@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import type { IntlString, Metadata, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+import type { IntlString, Metadata, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 import { type AnyComponent } from './types'
 
 /**

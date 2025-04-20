@@ -1,10 +1,10 @@
 //
 // Copyright © 2024 Hardcore Engineering Inc.
 //
-import { type Doc } from '@hcengineering/core'
-import { type Resources } from '@hcengineering/platform'
-import { showPopup } from '@hcengineering/ui'
-import { getPrintBaseURL } from '@hcengineering/print'
+import { type Doc } from '@hanzo/core'
+import { type Resources } from '@hanzo/platform'
+import { showPopup } from '@hanzo/ui'
+import { getPrintBaseURL } from '@hanzo/print'
 
 import PrintToPDF from './components/PrintToPDF.svelte'
 import DOCXViewer from './components/DOCXViewer.svelte'

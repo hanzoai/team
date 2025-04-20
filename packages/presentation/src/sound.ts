@@ -1,7 +1,7 @@
-import { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { type Asset, getMetadata, getResource } from '@hcengineering/platform'
+import { type Class, type Doc, type Ref } from '@hanzo/core'
+import { type Asset, getMetadata, getResource } from '@hanzo/platform'
 import { getClient } from '.'
-import notification from '@hcengineering/notification'
+import notification from '@hanzo/notification'
 
 const sounds = new Map<Asset, AudioBuffer>()
 const context = new AudioContext()

@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { AccountRole } from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import workbench from '@hcengineering/model-workbench'
-import { inboxId } from '@hcengineering/inbox'
+import { AccountRole } from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import workbench from '@hanzo/model-workbench'
+import { inboxId } from '@hanzo/inbox'
 
 import inbox from './plugin'
 
-export { inboxId } from '@hcengineering/inbox'
+export { inboxId } from '@hanzo/inbox'
 export { inboxOperation } from './migration'
 export default inbox
 

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref, TxCUD } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Component, resizeObserver } from '@hcengineering/ui'
-  import { DocNavLink, ObjectPresenter } from '@hcengineering/view-resources'
-  import { ItemPresenter } from '@hcengineering/time'
+  import { Doc, Ref, TxCUD } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Component, resizeObserver } from '@hanzo/ui'
+  import { DocNavLink, ObjectPresenter } from '@hanzo/view-resources'
+  import { ItemPresenter } from '@hanzo/time'
   import { createEventDispatcher } from 'svelte'
   import time from '../../../plugin'
 

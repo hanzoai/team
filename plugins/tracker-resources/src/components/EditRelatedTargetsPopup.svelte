@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Space } from '@hcengineering/core'
-  import { Card } from '@hcengineering/presentation'
-  import ui from '@hcengineering/ui'
+  import { Space } from '@hanzo/core'
+  import { Card } from '@hanzo/presentation'
+  import ui from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../plugin'
   import EditRelatedTargets from './EditRelatedTargets.svelte'

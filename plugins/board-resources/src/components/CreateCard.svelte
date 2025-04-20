@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,15 +14,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Board, Card as BoardCard } from '@hcengineering/board'
-  import core, { AttachedData, Ref, SortingOrder, Space, generateId } from '@hcengineering/core'
-  import { OK, Status } from '@hcengineering/platform'
-  import { Card, SpaceSelector, createQuery, getClient } from '@hcengineering/presentation'
-  import task, { TaskType, makeRank } from '@hcengineering/task'
-  import { EditBox, Grid, Status as StatusControl } from '@hcengineering/ui'
+  import type { Board, Card as BoardCard } from '@hanzo/board'
+  import core, { AttachedData, Ref, SortingOrder, Space, generateId } from '@hanzo/core'
+  import { OK, Status } from '@hanzo/platform'
+  import { Card, SpaceSelector, createQuery, getClient } from '@hanzo/presentation'
+  import task, { TaskType, makeRank } from '@hanzo/task'
+  import { EditBox, Grid, Status as StatusControl } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import board from '../plugin'
-  import { TaskKindSelector } from '@hcengineering/task-resources'
+  import { TaskKindSelector } from '@hanzo/task-resources'
 
   export let space: Ref<Space>
 

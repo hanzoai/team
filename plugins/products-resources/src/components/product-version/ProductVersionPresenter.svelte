@@ -16,11 +16,11 @@
 -->
 
 <script lang="ts">
-  import { Product, ProductVersion } from '@hcengineering/products'
-  import { WithLookup } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { tooltip } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { Product, ProductVersion } from '@hanzo/products'
+  import { WithLookup } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { tooltip } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   import products from '../../plugin'
 

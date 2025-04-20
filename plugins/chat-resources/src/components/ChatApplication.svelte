@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hcengineering/card'
+  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
   import {
     defineSeparators,
     Separator,
@@ -22,12 +22,12 @@
     resolvedLocationStore,
     Location,
     restoreLocation
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
-  import { createNotificationContextsQuery, getClient } from '@hcengineering/presentation'
-  import { chatId } from '@hcengineering/chat'
-  import { Ref, SortingOrder } from '@hcengineering/core'
-  import { NotificationContext } from '@hcengineering/communication-types'
+  import { createNotificationContextsQuery, getClient } from '@hanzo/presentation'
+  import { chatId } from '@hanzo/chat'
+  import { Ref, SortingOrder } from '@hanzo/core'
+  import { NotificationContext } from '@hanzo/communication-types'
 
   import ChatPanel from './ChatPanel.svelte'
   import ChatNavigation from './ChatNavigation.svelte'

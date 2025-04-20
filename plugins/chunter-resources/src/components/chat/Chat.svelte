@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref, Class } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Doc, Ref, Class } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     Component,
     defineSeparators,
@@ -25,15 +25,15 @@
     Location,
     restoreLocation,
     deviceOptionsStore as deviceInfo
-  } from '@hcengineering/ui'
-  import { NavigatorModel, SpecialNavModel } from '@hcengineering/workbench'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
+  } from '@hanzo/ui'
+  import { NavigatorModel, SpecialNavModel } from '@hanzo/workbench'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
   import { onMount, onDestroy } from 'svelte'
-  import { chunterId } from '@hcengineering/chunter'
-  import view, { decodeObjectURI } from '@hcengineering/view'
-  import { parseLinkId, getObjectLinkId } from '@hcengineering/view-resources'
-  import { ActivityMessage } from '@hcengineering/activity'
-  import { loadSavedAttachments } from '@hcengineering/attachment-resources'
+  import { chunterId } from '@hanzo/chunter'
+  import view, { decodeObjectURI } from '@hanzo/view'
+  import { parseLinkId, getObjectLinkId } from '@hanzo/view-resources'
+  import { ActivityMessage } from '@hanzo/activity'
+  import { loadSavedAttachments } from '@hanzo/attachment-resources'
 
   import ChatNavigator from './navigator/ChatNavigator.svelte'
   import ChannelView from '../ChannelView.svelte'

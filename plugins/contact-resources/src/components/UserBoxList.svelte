@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hcengineering/contact'
-  import type { Class, Doc, DocumentQuery, Ref } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import { ObjectCreate, getClient } from '@hcengineering/presentation'
-  import type { ButtonKind, ButtonSize, TooltipAlignment } from '@hcengineering/ui'
-  import { Button, Label, showPopup } from '@hcengineering/ui'
+  import contact, { Person } from '@hanzo/contact'
+  import type { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { ObjectCreate, getClient } from '@hanzo/presentation'
+  import type { ButtonKind, ButtonSize, TooltipAlignment } from '@hanzo/ui'
+  import { Button, Label, showPopup } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../plugin'
   import { personByIdStore } from '../utils'

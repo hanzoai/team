@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { Doc, Mixin } from '@hcengineering/core'
-  import { Button, Grid, IconDownOutline, IconUpOutline, resizeObserver } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { Doc, Mixin } from '@hanzo/core'
+  import { Button, Grid, IconDownOutline, IconUpOutline, resizeObserver } from '@hanzo/ui'
   import card from '../plugin'
   import MasterTagAttributes from './MasterTagAttributes.svelte'
   import TagAttributes from './TagAttributes.svelte'

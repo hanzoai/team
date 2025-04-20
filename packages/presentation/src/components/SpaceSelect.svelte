@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,8 +15,8 @@
 <script lang="ts">
   import { ComponentType, createEventDispatcher } from 'svelte'
 
-  import { Class, DocumentQuery, FindOptions, Ref, Space } from '@hcengineering/core'
-  import { Asset, IntlString } from '@hcengineering/platform'
+  import { Class, DocumentQuery, FindOptions, Ref, Space } from '@hanzo/core'
+  import { Asset, IntlString } from '@hanzo/platform'
   import {
     AnyComponent,
     AnySvelteComponent,
@@ -35,8 +35,8 @@
     getPlatformColorForTextDef,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view, { IconProps } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view, { IconProps } from '@hanzo/view'
 
   import { ObjectCreate } from '../types'
   import { getClient, reduceCalls } from '../utils'

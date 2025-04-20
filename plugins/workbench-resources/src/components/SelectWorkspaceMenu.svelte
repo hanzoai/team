@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { isArchivingMode, WorkspaceInfoWithStatus } from '@hcengineering/core'
-  import login from '@hcengineering/login'
-  import { getMetadata, getResource } from '@hcengineering/platform'
-  import presentation, { decodeTokenPayload, isAdminUser } from '@hcengineering/presentation'
+  import contact from '@hanzo/contact'
+  import { isArchivingMode, WorkspaceInfoWithStatus } from '@hanzo/core'
+  import login from '@hanzo/login'
+  import { getMetadata, getResource } from '@hanzo/platform'
+  import presentation, { decodeTokenPayload, isAdminUser } from '@hanzo/presentation'
   import {
     Icon,
     IconCheck,
@@ -34,8 +34,8 @@
     navigate,
     resolvedLocationStore,
     ticker
-  } from '@hcengineering/ui'
-  import { workbenchId } from '@hcengineering/workbench'
+  } from '@hanzo/ui'
+  import { workbenchId } from '@hanzo/workbench'
   import { onDestroy, onMount } from 'svelte'
 
   import { workspacesStore } from '../utils'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Timestamp } from '@hcengineering/core'
+import { type Timestamp } from '@hanzo/core'
 import type {
   Asset,
   IntlString,
   /* Metadata, Plugin, plugin, */ Resource /*, Service */
-} from '@hcengineering/platform'
+} from '@hanzo/platform'
 import { /* getContext, */ type ComponentType } from 'svelte'
 
 /**

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MeasureMetricsContext, type WorkspaceDataId, type WorkspaceUuid, generateId } from '@hcengineering/core'
-import { objectsToArray, type StorageConfiguration } from '@hcengineering/server-core'
+import { MeasureMetricsContext, type WorkspaceDataId, type WorkspaceUuid, generateId } from '@hanzo/core'
+import { objectsToArray, type StorageConfiguration } from '@hanzo/server-core'
 import { S3Service, processConfigFromEnv, type S3Config } from '..'
 
 describe('s3 operations', () => {

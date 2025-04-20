@@ -2,12 +2,12 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 import { get } from 'svelte/store'
-import { type Employee } from '@hcengineering/contact'
-import { personRefByAccountUuidStore } from '@hcengineering/contact-resources'
-import type { Training, TrainingRequest } from '@hcengineering/training'
-import core, { notEmpty, type AttachedData, type Ref, type Role, type RolesAssignment } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
-import { navigate } from '@hcengineering/ui'
+import { type Employee } from '@hanzo/contact'
+import { personRefByAccountUuidStore } from '@hanzo/contact-resources'
+import type { Training, TrainingRequest } from '@hanzo/training'
+import core, { notEmpty, type AttachedData, type Ref, type Role, type RolesAssignment } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
+import { navigate } from '@hanzo/ui'
 import training from '../plugin'
 import { trainingRequestRoute } from '../routing/routes/trainingRequestRoute'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'

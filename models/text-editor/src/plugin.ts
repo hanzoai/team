@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2022, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 //
 
-import { mergeIds, type Resource } from '@hcengineering/platform'
+import { mergeIds, type Resource } from '@hanzo/platform'
 import textEditor, {
   type TextActionFunction,
   type TextActionVisibleFunction,
   textEditorId
-} from '@hcengineering/text-editor'
+} from '@hanzo/text-editor'
 
 export default mergeIds(textEditorId, textEditor, {
   function: {

@@ -15,10 +15,10 @@
 
 <script lang="ts">
   import { ComponentProps } from 'svelte'
-  import { Button } from '@hcengineering/ui'
-  import { Doc, Ref } from '@hcengineering/core'
-  import { Action, ViewContextType } from '@hcengineering/view'
-  import { getClient } from '@hcengineering/presentation'
+  import { Button } from '@hanzo/ui'
+  import { Doc, Ref } from '@hanzo/core'
+  import { Action, ViewContextType } from '@hanzo/view'
+  import { getClient } from '@hanzo/presentation'
   import { filterAvailableActions, invokeAction } from '../actions'
   import view from '../plugin'
 

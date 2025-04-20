@@ -21,9 +21,9 @@
     WithLookup,
     getCurrentAccount,
     hasAccountRole
-  } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Vacancy } from '@hcengineering/recruit'
+  } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Vacancy } from '@hanzo/recruit'
   import {
     Button,
     Component,
@@ -34,9 +34,9 @@
     tableToCSV,
     Header,
     Breadcrumb
-  } from '@hcengineering/ui'
-  import view, { BuildModelKey, ViewOptions, Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view, { BuildModelKey, ViewOptions, Viewlet, ViewletPreference } from '@hanzo/view'
+  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
   import recruit from '../plugin'
   import CreateVacancy from './CreateVacancy.svelte'
   import IconVacancy from './icons/Vacancy.svelte'

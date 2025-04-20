@@ -15,13 +15,13 @@
 //
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import document, { Document } from '@hcengineering/document'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { CollaboratorEditor, HeadingsExtension, ImageUploadOptions } from '@hcengineering/text-editor-resources'
-  import { AnySvelteComponent } from '@hcengineering/ui'
-  import { getCollaborationUser } from '@hcengineering/view-resources'
+  import contact from '@hanzo/contact'
+  import document, { Document } from '@hanzo/document'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { CollaboratorEditor, HeadingsExtension, ImageUploadOptions } from '@hanzo/text-editor-resources'
+  import { AnySvelteComponent } from '@hanzo/ui'
+  import { getCollaborationUser } from '@hanzo/view-resources'
   import { Extensions, FocusPosition } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
 

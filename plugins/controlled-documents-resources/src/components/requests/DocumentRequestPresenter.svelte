@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, Label, ProgressCircle, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
-  import { Request, RequestStatus } from '@hcengineering/request'
-  import { IntlString } from '@hcengineering/platform'
-  import { RequestStatusPresenter, RequestDetailPopup } from '@hcengineering/request-resources'
+  import { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, Label, ProgressCircle, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
+  import { Request, RequestStatus } from '@hanzo/request'
+  import { IntlString } from '@hanzo/platform'
+  import { RequestStatusPresenter, RequestDetailPopup } from '@hanzo/request-resources'
 
   export let value: Request
   export let label: IntlString

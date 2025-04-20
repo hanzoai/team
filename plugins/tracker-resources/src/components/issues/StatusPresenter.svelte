@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { ColorDefinition } from '@hcengineering/ui'
-  import { IssueStatus, Project } from '@hcengineering/tracker'
+  import { Ref } from '@hanzo/core'
+  import { ColorDefinition } from '@hanzo/ui'
+  import { IssueStatus, Project } from '@hanzo/tracker'
   import IssueStatusIcon from './IssueStatusIcon.svelte'
-  import { ProjectType, TaskType } from '@hcengineering/task'
+  import { ProjectType, TaskType } from '@hanzo/task'
 
   export let value: IssueStatus | undefined
   export let space: Ref<Project> | undefined = undefined

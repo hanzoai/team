@@ -32,7 +32,7 @@ import {
   TxOperations,
   type TxResult,
   type WithLookup
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { RestClientImpl } from './rest'
 
 export async function createRestTxOperations (

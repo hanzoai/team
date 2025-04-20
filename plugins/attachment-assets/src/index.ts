@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import attachment from '@hcengineering/attachment'
-import { loadMetadata } from '@hcengineering/platform'
+import attachment from '@hanzo/attachment'
+import { loadMetadata } from '@hanzo/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(attachment.icon, {

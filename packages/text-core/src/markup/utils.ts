@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Markup } from '@hcengineering/core'
+import { Markup } from '@hanzo/core'
 
 import { deepEqual } from 'fast-equals'
 import { nodeDoc, nodeParagraph, nodeText } from './dsl'

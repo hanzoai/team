@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import { translateCB } from '@hcengineering/platform'
-  import { themeStore } from '@hcengineering/theme'
+  import type { IntlString } from '@hanzo/platform'
+  import { translateCB } from '@hanzo/platform'
+  import { themeStore } from '@hanzo/theme'
 
   export let label: IntlString
   export let params: Record<string, any> = {}

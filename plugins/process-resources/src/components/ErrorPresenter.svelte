@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ExecutionError } from '@hcengineering/process'
-  import { IconError, tooltip } from '@hcengineering/ui'
+  import { ExecutionError } from '@hanzo/process'
+  import { IconError, tooltip } from '@hanzo/ui'
   import ErrorTooltip from './ErrorTooltip.svelte'
 
   export let value: ExecutionError[] | null | undefined

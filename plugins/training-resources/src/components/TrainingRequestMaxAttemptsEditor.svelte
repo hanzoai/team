@@ -3,8 +3,8 @@
 -->
 
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import type { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
   import { unlimitedAttempts } from './TrainingRequestMaxAttemptsPresenter.svelte'
   import NullableNumberEditor from './NullablePositiveNumberEditor.svelte'
 

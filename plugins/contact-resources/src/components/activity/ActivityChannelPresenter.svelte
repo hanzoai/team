@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Channel, Contact, getName } from '@hcengineering/contact'
-  import { Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { CircleButton, tooltip } from '@hcengineering/ui'
-  import { DocNavLink } from '@hcengineering/view-resources'
+  import contact, { Channel, Contact, getName } from '@hanzo/contact'
+  import { Ref } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { CircleButton, tooltip } from '@hanzo/ui'
+  import { DocNavLink } from '@hanzo/view-resources'
   import { channelProviders } from '../../utils'
 
   export let value: Channel

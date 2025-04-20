@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type CollaboratorClient, getClient as getCollaborator } from '@hcengineering/collaborator-client'
-import { type Blob, type CollaborativeDoc, type Markup, type Ref } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
+import { type CollaboratorClient, getClient as getCollaborator } from '@hanzo/collaborator-client'
+import { type Blob, type CollaborativeDoc, type Markup, type Ref } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
 
 import presentation from './plugin'
 

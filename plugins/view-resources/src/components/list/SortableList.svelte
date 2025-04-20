@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, FindResult, Ref, SortingOrder } from '@hcengineering/core'
-  import { Asset, getResource, IntlString } from '@hcengineering/platform'
-  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-  import { DocWithRank, makeRank } from '@hcengineering/task'
-  import { Button, Component, Icon, IconAdd, IconSize, Label, Loading } from '@hcengineering/ui'
-  import view, { ObjectFactory } from '@hcengineering/view'
+  import { Class, Doc, DocumentQuery, FindOptions, FindResult, Ref, SortingOrder } from '@hanzo/core'
+  import { Asset, getResource, IntlString } from '@hanzo/platform'
+  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import { DocWithRank, makeRank } from '@hanzo/task'
+  import { Button, Component, Icon, IconAdd, IconSize, Label, Loading } from '@hanzo/ui'
+  import view, { ObjectFactory } from '@hanzo/view'
   import { flip } from 'svelte/animate'
   import { getListItemPresenter, getObjectPresenter } from '../../utils'
   import { SvelteComponent } from 'svelte'

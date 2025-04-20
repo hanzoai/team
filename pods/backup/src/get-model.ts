@@ -1,1 +1,1 @@
-import '@hcengineering/model-all/src/show'
+import '@hanzo/model-all/src/show'

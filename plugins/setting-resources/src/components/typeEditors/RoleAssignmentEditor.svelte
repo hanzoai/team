@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hcengineering/contact-resources'
-  import { type AccountUuid, TypedSpace, notEmpty } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { type AccountUuid, TypedSpace, notEmpty } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
 
   export let object: TypedSpace | undefined
   export let label: IntlString

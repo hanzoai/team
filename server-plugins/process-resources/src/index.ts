@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import card, { Card } from '@hcengineering/card'
+import card, { Card } from '@hanzo/card'
 import core, {
   ArrOf,
   Doc,
@@ -27,8 +27,8 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hcengineering/core'
-import { getEmbeddedLabel, getResource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { getEmbeddedLabel, getResource } from '@hanzo/platform'
 import process, {
   Execution,
   ExecutionError,
@@ -42,10 +42,10 @@ import process, {
   SelectedUserRequest,
   State,
   Step
-} from '@hcengineering/process'
-import { TriggerControl } from '@hcengineering/server-core'
-import serverProcess, { ExecuteResult, SuccessExecutionResult } from '@hcengineering/server-process'
-import time, { ToDoPriority } from '@hcengineering/time'
+} from '@hanzo/process'
+import { TriggerControl } from '@hanzo/server-core'
+import serverProcess, { ExecuteResult, SuccessExecutionResult } from '@hanzo/server-process'
+import time, { ToDoPriority } from '@hanzo/time'
 import { isError, parseError, ProcessError, processError } from './errors'
 
 export async function OnStateRemove (txes: Tx[], control: TriggerControl): Promise<Tx[]> {

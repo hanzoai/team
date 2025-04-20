@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { RadioGroup, RadioItem } from '@hcengineering/ui'
-  import { Room, RoomAccess, isOffice, roomAccessLabel } from '@hcengineering/love'
+  import { getClient } from '@hanzo/presentation'
+  import { RadioGroup, RadioItem } from '@hanzo/ui'
+  import { Room, RoomAccess, isOffice, roomAccessLabel } from '@hanzo/love'
   import { createEventDispatcher } from 'svelte'
 
   export let room: Room

@@ -3,16 +3,16 @@
 //
 
 // Add this to the VERY top of the first file loaded in your app
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, SplitLogger } from '@hcengineering/analytics-service'
-import contactPlugin from '@hcengineering/contact'
-import { MeasureMetricsContext, newMetrics, setOperationLogProfiling } from '@hcengineering/core'
-import { getPlatformQueue } from '@hcengineering/kafka'
-import { setMetadata } from '@hcengineering/platform'
-import { setDBExtraOptions } from '@hcengineering/postgres'
-import { serverConfigFromEnv } from '@hcengineering/server'
-import serverAiBot from '@hcengineering/server-ai-bot'
-import serverCalendar from '@hcengineering/server-calendar'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
+import contactPlugin from '@hanzo/contact'
+import { MeasureMetricsContext, newMetrics, setOperationLogProfiling } from '@hanzo/core'
+import { getPlatformQueue } from '@hanzo/kafka'
+import { setMetadata } from '@hanzo/platform'
+import { setDBExtraOptions } from '@hanzo/postgres'
+import { serverConfigFromEnv } from '@hanzo/server'
+import serverAiBot from '@hanzo/server-ai-bot'
+import serverCalendar from '@hanzo/server-calendar'
 import serverCore, {
   initStatisticsContext,
   loadBrandingMap,
@@ -22,10 +22,10 @@ import serverCore, {
   type UserStatistics,
   type Workspace,
   type WorkspaceStatistics
-} from '@hcengineering/server-core'
-import serverNotification from '@hcengineering/server-notification'
-import { storageConfigFromEnv } from '@hcengineering/server-storage'
-import serverToken from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import serverNotification from '@hanzo/server-notification'
+import { storageConfigFromEnv } from '@hanzo/server-storage'
+import serverToken from '@hanzo/server-token'
 import { join } from 'path'
 import { start } from '.'
 import { profileStart, profileStop } from './inspector'

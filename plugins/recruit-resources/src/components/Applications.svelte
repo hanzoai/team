@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hcengineering/core'
-  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hcengineering/ui'
-  import { Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { Table, ViewletsSettingButton } from '@hcengineering/view-resources'
+  import type { Doc, Ref } from '@hanzo/core'
+  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hanzo/ui'
+  import { Viewlet, ViewletPreference } from '@hanzo/view'
+  import { Table, ViewletsSettingButton } from '@hanzo/view-resources'
   import recruit from '../plugin'
   import CreateApplication from './CreateApplication.svelte'
   import IconApplication from './icons/Application.svelte'

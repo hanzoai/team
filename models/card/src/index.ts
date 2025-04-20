@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import activity from '@hcengineering/activity'
+import activity from '@hanzo/activity'
 import {
   cardId,
   type CardSpace,
@@ -20,8 +20,8 @@ import {
   type MasterTag,
   type ParentInfo,
   type Tag
-} from '@hcengineering/card'
-import chunter from '@hcengineering/chunter'
+} from '@hanzo/card'
+import chunter from '@hanzo/chunter'
 import core, {
   AccountRole,
   ClassifierKind,
@@ -34,7 +34,7 @@ import core, {
   type MarkupBlobRef,
   type Rank,
   type Ref
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   Collection,
   Index,
@@ -45,20 +45,20 @@ import {
   TypeString,
   UX,
   type Builder
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import { TClass, TDoc, TMixin, TSpace } from '@hcengineering/model-core'
-import presentation from '@hcengineering/model-presentation'
-import setting from '@hcengineering/model-setting'
-import view, { createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import { type Asset, getEmbeddedLabel, type IntlString } from '@hcengineering/platform'
-import time, { type ToDo } from '@hcengineering/time'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { type BuildModelKey } from '@hcengineering/view'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import { TClass, TDoc, TMixin, TSpace } from '@hanzo/model-core'
+import presentation from '@hanzo/model-presentation'
+import setting from '@hanzo/model-setting'
+import view, { createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import { type Asset, getEmbeddedLabel, type IntlString } from '@hanzo/platform'
+import time, { type ToDo } from '@hanzo/time'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type BuildModelKey } from '@hanzo/view'
 import card from './plugin'
 
-export { cardId } from '@hcengineering/card'
+export { cardId } from '@hanzo/card'
 
 @Model(card.class.MasterTag, core.class.Class)
 export class TMasterTag extends TClass implements MasterTag {

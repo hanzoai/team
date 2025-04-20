@@ -1,64 +1,64 @@
-import { addLocation } from '@hcengineering/platform'
-import { serverActivityId } from '@hcengineering/server-activity'
-import { serverAttachmentId } from '@hcengineering/server-attachment'
-import { serverCardId } from '@hcengineering/server-card'
-import { serverCalendarId } from '@hcengineering/server-calendar'
-import { serverChunterId } from '@hcengineering/server-chunter'
-import { serverCollaborationId } from '@hcengineering/server-collaboration'
-import { serverContactId } from '@hcengineering/server-contact'
-import { serverDocumentsId } from '@hcengineering/server-controlled-documents'
-import { serverDocumentId } from '@hcengineering/server-document'
-import { serverDriveId } from '@hcengineering/server-drive'
-import { serverGithubId } from '@hcengineering/server-github'
-import { serverGmailId } from '@hcengineering/server-gmail'
-import { serverGuestId } from '@hcengineering/server-guest'
-import { serverHrId } from '@hcengineering/server-hr'
-import { serverInventoryId } from '@hcengineering/server-inventory'
-import { serverLeadId } from '@hcengineering/server-lead'
-import { serverLoveId } from '@hcengineering/server-love'
-import { serverNotificationId } from '@hcengineering/server-notification'
-import { serverRecruitId } from '@hcengineering/server-recruit'
-import { serverRequestId } from '@hcengineering/server-request'
-import { serverSettingId } from '@hcengineering/server-setting'
-import { serverTagsId } from '@hcengineering/server-tags'
-import { serverTaskId } from '@hcengineering/server-task'
-import { serverTelegramId } from '@hcengineering/server-telegram'
-import { serverTimeId } from '@hcengineering/server-time'
-import { serverTrackerId } from '@hcengineering/server-tracker'
-import { serverTrainingId } from '@hcengineering/server-training'
-import { serverViewId } from '@hcengineering/server-view'
-import { serverAiBotId } from '@hcengineering/server-ai-bot'
-import { serverProcessId } from '@hcengineering/server-process'
+import { addLocation } from '@hanzo/platform'
+import { serverActivityId } from '@hanzo/server-activity'
+import { serverAttachmentId } from '@hanzo/server-attachment'
+import { serverCardId } from '@hanzo/server-card'
+import { serverCalendarId } from '@hanzo/server-calendar'
+import { serverChunterId } from '@hanzo/server-chunter'
+import { serverCollaborationId } from '@hanzo/server-collaboration'
+import { serverContactId } from '@hanzo/server-contact'
+import { serverDocumentsId } from '@hanzo/server-controlled-documents'
+import { serverDocumentId } from '@hanzo/server-document'
+import { serverDriveId } from '@hanzo/server-drive'
+import { serverGithubId } from '@hanzo/server-github'
+import { serverGmailId } from '@hanzo/server-gmail'
+import { serverGuestId } from '@hanzo/server-guest'
+import { serverHrId } from '@hanzo/server-hr'
+import { serverInventoryId } from '@hanzo/server-inventory'
+import { serverLeadId } from '@hanzo/server-lead'
+import { serverLoveId } from '@hanzo/server-love'
+import { serverNotificationId } from '@hanzo/server-notification'
+import { serverRecruitId } from '@hanzo/server-recruit'
+import { serverRequestId } from '@hanzo/server-request'
+import { serverSettingId } from '@hanzo/server-setting'
+import { serverTagsId } from '@hanzo/server-tags'
+import { serverTaskId } from '@hanzo/server-task'
+import { serverTelegramId } from '@hanzo/server-telegram'
+import { serverTimeId } from '@hanzo/server-time'
+import { serverTrackerId } from '@hanzo/server-tracker'
+import { serverTrainingId } from '@hanzo/server-training'
+import { serverViewId } from '@hanzo/server-view'
+import { serverAiBotId } from '@hanzo/server-ai-bot'
+import { serverProcessId } from '@hanzo/server-process'
 
 export function registerServerPlugins (): void {
-  addLocation(serverActivityId, () => import('@hcengineering/server-activity-resources'))
-  addLocation(serverAttachmentId, () => import('@hcengineering/server-attachment-resources'))
-  addLocation(serverCollaborationId, () => import('@hcengineering/server-collaboration-resources'))
-  addLocation(serverContactId, () => import('@hcengineering/server-contact-resources'))
-  addLocation(serverNotificationId, () => import('@hcengineering/server-notification-resources'))
-  addLocation(serverSettingId, () => import('@hcengineering/server-setting-resources'))
-  addLocation(serverChunterId, () => import('@hcengineering/server-chunter-resources'))
-  addLocation(serverInventoryId, () => import('@hcengineering/server-inventory-resources'))
-  addLocation(serverLeadId, () => import('@hcengineering/server-lead-resources'))
-  addLocation(serverRecruitId, () => import('@hcengineering/server-recruit-resources'))
-  addLocation(serverTaskId, () => import('@hcengineering/server-task-resources'))
-  addLocation(serverTrackerId, () => import('@hcengineering/server-tracker-resources'))
-  addLocation(serverTagsId, () => import('@hcengineering/server-tags-resources'))
-  addLocation(serverCardId, () => import('@hcengineering/server-card-resources'))
-  addLocation(serverCalendarId, () => import('@hcengineering/server-calendar-resources'))
-  addLocation(serverGmailId, () => import('@hcengineering/server-gmail-resources'))
-  addLocation(serverTelegramId, () => import('@hcengineering/server-telegram-resources'))
-  addLocation(serverRequestId, () => import('@hcengineering/server-request-resources'))
-  addLocation(serverViewId, () => import('@hcengineering/server-view-resources'))
-  addLocation(serverHrId, () => import('@hcengineering/server-hr-resources'))
-  addLocation(serverLoveId, () => import('@hcengineering/server-love-resources'))
-  addLocation(serverGuestId, () => import('@hcengineering/server-guest-resources'))
-  addLocation(serverDocumentId, () => import('@hcengineering/server-document-resources'))
-  addLocation(serverTimeId, () => import('@hcengineering/server-time-resources'))
-  addLocation(serverDriveId, () => import('@hcengineering/server-drive-resources'))
-  addLocation(serverDocumentsId, () => import('@hcengineering/server-controlled-documents-resources'))
-  addLocation(serverTrainingId, () => import('@hcengineering/server-training-resources'))
-  addLocation(serverGithubId, () => import('@hcengineering/server-github-resources'))
-  addLocation(serverAiBotId, () => import('@hcengineering/server-ai-bot-resources'))
-  addLocation(serverProcessId, () => import('@hcengineering/server-process-resources'))
+  addLocation(serverActivityId, () => import('@hanzo/server-activity-resources'))
+  addLocation(serverAttachmentId, () => import('@hanzo/server-attachment-resources'))
+  addLocation(serverCollaborationId, () => import('@hanzo/server-collaboration-resources'))
+  addLocation(serverContactId, () => import('@hanzo/server-contact-resources'))
+  addLocation(serverNotificationId, () => import('@hanzo/server-notification-resources'))
+  addLocation(serverSettingId, () => import('@hanzo/server-setting-resources'))
+  addLocation(serverChunterId, () => import('@hanzo/server-chunter-resources'))
+  addLocation(serverInventoryId, () => import('@hanzo/server-inventory-resources'))
+  addLocation(serverLeadId, () => import('@hanzo/server-lead-resources'))
+  addLocation(serverRecruitId, () => import('@hanzo/server-recruit-resources'))
+  addLocation(serverTaskId, () => import('@hanzo/server-task-resources'))
+  addLocation(serverTrackerId, () => import('@hanzo/server-tracker-resources'))
+  addLocation(serverTagsId, () => import('@hanzo/server-tags-resources'))
+  addLocation(serverCardId, () => import('@hanzo/server-card-resources'))
+  addLocation(serverCalendarId, () => import('@hanzo/server-calendar-resources'))
+  addLocation(serverGmailId, () => import('@hanzo/server-gmail-resources'))
+  addLocation(serverTelegramId, () => import('@hanzo/server-telegram-resources'))
+  addLocation(serverRequestId, () => import('@hanzo/server-request-resources'))
+  addLocation(serverViewId, () => import('@hanzo/server-view-resources'))
+  addLocation(serverHrId, () => import('@hanzo/server-hr-resources'))
+  addLocation(serverLoveId, () => import('@hanzo/server-love-resources'))
+  addLocation(serverGuestId, () => import('@hanzo/server-guest-resources'))
+  addLocation(serverDocumentId, () => import('@hanzo/server-document-resources'))
+  addLocation(serverTimeId, () => import('@hanzo/server-time-resources'))
+  addLocation(serverDriveId, () => import('@hanzo/server-drive-resources'))
+  addLocation(serverDocumentsId, () => import('@hanzo/server-controlled-documents-resources'))
+  addLocation(serverTrainingId, () => import('@hanzo/server-training-resources'))
+  addLocation(serverGithubId, () => import('@hanzo/server-github-resources'))
+  addLocation(serverAiBotId, () => import('@hanzo/server-ai-bot-resources'))
+  addLocation(serverProcessId, () => import('@hanzo/server-process-resources'))
 }

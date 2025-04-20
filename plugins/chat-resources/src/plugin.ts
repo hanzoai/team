@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import chat, { chatId } from '@hcengineering/chat'
-import { mergeIds } from '@hcengineering/platform'
-import type { AnyComponent } from '@hcengineering/ui'
+import chat, { chatId } from '@hanzo/chat'
+import { mergeIds } from '@hanzo/platform'
+import type { AnyComponent } from '@hanzo/ui'
 
 export default mergeIds(chatId, chat, {
   component: {

@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import contact from '@hcengineering/contact'
-import core, { type Class, type Doc } from '@hcengineering/core'
-import serverCore, { type ObjectDDParticipant } from '@hcengineering/server-core'
-import serverTelegram from '@hcengineering/server-telegram'
-import telegram from '@hcengineering/telegram'
-import notification from '@hcengineering/notification'
-import serverNotification from '@hcengineering/server-notification'
-import serverTemplates from '@hcengineering/server-templates'
-import templates from '@hcengineering/templates'
+import contact from '@hanzo/contact'
+import core, { type Class, type Doc } from '@hanzo/core'
+import serverCore, { type ObjectDDParticipant } from '@hanzo/server-core'
+import serverTelegram from '@hanzo/server-telegram'
+import telegram from '@hanzo/telegram'
+import notification from '@hanzo/notification'
+import serverNotification from '@hanzo/server-notification'
+import serverTemplates from '@hanzo/server-templates'
+import templates from '@hanzo/templates'
 
-export { serverTelegramId } from '@hcengineering/server-telegram'
+export { serverTelegramId } from '@hanzo/server-telegram'
 
 export function createModel (builder: Builder): void {
   builder.mixin<Class<Doc>, ObjectDDParticipant>(

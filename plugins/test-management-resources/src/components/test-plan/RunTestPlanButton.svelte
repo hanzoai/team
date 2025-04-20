@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { Ref } from '@hcengineering/core'
-  import { Button, location } from '@hcengineering/ui'
-  import type { TestPlan } from '@hcengineering/test-management'
-  import testManagement from '@hcengineering/test-management'
+  import { Ref } from '@hanzo/core'
+  import { Button, location } from '@hanzo/ui'
+  import type { TestPlan } from '@hanzo/test-management'
+  import testManagement from '@hanzo/test-management'
 
   import { showCreateTestRunPanel } from '../../utils'
   import { getTestPlanIdFromLocation } from '../../navigation'

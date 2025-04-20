@@ -13,14 +13,14 @@
  // limitations under the License.
  -->
 <script lang="ts">
-  import attachment, { Attachment } from '@hcengineering/attachment'
-  import core, { AttachedData, Doc, makeCollabId, Ref, SortingOrder } from '@hcengineering/core'
-  import { DraftController, draftsStore, getClient, deleteFile, createMarkup } from '@hcengineering/presentation'
-  import tags from '@hcengineering/tags'
-  import { makeRank } from '@hcengineering/task'
-  import { isEmptyMarkup } from '@hcengineering/text'
-  import { Component, Issue, IssueDraft, IssueParentInfo, Milestone, Project } from '@hcengineering/tracker'
-  import { Button, ExpandCollapse, Scroller } from '@hcengineering/ui'
+  import attachment, { Attachment } from '@hanzo/attachment'
+  import core, { AttachedData, Doc, makeCollabId, Ref, SortingOrder } from '@hanzo/core'
+  import { DraftController, draftsStore, getClient, deleteFile, createMarkup } from '@hanzo/presentation'
+  import tags from '@hanzo/tags'
+  import { makeRank } from '@hanzo/task'
+  import { isEmptyMarkup } from '@hanzo/text'
+  import { Component, Issue, IssueDraft, IssueParentInfo, Milestone, Project } from '@hanzo/tracker'
+  import { Button, ExpandCollapse, Scroller } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
   import tracker from '../plugin'
   import Collapsed from './icons/Collapsed.svelte'

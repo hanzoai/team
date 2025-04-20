@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person, formatName } from '@hcengineering/contact'
-  import { Avatar, personByIdStore } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
-  import { Loading } from '@hcengineering/ui'
+  import { Person, formatName } from '@hanzo/contact'
+  import { Avatar, personByIdStore } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
+  import { Loading } from '@hanzo/ui'
 
   import { currentRoomAudioLevels } from '../utils'
   import MicDisabled from './icons/MicDisabled.svelte'

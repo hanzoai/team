@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import { Milestone } from '@hcengineering/tracker'
+  import { WithLookup } from '@hanzo/core'
+  import { Milestone } from '@hanzo/tracker'
   import {
     Icon,
     getPlatformAvatarColorDef,
     getPlatformAvatarColorForTextDef,
     themeStore,
     tooltip
-  } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import tracker from '../../plugin'

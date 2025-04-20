@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { Person, type Employee } from '@hcengineering/contact'
-import { type PersonId, type Ref, type TxCUD } from '@hcengineering/core'
-import type { NotificationType } from '@hcengineering/notification'
-import type { TriggerControl } from '@hcengineering/server-core'
-import type { TrainingRequest } from '@hcengineering/training'
+import { Person, type Employee } from '@hanzo/contact'
+import { type PersonId, type Ref, type TxCUD } from '@hanzo/core'
+import type { NotificationType } from '@hanzo/notification'
+import type { TriggerControl } from '@hanzo/server-core'
+import type { TrainingRequest } from '@hanzo/training'
 import { isTxCreateDoc } from '../utils/isTxCreateDoc'
 import { isTxUpdateDoc } from '../utils/isTxUpdateDoc'
 

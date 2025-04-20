@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MeetingMinutes } from '@hcengineering/love'
-  import { ObjectPresenter, openDoc } from '@hcengineering/view-resources'
-  import view from '@hcengineering/view'
-  import { ActionIcon } from '@hcengineering/ui'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import type { Doc } from '@hcengineering/core'
+  import { MeetingMinutes } from '@hanzo/love'
+  import { ObjectPresenter, openDoc } from '@hanzo/view-resources'
+  import view from '@hanzo/view'
+  import { ActionIcon } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import type { Doc } from '@hanzo/core'
 
   export let object: MeetingMinutes
 

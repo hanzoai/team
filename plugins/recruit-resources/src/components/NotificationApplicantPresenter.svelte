@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getName } from '@hcengineering/contact'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Applicant, Candidate, Vacancy } from '@hcengineering/recruit'
+  import { getName } from '@hanzo/contact'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Applicant, Candidate, Vacancy } from '@hanzo/recruit'
   import recruit from '../plugin'
 
   export let value: Applicant

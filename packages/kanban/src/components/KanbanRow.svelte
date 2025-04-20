@@ -24,12 +24,12 @@
     Ref,
     Space,
     toIdMap
-  } from '@hcengineering/core'
-  import ui, { Button, IconMoreH, Lazy, mouseAttractor } from '@hcengineering/ui'
+  } from '@hanzo/core'
+  import ui, { Button, IconMoreH, Lazy, mouseAttractor } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { slide } from 'svelte/transition'
   import { CardDragEvent, DocWithRank, Item } from '../types'
-  import { createQuery } from '@hcengineering/presentation'
+  import { createQuery } from '@hanzo/presentation'
 
   export let stateObjects: Item[]
   export let isDragging: boolean

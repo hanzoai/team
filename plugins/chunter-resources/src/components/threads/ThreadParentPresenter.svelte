@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityMessagePresenter } from '@hcengineering/activity-resources'
-  import { ActivityMessage } from '@hcengineering/activity'
+  import { ActivityMessagePresenter } from '@hanzo/activity-resources'
+  import { ActivityMessage } from '@hanzo/activity'
 
   export let message: ActivityMessage
   export let readonly = false

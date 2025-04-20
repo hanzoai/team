@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import activity, { DocUpdateMessage } from '@hcengineering/activity'
-import { Analytics } from '@hcengineering/analytics'
-import { loadCollabJson, loadCollabYdoc, saveCollabJson, saveCollabYdoc } from '@hcengineering/collaboration'
-import { decodeDocumentId } from '@hcengineering/collaborator-client'
-import core, { AttachedData, MeasureContext, Ref, Space, TxOperations } from '@hcengineering/core'
-import { StorageAdapter } from '@hcengineering/server-core'
-import { areEqualMarkups } from '@hcengineering/text'
-import { markupToYDoc } from '@hcengineering/text-ydoc'
+import activity, { DocUpdateMessage } from '@hanzo/activity'
+import { Analytics } from '@hanzo/analytics'
+import { loadCollabJson, loadCollabYdoc, saveCollabJson, saveCollabYdoc } from '@hanzo/collaboration'
+import { decodeDocumentId } from '@hanzo/collaborator-client'
+import core, { AttachedData, MeasureContext, Ref, Space, TxOperations } from '@hanzo/core'
+import { StorageAdapter } from '@hanzo/server-core'
+import { areEqualMarkups } from '@hanzo/text'
+import { markupToYDoc } from '@hanzo/text-ydoc'
 import { Doc as YDoc } from 'yjs'
 
 import { Context } from '../context'

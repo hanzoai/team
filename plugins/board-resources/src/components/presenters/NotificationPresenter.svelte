@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { Icon, IconSize } from '@hcengineering/ui'
+  import { Doc } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { Icon, IconSize } from '@hanzo/ui'
 
   export let object: Doc
   export let size: IconSize = 'small'

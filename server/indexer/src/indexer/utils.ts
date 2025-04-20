@@ -22,11 +22,11 @@ import {
   type Hierarchy,
   type Ref,
   type Space
-} from '@hcengineering/core'
-import { type IndexedDoc } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { type IndexedDoc } from '@hanzo/server-core'
 import { type FullTextPipeline } from './types'
 
-export { docKey, isFullTextAttribute } from '@hcengineering/core'
+export { docKey, isFullTextAttribute } from '@hanzo/core'
 
 /**
  * @public

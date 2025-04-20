@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, Space } from '@hcengineering/core'
-  import { Label, Section, Scroller } from '@hcengineering/ui'
-  import { Table, ViewletsSettingButton } from '@hcengineering/view-resources'
-  import { Viewlet, ViewletPreference } from '@hcengineering/view'
+  import type { Class, Doc, Ref, Space } from '@hanzo/core'
+  import { Label, Section, Scroller } from '@hanzo/ui'
+  import { Table, ViewletsSettingButton } from '@hanzo/view-resources'
+  import { Viewlet, ViewletPreference } from '@hanzo/view'
 
   import love from '../plugin'
 

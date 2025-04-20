@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref, Blob } from '@hcengineering/core'
-  import { Button } from '@hcengineering/ui'
+  import type { Ref, Blob } from '@hanzo/core'
+  import { Button } from '@hanzo/ui'
 
   import { getFileUrl } from '../file'
   import Download from './icons/Download.svelte'

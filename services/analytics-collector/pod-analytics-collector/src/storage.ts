@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MongoClientReference, getMongoClient } from '@hcengineering/mongo'
+import { MongoClientReference, getMongoClient } from '@hanzo/mongo'
 import { MongoClient } from 'mongodb'
 
 import config from './config'

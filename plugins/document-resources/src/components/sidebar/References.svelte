@@ -15,12 +15,12 @@
 //
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { Document } from '@hcengineering/document'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Label, Lazy, Scroller } from '@hcengineering/ui'
-  import activity, { ActivityReference } from '@hcengineering/activity'
-  import { ActivityReferencePresenter } from '@hcengineering/activity-resources'
+  import { Ref } from '@hanzo/core'
+  import { Document } from '@hanzo/document'
+  import { createQuery } from '@hanzo/presentation'
+  import { Label, Lazy, Scroller } from '@hanzo/ui'
+  import activity, { ActivityReference } from '@hanzo/activity'
+  import { ActivityReferencePresenter } from '@hanzo/activity-resources'
 
   import document from '../../plugin'
 

@@ -2,10 +2,10 @@
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 
-import training, { type Training, trainingId, type TrainingRequest } from '@hcengineering/training'
-import { mergeIds, type Resource } from '@hcengineering/platform'
+import training, { type Training, trainingId, type TrainingRequest } from '@hanzo/training'
+import { mergeIds, type Resource } from '@hanzo/platform'
 import { type ComponentType } from 'svelte'
-import { type Ref } from '@hcengineering/core'
+import { type Ref } from '@hanzo/core'
 import {
   type Action,
   type GetAllValuesFunc,
@@ -14,7 +14,7 @@ import {
   type ViewActionAvailabilityFunction,
   type ViewActionFunction,
   type ViewletDescriptor
-} from '@hcengineering/view'
+} from '@hanzo/view'
 import type EmployeeEditor from './components/EmployeeEditor.svelte'
 import type IncomingRequestPresenter from './components/IncomingRequestPresenter.svelte'
 import type IncomingRequestStatePresenter from './components/IncomingRequestStatePresenter.svelte'

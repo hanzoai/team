@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { AttributesBar, KeyedAttribute, createQuery, getAttribute, getClient } from '@hcengineering/presentation'
-  import setting, { settingId } from '@hcengineering/setting'
-  import { Button, Label, getCurrentResolvedLocation, navigate } from '@hcengineering/ui'
+  import core, { Class, Doc, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { AttributesBar, KeyedAttribute, createQuery, getAttribute, getClient } from '@hanzo/presentation'
+  import setting, { settingId } from '@hanzo/setting'
+  import { Button, Label, getCurrentResolvedLocation, navigate } from '@hanzo/ui'
   import { getFiltredKeys, isCollectionAttr, restrictionStore } from '../utils'
 
   export let object: Doc | Record<string, any>

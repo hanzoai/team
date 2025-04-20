@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { DocumentQuery, Ref, Space, WithLookup } from '@hcengineering/core'
-  import { IntlString, translateCB } from '@hcengineering/platform'
-  import { IModeSelector, themeStore } from '@hcengineering/ui'
-  import { ViewOptions, Viewlet } from '@hcengineering/view'
-  import { FilterBar, SpaceHeader, ViewletContentView, ViewletSettingButton } from '@hcengineering/view-resources'
-  import { GithubPullRequest } from '@hcengineering/github'
+  import { DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
+  import { IntlString, translateCB } from '@hanzo/platform'
+  import { IModeSelector, themeStore } from '@hanzo/ui'
+  import { ViewOptions, Viewlet } from '@hanzo/view'
+  import { FilterBar, SpaceHeader, ViewletContentView, ViewletSettingButton } from '@hanzo/view-resources'
+  import { GithubPullRequest } from '@hanzo/github'
   import github from '../plugin'
 
   export let space: Ref<Space> | undefined = undefined

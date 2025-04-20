@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { personByIdStore, Avatar } from '@hcengineering/contact-resources'
-  import { Doc, IdMap, Ref, WithLookup } from '@hcengineering/core'
-  import { Label, TimeSince } from '@hcengineering/ui'
-  import activity, { ActivityMessage } from '@hcengineering/activity'
+  import { Person } from '@hanzo/contact'
+  import { personByIdStore, Avatar } from '@hanzo/contact-resources'
+  import { Doc, IdMap, Ref, WithLookup } from '@hanzo/core'
+  import { Label, TimeSince } from '@hanzo/ui'
+  import activity, { ActivityMessage } from '@hanzo/activity'
   import notification, {
     ActivityInboxNotification,
     DocNotifyContext,
     InboxNotification,
     InboxNotificationsClient
-  } from '@hcengineering/notification'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
+  } from '@hanzo/notification'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
 
   export let object: ActivityMessage
   export let embedded = false

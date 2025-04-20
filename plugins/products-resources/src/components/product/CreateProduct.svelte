@@ -19,11 +19,11 @@
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
 
-  import { type DocumentSpaceType } from '@hcengineering/controlled-documents'
-  import { type Product, ProductVersionState } from '@hcengineering/products'
-  import { type Attachment } from '@hcengineering/attachment'
-  import { AttachmentPresenter, AttachmentStyledBox } from '@hcengineering/attachment-resources'
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { type DocumentSpaceType } from '@hanzo/controlled-documents'
+  import { type Product, ProductVersionState } from '@hanzo/products'
+  import { type Attachment } from '@hanzo/attachment'
+  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
+  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
   import core, {
     AccountUuid,
     Data,
@@ -36,9 +36,9 @@
     generateId,
     getCurrentAccount,
     notEmpty
-  } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Card, MessageBox, createQuery, getClient } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Card, MessageBox, createQuery, getClient } from '@hanzo/presentation'
   import {
     Button,
     DropdownLabelsIntl,
@@ -50,9 +50,9 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { IconPicker, SpaceTypeSelector } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { IconPicker, SpaceTypeSelector } from '@hanzo/view-resources'
 
   import products from '../../plugin'
 

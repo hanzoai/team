@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Process, Step } from '@hcengineering/process'
-  import { tooltip, Component, Icon, IconError, Label } from '@hcengineering/ui'
+  import { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Process, Step } from '@hanzo/process'
+  import { tooltip, Component, Icon, IconError, Label } from '@hanzo/ui'
   import plugin from '../plugin'
-  import { translate } from '@hcengineering/platform'
+  import { translate } from '@hanzo/platform'
 
   export let process: Process
   export let value: Step<Doc>

@@ -24,7 +24,7 @@
     SelectPopupValueType,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import IconEraser from './icons/Eraser.svelte'
   import IconMove from './icons/Move.svelte'

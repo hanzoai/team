@@ -23,10 +23,10 @@ import {
   type MeasureContext,
   type Ref,
   type StorageIterator
-} from '@hcengineering/core'
-import { PlatformError, unknownStatus } from '@hcengineering/platform'
-import type { Middleware, PipelineContext } from '@hcengineering/server-core'
-import { BaseMiddleware } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { PlatformError, unknownStatus } from '@hanzo/platform'
+import type { Middleware, PipelineContext } from '@hanzo/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
 
 /**
  * Will perform a find inside adapters

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,16 +14,16 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import serverCore from '@hcengineering/server-core'
-import core from '@hcengineering/core'
-import serverNotification from '@hcengineering/server-notification'
-import serverSetting from '@hcengineering/server-setting'
-import setting from '@hcengineering/setting'
-import serverTemplates from '@hcengineering/server-templates'
-import templates from '@hcengineering/templates'
+import { type Builder } from '@hanzo/model'
+import serverCore from '@hanzo/server-core'
+import core from '@hanzo/core'
+import serverNotification from '@hanzo/server-notification'
+import serverSetting from '@hanzo/server-setting'
+import setting from '@hanzo/setting'
+import serverTemplates from '@hanzo/server-templates'
+import templates from '@hanzo/templates'
 
-export { serverSettingId } from '@hcengineering/server-setting'
+export { serverSettingId } from '@hanzo/server-setting'
 
 export function createModel (builder: Builder): void {
   builder.mixin(setting.class.Integration, core.class.Class, serverNotification.mixin.HTMLPresenter, {

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { IntlString } from '@hcengineering/platform'
-  import { CheckBox, Label, MiniToggle, resizeObserver } from '@hcengineering/ui'
-  import { Ref } from '@hcengineering/core'
-  import { ActivityMessagesFilter } from '@hcengineering/activity'
+  import { IntlString } from '@hanzo/platform'
+  import { CheckBox, Label, MiniToggle, resizeObserver } from '@hanzo/ui'
+  import { Ref } from '@hanzo/core'
+  import { ActivityMessagesFilter } from '@hanzo/activity'
 
   import activity from '../plugin'
 

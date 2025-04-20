@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type Blob, type CollaborativeDoc, type Ref, generateId } from '@hcengineering/core'
-import { encodeDocumentId } from '@hcengineering/collaborator-client'
-import { getMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
-import textEditor from '@hcengineering/text-editor'
+import { type Blob, type CollaborativeDoc, type Ref, generateId } from '@hanzo/core'
+import { encodeDocumentId } from '@hanzo/collaborator-client'
+import { getMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
+import textEditor from '@hanzo/text-editor'
 import { Doc as Ydoc } from 'yjs'
 
 import { CloudCollabProvider } from './cloud'

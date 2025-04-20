@@ -2,9 +2,9 @@
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 
-import { findQuestions, focusActionWithAvailability, releaseQuestion } from '@hcengineering/questions-resources'
-import { type Training, TrainingState } from '@hcengineering/training'
-import { getClient } from '@hcengineering/presentation'
+import { findQuestions, focusActionWithAvailability, releaseQuestion } from '@hanzo/questions-resources'
+import { type Training, TrainingState } from '@hanzo/training'
+import { getClient } from '@hanzo/presentation'
 import { getCurrentEmployeeRef, canReleaseTraining } from '../utils'
 
 export const trainingReleaseAction = focusActionWithAvailability<Training>(

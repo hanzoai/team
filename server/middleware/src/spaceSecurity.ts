@@ -47,15 +47,15 @@ import core, {
   systemAccountUuid,
   toFindResult,
   type SessionData
-} from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
+} from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
 import {
   BaseMiddleware,
   Middleware,
   ServerFindOptions,
   TxMiddlewareResult,
   type PipelineContext
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import { isOwner, isSystem } from './utils'
 type SpaceWithMembers = Pick<Space, '_id' | 'members' | 'private' | '_class' | 'archived'>
 

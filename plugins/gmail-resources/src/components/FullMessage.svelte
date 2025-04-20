@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,17 +14,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { NewMessage, SharedMessage } from '@hcengineering/gmail'
-  import Button from '@hcengineering/ui/src/components/Button.svelte'
+  import { NewMessage, SharedMessage } from '@hanzo/gmail'
+  import Button from '@hanzo/ui/src/components/Button.svelte'
   import { createEventDispatcher } from 'svelte'
-  import { IconArrowLeft, Label, Scroller, tooltip } from '@hcengineering/ui'
+  import { IconArrowLeft, Label, Scroller, tooltip } from '@hanzo/ui'
   import gmail from '../plugin'
   import FullMessageContent from './FullMessageContent.svelte'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import attachment, { Attachment } from '@hcengineering/attachment'
-  import { AttachmentPresenter } from '@hcengineering/attachment-resources'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Ref } from '@hcengineering/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import attachment, { Attachment } from '@hanzo/attachment'
+  import { AttachmentPresenter } from '@hanzo/attachment-resources'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Ref } from '@hanzo/core'
 
   export let currentMessage: SharedMessage
   export let newMessage: boolean

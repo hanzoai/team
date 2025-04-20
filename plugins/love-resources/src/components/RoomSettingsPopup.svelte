@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Modal, NavItem } from '@hcengineering/ui'
-  import presentation from '@hcengineering/presentation'
-  import { Room } from '@hcengineering/love'
+  import { Modal, NavItem } from '@hanzo/ui'
+  import presentation from '@hanzo/presentation'
+  import { Room } from '@hanzo/love'
   import { createEventDispatcher } from 'svelte'
-  import { IntlString } from '@hcengineering/platform'
+  import { IntlString } from '@hanzo/platform'
 
   import RoomTranscriptionSettings from './RoomTranscriptionSettings.svelte'
   import love from '../plugin'

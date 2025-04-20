@@ -1,11 +1,11 @@
 <script lang="ts">
   import GithubRepositories from './GithubRepositories.svelte'
 
-  import { WithLookup } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Project } from '@hcengineering/tracker'
-  import { Scroller } from '@hcengineering/ui'
-  import { GithubIntegration } from '@hcengineering/github'
+  import { WithLookup } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Project } from '@hanzo/tracker'
+  import { Scroller } from '@hanzo/ui'
+  import { GithubIntegration } from '@hanzo/github'
   import github from '../plugin'
 
   export let integrations: WithLookup<GithubIntegration>[] = []

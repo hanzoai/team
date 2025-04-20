@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { State } from '@hcengineering/task'
-  import { Button, getPlatformColorDef, getPlatformColorForTextDef, IconMoreV, themeStore } from '@hcengineering/ui'
-  import { showMenu } from '@hcengineering/view-resources'
+  import { State } from '@hanzo/task'
+  import { Button, getPlatformColorDef, getPlatformColorForTextDef, IconMoreV, themeStore } from '@hanzo/ui'
+  import { showMenu } from '@hanzo/view-resources'
   export let state: State
 </script>
 

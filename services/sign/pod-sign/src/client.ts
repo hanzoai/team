@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { type Client } from '@hcengineering/core'
-import { getTransactorEndpoint } from '@hcengineering/server-client'
-import { createClient } from '@hcengineering/server-client/src'
+import { type Client } from '@hanzo/core'
+import { getTransactorEndpoint } from '@hanzo/server-client'
+import { createClient } from '@hanzo/server-client/src'
 
 export async function getClient (token: string): Promise<Client> {
   const endpoint = await getTransactorEndpoint(token)

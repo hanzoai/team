@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { RecurringRule, getWeekday } from '@hcengineering/calendar'
+  import { RecurringRule, getWeekday } from '@hanzo/calendar'
   import ui, {
     Button,
     CircleButton,
@@ -24,11 +24,11 @@
     Label,
     NumberInput,
     RadioButton
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
   import DateEditor from './DateEditor.svelte'
-  import { Timestamp } from '@hcengineering/core'
+  import { Timestamp } from '@hanzo/core'
 
   export let rules: RecurringRule[]
   export let startDate: Timestamp

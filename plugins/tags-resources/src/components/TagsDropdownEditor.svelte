@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { AttachedDoc, Class, Collection, Doc, Ref } from '@hcengineering/core'
-  import { IntlString, translateCB } from '@hcengineering/platform'
-  import { KeyedAttribute } from '@hcengineering/presentation'
-  import { TagElement, TagReference } from '@hcengineering/tags'
-  import type { ButtonKind, ButtonSize, TooltipAlignment } from '@hcengineering/ui'
-  import { Button, showPopup, themeStore } from '@hcengineering/ui'
+  import type { AttachedDoc, Class, Collection, Doc, Ref } from '@hanzo/core'
+  import { IntlString, translateCB } from '@hanzo/platform'
+  import { KeyedAttribute } from '@hanzo/presentation'
+  import { TagElement, TagReference } from '@hanzo/tags'
+  import type { ButtonKind, ButtonSize, TooltipAlignment } from '@hanzo/ui'
+  import { Button, showPopup, themeStore } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import TagsPopup from './TagsPopup.svelte'

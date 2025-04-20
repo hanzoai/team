@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import type { NotificationGroup, NotificationType } from '@hcengineering/notification'
-import { trainingId } from '@hcengineering/training'
-import training from '@hcengineering/training-resources/src/plugin'
-import { mergeIds, type Resource } from '@hcengineering/platform'
-import { type Doc, type Ref } from '@hcengineering/core'
-import { type Location, type ResolvedLocation } from '@hcengineering/ui/src/types'
-import { type Application } from '@hcengineering/workbench'
-import { type ActionCategory } from '@hcengineering/view'
+import type { NotificationGroup, NotificationType } from '@hanzo/notification'
+import { trainingId } from '@hanzo/training'
+import training from '@hanzo/training-resources/src/plugin'
+import { mergeIds, type Resource } from '@hanzo/platform'
+import { type Doc, type Ref } from '@hanzo/core'
+import { type Location, type ResolvedLocation } from '@hanzo/ui/src/types'
+import { type Application } from '@hanzo/workbench'
+import { type ActionCategory } from '@hanzo/view'
 
 export default mergeIds(trainingId, training, {
   app: {
@@ -43,7 +43,7 @@ export default mergeIds(trainingId, training, {
   //  For unknown reasons in plugins/*-resources we can declare component resources that depend on Svelte,
   //  but not function (incl. location resolver) resources that depend on UI (particularly on Location and ResolvedLocation).
   //  The build fails saying:
-  //    > The inferred type of 'default' cannot be named without a reference to '[..]/node_modules/@hcengineering/ui/src'.
+  //    > The inferred type of 'default' cannot be named without a reference to '[..]/node_modules/@hanzo/ui/src'.
   //    > This is likely not portable. A type annotation is necessary.
 
   function: {

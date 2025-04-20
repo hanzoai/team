@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { htmlToJSON } from '@hcengineering/text'
+  import { htmlToJSON } from '@hanzo/text'
   import Node from './markup/Node.svelte'
 
   export let value: string

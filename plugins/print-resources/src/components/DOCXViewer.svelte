@@ -4,11 +4,11 @@
 -->
 
 <script lang="ts">
-  import { type Blob, type BlobMetadata, type Ref } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { getFileUrl } from '@hcengineering/presentation'
-  import { EmbeddedPDF, Spinner, themeStore } from '@hcengineering/ui'
-  import { convertToHTML } from '@hcengineering/print'
+  import { type Blob, type BlobMetadata, type Ref } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { getFileUrl } from '@hanzo/presentation'
+  import { EmbeddedPDF, Spinner, themeStore } from '@hanzo/ui'
+  import { convertToHTML } from '@hanzo/print'
 
   export let value: Ref<Blob>
   export let name: string

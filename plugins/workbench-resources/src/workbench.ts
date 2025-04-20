@@ -20,10 +20,10 @@ import core, {
   getCurrentAccount,
   reduceCalls,
   type Ref
-} from '@hcengineering/core'
-import notification, { notificationId } from '@hcengineering/notification'
-import { type Asset, getMetadata, getResource, type IntlString, setMetadata, translate } from '@hcengineering/platform'
-import presentation, { configurationStore, getClient } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import notification, { notificationId } from '@hanzo/notification'
+import { type Asset, getMetadata, getResource, type IntlString, setMetadata, translate } from '@hanzo/platform'
+import presentation, { configurationStore, getClient } from '@hanzo/presentation'
 import {
   type AnyComponent,
   getCurrentLocation,
@@ -34,13 +34,13 @@ import {
   locationToUrl,
   navigate,
   parseLocation
-} from '@hcengineering/ui'
-import view from '@hcengineering/view'
-import { parseLinkId } from '@hcengineering/view-resources'
-import { type Application, workbenchId, type WorkbenchTab } from '@hcengineering/workbench'
+} from '@hanzo/ui'
+import view from '@hanzo/view'
+import { parseLinkId } from '@hanzo/view-resources'
+import { type Application, workbenchId, type WorkbenchTab } from '@hanzo/workbench'
 import { derived, get, writable } from 'svelte/store'
 
-import setting from '@hcengineering/setting'
+import setting from '@hanzo/setting'
 import workbench from './plugin'
 import { locationWorkspaceStore } from './utils'
 

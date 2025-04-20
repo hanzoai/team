@@ -23,12 +23,12 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   UserStatus
-} from '@hcengineering/core'
-import { TriggerControl } from '@hcengineering/server-core'
-import { getAccountBySocialKey } from '@hcengineering/server-contact'
-import { aiBotEmailSocialKey, AIEventRequest } from '@hcengineering/ai-bot'
-import chunter, { ChatMessage, DirectMessage, ThreadMessage } from '@hcengineering/chunter'
-import contact from '@hcengineering/contact'
+} from '@hanzo/core'
+import { TriggerControl } from '@hanzo/server-core'
+import { getAccountBySocialKey } from '@hanzo/server-contact'
+import { aiBotEmailSocialKey, AIEventRequest } from '@hanzo/ai-bot'
+import chunter, { ChatMessage, DirectMessage, ThreadMessage } from '@hanzo/chunter'
+import contact from '@hanzo/contact'
 
 import { createAccountRequest, hasAiEndpoint, sendAIEvents } from './utils'
 

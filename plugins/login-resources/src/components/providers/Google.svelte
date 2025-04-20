@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label } from '@hcengineering/ui'
+  import { Label } from '@hanzo/ui'
   import Google from '../icons/Google.svelte'
   import login from '../../plugin'
 </script>

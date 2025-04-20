@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Employee } from '@hcengineering/contact'
-import type { Ref } from '@hcengineering/core'
-import { type TrainingAttempt, TrainingAttemptState, type TrainingRequest } from '@hcengineering/training'
+import type { Employee } from '@hanzo/contact'
+import type { Ref } from '@hanzo/core'
+import { type TrainingAttempt, TrainingAttemptState, type TrainingRequest } from '@hanzo/training'
 
 export enum CompletionMapValueState {
   Passed,

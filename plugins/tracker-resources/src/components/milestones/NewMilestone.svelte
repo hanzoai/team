@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Data, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { Card, getClient, SpaceSelector } from '@hcengineering/presentation'
-  import { Milestone, MilestoneStatus, Project } from '@hcengineering/tracker'
-  import ui, { DatePresenter, EditBox } from '@hcengineering/ui'
-  import { StyledTextArea } from '@hcengineering/text-editor-resources'
+  import { Data, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { Card, getClient, SpaceSelector } from '@hanzo/presentation'
+  import { Milestone, MilestoneStatus, Project } from '@hanzo/tracker'
+  import ui, { DatePresenter, EditBox } from '@hanzo/ui'
+  import { StyledTextArea } from '@hanzo/text-editor-resources'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import MilestoneStatusEditor from './MilestoneStatusEditor.svelte'

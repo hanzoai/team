@@ -1,5 +1,5 @@
-import { AccountUuid, MeasureContext, PersonUuid, WorkspaceUuid } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
+import { AccountUuid, MeasureContext, PersonUuid, WorkspaceUuid } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
 import { decode, encode } from 'jwt-simple'
 import serverPlugin from './plugin'
 

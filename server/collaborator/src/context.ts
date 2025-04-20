@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Blob, Ref, generateId, type WorkspaceIds } from '@hcengineering/core'
-import { decodeToken } from '@hcengineering/server-token'
+import { Blob, Ref, generateId, type WorkspaceIds } from '@hanzo/core'
+import { decodeToken } from '@hanzo/server-token'
 import { onAuthenticatePayload } from '@hocuspocus/server'
 import { ClientFactory, simpleClientFactory } from './platform'
 

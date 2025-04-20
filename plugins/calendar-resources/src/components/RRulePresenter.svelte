@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { RecurringRule } from '@hcengineering/calendar'
-  import { Label, themeStore } from '@hcengineering/ui'
+  import { RecurringRule } from '@hanzo/calendar'
+  import { Label, themeStore } from '@hanzo/ui'
   import calendar from '../plugin'
-  import { IntlString, translate } from '@hcengineering/platform'
+  import { IntlString, translate } from '@hanzo/platform'
   import DateLocalePresenter from './DateLocalePresenter.svelte'
 
   export let rules: RecurringRule[] = []

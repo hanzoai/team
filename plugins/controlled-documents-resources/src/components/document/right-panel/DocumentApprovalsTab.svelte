@@ -5,13 +5,13 @@
     DocumentState,
     emptyBundle,
     extractValidationWorkflow
-  } from '@hcengineering/controlled-documents'
+  } from '@hanzo/controlled-documents'
 
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Label, Scroller } from '@hcengineering/ui'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Label, Scroller } from '@hanzo/ui'
 
-  import chunter, { ChatMessage } from '@hcengineering/chunter'
-  import { personRefByPersonIdStore } from '@hcengineering/contact-resources'
+  import chunter, { ChatMessage } from '@hanzo/chunter'
+  import { personRefByPersonIdStore } from '@hanzo/contact-resources'
   import documentsRes from '../../../plugin'
   import {
     $controlledDocument as controlledDocument,

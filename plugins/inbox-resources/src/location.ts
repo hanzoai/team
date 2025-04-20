@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Card } from '@hcengineering/card'
-import type { Ref } from '@hcengineering/core'
-import { navigate, type Location, getCurrentResolvedLocation } from '@hcengineering/ui'
-import { inboxId } from '@hcengineering/inbox'
+import { type Card } from '@hanzo/card'
+import type { Ref } from '@hanzo/core'
+import { navigate, type Location, getCurrentResolvedLocation } from '@hanzo/ui'
+import { inboxId } from '@hanzo/inbox'
 
 // Url: /inbox/{cardId}
 

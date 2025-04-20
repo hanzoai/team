@@ -1,6 +1,6 @@
-import { Doc, Tx } from '@hcengineering/core'
-import { Execution, ExecutionError, MethodParams } from '@hcengineering/process'
-import { TriggerControl } from '@hcengineering/server-core'
+import { Doc, Tx } from '@hanzo/core'
+import { Execution, ExecutionError, MethodParams } from '@hanzo/process'
+import { TriggerControl } from '@hanzo/server-core'
 
 export type ExecuteFunc = (
   params: MethodParams<Doc>,

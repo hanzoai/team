@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import contact, { type Employee, type Person } from '@hcengineering/contact'
+import contact, { type Employee, type Person } from '@hanzo/contact'
 import {
   AccountRole,
   type CollectionSize,
@@ -25,7 +25,7 @@ import {
   DOMAIN_TRANSIENT,
   DateRangeMode,
   IndexKind
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   type DevicesPreference,
   type Floor,
@@ -43,7 +43,7 @@ import {
   type RoomInfo,
   type RoomLanguage,
   type RoomType
-} from '@hcengineering/love'
+} from '@hanzo/love'
 import {
   type Builder,
   Collection,
@@ -60,24 +60,24 @@ import {
   TypeString,
   UX,
   TypeBoolean
-} from '@hcengineering/model'
-import calendar, { TEvent } from '@hcengineering/model-calendar'
-import core, { TAttachedDoc, TDoc } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import presentation from '@hcengineering/model-presentation'
-import view, { createAction, createAttributePresenter } from '@hcengineering/model-view'
-import notification from '@hcengineering/notification'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import workbench, { WidgetType } from '@hcengineering/workbench'
-import activity from '@hcengineering/activity'
-import chunter from '@hcengineering/chunter'
-import attachment from '@hcengineering/attachment'
-import time, { type ToDo, type Todoable } from '@hcengineering/time'
+} from '@hanzo/model'
+import calendar, { TEvent } from '@hanzo/model-calendar'
+import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import presentation from '@hanzo/model-presentation'
+import view, { createAction, createAttributePresenter } from '@hanzo/model-view'
+import notification from '@hanzo/notification'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import workbench, { WidgetType } from '@hanzo/workbench'
+import activity from '@hanzo/activity'
+import chunter from '@hanzo/chunter'
+import attachment from '@hanzo/attachment'
+import time, { type ToDo, type Todoable } from '@hanzo/time'
 
 import love from './plugin'
 
-export { loveId } from '@hcengineering/love'
+export { loveId } from '@hanzo/love'
 export * from './migration'
 export const DOMAIN_LOVE = 'love' as Domain
 export const DOMAIN_MEETING_MINUTES = 'meeting-minutes' as Domain

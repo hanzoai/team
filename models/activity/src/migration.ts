@@ -18,8 +18,8 @@ import {
   type ActivityMessage,
   type DocUpdateMessage,
   type Reaction
-} from '@hcengineering/activity'
-import contact from '@hcengineering/contact'
+} from '@hanzo/activity'
+import contact from '@hanzo/contact'
 import core, {
   type AccountUuid,
   type Class,
@@ -30,7 +30,7 @@ import core, {
   type PersonId,
   type Ref,
   type Space
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   type MigrateOperation,
   type MigrateUpdate,
@@ -39,15 +39,15 @@ import {
   type MigrationIterator,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hcengineering/model'
-import { htmlToMarkup } from '@hcengineering/text'
+} from '@hanzo/model'
+import { htmlToMarkup } from '@hanzo/text'
 import {
   getAccountUuidByOldAccount,
   getAccountUuidBySocialKey,
   getSocialIdBySocialKey,
   getSocialIdFromOldAccount,
   getSocialKeyByOldAccount
-} from '@hcengineering/model-core'
+} from '@hanzo/model-core'
 
 import { activityId, DOMAIN_ACTIVITY, DOMAIN_REACTION, DOMAIN_USER_MENTION } from './index'
 import activity from './plugin'

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, showPopup } from '@hcengineering/ui'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, showPopup } from '@hanzo/ui'
   import calendar from '../plugin'
   import CreateReminder from './CreateReminder.svelte'
   import DocRemindersPopup from './DocRemindersPopup.svelte'

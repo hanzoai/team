@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { EmployeeBox, personRefByPersonIdStore } from '@hcengineering/contact-resources'
-  import core, { Class, ClassifierKind, Doc, Mixin, Ref } from '@hcengineering/core'
-  import { AttributeBarEditor, createQuery, getClient, KeyedAttribute } from '@hcengineering/presentation'
+  import { EmployeeBox, personRefByPersonIdStore } from '@hanzo/contact-resources'
+  import core, { Class, ClassifierKind, Doc, Mixin, Ref } from '@hanzo/core'
+  import { AttributeBarEditor, createQuery, getClient, KeyedAttribute } from '@hanzo/presentation'
 
-  import tags from '@hcengineering/tags'
-  import type { Issue } from '@hcengineering/tracker'
-  import { Component, Label } from '@hcengineering/ui'
-  import { getFiltredKeys, isCollectionAttr, ObjectBox, restrictionStore } from '@hcengineering/view-resources'
+  import tags from '@hanzo/tags'
+  import type { Issue } from '@hanzo/tracker'
+  import { Component, Label } from '@hanzo/ui'
+  import { getFiltredKeys, isCollectionAttr, ObjectBox, restrictionStore } from '@hanzo/view-resources'
   import tracker from '../../../plugin'
   import ComponentEditor from '../../components/ComponentEditor.svelte'
   import MilestoneEditor from '../../milestones/MilestoneEditor.svelte'

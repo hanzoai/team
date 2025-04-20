@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/api-client",
-  "version": "0.6.0",
+  "name": "@hanzo/api-client",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "exports": {
     ".": {
@@ -16,8 +16,8 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/api-package",
+  "author": "Hanzo <dev@hanzo.ai>",
+  "template": "@hanzo/api-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -30,7 +30,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -50,19 +50,19 @@
     "@types/snappyjs": "^0.7.1"
   },
   "dependencies": {
-    "@hcengineering/account-client": "^0.6.0",
-    "@hcengineering/client": "^0.6.18",
-    "@hcengineering/client-resources": "^0.6.27",
-    "@hcengineering/collaborator-client": "^0.6.4",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/text": "^0.6.5",
-    "@hcengineering/text-markdown": "^0.6.0",
+    "@hanzo/account-client": "^0.6.6",
+    "@hanzo/client": "^0.6.23",
+    "@hanzo/client-resources": "^0.6.32",
+    "@hanzo/collaborator-client": "^0.6.9",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/text": "^0.6.10",
+    "@hanzo/text-markdown": "^0.6.5",
     "snappyjs": "^0.7.0"
   },
-  "repository": "https://github.com/hcengineering/platform",
+  "repository": "https://github.com/hanzoai/team-manager",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "optionalDependencies": {
     "ws": "^8.18.0"

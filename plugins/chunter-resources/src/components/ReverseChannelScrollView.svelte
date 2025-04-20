@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hcengineering/activity'
-  import { ActivityMessagePresenter, canGroupMessages, messageInFocus } from '@hcengineering/activity-resources'
-  import core, { Doc, generateId, getCurrentAccount, Ref, Space, Timestamp, Tx, TxCUD } from '@hcengineering/core'
-  import { DocNotifyContext } from '@hcengineering/notification'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { addTxListener, getClient, removeTxListener } from '@hcengineering/presentation'
-  import { ModernButton, Scroller } from '@hcengineering/ui'
+  import activity, { ActivityMessage } from '@hanzo/activity'
+  import { ActivityMessagePresenter, canGroupMessages, messageInFocus } from '@hanzo/activity-resources'
+  import core, { Doc, generateId, getCurrentAccount, Ref, Space, Timestamp, Tx, TxCUD } from '@hanzo/core'
+  import { DocNotifyContext } from '@hanzo/notification'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { addTxListener, getClient, removeTxListener } from '@hanzo/presentation'
+  import { ModernButton, Scroller } from '@hanzo/ui'
   import { afterUpdate, onDestroy, onMount, tick } from 'svelte'
 
   import { ChannelDataProvider, MessageMetadata } from '../channelDataProvider'

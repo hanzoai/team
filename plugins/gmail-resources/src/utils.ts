@@ -1,9 +1,9 @@
-// import { getName as getContactName } from '@hcengineering/contact'
-import contact, { type Channel, type Contact, type Employee } from '@hcengineering/contact'
-import { type Client, type Doc, type IdMap, type Ref } from '@hcengineering/core'
-import { type Message, type SharedMessage } from '@hcengineering/gmail'
-import { getClient } from '@hcengineering/presentation'
-import { type Integration } from '@hcengineering/setting'
+// import { getName as getContactName } from '@hanzo/contact'
+import contact, { type Channel, type Contact, type Employee } from '@hanzo/contact'
+import { type Client, type Doc, type IdMap, type Ref } from '@hanzo/core'
+import { type Message, type SharedMessage } from '@hanzo/gmail'
+import { getClient } from '@hanzo/presentation'
+import { type Integration } from '@hanzo/setting'
 import gmail from './plugin'
 
 export function getTime (time: number): string {

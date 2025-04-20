@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import { type Channel } from '@hcengineering/contact'
-import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hcengineering/core'
+import activity from '@hanzo/activity'
+import { type Channel } from '@hanzo/contact'
+import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hanzo/core'
 import {
   ArrOf,
   type Builder,
@@ -28,24 +28,24 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import contact from '@hcengineering/model-contact'
-import core, { TAttachedDoc } from '@hcengineering/model-core'
-import setting from '@hcengineering/setting'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import contact from '@hanzo/model-contact'
+import core, { TAttachedDoc } from '@hanzo/model-core'
+import setting from '@hanzo/setting'
 import type {
   NewTelegramMessage,
   SharedTelegramMessage,
   SharedTelegramMessages,
   TelegramMessage
-} from '@hcengineering/telegram'
-import templates from '@hcengineering/templates'
-import view from '@hcengineering/view'
+} from '@hanzo/telegram'
+import templates from '@hanzo/templates'
+import view from '@hanzo/view'
 
 import telegram from './plugin'
 import { defineNotifications } from './notification'
 
-export { telegramId } from '@hcengineering/telegram'
+export { telegramId } from '@hanzo/telegram'
 export { telegramOperation } from './migration'
 export { default } from './plugin'
 

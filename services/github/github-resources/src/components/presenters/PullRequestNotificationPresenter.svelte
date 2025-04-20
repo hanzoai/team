@@ -3,10 +3,10 @@
 //
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { createQuery, getClient } from '@hanzo/presentation'
 
-  import { Issue } from '@hcengineering/tracker'
-  import { GithubIssue, GithubProject, GithubPullRequest } from '@hcengineering/github'
+  import { Issue } from '@hanzo/tracker'
+  import { GithubIssue, GithubProject, GithubPullRequest } from '@hanzo/github'
   import github from '../../plugin'
 
   export let value: GithubPullRequest

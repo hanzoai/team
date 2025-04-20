@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { isEmptyMarkup, markupToJSON } from '@hcengineering/text'
+  import { isEmptyMarkup, markupToJSON } from '@hanzo/text'
   import Node from './markup/Node.svelte'
 
   export let message: string

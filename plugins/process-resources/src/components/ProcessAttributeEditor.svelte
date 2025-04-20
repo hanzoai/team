@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { getAttributeEditor, getAttributePresenterClass, getClient } from '@hcengineering/presentation'
-  import { Process, State } from '@hcengineering/process'
-  import { AnySvelteComponent } from '@hcengineering/ui'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { getAttributeEditor, getAttributePresenterClass, getClient } from '@hanzo/presentation'
+  import { Process, State } from '@hanzo/process'
+  import { AnySvelteComponent } from '@hanzo/ui'
   import { getContext } from '../utils'
   import ProcessAttribute from './ProcessAttribute.svelte'
 

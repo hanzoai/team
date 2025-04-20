@@ -1,4 +1,4 @@
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   PersonId,
   AnyAttribute,
@@ -15,16 +15,16 @@ import core, {
   TxOperations,
   Type,
   toIdMap
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubIssueStateReason,
   GithubProject
-} from '@hcengineering/github'
-import { PlatformError, unknownStatus } from '@hcengineering/platform'
-import task, { TaskType, calculateStatuses, createState, findStatusAttr } from '@hcengineering/task'
-import tracker, { IssueStatus } from '@hcengineering/tracker'
+} from '@hanzo/github'
+import { PlatformError, unknownStatus } from '@hanzo/platform'
+import task, { TaskType, calculateStatuses, createState, findStatusAttr } from '@hanzo/task'
+import tracker, { IssueStatus } from '@hanzo/tracker'
 import { deepEqual } from 'fast-equals'
 import { IntegrationManager, githubExternalSyncVersion } from '../types'
 import { GithubDataType } from './githubTypes'

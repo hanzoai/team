@@ -5,10 +5,10 @@
     DownloadAttachmentOperation,
     Fields,
     MappingOperation
-  } from '@hcengineering/bitrix'
-  import { AnyAttribute } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, DropdownTextItem, IconAdd, IconDelete, DropdownLabels } from '@hcengineering/ui'
+  } from '@hanzo/bitrix'
+  import { AnyAttribute } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, DropdownTextItem, IconAdd, IconDelete, DropdownLabels } from '@hanzo/ui'
   import bitrix from '../../plugin'
 
   export let mapping: BitrixEntityMapping

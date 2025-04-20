@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import { translateCB } from '@hcengineering/platform'
-  import { themeStore } from '@hcengineering/theme'
+  import type { IntlString } from '@hanzo/platform'
+  import { translateCB } from '@hanzo/platform'
+  import { themeStore } from '@hanzo/theme'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import plugin from '../plugin'
   import IconClose from './icons/Close.svelte'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 //
 
-import type { Contact } from '@hcengineering/contact'
-import type { Attribute, Class, MarkupBlobRef, Doc, Markup, Ref, Status, Timestamp } from '@hcengineering/core'
-import { Mixin } from '@hcengineering/core'
-import type { Asset, IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import type { Project, ProjectType, ProjectTypeDescriptor, Task, TaskType } from '@hcengineering/task'
+import type { Contact } from '@hanzo/contact'
+import type { Attribute, Class, MarkupBlobRef, Doc, Markup, Ref, Status, Timestamp } from '@hanzo/core'
+import { Mixin } from '@hanzo/core'
+import type { Asset, IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import type { Project, ProjectType, ProjectTypeDescriptor, Task, TaskType } from '@hanzo/task'
 
 /**
  * @public

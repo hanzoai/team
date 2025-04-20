@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022, 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,17 +14,17 @@
 // limitations under the License.
 //
 
-import { Employee, Person, PersonSpace } from '@hcengineering/contact'
-import { PersonId, Class, Doc, Mixin, Ref, Tx, TxCUD, AccountUuid } from '@hcengineering/core'
-import { NotificationContent, NotificationType } from '@hcengineering/notification'
-import { Metadata, Plugin, Resource, plugin } from '@hcengineering/platform'
-import type { TriggerControl, TriggerFunc } from '@hcengineering/server-core'
+import { Employee, Person, PersonSpace } from '@hanzo/contact'
+import { PersonId, Class, Doc, Mixin, Ref, Tx, TxCUD, AccountUuid } from '@hanzo/core'
+import { NotificationContent, NotificationType } from '@hanzo/notification'
+import { Metadata, Plugin, Resource, plugin } from '@hanzo/platform'
+import type { TriggerControl, TriggerFunc } from '@hanzo/server-core'
 
 /**
  * @public
  */
 export const serverNotificationId = 'server-notification' as Plugin
-export { DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hcengineering/notification'
+export { DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hanzo/notification'
 
 /**
  * @public

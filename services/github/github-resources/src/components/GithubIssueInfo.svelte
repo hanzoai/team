@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { Icon, Label } from '@hcengineering/ui'
-  import { GithubIntegrationRepository } from '@hcengineering/github'
+  import { Ref } from '@hanzo/core'
+  import { Icon, Label } from '@hanzo/ui'
+  import { GithubIntegrationRepository } from '@hanzo/github'
   import github from '../plugin'
   import { integrationRepositories } from './utils'
 

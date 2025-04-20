@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Ref, RefTo, Space, Status } from '@hcengineering/core'
-  import { translate } from '@hcengineering/platform'
-  import { getAttributePresenterClass, getClient } from '@hcengineering/presentation'
+  import core, { Class, Doc, Ref, RefTo, Space, Status } from '@hanzo/core'
+  import { translate } from '@hanzo/platform'
+  import { getAttributePresenterClass, getClient } from '@hanzo/presentation'
   import {
     AnyComponent,
     Component,
@@ -25,8 +25,8 @@
     Label,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import { Filter, FilterMode } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { Filter, FilterMode } from '@hanzo/view'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import view from '../../plugin'
   import ModeSelector from './ModeSelector.svelte'

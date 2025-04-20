@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyleBoxCollabEditor } from '@hcengineering/attachment-resources'
-  import { ActionContext, createQuery, getClient } from '@hcengineering/presentation'
-  import { type Class, type Ref } from '@hcengineering/core'
-  import { TestRun } from '@hcengineering/test-management'
-  import { Panel } from '@hcengineering/panel'
-  import { EditBox } from '@hcengineering/ui'
+  import { AttachmentStyleBoxCollabEditor } from '@hanzo/attachment-resources'
+  import { ActionContext, createQuery, getClient } from '@hanzo/presentation'
+  import { type Class, type Ref } from '@hanzo/core'
+  import { TestRun } from '@hanzo/test-management'
+  import { Panel } from '@hanzo/panel'
+  import { EditBox } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import testManagement from '../../plugin'

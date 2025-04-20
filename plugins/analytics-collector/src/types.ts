@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Channel } from '@hcengineering/chunter'
-import type { AccountUuid, WorkspaceUuid } from '@hcengineering/core'
+import { Channel } from '@hanzo/chunter'
+import type { AccountUuid, WorkspaceUuid } from '@hanzo/core'
 
 export enum AnalyticEventType {
   SetUser = 'setUser',

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { ChannelItem } from '@hcengineering/contact'
-import type { PersonId, AttachedDoc, Class, Doc, Ref, Timestamp } from '@hcengineering/core'
-import { NotificationProvider, NotificationType } from '@hcengineering/notification'
-import type { IntlString, Metadata, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import type { Handler, IntegrationType } from '@hcengineering/setting'
-import type { AnyComponent } from '@hcengineering/ui'
+import { ChannelItem } from '@hanzo/contact'
+import type { PersonId, AttachedDoc, Class, Doc, Ref, Timestamp } from '@hanzo/core'
+import { NotificationProvider, NotificationType } from '@hanzo/notification'
+import type { IntlString, Metadata, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import type { Handler, IntegrationType } from '@hanzo/setting'
+import type { AnyComponent } from '@hanzo/ui'
 
 /**
  * @public

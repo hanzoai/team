@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { createQuery, getClient } from '@hcengineering/presentation'
+import { createQuery, getClient } from '@hanzo/presentation'
 import {
   type PersonId,
   type Class,
@@ -25,12 +25,12 @@ import {
   SortingOrder,
   type Space,
   type Timestamp
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { derived, get, type Readable, writable } from 'svelte/store'
-import activity, { type ActivityMessage, type ActivityReference } from '@hcengineering/activity'
-import attachment from '@hcengineering/attachment'
-import { combineActivityMessages, sortActivityMessages } from '@hcengineering/activity-resources'
-import notification, { type DocNotifyContext } from '@hcengineering/notification'
+import activity, { type ActivityMessage, type ActivityReference } from '@hanzo/activity'
+import attachment from '@hanzo/attachment'
+import { combineActivityMessages, sortActivityMessages } from '@hanzo/activity-resources'
+import notification, { type DocNotifyContext } from '@hanzo/notification'
 
 export type LoadMode = 'forward' | 'backward'
 

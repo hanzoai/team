@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Person } from '@hcengineering/contact'
-  import { personByIdStore } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
-  import love, { Floor as FloorType, Office, Room, RoomInfo, isOffice } from '@hcengineering/love'
-  import { getClient } from '@hcengineering/presentation'
-  import { deviceOptionsStore as deviceInfo, getCurrentLocation, navigate } from '@hcengineering/ui'
+  import { Contact, Person } from '@hanzo/contact'
+  import { personByIdStore } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
+  import love, { Floor as FloorType, Office, Room, RoomInfo, isOffice } from '@hanzo/love'
+  import { getClient } from '@hanzo/presentation'
+  import { deviceOptionsStore as deviceInfo, getCurrentLocation, navigate } from '@hanzo/ui'
   import { onDestroy, onMount } from 'svelte'
   import {
     activeFloor,

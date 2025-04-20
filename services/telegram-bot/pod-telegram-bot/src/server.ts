@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { Token } from '@hcengineering/server-token'
+import { Token } from '@hanzo/server-token'
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
 import { type Server } from 'http'
-import { MeasureContext } from '@hcengineering/core'
+import { MeasureContext } from '@hanzo/core'
 import { Telegraf } from 'telegraf'
-import telegram from '@hcengineering/telegram'
-import { translate } from '@hcengineering/platform'
-import { extractToken } from '@hcengineering/server-client'
+import telegram from '@hanzo/telegram'
+import { translate } from '@hanzo/platform'
+import { extractToken } from '@hanzo/server-client'
 import { Readable } from 'stream'
 import type { ReadableStream } from 'stream/web'
 

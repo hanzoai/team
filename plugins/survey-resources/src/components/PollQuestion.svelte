@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { generateId } from '@hcengineering/core'
-  import { AnsweredQuestion, QuestionKind } from '@hcengineering/survey'
-  import { EditBox, Icon, Label, ModernCheckbox, ModernRadioButton, tooltip } from '@hcengineering/ui'
+  import { generateId } from '@hanzo/core'
+  import { AnsweredQuestion, QuestionKind } from '@hanzo/survey'
+  import { EditBox, Icon, Label, ModernCheckbox, ModernRadioButton, tooltip } from '@hanzo/ui'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import survey from '../plugin'

@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { IntlString, Metadata, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import type { Class, Ref } from '@hcengineering/core'
-import { Channel } from '@hcengineering/chunter'
+import type { IntlString, Metadata, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import type { Class, Ref } from '@hanzo/core'
+import { Channel } from '@hanzo/chunter'
 
 import { OnboardingChannel } from './types'
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 import core, {
   concatLink,
   Doc,
@@ -23,11 +23,11 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import recruit, { Applicant, recruitId, Vacancy } from '@hcengineering/recruit'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import recruit, { Applicant, recruitId, Vacancy } from '@hanzo/recruit'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
+import { workbenchId } from '@hanzo/workbench'
 
 function getSequenceId (doc: Vacancy | Applicant, control: TriggerControl): string {
   const hierarchy = control.hierarchy

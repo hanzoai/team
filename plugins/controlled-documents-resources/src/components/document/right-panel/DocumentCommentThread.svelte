@@ -4,9 +4,9 @@
 //
 -->
 <script lang="ts">
-  import documents, { DocumentComment } from '@hcengineering/controlled-documents'
-  import { ThreadView } from '@hcengineering/chunter-resources'
-  import { Button, IconCheckCircle, Label } from '@hcengineering/ui'
+  import documents, { DocumentComment } from '@hanzo/controlled-documents'
+  import { ThreadView } from '@hanzo/chunter-resources'
+  import { Button, IconCheckCircle, Label } from '@hanzo/ui'
   import {
     $canAddDocumentCommentsFeedback as canAddDocumentCommentsFeedback,
     resolveCommentFx

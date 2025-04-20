@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Issue, TimeSpendReport } from '@hcengineering/tracker'
-  import { Expandable, Label, Spinner, floorFractionDigits } from '@hcengineering/ui'
+  import { DocumentQuery, SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Issue, TimeSpendReport } from '@hanzo/tracker'
+  import { Expandable, Label, Spinner, floorFractionDigits } from '@hanzo/ui'
   import tracker from '../../../plugin'
   import TimePresenter from './TimePresenter.svelte'
   import TimeSpendReportsList from './TimeSpendReportsList.svelte'

@@ -2,9 +2,9 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/core'
-import documents from '@hcengineering/controlled-documents'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/core'
+import documents from '@hanzo/controlled-documents'
 
 export function definePermissions (builder: Builder): void {
   builder.createDoc(

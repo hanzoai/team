@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { Ref, Class, Data } from '@hcengineering/core'
-import { Preference } from '@hcengineering/preference'
-import { NotificationPreferencesGroup } from '@hcengineering/notification'
-import type { Asset, IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { AnyComponent } from '@hcengineering/ui'
+import { Ref, Class, Data } from '@hanzo/core'
+import { Preference } from '@hanzo/preference'
+import { NotificationPreferencesGroup } from '@hanzo/notification'
+import type { Asset, IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { AnyComponent } from '@hanzo/ui'
 
 /**
  * @public

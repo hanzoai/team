@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, Ref, TxOperations, getObjectValue } from '@hcengineering/core'
-  import { getClient, reduceCalls, updateAttribute } from '@hcengineering/presentation'
-  import { Label, Loading, mouseAttractor, resizeObserver } from '@hcengineering/ui'
-  import { AttributeModel, BuildModelKey, BuildModelOptions, Viewlet } from '@hcengineering/view'
+  import core, { AnyAttribute, Class, Doc, Ref, TxOperations, getObjectValue } from '@hanzo/core'
+  import { getClient, reduceCalls, updateAttribute } from '@hanzo/presentation'
+  import { Label, Loading, mouseAttractor, resizeObserver } from '@hanzo/ui'
+  import { AttributeModel, BuildModelKey, BuildModelOptions, Viewlet } from '@hanzo/view'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
   import { showMenu } from '../actions'

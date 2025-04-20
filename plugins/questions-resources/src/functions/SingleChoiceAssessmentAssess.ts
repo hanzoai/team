@@ -6,7 +6,7 @@ import type {
   AnswerDataAssessFunction,
   SingleChoiceAssessment,
   SingleChoiceAssessmentAnswer
-} from '@hcengineering/questions'
+} from '@hanzo/questions'
 
 /** @public */
 export const SingleChoiceAssessmentAssess: AnswerDataAssessFunction<

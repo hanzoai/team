@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { concatLink } from '@hcengineering/core'
-import { getMetadata, type Resources } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
+import { concatLink } from '@hanzo/core'
+import { getMetadata, type Resources } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
 import GmailWriteMessage from './components/activity/GmailWriteMessage.svelte'
 import GmailSharedMessage from './components/activity/GmailSharedMessage.svelte'
 import Configure from './components/Configure.svelte'
@@ -24,7 +24,7 @@ import Connect from './components/Connect.svelte'
 import IconGmail from './components/icons/GmailColor.svelte'
 import Main from './components/Main.svelte'
 import NewMessages from './components/NewMessages.svelte'
-import gmail from '@hcengineering/gmail'
+import gmail from '@hanzo/gmail'
 import { checkHasEmail, MessageTitleProvider } from './utils'
 
 export default async (): Promise<Resources> => ({

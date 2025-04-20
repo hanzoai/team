@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { EmployeePresenter, SystemAvatar, personByPersonIdStore } from '@hcengineering/contact-resources'
-  import Avatar from '@hcengineering/contact-resources/src/components/Avatar.svelte'
-  import core, { getDisplayTime } from '@hcengineering/core'
-  import { MessageViewer } from '@hcengineering/presentation'
-  import { Label } from '@hcengineering/ui'
-  import { GithubReviewComment } from '@hcengineering/github'
+  import { EmployeePresenter, SystemAvatar, personByPersonIdStore } from '@hanzo/contact-resources'
+  import Avatar from '@hanzo/contact-resources/src/components/Avatar.svelte'
+  import core, { getDisplayTime } from '@hanzo/core'
+  import { MessageViewer } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
+  import { GithubReviewComment } from '@hanzo/github'
 
   export let comment: GithubReviewComment
 

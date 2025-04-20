@@ -29,8 +29,8 @@ import core, {
   type TxResult,
   type TxWorkspaceEvent,
   type WorkspaceIds
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import { createHash, type Hash } from 'crypto'
 import fs from 'fs'
 import type { DbAdapter } from './adapter'

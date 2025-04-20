@@ -10,14 +10,14 @@ import core, {
   MeasureContext,
   Ref,
   TxOperations
-} from '@hcengineering/core'
-import { LiveQuery } from '@hcengineering/query'
+} from '@hanzo/core'
+import { LiveQuery } from '@hanzo/query'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubProject,
   GithubReviewComment
-} from '@hcengineering/github'
+} from '@hanzo/github'
 import {
   ContainerFocus,
   DocSyncManager,
@@ -30,7 +30,7 @@ import {
 import { ReviewComment as ReviewCommentExternalData, reviewCommentDetails } from './githubTypes'
 import { collectUpdate, deleteObjects, errorToObj, isGHWriteAllowed } from './utils'
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import { PullRequestReviewCommentCreatedEvent, PullRequestReviewCommentEvent } from '@octokit/webhooks-types'
 import config from '../config'
 import { syncConfig } from './syncConfig'

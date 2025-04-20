@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { UsersPopup } from '@hcengineering/contact-resources'
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { Department, Staff } from '@hcengineering/hr'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Button, IconAdd, Label, Scroller, Section, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { Table, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
+  import contact from '@hanzo/contact'
+  import { UsersPopup } from '@hanzo/contact-resources'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { Department, Staff } from '@hanzo/hr'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Button, IconAdd, Label, Scroller, Section, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { Viewlet, ViewletPreference } from '@hanzo/view'
+  import { Table, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
   import hr from '../plugin'
   import { addMember } from '../utils'
 

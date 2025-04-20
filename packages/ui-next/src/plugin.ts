@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { addLocation, type IntlString, type Plugin, plugin } from '@hcengineering/platform'
+import { addLocation, type IntlString, type Plugin, plugin } from '@hanzo/platform'
 
 export const uiNextId = 'ui-next' as Plugin
 

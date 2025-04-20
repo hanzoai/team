@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Asset, type IntlString } from '@hcengineering/platform'
-import { type Class, type Doc, type Ref, type UserStatus, type AccountUuid } from '@hcengineering/core'
-import { type DocNotifyContext } from '@hcengineering/notification'
-import { type AnySvelteComponent, type IconSize, type Action } from '@hcengineering/ui'
+import { type Asset, type IntlString } from '@hanzo/platform'
+import { type Class, type Doc, type Ref, type UserStatus, type AccountUuid } from '@hanzo/core'
+import { type DocNotifyContext } from '@hanzo/notification'
+import { type AnySvelteComponent, type IconSize, type Action } from '@hanzo/ui'
 
 export type ChatGroup = 'activity' | 'direct' | 'channels' | 'starred'
 

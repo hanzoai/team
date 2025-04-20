@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2023 Anticrm Platform Contributors.
+// Copyright © 2023 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, Markup } from '@hcengineering/core'
-  import { EmptyMarkup, MarkupNode, MarkupNodeType, markupToJSON } from '@hcengineering/text'
-  import { MarkupDiffViewer } from '@hcengineering/text-editor-resources'
-  import { ShowMore } from '@hcengineering/ui'
+  import { AnyAttribute, Markup } from '@hanzo/core'
+  import { EmptyMarkup, MarkupNode, MarkupNodeType, markupToJSON } from '@hanzo/text'
+  import { MarkupDiffViewer } from '@hanzo/text-editor-resources'
+  import { ShowMore } from '@hanzo/ui'
   import { deepEqual } from 'fast-equals'
 
   export let value: Markup | undefined

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { codeBlockOptions } from '@hcengineering/text'
+import { codeBlockOptions } from '@hanzo/text'
 import { type CodeBlockLowlightOptions, CodeBlockLowlight } from '@tiptap/extension-code-block-lowlight'
 import { type Node as ProseMirrorNode } from '@tiptap/pm/model'
 import { NodeSelection, Plugin, PluginKey, TextSelection, type Transaction } from '@tiptap/pm/state'
@@ -21,7 +21,7 @@ import { Decoration, DecorationSet, type EditorView } from '@tiptap/pm/view'
 import { createLowlight } from 'lowlight'
 import { isChangeEditable } from './editable'
 import type { MermaidConfig } from 'mermaid'
-import { getCurrentTheme, isThemeDark, themeStore } from '@hcengineering/theme'
+import { getCurrentTheme, isThemeDark, themeStore } from '@hanzo/theme'
 
 import { createRelativePositionFromTypeIndex, type RelativePosition, type Doc as YDoc } from 'yjs'
 import { mergeAttributes } from '@tiptap/core'

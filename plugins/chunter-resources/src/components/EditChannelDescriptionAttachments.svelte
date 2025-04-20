@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment, { Attachment } from '@hcengineering/attachment'
-  import { AttachmentPresenter, FileDownload } from '@hcengineering/attachment-resources'
-  import { ChunterSpace } from '@hcengineering/chunter'
-  import { Doc, SortingOrder, getCurrentAccount, type WithLookup } from '@hcengineering/core'
-  import { createQuery, getClient, getFileUrl } from '@hcengineering/presentation'
-  import { Icon, IconMoreV, Label, Menu, getCurrentResolvedLocation, navigate, showPopup } from '@hcengineering/ui'
+  import attachment, { Attachment } from '@hanzo/attachment'
+  import { AttachmentPresenter, FileDownload } from '@hanzo/attachment-resources'
+  import { ChunterSpace } from '@hanzo/chunter'
+  import { Doc, SortingOrder, getCurrentAccount, type WithLookup } from '@hanzo/core'
+  import { createQuery, getClient, getFileUrl } from '@hanzo/presentation'
+  import { Icon, IconMoreV, Label, Menu, getCurrentResolvedLocation, navigate, showPopup } from '@hanzo/ui'
 
   export let channel: ChunterSpace | undefined
   const client = getClient()

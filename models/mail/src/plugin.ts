@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { mergeIds } from '@hcengineering/platform'
-import { mailId } from '@hcengineering/mail'
-import mail from '@hcengineering/mail-resources/src/plugin'
+import { mergeIds } from '@hanzo/platform'
+import { mailId } from '@hanzo/mail'
+import mail from '@hanzo/mail-resources/src/plugin'
 
 export default mergeIds(mailId, mail, {})

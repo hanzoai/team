@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hcengineering/card'
-  import core, { AnyAttribute, Class, Ref } from '@hcengineering/core'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { Process, State, Step } from '@hcengineering/process'
+  import { Card, MasterTag } from '@hanzo/card'
+  import core, { AnyAttribute, Class, Ref } from '@hanzo/core'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { Process, State, Step } from '@hanzo/process'
   import { createEventDispatcher } from 'svelte'
   import ParamsEditor from './ParamsEditor.svelte'
-  import { Button, eventToHTMLElement, SelectPopup, showPopup } from '@hcengineering/ui'
+  import { Button, eventToHTMLElement, SelectPopup, showPopup } from '@hanzo/ui'
 
   export let process: Process
   export let state: State

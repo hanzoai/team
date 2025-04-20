@@ -22,9 +22,9 @@ import core, {
   type SessionData,
   type Tx,
   type TxApplyIf
-} from '@hcengineering/core'
-import type { Middleware, PipelineContext, TxMiddlewareResult } from '@hcengineering/server-core'
-import { BaseMiddleware } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import type { Middleware, PipelineContext, TxMiddlewareResult } from '@hanzo/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
 
 /**
  * Will support apply tx

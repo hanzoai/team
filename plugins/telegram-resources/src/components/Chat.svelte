@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -15,18 +15,18 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import attachment from '@hcengineering/attachment'
-  import { AttachmentRefInput } from '@hcengineering/attachment-resources'
-  import contact, { Channel, Contact, Person, getName as getContactName } from '@hcengineering/contact'
-  import { Avatar } from '@hcengineering/contact-resources'
-  import core, { Ref, SortingOrder, generateId, getCurrentAccount } from '@hcengineering/core'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { getEmbeddedLabel, getResource } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { Integration } from '@hcengineering/setting'
-  import type { NewTelegramMessage, SharedTelegramMessage, TelegramMessage } from '@hcengineering/telegram'
-  import templates, { TemplateDataProvider } from '@hcengineering/templates'
-  import { jsonToHTML, markupToJSON } from '@hcengineering/text'
+  import attachment from '@hanzo/attachment'
+  import { AttachmentRefInput } from '@hanzo/attachment-resources'
+  import contact, { Channel, Contact, Person, getName as getContactName } from '@hanzo/contact'
+  import { Avatar } from '@hanzo/contact-resources'
+  import core, { Ref, SortingOrder, generateId, getCurrentAccount } from '@hanzo/core'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { getEmbeddedLabel, getResource } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import setting, { Integration } from '@hanzo/setting'
+  import type { NewTelegramMessage, SharedTelegramMessage, TelegramMessage } from '@hanzo/telegram'
+  import templates, { TemplateDataProvider } from '@hanzo/templates'
+  import { jsonToHTML, markupToJSON } from '@hanzo/text'
   import {
     Button,
     Icon,
@@ -37,7 +37,7 @@
     eventToHTMLElement,
     showPopup,
     tooltip
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import telegram from '../plugin'
   import Connect from './Connect.svelte'

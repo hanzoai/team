@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, Status, StatusCategory } from '@hcengineering/core'
-  import { getClient, reduceCalls } from '@hcengineering/presentation'
-  import task, { Project, ProjectType } from '@hcengineering/task'
+  import core, { IdMap, Ref, Status, StatusCategory } from '@hanzo/core'
+  import { getClient, reduceCalls } from '@hanzo/presentation'
+  import task, { Project, ProjectType } from '@hanzo/task'
   import {
     ColorDefinition,
     defaultBackground,
     getColorNumberByText,
     getPlatformColorDef,
     themeStore
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import { typeStore } from '../..'
 

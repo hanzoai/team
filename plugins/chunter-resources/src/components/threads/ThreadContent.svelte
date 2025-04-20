@@ -1,10 +1,10 @@
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hcengineering/activity'
-  import { Label } from '@hcengineering/ui'
-  import core, { Doc, Ref, Space } from '@hcengineering/core'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import notification from '@hcengineering/notification'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import activity, { ActivityMessage } from '@hanzo/activity'
+  import { Label } from '@hanzo/ui'
+  import core, { Doc, Ref, Space } from '@hanzo/core'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import notification from '@hanzo/notification'
+  import { createQuery, getClient } from '@hanzo/presentation'
 
   import ThreadParentMessage from './ThreadParentPresenter.svelte'
   import ReverseChannelScrollView from '../ReverseChannelScrollView.svelte'

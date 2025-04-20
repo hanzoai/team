@@ -1,6 +1,6 @@
-import type { ActivityMessage, Reaction } from '@hcengineering/activity'
-import core, { getCurrentAccount, isOtherHour, type Doc, type Ref, type Space } from '@hcengineering/core'
-import { getClient, isSpace } from '@hcengineering/presentation'
+import type { ActivityMessage, Reaction } from '@hanzo/activity'
+import core, { getCurrentAccount, isOtherHour, type Doc, type Ref, type Space } from '@hanzo/core'
+import { getClient, isSpace } from '@hanzo/presentation'
 import {
   EmojiPopup,
   closePopup,
@@ -9,8 +9,8 @@ import {
   showPopup,
   type Location,
   type Emojis
-} from '@hcengineering/ui'
-import { type AttributeModel } from '@hcengineering/view'
+} from '@hanzo/ui'
+import { type AttributeModel } from '@hanzo/view'
 import { get } from 'svelte/store'
 
 import { savedMessagesStore } from './activity'

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, Ref, SortingOrder, Space, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import preference, { SpacePreference } from '@hcengineering/preference'
-  import { createQuery, getClient, isAdminUser } from '@hcengineering/presentation'
-  import { Scroller, NavItem } from '@hcengineering/ui'
-  import { NavLink } from '@hcengineering/view-resources'
-  import type { Application, NavigatorModel, SpecialNavModel } from '@hcengineering/workbench'
+  import core, { Doc, Ref, SortingOrder, Space, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import preference, { SpacePreference } from '@hanzo/preference'
+  import { createQuery, getClient, isAdminUser } from '@hanzo/presentation'
+  import { Scroller, NavItem } from '@hanzo/ui'
+  import { NavLink } from '@hanzo/view-resources'
+  import type { Application, NavigatorModel, SpecialNavModel } from '@hanzo/workbench'
   import { getSpecialSpaceClass } from '../utils'
   import SpacesNav from './navigator/SpacesNav.svelte'
   import StarredNav from './navigator/StarredNav.svelte'

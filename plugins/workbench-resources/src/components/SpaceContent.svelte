@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, Space, WithLookup } from '@hcengineering/core'
-  import core from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { AnyComponent, Component, Loading } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
-  import { FilterBar } from '@hcengineering/view-resources'
+  import type { Class, Doc, Ref, Space, WithLookup } from '@hanzo/core'
+  import core from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { AnyComponent, Component, Loading } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { FilterBar } from '@hanzo/view-resources'
 
   export let _class: Ref<Class<Doc>>
   export let space: Ref<Space>

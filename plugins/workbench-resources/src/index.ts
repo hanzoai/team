@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { AccountRole, type Space, getCurrentAccount } from '@hcengineering/core'
-import { type Resources } from '@hcengineering/platform'
+import { AccountRole, type Space, getCurrentAccount } from '@hanzo/core'
+import { type Resources } from '@hanzo/platform'
 import ApplicationPresenter from './components/ApplicationPresenter.svelte'
 import Archive from './components/Archive.svelte'
 import SpacePanel from './components/navigator/SpacePanel.svelte'
@@ -24,7 +24,7 @@ import { doNavigate, logIn, logOut } from './utils'
 import Workbench from './components/Workbench.svelte'
 import ServerManager from './components/ServerManager.svelte'
 import WorkbenchTabs from './components/WorkbenchTabs.svelte'
-import { isAdminUser } from '@hcengineering/presentation'
+import { isAdminUser } from '@hanzo/presentation'
 import { canCloseTab, closeTab, pinTab, unpinTab } from './workbench'
 import { closeWidget, closeWidgetTab, createWidgetTab, getSidebarObject } from './sidebar'
 

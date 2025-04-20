@@ -18,17 +18,17 @@ import { Plugin, PluginKey } from '@tiptap/pm/state'
 import MentionList from '../MentionList.svelte'
 import { SvelteRenderer } from '../node-view'
 
-import { ReferenceNode, type ReferenceNodeProps, type ReferenceOptions } from '@hcengineering/text'
+import { ReferenceNode, type ReferenceNodeProps, type ReferenceOptions } from '@hanzo/text'
 import Suggestion, { type SuggestionKeyDownProps, type SuggestionOptions, type SuggestionProps } from './suggestion'
 
-import { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { getMetadata, getResource } from '@hcengineering/platform'
-import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-import view from '@hcengineering/view'
+import { type Class, type Doc, type Ref } from '@hanzo/core'
+import { getMetadata, getResource } from '@hanzo/platform'
+import presentation, { createQuery, getClient } from '@hanzo/presentation'
+import view from '@hanzo/view'
 
-import contact from '@hcengineering/contact'
-import { parseLocation, type Location } from '@hcengineering/ui'
-import workbench, { type Application } from '@hcengineering/workbench'
+import contact from '@hanzo/contact'
+import { parseLocation, type Location } from '@hanzo/ui'
+import workbench, { type Application } from '@hanzo/workbench'
 
 export interface ReferenceExtensionOptions extends ReferenceOptions {
   suggestion: Omit<SuggestionOptions, 'editor'>

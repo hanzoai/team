@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Markup } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { EmptyMarkup, isEmptyMarkup, areEqualMarkups } from '@hcengineering/text'
-  import { TextEditorHandler } from '@hcengineering/text-editor'
-  import { handler, registerFocus } from '@hcengineering/ui'
+  import { Markup } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { EmptyMarkup, isEmptyMarkup, areEqualMarkups } from '@hanzo/text'
+  import { TextEditorHandler } from '@hanzo/text-editor'
+  import { handler, registerFocus } from '@hanzo/ui'
   import { FocusPosition } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
   import {
@@ -26,7 +26,7 @@
     referenceConfig,
     ReferenceExtension,
     TextEditor
-  } from '@hcengineering/text-editor-resources'
+  } from '@hanzo/text-editor-resources'
 
   import Button from './Button.svelte'
   import IconSend from './icons/IconSend.svelte'

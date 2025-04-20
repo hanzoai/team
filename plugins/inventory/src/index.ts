@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { AttachedDoc, Class, Doc, Ref } from '@hcengineering/core'
-import type { Asset, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+import { AttachedDoc, Class, Doc, Ref } from '@hanzo/core'
+import type { Asset, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 
 /**
  * @public

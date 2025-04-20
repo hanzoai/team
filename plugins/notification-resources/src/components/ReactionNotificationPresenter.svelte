@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { DisplayDocUpdateMessage, Reaction } from '@hcengineering/activity'
-  import { getClient } from '@hcengineering/presentation'
-  import { Ref } from '@hcengineering/core'
-  import { BaseMessagePreview } from '@hcengineering/activity-resources'
+  import activity, { DisplayDocUpdateMessage, Reaction } from '@hanzo/activity'
+  import { getClient } from '@hanzo/presentation'
+  import { Ref } from '@hanzo/core'
+  import { BaseMessagePreview } from '@hanzo/activity-resources'
 
   export let message: DisplayDocUpdateMessage
 

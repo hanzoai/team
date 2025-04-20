@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/model-bitrix",
-  "version": "0.6.0",
+  "name": "@hanzo/model-bitrix",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/model-package",
+  "author": "Hanzo <dev@hanzo.ai>",
+  "template": "@hanzo/model-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -28,21 +28,21 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/activity": "^0.6.0",
-    "@hcengineering/model": "^0.6.11",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/model-core": "^0.6.0",
-    "@hcengineering/model-attachment": "^0.6.0",
-    "@hcengineering/model-contact": "^0.6.1",
-    "@hcengineering/view": "^0.6.13",
-    "@hcengineering/model-view": "^0.6.0",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/bitrix": "^0.6.52",
-    "@hcengineering/bitrix-resources": "^0.6.0",
-    "@hcengineering/preference": "^0.6.13",
-    "@hcengineering/model-preference": "^0.6.0",
-    "@hcengineering/setting": "^0.6.17",
-    "@hcengineering/ui": "^0.6.15"
+    "@hanzo/activity": "^0.6.4",
+    "@hanzo/model": "^0.6.16",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/model-core": "^0.6.4",
+    "@hanzo/model-attachment": "^0.6.4",
+    "@hanzo/model-contact": "^0.6.5",
+    "@hanzo/view": "^0.6.18",
+    "@hanzo/model-view": "^0.6.4",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/bitrix": "^0.6.57",
+    "@hanzo/bitrix-resources": "^0.6.4",
+    "@hanzo/preference": "^0.6.18",
+    "@hanzo/model-preference": "^0.6.4",
+    "@hanzo/setting": "^0.6.22",
+    "@hanzo/ui": "^0.6.21"
   }
 }

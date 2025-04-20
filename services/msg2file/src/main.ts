@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import { initStatisticsContext } from '@hcengineering/server-core'
-import serverToken from '@hcengineering/server-token'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import { initStatisticsContext } from '@hanzo/server-core'
+import serverToken from '@hanzo/server-token'
 import cron from 'node-cron'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
 
 import config from './config'
 import { job } from './worker'

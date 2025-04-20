@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import core, { Doc, Tx, TxCUD, TxCreateDoc, TxProcessor, TxUpdateDoc } from '@hcengineering/core'
-import { TriggerControl } from '@hcengineering/server-core'
-import task, { Task } from '@hcengineering/task'
+import core, { Doc, Tx, TxCUD, TxCreateDoc, TxProcessor, TxUpdateDoc } from '@hanzo/core'
+import { TriggerControl } from '@hanzo/server-core'
+import task, { Task } from '@hanzo/task'
 
 /**
  * @public

@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/model-questions",
-  "version": "0.1.0",
+  "name": "@hanzo/model-questions",
+  "version": "0.1.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
@@ -35,16 +35,16 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
-    "@hcengineering/questions": "^0.1.0",
-    "@hcengineering/questions-resources": "^0.1.0",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/model": "^0.6.11",
-    "@hcengineering/model-core": "^0.6.0",
-    "@hcengineering/model-tracker": "^0.6.0",
-    "@hcengineering/model-view": "^0.6.0",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/view": "^0.6.13"
+    "@hanzo/platform-rig": "^0.6.4",
+    "@hanzo/questions": "^0.1.4",
+    "@hanzo/questions-resources": "^0.1.4",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/model": "^0.6.16",
+    "@hanzo/model-core": "^0.6.4",
+    "@hanzo/model-tracker": "^0.6.4",
+    "@hanzo/model-view": "^0.6.4",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/view": "^0.6.18"
   }
 }

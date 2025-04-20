@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -15,13 +15,13 @@
 // limitations under the License.
 //
 
-import { SplitLogger } from '@hcengineering/analytics-service'
-import { MeasureMetricsContext, newMetrics } from '@hcengineering/core'
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import { initStatisticsContext, type StorageConfiguration } from '@hcengineering/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import serverToken from '@hcengineering/server-token'
+import { SplitLogger } from '@hanzo/analytics-service'
+import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import { initStatisticsContext, type StorageConfiguration } from '@hanzo/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import serverToken from '@hanzo/server-token'
 import { type IncomingHttpHeaders } from 'http'
 import { join } from 'path'
 import { decode64 } from './base64'

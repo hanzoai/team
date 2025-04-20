@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import {} from '@hcengineering/notification'
-import type { IntlString } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import task, { taskId } from '@hcengineering/task'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { type GetAllValuesFunc, type SortFunc } from '@hcengineering/view'
+import {} from '@hanzo/notification'
+import type { IntlString } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import task, { taskId } from '@hanzo/task'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type GetAllValuesFunc, type SortFunc } from '@hanzo/view'
 
 export default mergeIds(taskId, task, {
   string: {

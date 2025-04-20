@@ -17,8 +17,8 @@ import {
   getClient as getAccountClientRaw,
   isWorkspaceLoginInfo,
   type AccountClient
-} from '@hcengineering/account-client'
-import { Analytics } from '@hcengineering/analytics'
+} from '@hanzo/account-client'
+import { Analytics } from '@hanzo/analytics'
 import {
   generateId,
   platformNow,
@@ -27,9 +27,9 @@ import {
   type Tx,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import platform, { Severity, Status, UNAUTHORIZED, unknownStatus } from '@hcengineering/platform'
-import { RPCHandler, type Response } from '@hcengineering/rpc'
+} from '@hanzo/core'
+import platform, { Severity, Status, UNAUTHORIZED, unknownStatus } from '@hanzo/platform'
+import { RPCHandler, type Response } from '@hanzo/rpc'
 import {
   doSessionOp,
   getFile,
@@ -39,7 +39,7 @@ import {
   wipeStatistics,
   type BlobResponse,
   type WebsocketData
-} from '@hcengineering/server'
+} from '@hanzo/server'
 import {
   LOGGING_ENABLED,
   pingConst,
@@ -47,8 +47,8 @@ import {
   type ConnectionSocket,
   type SessionManager,
   type StorageAdapter
-} from '@hcengineering/server-core'
-import { decodeToken, type Token } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { decodeToken, type Token } from '@hanzo/server-token'
 import 'bufferutil'
 import cors from 'cors'
 import express, { type Response as ExpressResponse, type NextFunction, type Request } from 'express'

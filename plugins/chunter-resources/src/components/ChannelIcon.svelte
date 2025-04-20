@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Icon, IconSize } from '@hcengineering/ui'
-  import chunter, { Channel } from '@hcengineering/chunter'
+  import { Icon, IconSize } from '@hanzo/ui'
+  import chunter, { Channel } from '@hanzo/chunter'
   import Lock from './icons/Lock.svelte'
 
   export let value: Channel | undefined

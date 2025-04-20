@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hcengineering/core'
-import { type GetContentRequest, type GetContentResponse } from '@hcengineering/collaborator-client'
+import { MeasureContext } from '@hanzo/core'
+import { type GetContentRequest, type GetContentResponse } from '@hanzo/collaborator-client'
 import { Context } from '../../context'
 import { RpcMethodParams } from '../rpc'
 

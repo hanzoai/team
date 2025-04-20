@@ -30,10 +30,10 @@ import core, {
   TxProcessor,
   systemAccountUuid,
   type SessionData
-} from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
-import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hcengineering/server-core'
-import { DOMAIN_PREFERENCE } from '@hcengineering/server-preference'
+} from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
+import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hanzo/server-core'
+import { DOMAIN_PREFERENCE } from '@hanzo/server-preference'
 
 /**
  * @public

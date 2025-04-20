@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type StatusCategory, type Client, type Doc, type Ref, type Space } from '@hcengineering/core'
-import type { Asset, IntlString, Metadata, Resource } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import type { ObjectSearchCategory, ObjectSearchFactory } from '@hcengineering/presentation/src/types'
-import { type ProjectType, type TaskType } from '@hcengineering/task'
-import tracker, { trackerId, type IssueDraft, type Issue } from '@hcengineering/tracker'
-import { type AnyComponent, type Location } from '@hcengineering/ui/src/types'
+import { type StatusCategory, type Client, type Doc, type Ref, type Space } from '@hanzo/core'
+import type { Asset, IntlString, Metadata, Resource } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import type { ObjectSearchCategory, ObjectSearchFactory } from '@hanzo/presentation/src/types'
+import { type ProjectType, type TaskType } from '@hanzo/task'
+import tracker, { trackerId, type IssueDraft, type Issue } from '@hanzo/tracker'
+import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
 import {
   type CreateAggregationManagerFunc,
   type GetAllValuesFunc,
@@ -28,7 +28,7 @@ import {
   type ViewQueryAction,
   type Viewlet,
   type ViewletDescriptor
-} from '@hcengineering/view'
+} from '@hanzo/view'
 
 export default mergeIds(trackerId, tracker, {
   viewlet: {

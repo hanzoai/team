@@ -21,11 +21,11 @@ import core, {
   type TxApplyIf,
   type TxResult,
   type TxUpdateDoc
-} from '@hcengineering/core'
-import { BasePresentationMiddleware, type PresentationMiddleware } from '@hcengineering/presentation'
-import process, { type ProcessToDo } from '@hcengineering/process'
+} from '@hanzo/core'
+import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzo/presentation'
+import process, { type ProcessToDo } from '@hanzo/process'
 import { createExecution, getNextStateUserInput } from './utils'
-import cardPlugin, { type Card } from '@hcengineering/card'
+import cardPlugin, { type Card } from '@hanzo/card'
 
 /**
  * @public

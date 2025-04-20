@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import type { Doc, Ref } from '@hcengineering/core'
-import drive, { type File, type Drive, type Folder, driveId } from '@hcengineering/drive'
-import { getClient } from '@hcengineering/presentation'
-import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hcengineering/ui'
-import view, { type ObjectPanel } from '@hcengineering/view'
-import { accessDeniedStore } from '@hcengineering/view-resources'
+import type { Doc, Ref } from '@hanzo/core'
+import drive, { type File, type Drive, type Folder, driveId } from '@hanzo/drive'
+import { getClient } from '@hanzo/presentation'
+import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hanzo/ui'
+import view, { type ObjectPanel } from '@hanzo/view'
+import { accessDeniedStore } from '@hanzo/view-resources'
 
 export function getPanelFragment<T extends Doc> (object: Pick<T, '_class' | '_id'>): string {
   const hierarchy = getClient().getHierarchy()

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hcengineering/platform'
-import tracker from '@hcengineering/tracker'
+import { loadMetadata } from '@hanzo/platform'
+import tracker from '@hanzo/tracker'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(tracker.icon, {

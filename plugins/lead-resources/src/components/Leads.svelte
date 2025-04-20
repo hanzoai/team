@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref } from '@hcengineering/core'
-  import type { Customer } from '@hcengineering/lead'
-  import { Button, IconAdd, Label, showPopup, resizeObserver, Scroller } from '@hcengineering/ui'
-  import { Table } from '@hcengineering/view-resources'
+  import type { Ref } from '@hanzo/core'
+  import type { Customer } from '@hanzo/lead'
+  import { Button, IconAdd, Label, showPopup, resizeObserver, Scroller } from '@hanzo/ui'
+  import { Table } from '@hanzo/view-resources'
   import lead from '../plugin'
   import CreateLead from './CreateLead.svelte'
 

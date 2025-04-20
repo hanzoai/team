@@ -19,10 +19,10 @@
     ActivityReference,
     DisplayActivityMessage,
     WithReferences
-  } from '@hcengineering/activity'
-  import { Class, Doc, Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Grid, Label, Section, Spinner, location, Lazy } from '@hcengineering/ui'
+  } from '@hanzo/activity'
+  import { Class, Doc, Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Grid, Label, Section, Spinner, location, Lazy } from '@hanzo/ui'
   import { onDestroy, onMount } from 'svelte'
 
   import ActivityExtensionComponent from './ActivityExtension.svelte'

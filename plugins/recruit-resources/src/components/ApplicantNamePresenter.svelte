@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2024 Anticrm Platform Contributors.
+// Copyright © 2024 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import contactPlugin, { getFirstName, getLastName } from '@hcengineering/contact'
-  import { getMetadata } from '@hcengineering/platform'
+  import contactPlugin, { getFirstName, getLastName } from '@hanzo/contact'
+  import { getMetadata } from '@hanzo/platform'
 
   export let parentName: string | null | undefined = undefined
   export let spaceName: string | null | undefined = undefined

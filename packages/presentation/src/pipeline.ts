@@ -1,4 +1,4 @@
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import {
   toFindResult,
   type Class,
@@ -17,8 +17,8 @@ import {
   type Tx,
   type TxResult,
   type WithLookup
-} from '@hcengineering/core'
-import platform, { PlatformError, setPlatformStatus, unknownError, type Resource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import platform, { PlatformError, setPlatformStatus, unknownError, type Resource } from '@hanzo/platform'
 
 /**
  * @public

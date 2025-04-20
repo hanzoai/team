@@ -1,5 +1,5 @@
 import { Document } from 'domhandler'
-import { Markup } from '@hcengineering/core'
+import { Markup } from '@hanzo/core'
 
 import { GenericNodeSpec, NodeType, SectionSpec, SectionType, TocSectionSpec } from './types'
 import { AnyContainer, createNodeExtractor } from './nodes'

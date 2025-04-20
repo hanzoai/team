@@ -15,16 +15,16 @@
 //
 -->
 <script lang="ts">
-  import attachment, { Attachment } from '@hcengineering/attachment'
-  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hcengineering/core'
-  import { Document, DocumentEvents } from '@hcengineering/document'
-  import notification from '@hcengineering/notification'
-  import { Panel } from '@hcengineering/panel'
-  import { getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
-  import { copyTextToClipboard, createQuery, getClient } from '@hcengineering/presentation'
-  import tags from '@hcengineering/tags'
-  import { Heading } from '@hcengineering/text-editor'
-  import { TableOfContents } from '@hcengineering/text-editor-resources'
+  import attachment, { Attachment } from '@hanzo/attachment'
+  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hanzo/core'
+  import { Document, DocumentEvents } from '@hanzo/document'
+  import notification from '@hanzo/notification'
+  import { Panel } from '@hanzo/panel'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  import { copyTextToClipboard, createQuery, getClient } from '@hanzo/presentation'
+  import tags from '@hanzo/tags'
+  import { Heading } from '@hanzo/text-editor'
+  import { TableOfContents } from '@hanzo/text-editor-resources'
   import {
     Button,
     ButtonItem,
@@ -39,8 +39,8 @@
     navigate,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import {
     ClassAttributeBar,
     IconPicker,
@@ -49,9 +49,9 @@
     getObjectLinkFragment,
     restrictionStore,
     showMenu
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   import { starDocument, unstarDocument, unlockContent } from '..'
   import document from '../plugin'

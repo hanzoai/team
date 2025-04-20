@@ -16,8 +16,8 @@
 import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { type EditorView } from '@tiptap/pm/view'
-import { type Asset, getMetadata } from '@hcengineering/platform'
-import { SelectPopup, getEventPositionElement, showPopup } from '@hcengineering/ui'
+import { type Asset, getMetadata } from '@hanzo/platform'
+import { SelectPopup, getEventPositionElement, showPopup } from '@hanzo/ui'
 
 export interface LeftMenuOptions {
   width: number

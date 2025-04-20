@@ -14,11 +14,11 @@
 //
 
 import uploader from './plugin'
-import type { UploadHandlerDefinition, UploadHandler } from '@hcengineering/uploader'
-import { DOMAIN_MODEL } from '@hcengineering/core'
-import { Model } from '@hcengineering/model'
-import { type IntlString, type Asset, type Resource } from '@hcengineering/platform'
-import core, { TDoc } from '@hcengineering/model-core'
+import type { UploadHandlerDefinition, UploadHandler } from '@hanzo/uploader'
+import { DOMAIN_MODEL } from '@hanzo/core'
+import { Model } from '@hanzo/model'
+import { type IntlString, type Asset, type Resource } from '@hanzo/platform'
+import core, { TDoc } from '@hanzo/model-core'
 
 @Model(uploader.class.UploadHandlerDefinition, core.class.Doc, DOMAIN_MODEL)
 export class TUploadHandler extends TDoc implements UploadHandlerDefinition {

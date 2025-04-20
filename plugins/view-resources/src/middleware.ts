@@ -1,4 +1,4 @@
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   type Hierarchy,
   type TxApplyIf,
@@ -17,11 +17,11 @@ import core, {
   type RefTo,
   type Tx,
   type TxResult
-} from '@hcengineering/core'
-import { getResource, translate } from '@hcengineering/platform'
-import { BasePresentationMiddleware, type PresentationMiddleware } from '@hcengineering/presentation'
-import view, { type IAggregationManager } from '@hcengineering/view'
-import notification from '@hcengineering/notification'
+} from '@hanzo/core'
+import { getResource, translate } from '@hanzo/platform'
+import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzo/presentation'
+import view, { type IAggregationManager } from '@hanzo/view'
+import notification from '@hanzo/notification'
 
 /**
  * @public

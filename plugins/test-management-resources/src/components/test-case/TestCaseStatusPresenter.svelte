@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TestCase, TestCaseStatus } from '@hcengineering/test-management'
-  import type { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { TestCase, TestCaseStatus } from '@hanzo/test-management'
+  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
   import StatusEditor from './StatusEditor.svelte'
 
   export let value: TestCaseStatus

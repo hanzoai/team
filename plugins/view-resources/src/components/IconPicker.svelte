@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, Metadata } from '@hcengineering/platform'
+  import { Asset, Metadata } from '@hanzo/platform'
   import {
     ButtonIcon,
     EmojiPopup,
@@ -24,7 +24,7 @@
     getPlatformColorDef,
     themeStore,
     Label
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { iconsLibrary } from '../icons'
   import view from '../plugin'

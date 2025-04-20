@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import documents, { ControlledDocument, DocumentState } from '@hcengineering/controlled-documents'
-import { type DocumentQuery, type Ref, type Status, type TxOperations } from '@hcengineering/core'
-import document from '@hcengineering/document'
-import tracker, { IssuePriority, type IssueStatus } from '@hcengineering/tracker'
+import documents, { ControlledDocument, DocumentState } from '@hanzo/controlled-documents'
+import { type DocumentQuery, type Ref, type Status, type TxOperations } from '@hanzo/core'
+import document from '@hanzo/document'
+import tracker, { IssuePriority, type IssueStatus } from '@hanzo/tracker'
 import {
   ImportControlledDocument,
   ImportControlledDocumentTemplate,

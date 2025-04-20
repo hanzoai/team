@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hcengineering/ui-next'
+  import { Label } from '@hanzo/ui-next'
 
   import chat from '../plugin'
 </script>

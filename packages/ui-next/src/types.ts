@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Asset, type IntlString } from '@hcengineering/platform'
+import { type Asset, type IntlString } from '@hanzo/platform'
 import { type ComponentType } from 'svelte'
-import { type TextEditorHandler } from '@hcengineering/text-editor'
-import { type BlobID } from '@hcengineering/communication-types'
+import { type TextEditorHandler } from '@hanzo/text-editor'
+import { type BlobID } from '@hanzo/communication-types'
 
 export interface NavigationSection {
   id: string

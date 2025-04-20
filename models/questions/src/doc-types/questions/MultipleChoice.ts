@@ -10,10 +10,10 @@ import type {
   MultipleChoiceQuestion,
   MultipleChoiceQuestionAnswer,
   MultipleChoiceQuestionData
-} from '@hcengineering/questions'
-import { IndexKind, type Ref, type Type } from '@hcengineering/core'
-import { Hidden, Index, Model, Prop, TypeRef, UX } from '@hcengineering/model'
-import core, { TType } from '@hcengineering/model-core'
+} from '@hanzo/questions'
+import { IndexKind, type Ref, type Type } from '@hanzo/core'
+import { Hidden, Index, Model, Prop, TypeRef, UX } from '@hanzo/model'
+import core, { TType } from '@hanzo/model-core'
 import questions from '../../plugin'
 import { TAnswer, TAssessment, TQuestion } from '../base'
 

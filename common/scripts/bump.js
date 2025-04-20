@@ -1,24 +1,25 @@
 const fs = require('fs')
 const execSync = require('child_process').execSync
-const repo = '@hcengineering'
+const path = require('path')
+const repo = '@hanzo'
 
 const packages = {}
-const pathes = {}
 const jsons = {}
 
-function fillPackages (config) {
-  for (const package of config.projects) {
-    if (!package.name.startsWith(repo)) continue
-
-    packages[package.name] = {
-      version: package.version,
-      path: package.path
-    }
-    pathes[package.path] = package.name
-
-   const file = package.path + '/package.json'
-   const raw = fs.readFileSync(file)
-   jsons[package.name] = JSON.parse(raw)
+/**
+ * Populate packages and jsons from rush.json configuration
+ */
+function fillPackages() {
+  const rushJson = path.resolve(__dirname, '..', '..', 'rush.json')
+  const config = JSON.parse(fs.readFileSync(rushJson, 'utf-8'))
+  for (const pkg of config.projects) {
+    const name = pkg.packageName
+    const projectFolder = pkg.projectFolder
+    // Track publishable flag
+    packages[name] = { path: projectFolder, shouldPublish: pkg.shouldPublish === true }
+    // Load package.json
+    const pkgPath = path.resolve(__dirname, '..', '..', projectFolder, 'package.json')
+    jsons[name] = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
   }
 }
 
@@ -35,9 +36,11 @@ function bumpPackage (name, newVersion) {
   }
 }
 
-function shouldPublish (name) {
-  const json = jsons[name]
-  return json !== undefined && json.repository !== undefined
+/**
+ * Determine if a package should be published based on rush.json flag
+ */
+function shouldPublish(name) {
+  return packages[name] && packages[name].shouldPublish
 }
 
 function publish (name) {

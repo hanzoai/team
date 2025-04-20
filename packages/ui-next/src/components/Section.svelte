@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { IntlString } from '@hcengineering/platform'
+  import { IntlString } from '@hanzo/platform'
   import { createEventDispatcher } from 'svelte'
 
   import Label from './Label.svelte'

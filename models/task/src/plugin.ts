@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import {} from '@hcengineering/notification'
-import type { Doc, Ref, Space } from '@hcengineering/core'
-import { mergeIds, type IntlString } from '@hcengineering/platform'
-import { type TagCategory } from '@hcengineering/tags'
-import { taskId } from '@hcengineering/task'
-import task from '@hcengineering/task-resources/src/plugin'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import type { Action, ActionCategory, ViewAction, Viewlet } from '@hcengineering/view'
+import {} from '@hanzo/notification'
+import type { Doc, Ref, Space } from '@hanzo/core'
+import { mergeIds, type IntlString } from '@hanzo/platform'
+import { type TagCategory } from '@hanzo/tags'
+import { taskId } from '@hanzo/task'
+import task from '@hanzo/task-resources/src/plugin'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import type { Action, ActionCategory, ViewAction, Viewlet } from '@hanzo/view'
 
 export default mergeIds(taskId, task, {
   action: {

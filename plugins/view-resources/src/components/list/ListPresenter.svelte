@@ -14,8 +14,8 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import core, { Doc } from '@hcengineering/core'
-  import { AttributeModel } from '@hcengineering/view'
+  import core, { Doc } from '@hanzo/core'
+  import { AttributeModel } from '@hanzo/view'
   import { FixedColumn, restrictionStore } from '../..'
   import DividerPresenter from './DividerPresenter.svelte'
 

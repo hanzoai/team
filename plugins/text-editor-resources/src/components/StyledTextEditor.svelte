@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Markup } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import { Button, type ButtonSize, Scroller } from '@hcengineering/ui'
+  import { Markup } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { EmptyMarkup } from '@hanzo/text'
+  import { Button, type ButtonSize, Scroller } from '@hanzo/ui'
   import { AnyExtension, mergeAttributes, type Editor } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
-  import textEditor, { RefAction, TextEditorHandler, TextFormatCategory } from '@hcengineering/text-editor'
+  import textEditor, { RefAction, TextEditorHandler, TextFormatCategory } from '@hanzo/text-editor'
   import { defaultRefActions, getModelRefActions } from './editor/actions'
   import TextEditor from './TextEditor.svelte'
 

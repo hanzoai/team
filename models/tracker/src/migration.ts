@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import activity, { type DocUpdateMessage } from '@hcengineering/activity'
+import activity, { type DocUpdateMessage } from '@hanzo/activity'
 import core, {
   DOMAIN_MODEL_TX,
   DOMAIN_STATUS,
@@ -23,7 +23,7 @@ import core, {
   TxOperations,
   generateId,
   toIdMap
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   type MigrateOperation,
   type MigrationClient,
@@ -32,19 +32,19 @@ import {
   createOrUpdate,
   tryMigrate,
   tryUpgrade
-} from '@hcengineering/model'
-import { DOMAIN_ACTIVITY } from '@hcengineering/model-activity'
-import { DOMAIN_SPACE } from '@hcengineering/model-core'
-import { DOMAIN_TASK, migrateDefaultStatusesBase } from '@hcengineering/model-task'
-import tags from '@hcengineering/tags'
-import task from '@hcengineering/task'
+} from '@hanzo/model'
+import { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
+import { DOMAIN_SPACE } from '@hanzo/model-core'
+import { DOMAIN_TASK, migrateDefaultStatusesBase } from '@hanzo/model-task'
+import tags from '@hanzo/tags'
+import task from '@hanzo/task'
 import tracker, {
   type Issue,
   type IssueStatus,
   type Project,
   TimeReportDayType,
   trackerId
-} from '@hcengineering/tracker'
+} from '@hanzo/tracker'
 
 import { classicIssueTaskStatuses } from '.'
 

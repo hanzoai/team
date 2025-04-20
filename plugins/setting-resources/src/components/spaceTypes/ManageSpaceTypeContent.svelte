@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022, 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@
     WithLookup,
     isOwnerOrMaintainer,
     toIdMap
-  } from '@hcengineering/core'
+  } from '@hanzo/core'
   import {
     Location,
     resolvedLocationStore,
@@ -36,11 +36,11 @@
     getCurrentResolvedLocation,
     IconWithEmoji,
     deviceOptionsStore as deviceInfo
-  } from '@hcengineering/ui'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { SpaceTypeEditor } from '@hcengineering/setting'
-  import { Asset, getResource } from '@hcengineering/platform'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import setting, { SpaceTypeEditor } from '@hanzo/setting'
+  import { Asset, getResource } from '@hanzo/platform'
+  import view from '@hanzo/view'
 
   import SpaceTypeEditorComponent from './editor/SpaceTypeEditor.svelte'
   import { clearSettingsStore } from '../../store'

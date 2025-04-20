@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/platform-rig",
-  "version": "0.6.0",
+  "name": "@hanzo/platform-rig",
+  "version": "0.6.4",
   "scripts": {
     "build": "echo 'Not required'",
     "format": "echo 'Not required'"
@@ -24,5 +24,8 @@
   "peerDependencies": {
     "@typescript-eslint/parser": "^6.11.0",
     "eslint": "^8.54.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -15,12 +15,12 @@
 
 <script lang="ts">
   import { createEventDispatcher, afterUpdate, onDestroy } from 'svelte'
-  import calendar, { Calendar, generateEventId } from '@hcengineering/calendar'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { Ref, getCurrentAccount } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { TagElement } from '@hcengineering/tags'
-  import { Separator, defineSeparators, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
+  import calendar, { Calendar, generateEventId } from '@hanzo/calendar'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { Ref, getCurrentAccount } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { TagElement } from '@hanzo/tags'
+  import { Separator, defineSeparators, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
   import { ToDosMode } from '..'
   import PlanningCalendar from './PlanningCalendar.svelte'
   import ToDosNavigator from './ToDosNavigator.svelte'
@@ -28,8 +28,8 @@
   import { timeSeparators } from '../utils'
   import { dragging } from '../dragging'
   import time from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
-  import { TimeEvents } from '@hcengineering/time'
+  import { Analytics } from '@hanzo/analytics'
+  import { TimeEvents } from '@hanzo/time'
 
   const dispatch = createEventDispatcher()
 

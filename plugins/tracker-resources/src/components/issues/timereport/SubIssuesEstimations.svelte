@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Issue } from '@hcengineering/tracker'
-  import { Expandable, Spinner } from '@hcengineering/ui'
+  import { SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Issue } from '@hanzo/tracker'
+  import { Expandable, Spinner } from '@hanzo/ui'
   import tracker from '../../../plugin'
   import EstimationSubIssueList from './EstimationSubIssueList.svelte'
 

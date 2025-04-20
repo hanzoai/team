@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Plugin, Resource, plugin } from '@hcengineering/platform'
-import type { TriggerFunc } from '@hcengineering/server-core'
-import { NotificationContentProvider, Presenter } from '@hcengineering/server-notification'
+import { Plugin, Resource, plugin } from '@hanzo/platform'
+import type { TriggerFunc } from '@hanzo/server-core'
+import { NotificationContentProvider, Presenter } from '@hanzo/server-notification'
 
 export * from './types'
 export * from './utils'

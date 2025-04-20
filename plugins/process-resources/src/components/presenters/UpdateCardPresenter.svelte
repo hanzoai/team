@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { IntlString } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Process, MethodParams, Step } from '@hcengineering/process'
-  import { tooltip, Icon, IconError, Label } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { IntlString } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Process, MethodParams, Step } from '@hanzo/process'
+  import { tooltip, Icon, IconError, Label } from '@hanzo/ui'
   import plugin from '../../plugin'
 
   export let step: Step<Card>

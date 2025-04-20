@@ -15,10 +15,10 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { ActionContext, createQuery } from '@hcengineering/presentation'
-  import { type Class, type Ref, WithLookup } from '@hcengineering/core'
-  import { TestCase, TestResult } from '@hcengineering/test-management'
-  import { Panel } from '@hcengineering/panel'
+  import { ActionContext, createQuery } from '@hanzo/presentation'
+  import { type Class, type Ref, WithLookup } from '@hanzo/core'
+  import { TestCase, TestResult } from '@hanzo/test-management'
+  import { Panel } from '@hanzo/panel'
 
   import TestResultAside from './TestResultAside.svelte'
   import TestCaseDetails from '../test-case/TestCaseDetails.svelte'

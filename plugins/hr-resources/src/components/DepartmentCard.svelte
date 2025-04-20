@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hcengineering/contact'
-  import { Avatar, EmployeePresenter, UsersPopup } from '@hcengineering/contact-resources'
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { Department, Staff } from '@hcengineering/hr'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, IconAdd, Label, closeTooltip, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { openDoc, showMenu } from '@hcengineering/view-resources'
+  import contact, { Employee } from '@hanzo/contact'
+  import { Avatar, EmployeePresenter, UsersPopup } from '@hanzo/contact-resources'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { Department, Staff } from '@hanzo/hr'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, IconAdd, Label, closeTooltip, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { openDoc, showMenu } from '@hanzo/view-resources'
   import hr from '../plugin'
   import { addMember } from '../utils'
   import CreateDepartment from './CreateDepartment.svelte'

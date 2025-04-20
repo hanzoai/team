@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import type { AccountRole, AccountUuid, Class, Doc, DocumentQuery, Obj, Ref, Space } from '@hcengineering/core'
-import { DocNotifyContext, InboxNotification } from '@hcengineering/notification'
-import type { Asset, IntlString, Resource } from '@hcengineering/platform'
-import type { Preference } from '@hcengineering/preference'
-import { AnyComponent, type AnySvelteComponent, Location, ResolvedLocation } from '@hcengineering/ui'
+import type { AccountRole, AccountUuid, Class, Doc, DocumentQuery, Obj, Ref, Space } from '@hanzo/core'
+import { DocNotifyContext, InboxNotification } from '@hanzo/notification'
+import type { Asset, IntlString, Resource } from '@hanzo/platform'
+import type { Preference } from '@hanzo/preference'
+import { AnyComponent, type AnySvelteComponent, Location, ResolvedLocation } from '@hanzo/ui'
 
 /** @public */
 export interface LocationData {

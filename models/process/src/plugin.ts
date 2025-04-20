@@ -11,12 +11,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Doc, type Ref } from '@hcengineering/core'
-import { type IntlString, mergeIds } from '@hcengineering/platform'
-import { processId } from '@hcengineering/process'
-import { type PresentationMiddlewareFactory } from '@hcengineering/presentation/src/pipeline'
-import process from '@hcengineering/process-resources/src/plugin'
-import { type ViewAction, type Action } from '@hcengineering/view'
+import { type Doc, type Ref } from '@hanzo/core'
+import { type IntlString, mergeIds } from '@hanzo/platform'
+import { processId } from '@hanzo/process'
+import { type PresentationMiddlewareFactory } from '@hanzo/presentation/src/pipeline'
+import process from '@hanzo/process-resources/src/plugin'
+import { type ViewAction, type Action } from '@hanzo/view'
 
 export default mergeIds(processId, process, {
   app: {

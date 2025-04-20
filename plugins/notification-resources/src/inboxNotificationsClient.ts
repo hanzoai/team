@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity from '@hcengineering/activity'
+import activity from '@hanzo/activity'
 import {
   type Account,
   type Client,
@@ -25,15 +25,15 @@ import {
   type Ref,
   type TxOperations,
   type WithLookup
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   type ActivityInboxNotification,
   type Collaborators,
   type DocNotifyContext,
   type InboxNotification,
   type InboxNotificationsClient
-} from '@hcengineering/notification'
-import { createQuery, getClient, onClient } from '@hcengineering/presentation'
+} from '@hanzo/notification'
+import { createQuery, getClient, onClient } from '@hanzo/presentation'
 import { derived, get, writable } from 'svelte/store'
 
 import { isActivityNotification } from './utils'

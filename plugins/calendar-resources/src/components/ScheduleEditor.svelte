@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { Data, generateUuid, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import type { Schedule, ScheduleAvailability } from '@hcengineering/calendar'
+  import { Data, generateUuid, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import type { Schedule, ScheduleAvailability } from '@hanzo/calendar'
   import ui, {
     Button,
     ButtonIcon,
@@ -41,12 +41,12 @@
     getWeekDayName,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { StyledTextBox } from '@hcengineering/text-editor-resources'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { StyledTextBox } from '@hanzo/text-editor-resources'
   import TimeZoneSelector from './TimeZoneSelector.svelte'
 
   export let schedule: Schedule | undefined

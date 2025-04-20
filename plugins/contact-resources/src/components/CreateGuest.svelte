@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AvatarType, Channel, combineName, ContactEvents, Person, SocialIdentityRef } from '@hcengineering/contact'
+  import { AvatarType, Channel, combineName, ContactEvents, Person, SocialIdentityRef } from '@hanzo/contact'
   import {
     AccountRole,
     AttachedData,
@@ -22,16 +22,16 @@
     generateId,
     Ref,
     SocialIdType
-  } from '@hcengineering/core'
-  import login from '@hcengineering/login'
-  import { getResource } from '@hcengineering/platform'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { createFocusManager, EditBox, FocusHandler, IconInfo, Label } from '@hcengineering/ui'
+  } from '@hanzo/core'
+  import login from '@hanzo/login'
+  import { getResource } from '@hanzo/platform'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { createFocusManager, EditBox, FocusHandler, IconInfo, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { ChannelsDropdown, employeeBySocialKeyStore } from '..'
   import contact from '../plugin'
   import { getAccountClient } from '../utils'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let canSave: boolean = true
   export let onCreate: ((id: Ref<Person>) => Promise<void>) | undefined = undefined

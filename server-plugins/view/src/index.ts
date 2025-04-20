@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Plugin, Resource } from '@hcengineering/platform'
-import { TriggerControl, TriggerFunc } from '@hcengineering/server-core'
-import { plugin } from '@hcengineering/platform'
-import { Class, Doc, Mixin, Ref } from '@hcengineering/core'
+import type { Plugin, Resource } from '@hanzo/platform'
+import { TriggerControl, TriggerFunc } from '@hanzo/server-core'
+import { plugin } from '@hanzo/platform'
+import { Class, Doc, Mixin, Ref } from '@hanzo/core'
 
 /**
  * @public

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IdMap, Ref, Status } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import task, { Project, ProjectType } from '@hcengineering/task'
-  import { resizeObserver } from '@hcengineering/ui'
-  import { ObjectPresenter, statusStore } from '@hcengineering/view-resources'
+  import { IdMap, Ref, Status } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import task, { Project, ProjectType } from '@hanzo/task'
+  import { resizeObserver } from '@hanzo/ui'
+  import { ObjectPresenter, statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { typeStore } from '../..'
 

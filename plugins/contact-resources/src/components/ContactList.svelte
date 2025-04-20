@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact } from '@hcengineering/contact'
-  import type { Class, DocumentQuery, Ref } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Button, ButtonKind, ButtonSize, Label, showPopup, TooltipAlignment } from '@hcengineering/ui'
+  import { Contact } from '@hanzo/contact'
+  import type { Class, DocumentQuery, Ref } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { Button, ButtonKind, ButtonSize, Label, showPopup, TooltipAlignment } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { ContactPresenter } from '..'
   import contact from '../plugin'

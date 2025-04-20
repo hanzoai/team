@@ -9,15 +9,15 @@ import core, {
   MeasureContext,
   Ref,
   TxOperations
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubProject,
   GithubReviewThread
-} from '@hcengineering/github'
-import { LiveQuery } from '@hcengineering/query'
-import { EmptyMarkup } from '@hcengineering/text'
+} from '@hanzo/github'
+import { LiveQuery } from '@hanzo/query'
+import { EmptyMarkup } from '@hanzo/text'
 import {
   ContainerFocus,
   DocSyncManager,
@@ -36,7 +36,7 @@ import {
 } from './githubTypes'
 import { collectUpdate, deleteObjects, errorToObj, isGHWriteAllowed, syncChilds, syncDerivedDocuments } from './utils'
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import { PullRequestReviewThreadEvent } from '@octokit/webhooks-types'
 import config from '../config'
 import { syncConfig } from './syncConfig'

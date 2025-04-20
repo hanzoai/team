@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { Card } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
+  import card, { Card } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
   import Description from './Description.svelte'
-  import FilePreview from '@hcengineering/presentation/src/components/FilePreview.svelte'
+  import FilePreview from '@hanzo/presentation/src/components/FilePreview.svelte'
   import FilePlaceholder from './FilePlaceholder.svelte'
 
   export let doc: Card

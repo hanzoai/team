@@ -1,5 +1,5 @@
 //
-// Copyright © 2020-2025 Anticrm Platform Contributors.
+// Copyright © 2020-2025 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type ReccuringInstance } from '@hcengineering/calendar'
-import { type Doc, type TxOperations, concatLink } from '@hcengineering/core'
-import { type Resources, getMetadata } from '@hcengineering/platform'
-import presentation, { getClient } from '@hcengineering/presentation'
-import { closePopup, showPopup } from '@hcengineering/ui'
+import { type ReccuringInstance } from '@hanzo/calendar'
+import { type Doc, type TxOperations, concatLink } from '@hanzo/core'
+import { type Resources, getMetadata } from '@hanzo/platform'
+import presentation, { getClient } from '@hanzo/presentation'
+import { closePopup, showPopup } from '@hanzo/ui'
 import CalendarView from './components/CalendarView.svelte'
 import CreateEvent from './components/CreateEvent.svelte'
 import DateTimePresenter from './components/DateTimePresenter.svelte'
@@ -44,8 +44,8 @@ import ConnectApp from './components/ConnectApp.svelte'
 import CalendarWidget from './components/CalendarWidget.svelte'
 import ScheduleNavSection from './components/ScheduleNavSection.svelte'
 import calendar from './plugin'
-import contact from '@hcengineering/contact'
-import { deleteObjects } from '@hcengineering/view-resources'
+import contact from '@hanzo/contact'
+import { deleteObjects } from '@hanzo/view-resources'
 import { shareCalDavLink } from './utils'
 
 export {

@@ -23,9 +23,9 @@
     PropertyType,
     Ref,
     Type
-  } from '@hcengineering/core'
-  import { Asset, getEmbeddedLabel } from '@hcengineering/platform'
-  import presentation, { getClient, Card } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
+  import presentation, { getClient, Card } from '@hanzo/presentation'
   import {
     AnyComponent,
     Component,
@@ -34,12 +34,12 @@
     Label,
     showPopup,
     ButtonIcon
-  } from '@hcengineering/ui'
-  import { DropdownIntlItem } from '@hcengineering/ui/src/types'
+  } from '@hanzo/ui'
+  import { DropdownIntlItem } from '@hanzo/ui/src/types'
   import setting from '../plugin'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
-  import { IconPicker } from '@hcengineering/view-resources'
+  import { IconPicker } from '@hanzo/view-resources'
 
   export let _class: Ref<Class<Doc>>
   export let isCard: boolean = false

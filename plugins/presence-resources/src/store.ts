@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref } from '@hcengineering/core'
-import { getCurrentEmployee, type Person } from '@hcengineering/contact'
-import { type PresenceData } from '@hcengineering/presence'
-import { personByIdStore } from '@hcengineering/contact-resources'
+import { type Doc, type Ref } from '@hanzo/core'
+import { getCurrentEmployee, type Person } from '@hanzo/contact'
+import { type PresenceData } from '@hanzo/presence'
+import { personByIdStore } from '@hanzo/contact-resources'
 import { type Readable, derived, writable, get } from 'svelte/store'
 
 import type { PersonRoomPresence, Room, RoomPresence, MyDataItem } from './types'

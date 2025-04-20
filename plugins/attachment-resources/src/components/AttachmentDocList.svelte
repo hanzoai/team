@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hcengineering/attachment'
-  import { type Doc, type Ref, type WithLookup } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
+  import { Attachment } from '@hanzo/attachment'
+  import { type Doc, type Ref, type WithLookup } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
   import { onMount } from 'svelte'
 
   import attachment from '../plugin'

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hcengineering/platform'
-  import { Label, Loading, Notifications, location } from '@hcengineering/ui'
-  import { upgradeDownloadProgress } from '@hcengineering/presentation'
+  import { getMetadata } from '@hanzo/platform'
+  import { Label, Loading, Notifications, location } from '@hanzo/ui'
+  import { upgradeDownloadProgress } from '@hanzo/presentation'
   import { connect, versionError, invalidError } from '../connect'
 
-  import { guestId } from '@hcengineering/guest'
-  import workbench from '@hcengineering/workbench'
+  import { guestId } from '@hanzo/guest'
+  import workbench from '@hanzo/workbench'
   import Guest from './Guest.svelte'
   import plugin from '../plugin'
 </script>

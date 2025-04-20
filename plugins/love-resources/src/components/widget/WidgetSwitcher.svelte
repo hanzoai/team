@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { AnySvelteComponent } from '@hcengineering/ui'
-  import { AppItem } from '@hcengineering/workbench-resources'
-  import { RoomType } from '@hcengineering/love'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { AnySvelteComponent } from '@hanzo/ui'
+  import { AppItem } from '@hanzo/workbench-resources'
+  import { RoomType } from '@hanzo/love'
   import { currentRoom } from '../../stores'
   import { isConnected, isSharingEnabled, isCameraEnabled, isMicEnabled } from '../../utils'
   import love from '../../plugin'

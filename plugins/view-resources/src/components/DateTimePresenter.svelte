@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangeMode } from '@hcengineering/core'
+  import { DateRangeMode } from '@hanzo/core'
 
   import DatePresenter from './DatePresenter.svelte'
 

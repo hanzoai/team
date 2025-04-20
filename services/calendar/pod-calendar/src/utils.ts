@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { RecurringRule } from '@hcengineering/calendar'
-import { Timestamp } from '@hcengineering/core'
+import { RecurringRule } from '@hanzo/calendar'
+import { Timestamp } from '@hanzo/core'
 import { ReccuringData, type Token, type User } from './types'
 
 export class DeferredPromise<T = any> {

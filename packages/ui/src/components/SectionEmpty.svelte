@@ -16,7 +16,7 @@
 -->
 
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
+  import type { IntlString } from '@hanzo/platform'
   import type { ComponentProps } from 'svelte'
 
   import Icon from './Icon.svelte'

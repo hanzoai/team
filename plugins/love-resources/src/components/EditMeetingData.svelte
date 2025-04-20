@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hcengineering/calendar'
+  import { Event } from '@hanzo/calendar'
   import love from '../plugin'
   import RoomSelector from './RoomSelector.svelte'
-  import { getClient } from '@hcengineering/presentation'
-  import { Ref } from '@hcengineering/core'
-  import { Room } from '@hcengineering/love'
+  import { getClient } from '@hanzo/presentation'
+  import { Ref } from '@hanzo/core'
+  import { Room } from '@hanzo/love'
 
   export let value: Event
   export let readOnly: boolean = false

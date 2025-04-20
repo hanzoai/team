@@ -13,31 +13,31 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import contact from '@hcengineering/contact'
+import activity from '@hanzo/activity'
+import contact from '@hanzo/contact'
 import documentsPlugin, {
   documentsId,
   DocumentState,
   type Document,
   type DocumentSpace
-} from '@hcengineering/controlled-documents'
-import { type Builder } from '@hcengineering/model'
-import chunter from '@hcengineering/model-chunter'
-import core from '@hcengineering/model-core'
-import { generateClassNotificationTypes } from '@hcengineering/model-notification'
-import presentation from '@hcengineering/model-presentation'
-import print from '@hcengineering/model-print'
-import request from '@hcengineering/model-request'
-import tracker from '@hcengineering/model-tracker'
-import view, { classPresenter, createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import notification from '@hcengineering/notification'
-import setting from '@hcengineering/setting'
-import tags from '@hcengineering/tags'
-import textEditor from '@hcengineering/text-editor'
+} from '@hanzo/controlled-documents'
+import { type Builder } from '@hanzo/model'
+import chunter from '@hanzo/model-chunter'
+import core from '@hanzo/model-core'
+import { generateClassNotificationTypes } from '@hanzo/model-notification'
+import presentation from '@hanzo/model-presentation'
+import print from '@hanzo/model-print'
+import request from '@hanzo/model-request'
+import tracker from '@hanzo/model-tracker'
+import view, { classPresenter, createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import notification from '@hanzo/notification'
+import setting from '@hanzo/setting'
+import tags from '@hanzo/tags'
+import textEditor from '@hanzo/text-editor'
 
-import { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { type Action } from '@hcengineering/view'
+import { type Class, type Doc, type Ref } from '@hanzo/core'
+import { type Action } from '@hanzo/view'
 import { definePermissions } from './permissions'
 import documents from './plugin'
 import { defineSpaceType } from './spaceType'
@@ -68,7 +68,7 @@ import {
   TTypeDocumentState
 } from './types'
 
-export { documentsId } from '@hcengineering/controlled-documents/src/index'
+export { documentsId } from '@hanzo/controlled-documents/src/index'
 export * from './types'
 
 export function createModel (builder: Builder): void {

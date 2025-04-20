@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { ActivityMessage } from '@hcengineering/activity'
+import { ActivityMessage } from '@hanzo/activity'
 import {
   PersonId,
   AnyAttribute,
@@ -31,14 +31,14 @@ import {
   TxCUD,
   TxOperations,
   AccountUuid
-} from '@hcengineering/core'
-import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import { IntegrationType } from '@hcengineering/setting'
-import { AnyComponent, Location, ResolvedLocation } from '@hcengineering/ui'
-import { Action } from '@hcengineering/view'
-import { PersonSpace } from '@hcengineering/contact'
+} from '@hanzo/core'
+import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import { IntegrationType } from '@hanzo/setting'
+import { AnyComponent, Location, ResolvedLocation } from '@hanzo/ui'
+import { Action } from '@hanzo/view'
+import { PersonSpace } from '@hanzo/contact'
 
 import { Readable, Writable } from './types'
 

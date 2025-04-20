@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { MessageViewer as MarkupMessageViewer } from '@hcengineering/presentation'
-  import { Message, MessageType } from '@hcengineering/communication-types'
-  import { Card } from '@hcengineering/card'
+  import { MessageViewer as MarkupMessageViewer } from '@hanzo/presentation'
+  import { Message, MessageType } from '@hanzo/communication-types'
+  import { Card } from '@hanzo/card'
 
   import ActivityMessageViewer from './ActivityMessageViewer.svelte'
   import { toMarkup } from '../../utils'

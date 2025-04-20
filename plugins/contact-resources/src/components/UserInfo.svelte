@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,10 +15,10 @@
 <script lang="ts">
   import Avatar from './Avatar.svelte'
 
-  import { getName, Person } from '@hcengineering/contact'
-  import { Asset } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { AnySvelteComponent, IconSize } from '@hcengineering/ui'
+  import { getName, Person } from '@hanzo/contact'
+  import { Asset } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { AnySvelteComponent, IconSize } from '@hanzo/ui'
 
   export let value: Person
   export let subtitle: string | undefined = undefined

@@ -13,6 +13,6 @@
 // limitations under the License.
 //
 
-import survey from '@hcengineering/survey-resources/src/plugin'
+import survey from '@hanzo/survey-resources/src/plugin'
 
 export default survey

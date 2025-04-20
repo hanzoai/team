@@ -14,7 +14,7 @@
 //
 
 import { Request, Response } from 'express'
-import { type MeasureContext } from '@hcengineering/core'
+import { type MeasureContext } from '@hanzo/core'
 import { MailClient } from '../mail'
 import { handleSendMail } from '../main'
 

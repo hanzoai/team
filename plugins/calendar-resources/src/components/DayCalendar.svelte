@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event, ReccuringInstance } from '@hcengineering/calendar'
-  import { DocumentUpdate, Ref, Timestamp } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
+  import { Event, ReccuringInstance } from '@hanzo/calendar'
+  import { DocumentUpdate, Ref, Timestamp } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
   import ui, {
     ActionIcon,
     CalendarItem,
@@ -34,8 +34,8 @@
     resizeObserver,
     ticker,
     isWeekend
-  } from '@hcengineering/ui'
-  import { showMenu } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { showMenu } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import type {
     CalendarADGrid,

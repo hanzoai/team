@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { isWorkspaceLoginInfo } from '@hcengineering/account-client'
-import client, { ClientSocket } from '@hcengineering/client'
+import { isWorkspaceLoginInfo } from '@hanzo/account-client'
+import client, { ClientSocket } from '@hanzo/client'
 import core, {
   AccountUuid,
   Blob,
@@ -29,14 +29,14 @@ import core, {
   Space,
   TxOperations,
   WorkspaceIds
-} from '@hcengineering/core'
-import drive, { createFile, Drive } from '@hcengineering/drive'
-import notification from '@hcengineering/notification'
-import { setMetadata } from '@hcengineering/platform'
-import { createClient, getAccountClient, getTransactorEndpoint } from '@hcengineering/server-client'
-import { initStatisticsContext, StorageAdapter, StorageConfiguration } from '@hcengineering/server-core'
-import { buildStorageFromConfig } from '@hcengineering/server-storage'
-import { decodeToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import drive, { createFile, Drive } from '@hanzo/drive'
+import notification from '@hanzo/notification'
+import { setMetadata } from '@hanzo/platform'
+import { createClient, getAccountClient, getTransactorEndpoint } from '@hanzo/server-client'
+import { initStatisticsContext, StorageAdapter, StorageConfiguration } from '@hanzo/server-core'
+import { buildStorageFromConfig } from '@hanzo/server-storage'
+import { decodeToken } from '@hanzo/server-token'
 import archiver from 'archiver'
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
@@ -49,7 +49,7 @@ import { v4 as uuid } from 'uuid'
 import WebSocket from 'ws'
 import { ApiError } from './error'
 import { ExportFormat, WorkspaceExporter } from './exporter'
-import exportPlugin, { type TransformConfig } from '@hcengineering/export'
+import exportPlugin, { type TransformConfig } from '@hanzo/export'
 
 const extractCookieToken = (cookie?: string): string | null => {
   if (cookie === undefined || cookie === null) {

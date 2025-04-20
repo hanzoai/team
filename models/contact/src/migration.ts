@@ -10,7 +10,7 @@ import {
   getFirstName,
   getLastName,
   formatName
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import {
   AccountRole,
   buildSocialIdString,
@@ -27,7 +27,7 @@ import {
   SortingOrder,
   type Space,
   type TxCUD
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   createDefaultSpace,
   type MigrateOperation,
@@ -38,12 +38,12 @@ import {
   type ModelLogger,
   tryMigrate,
   tryUpgrade
-} from '@hcengineering/model'
-import { makeRank } from '@hcengineering/rank'
-import activity, { DOMAIN_ACTIVITY } from '@hcengineering/model-activity'
-import core, { getAccountsFromTxes, getSocialIdBySocialKey, getSocialKeyByOldEmail } from '@hcengineering/model-core'
-import { DOMAIN_VIEW } from '@hcengineering/model-view'
-import card, { type Card, DOMAIN_CARD } from '@hcengineering/card'
+} from '@hanzo/model'
+import { makeRank } from '@hanzo/rank'
+import activity, { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
+import core, { getAccountsFromTxes, getSocialIdBySocialKey, getSocialKeyByOldEmail } from '@hanzo/model-core'
+import { DOMAIN_VIEW } from '@hanzo/model-view'
+import card, { type Card, DOMAIN_CARD } from '@hanzo/card'
 
 import contact, { contactId, DOMAIN_CHANNEL, DOMAIN_CONTACT } from './index'
 

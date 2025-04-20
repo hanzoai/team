@@ -1,4 +1,4 @@
-import { type AnalyticProvider } from "@hcengineering/analytics"
+import { type AnalyticProvider } from "@hanzo/analytics"
 import * as Sentry from "@sentry/svelte"
 
 export class SentryAnalyticProvider implements AnalyticProvider {

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hcengineering/core'
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { Action, AnySvelteComponent } from '@hcengineering/ui'
+  import { Doc, Ref } from '@hanzo/core'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Action, AnySvelteComponent } from '@hanzo/ui'
   import TreeElement from './TreeElement.svelte'
 
   export let _id: Ref<Doc> | string | undefined = undefined

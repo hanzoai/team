@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import core from '@hcengineering/core'
-import lead from '@hcengineering/model-lead'
-import notification from '@hcengineering/notification'
-import serverCore from '@hcengineering/server-core'
-import serverLead from '@hcengineering/server-lead'
-import serverNotification from '@hcengineering/server-notification'
-import contact from '@hcengineering/contact'
+import core from '@hanzo/core'
+import lead from '@hanzo/model-lead'
+import notification from '@hanzo/notification'
+import serverCore from '@hanzo/server-core'
+import serverLead from '@hanzo/server-lead'
+import serverNotification from '@hanzo/server-notification'
+import contact from '@hanzo/contact'
 
-export { serverLeadId } from '@hcengineering/server-lead'
+export { serverLeadId } from '@hanzo/server-lead'
 
 export function createModel (builder: Builder): void {
   builder.mixin(lead.class.Lead, core.class.Class, serverNotification.mixin.HTMLPresenter, {

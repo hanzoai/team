@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { MessageInput } from '@hcengineering/ui-next'
-  import { Card } from '@hcengineering/card'
+  import { MessageInput } from '@hanzo/ui-next'
+  import { Card } from '@hanzo/card'
 
   import chat from '../plugin'
 

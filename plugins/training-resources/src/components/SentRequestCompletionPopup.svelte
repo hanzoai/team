@@ -3,12 +3,12 @@
 -->
 
 <script lang="ts">
-  import contact, { type Employee } from '@hcengineering/contact'
-  import { UserInfo } from '@hcengineering/contact-resources'
-  import { type Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery, DocPopup } from '@hcengineering/presentation'
-  import { StateTag, StateType } from '@hcengineering/ui'
-  import type { TrainingRequest } from '@hcengineering/training'
+  import contact, { type Employee } from '@hanzo/contact'
+  import { UserInfo } from '@hanzo/contact-resources'
+  import { type Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery, DocPopup } from '@hanzo/presentation'
+  import { StateTag, StateType } from '@hanzo/ui'
+  import type { TrainingRequest } from '@hanzo/training'
   import {
     compareCompletionMapValueState,
     type CompletionMap,

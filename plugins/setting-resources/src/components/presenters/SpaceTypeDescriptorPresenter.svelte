@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SpaceTypeDescriptor } from '@hcengineering/core'
-  import { Label } from '@hcengineering/ui'
+  import { SpaceTypeDescriptor } from '@hanzo/core'
+  import { Label } from '@hanzo/ui'
 
   export let value: SpaceTypeDescriptor
   export let inline: boolean = false

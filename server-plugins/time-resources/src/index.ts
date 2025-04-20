@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import contact, { Employee, Person } from '@hcengineering/contact'
+import { Analytics } from '@hanzo/analytics'
+import contact, { Employee, Person } from '@hanzo/contact'
 
 import core, {
   AttachedData,
@@ -33,24 +33,24 @@ import core, {
   TxUpdateDoc,
   toIdMap,
   Space
-} from '@hcengineering/core'
-import notification, { CommonInboxNotification } from '@hcengineering/notification'
-import { getResource } from '@hcengineering/platform'
-import type { TriggerControl } from '@hcengineering/server-core'
-import { getSocialStrings } from '@hcengineering/server-contact'
-import { ReceiverInfo, SenderInfo } from '@hcengineering/server-notification'
+} from '@hanzo/core'
+import notification, { CommonInboxNotification } from '@hanzo/notification'
+import { getResource } from '@hanzo/platform'
+import type { TriggerControl } from '@hanzo/server-core'
+import { getSocialStrings } from '@hanzo/server-contact'
+import { ReceiverInfo, SenderInfo } from '@hanzo/server-notification'
 import {
   getCommonNotificationTxes,
   getNotificationContent,
   getNotificationProviderControl,
   isShouldNotifyTx,
   getSenderInfo
-} from '@hcengineering/server-notification-resources'
-import serverTime, { OnToDo, ToDoFactory } from '@hcengineering/server-time'
-import task, { makeRank } from '@hcengineering/task'
-import { jsonToMarkup, nodeDoc, nodeParagraph, nodeText } from '@hcengineering/text-core'
-import time, { ProjectToDo, ToDo, ToDoPriority, TodoAutomationHelper, WorkSlot } from '@hcengineering/time'
-import tracker, { Issue, IssueStatus, Project, TimeSpendReport } from '@hcengineering/tracker'
+} from '@hanzo/server-notification-resources'
+import serverTime, { OnToDo, ToDoFactory } from '@hanzo/server-time'
+import task, { makeRank } from '@hanzo/task'
+import { jsonToMarkup, nodeDoc, nodeParagraph, nodeText } from '@hanzo/text-core'
+import time, { ProjectToDo, ToDo, ToDoPriority, TodoAutomationHelper, WorkSlot } from '@hanzo/time'
+import tracker, { Issue, IssueStatus, Project, TimeSpendReport } from '@hanzo/tracker'
 
 /**
  * @public

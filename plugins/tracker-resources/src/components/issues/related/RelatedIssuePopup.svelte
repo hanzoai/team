@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { SortingOrder, toIdMap, type IdMap, type Ref, type StatusCategory } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import tracker, { type Issue, type Project } from '@hcengineering/tracker'
+  import core, { SortingOrder, toIdMap, type IdMap, type Ref, type StatusCategory } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import tracker, { type Issue, type Project } from '@hanzo/tracker'
   import {
     createFocusManager,
     deviceOptionsStore,
@@ -31,8 +31,8 @@
     showPanel,
     Spinner,
     type SelectPopupValueType
-  } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { subIssueListProvider, type IssueRef } from '../../../utils'
   import RelatedIssuePresenter from './RelatedIssuePresenter.svelte'

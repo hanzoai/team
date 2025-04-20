@@ -1,10 +1,10 @@
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { CreateRelation } from '@hcengineering/setting-resources'
+  import contact from '@hanzo/contact'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { CreateRelation } from '@hanzo/setting-resources'
   import card from '../../plugin'
-  import { MasterTag } from '@hcengineering/card'
+  import { MasterTag } from '@hanzo/card'
 
   export let aClass: Ref<Class<Doc>> | undefined = undefined
 

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Markup } from '@hcengineering/core'
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
-  import textEditor, { RefAction, TextEditorHandler } from '@hcengineering/text-editor'
+  import { Markup } from '@hanzo/core'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+  import textEditor, { RefAction, TextEditorHandler } from '@hanzo/text-editor'
   import {
     AnySvelteComponent,
     Button,
@@ -26,12 +26,12 @@
     handler,
     IconClose,
     registerFocus
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { FocusPosition } from '@tiptap/core'
   import { EditorView } from '@tiptap/pm/view'
   import { createEventDispatcher } from 'svelte'
 
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
   import TextEditor from './TextEditor.svelte'
   import { defaultRefActions, getModelRefActions } from './editor/actions'
   import { EmojiExtension } from './extension/emoji'

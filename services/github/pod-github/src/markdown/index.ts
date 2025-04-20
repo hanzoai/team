@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MarkupNode, jsonToMarkup, markupToJSON, htmlToJSON } from '@hcengineering/text'
-import { MarkdownParser, storeNodes, storeMarks, MarkdownState } from '@hcengineering/text-markdown'
+import { MarkupNode, jsonToMarkup, markupToJSON, htmlToJSON } from '@hanzo/text'
+import { MarkdownParser, storeNodes, storeMarks, MarkdownState } from '@hanzo/text-markdown'
 import { GithubKit } from './extensions'
 import { hasHulyLink, hasHulyLinkText } from '../sync/guest'
 

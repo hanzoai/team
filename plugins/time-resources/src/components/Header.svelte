@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Timestamp } from '@hcengineering/core'
-  import { IntlString, getEmbeddedLabel } from '@hcengineering/platform'
+  import { Timestamp } from '@hanzo/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
   import {
     Label,
     areDatesEqual,
@@ -11,7 +11,7 @@
     IconChevronLeft,
     IconChevronRight,
     getFormattedDate
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import IconSun from './icons/Sun.svelte'
   import time from '../plugin'
 

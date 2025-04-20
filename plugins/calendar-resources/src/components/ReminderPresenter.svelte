@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hcengineering/calendar'
-  import { getResource } from '@hcengineering/platform'
-  import { DateTimeRangePresenter, showPanel, tooltip } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Event } from '@hanzo/calendar'
+  import { getResource } from '@hanzo/platform'
+  import { DateTimeRangePresenter, showPanel, tooltip } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   export let value: Event
 

@@ -25,16 +25,16 @@ import core, {
   type Tx,
   type TxCUD,
   type TxResult
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import type {
   DbAdapter,
   DBAdapterManager,
   Middleware,
   PipelineContext,
   TxMiddlewareResult
-} from '@hcengineering/server-core'
-import { BaseMiddleware } from '@hcengineering/server-core'
+} from '@hanzo/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
 
 /**
  * Will route transactions to domain adapters.

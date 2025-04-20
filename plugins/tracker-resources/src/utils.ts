@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { type Person } from '@hcengineering/contact'
+import { Analytics } from '@hanzo/analytics'
+import { type Person } from '@hanzo/contact'
 import core, {
   SortingOrder,
   toIdMap,
@@ -34,16 +34,16 @@ import core, {
   type TxOperations,
   type TxResult,
   type TxUpdateDoc
-} from '@hcengineering/core'
-import { type IntlString } from '@hcengineering/platform'
-import { createQuery, getClient, onClient } from '@hcengineering/presentation'
-import task, { getStatusIndex, makeRank, type TaskType, type ProjectType } from '@hcengineering/task'
+} from '@hanzo/core'
+import { type IntlString } from '@hanzo/platform'
+import { createQuery, getClient, onClient } from '@hanzo/presentation'
+import task, { getStatusIndex, makeRank, type TaskType, type ProjectType } from '@hanzo/task'
 import {
   selectedTaskTypeStore,
   activeProjects as taskActiveProjects,
   taskTypeStore,
   typesOfJoinedProjectsStore
-} from '@hcengineering/task-resources'
+} from '@hanzo/task-resources'
 import {
   IssuePriority,
   MilestoneStatus,
@@ -53,10 +53,10 @@ import {
   type IssueStatus,
   type Milestone,
   type Project
-} from '@hcengineering/tracker'
-import { areDatesEqual, isWeekend, PaletteColorIndexes } from '@hcengineering/ui'
-import { type KeyFilter, type ViewletDescriptor } from '@hcengineering/view'
-import { CategoryQuery, ListSelectionProvider, statusStore, type SelectDirection } from '@hcengineering/view-resources'
+} from '@hanzo/tracker'
+import { areDatesEqual, isWeekend, PaletteColorIndexes } from '@hanzo/ui'
+import { type KeyFilter, type ViewletDescriptor } from '@hanzo/view'
+import { CategoryQuery, ListSelectionProvider, statusStore, type SelectDirection } from '@hanzo/view-resources'
 import { derived, get, writable } from 'svelte/store'
 import tracker from './plugin'
 import { defaultMilestoneStatuses, defaultPriorities } from './types'

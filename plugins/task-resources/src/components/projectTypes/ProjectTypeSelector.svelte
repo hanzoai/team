@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import type { ProjectType, ProjectTypeDescriptor } from '@hcengineering/task'
-  import task from '@hcengineering/task'
-  import type { DropdownTextItem } from '@hcengineering/ui'
-  import { ButtonKind, ButtonSize, DropdownLabels } from '@hcengineering/ui'
+  import type { Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import type { ProjectType, ProjectTypeDescriptor } from '@hanzo/task'
+  import task from '@hanzo/task'
+  import type { DropdownTextItem } from '@hanzo/ui'
+  import { ButtonKind, ButtonSize, DropdownLabels } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
 

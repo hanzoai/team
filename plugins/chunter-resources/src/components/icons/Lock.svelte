@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { IconSize } from '@hcengineering/ui'
+  import { IconSize } from '@hanzo/ui'
 
   export let size: IconSize
   export let fill: string = 'currentColor'

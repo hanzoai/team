@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import platform, { loadPluginStrings, setMetadata } from '@hcengineering/platform'
+  import { Analytics } from '@hanzo/analytics'
+  import platform, { loadPluginStrings, setMetadata } from '@hanzo/platform'
   import { onMount, setContext } from 'svelte'
   import { writable } from 'svelte/store'
   import {

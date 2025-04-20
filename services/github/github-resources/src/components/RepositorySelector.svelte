@@ -3,11 +3,11 @@
 //
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { IntlString, getEmbeddedLabel } from '@hcengineering/platform'
-  import type { ButtonKind, ButtonShape, ButtonSize, LabelAndProps, SelectPopupValueType } from '@hcengineering/ui'
-  import { ButtonWithDropdown, Icon, IconDropdown, SelectPopup, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { GithubIntegrationRepository, GithubProject } from '@hcengineering/github'
+  import { Ref } from '@hanzo/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
+  import type { ButtonKind, ButtonShape, ButtonSize, LabelAndProps, SelectPopupValueType } from '@hanzo/ui'
+  import { ButtonWithDropdown, Icon, IconDropdown, SelectPopup, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { GithubIntegrationRepository, GithubProject } from '@hanzo/github'
   import github from '../plugin'
   import { integrationRepositories } from './utils'
 

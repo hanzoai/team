@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, FindResult, Ref, SortingOrder } from '@hcengineering/core'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { Project, Milestone, MilestoneStatus } from '@hcengineering/tracker'
+  import { DocumentQuery, FindResult, Ref, SortingOrder } from '@hanzo/core'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { Project, Milestone, MilestoneStatus } from '@hanzo/tracker'
   import ui, {
     IconCheck,
     Icon,
@@ -25,9 +25,9 @@
     resizeObserver,
     EditWithIcon,
     IconSearch
-  } from '@hcengineering/ui'
-  import { FILTER_DEBOUNCE_MS, sortFilterValues } from '@hcengineering/view-resources'
-  import view, { Filter } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { FILTER_DEBOUNCE_MS, sortFilterValues } from '@hanzo/view-resources'
+  import view, { Filter } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import { milestoneStatusAssets } from '../../types'

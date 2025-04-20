@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { IssuePriority } from '@hcengineering/tracker'
-  import { Icon, Label, getPlatformColorDef, themeStore } from '@hcengineering/ui'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { IssuePriority } from '@hanzo/tracker'
+  import { Icon, Label, getPlatformColorDef, themeStore } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import { IssuePriorityColor, issuePriorities } from '../../utils'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import core, { Doc, FindOptions, SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Execution } from '@hcengineering/process'
+  import { Card } from '@hanzo/card'
+  import core, { Doc, FindOptions, SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Execution } from '@hanzo/process'
   import {
     Button,
     eventToHTMLElement,
@@ -26,9 +26,9 @@
     resizeObserver,
     Section,
     showPopup
-  } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
-  import { List, ListSelectionProvider, SelectDirection, ViewletsSettingButton } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { List, ListSelectionProvider, SelectDirection, ViewletsSettingButton } from '@hanzo/view-resources'
   import process from '../plugin'
   import RunProcessPopup from './RunProcessPopup.svelte'
 

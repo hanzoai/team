@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hcengineering/contact'
-  import { AccountRole, getCurrentAccount, Ref } from '@hcengineering/core'
-  import { tzDateCompare, type Department, type Request, type RequestType, type Staff } from '@hcengineering/hr'
-  import { isAdminUser } from '@hcengineering/presentation'
+  import contact, { Employee } from '@hanzo/contact'
+  import { AccountRole, getCurrentAccount, Ref } from '@hanzo/core'
+  import { tzDateCompare, type Department, type Request, type RequestType, type Staff } from '@hanzo/hr'
+  import { isAdminUser } from '@hanzo/presentation'
   import {
     areDatesEqual,
     daysInMonth,
@@ -31,7 +31,7 @@
     Scroller,
     showPopup,
     tooltip
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import hr from '../../plugin'
   import { getHolidayDatesForEmployee, getRequests, isHoliday } from '../../utils'
   import CreateRequest from '../CreateRequest.svelte'

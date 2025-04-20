@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref, Space, getCurrentAccount } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient, reduceCalls } from '@hcengineering/presentation'
-  import { Button, IconAdd, eventToHTMLElement, getCurrentLocation, showPopup } from '@hcengineering/ui'
-  import { Filter, FilteredView, ViewOptions, Viewlet } from '@hcengineering/view'
+  import { Class, Doc, DocumentQuery, Ref, Space, getCurrentAccount } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { getClient, reduceCalls } from '@hanzo/presentation'
+  import { Button, IconAdd, eventToHTMLElement, getCurrentLocation, showPopup } from '@hanzo/ui'
+  import { Filter, FilteredView, ViewOptions, Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import { filterStore, removeFilter, selectedFilterStore, updateFilter } from '../../filter'
   import view from '../../plugin'

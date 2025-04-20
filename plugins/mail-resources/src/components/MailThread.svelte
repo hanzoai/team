@@ -18,15 +18,15 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { getResource } from '@hcengineering/platform'
-  import { ActionContext, getClient } from '@hcengineering/presentation'
-  import { Class, type Ref } from '@hcengineering/core'
-  import { type Card } from '@hcengineering/card'
-  import mail from '@hcengineering/mail'
-  import chunter, { ChatMessage } from '@hcengineering/chunter'
-  import { Panel } from '@hcengineering/panel'
-  import { type AnySvelteComponent, Component, Loading } from '@hcengineering/ui'
-  import view, { type ObjectPresenter } from '@hcengineering/view'
+  import { getResource } from '@hanzo/platform'
+  import { ActionContext, getClient } from '@hanzo/presentation'
+  import { Class, type Ref } from '@hanzo/core'
+  import { type Card } from '@hanzo/card'
+  import mail from '@hanzo/mail'
+  import chunter, { ChatMessage } from '@hanzo/chunter'
+  import { Panel } from '@hanzo/panel'
+  import { type AnySvelteComponent, Component, Loading } from '@hanzo/ui'
+  import view, { type ObjectPresenter } from '@hanzo/view'
 
   export let _id: Ref<Card>
   export let _class: Ref<Class<Card>> = mail.class.MailThread

@@ -16,8 +16,8 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import login from '@hcengineering/login'
-  import { getClient as getAccountClient } from '@hcengineering/account-client'
+  import login from '@hanzo/login'
+  import { getClient as getAccountClient } from '@hanzo/account-client'
   import {
     ERROR,
     IntlString,
@@ -27,11 +27,11 @@
     Status,
     getMetadata,
     translate
-  } from '@hcengineering/platform'
-  import { EditBox, StylishEdit, ModernDialog } from '@hcengineering/ui'
-  import { getCurrentAccount, SocialIdType } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import contact, { SocialIdentityRef } from '@hcengineering/contact'
+  } from '@hanzo/platform'
+  import { EditBox, StylishEdit, ModernDialog } from '@hanzo/ui'
+  import { getCurrentAccount, SocialIdType } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import contact, { SocialIdentityRef } from '@hanzo/contact'
 
   import documents from '../plugin'
   import StatusControl from './requests/StatusControl.svelte'

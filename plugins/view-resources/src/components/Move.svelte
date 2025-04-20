@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient, SpaceSelect } from '@hcengineering/presentation'
-  import { Button, Label, Status as StatusControl, themeStore } from '@hcengineering/ui'
+  import { getClient, SpaceSelect } from '@hanzo/presentation'
+  import { Button, Label, Status as StatusControl, themeStore } from '@hanzo/ui'
 
-  import core, { Class, Client, Doc, Ref, SortingOrder, Space } from '@hcengineering/core'
-  import { OK, Resource, Status, getResource, translate } from '@hcengineering/platform'
-  import task, { Project, Task, makeRank } from '@hcengineering/task'
+  import core, { Class, Client, Doc, Ref, SortingOrder, Space } from '@hanzo/core'
+  import { OK, Resource, Status, getResource, translate } from '@hanzo/platform'
+  import task, { Project, Task, makeRank } from '@hanzo/task'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
   import { moveToSpace } from '../utils'

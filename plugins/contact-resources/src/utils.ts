@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type AccountClient, getClient as getAccountClientRaw } from '@hcengineering/account-client'
+import { type AccountClient, getClient as getAccountClientRaw } from '@hanzo/account-client'
 import {
   addEmployeeListenrer,
   AvatarType,
@@ -33,7 +33,7 @@ import {
   type Person,
   type PersonsByPermission,
   type SocialIdentity
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import core, {
   type AccountUuid,
   type AggregateValue,
@@ -58,12 +58,12 @@ import core, {
   type TypedSpace,
   type UserStatus,
   type WithLookup
-} from '@hcengineering/core'
-import login from '@hcengineering/login'
-import notification, { type DocNotifyContext, type InboxNotification } from '@hcengineering/notification'
-import { getEmbeddedLabel, getMetadata, getResource, type IntlString, translate } from '@hcengineering/platform'
-import presentation, { createQuery, getClient, onClient } from '@hcengineering/presentation'
-import { type TemplateDataProvider } from '@hcengineering/templates'
+} from '@hanzo/core'
+import login from '@hanzo/login'
+import notification, { type DocNotifyContext, type InboxNotification } from '@hanzo/notification'
+import { getEmbeddedLabel, getMetadata, getResource, type IntlString, translate } from '@hanzo/platform'
+import presentation, { createQuery, getClient, onClient } from '@hanzo/presentation'
+import { type TemplateDataProvider } from '@hanzo/templates'
 import {
   getCurrentResolvedLocation,
   getPanelURI,
@@ -71,10 +71,10 @@ import {
   type Location,
   type ResolvedLocation,
   type TabItem
-} from '@hcengineering/ui'
-import view, { type Filter, type GrouppingManager } from '@hcengineering/view'
-import { accessDeniedStore, FilterQuery } from '@hcengineering/view-resources'
-import { type LocationData } from '@hcengineering/workbench'
+} from '@hanzo/ui'
+import view, { type Filter, type GrouppingManager } from '@hanzo/view'
+import { accessDeniedStore, FilterQuery } from '@hanzo/view-resources'
+import { type LocationData } from '@hanzo/workbench'
 import { derived, get, type Readable, writable } from 'svelte/store'
 
 import contact from './plugin'

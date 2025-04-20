@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type Employee } from '@hcengineering/contact'
+import { type Employee } from '@hanzo/contact'
 
 export async function canResendInvitation (employee: Employee): Promise<boolean> {
   return !employee.active

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import task from '@hcengineering/task'
-  import { Issue } from '@hcengineering/tracker'
-  import { ButtonKind, ButtonSize, DueDatePresenter } from '@hcengineering/ui'
+  import { WithLookup } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import task from '@hanzo/task'
+  import { Issue } from '@hanzo/tracker'
+  import { ButtonKind, ButtonSize, DueDatePresenter } from '@hanzo/ui'
 
   export let value: WithLookup<Issue>
   export let kind: ButtonKind = 'link'

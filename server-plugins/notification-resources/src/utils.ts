@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity, { ActivityMessage, DocUpdateMessage } from '@hcengineering/activity'
-import { Analytics } from '@hcengineering/analytics'
-import chunter, { ChatMessage } from '@hcengineering/chunter'
+import activity, { ActivityMessage, DocUpdateMessage } from '@hanzo/activity'
+import { Analytics } from '@hanzo/analytics'
+import chunter, { ChatMessage } from '@hanzo/chunter'
 import contact, {
   Employee,
   formatName,
@@ -22,7 +22,7 @@ import contact, {
   Person,
   SocialIdentity,
   SocialIdentityRef
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import core, {
   AccountUuid,
   Class,
@@ -43,7 +43,7 @@ import core, {
   TxCUD,
   TxMixin,
   TxUpdateDoc
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   BaseNotificationType,
   Collaborators,
@@ -54,22 +54,22 @@ import notification, {
   type NotificationProviderSetting,
   NotificationType,
   type NotificationTypeSetting
-} from '@hcengineering/notification'
-import { getMetadata, getResource, IntlString, translate } from '@hcengineering/platform'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/notification'
+import { getMetadata, getResource, IntlString, translate } from '@hanzo/platform'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
 import serverNotification, {
   HTMLPresenter,
   NotificationPresenter,
   ReceiverInfo,
   SenderInfo,
   TextPresenter
-} from '@hcengineering/server-notification'
-import serverView from '@hcengineering/server-view'
-import { encodeObjectURI } from '@hcengineering/view'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/server-notification'
+import serverView from '@hanzo/server-view'
+import { encodeObjectURI } from '@hanzo/view'
+import { workbenchId } from '@hanzo/workbench'
 
 import { NotifyResult } from './types'
-import { getPersonSpaces } from '@hcengineering/server-contact'
+import { getPersonSpaces } from '@hanzo/server-contact'
 
 /**
  * @public

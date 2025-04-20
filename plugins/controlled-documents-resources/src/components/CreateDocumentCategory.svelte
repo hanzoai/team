@@ -16,12 +16,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Attachment } from '@hcengineering/attachment'
-  import { AttachmentPresenter, AttachmentStyledBox } from '@hcengineering/attachment-resources'
-  import { generateId, Ref, Space } from '@hcengineering/core'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { Button, EditBox, IconAttachment, tooltip } from '@hcengineering/ui'
-  import { DocumentCategory } from '@hcengineering/controlled-documents'
+  import { Attachment } from '@hanzo/attachment'
+  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
+  import { generateId, Ref, Space } from '@hanzo/core'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { Button, EditBox, IconAttachment, tooltip } from '@hanzo/ui'
+  import { DocumentCategory } from '@hanzo/controlled-documents'
 
   import IconWarning from './icons/IconWarning.svelte'
   import documents from '../plugin'

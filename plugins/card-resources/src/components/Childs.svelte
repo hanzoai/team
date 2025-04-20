@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, CardEvents } from '@hcengineering/card'
-  import core, { Data, Doc, fillDefaults, MarkupBlobRef, SortingOrder, WithLookup } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Card, CardEvents } from '@hanzo/card'
+  import core, { Data, Doc, fillDefaults, MarkupBlobRef, SortingOrder, WithLookup } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     Label,
     Scroller,
@@ -25,19 +25,19 @@
     navigate,
     resizeObserver,
     Section
-  } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     List,
     ListSelectionProvider,
     restrictionStore,
     SelectDirection,
     ViewletsSettingButton
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import card from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
-  import { translate } from '@hcengineering/platform'
-  import { makeRank } from '@hcengineering/rank'
+  import { Analytics } from '@hanzo/analytics'
+  import { translate } from '@hanzo/platform'
+  import { makeRank } from '@hanzo/rank'
 
   export let object: Card
   export let readonly: boolean = false

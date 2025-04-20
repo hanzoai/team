@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, Label, showPopup, getEventPositionElement } from '@hcengineering/ui'
-  import { ObjectBoxPopup } from '@hcengineering/view-resources'
-  import { Ref } from '@hcengineering/core'
-  import { MasterTag } from '@hcengineering/card'
+  import { Button, Label, showPopup, getEventPositionElement } from '@hanzo/ui'
+  import { ObjectBoxPopup } from '@hanzo/view-resources'
+  import { Ref } from '@hanzo/core'
+  import { MasterTag } from '@hanzo/card'
   import card from '../../plugin'
   export let value: Ref<MasterTag>[]
 

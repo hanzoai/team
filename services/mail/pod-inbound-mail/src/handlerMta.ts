@@ -17,7 +17,7 @@ import { readEml, ReadedEmlJson } from 'eml-parse-js'
 import { Request, Response } from 'express'
 import TurndownService from 'turndown'
 import sanitizeHtml from 'sanitize-html'
-import { MeasureContext } from '@hcengineering/core'
+import { MeasureContext } from '@hanzo/core'
 import { type Attachment, createMessages } from './message'
 import config from './config'
 

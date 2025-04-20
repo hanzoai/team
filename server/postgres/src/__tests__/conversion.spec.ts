@@ -9,7 +9,7 @@ import core, {
   type Space,
   type Tx,
   type WorkspaceUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { PostgresAdapter } from '../storage'
 import { convertArrayParams, decodeArray, filterProjection } from '../utils'
 import { genMinModel, test, type ComplexClass } from './minmodel'

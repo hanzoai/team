@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TxUpdateDoc } from '@hcengineering/core'
-  import { Asset } from '@hcengineering/platform'
-  import { Issue } from '@hcengineering/tracker'
-  import { Icon } from '@hcengineering/ui'
+  import { TxUpdateDoc } from '@hanzo/core'
+  import { Asset } from '@hanzo/platform'
+  import { Issue } from '@hanzo/tracker'
+  import { Icon } from '@hanzo/ui'
   import { issuePriorities } from '../../utils'
 
   export let tx: TxUpdateDoc<Issue>

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -25,14 +25,14 @@
     Lookup,
     mergeQueries,
     Ref
-  } from '@hcengineering/core'
-  import { DocWithRank, Item, Kanban as KanbanUI } from '@hcengineering/kanban'
-  import { getResource } from '@hcengineering/platform'
-  import { ActionContext, createQuery, getClient } from '@hcengineering/presentation'
-  import tags from '@hcengineering/tags'
-  import { Project, Task, TaskOrdering } from '@hcengineering/task'
-  import { ColorDefinition, defaultBackground, Label, themeStore } from '@hcengineering/ui'
-  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hcengineering/view'
+  } from '@hanzo/core'
+  import { DocWithRank, Item, Kanban as KanbanUI } from '@hanzo/kanban'
+  import { getResource } from '@hanzo/platform'
+  import { ActionContext, createQuery, getClient } from '@hanzo/presentation'
+  import tags from '@hanzo/tags'
+  import { Project, Task, TaskOrdering } from '@hanzo/task'
+  import { ColorDefinition, defaultBackground, Label, themeStore } from '@hanzo/ui'
+  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hanzo/view'
   import {
     focusStore,
     getCategoryQueryNoLookup,
@@ -47,7 +47,7 @@
     SelectDirection,
     setGroupByValues,
     showMenu
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import { onMount } from 'svelte'
   import task from '../../plugin'
   import { getTaskKanbanResultQuery, updateTaskKanbanCategories } from '../../utils'

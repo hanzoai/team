@@ -14,8 +14,8 @@
 //
 import { type SendMailOptions, type Transporter } from 'nodemailer'
 
-import { Analytics } from '@hcengineering/analytics'
-import { MeasureContext } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { MeasureContext } from '@hanzo/core'
 
 import config from './config'
 import { getTransport } from './transport'

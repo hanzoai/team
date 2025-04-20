@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import { AccountRole, MeasureContext, PersonUuid, WorkspaceUuid } from '@hcengineering/core'
-import platform, { PlatformError, Status, Severity, getMetadata } from '@hcengineering/platform'
-import { decodeTokenVerbose } from '@hcengineering/server-token'
+import { AccountRole, MeasureContext, PersonUuid, WorkspaceUuid } from '@hanzo/core'
+import platform, { PlatformError, Status, Severity, getMetadata } from '@hanzo/platform'
+import { decodeTokenVerbose } from '@hanzo/server-token'
 
 import { AccountDB } from '../types'
 import { createInvite, createInviteLink, sendInvite, resendInvite } from '../operations'
 import { accountPlugin } from '../plugin'
 
 // Mock platform
-jest.mock('@hcengineering/platform', () => {
-  const actual = jest.requireActual('@hcengineering/platform')
+jest.mock('@hanzo/platform', () => {
+  const actual = jest.requireActual('@hanzo/platform')
   return {
     ...actual,
     ...actual.default,
@@ -33,7 +33,7 @@ jest.mock('@hcengineering/platform', () => {
 })
 
 // Mock server-token
-jest.mock('@hcengineering/server-token', () => ({
+jest.mock('@hanzo/server-token', () => ({
   decodeTokenVerbose: jest.fn(),
   generateToken: jest.fn()
 }))

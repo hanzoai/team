@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Widget, WidgetPreference, WidgetType } from '@hcengineering/workbench'
-  import { IconSettings, ModernButton, showPopup, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
-  import { Ref } from '@hcengineering/core'
+  import { Widget, WidgetPreference, WidgetType } from '@hanzo/workbench'
+  import { IconSettings, ModernButton, showPopup, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  import { Ref } from '@hanzo/core'
 
   import WidgetPresenter from './/WidgetPresenter.svelte'
   import AddWidgetsPopup from './AddWidgetsPopup.svelte'

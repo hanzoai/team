@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { type Board, boardId } from '@hcengineering/board'
-import board from '@hcengineering/board-resources/src/plugin'
-import type { Ref, Sequence } from '@hcengineering/core'
-import { type IntlString, mergeIds } from '@hcengineering/platform'
-import { type TaskTypeDescriptor, type ProjectType } from '@hcengineering/task'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import { type Action, type ViewAction, type Viewlet, type ViewletDescriptor } from '@hcengineering/view'
+import { type Board, boardId } from '@hanzo/board'
+import board from '@hanzo/board-resources/src/plugin'
+import type { Ref, Sequence } from '@hanzo/core'
+import { type IntlString, mergeIds } from '@hanzo/platform'
+import { type TaskTypeDescriptor, type ProjectType } from '@hanzo/task'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import { type Action, type ViewAction, type Viewlet, type ViewletDescriptor } from '@hanzo/view'
 
 export default mergeIds(boardId, board, {
   component: {

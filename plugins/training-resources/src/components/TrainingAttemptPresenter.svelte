@@ -3,10 +3,10 @@
 -->
 
 <script lang="ts">
-  import type { Training, TrainingAttempt, TrainingRequest } from '@hcengineering/training'
-  import { EmployeeRefPresenter } from '@hcengineering/contact-resources'
-  import type { WithLookup } from '@hcengineering/core'
-  import { DocNavLink } from '@hcengineering/view-resources'
+  import type { Training, TrainingAttempt, TrainingRequest } from '@hanzo/training'
+  import { EmployeeRefPresenter } from '@hanzo/contact-resources'
+  import type { WithLookup } from '@hanzo/core'
+  import { DocNavLink } from '@hanzo/view-resources'
 
   export let value: WithLookup<TrainingAttempt>
   export let disabled: boolean = false

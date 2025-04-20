@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hcengineering/contact'
-  import { Class, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { IconSize } from '@hcengineering/ui'
+  import contact, { Person } from '@hanzo/contact'
+  import { Class, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { IconSize } from '@hanzo/ui'
   import { PersonLabelTooltip } from '..'
   import PersonPresenter from './PersonPresenter.svelte'
 

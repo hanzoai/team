@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { closeWidget, closeWidgetTab } from '@hcengineering/workbench-resources'
-  import { Widget } from '@hcengineering/workbench'
-  import { ChatWidgetTab } from '@hcengineering/chunter'
+  import { closeWidget, closeWidgetTab } from '@hanzo/workbench-resources'
+  import { Widget } from '@hanzo/workbench'
+  import { ChatWidgetTab } from '@hanzo/chunter'
 
   import ChannelSidebarView from './ChannelSidebarView.svelte'
   import chunter from '../plugin'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
+import activity from '@hanzo/activity'
 import {
   AvatarType,
   contactId,
@@ -31,7 +31,7 @@ import {
   type Person,
   type Status,
   type PersonSpace
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import {
   AccountRole,
   DOMAIN_MODEL,
@@ -49,7 +49,7 @@ import {
   type PersonId,
   type AccountUuid,
   ClassifierKind
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   Collection as CollectionType,
   Hidden,
@@ -69,25 +69,25 @@ import {
   TypeTimestamp,
   UX,
   type Builder
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import chunter from '@hcengineering/model-chunter'
-import core, { TAttachedDoc, TDoc, TSpace } from '@hcengineering/model-core'
-import { createPublicLinkAction } from '@hcengineering/model-guest'
-import { generateClassNotificationTypes } from '@hcengineering/model-notification'
-import presentation from '@hcengineering/model-presentation'
-import view, { createAction, createAttributePresenter, type Viewlet } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import notification from '@hcengineering/notification'
-import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import templates from '@hcengineering/templates'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { type Action } from '@hcengineering/view'
-import card, { type Card } from '@hcengineering/card'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import chunter from '@hanzo/model-chunter'
+import core, { TAttachedDoc, TDoc, TSpace } from '@hanzo/model-core'
+import { createPublicLinkAction } from '@hanzo/model-guest'
+import { generateClassNotificationTypes } from '@hanzo/model-notification'
+import presentation from '@hanzo/model-presentation'
+import view, { createAction, createAttributePresenter, type Viewlet } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import notification from '@hanzo/notification'
+import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import templates from '@hanzo/templates'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type Action } from '@hanzo/view'
+import card, { type Card } from '@hanzo/card'
 import contact from './plugin'
 
-export { contactId } from '@hcengineering/contact'
+export { contactId } from '@hanzo/contact'
 export { contactOperation } from './migration'
 export { contact as default }
 

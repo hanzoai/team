@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { setMetadata } from '@hcengineering/platform'
-import serverClient, { withRetry } from '@hcengineering/server-client'
-import { initStatisticsContext } from '@hcengineering/server-core'
-import serverToken, { generateToken } from '@hcengineering/server-token'
+import { setMetadata } from '@hanzo/platform'
+import serverClient, { withRetry } from '@hanzo/server-client'
+import { initStatisticsContext } from '@hanzo/server-core'
+import serverToken, { generateToken } from '@hanzo/server-token'
 
-import { getClient as getAccountClient } from '@hcengineering/account-client'
-import { SplitLogger } from '@hcengineering/analytics-service'
-import { MeasureMetricsContext, newMetrics, type SocialId } from '@hcengineering/core'
+import { getClient as getAccountClient } from '@hanzo/account-client'
+import { SplitLogger } from '@hanzo/analytics-service'
+import { MeasureMetricsContext, newMetrics, type SocialId } from '@hanzo/core'
 import { join } from 'path'
 import config from './config'
 import { AIControl } from './controller'

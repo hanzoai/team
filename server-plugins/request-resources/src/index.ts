@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { DocUpdateMessage } from '@hcengineering/activity'
-import core, { Doc, Tx, TxCUD, TxCreateDoc, TxProcessor, TxUpdateDoc, type MeasureContext } from '@hcengineering/core'
-import notification from '@hcengineering/notification'
-import { getResource, translate } from '@hcengineering/platform'
-import request, { Request, RequestStatus } from '@hcengineering/request'
-import { pushDocUpdateMessages } from '@hcengineering/server-activity-resources'
-import type { TriggerControl } from '@hcengineering/server-core'
+import { DocUpdateMessage } from '@hanzo/activity'
+import core, { Doc, Tx, TxCUD, TxCreateDoc, TxProcessor, TxUpdateDoc, type MeasureContext } from '@hanzo/core'
+import notification from '@hanzo/notification'
+import { getResource, translate } from '@hanzo/platform'
+import request, { Request, RequestStatus } from '@hanzo/request'
+import { pushDocUpdateMessages } from '@hanzo/server-activity-resources'
+import type { TriggerControl } from '@hanzo/server-core'
 import {
   getCollaborators,
   getNotificationProviderControl,
@@ -27,7 +27,7 @@ import {
   getReceiversInfo,
   getSenderInfo,
   getTextPresenter
-} from '@hcengineering/server-notification-resources'
+} from '@hanzo/server-notification-resources'
 
 /**
  * @public

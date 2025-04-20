@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person, getCurrentEmployee } from '@hcengineering/contact'
-  import { UserInfo, personByIdStore } from '@hcengineering/contact-resources'
-  import { Class, Doc, IdMap, Ref } from '@hcengineering/core'
+  import { Person, getCurrentEmployee } from '@hanzo/contact'
+  import { UserInfo, personByIdStore } from '@hanzo/contact-resources'
+  import { Class, Doc, IdMap, Ref } from '@hanzo/core'
 
   import {
     IconArrowLeft,
@@ -30,7 +30,7 @@
     navigate,
     panelstore,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
 
   import {
     MeetingMinutes,
@@ -41,10 +41,10 @@
     loveId,
     roomAccessIcon,
     roomAccessLabel
-  } from '@hcengineering/love'
-  import { getClient } from '@hcengineering/presentation'
-  import view from '@hcengineering/view'
-  import { getObjectLinkFragment } from '@hcengineering/view-resources'
+  } from '@hanzo/love'
+  import { getClient } from '@hanzo/presentation'
+  import view from '@hanzo/view'
+  import { getObjectLinkFragment } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import love from '../plugin'
   import { currentMeetingMinutes, currentRoom, infos, invites, myInfo, myOffice, myRequests, rooms } from '../stores'

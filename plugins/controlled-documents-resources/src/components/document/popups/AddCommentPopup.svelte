@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import chunter, { type ChatMessage } from '@hcengineering/chunter'
-  import { Ref, generateId } from '@hcengineering/core'
-  import { ReferenceInput } from '@hcengineering/text-editor-resources'
+  import chunter, { type ChatMessage } from '@hanzo/chunter'
+  import { Ref, generateId } from '@hanzo/core'
+  import { ReferenceInput } from '@hanzo/text-editor-resources'
 
   import { addDocumentCommentFx } from '../../../stores/editors/document'
 

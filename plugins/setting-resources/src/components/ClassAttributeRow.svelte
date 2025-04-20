@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, ArrOf, Doc, EnumOf, RefTo, Type } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { AnySvelteComponent, Icon, IconMoreV2, Label, IconOpenedArrow } from '@hcengineering/ui'
+  import core, { AnyAttribute, ArrOf, Doc, EnumOf, RefTo, Type } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { AnySvelteComponent, Icon, IconMoreV2, Label, IconOpenedArrow } from '@hanzo/ui'
   import settings from '../plugin'
 
   export let attribute: AnyAttribute

@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import { ProductVersion } from '@hcengineering/products'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { ProductVersion } from '@hanzo/products'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   import { getProductVersionVersion } from '../../utils'
 

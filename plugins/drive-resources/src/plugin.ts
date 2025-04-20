@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hcengineering/platform'
-import drive, { driveId } from '@hcengineering/drive'
+import { type IntlString, mergeIds } from '@hanzo/platform'
+import drive, { driveId } from '@hanzo/drive'
 
 export default mergeIds(driveId, drive, {
   string: {

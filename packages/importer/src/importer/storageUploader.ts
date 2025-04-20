@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { saveCollabJson } from '@hcengineering/collaboration'
-import { CollaborativeDoc, Markup, MeasureContext, Blob as PlatformBlob, Ref, WorkspaceIds } from '@hcengineering/core'
-import type { StorageAdapter } from '@hcengineering/server-core'
+import { saveCollabJson } from '@hanzo/collaboration'
+import { CollaborativeDoc, Markup, MeasureContext, Blob as PlatformBlob, Ref, WorkspaceIds } from '@hanzo/core'
+import type { StorageAdapter } from '@hanzo/server-core'
 import { FileUploader, UploadResult } from './uploader'
 
 export class StorageFileUploader implements FileUploader {

@@ -13,131 +13,131 @@
 // limitations under the License.
 //
 
-import platform, { type Plugin, addLocation, addStringsLoader, platformId } from '@hcengineering/platform'
+import platform, { type Plugin, addLocation, addStringsLoader, platformId } from '@hanzo/platform'
 
-import { activityId } from '@hcengineering/activity'
-import aiBot, { aiBotId } from '@hcengineering/ai-bot'
-import analyticsCollector, { analyticsCollectorId } from '@hcengineering/analytics-collector'
-import { attachmentId } from '@hcengineering/attachment'
-import { boardId } from '@hcengineering/board'
-import calendar, { calendarId } from '@hcengineering/calendar'
-import { cardId } from '@hcengineering/card'
-import { chunterId } from '@hcengineering/chunter'
-import client, { clientId } from '@hcengineering/client'
-import contactPlugin, { contactId } from '@hcengineering/contact'
-import { documentsId } from '@hcengineering/controlled-documents'
-import { desktopPreferencesId } from '@hcengineering/desktop-preferences'
-import { diffviewId } from '@hcengineering/diffview'
-import { documentId } from '@hcengineering/document'
-import { driveId } from '@hcengineering/drive'
-import exportPlugin, { exportId } from '@hcengineering/export'
-import gmail, { gmailId } from '@hcengineering/gmail'
-import guest, { guestId } from '@hcengineering/guest'
-import { hrId } from '@hcengineering/hr'
-import { imageCropperId } from '@hcengineering/image-cropper'
-import { inventoryId } from '@hcengineering/inventory'
-import { leadId } from '@hcengineering/lead'
-import login, { loginId } from '@hcengineering/login'
-import love, { loveId } from '@hcengineering/love'
-import notification, { notificationId } from '@hcengineering/notification'
-import onboard, { onboardId } from '@hcengineering/onboard'
-import presence, { presenceId } from '@hcengineering/presence'
-import print, { printId } from '@hcengineering/print'
-import { processId } from '@hcengineering/process'
-import { productsId } from '@hcengineering/products'
-import { questionsId } from '@hcengineering/questions'
-import { recruitId } from '@hcengineering/recruit'
-import rekoni from '@hcengineering/rekoni'
-import { requestId } from '@hcengineering/request'
-import setting, { settingId } from '@hcengineering/setting'
-import sign from '@hcengineering/sign'
-import { supportId } from '@hcengineering/support'
-import { surveyId } from '@hcengineering/survey'
-import { tagsId } from '@hcengineering/tags'
-import { taskId } from '@hcengineering/task'
-import telegram, { telegramId } from '@hcengineering/telegram'
-import { templatesId } from '@hcengineering/templates'
-import { testManagementId } from '@hcengineering/test-management'
-import textEditor, { textEditorId } from '@hcengineering/text-editor'
-import { timeId } from '@hcengineering/time'
-import tracker, { trackerId } from '@hcengineering/tracker'
-import { trainingId } from '@hcengineering/training'
-import uiPlugin from '@hcengineering/ui'
-import {uiNextId} from '@hcengineering/ui-next'
-import { uploaderId } from '@hcengineering/uploader'
-import recorder, { recorderId } from '@hcengineering/recorder'
-import { viewId } from '@hcengineering/view'
-import workbench, { workbenchId } from '@hcengineering/workbench'
-import { mailId } from '@hcengineering/mail'
-import { chatId } from '@hcengineering/chat'
-import github, { githubId } from '@hcengineering/github'
-import { bitrixId } from '@hcengineering/bitrix'
-import {inboxId} from '@hcengineering/inbox'
+import { activityId } from '@hanzo/activity'
+import aiBot, { aiBotId } from '@hanzo/ai-bot'
+import analyticsCollector, { analyticsCollectorId } from '@hanzo/analytics-collector'
+import { attachmentId } from '@hanzo/attachment'
+import { boardId } from '@hanzo/board'
+import calendar, { calendarId } from '@hanzo/calendar'
+import { cardId } from '@hanzo/card'
+import { chunterId } from '@hanzo/chunter'
+import client, { clientId } from '@hanzo/client'
+import contactPlugin, { contactId } from '@hanzo/contact'
+import { documentsId } from '@hanzo/controlled-documents'
+import { desktopPreferencesId } from '@hanzo/desktop-preferences'
+import { diffviewId } from '@hanzo/diffview'
+import { documentId } from '@hanzo/document'
+import { driveId } from '@hanzo/drive'
+import exportPlugin, { exportId } from '@hanzo/export'
+import gmail, { gmailId } from '@hanzo/gmail'
+import guest, { guestId } from '@hanzo/guest'
+import { hrId } from '@hanzo/hr'
+import { imageCropperId } from '@hanzo/image-cropper'
+import { inventoryId } from '@hanzo/inventory'
+import { leadId } from '@hanzo/lead'
+import login, { loginId } from '@hanzo/login'
+import love, { loveId } from '@hanzo/love'
+import notification, { notificationId } from '@hanzo/notification'
+import onboard, { onboardId } from '@hanzo/onboard'
+import presence, { presenceId } from '@hanzo/presence'
+import print, { printId } from '@hanzo/print'
+import { processId } from '@hanzo/process'
+import { productsId } from '@hanzo/products'
+import { questionsId } from '@hanzo/questions'
+import { recruitId } from '@hanzo/recruit'
+import rekoni from '@hanzo/rekoni'
+import { requestId } from '@hanzo/request'
+import setting, { settingId } from '@hanzo/setting'
+import sign from '@hanzo/sign'
+import { supportId } from '@hanzo/support'
+import { surveyId } from '@hanzo/survey'
+import { tagsId } from '@hanzo/tags'
+import { taskId } from '@hanzo/task'
+import telegram, { telegramId } from '@hanzo/telegram'
+import { templatesId } from '@hanzo/templates'
+import { testManagementId } from '@hanzo/test-management'
+import textEditor, { textEditorId } from '@hanzo/text-editor'
+import { timeId } from '@hanzo/time'
+import tracker, { trackerId } from '@hanzo/tracker'
+import { trainingId } from '@hanzo/training'
+import uiPlugin from '@hanzo/ui'
+import {uiNextId} from '@hanzo/ui-next'
+import { uploaderId } from '@hanzo/uploader'
+import recorder, { recorderId } from '@hanzo/recorder'
+import { viewId } from '@hanzo/view'
+import workbench, { workbenchId } from '@hanzo/workbench'
+import { mailId } from '@hanzo/mail'
+import { chatId } from '@hanzo/chat'
+import github, { githubId } from '@hanzo/github'
+import { bitrixId } from '@hanzo/bitrix'
+import {inboxId} from '@hanzo/inbox'
 
-import '@hcengineering/activity-assets'
-import '@hcengineering/analytics-collector-assets'
-import '@hcengineering/attachment-assets'
-import '@hcengineering/bitrix-assets'
-import '@hcengineering/board-assets'
-import '@hcengineering/calendar-assets'
-import '@hcengineering/card-assets'
-import '@hcengineering/chunter-assets'
-import '@hcengineering/contact-assets'
-import '@hcengineering/controlled-documents-assets'
-import '@hcengineering/desktop-preferences-assets'
-import '@hcengineering/diffview-assets'
-import '@hcengineering/document-assets'
-import '@hcengineering/drive-assets'
-import '@hcengineering/export-assets'
-import '@hcengineering/gmail-assets'
-import '@hcengineering/guest-assets'
-import '@hcengineering/hr-assets'
-import '@hcengineering/inventory-assets'
-import '@hcengineering/lead-assets'
-import '@hcengineering/login-assets'
-import '@hcengineering/love-assets'
-import '@hcengineering/notification-assets'
-import '@hcengineering/preference-assets'
-import '@hcengineering/print-assets'
-import '@hcengineering/process-assets'
-import '@hcengineering/products-assets'
-import '@hcengineering/questions-assets'
-import '@hcengineering/recruit-assets'
-import '@hcengineering/request-assets'
-import '@hcengineering/setting-assets'
-import '@hcengineering/support-assets'
-import '@hcengineering/survey-assets'
-import '@hcengineering/tags-assets'
-import '@hcengineering/task-assets'
-import '@hcengineering/telegram-assets'
-import '@hcengineering/templates-assets'
-import '@hcengineering/test-management-assets'
-import '@hcengineering/text-editor-assets'
-import '@hcengineering/time-assets'
-import '@hcengineering/tracker-assets'
-import '@hcengineering/training-assets'
-import '@hcengineering/uploader-assets'
-import '@hcengineering/recorder-assets'
-import '@hcengineering/view-assets'
-import '@hcengineering/workbench-assets'
-import '@hcengineering/chat-assets'
-import '@hcengineering/inbox-assets'
-import '@hcengineering/mail-assets'
-import '@hcengineering/github-assets'
+import '@hanzo/activity-assets'
+import '@hanzo/analytics-collector-assets'
+import '@hanzo/attachment-assets'
+import '@hanzo/bitrix-assets'
+import '@hanzo/board-assets'
+import '@hanzo/calendar-assets'
+import '@hanzo/card-assets'
+import '@hanzo/chunter-assets'
+import '@hanzo/contact-assets'
+import '@hanzo/controlled-documents-assets'
+import '@hanzo/desktop-preferences-assets'
+import '@hanzo/diffview-assets'
+import '@hanzo/document-assets'
+import '@hanzo/drive-assets'
+import '@hanzo/export-assets'
+import '@hanzo/gmail-assets'
+import '@hanzo/guest-assets'
+import '@hanzo/hr-assets'
+import '@hanzo/inventory-assets'
+import '@hanzo/lead-assets'
+import '@hanzo/login-assets'
+import '@hanzo/love-assets'
+import '@hanzo/notification-assets'
+import '@hanzo/preference-assets'
+import '@hanzo/print-assets'
+import '@hanzo/process-assets'
+import '@hanzo/products-assets'
+import '@hanzo/questions-assets'
+import '@hanzo/recruit-assets'
+import '@hanzo/request-assets'
+import '@hanzo/setting-assets'
+import '@hanzo/support-assets'
+import '@hanzo/survey-assets'
+import '@hanzo/tags-assets'
+import '@hanzo/task-assets'
+import '@hanzo/telegram-assets'
+import '@hanzo/templates-assets'
+import '@hanzo/test-management-assets'
+import '@hanzo/text-editor-assets'
+import '@hanzo/time-assets'
+import '@hanzo/tracker-assets'
+import '@hanzo/training-assets'
+import '@hanzo/uploader-assets'
+import '@hanzo/recorder-assets'
+import '@hanzo/view-assets'
+import '@hanzo/workbench-assets'
+import '@hanzo/chat-assets'
+import '@hanzo/inbox-assets'
+import '@hanzo/mail-assets'
+import '@hanzo/github-assets'
 
-import { coreId } from '@hcengineering/core'
+import { coreId } from '@hanzo/core'
 import presentation, {
   loadServerConfig,
   parsePreviewConfig,
   parseUploadConfig,
   presentationId
-} from '@hcengineering/presentation'
+} from '@hanzo/presentation'
 
-import { setMetadata } from '@hcengineering/platform'
-import { initThemeStore, setDefaultLanguage } from '@hcengineering/theme'
+import { setMetadata } from '@hanzo/platform'
+import { initThemeStore, setDefaultLanguage } from '@hanzo/theme'
 
-import { preferenceId } from '@hcengineering/preference'
-import { uiId } from '@hcengineering/ui/src/plugin'
+import { preferenceId } from '@hanzo/preference'
+import { uiId } from '@hanzo/ui/src/plugin'
 import { configureAnalytics } from './analytics'
 
 export interface Config {
@@ -253,108 +253,108 @@ function configureI18n(): void {
     /* webpackInclude: /\.json$/ */
     /* webpackMode: "lazy" */
     /* webpackChunkName: "lang-[request]" */
-    `@hcengineering/platform/lang/${lang}.json`
+    `@hanzo/platform/lang/${lang}.json`
   ))
   addStringsLoader(coreId, async (lang: string) => await import(
     /* webpackInclude: /\.json$/ */
     /* webpackMode: "lazy" */
     /* webpackChunkName: "lang-[request]" */
-    `@hcengineering/core/lang/${lang}.json`
+    `@hanzo/core/lang/${lang}.json`
   ))
   addStringsLoader(
     presentationId,
-    async (lang: string) => await import(`@hcengineering/presentation/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/presentation/lang/${lang}.json`)
   )
   addStringsLoader(
     textEditorId,
-    async (lang: string) => await import(`@hcengineering/text-editor-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/text-editor-assets/lang/${lang}.json`)
   )
-  addStringsLoader(uiId, async (lang: string) => await import(`@hcengineering/ui/lang/${lang}.json`))
-  addStringsLoader(uiNextId, async (lang: string) => await import(`@hcengineering/ui-next/lang/${lang}.json`))
-  addStringsLoader(uploaderId, async (lang: string) => await import(`@hcengineering/uploader-assets/lang/${lang}.json`))
-  addStringsLoader(recorderId, async (lang: string) => await import(`@hcengineering/recorder-assets/lang/${lang}.json`))
-  addStringsLoader(activityId, async (lang: string) => await import(`@hcengineering/activity-assets/lang/${lang}.json`))
+  addStringsLoader(uiId, async (lang: string) => await import(`@hanzo/ui/lang/${lang}.json`))
+  addStringsLoader(uiNextId, async (lang: string) => await import(`@hanzo/ui-next/lang/${lang}.json`))
+  addStringsLoader(uploaderId, async (lang: string) => await import(`@hanzo/uploader-assets/lang/${lang}.json`))
+  addStringsLoader(recorderId, async (lang: string) => await import(`@hanzo/recorder-assets/lang/${lang}.json`))
+  addStringsLoader(activityId, async (lang: string) => await import(`@hanzo/activity-assets/lang/${lang}.json`))
   addStringsLoader(
     attachmentId,
-    async (lang: string) => await import(`@hcengineering/attachment-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/attachment-assets/lang/${lang}.json`)
   )
-  addStringsLoader(bitrixId, async (lang: string) => await import(`@hcengineering/bitrix-assets/lang/${lang}.json`))
-  addStringsLoader(boardId, async (lang: string) => await import(`@hcengineering/board-assets/lang/${lang}.json`))
-  addStringsLoader(calendarId, async (lang: string) => await import(`@hcengineering/calendar-assets/lang/${lang}.json`))
-  addStringsLoader(chunterId, async (lang: string) => await import(`@hcengineering/chunter-assets/lang/${lang}.json`))
-  addStringsLoader(contactId, async (lang: string) => await import(`@hcengineering/contact-assets/lang/${lang}.json`))
-  addStringsLoader(driveId, async (lang: string) => await import(`@hcengineering/drive-assets/lang/${lang}.json`))
-  addStringsLoader(gmailId, async (lang: string) => await import(`@hcengineering/gmail-assets/lang/${lang}.json`))
-  addStringsLoader(hrId, async (lang: string) => await import(`@hcengineering/hr-assets/lang/${lang}.json`))
+  addStringsLoader(bitrixId, async (lang: string) => await import(`@hanzo/bitrix-assets/lang/${lang}.json`))
+  addStringsLoader(boardId, async (lang: string) => await import(`@hanzo/board-assets/lang/${lang}.json`))
+  addStringsLoader(calendarId, async (lang: string) => await import(`@hanzo/calendar-assets/lang/${lang}.json`))
+  addStringsLoader(chunterId, async (lang: string) => await import(`@hanzo/chunter-assets/lang/${lang}.json`))
+  addStringsLoader(contactId, async (lang: string) => await import(`@hanzo/contact-assets/lang/${lang}.json`))
+  addStringsLoader(driveId, async (lang: string) => await import(`@hanzo/drive-assets/lang/${lang}.json`))
+  addStringsLoader(gmailId, async (lang: string) => await import(`@hanzo/gmail-assets/lang/${lang}.json`))
+  addStringsLoader(hrId, async (lang: string) => await import(`@hanzo/hr-assets/lang/${lang}.json`))
   addStringsLoader(
     inventoryId,
-    async (lang: string) => await import(`@hcengineering/inventory-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/inventory-assets/lang/${lang}.json`)
   )
-  addStringsLoader(leadId, async (lang: string) => await import(`@hcengineering/lead-assets/lang/${lang}.json`))
-  addStringsLoader(loginId, async (lang: string) => await import(`@hcengineering/login-assets/lang/${lang}.json`))
+  addStringsLoader(leadId, async (lang: string) => await import(`@hanzo/lead-assets/lang/${lang}.json`))
+  addStringsLoader(loginId, async (lang: string) => await import(`@hanzo/login-assets/lang/${lang}.json`))
   addStringsLoader(
     notificationId,
-    async (lang: string) => await import(`@hcengineering/notification-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/notification-assets/lang/${lang}.json`)
   )
-  addStringsLoader(onboardId, async (lang: string) => await import(`@hcengineering/onboard-assets/lang/${lang}.json`))
+  addStringsLoader(onboardId, async (lang: string) => await import(`@hanzo/onboard-assets/lang/${lang}.json`))
   addStringsLoader(
     preferenceId,
-    async (lang: string) => await import(`@hcengineering/preference-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/preference-assets/lang/${lang}.json`)
   )
-  addStringsLoader(recruitId, async (lang: string) => await import(`@hcengineering/recruit-assets/lang/${lang}.json`))
-  addStringsLoader(requestId, async (lang: string) => await import(`@hcengineering/request-assets/lang/${lang}.json`))
-  addStringsLoader(settingId, async (lang: string) => await import(`@hcengineering/setting-assets/lang/${lang}.json`))
-  addStringsLoader(supportId, async (lang: string) => await import(`@hcengineering/support-assets/lang/${lang}.json`))
-  addStringsLoader(tagsId, async (lang: string) => await import(`@hcengineering/tags-assets/lang/${lang}.json`))
-  addStringsLoader(taskId, async (lang: string) => await import(`@hcengineering/task-assets/lang/${lang}.json`))
-  addStringsLoader(telegramId, async (lang: string) => await import(`@hcengineering/telegram-assets/lang/${lang}.json`))
+  addStringsLoader(recruitId, async (lang: string) => await import(`@hanzo/recruit-assets/lang/${lang}.json`))
+  addStringsLoader(requestId, async (lang: string) => await import(`@hanzo/request-assets/lang/${lang}.json`))
+  addStringsLoader(settingId, async (lang: string) => await import(`@hanzo/setting-assets/lang/${lang}.json`))
+  addStringsLoader(supportId, async (lang: string) => await import(`@hanzo/support-assets/lang/${lang}.json`))
+  addStringsLoader(tagsId, async (lang: string) => await import(`@hanzo/tags-assets/lang/${lang}.json`))
+  addStringsLoader(taskId, async (lang: string) => await import(`@hanzo/task-assets/lang/${lang}.json`))
+  addStringsLoader(telegramId, async (lang: string) => await import(`@hanzo/telegram-assets/lang/${lang}.json`))
   addStringsLoader(
     templatesId,
-    async (lang: string) => await import(`@hcengineering/templates-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/templates-assets/lang/${lang}.json`)
   )
-  addStringsLoader(trackerId, async (lang: string) => await import(`@hcengineering/tracker-assets/lang/${lang}.json`))
-  addStringsLoader(viewId, async (lang: string) => await import(`@hcengineering/view-assets/lang/${lang}.json`))
+  addStringsLoader(trackerId, async (lang: string) => await import(`@hanzo/tracker-assets/lang/${lang}.json`))
+  addStringsLoader(viewId, async (lang: string) => await import(`@hanzo/view-assets/lang/${lang}.json`))
   addStringsLoader(
     workbenchId,
-    async (lang: string) => await import(`@hcengineering/workbench-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/workbench-assets/lang/${lang}.json`)
   )
 
   addStringsLoader(
     desktopPreferencesId,
-    async (lang: string) => await import(`@hcengineering/desktop-preferences-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/desktop-preferences-assets/lang/${lang}.json`)
   )
-  addStringsLoader(diffviewId, async (lang: string) => await import(`@hcengineering/diffview-assets/lang/${lang}.json`))
-  addStringsLoader(documentId, async (lang: string) => await import(`@hcengineering/document-assets/lang/${lang}.json`))
-  addStringsLoader(timeId, async (lang: string) => await import(`@hcengineering/time-assets/lang/${lang}.json`))
-  addStringsLoader(githubId, async (lang: string) => await import(`@hcengineering/github-assets/lang/${lang}.json`))
+  addStringsLoader(diffviewId, async (lang: string) => await import(`@hanzo/diffview-assets/lang/${lang}.json`))
+  addStringsLoader(documentId, async (lang: string) => await import(`@hanzo/document-assets/lang/${lang}.json`))
+  addStringsLoader(timeId, async (lang: string) => await import(`@hanzo/time-assets/lang/${lang}.json`))
+  addStringsLoader(githubId, async (lang: string) => await import(`@hanzo/github-assets/lang/${lang}.json`))
   addStringsLoader(
     documentsId,
-    async (lang: string) => await import(`@hcengineering/controlled-documents-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/controlled-documents-assets/lang/${lang}.json`)
   )
-  addStringsLoader(productsId, async (lang: string) => await import(`@hcengineering/products-assets/lang/${lang}.json`))
+  addStringsLoader(productsId, async (lang: string) => await import(`@hanzo/products-assets/lang/${lang}.json`))
   addStringsLoader(
     questionsId,
-    async (lang: string) => await import(`@hcengineering/questions-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/questions-assets/lang/${lang}.json`)
   )
-  addStringsLoader(trainingId, async (lang: string) => await import(`@hcengineering/training-assets/lang/${lang}.json`))
-  addStringsLoader(guestId, async (lang: string) => await import(`@hcengineering/guest-assets/lang/${lang}.json`))
-  addStringsLoader(loveId, async (lang: string) => await import(`@hcengineering/love-assets/lang/${lang}.json`))
-  addStringsLoader(printId, async (lang: string) => await import(`@hcengineering/print-assets/lang/${lang}.json`))
-  addStringsLoader(exportId, async (lang: string) => await import(`@hcengineering/export-assets/lang/${lang}.json`))
+  addStringsLoader(trainingId, async (lang: string) => await import(`@hanzo/training-assets/lang/${lang}.json`))
+  addStringsLoader(guestId, async (lang: string) => await import(`@hanzo/guest-assets/lang/${lang}.json`))
+  addStringsLoader(loveId, async (lang: string) => await import(`@hanzo/love-assets/lang/${lang}.json`))
+  addStringsLoader(printId, async (lang: string) => await import(`@hanzo/print-assets/lang/${lang}.json`))
+  addStringsLoader(exportId, async (lang: string) => await import(`@hanzo/export-assets/lang/${lang}.json`))
   addStringsLoader(
     analyticsCollectorId,
-    async (lang: string) => await import(`@hcengineering/analytics-collector-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/analytics-collector-assets/lang/${lang}.json`)
   )
   addStringsLoader(
     testManagementId,
-    async (lang: string) => await import(`@hcengineering/test-management-assets/lang/${lang}.json`)
+    async (lang: string) => await import(`@hanzo/test-management-assets/lang/${lang}.json`)
   )
-  addStringsLoader(surveyId, async (lang: string) => await import(`@hcengineering/survey-assets/lang/${lang}.json`))
-  addStringsLoader(cardId, async (lang: string) => await import(`@hcengineering/card-assets/lang/${lang}.json`))
-  addStringsLoader(mailId, async (lang: string) => await import(`@hcengineering/mail-assets/lang/${lang}.json`))
-  addStringsLoader(chatId, async (lang: string) => await import(`@hcengineering/chat-assets/lang/${lang}.json`))
-  addStringsLoader(processId, async (lang: string) => await import(`@hcengineering/process-assets/lang/${lang}.json`))
-  addStringsLoader(inboxId, async (lang: string) => await import(`@hcengineering/inbox-assets/lang/${lang}.json`))
+  addStringsLoader(surveyId, async (lang: string) => await import(`@hanzo/survey-assets/lang/${lang}.json`))
+  addStringsLoader(cardId, async (lang: string) => await import(`@hanzo/card-assets/lang/${lang}.json`))
+  addStringsLoader(mailId, async (lang: string) => await import(`@hanzo/mail-assets/lang/${lang}.json`))
+  addStringsLoader(chatId, async (lang: string) => await import(`@hanzo/chat-assets/lang/${lang}.json`))
+  addStringsLoader(processId, async (lang: string) => await import(`@hanzo/process-assets/lang/${lang}.json`))
+  addStringsLoader(inboxId, async (lang: string) => await import(`@hanzo/inbox-assets/lang/${lang}.json`))
 }
 
 export async function configurePlatform() {
@@ -482,78 +482,78 @@ export async function configurePlatform() {
   addLocation(coreId, async () => ({ default: async () => ({}) }))
   addLocation(presentationId, async () => ({ default: async () => ({}) }))
 
-  addLocation(clientId, () => import(/* webpackChunkName: "client" */ '@hcengineering/client-resources'))
-  addLocation(loginId, () => import(/* webpackChunkName: "login" */ '@hcengineering/login-resources'))
-  addLocation(onboardId, () => import(/* webpackChunkName: "onboard" */ '@hcengineering/onboard-resources'))
-  addLocation(workbenchId, () => import(/* webpackChunkName: "workbench" */ '@hcengineering/workbench-resources'))
-  addLocation(viewId, () => import(/* webpackChunkName: "view" */ '@hcengineering/view-resources'))
-  addLocation(taskId, () => import(/* webpackChunkName: "task" */ '@hcengineering/task-resources'))
-  addLocation(contactId, () => import(/* webpackChunkName: "contact" */ '@hcengineering/contact-resources'))
-  addLocation(chunterId, () => import(/* webpackChunkName: "chunter" */ '@hcengineering/chunter-resources'))
-  addLocation(recruitId, () => import(/* webpackChunkName: "recruit" */ '@hcengineering/recruit-resources'))
-  addLocation(activityId, () => import(/*webpackChunkName: "activity" */ '@hcengineering/activity-resources'))
-  addLocation(settingId, () => import(/* webpackChunkName: "setting" */ '@hcengineering/setting-resources'))
-  addLocation(leadId, () => import(/* webpackChunkName: "lead" */ '@hcengineering/lead-resources'))
-  addLocation(telegramId, () => import(/* webpackChunkName: "telegram" */ '@hcengineering/telegram-resources'))
-  addLocation(attachmentId, () => import(/* webpackChunkName: "attachment" */ '@hcengineering/attachment-resources'))
-  addLocation(gmailId, () => import(/* webpackChunkName: "gmail" */ '@hcengineering/gmail-resources'))
+  addLocation(clientId, () => import(/* webpackChunkName: "client" */ '@hanzo/client-resources'))
+  addLocation(loginId, () => import(/* webpackChunkName: "login" */ '@hanzo/login-resources'))
+  addLocation(onboardId, () => import(/* webpackChunkName: "onboard" */ '@hanzo/onboard-resources'))
+  addLocation(workbenchId, () => import(/* webpackChunkName: "workbench" */ '@hanzo/workbench-resources'))
+  addLocation(viewId, () => import(/* webpackChunkName: "view" */ '@hanzo/view-resources'))
+  addLocation(taskId, () => import(/* webpackChunkName: "task" */ '@hanzo/task-resources'))
+  addLocation(contactId, () => import(/* webpackChunkName: "contact" */ '@hanzo/contact-resources'))
+  addLocation(chunterId, () => import(/* webpackChunkName: "chunter" */ '@hanzo/chunter-resources'))
+  addLocation(recruitId, () => import(/* webpackChunkName: "recruit" */ '@hanzo/recruit-resources'))
+  addLocation(activityId, () => import(/*webpackChunkName: "activity" */ '@hanzo/activity-resources'))
+  addLocation(settingId, () => import(/* webpackChunkName: "setting" */ '@hanzo/setting-resources'))
+  addLocation(leadId, () => import(/* webpackChunkName: "lead" */ '@hanzo/lead-resources'))
+  addLocation(telegramId, () => import(/* webpackChunkName: "telegram" */ '@hanzo/telegram-resources'))
+  addLocation(attachmentId, () => import(/* webpackChunkName: "attachment" */ '@hanzo/attachment-resources'))
+  addLocation(gmailId, () => import(/* webpackChunkName: "gmail" */ '@hanzo/gmail-resources'))
   addLocation(
     imageCropperId,
-    () => import(/* webpackChunkName: "image-cropper" */ '@hcengineering/image-cropper-resources')
+    () => import(/* webpackChunkName: "image-cropper" */ '@hanzo/image-cropper-resources')
   )
-  addLocation(inventoryId, () => import(/* webpackChunkName: "inventory" */ '@hcengineering/inventory-resources'))
-  addLocation(templatesId, () => import(/* webpackChunkName: "templates" */ '@hcengineering/templates-resources'))
+  addLocation(inventoryId, () => import(/* webpackChunkName: "inventory" */ '@hanzo/inventory-resources'))
+  addLocation(templatesId, () => import(/* webpackChunkName: "templates" */ '@hanzo/templates-resources'))
   addLocation(
     notificationId,
-    () => import(/* webpackChunkName: "notification" */ '@hcengineering/notification-resources')
+    () => import(/* webpackChunkName: "notification" */ '@hanzo/notification-resources')
   )
-  addLocation(tagsId, () => import(/* webpackChunkName: "tags" */ '@hcengineering/tags-resources'))
-  addLocation(calendarId, () => import(/* webpackChunkName: "calendar" */ '@hcengineering/calendar-resources'))
-  addLocation(diffviewId, () => import(/* webpackChunkName: "diffview" */ '@hcengineering/diffview-resources'))
-  addLocation(timeId, () => import(/* webpackChunkName: "time" */ '@hcengineering/time-resources'))
+  addLocation(tagsId, () => import(/* webpackChunkName: "tags" */ '@hanzo/tags-resources'))
+  addLocation(calendarId, () => import(/* webpackChunkName: "calendar" */ '@hanzo/calendar-resources'))
+  addLocation(diffviewId, () => import(/* webpackChunkName: "diffview" */ '@hanzo/diffview-resources'))
+  addLocation(timeId, () => import(/* webpackChunkName: "time" */ '@hanzo/time-resources'))
   addLocation(
     desktopPreferencesId,
-    () => import(/* webpackChunkName: "desktop-preferences" */ '@hcengineering/desktop-preferences-resources')
+    () => import(/* webpackChunkName: "desktop-preferences" */ '@hanzo/desktop-preferences-resources')
   )
-  addLocation(analyticsCollectorId, async () => await import('@hcengineering/analytics-collector-resources'))
-  addLocation(aiBotId, async () => await import('@hcengineering/ai-bot-resources'))
+  addLocation(analyticsCollectorId, async () => await import('@hanzo/analytics-collector-resources'))
+  addLocation(aiBotId, async () => await import('@hanzo/ai-bot-resources'))
 
-  addLocation(trackerId, () => import(/* webpackChunkName: "tracker" */ '@hcengineering/tracker-resources'))
-  addLocation(boardId, () => import(/* webpackChunkName: "board" */ '@hcengineering/board-resources'))
-  addLocation(hrId, () => import(/* webpackChunkName: "hr" */ '@hcengineering/hr-resources'))
-  addLocation(bitrixId, () => import(/* webpackChunkName: "bitrix" */ '@hcengineering/bitrix-resources'))
-  addLocation(requestId, () => import(/* webpackChunkName: "request" */ '@hcengineering/request-resources'))
-  addLocation(driveId, () => import(/* webpackChunkName: "drive" */ '@hcengineering/drive-resources'))
-  addLocation(supportId, () => import(/* webpackChunkName: "support" */ '@hcengineering/support-resources'))
+  addLocation(trackerId, () => import(/* webpackChunkName: "tracker" */ '@hanzo/tracker-resources'))
+  addLocation(boardId, () => import(/* webpackChunkName: "board" */ '@hanzo/board-resources'))
+  addLocation(hrId, () => import(/* webpackChunkName: "hr" */ '@hanzo/hr-resources'))
+  addLocation(bitrixId, () => import(/* webpackChunkName: "bitrix" */ '@hanzo/bitrix-resources'))
+  addLocation(requestId, () => import(/* webpackChunkName: "request" */ '@hanzo/request-resources'))
+  addLocation(driveId, () => import(/* webpackChunkName: "drive" */ '@hanzo/drive-resources'))
+  addLocation(supportId, () => import(/* webpackChunkName: "support" */ '@hanzo/support-resources'))
 
-  addLocation(documentId, () => import(/* webpackChunkName: "document" */ '@hcengineering/document-resources'))
-  addLocation(githubId, () => import(/* webpackChunkName: "github" */ '@hcengineering/github-resources'))
-  addLocation(questionsId, () => import(/* webpackChunkName: "training" */ '@hcengineering/questions-resources'))
-  addLocation(trainingId, () => import(/* webpackChunkName: "training" */ '@hcengineering/training-resources'))
-  addLocation(productsId, () => import(/* webpackChunkName: "products" */ '@hcengineering/products-resources'))
+  addLocation(documentId, () => import(/* webpackChunkName: "document" */ '@hanzo/document-resources'))
+  addLocation(githubId, () => import(/* webpackChunkName: "github" */ '@hanzo/github-resources'))
+  addLocation(questionsId, () => import(/* webpackChunkName: "training" */ '@hanzo/questions-resources'))
+  addLocation(trainingId, () => import(/* webpackChunkName: "training" */ '@hanzo/training-resources'))
+  addLocation(productsId, () => import(/* webpackChunkName: "products" */ '@hanzo/products-resources'))
   addLocation(
     documentsId,
-    () => import(/* webpackChunkName: "documents" */ '@hcengineering/controlled-documents-resources')
+    () => import(/* webpackChunkName: "documents" */ '@hanzo/controlled-documents-resources')
   )
-  addLocation(guestId, () => import(/* webpackChunkName: "guest" */ '@hcengineering/guest-resources'))
-  addLocation(loveId, () => import(/* webpackChunkName: "love" */ '@hcengineering/love-resources'))
-  addLocation(printId, () => import(/* webpackChunkName: "print" */ '@hcengineering/print-resources'))
-  addLocation(exportId, () => import(/* webpackChunkName: "export" */ '@hcengineering/export-resources'))
-  addLocation(textEditorId, () => import(/* webpackChunkName: "text-editor" */ '@hcengineering/text-editor-resources'))
-  addLocation(uploaderId, () => import(/* webpackChunkName: "uploader" */ '@hcengineering/uploader-resources'))
-  addLocation(recorderId, () => import(/* webpackChunkName: "recorder" */ '@hcengineering/recorder-resources'))
+  addLocation(guestId, () => import(/* webpackChunkName: "guest" */ '@hanzo/guest-resources'))
+  addLocation(loveId, () => import(/* webpackChunkName: "love" */ '@hanzo/love-resources'))
+  addLocation(printId, () => import(/* webpackChunkName: "print" */ '@hanzo/print-resources'))
+  addLocation(exportId, () => import(/* webpackChunkName: "export" */ '@hanzo/export-resources'))
+  addLocation(textEditorId, () => import(/* webpackChunkName: "text-editor" */ '@hanzo/text-editor-resources'))
+  addLocation(uploaderId, () => import(/* webpackChunkName: "uploader" */ '@hanzo/uploader-resources'))
+  addLocation(recorderId, () => import(/* webpackChunkName: "recorder" */ '@hanzo/recorder-resources'))
   
   addLocation(
     testManagementId,
-    () => import(/* webpackChunkName: "test-management" */ '@hcengineering/test-management-resources')
+    () => import(/* webpackChunkName: "test-management" */ '@hanzo/test-management-resources')
   )
-  addLocation(surveyId, () => import(/* webpackChunkName: "survey" */ '@hcengineering/survey-resources'))
-  addLocation(presenceId, () => import(/* webpackChunkName: "presence" */ '@hcengineering/presence-resources'))
-  addLocation(cardId, () => import(/* webpackChunkName: "card" */ '@hcengineering/card-resources'))
-  addLocation(mailId, () => import(/* webpackChunkName: "card" */ '@hcengineering/mail-resources'))
-  addLocation(chatId, () => import(/* webpackChunkName: "chat" */ '@hcengineering/chat-resources'))
-  addLocation(processId, () => import(/* webpackChunkName: "process" */ '@hcengineering/process-resources'))
-  addLocation(inboxId, () => import(/* webpackChunkName: "inbox" */ '@hcengineering/inbox-resources'))
+  addLocation(surveyId, () => import(/* webpackChunkName: "survey" */ '@hanzo/survey-resources'))
+  addLocation(presenceId, () => import(/* webpackChunkName: "presence" */ '@hanzo/presence-resources'))
+  addLocation(cardId, () => import(/* webpackChunkName: "card" */ '@hanzo/card-resources'))
+  addLocation(mailId, () => import(/* webpackChunkName: "card" */ '@hanzo/mail-resources'))
+  addLocation(chatId, () => import(/* webpackChunkName: "chat" */ '@hanzo/chat-resources'))
+  addLocation(processId, () => import(/* webpackChunkName: "process" */ '@hanzo/process-resources'))
+  addLocation(inboxId, () => import(/* webpackChunkName: "inbox" */ '@hanzo/inbox-resources'))
 
   setMetadata(client.metadata.FilterModel, 'ui')
   setMetadata(client.metadata.ExtraPlugins, ['preference' as Plugin])

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import hr, { Request, RequestType } from '@hcengineering/hr'
-  import { getClient } from '@hcengineering/presentation'
-  import { jsonToText, markupToJSON } from '@hcengineering/text'
-  import { Icon, Label, closeTooltip } from '@hcengineering/ui'
-  import { showMenu } from '@hcengineering/view-resources'
+  import hr, { Request, RequestType } from '@hanzo/hr'
+  import { getClient } from '@hanzo/presentation'
+  import { jsonToText, markupToJSON } from '@hanzo/text'
+  import { Icon, Label, closeTooltip } from '@hanzo/ui'
+  import { showMenu } from '@hanzo/view-resources'
 
   export let request: Request
   export let editable: boolean = false

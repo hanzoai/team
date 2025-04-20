@@ -8,11 +8,11 @@
     performSynchronization,
     StatusValue,
     toClassRef
-  } from '@hcengineering/bitrix'
-  import contact from '@hcengineering/contact'
-  import core, { Class, Doc, generateId, Ref, Space, WithLookup } from '@hcengineering/core'
-  import { getEmbeddedLabel, getMetadata } from '@hcengineering/platform'
-  import presentation, { getClient, SpaceSelect } from '@hcengineering/presentation'
+  } from '@hanzo/bitrix'
+  import contact from '@hanzo/contact'
+  import core, { Class, Doc, generateId, Ref, Space, WithLookup } from '@hanzo/core'
+  import { getEmbeddedLabel, getMetadata } from '@hanzo/platform'
+  import presentation, { getClient, SpaceSelect } from '@hanzo/presentation'
   import {
     Button,
     CheckBox,
@@ -23,8 +23,8 @@
     Label,
     DropdownLabels,
     EditBox
-  } from '@hcengineering/ui'
-  import { NumberEditor } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { NumberEditor } from '@hanzo/view-resources'
   import bitrix from '../plugin'
   import FieldMappingPresenter from './FieldMappingPresenter.svelte'
 

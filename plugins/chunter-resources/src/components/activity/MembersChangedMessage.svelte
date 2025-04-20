@@ -14,18 +14,18 @@
 -->
 
 <script lang="ts">
-  import { DocAttributeUpdates, DocUpdateMessage } from '@hcengineering/activity'
-  import { Person } from '@hcengineering/contact'
-  import { AccountUuid, notEmpty, PersonId, Ref } from '@hcengineering/core'
+  import { DocAttributeUpdates, DocUpdateMessage } from '@hanzo/activity'
+  import { Person } from '@hanzo/contact'
+  import { AccountUuid, notEmpty, PersonId, Ref } from '@hanzo/core'
   import {
     personRefByAccountUuidStore,
     personRefByPersonIdStore,
     personByIdStore,
     PersonPresenter
-  } from '@hcengineering/contact-resources'
-  import { ChunterSpace } from '@hcengineering/chunter'
-  import { Label } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/contact-resources'
+  import { ChunterSpace } from '@hanzo/chunter'
+  import { Label } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   import chunter from '../../plugin'
   import ChannelIcon from '../ChannelIcon.svelte'

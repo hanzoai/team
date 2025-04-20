@@ -3,8 +3,8 @@
 -->
 
 <script lang="ts">
-  import { DateRangeMode, type Timestamp } from '@hcengineering/core'
-  import { DatePresenter, getDaysDifference, getDueDateIconModifier } from '@hcengineering/ui'
+  import { DateRangeMode, type Timestamp } from '@hanzo/core'
+  import { DatePresenter, getDaysDifference, getDueDateIconModifier } from '@hanzo/ui'
   import type { ComponentProps } from 'svelte'
 
   type $$Props = ComponentProps<DatePresenter> & {

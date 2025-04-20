@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -31,10 +31,10 @@ import {
   type Tx,
   type TxResult,
   type WithLookup
-} from '@hcengineering/core'
-import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { type ComponentExtensionId } from '@hcengineering/ui/src/types'
+} from '@hanzo/core'
+import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { type ComponentExtensionId } from '@hanzo/ui/src/types'
 import { type PresentationMiddlewareFactory } from './pipeline'
 import type { PreviewConfig } from './preview'
 import {

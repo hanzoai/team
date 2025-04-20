@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Avatar, personByIdStore } from '@hcengineering/contact-resources'
-  import { ParticipantInfo } from '@hcengineering/love'
-  import { Scroller } from '@hcengineering/ui'
-  import { formatName } from '@hcengineering/contact'
+  import { Avatar, personByIdStore } from '@hanzo/contact-resources'
+  import { ParticipantInfo } from '@hanzo/love'
+  import { Scroller } from '@hanzo/ui'
+  import { formatName } from '@hanzo/contact'
 
   export let items: (ParticipantInfo & { onclick?: (e: MouseEvent) => void })[]
 </script>

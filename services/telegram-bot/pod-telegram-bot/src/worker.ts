@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { AccountUuid, MeasureContext, PersonId, Ref, WorkspaceUuid } from '@hcengineering/core'
-import { StorageAdapter, type StorageConfiguration } from '@hcengineering/server-core'
-import chunter, { ChunterSpace } from '@hcengineering/chunter'
-import { formatName } from '@hcengineering/contact'
-import { getAccountClient } from '@hcengineering/server-client'
-import { ActivityMessage } from '@hcengineering/activity'
+import { AccountUuid, MeasureContext, PersonId, Ref, WorkspaceUuid } from '@hanzo/core'
+import { StorageAdapter, type StorageConfiguration } from '@hanzo/server-core'
+import chunter, { ChunterSpace } from '@hanzo/chunter'
+import { formatName } from '@hanzo/contact'
+import { getAccountClient } from '@hanzo/server-client'
+import { ActivityMessage } from '@hanzo/activity'
 
 import {
   ChannelId,
@@ -36,10 +36,10 @@ import config from './config'
 import {
   TelegramNotificationQueueMessage,
   TelegramWorkspaceSubscriptionQueueMessage
-} from '@hcengineering/server-telegram'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-telegram'
+import { generateToken } from '@hanzo/server-token'
 import { Telegraf } from 'telegraf'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
 
 import { Limiter } from './limiter'
 import { TgContext } from './telegraf/types'

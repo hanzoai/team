@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -63,7 +63,7 @@ import core, {
   type TxUpdateDoc,
   type WithLookup,
   type WorkspaceIds
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   calcHashHash,
   type DbAdapter,
@@ -73,7 +73,7 @@ import {
   type ServerFindOptions,
   type StorageAdapter,
   type TxAdapter
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import {
   ObjectId,
   type AbstractCursor,

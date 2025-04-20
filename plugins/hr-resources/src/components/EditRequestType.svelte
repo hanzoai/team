@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { Request, RequestType } from '@hcengineering/hr'
-  import presentation, { Card, getClient } from '@hcengineering/presentation'
-  import { DropdownLabelsIntl, Label } from '@hcengineering/ui'
+  import { Ref } from '@hanzo/core'
+  import { Request, RequestType } from '@hanzo/hr'
+  import presentation, { Card, getClient } from '@hanzo/presentation'
+  import { DropdownLabelsIntl, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import hr from '../plugin'
 

@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/desktop-preferences",
-  "version": "0.6.0",
+  "name": "@hanzo/desktop-preferences",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
@@ -21,7 +21,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -36,10 +36,13 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hcengineering/ui": "^0.6.15",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/preference": "^0.6.13",
-    "@hcengineering/notification": "^0.6.23"
+    "@hanzo/ui": "^0.6.21",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/preference": "^0.6.18",
+    "@hanzo/notification": "^0.6.28"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { eventToHTMLElement, Label, ModernButton, showPopup, Icon, ButtonIcon } from '@hcengineering/ui'
+  import { eventToHTMLElement, Label, ModernButton, showPopup, Icon, ButtonIcon } from '@hanzo/ui'
   import PinnedMessagesPopup from './PinnedMessagesPopup.svelte'
-  import { createQuery } from '@hcengineering/presentation'
-  import activity from '@hcengineering/activity'
-  import { Class, Doc, Ref, Space } from '@hcengineering/core'
-  import view from '@hcengineering/view'
+  import { createQuery } from '@hanzo/presentation'
+  import activity from '@hanzo/activity'
+  import { Class, Doc, Ref, Space } from '@hanzo/core'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
 
   import chunter from '../plugin'

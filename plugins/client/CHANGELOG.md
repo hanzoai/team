@@ -1,4 +1,4 @@
-# Change Log - @hcengineering/client
+# Change Log - @hanzo/client
 
 This log was last generated on Sun, 08 Aug 2021 21:05:26 GMT and should not be manually modified.
 

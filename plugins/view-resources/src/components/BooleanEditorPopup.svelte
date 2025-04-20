@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { CheckBox, resizeObserver } from '@hcengineering/ui'
+  import { CheckBox, resizeObserver } from '@hanzo/ui'
   import BooleanPresenter from './BooleanPresenter.svelte'
 
   export let value: boolean | null | undefined

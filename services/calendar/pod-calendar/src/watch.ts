@@ -1,12 +1,12 @@
-import { generateId, isActiveMode, systemAccountUuid, WorkspaceUuid } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+import { generateId, isActiveMode, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import { Credentials, OAuth2Client } from 'google-auth-library'
 import { calendar_v3, google } from 'googleapis'
 import { Collection, Db } from 'mongodb'
 import config from './config'
 import { RateLimiter } from './rateLimiter'
 import { EventWatch, Token, Watch, WatchBase } from './types'
-import { getAccountClient } from '@hcengineering/server-client'
+import { getAccountClient } from '@hanzo/server-client'
 
 export class WatchClient {
   private readonly watches: Collection<Watch>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Integration } from '@hcengineering/setting'
+  import { Integration } from '@hanzo/setting'
   import Connect from './Connect.svelte'
 
   export let integration: Integration

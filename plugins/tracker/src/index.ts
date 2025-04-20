@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Employee, Person } from '@hcengineering/contact'
+import { Employee, Person } from '@hanzo/contact'
 import {
   AttachedDoc,
   Attribute,
@@ -30,11 +30,11 @@ import {
   Status,
   Timestamp,
   Type
-} from '@hcengineering/core'
-import { Asset, IntlString, Plugin, Resource, plugin } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import { TagCategory, TagElement, TagReference } from '@hcengineering/tags'
-import { ToDo } from '@hcengineering/time'
+} from '@hanzo/core'
+import { Asset, IntlString, Plugin, Resource, plugin } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import { TagCategory, TagElement, TagReference } from '@hanzo/tags'
+import { ToDo } from '@hanzo/time'
 import {
   ProjectType,
   ProjectTypeDescriptor,
@@ -43,9 +43,9 @@ import {
   TaskStatusFactory,
   TaskType,
   TaskTypeDescriptor
-} from '@hcengineering/task'
-import { AnyComponent, ComponentExtensionId, Location, ResolvedLocation } from '@hcengineering/ui'
-import { Action, ActionCategory, IconProps } from '@hcengineering/view'
+} from '@hanzo/task'
+import { AnyComponent, ComponentExtensionId, Location, ResolvedLocation } from '@hanzo/ui'
+import { Action, ActionCategory, IconProps } from '@hanzo/view'
 
 export * from './analytics'
 

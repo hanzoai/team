@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { Card, createQuery } from '@hcengineering/presentation'
-  import { findTagCategory, TagCategory } from '@hcengineering/tags'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { Card, createQuery } from '@hanzo/presentation'
+  import { findTagCategory, TagCategory } from '@hanzo/tags'
   import {
     Button,
     DropdownLabels,
@@ -27,8 +27,8 @@
     IconFolder,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import { ColorsPopup } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { ColorsPopup } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import { createTagElement, getTagStyle } from '../utils'

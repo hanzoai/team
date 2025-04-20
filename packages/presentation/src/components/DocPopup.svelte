@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getObjectValue, type Class, type Doc, type Ref } from '@hcengineering/core'
-  import { getResource, type IntlString } from '@hcengineering/platform'
+  import { getObjectValue, type Class, type Doc, type Ref } from '@hanzo/core'
+  import { getResource, type IntlString } from '@hanzo/platform'
   import {
     AnySvelteComponent,
     Button,
@@ -31,8 +31,8 @@
     resizeObserver,
     showPopup,
     tooltip
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import presentation from '..'
   import { ObjectCreate } from '../types'

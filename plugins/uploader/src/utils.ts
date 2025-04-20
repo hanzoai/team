@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getResource } from '@hcengineering/platform'
+import { getResource } from '@hanzo/platform'
 
 import uploader from './plugin'
 import type { FileUploadOptions, FileUploadPopupOptions, FileWithPath, UploadHandlerDefinition } from './types'

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Hierarchy, Mixin, Ref } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { Panel } from '@hcengineering/panel'
-  import { getResource } from '@hcengineering/platform'
+  import { Class, Doc, Hierarchy, Mixin, Ref } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { Panel } from '@hanzo/panel'
+  import { getResource } from '@hanzo/platform'
   import {
     ActionContext,
     AttributesBar,
@@ -26,9 +26,9 @@
     getClient,
     hasResource,
     reduceCalls
-  } from '@hcengineering/presentation'
-  import { AnyComponent, Button, Component, IconMixin, IconMoreH } from '@hcengineering/ui'
-  import view, { AttributeCategory } from '@hcengineering/view'
+  } from '@hanzo/presentation'
+  import { AnyComponent, Button, Component, IconMixin, IconMoreH } from '@hanzo/ui'
+  import view, { AttributeCategory } from '@hanzo/view'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import { DocNavLink, ParentsNavigator, getDocAttrsInfo, getDocLabel, getDocMixins, showMenu, parseLinkId } from '..'

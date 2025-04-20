@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Mixin, DocumentQuery, Ref } from '@hcengineering/core'
-  import { DocumentSpace, type DocumentTemplate } from '@hcengineering/controlled-documents'
-  import { ActionContext, createQuery } from '@hcengineering/presentation'
-  import { Button, IconAdd, Loading, showPopup } from '@hcengineering/ui'
-  import view, { ViewOptions, Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { TableBrowser, ViewletPanelHeader } from '@hcengineering/view-resources'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
+  import { Mixin, DocumentQuery, Ref } from '@hanzo/core'
+  import { DocumentSpace, type DocumentTemplate } from '@hanzo/controlled-documents'
+  import { ActionContext, createQuery } from '@hanzo/presentation'
+  import { Button, IconAdd, Loading, showPopup } from '@hanzo/ui'
+  import view, { ViewOptions, Viewlet, ViewletPreference } from '@hanzo/view'
+  import { TableBrowser, ViewletPanelHeader } from '@hanzo/view-resources'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
 
   import documents from '../plugin'
 

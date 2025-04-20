@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hcengineering/attachment'
-  import contact, { getCurrentEmployee, Person } from '@hcengineering/contact'
-  import core, { Class, Ref, Space } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Label, Loading, navigate, TabList, getLocation } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Attachment } from '@hanzo/attachment'
+  import contact, { getCurrentEmployee, Person } from '@hanzo/contact'
+  import core, { Class, Ref, Space } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Label, Loading, navigate, TabList, getLocation } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   import { dateFileBrowserFilters, FileBrowserSortMode, fileTypeFileBrowserFilters, sortModeToOptionObject } from '..'
   import attachment from '../plugin'

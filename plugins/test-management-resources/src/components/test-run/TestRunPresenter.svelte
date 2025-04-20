@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TestRun } from '@hcengineering/test-management'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { tooltip } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { TestRun } from '@hanzo/test-management'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { tooltip } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   export let value: TestRun | undefined
   export let inline: boolean = false

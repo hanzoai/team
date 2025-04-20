@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Milestone } from '@hcengineering/tracker'
+  import { Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Milestone } from '@hanzo/tracker'
   import {
     ButtonKind,
     DatePresenter,
@@ -23,7 +23,7 @@
     getPlatformAvatarColorDef,
     getPlatformAvatarColorForTextDef,
     themeStore
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import tracker from '../../plugin'
   import MilestoneSelector from './MilestoneSelector.svelte'

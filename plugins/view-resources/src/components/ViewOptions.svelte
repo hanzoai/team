@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { DropdownIntlItem, DropdownLabelsIntl, Label, Toggle } from '@hcengineering/ui'
-  import { Viewlet, ViewOptions, ViewOptionsModel, ViewOptionModel } from '@hcengineering/view'
+  import { getClient } from '@hanzo/presentation'
+  import { DropdownIntlItem, DropdownLabelsIntl, Label, Toggle } from '@hanzo/ui'
+  import { Viewlet, ViewOptions, ViewOptionsModel, ViewOptionModel } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
   import { buildConfigLookup, getKeyLabel } from '../utils'

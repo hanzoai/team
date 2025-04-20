@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,15 +14,15 @@
 // limitations under the License.
 //
 
-import { type Builder, Mixin } from '@hcengineering/model'
+import { type Builder, Mixin } from '@hanzo/model'
 
-import contact from '@hcengineering/contact'
-import core from '@hcengineering/core'
-import { TClass } from '@hcengineering/model-core'
-import { TNotificationType } from '@hcengineering/model-notification'
-import notification from '@hcengineering/notification'
-import { type Resource } from '@hcengineering/platform'
-import serverCore from '@hcengineering/server-core'
+import contact from '@hanzo/contact'
+import core from '@hanzo/core'
+import { TClass } from '@hanzo/model-core'
+import { TNotificationType } from '@hanzo/model-notification'
+import notification from '@hanzo/notification'
+import { type Resource } from '@hanzo/platform'
+import serverCore from '@hanzo/server-core'
 import serverNotification, {
   type HTMLPresenter,
   type NotificationContentProvider,
@@ -31,9 +31,9 @@ import serverNotification, {
   type TextPresenter,
   type TypeMatch,
   type TypeMatchFunc
-} from '@hcengineering/server-notification'
+} from '@hanzo/server-notification'
 
-export { serverNotificationId } from '@hcengineering/server-notification'
+export { serverNotificationId } from '@hanzo/server-notification'
 
 @Mixin(serverNotification.mixin.HTMLPresenter, core.class.Class)
 export class THTMLPresenter extends TClass implements HTMLPresenter {

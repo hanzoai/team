@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
-  import { Label } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
 
   export let value: Card
 

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event, ReccuringEvent, ReccuringInstance, RecurringRule } from '@hcengineering/calendar'
-  import { Person } from '@hcengineering/contact'
-  import { DocumentUpdate, Ref } from '@hcengineering/core'
-  import presentation, { ComponentExtensions, getClient } from '@hcengineering/presentation'
-  import { StyledTextBox } from '@hcengineering/text-editor-resources'
+  import { Event, ReccuringEvent, ReccuringInstance, RecurringRule } from '@hanzo/calendar'
+  import { Person } from '@hanzo/contact'
+  import { DocumentUpdate, Ref } from '@hanzo/core'
+  import presentation, { ComponentExtensions, getClient } from '@hanzo/presentation'
+  import { StyledTextBox } from '@hanzo/text-editor-resources'
   import {
     Button,
     EditBox,
@@ -28,7 +28,7 @@
     getUserTimezone,
     showPopup,
     Scroller
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'

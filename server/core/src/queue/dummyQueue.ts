@@ -1,4 +1,4 @@
-import type { MeasureContext, WorkspaceUuid } from '@hcengineering/core'
+import type { MeasureContext, WorkspaceUuid } from '@hanzo/core'
 import { type ConsumerHandle, type PlatformQueue, type PlatformQueueProducer, type QueueTopic } from './types'
 
 /**

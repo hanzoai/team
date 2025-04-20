@@ -15,7 +15,7 @@
 //
 -->
 <script lang="ts">
-  import { Question, QuestionKind } from '@hcengineering/survey'
+  import { Question, QuestionKind } from '@hanzo/survey'
   import {
     ButtonIcon,
     EditBox,
@@ -25,7 +25,7 @@
     eventToHTMLElement,
     showPopup,
     tooltip
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import survey from '../plugin'

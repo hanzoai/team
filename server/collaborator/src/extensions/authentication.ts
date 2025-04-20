@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { decodeDocumentId } from '@hcengineering/collaborator-client'
-import { MeasureContext } from '@hcengineering/core'
-import { decodeToken } from '@hcengineering/server-token'
+import { decodeDocumentId } from '@hanzo/collaborator-client'
+import { MeasureContext } from '@hanzo/core'
+import { decodeToken } from '@hanzo/server-token'
 import { Extension, onAuthenticatePayload } from '@hocuspocus/server'
 
 import { Context, buildContext } from '../context'

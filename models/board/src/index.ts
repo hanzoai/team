@@ -21,8 +21,8 @@ import {
   type CardCover,
   type CommonBoardPreference,
   type MenuPage
-} from '@hcengineering/board'
-import type { Employee } from '@hcengineering/contact'
+} from '@hanzo/board'
+import type { Employee } from '@hanzo/contact'
 import {
   DOMAIN_MODEL,
   IndexKind,
@@ -31,7 +31,7 @@ import {
   type Status,
   type Timestamp,
   type Type
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   type Builder,
@@ -44,19 +44,19 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import contact from '@hcengineering/model-contact'
-import core, { TDoc, TType } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import tags from '@hcengineering/model-tags'
-import task, { actionTemplates as taskActionTemplates, TProject, TTask } from '@hcengineering/model-task'
-import view, { actionTemplates, createAction, actionTemplates as viewTemplates } from '@hcengineering/model-view'
-import workbench, { type Application } from '@hcengineering/model-workbench'
-import { type IntlString } from '@hcengineering/platform'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
+} from '@hanzo/model'
+import contact from '@hanzo/model-contact'
+import core, { TDoc, TType } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import tags from '@hanzo/model-tags'
+import task, { actionTemplates as taskActionTemplates, TProject, TTask } from '@hanzo/model-task'
+import view, { actionTemplates, createAction, actionTemplates as viewTemplates } from '@hanzo/model-view'
+import workbench, { type Application } from '@hanzo/model-workbench'
+import { type IntlString } from '@hanzo/platform'
+import type { AnyComponent } from '@hanzo/ui/src/types'
 import board from './plugin'
 
-export { boardId } from '@hcengineering/board'
+export { boardId } from '@hanzo/board'
 export { boardOperation } from './migration'
 export { default } from './plugin'
 

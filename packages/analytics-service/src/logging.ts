@@ -1,8 +1,8 @@
 //
 // Copyright © 2024 Hardcore Engineering Inc.
 //
-import { Analytics } from '@hcengineering/analytics'
-import { MeasureLogger, ParamsType } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { MeasureLogger, ParamsType } from '@hanzo/core'
 import { basename, dirname, join } from 'path'
 import winston from 'winston'
 import DailyRotateFile from 'winston-daily-rotate-file'

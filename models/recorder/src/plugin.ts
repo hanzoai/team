@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hcengineering/platform'
-import { recorderId } from '@hcengineering/recorder'
-import recorder from '@hcengineering/recorder-resources/src/plugin'
+import { mergeIds } from '@hanzo/platform'
+import { recorderId } from '@hanzo/recorder'
+import recorder from '@hanzo/recorder-resources/src/plugin'
 
 export default mergeIds(recorderId, recorder, {})

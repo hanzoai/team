@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { AttachedDoc, Ref, WithLookup } from '@hcengineering/core'
-  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hcengineering/github'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { NavLink, getClient, isAdminUser } from '@hcengineering/presentation'
-  import MessageBox from '@hcengineering/presentation/src/components/MessageBox.svelte'
-  import tracker, { Project } from '@hcengineering/tracker'
+  import { AttachedDoc, Ref, WithLookup } from '@hanzo/core'
+  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { NavLink, getClient, isAdminUser } from '@hanzo/presentation'
+  import MessageBox from '@hanzo/presentation/src/components/MessageBox.svelte'
+  import tracker, { Project } from '@hanzo/tracker'
   import ui, {
     Action,
     Button,
@@ -18,15 +18,15 @@
     TimeSince,
     getEventPositionElement,
     showPopup
-  } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
-  import { Analytics } from '@hcengineering/analytics'
+  } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
+  import { Analytics } from '@hanzo/analytics'
 
   import github from '../plugin'
   import ConnectProject from './ConnectProject.svelte'
   import { githubLanguageColors } from './languageColors'
   import { sendGHServiceRequest } from './utils'
-  import { BackgroundColor } from '@hcengineering/text'
+  import { BackgroundColor } from '@hanzo/text'
 
   export let integration: WithLookup<GithubIntegration>
   export let projects: Project[] = []

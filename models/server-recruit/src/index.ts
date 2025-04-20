@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import contact from '@hcengineering/contact'
-import core from '@hcengineering/core'
-import recruit from '@hcengineering/model-recruit'
-import notification from '@hcengineering/notification'
-import serverCore from '@hcengineering/server-core'
-import serverNotification from '@hcengineering/server-notification'
-import serverRecruit from '@hcengineering/server-recruit'
-import serverView from '@hcengineering/server-view'
-import serverContact from '@hcengineering/server-contact'
+import contact from '@hanzo/contact'
+import core from '@hanzo/core'
+import recruit from '@hanzo/model-recruit'
+import notification from '@hanzo/notification'
+import serverCore from '@hanzo/server-core'
+import serverNotification from '@hanzo/server-notification'
+import serverRecruit from '@hanzo/server-recruit'
+import serverView from '@hanzo/server-view'
+import serverContact from '@hanzo/server-contact'
 
-export { serverRecruitId } from '@hcengineering/server-recruit'
+export { serverRecruitId } from '@hanzo/server-recruit'
 
 export function createModel (builder: Builder): void {
   builder.mixin(recruit.class.Applicant, core.class.Class, serverNotification.mixin.HTMLPresenter, {

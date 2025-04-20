@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset } from '@hcengineering/platform'
-  import { themeStore } from '@hcengineering/theme'
-  import { AnySvelteComponent, ColorDefinition, Icon, IconSize, resizeObserver } from '@hcengineering/ui'
+  import { Asset } from '@hanzo/platform'
+  import { themeStore } from '@hanzo/theme'
+  import { AnySvelteComponent, ColorDefinition, Icon, IconSize, resizeObserver } from '@hanzo/ui'
   import AvatarIcon from './icons/Avatar.svelte'
 
   export let url: string | undefined

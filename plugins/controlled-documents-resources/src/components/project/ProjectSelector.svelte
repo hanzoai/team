@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Space } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Button, ButtonKind, ButtonSize, Label, showPopup } from '@hcengineering/ui'
-  import { Project } from '@hcengineering/controlled-documents'
+  import { Ref, Space } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { Button, ButtonKind, ButtonSize, Label, showPopup } from '@hanzo/ui'
+  import { Project } from '@hanzo/controlled-documents'
   import { createEventDispatcher } from 'svelte'
 
   import ProjectSelectorPopup from './ProjectSelectorPopup.svelte'

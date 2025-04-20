@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Question } from '@hcengineering/questions'
-import { type AttachedData, type Class, type Doc, type Ref, type Space, type TxOperations } from '@hcengineering/core'
+import type { Question } from '@hanzo/questions'
+import { type AttachedData, type Class, type Doc, type Ref, type Space, type TxOperations } from '@hanzo/core'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 
 export type CreateQuestionData<Q extends Question<any>> = Omit<AttachedData<Q>, 'owner' | 'releasedBy' | 'releasedOn'>

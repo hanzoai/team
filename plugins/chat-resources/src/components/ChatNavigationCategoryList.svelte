@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import card, { MasterTag } from '@hcengineering/card'
-  import { Ref, SortingOrder } from '@hcengineering/core'
-  import { SpecialView } from '@hcengineering/workbench-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import view, { BuildModelKey, type ViewOptions } from '@hcengineering/view'
+  import card, { MasterTag } from '@hanzo/card'
+  import { Ref, SortingOrder } from '@hanzo/core'
+  import { SpecialView } from '@hanzo/workbench-resources'
+  import { getClient } from '@hanzo/presentation'
+  import view, { BuildModelKey, type ViewOptions } from '@hanzo/view'
 
   export let type: Ref<MasterTag>
 

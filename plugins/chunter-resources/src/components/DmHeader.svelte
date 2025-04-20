@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DirectMessage } from '@hcengineering/chunter'
-  import contact, { getCurrentEmployee } from '@hcengineering/contact'
-  import { CombineAvatars, personRefByAccountUuidStore } from '@hcengineering/contact-resources'
-  import { type Ref, notEmpty } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { SearchEdit } from '@hcengineering/ui'
-  import { openDoc } from '@hcengineering/view-resources'
+  import { DirectMessage } from '@hanzo/chunter'
+  import contact, { getCurrentEmployee } from '@hanzo/contact'
+  import { CombineAvatars, personRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { type Ref, notEmpty } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { SearchEdit } from '@hanzo/ui'
+  import { openDoc } from '@hanzo/view-resources'
 
   import { userSearch } from '../index'
   import chunter from '../plugin'

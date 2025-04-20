@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel } from '@hcengineering/contact'
-  import type { AttachedData, Doc, Ref } from '@hcengineering/core'
-  import presentation from '@hcengineering/presentation'
-  import { CircleButton, eventToHTMLElement, IconAdd, Label, showPopup } from '@hcengineering/ui'
+  import { Channel } from '@hanzo/contact'
+  import type { AttachedData, Doc, Ref } from '@hanzo/core'
+  import presentation from '@hanzo/presentation'
+  import { CircleButton, eventToHTMLElement, IconAdd, Label, showPopup } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import contact from '../plugin'
   import ChannelsView from './ChannelsView.svelte'

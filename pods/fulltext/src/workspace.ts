@@ -14,7 +14,7 @@ import core, {
   type TxWorkspaceEvent,
   WorkspaceEvent,
   type WorkspaceIds
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ContextNameMiddleware,
   DBAdapterInitMiddleware,
@@ -22,8 +22,8 @@ import {
   DomainFindMiddleware,
   LowLevelMiddleware,
   ModelMiddleware
-} from '@hcengineering/middleware'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/middleware'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import {
   type ConsumerControl,
   type ContentTextAdapter,
@@ -34,10 +34,10 @@ import {
   type Pipeline,
   type PipelineContext,
   type StorageAdapter
-} from '@hcengineering/server-core'
-import { FullTextIndexPipeline } from '@hcengineering/server-indexer'
-import { getConfig } from '@hcengineering/server-pipeline'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { FullTextIndexPipeline } from '@hanzo/server-indexer'
+import { getConfig } from '@hanzo/server-pipeline'
+import { generateToken } from '@hanzo/server-token'
 
 import { fulltextModelFilter } from './utils'
 

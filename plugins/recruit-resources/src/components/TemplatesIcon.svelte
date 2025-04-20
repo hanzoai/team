@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { IconSize } from '@hcengineering/ui'
+  import { IconSize } from '@hanzo/ui'
   import VacancyIcon from './icons/Vacancy.svelte'
   export let size: IconSize = 'small'
 </script>

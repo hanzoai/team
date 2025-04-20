@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import core, { type Ref, type Space } from '@hcengineering/core'
+import core, { type Ref, type Space } from '@hanzo/core'
 import {
   migrateSpace,
   tryMigrate,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hcengineering/model'
-import { telegramId } from '@hcengineering/telegram'
+} from '@hanzo/model'
+import { telegramId } from '@hanzo/telegram'
 import { DOMAIN_TELEGRAM } from '.'
 
 export const telegramOperation: MigrateOperation = {

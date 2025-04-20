@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { type Doc } from '@hcengineering/core'
-  import { encodeDocumentId } from '@hcengineering/collaborator-client'
-  import { getAttribute, getClient, KeyedAttribute } from '@hcengineering/presentation'
-  import { CollaborationIds } from '@hcengineering/text-editor'
+  import { type Doc } from '@hanzo/core'
+  import { encodeDocumentId } from '@hanzo/collaborator-client'
+  import { getAttribute, getClient, KeyedAttribute } from '@hanzo/presentation'
+  import { CollaborationIds } from '@hanzo/text-editor'
   import { onDestroy, setContext } from 'svelte'
 
   import { createTiptapCollaborationData } from '../provider/utils'

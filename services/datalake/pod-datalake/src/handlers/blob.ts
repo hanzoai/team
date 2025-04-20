@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { MeasureContext } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { MeasureContext } from '@hanzo/core'
 import { type Request, type Response } from 'express'
 import { UploadedFile } from 'express-fileupload'
 import fs from 'fs'

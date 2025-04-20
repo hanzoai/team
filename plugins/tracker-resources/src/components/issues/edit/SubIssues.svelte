@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Issue, trackerId } from '@hcengineering/tracker'
-  import { Button, IconScaleFull, Label, closeTooltip, getCurrentResolvedLocation, navigate } from '@hcengineering/ui'
-  import { createFilter, restrictionStore, setFilters } from '@hcengineering/view-resources'
+  import { Issue, trackerId } from '@hanzo/tracker'
+  import { Button, IconScaleFull, Label, closeTooltip, getCurrentResolvedLocation, navigate } from '@hanzo/ui'
+  import { createFilter, restrictionStore, setFilters } from '@hanzo/view-resources'
   import tracker from '../../../plugin'
   import QueryIssuesList from './QueryIssuesList.svelte'
 

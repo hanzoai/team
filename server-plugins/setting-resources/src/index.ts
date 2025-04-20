@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import contact, { Person, getFirstName, getLastName } from '@hcengineering/contact'
-import core, { PersonId, Doc, Role, Tx, TxUpdateDoc } from '@hcengineering/core'
-import { getEmbeddedLabel, translate } from '@hcengineering/platform'
-import type { TriggerControl } from '@hcengineering/server-core'
-import setting, { Integration } from '@hcengineering/setting'
+import contact, { Person, getFirstName, getLastName } from '@hanzo/contact'
+import core, { PersonId, Doc, Role, Tx, TxUpdateDoc } from '@hanzo/core'
+import { getEmbeddedLabel, translate } from '@hanzo/platform'
+import type { TriggerControl } from '@hanzo/server-core'
+import setting, { Integration } from '@hanzo/setting'
 
 /**
  * @public

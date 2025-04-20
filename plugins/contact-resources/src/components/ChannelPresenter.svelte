@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel } from '@hcengineering/contact'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { ButtonSize, CircleButton, tooltip } from '@hcengineering/ui'
+  import { Channel } from '@hanzo/contact'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { ButtonSize, CircleButton, tooltip } from '@hanzo/ui'
   import { channelProviders } from '../utils'
 
   export let value: Channel

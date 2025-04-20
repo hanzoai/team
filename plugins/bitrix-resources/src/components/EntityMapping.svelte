@@ -7,11 +7,11 @@
     mappingTypes,
     StatusValue,
     toClassRef
-  } from '@hcengineering/bitrix'
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { ClassSetting } from '@hcengineering/setting-resources'
+  } from '@hanzo/bitrix'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { ClassSetting } from '@hanzo/setting-resources'
   import {
     Button,
     Expandable,
@@ -23,7 +23,7 @@
     showPopup,
     CheckBox,
     DropdownLabelsPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import bitrix from '../plugin'
 
   import AttributeMapper from './AttributeMapper.svelte'

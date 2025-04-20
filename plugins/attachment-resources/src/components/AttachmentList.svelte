@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hcengineering/attachment'
-  import { Ref, type WithLookup } from '@hcengineering/core'
-  import { ListSelectionProvider } from '@hcengineering/view-resources'
-  import { Scroller, updatePopup } from '@hcengineering/ui'
+  import { Attachment } from '@hanzo/attachment'
+  import { Ref, type WithLookup } from '@hanzo/core'
+  import { ListSelectionProvider } from '@hanzo/view-resources'
+  import { Scroller, updatePopup } from '@hanzo/ui'
   import { AttachmentImageSize } from '../types'
   import AttachmentPreview from './AttachmentPreview.svelte'
 

@@ -3,7 +3,7 @@
 -->
 
 <script lang="ts">
-  import type { TrainingAttempt } from '@hcengineering/training'
+  import type { TrainingAttempt } from '@hanzo/training'
   import Score from './Score.svelte'
 
   export let value: TrainingAttempt

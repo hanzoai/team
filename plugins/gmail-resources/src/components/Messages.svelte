@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { SharedMessage } from '@hcengineering/gmail'
+  import type { SharedMessage } from '@hanzo/gmail'
   import MessageView from './Message.svelte'
-  import { Ref } from '@hcengineering/core'
+  import { Ref } from '@hanzo/core'
   import { createEventDispatcher } from 'svelte'
 
   export let messages: SharedMessage[] = []

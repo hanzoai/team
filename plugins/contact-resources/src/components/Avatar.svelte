@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -22,9 +22,9 @@
     getAvatarProvider,
     getAvatarProviderId,
     Person
-  } from '@hcengineering/contact'
-  import { Asset, getResource } from '@hcengineering/platform'
-  import { getBlobURL, getClient, reduceCalls, sizeToWidth } from '@hcengineering/presentation'
+  } from '@hanzo/contact'
+  import { Asset, getResource } from '@hanzo/platform'
+  import { getBlobURL, getClient, reduceCalls, sizeToWidth } from '@hanzo/presentation'
   import {
     AnySvelteComponent,
     ColorDefinition,
@@ -33,9 +33,9 @@
     getPlatformColor,
     IconSize,
     themeStore
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onMount } from 'svelte'
-  import { AccountUuid, type Data, PersonUuid, Ref, type WithLookup } from '@hcengineering/core'
+  import { AccountUuid, type Data, PersonUuid, Ref, type WithLookup } from '@hanzo/core'
 
   import { loadUsersStatus, statusByUserStore } from '../utils'
   import AvatarInstance from './AvatarInstance.svelte'

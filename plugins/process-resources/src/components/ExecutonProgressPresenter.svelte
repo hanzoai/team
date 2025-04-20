@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Execution, State } from '@hcengineering/process'
-  import { Button, ProgressCircle, SelectPopup, SelectPopupValueType } from '@hcengineering/ui'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Execution, State } from '@hanzo/process'
+  import { Button, ProgressCircle, SelectPopup, SelectPopupValueType } from '@hanzo/ui'
   import IconProgress from './icons/IconProgress.svelte'
   import IconBacklog from './icons/IconBacklog.svelte'
   import IconCompleted from './icons/IconCompleted.svelte'

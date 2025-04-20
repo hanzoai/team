@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Scroller } from '@hcengineering/ui'
-  import { Ref } from '@hcengineering/core'
-  import { ControlledDocument, ControlledDocumentState, DocumentState } from '@hcengineering/controlled-documents'
-  import { Employee } from '@hcengineering/contact'
-  import { getClient } from '@hcengineering/presentation'
+  import { Scroller } from '@hanzo/ui'
+  import { Ref } from '@hanzo/core'
+  import { ControlledDocument, ControlledDocumentState, DocumentState } from '@hanzo/controlled-documents'
+  import { Employee } from '@hanzo/contact'
+  import { getClient } from '@hanzo/presentation'
 
   import DocTeam from './DocTeam.svelte'
 

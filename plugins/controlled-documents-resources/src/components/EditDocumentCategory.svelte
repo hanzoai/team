@@ -14,11 +14,11 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { AttachmentStyleBoxEditor } from '@hcengineering/attachment-resources'
-  import { MessageViewer, getClient } from '@hcengineering/presentation'
-  import { EditBox, Grid } from '@hcengineering/ui'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
-  import documents, { DocumentCategory } from '@hcengineering/controlled-documents'
+  import { AttachmentStyleBoxEditor } from '@hanzo/attachment-resources'
+  import { MessageViewer, getClient } from '@hanzo/presentation'
+  import { EditBox, Grid } from '@hanzo/ui'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  import documents, { DocumentCategory } from '@hanzo/controlled-documents'
 
   import document from '../plugin'
 

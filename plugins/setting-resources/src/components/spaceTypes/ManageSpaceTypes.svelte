@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022, 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -15,10 +15,10 @@
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import core, { Ref, SpaceType, WithLookup } from '@hcengineering/core'
-  import { Location, getCurrentResolvedLocation, navigate, resolvedLocationStore } from '@hcengineering/ui'
-  import { createQuery, hasResource } from '@hcengineering/presentation'
-  import { Resource } from '@hcengineering/platform'
+  import core, { Ref, SpaceType, WithLookup } from '@hanzo/core'
+  import { Location, getCurrentResolvedLocation, navigate, resolvedLocationStore } from '@hanzo/ui'
+  import { createQuery, hasResource } from '@hanzo/presentation'
+  import { Resource } from '@hanzo/platform'
 
   import { clearSettingsStore } from '../../store'
   import SpaceTypes from './SpaceTypes.svelte'

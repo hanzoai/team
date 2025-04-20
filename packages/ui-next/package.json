@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/ui-next",
-  "version": "0.6.0",
+  "name": "@hanzo/ui-next",
+  "version": "0.6.4",
   "main": "src/index.ts",
   "author": "Copyright © Hardcore Engineering Inc.",
   "license": "EPL-2.0",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@types/dompurify": "^3.0.5",
     "@types/jest": "^29.5.5",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
@@ -39,30 +39,30 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/analytics": "^0.6.0",
-    "@hcengineering/attachment-resources": "^0.6.0",
-    "@hcengineering/card": "^0.6.0",
-    "@hcengineering/communication-types": "0.1.166",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/contact-resources": "^0.6.0",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/presentation": "^0.6.3",
-    "@hcengineering/text": "^0.6.5",
-    "@hcengineering/text-editor": "^0.6.0",
-    "@hcengineering/text-editor-resources": "^0.6.0",
-    "@hcengineering/text-markdown": "^0.6.0",
-    "@hcengineering/theme": "^0.6.5",
-    "@hcengineering/ui": "^0.6.15",
-    "@hcengineering/view": "^0.6.13",
-    "@hcengineering/view-resources": "^0.6.0",
+    "@hanzo/analytics": "^0.6.4",
+    "@hanzo/attachment-resources": "^0.6.4",
+    "@hanzo/card": "^0.6.5",
+    "@hanzo/communication-types": "0.1.166",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/contact-resources": "^0.6.4",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/presentation": "^0.6.7",
+    "@hanzo/text": "^0.6.10",
+    "@hanzo/text-editor": "^0.6.4",
+    "@hanzo/text-editor-resources": "^0.6.4",
+    "@hanzo/text-markdown": "^0.6.5",
+    "@hanzo/theme": "^0.6.10",
+    "@hanzo/ui": "^0.6.21",
+    "@hanzo/view": "^0.6.18",
+    "@hanzo/view-resources": "^0.6.4",
     "@tiptap/core": "^2.11.7",
     "@tiptap/pm": "^2.11.7",
     "fast-equals": "^5.2.2",
     "svelte": "^4.2.19"
   },
-  "repository": "https://github.com/hcengineering/platform",
+  "repository": "https://github.com/hanzoai/team-manager",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   }
 }

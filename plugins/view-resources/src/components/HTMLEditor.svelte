@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
+  import { Doc } from '@hanzo/core'
 
-  import { getAttribute, getClient, KeyedAttribute, updateAttribute } from '@hcengineering/presentation'
-  import { FullDescriptionBox } from '@hcengineering/text-editor-resources'
+  import { getAttribute, getClient, KeyedAttribute, updateAttribute } from '@hanzo/presentation'
+  import { FullDescriptionBox } from '@hanzo/text-editor-resources'
 
   // TODO Rename this component to MarkupEditor
   export let object: Doc

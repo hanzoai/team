@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/tests-sanity",
+  "name": "@hanzo/tests-sanity",
   "version": "0.6.1",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/default-package",
+  "author": "Hanzo <dev@hanzo.ai>",
+  "template": "@hanzo/default-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -29,7 +29,7 @@
     "allure:generate": "allure generate allure-results -o allure-report --clean"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@types/jest": "^29.5.5",
     "@types/node": "~20.11.16",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
@@ -49,9 +49,9 @@
   "dependencies": {
     "dotenv": "~16.0.0",
     "cross-env": "~7.0.3",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/client-resources": "^0.6.27",
-    "@hcengineering/account": "^0.6.0",
-    "@hcengineering/account-client": "^0.6.0"
+    "@hanzo/core": "^0.6.32",
+    "@hanzo/client-resources": "^0.6.27",
+    "@hanzo/account": "^0.6.0",
+    "@hanzo/account-client": "^0.6.0"
   }
 }

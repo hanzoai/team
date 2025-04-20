@@ -1,5 +1,5 @@
 //
-// Copyright © 2021 Anticrm Platform Contributors.
+// Copyright © 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { generateId, type Doc, type Domain, type FieldIndexConfig } from '@hcengineering/core'
-import { PlatformError, unknownStatus } from '@hcengineering/platform'
-import { type DomainHelperOperations } from '@hcengineering/server-core'
+import { generateId, type Doc, type Domain, type FieldIndexConfig } from '@hanzo/core'
+import { PlatformError, unknownStatus } from '@hanzo/platform'
+import { type DomainHelperOperations } from '@hanzo/server-core'
 import { MongoClient, type Collection, type Db, type Document } from 'mongodb'
 
 const connections = new Map<string, MongoClientReferenceImpl>()

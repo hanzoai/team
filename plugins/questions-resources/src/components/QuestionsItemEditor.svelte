@@ -3,12 +3,12 @@
 -->
 
 <script lang="ts">
-  import { type Class, type DocumentUpdate } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, IconMoreV, Loading } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { showMenu } from '@hcengineering/view-resources'
+  import { type Class, type DocumentUpdate } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, IconMoreV, Loading } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { showMenu } from '@hanzo/view-resources'
   import type {
     Answer,
     Question,
@@ -16,7 +16,7 @@
     QuestionDataEditorComponent,
     QuestionDataPresenter,
     QuestionMixin
-  } from '@hcengineering/questions'
+  } from '@hanzo/questions'
   import { deepEqual } from 'fast-equals'
   import { canUpdateQuestion, getQuestionMixin, isAssessment, updateQuestion } from '../utils'
   import LabelEditor from './LabelEditor.svelte'

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, eventToHTMLElement, IconFilter, showPopup } from '@hcengineering/ui'
-  import { Ref } from '@hcengineering/core'
-  import activity, { ActivityMessagesFilter } from '@hcengineering/activity'
-  import view from '@hcengineering/view-resources/src/plugin'
-  import { getClient } from '@hcengineering/presentation'
-  import { ActivityMessagesFilterPopup } from '@hcengineering/activity-resources'
+  import { Button, eventToHTMLElement, IconFilter, showPopup } from '@hanzo/ui'
+  import { Ref } from '@hanzo/core'
+  import activity, { ActivityMessagesFilter } from '@hanzo/activity'
+  import view from '@hanzo/view-resources/src/plugin'
+  import { getClient } from '@hanzo/presentation'
+  import { ActivityMessagesFilterPopup } from '@hanzo/activity-resources'
 
   export let selectedFilters: Ref<ActivityMessagesFilter>[] = []
 

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Customer } from '@hcengineering/lead'
-  import { Table } from '@hcengineering/view-resources'
+  import type { Customer } from '@hanzo/lead'
+  import { Table } from '@hanzo/view-resources'
   import leads from '../plugin'
 
   export let value: Customer

@@ -2,7 +2,7 @@
 // Copyright @ 2022-2023 Hardcore Engineering Inc.
 //
 
-import attachment, { type Attachment } from '@hcengineering/attachment'
+import attachment, { type Attachment } from '@hanzo/attachment'
 import {
   loadCollabYdoc,
   saveCollabYdoc,
@@ -10,7 +10,7 @@ import {
   YXmlElement,
   yXmlElementClone,
   YXmlText
-} from '@hcengineering/collaboration'
+} from '@hanzo/collaboration'
 import {
   type ChangeControl,
   type ControlledDocument,
@@ -21,7 +21,7 @@ import {
   documentsId,
   DocumentState,
   type ProjectMeta
-} from '@hcengineering/controlled-documents'
+} from '@hanzo/controlled-documents'
 import {
   type Class,
   type Data,
@@ -35,7 +35,7 @@ import {
   SortingOrder,
   toIdMap,
   TxOperations
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   createDefaultSpace,
   createOrUpdate,
@@ -46,13 +46,13 @@ import {
   type MigrationUpgradeClient,
   tryMigrate,
   tryUpgrade
-} from '@hcengineering/model'
-import { DOMAIN_ATTACHMENT } from '@hcengineering/model-attachment'
-import core from '@hcengineering/model-core'
-import tags from '@hcengineering/tags'
+} from '@hanzo/model'
+import { DOMAIN_ATTACHMENT } from '@hanzo/model-attachment'
+import core from '@hanzo/model-core'
+import tags from '@hanzo/tags'
 
-import { compareDocumentVersions } from '@hcengineering/controlled-documents/src'
-import { makeRank } from '@hcengineering/rank'
+import { compareDocumentVersions } from '@hanzo/controlled-documents/src'
+import { makeRank } from '@hanzo/rank'
 import documents, { DOMAIN_DOCUMENTS } from './index'
 
 async function createTemplatesSpace (tx: TxOperations): Promise<void> {

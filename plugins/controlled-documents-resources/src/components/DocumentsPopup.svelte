@@ -14,12 +14,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hcengineering/core'
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hcengineering/presentation'
-  import { AnySvelteComponent, Label } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
-  import documents, { type Document } from '@hcengineering/controlled-documents'
+  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hanzo/presentation'
+  import { AnySvelteComponent, Label } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
+  import documents, { type Document } from '@hanzo/controlled-documents'
 
   export let _class: Ref<Class<Document>>
   export let options: FindOptions<Document> | undefined = undefined

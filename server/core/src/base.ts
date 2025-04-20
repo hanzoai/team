@@ -30,7 +30,7 @@ import {
   type Timestamp,
   toFindResult,
   type Tx
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import type { Middleware, PipelineContext, TxMiddlewareResult } from './types'
 
 export const emptyFindResult = Promise.resolve(toFindResult([]))

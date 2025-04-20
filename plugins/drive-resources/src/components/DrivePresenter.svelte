@@ -15,11 +15,11 @@
 //
 -->
 <script lang="ts">
-  import { Drive } from '@hcengineering/drive'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Icon, tooltip } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
-  import { ObjectPresenterType } from '@hcengineering/view'
+  import { Drive } from '@hanzo/drive'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Icon, tooltip } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { ObjectPresenterType } from '@hanzo/view'
 
   import drive from '../plugin'
 

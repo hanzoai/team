@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { fromTzDate, Request, tzDateEqual } from '@hcengineering/hr'
-  import { getClient } from '@hcengineering/presentation'
-  import { DateRangePresenter, Label } from '@hcengineering/ui'
+  import { fromTzDate, Request, tzDateEqual } from '@hanzo/hr'
+  import { getClient } from '@hanzo/presentation'
+  import { DateRangePresenter, Label } from '@hanzo/ui'
 
   export let value: Request | null | undefined
   export let noShift: boolean = false

@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { NotificationContext } from '@hcengineering/communication-types'
+  import { Card } from '@hanzo/card'
+  import { NotificationContext } from '@hanzo/communication-types'
 
   import ChatHeader from './ChatHeader.svelte'
   import ChatBody from './ChatBody.svelte'

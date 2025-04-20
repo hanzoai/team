@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, FindResult, IdMap, Ref, RefTo, Space, Status, toIdMap } from '@hcengineering/core'
-  import { translate } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { ProjectStatus, ProjectType, TaskType } from '@hcengineering/task'
+  import core, { Doc, FindResult, IdMap, Ref, RefTo, Space, Status, toIdMap } from '@hanzo/core'
+  import { translate } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { ProjectStatus, ProjectType, TaskType } from '@hanzo/task'
   import ui, {
     EditWithIcon,
     Icon,
@@ -28,16 +28,16 @@
     deviceOptionsStore,
     resizeObserver,
     themeStore
-  } from '@hcengineering/ui'
-  import { Filter } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { Filter } from '@hanzo/view'
   import {
     FILTER_DEBOUNCE_MS,
     FilterRemovedNotification,
     sortFilterValues,
     statusStore
-  } from '@hcengineering/view-resources'
-  import view from '@hcengineering/view-resources/src/plugin'
-  import { buildConfigLookup, getPresenter } from '@hcengineering/view-resources/src/utils'
+  } from '@hanzo/view-resources'
+  import view from '@hanzo/view-resources/src/plugin'
+  import { buildConfigLookup, getPresenter } from '@hanzo/view-resources/src/utils'
   import { createEventDispatcher } from 'svelte'
   import { typesOfJoinedProjectsStore, selectedTaskTypeStore, selectedTypeStore, taskTypeStore, typeStore } from '..'
 

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import login, { loginId } from '@hcengineering/login'
-  import { getClient, createQuery } from '@hcengineering/presentation'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import login, { loginId } from '@hanzo/login'
+  import { getClient, createQuery } from '@hanzo/presentation'
   import settingPlg from '../plugin'
-  import setting, { SettingsCategory, SettingsEvents } from '@hcengineering/setting'
+  import setting, { SettingsCategory, SettingsEvents } from '@hanzo/setting'
   import {
     Component,
     Label,
@@ -34,7 +34,7 @@
     type AnyComponent,
     deviceOptionsStore as deviceInfo,
     deviceWidths
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import {
     closeWidget,
     NavFooter,
@@ -42,11 +42,11 @@
     minimizeSidebar,
     sidebarStore,
     logOut
-  } from '@hcengineering/workbench-resources'
-  import workbench from '@hcengineering/workbench'
+  } from '@hanzo/workbench-resources'
+  import workbench from '@hanzo/workbench'
   import { ComponentType, onDestroy, onMount } from 'svelte'
   import { clearSettingsStore, settingsStore, type SettingsStore } from '../store'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let workbenchWidth: number = 0
 

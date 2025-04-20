@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Card, CardEvents } from '@hcengineering/card'
-  import core, { Class, Data, Doc, fillDefaults, MarkupBlobRef, Ref, SortingOrder } from '@hcengineering/core'
-  import { translate } from '@hcengineering/platform'
-  import { makeRank } from '@hcengineering/rank'
-  import { ButtonIcon, getCurrentLocation, IconAdd, navigate } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
+  import { Analytics } from '@hanzo/analytics'
+  import { Card, CardEvents } from '@hanzo/card'
+  import core, { Class, Data, Doc, fillDefaults, MarkupBlobRef, Ref, SortingOrder } from '@hanzo/core'
+  import { translate } from '@hanzo/platform'
+  import { makeRank } from '@hanzo/rank'
+  import { ButtonIcon, getCurrentLocation, IconAdd, navigate } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
   import card from '../plugin'
 
   export let _class: Ref<Class<Doc>> | undefined

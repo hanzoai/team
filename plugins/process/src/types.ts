@@ -1,4 +1,4 @@
-import { Class, Doc, type AnyAttribute, type Association, type Ref } from '@hcengineering/core'
+import { Class, Doc, type AnyAttribute, type Association, type Ref } from '@hanzo/core'
 import { ProcessFunction } from '.'
 
 export interface Context {

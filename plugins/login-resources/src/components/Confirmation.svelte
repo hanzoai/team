@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { OK, Severity, Status } from '@hcengineering/platform'
-  import { getCurrentLocation } from '@hcengineering/ui'
-  import { logIn } from '@hcengineering/workbench'
+  import { OK, Severity, Status } from '@hanzo/platform'
+  import { getCurrentLocation } from '@hanzo/ui'
+  import { logIn } from '@hanzo/workbench'
 
   import login from '../plugin'
   import { afterConfirm, confirm, goTo } from '../utils'

@@ -13,20 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ButtonIcon, CheckBox, Component, IconMoreV, Label, Loading, showPopup, Spinner } from '@hcengineering/ui'
+  import { ButtonIcon, CheckBox, Component, IconMoreV, Label, Loading, showPopup, Spinner } from '@hanzo/ui'
   import notification, {
     ActivityNotificationViewlet,
     DisplayInboxNotification,
     DocNotifyContext,
     InboxNotification
-  } from '@hcengineering/notification'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { getDocTitle, getDocIdentifier, Menu } from '@hcengineering/view-resources'
+  } from '@hanzo/notification'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { getDocTitle, getDocIdentifier, Menu } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
-  import { Class, Doc, PersonId, Ref, WithLookup } from '@hcengineering/core'
-  import chunter from '@hcengineering/chunter'
-  import { personRefByPersonIdStore } from '@hcengineering/contact-resources'
-  import { Person } from '@hcengineering/contact'
+  import { Class, Doc, PersonId, Ref, WithLookup } from '@hanzo/core'
+  import chunter from '@hanzo/chunter'
+  import { personRefByPersonIdStore } from '@hanzo/contact-resources'
+  import { Person } from '@hanzo/contact'
 
   import InboxNotificationPresenter from './inbox/InboxNotificationPresenter.svelte'
   import NotifyContextIcon from './NotifyContextIcon.svelte'

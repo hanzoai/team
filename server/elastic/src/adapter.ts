@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import {
   Class,
   Doc,
@@ -25,12 +25,12 @@ import {
   SearchQuery,
   TxResult,
   WorkspaceUuid
-} from '@hcengineering/core'
-import type { FullTextAdapter, IndexedDoc, SearchScoring, SearchStringResult } from '@hcengineering/server-core'
-import serverCore from '@hcengineering/server-core'
+} from '@hanzo/core'
+import type { FullTextAdapter, IndexedDoc, SearchScoring, SearchStringResult } from '@hanzo/server-core'
+import serverCore from '@hanzo/server-core'
 
 import { Client, errors as esErr } from '@elastic/elasticsearch'
-import { getMetadata } from '@hcengineering/platform'
+import { getMetadata } from '@hanzo/platform'
 
 const DEFAULT_LIMIT = 200
 

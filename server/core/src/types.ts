@@ -17,13 +17,13 @@ import {
   type ServerApi as CommunicationApi,
   type RequestEvent as CommunicationEvent,
   type EventResult
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import {
   type FindMessagesGroupsParams,
   type FindMessagesParams,
   type Message,
   type MessagesGroup
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import {
   type Account,
   type AccountUuid,
@@ -54,11 +54,11 @@ import {
   type WorkspaceDataId,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import type { Asset, Resource } from '@hcengineering/platform'
-import type { LiveQuery } from '@hcengineering/query'
-import type { ReqId, Request, Response } from '@hcengineering/rpc'
-import type { Token } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import type { Asset, Resource } from '@hanzo/platform'
+import type { LiveQuery } from '@hanzo/query'
+import type { ReqId, Request, Response } from '@hanzo/rpc'
+import type { Token } from '@hanzo/server-token'
 import { type Readable } from 'stream'
 
 import type { DbAdapter, DomainHelper } from './adapter'

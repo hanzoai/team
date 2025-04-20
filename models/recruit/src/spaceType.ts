@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
-import task from '@hcengineering/task'
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import { type Ref, type Status } from '@hcengineering/core'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
+import task from '@hanzo/task'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import { type Ref, type Status } from '@hanzo/core'
 
 import { TDefaultVacancyTypeData, TApplicantTypeData } from './types'
 import plugin from './plugin'

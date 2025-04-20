@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { Ref } from '@hcengineering/core'
+  import { Person } from '@hanzo/contact'
+  import { Ref } from '@hanzo/core'
   import CombineAvatars from './CombineAvatars.svelte'
   import contact from '../plugin'
 

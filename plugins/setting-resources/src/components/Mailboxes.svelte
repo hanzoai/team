@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Anticrm Platform Contributors.
+// Copyright © 2025 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -23,12 +23,12 @@
     ModernButton,
     Scroller,
     showPopup
-  } from '@hcengineering/ui'
-  import setting from '@hcengineering/setting'
+  } from '@hanzo/ui'
+  import setting from '@hanzo/setting'
   import MailboxEditorModal from './MailboxEditorModal.svelte'
   import { getAccountClient } from '../utils'
   import { onMount } from 'svelte'
-  import { MailboxInfo, MailboxOptions } from '@hcengineering/account-client'
+  import { MailboxInfo, MailboxOptions } from '@hanzo/account-client'
   import MailboxItem from './MailboxItem.svelte'
 
   let boxesLoading = true

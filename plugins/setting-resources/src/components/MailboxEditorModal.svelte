@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Anticrm Platform Contributors.
+// Copyright © 2025 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MailboxOptions } from '@hcengineering/account-client'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { Dropdown, ListItem, Modal, ModernEditbox, Spinner, themeStore } from '@hcengineering/ui'
-  import setting from '@hcengineering/setting'
+  import { MailboxOptions } from '@hanzo/account-client'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { Dropdown, ListItem, Modal, ModernEditbox, Spinner, themeStore } from '@hanzo/ui'
+  import setting from '@hanzo/setting'
   import { createEventDispatcher } from 'svelte'
   import { getAccountClient } from '../utils'
-  import { IntlString, translateCB } from '@hcengineering/platform'
-  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hcengineering/contact'
-  import { buildSocialIdString, SocialIdType } from '@hcengineering/core'
+  import { IntlString, translateCB } from '@hanzo/platform'
+  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hanzo/contact'
+  import { buildSocialIdString, SocialIdType } from '@hanzo/core'
 
   export let mailboxOptions: MailboxOptions
 

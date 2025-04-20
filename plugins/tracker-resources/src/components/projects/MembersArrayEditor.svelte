@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { AccountArrayEditor } from '@hcengineering/contact-resources'
-  import contact from '@hcengineering/contact-resources/src/plugin'
-  import { getClient } from '@hcengineering/presentation'
-  import { Project } from '@hcengineering/tracker'
+  import { AccountArrayEditor } from '@hanzo/contact-resources'
+  import contact from '@hanzo/contact-resources/src/plugin'
+  import { getClient } from '@hanzo/presentation'
+  import { Project } from '@hanzo/tracker'
   export let value: Project
 </script>
 

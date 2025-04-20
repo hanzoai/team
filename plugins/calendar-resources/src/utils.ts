@@ -4,7 +4,7 @@ import {
   type ReccuringEvent,
   type ReccuringInstance,
   generateEventId
-} from '@hcengineering/calendar'
+} from '@hanzo/calendar'
 import {
   type DocumentUpdate,
   type IdMap,
@@ -12,13 +12,13 @@ import {
   type Timestamp,
   getCurrentAccount,
   toIdMap
-} from '@hcengineering/core'
-import { createQuery, getClient, getCurrentWorkspaceUrl, MessageBox, onClient } from '@hcengineering/presentation'
-import { closePopup, DAY, showPopup } from '@hcengineering/ui'
+} from '@hanzo/core'
+import { createQuery, getClient, getCurrentWorkspaceUrl, MessageBox, onClient } from '@hanzo/presentation'
+import { closePopup, DAY, showPopup } from '@hanzo/ui'
 import { writable } from 'svelte/store'
 import UpdateRecInstancePopup from './components/UpdateRecInstancePopup.svelte'
 import calendar from './plugin'
-import { getMetadata } from '@hcengineering/platform'
+import { getMetadata } from '@hanzo/platform'
 
 export function saveUTC (date: Timestamp): Timestamp {
   const utcdate = new Date(date)

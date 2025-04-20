@@ -13,22 +13,22 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WorkbenchTab } from '@hcengineering/workbench'
+  import { WorkbenchTab } from '@hanzo/workbench'
   import {
     getNotificationsCount,
     InboxNotificationsClientImpl,
     isActivityNotification,
     isMentionNotification,
     NotifyMarker
-  } from '@hcengineering/notification-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import { InboxNotification } from '@hcengineering/notification'
+  } from '@hanzo/notification-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { InboxNotification } from '@hanzo/notification'
   import { onDestroy } from 'svelte'
-  import { concatLink, Doc, Ref } from '@hcengineering/core'
-  import view, { decodeObjectURI } from '@hcengineering/view'
-  import { chunterId } from '@hcengineering/chunter'
-  import { parseLinkId } from '@hcengineering/view-resources'
-  import { parseLocation } from '@hcengineering/ui'
+  import { concatLink, Doc, Ref } from '@hanzo/core'
+  import view, { decodeObjectURI } from '@hanzo/view'
+  import { chunterId } from '@hanzo/chunter'
+  import { parseLinkId } from '@hanzo/view-resources'
+  import { parseLocation } from '@hanzo/ui'
 
   import chunter from '../plugin'
 

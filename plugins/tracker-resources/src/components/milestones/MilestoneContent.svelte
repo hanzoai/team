@@ -1,11 +1,11 @@
 <script lang="ts">
-  import core, { DocumentQuery, Ref, Space, WithLookup } from '@hcengineering/core'
-  import { Milestone } from '@hcengineering/tracker'
-  import { Component, Loading } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  import core, { DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
+  import { Milestone } from '@hanzo/tracker'
+  import { Component, Loading } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import tracker from '../../plugin'
   import NewMilestone from './NewMilestone.svelte'
-  import { createQuery } from '@hcengineering/presentation'
+  import { createQuery } from '@hanzo/presentation'
 
   export let viewlet: WithLookup<Viewlet>
   export let query: DocumentQuery<Milestone> = {}

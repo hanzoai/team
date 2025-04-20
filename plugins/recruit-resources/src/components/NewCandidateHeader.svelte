@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MultipleDraftController } from '@hcengineering/presentation'
-  import { Button, IconAdd, showPopup } from '@hcengineering/ui'
+  import { MultipleDraftController } from '@hanzo/presentation'
+  import { Button, IconAdd, showPopup } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
   import recruit from '../plugin'
   import CreateCandidate from './CreateCandidate.svelte'
-  import { Analytics } from '@hcengineering/analytics'
-  import { RecruitEvents } from '@hcengineering/recruit'
+  import { Analytics } from '@hanzo/analytics'
+  import { RecruitEvents } from '@hanzo/recruit'
 
   let draftExists = false
 

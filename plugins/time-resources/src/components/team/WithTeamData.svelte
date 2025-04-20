@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { Calendar, Event } from '@hcengineering/calendar'
-  import { visibleCalendarStore, hidePrivateEvents, calendarByIdStore } from '@hcengineering/calendar-resources'
-  import { Person } from '@hcengineering/contact'
-  import { IdMap, Ref, toIdMap } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import task, { Project } from '@hcengineering/task'
-  import time, { ToDo, WorkSlot } from '@hcengineering/time'
+  import calendar, { Calendar, Event } from '@hanzo/calendar'
+  import { visibleCalendarStore, hidePrivateEvents, calendarByIdStore } from '@hanzo/calendar-resources'
+  import { Person } from '@hanzo/contact'
+  import { IdMap, Ref, toIdMap } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import task, { Project } from '@hanzo/task'
+  import time, { ToDo, WorkSlot } from '@hanzo/time'
 
   export let space: Ref<Project>
   export let fromDate: number

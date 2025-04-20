@@ -1,6 +1,6 @@
-import type { Blob, Ref } from '@hcengineering/core'
-import { concatLink } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
+import type { Blob, Ref } from '@hanzo/core'
+import { concatLink } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
 
 import { getFileUrl, getCurrentWorkspaceUuid, getBlobUrl } from './file'
 import presentation from './plugin'

@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { resizeObserver } from '@hcengineering/ui'
+  import { resizeObserver } from '@hanzo/ui'
   import { afterUpdate } from 'svelte'
 
   export let noLabel: boolean = false

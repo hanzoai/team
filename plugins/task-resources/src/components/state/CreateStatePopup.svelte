@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Attribute, Class, Ref, Status, StatusCategory } from '@hcengineering/core'
-  import { Asset, getEmbeddedLabel } from '@hcengineering/platform'
-  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-  import { clearSettingsStore, settingsStore } from '@hcengineering/setting-resources'
-  import { ProjectType, TaskType, calculateStatuses, createState } from '@hcengineering/task'
+  import core, { Attribute, Class, Ref, Status, StatusCategory } from '@hanzo/core'
+  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
+  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
+  import { ProjectType, TaskType, calculateStatuses, createState } from '@hanzo/task'
   import {
     ButtonIcon,
     ButtonMenu,
@@ -35,9 +35,9 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import { ColorsPopup, statusStore } from '@hcengineering/view-resources'
-  import view from '@hcengineering/view-resources/src/plugin'
+  } from '@hanzo/ui'
+  import { ColorsPopup, statusStore } from '@hanzo/view-resources'
+  import view from '@hanzo/view-resources/src/plugin'
   import { taskTypeStore, typeStore } from '../..'
   import task from '../../plugin'
   import ApproveStatusRenamePopup from './ApproveStatusRenamePopup.svelte'

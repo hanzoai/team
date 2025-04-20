@@ -19,9 +19,9 @@
     getDocumentName,
     isFolder,
     type Project
-  } from '@hcengineering/controlled-documents'
-  import { type Ref } from '@hcengineering/core'
-  import { Icon, navigate } from '@hcengineering/ui'
+  } from '@hanzo/controlled-documents'
+  import { type Ref } from '@hanzo/core'
+  import { Icon, navigate } from '@hanzo/ui'
 
   import { getProjectDocumentLink } from '../../../../navigation'
 

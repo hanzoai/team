@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import attachment from '@hcengineering/attachment'
-import core from '@hcengineering/core'
-import serverAttachment from '@hcengineering/server-attachment'
-import serverCore from '@hcengineering/server-core'
+import attachment from '@hanzo/attachment'
+import core from '@hanzo/core'
+import serverAttachment from '@hanzo/server-attachment'
+import serverCore from '@hanzo/server-core'
 
-export { serverAttachmentId } from '@hcengineering/server-attachment'
+export { serverAttachmentId } from '@hanzo/server-attachment'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {

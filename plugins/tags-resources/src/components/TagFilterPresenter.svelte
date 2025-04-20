@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TagElement } from '@hcengineering/tags'
-  import { getPlatformColorDef, themeStore } from '@hcengineering/ui'
+  import { TagElement } from '@hanzo/tags'
+  import { getPlatformColorDef, themeStore } from '@hanzo/ui'
 
   export let value: TagElement
 </script>

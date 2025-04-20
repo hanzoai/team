@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2021 Anticrm Platform Contributors.
+// Copyright © 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, RelatedDocument } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { AttributeModel } from '@hcengineering/view'
+  import type { Class, Doc, Ref, RelatedDocument } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { AttributeModel } from '@hanzo/view'
   import { getObjectPresenter } from '../utils'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let objectId: Ref<Doc> | undefined = undefined
   export let _class: Ref<Class<Doc>> | undefined = undefined

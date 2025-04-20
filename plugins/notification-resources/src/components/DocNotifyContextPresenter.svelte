@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocNotifyContext } from '@hcengineering/notification'
-  import { Doc } from '@hcengineering/core'
-  import { getDocLinkTitle, getDocTitle } from '@hcengineering/view-resources'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import chunter from '@hcengineering/chunter'
+  import { DocNotifyContext } from '@hanzo/notification'
+  import { Doc } from '@hanzo/core'
+  import { getDocLinkTitle, getDocTitle } from '@hanzo/view-resources'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import chunter from '@hanzo/chunter'
   import NotifyContextIcon from './NotifyContextIcon.svelte'
 
   export let value: DocNotifyContext

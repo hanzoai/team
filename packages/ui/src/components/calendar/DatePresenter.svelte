@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString, Asset } from '@hcengineering/platform'
+  import type { IntlString, Asset } from '@hanzo/platform'
   import { createEventDispatcher, ComponentType, afterUpdate } from 'svelte'
 
-  import { DateRangeMode } from '@hcengineering/core'
+  import { DateRangeMode } from '@hanzo/core'
   import ui from '../../plugin'
   import { showPopup } from '../../popups'
   import { ButtonKind, ButtonSize, AnySvelteComponent } from '../../types'

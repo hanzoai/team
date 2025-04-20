@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DisplayDocUpdateMessage, DocUpdateMessageViewlet } from '@hcengineering/activity'
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { AnyComponent, Component, Icon, IconAdd, IconDelete } from '@hcengineering/ui'
-  import view, { ObjectPanel } from '@hcengineering/view'
+  import { DisplayDocUpdateMessage, DocUpdateMessageViewlet } from '@hanzo/activity'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { AnyComponent, Component, Icon, IconAdd, IconDelete } from '@hanzo/ui'
+  import view, { ObjectPanel } from '@hanzo/view'
   import {
     buildRemovedDoc,
     checkIsObjectRemoved,
     DocNavLink,
     getDocLinkTitle,
     isAttachedDoc
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
 
   export let attachedTo: DisplayDocUpdateMessage['attachedTo']
   export let objectClass: DisplayDocUpdateMessage['objectClass']

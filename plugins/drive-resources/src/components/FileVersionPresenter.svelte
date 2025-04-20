@@ -15,12 +15,12 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import { type FileVersion } from '@hcengineering/drive'
-  import { FilePreviewPopup } from '@hcengineering/presentation'
-  import { showPopup } from '@hcengineering/ui'
-  import { ObjectPresenterType } from '@hcengineering/view'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { WithLookup } from '@hanzo/core'
+  import { type FileVersion } from '@hanzo/drive'
+  import { FilePreviewPopup } from '@hanzo/presentation'
+  import { showPopup } from '@hanzo/ui'
+  import { ObjectPresenterType } from '@hanzo/view'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   import { formatFileVersion } from '../utils'
 

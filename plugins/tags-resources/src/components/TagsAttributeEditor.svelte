@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { AnyAttribute, Class, Doc, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import tags, { TagReference, TagsEvents } from '@hcengineering/tags'
-  import { Icon, Label, getEventPopupPositionElement, showPopup } from '@hcengineering/ui'
-  import { getObjectId } from '@hcengineering/view-resources'
-  import { Analytics } from '@hcengineering/analytics'
+  import { AnyAttribute, Class, Doc, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import tags, { TagReference, TagsEvents } from '@hanzo/tags'
+  import { Icon, Label, getEventPopupPositionElement, showPopup } from '@hanzo/ui'
+  import { getObjectId } from '@hanzo/view-resources'
+  import { Analytics } from '@hanzo/analytics'
 
   import TagReferencePresenter from './TagReferencePresenter.svelte'
   import TagsEditorPopup from './TagsEditorPopup.svelte'

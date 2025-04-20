@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { MongoClientReference, getMongoClient } from '@hcengineering/mongo'
+import { MongoClientReference, getMongoClient } from '@hanzo/mongo'
 import { Collection, Db, MongoClient, ObjectId, UpdateFilter, WithId } from 'mongodb'
-import { Doc, Ref, SortingOrder, WorkspaceUuid } from '@hcengineering/core'
-import { WorkspaceInfoRecord } from '@hcengineering/server-ai-bot'
+import { Doc, Ref, SortingOrder, WorkspaceUuid } from '@hanzo/core'
+import { WorkspaceInfoRecord } from '@hanzo/server-ai-bot'
 
 import config from './config'
 import { HistoryRecord } from './types'

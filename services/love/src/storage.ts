@@ -20,11 +20,11 @@ import {
   WorkspaceIds,
   WorkspaceUuid,
   type WorkspaceDataId
-} from '@hcengineering/core'
-import { DatalakeConfig, DatalakeService, createDatalakeClient } from '@hcengineering/datalake'
-import { S3Config, S3Service } from '@hcengineering/s3'
-import { StorageConfig } from '@hcengineering/server-core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { DatalakeConfig, DatalakeService, createDatalakeClient } from '@hanzo/datalake'
+import { S3Config, S3Service } from '@hanzo/s3'
+import { StorageConfig } from '@hanzo/server-core'
+import { generateToken } from '@hanzo/server-token'
 import { v4 as uuid } from 'uuid'
 
 export interface S3UploadParams {

@@ -23,9 +23,9 @@
     PropertyType,
     Ref,
     Type
-  } from '@hcengineering/core'
-  import { Asset, getEmbeddedLabel } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
   import {
     AnyComponent,
     Component,
@@ -37,12 +37,12 @@
     IconDelete,
     IconCopy,
     showPopup
-  } from '@hcengineering/ui'
-  import { DropdownIntlItem } from '@hcengineering/ui/src/types'
+  } from '@hanzo/ui'
+  import { DropdownIntlItem } from '@hanzo/ui/src/types'
   import setting from '../plugin'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
   import { clearSettingsStore } from '../store'
-  import { IconPicker } from '@hcengineering/view-resources'
+  import { IconPicker } from '@hanzo/view-resources'
 
   export let _id: Ref<Class<Type<PropertyType>>> | undefined = undefined
   export let _class: Ref<Class<Doc>>

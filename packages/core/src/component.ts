@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 import type { BenchmarkDoc } from './benchmark'
 import { AccountRole } from './classes'
 import type {

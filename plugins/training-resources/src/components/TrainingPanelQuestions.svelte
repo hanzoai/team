@@ -3,10 +3,10 @@
 -->
 
 <script lang="ts">
-  import { navigate } from '@hcengineering/ui'
-  import questions from '@hcengineering/questions'
-  import { getQuestionClasses, QuestionsCollectionEditor } from '@hcengineering/questions-resources'
-  import { type Training } from '@hcengineering/training'
+  import { navigate } from '@hanzo/ui'
+  import questions from '@hanzo/questions'
+  import { getQuestionClasses, QuestionsCollectionEditor } from '@hanzo/questions-resources'
+  import { type Training } from '@hanzo/training'
   import { trainingRoute, TrainingRouteTab } from '../routing/routes/trainingRoute'
   import { canViewTrainingQuestions } from '../utils'
   import TrainingPassingScoreSlider from './TrainingPassingScoreSlider.svelte'

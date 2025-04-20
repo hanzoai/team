@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { devModelId } from '@hcengineering/devmodel'
-import { PresentationClientHook } from '@hcengineering/devmodel-resources'
-import login from '@hcengineering/login'
-import { addLocation, setMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
+import { devModelId } from '@hanzo/devmodel'
+import { PresentationClientHook } from '@hanzo/devmodel-resources'
+import login from '@hanzo/login'
+import { addLocation, setMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
 
 export function configurePlatformDevServer() {  
   // Set devmodel to hook client to be able to present all activity
@@ -26,5 +26,5 @@ export function configurePlatformDevServer() {
 
 function enableDevModel() {
   setMetadata(presentation.metadata.ClientHook, new PresentationClientHook())
-  addLocation(devModelId, () => import(/* webpackChunkName: "devmodel" */ '@hcengineering/devmodel-resources'))
+  addLocation(devModelId, () => import(/* webpackChunkName: "devmodel" */ '@hanzo/devmodel-resources'))
 }

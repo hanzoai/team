@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Organization } from '@hcengineering/contact'
-  import { Doc, DocumentQuery, Ref } from '@hcengineering/core'
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { Vacancy, VacancyList } from '@hcengineering/recruit'
-  import { AnySvelteComponent, Icon, tooltip } from '@hcengineering/ui'
+  import { Organization } from '@hanzo/contact'
+  import { Doc, DocumentQuery, Ref } from '@hanzo/core'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { Vacancy, VacancyList } from '@hanzo/recruit'
+  import { AnySvelteComponent, Icon, tooltip } from '@hanzo/ui'
 
   export let value: VacancyList
   export let values:

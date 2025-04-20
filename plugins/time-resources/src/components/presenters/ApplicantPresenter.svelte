@@ -1,9 +1,9 @@
 <script lang="ts">
-  import contact, { getName } from '@hcengineering/contact'
-  import core, { Space } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import recruit, { Applicant, Candidate } from '@hcengineering/recruit'
-  import { Icon, Label } from '@hcengineering/ui'
+  import contact, { getName } from '@hanzo/contact'
+  import core, { Space } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import recruit, { Applicant, Candidate } from '@hanzo/recruit'
+  import { Icon, Label } from '@hanzo/ui'
 
   export let value: Applicant
   export let withoutSpace: boolean

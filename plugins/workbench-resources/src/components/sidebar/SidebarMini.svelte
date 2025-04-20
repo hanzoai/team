@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Widget, WidgetPreference } from '@hcengineering/workbench'
-  import { Ref } from '@hcengineering/core'
+  import { Widget, WidgetPreference } from '@hanzo/workbench'
+  import { Ref } from '@hanzo/core'
 
   import WidgetsBar from './widgets/WidgetsBar.svelte'
 

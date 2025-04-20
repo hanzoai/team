@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hcengineering/core'
+import { MeasureContext } from '@hanzo/core'
 import postgres, { type Row } from 'postgres'
 import { type Location, type UUID } from './types'
 import { type RetryOptions, retry } from './retry'

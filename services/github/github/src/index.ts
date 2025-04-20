@@ -1,9 +1,9 @@
 //
 // Copyright © 2023 Hardcore Engineering Inc.
 //
-import { ActivityMessage, ActivityMessageViewlet } from '@hcengineering/activity'
-import { Attachment } from '@hcengineering/attachment'
-import { Person } from '@hcengineering/contact'
+import { ActivityMessage, ActivityMessageViewlet } from '@hanzo/activity'
+import { Attachment } from '@hanzo/attachment'
+import { Person } from '@hanzo/contact'
 import {
   PersonId,
   AnyAttribute,
@@ -16,14 +16,14 @@ import {
   Mixin,
   Ref,
   Timestamp
-} from '@hcengineering/core'
-import { Asset, IntlString, Metadata, Plugin, plugin } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import task, { ProjectTypeDescriptor, TaskStatusFactory, TaskTypeDescriptor } from '@hcengineering/task'
-import { ToDo } from '@hcengineering/time'
-import { Component, Issue, Milestone, Project } from '@hcengineering/tracker'
-import { AnyComponent } from '@hcengineering/ui'
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
+} from '@hanzo/core'
+import { Asset, IntlString, Metadata, Plugin, plugin } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import task, { ProjectTypeDescriptor, TaskStatusFactory, TaskTypeDescriptor } from '@hanzo/task'
+import { ToDo } from '@hanzo/time'
+import { Component, Issue, Milestone, Project } from '@hanzo/tracker'
+import { AnyComponent } from '@hanzo/ui'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
 
 /**
  * @public

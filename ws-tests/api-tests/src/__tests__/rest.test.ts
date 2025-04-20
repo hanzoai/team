@@ -20,7 +20,7 @@ import {
   loadServerConfig,
   type RestClient,
   type WorkspaceToken
-} from '@hcengineering/api-client'
+} from '@hanzo/api-client'
 import core, {
   generateId,
   MeasureMetricsContext,
@@ -29,12 +29,12 @@ import core, {
   type Space,
   type TxCreateDoc,
   type TxOperations
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
-import { getClient as getAccountClient } from '@hcengineering/account-client'
+import { getClient as getAccountClient } from '@hanzo/account-client'
 
-import chunter from '@hcengineering/chunter'
-import contact, { ensureEmployee } from '@hcengineering/contact'
+import chunter from '@hanzo/chunter'
+import contact, { ensureEmployee } from '@hanzo/contact'
 
 describe('rest-api-server', () => {
   const testCtx = new MeasureMetricsContext('test', {})

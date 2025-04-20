@@ -1,4 +1,4 @@
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   AnyAttribute,
   Class,
@@ -10,7 +10,7 @@ import core, {
   Ref,
   TxOperations,
   generateId
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubFieldMapping,
@@ -18,11 +18,11 @@ import github, {
   GithubMilestone,
   GithubProject,
   GithubProjectSyncData
-} from '@hcengineering/github'
-import { getEmbeddedLabel, translate } from '@hcengineering/platform'
-import { LiveQuery } from '@hcengineering/query'
-import task from '@hcengineering/task'
-import tracker, { Milestone } from '@hcengineering/tracker'
+} from '@hanzo/github'
+import { getEmbeddedLabel, translate } from '@hanzo/platform'
+import { LiveQuery } from '@hanzo/query'
+import task from '@hanzo/task'
+import tracker, { Milestone } from '@hanzo/tracker'
 import { RepositoryEvent } from '@octokit/webhooks-types'
 import { deepEqual } from 'fast-equals'
 import { Octokit } from 'octokit'

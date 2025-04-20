@@ -1,5 +1,5 @@
-import attachment, { Attachment } from '@hcengineering/attachment'
-import contact, { Channel, Organization } from '@hcengineering/contact'
+import attachment, { Attachment } from '@hanzo/attachment'
+import contact, { Channel, Organization } from '@hanzo/contact'
 import core, {
   AnyAttribute,
   AttachedDoc,
@@ -17,11 +17,11 @@ import core, {
   WithLookup,
   generateId,
   type Blob as PlatformBlob
-} from '@hcengineering/core'
-import { Message } from '@hcengineering/gmail'
-import recruit, { Applicant, Candidate, Vacancy } from '@hcengineering/recruit'
-import tags, { TagCategory, TagElement, TagReference } from '@hcengineering/tags'
-import task from '@hcengineering/task'
+} from '@hanzo/core'
+import { Message } from '@hanzo/gmail'
+import recruit, { Applicant, Candidate, Vacancy } from '@hanzo/recruit'
+import tags, { TagCategory, TagElement, TagReference } from '@hanzo/tags'
+import task from '@hanzo/task'
 import bitrix, {
   BitrixEntityMapping,
   BitrixEntityType,

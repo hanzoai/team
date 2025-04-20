@@ -1,4 +1,4 @@
-import { ServerKit } from '@hcengineering/text'
+import { ServerKit } from '@hanzo/text'
 
 import { AnyExtension, Extension, Node, mergeAttributes } from '@tiptap/core'
 

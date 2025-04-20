@@ -15,9 +15,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
   import { type Editor } from '@tiptap/core'
-  import { type TextEditorAction, type ActionContext } from '@hcengineering/text-editor'
-  import { getResource } from '@hcengineering/platform'
-  import { Icon, IconSize, tooltip } from '@hcengineering/ui'
+  import { type TextEditorAction, type ActionContext } from '@hanzo/text-editor'
+  import { getResource } from '@hanzo/platform'
+  import { Icon, IconSize, tooltip } from '@hanzo/ui'
 
   export let action: TextEditorAction
   export let size: IconSize

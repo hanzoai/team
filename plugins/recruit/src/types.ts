@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Event } from '@hcengineering/calendar'
-import type { Channel, Organization, Person } from '@hcengineering/contact'
+import { Event } from '@hanzo/calendar'
+import type { Channel, Organization, Person } from '@hanzo/contact'
 import type {
   AttachedData,
   AttachedDoc,
@@ -24,10 +24,10 @@ import type {
   Ref,
   Status,
   Timestamp
-} from '@hcengineering/core'
-import { Poll } from '@hcengineering/survey'
-import { TagReference } from '@hcengineering/tags'
-import type { Project, Task } from '@hcengineering/task'
+} from '@hanzo/core'
+import { Poll } from '@hanzo/survey'
+import { TagReference } from '@hanzo/tags'
+import type { Project, Task } from '@hanzo/task'
 
 /** @public */
 export interface Vacancy extends Project {

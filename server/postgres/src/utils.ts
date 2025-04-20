@@ -30,9 +30,9 @@ import core, {
   type Ref,
   systemAccountUuid,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { PlatformError, unknownStatus } from '@hcengineering/platform'
-import { type DomainHelperOperations } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { PlatformError, unknownStatus } from '@hanzo/platform'
+import { type DomainHelperOperations } from '@hanzo/server-core'
 import postgres, { type Options, type ParameterOrJSON } from 'postgres'
 import type { DBClient } from './client'
 import {

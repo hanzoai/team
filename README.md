@@ -15,7 +15,7 @@ Various teams are building products on top of the Platform, including [Huly](htt
 
 ## Self-Hosting
 
-If you're primarily interested in self-hosting Huly without the intention to modify or contribute to its development, please use [huly-selfhost](https://github.com/hcengineering/huly-selfhost).
+If you're primarily interested in self-hosting Huly without the intention to modify or contribute to its development, please use [huly-selfhost](https://github.com/hanzoai/huly-selfhost).
 This project offers a convenient method to host Huly using `docker`, designed for ease of use and quick setup. Explore this option to effortlessly enjoy Huly on your own server.
 
 ## Activity
@@ -26,7 +26,7 @@ This project offers a convenient method to host Huly using `docker`, designed fo
 
 If you want to interact with Huly programmatically, check out our [API Client](./packages/api-client/README.md) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
 
-You can find API usage examples in the [Huly examples](https://github.com/hcengineering/huly-examples) repository.
+You can find API usage examples in the [Huly examples](https://github.com/hanzoai/huly-examples) repository.
 
 ## Table of Contents
 

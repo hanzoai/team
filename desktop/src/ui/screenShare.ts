@@ -1,12 +1,12 @@
 import log from 'electron-log'
-import love from '@hcengineering/love'
-import { setCustomCreateScreenTracks } from '@hcengineering/love-resources'
-import { showPopup } from '@hcengineering/ui'
+import love from '@hanzo/love'
+import { setCustomCreateScreenTracks } from '@hanzo/love-resources'
+import { showPopup } from '@hanzo/ui'
 import { Track, LocalTrack, LocalAudioTrack, LocalVideoTrack, ParticipantEvent, TrackInvalidError, ScreenShareCaptureOptions, DeviceUnsupportedError, ScreenSharePresets } from 'livekit-client'
 
 import { IPCMainExposed } from './types'
-import { setMetadata } from '@hcengineering/platform'
-import recordPlugin from '@hcengineering/recorder'
+import { setMetadata } from '@hanzo/platform'
+import recordPlugin from '@hanzo/recorder'
 
 export async function getMediaStream (opts?: DisplayMediaStreamOptions): Promise<MediaStream> {
   if (opts === undefined) {

@@ -19,9 +19,9 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hcengineering/model'
+} from '@hanzo/model'
 import bitrix from './plugin'
-import { bitrixId } from '@hcengineering/bitrix'
+import { bitrixId } from '@hanzo/bitrix'
 
 export const bitrixOperation: MigrateOperation = {
   async migrate (client: MigrationClient): Promise<void> {},

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { ObjectBox } from '@hcengineering/view-resources'
-  import { ProductVersion } from '@hcengineering/products'
+  import { Ref } from '@hanzo/core'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { ObjectBox } from '@hanzo/view-resources'
+  import { ProductVersion } from '@hanzo/products'
 
   import products from '../../plugin'
 

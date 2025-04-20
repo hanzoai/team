@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import testManagement from '@hcengineering/test-management'
-import { loadMetadata } from '@hcengineering/platform'
+import testManagement from '@hanzo/test-management'
+import { loadMetadata } from '@hanzo/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(testManagement.icon, {

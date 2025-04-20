@@ -2,10 +2,10 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import { setMetadata } from '@hcengineering/platform'
-import serverToken from '@hcengineering/server-token'
+import { setMetadata } from '@hanzo/platform'
+import serverToken from '@hanzo/server-token'
 
-import { storageConfigFromEnv } from '@hcengineering/server-storage'
+import { storageConfigFromEnv } from '@hanzo/server-storage'
 import config from './config'
 import { createServer, listen } from './server'
 

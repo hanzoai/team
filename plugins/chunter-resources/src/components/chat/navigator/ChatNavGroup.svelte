@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity from '@hcengineering/activity'
-  import core, { Class, Doc, groupByArray, reduceCalls, Ref, Space } from '@hcengineering/core'
-  import { DocNotifyContext } from '@hcengineering/notification'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient, LiveQuery } from '@hcengineering/presentation'
-  import { Action } from '@hcengineering/ui'
+  import activity from '@hanzo/activity'
+  import core, { Class, Doc, groupByArray, reduceCalls, Ref, Space } from '@hanzo/core'
+  import { DocNotifyContext } from '@hanzo/notification'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient, LiveQuery } from '@hanzo/presentation'
+  import { Action } from '@hanzo/ui'
 
   import chunter from '../../../plugin'
   import { ChatGroup, ChatNavGroupModel } from '../types'

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { translate } from '@hcengineering/platform'
-  import { DropdownLabels, DropdownTextItem, Label, Progress, Toggle } from '@hcengineering/ui'
+  import { translate } from '@hanzo/platform'
+  import { DropdownLabels, DropdownTextItem, Label, Progress, Toggle } from '@hanzo/ui'
   import { Room } from 'livekit-client'
   import love from '../plugin'
   import { myPreferences } from '../stores'

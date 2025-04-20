@@ -1,10 +1,10 @@
 <script lang="ts">
-  import core, { Association, Doc, WithLookup } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hcengineering/ui'
+  import core, { Association, Doc, WithLookup } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hanzo/ui'
   import { showMenu } from '../actions'
-  import view, { Viewlet, ViewletPreference } from '@hcengineering/view'
+  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
   import DocTable from './DocTable.svelte'
   import ObjectBoxPopup from './ObjectBoxPopup.svelte'
 

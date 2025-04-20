@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Ref, type WithLookup } from '@hcengineering/core'
-  import { createFileVersion, type File as DriveFile, type FileVersion } from '@hcengineering/drive'
-  import { Panel } from '@hcengineering/panel'
-  import { createQuery, getClient, getFileUrl } from '@hcengineering/presentation'
-  import { Button, IconMoreH } from '@hcengineering/ui'
-  import { FileUploadCallbackParams, showFilesUploadPopup } from '@hcengineering/uploader'
-  import view from '@hcengineering/view'
-  import { showMenu } from '@hcengineering/view-resources'
+  import { type Ref, type WithLookup } from '@hanzo/core'
+  import { createFileVersion, type File as DriveFile, type FileVersion } from '@hanzo/drive'
+  import { Panel } from '@hanzo/panel'
+  import { createQuery, getClient, getFileUrl } from '@hanzo/presentation'
+  import { Button, IconMoreH } from '@hanzo/ui'
+  import { FileUploadCallbackParams, showFilesUploadPopup } from '@hanzo/uploader'
+  import view from '@hanzo/view'
+  import { showMenu } from '@hanzo/view-resources'
 
   import EditFile from './EditFile.svelte'
   import FileAside from './FileAside.svelte'

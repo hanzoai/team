@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { Token } from '@hcengineering/server-token'
+import { Token } from '@hanzo/server-token'
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
 import { type Server } from 'http'
-import { AnalyticEvent } from '@hcengineering/analytics-collector'
-import { extractToken } from '@hcengineering/server-client'
+import { AnalyticEvent } from '@hanzo/analytics-collector'
+import { extractToken } from '@hanzo/server-client'
 
 import { ApiError } from './error'
 import { Collector } from './collector'

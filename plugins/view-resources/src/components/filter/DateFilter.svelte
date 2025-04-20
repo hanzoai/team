@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { RangeDatePopup, SelectPopup, SimpleDatePopup, showPopup } from '@hcengineering/ui'
-  import { Filter, FilterMode } from '@hcengineering/view'
+  import core from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { RangeDatePopup, SelectPopup, SimpleDatePopup, showPopup } from '@hanzo/ui'
+  import { Filter, FilterMode } from '@hanzo/view'
   import { createEventDispatcher, onMount } from 'svelte'
   import view from '../../plugin'
 

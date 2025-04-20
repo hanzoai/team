@@ -3,17 +3,17 @@
 //
 -->
 <script lang="ts">
-  import core, { PersonId, Ref, WithLookup, getCurrentAccount } from '@hcengineering/core'
-  import { GithubPullRequest, GithubReviewComment, GithubReviewThread } from '@hcengineering/github'
+  import core, { PersonId, Ref, WithLookup, getCurrentAccount } from '@hanzo/core'
+  import { GithubPullRequest, GithubReviewComment, GithubReviewThread } from '@hanzo/github'
 
-  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hcengineering/activity-resources'
-  import { Person } from '@hcengineering/contact'
-  import { EmployeePresenter, personByPersonIdStore } from '@hcengineering/contact-resources'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { ReferenceInput } from '@hcengineering/text-editor-resources'
-  import { Button, Component, Label, PaletteColorIndexes, getPlatformColor, themeStore } from '@hcengineering/ui'
-  import diffview from '@hcengineering/diffview'
+  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hanzo/activity-resources'
+  import { Person } from '@hanzo/contact'
+  import { EmployeePresenter, personByPersonIdStore } from '@hanzo/contact-resources'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { ReferenceInput } from '@hanzo/text-editor-resources'
+  import { Button, Component, Label, PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzo/ui'
+  import diffview from '@hanzo/diffview'
   import github from '../../plugin'
   import ReviewCommentPresenter from './ReviewCommentPresenter.svelte'
   import { githubConfiguration } from '../../configuration'

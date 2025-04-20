@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, Person, formatName } from '@hcengineering/contact'
-  import { employeeByIdStore, personRefByPersonIdStore } from '@hcengineering/contact-resources'
+  import { Employee, Person, formatName } from '@hanzo/contact'
+  import { employeeByIdStore, personRefByPersonIdStore } from '@hanzo/contact-resources'
   import documents, {
     DocumentRequest,
     emptyBundle,
     extractValidationWorkflow
-  } from '@hcengineering/controlled-documents'
-  import { Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Label, Scroller } from '@hcengineering/ui'
+  } from '@hanzo/controlled-documents'
+  import { Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Label, Scroller } from '@hanzo/ui'
 
   import documentsRes from '../../plugin'
   import {

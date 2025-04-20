@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity, { ActivityMessage, DocUpdateMessage } from '@hcengineering/activity'
-import chunter, { ChatMessage } from '@hcengineering/chunter'
-import contact, { Channel, Person } from '@hcengineering/contact'
+import activity, { ActivityMessage, DocUpdateMessage } from '@hanzo/activity'
+import chunter, { ChatMessage } from '@hanzo/chunter'
+import contact, { Channel, Person } from '@hanzo/contact'
 import core, {
   PersonId,
   Class,
@@ -29,31 +29,31 @@ import core, {
   TxProcessor,
   TxCUD,
   TxUpdateDoc
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   ActivityInboxNotification,
   InboxNotification,
   MentionInboxNotification,
   NotificationProviderSetting,
   NotificationType
-} from '@hcengineering/notification'
-import { getResource, translate } from '@hcengineering/platform'
-import { getAccountBySocialId, getPerson } from '@hcengineering/server-contact'
-import { PlatformQueueProducer, QueueTopic, TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/notification'
+import { getResource, translate } from '@hanzo/platform'
+import { getAccountBySocialId, getPerson } from '@hanzo/server-contact'
+import { PlatformQueueProducer, QueueTopic, TriggerControl } from '@hanzo/server-core'
 import {
   getNotificationLink,
   getTextPresenter,
   getTranslatedNotificationContent,
   AvailableProvidersCache,
   AvailableProvidersCacheKey
-} from '@hcengineering/server-notification-resources'
+} from '@hanzo/server-notification-resources'
 import {
   type TelegramNotificationQueueMessage,
   TelegramQueueMessageType,
   TelegramQueueMessage
-} from '@hcengineering/server-telegram'
-import telegram, { TelegramMessage } from '@hcengineering/telegram'
-import { jsonToHTML, markupToJSON } from '@hcengineering/text'
+} from '@hanzo/server-telegram'
+import telegram, { TelegramMessage } from '@hanzo/telegram'
+import { jsonToHTML, markupToJSON } from '@hanzo/text'
 
 /**
  * @public

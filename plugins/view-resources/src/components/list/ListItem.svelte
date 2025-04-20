@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, Doc, getObjectValue } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { getClient, updateAttribute } from '@hcengineering/presentation'
-  import { CheckBox, Component, IconCircles, tooltip, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
-  import { AttributeModel } from '@hcengineering/view'
+  import { AnyAttribute, Doc, getObjectValue } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { getClient, updateAttribute } from '@hanzo/presentation'
+  import { CheckBox, Component, IconCircles, tooltip, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  import { AttributeModel } from '@hanzo/view'
   import { createEventDispatcher, onMount } from 'svelte'
   import view from '../../plugin'
   import GrowPresenter from './GrowPresenter.svelte'

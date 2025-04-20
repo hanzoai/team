@@ -3,8 +3,8 @@
   // © 2023 Hardcore Engineering, Inc. All Rights Reserved.
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
-  import type { IntlString } from '@hcengineering/platform'
-  import { generateId } from '@hcengineering/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { generateId } from '@hanzo/core'
   import { Label } from '../..'
 
   export let id: string = generateId()

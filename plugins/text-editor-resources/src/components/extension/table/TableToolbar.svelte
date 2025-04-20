@@ -16,10 +16,10 @@
 -->
 <script lang="ts">
   import { NodeViewProps } from '../../node-view'
-  import textEditor, { ActionContext, TextEditorAction } from '@hcengineering/text-editor'
-  import { createQuery } from '@hcengineering/presentation'
+  import textEditor, { ActionContext, TextEditorAction } from '@hanzo/text-editor'
+  import { createQuery } from '@hanzo/presentation'
   import TextActionButton from '../../TextActionButton.svelte'
-  import { getResource } from '@hcengineering/platform'
+  import { getResource } from '@hanzo/platform'
 
   export let editor: NodeViewProps['editor']
 

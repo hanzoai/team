@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Question } from '@hcengineering/questions'
-import core, { type AttachedDoc, type Doc, type Ref, type TxOperations } from '@hcengineering/core'
+import type { Question } from '@hanzo/questions'
+import core, { type AttachedDoc, type Doc, type Ref, type TxOperations } from '@hanzo/core'
 import { createQuestion, type CreateQuestionData } from './createQuestion'
 import { findQuestions } from './findQuestions'
 

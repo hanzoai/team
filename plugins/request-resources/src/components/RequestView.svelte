@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getName } from '@hcengineering/contact'
-  import { personByPersonIdStore } from '@hcengineering/contact-resources'
-  import { Doc, TxCUD } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Request } from '@hcengineering/request'
-  import { Label, TimeSince } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
+  import { getName } from '@hanzo/contact'
+  import { personByPersonIdStore } from '@hanzo/contact-resources'
+  import { Doc, TxCUD } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Request } from '@hanzo/request'
+  import { Label, TimeSince } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
   import request from '../plugin'
   import RequestActions from './RequestActions.svelte'
   import RequestPresenter from './RequestPresenter.svelte'

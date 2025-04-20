@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import core, { MeasureContext, Tx, systemAccountUuid, type SessionData, type TxApplyIf } from '@hcengineering/core'
-import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hcengineering/server-core'
+import core, { MeasureContext, Tx, systemAccountUuid, type SessionData, type TxApplyIf } from '@hanzo/core'
+import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hanzo/server-core'
 
 /**
  * @public

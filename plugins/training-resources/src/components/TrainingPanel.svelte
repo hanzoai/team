@@ -3,13 +3,13 @@
 -->
 
 <script lang="ts">
-  import { Class, Ref } from '@hcengineering/core'
-  import { Panel } from '@hcengineering/panel'
-  import { ActionContext, createQuery } from '@hcengineering/presentation'
-  import { Button, IconMoreH, type IModeSelector, navigate, rawLocation } from '@hcengineering/ui'
-  import view, { type Action } from '@hcengineering/view'
-  import { ActionButton, showMenu } from '@hcengineering/view-resources'
-  import { type Training } from '@hcengineering/training'
+  import { Class, Ref } from '@hanzo/core'
+  import { Panel } from '@hanzo/panel'
+  import { ActionContext, createQuery } from '@hanzo/presentation'
+  import { Button, IconMoreH, type IModeSelector, navigate, rawLocation } from '@hanzo/ui'
+  import view, { type Action } from '@hanzo/view'
+  import { ActionButton, showMenu } from '@hanzo/view-resources'
+  import { type Training } from '@hanzo/training'
   import training from '../plugin'
   import { myTrainingsRoute } from '../routing/routes/myTrainingsRoute'
   import { trainingRoute, TrainingRouteTab } from '../routing/routes/trainingRoute'

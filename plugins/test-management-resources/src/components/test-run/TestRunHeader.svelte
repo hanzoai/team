@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hcengineering/platform'
-  import testManagement, { type TestResult } from '@hcengineering/test-management'
-  import { DocumentQuery, Ref, Space } from '@hcengineering/core'
+  import { IntlString } from '@hanzo/platform'
+  import testManagement, { type TestResult } from '@hanzo/test-management'
+  import { DocumentQuery, Ref, Space } from '@hanzo/core'
 
   import TestResultModeSelector from './TestResultModeSelector.svelte'
   import TestRunButton from './TestRunButton.svelte'

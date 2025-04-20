@@ -15,13 +15,13 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
 
-  import { MasterTag } from '@hcengineering/card'
-  import { WithLookup } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import setting from '@hcengineering/setting'
-  import { clearSettingsStore, settingsStore } from '@hcengineering/setting-resources'
-  import { ButtonIcon, Icon, IconAdd, Label, showPopup } from '@hcengineering/ui'
-  import view, { type Viewlet } from '@hcengineering/view'
+  import { MasterTag } from '@hanzo/card'
+  import { WithLookup } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import setting from '@hanzo/setting'
+  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
+  import { ButtonIcon, Icon, IconAdd, Label, showPopup } from '@hanzo/ui'
+  import view, { type Viewlet } from '@hanzo/view'
 
   import CreateView from './CreateView.svelte'
   import card from '../../../plugin'

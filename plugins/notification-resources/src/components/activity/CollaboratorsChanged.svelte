@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { Icon, IconAdd, IconDelete, Label } from '@hcengineering/ui'
-  import { personRefByPersonIdStore, PersonRefPresenter } from '@hcengineering/contact-resources'
-  import { Person } from '@hcengineering/contact'
-  import { type PersonId, type Ref, notEmpty } from '@hcengineering/core'
-  import activity, { DocAttributeUpdates } from '@hcengineering/activity'
-  import notification from '@hcengineering/notification'
+  import { Icon, IconAdd, IconDelete, Label } from '@hanzo/ui'
+  import { personRefByPersonIdStore, PersonRefPresenter } from '@hanzo/contact-resources'
+  import { Person } from '@hanzo/contact'
+  import { type PersonId, type Ref, notEmpty } from '@hanzo/core'
+  import activity, { DocAttributeUpdates } from '@hanzo/activity'
+  import notification from '@hanzo/notification'
 
   export let value: DocAttributeUpdates
 

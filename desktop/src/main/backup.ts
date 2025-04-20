@@ -1,12 +1,12 @@
-import client, { clientId } from '@hcengineering/client'
-import { MeasureMetricsContext, WorkspaceIds, type BackupClient, type Client } from '@hcengineering/core'
-import { addLocation, getResource, setMetadata } from '@hcengineering/platform'
+import client, { clientId } from '@hanzo/client'
+import { MeasureMetricsContext, WorkspaceIds, type BackupClient, type Client } from '@hanzo/core'
+import { addLocation, getResource, setMetadata } from '@hanzo/platform'
 import WebSocket from 'ws'
 
 import {
   backup,
   createFileBackupStorage
-} from '@hcengineering/server-backup'
+} from '@hanzo/server-backup'
 import { dialog, type BrowserWindow } from 'electron'
 
 let runningBackup: {
@@ -25,7 +25,7 @@ export async function createClient (
   setMetadata(client.metadata.ClientSocketFactory, (url) => {
     return new WebSocket(url) as any
   })
-  addLocation(clientId, () => import('@hcengineering/client-resources'))
+  addLocation(clientId, () => import('@hanzo/client-resources'))
 
   const clientFactory = await getResource(client.function.GetClient)
   return (await clientFactory(token, transactorUrl)) as unknown as Client & BackupClient

@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Permission, Ref, Space } from '@hcengineering/core'
-import { ColorDefinition } from '@hcengineering/ui'
-import { type Card } from '@hcengineering/card'
+import { Permission, Ref, Space } from '@hanzo/core'
+import { ColorDefinition } from '@hanzo/ui'
+import { type Card } from '@hanzo/card'
 
 import { Person } from './index'
 

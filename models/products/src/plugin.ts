@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import '@hcengineering/controlled-documents'
-import { productsId } from '@hcengineering/products'
-import products from '@hcengineering/products-resources/src/plugin'
-import type { Client, Doc, Ref, Role } from '@hcengineering/core'
-import { type Resource, mergeIds } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import type { Action } from '@hcengineering/view'
+import '@hanzo/controlled-documents'
+import { productsId } from '@hanzo/products'
+import products from '@hanzo/products-resources/src/plugin'
+import type { Client, Doc, Ref, Role } from '@hanzo/core'
+import { type Resource, mergeIds } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import type { Action } from '@hanzo/view'
 
 export default mergeIds(productsId, products, {
   action: {

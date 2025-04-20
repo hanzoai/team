@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Breadcrumbs, Header } from '@hcengineering/ui'
-  import { IntlString } from '@hcengineering/platform'
+  import { Breadcrumbs, Header } from '@hanzo/ui'
+  import { IntlString } from '@hanzo/platform'
 
   import { CalendarMode } from '../index'
   import CalendarNavigation from './CalendarNavigation.svelte'

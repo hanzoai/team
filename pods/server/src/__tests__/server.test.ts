@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { UNAUTHORIZED } from '@hcengineering/platform'
-import { RPCHandler, type Response } from '@hcengineering/rpc'
-import { generateToken } from '@hcengineering/server-token'
+import { UNAUTHORIZED } from '@hanzo/platform'
+import { RPCHandler, type Response } from '@hanzo/rpc'
+import { generateToken } from '@hanzo/server-token'
 import WebSocket from 'ws'
 
 import {
@@ -39,9 +39,9 @@ import {
   type Tx,
   type TxResult,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { ClientSession, startSessionManager, type SessionManagerOptions } from '@hcengineering/server'
-import { createDummyQueue, createDummyStorageAdapter } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { ClientSession, startSessionManager, type SessionManagerOptions } from '@hanzo/server'
+import { createDummyQueue, createDummyStorageAdapter } from '@hanzo/server-core'
 import { startHttpServer } from '../server_http'
 import { genMinModel } from './minmodel'
 

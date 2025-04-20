@@ -17,7 +17,7 @@ import { type Editor } from '@tiptap/core'
 import { type EditorState } from '@tiptap/pm/state'
 import { CellSelection, TableMap } from '@tiptap/pm/tables'
 import { Decoration } from '@tiptap/pm/view'
-import textEditor from '@hcengineering/text-editor'
+import textEditor from '@hanzo/text-editor'
 
 import { type TableNodeLocation } from '../types'
 import { findTable, getSelectedColumns, isColumnSelected, selectColumn } from '../utils'

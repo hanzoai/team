@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Person } from '@hcengineering/contact'
-  import { ContactRefPresenter } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
-  import { Button, IconClose } from '@hcengineering/ui'
+  import { Person } from '@hanzo/contact'
+  import { ContactRefPresenter } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
+  import { Button, IconClose } from '@hanzo/ui'
 
   export let participant: Ref<Person> | undefined = undefined
   export let externalParticipant: string | undefined = undefined

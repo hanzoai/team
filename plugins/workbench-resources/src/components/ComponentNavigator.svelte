@@ -34,9 +34,9 @@
     defineSeparators,
     twoPanelsSeparators,
     resizeObserver
-  } from '@hcengineering/ui'
-  import { Doc, DocumentQuery, Ref, Space, mergeQueries } from '@hcengineering/core'
-  import { IntlString, Asset } from '@hcengineering/platform'
+  } from '@hanzo/ui'
+  import { Doc, DocumentQuery, Ref, Space, mergeQueries } from '@hanzo/core'
+  import { IntlString, Asset } from '@hanzo/platform'
 
   export let space: Ref<Space> | undefined = undefined
   export let navigationComponent: AnyComponent
