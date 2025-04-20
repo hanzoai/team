@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { statusByUserStore } from '@hcengineering/contact-resources'
-  import { Doc, reduceCalls, Ref } from '@hcengineering/core'
-  import { DocNotifyContext } from '@hcengineering/notification'
-  import { getResource, IntlString, translate } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import ui, { Action, AnySvelteComponent, IconSize, ModernButton, NavGroup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { getDocTitle } from '@hcengineering/view-resources'
+  import contact from '@hanzo/contact'
+  import { statusByUserStore } from '@hanzo/contact-resources'
+  import { Doc, reduceCalls, Ref } from '@hanzo/core'
+  import { DocNotifyContext } from '@hanzo/notification'
+  import { getResource, IntlString, translate } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import ui, { Action, AnySvelteComponent, IconSize, ModernButton, NavGroup } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { getDocTitle } from '@hanzo/view-resources'
 
   import { createEventDispatcher } from 'svelte'
   import chunter from '../../../plugin'

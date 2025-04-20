@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Organization } from '@hcengineering/contact'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { tooltip } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
-  import { ObjectPresenterType } from '@hcengineering/view'
+  import { Organization } from '@hanzo/contact'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { tooltip } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { ObjectPresenterType } from '@hanzo/view'
 
   import contact from '../plugin'
   import Company from './icons/Company.svelte'

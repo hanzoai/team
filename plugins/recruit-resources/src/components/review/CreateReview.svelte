@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,23 +13,23 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { Calendar } from '@hcengineering/calendar'
-  import type { Organization, Person } from '@hcengineering/contact'
-  import contact, { getCurrentEmployee } from '@hcengineering/contact'
-  import core, { Class, Client, DateRangeMode, Doc, generateId, Markup, PersonId, Ref } from '@hcengineering/core'
-  import { getResource, OK, Resource, Severity, Status } from '@hcengineering/platform'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { UserBox, UserBoxList } from '@hcengineering/contact-resources'
-  import { Applicant, Candidate, RecruitEvents, Review } from '@hcengineering/recruit'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import { StyledTextArea } from '@hcengineering/text-editor-resources'
-  import { DateRangePresenter, EditBox, Status as StatusControl } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { ObjectSearchBox } from '@hcengineering/view-resources'
+  import calendar, { Calendar } from '@hanzo/calendar'
+  import type { Organization, Person } from '@hanzo/contact'
+  import contact, { getCurrentEmployee } from '@hanzo/contact'
+  import core, { Class, Client, DateRangeMode, Doc, generateId, Markup, PersonId, Ref } from '@hanzo/core'
+  import { getResource, OK, Resource, Severity, Status } from '@hanzo/platform'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { UserBox, UserBoxList } from '@hanzo/contact-resources'
+  import { Applicant, Candidate, RecruitEvents, Review } from '@hanzo/recruit'
+  import { EmptyMarkup } from '@hanzo/text'
+  import { StyledTextArea } from '@hanzo/text-editor-resources'
+  import { DateRangePresenter, EditBox, Status as StatusControl } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { ObjectSearchBox } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../../plugin'
   import IconCompany from '../icons/Company.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   // export let space: Ref<Project>
   export let candidate: Ref<Person>

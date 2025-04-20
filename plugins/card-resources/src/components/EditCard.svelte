@@ -15,14 +15,14 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Attachments } from '@hcengineering/attachment-resources'
-  import { Card, CardEvents } from '@hcengineering/card'
-  import { Doc, Mixin, Ref, WithLookup } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { Panel } from '@hcengineering/panel'
-  import { getResource } from '@hcengineering/platform'
-  import { ComponentExtensions, createQuery, getClient } from '@hcengineering/presentation'
+  import { Analytics } from '@hanzo/analytics'
+  import { Attachments } from '@hanzo/attachment-resources'
+  import { Card, CardEvents } from '@hanzo/card'
+  import { Doc, Mixin, Ref, WithLookup } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { Panel } from '@hanzo/panel'
+  import { getResource } from '@hanzo/platform'
+  import { ComponentExtensions, createQuery, getClient } from '@hanzo/presentation'
   import {
     Button,
     EditBox,
@@ -31,9 +31,9 @@
     createFocusManager,
     getCurrentLocation,
     navigate
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { ParentsNavigator, RelationsEditor, getDocMixins, showMenu } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { ParentsNavigator, RelationsEditor, getDocMixins, showMenu } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import card from '../plugin'
   import CardAttributeEditor from './CardAttributeEditor.svelte'

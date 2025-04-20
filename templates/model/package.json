@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/model-package",
+  "name": "@hanzo/model-package",
   "version": "0.6.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",

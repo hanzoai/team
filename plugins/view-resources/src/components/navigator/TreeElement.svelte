@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hcengineering/core'
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { Action, AnySvelteComponent, IconSize } from '@hcengineering/ui'
+  import type { Doc, Ref } from '@hanzo/core'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Action, AnySvelteComponent, IconSize } from '@hanzo/ui'
   import {
     ActionIcon,
     IconMoreH,
@@ -26,8 +26,8 @@
     NavItem,
     NavGroup,
     ButtonIcon
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   export let _id: Ref<Doc> | string | undefined = undefined
   export let icon: Asset | AnySvelteComponent | undefined = undefined

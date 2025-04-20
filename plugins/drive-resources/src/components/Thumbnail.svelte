@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type WithLookup } from '@hcengineering/core'
-  import drive, { type Resource } from '@hcengineering/drive'
-  import { Image, getClient, remToPx } from '@hcengineering/presentation'
-  import { Icon } from '@hcengineering/ui'
+  import { type WithLookup } from '@hanzo/core'
+  import drive, { type Resource } from '@hanzo/drive'
+  import { Image, getClient, remToPx } from '@hanzo/presentation'
+  import { Icon } from '@hanzo/ui'
 
   import IconFolderThumbnail from './icons/FolderThumbnail.svelte'
 

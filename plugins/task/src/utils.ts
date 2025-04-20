@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -27,12 +27,12 @@ import core, {
   type AnyAttribute,
   type Rank,
   type RefTo
-} from '@hcengineering/core'
-import { PlatformError, getEmbeddedLabel, unknownStatus } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, getEmbeddedLabel, unknownStatus } from '@hanzo/platform'
 import task, { Project, ProjectStatus, ProjectType, Task, TaskType } from '.'
-import { makeRank } from '@hcengineering/rank'
+import { makeRank } from '@hanzo/rank'
 
-export { genRanks, makeRank } from '@hcengineering/rank'
+export { genRanks, makeRank } from '@hanzo/rank'
 
 /**
  * @deprecated Prefer {@link makeRank}

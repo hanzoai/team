@@ -1,7 +1,7 @@
-import { Class, Doc, PersonUuid, Ref } from '@hcengineering/core'
-import type { Asset, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { AnyComponent, Location } from '@hcengineering/ui'
+import { Class, Doc, PersonUuid, Ref } from '@hanzo/core'
+import type { Asset, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { AnyComponent, Location } from '@hanzo/ui'
 
 export * from './utils'
 

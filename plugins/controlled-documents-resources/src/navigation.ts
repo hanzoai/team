@@ -17,12 +17,12 @@ import documents, {
   type Document,
   type Project,
   type ProjectDocument
-} from '@hcengineering/controlled-documents'
-import { type Doc, type Ref } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
-import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hcengineering/ui'
-import view, { type ObjectPanel } from '@hcengineering/view'
-import { accessDeniedStore } from '@hcengineering/view-resources'
+} from '@hanzo/controlled-documents'
+import { type Doc, type Ref } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
+import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hanzo/ui'
+import view, { type ObjectPanel } from '@hanzo/view'
+import { accessDeniedStore } from '@hanzo/view-resources'
 import slugify from 'slugify'
 
 export function getPanelFragment<T extends Doc> (object: Pick<T, '_class' | '_id'>): string {

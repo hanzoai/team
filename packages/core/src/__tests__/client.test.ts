@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering, Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { IntlString, Plugin } from '@hcengineering/platform'
+import { IntlString, Plugin } from '@hanzo/platform'
 import { ClientConnectEvent, DocChunk } from '..'
 import type { Class, Data, Doc, Domain, PluginConfiguration, Ref, Timestamp } from '../classes'
 import { ClassifierKind, DOMAIN_MODEL, Space } from '../classes'

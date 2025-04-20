@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import type { Person } from '@hcengineering/contact'
-import contact from '@hcengineering/contact'
-import { type Timestamp, type Domain, type Ref, type Tx } from '@hcengineering/core'
+import activity from '@hanzo/activity'
+import type { Person } from '@hanzo/contact'
+import contact from '@hanzo/contact'
+import { type Timestamp, type Domain, type Ref, type Tx } from '@hanzo/core'
 import {
   ArrOf,
   type Builder,
@@ -28,23 +28,23 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import chunter, { TChatMessage } from '@hcengineering/model-chunter'
-import core, { TAttachedDoc, TClass } from '@hcengineering/model-core'
-import { generateClassNotificationTypes } from '@hcengineering/model-notification'
-import view from '@hcengineering/model-view'
-import notification from '@hcengineering/notification'
+} from '@hanzo/model'
+import chunter, { TChatMessage } from '@hanzo/model-chunter'
+import core, { TAttachedDoc, TClass } from '@hanzo/model-core'
+import { generateClassNotificationTypes } from '@hanzo/model-notification'
+import view from '@hanzo/model-view'
+import notification from '@hanzo/notification'
 import {
   type Request,
   type RequestDecisionComment,
   type RequestPresenter,
   type RequestStatus
-} from '@hcengineering/request'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+} from '@hanzo/request'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 import request from './plugin'
 
 export { requestOperation } from './migration'
-export { requestId } from '@hcengineering/request'
+export { requestId } from '@hanzo/request'
 export { default } from './plugin'
 
 export const DOMAIN_REQUEST = 'request' as Domain

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space, getCurrentAccount } from '@hcengineering/core'
-  import { Asset, getResource } from '@hcengineering/platform'
-  import { AnyComponent, AnySvelteComponent, ButtonSize } from '@hcengineering/ui'
+  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space, getCurrentAccount } from '@hanzo/core'
+  import { Asset, getResource } from '@hanzo/platform'
+  import { AnyComponent, AnySvelteComponent, ButtonSize } from '@hanzo/ui'
   import { ObjectCreate } from '../types'
   import { createQuery } from '../utils'
   import DocPopup from './DocPopup.svelte'

@@ -19,7 +19,7 @@ import {
   saveCollabYdoc,
   yDocCopyXmlField,
   yDocFromBuffer
-} from '@hcengineering/collaboration'
+} from '@hanzo/collaboration'
 import core, {
   type Blob,
   type Doc,
@@ -34,12 +34,12 @@ import core, {
   makeCollabId,
   makeCollabYdocId,
   makeDocCollabId
-} from '@hcengineering/core'
-import document, { type Document } from '@hcengineering/document'
-import documents from '@hcengineering/controlled-documents'
-import { DOMAIN_DOCUMENT } from '@hcengineering/model-document'
-import { DOMAIN_DOCUMENTS } from '@hcengineering/model-controlled-documents'
-import { type StorageAdapter } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import document, { type Document } from '@hanzo/document'
+import documents from '@hanzo/controlled-documents'
+import { DOMAIN_DOCUMENT } from '@hanzo/model-document'
+import { DOMAIN_DOCUMENTS } from '@hanzo/model-controlled-documents'
+import { type StorageAdapter } from '@hanzo/server-core'
 import { type Db } from 'mongodb'
 
 export interface RestoreWikiContentParams {

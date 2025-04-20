@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref, getObjectValue } from '@hcengineering/core'
-  import inventory, { Category } from '@hcengineering/inventory'
-  import { IconMoreV } from '@hcengineering/ui'
-  import { AttributeModel } from '@hcengineering/view'
-  import { showMenu } from '@hcengineering/view-resources'
+  import { Doc, Ref, getObjectValue } from '@hanzo/core'
+  import inventory, { Category } from '@hanzo/inventory'
+  import { IconMoreV } from '@hanzo/ui'
+  import { AttributeModel } from '@hanzo/view'
+  import { showMenu } from '@hanzo/view-resources'
   import HierarchyElement from './HierarchyElement.svelte'
   import Collapse from './icons/Collapse.svelte'
   import Expand from './icons/Expand.svelte'

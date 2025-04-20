@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { BenchmarkDoc } from '@hcengineering/core'
-import { DOMAIN_BENCHMARK } from '@hcengineering/core'
-import { Model, UX } from '@hcengineering/model'
-import { getEmbeddedLabel } from '@hcengineering/platform'
+import type { BenchmarkDoc } from '@hanzo/core'
+import { DOMAIN_BENCHMARK } from '@hanzo/core'
+import { Model, UX } from '@hanzo/model'
+import { getEmbeddedLabel } from '@hanzo/platform'
 import core from './component'
 import { TDoc } from './core'
 

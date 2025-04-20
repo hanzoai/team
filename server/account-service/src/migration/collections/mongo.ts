@@ -14,7 +14,7 @@
 //
 import { ObjectId as MongoObjectId, UUID } from 'mongodb'
 import type { Collection, CreateIndexesOptions, Db, Filter, FindCursor, OptionalUnlessRequiredId, Sort } from 'mongodb'
-import { type WorkspaceUuid } from '@hcengineering/core'
+import { type WorkspaceUuid } from '@hanzo/core'
 import type {
   DbCollection,
   Query,

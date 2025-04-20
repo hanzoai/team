@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Icon, IconEdit, Component } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import { Doc, Ref, Space } from '@hcengineering/core'
-  import { AttributeModel } from '@hcengineering/view'
-  import { DocAttributeUpdates, DocUpdateMessageViewlet } from '@hcengineering/activity'
+  import { Icon, IconEdit, Component } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { Doc, Ref, Space } from '@hanzo/core'
+  import { AttributeModel } from '@hanzo/view'
+  import { DocAttributeUpdates, DocUpdateMessageViewlet } from '@hanzo/activity'
 
   import { getAttributeValues } from '../../../activityMessagesUtils'
 

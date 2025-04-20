@@ -1,4 +1,4 @@
-import { Person } from '@hcengineering/contact'
+import { Person } from '@hanzo/contact'
 import {
   PersonId,
   Branding,
@@ -13,10 +13,10 @@ import {
   WithLookup,
   WorkspaceUuid,
   type Blob
-} from '@hcengineering/core'
-import { LiveQuery } from '@hcengineering/query'
-import { ProjectType, TaskType } from '@hcengineering/task'
-import { MarkupNode } from '@hcengineering/text'
+} from '@hanzo/core'
+import { LiveQuery } from '@hanzo/query'
+import { ProjectType, TaskType } from '@hanzo/task'
+import { MarkupNode } from '@hanzo/text'
 import { User } from '@octokit/webhooks-types'
 import {
   DocSyncInfo,
@@ -25,7 +25,7 @@ import {
   GithubMilestone,
   GithubProject,
   GithubUserInfo
-} from '@hcengineering/github'
+} from '@hanzo/github'
 import { Octokit } from 'octokit'
 import { GithubProjectV2 } from './sync/githubTypes'
 

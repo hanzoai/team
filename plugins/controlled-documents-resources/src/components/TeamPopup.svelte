@@ -5,17 +5,17 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { RequestStatus } from '@hcengineering/request'
-  import { Label, ModernDialog, showPopup } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
-  import { Employee } from '@hcengineering/contact'
-  import { Class, Ref } from '@hcengineering/core'
-  import { UserBoxItems, permissionsStore } from '@hcengineering/contact-resources'
+  import { RequestStatus } from '@hanzo/request'
+  import { Label, ModernDialog, showPopup } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
+  import { Employee } from '@hanzo/contact'
+  import { Class, Ref } from '@hanzo/core'
+  import { UserBoxItems, permissionsStore } from '@hanzo/contact-resources'
   import documents, {
     ControlledDocument,
     ControlledDocumentState,
     DocumentRequest
-  } from '@hcengineering/controlled-documents'
+  } from '@hanzo/controlled-documents'
 
   import documentsRes from '../plugin'
   import { sendApprovalRequest, sendReviewRequest } from '../utils'

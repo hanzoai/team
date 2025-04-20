@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee, Person } from '@hcengineering/contact'
-  import { Avatar, personByIdStore } from '@hcengineering/contact-resources'
-  import { IdMap } from '@hcengineering/core'
-  import { isOffice, ParticipantInfo, Room, RoomAccess, RoomType, MeetingStatus } from '@hcengineering/love'
-  import { Icon, Label, eventToHTMLElement, showPopup } from '@hcengineering/ui'
+  import { getCurrentEmployee, Person } from '@hanzo/contact'
+  import { Avatar, personByIdStore } from '@hanzo/contact-resources'
+  import { IdMap } from '@hanzo/core'
+  import { isOffice, ParticipantInfo, Room, RoomAccess, RoomType, MeetingStatus } from '@hanzo/love'
+  import { Icon, Label, eventToHTMLElement, showPopup } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
-  import { getClient } from '@hcengineering/presentation'
-  import { openDoc } from '@hcengineering/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { openDoc } from '@hanzo/view-resources'
 
   import love from '../plugin'
   import { myInfo, selectedRoomPlace, currentRoom, currentMeetingMinutes } from '../stores'

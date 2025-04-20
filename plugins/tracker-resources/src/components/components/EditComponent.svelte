@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { AttachmentStyleBoxEditor } from '@hcengineering/attachment-resources'
-  import { getClient, getDocRules } from '@hcengineering/presentation'
-  import { Component } from '@hcengineering/tracker'
-  import { EditBox, Label } from '@hcengineering/ui'
+  import { AttachmentStyleBoxEditor } from '@hanzo/attachment-resources'
+  import { getClient, getDocRules } from '@hanzo/presentation'
+  import { Component } from '@hanzo/tracker'
+  import { EditBox, Label } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import tracker from '../../plugin'
   import QueryIssuesList from '../issues/edit/QueryIssuesList.svelte'

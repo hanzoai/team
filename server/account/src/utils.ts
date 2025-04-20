@@ -31,17 +31,17 @@ import {
   type PersonId,
   type Person,
   AccountUuid
-} from '@hcengineering/core'
-import { getMongoClient } from '@hcengineering/mongo' // TODO: get rid of this import later
-import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hcengineering/platform'
-import { getDBClient } from '@hcengineering/postgres'
+} from '@hanzo/core'
+import { getMongoClient } from '@hanzo/mongo' // TODO: get rid of this import later
+import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzo/platform'
+import { getDBClient } from '@hanzo/postgres'
 import otpGenerator from 'otp-generator'
 import { pbkdf2Sync, randomBytes } from 'crypto'
 
 import { MongoAccountDB } from './collections/mongo'
 import { PostgresAccountDB } from './collections/postgres'
 import { accountPlugin } from './plugin'
-import { sharedPipelineContextVars } from '@hcengineering/server-pipeline'
+import { sharedPipelineContextVars } from '@hanzo/server-pipeline'
 import {
   AccountMethodHandler,
   OtpInfo,
@@ -58,8 +58,8 @@ import {
   AccountEventType,
   Meta
 } from './types'
-import { Analytics } from '@hcengineering/analytics'
-import { TokenError, decodeTokenVerbose, generateToken } from '@hcengineering/server-token'
+import { Analytics } from '@hanzo/analytics'
+import { TokenError, decodeTokenVerbose, generateToken } from '@hanzo/server-token'
 
 export const GUEST_ACCOUNT = 'b6996120-416f-49cd-841e-e4a5d2e49c9b'
 

@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, Person, getName } from '@hcengineering/contact'
-  import { Class, Doc, Ref, Space } from '@hcengineering/core'
-  import { Task } from '@hcengineering/task'
-  import { getClient } from '@hcengineering/presentation'
-  import { UsersPopup, employeeByIdStore } from '@hcengineering/contact-resources'
-  import { AttributeModel } from '@hcengineering/view'
-  import { eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { getObjectPresenter } from '@hcengineering/view-resources'
-  import { IntlString, getEmbeddedLabel } from '@hcengineering/platform'
+  import contact, { Employee, Person, getName } from '@hanzo/contact'
+  import { Class, Doc, Ref, Space } from '@hanzo/core'
+  import { Task } from '@hanzo/task'
+  import { getClient } from '@hanzo/presentation'
+  import { UsersPopup, employeeByIdStore } from '@hanzo/contact-resources'
+  import { AttributeModel } from '@hanzo/view'
+  import { eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { getObjectPresenter } from '@hanzo/view-resources'
+  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
   import task from '../plugin'
 
   export let value: Ref<Person> | Person | null | undefined

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Class, IdMap, Ref, Status } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { DocPopup, getClient } from '@hcengineering/presentation'
-  import { Task, TaskType } from '@hcengineering/task'
-  import { getObjectId, ObjectPresenter, statusStore } from '@hcengineering/view-resources'
+  import { Analytics } from '@hanzo/analytics'
+  import { Class, IdMap, Ref, Status } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { DocPopup, getClient } from '@hanzo/presentation'
+  import { Task, TaskType } from '@hanzo/task'
+  import { getObjectId, ObjectPresenter, statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { taskTypeStore } from '..'
 

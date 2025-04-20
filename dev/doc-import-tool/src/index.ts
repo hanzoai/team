@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { Employee } from '@hcengineering/contact'
-import documents, { DocumentSpace } from '@hcengineering/controlled-documents'
-import { MeasureMetricsContext, Ref, systemAccountUuid, WorkspaceUuid, type WorkspaceDataId } from '@hcengineering/core'
-import { setMetadata } from '@hcengineering/platform'
-import serverClientPlugin from '@hcengineering/server-client'
-import { type StorageAdapter } from '@hcengineering/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import serverToken, { generateToken } from '@hcengineering/server-token'
+import { Employee } from '@hanzo/contact'
+import documents, { DocumentSpace } from '@hanzo/controlled-documents'
+import { MeasureMetricsContext, Ref, systemAccountUuid, WorkspaceUuid, type WorkspaceDataId } from '@hanzo/core'
+import { setMetadata } from '@hanzo/platform'
+import serverClientPlugin from '@hanzo/server-client'
+import { type StorageAdapter } from '@hanzo/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import serverToken, { generateToken } from '@hanzo/server-token'
 import { program } from 'commander'
 
 import { importDoc } from './commands'

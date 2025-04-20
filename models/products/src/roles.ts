@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import core from '@hcengineering/core'
-import documents from '@hcengineering/controlled-documents'
+import core from '@hanzo/core'
+import documents from '@hanzo/controlled-documents'
 import products from './plugin'
 
 export const roles = [

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, Label } from '@hcengineering/ui'
-  import { JoinRequest, RequestStatus } from '@hcengineering/love'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, Label } from '@hanzo/ui'
+  import { JoinRequest, RequestStatus } from '@hanzo/love'
   import love from '../plugin'
   import { rooms } from '../stores'
   import { getRoomLabel } from '../utils'
-  import { personByIdStore } from '@hcengineering/contact-resources'
+  import { personByIdStore } from '@hanzo/contact-resources'
 
   export let request: JoinRequest
 

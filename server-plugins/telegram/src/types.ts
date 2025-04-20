@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { ActivityMessage } from '@hcengineering/activity'
-import { AccountUuid, Ref } from '@hcengineering/core'
-import { InboxNotification } from '@hcengineering/notification'
+import { ActivityMessage } from '@hanzo/activity'
+import { AccountUuid, Ref } from '@hanzo/core'
+import { InboxNotification } from '@hanzo/notification'
 
 export type TelegramQueueMessage = TelegramNotificationQueueMessage | TelegramWorkspaceSubscriptionQueueMessage
 

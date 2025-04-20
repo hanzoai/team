@@ -23,11 +23,11 @@ import {
   type MeasureContext,
   type Ref,
   DOMAIN_MODEL
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
-import type { DBAdapterManager, Middleware, PipelineContext, ServerFindOptions } from '@hcengineering/server-core'
-import { BaseMiddleware } from '@hcengineering/server-core'
-import { emptyFindResult } from '@hcengineering/server-core/src/base'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
+import type { DBAdapterManager, Middleware, PipelineContext, ServerFindOptions } from '@hanzo/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
+import { emptyFindResult } from '@hanzo/server-core/src/base'
 
 /**
  * Will perform a find inside adapters

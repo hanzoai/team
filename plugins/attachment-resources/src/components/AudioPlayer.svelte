@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Attachment } from '@hcengineering/attachment'
-  import type { BlobType, WithLookup } from '@hcengineering/core'
-  import { getFileUrl } from '@hcengineering/presentation'
-  import { CircleButton, Progress } from '@hcengineering/ui'
+  import type { Attachment } from '@hanzo/attachment'
+  import type { BlobType, WithLookup } from '@hanzo/core'
+  import { getFileUrl } from '@hanzo/presentation'
+  import { CircleButton, Progress } from '@hanzo/ui'
   import Pause from './icons/Pause.svelte'
   import Play from './icons/Play.svelte'
 

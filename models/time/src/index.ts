@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import board from '@hcengineering/board'
-import calendarPlugin, { type Visibility } from '@hcengineering/calendar'
-import contactPlugin, { type Person } from '@hcengineering/contact'
+import activity from '@hanzo/activity'
+import board from '@hanzo/board'
+import calendarPlugin, { type Visibility } from '@hanzo/calendar'
+import contactPlugin, { type Person } from '@hanzo/contact'
 import {
   DOMAIN_MODEL,
   type Class,
@@ -28,8 +28,8 @@ import {
   type Type,
   DateRangeMode,
   IndexKind
-} from '@hcengineering/core'
-import lead from '@hcengineering/lead'
+} from '@hanzo/core'
+import lead from '@hanzo/lead'
 import {
   Collection,
   Mixin,
@@ -42,18 +42,18 @@ import {
   TypeDate,
   Hidden,
   Index
-} from '@hcengineering/model'
-import textEditor from '@hcengineering/text-editor'
-import { TEvent } from '@hcengineering/model-calendar'
-import core, { TAttachedDoc, TClass, TDoc, TType } from '@hcengineering/model-core'
-import tracker from '@hcengineering/model-tracker'
-import document from '@hcengineering/model-document'
-import view, { createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import notification from '@hcengineering/notification'
-import recruit from '@hcengineering/recruit'
-import tags from '@hcengineering/tags'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+} from '@hanzo/model'
+import textEditor from '@hanzo/text-editor'
+import { TEvent } from '@hanzo/model-calendar'
+import core, { TAttachedDoc, TClass, TDoc, TType } from '@hanzo/model-core'
+import tracker from '@hanzo/model-tracker'
+import document from '@hanzo/model-document'
+import view, { createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import notification from '@hanzo/notification'
+import recruit from '@hanzo/recruit'
+import tags from '@hanzo/tags'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 import {
   type TodoDoneTester,
   timeId,
@@ -63,14 +63,14 @@ import {
   type ToDoPriority,
   type TodoAutomationHelper,
   type WorkSlot
-} from '@hcengineering/time'
+} from '@hanzo/time'
 
-import type { Resource } from '@hcengineering/platform'
-import type { Rank } from '@hcengineering/task'
+import type { Resource } from '@hanzo/platform'
+import type { Rank } from '@hanzo/task'
 import time from './plugin'
-import task from '@hcengineering/task'
+import task from '@hanzo/task'
 
-export { timeId } from '@hcengineering/time'
+export { timeId } from '@hanzo/time'
 export { default } from './plugin'
 
 export const DOMAIN_TIME = 'time' as Domain

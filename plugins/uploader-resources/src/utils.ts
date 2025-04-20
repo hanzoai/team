@@ -19,11 +19,11 @@ import {
   type FileWithPath,
   toFileWithPath,
   type UploadHandlerDefinition
-} from '@hcengineering/uploader'
-import { type Ref, type Blob, RateLimiter } from '@hcengineering/core'
+} from '@hanzo/uploader'
+import { type Ref, type Blob, RateLimiter } from '@hanzo/core'
 import { type FileUpload, type Upload, trackUpload, untrackUpload, updateUploads } from './store'
 import uploader from './plugin'
-import { generateFileId, getFileUploadParams, getClient } from '@hcengineering/presentation'
+import { generateFileId, getFileUploadParams, getClient } from '@hanzo/presentation'
 
 export async function showFilesUploadPopup (
   options: FileUploadOptions,

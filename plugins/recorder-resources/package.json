@@ -1,8 +1,8 @@
 {
-  "name": "@hcengineering/recorder-resources",
-  "version": "0.6.0",
+  "name": "@hanzo/recorder-resources",
+  "version": "0.6.4",
   "main": "src/index.ts",
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@types/jest": "^29.5.5",
     "@types/node": "~20.11.16",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
@@ -39,18 +39,21 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/presentation": "^0.6.3",
-    "@hcengineering/recorder": "^0.6.0",
-    "@hcengineering/theme": "^0.6.5",
-    "@hcengineering/ui": "^0.6.15",
-    "@hcengineering/uploader": "^0.6.0",
-    "@hcengineering/view": "^0.6.13",
-    "@hcengineering/view-resources": "^0.6.0",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/presentation": "^0.6.7",
+    "@hanzo/recorder": "^0.6.4",
+    "@hanzo/theme": "^0.6.10",
+    "@hanzo/ui": "^0.6.21",
+    "@hanzo/uploader": "^0.6.4",
+    "@hanzo/view": "^0.6.18",
+    "@hanzo/view-resources": "^0.6.4",
     "install": "^0.13.0",
     "stream-browserify": "^3.0.0",
     "svelte": "^4.2.19",
     "tus-js-client": "^4.3.1"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

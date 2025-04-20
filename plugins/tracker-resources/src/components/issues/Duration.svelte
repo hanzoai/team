@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { translateCB } from '@hcengineering/platform'
-  import ui, { DAY, HOUR, MINUTE, MONTH, YEAR, themeStore } from '@hcengineering/ui'
+  import { translateCB } from '@hanzo/platform'
+  import ui, { DAY, HOUR, MINUTE, MONTH, YEAR, themeStore } from '@hanzo/ui'
 
   export let value: number
 

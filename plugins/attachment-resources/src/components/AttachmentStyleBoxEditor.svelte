@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Class, Ref, updateAttribute } from '@hcengineering/core'
+  import { Doc, Class, Ref, updateAttribute } from '@hanzo/core'
 
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getAttribute, getClient, KeyedAttribute } from '@hcengineering/presentation'
-  import { navigate } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { getObjectLinkFragment } from '@hcengineering/view-resources'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getAttribute, getClient, KeyedAttribute } from '@hanzo/presentation'
+  import { navigate } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { getObjectLinkFragment } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import AttachmentStyledBox from './AttachmentStyledBox.svelte'
 

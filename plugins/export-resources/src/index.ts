@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
+import { type Resources } from '@hanzo/platform'
 import ExportButton from './components/ExportButton.svelte'
 import ExportSettings from './components/ExportSettings.svelte'
 

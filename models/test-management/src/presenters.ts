@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import view from '@hcengineering/model-view'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import view from '@hanzo/model-view'
 import testManagement from './plugin'
 
 /**

@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import { type TrainingAttemptState, trainingAttemptStateOrder } from '@hcengineering/training'
-import { type TxOperations } from '@hcengineering/core'
+import { type TrainingAttemptState, trainingAttemptStateOrder } from '@hanzo/training'
+import { type TxOperations } from '@hanzo/core'
 
 export async function trainingAttemptStateSort (
   _: TxOperations,

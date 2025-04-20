@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { EnumOf } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { DropdownLabels, DropdownTextItem, tooltip } from '@hcengineering/ui'
+  import core, { EnumOf } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { DropdownLabels, DropdownTextItem, tooltip } from '@hanzo/ui'
   import StringPresenter from './StringPresenter.svelte'
 
   export let value: string

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { aiBotSocialIdentityStore } from '@hcengineering/ai-bot-resources'
-  import { personRefByPersonIdStore } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
-  import { RoomType, Room as TypeRoom } from '@hcengineering/love'
-  import { MessageBox } from '@hcengineering/presentation'
-  import { ActionIcon, Scroller, showPopup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { aiBotSocialIdentityStore } from '@hanzo/ai-bot-resources'
+  import { personRefByPersonIdStore } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
+  import { RoomType, Room as TypeRoom } from '@hanzo/love'
+  import { MessageBox } from '@hanzo/presentation'
+  import { ActionIcon, Scroller, showPopup } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import {
     LocalParticipant,
     LocalTrackPublication,

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { cardId, DOMAIN_CARD } from '@hcengineering/card'
-import core, { TxOperations, type Client, type Data, type Doc } from '@hcengineering/core'
+import { cardId, DOMAIN_CARD } from '@hanzo/card'
+import core, { TxOperations, type Client, type Data, type Doc } from '@hanzo/core'
 import {
   tryMigrate,
   tryUpgrade,
@@ -22,10 +22,10 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   createOrUpdate
-} from '@hcengineering/model'
-import view from '@hcengineering/view'
+} from '@hanzo/model'
+import view from '@hanzo/view'
 import card from '.'
-import tags from '@hcengineering/tags'
+import tags from '@hanzo/tags'
 
 export const cardOperation: MigrateOperation = {
   async migrate (client: MigrationClient, mode): Promise<void> {

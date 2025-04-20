@@ -1,4 +1,4 @@
-import { Doc } from '@hcengineering/core'
+import { Doc } from '@hanzo/core'
 import { deepEqual } from 'fast-equals'
 
 export function equalExceptKeys<T extends Doc> (a: T | T[], b: T | T[], keys: (keyof T)[]): boolean {

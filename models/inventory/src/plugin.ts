@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { type ChatMessageViewlet } from '@hcengineering/chunter'
-import type { Client, Doc, Ref } from '@hcengineering/core'
-import { inventoryId } from '@hcengineering/inventory'
-import inventory from '@hcengineering/inventory-resources/src/plugin'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction, type Viewlet } from '@hcengineering/view'
+import { type ChatMessageViewlet } from '@hanzo/chunter'
+import type { Client, Doc, Ref } from '@hanzo/core'
+import { inventoryId } from '@hanzo/inventory'
+import inventory from '@hanzo/inventory-resources/src/plugin'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction, type Viewlet } from '@hanzo/view'
 export default mergeIds(inventoryId, inventory, {
   action: {
     CreateSubcategory: '' as Ref<Action>

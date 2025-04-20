@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { type Person } from '@hcengineering/contact'
+  import contact, { type Person } from '@hanzo/contact'
   import {
     DrawingBoardToolbar,
     DrawingCmd,
@@ -22,10 +22,10 @@
     Point,
     drawing,
     makeCommandId
-  } from '@hcengineering/presentation'
-  import presence from '@hcengineering/presence'
-  import { getResource } from '@hcengineering/platform'
-  import { Loading, Component } from '@hcengineering/ui'
+  } from '@hanzo/presentation'
+  import presence from '@hanzo/presence'
+  import { getResource } from '@hanzo/platform'
+  import { Loading, Component } from '@hanzo/ui'
   import { onMount, onDestroy } from 'svelte'
   import { Array as YArray, Map as YMap } from 'yjs'
 

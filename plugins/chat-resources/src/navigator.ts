@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Card, type MasterTag } from '@hcengineering/card'
-import { type NavigationSection } from '@hcengineering/ui-next'
-import { type Hierarchy, type Ref } from '@hcengineering/core'
-import chat from '@hcengineering/chat'
-import { translate } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
+import { type Card, type MasterTag } from '@hanzo/card'
+import { type NavigationSection } from '@hanzo/ui-next'
+import { type Hierarchy, type Ref } from '@hanzo/core'
+import chat from '@hanzo/chat'
+import { translate } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
 import { get, writable } from 'svelte/store'
-import { type NotificationContext } from '@hcengineering/communication-types'
+import { type NotificationContext } from '@hanzo/communication-types'
 
 const navigatorStateStorageKey = 'chat.navigatorState'
 

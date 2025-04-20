@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { SearchResultDoc } from '@hcengineering/core'
-  import { getResourceC } from '@hcengineering/platform'
-  import { Icon, type AnySvelteComponent } from '@hcengineering/ui'
+  import type { SearchResultDoc } from '@hanzo/core'
+  import { getResourceC } from '@hanzo/platform'
+  import { Icon, type AnySvelteComponent } from '@hanzo/ui'
 
   export let value: SearchResultDoc
 

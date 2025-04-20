@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { copyTextToClipboard, createQuery } from '@hcengineering/presentation'
-  import { Issue, IssueStatus } from '@hcengineering/tracker'
-  import { Button, Notification, navigate, parseLocation, NotificationToast } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { copyTextToClipboard, createQuery } from '@hanzo/presentation'
+  import { Issue, IssueStatus } from '@hanzo/tracker'
+  import { Button, Notification, navigate, parseLocation, NotificationToast } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
-  import { statusStore } from '@hcengineering/view-resources'
+  import { statusStore } from '@hanzo/view-resources'
   import tracker from '../../plugin'
   import IssuePresenter from './IssuePresenter.svelte'
   import IssueStatusIcon from './IssueStatusIcon.svelte'

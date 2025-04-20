@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Asset, IntlString, plugin, Plugin, Resource, Metadata } from '@hcengineering/platform'
-import { type UploadHandler } from '@hcengineering/uploader'
+import { Asset, IntlString, plugin, Plugin, Resource, Metadata } from '@hanzo/platform'
+import { type UploadHandler } from '@hanzo/uploader'
 
 /**
  * @public

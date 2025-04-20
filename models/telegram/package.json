@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/model-telegram",
-  "version": "0.6.0",
+  "name": "@hanzo/model-telegram",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/model-package",
+  "author": "Hanzo <dev@hanzo.ai>",
+  "template": "@hanzo/model-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -28,23 +28,23 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/activity": "^0.6.0",
-    "@hcengineering/chunter": "^0.6.20",
-    "@hcengineering/love": "^0.6.0",
-    "@hcengineering/model": "^0.6.11",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/model-core": "^0.6.0",
-    "@hcengineering/model-attachment": "^0.6.0",
-    "@hcengineering/model-notification": "^0.6.0",
-    "@hcengineering/notification": "^0.6.23",
-    "@hcengineering/model-contact": "^0.6.1",
-    "@hcengineering/view": "^0.6.13",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/telegram": "^0.6.21",
-    "@hcengineering/telegram-resources": "^0.6.0",
-    "@hcengineering/templates": "^0.6.11",
-    "@hcengineering/setting": "^0.6.17",
-    "@hcengineering/ui": "^0.6.15"
+    "@hanzo/activity": "^0.6.4",
+    "@hanzo/chunter": "^0.6.25",
+    "@hanzo/love": "^0.6.5",
+    "@hanzo/model": "^0.6.16",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/model-core": "^0.6.4",
+    "@hanzo/model-attachment": "^0.6.4",
+    "@hanzo/model-notification": "^0.6.4",
+    "@hanzo/notification": "^0.6.28",
+    "@hanzo/model-contact": "^0.6.5",
+    "@hanzo/view": "^0.6.18",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/telegram": "^0.6.26",
+    "@hanzo/telegram-resources": "^0.6.4",
+    "@hanzo/templates": "^0.6.16",
+    "@hanzo/setting": "^0.6.22",
+    "@hanzo/ui": "^0.6.21"
   }
 }

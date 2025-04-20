@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,20 +14,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery } from '@hcengineering/core'
-  import { ActionContext } from '@hcengineering/presentation'
-  import { Button, Label, Loading, SearchEdit, showPopup } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  import { Doc, DocumentQuery } from '@hanzo/core'
+  import { ActionContext } from '@hanzo/presentation'
+  import { Button, Label, Loading, SearchEdit, showPopup } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     FilterBar,
     FilterButton,
     TableBrowser,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import contact from '../plugin'
   import CreateContact from './CreateContact.svelte'
-  // import { deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
+  // import { deviceOptionsStore as deviceInfo } from '@hanzo/ui'
 
   let search = ''
   let searchQuery: DocumentQuery<Doc> = {}

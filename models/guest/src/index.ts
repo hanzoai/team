@@ -1,8 +1,8 @@
-import { type Class, type IndexingConfiguration, type Doc, type Domain, type Ref } from '@hcengineering/core'
-import { type PublicLink, type Restrictions } from '@hcengineering/guest'
-import { type Builder, Model } from '@hcengineering/model'
-import core, { TDoc } from '@hcengineering/model-core'
-import { type Location } from '@hcengineering/ui/src/types'
+import { type Class, type IndexingConfiguration, type Doc, type Domain, type Ref } from '@hanzo/core'
+import { type PublicLink, type Restrictions } from '@hanzo/guest'
+import { type Builder, Model } from '@hanzo/model'
+import core, { TDoc } from '@hanzo/model-core'
+import { type Location } from '@hanzo/ui/src/types'
 import guest from './plugin'
 
 export const GUEST_DOMAIN = 'guest' as Domain
@@ -41,6 +41,6 @@ export function createModel (builder: Builder): void {
   )
 }
 
-export { guestId } from '@hcengineering/guest'
+export { guestId } from '@hanzo/guest'
 export * from './migration'
 export * from './utils'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Copyright © 2025 Hardcore Engineering Inc.
 //
@@ -28,13 +28,13 @@ import {
   type Space,
   type AnyAttribute,
   type AccountUuid
-} from '@hcengineering/core'
-import { type Builder, Mixin, Model, UX } from '@hcengineering/model'
-import core, { TClass, TDoc } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import presentation from '@hcengineering/model-presentation'
-import { type Asset, type IntlString, type Resource, type Status } from '@hcengineering/platform'
-import { type AnyComponent, type LabelAndProps, type Location } from '@hcengineering/ui/src/types'
+} from '@hanzo/core'
+import { type Builder, Mixin, Model, UX } from '@hanzo/model'
+import core, { TClass, TDoc } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import presentation from '@hanzo/model-presentation'
+import { type Asset, type IntlString, type Resource, type Status } from '@hanzo/platform'
+import { type AnyComponent, type LabelAndProps, type Location } from '@hanzo/ui/src/types'
 import {
   type Action,
   type ActionCategory,
@@ -97,12 +97,12 @@ import {
   type AttrPresenter,
   type AttributeCategory,
   type LinkIdProvider
-} from '@hcengineering/view'
+} from '@hanzo/view'
 
 import view from './plugin'
 import { classPresenter, createAction } from './utils'
 
-export { viewId } from '@hcengineering/view'
+export { viewId } from '@hanzo/view'
 export { viewOperation } from './migration'
 export type { ViewAction, Viewlet }
 

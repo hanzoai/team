@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { generateId } from '@hcengineering/core'
+import { generateId } from '@hanzo/core'
 import {
   AbstractType as YAbstractType,
   Doc as YDoc,

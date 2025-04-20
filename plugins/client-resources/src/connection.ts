@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import client, {
   type ClientFactoryOptions,
   ClientSocket,
   ClientSocketReadyState,
   pingConst,
   pongConst
-} from '@hcengineering/client'
+} from '@hanzo/client'
 import core, {
   Account,
   Class,
@@ -51,7 +51,7 @@ import core, {
   TxHandler,
   TxResult,
   type WorkspaceUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import platform, {
   broadcastEvent,
   getMetadata,
@@ -59,10 +59,10 @@ import platform, {
   Severity,
   Status,
   UNAUTHORIZED
-} from '@hcengineering/platform'
+} from '@hanzo/platform'
 import { uncompress } from 'snappyjs'
-import { HelloRequest, HelloResponse, ReqId, type Response, RPCHandler } from '@hcengineering/rpc'
-import { EventResult } from '@hcengineering/communication-sdk-types'
+import { HelloRequest, HelloResponse, ReqId, type Response, RPCHandler } from '@hanzo/rpc'
+import { EventResult } from '@hanzo/communication-sdk-types'
 import {
   FindLabelsParams,
   FindMessagesGroupsParams,
@@ -73,7 +73,7 @@ import {
   Message,
   MessagesGroup,
   NotificationContext
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 
 const SECOND = 1000
 const pingTimeout = 10 * SECOND

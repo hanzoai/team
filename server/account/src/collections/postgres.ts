@@ -21,7 +21,7 @@ import {
   AccountRole,
   type WorkspaceUuid,
   type AccountUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
 import type {
   DbCollection,

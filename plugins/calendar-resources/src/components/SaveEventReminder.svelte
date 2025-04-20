@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hcengineering/calendar'
-  import { Class, Ref } from '@hcengineering/core'
-  import presentation, { Card, createQuery, getClient } from '@hcengineering/presentation'
-  import { DateOrShift, Grid, TimeShiftPicker } from '@hcengineering/ui'
+  import { Event } from '@hanzo/calendar'
+  import { Class, Ref } from '@hanzo/core'
+  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
+  import { DateOrShift, Grid, TimeShiftPicker } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
 

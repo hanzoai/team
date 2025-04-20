@@ -14,8 +14,8 @@
 //
 
 import { type DecorationAttrs } from '@tiptap/pm/view'
-import { getPlatformColor, showTooltip } from '@hcengineering/ui'
-import { type CollaborationUser } from '@hcengineering/text-editor'
+import { getPlatformColor, showTooltip } from '@hanzo/ui'
+import { type CollaborationUser } from '@hanzo/text-editor'
 
 import CollaborationUserPopup from '../CollaborationUserPopup.svelte'
 

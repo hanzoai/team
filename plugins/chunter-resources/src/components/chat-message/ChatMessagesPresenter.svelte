@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc } from '@hcengineering/core'
-  import { Button, ButtonKind, ButtonSize, IconThread } from '@hcengineering/ui'
+  import type { Doc } from '@hanzo/core'
+  import { Button, ButtonKind, ButtonSize, IconThread } from '@hanzo/ui'
 
   import ChatMessagePopup from './ChatMessagePopup.svelte'
-  import { restrictionStore } from '@hcengineering/view-resources'
+  import { restrictionStore } from '@hanzo/view-resources'
 
   export let value: number | undefined
   export let object: Doc

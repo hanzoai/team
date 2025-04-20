@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type DocUpdateMessageViewlet } from '@hcengineering/activity'
-import { type ChatMessageViewlet } from '@hcengineering/chunter'
-import type { Client, Doc, Ref, Status } from '@hcengineering/core'
-import { type NotificationGroup, type NotificationType } from '@hcengineering/notification'
-import type { IntlString, Status as OperationStatus, Resource } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import { recruitId } from '@hcengineering/recruit'
-import recruit from '@hcengineering/recruit-resources/src/plugin'
-import { type ProjectType, type TaskTypeDescriptor } from '@hcengineering/task'
-import type { AnyComponent, Location } from '@hcengineering/ui/src/types'
+import { type DocUpdateMessageViewlet } from '@hanzo/activity'
+import { type ChatMessageViewlet } from '@hanzo/chunter'
+import type { Client, Doc, Ref, Status } from '@hanzo/core'
+import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
+import type { IntlString, Status as OperationStatus, Resource } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import { recruitId } from '@hanzo/recruit'
+import recruit from '@hanzo/recruit-resources/src/plugin'
+import { type ProjectType, type TaskTypeDescriptor } from '@hanzo/task'
+import type { AnyComponent, Location } from '@hanzo/ui/src/types'
 import type {
   Action,
   ActionCategory,
@@ -30,7 +30,7 @@ import type {
   ViewActionAvailabilityFunction,
   ViewQueryAction,
   Viewlet
-} from '@hcengineering/view'
+} from '@hanzo/view'
 
 export default mergeIds(recruitId, recruit, {
   action: {

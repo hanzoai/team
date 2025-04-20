@@ -23,10 +23,10 @@
     TEMPLATE_PREFIX,
     createChangeControl,
     createDocumentTemplate
-  } from '@hcengineering/controlled-documents'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { type AttachedData, type Class, type Data, type Ref, type Mixin, generateId } from '@hcengineering/core'
-  import { MessageBox, getClient } from '@hcengineering/presentation'
+  } from '@hanzo/controlled-documents'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { type AttachedData, type Class, type Data, type Ref, type Mixin, generateId } from '@hanzo/core'
+  import { MessageBox, getClient } from '@hanzo/presentation'
   import {
     AnySvelteComponent,
     addNotification,
@@ -35,9 +35,9 @@
     NotificationSeverity,
     ModernWizardDialog,
     type IWizardStep
-  } from '@hcengineering/ui'
-  import { getCurrentLanguage } from '@hcengineering/theme'
-  import { translate } from '@hcengineering/platform'
+  } from '@hanzo/ui'
+  import { getCurrentLanguage } from '@hanzo/theme'
+  import { translate } from '@hanzo/platform'
 
   import documents from '../../plugin'
   import { getProjectDocumentLink } from '../../navigation'

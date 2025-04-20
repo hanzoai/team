@@ -35,21 +35,21 @@ import core, {
   platformNow,
   platformNowDiff,
   type AccountUuid
-} from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
-import { connect } from '@hcengineering/server-tool'
+} from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
+import { connect } from '@hanzo/server-tool'
 
-import client from '@hcengineering/client'
-import { setMetadata } from '@hcengineering/platform'
-import serverClientPlugin, { getTransactorEndpoint } from '@hcengineering/server-client'
+import client from '@hanzo/client'
+import { setMetadata } from '@hanzo/platform'
+import serverClientPlugin, { getTransactorEndpoint } from '@hanzo/server-client'
 import os from 'os'
 import { Worker, isMainThread, parentPort } from 'worker_threads'
 import { CSVWriter } from './csv'
 
-import { AvatarType, getPersonBySocialKey } from '@hcengineering/contact'
-import contact from '@hcengineering/model-contact'
-import recruit from '@hcengineering/model-recruit'
-import { type Vacancy } from '@hcengineering/recruit'
+import { AvatarType, getPersonBySocialKey } from '@hanzo/contact'
+import contact from '@hanzo/model-contact'
+import recruit from '@hanzo/model-recruit'
+import { type Vacancy } from '@hanzo/recruit'
 import { WebSocket } from 'ws'
 
 interface StartMessage {

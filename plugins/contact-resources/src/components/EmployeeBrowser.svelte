@@ -1,8 +1,8 @@
 <script lang="ts">
-  import contact, { Employee } from '@hcengineering/contact'
-  import { DocumentQuery, SortingOrder } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Scroller } from '@hcengineering/ui'
+  import contact, { Employee } from '@hanzo/contact'
+  import { DocumentQuery, SortingOrder } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Scroller } from '@hanzo/ui'
   import EmployeePresenter from './EmployeePresenter.svelte'
 
   export let search: string = ''

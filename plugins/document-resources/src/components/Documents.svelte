@@ -15,12 +15,12 @@
 //
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery } from '@hcengineering/core'
-  import { Document } from '@hcengineering/document'
-  import { ActionContext } from '@hcengineering/presentation'
-  import { Label, Loading, SearchEdit } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { FilterButton, TableBrowser, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
+  import { Doc, DocumentQuery } from '@hanzo/core'
+  import { Document } from '@hanzo/document'
+  import { ActionContext } from '@hanzo/presentation'
+  import { Label, Loading, SearchEdit } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
+  import { FilterButton, TableBrowser, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
   import document from '../plugin'
 
   export let query: DocumentQuery<Document> = {}

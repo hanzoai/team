@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { setMetadata } from '@hcengineering/platform'
-import serverToken from '@hcengineering/server-token'
+import { setMetadata } from '@hanzo/platform'
+import serverToken from '@hanzo/server-token'
 
-import type { MeasureContext } from '@hcengineering/core'
-import serverClient from '@hcengineering/server-client'
-import type { StorageConfiguration } from '@hcengineering/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import type { MeasureContext } from '@hanzo/core'
+import serverClient from '@hanzo/server-client'
+import type { StorageConfiguration } from '@hanzo/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
 import config from './config'
 import { start } from './server'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Component, ComponentExtensionId } from '@hcengineering/ui'
+  import { Component, ComponentExtensionId } from '@hanzo/ui'
   import plugin from '../../plugin'
   import { ComponentPointExtension } from '../../types'
   import { getClient } from '../../utils'

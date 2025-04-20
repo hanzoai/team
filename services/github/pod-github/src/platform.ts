@@ -3,7 +3,7 @@
 //
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import chunter from '@hcengineering/chunter'
+import chunter from '@hanzo/chunter'
 import core, {
   PersonId,
   BrandingMap,
@@ -19,22 +19,22 @@ import core, {
   systemAccountUuid,
   WorkspaceUuid,
   WorkspaceInfoWithStatus
-} from '@hcengineering/core'
-import github, { GithubAuthentication, makeQuery, type GithubIntegration } from '@hcengineering/github'
-import { getMongoClient, MongoClientReference } from '@hcengineering/mongo'
-import { setMetadata } from '@hcengineering/platform'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import serverToken, { generateToken } from '@hcengineering/server-token'
-import { getClient as getAccountClient } from '@hcengineering/account-client'
-import tracker from '@hcengineering/tracker'
+} from '@hanzo/core'
+import github, { GithubAuthentication, makeQuery, type GithubIntegration } from '@hanzo/github'
+import { getMongoClient, MongoClientReference } from '@hanzo/mongo'
+import { setMetadata } from '@hanzo/platform'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import serverToken, { generateToken } from '@hanzo/server-token'
+import { getClient as getAccountClient } from '@hanzo/account-client'
+import tracker from '@hanzo/tracker'
 import { Installation, type InstallationCreatedEvent, type InstallationUnsuspendEvent } from '@octokit/webhooks-types'
 import { Collection } from 'mongodb'
 import { App, Octokit } from 'octokit'
 
-import { Analytics } from '@hcengineering/analytics'
-import { SplitLogger } from '@hcengineering/analytics-service'
-import contact, { Person } from '@hcengineering/contact'
-import { type StorageAdapter } from '@hcengineering/server-core'
+import { Analytics } from '@hanzo/analytics'
+import { SplitLogger } from '@hanzo/analytics-service'
+import contact, { Person } from '@hanzo/contact'
+import { type StorageAdapter } from '@hanzo/server-core'
 import { join } from 'path'
 import { createPlatformClient } from './client'
 import config from './config'

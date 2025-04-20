@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,16 +14,16 @@
 // limitations under the License.
 //
 
-import { type ChatMessageViewlet } from '@hcengineering/chunter'
-import type { Doc, Ref, Status } from '@hcengineering/core'
-import { leadId } from '@hcengineering/lead'
-import lead from '@hcengineering/lead-resources/src/plugin'
-import { type NotificationGroup, type NotificationType } from '@hcengineering/notification'
-import type { IntlString } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import { type TaskTypeDescriptor } from '@hcengineering/task'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import { type Action, type ActionCategory, type Viewlet } from '@hcengineering/view'
+import { type ChatMessageViewlet } from '@hanzo/chunter'
+import type { Doc, Ref, Status } from '@hanzo/core'
+import { leadId } from '@hanzo/lead'
+import lead from '@hanzo/lead-resources/src/plugin'
+import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
+import type { IntlString } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import { type TaskTypeDescriptor } from '@hanzo/task'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import { type Action, type ActionCategory, type Viewlet } from '@hanzo/view'
 
 export default mergeIds(leadId, lead, {
   string: {

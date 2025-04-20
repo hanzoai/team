@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import contact, { type Employee, getFirstName, getLastName } from '@hcengineering/contact'
-import { employeeByIdStore } from '@hcengineering/contact-resources'
-import { type Class, type Doc, type Hierarchy, type Ref } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import login from '@hcengineering/login'
-import presentation from '@hcengineering/presentation'
-import setting from '@hcengineering/setting'
-import { type TemplateDataProvider } from '@hcengineering/templates'
-import { getClient as getAccountClientRaw, type AccountClient } from '@hcengineering/account-client'
+import contact, { type Employee, getFirstName, getLastName } from '@hanzo/contact'
+import { employeeByIdStore } from '@hanzo/contact-resources'
+import { type Class, type Doc, type Hierarchy, type Ref } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import login from '@hanzo/login'
+import presentation from '@hanzo/presentation'
+import setting from '@hanzo/setting'
+import { type TemplateDataProvider } from '@hanzo/templates'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
 
 function isEditable (hierarchy: Hierarchy, p: Class<Doc>): boolean {
   let ancestors = [p._id]

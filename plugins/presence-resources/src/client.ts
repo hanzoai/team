@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type Ref, concatLink } from '@hcengineering/core'
-import { getCurrentEmployee, type Person } from '@hcengineering/contact'
-import { getMetadata } from '@hcengineering/platform'
-import presence from '@hcengineering/presence'
-import presentation from '@hcengineering/presentation'
+import { type Ref, concatLink } from '@hanzo/core'
+import { getCurrentEmployee, type Person } from '@hanzo/contact'
+import { getMetadata } from '@hanzo/platform'
+import presence from '@hanzo/presence'
+import presentation from '@hanzo/presentation'
 import { type Unsubscriber, get } from 'svelte/store'
 
 import { myPresence, myData, isAnybodyInMyRoom, onPersonUpdate, onPersonLeave, onPersonData } from './store'

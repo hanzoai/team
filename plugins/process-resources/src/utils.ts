@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Card } from '@hcengineering/card'
+import { type Card } from '@hanzo/card'
 import core, {
   type Space,
   type AnyAttribute,
@@ -25,8 +25,8 @@ import core, {
   type RefTo,
   type Type,
   generateId
-} from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
 import {
   parseContext,
   type SelectedUserRequest,
@@ -39,9 +39,9 @@ import {
   type RelatedContext,
   type State,
   type Step
-} from '@hcengineering/process'
-import { showPopup } from '@hcengineering/ui'
-import { type AttributeCategory } from '@hcengineering/view'
+} from '@hanzo/process'
+import { showPopup } from '@hanzo/ui'
+import { type AttributeCategory } from '@hanzo/view'
 import process from './plugin'
 
 export async function initStep<T extends Doc> (methodId: Ref<Method<T>>): Promise<Step<T>> {

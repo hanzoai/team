@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import attachment, { Drawing, type Attachment } from '@hcengineering/attachment'
-import chunter, { type ChatMessage } from '@hcengineering/chunter'
-import { Employee, type Person } from '@hcengineering/contact'
+import attachment, { Drawing, type Attachment } from '@hanzo/attachment'
+import chunter, { type ChatMessage } from '@hanzo/chunter'
+import { Employee, type Person } from '@hanzo/contact'
 import documents, {
   ChangeControl,
   type ControlledDocument,
@@ -28,7 +28,7 @@ import documents, {
   OrgSpace,
   ProjectDocument,
   useDocumentTemplate
-} from '@hcengineering/controlled-documents'
+} from '@hanzo/controlled-documents'
 import core, {
   type AttachedData,
   type Class,
@@ -49,17 +49,17 @@ import core, {
   type TxOperations,
   type PersonId,
   type AccountUuid
-} from '@hcengineering/core'
-import document, { type Document, getFirstRank, type Teamspace } from '@hcengineering/document'
+} from '@hanzo/core'
+import document, { type Document, getFirstRank, type Teamspace } from '@hanzo/document'
 import task, {
   createProjectType,
   makeRank,
   type ProjectType,
   type TaskType,
   type TaskTypeWithFactory
-} from '@hcengineering/task'
-import { jsonToMarkup } from '@hcengineering/text'
-import { markdownToMarkup } from '@hcengineering/text-markdown'
+} from '@hanzo/task'
+import { jsonToMarkup } from '@hanzo/text'
+import { markdownToMarkup } from '@hanzo/text-markdown'
 import tracker, {
   type Issue,
   type IssueParentInfo,
@@ -67,8 +67,8 @@ import tracker, {
   type IssueStatus,
   type Project,
   TimeReportDayType
-} from '@hcengineering/tracker'
-import view from '@hcengineering/view'
+} from '@hanzo/tracker'
+import view from '@hanzo/view'
 import { type MarkdownPreprocessor, NoopMarkdownPreprocessor } from './preprocessor'
 import { type FileUploader } from './uploader'
 import { Logger } from './logger'

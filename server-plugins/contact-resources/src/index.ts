@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022, 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -28,7 +28,7 @@ import contact, {
   getLastName,
   getName,
   type UserProfile
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import core, {
   Doc,
   Hierarchy,
@@ -46,14 +46,14 @@ import core, {
   TxCreateDoc,
   SortingOrder,
   MarkupBlobRef
-} from '@hcengineering/core'
-import { makeRank } from '@hcengineering/rank'
-import card from '@hcengineering/card'
-import notification, { Collaborators } from '@hcengineering/notification'
-import { getMetadata } from '@hcengineering/platform'
-import { getAccountBySocialId, getCurrentPerson } from '@hcengineering/server-contact'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/core'
+import { makeRank } from '@hanzo/rank'
+import card from '@hanzo/card'
+import notification, { Collaborators } from '@hanzo/notification'
+import { getMetadata } from '@hanzo/platform'
+import { getAccountBySocialId, getCurrentPerson } from '@hanzo/server-contact'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
+import { workbenchId } from '@hanzo/workbench'
 
 export async function OnSpaceTypeMembers (txes: Tx[], control: TriggerControl): Promise<Tx[]> {
   const result: Tx[] = []

@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-  import { TestCase, TestPlanItem } from '@hcengineering/test-management'
-  import { WithLookup } from '@hcengineering/core'
-  import { Icon, tooltip } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { TestCase, TestPlanItem } from '@hanzo/test-management'
+  import { WithLookup } from '@hanzo/core'
+  import { Icon, tooltip } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   import testManagement from '../../plugin'
 

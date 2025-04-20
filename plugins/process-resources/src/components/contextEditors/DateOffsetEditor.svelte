@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/presentation'
+  import { Card } from '@hanzo/presentation'
   import { createEventDispatcher } from 'svelte'
   import process from '../../plugin'
-  import ui, { DropdownIntlItem, DropdownLabelsIntl, NumberInput } from '@hcengineering/ui'
+  import ui, { DropdownIntlItem, DropdownLabelsIntl, NumberInput } from '@hanzo/ui'
 
   export const props: Record<string, any> = {}
 

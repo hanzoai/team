@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { Scroller } from '@hcengineering/ui'
-  import { ParticipantInfo, Room } from '@hcengineering/love'
+  import { Ref } from '@hanzo/core'
+  import { Scroller } from '@hanzo/ui'
+  import { ParticipantInfo, Room } from '@hanzo/love'
   import { infos } from '../stores'
   import { calculateFloorSize } from '../utils'
   import FloorGrid from './FloorGrid.svelte'

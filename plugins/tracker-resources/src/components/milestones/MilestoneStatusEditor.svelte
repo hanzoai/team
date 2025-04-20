@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Data } from '@hcengineering/core'
-  import { Milestone } from '@hcengineering/tracker'
-  import { getClient } from '@hcengineering/presentation'
+  import { Data } from '@hanzo/core'
+  import { Milestone } from '@hanzo/tracker'
+  import { getClient } from '@hanzo/presentation'
   import {
     Button,
     ButtonKind,
@@ -26,7 +26,7 @@
     eventToHTMLElement,
     showPopup,
     Label
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { defaultMilestoneStatuses, milestoneStatusAssets } from '../../utils'
   import tracker from '../../plugin'
 

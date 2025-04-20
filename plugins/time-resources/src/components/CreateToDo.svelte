@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { ActionIcon, IconAdd, showPopup, ModernEditbox, Spinner } from '@hcengineering/ui'
-  import { SortingOrder } from '@hcengineering/core'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { TimeEvents, ToDoPriority } from '@hcengineering/time'
-  import { getClient } from '@hcengineering/presentation'
+  import { ActionIcon, IconAdd, showPopup, ModernEditbox, Spinner } from '@hanzo/ui'
+  import { SortingOrder } from '@hanzo/core'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { TimeEvents, ToDoPriority } from '@hanzo/time'
+  import { getClient } from '@hanzo/presentation'
   import CreateToDoPopup from './CreateToDoPopup.svelte'
   import time from '../plugin'
-  import { makeRank } from '@hcengineering/task'
-  import { Analytics } from '@hcengineering/analytics'
+  import { makeRank } from '@hanzo/task'
+  import { Analytics } from '@hanzo/analytics'
 
   export let fullSize: boolean = false
   let value: string = ''

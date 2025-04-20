@@ -1,9 +1,9 @@
 {
-  "name": "@hcengineering/recruit-assets",
-  "version": "0.6.23",
+  "name": "@hanzo/recruit-assets",
+  "version": "0.6.28",
   "main": "src/index.ts",
-  "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/assets-package",
+  "author": "Hanzo <dev@hanzo.ai>",
+  "template": "@hanzo/assets-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -17,7 +17,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
@@ -33,7 +33,10 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/recruit": "^0.6.29"
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/recruit": "^0.6.34"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

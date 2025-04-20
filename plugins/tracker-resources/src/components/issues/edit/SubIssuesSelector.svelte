@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, SortingOrder, StatusCategory, WithLookup, toIdMap } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import task, { getStates } from '@hcengineering/task'
-  import { typeStore } from '@hcengineering/task-resources'
-  import { Issue, Project } from '@hcengineering/tracker'
-  import { Button, ButtonKind, ButtonSize, ProgressCircle, SelectPopup, showPanel } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
+  import core, { IdMap, Ref, SortingOrder, StatusCategory, WithLookup, toIdMap } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import task, { getStates } from '@hanzo/task'
+  import { typeStore } from '@hanzo/task-resources'
+  import { Issue, Project } from '@hanzo/tracker'
+  import { Button, ButtonKind, ButtonSize, ProgressCircle, SelectPopup, showPanel } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
   import tracker from '../../../plugin'
   import { listIssueStatusOrder } from '../../../utils'
   import IssueStatusIcon from '../IssueStatusIcon.svelte'

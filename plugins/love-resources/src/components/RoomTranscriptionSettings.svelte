@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import ui, { Label, ModernToggle } from '@hcengineering/ui'
-  import love, { Room } from '@hcengineering/love'
-  import { getClient } from '@hcengineering/presentation'
+  import ui, { Label, ModernToggle } from '@hanzo/ui'
+  import love, { Room } from '@hanzo/love'
+  import { getClient } from '@hanzo/presentation'
 
   import RoomLanguageSelector from './RoomLanguageSelector.svelte'
 

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact, Person } from '@hcengineering/contact'
-  import { AssigneeBox, personByIdStore } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { ActionIcon, EditBox, Icon, IconDelete, resizeObserver } from '@hcengineering/ui'
-  import { Room, RoomAccess, RoomType, isOffice } from '@hcengineering/love'
+  import contact, { Contact, Person } from '@hanzo/contact'
+  import { AssigneeBox, personByIdStore } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { ActionIcon, EditBox, Icon, IconDelete, resizeObserver } from '@hanzo/ui'
+  import { Room, RoomAccess, RoomType, isOffice } from '@hanzo/love'
   import { createEventDispatcher, onMount } from 'svelte'
   import { cubicOut } from 'svelte/easing'
   import { tweened } from 'svelte/motion'

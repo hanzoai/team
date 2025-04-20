@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { Project } from '@hcengineering/tracker'
+  import { Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { Project } from '@hanzo/tracker'
   import tracker from '../../plugin'
   import { MilestoneViewMode } from '../../utils'
   import MilestoneBrowser from './MilestoneBrowser.svelte'

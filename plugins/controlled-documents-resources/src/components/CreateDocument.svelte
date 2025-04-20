@@ -16,11 +16,11 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { AttachedData, Class, generateId, Mixin, Ref, SortingOrder } from '@hcengineering/core'
-  import { Card, createQuery, getClient } from '@hcengineering/presentation'
-  import { createFocusManager, EditBox, FocusHandler } from '@hcengineering/ui'
-  import { ObjectBox } from '@hcengineering/view-resources'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { AttachedData, Class, generateId, Mixin, Ref, SortingOrder } from '@hanzo/core'
+  import { Card, createQuery, getClient } from '@hanzo/presentation'
+  import { createFocusManager, EditBox, FocusHandler } from '@hanzo/ui'
+  import { ObjectBox } from '@hanzo/view-resources'
   import {
     type ControlledDocument,
     type DocumentTemplate,
@@ -28,7 +28,7 @@
     type ChangeControl,
     type DocumentSpace,
     DocumentState
-  } from '@hcengineering/controlled-documents'
+  } from '@hanzo/controlled-documents'
 
   import { createControlledDocFromTemplate } from '../docutils'
   import documents from '../plugin'

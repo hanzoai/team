@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hcengineering/contact'
-  import { DocumentQuery, Ref, RefTo } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
+  import { Employee } from '@hanzo/contact'
+  import { DocumentQuery, Ref, RefTo } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
   import contact from '../plugin'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
   import EmployeeBox from './EmployeeBox.svelte'
 
   export let value: Ref<Employee> | undefined

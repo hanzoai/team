@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, IconDownOutline, IconUpOutline, navigate } from '@hcengineering/ui'
+  import { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, IconDownOutline, IconUpOutline, navigate } from '@hanzo/ui'
   import { tick } from 'svelte'
   import { select } from '../actionImpl'
   import view from '../plugin'

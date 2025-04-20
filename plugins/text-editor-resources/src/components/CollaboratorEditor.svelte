@@ -15,12 +15,12 @@
 //
 -->
 <script lang="ts">
-  import { type Doc } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { KeyedAttribute } from '@hcengineering/presentation'
-  import { AnySvelteComponent, IconSize, registerFocus } from '@hcengineering/ui'
+  import { type Doc } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { KeyedAttribute } from '@hanzo/presentation'
+  import { AnySvelteComponent, IconSize, registerFocus } from '@hanzo/ui'
   import { AnyExtension, FocusPosition } from '@tiptap/core'
-  import textEditor, { CollaborationUser, TextEditorCommandHandler } from '@hcengineering/text-editor'
+  import textEditor, { CollaborationUser, TextEditorCommandHandler } from '@hanzo/text-editor'
 
   import CollaborativeTextEditor from './CollaborativeTextEditor.svelte'
   import { FileAttachFunction } from './extension/types'

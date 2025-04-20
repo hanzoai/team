@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity, { type ActivityMessage, type SavedMessage } from '@hcengineering/activity'
-import core, { type Ref, SortingOrder, type WithLookup } from '@hcengineering/core'
-import { createQuery, onClient } from '@hcengineering/presentation'
+import activity, { type ActivityMessage, type SavedMessage } from '@hanzo/activity'
+import core, { type Ref, SortingOrder, type WithLookup } from '@hanzo/core'
+import { createQuery, onClient } from '@hanzo/presentation'
 import { writable } from 'svelte/store'
 
 export const savedMessagesStore = writable<Array<WithLookup<SavedMessage>>>([])

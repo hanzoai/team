@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import devmodel, { devModelId } from '@hcengineering/devmodel'
-import { mergeIds } from '@hcengineering/platform'
-import { type Ref } from '@hcengineering/core'
-import { type Application } from '@hcengineering/workbench'
+import devmodel, { devModelId } from '@hanzo/devmodel'
+import { mergeIds } from '@hanzo/platform'
+import { type Ref } from '@hanzo/core'
+import { type Application } from '@hanzo/workbench'
 
 export default mergeIds(devModelId, devmodel, {
   ids: {

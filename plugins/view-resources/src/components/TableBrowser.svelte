@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hcengineering/core'
-  import { ActionContext } from '@hcengineering/presentation'
-  import { FadeOptions, Scroller, tableSP } from '@hcengineering/ui'
-  import { BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hcengineering/view'
+  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
+  import { ActionContext } from '@hanzo/presentation'
+  import { FadeOptions, Scroller, tableSP } from '@hanzo/ui'
+  import { BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzo/view'
   import { onMount } from 'svelte'
   import { focusStore, ListSelectionProvider, SelectDirection } from '../selection'
   import { LoadingProps } from '../utils'

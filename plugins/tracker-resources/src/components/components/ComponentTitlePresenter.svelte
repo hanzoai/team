@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Component } from '@hcengineering/tracker'
-  import { Icon } from '@hcengineering/ui'
+  import { Component } from '@hanzo/tracker'
+  import { Icon } from '@hanzo/ui'
   import tracker from '../../plugin'
 
   export let value: Component | undefined

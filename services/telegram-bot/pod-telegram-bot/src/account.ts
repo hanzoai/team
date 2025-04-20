@@ -20,10 +20,10 @@ import {
   SocialIdType,
   WorkspaceUuid,
   buildSocialIdString
-} from '@hcengineering/core'
-import { getAccountClient } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
-import { Integration } from '@hcengineering/account-client'
+} from '@hanzo/core'
+import { getAccountClient } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
+import { Integration } from '@hanzo/account-client'
 
 import { serviceToken } from './utils'
 import { IntegrationInfo } from './types'

@@ -4,7 +4,7 @@
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
   import { createEventDispatcher } from 'svelte'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { getEmbeddedLabel } from '@hanzo/platform'
   import { tooltip, capitalizeFirstLetter, type EmojiWithGroup, type LabelAndProps } from '../../'
   import { getEmoji } from '.'
   import { type Emoji } from 'emojibase'

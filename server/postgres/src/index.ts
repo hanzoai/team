@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { WorkspaceDestroyAdapter } from '@hcengineering/server-core'
+import type { WorkspaceDestroyAdapter } from '@hanzo/server-core'
 import { domainSchemas } from './schemas'
 import { getDBClient, retryTxn } from './utils'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { AccountUuid, Class, Ref, WorkspaceUuid } from '@hcengineering/core'
-import { ChunterSpace } from '@hcengineering/chunter'
-import { ActivityMessage } from '@hcengineering/activity'
-import { Integration } from '@hcengineering/account-client'
+import { AccountUuid, Class, Ref, WorkspaceUuid } from '@hanzo/core'
+import { ChunterSpace } from '@hanzo/chunter'
+import { ActivityMessage } from '@hanzo/activity'
+import { Integration } from '@hanzo/account-client'
 
 export type ChannelId = string & { __channelId: true }
 

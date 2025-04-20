@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hcengineering/core'
-import type { IntlString, Resource, StatusCode } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hcengineering/presentation/src/types'
-import recruit, { recruitId } from '@hcengineering/recruit'
-import { type TagCategory } from '@hcengineering/tags'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { type FilterFunction, type FilterMode, type Viewlet } from '@hcengineering/view'
+import { type Client, type Doc, type Ref } from '@hanzo/core'
+import type { IntlString, Resource, StatusCode } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/presentation/src/types'
+import recruit, { recruitId } from '@hanzo/recruit'
+import { type TagCategory } from '@hanzo/tags'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type FilterFunction, type FilterMode, type Viewlet } from '@hanzo/view'
 
 export default mergeIds(recruitId, recruit, {
   viewlet: {

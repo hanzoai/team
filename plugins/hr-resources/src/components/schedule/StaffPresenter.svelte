@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getName } from '@hcengineering/contact'
-  import { Avatar } from '@hcengineering/contact-resources'
-  import hr, { Department, Staff } from '@hcengineering/hr'
-  import { getClient } from '@hcengineering/presentation'
-  import { DocNavLink } from '@hcengineering/view-resources'
+  import { getName } from '@hanzo/contact'
+  import { Avatar } from '@hanzo/contact-resources'
+  import hr, { Department, Staff } from '@hanzo/hr'
+  import { getClient } from '@hanzo/presentation'
+  import { DocNavLink } from '@hanzo/view-resources'
 
   export let value: Staff
 

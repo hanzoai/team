@@ -3,12 +3,12 @@
 //
 //
 
-import { Ref } from '@hcengineering/core'
-import type { Metadata, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { TriggerFunc } from '@hcengineering/server-core'
-import { TodoDoneTester } from '@hcengineering/time'
-import { GithubProject } from '@hcengineering/github'
+import { Ref } from '@hanzo/core'
+import type { Metadata, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { TriggerFunc } from '@hanzo/server-core'
+import { TodoDoneTester } from '@hanzo/time'
+import { GithubProject } from '@hanzo/github'
 
 /**
  * @public

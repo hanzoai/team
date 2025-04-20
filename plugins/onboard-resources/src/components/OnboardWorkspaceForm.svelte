@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { LoginInfo } from '@hcengineering/login'
-  import { createWorkspace, setLoginInfo } from '@hcengineering/login-resources'
-  import { Status, Severity, OK } from '@hcengineering/platform'
+  import { LoginInfo } from '@hanzo/login'
+  import { createWorkspace, setLoginInfo } from '@hanzo/login-resources'
+  import { Status, Severity, OK } from '@hanzo/platform'
   import { createEventDispatcher } from 'svelte'
 
   import Form from './Form.svelte'

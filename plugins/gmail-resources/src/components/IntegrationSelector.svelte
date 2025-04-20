@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountBox } from '@hcengineering/contact-resources'
-  import { notEmpty, type PersonId } from '@hcengineering/core'
-  import { Integration } from '@hcengineering/setting'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { AccountBox } from '@hanzo/contact-resources'
+  import { notEmpty, type PersonId } from '@hanzo/core'
+  import { Integration } from '@hanzo/setting'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
 
   export let integrations: Integration[]
   export let selected: Integration | undefined

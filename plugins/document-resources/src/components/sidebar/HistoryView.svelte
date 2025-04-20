@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { EmployeePresenter, personByPersonIdStore } from '@hcengineering/contact-resources'
-  import { DocumentSnapshot } from '@hcengineering/document'
-  import { TimeSince } from '@hcengineering/ui'
+  import { EmployeePresenter, personByPersonIdStore } from '@hanzo/contact-resources'
+  import { DocumentSnapshot } from '@hanzo/document'
+  import { TimeSince } from '@hanzo/ui'
 
   export let value: DocumentSnapshot
 

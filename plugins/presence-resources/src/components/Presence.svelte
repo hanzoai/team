@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2024 Anticrm Platform Contributors.
+// Copyright © 2024 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
+  import { Doc } from '@hanzo/core'
 
   import PresenceContext from './PresenceContext.svelte'
 

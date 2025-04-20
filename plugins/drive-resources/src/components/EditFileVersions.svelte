@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { FindOptions, SortingOrder } from '@hcengineering/core'
-  import { type File, type FileVersion } from '@hcengineering/drive'
-  import { Scroller, Section } from '@hcengineering/ui'
-  import { Table } from '@hcengineering/view-resources'
+  import { FindOptions, SortingOrder } from '@hanzo/core'
+  import { type File, type FileVersion } from '@hanzo/drive'
+  import { Scroller, Section } from '@hanzo/ui'
+  import { Table } from '@hanzo/view-resources'
 
   import drive from '../plugin'
 

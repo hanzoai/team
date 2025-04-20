@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hcengineering/core'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import { gmailId } from '@hcengineering/gmail'
-import gmail from '@hcengineering/gmail-resources/src/plugin'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import type { DocUpdateMessageViewlet } from '@hcengineering/activity'
-import { type Action } from '@hcengineering/view'
-import { type NotificationGroup } from '@hcengineering/notification'
+import { type Client, type Doc, type Ref } from '@hanzo/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import { gmailId } from '@hanzo/gmail'
+import gmail from '@hanzo/gmail-resources/src/plugin'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import type { DocUpdateMessageViewlet } from '@hanzo/activity'
+import { type Action } from '@hanzo/view'
+import { type NotificationGroup } from '@hanzo/notification'
 
 export default mergeIds(gmailId, gmail, {
   action: {

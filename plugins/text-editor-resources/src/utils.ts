@@ -14,7 +14,7 @@
 //
 
 import { type Attribute } from '@tiptap/core'
-import { showPopup, SelectPopup, type PopupAlignment } from '@hcengineering/ui'
+import { showPopup, SelectPopup, type PopupAlignment } from '@hanzo/ui'
 
 import { mInsertTable } from './components/extensions'
 

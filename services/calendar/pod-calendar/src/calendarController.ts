@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Event } from '@hcengineering/calendar'
+import { Event } from '@hanzo/calendar'
 import {
   PersonId,
   PersonUuid,
@@ -23,14 +23,14 @@ import {
   isDeletingMode,
   parseSocialIdString,
   systemAccountUuid
-} from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import { Collection, type Db } from 'mongodb'
 import { type CalendarClient } from './calendar'
 import config from './config'
 import { type Token, type User } from './types'
 import { WorkspaceClient } from './workspaceClient'
-import { getAccountClient } from '@hcengineering/server-client'
+import { getAccountClient } from '@hanzo/server-client'
 
 export class CalendarController {
   private readonly workspaces: Map<WorkspaceUuid, WorkspaceClient | Promise<WorkspaceClient>> = new Map<

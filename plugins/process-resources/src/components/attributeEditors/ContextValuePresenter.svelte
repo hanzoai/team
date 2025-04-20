@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Context, SelectedContext } from '@hcengineering/process'
-  import { Label } from '@hcengineering/ui'
+  import { Context, SelectedContext } from '@hanzo/process'
+  import { Label } from '@hanzo/ui'
   import plugin from '../../plugin'
   import AttrContextPresenter from './AttrContextPresenter.svelte'
   import NestedContextPresenter from './NestedContextPresenter.svelte'

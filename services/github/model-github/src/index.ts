@@ -22,8 +22,8 @@ import {
   TypeString,
   UX,
   type Builder
-} from '@hcengineering/model'
-import core, { TAttachedDoc, TDoc } from '@hcengineering/model-core'
+} from '@hanzo/model'
+import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
 import github from './plugin'
 
 import {
@@ -38,18 +38,18 @@ import {
   type Markup,
   type Ref,
   type Timestamp
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
-import { type Person } from '@hcengineering/contact'
-import contact, { TPerson } from '@hcengineering/model-contact'
-import presentation from '@hcengineering/model-presentation'
-import tracker, { TComponent, TIssue, TMilestone, TProject, issuesOptions } from '@hcengineering/model-tracker'
-import view, { classPresenter } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import tags from '@hcengineering/tags'
-import task from '@hcengineering/task'
+import { type Person } from '@hanzo/contact'
+import contact, { TPerson } from '@hanzo/model-contact'
+import presentation from '@hanzo/model-presentation'
+import tracker, { TComponent, TIssue, TMilestone, TProject, issuesOptions } from '@hanzo/model-tracker'
+import view, { classPresenter } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import tags from '@hanzo/tags'
+import task from '@hanzo/task'
 import {
   type DocSyncInfo,
   type GithubAuthentication,
@@ -77,21 +77,21 @@ import {
   type LastReviewState,
   type MinimizeReason,
   type PullRequestMergeable
-} from '@hcengineering/github'
+} from '@hanzo/github'
 
-import { generateClassNotificationTypes } from '@hcengineering/model-notification'
+import { generateClassNotificationTypes } from '@hanzo/model-notification'
 
-import { type ActivityMessageControl } from '@hcengineering/activity'
-import activity, { TActivityMessage } from '@hcengineering/model-activity'
-import attachment, { TAttachment } from '@hcengineering/model-attachment'
-import chunter from '@hcengineering/model-chunter'
-import { TPreference } from '@hcengineering/model-preference'
-import { TToDo } from '@hcengineering/model-time'
-import notification from '@hcengineering/notification'
-import { DOMAIN_PREFERENCE } from '@hcengineering/preference'
-import time from '@hcengineering/time'
+import { type ActivityMessageControl } from '@hanzo/activity'
+import activity, { TActivityMessage } from '@hanzo/model-activity'
+import attachment, { TAttachment } from '@hanzo/model-attachment'
+import chunter from '@hanzo/model-chunter'
+import { TPreference } from '@hanzo/model-preference'
+import { TToDo } from '@hanzo/model-time'
+import notification from '@hanzo/notification'
+import { DOMAIN_PREFERENCE } from '@hanzo/preference'
+import time from '@hanzo/time'
 
-export { githubId } from '@hcengineering/github'
+export { githubId } from '@hanzo/github'
 export { githubOperation, githubOperationPreTime } from './migration'
 export { default } from './plugin'
 export const DOMAIN_GITHUB = 'github' as Domain

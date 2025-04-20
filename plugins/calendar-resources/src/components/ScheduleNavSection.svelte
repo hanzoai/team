@@ -15,16 +15,16 @@
 //
 -->
 <script lang="ts">
-  import { Schedule } from '@hcengineering/calendar'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { createQuery, getClient, getCurrentWorkspaceUrl, MessageBox } from '@hcengineering/presentation'
-  import { Action, ButtonIcon, IconAdd, IconDelete, IconLink, NavItem, showPopup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { TreeElement } from '@hcengineering/view-resources'
+  import { Schedule } from '@hanzo/calendar'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { createQuery, getClient, getCurrentWorkspaceUrl, MessageBox } from '@hanzo/presentation'
+  import { Action, ButtonIcon, IconAdd, IconDelete, IconLink, NavItem, showPopup } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { TreeElement } from '@hanzo/view-resources'
   import ScheduleEditor from './ScheduleEditor.svelte'
   import calendar from '../plugin'
-  import { SortingOrder } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
+  import { SortingOrder } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
 
   const currentUser = getCurrentEmployee()
   const scheduleUrl = getMetadata(calendar.metadata.PublicScheduleURL)

@@ -1,6 +1,6 @@
-import notification from '@hcengineering/notification'
-import core from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
+import notification from '@hanzo/notification'
+import core from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
 
 import activity from './plugin'
 

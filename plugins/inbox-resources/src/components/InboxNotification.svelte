@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { Notification } from '@hcengineering/communication-types'
-  import { MessagePresenter } from '@hcengineering/ui-next'
-  import { Card } from '@hcengineering/card'
+  import { Notification } from '@hanzo/communication-types'
+  import { MessagePresenter } from '@hanzo/ui-next'
+  import { Card } from '@hanzo/card'
 
   export let notification: Notification
   export let card: Card

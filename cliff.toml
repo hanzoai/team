@@ -48,8 +48,8 @@ filter_unconventional = true
 split_commits = false
 # regex for preprocessing the commit messages
 commit_preprocessors = [
-   { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/hcengineering/platform/issues/${2}))"},
-    { pattern = "Merge pull request #([0-9]+) from [^ ]+", replace = "PR [#${1}](https://github.com/hcengineering/platform/pull/${1}):"},
+   { pattern = '\((\w+\s)?#([0-9]+)\)', replace = "([#${2}](https://github.com/hanzoai/team-manager/issues/${2}))"},
+    { pattern = "Merge pull request #([0-9]+) from [^ ]+", replace = "PR [#${1}](https://github.com/hanzoai/team-manager/pull/${1}):"},
 ]
 # regex for parsing and grouping commits
 commit_parsers = [

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association } from '@hcengineering/core'
-  import { getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import presentation, { getClient, MessageBox } from '@hcengineering/presentation'
-  import { Button, DropdownIntlItem, EditBox, IconDelete, Label, Modal, showPopup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import core, { Association } from '@hanzo/core'
+  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import presentation, { getClient, MessageBox } from '@hanzo/presentation'
+  import { Button, DropdownIntlItem, EditBox, IconDelete, Label, Modal, showPopup } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import setting from '../plugin'
   import { clearSettingsStore } from '../store'
 

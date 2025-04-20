@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import type { Client, Doc, Ref } from '@hcengineering/core'
-import { type Resource, mergeIds } from '@hcengineering/platform'
-import survey, { surveyId } from '@hcengineering/survey'
-import type { Location, ResolvedLocation } from '@hcengineering/ui/src/types'
-import type { Action, ActionCategory, ViewAction } from '@hcengineering/view'
+import type { Client, Doc, Ref } from '@hanzo/core'
+import { type Resource, mergeIds } from '@hanzo/platform'
+import survey, { surveyId } from '@hanzo/survey'
+import type { Location, ResolvedLocation } from '@hanzo/ui/src/types'
+import type { Action, ActionCategory, ViewAction } from '@hanzo/view'
 
 export default mergeIds(surveyId, survey, {
   resolver: {

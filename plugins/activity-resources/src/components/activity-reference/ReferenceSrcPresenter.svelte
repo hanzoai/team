@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { DocReferencePresenter } from '@hcengineering/view-resources'
-  import view from '@hcengineering/view'
-  import { Icon, Label } from '@hcengineering/ui'
+  import type { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { DocReferencePresenter } from '@hanzo/view-resources'
+  import view from '@hanzo/view'
+  import { Icon, Label } from '@hanzo/ui'
 
   import activity from '../../plugin'
   import { isActivityMessage } from '../../activityMessagesUtils'

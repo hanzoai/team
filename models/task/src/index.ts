@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Person } from '@hcengineering/contact'
-import contact from '@hcengineering/contact'
+import type { Person } from '@hanzo/contact'
+import contact from '@hanzo/contact'
 import {
   DOMAIN_MODEL,
   IndexKind,
@@ -24,7 +24,7 @@ import {
   type Status,
   type StatusCategory,
   type Timestamp
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,
@@ -41,9 +41,9 @@ import {
   TypeString,
   UX,
   type Builder
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import chunter from '@hcengineering/model-chunter'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import chunter from '@hanzo/model-chunter'
 import core, {
   TAttachedDoc,
   TClass,
@@ -51,17 +51,17 @@ import core, {
   TSpaceType,
   TSpaceTypeDescriptor,
   TTypedSpace
-} from '@hcengineering/model-core'
-import { createPublicLinkAction } from '@hcengineering/model-guest'
+} from '@hanzo/model-core'
+import { createPublicLinkAction } from '@hanzo/model-guest'
 import view, {
   classPresenter,
   createAction,
   template,
   actionTemplates as viewTemplates
-} from '@hcengineering/model-view'
-import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import tags from '@hcengineering/tags'
+} from '@hanzo/model-view'
+import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import tags from '@hanzo/tags'
 import {
   type KanbanCard,
   type Project,
@@ -75,13 +75,13 @@ import {
   type TaskTypeClass,
   type TaskTypeDescriptor,
   type TaskTypeKind
-} from '@hcengineering/task'
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
+} from '@hanzo/task'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
+import type { AnyComponent } from '@hanzo/ui/src/types'
 
 import task from './plugin'
 
-export { createProjectType, taskId } from '@hcengineering/task'
+export { createProjectType, taskId } from '@hanzo/task'
 export { createSequence, migrateDefaultStatusesBase, taskOperation } from './migration'
 export { default } from './plugin'
 

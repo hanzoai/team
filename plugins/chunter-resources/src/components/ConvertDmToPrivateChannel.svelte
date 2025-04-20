@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Anticrm Platform Contributors.
+// Copyright © 2022 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,11 +15,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { getClient, Card } from '@hcengineering/presentation'
-  import { DirectMessage } from '@hcengineering/chunter'
-  import workbench from '@hcengineering/workbench'
-  import { getResource } from '@hcengineering/platform'
-  import { EditBox } from '@hcengineering/ui'
+  import { getClient, Card } from '@hanzo/presentation'
+  import { DirectMessage } from '@hanzo/chunter'
+  import workbench from '@hanzo/workbench'
+  import { getResource } from '@hanzo/platform'
+  import { EditBox } from '@hanzo/ui'
 
   import chunter from '../plugin'
 

@@ -33,7 +33,7 @@ import {
   type CardType,
   type Label,
   type FindLabelsParams
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import {
   type CreateFileEvent,
   type CreateMessageEvent,
@@ -49,7 +49,7 @@ import {
   type UpdateNotificationContextEvent,
   MessageRequestEventType,
   NotificationRequestEventType
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import {
   type Client as PlatformClient,
   type ClientConnection as PlatformConnection,
@@ -57,7 +57,7 @@ import {
   type SocialId,
   SocialIdType,
   generateId
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { onDestroy } from 'svelte'
 import {
   createMessagesQuery,
@@ -65,7 +65,7 @@ import {
   createNotificationsQuery,
   createLabelsQuery,
   initLiveQueries
-} from '@hcengineering/communication-client-query'
+} from '@hanzo/communication-client-query'
 
 import { getCurrentWorkspaceUuid, getFilesUrl } from './file'
 

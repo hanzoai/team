@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import attachment, { type Attachment } from '@hcengineering/attachment'
-import type { Tx, TxRemoveDoc } from '@hcengineering/core'
-import type { TriggerControl } from '@hcengineering/server-core'
+import attachment, { type Attachment } from '@hanzo/attachment'
+import type { Tx, TxRemoveDoc } from '@hanzo/core'
+import type { TriggerControl } from '@hanzo/server-core'
 
 /**
  * @public

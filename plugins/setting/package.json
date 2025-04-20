@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/setting",
-  "version": "0.6.17",
+  "name": "@hanzo/setting",
+  "version": "0.6.22",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -37,13 +37,13 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/templates": "^0.6.11",
-    "@hcengineering/ui": "^0.6.15"
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/templates": "^0.6.16",
+    "@hanzo/ui": "^0.6.21"
   },
-  "repository": "https://github.com/hcengineering/platform",
+  "repository": "https://github.com/hanzoai/team-manager",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   }
 }

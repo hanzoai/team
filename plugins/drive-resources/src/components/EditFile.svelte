@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Blob, type Ref, type WithLookup } from '@hcengineering/core'
-  import drive, { type File, type FileVersion } from '@hcengineering/drive'
-  import { FilePreview, createQuery } from '@hcengineering/presentation'
+  import { type Blob, type Ref, type WithLookup } from '@hanzo/core'
+  import drive, { type File, type FileVersion } from '@hanzo/drive'
+  import { FilePreview, createQuery } from '@hanzo/presentation'
 
   import { createEventDispatcher, onMount } from 'svelte'
   import EditFileVersions from './EditFileVersions.svelte'

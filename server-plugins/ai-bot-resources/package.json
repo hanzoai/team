@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/server-ai-bot-resources",
-  "version": "0.6.0",
+  "name": "@hanzo/server-ai-bot-resources",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
@@ -21,7 +21,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@types/jest": "^29.5.5",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
@@ -36,20 +36,20 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/activity": "^0.6.0",
-    "@hcengineering/ai-bot": "^0.6.0",
-    "@hcengineering/analytics-collector": "^0.6.0",
-    "@hcengineering/chunter": "^0.6.20",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/notification": "^0.6.23",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/server-activity-resources": "^0.6.0",
-    "@hcengineering/server-ai-bot": "^0.6.0",
-    "@hcengineering/server-contact": "^0.6.1",
-    "@hcengineering/server-core": "^0.6.1",
-    "@hcengineering/server-templates": "^0.6.0",
-    "@hcengineering/server-token": "^0.6.11",
-    "@hcengineering/templates": "^0.6.11"
+    "@hanzo/activity": "^0.6.4",
+    "@hanzo/ai-bot": "^0.6.4",
+    "@hanzo/analytics-collector": "^0.6.4",
+    "@hanzo/chunter": "^0.6.25",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/notification": "^0.6.28",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/server-activity-resources": "^0.6.4",
+    "@hanzo/server-ai-bot": "^0.6.4",
+    "@hanzo/server-contact": "^0.6.5",
+    "@hanzo/server-core": "^0.6.5",
+    "@hanzo/server-templates": "^0.6.4",
+    "@hanzo/server-token": "^0.6.16",
+    "@hanzo/templates": "^0.6.16"
   }
 }

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import {
   type Attribute,
   type Class,
@@ -27,10 +27,10 @@ import {
   type Space,
   toIdMap,
   type TxOperations
-} from '@hcengineering/core'
-import { type Resources, type Status, translate } from '@hcengineering/platform'
-import { getClient, MessageBox, type ObjectSearchResult } from '@hcengineering/presentation'
-import { type Component, type Issue, type Milestone, type Project } from '@hcengineering/tracker'
+} from '@hanzo/core'
+import { type Resources, type Status, translate } from '@hanzo/platform'
+import { getClient, MessageBox, type ObjectSearchResult } from '@hanzo/presentation'
+import { type Component, type Issue, type Milestone, type Project } from '@hanzo/tracker'
 import {
   closePanel,
   getCurrentLocation,
@@ -38,7 +38,7 @@ import {
   navigate,
   showPopup,
   themeStore
-} from '@hcengineering/ui'
+} from '@hanzo/ui'
 import ComponentEditor from './components/components/ComponentEditor.svelte'
 import ComponentFilterValuePresenter from './components/components/ComponentFilterValuePresenter.svelte'
 import ComponentPresenter from './components/components/ComponentPresenter.svelte'
@@ -130,7 +130,7 @@ import {
   deleteObject,
   deleteObjects,
   setFilters
-} from '@hcengineering/view-resources'
+} from '@hanzo/view-resources'
 import MoveAndDeleteMilestonePopup from './components/milestones/MoveAndDeleteMilestonePopup.svelte'
 import EditIssueTemplate from './components/templates/EditIssueTemplate.svelte'
 import TemplateEstimationEditor from './components/templates/EstimationEditor.svelte'
@@ -168,13 +168,13 @@ import ProjectPresenter from './components/projects/ProjectPresenter.svelte'
 import ProjectSpacePresenter from './components/projects/ProjectSpacePresenter.svelte'
 
 import { get } from 'svelte/store'
-import { settingId } from '@hcengineering/setting'
-import type { TaskType } from '@hcengineering/task'
-import { getAllStates } from '@hcengineering/task-resources'
-import view, { type Filter } from '@hcengineering/view'
+import { settingId } from '@hanzo/setting'
+import type { TaskType } from '@hanzo/task'
+import { getAllStates } from '@hanzo/task-resources'
+import view, { type Filter } from '@hanzo/view'
 import EstimationValueEditor from './components/issues/timereport/EstimationValueEditor.svelte'
 import TimePresenter from './components/issues/timereport/TimePresenter.svelte'
-import { getTargetObjectFromUrl } from '@hcengineering/text-editor-resources'
+import { getTargetObjectFromUrl } from '@hanzo/text-editor-resources'
 
 export { default as AssigneeEditor } from './components/issues/AssigneeEditor.svelte'
 export { default as SubIssueList } from './components/issues/edit/SubIssueList.svelte'

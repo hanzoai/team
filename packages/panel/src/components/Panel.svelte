@@ -1,5 +1,5 @@
 <!--
-    // Copyright © 2020, 2021 Anticrm Platform Contributors.
+    // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
     // Copyright © 2021, 2023 Hardcore Engineering Inc.
     //
     // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -17,8 +17,8 @@
   import { afterUpdate, createEventDispatcher, SvelteComponent } from 'svelte'
   import { Writable, writable } from 'svelte/store'
 
-  import activity from '@hcengineering/activity'
-  import { AccountRole, Doc, getCurrentAccount } from '@hcengineering/core'
+  import activity from '@hanzo/activity'
+  import { AccountRole, Doc, getCurrentAccount } from '@hanzo/core'
   import {
     Component,
     deviceOptionsStore as deviceInfo,
@@ -26,10 +26,10 @@
     Scroller,
     resizeObserver,
     HeaderAdaptive
-  } from '@hcengineering/ui'
-  import type { ButtonItem } from '@hcengineering/ui'
-  import { getResource } from '@hcengineering/platform'
-  import presence from '@hcengineering/presence'
+  } from '@hanzo/ui'
+  import type { ButtonItem } from '@hanzo/ui'
+  import { getResource } from '@hanzo/platform'
+  import presence from '@hanzo/presence'
 
   export let title: string | undefined = undefined
   export let withoutActivity: boolean = false

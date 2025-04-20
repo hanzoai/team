@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,19 +14,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref, Space } from '@hcengineering/core'
-  import core from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Action, IconEdit } from '@hcengineering/ui'
+  import type { Ref, Space } from '@hanzo/core'
+  import core from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Action, IconEdit } from '@hanzo/ui'
   import {
     NavLink,
     TreeItem,
     getActions as getContributedActions,
     getSpacePresenter,
     classIcon
-  } from '@hcengineering/view-resources'
-  import { SpacesNavModel } from '@hcengineering/workbench'
+  } from '@hanzo/view-resources'
+  import { SpacesNavModel } from '@hanzo/workbench'
   import { getSpaceName } from '../../utils'
 
   export let model: SpacesNavModel

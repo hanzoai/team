@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import type { DocumentQuery, Ref, WithLookup, IdMap } from '@hcengineering/core'
-  import type { ToDo, WorkSlot } from '@hcengineering/time'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import type { IntlString } from '@hcengineering/platform'
-  import type { TagElement } from '@hcengineering/tags'
-  import type { Project } from '@hcengineering/tracker'
+  import type { DocumentQuery, Ref, WithLookup, IdMap } from '@hanzo/core'
+  import type { ToDo, WorkSlot } from '@hanzo/time'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import type { IntlString } from '@hanzo/platform'
+  import type { TagElement } from '@hanzo/tags'
+  import type { Project } from '@hanzo/tracker'
   import type { ToDosMode } from '..'
   import {
     Scroller,
@@ -32,12 +32,12 @@
     IconMenuOpen,
     IconMenuClose,
     deviceOptionsStore as deviceInfo
-  } from '@hcengineering/ui'
-  import { toIdMap, SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import tracker from '@hcengineering/tracker'
-  import tags from '@hcengineering/tags'
-  import view from '@hcengineering/view-resources/src/plugin'
+  } from '@hanzo/ui'
+  import { toIdMap, SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import tracker from '@hanzo/tracker'
+  import tags from '@hanzo/tags'
+  import view from '@hanzo/view-resources/src/plugin'
   import { getNearest } from '../utils'
   import CreateToDo from './CreateToDo.svelte'
   import ToDoGroup from './ToDoGroup.svelte'

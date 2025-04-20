@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { isAdminUser } from '@hcengineering/presentation'
-  import { Project } from '@hcengineering/tracker'
+  import presentation, { isAdminUser } from '@hanzo/presentation'
+  import { Project } from '@hanzo/tracker'
   import {
     Icon,
     IconWithEmoji,
@@ -22,11 +22,11 @@
     getPlatformColorDef,
     getPlatformColorForTextDef,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { NavLink } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { NavLink } from '@hanzo/view-resources'
   import tracker from '../../plugin'
-  import { getCurrentAccount } from '@hcengineering/core'
+  import { getCurrentAccount } from '@hanzo/core'
 
   export let value: Project | undefined
   export let inline: boolean = false

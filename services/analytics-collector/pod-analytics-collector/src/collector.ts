@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { generateToken, Token } from '@hcengineering/server-token'
-import { AnalyticEvent } from '@hcengineering/analytics-collector'
-import { AccountRole, MeasureContext, isWorkspaceCreating, WorkspaceUuid, PersonUuid } from '@hcengineering/core'
-import { Person } from '@hcengineering/contact'
-import { getClient as getAccountClient, isWorkspaceLoginInfo } from '@hcengineering/account-client'
+import { generateToken, Token } from '@hanzo/server-token'
+import { AnalyticEvent } from '@hanzo/analytics-collector'
+import { AccountRole, MeasureContext, isWorkspaceCreating, WorkspaceUuid, PersonUuid } from '@hanzo/core'
+import { Person } from '@hanzo/contact'
+import { getClient as getAccountClient, isWorkspaceLoginInfo } from '@hanzo/account-client'
 import { Db, Collection } from 'mongodb'
 
 import { WorkspaceClient } from './workspaceClient'

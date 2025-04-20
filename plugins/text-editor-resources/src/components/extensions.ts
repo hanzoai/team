@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import textEditor from '@hcengineering/text-editor'
-import { IconScribble } from '@hcengineering/ui'
-import view from '@hcengineering/view'
+import textEditor from '@hanzo/text-editor'
+import { IconScribble } from '@hanzo/ui'
+import view from '@hanzo/view'
 import { type Editor, type Range } from '@tiptap/core'
 
 import { type InlineCommandsOptions } from './extension/inlineCommands'

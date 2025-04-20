@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import type { Attribute, Class, Doc, Mixin, Ref, Status } from '@hcengineering/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import type { ProjectTypeDescriptor, TaskType } from '@hcengineering/task'
-import { AnyComponent, Location, ResolvedLocation } from '@hcengineering/ui'
+import type { Attribute, Class, Doc, Mixin, Ref, Status } from '@hanzo/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import type { ProjectTypeDescriptor, TaskType } from '@hanzo/task'
+import { AnyComponent, Location, ResolvedLocation } from '@hanzo/ui'
 import type { Applicant, ApplicantMatch, Candidate, Opinion, Review, Vacancy, VacancyList } from './types'
 
 export * from './types'

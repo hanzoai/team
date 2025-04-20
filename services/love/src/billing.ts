@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { concatLink, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+import { concatLink, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import { AccessToken, EgressInfo } from 'livekit-server-sdk'
 import config from './config'
 

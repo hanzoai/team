@@ -13,20 +13,20 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import chunter from '@hcengineering/chunter'
-import core from '@hcengineering/model-core'
-import { SortingOrder, type FindOptions } from '@hcengineering/core'
+import activity from '@hanzo/activity'
+import chunter from '@hanzo/chunter'
+import core from '@hanzo/model-core'
+import { SortingOrder, type FindOptions } from '@hanzo/core'
 
-import { type Builder } from '@hcengineering/model'
-import view, { createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import print from '@hcengineering/model-print'
-import tracker from '@hcengineering/model-tracker'
-import { type ViewOptionsModel } from '@hcengineering/view'
-import contact from '@hcengineering/contact'
+import { type Builder } from '@hanzo/model'
+import view, { createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import print from '@hanzo/model-print'
+import tracker from '@hanzo/model-tracker'
+import { type ViewOptionsModel } from '@hanzo/view'
+import contact from '@hanzo/contact'
 
-import { testManagementId, type TestPlanItem, type TestResult } from '@hcengineering/test-management'
+import { testManagementId, type TestPlanItem, type TestResult } from '@hanzo/test-management'
 
 import {
   DOMAIN_TEST_MANAGEMENT,
@@ -47,7 +47,7 @@ import {
 import testManagement from './plugin'
 import { definePresenters } from './presenters'
 
-export { testManagementId } from '@hcengineering/test-management/src/index'
+export { testManagementId } from '@hanzo/test-management/src/index'
 
 function defineApplication (builder: Builder): void {
   builder.createDoc(

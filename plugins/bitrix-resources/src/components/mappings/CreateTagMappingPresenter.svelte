@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixFieldMapping, CreateTagOperation } from '@hcengineering/bitrix'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import tags from '@hcengineering/tags'
-  import { Button } from '@hcengineering/ui'
+  import { BitrixEntityMapping, BitrixFieldMapping, CreateTagOperation } from '@hanzo/bitrix'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import tags from '@hanzo/tags'
+  import { Button } from '@hanzo/ui'
 
   export let mapping: BitrixEntityMapping
   export let value: BitrixFieldMapping

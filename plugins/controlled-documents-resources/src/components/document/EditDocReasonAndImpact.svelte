@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Ref } from '@hcengineering/core'
-  import { Label, Scroller, PlainTextEditor } from '@hcengineering/ui'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import documents, { type DocumentSpace, type ChangeControl, DocumentState } from '@hcengineering/controlled-documents'
+  import { type Ref } from '@hanzo/core'
+  import { Label, Scroller, PlainTextEditor } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import documents, { type DocumentSpace, type ChangeControl, DocumentState } from '@hanzo/controlled-documents'
 
   import documentsRes from '../../plugin'
   import { $controlledDocument as controlledDocument, $isEditable as isEditable } from '../../stores/editors/document'

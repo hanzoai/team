@@ -1,7 +1,7 @@
-import { AccountUuid, MarkupBlobRef, Ref } from '@hcengineering/core'
-import document, { Document, getFirstRank, Teamspace } from '@hcengineering/document'
-import { makeRank } from '@hcengineering/rank'
-import { markdownToMarkup } from '@hcengineering/text-markdown'
+import { AccountUuid, MarkupBlobRef, Ref } from '@hanzo/core'
+import document, { Document, getFirstRank, Teamspace } from '@hanzo/document'
+import { makeRank } from '@hanzo/rank'
+import { markdownToMarkup } from '@hanzo/text-markdown'
 import {
   BaseFunctionsArgs,
   RunnableFunctionWithoutParse,

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Process, MethodParams, Step } from '@hcengineering/process'
-  import { Label } from '@hcengineering/ui'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Process, MethodParams, Step } from '@hanzo/process'
+  import { Label } from '@hanzo/ui'
   import process from '../../plugin'
-  import { Ref } from '@hcengineering/core'
+  import { Ref } from '@hanzo/core'
 
   export let step: Step<Process>
   export let params: MethodParams<Process>

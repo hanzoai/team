@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, SplitLogger } from '@hcengineering/analytics-service'
-import { startBackup } from '@hcengineering/backup-service'
-import { MeasureMetricsContext, newMetrics, type Tx } from '@hcengineering/core'
-import { initStatisticsContext, type PipelineFactory } from '@hcengineering/server-core'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
+import { startBackup } from '@hanzo/backup-service'
+import { MeasureMetricsContext, newMetrics, type Tx } from '@hanzo/core'
+import { initStatisticsContext, type PipelineFactory } from '@hanzo/server-core'
 import {
   createBackupPipeline,
   getConfig,
@@ -26,7 +26,7 @@ import {
   registerTxAdapterFactory,
   setAdapterSecurity,
   sharedPipelineContextVars
-} from '@hcengineering/server-pipeline'
+} from '@hanzo/server-pipeline'
 import { join } from 'path'
 
 import {
@@ -34,14 +34,14 @@ import {
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   shutdownMongo
-} from '@hcengineering/mongo'
+} from '@hanzo/mongo'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions,
   shutdownPostgres
-} from '@hcengineering/postgres'
+} from '@hanzo/postgres'
 import { readFileSync } from 'node:fs'
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]
 

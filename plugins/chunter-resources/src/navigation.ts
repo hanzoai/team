@@ -6,24 +6,24 @@ import {
   type Location,
   navigate,
   languageStore
-} from '@hcengineering/ui'
-import { type Ref, type Doc, type Class, generateId, concatLink } from '@hcengineering/core'
-import activity, { type ActivityMessage } from '@hcengineering/activity'
+} from '@hanzo/ui'
+import { type Ref, type Doc, type Class, generateId, concatLink } from '@hanzo/core'
+import activity, { type ActivityMessage } from '@hanzo/activity'
 import {
   type Channel,
   type ChatWidgetTab,
   chunterId,
   type ChunterSpace,
   type ThreadMessage
-} from '@hcengineering/chunter'
-import { type DocNotifyContext, notificationId } from '@hcengineering/notification'
-import workbench, { type Widget, workbenchId, type LocationData } from '@hcengineering/workbench'
-import { classIcon, getObjectLinkId, parseLinkId } from '@hcengineering/view-resources'
-import presentation, { getClient } from '@hcengineering/presentation'
-import view, { encodeObjectURI, decodeObjectURI } from '@hcengineering/view'
-import { createWidgetTab, isElementFromSidebar, sidebarStore } from '@hcengineering/workbench-resources'
-import { type Asset, getMetadata, type IntlString, translate } from '@hcengineering/platform'
-import contact from '@hcengineering/contact'
+} from '@hanzo/chunter'
+import { type DocNotifyContext, notificationId } from '@hanzo/notification'
+import workbench, { type Widget, workbenchId, type LocationData } from '@hanzo/workbench'
+import { classIcon, getObjectLinkId, parseLinkId } from '@hanzo/view-resources'
+import presentation, { getClient } from '@hanzo/presentation'
+import view, { encodeObjectURI, decodeObjectURI } from '@hanzo/view'
+import { createWidgetTab, isElementFromSidebar, sidebarStore } from '@hanzo/workbench-resources'
+import { type Asset, getMetadata, type IntlString, translate } from '@hanzo/platform'
+import contact from '@hanzo/contact'
 import { get } from 'svelte/store'
 
 import { chatSpecials } from './components/chat/utils'

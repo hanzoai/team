@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Ref } from '@hcengineering/core'
-import type { Card } from '@hcengineering/card'
-import { type MessageID } from '@hcengineering/communication-types'
+import type { Ref } from '@hanzo/core'
+import type { Card } from '@hanzo/card'
+import { type MessageID } from '@hanzo/communication-types'
 
 export interface ChatWidgetData {
   id: string

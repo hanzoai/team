@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,14 +14,14 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import core, { getCurrentAccount, type Ref } from '@hcengineering/core'
-  import { createNotificationsQuery, createQuery } from '@hcengineering/presentation'
-  import { Scroller, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
-  import { NavLink } from '@hcengineering/view-resources'
-  import type { Application } from '@hcengineering/workbench'
-  import workbench from '@hcengineering/workbench'
-  import inbox, { inboxId } from '@hcengineering/inbox'
-  import chat, { chatId } from '@hcengineering/chat'
+  import core, { getCurrentAccount, type Ref } from '@hanzo/core'
+  import { createNotificationsQuery, createQuery } from '@hanzo/presentation'
+  import { Scroller, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  import { NavLink } from '@hanzo/view-resources'
+  import type { Application } from '@hanzo/workbench'
+  import workbench from '@hanzo/workbench'
+  import inbox, { inboxId } from '@hanzo/inbox'
+  import chat, { chatId } from '@hanzo/chat'
 
   import { isAppAllowed } from '../utils'
   import AppItem from './AppItem.svelte'

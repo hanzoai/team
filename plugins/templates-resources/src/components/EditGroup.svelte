@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SpaceMembers } from '@hcengineering/contact-resources'
-  import contact from '@hcengineering/contact-resources/src/plugin'
-  import core from '@hcengineering/core'
-  import presentation, { Card, getClient } from '@hcengineering/presentation'
-  import { TemplateCategory } from '@hcengineering/templates'
-  import { EditBox, Grid, Label } from '@hcengineering/ui'
-  import { BooleanPresenter } from '@hcengineering/view-resources'
+  import { SpaceMembers } from '@hanzo/contact-resources'
+  import contact from '@hanzo/contact-resources/src/plugin'
+  import core from '@hanzo/core'
+  import presentation, { Card, getClient } from '@hanzo/presentation'
+  import { TemplateCategory } from '@hanzo/templates'
+  import { EditBox, Grid, Label } from '@hanzo/ui'
+  import { BooleanPresenter } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import templates from '../plugin'
 

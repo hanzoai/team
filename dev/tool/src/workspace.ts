@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -27,17 +27,17 @@ import core, {
   type WorkspaceIds,
   type WorkspaceInfoWithStatus,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { getMongoClient, getWorkspaceMongoDB } from '@hcengineering/mongo'
-import { createStorageBackupStorage, restore } from '@hcengineering/server-backup'
+} from '@hanzo/core'
+import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
+import { createStorageBackupStorage, restore } from '@hanzo/server-backup'
 import {
   createDummyStorageAdapter,
   type PipelineFactory,
   type StorageAdapter,
   wrapPipeline
-} from '@hcengineering/server-core'
-import { createStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import { connect } from '@hcengineering/server-tool'
+} from '@hanzo/server-core'
+import { createStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import { connect } from '@hanzo/server-tool'
 import { generateModelDiff, printDiff } from './mdiff'
 
 export async function diffWorkspace (mongoUrl: string, dbName: string, rawTxes: Tx[]): Promise<void> {

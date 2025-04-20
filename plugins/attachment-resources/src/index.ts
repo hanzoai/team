@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import activity, { type ActivityMessage, type DocUpdateMessage } from '@hcengineering/activity'
-import attachment, { type Attachment } from '@hcengineering/attachment'
-import core, { SortingOrder, type Markup, type ObjQueryType, type SortingQuery } from '@hcengineering/core'
-import { type IntlString, type Resources } from '@hcengineering/platform'
-import { PDFViewer, deleteFile, getClient, uploadFile } from '@hcengineering/presentation'
+import activity, { type ActivityMessage, type DocUpdateMessage } from '@hanzo/activity'
+import attachment, { type Attachment } from '@hanzo/attachment'
+import core, { SortingOrder, type Markup, type ObjQueryType, type SortingQuery } from '@hanzo/core'
+import { type IntlString, type Resources } from '@hanzo/platform'
+import { PDFViewer, deleteFile, getClient, uploadFile } from '@hanzo/presentation'
 
 import AccordionEditor from './components/AccordionEditor.svelte'
 import AddAttachment from './components/AddAttachment.svelte'

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixEntityType, mappingTypes } from '@hcengineering/bitrix'
-  import core, { Class, ClassifierKind, Doc, Obj, Ref } from '@hcengineering/core'
-  import { Card, createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { Integration } from '@hcengineering/setting'
-  import { DropdownLabels } from '@hcengineering/ui'
-  import { ObjectBox } from '@hcengineering/view-resources'
+  import { BitrixEntityMapping, BitrixEntityType, mappingTypes } from '@hanzo/bitrix'
+  import core, { Class, ClassifierKind, Doc, Obj, Ref } from '@hanzo/core'
+  import { Card, createQuery, getClient } from '@hanzo/presentation'
+  import setting, { Integration } from '@hanzo/setting'
+  import { DropdownLabels } from '@hanzo/ui'
+  import { ObjectBox } from '@hanzo/view-resources'
   import bitrix from '../plugin'
 
   export let integration: Integration

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery } from '@hcengineering/presentation'
-  import type { Applicant, Candidate, Vacancy } from '@hcengineering/recruit'
-  import { Scroller } from '@hcengineering/ui'
+  import { createQuery } from '@hanzo/presentation'
+  import type { Applicant, Candidate, Vacancy } from '@hanzo/recruit'
+  import { Scroller } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import CandidateCard from './CandidateCard.svelte'
   import VacancyCard from './VacancyCard.svelte'

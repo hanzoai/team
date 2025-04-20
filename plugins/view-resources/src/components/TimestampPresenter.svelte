@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, ButtonSize, TimeSince } from '@hcengineering/ui'
+  import { Button, ButtonSize, TimeSince } from '@hanzo/ui'
 
   export let value: number
   export let kind: 'no-border' | 'link' | 'list' = 'no-border'

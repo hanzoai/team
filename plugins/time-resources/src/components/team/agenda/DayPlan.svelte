@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Event } from '@hcengineering/calendar'
-  import { IdMap, Ref, Timestamp } from '@hcengineering/core'
-  import { IntlString, getEmbeddedLabel } from '@hcengineering/platform'
-  import { ToDo, WorkSlot } from '@hcengineering/time'
-  import { Label, Scroller, areDatesEqual, ticker } from '@hcengineering/ui'
+  import { Event } from '@hanzo/calendar'
+  import { IdMap, Ref, Timestamp } from '@hanzo/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
+  import { ToDo, WorkSlot } from '@hanzo/time'
+  import { Label, Scroller, areDatesEqual, ticker } from '@hanzo/ui'
   import time from '../../../plugin'
   import PlanGroup from './PlanGroup.svelte'
 

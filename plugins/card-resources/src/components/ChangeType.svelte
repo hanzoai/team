@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Card, CardEvents, MasterTag } from '@hcengineering/card'
-  import { AnyAttribute, Class, ClassifierKind, Doc, fillDefaults, Ref } from '@hcengineering/core'
-  import { Card as CardModal, getClient } from '@hcengineering/presentation'
-  import { DropdownIntlItem, Label, NestedDropdown } from '@hcengineering/ui'
+  import { Analytics } from '@hanzo/analytics'
+  import { Card, CardEvents, MasterTag } from '@hanzo/card'
+  import { AnyAttribute, Class, ClassifierKind, Doc, fillDefaults, Ref } from '@hanzo/core'
+  import { Card as CardModal, getClient } from '@hanzo/presentation'
+  import { DropdownIntlItem, Label, NestedDropdown } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { deepEqual } from 'fast-equals'
   import card from '../plugin'

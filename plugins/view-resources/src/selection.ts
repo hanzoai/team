@@ -1,5 +1,5 @@
-import { type Doc, type Ref } from '@hcengineering/core'
-import { panelstore } from '@hcengineering/ui'
+import { type Doc, type Ref } from '@hanzo/core'
+import { panelstore } from '@hanzo/ui'
 import { onDestroy } from 'svelte'
 import { type Unsubscriber, type Writable, writable } from 'svelte/store'
 

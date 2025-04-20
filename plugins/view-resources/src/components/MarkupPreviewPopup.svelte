@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MessageViewer } from '@hcengineering/presentation'
-  import { deviceOptionsStore as deviceInfo, resizeObserver } from '@hcengineering/ui'
+  import { MessageViewer } from '@hanzo/presentation'
+  import { deviceOptionsStore as deviceInfo, resizeObserver } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let value: string

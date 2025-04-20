@@ -1,4 +1,4 @@
-FROM hardcoreeng/base:v20250113a
+FROM hanzoai/team:v20250113a
 WORKDIR /usr/src/app
 
 RUN npm install --ignore-scripts=false --verbose sharp@v0.32.6 --unsafe-perm

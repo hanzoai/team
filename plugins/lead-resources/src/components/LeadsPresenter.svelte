@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Customer } from '@hcengineering/lead'
-  import { Icon, tooltip } from '@hcengineering/ui'
+  import type { Customer } from '@hanzo/lead'
+  import { Icon, tooltip } from '@hanzo/ui'
   import LeadsPopup from './LeadsPopup.svelte'
   import leads from '../plugin'
 

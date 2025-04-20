@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
+import activity from '@hanzo/activity'
 import type {
   Attachment,
   AttachmentMetadata,
@@ -21,8 +21,8 @@ import type {
   Embedding,
   Photo,
   SavedAttachments
-} from '@hcengineering/attachment'
-import { IndexKind, type Blob, type Class, type Doc, type Domain, type Ref } from '@hcengineering/core'
+} from '@hanzo/attachment'
+import { IndexKind, type Blob, type Class, type Doc, type Domain, type Ref } from '@hanzo/core'
 import {
   Hidden,
   Index,
@@ -35,17 +35,17 @@ import {
   TypeTimestamp,
   UX,
   type Builder
-} from '@hcengineering/model'
-import core, { TAttachedDoc, TDoc } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import view, { createAction } from '@hcengineering/model-view'
-import workbench, { WidgetType } from '@hcengineering/workbench'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import presentation from '@hcengineering/model-presentation'
+} from '@hanzo/model'
+import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import view, { createAction } from '@hanzo/model-view'
+import workbench, { WidgetType } from '@hanzo/workbench'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import presentation from '@hanzo/model-presentation'
 
 import attachment from './plugin'
 
-export { attachmentId } from '@hcengineering/attachment'
+export { attachmentId } from '@hanzo/attachment'
 export { attachmentOperation } from './migration'
 
 export const DOMAIN_ATTACHMENT = 'attachment' as Domain

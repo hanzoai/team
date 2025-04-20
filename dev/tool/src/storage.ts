@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Attachment } from '@hcengineering/attachment'
+import { type Attachment } from '@hanzo/attachment'
 import {
   type Blob,
   type MeasureContext,
@@ -22,17 +22,17 @@ import {
   RateLimiter,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { type DatalakeClient } from '@hcengineering/datalake'
-import { type UploadObjectParams } from '@hcengineering/datalake/types/client'
-import { DOMAIN_ATTACHMENT } from '@hcengineering/model-attachment'
-import { type S3Config, type S3Service } from '@hcengineering/s3'
+} from '@hanzo/core'
+import { type DatalakeClient } from '@hanzo/datalake'
+import { type UploadObjectParams } from '@hanzo/datalake/types/client'
+import { DOMAIN_ATTACHMENT } from '@hanzo/model-attachment'
+import { type S3Config, type S3Service } from '@hanzo/s3'
 import {
   type ListBlobResult,
   type StorageAdapter,
   type StorageAdapterEx,
   type UploadedObjectInfo
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import { type Db } from 'mongodb'
 import { PassThrough, type Readable } from 'stream'
 

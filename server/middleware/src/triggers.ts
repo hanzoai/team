@@ -35,8 +35,8 @@ import core, {
   addOperation,
   toFindResult,
   withContext
-} from '@hcengineering/core'
-import { PlatformError, getResource, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, getResource, unknownError } from '@hanzo/platform'
 import type {
   Middleware,
   ObjectDDParticipant,
@@ -46,8 +46,8 @@ import type {
   StorageAdapter,
   TriggerControl,
   TxMiddlewareResult
-} from '@hcengineering/server-core'
-import serverCore, { BaseMiddleware, SessionDataImpl, SessionFindAll, Triggers } from '@hcengineering/server-core'
+} from '@hanzo/server-core'
+import serverCore, { BaseMiddleware, SessionDataImpl, SessionFindAll, Triggers } from '@hanzo/server-core'
 import { filterBroadcastOnly } from './utils'
 
 /**

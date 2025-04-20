@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Asset, IntlString } from '@hcengineering/platform'
+import { Asset, IntlString } from '@hanzo/platform'
 import { Attribute, Doc, Domain, Ref } from './classes'
 
 /**

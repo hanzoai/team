@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2021, 2023 Anticrm Platform Contributors.
+// Copyright © 2021, 2023 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import { getEmbeddedLabel } from '@hanzo/platform'
   import {
     Icon,
     Label,

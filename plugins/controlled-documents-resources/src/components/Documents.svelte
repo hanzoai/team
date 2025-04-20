@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Document } from '@hcengineering/controlled-documents'
-  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hcengineering/core'
-  import type { IntlString, Asset } from '@hcengineering/platform'
-  import { IModeSelector } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
-  import { ViewletPanelHeader } from '@hcengineering/view-resources'
+  import { Document } from '@hanzo/controlled-documents'
+  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
+  import type { IntlString, Asset } from '@hanzo/platform'
+  import { IModeSelector } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { ViewletPanelHeader } from '@hanzo/view-resources'
 
   import document from '../plugin'
   import DocumentsContent from './document/DocumentsContent.svelte'

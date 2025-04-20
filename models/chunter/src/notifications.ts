@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import notification from '@hcengineering/model-notification'
-import core from '@hcengineering/model-core'
-import activity from '@hcengineering/activity'
+import { type Builder } from '@hanzo/model'
+import notification from '@hanzo/model-notification'
+import core from '@hanzo/model-core'
+import activity from '@hanzo/activity'
 
 import chunter from './plugin'
 

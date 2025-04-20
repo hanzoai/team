@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { ArrOf, Prop, TypeString, type Builder } from '@hcengineering/model'
-import { type Asset } from '@hcengineering/platform'
-import { getRoleAttributeLabel } from '@hcengineering/core'
+import { ArrOf, Prop, TypeString, type Builder } from '@hanzo/model'
+import { type Asset } from '@hanzo/platform'
+import { getRoleAttributeLabel } from '@hanzo/core'
 
 import { TSpacesTypeData } from './security'
 import core from './component'

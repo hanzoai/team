@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, RelatedDocument, DocumentQuery } from '@hcengineering/core'
+  import { Ref, RelatedDocument, DocumentQuery } from '@hanzo/core'
 
-  import { getResource, IntlString } from '@hcengineering/platform'
+  import { getResource, IntlString } from '@hanzo/platform'
   import ui, {
     createFocusManager,
     deviceOptionsStore,
@@ -28,7 +28,7 @@
     Icon,
     tooltip,
     EditWithIcon
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import presentation from '../plugin'
   import { ObjectSearchCategory, ObjectSearchResult } from '../types'

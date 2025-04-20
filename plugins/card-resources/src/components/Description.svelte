@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hcengineering/attachment'
-  import { Card } from '@hcengineering/card'
-  import { Blob, Ref } from '@hcengineering/core'
-  import { getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Heading } from '@hcengineering/text-editor'
-  import { TableOfContents } from '@hcengineering/text-editor-resources'
-  import { navigate } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { getObjectLinkFragment } from '@hcengineering/view-resources'
+  import attachment from '@hanzo/attachment'
+  import { Card } from '@hanzo/card'
+  import { Blob, Ref } from '@hanzo/core'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Heading } from '@hanzo/text-editor'
+  import { TableOfContents } from '@hanzo/text-editor-resources'
+  import { navigate } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { getObjectLinkFragment } from '@hanzo/view-resources'
   import ContentEditor from './ContentEditor.svelte'
 
   export let doc: Card

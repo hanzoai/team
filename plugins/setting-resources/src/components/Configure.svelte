@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { PluginConfiguration } from '@hcengineering/core'
-  import { pluginConfigurationStore, getClient } from '@hcengineering/presentation'
-  import { Breadcrumb, Button, Header, Icon, IconInfo, Label, Scroller } from '@hcengineering/ui'
+  import { PluginConfiguration } from '@hanzo/core'
+  import { pluginConfigurationStore, getClient } from '@hanzo/presentation'
+  import { Breadcrumb, Button, Header, Icon, IconInfo, Label, Scroller } from '@hanzo/ui'
   import setting from '../plugin'
 
   const client = getClient()

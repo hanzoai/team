@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type LoginInfo } from '@hcengineering/login'
+import { type LoginInfo } from '@hanzo/login'
 import {
   getWorkspaces,
   navigateToWorkspace,
   selectWorkspace,
   type Pages as LoginPages
-} from '@hcengineering/login-resources'
-import { getMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
-import { type Location, getCurrentLocation, locationToUrl, navigate } from '@hcengineering/ui'
+} from '@hanzo/login-resources'
+import { getMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
+import { type Location, getCurrentLocation, locationToUrl, navigate } from '@hanzo/ui'
 
 import { type Pages } from './index'
 

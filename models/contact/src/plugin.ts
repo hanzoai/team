@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,17 +14,17 @@
 // limitations under the License.
 //
 
-import { contactId } from '@hcengineering/contact'
-import contact from '@hcengineering/contact-resources/src/plugin'
-import type { Client, Doc, DocManager, Ref } from '@hcengineering/core'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hcengineering/model-presentation'
-import { type NotificationGroup } from '@hcengineering/notification'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import { type TemplateFieldFunc } from '@hcengineering/templates'
-import { type AnyComponent, type Location } from '@hcengineering/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction } from '@hcengineering/view'
-import { type ChatMessageViewlet } from '@hcengineering/chunter'
-import { type LocationData } from '@hcengineering/workbench'
+import { contactId } from '@hanzo/contact'
+import contact from '@hanzo/contact-resources/src/plugin'
+import type { Client, Doc, DocManager, Ref } from '@hanzo/core'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/model-presentation'
+import { type NotificationGroup } from '@hanzo/notification'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import { type TemplateFieldFunc } from '@hanzo/templates'
+import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction } from '@hanzo/view'
+import { type ChatMessageViewlet } from '@hanzo/chunter'
+import { type LocationData } from '@hanzo/workbench'
 
 export default mergeIds(contactId, contact, {
   activity: {

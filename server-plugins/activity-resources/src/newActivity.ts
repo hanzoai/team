@@ -1,17 +1,17 @@
-import core, { Class, Doc, Hierarchy, Ref, systemAccount, TxCreateDoc, TxCUD, TxProcessor } from '@hcengineering/core'
-import { Card } from '@hcengineering/card'
-import { TriggerControl } from '@hcengineering/server-core'
-import activity from '@hcengineering/activity'
-import { ActivityControl } from '@hcengineering/server-activity'
-import { ServerApi as CommunicationApi, MessageRequestEventType } from '@hcengineering/communication-sdk-types'
+import core, { Class, Doc, Hierarchy, Ref, systemAccount, TxCreateDoc, TxCUD, TxProcessor } from '@hanzo/core'
+import { Card } from '@hanzo/card'
+import { TriggerControl } from '@hanzo/server-core'
+import activity from '@hanzo/activity'
+import { ActivityControl } from '@hanzo/server-activity'
+import { ServerApi as CommunicationApi, MessageRequestEventType } from '@hanzo/communication-sdk-types'
 import {
   ActivityAttributeUpdate,
   ActivityMessageData,
   ActivityUpdate,
   ActivityUpdateType,
   MessageType
-} from '@hcengineering/communication-types'
-import { translate } from '@hcengineering/platform'
+} from '@hanzo/communication-types'
+import { translate } from '@hanzo/platform'
 
 import { getNewActivityUpdates } from './utils'
 

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import core, { Client, Ref, TxOperations, AccountUuid } from '@hcengineering/core'
-import { createClient } from '@hcengineering/server-client'
-import contact, { Employee, Person } from '@hcengineering/contact'
-import chunter, { DirectMessage } from '@hcengineering/chunter'
-import { aiBotEmailSocialKey } from '@hcengineering/ai-bot'
-import notification from '@hcengineering/notification'
+import core, { Client, Ref, TxOperations, AccountUuid } from '@hanzo/core'
+import { createClient } from '@hanzo/server-client'
+import contact, { Employee, Person } from '@hanzo/contact'
+import chunter, { DirectMessage } from '@hanzo/chunter'
+import { aiBotEmailSocialKey } from '@hanzo/ai-bot'
+import notification from '@hanzo/notification'
 
 export async function connectPlatform (token: string, endpoint: string): Promise<Client> {
   return await createClient(endpoint, token)

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2021 Anticrm Platform Contributors.
+// Copyright © 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { Action } from '@hcengineering/ui'
-  import { ButtonIcon, NavItem } from '@hcengineering/ui'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Action } from '@hanzo/ui'
+  import { ButtonIcon, NavItem } from '@hanzo/ui'
 
   export let icon: Asset | undefined = undefined
   export let iconProps: Record<string, any> | undefined = undefined

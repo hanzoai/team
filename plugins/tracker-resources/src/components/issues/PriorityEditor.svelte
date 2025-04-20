@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Issue, IssueDraft, IssuePriority, IssueTemplateData, TrackerEvents } from '@hcengineering/tracker'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { AttachedData } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Issue, IssueDraft, IssuePriority, IssueTemplateData, TrackerEvents } from '@hanzo/tracker'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   import PriorityInlineEditor from './PriorityInlineEditor.svelte'
 

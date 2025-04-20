@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DrawingCmd } from '@hcengineering/presentation'
-  import textEditor from '@hcengineering/text-editor'
-  import { Dialog } from '@hcengineering/ui'
+  import { DrawingCmd } from '@hanzo/presentation'
+  import textEditor from '@hanzo/text-editor'
+  import { Dialog } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { Array as YArray, Map as YMap } from 'yjs'
   import DrawingBoardEditor from './DrawingBoardEditor.svelte'

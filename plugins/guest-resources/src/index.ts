@@ -1,5 +1,5 @@
-import { type Resources } from '@hcengineering/platform'
-import { type DefSeparators } from '@hcengineering/ui'
+import { type Resources } from '@hanzo/platform'
+import { type DefSeparators } from '@hanzo/ui'
 import CreatePublicLink from './components/CreatePublicLink.svelte'
 import GuestApp from './components/GuestApp.svelte'
 

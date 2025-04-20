@@ -18,9 +18,9 @@
     getClient,
     type LinkPreviewDetails,
     LinkPreviewAttachmentMetadata
-  } from '@hcengineering/presentation'
-  import { type Attachment } from '@hcengineering/attachment'
-  import { type WithLookup } from '@hcengineering/core'
+  } from '@hanzo/presentation'
+  import { type Attachment } from '@hanzo/attachment'
+  import { type WithLookup } from '@hanzo/core'
   import { onMount } from 'svelte'
 
   import TrashIcon from './icons/Trash.svelte'

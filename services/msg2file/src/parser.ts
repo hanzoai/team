@@ -14,8 +14,8 @@
 //
 
 import { Readable } from 'stream'
-import { ParsedFile } from '@hcengineering/communication-types'
-import { parseYaml } from '@hcengineering/communication-yaml'
+import { ParsedFile } from '@hanzo/communication-types'
+import { parseYaml } from '@hanzo/communication-yaml'
 
 export async function parseFileStream (stream: Readable): Promise<ParsedFile> {
   return await new Promise((resolve, reject) => {

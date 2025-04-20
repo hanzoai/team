@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { MeetingMinutes } from '@hcengineering/love'
+  import { MeetingMinutes } from '@hanzo/love'
 
   import ControlBar from './ControlBar.svelte'
   import { currentRoom, currentMeetingMinutes } from '../stores'

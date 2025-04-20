@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TextEditorHandler } from '@hcengineering/text-editor'
+  import { TextEditorHandler } from '@hanzo/text-editor'
   import TemplatePopup from './TemplatePopup.svelte'
 
   export let editor: TextEditorHandler

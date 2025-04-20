@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import documents, { ProjectDocumentTree, type DocumentSpace, type Project } from '@hcengineering/controlled-documents'
-  import { type Doc, type Ref } from '@hcengineering/core'
-  import { getPlatformColorForTextDef, themeStore } from '@hcengineering/ui'
-  import { TreeNode } from '@hcengineering/view-resources'
+  import documents, { ProjectDocumentTree, type DocumentSpace, type Project } from '@hanzo/controlled-documents'
+  import { type Doc, type Ref } from '@hanzo/core'
+  import { getPlatformColorForTextDef, themeStore } from '@hanzo/ui'
+  import { TreeNode } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import { createDocumentHierarchyQuery } from '../../utils'

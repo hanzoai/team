@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { CardSelector } from '@hcengineering/card-resources'
-  import { Ref } from '@hcengineering/core'
-  import { Card as CardPopup, getClient } from '@hcengineering/presentation'
-  import { Process } from '@hcengineering/process'
-  import { Dropdown, ListItem } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { CardSelector } from '@hanzo/card-resources'
+  import { Ref } from '@hanzo/core'
+  import { Card as CardPopup, getClient } from '@hanzo/presentation'
+  import { Process } from '@hanzo/process'
+  import { Dropdown, ListItem } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../plugin'
   import { createExecution } from '../utils'

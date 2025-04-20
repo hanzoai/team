@@ -15,11 +15,11 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { Employee } from '@hcengineering/contact'
-  import { AccountUuid, Ref, notEmpty } from '@hcengineering/core'
-  import { employeeByIdStore, SelectUsersPopup } from '@hcengineering/contact-resources'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { Modal, showPopup } from '@hcengineering/ui'
+  import { Employee } from '@hanzo/contact'
+  import { AccountUuid, Ref, notEmpty } from '@hanzo/core'
+  import { employeeByIdStore, SelectUsersPopup } from '@hanzo/contact-resources'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { Modal, showPopup } from '@hanzo/ui'
 
   import chunter from '../../../plugin'
   import { buildDmName, createDirect } from '../../../utils'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, DocumentUpdate, IndexKind, PropertyType, Ref, Type } from '@hcengineering/core'
-  import { Asset, getEmbeddedLabel, getResource, translateCB } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
+  import core, { AnyAttribute, Class, DocumentUpdate, IndexKind, PropertyType, Ref, Type } from '@hanzo/core'
+  import { Asset, getEmbeddedLabel, getResource, translateCB } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
   import {
     AnyComponent,
     ButtonIcon,
@@ -28,9 +28,9 @@
     ModernEditbox,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import { IconPicker } from '@hcengineering/view-resources'
-  import view from '@hcengineering/view-resources/src/plugin'
+  } from '@hanzo/ui'
+  import { IconPicker } from '@hanzo/view-resources'
+  import view from '@hanzo/view-resources/src/plugin'
   import setting from '../plugin'
   import { clearSettingsStore } from '../store'
 

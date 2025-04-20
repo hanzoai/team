@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { RecurringRule } from '@hcengineering/calendar'
+  import { RecurringRule } from '@hanzo/calendar'
   import {
     Button,
     CheckBox,
@@ -25,7 +25,7 @@
     eventToHTMLElement,
     getUserTimezone,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
   import RRulePresenter from './RRulePresenter.svelte'

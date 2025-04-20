@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card } from '@hcengineering/card'
+  import cardPlugin, { Card } from '@hanzo/card'
   import {
     defineSeparators,
     Separator,
@@ -23,12 +23,12 @@
     Location,
     restoreLocation,
     Component
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
-  import { getClient, getCommunicationClient } from '@hcengineering/presentation'
-  import { inboxId } from '@hcengineering/inbox'
-  import view from '@hcengineering/view'
-  import { NotificationContext } from '@hcengineering/communication-types'
+  import { getClient, getCommunicationClient } from '@hanzo/presentation'
+  import { inboxId } from '@hanzo/inbox'
+  import view from '@hanzo/view'
+  import { NotificationContext } from '@hanzo/communication-types'
 
   import InboxNavigation from './InboxNavigation.svelte'
   import { getCardIdFromLocation, navigateToCard } from '../location'

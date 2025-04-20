@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import { ClassAttributes } from '@hcengineering/setting-resources'
+  import { MasterTag } from '@hanzo/card'
+  import { ClassAttributes } from '@hanzo/setting-resources'
   import card from '../../plugin'
 
   export let masterTag: MasterTag

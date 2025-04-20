@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { AttrValue, MarkupNode, MarkupNodeType, MarkupMarkType } from '@hcengineering/text'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { AttrValue, MarkupNode, MarkupNodeType, MarkupMarkType } from '@hanzo/text'
 
   import LiteNodes from './LiteNodes.svelte'
   import ObjectNode from '../ObjectNode.svelte'

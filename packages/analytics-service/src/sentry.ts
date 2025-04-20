@@ -1,4 +1,4 @@
-import { AnalyticProvider } from '@hcengineering/analytics'
+import { AnalyticProvider } from '@hanzo/analytics'
 import * as Sentry from '@sentry/node'
 
 export class SentryAnalyticProvider implements AnalyticProvider {

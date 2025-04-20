@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Card } from '@hcengineering/board'
-  import { getClient } from '@hcengineering/presentation'
-  import { CheckBox, Label } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
-  import core, { Status, TxProcessor } from '@hcengineering/core'
+  import type { Card } from '@hanzo/board'
+  import { getClient } from '@hanzo/presentation'
+  import { CheckBox, Label } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
+  import core, { Status, TxProcessor } from '@hanzo/core'
   import board from '../../plugin'
 
   export let value: Card

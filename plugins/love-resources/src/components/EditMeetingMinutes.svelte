@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { EditBox } from '@hcengineering/ui'
-  import { MeetingMinutes } from '@hcengineering/love'
+  import { getClient } from '@hanzo/presentation'
+  import { EditBox } from '@hanzo/ui'
+  import { MeetingMinutes } from '@hanzo/love'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import love from '../plugin'

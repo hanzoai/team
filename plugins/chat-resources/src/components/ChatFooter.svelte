@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
+  import { Card } from '@hanzo/card'
 
   import ChatInput from './ChatInput.svelte'
 

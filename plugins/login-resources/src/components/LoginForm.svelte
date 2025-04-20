@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type IntlString, type Status } from '@hcengineering/platform'
+  import { type IntlString, type Status } from '@hanzo/platform'
 
   import { type BottomAction, LoginMethods } from '../index'
   import LoginPasswordForm from './LoginPasswordForm.svelte'
   import LoginOtpForm from './LoginOtpForm.svelte'
   import BottomActionComponent from './BottomAction.svelte'
   import login from '../plugin'
-  import { LoginInfo } from '@hcengineering/account-client'
+  import { LoginInfo } from '@hanzo/account-client'
 
   export let navigateUrl: string | undefined = undefined
   export let signUpDisabled = false

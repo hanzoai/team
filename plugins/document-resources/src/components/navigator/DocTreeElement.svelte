@@ -14,12 +14,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Document } from '@hcengineering/document'
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { Action, AnySvelteComponent } from '@hcengineering/ui'
-  import { IconMoreH, Menu, navigate, showPopup, NavItem, ButtonIcon } from '@hcengineering/ui'
+  import { Document } from '@hanzo/document'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Action, AnySvelteComponent } from '@hanzo/ui'
+  import { IconMoreH, Menu, navigate, showPopup, NavItem, ButtonIcon } from '@hanzo/ui'
   import { getDocumentLink } from '../../utils'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
 
   export let doc: Document
   export let icon: Asset | AnySvelteComponent | undefined = undefined

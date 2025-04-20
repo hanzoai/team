@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import activity, { type ActivityMessage } from '@hcengineering/activity'
-import { type PersonSpace } from '@hcengineering/contact'
+import activity, { type ActivityMessage } from '@hanzo/activity'
+import { type PersonSpace } from '@hanzo/contact'
 import {
   AccountRole,
   DOMAIN_MODEL,
@@ -36,7 +36,7 @@ import {
   type TxCUD,
   DOMAIN_TRANSIENT,
   type AccountUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Index,
@@ -51,11 +51,11 @@ import {
   UX,
   type Builder,
   TypeAccountUuid
-} from '@hcengineering/model'
-import core, { TClass, TDoc } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import view, { createAction, template } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
+} from '@hanzo/model'
+import core, { TClass, TDoc } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import view, { createAction, template } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
 import {
   notificationId,
   DOMAIN_USER_NOTIFY,
@@ -83,14 +83,14 @@ import {
   type NotificationTypeSetting,
   type PushSubscription,
   type PushSubscriptionKeys
-} from '@hcengineering/notification'
-import { type Asset, type IntlString, type Resource } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import { type AnyComponent, type Location } from '@hcengineering/ui/src/types'
+} from '@hanzo/notification'
+import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
 
 import notification from './plugin'
 
-export { notificationId, DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hcengineering/notification'
+export { notificationId, DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hanzo/notification'
 export { notificationOperation } from './migration'
 export { notification as default }
 

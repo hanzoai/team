@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedDoc, Doc, Ref, Class } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
+  import { AttachedDoc, Doc, Ref, Class } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
   import { isAttachedDoc } from '../utils'
   import DocsNavigator from './DocsNavigator.svelte'
 

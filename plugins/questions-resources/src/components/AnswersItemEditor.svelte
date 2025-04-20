@@ -10,11 +10,11 @@
     AnswerDataPresenter,
     Question,
     QuestionMixin
-  } from '@hcengineering/questions'
-  import type { Class, Ref } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Icon, Loading } from '@hcengineering/ui'
+  } from '@hanzo/questions'
+  import type { Class, Ref } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Icon, Loading } from '@hanzo/ui'
   import questions from '../plugin'
   import { assessAnswer, getQuestionMixin, isAssessment, updateAnswer } from '../utils'
   import LabelEditor from './LabelEditor.svelte'

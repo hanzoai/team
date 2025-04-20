@@ -13,31 +13,31 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import notification, { type NotificationType } from '@hcengineering/notification'
-import { type Asset, type IntlString } from '@hcengineering/platform'
-import type { BuildModelKey, KeyFilterPreset, Viewlet, ViewletDescriptor } from '@hcengineering/view'
-import questions from '@hcengineering/model-questions'
-import contact from '@hcengineering/contact'
-import tracker from '@hcengineering/model-tracker'
-import attachment from '@hcengineering/model-attachment'
-import print from '@hcengineering/model-print'
-import setting, { getRoleAttributeProps } from '@hcengineering/setting'
+import activity from '@hanzo/activity'
+import notification, { type NotificationType } from '@hanzo/notification'
+import { type Asset, type IntlString } from '@hanzo/platform'
+import type { BuildModelKey, KeyFilterPreset, Viewlet, ViewletDescriptor } from '@hanzo/view'
+import questions from '@hanzo/model-questions'
+import contact from '@hanzo/contact'
+import tracker from '@hanzo/model-tracker'
+import attachment from '@hanzo/model-attachment'
+import print from '@hanzo/model-print'
+import setting, { getRoleAttributeProps } from '@hanzo/setting'
 import {
   type Training,
   type TrainingAttempt,
   trainingId,
   type TrainingRequest,
   TrainingSpecialIds
-} from '@hcengineering/training'
+} from '@hanzo/training'
 
-import { AccountRole, type Data, type FindOptions, type Permission, type Ref } from '@hcengineering/core'
-import { Prop, type Builder } from '@hcengineering/model'
+import { AccountRole, type Data, type FindOptions, type Permission, type Ref } from '@hanzo/core'
+import { Prop, type Builder } from '@hanzo/model'
 
-import contacts from '@hcengineering/model-contact'
-import core from '@hcengineering/model-core'
-import view, { classPresenter, createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
+import contacts from '@hanzo/model-contact'
+import core from '@hanzo/model-core'
+import view, { classPresenter, createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
 import training from './plugin'
 import {
   TTraining,
@@ -49,7 +49,7 @@ import {
 } from './types'
 import { roles } from './roles'
 export { trainingOperation } from './migration'
-export { trainingId } from '@hcengineering/training/src/index'
+export { trainingId } from '@hanzo/training/src/index'
 export { default } from './plugin'
 
 export function createModel (builder: Builder): void {

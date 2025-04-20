@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { Timestamp } from '@hcengineering/core'
+  import { Timestamp } from '@hanzo/core'
 
   export let time: Timestamp
 

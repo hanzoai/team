@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Drive, type Folder } from '@hcengineering/drive'
+  import { type Drive, type Folder } from '@hanzo/drive'
 
-  import { type Ref } from '@hcengineering/core'
+  import { type Ref } from '@hanzo/core'
   import FolderBrowser from './FolderBrowser.svelte'
 
   export let object: Folder

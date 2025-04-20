@@ -3,15 +3,15 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import { GithubPullRequestReviewState, GithubReview } from '@hcengineering/github'
+  import { WithLookup } from '@hanzo/core'
+  import { GithubPullRequestReviewState, GithubReview } from '@hanzo/github'
 
-  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hcengineering/activity-resources'
-  import { personByPersonIdStore } from '@hcengineering/contact-resources'
-  import { IntlString } from '@hcengineering/platform'
-  import { MessageViewer } from '@hcengineering/presentation'
-  import { isEmptyMarkup } from '@hcengineering/text'
-  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hcengineering/ui'
+  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hanzo/activity-resources'
+  import { personByPersonIdStore } from '@hanzo/contact-resources'
+  import { IntlString } from '@hanzo/platform'
+  import { MessageViewer } from '@hanzo/presentation'
+  import { isEmptyMarkup } from '@hanzo/text'
+  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzo/ui'
   import github from '../../plugin'
 
   export let value: WithLookup<GithubReview>

@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { Class, Doc, Mixin, Ref, Tx } from '@hcengineering/core'
-import type { Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import type { TriggerControl, TriggerFunc } from '@hcengineering/server-core'
-import { Task } from '@hcengineering/task'
-import { ToDo, WorkSlot } from '@hcengineering/time'
+import { Class, Doc, Mixin, Ref, Tx } from '@hanzo/core'
+import type { Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import type { TriggerControl, TriggerFunc } from '@hanzo/server-core'
+import { Task } from '@hanzo/task'
+import { ToDo, WorkSlot } from '@hanzo/time'
 
 /**
  * @public

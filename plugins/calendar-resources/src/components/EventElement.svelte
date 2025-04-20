@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { CalendarEventPresenter, Event } from '@hcengineering/calendar'
-  import { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Component, MILLISECONDS_IN_MINUTE, showPopup, tooltip } from '@hcengineering/ui'
-  import view, { ObjectEditor } from '@hcengineering/view'
-  import { showMenu } from '@hcengineering/view-resources'
+  import calendar, { CalendarEventPresenter, Event } from '@hanzo/calendar'
+  import { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Component, MILLISECONDS_IN_MINUTE, showPopup, tooltip } from '@hanzo/ui'
+  import view, { ObjectEditor } from '@hanzo/view'
+  import { showMenu } from '@hanzo/view-resources'
   import { calendarByIdStore, isVisible } from '../utils'
   import EventPresenter from './EventPresenter.svelte'
 

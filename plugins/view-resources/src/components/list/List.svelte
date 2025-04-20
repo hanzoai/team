@@ -22,11 +22,11 @@
     Ref,
     Space,
     mergeQueries
-  } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient, reduceCalls } from '@hcengineering/presentation'
-  import { AnyComponent, AnySvelteComponent } from '@hcengineering/ui'
-  import { BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hcengineering/view'
+  } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient, reduceCalls } from '@hanzo/presentation'
+  import { AnyComponent, AnySvelteComponent } from '@hanzo/ui'
+  import { BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import { SelectionFocusProvider } from '../../selection'
   import { buildConfigLookup } from '../../utils'

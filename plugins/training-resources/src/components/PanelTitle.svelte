@@ -3,7 +3,7 @@
 -->
 
 <script lang="ts">
-  import type { Training } from '@hcengineering/training'
+  import type { Training } from '@hanzo/training'
   import TrainingPresenter from './TrainingPresenter.svelte'
 
   export let training: Training

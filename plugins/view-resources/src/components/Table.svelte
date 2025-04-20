@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -26,9 +26,9 @@
     TxOperations,
     getObjectValue,
     mergeQueries
-  } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { createQuery, getClient, reduceCalls, updateAttribute } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { createQuery, getClient, reduceCalls, updateAttribute } from '@hanzo/presentation'
   import ui, {
     Button,
     CheckBox,
@@ -39,8 +39,8 @@
     lazyObserver,
     mouseAttractor,
     resizeObserver
-  } from '@hcengineering/ui'
-  import { AttributeModel, BuildModelKey, BuildModelOptions, ViewOptionModel, ViewOptions } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { AttributeModel, BuildModelKey, BuildModelOptions, ViewOptionModel, ViewOptions } from '@hanzo/view'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
   import { showMenu } from '../actions'

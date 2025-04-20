@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { ChunterSpace } from '@hcengineering/chunter'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
+  import { Class, Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { ChunterSpace } from '@hanzo/chunter'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
 
   import ChannelView from './ChannelView.svelte'
 

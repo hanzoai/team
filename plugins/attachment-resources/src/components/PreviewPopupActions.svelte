@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { BlobMetadata, Blob, Ref } from '@hcengineering/core'
-  import { Button, closePopup, closeTooltip, IconToDetails } from '@hcengineering/ui'
-  import workbench from '@hcengineering/workbench'
+  import type { BlobMetadata, Blob, Ref } from '@hanzo/core'
+  import { Button, closePopup, closeTooltip, IconToDetails } from '@hanzo/ui'
+  import workbench from '@hanzo/workbench'
 
   import { openFilePreviewInSidebar } from '../utils'
 

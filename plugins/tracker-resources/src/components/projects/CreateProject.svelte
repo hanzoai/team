@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Employee } from '@hcengineering/contact'
+  import { Analytics } from '@hanzo/analytics'
+  import { Employee } from '@hanzo/contact'
   import {
     AccountArrayEditor,
     AssigneeBox,
     personRefByAccountUuidStore,
     personRefByPersonIdStore
-  } from '@hcengineering/contact-resources'
+  } from '@hanzo/contact-resources'
   import core, {
     PersonId,
     Data,
@@ -34,12 +34,12 @@
     getCurrentAccount,
     notEmpty,
     AccountUuid
-  } from '@hcengineering/core'
-  import { Asset } from '@hcengineering/platform'
-  import presentation, { Card, createQuery, getClient } from '@hcengineering/presentation'
-  import task, { ProjectType, TaskType } from '@hcengineering/task'
-  import { taskTypeStore, typeStore } from '@hcengineering/task-resources'
-  import { IssueStatus, Project, TimeReportDayType, TrackerEvents } from '@hcengineering/tracker'
+  } from '@hanzo/core'
+  import { Asset } from '@hanzo/platform'
+  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
+  import task, { ProjectType, TaskType } from '@hanzo/task'
+  import { taskTypeStore, typeStore } from '@hanzo/task-resources'
+  import { IssueStatus, Project, TimeReportDayType, TrackerEvents } from '@hanzo/tracker'
   import {
     Button,
     Component,
@@ -52,9 +52,9 @@
     getPlatformColorForTextDef,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { IconPicker } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { IconPicker } from '@hanzo/view-resources'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
 

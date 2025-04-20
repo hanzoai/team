@@ -4,8 +4,8 @@ import {
   type Metrics,
   metricsAggregate,
   type MetricsData
-} from '@hcengineering/core'
-import { type SessionManager } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { type SessionManager } from '@hanzo/server-core'
 import os from 'node:os'
 
 /**

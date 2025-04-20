@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, SplitLogger } from '@hcengineering/analytics-service'
-import { MeasureMetricsContext, newMetrics, type Tx } from '@hcengineering/core'
-import { initStatisticsContext, type StorageConfiguration } from '@hcengineering/server-core'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
+import { MeasureMetricsContext, newMetrics, type Tx } from '@hanzo/core'
+import { initStatisticsContext, type StorageConfiguration } from '@hanzo/server-core'
 import { join } from 'path'
 
-import { createElasticAdapter } from '@hcengineering/elastic'
-import { createRekoniAdapter, type FulltextDBConfiguration } from '@hcengineering/server-indexer'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import { createElasticAdapter } from '@hanzo/elastic'
+import { createRekoniAdapter, type FulltextDBConfiguration } from '@hanzo/server-indexer'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
 import { readFileSync } from 'fs'
 import { startIndexer } from './server'
-import { getPlatformQueue } from '@hcengineering/kafka'
+import { getPlatformQueue } from '@hanzo/kafka'
 
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]
 

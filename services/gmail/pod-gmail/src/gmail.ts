@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import attachment, { Attachment } from '@hcengineering/attachment'
+import attachment, { Attachment } from '@hanzo/attachment'
 import core, {
   AttachedData,
   Blob,
@@ -29,10 +29,10 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   WorkspaceUuid
-} from '@hcengineering/core'
-import gmail, { type Message, type NewMessage } from '@hcengineering/gmail'
-import { type StorageAdapter } from '@hcengineering/server-core'
-import setting from '@hcengineering/setting'
+} from '@hanzo/core'
+import gmail, { type Message, type NewMessage } from '@hanzo/gmail'
+import { type StorageAdapter } from '@hanzo/server-core'
+import setting from '@hanzo/setting'
 import type { GaxiosResponse } from 'gaxios'
 import type { Credentials, OAuth2Client } from 'google-auth-library'
 import { gmail_v1, google } from 'googleapis'

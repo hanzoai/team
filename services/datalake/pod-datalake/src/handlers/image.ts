@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { MeasureContext } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { MeasureContext } from '@hanzo/core'
 import { type Request, type Response } from 'express'
 import { createReadStream, createWriteStream } from 'fs'
 import sharp from 'sharp'

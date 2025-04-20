@@ -1,6 +1,6 @@
 <script lang="ts">
-  import tags from '@hcengineering/tags'
-  import { Component } from '@hcengineering/ui'
+  import tags from '@hanzo/tags'
+  import { Component } from '@hanzo/ui'
   import board from '../plugin'
 </script>
 

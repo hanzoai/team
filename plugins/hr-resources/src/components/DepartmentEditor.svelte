@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { Department } from '@hcengineering/hr'
-  import { IntlString } from '@hcengineering/platform'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { ObjectBox } from '@hcengineering/view-resources'
+  import { Ref } from '@hanzo/core'
+  import { Department } from '@hanzo/hr'
+  import { IntlString } from '@hanzo/platform'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { ObjectBox } from '@hanzo/view-resources'
   import hr from '../plugin'
-  import { createQuery } from '@hcengineering/presentation'
+  import { createQuery } from '@hanzo/presentation'
 
   export let value: Ref<Department> | undefined
   export let label: IntlString = hr.string.ParentDepartmentLabel

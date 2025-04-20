@@ -3,9 +3,9 @@
 -->
 <script lang="ts" context="module">
   import type { ComponentProps } from 'svelte'
-  import { StateTag, StateType } from '@hcengineering/ui'
-  import { TrainingAttemptState } from '@hcengineering/training'
-  import type { IntlString } from '@hcengineering/platform'
+  import { StateTag, StateType } from '@hanzo/ui'
+  import { TrainingAttemptState } from '@hanzo/training'
+  import type { IntlString } from '@hanzo/platform'
 
   import training from '../plugin'
 

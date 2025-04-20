@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IdMap, Ref, Status, WithLookup } from '@hcengineering/core'
-  import { ProjectType, TaskType } from '@hcengineering/task'
-  import { typeStore } from '@hcengineering/task-resources'
-  import { IssueStatus } from '@hcengineering/tracker'
+  import { IdMap, Ref, Status, WithLookup } from '@hanzo/core'
+  import { ProjectType, TaskType } from '@hanzo/task'
+  import { typeStore } from '@hanzo/task-resources'
+  import { IssueStatus } from '@hanzo/tracker'
   import {
     Button,
     ButtonKind,
@@ -27,8 +27,8 @@
     TooltipAlignment,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import IssueStatusIcon from './IssueStatusIcon.svelte'

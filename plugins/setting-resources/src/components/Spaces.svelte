@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Header, Breadcrumb } from '@hcengineering/ui'
-  import core, { AccountUuid, Ref, Role, RolesAssignment, SpaceType, TypedSpace, WithLookup } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { AccountArrayEditor } from '@hcengineering/contact-resources'
+  import { Header, Breadcrumb } from '@hanzo/ui'
+  import core, { AccountUuid, Ref, Role, RolesAssignment, SpaceType, TypedSpace, WithLookup } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { AccountArrayEditor } from '@hanzo/contact-resources'
 
   import setting from '../plugin'
 

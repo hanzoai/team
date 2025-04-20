@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, DocumentQuery, Enum, Ref } from '@hcengineering/core'
-  import { ObjectPopup } from '@hcengineering/presentation'
+  import type { Class, DocumentQuery, Enum, Ref } from '@hanzo/core'
+  import { ObjectPopup } from '@hanzo/presentation'
   import { createEventDispatcher } from 'svelte'
 
   export let _class: Ref<Class<Enum>>

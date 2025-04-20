@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { formatName } from '@hcengineering/contact'
-  import { Icon, Label } from '@hcengineering/ui'
-  import activity, { DocAttributeUpdates } from '@hcengineering/activity'
+  import { formatName } from '@hanzo/contact'
+  import { Icon, Label } from '@hanzo/ui'
+  import activity, { DocAttributeUpdates } from '@hanzo/activity'
 
   import contact from '../../plugin'
 

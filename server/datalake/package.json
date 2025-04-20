@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/datalake",
-  "version": "0.6.0",
+  "name": "@hanzo/datalake",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/node-package",
+  "author": "Hanzo <dev@hanzo.ai>",
+  "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -36,10 +36,10 @@
     "ts-node": "^10.8.0"
   },
   "dependencies": {
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/server-core": "^0.6.1",
-    "@hcengineering/server-token": "^0.6.11",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/server-core": "^0.6.5",
+    "@hanzo/server-token": "^0.6.16",
     "node-fetch": "^2.6.6",
     "form-data": "^4.0.0"
   }

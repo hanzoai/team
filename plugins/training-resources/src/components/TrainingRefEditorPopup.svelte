@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { ObjectPopup } from '@hcengineering/presentation'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
-  import { TrainingState } from '@hcengineering/training'
+  import { ObjectPopup } from '@hanzo/presentation'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  import { TrainingState } from '@hanzo/training'
   import type { ComponentProps } from 'svelte'
   import training from '../plugin'
   import { getCurrentEmployeeRef } from '../utils'

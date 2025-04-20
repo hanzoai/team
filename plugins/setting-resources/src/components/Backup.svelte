@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation from '@hcengineering/presentation'
-  import { Breadcrumb, Button, Expandable, Header, Label, Loading } from '@hcengineering/ui'
-  import Scroller from '@hcengineering/ui/src/components/Scroller.svelte'
-  import view from '@hcengineering/view'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation from '@hanzo/presentation'
+  import { Breadcrumb, Button, Expandable, Header, Label, Loading } from '@hanzo/ui'
+  import Scroller from '@hanzo/ui/src/components/Scroller.svelte'
+  import view from '@hanzo/view'
   import { onMount } from 'svelte'
   import setting from '../plugin'
   import { BackupInfo, BackupSnapshot } from '../types'

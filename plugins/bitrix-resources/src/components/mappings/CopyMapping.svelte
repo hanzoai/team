@@ -6,10 +6,10 @@
     CopyValueOperation,
     Fields,
     MappingOperation
-  } from '@hcengineering/bitrix'
-  import core, { AnyAttribute } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, DropdownLabels, EditBox, IconActivity, IconAdd, IconClose, IconDelete } from '@hcengineering/ui'
+  } from '@hanzo/bitrix'
+  import core, { AnyAttribute } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, DropdownLabels, EditBox, IconActivity, IconAdd, IconClose, IconDelete } from '@hanzo/ui'
   import bitrix from '../../plugin'
 
   export let mapping: BitrixEntityMapping

@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { fly } from 'svelte/transition'
-  import { Timestamp } from '@hcengineering/core'
+  import { Timestamp } from '@hanzo/core'
   import { TimelinePoint, TimelineRow, TimelineState } from '../types'
   import ui, {
     CheckBox,

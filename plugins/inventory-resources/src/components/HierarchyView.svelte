@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Label, Loading } from '@hcengineering/ui'
-  import { buildModel } from '@hcengineering/view-resources'
-  import { Category } from '@hcengineering/inventory'
+  import { Class, Doc, DocumentQuery, FindOptions, Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Label, Loading } from '@hanzo/ui'
+  import { buildModel } from '@hanzo/view-resources'
+  import { Category } from '@hanzo/inventory'
   import HierarchyElement from './HierarchyElement.svelte'
-  import { buildConfigLookup } from '@hcengineering/view-resources/src/utils'
+  import { buildConfigLookup } from '@hanzo/view-resources/src/utils'
 
   export let _class: Ref<Class<Category>>
   export let query: DocumentQuery<Category> = {}

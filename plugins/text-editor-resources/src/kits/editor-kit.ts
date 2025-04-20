@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Class, type Doc, type Ref, type Space } from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
-import { getBlobRef, getClient } from '@hcengineering/presentation'
+import { type Class, type Doc, type Ref, type Space } from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
+import { getBlobRef, getClient } from '@hanzo/presentation'
 import {
   BackgroundColor,
   CodeExtension,
@@ -24,8 +24,8 @@ import {
   MarkdownNode,
   TextColor,
   TextStyle
-} from '@hcengineering/text'
-import textEditor, { type ActionContext, type ExtensionCreator, type TextEditorMode } from '@hcengineering/text-editor'
+} from '@hanzo/text'
+import textEditor, { type ActionContext, type ExtensionCreator, type TextEditorMode } from '@hanzo/text-editor'
 import { type AnyExtension, type Editor, Extension } from '@tiptap/core'
 import { type Level } from '@tiptap/extension-heading'
 import TableHeader from '@tiptap/extension-table-header'

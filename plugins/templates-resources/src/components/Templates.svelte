@@ -1,9 +1,9 @@
 <script lang="ts">
-  import core, { Data, Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel, getResource } from '@hcengineering/platform'
-  import { createQuery, getClient, MessageViewer, SpaceSelector } from '@hcengineering/presentation'
-  import { MessageTemplate, TemplateCategory } from '@hcengineering/templates'
-  import { StyledTextEditor } from '@hcengineering/text-editor-resources'
+  import core, { Data, Ref } from '@hanzo/core'
+  import { getEmbeddedLabel, getResource } from '@hanzo/platform'
+  import { createQuery, getClient, MessageViewer, SpaceSelector } from '@hanzo/presentation'
+  import { MessageTemplate, TemplateCategory } from '@hanzo/templates'
+  import { StyledTextEditor } from '@hanzo/text-editor-resources'
   import {
     Action,
     Button,
@@ -19,8 +19,8 @@
     defineSeparators,
     twoPanelsSeparators,
     Scroller
-  } from '@hcengineering/ui'
-  import { getActions as getContributedActions, TreeItem, TreeNode } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { getActions as getContributedActions, TreeItem, TreeNode } from '@hanzo/view-resources'
   import templatesPlugin from '../plugin'
   import CreateTemplateCategory from './CreateTemplateCategory.svelte'
   import FieldPopup from './FieldPopup.svelte'

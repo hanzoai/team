@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import type { Project } from '@hcengineering/tracker'
-  import type { ToDo } from '@hcengineering/time'
+  import type { IntlString } from '@hanzo/platform'
+  import type { Project } from '@hanzo/tracker'
+  import type { ToDo } from '@hanzo/time'
   import type { ToDosMode } from '..'
   import {
     AccordionItem,
@@ -24,11 +24,11 @@
     getPlatformColorDef,
     getPlatformColorForTextDef,
     themeStore
-  } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
-  import { makeRank } from '@hcengineering/task'
-  import tracker from '@hcengineering/tracker'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
+  import { makeRank } from '@hanzo/task'
+  import tracker from '@hanzo/tracker'
+  import view from '@hanzo/view'
   import ToDoDraggable from './ToDoDraggable.svelte'
   import ToDoElement from './ToDoElement.svelte'
   import time from '../plugin'

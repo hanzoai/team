@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, Tag } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
-  import setting, { settingId } from '@hcengineering/setting'
+  import { Card, Tag } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
+  import setting, { settingId } from '@hanzo/setting'
   import {
     Button,
     Chevron,
@@ -28,7 +28,7 @@
     navigate,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import CardAttributes from './CardAttributes.svelte'
 
   export let value: Card

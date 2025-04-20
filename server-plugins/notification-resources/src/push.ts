@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
-import serverNotification, { PUSH_NOTIFICATION_TITLE_SIZE } from '@hcengineering/server-notification'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
+import serverNotification, { PUSH_NOTIFICATION_TITLE_SIZE } from '@hanzo/server-notification'
 import {
   AccountUuid,
   Class,
@@ -26,7 +26,7 @@ import {
   Tx,
   TxCreateDoc,
   TxProcessor
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   ActivityInboxNotification,
   InboxNotification,
@@ -34,21 +34,21 @@ import notification, {
   notificationId,
   PushData,
   PushSubscription
-} from '@hcengineering/notification'
-import activity, { ActivityMessage } from '@hcengineering/activity'
-import serverView from '@hcengineering/server-view'
-import { getMetadata, getResource } from '@hcengineering/platform'
-import { workbenchId } from '@hcengineering/workbench'
-import { encodeObjectURI } from '@hcengineering/view'
+} from '@hanzo/notification'
+import activity, { ActivityMessage } from '@hanzo/activity'
+import serverView from '@hanzo/server-view'
+import { getMetadata, getResource } from '@hanzo/platform'
+import { workbenchId } from '@hanzo/workbench'
+import { encodeObjectURI } from '@hanzo/view'
 import contact, {
   type AvatarInfo,
   getAvatarProviderId,
   getGravatarUrl,
   Person,
   PersonSpace
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import { AvailableProvidersCache, AvailableProvidersCacheKey, getTranslatedNotificationContent } from './index'
-import { getPerson } from '@hcengineering/server-contact'
+import { getPerson } from '@hanzo/server-contact'
 
 async function createPushFromInbox (
   control: TriggerControl,

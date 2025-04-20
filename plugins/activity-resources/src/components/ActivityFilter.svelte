@@ -14,12 +14,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { ActivityMessage, ActivityMessagesFilter } from '@hcengineering/activity'
-  import { Doc, Ref, SortingOrder } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, eventToHTMLElement, Icon, Label, showPopup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { ActivityMessage, ActivityMessagesFilter } from '@hanzo/activity'
+  import { Doc, Ref, SortingOrder } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, eventToHTMLElement, Icon, Label, showPopup } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   import activity from '../plugin'
   import FilterPopup from './FilterPopup.svelte'

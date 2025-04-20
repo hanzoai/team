@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Account } from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
+import type { Account } from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
 import { Packr } from 'msgpackr'
 
 /**

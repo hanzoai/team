@@ -1,8 +1,8 @@
-import { Doc, Ref, TxOperations, AccountUuid } from '@hcengineering/core'
-import notification, { DocNotifyContext } from '@hcengineering/notification'
-import { IntlString } from '@hcengineering/platform'
-import { PersonSpace } from '@hcengineering/contact'
-import github from '@hcengineering/github'
+import { Doc, Ref, TxOperations, AccountUuid } from '@hanzo/core'
+import notification, { DocNotifyContext } from '@hanzo/notification'
+import { IntlString } from '@hanzo/platform'
+import { PersonSpace } from '@hanzo/contact'
+import github from '@hanzo/github'
 
 export async function createNotification (
   client: TxOperations,

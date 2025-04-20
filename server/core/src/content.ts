@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, type WorkspaceUuid } from '@hcengineering/core'
+import { type MeasureContext, type WorkspaceUuid } from '@hanzo/core'
 import { type Readable } from 'stream'
 import { type ContentTextAdapterConfiguration } from './configuration'
 import { type ContentTextAdapter } from './types'

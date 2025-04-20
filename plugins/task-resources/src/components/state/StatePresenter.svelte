@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, Status, StatusCategory } from '@hcengineering/core'
-  import { Asset } from '@hcengineering/platform'
-  import { getClient, reduceCalls } from '@hcengineering/presentation'
-  import task, { Project, ProjectType, TaskType } from '@hcengineering/task'
+  import core, { IdMap, Ref, Status, StatusCategory } from '@hanzo/core'
+  import { Asset } from '@hanzo/platform'
+  import { getClient, reduceCalls } from '@hanzo/presentation'
+  import task, { Project, ProjectType, TaskType } from '@hanzo/task'
   import {
     ColorDefinition,
     Icon,
@@ -26,9 +26,9 @@
     getColorNumberByText,
     getPlatformColorDef,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { statusStore } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
   import { selectedTypeStore, typeStore } from '../..'
   import IconBacklog from '../icons/IconBacklog.svelte'

@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import core from '@hcengineering/core'
-import inventory from '@hcengineering/inventory'
-import serverInventory from '@hcengineering/server-inventory'
-import serverNotification from '@hcengineering/server-notification'
+import core from '@hanzo/core'
+import inventory from '@hanzo/inventory'
+import serverInventory from '@hanzo/server-inventory'
+import serverNotification from '@hanzo/server-notification'
 
-export { serverInventoryId } from '@hcengineering/server-inventory'
+export { serverInventoryId } from '@hanzo/server-inventory'
 
 export function createModel (builder: Builder): void {
   builder.mixin(inventory.class.Product, core.class.Class, serverNotification.mixin.HTMLPresenter, {

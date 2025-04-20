@@ -28,8 +28,8 @@ import {
   type SessionData,
   type Timestamp,
   type Tx
-} from '@hcengineering/core'
-import { BaseMiddleware, Middleware, type PipelineContext, ServerFindOptions } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { BaseMiddleware, Middleware, type PipelineContext, ServerFindOptions } from '@hanzo/server-core'
 
 interface Query {
   key: string

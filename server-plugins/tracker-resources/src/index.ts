@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import chunter, { ChatMessage } from '@hcengineering/chunter'
-import { Person } from '@hcengineering/contact'
+import chunter, { ChatMessage } from '@hanzo/chunter'
+import { Person } from '@hanzo/contact'
 import core, {
   AccountRole,
   concatLink,
@@ -30,12 +30,12 @@ import core, {
   TxRemoveDoc,
   TxUpdateDoc,
   WithLookup
-} from '@hcengineering/core'
-import { NotificationContent } from '@hcengineering/notification'
-import { getMetadata, IntlString } from '@hcengineering/platform'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
-import { NOTIFICATION_BODY_SIZE } from '@hcengineering/server-notification'
-import { stripTags } from '@hcengineering/text-core'
+} from '@hanzo/core'
+import { NotificationContent } from '@hanzo/notification'
+import { getMetadata, IntlString } from '@hanzo/platform'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
+import { NOTIFICATION_BODY_SIZE } from '@hanzo/server-notification'
+import { stripTags } from '@hanzo/text-core'
 import tracker, {
   Component,
   Issue,
@@ -43,8 +43,8 @@ import tracker, {
   TimeSpendReport,
   trackerId,
   type Project
-} from '@hcengineering/tracker'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/tracker'
+import { workbenchId } from '@hanzo/workbench'
 
 async function updateSubIssues (
   updateTx: TxUpdateDoc<Issue>,

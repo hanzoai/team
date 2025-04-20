@@ -8,12 +8,12 @@ import bp from 'body-parser'
 import cors from 'cors'
 import express from 'express'
 
-import { Analytics } from '@hcengineering/analytics'
-import { PersonId, BrandingMap, MeasureContext } from '@hcengineering/core'
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import serverCore from '@hcengineering/server-core'
-import { decodeToken } from '@hcengineering/server-token'
+import { Analytics } from '@hanzo/analytics'
+import { PersonId, BrandingMap, MeasureContext } from '@hanzo/core'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import serverCore from '@hanzo/server-core'
+import { decodeToken } from '@hanzo/server-token'
 
 /**
  * @public

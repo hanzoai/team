@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type DocumentQuery } from '@hcengineering/core'
-import { type IntlString } from '@hcengineering/platform'
-import { type Execution } from '@hcengineering/process'
+import { type DocumentQuery } from '@hanzo/core'
+import { type IntlString } from '@hanzo/platform'
+import { type Execution } from '@hanzo/process'
 
 export interface Special {
   _id: string

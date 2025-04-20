@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata, setMetadata } from '@hcengineering/platform'
-  import presentation from '@hcengineering/presentation'
+  import { getMetadata, setMetadata } from '@hanzo/platform'
+  import presentation from '@hanzo/presentation'
   import {
     Location,
     Popup,
@@ -26,8 +26,8 @@
     location,
     setMetadataLocalStorage,
     themeStore
-  } from '@hcengineering/ui'
-  import workbench from '@hcengineering/workbench'
+  } from '@hanzo/ui'
+  import workbench from '@hanzo/workbench'
   import { onDestroy, onMount } from 'svelte'
   import Auth from './Auth.svelte'
   import Confirmation from './Confirmation.svelte'

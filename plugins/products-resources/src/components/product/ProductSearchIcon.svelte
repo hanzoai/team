@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IconProps } from '@hcengineering/view'
-  import type { Asset } from '@hcengineering/platform'
+  import type { IconProps } from '@hanzo/view'
+  import type { Asset } from '@hanzo/platform'
 
   import DocIcon from '../DocIcon.svelte'
   import products from '../../plugin'

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Class } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Task } from '@hcengineering/task'
-  import { Button, Icon, Label, showPanel } from '@hcengineering/ui'
-  import view, { ObjectPanel } from '@hcengineering/view'
-  import { ToDo } from '@hcengineering/time'
+  import { Class } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Task } from '@hanzo/task'
+  import { Button, Icon, Label, showPanel } from '@hanzo/ui'
+  import view, { ObjectPanel } from '@hanzo/view'
+  import { ToDo } from '@hanzo/time'
   import time from '../plugin'
   import WorkItemPresenter from './WorkItemPresenter.svelte'
 

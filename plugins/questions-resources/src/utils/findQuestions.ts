@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import questions, { type Question } from '@hcengineering/questions'
-import { type Doc, SortingOrder } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
+import questions, { type Question } from '@hanzo/questions'
+import { type Doc, SortingOrder } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
 
 export async function findQuestions<Parent extends Doc, Collection extends Extract<keyof Parent, string> | string> (
   from: Parent,

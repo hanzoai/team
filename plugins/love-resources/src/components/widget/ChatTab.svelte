@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import love, { MeetingMinutes, Room } from '@hcengineering/love'
-  import { ChannelEmbeddedContent } from '@hcengineering/chunter-resources'
-  import { ActivityMessage } from '@hcengineering/activity'
-  import { updateTabData, WidgetState } from '@hcengineering/workbench-resources'
+  import love, { MeetingMinutes, Room } from '@hanzo/love'
+  import { ChannelEmbeddedContent } from '@hanzo/chunter-resources'
+  import { ActivityMessage } from '@hanzo/activity'
+  import { updateTabData, WidgetState } from '@hanzo/workbench-resources'
   import MeetingWidgetHeader from './MeetingWidgetHeader.svelte'
 
   export let widgetState: WidgetState

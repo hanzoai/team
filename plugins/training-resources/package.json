@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/training-resources",
-  "version": "0.1.0",
+  "name": "@hanzo/training-resources",
+  "version": "0.1.4",
   "main": "src/index.ts",
   "author": "Hardcore Engineering Inc",
   "scripts": {
@@ -13,7 +13,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "svelte-loader": "^3.2.0",
     "sass": "^1.53.0",
     "svelte-preprocess": "^5.1.3",
@@ -35,29 +35,32 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/activity": "^0.6.0",
-    "@hcengineering/activity-resources": "^0.6.1",
-    "@hcengineering/attachment": "^0.6.14",
-    "@hcengineering/attachment-resources": "^0.6.0",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/contact-resources": "^0.6.0",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/notification": "^0.6.23",
-    "@hcengineering/panel": "^0.6.23",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/presentation": "^0.6.3",
-    "@hcengineering/text-editor-resources": "^0.6.0",
-    "@hcengineering/theme": "^0.6.5",
-    "@hcengineering/ui": "^0.6.15",
-    "@hcengineering/view": "^0.6.13",
-    "@hcengineering/view-resources": "^0.6.0",
-    "@hcengineering/workbench-resources": "^0.6.1",
-    "@hcengineering/controlled-documents": "^0.1.0",
-    "@hcengineering/questions": "^0.1.0",
-    "@hcengineering/questions-resources": "^0.1.0",
-    "@hcengineering/training": "^0.1.0",
+    "@hanzo/activity": "^0.6.4",
+    "@hanzo/activity-resources": "^0.6.5",
+    "@hanzo/attachment": "^0.6.19",
+    "@hanzo/attachment-resources": "^0.6.4",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/contact-resources": "^0.6.4",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/notification": "^0.6.28",
+    "@hanzo/panel": "^0.6.28",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/presentation": "^0.6.7",
+    "@hanzo/text-editor-resources": "^0.6.4",
+    "@hanzo/theme": "^0.6.10",
+    "@hanzo/ui": "^0.6.21",
+    "@hanzo/view": "^0.6.18",
+    "@hanzo/view-resources": "^0.6.4",
+    "@hanzo/workbench-resources": "^0.6.5",
+    "@hanzo/controlled-documents": "^0.1.4",
+    "@hanzo/questions": "^0.1.4",
+    "@hanzo/questions-resources": "^0.1.4",
+    "@hanzo/training": "^0.1.4",
     "fast-equals": "^5.2.2",
     "lexorank": "~1.0.4",
     "svelte": "^4.2.19"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

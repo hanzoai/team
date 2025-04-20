@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import type { Issue } from '@hcengineering/tracker'
-  import { FixedColumn, statusStore } from '@hcengineering/view-resources'
+  import { WithLookup } from '@hanzo/core'
+  import type { Issue } from '@hanzo/tracker'
+  import { FixedColumn, statusStore } from '@hanzo/view-resources'
   import IssueStatusIcon from './IssueStatusIcon.svelte'
 
   export let value: WithLookup<Issue>

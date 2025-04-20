@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Data, generateId, Ref } from '@hcengineering/core'
-  import { Document, DocumentEvents, Teamspace } from '@hcengineering/document'
-  import { Card, getClient, SpaceSelector } from '@hcengineering/presentation'
+  import { Analytics } from '@hanzo/analytics'
+  import { Data, generateId, Ref } from '@hanzo/core'
+  import { Document, DocumentEvents, Teamspace } from '@hanzo/document'
+  import { Card, getClient, SpaceSelector } from '@hanzo/presentation'
   import {
     Button,
     createFocusManager,
@@ -28,9 +28,9 @@
     IconWithEmoji,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { IconPicker, ObjectBox } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { IconPicker, ObjectBox } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import document from '../plugin'

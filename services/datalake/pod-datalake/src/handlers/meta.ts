@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hcengineering/core'
+import { type MeasureContext } from '@hanzo/core'
 import { type Request, type Response } from 'express'
 
 import { type Datalake } from '../datalake'

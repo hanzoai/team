@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { Button, ToggleWithLabel } from '@hcengineering/ui'
-  import { BuildModelKey, Viewlet } from '@hcengineering/view'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { Button, ToggleWithLabel } from '@hanzo/ui'
+  import { BuildModelKey, Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
 

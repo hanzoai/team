@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref } from '@hcengineering/core'
-  import type { AnySvelteComponent, ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { Icon, Label, tooltip } from '@hcengineering/ui'
+  import type { Class, Doc, Ref } from '@hanzo/core'
+  import type { AnySvelteComponent, ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Icon, Label, tooltip } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { getAttribute, KeyedAttribute, updateAttribute } from '../attributes'
   import { getAttributeEditor, getClient } from '../utils'

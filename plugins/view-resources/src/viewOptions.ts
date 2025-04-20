@@ -7,10 +7,10 @@ import {
   type Ref,
   SortingOrder,
   type Space
-} from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
-import { type LiveQuery, createQuery, getAttributePresenterClass, getClient } from '@hcengineering/presentation'
-import { locationToUrl, getCurrentResolvedLocation } from '@hcengineering/ui'
+} from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
+import { type LiveQuery, createQuery, getAttributePresenterClass, getClient } from '@hanzo/presentation'
+import { locationToUrl, getCurrentResolvedLocation } from '@hanzo/ui'
 import {
   type ViewOptionsOption,
   type ViewQueryOption,
@@ -21,7 +21,7 @@ import {
   type ViewOptions,
   type Viewlet,
   type ViewletDescriptor
-} from '@hcengineering/view'
+} from '@hanzo/view'
 import { get, writable } from 'svelte/store'
 import view from './plugin'
 import { groupByCategory } from './utils'

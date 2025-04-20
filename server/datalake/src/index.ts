@@ -20,7 +20,7 @@ import core, {
   type WorkspaceIds,
   systemAccountUuid,
   withContext
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   type BlobStorageIterator,
   type BucketInfo,
@@ -29,8 +29,8 @@ import {
   type StorageConfig,
   type StorageConfiguration,
   type UploadedObjectInfo
-} from '@hcengineering/server-core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { generateToken } from '@hanzo/server-token'
 import { type Readable } from 'stream'
 import { type UploadObjectParams, DatalakeClient } from './client'
 

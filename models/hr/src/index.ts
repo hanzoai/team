@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Contact, type Employee } from '@hcengineering/contact'
+import { type Contact, type Employee } from '@hanzo/contact'
 import {
   AccountRole,
   DOMAIN_MODEL,
@@ -24,7 +24,7 @@ import {
   type Markup,
   type Ref,
   type Type
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   hrId,
   type Department,
@@ -33,7 +33,7 @@ import {
   type RequestType,
   type Staff,
   type TzDate
-} from '@hcengineering/hr'
+} from '@hanzo/hr'
 import {
   ArrOf,
   Collection,
@@ -48,20 +48,20 @@ import {
   TypeString,
   UX,
   type Builder
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import calendar from '@hcengineering/model-calendar'
-import chunter from '@hcengineering/model-chunter'
-import contact, { TEmployee } from '@hcengineering/model-contact'
-import core, { TAttachedDoc, TDoc, TType } from '@hcengineering/model-core'
-import view, { classPresenter, createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import notification from '@hcengineering/notification'
-import { type Asset, type IntlString } from '@hcengineering/platform'
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import calendar from '@hanzo/model-calendar'
+import chunter from '@hanzo/model-chunter'
+import contact, { TEmployee } from '@hanzo/model-contact'
+import core, { TAttachedDoc, TDoc, TType } from '@hanzo/model-core'
+import view, { classPresenter, createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import notification from '@hanzo/notification'
+import { type Asset, type IntlString } from '@hanzo/platform'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
 import hr from './plugin'
 
-export { hrId } from '@hcengineering/hr'
+export { hrId } from '@hanzo/hr'
 export { hrOperation } from './migration'
 export { default } from './plugin'
 

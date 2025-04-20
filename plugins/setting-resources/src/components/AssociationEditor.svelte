@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association, Class, Data, Doc, Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
+  import core, { Association, Class, Data, Doc, Ref } from '@hanzo/core'
+  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
   import {
     Button,
     ButtonKind,
@@ -25,9 +25,9 @@
     EditBox,
     Label,
     NestedDropdown
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import card from '@hcengineering/card'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import card from '@hanzo/card'
   import { createEventDispatcher } from 'svelte'
   import setting from '../plugin'
 

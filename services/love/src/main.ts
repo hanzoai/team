@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { MeasureContext, MeasureMetricsContext, newMetrics, Ref, WorkspaceIds } from '@hcengineering/core'
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import { initStatisticsContext, StorageConfig, StorageConfiguration } from '@hcengineering/server-core'
-import { storageConfigFromEnv } from '@hcengineering/server-storage'
-import serverToken, { decodeToken } from '@hcengineering/server-token'
+import { MeasureContext, MeasureMetricsContext, newMetrics, Ref, WorkspaceIds } from '@hanzo/core'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import { initStatisticsContext, StorageConfig, StorageConfiguration } from '@hanzo/server-core'
+import { storageConfigFromEnv } from '@hanzo/server-storage'
+import serverToken, { decodeToken } from '@hanzo/server-token'
 import {
   getClient as getAccountClientRaw,
   isWorkspaceLoginInfo,
   type AccountClient
-} from '@hcengineering/account-client'
-import { RoomMetadata, TranscriptionStatus, MeetingMinutes } from '@hcengineering/love'
+} from '@hanzo/account-client'
+import { RoomMetadata, TranscriptionStatus, MeetingMinutes } from '@hanzo/love'
 import cors from 'cors'
 import express from 'express'
 import { IncomingHttpHeaders } from 'http'
@@ -41,7 +41,7 @@ import { saveLiveKitEgressBilling, saveLiveKitSessionBilling } from './billing'
 import { getS3UploadParams, saveFile } from './storage'
 import { WorkspaceClient } from './workspaceClient'
 import { join } from 'path'
-import { SplitLogger } from '@hcengineering/analytics-service'
+import { SplitLogger } from '@hanzo/analytics-service'
 
 const extractToken = (header: IncomingHttpHeaders): any => {
   try {

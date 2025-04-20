@@ -7,8 +7,8 @@ import {
   type Space,
   type TxResult,
   getCurrentAccount
-} from '@hcengineering/core'
-import { type Asset, type IntlString, type Resource, getResource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { type Asset, type IntlString, type Resource, getResource } from '@hanzo/platform'
 import {
   MessageBox,
   getClient,
@@ -16,7 +16,7 @@ import {
   type ContextStore,
   contextStore,
   copyTextToClipboardOldBrowser
-} from '@hcengineering/presentation'
+} from '@hanzo/presentation'
 import {
   type AnyComponent,
   type AnySvelteComponent,
@@ -27,7 +27,7 @@ import {
   navigate,
   showPanel,
   showPopup
-} from '@hcengineering/ui'
+} from '@hanzo/ui'
 import MoveView from './components/Move.svelte'
 import view from './plugin'
 import {
@@ -40,8 +40,8 @@ import {
   selectionLimit
 } from './selection'
 import { deleteObjects, getObjectId, getObjectLinkFragment, restrictionStore } from './utils'
-import contact from '@hcengineering/contact'
-import { locationToUrl } from '@hcengineering/ui'
+import contact from '@hanzo/contact'
+import { locationToUrl } from '@hanzo/ui'
 import { get } from 'svelte/store'
 
 /**

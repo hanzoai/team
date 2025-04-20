@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { Class, Doc, DocumentQuery, FindOptions, Mixin, Ref } from '@hcengineering/core'
-import { Asset, IntlString, Plugin, Resource, plugin } from '@hcengineering/platform'
-import { AnyComponent, PopupAlignment, PopupPosAlignment } from '@hcengineering/ui/src/types'
+import { Class, Doc, DocumentQuery, FindOptions, Mixin, Ref } from '@hanzo/core'
+import { Asset, IntlString, Plugin, Resource, plugin } from '@hanzo/platform'
+import { AnyComponent, PopupAlignment, PopupPosAlignment } from '@hanzo/ui/src/types'
 import {
   Action,
   ActionCategory,

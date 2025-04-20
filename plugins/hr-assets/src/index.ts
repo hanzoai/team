@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import hr from '@hcengineering/hr'
-import { loadMetadata } from '@hcengineering/platform'
+import hr from '@hanzo/hr'
+import { loadMetadata } from '@hanzo/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(hr.icon, {

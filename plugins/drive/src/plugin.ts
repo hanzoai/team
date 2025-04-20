@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Mixin, Ref, SpaceType, SpaceTypeDescriptor, Type } from '@hcengineering/core'
-import type { Asset, IntlString, Plugin, Resource as PlatformResource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import type { Location, ResolvedLocation } from '@hcengineering/ui/src/types'
+import type { Class, Doc, Mixin, Ref, SpaceType, SpaceTypeDescriptor, Type } from '@hanzo/core'
+import type { Asset, IntlString, Plugin, Resource as PlatformResource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import type { Location, ResolvedLocation } from '@hanzo/ui/src/types'
 import { Drive, File, FileVersion, Folder, Resource } from './types'
 
 export * from './types'

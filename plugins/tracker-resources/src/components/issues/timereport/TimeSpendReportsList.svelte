@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { UserBox } from '@hcengineering/contact-resources'
-  import { Ref, Space, WithLookup } from '@hcengineering/core'
-  import { Project, TimeReportDayType, TimeSpendReport } from '@hcengineering/tracker'
+  import contact from '@hanzo/contact'
+  import { UserBox } from '@hanzo/contact-resources'
+  import { Ref, Space, WithLookup } from '@hanzo/core'
+  import { Project, TimeReportDayType, TimeSpendReport } from '@hanzo/tracker'
   import {
     DatePresenter,
     ListView,
     deviceOptionsStore as deviceInfo,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
-  import { FixedColumn, ListSelectionProvider, showMenu } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { FixedColumn, ListSelectionProvider, showMenu } from '@hanzo/view-resources'
   import tracker from '../../../plugin'
   import { activeProjects } from '../../../utils'
   import TimePresenter from './TimePresenter.svelte'

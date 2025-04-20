@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import contact from '@hcengineering/contact'
-import core, { type Class, type Doc } from '@hcengineering/core'
-import gmail from '@hcengineering/gmail'
-import notification from '@hcengineering/notification'
-import serverCore, { type ObjectDDParticipant } from '@hcengineering/server-core'
-import serverGmail from '@hcengineering/server-gmail'
-import serverNotification from '@hcengineering/server-notification'
-export { serverGmailId } from '@hcengineering/server-gmail'
+import contact from '@hanzo/contact'
+import core, { type Class, type Doc } from '@hanzo/core'
+import gmail from '@hanzo/gmail'
+import notification from '@hanzo/notification'
+import serverCore, { type ObjectDDParticipant } from '@hanzo/server-core'
+import serverGmail from '@hanzo/server-gmail'
+import serverNotification from '@hanzo/server-notification'
+export { serverGmailId } from '@hanzo/server-gmail'
 
 export function createModel (builder: Builder): void {
   builder.mixin<Class<Doc>, ObjectDDParticipant>(

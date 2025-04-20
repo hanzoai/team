@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { FindOptions } from '@hcengineering/core'
-  import presentation, { Card } from '@hcengineering/presentation'
-  import { Issue, Project, TimeSpendReport } from '@hcengineering/tracker'
-  import { Button, eventToHTMLElement, IconAdd, Scroller, showPopup, tableSP } from '@hcengineering/ui'
-  import { TableBrowser } from '@hcengineering/view-resources'
+  import contact from '@hanzo/contact'
+  import { FindOptions } from '@hanzo/core'
+  import presentation, { Card } from '@hanzo/presentation'
+  import { Issue, Project, TimeSpendReport } from '@hanzo/tracker'
+  import { Button, eventToHTMLElement, IconAdd, Scroller, showPopup, tableSP } from '@hanzo/ui'
+  import { TableBrowser } from '@hanzo/view-resources'
   import tracker from '../../../plugin'
   import IssuePresenter from '../IssuePresenter.svelte'
   import ParentNamesPresenter from '../ParentNamesPresenter.svelte'

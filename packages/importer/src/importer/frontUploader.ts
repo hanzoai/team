@@ -19,7 +19,7 @@ import {
   Markup,
   type Blob as PlatformBlob,
   type Ref
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { FileUploader, UploadResult } from './uploader'
 
 interface FileUploadError {

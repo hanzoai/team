@@ -11,8 +11,8 @@
 </script>
 
 <script lang="ts">
-  import questions from '@hcengineering/questions'
-  import { Icon } from '@hcengineering/ui'
+  import questions from '@hanzo/questions'
+  import { Icon } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import LayoutRow from './LayoutRow.svelte'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Person } from '@hcengineering/contact'
-  import { PersonId, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { ButtonKind, ButtonSize, IconSize } from '@hcengineering/ui'
+  import { Contact, Person } from '@hanzo/contact'
+  import { PersonId, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { ButtonKind, ButtonSize, IconSize } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import contact from '../plugin'
   import { personRefByPersonIdStore, primarySocialIdByPersonRefStore } from '../utils'

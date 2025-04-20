@@ -29,17 +29,17 @@ import {
   toIdMap,
   TxOperations,
   type PersonId
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { LexoDecimal, LexoNumeralSystem36, LexoRank } from 'lexorank'
 import LexoRankBucket from 'lexorank/lib/lexoRank/lexoRankBucket'
 
 import documents from './plugin'
 
-import attachment, { Attachment } from '@hcengineering/attachment'
-import chunter, { ChatMessage } from '@hcengineering/chunter'
-import { Employee, getCurrentEmployee, Person } from '@hcengineering/contact'
-import { makeRank } from '@hcengineering/rank'
-import tags, { TagReference } from '@hcengineering/tags'
+import attachment, { Attachment } from '@hanzo/attachment'
+import chunter, { ChatMessage } from '@hanzo/chunter'
+import { Employee, getCurrentEmployee, Person } from '@hanzo/contact'
+import { makeRank } from '@hanzo/rank'
+import tags, { TagReference } from '@hanzo/tags'
 import {
   ChangeControl,
   ControlledDocument,
@@ -53,7 +53,7 @@ import {
   ProjectDocument,
   ProjectMeta
 } from './types'
-import { RequestStatus } from '@hcengineering/request'
+import { RequestStatus } from '@hanzo/request'
 
 /**
  * @public

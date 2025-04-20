@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Product } from '@hcengineering/inventory'
-  import { Icon } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { Product } from '@hanzo/inventory'
+  import { Icon } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   import inventory from '../plugin'
 

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import tags, { TagElement } from '@hcengineering/tags'
-  import { selectedTagElements } from '@hcengineering/tags-resources'
-  import { Component, getCurrentResolvedLocation, navigate } from '@hcengineering/ui'
-  import { Filter } from '@hcengineering/view'
-  import { buildFilterKey, setFilters } from '@hcengineering/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import tags, { TagElement } from '@hanzo/tags'
+  import { selectedTagElements } from '@hanzo/tags-resources'
+  import { Component, getCurrentResolvedLocation, navigate } from '@hanzo/ui'
+  import { Filter } from '@hanzo/view'
+  import { buildFilterKey, setFilters } from '@hanzo/view-resources'
   import tracker from '../plugin'
 
   function setFilterTag (tag: TagElement) {

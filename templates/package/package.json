@@ -1,9 +1,9 @@
 {
-  "name": "@hcengineering/webpack-package",
+  "name": "@hanzo/webpack-package",
   "version": "0.6.0",
   "scripts": {},
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "cross-env": "~7.0.3",
     "webpack-cli": "^5.1.4",
     "webpack": "^5.97.1",

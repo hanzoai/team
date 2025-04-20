@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
+import activity from '@hanzo/activity'
 import {
   type Calendar,
   type CalendarEventPresenter,
@@ -25,8 +25,8 @@ import {
   type Schedule,
   type ScheduleAvailability,
   type Visibility
-} from '@hcengineering/calendar'
-import { type Contact, type Employee } from '@hcengineering/contact'
+} from '@hanzo/calendar'
+import { type Contact, type Employee } from '@hanzo/contact'
 import {
   DateRangeMode,
   IndexKind,
@@ -36,7 +36,7 @@ import {
   type Ref,
   type Timestamp,
   type PersonId
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,
@@ -53,21 +53,21 @@ import {
   TypeTimestamp,
   UX,
   type Builder
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import contact from '@hcengineering/model-contact'
-import core, { TAttachedDoc, TClass, TDoc } from '@hcengineering/model-core'
-import view, { createAction } from '@hcengineering/model-view'
-import notification from '@hcengineering/notification'
-import setting from '@hcengineering/setting'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import workbench from '@hcengineering/model-workbench'
-import { WidgetType } from '@hcengineering/workbench'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import contact from '@hanzo/model-contact'
+import core, { TAttachedDoc, TClass, TDoc } from '@hanzo/model-core'
+import view, { createAction } from '@hanzo/model-view'
+import notification from '@hanzo/notification'
+import setting from '@hanzo/setting'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import workbench from '@hanzo/model-workbench'
+import { WidgetType } from '@hanzo/workbench'
 
 import calendar from './plugin'
 
-export * from '@hcengineering/calendar'
-export { calendarId } from '@hcengineering/calendar'
+export * from '@hanzo/calendar'
+export { calendarId } from '@hanzo/calendar'
 export { calendarOperation } from './migration'
 
 export const DOMAIN_CALENDAR = 'calendar' as Domain

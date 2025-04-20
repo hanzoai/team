@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Ref, type Space } from '@hcengineering/core'
-import { type Builder, Model, Prop, TypeRef, TypeString } from '@hcengineering/model'
-import core, { TDoc } from '@hcengineering/model-core'
-import preference, { DOMAIN_PREFERENCE, type Preference, type SpacePreference } from '@hcengineering/preference'
+import { type Ref, type Space } from '@hanzo/core'
+import { type Builder, Model, Prop, TypeRef, TypeString } from '@hanzo/model'
+import core, { TDoc } from '@hanzo/model-core'
+import preference, { DOMAIN_PREFERENCE, type Preference, type SpacePreference } from '@hanzo/preference'
 
-export { preferenceId } from '@hcengineering/preference'
+export { preferenceId } from '@hanzo/preference'
 export { preferenceOperation } from './migration'
 export { preference as default }
 

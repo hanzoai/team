@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import presentation, { Card } from '@hcengineering/presentation'
-  import { Integration } from '@hcengineering/setting'
-  import { EditBox } from '@hcengineering/ui'
+  import presentation, { Card } from '@hanzo/presentation'
+  import { Integration } from '@hanzo/setting'
+  import { EditBox } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import bitrix from '../plugin'
 

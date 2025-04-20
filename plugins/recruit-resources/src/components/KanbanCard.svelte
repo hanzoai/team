@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,20 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentsPresenter } from '@hcengineering/attachment-resources'
-  import contact, { getName } from '@hcengineering/contact'
-  import { Avatar } from '@hcengineering/contact-resources'
-  import { WithLookup } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { getClient } from '@hcengineering/presentation'
-  import recruit, { Applicant, Candidate } from '@hcengineering/recruit'
-  import task from '@hcengineering/task'
-  import { AssigneePresenter, StateRefPresenter } from '@hcengineering/task-resources'
-  import tracker from '@hcengineering/tracker'
-  import { Component, DueDatePresenter } from '@hcengineering/ui'
-  import { BuildModelKey } from '@hcengineering/view'
-  import { DocNavLink, ObjectPresenter, enabledConfig, statusStore } from '@hcengineering/view-resources'
-  import { ChatMessagesPresenter } from '@hcengineering/chunter-resources'
+  import { AttachmentsPresenter } from '@hanzo/attachment-resources'
+  import contact, { getName } from '@hanzo/contact'
+  import { Avatar } from '@hanzo/contact-resources'
+  import { WithLookup } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { getClient } from '@hanzo/presentation'
+  import recruit, { Applicant, Candidate } from '@hanzo/recruit'
+  import task from '@hanzo/task'
+  import { AssigneePresenter, StateRefPresenter } from '@hanzo/task-resources'
+  import tracker from '@hanzo/tracker'
+  import { Component, DueDatePresenter } from '@hanzo/ui'
+  import { BuildModelKey } from '@hanzo/view'
+  import { DocNavLink, ObjectPresenter, enabledConfig, statusStore } from '@hanzo/view-resources'
+  import { ChatMessagesPresenter } from '@hanzo/chunter-resources'
 
   import ApplicationPresenter from './ApplicationPresenter.svelte'
 

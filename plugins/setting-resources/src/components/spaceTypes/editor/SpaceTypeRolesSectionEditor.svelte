@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Role, SortingOrder, SpaceType, SpaceTypeDescriptor } from '@hcengineering/core'
-  import { ButtonIcon, IconAdd, Label, getCurrentResolvedLocation, navigate } from '@hcengineering/ui'
-  import { createQuery } from '@hcengineering/presentation'
+  import core, { Role, SortingOrder, SpaceType, SpaceTypeDescriptor } from '@hanzo/core'
+  import { ButtonIcon, IconAdd, Label, getCurrentResolvedLocation, navigate } from '@hanzo/ui'
+  import { createQuery } from '@hanzo/presentation'
 
   import MembersIcon from '../../icons/Members.svelte'
   import PersonIcon from '../../icons/Person.svelte'

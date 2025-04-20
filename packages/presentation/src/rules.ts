@@ -1,4 +1,4 @@
-import { type Class, type Doc, type DocumentQuery, type Ref, type Space, matchQuery } from '@hcengineering/core'
+import { type Class, type Doc, type DocumentQuery, type Ref, type Space, matchQuery } from '@hanzo/core'
 import { getClient } from '.'
 import presentation from './plugin'
 

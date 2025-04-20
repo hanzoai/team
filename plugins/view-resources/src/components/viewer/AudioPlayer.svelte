@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Blob, type Ref } from '@hcengineering/core'
-  import { CircleButton, Progress } from '@hcengineering/ui'
+  import { type Blob, type Ref } from '@hanzo/core'
+  import { CircleButton, Progress } from '@hanzo/ui'
 
-  import { getFileUrl } from '@hcengineering/presentation'
+  import { getFileUrl } from '@hanzo/presentation'
   import Pause from '../icons/Pause.svelte'
   import Play from '../icons/Play.svelte'
 

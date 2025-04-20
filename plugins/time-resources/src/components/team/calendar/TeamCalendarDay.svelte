@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event, getAllEvents } from '@hcengineering/calendar'
-  import { calendarByIdStore } from '@hcengineering/calendar-resources'
-  import { getCurrentEmployee, Person } from '@hcengineering/contact'
-  import { IdMap, Ref } from '@hcengineering/core'
-  import { Project } from '@hcengineering/task'
-  import { ToDo, WorkSlot } from '@hcengineering/time'
+  import { Event, getAllEvents } from '@hanzo/calendar'
+  import { calendarByIdStore } from '@hanzo/calendar-resources'
+  import { getCurrentEmployee, Person } from '@hanzo/contact'
+  import { IdMap, Ref } from '@hanzo/core'
+  import { Project } from '@hanzo/task'
+  import { ToDo, WorkSlot } from '@hanzo/time'
   import WithTeamData from '../WithTeamData.svelte'
   import { groupTeamData, toSlots } from '../utils'
   import EventElement from './EventElement.svelte'

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { ActionContext, createQuery } from '@hcengineering/presentation'
-  import { TaskKindSelector } from '@hcengineering/task-resources'
-  import tracker, { Component, Issue, IssueTemplateChild, Milestone, Project } from '@hcengineering/tracker'
-  import { IconCircles, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { FixedColumn } from '@hcengineering/view-resources'
+  import { Ref } from '@hanzo/core'
+  import { ActionContext, createQuery } from '@hanzo/presentation'
+  import { TaskKindSelector } from '@hanzo/task-resources'
+  import tracker, { Component, Issue, IssueTemplateChild, Milestone, Project } from '@hanzo/tracker'
+  import { IconCircles, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { FixedColumn } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { flip } from 'svelte/animate'
   import AssigneeEditor from '../issues/AssigneeEditor.svelte'

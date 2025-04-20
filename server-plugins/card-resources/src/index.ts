@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import card, { Card, MasterTag, Tag } from '@hcengineering/card'
+import card, { Card, MasterTag, Tag } from '@hanzo/card'
 import core, {
   AccountUuid,
   AnyAttribute,
@@ -31,13 +31,13 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hcengineering/core'
-import { TriggerControl } from '@hcengineering/server-core'
-import setting from '@hcengineering/setting'
-import view from '@hcengineering/view'
-import { NotificationRequestEventType } from '@hcengineering/communication-sdk-types'
-import { getEmployee, getPersonSpaces } from '@hcengineering/server-contact'
-import contact from '@hcengineering/contact'
+} from '@hanzo/core'
+import { TriggerControl } from '@hanzo/server-core'
+import setting from '@hanzo/setting'
+import view from '@hanzo/view'
+import { NotificationRequestEventType } from '@hanzo/communication-sdk-types'
+import { getEmployee, getPersonSpaces } from '@hanzo/server-contact'
+import contact from '@hanzo/contact'
 
 async function OnAttribute (ctx: TxCreateDoc<AnyAttribute>[], control: TriggerControl): Promise<Tx[]> {
   const attr = TxProcessor.createDoc2Doc(ctx[0])

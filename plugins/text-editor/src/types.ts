@@ -1,6 +1,6 @@
-import { type Asset, type IntlString, type Resource } from '@hcengineering/platform'
-import { type Class, type Space, type PersonId, type Doc, type Markup, type Ref } from '@hcengineering/core'
-import type { AnySvelteComponent } from '@hcengineering/ui/src/types'
+import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
+import { type Class, type Space, type PersonId, type Doc, type Markup, type Ref } from '@hanzo/core'
+import type { AnySvelteComponent } from '@hanzo/ui/src/types'
 import { type AnyExtension, type Content, type Editor, type SingleCommands } from '@tiptap/core'
 import { type ParseOptions } from '@tiptap/pm/model'
 

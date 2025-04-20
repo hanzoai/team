@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Blob, type Ref, type BlobMetadata } from '@hcengineering/core'
-  import { DrawingBoard, getBlobRef, imageSizeToRatio } from '@hcengineering/presentation'
-  import { Loading } from '@hcengineering/ui'
+  import { type Blob, type Ref, type BlobMetadata } from '@hanzo/core'
+  import { DrawingBoard, getBlobRef, imageSizeToRatio } from '@hanzo/presentation'
+  import { Loading } from '@hanzo/ui'
 
   export let value: Ref<Blob>
   export let name: string

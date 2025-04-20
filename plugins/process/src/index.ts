@@ -11,13 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Card, MasterTag, Tag } from '@hcengineering/card'
-import { Employee } from '@hcengineering/contact'
-import { Class, Doc, DocumentUpdate, ObjQueryType, Ref, Tx } from '@hcengineering/core'
-import { Asset, IntlString, Plugin, plugin } from '@hcengineering/platform'
-import { ToDo } from '@hcengineering/time'
-import { AnyComponent } from '@hcengineering/ui'
-import { AttributeCategory } from '@hcengineering/view'
+import { Card, MasterTag, Tag } from '@hanzo/card'
+import { Employee } from '@hanzo/contact'
+import { Class, Doc, DocumentUpdate, ObjQueryType, Ref, Tx } from '@hanzo/core'
+import { Asset, IntlString, Plugin, plugin } from '@hanzo/platform'
+import { ToDo } from '@hanzo/time'
+import { AnyComponent } from '@hanzo/ui'
+import { AttributeCategory } from '@hanzo/view'
 
 /**
  * @public

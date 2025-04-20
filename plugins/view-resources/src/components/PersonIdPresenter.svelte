@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { PersonId, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import contact, { getPersonRefBySocialId, Person } from '@hcengineering/contact'
-  import { IconSize } from '@hcengineering/ui'
+  import { PersonId, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import contact, { getPersonRefBySocialId, Person } from '@hanzo/contact'
+  import { IconSize } from '@hanzo/ui'
 
   import ObjectPresenter from './ObjectPresenter.svelte'
 

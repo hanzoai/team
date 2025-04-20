@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Execution } from '@hcengineering/process'
+  import { WithLookup } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Execution } from '@hanzo/process'
   import ErrorPresenter from './ErrorPresenter.svelte'
 
   export let value: WithLookup<Execution>

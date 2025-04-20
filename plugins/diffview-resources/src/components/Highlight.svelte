@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { highlightText } from '@hcengineering/highlight'
-  import { Html } from '@hcengineering/ui'
+  import { highlightText } from '@hanzo/highlight'
+  import { Html } from '@hanzo/ui'
 
   export let value: string
   export let language: string | undefined = undefined

@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import view, { actionTemplates as viewTemplates, createAction, template } from '@hcengineering/model-view'
-import notification, { notificationActionTemplates } from '@hcengineering/model-notification'
-import activity from '@hcengineering/activity'
-import workbench from '@hcengineering/model-workbench'
-import core from '@hcengineering/model-core'
-import contact from '@hcengineering/contact'
+import { type Builder } from '@hanzo/model'
+import view, { actionTemplates as viewTemplates, createAction, template } from '@hanzo/model-view'
+import notification, { notificationActionTemplates } from '@hanzo/model-notification'
+import activity from '@hanzo/activity'
+import workbench from '@hanzo/model-workbench'
+import core from '@hanzo/model-core'
+import contact from '@hanzo/contact'
 
 import chunter from './plugin'
 

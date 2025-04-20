@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hcengineering/core'
-import { TokenError, decodeToken } from '@hcengineering/server-token'
-import { StorageAdapter } from '@hcengineering/storage'
+import { Analytics } from '@hanzo/analytics'
+import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hanzo/core'
+import { TokenError, decodeToken } from '@hanzo/server-token'
+import { StorageAdapter } from '@hanzo/storage'
 import bp from 'body-parser'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
@@ -29,7 +29,7 @@ import { join, normalize, resolve } from 'path'
 import { cwd } from 'process'
 import sharp, { type Sharp } from 'sharp'
 import { v4 as uuid } from 'uuid'
-import { getClient as getAccountClient } from '@hcengineering/account-client'
+import { getClient as getAccountClient } from '@hanzo/account-client'
 import { preConditions } from './utils'
 
 import fs, { createReadStream, mkdtempSync } from 'fs'

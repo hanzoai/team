@@ -24,28 +24,28 @@ import core, {
   type Mixin,
   type Ref,
   SortingOrder
-} from '@hcengineering/core'
-import view, { type AttributeModel } from '@hcengineering/view'
-import { getClient, getFiltredKeys } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import view, { type AttributeModel } from '@hanzo/view'
+import { getClient, getFiltredKeys } from '@hanzo/presentation'
 import {
   buildRemovedDoc,
   checkIsObjectRemoved,
   getAttributePresenter,
   getDocLinkTitle,
   hasAttributePresenter
-} from '@hcengineering/view-resources'
-import contact, { type Person } from '@hcengineering/contact'
-import { type IntlString } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui'
+} from '@hanzo/view-resources'
+import contact, { type Person } from '@hanzo/contact'
+import { type IntlString } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui'
 import { get } from 'svelte/store'
-import { personRefByPersonIdStore } from '@hcengineering/contact-resources'
+import { personRefByPersonIdStore } from '@hanzo/contact-resources'
 import activity, {
   type ActivityMessage,
   type DisplayActivityMessage,
   type DisplayDocUpdateMessage,
   type DocAttributeUpdates,
   type DocUpdateMessage
-} from '@hcengineering/activity'
+} from '@hanzo/activity'
 
 // Use 5 minutes to combine similar messages
 const combineThresholdMs = 5 * 60 * 1000

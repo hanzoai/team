@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Organization } from '@hcengineering/contact'
-  import { getCurrentAccount, Ref } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { IntegrationType } from '@hcengineering/setting'
-  import { createFocusManager, EditBox, FocusHandler, Scroller } from '@hcengineering/ui'
+  import { Organization } from '@hanzo/contact'
+  import { getCurrentAccount, Ref } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import setting, { IntegrationType } from '@hanzo/setting'
+  import { createFocusManager, EditBox, FocusHandler, Scroller } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import contact from '../plugin'
   import ChannelsEditor from './ChannelsEditor.svelte'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getEmbeddedLabel, getMetadata, IntlString } from '@hcengineering/platform'
+import { getEmbeddedLabel, getMetadata, IntlString } from '@hanzo/platform'
 import { deepEqual } from 'fast-equals'
 import { DOMAIN_BENCHMARK } from './benchmark'
 import {

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getFileSrcSet, getFileUrl } from '@hcengineering/presentation'
-  import setting, { WorkspaceSetting } from '@hcengineering/setting'
+  import { createQuery, getFileSrcSet, getFileUrl } from '@hanzo/presentation'
+  import setting, { WorkspaceSetting } from '@hanzo/setting'
 
   export let mini: boolean = false
   export let workspace: string

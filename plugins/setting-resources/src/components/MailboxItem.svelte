@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Anticrm Platform Contributors.
+// Copyright © 2025 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -22,13 +22,13 @@
     ModernPopup,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
-  import setting from '@hcengineering/setting'
-  import { MailboxInfo } from '@hcengineering/account-client'
-  import { getClient, MessageBox } from '@hcengineering/presentation'
+  } from '@hanzo/ui'
+  import setting from '@hanzo/setting'
+  import { MailboxInfo } from '@hanzo/account-client'
+  import { getClient, MessageBox } from '@hanzo/presentation'
   import { getAccountClient } from '../utils'
-  import contact, { getCurrentEmployee } from '@hcengineering/contact'
-  import { buildSocialIdString, SocialIdType } from '@hcengineering/core'
+  import contact, { getCurrentEmployee } from '@hanzo/contact'
+  import { buildSocialIdString, SocialIdType } from '@hanzo/core'
 
   export let mailbox: MailboxInfo
   export let mailboxIdx: number

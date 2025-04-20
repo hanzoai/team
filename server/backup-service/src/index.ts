@@ -18,13 +18,13 @@ import {
   type Branding,
   type WorkspaceIds,
   WorkspaceInfoWithStatus
-} from '@hcengineering/core'
-import { setMetadata } from '@hcengineering/platform'
-import { backupService, doBackupWorkspace } from '@hcengineering/server-backup'
-import serverClientPlugin from '@hcengineering/server-client'
-import { type DbConfiguration, type PipelineFactory, type StorageAdapter } from '@hcengineering/server-core'
-import { buildStorageFromConfig, createStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import serverToken, { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { setMetadata } from '@hanzo/platform'
+import { backupService, doBackupWorkspace } from '@hanzo/server-backup'
+import serverClientPlugin from '@hanzo/server-client'
+import { type DbConfiguration, type PipelineFactory, type StorageAdapter } from '@hanzo/server-core'
+import { buildStorageFromConfig, createStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import serverToken, { generateToken } from '@hanzo/server-token'
 import { config as _config } from './config'
 
 export function startBackup (

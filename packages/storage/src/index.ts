@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Anticrm Platform Contributors.
+// Copyright © 2024 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -19,8 +19,8 @@ import {
   type MeasureContext,
   type StorageIterator,
   type WorkspaceDataId
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import { type Readable } from 'stream'
 
 export type ListBlobResult = Omit<Blob, 'contentType' | 'version'>

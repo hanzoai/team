@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, SortingOrder, StatusCategory, WithLookup, toIdMap } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import task from '@hcengineering/task'
-  import { Issue, IssueStatus } from '@hcengineering/tracker'
+  import core, { IdMap, Ref, SortingOrder, StatusCategory, WithLookup, toIdMap } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import task from '@hanzo/task'
+  import { Issue, IssueStatus } from '@hanzo/tracker'
   import {
     Icon,
     IconDetails,
@@ -28,8 +28,8 @@
     navigate,
     themeStore,
     tooltip
-  } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
   import { issueLinkFragmentProvider } from '../../../issues'
   import tracker from '../../../plugin'
   import { listIssueStatusOrder } from '../../../utils'

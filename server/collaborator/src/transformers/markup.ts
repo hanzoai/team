@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { markupToYDoc, yDocToMarkup } from '@hcengineering/text-ydoc'
+import { markupToYDoc, yDocToMarkup } from '@hanzo/text-ydoc'
 import { Transformer } from '@hocuspocus/transformer'
 import { Doc } from 'yjs'
 

@@ -1,13 +1,13 @@
 <script lang="ts">
-  import tags, { TagElement } from '@hcengineering/tags'
-  import { Button, Component, getCurrentResolvedLocation, navigate, showPopup } from '@hcengineering/ui'
+  import tags, { TagElement } from '@hanzo/tags'
+  import { Button, Component, getCurrentResolvedLocation, navigate, showPopup } from '@hanzo/ui'
   import recruit from '../plugin'
-  import { buildFilterKey, setFilters } from '@hcengineering/view-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import { Filter } from '@hcengineering/view'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { buildFilterKey, setFilters } from '@hanzo/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { Filter } from '@hanzo/view'
+  import { getEmbeddedLabel } from '@hanzo/platform'
   import OptimizeSkills from './OptimizeSkills.svelte'
-  import { selectedTagElements } from '@hcengineering/tags-resources'
+  import { selectedTagElements } from '@hanzo/tags-resources'
 
   function setFilterTag (tag: TagElement) {
     const client = getClient()

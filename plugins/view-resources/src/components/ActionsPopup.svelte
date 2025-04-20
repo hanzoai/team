@@ -21,8 +21,8 @@
     TxWorkspaceEvent,
     WithLookup,
     WorkspaceEvent
-  } from '@hcengineering/core'
-  import { getResource, translate, translateCB } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { getResource, translate, translateCB } from '@hanzo/platform'
   import {
     ActionContext,
     SearchResult,
@@ -34,7 +34,7 @@
     searchFor,
     type ObjectSearchCategory,
     type SearchItem
-  } from '@hcengineering/presentation'
+  } from '@hanzo/presentation'
   import ui, {
     Button,
     Component,
@@ -48,8 +48,8 @@
     formatKey,
     resizeObserver,
     themeStore
-  } from '@hcengineering/ui'
-  import { Action, ActionCategory, ViewContext } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { Action, ActionCategory, ViewContext } from '@hanzo/view'
   import { createEventDispatcher, onMount, tick } from 'svelte'
   import { filterActions, getSelection } from '../actions'
   import view from '../plugin'
@@ -57,7 +57,7 @@
   import { openDoc } from '../utils'
   import ObjectPresenter from './ObjectPresenter.svelte'
 
-  import { contextStore } from '@hcengineering/presentation'
+  import { contextStore } from '@hanzo/presentation'
   import ChevronDown from './icons/ChevronDown.svelte'
   import ChevronUp from './icons/ChevronUp.svelte'
 

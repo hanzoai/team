@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import contact, { Channel, formatName, Person } from '@hcengineering/contact'
+import contact, { Channel, formatName, Person } from '@hanzo/contact'
 import {
   PersonId,
   Class,
@@ -28,15 +28,15 @@ import {
   Tx,
   TxCreateDoc,
   TxProcessor
-} from '@hcengineering/core'
-import gmail, { Message } from '@hcengineering/gmail'
-import { TriggerControl } from '@hcengineering/server-core'
-import { BaseNotificationType, InboxNotification, NotificationType } from '@hcengineering/notification'
-import serverNotification, { ReceiverInfo, SenderInfo } from '@hcengineering/server-notification'
-import { getContentByTemplate } from '@hcengineering/server-notification-resources'
-import { getMetadata } from '@hcengineering/platform'
-import { ActivityMessage } from '@hcengineering/activity'
-import aiBot from '@hcengineering/ai-bot'
+} from '@hanzo/core'
+import gmail, { Message } from '@hanzo/gmail'
+import { TriggerControl } from '@hanzo/server-core'
+import { BaseNotificationType, InboxNotification, NotificationType } from '@hanzo/notification'
+import serverNotification, { ReceiverInfo, SenderInfo } from '@hanzo/server-notification'
+import { getContentByTemplate } from '@hanzo/server-notification-resources'
+import { getMetadata } from '@hanzo/platform'
+import { ActivityMessage } from '@hanzo/activity'
+import aiBot from '@hanzo/ai-bot'
 
 /**
  * @public

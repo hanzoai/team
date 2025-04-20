@@ -1,5 +1,5 @@
-import type { IntlString } from '@hcengineering/platform'
-import type { ToDo } from '@hcengineering/time'
+import type { IntlString } from '@hanzo/platform'
+import type { ToDo } from '@hanzo/time'
 import { writable } from 'svelte/store'
 
 interface ToDoDragging {

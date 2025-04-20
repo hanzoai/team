@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { formatName, getCurrentEmployee } from '@hcengineering/contact'
-  import { Avatar, personByIdStore } from '@hcengineering/contact-resources'
-  import { getClient, playNotificationSound } from '@hcengineering/presentation'
-  import { Button, Label } from '@hcengineering/ui'
-  import { JoinRequest, RequestStatus } from '@hcengineering/love'
+  import { formatName, getCurrentEmployee } from '@hanzo/contact'
+  import { Avatar, personByIdStore } from '@hanzo/contact-resources'
+  import { getClient, playNotificationSound } from '@hanzo/presentation'
+  import { Button, Label } from '@hanzo/ui'
+  import { JoinRequest, RequestStatus } from '@hanzo/love'
   import love from '../plugin'
   import { myInfo, myOffice } from '../stores'
   import { connectRoom, isConnected } from '../utils'

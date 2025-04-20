@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { type Person } from '@hcengineering/contact'
-import { type PresenceData } from '@hcengineering/presence'
+import { type Class, type Doc, type Ref } from '@hanzo/core'
+import { type Person } from '@hanzo/contact'
+import { type PresenceData } from '@hanzo/presence'
 
 export interface Room {
   objectId: Ref<Doc>

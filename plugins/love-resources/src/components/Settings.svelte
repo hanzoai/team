@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getCurrentAccount, Ref, Space } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Breadcrumb, Header, Label, Toggle } from '@hcengineering/ui'
-  import { DevicesPreference } from '@hcengineering/love'
+  import { getCurrentAccount, Ref, Space } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Breadcrumb, Header, Label, Toggle } from '@hanzo/ui'
+  import { DevicesPreference } from '@hanzo/love'
   import love from '../plugin'
   import { myPreferences } from '../stores'
   import { krispProcessor } from '../utils'

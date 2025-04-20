@@ -15,8 +15,8 @@
 //
 -->
 <script lang="ts">
-  import { IntlString, translateCB } from '@hcengineering/platform'
-  import { registerFocus, themeStore } from '@hcengineering/ui'
+  import { IntlString, translateCB } from '@hanzo/platform'
+  import { registerFocus, themeStore } from '@hanzo/ui'
   import { onMount } from 'svelte'
 
   export let value: string | undefined = undefined

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, DocumentQuery, FindOptions, Ref, Status } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Project, Task, getStates } from '@hcengineering/task'
-  import type { TabItem } from '@hcengineering/ui'
-  import { ScrollerBar, TabList, Switcher } from '@hcengineering/ui'
-  import { TableBrowser, statusStore } from '@hcengineering/view-resources'
+  import { Class, DocumentQuery, FindOptions, Ref, Status } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Project, Task, getStates } from '@hanzo/task'
+  import type { TabItem } from '@hanzo/ui'
+  import { ScrollerBar, TabList, Switcher } from '@hanzo/ui'
+  import { TableBrowser, statusStore } from '@hanzo/view-resources'
   import { typeStore } from '..'
   import task from '../plugin'
   import Lost from './icons/Lost.svelte'

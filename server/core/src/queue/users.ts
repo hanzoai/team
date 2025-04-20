@@ -1,4 +1,4 @@
-import type { AccountUuid, PersonId } from '@hcengineering/core'
+import type { AccountUuid, PersonId } from '@hanzo/core'
 
 export enum QueueUserEvent {
   login = 'login',

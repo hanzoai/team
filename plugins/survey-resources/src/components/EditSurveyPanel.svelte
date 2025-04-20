@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { Panel } from '@hcengineering/panel'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Survey } from '@hcengineering/survey'
+  import { Ref } from '@hanzo/core'
+  import { Panel } from '@hanzo/panel'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Survey } from '@hanzo/survey'
   import {
     Breadcrumb,
     Button,
@@ -28,9 +28,9 @@
     Label,
     ThrottledCaller,
     tooltip
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { showMenu } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { showMenu } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import survey from '../plugin'
   import { makePollData } from '../utils'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { Component, Icon } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { Component, Icon } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   import { createQuery, getClient } from '../../utils'
 

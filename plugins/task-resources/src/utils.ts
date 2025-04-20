@@ -7,17 +7,17 @@ import {
   type Ref,
   type Space,
   type TxOperations
-} from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
-import { type Task } from '@hcengineering/task'
+} from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
+import { type Task } from '@hanzo/task'
 import {
   type CategoryOption,
   type ViewOptionModel,
   type ViewOptions,
   type ViewQueryOption,
   type Viewlet
-} from '@hcengineering/view'
-import { getCategories, getCategorySpaces, concatCategories } from '@hcengineering/view-resources'
+} from '@hanzo/view'
+import { getCategories, getCategorySpaces, concatCategories } from '@hanzo/view-resources'
 
 /**
  * @public

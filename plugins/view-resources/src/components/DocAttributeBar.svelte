@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Mixin } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import setting from '@hcengineering/setting'
+  import { Doc, Mixin } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import setting from '@hanzo/setting'
 
   import ClassAttributeBar from './ClassAttributeBar.svelte'
 

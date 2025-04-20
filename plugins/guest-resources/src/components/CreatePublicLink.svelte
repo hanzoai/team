@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Timestamp } from '@hcengineering/core'
-  import { PublicLink, createPublicLink } from '@hcengineering/guest'
+  import { Doc, Timestamp } from '@hanzo/core'
+  import { PublicLink, createPublicLink } from '@hanzo/guest'
   import presentaion, {
     Card,
     MessageBox,
     copyTextToClipboard,
     createQuery,
     getClient
-  } from '@hcengineering/presentation'
-  import { Button, Loading, showPopup, ticker } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { getObjectLinkFragment } from '@hcengineering/view-resources'
+  } from '@hanzo/presentation'
+  import { Button, Loading, showPopup, ticker } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { getObjectLinkFragment } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import guest from '../plugin'
 

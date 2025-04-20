@@ -21,8 +21,8 @@ import core, {
   toIdMap,
   type Tx,
   type TxUpdateDoc
-} from '@hcengineering/core'
-import { getResourcePlugin, type Plugin, type Resource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { getResourcePlugin, type Plugin, type Resource } from '@hanzo/platform'
 import { writable } from 'svelte/store'
 import { addTxListener, createQuery } from '.'
 

@@ -1,4 +1,4 @@
-import { getWorkspaceById, getWorkspaceByUrl, type AccountDB, type Workspace } from '@hcengineering/account'
+import { getWorkspaceById, getWorkspaceByUrl, type AccountDB, type Workspace } from '@hanzo/account'
 import {
   systemAccountUuid,
   type WorkspaceUuid,
@@ -10,9 +10,9 @@ import {
   type Ref,
   type Space,
   type TxOperations
-} from '@hcengineering/core'
-import { getTransactorEndpoint } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { getTransactorEndpoint } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
 
 export async function findOrUpdateAttached<T extends AttachedDoc> (
   client: TxOperations,

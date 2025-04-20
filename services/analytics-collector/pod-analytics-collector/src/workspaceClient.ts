@@ -20,9 +20,9 @@ import core, {
   systemAccountUuid,
   TxOperations,
   WorkspaceUuid
-} from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
-import contact, { Person } from '@hcengineering/contact'
+} from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
+import contact, { Person } from '@hanzo/contact'
 
 import { connectPlatform } from './platform'
 

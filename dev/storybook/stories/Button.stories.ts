@@ -1,6 +1,6 @@
 import type { StoryObj } from '@storybook/svelte';
-import { Button } from '@hcengineering/ui';
-import uiPlugin from '@hcengineering/ui';
+import { Button } from '@hanzo/ui';
+import uiPlugin from '@hanzo/ui';
 
 const meta = {
   title: 'UI/Button',

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Card } from '@hcengineering/board'
-  import { Ref, Space } from '@hcengineering/core'
-  import { IntlString, translate } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { DropdownLabels, DropdownTextItem, themeStore } from '@hcengineering/ui'
+  import { Card } from '@hanzo/board'
+  import { Ref, Space } from '@hanzo/core'
+  import { IntlString, translate } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { DropdownLabels, DropdownTextItem, themeStore } from '@hanzo/ui'
   import board from '../../plugin'
 
   export let object: Card

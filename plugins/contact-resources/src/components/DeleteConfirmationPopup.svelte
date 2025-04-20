@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { AccountRole, Doc, getCurrentAccount } from '@hcengineering/core'
-  import { Card, isAdminUser } from '@hcengineering/presentation'
-  import ui, { Button, Label } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
-  import view from '@hcengineering/view-resources/src/plugin'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { AccountRole, Doc, getCurrentAccount } from '@hanzo/core'
+  import { Card, isAdminUser } from '@hanzo/presentation'
+  import ui, { Button, Label } from '@hanzo/ui'
+  import { ObjectPresenter } from '@hanzo/view-resources'
+  import view from '@hanzo/view-resources/src/plugin'
   import { createEventDispatcher } from 'svelte'
   import { personRefByPersonIdStore } from '../utils'
   import { PersonRefPresenter } from '..'
-  import { IntlString } from '@hcengineering/platform'
+  import { IntlString } from '@hanzo/platform'
 
   export let object: Doc | Doc[]
   export let deleteAction: () => void | Promise<void>

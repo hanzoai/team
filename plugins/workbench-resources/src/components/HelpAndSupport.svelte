@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2023 Anticrm Platform Contributors.
+// Copyright © 2023 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import setting, { settingId } from '@hcengineering/setting'
-  import support, { docsLink, reportBugLink, supportLink, privacyPolicyLink } from '@hcengineering/support'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import setting, { settingId } from '@hanzo/setting'
+  import support, { docsLink, reportBugLink, supportLink, privacyPolicyLink } from '@hanzo/support'
   import {
     AnySvelteComponent,
     Button,
@@ -31,14 +31,14 @@
     getCurrentResolvedLocation,
     navigate,
     topSP
-  } from '@hcengineering/ui'
-  import view, { Action, ActionCategory } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view, { Action, ActionCategory } from '@hanzo/view'
   import workbench from '../plugin'
   import RightArrowIcon from './icons/Collapsed.svelte'
   import DocumentationIcon from './icons/Documentation.svelte'
   import KeyboardIcon from './icons/Keyboard.svelte'
-  import { WorkbenchEvents } from '@hcengineering/workbench'
-  import { Analytics } from '@hcengineering/analytics'
+  import { WorkbenchEvents } from '@hanzo/workbench'
+  import { Analytics } from '@hanzo/analytics'
 
   let shortcuts = false
   let actions: Action[] = []

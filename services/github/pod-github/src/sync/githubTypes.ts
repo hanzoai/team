@@ -4,7 +4,7 @@ import {
   GithubPullRequestState,
   GithubReviewDecisionState,
   PullRequestMergeable
-} from '@hcengineering/github'
+} from '@hanzo/github'
 
 /**
  * @public

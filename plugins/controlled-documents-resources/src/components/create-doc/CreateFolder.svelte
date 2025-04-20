@@ -21,11 +21,11 @@
     type DocumentSpace,
     type Project,
     type ProjectDocument
-  } from '@hcengineering/controlled-documents'
-  import core, { Ref } from '@hcengineering/core'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { EditBox, FocusHandler, createFocusManager } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/controlled-documents'
+  import core, { Ref } from '@hanzo/core'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { EditBox, FocusHandler, createFocusManager } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
 
   export function canClose (): boolean {

@@ -7,7 +7,7 @@ import {
   type Timestamp,
   type SocialId as SocialIdBase,
   PersonUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
 export interface LoginInfo {
   account: AccountUuid

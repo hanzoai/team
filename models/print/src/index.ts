@@ -2,14 +2,14 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import view, { createAction } from '@hcengineering/model-view'
-import presentation from '@hcengineering/model-presentation'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import view, { createAction } from '@hanzo/model-view'
+import presentation from '@hanzo/model-presentation'
 
 import print from './plugin'
 
-export { printId } from '@hcengineering/print'
+export { printId } from '@hanzo/print'
 export * from './migration'
 export default print
 

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hcengineering/contact'
-  import type { Class, DocumentQuery, Ref } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import { showPopup } from '@hcengineering/ui'
-  import type { IconSize } from '@hcengineering/ui'
+  import contact, { Employee } from '@hanzo/contact'
+  import type { Class, DocumentQuery, Ref } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { showPopup } from '@hanzo/ui'
+  import type { IconSize } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { employeeByIdStore } from '../utils'
   import CombineAvatars from './CombineAvatars.svelte'

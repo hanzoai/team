@@ -1,6 +1,6 @@
-import { getMetadata, type Resources } from '@hcengineering/platform'
-import aiBot from '@hcengineering/ai-bot'
-import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+import { getMetadata, type Resources } from '@hanzo/platform'
+import aiBot from '@hanzo/ai-bot'
+import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
 
 import ControlExt from './components/ControlExt.svelte'
 import EditMeetingData from './components/EditMeetingData.svelte'

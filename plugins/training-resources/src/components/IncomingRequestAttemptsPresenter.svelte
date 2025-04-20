@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import { createQuery } from '@hcengineering/presentation'
-  import type { TrainingRequest } from '@hcengineering/training'
+  import { createQuery } from '@hanzo/presentation'
+  import type { TrainingRequest } from '@hanzo/training'
   import { queryLatestOwnAttempt } from '../utils'
   import TrainingRequestMaxAttemptsPresenter from './TrainingRequestMaxAttemptsPresenter.svelte'
 

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import { translateCB } from '@hcengineering/platform'
-  import { Component } from '@hcengineering/tracker'
-  import { Icon, themeStore } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { WithLookup } from '@hanzo/core'
+  import { translateCB } from '@hanzo/platform'
+  import { Component } from '@hanzo/tracker'
+  import { Icon, themeStore } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
   import tracker from '../../plugin'
 
   export let value: WithLookup<Component> | undefined

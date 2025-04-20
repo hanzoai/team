@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, type WorkspaceUuid, concatLink } from '@hcengineering/core'
+import { type MeasureContext, type WorkspaceUuid, concatLink } from '@hanzo/core'
 import FormData from 'form-data'
 import fetch, { type RequestInfo, type RequestInit, type Response } from 'node-fetch'
 import { Readable } from 'stream'

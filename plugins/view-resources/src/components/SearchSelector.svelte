@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { IconSearch } from '@hcengineering/ui'
-  import { showPopup } from '@hcengineering/ui/src/popups'
+  import { IconSearch } from '@hanzo/ui'
+  import { showPopup } from '@hanzo/ui/src/popups'
   import ActionsPopup from './ActionsPopup.svelte'
 
   function openPopup () {

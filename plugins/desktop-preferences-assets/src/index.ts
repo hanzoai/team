@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hcengineering/platform'
-import desktopPreferences from '@hcengineering/desktop-preferences'
+import { loadMetadata } from '@hanzo/platform'
+import desktopPreferences from '@hanzo/desktop-preferences'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(desktopPreferences.icon, {

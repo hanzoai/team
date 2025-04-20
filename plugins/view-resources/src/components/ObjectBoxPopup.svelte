@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { type Class, type Doc, type DocumentQuery, type FindOptions, type Ref } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import presentation, { ObjectCreate, ObjectPopup } from '@hcengineering/presentation'
+  import { Person } from '@hanzo/contact'
+  import { type Class, type Doc, type DocumentQuery, type FindOptions, type Ref } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import presentation, { ObjectCreate, ObjectPopup } from '@hanzo/presentation'
   import ObjectPresenter from './ObjectPresenter.svelte'
 
   export let _class: Ref<Class<Doc>>

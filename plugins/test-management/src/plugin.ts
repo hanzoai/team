@@ -22,13 +22,13 @@ import {
   type Status,
   type SpaceTypeDescriptor,
   type SpaceType
-} from '@hcengineering/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
 
-import { plugin } from '@hcengineering/platform'
-import { type AnyComponent, type Location, type ResolvedLocation } from '@hcengineering/ui/src/types'
+import { plugin } from '@hanzo/platform'
+import { type AnyComponent, type Location, type ResolvedLocation } from '@hanzo/ui/src/types'
 
-import { Action, ActionCategory, ViewAction, Viewlet } from '@hcengineering/view'
+import { Action, ActionCategory, ViewAction, Viewlet } from '@hanzo/view'
 import {
   TestSuite,
   TestCase,

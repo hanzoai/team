@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentUpdate, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
+  import { DocumentUpdate, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
   import {
     Breadcrumb,
     ButtonIcon,
@@ -24,8 +24,8 @@
     Scroller,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
-  import { Floor, GRID_WIDTH, Room, getFreeSpace } from '@hcengineering/love'
+  } from '@hanzo/ui'
+  import { Floor, GRID_WIDTH, Room, getFreeSpace } from '@hanzo/love'
   import { createEventDispatcher } from 'svelte'
   import { floors, lockedRoom } from '../stores'
   import { FloorSize, RGBAColor, ResizeInitParams, RoomSide, shadowError, shadowNormal } from '../types'
@@ -34,7 +34,7 @@
   import FloorGrid from './FloorGrid.svelte'
   import RoomConfigure from './RoomConfigure.svelte'
   import lovePlg from '../plugin'
-  import { Contact } from '@hcengineering/contact'
+  import { Contact } from '@hanzo/contact'
 
   export let rooms: Room[] = []
   export let floor: Ref<Floor>

@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Question } from '@hcengineering/questions'
-import { type DocumentUpdate, type TxOperations } from '@hcengineering/core'
+import type { Question } from '@hanzo/questions'
+import { type DocumentUpdate, type TxOperations } from '@hanzo/core'
 import { canUpdateQuestion } from './canUpdateQuestion'
 
 export async function updateQuestion<Q extends Question<unknown>> (

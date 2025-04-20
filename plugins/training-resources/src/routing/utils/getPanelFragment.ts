@@ -2,10 +2,10 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Doc } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
-import { getPanelURI } from '@hcengineering/ui'
-import view, { type ObjectPanel } from '@hcengineering/view'
+import type { Doc } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
+import { getPanelURI } from '@hanzo/ui'
+import view, { type ObjectPanel } from '@hanzo/view'
 
 export function getPanelFragment<T extends Doc> (object: Pick<T, '_class' | '_id'>): string {
   const hierarchy = getClient().getHierarchy()

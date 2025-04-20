@@ -13,21 +13,21 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hcengineering/calendar'
+  import { Event } from '@hanzo/calendar'
   import {
     CalendarSelector,
     EventReminders,
     EventTimeEditor,
     VisibilityEditor,
     isReadOnly
-  } from '@hcengineering/calendar-resources'
-  import calendar from '@hcengineering/calendar-resources/src/plugin'
-  import { DocumentUpdate } from '@hcengineering/core'
-  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-  import { StyledTextBox } from '@hcengineering/text-editor-resources'
-  import { Button, EditBox, Icon, IconClose, createFocusManager } from '@hcengineering/ui'
-  import FocusHandler from '@hcengineering/ui/src/components/FocusHandler.svelte'
-  import { ToDo, WorkSlot } from '@hcengineering/time'
+  } from '@hanzo/calendar-resources'
+  import calendar from '@hanzo/calendar-resources/src/plugin'
+  import { DocumentUpdate } from '@hanzo/core'
+  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import { StyledTextBox } from '@hanzo/text-editor-resources'
+  import { Button, EditBox, Icon, IconClose, createFocusManager } from '@hanzo/ui'
+  import FocusHandler from '@hanzo/ui/src/components/FocusHandler.svelte'
+  import { ToDo, WorkSlot } from '@hanzo/time'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
   import TaskSelector from './TaskSelector.svelte'

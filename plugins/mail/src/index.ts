@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Ref } from '@hcengineering/core'
-import { Asset, IntlString, type Plugin, plugin } from '@hcengineering/platform'
-import type { AnyComponent } from '@hcengineering/ui'
-import type { MasterTag } from '@hcengineering/card'
+import type { Class, Doc, Ref } from '@hanzo/core'
+import { Asset, IntlString, type Plugin, plugin } from '@hanzo/platform'
+import type { AnyComponent } from '@hanzo/ui'
+import type { MasterTag } from '@hanzo/card'
 
 export interface MailRoute extends Doc {
   mailId: string

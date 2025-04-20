@@ -1,5 +1,5 @@
 //
-import training, { type Training } from '@hcengineering/training'
+import training, { type Training } from '@hanzo/training'
 // Copyright © 2022-2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -19,11 +19,11 @@ import {
   type DocumentComment,
   type DocumentTraining,
   type Project
-} from '@hcengineering/controlled-documents'
-import attachment from '@hcengineering/attachment'
-import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hcengineering/core'
-import { createQuery } from '@hcengineering/presentation'
-import { RequestStatus } from '@hcengineering/request'
+} from '@hanzo/controlled-documents'
+import attachment from '@hanzo/attachment'
+import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hanzo/core'
+import { createQuery } from '@hanzo/presentation'
+import { RequestStatus } from '@hanzo/request'
 
 import documents from '../../../plugin'
 import {

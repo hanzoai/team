@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/text-ydoc",
-  "version": "0.6.0",
+  "name": "@hanzo/text-ydoc",
+  "version": "0.6.5",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -40,12 +40,12 @@
     "y-prosemirror": "^1.2.15"
   },
   "dependencies": {
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/text": "^0.6.5",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/text": "^0.6.10",
     "yjs": "^13.6.23"
   },
-  "repository": "https://github.com/hcengineering/platform",
+  "repository": "https://github.com/hanzoai/team-manager",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   }
 }

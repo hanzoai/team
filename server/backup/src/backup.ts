@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   BackupClient,
   Client as CoreClient,
@@ -39,10 +39,10 @@ import core, {
   type TxCUD,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { BlobClient, createClient, getTransactorEndpoint } from '@hcengineering/server-client'
-import { estimateDocSize, type StorageAdapter } from '@hcengineering/server-core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { BlobClient, createClient, getTransactorEndpoint } from '@hanzo/server-client'
+import { estimateDocSize, type StorageAdapter } from '@hanzo/server-core'
+import { generateToken } from '@hanzo/server-token'
 import { deepEqual } from 'fast-equals'
 import {
   createReadStream,

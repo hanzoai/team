@@ -2,9 +2,9 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { metricsAggregate, type MeasureContext } from '@hcengineering/core'
-import { setMetadata } from '@hcengineering/platform'
+import { Analytics } from '@hanzo/analytics'
+import { metricsAggregate, type MeasureContext } from '@hanzo/core'
+import { setMetadata } from '@hanzo/platform'
 import {
   getCPUInfo,
   getMemoryInfo,
@@ -12,8 +12,8 @@ import {
   type MemoryStatistics,
   type ServiceStatistics,
   type WorkspaceStatistics
-} from '@hcengineering/server-core'
-import serverToken, { decodeToken } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import serverToken, { decodeToken } from '@hanzo/server-token'
 import cors from '@koa/cors'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'

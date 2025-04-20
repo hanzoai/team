@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact, getFirstName, getLastName, getName, Person } from '@hcengineering/contact'
-  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hcengineering/core'
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hcengineering/presentation'
-  import { AnySvelteComponent, Label } from '@hcengineering/ui'
+  import contact, { Contact, getFirstName, getLastName, getName, Person } from '@hanzo/contact'
+  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hanzo/presentation'
+  import { AnySvelteComponent, Label } from '@hanzo/ui'
   import UserInfo from './UserInfo.svelte'
   import { createEventDispatcher } from 'svelte'
 

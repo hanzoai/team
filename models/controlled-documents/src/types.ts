@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import request from '@hcengineering/request'
+import request from '@hanzo/request'
 import {
   type ChangeControl,
   type ControlledDocument,
@@ -39,10 +39,10 @@ import {
   type DocumentTraining,
   type DocumentSnapshot,
   type ControlledDocumentSnapshot
-} from '@hcengineering/controlled-documents'
-import { TRequest } from '@hcengineering/model-request'
-import { type Attachment } from '@hcengineering/attachment'
-import contact, { type Employee } from '@hcengineering/contact'
+} from '@hanzo/controlled-documents'
+import { TRequest } from '@hanzo/model-request'
+import { type Attachment } from '@hanzo/attachment'
+import contact, { type Employee } from '@hanzo/contact'
 import {
   DateRangeMode,
   IndexKind,
@@ -58,7 +58,7 @@ import {
   type RolesAssignment,
   type Rank,
   type AccountUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,
@@ -76,9 +76,9 @@ import {
   TypeCollaborativeDoc,
   TypeMarkup,
   ReadOnly
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import chunter, { TChatMessage } from '@hcengineering/model-chunter'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import chunter, { TChatMessage } from '@hanzo/model-chunter'
 import core, {
   TAttachedDoc,
   TDoc,
@@ -86,11 +86,11 @@ import core, {
   TType,
   TSpaceTypeDescriptor,
   TSpaceType
-} from '@hcengineering/model-core'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import tags, { type TagReference } from '@hcengineering/tags'
-import time, { type ToDo } from '@hcengineering/time'
-import training, { type Training, type TrainingRequest } from '@hcengineering/training'
+} from '@hanzo/model-core'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import tags, { type TagReference } from '@hanzo/tags'
+import time, { type ToDo } from '@hanzo/time'
+import training, { type Training, type TrainingRequest } from '@hanzo/training'
 
 import documents from './plugin'
 

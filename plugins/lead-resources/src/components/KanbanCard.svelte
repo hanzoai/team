@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,20 +14,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentsPresenter } from '@hcengineering/attachment-resources'
-  import { ChatMessagesPresenter } from '@hcengineering/chunter-resources'
-  import contact from '@hcengineering/contact'
-  import { ContactPresenter } from '@hcengineering/contact-resources'
-  import type { WithLookup } from '@hcengineering/core'
-  import type { Lead } from '@hcengineering/lead'
-  import notification from '@hcengineering/notification'
-  import { getClient } from '@hcengineering/presentation'
-  import task from '@hcengineering/task'
-  import { AssigneePresenter, StateRefPresenter } from '@hcengineering/task-resources'
-  import { ActionIcon, Component, DueDatePresenter, IconMoreH } from '@hcengineering/ui'
-  import { BuildModelKey } from '@hcengineering/view'
-  import { enabledConfig, openDoc, showMenu, statusStore } from '@hcengineering/view-resources'
-  import tracker from '@hcengineering/tracker'
+  import { AttachmentsPresenter } from '@hanzo/attachment-resources'
+  import { ChatMessagesPresenter } from '@hanzo/chunter-resources'
+  import contact from '@hanzo/contact'
+  import { ContactPresenter } from '@hanzo/contact-resources'
+  import type { WithLookup } from '@hanzo/core'
+  import type { Lead } from '@hanzo/lead'
+  import notification from '@hanzo/notification'
+  import { getClient } from '@hanzo/presentation'
+  import task from '@hanzo/task'
+  import { AssigneePresenter, StateRefPresenter } from '@hanzo/task-resources'
+  import { ActionIcon, Component, DueDatePresenter, IconMoreH } from '@hanzo/ui'
+  import { BuildModelKey } from '@hanzo/view'
+  import { enabledConfig, openDoc, showMenu, statusStore } from '@hanzo/view-resources'
+  import tracker from '@hanzo/tracker'
 
   import lead from '../plugin'
   import LeadPresenter from './LeadPresenter.svelte'

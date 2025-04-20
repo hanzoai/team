@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hcengineering/attachment'
-  import contact, { Channel, Organization } from '@hcengineering/contact'
-  import { ChannelsEditor } from '@hcengineering/contact-resources'
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Vacancy } from '@hcengineering/recruit'
-  import { Component, Label } from '@hcengineering/ui'
-  import { DocNavLink } from '@hcengineering/view-resources'
+  import attachment from '@hanzo/attachment'
+  import contact, { Channel, Organization } from '@hanzo/contact'
+  import { ChannelsEditor } from '@hanzo/contact-resources'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Vacancy } from '@hanzo/recruit'
+  import { Component, Label } from '@hanzo/ui'
+  import { DocNavLink } from '@hanzo/view-resources'
   import recruit from '../plugin'
   import VacancyIcon from './icons/Vacancy.svelte'
-  import chunter from '@hcengineering/chunter'
+  import chunter from '@hanzo/chunter'
 
   export let vacancy: WithLookup<Vacancy> | undefined
   export let disabled: boolean = false

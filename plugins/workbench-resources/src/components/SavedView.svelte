@@ -1,8 +1,8 @@
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { Ref, getCurrentAccount, toIdMap } from '@hcengineering/core'
-  import { copyTextToClipboard, createQuery, getClient } from '@hcengineering/presentation'
-  import setting from '@hcengineering/setting'
+  import contact from '@hanzo/contact'
+  import { Ref, getCurrentAccount, toIdMap } from '@hanzo/core'
+  import { copyTextToClipboard, createQuery, getClient } from '@hanzo/presentation'
+  import setting from '@hanzo/setting'
   import {
     Action,
     IconAdd,
@@ -16,8 +16,8 @@
     locationToUrl,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
-  import view, { Filter, FilteredView, ViewOptions, Viewlet } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view, { Filter, FilteredView, ViewOptions, Viewlet } from '@hanzo/view'
   import {
     EditBoxPopup,
     TreeItem,
@@ -31,7 +31,7 @@
     setFilters,
     setViewOptions,
     viewOptionStore
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import copy from 'fast-copy'
   import { createEventDispatcher } from 'svelte'
   import TodoCheck from './icons/TodoCheck.svelte'

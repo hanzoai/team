@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Icon, Label } from '@hcengineering/ui'
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import activity, { DisplayDocUpdateMessage, DocUpdateMessage, DocUpdateMessageViewlet } from '@hcengineering/activity'
+  import { Icon, Label } from '@hanzo/ui'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import activity, { DisplayDocUpdateMessage, DocUpdateMessage, DocUpdateMessageViewlet } from '@hanzo/activity'
 
   import DocUpdateMessageObjectValue from './DocUpdateMessageObjectValue.svelte'
 

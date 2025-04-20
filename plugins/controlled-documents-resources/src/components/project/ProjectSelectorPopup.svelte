@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Label, Scroller } from '@hcengineering/ui'
-  import { NavLink } from '@hcengineering/view-resources'
-  import { DocumentSpace, Project } from '@hcengineering/controlled-documents'
+  import { Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Label, Scroller } from '@hanzo/ui'
+  import { NavLink } from '@hanzo/view-resources'
+  import { DocumentSpace, Project } from '@hanzo/controlled-documents'
   import { createEventDispatcher } from 'svelte'
 
   import documents from '../../plugin'

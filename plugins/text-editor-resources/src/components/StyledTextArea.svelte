@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Markup } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import textEditor from '@hcengineering/text-editor'
-  import { ButtonSize, Label } from '@hcengineering/ui'
+  import { Markup } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { EmptyMarkup } from '@hanzo/text'
+  import textEditor from '@hanzo/text-editor'
+  import { ButtonSize, Label } from '@hanzo/ui'
   import { AnyExtension } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
 

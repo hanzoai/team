@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -28,7 +28,7 @@ import {
   type SpaceTypeDescriptor,
   type TypedSpace,
   type AccountUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,
@@ -42,8 +42,8 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import { getEmbeddedLabel, type Asset, type IntlString } from '@hcengineering/platform'
+} from '@hanzo/model'
+import { getEmbeddedLabel, type Asset, type IntlString } from '@hanzo/platform'
 import core from './component'
 import { TAttachedDoc, TDoc } from './core'
 

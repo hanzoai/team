@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hcengineering/platform'
-import type { IntlString, Metadata } from '@hcengineering/platform'
+import { mergeIds } from '@hanzo/platform'
+import type { IntlString, Metadata } from '@hanzo/platform'
 
-import workbench, { workbenchId } from '@hcengineering/workbench'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+import workbench, { workbenchId } from '@hanzo/workbench'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 
 export default mergeIds(workbenchId, workbench, {
   string: {

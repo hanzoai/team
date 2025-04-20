@@ -3,10 +3,10 @@
 //
 //
 
-import type { Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { TriggerFunc } from '@hcengineering/server-core'
-import { Presenter, TypeMatchFunc } from '@hcengineering/server-notification'
+import type { Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { TriggerFunc } from '@hanzo/server-core'
+import { Presenter, TypeMatchFunc } from '@hanzo/server-notification'
 
 /**
  * @public

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Resources } from '@hcengineering/platform'
+import { type Resources } from '@hanzo/platform'
 import MailThread from './components/MailThread.svelte'
 
 export default async (): Promise<Resources> => ({

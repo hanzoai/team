@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type Attachment } from '@hcengineering/attachment'
+import { type Attachment } from '@hanzo/attachment'
 import {
   type BlobMetadata,
   type Blob,
@@ -26,18 +26,18 @@ import {
   type Space,
   type WithLookup,
   type BlobType
-} from '@hcengineering/core'
-import { getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
 import {
   type FileOrBlob,
   getClient,
   getFileMetadata,
   getPreviewAlignment,
   uploadFile
-} from '@hcengineering/presentation'
-import { closeTooltip, showPopup, type PopupResult } from '@hcengineering/ui'
-import workbench, { type WidgetTab } from '@hcengineering/workbench'
-import view from '@hcengineering/view'
+} from '@hanzo/presentation'
+import { closeTooltip, showPopup, type PopupResult } from '@hanzo/ui'
+import workbench, { type WidgetTab } from '@hanzo/workbench'
+import view from '@hanzo/view'
 
 import attachment from './plugin'
 import AttachmentPreviewPopup from './components/AttachmentPreviewPopup.svelte'

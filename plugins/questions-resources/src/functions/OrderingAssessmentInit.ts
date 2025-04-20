@@ -6,9 +6,9 @@ import {
   type QuestionInitFunction,
   type QuestionInitFunctionResult,
   type OrderingAssessment
-} from '@hcengineering/questions'
-import { type Hierarchy } from '@hcengineering/core'
-import type { ThemeOptions } from '@hcengineering/theme'
+} from '@hanzo/questions'
+import { type Hierarchy } from '@hanzo/core'
+import type { ThemeOptions } from '@hanzo/theme'
 import { OrderingQuestionInit } from './OrderingQuestionInit'
 
 export const OrderingAssessmentInit: QuestionInitFunction<OrderingAssessment> = async (

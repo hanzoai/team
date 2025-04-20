@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getClient as getAccountClient } from '@hcengineering/account-client'
-import { createRestTxOperations } from '@hcengineering/api-client'
-import { type Card } from '@hcengineering/card'
+import { getClient as getAccountClient } from '@hanzo/account-client'
+import { createRestTxOperations } from '@hanzo/api-client'
+import { type Card } from '@hanzo/card'
 import {
   type RestClient as CommunicationClient,
   createRestClient as getCommunicationClient
-} from '@hcengineering/communication-rest-client'
-import { MessageType } from '@hcengineering/communication-types'
-import contact, { PersonSpace } from '@hcengineering/contact'
+} from '@hanzo/communication-rest-client'
+import { MessageType } from '@hanzo/communication-types'
+import contact, { PersonSpace } from '@hanzo/contact'
 import {
   type Blob,
   type MeasureContext,
@@ -31,10 +31,10 @@ import {
   PersonUuid,
   RateLimiter,
   systemAccountUuid
-} from '@hcengineering/core'
-import mail from '@hcengineering/mail'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import mail from '@hanzo/mail'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import { generateToken } from '@hanzo/server-token'
 import config from './config'
 import { ensureGlobalPerson, ensureLocalPerson } from './person'
 

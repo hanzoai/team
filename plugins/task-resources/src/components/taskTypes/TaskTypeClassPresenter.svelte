@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Class } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Task } from '@hcengineering/task'
+  import { Class } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Task } from '@hanzo/task'
   import task from '../../plugin'
   import { typeStore } from '../..'
 

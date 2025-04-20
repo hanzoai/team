@@ -6,7 +6,7 @@ import {
   type MeasureMetricsContext,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   BroadcastMiddleware,
   DBAdapterInitMiddleware,
@@ -19,7 +19,7 @@ import {
   QueryJoinMiddleware,
   QueueMiddleware,
   TxMiddleware
-} from '@hcengineering/middleware'
+} from '@hanzo/middleware'
 import {
   createDummyStorageAdapter,
   createPipeline,
@@ -27,7 +27,7 @@ import {
   type Pipeline,
   type PipelineContext,
   type PlatformQueue
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import {
   getConfig,
   registerAdapterFactory,
@@ -36,24 +36,24 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hcengineering/server-pipeline'
-import serverToken, { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-pipeline'
+import serverToken, { generateToken } from '@hanzo/server-token'
 import { randomUUID } from 'crypto'
 
 /* eslint-disable @typescript-eslint/unbound-method */
 
-import { setMetadata } from '@hcengineering/platform'
+import { setMetadata } from '@hanzo/platform'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions
-} from '@hcengineering/postgres'
-import serverClientPlugin from '@hcengineering/server-client'
-import serverCore from '@hcengineering/server-core'
+} from '@hanzo/postgres'
+import serverClientPlugin from '@hanzo/server-client'
+import serverCore from '@hanzo/server-core'
 
-import { createElasticAdapter } from '@hcengineering/elastic'
-import type { FulltextDBConfiguration } from '@hcengineering/server-indexer'
+import { createElasticAdapter } from '@hanzo/elastic'
+import type { FulltextDBConfiguration } from '@hanzo/server-indexer'
 import { genMinModel } from './minmodel'
 export const model = genMinModel()
 

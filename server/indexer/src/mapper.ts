@@ -6,8 +6,8 @@ import {
   type Ref,
   type SearchResultDoc,
   type Space
-} from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
 
 import plugin, {
   type FieldTemplate,
@@ -16,7 +16,7 @@ import plugin, {
   type IndexedDoc,
   type SearchPresenter,
   type SearchScoring
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 
 export function findSearchPresenter (hierarchy: Hierarchy, _class: Ref<Class<Doc>>): SearchPresenter | undefined {
   try {

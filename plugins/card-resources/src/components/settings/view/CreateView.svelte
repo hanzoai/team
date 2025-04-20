@@ -15,12 +15,12 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { MasterTag, Tag } from '@hcengineering/card'
-  import core, { Association, Data, Ref, generateId } from '@hcengineering/core'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { EditBox, Label } from '@hcengineering/ui'
-  import view, { MasterDetailConfig, Viewlet, ViewletDescriptor, ViewOptionsModel } from '@hcengineering/view'
-  import setting from '@hcengineering/setting'
+  import { MasterTag, Tag } from '@hanzo/card'
+  import core, { Association, Data, Ref, generateId } from '@hanzo/core'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { EditBox, Label } from '@hanzo/ui'
+  import view, { MasterDetailConfig, Viewlet, ViewletDescriptor, ViewOptionsModel } from '@hanzo/view'
+  import setting from '@hanzo/setting'
 
   import DescriptorBox from './DescriptorBox.svelte'
   import ViewSettingButton from './ViewSettingButton.svelte'

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,16 +14,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact } from '@hcengineering/contact'
-  import { UserBox } from '@hcengineering/contact-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import { RecruitEvents, Review } from '@hcengineering/recruit'
-  import { FullDescriptionBox } from '@hcengineering/text-editor-resources'
-  import { EditBox, Grid } from '@hcengineering/ui'
-  import { ObjectPresenter, openDoc } from '@hcengineering/view-resources'
+  import contact, { Contact } from '@hanzo/contact'
+  import { UserBox } from '@hanzo/contact-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { RecruitEvents, Review } from '@hanzo/recruit'
+  import { FullDescriptionBox } from '@hanzo/text-editor-resources'
+  import { EditBox, Grid } from '@hanzo/ui'
+  import { ObjectPresenter, openDoc } from '@hanzo/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
   import recruit from '../../plugin'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let object: Review
 

@@ -14,15 +14,15 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { SpecialNavModel } from '@hcengineering/workbench'
-  import { getResource } from '@hcengineering/platform'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { DocNotifyContext, InboxNotification } from '@hcengineering/notification'
-  import { Ref } from '@hcengineering/core'
-  import { SavedAttachments } from '@hcengineering/attachment'
-  import { SavedMessage } from '@hcengineering/activity'
-  import { savedMessagesStore } from '@hcengineering/activity-resources'
-  import { savedAttachmentsStore } from '@hcengineering/attachment-resources'
+  import { SpecialNavModel } from '@hanzo/workbench'
+  import { getResource } from '@hanzo/platform'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { DocNotifyContext, InboxNotification } from '@hanzo/notification'
+  import { Ref } from '@hanzo/core'
+  import { SavedAttachments } from '@hanzo/attachment'
+  import { SavedMessage } from '@hanzo/activity'
+  import { savedMessagesStore } from '@hanzo/activity-resources'
+  import { savedAttachmentsStore } from '@hanzo/attachment-resources'
 
   import NavItem from './NavItem.svelte'
 

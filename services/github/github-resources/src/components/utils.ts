@@ -1,14 +1,14 @@
-import { Analytics } from '@hcengineering/analytics'
-import { concatLink, getCurrentAccount, toIdMap, type IdMap } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { concatLink, getCurrentAccount, toIdMap, type IdMap } from '@hanzo/core'
 import {
   makeQuery,
   type GithubAuthentication,
   type GithubIntegrationRepository,
   type GithubProject
-} from '@hcengineering/github'
-import { PlatformError, getMetadata, unknownError } from '@hcengineering/platform'
-import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-import { location } from '@hcengineering/ui'
+} from '@hanzo/github'
+import { PlatformError, getMetadata, unknownError } from '@hanzo/platform'
+import presentation, { createQuery, getClient } from '@hanzo/presentation'
+import { location } from '@hanzo/ui'
 import { get, writable } from 'svelte/store'
 import github from '../plugin'
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, DocumentQuery, FindOptions, Ref, Space } from '@hcengineering/core'
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { AnyComponent, AnySvelteComponent, ButtonKind, ButtonShape, ButtonSize } from '@hcengineering/ui'
+  import { Class, DocumentQuery, FindOptions, Ref, Space } from '@hanzo/core'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { AnyComponent, AnySvelteComponent, ButtonKind, ButtonShape, ButtonSize } from '@hanzo/ui'
   import { ComponentType, createEventDispatcher } from 'svelte'
   import { ObjectCreate } from '../types'
   import SpaceSelect from './SpaceSelect.svelte'

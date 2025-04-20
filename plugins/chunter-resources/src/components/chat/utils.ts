@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { type DirectMessage } from '@hcengineering/chunter'
-import contact from '@hcengineering/contact'
-import { AccountRole, getCurrentAccount, hasAccountRole, type UserStatus, type AccountUuid } from '@hcengineering/core'
-import notification, { type DocNotifyContext } from '@hcengineering/notification'
-import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-import { getClient, MessageBox } from '@hcengineering/presentation'
-import { type Action, showPopup } from '@hcengineering/ui'
-import view from '@hcengineering/view'
-import workbench, { type SpecialNavModel } from '@hcengineering/workbench'
+import { type DirectMessage } from '@hanzo/chunter'
+import contact from '@hanzo/contact'
+import { AccountRole, getCurrentAccount, hasAccountRole, type UserStatus, type AccountUuid } from '@hanzo/core'
+import notification, { type DocNotifyContext } from '@hanzo/notification'
+import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+import { getClient, MessageBox } from '@hanzo/presentation'
+import { type Action, showPopup } from '@hanzo/ui'
+import view from '@hanzo/view'
+import workbench, { type SpecialNavModel } from '@hanzo/workbench'
 import { get, writable } from 'svelte/store'
 
 import chunter from '../../plugin'

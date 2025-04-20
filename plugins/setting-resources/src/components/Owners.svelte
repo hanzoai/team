@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, formatName } from '@hcengineering/contact'
-  import { EmployeePresenter } from '@hcengineering/contact-resources'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Breadcrumb, DropdownIntlItem, DropdownLabelsIntl, SearchInput, Header, Scroller } from '@hcengineering/ui'
+  import contact, { Employee, formatName } from '@hanzo/contact'
+  import { EmployeePresenter } from '@hanzo/contact-resources'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Breadcrumb, DropdownIntlItem, DropdownLabelsIntl, SearchInput, Header, Scroller } from '@hanzo/ui'
   import { onMount } from 'svelte'
 
   import { getAccountClient } from '../utils'

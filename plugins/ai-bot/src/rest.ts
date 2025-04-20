@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { Class, Doc, Markup, PersonId, Ref, Space, Timestamp } from '@hcengineering/core'
-import { Room, RoomLanguage } from '@hcengineering/love'
-import { Contact, Person } from '@hcengineering/contact'
-import { ChatMessage } from '@hcengineering/chunter'
+import { Class, Doc, Markup, PersonId, Ref, Space, Timestamp } from '@hanzo/core'
+import { Room, RoomLanguage } from '@hanzo/love'
+import { Contact, Person } from '@hanzo/contact'
+import { ChatMessage } from '@hanzo/chunter'
 
 export interface AIEventRequest {
   message: string

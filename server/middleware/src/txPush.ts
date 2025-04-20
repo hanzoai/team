@@ -26,10 +26,10 @@ import core, {
   type TxCUD,
   type TxResult,
   type TxWorkspaceEvent
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
-import type { DBAdapterManager, Middleware, PipelineContext, TxMiddlewareResult } from '@hcengineering/server-core'
-import { BaseMiddleware } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
+import type { DBAdapterManager, Middleware, PipelineContext, TxMiddlewareResult } from '@hanzo/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
 
 /**
  * Will store transactions to tx adapter

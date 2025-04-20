@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { AttrValue, MarkupNode, MarkupNodeType } from '@hcengineering/text'
+import { AttrValue, MarkupNode, MarkupNodeType } from '@hanzo/text'
 import { dirname, join, relative } from 'path'
 import { DocumentPreprocessorSpec, DocumentState } from './docx'
-import documents from '@hcengineering/controlled-documents'
+import documents from '@hanzo/controlled-documents'
 
 const _addStubHeader: DocumentPreprocessorSpec<DocumentState['header']> = (converter, inputOptions) => {
   return (document) => {

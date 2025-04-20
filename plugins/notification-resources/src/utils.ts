@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -17,16 +17,16 @@ import activity, {
   type ActivityMessage,
   type DisplayDocUpdateMessage,
   type DocUpdateMessage
-} from '@hcengineering/activity'
+} from '@hanzo/activity'
 import {
   activityMessagesComparator,
   combineActivityMessages,
   isActivityMessageClass,
   isReactionMessage,
   messageInFocus
-} from '@hcengineering/activity-resources'
-import { Analytics } from '@hcengineering/analytics'
-import chunter, { type ThreadMessage } from '@hcengineering/chunter'
+} from '@hanzo/activity-resources'
+import { Analytics } from '@hanzo/analytics'
+import chunter, { type ThreadMessage } from '@hanzo/chunter'
 import core, {
   SortingOrder,
   getCurrentAccount,
@@ -36,7 +36,7 @@ import core, {
   type Ref,
   type TxOperations,
   type WithLookup
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   notificationId,
   type ActivityInboxNotification,
@@ -49,9 +49,9 @@ import notification, {
   type NotificationProvider,
   type NotificationProviderSetting,
   type NotificationTypeSetting
-} from '@hcengineering/notification'
-import { getMetadata, getResource } from '@hcengineering/platform'
-import { MessageBox, createQuery, getClient } from '@hcengineering/presentation'
+} from '@hanzo/notification'
+import { getMetadata, getResource } from '@hanzo/platform'
+import { MessageBox, createQuery, getClient } from '@hanzo/presentation'
 import {
   getCurrentLocation,
   getLocation,
@@ -61,11 +61,11 @@ import {
   showPopup,
   type Location,
   type ResolvedLocation
-} from '@hcengineering/ui'
-import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hcengineering/view'
-import { getObjectLinkId, parseLinkId } from '@hcengineering/view-resources'
+} from '@hanzo/ui'
+import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hanzo/view'
+import { getObjectLinkId, parseLinkId } from '@hanzo/view-resources'
 import { get, writable } from 'svelte/store'
-import type { LocationData } from '@hcengineering/workbench'
+import type { LocationData } from '@hanzo/workbench'
 
 import { InboxNotificationsClientImpl } from './inboxNotificationsClient'
 import { type InboxData, type InboxNotificationsFilter } from './types'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -52,8 +52,8 @@ import core, {
   TypeDate as TypeDateType,
   generateId,
   type AccountUuid
-} from '@hcengineering/core'
-import type { Asset, IntlString } from '@hcengineering/platform'
+} from '@hanzo/core'
+import type { Asset, IntlString } from '@hanzo/platform'
 import toposort from 'toposort'
 
 const targets = new Map<any, Map<string, IndexKind>>()

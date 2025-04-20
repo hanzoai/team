@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import type { Client, Doc, Ref } from '@hcengineering/core'
-import {} from '@hcengineering/core'
-import { driveId } from '@hcengineering/drive'
-import drive from '@hcengineering/drive-resources/src/plugin'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hcengineering/model-presentation'
-import { type IntlString, type Resource, mergeIds } from '@hcengineering/platform'
-import { type AnyComponent, type Location } from '@hcengineering/ui/src/types'
+import type { Client, Doc, Ref } from '@hanzo/core'
+import {} from '@hanzo/core'
+import { driveId } from '@hanzo/drive'
+import drive from '@hanzo/drive-resources/src/plugin'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/model-presentation'
+import { type IntlString, type Resource, mergeIds } from '@hanzo/platform'
+import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
 import {
   type Action,
   type ActionCategory,
@@ -27,7 +27,7 @@ import {
   type ViewActionAvailabilityFunction,
   type Viewlet,
   type ViewletDescriptor
-} from '@hcengineering/view'
+} from '@hanzo/view'
 
 export default mergeIds(driveId, drive, {
   component: {

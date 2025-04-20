@@ -32,9 +32,9 @@ import core, {
   type TxCreateDoc,
   type TxCUD,
   TxFactory
-} from '@hcengineering/core'
-import type { IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+} from '@hanzo/core'
+import type { IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 import { taskPlugin } from './tasks'
 
 export const txFactory = new TxFactory(core.account.System)

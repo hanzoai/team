@@ -13,20 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Space } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { TestProject } from '@hcengineering/test-management'
+  import { Ref, Space } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { TestProject } from '@hanzo/test-management'
   import {
     IconWithEmoji,
     getPlatformColorDef,
     getPlatformColorForTextDef,
     themeStore,
     type Action
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { NavLink, TreeNode } from '@hcengineering/view-resources'
-  import { SpacesNavModel, SpecialNavModel } from '@hcengineering/workbench'
-  import { SpecialElement } from '@hcengineering/workbench-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { NavLink, TreeNode } from '@hanzo/view-resources'
+  import { SpacesNavModel, SpecialNavModel } from '@hanzo/workbench'
+  import { SpecialElement } from '@hanzo/workbench-resources'
 
   export let space: TestProject
   export let model: SpacesNavModel

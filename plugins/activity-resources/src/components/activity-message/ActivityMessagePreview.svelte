@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { DisplayActivityMessage, ActivityMessagePreviewType } from '@hcengineering/activity'
-  import { getClient } from '@hcengineering/presentation'
-  import { Action, Component } from '@hcengineering/ui'
-  import { Class, Doc, Ref, Space } from '@hcengineering/core'
+  import { DisplayActivityMessage, ActivityMessagePreviewType } from '@hanzo/activity'
+  import { getClient } from '@hanzo/presentation'
+  import { Action, Component } from '@hanzo/ui'
+  import { Class, Doc, Ref, Space } from '@hanzo/core'
 
   import activity from '../../plugin'
 

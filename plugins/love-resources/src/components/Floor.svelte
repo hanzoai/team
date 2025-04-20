@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, getCurrentAccount, hasAccountRole, WithLookup } from '@hcengineering/core'
-  import { Breadcrumb, Header, IconEdit, ModernButton, Component } from '@hcengineering/ui'
-  import { Floor, Room } from '@hcengineering/love'
+  import { AccountRole, Ref, getCurrentAccount, hasAccountRole, WithLookup } from '@hanzo/core'
+  import { Breadcrumb, Header, IconEdit, ModernButton, Component } from '@hanzo/ui'
+  import { Floor, Room } from '@hanzo/love'
   import { createEventDispatcher } from 'svelte'
-  import { ViewletSelector } from '@hcengineering/view-resources'
-  import { Viewlet, ViewletPreference } from '@hcengineering/view'
+  import { ViewletSelector } from '@hanzo/view-resources'
+  import { Viewlet, ViewletPreference } from '@hanzo/view'
 
   import lovePlg from '../plugin'
   import { currentRoom, floors } from '../stores'

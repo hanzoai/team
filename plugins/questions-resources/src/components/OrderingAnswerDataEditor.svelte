@@ -14,8 +14,8 @@
     type OrderingQuestion,
     type OrderingQuestionAnswer,
     type OrderingQuestionData
-  } from '@hcengineering/questions'
-  import { Loading } from '@hcengineering/ui'
+  } from '@hanzo/questions'
+  import { Loading } from '@hanzo/ui'
   import { moveItem } from '../utils'
   import LabelEditor from './LabelEditor.svelte'
   import OptionsList, { type OptionsListDropEvent } from './OptionsList.svelte'

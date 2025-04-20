@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hcengineering/platform'
-import inbox from '@hcengineering/inbox'
+import { loadMetadata } from '@hanzo/platform'
+import inbox from '@hanzo/inbox'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(inbox.icon, {

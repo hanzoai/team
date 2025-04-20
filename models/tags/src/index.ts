@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Class, type Doc, type Domain, IndexKind, type Ref } from '@hcengineering/core'
-import { ArrOf, type Builder, Index, Model, Prop, TypeNumber, TypeRef, TypeString, UX } from '@hcengineering/model'
-import core, { TAttachedDoc, TDoc } from '@hcengineering/model-core'
-import view from '@hcengineering/model-view'
-import { type Asset, type IntlString } from '@hcengineering/platform'
+import { type Class, type Doc, type Domain, IndexKind, type Ref } from '@hanzo/core'
+import { ArrOf, type Builder, Index, Model, Prop, TypeNumber, TypeRef, TypeString, UX } from '@hanzo/model'
+import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
+import view from '@hanzo/model-view'
+import { type Asset, type IntlString } from '@hanzo/platform'
 import type {
   ExpertKnowledge,
   InitialKnowledge,
@@ -24,10 +24,10 @@ import type {
   TagCategory,
   TagElement,
   TagReference
-} from '@hcengineering/tags'
+} from '@hanzo/tags'
 import tags from './plugin'
 
-export { type TagCategory, type TagElement, type TagReference, tagsId } from '@hcengineering/tags'
+export { type TagCategory, type TagElement, type TagReference, tagsId } from '@hanzo/tags'
 export { tagsOperation } from './migration'
 export { tags as default }
 

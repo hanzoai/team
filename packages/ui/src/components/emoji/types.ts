@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import type { IntlString } from '@hcengineering/platform'
+import type { IntlString } from '@hanzo/platform'
 import type { AnySvelteComponent } from '../..'
 import type { Emoji } from 'emojibase'
 

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
+import { type Resources } from '@hanzo/platform'
 import Templates from './components/Templates.svelte'
-import { type TextEditorHandler } from '@hcengineering/text-editor'
-import { showPopup } from '@hcengineering/ui'
+import { type TextEditorHandler } from '@hanzo/text-editor'
+import { showPopup } from '@hanzo/ui'
 import EditorTemplatePopup from './components/EditorTemplatePopup.svelte'
 import CreateTemplateCategory from './components/CreateTemplateCategory.svelte'
 import TemplatePopup from './components/TemplatePopup.svelte'

@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Answer, Question, QuestionMixin } from '@hcengineering/questions'
-import type { Class, Ref } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
+import type { Answer, Question, QuestionMixin } from '@hanzo/questions'
+import type { Class, Ref } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
 import questions from '../plugin'
 
 export function getQuestionMixin<Q extends Question<any>> (

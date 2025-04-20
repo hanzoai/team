@@ -1,9 +1,9 @@
 <script lang="ts">
-  import calendar, { Event } from '@hcengineering/calendar'
-  import { DateRangeMode } from '@hcengineering/core'
-  import { Icon } from '@hcengineering/ui'
-  import DatePresenter from '@hcengineering/ui/src/components/calendar/DatePresenter.svelte'
-  import ArrowRight from '@hcengineering/ui/src/components/icons/ArrowRight.svelte'
+  import calendar, { Event } from '@hanzo/calendar'
+  import { DateRangeMode } from '@hanzo/core'
+  import { Icon } from '@hanzo/ui'
+  import DatePresenter from '@hanzo/ui/src/components/calendar/DatePresenter.svelte'
+  import ArrowRight from '@hanzo/ui/src/components/icons/ArrowRight.svelte'
   import TimePresenter from '../../presenters/TimePresenter.svelte'
 
   export let item: Event

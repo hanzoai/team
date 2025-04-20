@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -20,11 +20,11 @@ import {
   type MigrationDocumentQuery,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hcengineering/model'
-import { DOMAIN_PREFERENCE } from '@hcengineering/preference'
-import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hcengineering/view'
-import { getSocialKeyByOldAccount, getUniqueAccounts } from '@hcengineering/model-core'
-import { type AccountUuid, MeasureMetricsContext } from '@hcengineering/core'
+} from '@hanzo/model'
+import { DOMAIN_PREFERENCE } from '@hanzo/preference'
+import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hanzo/view'
+import { getSocialKeyByOldAccount, getUniqueAccounts } from '@hanzo/model-core'
+import { type AccountUuid, MeasureMetricsContext } from '@hanzo/core'
 
 import { DOMAIN_VIEW } from '.'
 

@@ -10,14 +10,14 @@ import account, {
   getAllTransactors,
   getMethods,
   cleanExpiredOtp
-} from '@hcengineering/account'
-import accountEn from '@hcengineering/account/lang/en.json'
-import accountRu from '@hcengineering/account/lang/ru.json'
-import { Analytics } from '@hcengineering/analytics'
-import { registerProviders } from '@hcengineering/auth-providers'
-import { metricsAggregate, type BrandingMap, type MeasureContext } from '@hcengineering/core'
-import platform, { Severity, Status, addStringsLoader, setMetadata } from '@hcengineering/platform'
-import serverToken, { decodeToken, decodeTokenVerbose, generateToken } from '@hcengineering/server-token'
+} from '@hanzo/account'
+import accountEn from '@hanzo/account/lang/en.json'
+import accountRu from '@hanzo/account/lang/ru.json'
+import { Analytics } from '@hanzo/analytics'
+import { registerProviders } from '@hanzo/auth-providers'
+import { metricsAggregate, type BrandingMap, type MeasureContext } from '@hanzo/core'
+import platform, { Severity, Status, addStringsLoader, setMetadata } from '@hanzo/platform'
+import serverToken, { decodeToken, decodeTokenVerbose, generateToken } from '@hanzo/server-token'
 import cors from '@koa/cors'
 import type Cookies from 'cookies'
 import { type IncomingHttpHeaders } from 'http'

@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { IntlString } from '@hcengineering/platform'
+  import { IntlString } from '@hanzo/platform'
 
   import Icon from './Icon.svelte'
   import Label from './Label.svelte'

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient, ObjectPopup } from '@hcengineering/presentation'
-  import { Card } from '@hcengineering/card'
-  import { Class, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { Label } from '@hcengineering/ui'
+  import { getClient, ObjectPopup } from '@hanzo/presentation'
+  import { Card } from '@hanzo/card'
+  import { Class, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let _class: Ref<Class<Card>>

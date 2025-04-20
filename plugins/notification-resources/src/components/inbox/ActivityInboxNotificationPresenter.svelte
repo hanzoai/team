@@ -13,22 +13,22 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { Ref, Space, matchQuery, Doc } from '@hcengineering/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Ref, Space, matchQuery, Doc } from '@hanzo/core'
   import notification, {
     ActivityInboxNotification,
     ActivityNotificationViewlet,
     DisplayActivityInboxNotification
-  } from '@hcengineering/notification'
+  } from '@hanzo/notification'
   import {
     ActivityMessagePreview,
     combineActivityMessages,
     sortActivityMessages
-  } from '@hcengineering/activity-resources'
-  import { ActivityMessage, DisplayActivityMessage } from '@hcengineering/activity'
-  import { Action, Component } from '@hcengineering/ui'
-  import { getActions } from '@hcengineering/view-resources'
-  import { getResource } from '@hcengineering/platform'
+  } from '@hanzo/activity-resources'
+  import { ActivityMessage, DisplayActivityMessage } from '@hanzo/activity'
+  import { Action, Component } from '@hanzo/ui'
+  import { getActions } from '@hanzo/view-resources'
+  import { getResource } from '@hanzo/platform'
 
   export let object: Doc | undefined
   export let value: DisplayActivityInboxNotification

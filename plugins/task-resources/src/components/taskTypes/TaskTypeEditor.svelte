@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, SortingOrder, Status } from '@hcengineering/core'
-  import { Asset, getEmbeddedLabel, getResource } from '@hcengineering/platform'
-  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hcengineering/presentation'
-  import { ClassAttributes, settingsStore } from '@hcengineering/setting-resources'
-  import task, { ProjectType, TaskType, calculateStatuses, findStatusAttr } from '@hcengineering/task'
+  import { Ref, SortingOrder, Status } from '@hanzo/core'
+  import { Asset, getEmbeddedLabel, getResource } from '@hanzo/platform'
+  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hanzo/presentation'
+  import { ClassAttributes, settingsStore } from '@hanzo/setting-resources'
+  import task, { ProjectType, TaskType, calculateStatuses, findStatusAttr } from '@hanzo/task'
   import {
     ButtonIcon,
     Icon,
@@ -31,8 +31,8 @@
     getCurrentLocation,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
-  import { IconPicker, deleteObjects, statusStore } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { IconPicker, deleteObjects, statusStore } from '@hanzo/view-resources'
   import { taskTypeStore } from '../..'
   import plugin from '../../plugin'
   import StatesProjectEditor from '../state/StatesProjectEditor.svelte'

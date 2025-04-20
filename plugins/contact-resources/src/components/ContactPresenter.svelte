@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Employee, Organization } from '@hcengineering/contact'
-  import { getClient } from '@hcengineering/presentation'
+  import { Contact, Employee, Organization } from '@hanzo/contact'
+  import { getClient } from '@hanzo/presentation'
   import contact from '../plugin'
   import EmployeePresenter from './EmployeePresenter.svelte'
 
   import OrganizationPresenter from './OrganizationPresenter.svelte'
   import PersonPresenter from './PersonPresenter.svelte'
-  import { IconSize } from '@hcengineering/ui'
+  import { IconSize } from '@hanzo/ui'
 
   export let value: Contact
   export let inline: boolean = false

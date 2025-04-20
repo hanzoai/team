@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { personByIdStore, personRefByPersonIdStore } from '@hcengineering/contact-resources'
-  import { Room as TypeRoom } from '@hcengineering/love'
-  import { getMetadata } from '@hcengineering/platform'
-  import { Label, Loading, resizeObserver, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
+  import { Analytics } from '@hanzo/analytics'
+  import { personByIdStore, personRefByPersonIdStore } from '@hanzo/contact-resources'
+  import { Room as TypeRoom } from '@hanzo/love'
+  import { getMetadata } from '@hanzo/platform'
+  import { Label, Loading, resizeObserver, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
   import {
     LocalParticipant,
     LocalTrackPublication,
@@ -30,8 +30,8 @@
     TrackPublication
   } from 'livekit-client'
   import { onDestroy, onMount, tick } from 'svelte'
-  import presentation from '@hcengineering/presentation'
-  import { aiBotSocialIdentityStore } from '@hcengineering/ai-bot-resources'
+  import presentation from '@hanzo/presentation'
+  import { aiBotSocialIdentityStore } from '@hanzo/ai-bot-resources'
 
   import love from '../plugin'
   import { waitForOfficeLoaded, currentRoom, infos, invites, myInfo, myRequests } from '../stores'

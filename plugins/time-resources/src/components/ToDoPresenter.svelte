@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ToDo } from '@hcengineering/time'
+  import { ToDo } from '@hanzo/time'
   import time from '../plugin'
   import WorkItemPresenter from './WorkItemPresenter.svelte'
-  import { getCurrentAccount } from '@hcengineering/core'
-  import calendar from '@hcengineering/calendar'
-  import { CheckBox, Label } from '@hcengineering/ui'
+  import { getCurrentAccount } from '@hanzo/core'
+  import calendar from '@hanzo/calendar'
+  import { CheckBox, Label } from '@hanzo/ui'
 
   export let value: ToDo
   export let withoutSpace: boolean = false

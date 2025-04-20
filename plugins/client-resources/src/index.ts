@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import clientPlugin from '@hcengineering/client'
-import type { ClientFactoryOptions } from '@hcengineering/client/src'
+import clientPlugin from '@hanzo/client'
+import type { ClientFactoryOptions } from '@hanzo/client/src'
 import core, {
   Client,
   LoadModelResponse,
@@ -37,8 +37,8 @@ import core, {
   type Ref,
   type TxCUD,
   platformNow
-} from '@hcengineering/core'
-import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hcengineering/platform'
+} from '@hanzo/core'
+import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hanzo/platform'
 import { connect } from './connection'
 
 export { connect }

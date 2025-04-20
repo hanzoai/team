@@ -7,7 +7,7 @@ A TypeScript client library for interacting with the Huly Platform API.
 In order to be able to install required packages, you will need to obtain GitHub access token. You can create a token by following the instructions [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
 
 ```bash
-npm install @hcengineering/api-client
+npm install @hanzo/api-client
 ```
 
 ## Authentication
@@ -76,7 +76,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 
 ...
 
@@ -106,8 +106,8 @@ Parameters:
 Example:
 
 ```ts
-import { SortingOrder } from '@hcengineering/core'
-import contact from '@hcengineering/contact'
+import { SortingOrder } from '@hanzo/core'
+import contact from '@hanzo/contact'
 
 ..
 
@@ -143,7 +143,7 @@ Parameters:
 Example:
 
 ```ts
-import contact, { AvatarType } from '@hcengineering/contact'
+import contact, { AvatarType } from '@hanzo/contact'
 
 ..
 
@@ -172,7 +172,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 
 ..
 
@@ -199,7 +199,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 
 ..
 
@@ -229,7 +229,7 @@ Parameters:
 Example:
 
 ```ts
-import contact, { AvatarType } from '@hcengineering/contact'
+import contact, { AvatarType } from '@hanzo/contact'
 
 ..
 
@@ -273,7 +273,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 
 ..
 
@@ -306,7 +306,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 
 ..
 
@@ -337,7 +337,7 @@ Parameters:
 - `attributes`: Attributes of the mixin
 
 ```ts
-import contact, { AvatarType } from '@hcengineering/contact'
+import contact, { AvatarType } from '@hanzo/contact'
 
 ..
 
@@ -376,7 +376,7 @@ Parameters:
 - `attributes`: Attributes of the mixin to update
 
 ```ts
-import contact, { AvatarType } from '@hcengineering/contact'
+import contact, { AvatarType } from '@hanzo/contact'
 
 ..
 

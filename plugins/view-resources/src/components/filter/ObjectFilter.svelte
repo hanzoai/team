@@ -22,9 +22,9 @@
     SortingOrder,
     Space,
     type WithLookup
-  } from '@hcengineering/core'
-  import { getResourceC, translate } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import { getResourceC, translate } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
   import ui, {
     addNotification,
     deviceOptionsStore,
@@ -36,8 +36,8 @@
     Loading,
     resizeObserver,
     themeStore
-  } from '@hcengineering/ui'
-  import { Filter, GrouppingManager } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { Filter, GrouppingManager } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import { FILTER_DEBOUNCE_MS, sortFilterValues } from '../../filter'
   import view from '../../plugin'

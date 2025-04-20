@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
-  import setting, { settingId } from '@hcengineering/setting'
+  import { Card, MasterTag } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
+  import setting, { settingId } from '@hanzo/setting'
   import {
     Button,
     Chevron,
@@ -27,10 +27,10 @@
     Label,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import card from '../plugin'
   import CardAttributes from './CardAttributes.svelte'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
 
   export let value: Card
   export let readonly: boolean = false

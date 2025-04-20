@@ -23,15 +23,15 @@ import {
   type SessionData,
   type Tx,
   type TxCUD
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import type {
   BroadcastFunc,
   Middleware,
   MiddlewareCreator,
   PipelineContext,
   TxMiddlewareResult
-} from '@hcengineering/server-core'
-import { BaseMiddleware, createBroadcastEvent } from '@hcengineering/server-core'
+} from '@hanzo/server-core'
+import { BaseMiddleware, createBroadcastEvent } from '@hanzo/server-core'
 
 /**
  * @public

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment, { Attachment, AttachmentsEvents } from '@hcengineering/attachment'
-  import contact from '@hcengineering/contact'
-  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hcengineering/core'
-  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  import attachment, { Attachment, AttachmentsEvents } from '@hanzo/attachment'
+  import contact from '@hanzo/contact'
+  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hanzo/core'
+  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
   import {
     FileOrBlob,
     KeyedAttribute,
@@ -24,8 +24,8 @@
     getClient,
     getFileMetadata,
     uploadFile
-  } from '@hcengineering/presentation'
-  import textEditor, { type RefAction, type TextEditorHandler } from '@hcengineering/text-editor'
+  } from '@hanzo/presentation'
+  import textEditor, { type RefAction, type TextEditorHandler } from '@hanzo/text-editor'
   import {
     AttachIcon,
     CollaborativeAttributeBox,
@@ -33,12 +33,12 @@
     addTableHandler,
     defaultRefActions,
     getModelRefActions
-  } from '@hcengineering/text-editor-resources'
-  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement, navigate } from '@hcengineering/ui'
-  import { type FileUploadCallbackParams, uploadFiles } from '@hcengineering/uploader'
-  import view from '@hcengineering/view'
-  import { getCollaborationUser, getObjectId, getObjectLinkFragment } from '@hcengineering/view-resources'
-  import { Analytics } from '@hcengineering/analytics'
+  } from '@hanzo/text-editor-resources'
+  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement, navigate } from '@hanzo/ui'
+  import { type FileUploadCallbackParams, uploadFiles } from '@hanzo/uploader'
+  import view from '@hanzo/view'
+  import { getCollaborationUser, getObjectId, getObjectLinkFragment } from '@hanzo/view-resources'
+  import { Analytics } from '@hanzo/analytics'
 
   import AttachmentsGrid from './AttachmentsGrid.svelte'
 

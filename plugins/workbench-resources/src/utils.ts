@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { getClient as getAccountClient } from '@hcengineering/account-client'
+import { getClient as getAccountClient } from '@hanzo/account-client'
 import type {
   Account,
   Class,
@@ -24,11 +24,11 @@ import type {
   Space,
   TxOperations,
   WorkspaceInfoWithStatus
-} from '@hcengineering/core'
-import core, { hasAccountRole } from '@hcengineering/core'
-import login from '@hcengineering/login'
-import { getMetadata, getResource, setMetadata } from '@hcengineering/platform'
-import presentation, { closeClient, getClient, setPresentationCookie } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import core, { hasAccountRole } from '@hanzo/core'
+import login from '@hanzo/login'
+import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
+import presentation, { closeClient, getClient, setPresentationCookie } from '@hanzo/presentation'
 import {
   closePanel,
   getCurrentLocation,
@@ -36,9 +36,9 @@ import {
   location,
   navigate,
   setMetadataLocalStorage
-} from '@hcengineering/ui'
-import view from '@hcengineering/view'
-import workbench, { type Application, type NavigatorModel } from '@hcengineering/workbench'
+} from '@hanzo/ui'
+import view from '@hanzo/view'
+import workbench, { type Application, type NavigatorModel } from '@hanzo/workbench'
 import { derived, writable } from 'svelte/store'
 
 export const workspaceCreating = writable<number | undefined>(undefined)

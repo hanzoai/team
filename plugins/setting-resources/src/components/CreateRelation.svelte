@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import cardPlugin from '@hcengineering/card'
-  import core, { Class, Doc, Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import presentation, { Card, getClient } from '@hcengineering/presentation'
-  import { DropdownIntlItem, DropdownLabelsIntl, EditBox, Label } from '@hcengineering/ui'
-  import NestedDropdown from '@hcengineering/ui/src/components/NestedDropdown.svelte'
-  import view from '@hcengineering/view'
+  import cardPlugin from '@hanzo/card'
+  import core, { Class, Doc, Ref } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import presentation, { Card, getClient } from '@hanzo/presentation'
+  import { DropdownIntlItem, DropdownLabelsIntl, EditBox, Label } from '@hanzo/ui'
+  import NestedDropdown from '@hanzo/ui/src/components/NestedDropdown.svelte'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import setting from '../plugin'
 

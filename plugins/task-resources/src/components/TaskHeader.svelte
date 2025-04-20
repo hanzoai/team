@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import core, { Class, Doc, Mixin, Ref, RefTo } from '@hcengineering/core'
-  import { AttributesBar, getClient, KeyedAttribute } from '@hcengineering/presentation'
-  import { UserBox } from '@hcengineering/contact-resources'
-  import { Task } from '@hcengineering/task'
+  import contact from '@hanzo/contact'
+  import core, { Class, Doc, Mixin, Ref, RefTo } from '@hanzo/core'
+  import { AttributesBar, getClient, KeyedAttribute } from '@hanzo/presentation'
+  import { UserBox } from '@hanzo/contact-resources'
+  import { Task } from '@hanzo/task'
   import task from '../plugin'
-  import { DocAttributeBar } from '@hcengineering/view-resources'
+  import { DocAttributeBar } from '@hanzo/view-resources'
 
   export let object: Task
   export let keys: KeyedAttribute[]

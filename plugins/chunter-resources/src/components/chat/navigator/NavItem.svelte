@@ -23,9 +23,9 @@
     Menu,
     showPopup,
     NavItem
-  } from '@hcengineering/ui'
-  import { NotifyMarker } from '@hcengineering/notification-resources'
-  import { Asset, IntlString } from '@hcengineering/platform'
+  } from '@hanzo/ui'
+  import { NotifyMarker } from '@hanzo/notification-resources'
+  import { Asset, IntlString } from '@hanzo/platform'
 
   export let _id: string
   export let icon: Asset | AnySvelteComponent | undefined

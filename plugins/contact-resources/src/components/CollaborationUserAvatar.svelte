@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import { CollaborationUser } from '@hcengineering/text-editor'
-  import { IconSize } from '@hcengineering/ui'
+  import { CollaborationUser } from '@hanzo/text-editor'
+  import { IconSize } from '@hanzo/ui'
 
   import { personByPersonIdStore } from '../utils'
   import Avatar from './Avatar.svelte'

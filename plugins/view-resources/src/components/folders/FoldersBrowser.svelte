@@ -16,11 +16,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { Class, Doc, DocumentQuery, Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Action, IconEdit, navigate, type Location, Scroller, location, getLocation } from '@hcengineering/ui'
-  import { getResource, type Resource } from '@hcengineering/platform'
-  import { IntlString, Asset } from '@hcengineering/platform'
+  import { Class, Doc, DocumentQuery, Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Action, IconEdit, navigate, type Location, Scroller, location, getLocation } from '@hanzo/ui'
+  import { getResource, type Resource } from '@hanzo/platform'
+  import { IntlString, Asset } from '@hanzo/platform'
 
   import { createFoldersStore, FoldersState, emptyFoldersState, getFoldersManager } from './store/folderStore'
   import FolderTreeLevel from './FolderTreeLevel.svelte'

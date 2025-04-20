@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card } from '@hcengineering/card'
-  import { Scroller } from '@hcengineering/ui'
-  import { SortingOrder, Ref } from '@hcengineering/core'
-  import { createNotificationContextsQuery, createQuery } from '@hcengineering/presentation'
-  import { NotificationContext, Window } from '@hcengineering/communication-types'
+  import cardPlugin, { Card } from '@hanzo/card'
+  import { Scroller } from '@hanzo/ui'
+  import { SortingOrder, Ref } from '@hanzo/core'
+  import { createNotificationContextsQuery, createQuery } from '@hanzo/presentation'
+  import { NotificationContext, Window } from '@hanzo/communication-types'
 
   import InboxCard from './InboxCard.svelte'
 

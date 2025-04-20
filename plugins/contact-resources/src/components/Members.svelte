@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Anticrm Platform Contributors.
+// Copyright © 2022 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Member } from '@hcengineering/contact'
-  import type { Class, Doc, Ref, Space } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Button, IconAdd, Label, Section, showPopup } from '@hcengineering/ui'
-  import { Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { Table, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
+  import { Member } from '@hanzo/contact'
+  import type { Class, Doc, Ref, Space } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Button, IconAdd, Label, Section, showPopup } from '@hanzo/ui'
+  import { Viewlet, ViewletPreference } from '@hanzo/view'
+  import { Table, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
   import contact from '../plugin'
   import UsersPopup from './UsersPopup.svelte'
   import IconMembersOutline from './icons/MembersOutline.svelte'

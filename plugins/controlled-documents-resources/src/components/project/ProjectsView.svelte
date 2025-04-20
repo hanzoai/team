@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref, WithLookup } from '@hcengineering/core'
-  import { IntlString, translate } from '@hcengineering/platform'
-  import { themeStore } from '@hcengineering/ui'
-  import { Viewlet, ViewOptions } from '@hcengineering/view'
-  import { FilterBar, SpaceHeader, ViewletContentView, ViewletSettingButton } from '@hcengineering/view-resources'
-  import { Project, DocumentSpace } from '@hcengineering/controlled-documents'
+  import { Class, Doc, DocumentQuery, Ref, WithLookup } from '@hanzo/core'
+  import { IntlString, translate } from '@hanzo/platform'
+  import { themeStore } from '@hanzo/ui'
+  import { Viewlet, ViewOptions } from '@hanzo/view'
+  import { FilterBar, SpaceHeader, ViewletContentView, ViewletSettingButton } from '@hanzo/view-resources'
+  import { Project, DocumentSpace } from '@hanzo/controlled-documents'
 
   export let space: Ref<DocumentSpace>
   export let _class: Ref<Class<Project>>

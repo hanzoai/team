@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
+  import { AccountRole, Ref, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
   import {
     AccordionItem,
     ButtonIcon,
@@ -28,8 +28,8 @@
     eventToHTMLElement,
     showPopup,
     type SelectPopupValueType
-  } from '@hcengineering/ui'
-  import { Floor, ParticipantInfo, Room } from '@hcengineering/love'
+  } from '@hanzo/ui'
+  import { Floor, ParticipantInfo, Room } from '@hanzo/love'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../plugin'
   import { infos } from '../stores'

@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Process, ProcessToDo, State, Step } from '@hcengineering/process'
+  import { Process, ProcessToDo, State, Step } from '@hanzo/process'
   import { createEventDispatcher, onMount } from 'svelte'
   import ParamsEditor from './ParamsEditor.svelte'
   import plugin from '../plugin'

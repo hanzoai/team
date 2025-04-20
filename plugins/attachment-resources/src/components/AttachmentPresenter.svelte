@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { PermissionsStore } from '@hcengineering/contact'
-  import type { Attachment } from '@hcengineering/attachment'
-  import core, { BlobType, type WithLookup } from '@hcengineering/core'
+  import contact, { PermissionsStore } from '@hanzo/contact'
+  import type { Attachment } from '@hanzo/attachment'
+  import core, { BlobType, type WithLookup } from '@hanzo/core'
   import presentation, {
     canPreviewFile,
     getBlobRef,
@@ -24,12 +24,12 @@
     previewTypes,
     getJsonOrEmpty,
     sizeToWidth
-  } from '@hcengineering/presentation'
-  import { Label, Spinner } from '@hcengineering/ui'
+  } from '@hanzo/presentation'
+  import { Label, Spinner } from '@hanzo/ui'
   import WebIcon from './icons/Web.svelte'
   import filesize from 'filesize'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { getResource } from '@hcengineering/platform'
+  import { getResource } from '@hanzo/platform'
   import { Readable } from 'svelte/store'
   import { getType, isAttachment, openAttachmentInSidebar, showAttachmentPreviewPopup } from '../utils'
   import AttachmentName from './AttachmentName.svelte'

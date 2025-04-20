@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
+import { type Resources } from '@hanzo/platform'
 import CreateSurvey from './components/CreateSurvey.svelte'
 import EditPollPanel from './components/EditPollPanel.svelte'
 import EditSurveyPanel from './components/EditSurveyPanel.svelte'

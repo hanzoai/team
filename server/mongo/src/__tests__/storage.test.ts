@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -24,8 +24,8 @@ import core, {
   type Space,
   TxOperations,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { type DbAdapter, wrapAdapterToClient } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { type DbAdapter, wrapAdapterToClient } from '@hanzo/server-core'
 import { createMongoAdapter, createMongoTxAdapter } from '..'
 import { getMongoClient, type MongoClientReference, shutdownMongo } from '../utils'
 import { genMinModel } from './minmodel'

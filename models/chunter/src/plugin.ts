@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import type { ActivityMessage } from '@hcengineering/activity'
-import { chunterId, type Channel } from '@hcengineering/chunter'
-import chunter from '@hcengineering/chunter-resources/src/plugin'
-import { type Client, type Doc, type Ref } from '@hcengineering/core'
-import { type NotificationGroup } from '@hcengineering/notification'
-import type { IntlString, Resource } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import type { AnyComponent, Location } from '@hcengineering/ui/src/types'
-import type { Action, ActionCategory, ViewAction, Viewlet, ViewletDescriptor } from '@hcengineering/view'
-import { type WidgetTab, type LocationData } from '@hcengineering/workbench'
+import type { ActivityMessage } from '@hanzo/activity'
+import { chunterId, type Channel } from '@hanzo/chunter'
+import chunter from '@hanzo/chunter-resources/src/plugin'
+import { type Client, type Doc, type Ref } from '@hanzo/core'
+import { type NotificationGroup } from '@hanzo/notification'
+import type { IntlString, Resource } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import type { AnyComponent, Location } from '@hanzo/ui/src/types'
+import type { Action, ActionCategory, ViewAction, Viewlet, ViewletDescriptor } from '@hanzo/view'
+import { type WidgetTab, type LocationData } from '@hanzo/workbench'
 
 export default mergeIds(chunterId, chunter, {
   component: {

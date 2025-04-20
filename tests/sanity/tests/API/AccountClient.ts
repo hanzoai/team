@@ -1,4 +1,4 @@
-import { getClient as getClientRaw, type AccountClient } from '@hcengineering/account-client'
+import { getClient as getClientRaw, type AccountClient } from '@hanzo/account-client'
 import { LocalUrl, PlatformAdmin } from '../utils'
 
 let adminAccountClient: AccountClient

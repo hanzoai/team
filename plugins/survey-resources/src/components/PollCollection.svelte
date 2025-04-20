@@ -15,12 +15,12 @@
 //
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, Space } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Survey } from '@hcengineering/survey'
-  import { Button, IconAdd, Label, Section, navigate, showPopup } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { Table, ViewletSelector, ViewletSettingButton, getObjectLinkFragment } from '@hcengineering/view-resources'
+  import type { Class, Doc, Ref, Space } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Survey } from '@hanzo/survey'
+  import { Button, IconAdd, Label, Section, navigate, showPopup } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
+  import { Table, ViewletSelector, ViewletSettingButton, getObjectLinkFragment } from '@hanzo/view-resources'
   import SurveyPopup from './SurveyPopup.svelte'
   import survey from '../plugin'
   import { makePollData } from '../utils'

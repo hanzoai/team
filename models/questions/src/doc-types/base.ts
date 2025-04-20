@@ -2,11 +2,11 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Answer, Assessment, Percentage, Question, QuestionOption, Rank } from '@hcengineering/questions'
-import contact, { type Employee } from '@hcengineering/contact'
-import { type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hcengineering/core'
-import { Hidden, Index, Model, Prop, TypeRef, TypeString, TypeTimestamp, UX } from '@hcengineering/model'
-import core, { TAttachedDoc, TType } from '@hcengineering/model-core'
+import type { Answer, Assessment, Percentage, Question, QuestionOption, Rank } from '@hanzo/questions'
+import contact, { type Employee } from '@hanzo/contact'
+import { type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hanzo/core'
+import { Hidden, Index, Model, Prop, TypeRef, TypeString, TypeTimestamp, UX } from '@hanzo/model'
+import core, { TAttachedDoc, TType } from '@hanzo/model-core'
 import questions from '../plugin'
 
 export const DOMAIN_QUESTIONS = 'questions' as Domain

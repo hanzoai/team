@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import view, { classPresenter } from '@hcengineering/model-view'
-import notification from '@hcengineering/notification'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import view, { classPresenter } from '@hanzo/model-view'
+import notification from '@hanzo/notification'
 import tracker from './plugin'
 
 /**

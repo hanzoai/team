@@ -14,9 +14,9 @@
 //
 
 import { get, writable } from 'svelte/store'
-import core, { SortingOrder, type WithLookup } from '@hcengineering/core'
-import attachment, { type SavedAttachments } from '@hcengineering/attachment'
-import { createQuery, onClient } from '@hcengineering/presentation'
+import core, { SortingOrder, type WithLookup } from '@hanzo/core'
+import attachment, { type SavedAttachments } from '@hanzo/attachment'
+import { createQuery, onClient } from '@hanzo/presentation'
 
 export const savedAttachmentsStore = writable<Array<WithLookup<SavedAttachments>>>([])
 export const isSavedAttachmentsLoaded = writable(false)

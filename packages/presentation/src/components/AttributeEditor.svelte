@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  // import core from '@hcengineering/core'
-  import type { Class, Doc, Ref } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import type { AnySvelteComponent, EditStyle } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  // import core from '@hanzo/core'
+  import type { Class, Doc, Ref } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import type { AnySvelteComponent, EditStyle } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { KeyedAttribute, getAttribute, updateAttribute } from '../attributes'
   import { getAttributePresenterClass, getClient } from '../utils'
 

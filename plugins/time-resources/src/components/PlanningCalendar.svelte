@@ -1,10 +1,10 @@
 <script lang="ts">
-  import calendar, { Calendar, Event, generateEventId, getAllEvents } from '@hcengineering/calendar'
-  import { DayCalendar, calendarByIdStore, hidePrivateEvents } from '@hcengineering/calendar-resources'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { Ref, SortingOrder, Timestamp, getCurrentAccount } from '@hcengineering/core'
-  import { IntlString, getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
+  import calendar, { Calendar, Event, generateEventId, getAllEvents } from '@hanzo/calendar'
+  import { DayCalendar, calendarByIdStore, hidePrivateEvents } from '@hanzo/calendar-resources'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { Ref, SortingOrder, Timestamp, getCurrentAccount } from '@hanzo/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
   import {
     AnyComponent,
     ButtonBase,
@@ -19,8 +19,8 @@
     getFormattedDate,
     resizeObserver,
     deviceOptionsStore as deviceInfo
-  } from '@hcengineering/ui'
-  import { ToDo, WorkSlot } from '@hcengineering/time'
+  } from '@hanzo/ui'
+  import { ToDo, WorkSlot } from '@hanzo/time'
   import time from '../plugin'
   import IconSun from './icons/Sun.svelte'
 

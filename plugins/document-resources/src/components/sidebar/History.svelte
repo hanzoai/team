@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { Document, DocumentSnapshot } from '@hcengineering/document'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Button, Label, Lazy, Scroller, showPopup } from '@hcengineering/ui'
+  import { Document, DocumentSnapshot } from '@hanzo/document'
+  import { createQuery } from '@hanzo/presentation'
+  import { Button, Label, Lazy, Scroller, showPopup } from '@hanzo/ui'
 
   import document from '../../plugin'
   import HistoryView from './HistoryView.svelte'

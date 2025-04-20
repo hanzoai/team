@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Category } from '@hcengineering/inventory'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { Category } from '@hanzo/inventory'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   export let value: Category
   export let inline: boolean = false

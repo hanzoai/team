@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { TestSuite } from '@hcengineering/test-management'
+  import { Class, Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { TestSuite } from '@hanzo/test-management'
 
   import testManagement from '../../plugin'
   import TestSuitePresenter from './TestSuitePresenter.svelte'

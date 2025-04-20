@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hcengineering/core'
-  import login from '@hcengineering/login'
-  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { InviteSettings } from '@hcengineering/setting'
-  import { Breadcrumb, Button, EditBox, Header, MiniToggle } from '@hcengineering/ui'
+  import core from '@hanzo/core'
+  import login from '@hanzo/login'
+  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import setting, { InviteSettings } from '@hanzo/setting'
+  import { Breadcrumb, Button, EditBox, Header, MiniToggle } from '@hanzo/ui'
 
   const client = getClient()
   let expTime: number = 48

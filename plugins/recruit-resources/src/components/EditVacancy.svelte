@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyleBoxCollabEditor } from '@hcengineering/attachment-resources'
+  import { AttachmentStyleBoxCollabEditor } from '@hanzo/attachment-resources'
   import core, {
     ClassifierKind,
     type CollaborativeDoc,
@@ -23,17 +23,17 @@
     type MarkupBlobRef,
     Mixin,
     Ref
-  } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { Panel } from '@hcengineering/panel'
-  import { getResource } from '@hcengineering/platform'
-  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
-  import { Vacancy } from '@hcengineering/recruit'
-  import survey from '@hcengineering/survey'
-  import tracker from '@hcengineering/tracker'
-  import { Button, Component, EditBox, IconMixin, IconMoreH, Label } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { DocAttributeBar, DocNavLink, showMenu } from '@hcengineering/view-resources'
+  } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { Panel } from '@hanzo/panel'
+  import { getResource } from '@hanzo/platform'
+  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import { Vacancy } from '@hanzo/recruit'
+  import survey from '@hanzo/survey'
+  import tracker from '@hanzo/tracker'
+  import { Button, Component, EditBox, IconMixin, IconMoreH, Label } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { DocAttributeBar, DocNavLink, showMenu } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import recruit from '../plugin'
   import VacancyApplications from './VacancyApplications.svelte'

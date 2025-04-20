@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { markupToJSON } from '@hcengineering/text'
+  import { markupToJSON } from '@hanzo/text'
   import LiteNode from './markup/lite/LiteNode.svelte'
 
   export let message: string

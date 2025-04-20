@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Employee } from '@hcengineering/contact'
+import type { Employee } from '@hanzo/contact'
 import {
   IndexKind,
   type MarkupBlobRef,
@@ -23,8 +23,8 @@ import {
   type Status,
   type Timestamp,
   type AccountUuid
-} from '@hcengineering/core'
-import { type Customer, type Funnel, type Lead } from '@hcengineering/lead'
+} from '@hanzo/core'
+import { type Customer, type Funnel, type Lead } from '@hanzo/lead'
 import {
   Collection,
   Index,
@@ -38,17 +38,17 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import chunter from '@hcengineering/model-chunter'
-import contact, { TContact } from '@hcengineering/model-contact'
-import core from '@hcengineering/model-core'
-import task, { TProject, TTask } from '@hcengineering/model-task'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import chunter from '@hanzo/model-chunter'
+import contact, { TContact } from '@hanzo/model-contact'
+import core from '@hanzo/model-core'
+import task, { TProject, TTask } from '@hanzo/model-task'
 
 import lead from './plugin'
-import { getEmbeddedLabel } from '@hcengineering/platform'
+import { getEmbeddedLabel } from '@hanzo/platform'
 
-export { leadId } from '@hcengineering/lead'
+export { leadId } from '@hanzo/lead'
 export { leadOperation } from './migration'
 export { default } from './plugin'
 

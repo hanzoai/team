@@ -23,10 +23,10 @@ import core, {
   TxApplyIf,
   systemAccountUuid,
   AccountUuid
-} from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
-import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hcengineering/server-core'
-import { DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hcengineering/server-notification'
+} from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
+import { BaseMiddleware, Middleware, TxMiddlewareResult, type PipelineContext } from '@hanzo/server-core'
+import { DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hanzo/server-notification'
 
 /**
  * @public

@@ -16,10 +16,10 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import core from '@hcengineering/core'
-  import { Card } from '@hcengineering/presentation'
-  import { EditBox } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import core from '@hanzo/core'
+  import { Card } from '@hanzo/presentation'
+  import { EditBox } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   import drive from '../plugin'
 

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 import { faker } from '@faker-js/faker'
-import { Integration, IntegrationSecret } from '@hcengineering/account'
-import { buildSocialIdString, SocialIdType } from '@hcengineering/core'
+import { Integration, IntegrationSecret } from '@hanzo/account'
+import { buildSocialIdString, SocialIdType } from '@hanzo/core'
 
 import { PlatformUser } from './utils'
 import { getAdminAccountClient } from './API/AccountClient'

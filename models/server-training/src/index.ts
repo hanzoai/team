@@ -1,15 +1,15 @@
 //
 // Copyright @ 2022 Hardcore Engineering Inc.
 //
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import training from '@hcengineering/model-training'
-import serverTraining from '@hcengineering/server-training'
-import core from '@hcengineering/core'
-import notification from '@hcengineering/notification'
-import serverNotification from '@hcengineering/server-notification'
+import training from '@hanzo/model-training'
+import serverTraining from '@hanzo/server-training'
+import core from '@hanzo/core'
+import notification from '@hanzo/notification'
+import serverNotification from '@hanzo/server-notification'
 
-export { serverTrainingId } from '@hcengineering/server-training/src/index'
+export { serverTrainingId } from '@hanzo/server-training/src/index'
 
 export function createModel (builder: Builder): void {
   builder.mixin(

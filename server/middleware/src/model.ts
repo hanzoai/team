@@ -30,16 +30,16 @@ import core, {
   DOMAIN_MODEL,
   DOMAIN_TX,
   withContext
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import type {
   Middleware,
   MiddlewareCreator,
   PipelineContext,
   TxAdapter,
   TxMiddlewareResult
-} from '@hcengineering/server-core'
-import { BaseMiddleware } from '@hcengineering/server-core'
+} from '@hanzo/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
 import crypto from 'node:crypto'
 
 const isUserTx = (it: Tx): boolean =>

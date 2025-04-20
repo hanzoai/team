@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { TrainingAttempt } from '@hcengineering/training'
-import type { Location } from '@hcengineering/ui'
+import type { TrainingAttempt } from '@hanzo/training'
+import type { Location } from '@hanzo/ui'
 import { trainingAttemptRoute } from '../routing/routes/trainingAttemptRoute'
 
 export async function trainingAttemptLinkProviderEncode (

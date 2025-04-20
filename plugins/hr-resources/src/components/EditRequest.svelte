@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hcengineering/core'
-  import { Request } from '@hcengineering/hr'
-  import { getClient } from '@hcengineering/presentation'
-  import { StyledTextArea } from '@hcengineering/text-editor-resources'
-  import { createFocusManager, FocusHandler } from '@hcengineering/ui'
+  import core from '@hanzo/core'
+  import { Request } from '@hanzo/hr'
+  import { getClient } from '@hanzo/presentation'
+  import { StyledTextArea } from '@hanzo/text-editor-resources'
+  import { createFocusManager, FocusHandler } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
 
   export let object: Request

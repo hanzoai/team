@@ -6,7 +6,7 @@ import {
   getAccount,
   getWorkspaceById,
   getWorkspaces
-} from '@hcengineering/account'
+} from '@hanzo/account'
 import {
   systemAccountUuid,
   type BackupClient,
@@ -14,8 +14,8 @@ import {
   type Doc,
   MeasureMetricsContext,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { getMongoClient, getWorkspaceMongoDB } from '@hcengineering/mongo'
+} from '@hanzo/core'
+import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
 import {
   convertDoc,
   createTables,
@@ -23,12 +23,12 @@ import {
   getDocFieldsByDomains,
   retryTxn,
   translateDomain
-} from '@hcengineering/postgres'
-import { type DBDoc } from '@hcengineering/postgres/types/utils'
-import { getTransactorEndpoint } from '@hcengineering/server-client'
-import { sharedPipelineContextVars } from '@hcengineering/server-pipeline'
-import { generateToken } from '@hcengineering/server-token'
-import { connect } from '@hcengineering/server-tool'
+} from '@hanzo/postgres'
+import { type DBDoc } from '@hanzo/postgres/types/utils'
+import { getTransactorEndpoint } from '@hanzo/server-client'
+import { sharedPipelineContextVars } from '@hanzo/server-pipeline'
+import { generateToken } from '@hanzo/server-token'
+import { connect } from '@hanzo/server-tool'
 import { type MongoClient, UUID } from 'mongodb'
 import type postgres from 'postgres'
 

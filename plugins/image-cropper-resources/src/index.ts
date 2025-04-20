@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import '@hcengineering/platform-rig/profiles/ui/svelte'
+import '@hanzo/platform-rig/profiles/ui/svelte'
 
-import { type Resources } from '@hcengineering/platform'
+import { type Resources } from '@hanzo/platform'
 
 import Cropper from './components/Cropper.svelte'
 

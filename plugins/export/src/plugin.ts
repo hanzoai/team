@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type IntlString, type Metadata, type Plugin, plugin, type Asset } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+import { type IntlString, type Metadata, type Plugin, plugin, type Asset } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 
 export const exportId = 'export' as Plugin
 

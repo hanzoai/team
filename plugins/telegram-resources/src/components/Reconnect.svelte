@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { concatLink, getCurrentAccount } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import setting from '@hcengineering/setting'
-  import { Button, EditBox, IconClose, Label } from '@hcengineering/ui'
+  import { concatLink, getCurrentAccount } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import setting from '@hanzo/setting'
+  import { Button, EditBox, IconClose, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import telegram from '../plugin'
   import PinPad from './PinPad.svelte'

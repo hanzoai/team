@@ -1,5 +1,5 @@
-import { type Card } from '@hcengineering/board'
-import { type Employee, getCurrentEmployee } from '@hcengineering/contact'
+import { type Card } from '@hanzo/board'
+import { type Employee, getCurrentEmployee } from '@hanzo/contact'
 import core, {
   type TxOperations as Client,
   type TxResult,
@@ -8,9 +8,9 @@ import core, {
   type AttachedData,
   SortingOrder,
   type Status
-} from '@hcengineering/core'
-import { showPanel } from '@hcengineering/ui'
-import { makeRank } from '@hcengineering/task'
+} from '@hanzo/core'
+import { showPanel } from '@hanzo/ui'
+import { makeRank } from '@hanzo/task'
 import board from '../plugin'
 
 export async function createCard (

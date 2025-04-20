@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import type { PersonId, Doc, WorkspaceUuid } from '@hcengineering/core'
+import type { PersonId, Doc, WorkspaceUuid } from '@hanzo/core'
 import type { NextFunction, Request, Response } from 'express'
 import type { Credentials } from 'google-auth-library'
-import type { Channel as PlatformChannel } from '@hcengineering/contact'
+import type { Channel as PlatformChannel } from '@hanzo/contact'
 
 export type Token = User & Credentials
 

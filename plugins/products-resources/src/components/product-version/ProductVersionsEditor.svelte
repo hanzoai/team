@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Product } from '@hcengineering/products'
-  import { type Ref } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hcengineering/ui'
-  import { Table, openDoc } from '@hcengineering/view-resources'
+  import { Product } from '@hanzo/products'
+  import { type Ref } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hanzo/ui'
+  import { Table, openDoc } from '@hanzo/view-resources'
 
   import products from '../../plugin'
   import CreateProductVersion from './CreateProductVersion.svelte'

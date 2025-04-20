@@ -15,7 +15,7 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
   import {
     AccountRole,
     type Blob,
@@ -26,8 +26,8 @@
     generateId,
     getCurrentAccount,
     makeDocCollabId
-  } from '@hcengineering/core'
-  import { IntlString, translate } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { IntlString, translate } from '@hanzo/platform'
   import {
     DrawingCmd,
     KeyedAttribute,
@@ -36,8 +36,8 @@
     getFileUrl,
     getImageSize,
     imageSizeToRatio
-  } from '@hcengineering/presentation'
-  import { markupToJSON } from '@hcengineering/text'
+  } from '@hanzo/presentation'
+  import { markupToJSON } from '@hanzo/text'
   import {
     AnySvelteComponent,
     Button,
@@ -49,8 +49,8 @@
     getEventPositionElement,
     getPopupPositionElement,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { AnyExtension, Editor, FocusPosition, mergeAttributes } from '@tiptap/core'
   import Collaboration, { isChangeOrigin } from '@tiptap/extension-collaboration'
   import CollaborationCursor from '@tiptap/extension-collaboration-cursor'
@@ -64,7 +64,7 @@
     RefAction,
     TextEditorCommandHandler,
     TextEditorHandler
-  } from '@hcengineering/text-editor'
+  } from '@hanzo/text-editor'
   import { EditorKitOptions, getEditorKit } from '../../src/kits/editor-kit'
   import { deleteAttachment } from '../command/deleteAttachment'
   import { textEditorCommandHandler } from '../commands'

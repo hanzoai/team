@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { createLabelsQuery, getClient } from '@hcengineering/presentation'
-  import { Card } from '@hcengineering/card'
-  import { Label } from '@hcengineering/communication-types'
-  import tag, { type TagElement } from '@hcengineering/tags'
-  import { TagElementPresenter } from '@hcengineering/tags-resources'
+  import { createLabelsQuery, getClient } from '@hanzo/presentation'
+  import { Card } from '@hanzo/card'
+  import { Label } from '@hanzo/communication-types'
+  import tag, { type TagElement } from '@hanzo/tags'
+  import { TagElementPresenter } from '@hanzo/tags-resources'
 
   export let value: Card
 

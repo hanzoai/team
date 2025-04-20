@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Loading } from '@hcengineering/ui'
-  import documents, { type ControlledDocument, type ProjectDocument } from '@hcengineering/controlled-documents'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Loading } from '@hanzo/ui'
+  import documents, { type ControlledDocument, type ProjectDocument } from '@hanzo/controlled-documents'
 
   import EditDocPanel from './EditDocPanel.svelte'
 

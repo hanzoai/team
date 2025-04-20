@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type WorkspaceLoginInfo, getClient as getAccountClient } from '@hcengineering/account-client'
-import client, { clientId } from '@hcengineering/client'
+import { type WorkspaceLoginInfo, getClient as getAccountClient } from '@hanzo/account-client'
+import client, { clientId } from '@hanzo/client'
 import {
   type Class,
   type Client,
@@ -39,8 +39,8 @@ import {
   WorkspaceUuid,
   generateId,
   pickPrimarySocialId
-} from '@hcengineering/core'
-import { addLocation, getResource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { addLocation, getResource } from '@hanzo/platform'
 
 import { type ServerConfig, loadServerConfig } from './config'
 import {
@@ -79,7 +79,7 @@ async function createClient (
   config: ServerConfig,
   options: ConnectOptions
 ): Promise<PlatformClient> {
-  addLocation(clientId, () => import(/* webpackChunkName: "client" */ '@hcengineering/client-resources'))
+  addLocation(clientId, () => import(/* webpackChunkName: "client" */ '@hanzo/client-resources'))
 
   const { socketFactory, connectionTimeout } = options
 

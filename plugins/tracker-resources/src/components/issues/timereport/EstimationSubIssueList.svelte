@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { AssigneeBox } from '@hcengineering/contact-resources'
-  import { Issue } from '@hcengineering/tracker'
-  import { ListView, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
-  import { FixedColumn, ListSelectionProvider, showMenu } from '@hcengineering/view-resources'
+  import contact from '@hanzo/contact'
+  import { AssigneeBox } from '@hanzo/contact-resources'
+  import { Issue } from '@hanzo/tracker'
+  import { ListView, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  import { FixedColumn, ListSelectionProvider, showMenu } from '@hanzo/view-resources'
   import tracker from '../../../plugin'
   import EstimationEditor from './EstimationEditor.svelte'
 

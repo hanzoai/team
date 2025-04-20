@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { concatLink } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import serverCore, { type TriggerControl } from '@hcengineering/server-core'
-import type { Presenter } from '@hcengineering/server-notification'
-import { workbenchId } from '@hcengineering/workbench'
-import { trainingId, type TrainingRequest } from '@hcengineering/training'
+import { concatLink } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import serverCore, { type TriggerControl } from '@hanzo/server-core'
+import type { Presenter } from '@hanzo/server-notification'
+import { workbenchId } from '@hanzo/workbench'
+import { trainingId, type TrainingRequest } from '@hanzo/training'
 import { TrainingRequestTextPresenter } from './TrainingRequestTextPresenter'
 
 /** @public */

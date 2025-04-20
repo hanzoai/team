@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import recruit, { Applicant } from '@hcengineering/recruit'
-  import { Icon, tooltip } from '@hcengineering/ui'
-  import { ObjectPresenterType } from '@hcengineering/view'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import recruit, { Applicant } from '@hanzo/recruit'
+  import { Icon, tooltip } from '@hanzo/ui'
+  import { ObjectPresenterType } from '@hanzo/view'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
 
   export let value: Applicant
   export let inline: boolean = false

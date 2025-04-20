@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Message } from '@hcengineering/communication-types'
+import { type Message } from '@hanzo/communication-types'
 
 import { openThreadInSidebar } from './location'
 

@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { NotificationContext, Notification } from '@hcengineering/communication-types'
-  import { Card } from '@hcengineering/card'
+  import { NotificationContext, Notification } from '@hanzo/communication-types'
+  import { Card } from '@hanzo/card'
   import { createEventDispatcher } from 'svelte'
 
   import InboxNotification from './InboxNotification.svelte'

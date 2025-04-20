@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Training } from '@hcengineering/training'
-import attachment, { type Attachment } from '@hcengineering/attachment'
-import type { Ref, TxOperations } from '@hcengineering/core'
+import type { Training } from '@hanzo/training'
+import attachment, { type Attachment } from '@hanzo/attachment'
+import type { Ref, TxOperations } from '@hanzo/core'
 
 /**
  * Copy attachments metadata, not files. It should only be detached on remove rather than deleted.

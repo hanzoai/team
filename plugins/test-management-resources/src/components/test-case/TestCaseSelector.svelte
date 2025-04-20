@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import { IntlString } from '@hcengineering/platform'
-  import { Button, ButtonKind, ButtonShape, ButtonSize, Label } from '@hcengineering/ui'
-  import { TestCase, TestProject } from '@hcengineering/test-management'
+  import { IntlString } from '@hanzo/platform'
+  import { Button, ButtonKind, ButtonShape, ButtonSize, Label } from '@hanzo/ui'
+  import { TestCase, TestProject } from '@hanzo/test-management'
 
   import testManagement from '../../plugin'
   import { showSelectTestCasesPopup } from '../../utils'
-  import { Ref } from '@hcengineering/core'
+  import { Ref } from '@hanzo/core'
 
   export let objects: TestCase[]
   export let label: IntlString = testManagement.string.SelectedTestCases

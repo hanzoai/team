@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Attachment } from '@hcengineering/attachment'
+  import { Attachment } from '@hanzo/attachment'
 
   export let attachments: Attachment[] = []
 </script>

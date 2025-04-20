@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, ArrOf, Class, ClassifierKind, Doc, Ref, RefTo, Space, Type } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Label, Scroller, Submenu, closePopup, closeTooltip, resizeObserver, showPopup } from '@hcengineering/ui'
-  import { ClassFilters, Filter, KeyFilter, KeyFilterPreset, ViewOptions } from '@hcengineering/view'
-  import { getResource } from '@hcengineering/platform'
+  import core, { AnyAttribute, ArrOf, Class, ClassifierKind, Doc, Ref, RefTo, Space, Type } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Label, Scroller, Submenu, closePopup, closeTooltip, resizeObserver, showPopup } from '@hanzo/ui'
+  import { ClassFilters, Filter, KeyFilter, KeyFilterPreset, ViewOptions } from '@hanzo/view'
+  import { getResource } from '@hanzo/platform'
   import { createEventDispatcher } from 'svelte'
   import { FilterQuery, buildFilterKey } from '../../filter'
   import view from '../../plugin'

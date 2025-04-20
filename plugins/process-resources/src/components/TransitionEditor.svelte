@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { State } from '@hcengineering/process'
+  import { State } from '@hanzo/process'
   import plugin from '../plugin'
-  import { ButtonIcon, eventToHTMLElement, SelectPopup, SelectPopupValueType, showPopup } from '@hcengineering/ui'
+  import { ButtonIcon, eventToHTMLElement, SelectPopup, SelectPopupValueType, showPopup } from '@hanzo/ui'
   import { getToDoEndAction } from '../utils'
-  import { getClient } from '@hcengineering/presentation'
+  import { getClient } from '@hanzo/presentation'
 
   export let state: State
 

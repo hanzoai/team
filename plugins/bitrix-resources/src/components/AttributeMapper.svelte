@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixFieldMapping, MappingOperation, Fields } from '@hcengineering/bitrix'
-  import core, { AnyAttribute } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, eventToHTMLElement, IconDelete, Menu, showPopup, Action, IconEdit } from '@hcengineering/ui'
+  import { BitrixEntityMapping, BitrixFieldMapping, MappingOperation, Fields } from '@hanzo/bitrix'
+  import core, { AnyAttribute } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, eventToHTMLElement, IconDelete, Menu, showPopup, Action, IconEdit } from '@hanzo/ui'
   import bitrix from '../plugin'
   import CreateMappingAttribute from './CreateMappingAttribute.svelte'
   export let mapping: BitrixEntityMapping

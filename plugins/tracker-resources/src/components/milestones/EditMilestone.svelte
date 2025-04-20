@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyleBoxEditor } from '@hcengineering/attachment-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import { Milestone } from '@hcengineering/tracker'
-  import { EditBox, Label } from '@hcengineering/ui'
+  import { AttachmentStyleBoxEditor } from '@hanzo/attachment-resources'
+  import { getClient } from '@hanzo/presentation'
+  import { Milestone } from '@hanzo/tracker'
+  import { EditBox, Label } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import tracker from '../../plugin'
   import QueryIssuesList from '../issues/edit/QueryIssuesList.svelte'

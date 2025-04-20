@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { combineName, getCurrentEmployee, getFirstName, getLastName } from '@hcengineering/contact'
-  import { ChannelsEditor, EditableAvatar, personByIdStore } from '@hcengineering/contact-resources'
-  import { getCurrentAccount, SocialIdType } from '@hcengineering/core'
-  import login, { loginId } from '@hcengineering/login'
-  import { getResource } from '@hcengineering/platform'
-  import { AttributeEditor, MessageBox, getClient } from '@hcengineering/presentation'
+  import contact, { combineName, getCurrentEmployee, getFirstName, getLastName } from '@hanzo/contact'
+  import { ChannelsEditor, EditableAvatar, personByIdStore } from '@hanzo/contact-resources'
+  import { getCurrentAccount, SocialIdType } from '@hanzo/core'
+  import login, { loginId } from '@hanzo/login'
+  import { getResource } from '@hanzo/platform'
+  import { AttributeEditor, MessageBox, getClient } from '@hanzo/presentation'
   import {
     Breadcrumb,
     Button,
@@ -28,8 +28,8 @@
     createFocusManager,
     showPopup,
     navigate
-  } from '@hcengineering/ui'
-  import { logIn, logOut } from '@hcengineering/workbench-resources'
+  } from '@hanzo/ui'
+  import { logIn, logOut } from '@hanzo/workbench-resources'
 
   import setting from '../plugin'
 

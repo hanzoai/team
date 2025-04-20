@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Document } from '@hcengineering/controlled-documents'
-  import { WithLookup } from '@hcengineering/core'
-  import { getPanelURI } from '@hcengineering/ui'
+  import { Document } from '@hanzo/controlled-documents'
+  import { WithLookup } from '@hanzo/core'
+  import { getPanelURI } from '@hanzo/ui'
   import documents from '../../../plugin'
 
   export let value: WithLookup<Document>

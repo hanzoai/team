@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import attachment, { AttachmentsEvents } from '@hcengineering/attachment'
+  import { Analytics } from '@hanzo/analytics'
+  import attachment, { AttachmentsEvents } from '@hanzo/attachment'
   import contact, {
     AvatarType,
     Channel,
@@ -22,8 +22,8 @@
     combineName,
     findContacts,
     Person
-  } from '@hcengineering/contact'
-  import { ChannelsDropdown, EditableAvatar, PersonPresenter } from '@hcengineering/contact-resources'
+  } from '@hanzo/contact'
+  import { ChannelsDropdown, EditableAvatar, PersonPresenter } from '@hanzo/contact-resources'
   import core, {
     Account,
     AttachedData,
@@ -37,8 +37,8 @@
     TxProcessor,
     WithLookup,
     type Blob
-  } from '@hcengineering/core'
-  import { getMetadata, getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { getMetadata, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
   import presentation, {
     Card,
     createQuery,
@@ -50,10 +50,10 @@
     KeyedAttribute,
     MessageBox,
     MultipleDraftController
-  } from '@hcengineering/presentation'
-  import { Candidate, CandidateDraft, RecruitEvents } from '@hcengineering/recruit'
-  import { recognizeDocument } from '@hcengineering/rekoni'
-  import tags, { findTagCategory, TagElement, TagReference } from '@hcengineering/tags'
+  } from '@hanzo/presentation'
+  import { Candidate, CandidateDraft, RecruitEvents } from '@hanzo/recruit'
+  import { recognizeDocument } from '@hanzo/rekoni'
+  import tags, { findTagCategory, TagElement, TagReference } from '@hanzo/tags'
   import {
     Button,
     Component,
@@ -69,7 +69,7 @@
     showPopup,
     Spinner,
     ActionIcon
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import recruit from '../plugin'
   import { getCandidateIdentifier } from '../utils'

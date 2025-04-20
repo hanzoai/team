@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { MongoClientReference, getMongoClient } from '@hcengineering/mongo'
+import { MongoClientReference, getMongoClient } from '@hanzo/mongo'
 import { MongoClient } from 'mongodb'
 
 import config from './config'

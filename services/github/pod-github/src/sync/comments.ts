@@ -1,7 +1,7 @@
 //
 // Copyright © 2023 Hardcore Engineering Inc.
 //
-import chunter, { ChatMessage } from '@hcengineering/chunter'
+import chunter, { ChatMessage } from '@hanzo/chunter'
 import core, {
   PersonId,
   AttachedData,
@@ -10,9 +10,9 @@ import core, {
   MeasureContext,
   Ref,
   TxOperations
-} from '@hcengineering/core'
-import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hcengineering/github'
-import { LiveQuery } from '@hcengineering/query'
+} from '@hanzo/core'
+import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
+import { LiveQuery } from '@hanzo/query'
 import { deepEqual } from 'fast-equals'
 import {
   ContainerFocus,
@@ -25,7 +25,7 @@ import {
 } from '../types'
 import { collectUpdate, deleteObjects, errorToObj, getSince, isGHWriteAllowed } from './utils'
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import { IssueComment, IssueCommentCreatedEvent, IssueCommentEvent } from '@octokit/webhooks-types'
 import config from '../config'
 import { syncConfig } from './syncConfig'

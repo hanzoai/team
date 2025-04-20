@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { BlobMetadata, SortingOrder, type Blob, type Ref } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Button, Dialog, IconHistory, IconScribble, showPopup, tooltip } from '@hcengineering/ui'
+  import { Analytics } from '@hanzo/analytics'
+  import { BlobMetadata, SortingOrder, type Blob, type Ref } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Button, Dialog, IconHistory, IconScribble, showPopup, tooltip } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import ActionContext from './ActionContext.svelte'

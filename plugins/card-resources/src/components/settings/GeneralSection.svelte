@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import { getEmbeddedLabel, translateCB } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
+  import { MasterTag } from '@hanzo/card'
+  import { getEmbeddedLabel, translateCB } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
   import {
     ButtonIcon,
     getCurrentLocation,
@@ -25,12 +25,12 @@
     navigate,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import { IconPicker } from '@hcengineering/view-resources'
-  import setting from '@hcengineering/setting'
+  } from '@hanzo/ui'
+  import { IconPicker } from '@hanzo/view-resources'
+  import setting from '@hanzo/setting'
   import card from '../../plugin'
   import { deleteMasterTag } from '../../utils'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
 
   export let masterTag: MasterTag
 

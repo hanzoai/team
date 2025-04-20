@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, Person } from '@hcengineering/contact'
-  import type { Class, DocumentQuery, FindOptions, Ref } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import presentation from '@hcengineering/presentation'
-  import { ButtonKind, ButtonSize, IconSize, LabelAndProps } from '@hcengineering/ui'
+  import contact, { Employee, Person } from '@hanzo/contact'
+  import type { Class, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import presentation from '@hanzo/presentation'
+  import { ButtonKind, ButtonSize, IconSize, LabelAndProps } from '@hanzo/ui'
   import UserBox from './UserBox.svelte'
   import IconPerson from './icons/Person.svelte'
 

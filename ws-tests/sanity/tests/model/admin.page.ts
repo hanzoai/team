@@ -1,4 +1,4 @@
-import { PlatformURI } from '@hcengineering/tests-sanity'
+import { PlatformURI } from '@hanzo/tests-sanity'
 import { type Page } from '@playwright/test'
 
 export class AdminPage {

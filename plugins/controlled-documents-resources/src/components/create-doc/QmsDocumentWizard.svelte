@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { generateId, type AttachedData, type Class, type Data, type Ref } from '@hcengineering/core'
-  import { MessageBox, getClient } from '@hcengineering/presentation'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { generateId, type AttachedData, type Class, type Data, type Ref } from '@hanzo/core'
+  import { MessageBox, getClient } from '@hanzo/presentation'
   import {
     AnySvelteComponent,
     addNotification,
@@ -25,9 +25,9 @@
     NotificationSeverity,
     ModernWizardDialog,
     type IWizardStep
-  } from '@hcengineering/ui'
-  import { getCurrentLanguage } from '@hcengineering/theme'
-  import { translate } from '@hcengineering/platform'
+  } from '@hanzo/ui'
+  import { getCurrentLanguage } from '@hanzo/theme'
+  import { translate } from '@hanzo/platform'
   import {
     type ChangeControl,
     type ControlledDocument,
@@ -36,7 +36,7 @@
     DocumentState,
     createChangeControl,
     DEFAULT_PERIODIC_REVIEW_INTERVAL
-  } from '@hcengineering/controlled-documents'
+  } from '@hanzo/controlled-documents'
 
   import { createControlledDocFromTemplate } from '../../docutils'
   import documents from '../../plugin'

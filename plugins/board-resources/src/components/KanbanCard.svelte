@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,17 +14,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentDroppable, AttachmentsPresenter } from '@hcengineering/attachment-resources'
-  import type { Card } from '@hcengineering/board'
-  import contact, { Employee } from '@hcengineering/contact'
-  import type { Ref, WithLookup } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { ChatMessagesPresenter } from '@hcengineering/notification-resources'
-  import { getClient } from '@hcengineering/presentation'
-  import tags from '@hcengineering/tags'
-  import { Button, Component, EditBox, Icon, IconMoreV, Label, numberToHexColor } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { showMenu } from '@hcengineering/view-resources'
+  import { AttachmentDroppable, AttachmentsPresenter } from '@hanzo/attachment-resources'
+  import type { Card } from '@hanzo/board'
+  import contact, { Employee } from '@hanzo/contact'
+  import type { Ref, WithLookup } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { ChatMessagesPresenter } from '@hanzo/notification-resources'
+  import { getClient } from '@hanzo/presentation'
+  import tags from '@hanzo/tags'
+  import { Button, Component, EditBox, Icon, IconMoreV, Label, numberToHexColor } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { showMenu } from '@hanzo/view-resources'
   import board from '../plugin'
   import { hasDate, openCardPanel, updateCard, updateCardMembers } from '../utils/CardUtils'
   import DatePresenter from './presenters/DatePresenter.svelte'

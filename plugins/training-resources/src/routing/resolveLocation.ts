@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import { trainingId } from '@hcengineering/training'
-import { type Location, type ResolvedLocation } from '@hcengineering/ui'
+import { trainingId } from '@hanzo/training'
+import { type Location, type ResolvedLocation } from '@hanzo/ui'
 import { trainingAttemptRoute } from './routes/trainingAttemptRoute'
 import { trainingRequestRoute } from './routes/trainingRequestRoute'
 import { trainingRoute } from './routes/trainingRoute'

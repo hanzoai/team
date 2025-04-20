@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import activity, { ActivityMessage, ActivityReference } from '@hcengineering/activity'
-import chunter, { Channel, ChatMessage, chunterId, ChunterSpace, ThreadMessage } from '@hcengineering/chunter'
-import contact, { Person } from '@hcengineering/contact'
-import { getAccountBySocialId, getPerson } from '@hcengineering/server-contact'
+import activity, { ActivityMessage, ActivityReference } from '@hanzo/activity'
+import chunter, { Channel, ChatMessage, chunterId, ChunterSpace, ThreadMessage } from '@hanzo/chunter'
+import contact, { Person } from '@hanzo/contact'
+import { getAccountBySocialId, getPerson } from '@hanzo/server-contact'
 import core, {
   PersonId,
   Class,
@@ -37,21 +37,21 @@ import core, {
   type MeasureContext,
   combineAttributes,
   AccountUuid
-} from '@hcengineering/core'
-import notification, { DocNotifyContext, NotificationContent } from '@hcengineering/notification'
-import { getMetadata, IntlString, translate } from '@hcengineering/platform'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import notification, { DocNotifyContext, NotificationContent } from '@hanzo/notification'
+import { getMetadata, IntlString, translate } from '@hanzo/platform'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
 import {
   createCollaboratorNotifications,
   getDocCollaborators,
   getMixinTx
-} from '@hcengineering/server-notification-resources'
-import { markupToText, stripTags } from '@hcengineering/text-core'
-import { jsonToHTML, markupToJSON } from '@hcengineering/text'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/server-notification-resources'
+import { markupToText, stripTags } from '@hanzo/text-core'
+import { jsonToHTML, markupToJSON } from '@hanzo/text'
+import { workbenchId } from '@hanzo/workbench'
 
-import { NOTIFICATION_BODY_SIZE } from '@hcengineering/server-notification'
-import { encodeObjectURI } from '@hcengineering/view'
+import { NOTIFICATION_BODY_SIZE } from '@hanzo/server-notification'
+import { encodeObjectURI } from '@hanzo/view'
 
 const updateChatInfoDelay = 12 * 60 * 60 * 1000 // 12 hours
 const hideChannelDelay = 7 * 24 * 60 * 60 * 1000 // 7 days

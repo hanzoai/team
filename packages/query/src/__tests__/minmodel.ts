@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -27,10 +27,10 @@ import type {
   TxCreateDoc,
   TxCUD,
   AccountUuid
-} from '@hcengineering/core'
-import core, { AttachedDoc, ClassifierKind, DOMAIN_MODEL, DOMAIN_TX, TxFactory } from '@hcengineering/core'
-import type { IntlString, Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+} from '@hanzo/core'
+import core, { AttachedDoc, ClassifierKind, DOMAIN_MODEL, DOMAIN_TX, TxFactory } from '@hanzo/core'
+import type { IntlString, Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 
 const txFactory = new TxFactory(core.account.System)
 

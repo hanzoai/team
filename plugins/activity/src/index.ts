@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Person } from '@hcengineering/contact'
+import { Person } from '@hanzo/contact'
 import {
   PersonId,
   AttachedDoc,
@@ -26,12 +26,12 @@ import {
   Timestamp,
   Tx,
   TxCUD
-} from '@hcengineering/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import type { AnyComponent, ComponentExtensionId } from '@hcengineering/ui'
-import type { Action } from '@hcengineering/view'
+} from '@hanzo/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
+import type { Action } from '@hanzo/view'
 
 /**
  * @public

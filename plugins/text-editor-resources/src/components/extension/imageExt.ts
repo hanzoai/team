@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import { FilePreviewPopup, getFileUrl } from '@hcengineering/presentation'
-import { ImageNode, type ImageOptions as ImageNodeOptions } from '@hcengineering/text'
-import textEditor from '@hcengineering/text-editor'
-import { getEventPositionElement, SelectPopup, showPopup } from '@hcengineering/ui'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import { FilePreviewPopup, getFileUrl } from '@hanzo/presentation'
+import { ImageNode, type ImageOptions as ImageNodeOptions } from '@hanzo/text'
+import textEditor from '@hanzo/text-editor'
+import { getEventPositionElement, SelectPopup, showPopup } from '@hanzo/ui'
 import { type Editor, nodeInputRule } from '@tiptap/core'
 import { type BubbleMenuOptions } from '@tiptap/extension-bubble-menu'
 import { Plugin, PluginKey } from '@tiptap/pm/state'

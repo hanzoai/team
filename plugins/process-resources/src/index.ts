@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Resources } from '@hcengineering/platform'
+import { type Resources } from '@hanzo/platform'
 import FunctionSelector from './components/attributeEditors/FunctionSelector.svelte'
 import NestedContextSelector from './components/attributeEditors/NestedContextSelector.svelte'
 import RelatedContextSelector from './components/attributeEditors/RelatedContextSelector.svelte'

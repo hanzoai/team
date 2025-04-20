@@ -19,11 +19,11 @@ import core, {
   type Space,
   checkPermission,
   getCurrentAccount
-} from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
-import { type KeyFilter } from '@hcengineering/view'
-import documents from '@hcengineering/controlled-documents'
-import products, { ProductVersionState, type Product, type ProductVersion } from '@hcengineering/products'
+} from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
+import { type KeyFilter } from '@hanzo/view'
+import documents from '@hanzo/controlled-documents'
+import products, { ProductVersionState, type Product, type ProductVersion } from '@hanzo/products'
 
 export function getProductVersionVersion (doc: ProductVersion): string {
   const codename = doc.codename ?? ''

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Class, Doc, Ref } from '@hcengineering/core'
-import { EmptyMarkup, MarkupNodeType, jsonToMarkup } from '@hcengineering/text-core'
+import { Class, Doc, Ref } from '@hanzo/core'
+import { EmptyMarkup, MarkupNodeType, jsonToMarkup } from '@hanzo/text-core'
 
 import { getReferencesData } from '../references'
 

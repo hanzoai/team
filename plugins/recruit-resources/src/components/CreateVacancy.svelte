@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyledBox } from '@hcengineering/attachment-resources'
-  import contact, { Organization } from '@hcengineering/contact'
-  import { AccountArrayEditor, UserBox } from '@hcengineering/contact-resources'
+  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
+  import contact, { Organization } from '@hanzo/contact'
+  import { AccountArrayEditor, UserBox } from '@hanzo/contact-resources'
   import core, {
     AttachedData,
     Data,
@@ -28,8 +28,8 @@
     getCurrentAccount,
     makeCollabId,
     AccountUuid
-  } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
   import {
     Card,
     InlineAttributeBar,
@@ -37,12 +37,12 @@
     createMarkup,
     createQuery,
     getClient
-  } from '@hcengineering/presentation'
-  import { RecruitEvents, Vacancy, Vacancy as VacancyClass } from '@hcengineering/recruit'
-  import tags from '@hcengineering/tags'
-  import task, { ProjectType, makeRank } from '@hcengineering/task'
-  import { selectedTypeStore, typeStore } from '@hcengineering/task-resources'
-  import tracker, { Issue, IssueStatus, IssueTemplate, IssueTemplateData, Project } from '@hcengineering/tracker'
+  } from '@hanzo/presentation'
+  import { RecruitEvents, Vacancy, Vacancy as VacancyClass } from '@hanzo/recruit'
+  import tags from '@hanzo/tags'
+  import task, { ProjectType, makeRank } from '@hanzo/task'
+  import { selectedTypeStore, typeStore } from '@hanzo/task-resources'
+  import tracker, { Issue, IssueStatus, IssueTemplate, IssueTemplateData, Project } from '@hanzo/tracker'
   import {
     Button,
     Component,
@@ -51,14 +51,14 @@
     IconAttachment,
     createFocusManager,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../plugin'
   import Company from './icons/Company.svelte'
   import VacancyIcon from './icons/Vacancy.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
   import { getSequenceId } from '../utils'
-  import { isEmptyMarkup } from '@hcengineering/text'
+  import { isEmptyMarkup } from '@hanzo/text'
 
   const dispatch = createEventDispatcher()
 

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getResourceP } from '@hcengineering/platform'
+  import { getResourceP } from '@hanzo/platform'
   import { deepEqual } from 'fast-equals'
   import { SvelteComponent } from 'svelte'
   import type { AnyComponent, AnySvelteComponent } from '../types'

@@ -14,12 +14,12 @@
 -->
 <script lang="ts">
   import { onMount } from 'svelte'
-  import chunter from '@hcengineering/chunter'
-  import { getName, Person, getCurrentEmployee } from '@hcengineering/contact'
-  import { personByIdStore } from '@hcengineering/contact-resources'
-  import { IdMap } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Label } from '@hcengineering/ui'
+  import chunter from '@hanzo/chunter'
+  import { getName, Person, getCurrentEmployee } from '@hanzo/contact'
+  import { personByIdStore } from '@hanzo/contact-resources'
+  import { IdMap } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
   import { PresenceTyping } from '../types'
 
   export let typingInfo: PresenceTyping[] = []

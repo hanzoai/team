@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hcengineering/attachment'
-  import { createQuery, getClient, getFileMetadata, uploadFile } from '@hcengineering/presentation'
-  import { ActionIcon, IconAdd, Label, Loading } from '@hcengineering/ui'
+  import { Attachment } from '@hanzo/attachment'
+  import { createQuery, getClient, getFileMetadata, uploadFile } from '@hanzo/presentation'
+  import { ActionIcon, IconAdd, Label, Loading } from '@hanzo/ui'
 
-  import core, { Doc, Ref, Space, WithLookup } from '@hcengineering/core'
+  import core, { Doc, Ref, Space, WithLookup } from '@hanzo/core'
 
-  import { setPlatformStatus, unknownError } from '@hcengineering/platform'
+  import { setPlatformStatus, unknownError } from '@hanzo/platform'
   import { AttachmentPresenter } from '..'
   import attachment from '../plugin'
 

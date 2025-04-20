@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Space } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { TreeNode } from '@hcengineering/view-resources'
-  import { SpacesNavModel } from '@hcengineering/workbench'
+  import { Ref, Space } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { TreeNode } from '@hanzo/view-resources'
+  import { SpacesNavModel } from '@hanzo/workbench'
   import TagHierarchy from './TagHierarchy.svelte'
 
-  import { CardSpace, MasterTag } from '@hcengineering/card'
+  import { CardSpace, MasterTag } from '@hanzo/card'
   import card from '../../plugin'
   import { onDestroy } from 'svelte'
-  import { location } from '@hcengineering/ui'
+  import { location } from '@hanzo/ui'
 
   export let space: CardSpace
   export let model: SpacesNavModel

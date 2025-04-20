@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { taskTypeStore } from '@hcengineering/task-resources'
-  import { Issue } from '@hcengineering/tracker'
-  import { IconSize } from '@hcengineering/ui'
-  import { getTaskTypeStates } from '@hcengineering/task'
-  import { statusStore } from '@hcengineering/view-resources'
+  import { taskTypeStore } from '@hanzo/task-resources'
+  import { Issue } from '@hanzo/tracker'
+  import { IconSize } from '@hanzo/ui'
+  import { getTaskTypeStates } from '@hanzo/task'
+  import { statusStore } from '@hanzo/view-resources'
 
   import IssueStatusIcon from './IssueStatusIcon.svelte'
 

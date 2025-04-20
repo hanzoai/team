@@ -3,9 +3,9 @@
 -->
 
 <script lang="ts">
-  import { Label } from '@hcengineering/ui'
-  import training, { type Training } from '@hcengineering/training'
-  import { getClient } from '@hcengineering/presentation'
+  import { Label } from '@hanzo/ui'
+  import training, { type Training } from '@hanzo/training'
+  import { getClient } from '@hanzo/presentation'
   import TrainingPassingScorePresenter from './TrainingPassingScorePresenter.svelte'
 
   export let object: Training

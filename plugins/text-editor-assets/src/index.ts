@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2022, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { loadMetadata } from '@hcengineering/platform'
-import textEditor from '@hcengineering/text-editor'
+import { loadMetadata } from '@hanzo/platform'
+import textEditor from '@hanzo/text-editor'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(textEditor.icon, {

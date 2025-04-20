@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { ConnectMeetingRequest } from '@hcengineering/ai-bot'
-import chunter from '@hcengineering/chunter'
-import contact, { Person } from '@hcengineering/contact'
+import { ConnectMeetingRequest } from '@hanzo/ai-bot'
+import chunter from '@hanzo/chunter'
+import contact, { Person } from '@hanzo/contact'
 import core, {
   concatLink,
   Doc,
@@ -29,7 +29,7 @@ import core, {
   TxUpdateDoc,
   WorkspaceUuid,
   pickPrimarySocialId
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import love, {
   getFreeRoomPlace,
   MeetingMinutes,
@@ -38,8 +38,8 @@ import love, {
   Room,
   RoomLanguage,
   TranscriptionStatus
-} from '@hcengineering/love'
-import { jsonToMarkup, MarkupNodeType } from '@hcengineering/text'
+} from '@hanzo/love'
+import { jsonToMarkup, MarkupNodeType } from '@hanzo/text'
 
 import config from '../config'
 

@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { ModernButton, showPopup } from '@hcengineering/ui'
-  import telegram from '@hcengineering/telegram'
+  import { ModernButton, showPopup } from '@hanzo/ui'
+  import telegram from '@hanzo/telegram'
 
   import ConfigureBotPopup from './ConfigureBotPopup.svelte'
 

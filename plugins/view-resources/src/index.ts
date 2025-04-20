@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
-import { getEventPopupPositionElement, type PopupAlignment } from '@hcengineering/ui'
+import { type Resources } from '@hanzo/platform'
+import { getEventPopupPositionElement, type PopupAlignment } from '@hanzo/ui'
 import { actionImpl } from './actionImpl'
 import ActionsPopup from './components/ActionsPopup.svelte'
 import ArrayEditor from './components/ArrayEditor.svelte'

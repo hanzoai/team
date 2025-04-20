@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { IntlString } from '@hcengineering/platform'
-  import { Button, Label } from '@hcengineering/ui'
-  import { DiffFile, DiffViewMode } from '@hcengineering/diffview'
+  import { IntlString } from '@hanzo/platform'
+  import { Button, Label } from '@hanzo/ui'
+  import { DiffFile, DiffViewMode } from '@hanzo/diffview'
 
   import FileDiffContent from './FileDiffContent.svelte'
   import FileDiffHeader from './FileDiffHeader.svelte'

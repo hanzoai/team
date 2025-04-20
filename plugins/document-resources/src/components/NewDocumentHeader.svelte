@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, Space, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { AccountRole, Ref, Space, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     Button,
     ButtonWithDropdown,
@@ -23,10 +23,10 @@
     Loading,
     SelectPopupValueType,
     showPopup
-  } from '@hcengineering/ui'
-  import { openDoc } from '@hcengineering/view-resources'
-  import { Analytics } from '@hcengineering/analytics'
-  import { DocumentEvents } from '@hcengineering/document'
+  } from '@hanzo/ui'
+  import { openDoc } from '@hanzo/view-resources'
+  import { Analytics } from '@hanzo/analytics'
+  import { DocumentEvents } from '@hanzo/document'
 
   import document from '../plugin'
   import { getDocumentIdFromFragment } from '../utils'

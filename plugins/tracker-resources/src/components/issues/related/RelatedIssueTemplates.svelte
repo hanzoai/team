@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery } from '@hcengineering/core'
-  import presentation, { createQuery } from '@hcengineering/presentation'
-  import { IssueTemplate } from '@hcengineering/tracker'
-  import { Label, Spinner } from '@hcengineering/ui'
+  import { Doc, DocumentQuery } from '@hanzo/core'
+  import presentation, { createQuery } from '@hanzo/presentation'
+  import { IssueTemplate } from '@hanzo/tracker'
+  import { Label, Spinner } from '@hanzo/ui'
   import tracker from '../../../plugin'
   import IssueTemplatePresenter from '../../templates/IssueTemplatePresenter.svelte'
 

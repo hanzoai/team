@@ -8,7 +8,7 @@ import core, {
   TxCUD,
   TxMixin,
   TxUpdateDoc
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { DocObjectCache, type ActivityControl } from './types'
 
 export async function getAllObjectTransactions (

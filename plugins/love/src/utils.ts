@@ -1,5 +1,5 @@
-import { Employee, Person } from '@hcengineering/contact'
-import { Data, generateId, Ref } from '@hcengineering/core'
+import { Employee, Person } from '@hanzo/contact'
+import { Data, generateId, Ref } from '@hanzo/core'
 
 import love, { Office, Room, ParticipantInfo, RoomAccess, RoomType, GRID_WIDTH } from '.'
 

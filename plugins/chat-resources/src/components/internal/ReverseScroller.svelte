@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Loading, Scroller } from '@hcengineering/ui'
+  import { Loading, Scroller } from '@hanzo/ui'
 
   export let scroller: Scroller | undefined | null = undefined
   export let scrollDiv: HTMLDivElement | undefined | null = undefined

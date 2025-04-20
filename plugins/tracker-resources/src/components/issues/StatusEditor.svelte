@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData, Ref, WithLookup } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { getTaskTypeStates } from '@hcengineering/task'
-  import { taskTypeStore } from '@hcengineering/task-resources'
-  import { Issue, IssueDraft, IssueStatus, Project, TrackerEvents } from '@hcengineering/tracker'
+  import { AttachedData, Ref, WithLookup } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { getTaskTypeStates } from '@hanzo/task'
+  import { taskTypeStore } from '@hanzo/task-resources'
+  import { Issue, IssueDraft, IssueStatus, Project, TrackerEvents } from '@hanzo/tracker'
   import {
     Button,
     ButtonKind,
@@ -27,9 +27,9 @@
     TooltipAlignment,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
-  import { Analytics } from '@hcengineering/analytics'
+  } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
+  import { Analytics } from '@hanzo/analytics'
   import { createEventDispatcher } from 'svelte'
 
   import tracker from '../../plugin'

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import attachment, { Attachment } from '@hcengineering/attachment'
+import attachment, { Attachment } from '@hanzo/attachment'
 import core, {
   Client,
   Data,
@@ -22,10 +22,10 @@ import core, {
   TxOperations,
   type WorkspaceUuid,
   type Blob
-} from '@hcengineering/core'
-import drive, { createFile } from '@hcengineering/drive'
-import love, { MeetingMinutes } from '@hcengineering/love'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import drive, { createFile } from '@hanzo/drive'
+import love, { MeetingMinutes } from '@hanzo/love'
+import { generateToken } from '@hanzo/server-token'
 import { getClient } from './client'
 
 export class WorkspaceClient {

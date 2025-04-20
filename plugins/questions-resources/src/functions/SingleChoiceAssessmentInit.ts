@@ -6,9 +6,9 @@ import {
   type QuestionInitFunction,
   type QuestionInitFunctionResult,
   type SingleChoiceAssessment
-} from '@hcengineering/questions'
-import { type Hierarchy } from '@hcengineering/core'
-import type { ThemeOptions } from '@hcengineering/theme'
+} from '@hanzo/questions'
+import { type Hierarchy } from '@hanzo/core'
+import type { ThemeOptions } from '@hanzo/theme'
 import { SingleChoiceQuestionInit } from './SingleChoiceQuestionInit'
 
 export const SingleChoiceAssessmentInit: QuestionInitFunction<SingleChoiceAssessment> = async (

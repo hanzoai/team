@@ -1,5 +1,5 @@
 //
-// Copyright © 2021 Anticrm Platform Contributors.
+// Copyright © 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Asset, Resource } from '@hcengineering/platform'
+import type { Asset, Resource } from '@hanzo/platform'
 
 import type { KeysByType } from 'simplytyped'
 import type { Association, AttachedDoc, Class, Doc, Ref, Space } from './classes'

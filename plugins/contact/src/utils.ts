@@ -34,9 +34,9 @@ import {
   SocialId,
   toIdMap,
   TxFactory
-} from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import { ColorDefinition } from '@hcengineering/ui'
+} from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import { ColorDefinition } from '@hanzo/ui'
 import contact, { AvatarProvider, AvatarType, Channel, Contact, Employee, Person, SocialIdentityRef } from '.'
 
 import { AVATAR_COLORS, GravatarPlaceholderType } from './types'

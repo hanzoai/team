@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -55,7 +55,7 @@ import {
   type TypeAny,
   type Version,
   DOMAIN_SEQUENCE
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   Hidden,
   Index,
@@ -71,8 +71,8 @@ import {
   TypeTimestamp,
   TypePersonId,
   UX
-} from '@hcengineering/model'
-import { getEmbeddedLabel, type IntlString, type Plugin } from '@hcengineering/platform'
+} from '@hanzo/model'
+import { getEmbeddedLabel, type IntlString, type Plugin } from '@hanzo/platform'
 import core from './component'
 
 // C O R E

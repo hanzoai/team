@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Analytics } from '@hcengineering/analytics'
-import chunter from '@hcengineering/chunter'
-import { CollaboratorClient } from '@hcengineering/collaborator-client'
-import contact, { AvatarType, Person } from '@hcengineering/contact'
+import { Analytics } from '@hanzo/analytics'
+import chunter from '@hanzo/chunter'
+import { CollaboratorClient } from '@hanzo/collaborator-client'
+import contact, { AvatarType, Person } from '@hanzo/contact'
 import core, {
   PersonId,
   AccountRole,
@@ -40,7 +40,7 @@ import core, {
   type TimeRateLimiter,
   type WorkspaceIds,
   type WorkspaceDataId
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubAuthentication,
@@ -50,14 +50,14 @@ import github, {
   GithubProject,
   GithubUserInfo,
   githubId
-} from '@hcengineering/github'
-import { LiveQuery } from '@hcengineering/query'
-import { StorageAdapter } from '@hcengineering/server-core'
-import { getPublicLinkUrl } from '@hcengineering/server-guest-resources'
-import task, { ProjectType, TaskType } from '@hcengineering/task'
-import { MarkupNode, MarkupNodeType, jsonToMarkup } from '@hcengineering/text'
-import { isMarkdownsEquals } from '@hcengineering/text-markdown'
-import tracker from '@hcengineering/tracker'
+} from '@hanzo/github'
+import { LiveQuery } from '@hanzo/query'
+import { StorageAdapter } from '@hanzo/server-core'
+import { getPublicLinkUrl } from '@hanzo/server-guest-resources'
+import task, { ProjectType, TaskType } from '@hanzo/task'
+import { MarkupNode, MarkupNodeType, jsonToMarkup } from '@hanzo/text'
+import { isMarkdownsEquals } from '@hanzo/text-markdown'
+import tracker from '@hanzo/tracker'
 import { User } from '@octokit/webhooks-types'
 import { App, Octokit } from 'octokit'
 import { createPlatformClient } from './client'

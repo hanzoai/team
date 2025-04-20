@@ -14,8 +14,8 @@
 // -->
 
 <script lang="ts">
-  import { type Attachment } from '@hcengineering/attachment'
-  import { type WithLookup, Ref } from '@hcengineering/core'
+  import { type Attachment } from '@hanzo/attachment'
+  import { type WithLookup, Ref } from '@hanzo/core'
   import { AttachmentImageSize } from '../types'
   import AttachmentList from './AttachmentList.svelte'
   import LinkPreviewList from './LinkPreviewList.svelte'

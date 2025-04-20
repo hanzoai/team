@@ -4,10 +4,10 @@
 //
 -->
 <script lang="ts">
-  import { Document } from '@hcengineering/controlled-documents'
-  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hcengineering/core'
-  import { Component } from '@hcengineering/ui'
-  import { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  import { Document } from '@hanzo/controlled-documents'
+  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
+  import { Component } from '@hanzo/ui'
+  import { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
 
   export let _class: Ref<Class<Document>>
   export let viewlet: WithLookup<Viewlet>

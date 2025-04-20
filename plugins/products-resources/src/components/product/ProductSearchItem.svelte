@@ -15,8 +15,8 @@
 //
 -->
 <script lang="ts">
-  import { Product } from '@hcengineering/products'
-  import { WithLookup } from '@hcengineering/core'
+  import { Product } from '@hanzo/products'
+  import { WithLookup } from '@hanzo/core'
   import products from '../../plugin'
   import DocIcon from '../DocIcon.svelte'
 

@@ -2,8 +2,8 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import core, { Doc, TxOperations } from '@hcengineering/core'
-import { type Location } from '@hcengineering/ui'
+import core, { Doc, TxOperations } from '@hanzo/core'
+import { type Location } from '@hanzo/ui'
 
 import guest from './index'
 

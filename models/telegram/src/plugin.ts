@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hcengineering/core'
-import { type IntlString, type Resource, mergeIds } from '@hcengineering/platform'
-import { telegramId } from '@hcengineering/telegram'
-import telegram from '@hcengineering/telegram-resources/src/plugin'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
-import type { DocUpdateMessageViewlet } from '@hcengineering/activity'
-import { type TemplateFieldFunc } from '@hcengineering/templates'
-import { type NotificationGroup } from '@hcengineering/notification'
+import { type Ref } from '@hanzo/core'
+import { type IntlString, type Resource, mergeIds } from '@hanzo/platform'
+import { telegramId } from '@hanzo/telegram'
+import telegram from '@hanzo/telegram-resources/src/plugin'
+import type { AnyComponent } from '@hanzo/ui/src/types'
+import type { DocUpdateMessageViewlet } from '@hanzo/activity'
+import { type TemplateFieldFunc } from '@hanzo/templates'
+import { type NotificationGroup } from '@hanzo/notification'
 
 export default mergeIds(telegramId, telegram, {
   string: {

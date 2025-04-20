@@ -24,7 +24,7 @@ import {
   type Ref,
   type Storage,
   type WithLookup
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
 export interface RestClient extends Storage {
   getAccount: () => Promise<Account>

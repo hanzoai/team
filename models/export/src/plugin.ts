@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hcengineering/platform'
-import { exportId } from '@hcengineering/export'
-import { type ComponentPointExtension } from '@hcengineering/presentation'
-import { type Ref } from '@hcengineering/core'
-import exportPlugin from '@hcengineering/export-resources/src/plugin'
+import { mergeIds } from '@hanzo/platform'
+import { exportId } from '@hanzo/export'
+import { type ComponentPointExtension } from '@hanzo/presentation'
+import { type Ref } from '@hanzo/core'
+import exportPlugin from '@hanzo/export-resources/src/plugin'
 
 export default mergeIds(exportId, exportPlugin, {
   extensions: {

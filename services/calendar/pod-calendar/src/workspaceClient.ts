@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import calendar, { Event, ExternalCalendar } from '@hcengineering/calendar'
+import calendar, { Event, ExternalCalendar } from '@hanzo/calendar'
 import contact, {
   Channel,
   Contact,
@@ -23,7 +23,7 @@ import contact, {
   getPersonRefsBySocialIds,
   type Employee,
   SocialIdentityRef
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import core, {
   PersonId,
   SocialIdType,
@@ -42,9 +42,9 @@ import core, {
   type TxUpdateDoc,
   systemAccountUuid,
   PersonUuid
-} from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
-import setting, { Integration } from '@hcengineering/setting'
+} from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
+import setting, { Integration } from '@hanzo/setting'
 import { Collection, type Db } from 'mongodb'
 import { CalendarClient } from './calendar'
 import { CalendarController } from './calendarController'

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import view from '@hcengineering/view'
-  import { ButtonMenu, IconMoreV } from '@hcengineering/ui'
+  import view from '@hanzo/view'
+  import { ButtonMenu, IconMoreV } from '@hanzo/ui'
 
   import notification from '../../plugin'
   import { archiveAll, readAll, unreadAll } from '../../utils'

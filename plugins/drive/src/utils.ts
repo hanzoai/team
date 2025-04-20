@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type AttachedData, type Data, type Ref, type TxOperations, generateId } from '@hcengineering/core'
+import { type AttachedData, type Data, type Ref, type TxOperations, generateId } from '@hanzo/core'
 
 import drive from './plugin'
 import type { Drive, File, FileVersion, Folder } from './types'

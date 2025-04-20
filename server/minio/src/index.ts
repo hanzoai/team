@@ -23,8 +23,8 @@ import core, {
   type MeasureContext,
   type Ref,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
 import serverCore, {
   removeAllObjects,
   getDataId,
@@ -35,7 +35,7 @@ import serverCore, {
   type StorageConfig,
   type StorageConfiguration,
   type UploadedObjectInfo
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import { type Readable } from 'stream'
 
 export interface MinioConfig extends StorageConfig {

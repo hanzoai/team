@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { Card, createQuery, getClient } from '@hcengineering/presentation'
-  import { Issue, Project } from '@hcengineering/tracker'
-  import { Button, EditStyle, eventToHTMLElement, IconAdd, Label, showPopup } from '@hcengineering/ui'
-  import { EditBoxPopup } from '@hcengineering/view-resources'
+  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
+  import { Issue, Project } from '@hanzo/tracker'
+  import { Button, EditStyle, eventToHTMLElement, IconAdd, Label, showPopup } from '@hanzo/ui'
+  import { EditBoxPopup } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../../plugin'
   import IssuePresenter from '../IssuePresenter.svelte'

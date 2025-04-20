@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import documents, { TExternalSpace, TProject } from '@hcengineering/model-controlled-documents'
-import type { Document } from '@hcengineering/controlled-documents'
-import type { Product, ProductVersionState, ProductVersion } from '@hcengineering/products'
-import { productsId } from '@hcengineering/products'
-import activity from '@hcengineering/activity'
-import { type Attachment } from '@hcengineering/attachment'
-import contact from '@hcengineering/contact'
-import chunter from '@hcengineering/chunter'
-import { getRoleAttributeProps } from '@hcengineering/setting'
-import type { Type, Ref, CollectionSize, Markup, RolesAssignment, Permission, Role } from '@hcengineering/core'
-import { IndexKind, AccountUuid } from '@hcengineering/core'
+import documents, { TExternalSpace, TProject } from '@hanzo/model-controlled-documents'
+import type { Document } from '@hanzo/controlled-documents'
+import type { Product, ProductVersionState, ProductVersion } from '@hanzo/products'
+import { productsId } from '@hanzo/products'
+import activity from '@hanzo/activity'
+import { type Attachment } from '@hanzo/attachment'
+import contact from '@hanzo/contact'
+import chunter from '@hanzo/chunter'
+import { getRoleAttributeProps } from '@hanzo/setting'
+import type { Type, Ref, CollectionSize, Markup, RolesAssignment, Permission, Role } from '@hanzo/core'
+import { IndexKind, AccountUuid } from '@hanzo/core'
 import {
   type Builder,
   Model,
@@ -41,20 +41,20 @@ import {
   ReadOnly,
   Mixin,
   TypeAccountUuid
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import core, { TType } from '@hcengineering/model-core'
-import presentation from '@hcengineering/model-presentation'
-import tracker from '@hcengineering/model-tracker'
-import { type Action } from '@hcengineering/view'
-import view, { createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import { getEmbeddedLabel, type Asset } from '@hcengineering/platform'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import core, { TType } from '@hanzo/model-core'
+import presentation from '@hanzo/model-presentation'
+import tracker from '@hanzo/model-tracker'
+import { type Action } from '@hanzo/view'
+import view, { createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import { getEmbeddedLabel, type Asset } from '@hanzo/platform'
 
 import products from './plugin'
 import { roles } from './roles'
 
-export { productsId } from '@hcengineering/products/src/index'
+export { productsId } from '@hanzo/products/src/index'
 
 const productPermissions: Ref<Permission>[] = [
   documents.permission.CreateDocument,

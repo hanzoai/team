@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { concatLink, Doc } from '@hcengineering/core'
-import { inventoryId, Product } from '@hcengineering/inventory'
-import { getMetadata } from '@hcengineering/platform'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
-import view from '@hcengineering/view'
-import { workbenchId } from '@hcengineering/workbench'
+import { concatLink, Doc } from '@hanzo/core'
+import { inventoryId, Product } from '@hanzo/inventory'
+import { getMetadata } from '@hanzo/platform'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
+import view from '@hanzo/view'
+import { workbenchId } from '@hanzo/workbench'
 
 /**
  * @public

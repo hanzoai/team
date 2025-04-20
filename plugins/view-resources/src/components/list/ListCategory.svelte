@@ -26,10 +26,10 @@
     RateLimiter,
     Ref,
     Space
-  } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { DocWithRank, makeRank } from '@hcengineering/task'
+  } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { DocWithRank, makeRank } from '@hanzo/task'
   import ui, {
     AnyComponent,
     AnySvelteComponent,
@@ -37,8 +37,8 @@
     mouseAttractor,
     Loading,
     Label
-  } from '@hcengineering/ui'
-  import { AttributeModel, BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { AttributeModel, BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import { fade } from 'svelte/transition'
   import { showMenu } from '../../actions'

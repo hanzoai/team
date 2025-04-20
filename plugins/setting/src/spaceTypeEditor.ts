@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Class, SpaceType, SpaceTypeDescriptor } from '@hcengineering/core'
-import type { IntlString } from '@hcengineering/platform'
-import type { AnyComponent } from '@hcengineering/ui'
+import type { Class, SpaceType, SpaceTypeDescriptor } from '@hanzo/core'
+import type { IntlString } from '@hanzo/platform'
+import type { AnyComponent } from '@hanzo/ui'
 
 /**
  * @public

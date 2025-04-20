@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { DocumentQuery, SortingOrder, Status } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import task from '@hcengineering/task'
-  import { Button, Label } from '@hcengineering/ui'
+  import { DocumentQuery, SortingOrder, Status } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import task from '@hanzo/task'
+  import { Button, Label } from '@hanzo/ui'
   import board from '../plugin'
 
   export let query: DocumentQuery<Status> = {}

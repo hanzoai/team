@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Question } from '@hcengineering/questions'
-import { type QuerySelector, SortingOrder } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
+import type { Question } from '@hanzo/questions'
+import { type QuerySelector, SortingOrder } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
 import questions from '../plugin'
 
 export async function findNextQuestion (object: Question<unknown>): Promise<Question<unknown> | undefined> {

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { getCurrentLocation, type Location } from '@hcengineering/ui'
-import documents, { documentsId, type Document } from '@hcengineering/controlled-documents'
+import { getCurrentLocation, type Location } from '@hanzo/ui'
+import documents, { documentsId, type Document } from '@hanzo/controlled-documents'
 import { getPanelFragment } from '../utils/getPanelFragment'
 import type { Route, RouteParams } from '../utils/Route'
 

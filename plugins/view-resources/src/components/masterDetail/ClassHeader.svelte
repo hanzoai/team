@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { MasterTag } from '@hcengineering/card'
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Icon, IconWithEmoji, Label } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import card, { MasterTag } from '@hanzo/card'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Icon, IconWithEmoji, Label } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   export let _class: Ref<Class<Doc>>
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import contact, { Contact, Employee, formatName, getName, Person } from '@hcengineering/contact'
+import contact, { Contact, Employee, formatName, getName, Person } from '@hanzo/contact'
 import core, {
   Doc,
   PersonId,
@@ -27,19 +27,19 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hcengineering/core'
-import gmail from '@hcengineering/gmail'
-import hr, { Department, fromTzDate, PublicHoliday, Request, Staff, tzDateEqual } from '@hcengineering/hr'
-import notification, { NotificationType } from '@hcengineering/notification'
-import { translate } from '@hcengineering/platform'
-import { TriggerControl } from '@hcengineering/server-core'
-import { getEmployee, getSocialStrings } from '@hcengineering/server-contact'
-import { sendEmailNotification } from '@hcengineering/server-gmail-resources'
+} from '@hanzo/core'
+import gmail from '@hanzo/gmail'
+import hr, { Department, fromTzDate, PublicHoliday, Request, Staff, tzDateEqual } from '@hanzo/hr'
+import notification, { NotificationType } from '@hanzo/notification'
+import { translate } from '@hanzo/platform'
+import { TriggerControl } from '@hanzo/server-core'
+import { getEmployee, getSocialStrings } from '@hanzo/server-contact'
+import { sendEmailNotification } from '@hanzo/server-gmail-resources'
 import {
   getContentByTemplate,
   getNotificationProviderControl,
   isAllowed
-} from '@hcengineering/server-notification-resources'
+} from '@hanzo/server-notification-resources'
 
 async function getOldDepartment (
   currentTx: TxMixin<Employee, Staff>,

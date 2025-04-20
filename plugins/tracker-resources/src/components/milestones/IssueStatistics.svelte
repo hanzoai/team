@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import task from '@hcengineering/task'
-  import { Issue } from '@hcengineering/tracker'
-  import { floorFractionDigits, Label } from '@hcengineering/ui'
-  import { FixedColumn, statusStore } from '@hcengineering/view-resources'
+  import task from '@hanzo/task'
+  import { Issue } from '@hanzo/tracker'
+  import { floorFractionDigits, Label } from '@hanzo/ui'
+  import { FixedColumn, statusStore } from '@hanzo/view-resources'
   import tracker from '../../plugin'
   import EstimationProgressCircle from '../issues/timereport/EstimationProgressCircle.svelte'
   import TimePresenter from '../issues/timereport/TimePresenter.svelte'

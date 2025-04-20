@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { MeasureContext, PersonId, PersonUuid, SocialIdType, WorkspaceUuid } from '@hcengineering/core'
-import platform, { PlatformError, Status, Severity } from '@hcengineering/platform'
-import { decodeTokenVerbose } from '@hcengineering/server-token'
+import { MeasureContext, PersonId, PersonUuid, SocialIdType, WorkspaceUuid } from '@hanzo/core'
+import platform, { PlatformError, Status, Severity } from '@hanzo/platform'
+import { decodeTokenVerbose } from '@hanzo/server-token'
 
 import { AccountDB, Integration, IntegrationKey, IntegrationSecret, IntegrationSecretKey } from '../types'
 import * as utils from '../utils'
@@ -34,8 +34,8 @@ import {
 } from '../serviceOperations'
 
 // Mock platform
-jest.mock('@hcengineering/platform', () => {
-  const actual = jest.requireActual('@hcengineering/platform')
+jest.mock('@hanzo/platform', () => {
+  const actual = jest.requireActual('@hanzo/platform')
   return {
     ...actual,
     ...actual.default,
@@ -45,7 +45,7 @@ jest.mock('@hcengineering/platform', () => {
 })
 
 // Mock server-token
-jest.mock('@hcengineering/server-token', () => ({
+jest.mock('@hanzo/server-token', () => ({
   decodeTokenVerbose: jest.fn(),
   generateToken: jest.fn()
 }))

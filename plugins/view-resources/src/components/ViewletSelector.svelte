@@ -1,11 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
   import { activeViewlet, makeViewletKey, setActiveViewletId } from '../utils'
-  import { resolvedLocationStore, Switcher } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletDescriptor, ViewletPreference } from '@hcengineering/view'
-  import core, { DocumentQuery, Ref, WithLookup } from '@hcengineering/core'
+  import { resolvedLocationStore, Switcher } from '@hanzo/ui'
+  import view, { Viewlet, ViewletDescriptor, ViewletPreference } from '@hanzo/view'
+  import core, { DocumentQuery, Ref, WithLookup } from '@hanzo/core'
   import { deepEqual } from 'fast-equals'
-  import { createQuery } from '@hcengineering/presentation'
+  import { createQuery } from '@hanzo/presentation'
 
   export let viewlet: WithLookup<Viewlet> | undefined
   export let viewlets: Array<WithLookup<Viewlet>> = []

@@ -1,5 +1,5 @@
-import type { Attachment } from '@hcengineering/attachment'
-import type { Employee } from '@hcengineering/contact'
+import type { Attachment } from '@hanzo/attachment'
+import type { Employee } from '@hanzo/contact'
 import {
   type AttachedDoc,
   type CollectionSize,
@@ -8,8 +8,8 @@ import {
   type Ref,
   type Timestamp,
   type TypedSpace
-} from '@hcengineering/core'
-import type { Answer, Percentage, Question } from '@hcengineering/questions'
+} from '@hanzo/core'
+import type { Answer, Percentage, Question } from '@hanzo/questions'
 
 export const trainingPrefix = 'TR'
 

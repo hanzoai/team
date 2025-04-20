@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Person } from '@hcengineering/contact'
+import type { Person } from '@hanzo/contact'
 import {
   AttachedDoc,
   Attribute,
@@ -29,15 +29,15 @@ import {
   SpaceType,
   SpaceTypeDescriptor,
   TypedSpace
-} from '@hcengineering/core'
-import { NotificationType } from '@hcengineering/notification'
-import type { Asset, IntlString, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import type { AnyComponent, ComponentExtensionId } from '@hcengineering/ui'
-import { Action, IconProps, ViewletDescriptor } from '@hcengineering/view'
+} from '@hanzo/core'
+import { NotificationType } from '@hanzo/notification'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
+import { Action, IconProps, ViewletDescriptor } from '@hanzo/view'
 
 export * from './utils'
-export type { Rank } from '@hcengineering/rank'
+export type { Rank } from '@hanzo/rank'
 
 /** @public */
 export interface DocWithRank extends Doc {

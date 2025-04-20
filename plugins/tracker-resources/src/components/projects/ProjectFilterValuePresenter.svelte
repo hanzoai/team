@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Project } from '@hcengineering/tracker'
-  import { Icon, IconWithEmoji, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hcengineering/ui'
+  import { Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Project } from '@hanzo/tracker'
+  import { Icon, IconWithEmoji, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hanzo/ui'
   import tracker from '../../plugin'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
 
   export let value: [Ref<Project>, Ref<Project>[]][]
 

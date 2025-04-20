@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -15,15 +15,15 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import { Channel, Contact } from '@hcengineering/contact'
-  import { employeeByIdStore } from '@hcengineering/contact-resources'
-  import { Ref, SortingOrder } from '@hcengineering/core'
-  import { Message, SharedMessage } from '@hcengineering/gmail'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import plugin, { Button, Icon, IconShare, Label, Scroller } from '@hcengineering/ui'
+  import { Channel, Contact } from '@hanzo/contact'
+  import { employeeByIdStore } from '@hanzo/contact-resources'
+  import { Ref, SortingOrder } from '@hanzo/core'
+  import { Message, SharedMessage } from '@hanzo/gmail'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import plugin, { Button, Icon, IconShare, Label, Scroller } from '@hanzo/ui'
 
-  import { Integration } from '@hcengineering/setting'
+  import { Integration } from '@hanzo/setting'
   import gmail from '../plugin'
   import { convertMessages } from '../utils'
   import Messages from './Messages.svelte'

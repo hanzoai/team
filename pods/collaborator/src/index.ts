@@ -13,4 +13,4 @@
 // limitations under the License.
 //
 
-export * from '@hcengineering/collaborator'
+export * from '@hanzo/collaborator'

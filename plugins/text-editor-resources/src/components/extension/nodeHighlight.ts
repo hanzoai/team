@@ -4,7 +4,7 @@ import { Plugin, PluginKey, TextSelection } from '@tiptap/pm/state'
 import { AddMarkStep, RemoveMarkStep } from '@tiptap/pm/transform'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'
 import { NodeUuidExtension, type NodeUuidOptions, findNodeUuidMark } from './nodeUuid'
-import { type TextEditorCommand } from '@hcengineering/text-editor'
+import { type TextEditorCommand } from '@hanzo/text-editor'
 
 export enum NodeHighlightType {
   WARNING = 'warning',

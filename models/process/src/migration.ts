@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import core, { type Ref, TxOperations } from '@hcengineering/core'
+import core, { type Ref, TxOperations } from '@hanzo/core'
 import {
   tryUpgrade,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hcengineering/model'
-import { type Func, parseContext, type ProcessFunction } from '@hcengineering/process'
+} from '@hanzo/model'
+import { type Func, parseContext, type ProcessFunction } from '@hanzo/process'
 import { processId } from '.'
 import process from './plugin'
 

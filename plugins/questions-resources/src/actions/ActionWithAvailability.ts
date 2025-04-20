@@ -2,8 +2,8 @@
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 
-import { type Doc } from '@hcengineering/core'
-import { type ViewActionAvailabilityFunction, type ViewActionFunction } from '@hcengineering/view'
+import { type Doc } from '@hanzo/core'
+import { type ViewActionAvailabilityFunction, type ViewActionFunction } from '@hanzo/view'
 
 // TODO: Move to platform?
 export interface ActionWithAvailability<T extends Doc, P = never> {

@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import core, { type Doc } from '@hcengineering/core'
-import { type Builder, Mixin } from '@hcengineering/model'
-import { TClass } from '@hcengineering/model-core'
-import { type Resource } from '@hcengineering/platform'
-import serverCore, { type TriggerControl } from '@hcengineering/server-core'
-import serverView, { type ServerLinkIdProvider } from '@hcengineering/server-view'
+import core, { type Doc } from '@hanzo/core'
+import { type Builder, Mixin } from '@hanzo/model'
+import { TClass } from '@hanzo/model-core'
+import { type Resource } from '@hanzo/platform'
+import serverCore, { type TriggerControl } from '@hanzo/server-core'
+import serverView, { type ServerLinkIdProvider } from '@hanzo/server-view'
 
-export { serverViewId } from '@hcengineering/server-view'
+export { serverViewId } from '@hanzo/server-view'
 
 @Mixin(serverView.mixin.ServerLinkIdProvider, core.class.Class)
 export class TServerLinkIdProvider extends TClass implements ServerLinkIdProvider {

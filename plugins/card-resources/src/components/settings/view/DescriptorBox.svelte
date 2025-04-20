@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { ObjectBox } from '@hcengineering/view-resources'
-  import view, { ViewletDescriptor } from '@hcengineering/view'
-  import { IntlString } from '@hcengineering/platform'
+  import { Ref } from '@hanzo/core'
+  import { ObjectBox } from '@hanzo/view-resources'
+  import view, { ViewletDescriptor } from '@hanzo/view'
+  import { IntlString } from '@hanzo/platform'
 
   export let value: Ref<ViewletDescriptor> | undefined = undefined
   export let withSingleViews: boolean = false

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Person } from '@hcengineering/contact'
-import type { Ref, Timestamp } from '@hcengineering/core'
+import type { Person } from '@hanzo/contact'
+import type { Ref, Timestamp } from '@hanzo/core'
 
 export interface PresenceTyping {
   person: Ref<Person>

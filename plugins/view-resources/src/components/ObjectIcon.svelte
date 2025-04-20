@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import view from '@hcengineering/view'
-  import { AnySvelteComponent, Component, Icon, IconSize } from '@hcengineering/ui'
-  import type { Doc } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
+  import view from '@hanzo/view'
+  import { AnySvelteComponent, Component, Icon, IconSize } from '@hanzo/ui'
+  import type { Doc } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
 
   import { classIcon } from '../utils'
-  import { Asset } from '@hcengineering/platform'
+  import { Asset } from '@hanzo/platform'
 
   export let value: Doc
   export let size: IconSize = 'small'

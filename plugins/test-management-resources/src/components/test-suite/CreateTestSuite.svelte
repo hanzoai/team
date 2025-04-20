@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Data, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { Card, SpaceSelector, getClient } from '@hcengineering/presentation'
-  import { StyledTextArea } from '@hcengineering/text-editor-resources'
-  import { TestSuite, TestProject } from '@hcengineering/test-management'
-  import { EditBox } from '@hcengineering/ui'
-  import { ObjectBox } from '@hcengineering/view-resources'
+  import { Data, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { Card, SpaceSelector, getClient } from '@hanzo/presentation'
+  import { StyledTextArea } from '@hanzo/text-editor-resources'
+  import { TestSuite, TestProject } from '@hanzo/test-management'
+  import { EditBox } from '@hanzo/ui'
+  import { ObjectBox } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import testManagement from '../../plugin'
   import ProjectPresenter from '../project/ProjectSpacePresenter.svelte'

@@ -14,11 +14,11 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Label } from '@hcengineering/ui'
-  import { TypedSpace, type Data, type Ref, type Permission } from '@hcengineering/core'
-  import { type Employee, type PermissionsStore, getCurrentEmployee } from '@hcengineering/contact'
-  import documents, { type ControlledDocument } from '@hcengineering/controlled-documents'
-  import { UserBoxItems, permissionsStore } from '@hcengineering/contact-resources'
+  import { Label } from '@hanzo/ui'
+  import { TypedSpace, type Data, type Ref, type Permission } from '@hanzo/core'
+  import { type Employee, type PermissionsStore, getCurrentEmployee } from '@hanzo/contact'
+  import documents, { type ControlledDocument } from '@hanzo/controlled-documents'
+  import { UserBoxItems, permissionsStore } from '@hanzo/contact-resources'
 
   export let controlledDoc: Data<ControlledDocument>
   export let space: Ref<TypedSpace>

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { type Attachment } from '@hcengineering/attachment'
-import contact, { Employee, SocialIdentity, type Person } from '@hcengineering/contact'
+import { type Attachment } from '@hanzo/attachment'
+import contact, { Employee, SocialIdentity, type Person } from '@hanzo/contact'
 import {
   AccountUuid,
   buildSocialIdString,
@@ -26,10 +26,10 @@ import {
   SocialIdType,
   type Space,
   type TxOperations
-} from '@hcengineering/core'
-import document, { type Document } from '@hcengineering/document'
-import { MarkupMarkType, type MarkupNode, MarkupNodeType, traverseNode, traverseNodeMarks } from '@hcengineering/text'
-import tracker, { type Issue, Project } from '@hcengineering/tracker'
+} from '@hanzo/core'
+import document, { type Document } from '@hanzo/document'
+import { MarkupMarkType, type MarkupNode, MarkupNodeType, traverseNode, traverseNodeMarks } from '@hanzo/text'
+import tracker, { type Issue, Project } from '@hanzo/tracker'
 import * as fs from 'fs'
 import sizeOf from 'image-size'
 import * as yaml from 'js-yaml'
@@ -59,7 +59,7 @@ import documents, {
   DocumentCategory,
   ControlledDocument,
   DocumentMeta
-} from '@hcengineering/controlled-documents'
+} from '@hanzo/controlled-documents'
 
 export interface HulyComment {
   author: string

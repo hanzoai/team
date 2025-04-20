@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hcengineering/contact'
-  import { PersonPresenter } from '@hcengineering/contact-resources'
-  import { Ref } from '@hcengineering/core'
+  import contact, { Person } from '@hanzo/contact'
+  import { PersonPresenter } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzo/core'
   import {
     Label,
     Scroller,
@@ -26,7 +26,7 @@
     getWeekDayName,
     isWeekend,
     resizeObserver
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
 
   export let headerHeightRem = 4.375
   const minColWidthRem = 2.5

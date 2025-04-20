@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Card } from '@hcengineering/board'
-  import core, { Ref, SortingOrder, Space, Status } from '@hcengineering/core'
-  import { IntlString, translate } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import { DropdownLabels, DropdownTextItem, themeStore } from '@hcengineering/ui'
+  import { Card } from '@hanzo/board'
+  import core, { Ref, SortingOrder, Space, Status } from '@hanzo/core'
+  import { IntlString, translate } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import { DropdownLabels, DropdownTextItem, themeStore } from '@hanzo/ui'
   import board from '../../plugin'
-  import task, { Project } from '@hcengineering/task'
+  import task, { Project } from '@hanzo/task'
 
   export let object: Card
   export let label: IntlString

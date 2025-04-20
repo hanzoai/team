@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
   import core, {
     getCurrentAccount,
     Ref,
@@ -24,16 +24,16 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hcengineering/core'
-  import lead, { Funnel, LeadEvents } from '@hcengineering/lead'
-  import presentation, { getClient, SpaceCreateCard } from '@hcengineering/presentation'
-  import task, { ProjectType } from '@hcengineering/task'
-  import ui, { Component, EditBox, Label, Toggle, ToggleWithLabel } from '@hcengineering/ui'
+  } from '@hanzo/core'
+  import lead, { Funnel, LeadEvents } from '@hanzo/lead'
+  import presentation, { getClient, SpaceCreateCard } from '@hanzo/presentation'
+  import task, { ProjectType } from '@hanzo/task'
+  import ui, { Component, EditBox, Label, Toggle, ToggleWithLabel } from '@hanzo/ui'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
 
   import leadRes from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let funnel: Funnel | undefined = undefined
   const dispatch = createEventDispatcher()

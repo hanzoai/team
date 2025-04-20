@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Asset, getMetadata } from '@hcengineering/platform'
+  import { Asset, getMetadata } from '@hanzo/platform'
   import { IconSize, IconComponent } from '../types'
 
   export let icon: IconComponent

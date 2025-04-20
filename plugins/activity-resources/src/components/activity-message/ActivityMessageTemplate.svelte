@@ -18,16 +18,16 @@
     DisplayActivityMessage,
     ActivityMessageViewType,
     ActivityMessage
-  } from '@hcengineering/activity'
-  import { Person } from '@hcengineering/contact'
-  import { Avatar, SystemAvatar } from '@hcengineering/contact-resources'
-  import core, { Ref } from '@hcengineering/core'
-  import { ComponentExtensions, getClient } from '@hcengineering/presentation'
-  import { Action, Icon, Label } from '@hcengineering/ui'
-  import { getActions, restrictionStore, showMenu } from '@hcengineering/view-resources'
-  import { Asset } from '@hcengineering/platform'
-  import { Action as ViewAction } from '@hcengineering/view'
-  import notification from '@hcengineering/notification'
+  } from '@hanzo/activity'
+  import { Person } from '@hanzo/contact'
+  import { Avatar, SystemAvatar } from '@hanzo/contact-resources'
+  import core, { Ref } from '@hanzo/core'
+  import { ComponentExtensions, getClient } from '@hanzo/presentation'
+  import { Action, Icon, Label } from '@hanzo/ui'
+  import { getActions, restrictionStore, showMenu } from '@hanzo/view-resources'
+  import { Asset } from '@hanzo/platform'
+  import { Action as ViewAction } from '@hanzo/view'
+  import notification from '@hanzo/notification'
 
   import ReactionsPresenter from '../reactions/ReactionsPresenter.svelte'
   import ActivityMessagePresenter from './ActivityMessagePresenter.svelte'

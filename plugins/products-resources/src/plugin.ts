@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import products, { productsId } from '@hcengineering/products'
-import { type Ref, type Space } from '@hcengineering/core'
-import { type IntlString, type Resource, mergeIds } from '@hcengineering/platform'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hcengineering/presentation/src/types'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { type KeyFilter } from '@hcengineering/view'
+import products, { productsId } from '@hanzo/products'
+import { type Ref, type Space } from '@hanzo/core'
+import { type IntlString, type Resource, mergeIds } from '@hanzo/platform'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/presentation/src/types'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type KeyFilter } from '@hanzo/view'
 
 export default mergeIds(productsId, products, {
   component: {

@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Calendar, Event, ReccuringEvent, RecurringRule, Visibility, generateEventId } from '@hcengineering/calendar'
-  import { getCurrentEmployee, Person } from '@hcengineering/contact'
-  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hcengineering/core'
+  import { Calendar, Event, ReccuringEvent, RecurringRule, Visibility, generateEventId } from '@hanzo/calendar'
+  import { getCurrentEmployee, Person } from '@hanzo/contact'
+  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hanzo/core'
   import presentation, {
     createQuery,
     DocCreateExtComponent,
     DocCreateExtensionManager,
     getClient
-  } from '@hcengineering/presentation'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import { StyledTextBox } from '@hcengineering/text-editor-resources'
+  } from '@hanzo/presentation'
+  import { EmptyMarkup } from '@hanzo/text'
+  import { StyledTextBox } from '@hanzo/text-editor-resources'
   import {
     Button,
     EditBox,
@@ -34,7 +34,7 @@
     getUserTimezone,
     showPopup,
     Scroller
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
   import { saveUTC } from '../utils'

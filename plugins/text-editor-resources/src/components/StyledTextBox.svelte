@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Markup } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import presentation, { MessageViewer, getFileUrl, getImageSize, imageSizeToRatio } from '@hcengineering/presentation'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import textEditor, { RefAction } from '@hcengineering/text-editor'
+  import { Markup } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import presentation, { MessageViewer, getFileUrl, getImageSize, imageSizeToRatio } from '@hanzo/presentation'
+  import { EmptyMarkup } from '@hanzo/text'
+  import textEditor, { RefAction } from '@hanzo/text-editor'
   import {
     ActionIcon,
     ButtonSize,
@@ -17,7 +17,7 @@
     getPopupPositionElement,
     registerFocus,
     resizeObserver
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import type { AnyExtension } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
 

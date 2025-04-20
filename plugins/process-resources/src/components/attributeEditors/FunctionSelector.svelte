@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { ProcessFunction } from '@hcengineering/process'
-  import { resizeObserver, Scroller, Label } from '@hcengineering/ui'
+  import { Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { ProcessFunction } from '@hanzo/process'
+  import { resizeObserver, Scroller, Label } from '@hanzo/ui'
   import process from '../../plugin'
   import { createEventDispatcher } from 'svelte'
 

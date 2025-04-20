@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/model-server-notification",
-  "version": "0.6.0",
+  "name": "@hanzo/model-server-notification",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/model-package",
+  "author": "Hanzo <dev@hanzo.ai>",
+  "template": "@hanzo/model-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "eslint": "^8.54.0",
@@ -28,16 +28,16 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/activity": "^0.6.0",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/model": "^0.6.11",
-    "@hcengineering/model-chunter": "^0.6.0",
-    "@hcengineering/model-core": "^0.6.0",
-    "@hcengineering/model-notification": "^0.6.0",
-    "@hcengineering/notification": "^0.6.23",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/server-core": "^0.6.1",
-    "@hcengineering/server-notification": "^0.6.1"
+    "@hanzo/activity": "^0.6.4",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/model": "^0.6.16",
+    "@hanzo/model-chunter": "^0.6.4",
+    "@hanzo/model-core": "^0.6.4",
+    "@hanzo/model-notification": "^0.6.4",
+    "@hanzo/notification": "^0.6.28",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/server-core": "^0.6.5",
+    "@hanzo/server-notification": "^0.6.5"
   }
 }

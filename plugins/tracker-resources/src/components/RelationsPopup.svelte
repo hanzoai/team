@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Class, Doc, Ref, RelatedDocument } from '@hcengineering/core'
-  import { getResource, IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient, ObjectSearchPopup, ObjectSearchResult } from '@hcengineering/presentation'
-  import { Issue } from '@hcengineering/tracker'
-  import { Action, closePopup, Menu, showPopup } from '@hcengineering/ui'
-  import activity from '@hcengineering/activity'
+  import { Class, Doc, Ref, RelatedDocument } from '@hanzo/core'
+  import { getResource, IntlString } from '@hanzo/platform'
+  import { createQuery, getClient, ObjectSearchPopup, ObjectSearchResult } from '@hanzo/presentation'
+  import { Issue } from '@hanzo/tracker'
+  import { Action, closePopup, Menu, showPopup } from '@hanzo/ui'
+  import activity from '@hanzo/activity'
 
   import { updateIssueRelation } from '../issues'
   import tracker from '../plugin'

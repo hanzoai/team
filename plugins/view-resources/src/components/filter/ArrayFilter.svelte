@@ -23,8 +23,8 @@
     Ref,
     SortingOrder,
     Space
-  } from '@hcengineering/core'
-  import presentation, { getClient } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import presentation, { getClient } from '@hanzo/presentation'
   import ui, {
     deviceOptionsStore,
     EditWithIcon,
@@ -34,8 +34,8 @@
     Label,
     Loading,
     resizeObserver
-  } from '@hcengineering/ui'
-  import { Filter } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { Filter } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import { FILTER_DEBOUNCE_MS } from '../../filter'
   import view from '../../plugin'

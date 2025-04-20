@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   docKey,
   isFullTextAttribute,
@@ -33,9 +33,9 @@ import core, {
   type SearchOptions,
   type SearchQuery,
   type SearchResult
-} from '@hcengineering/core'
-import type { IndexedDoc, Middleware, MiddlewareCreator, PipelineContext } from '@hcengineering/server-core'
-import { BaseMiddleware } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import type { IndexedDoc, Middleware, MiddlewareCreator, PipelineContext } from '@hanzo/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
 /**
  * @public
  */

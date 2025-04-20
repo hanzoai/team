@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { copyTextToClipboard } from '@hcengineering/presentation'
-  import { Button } from '@hcengineering/ui'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { copyTextToClipboard } from '@hanzo/presentation'
+  import { Button } from '@hanzo/ui'
 
   export let icon: Asset
   export let title: IntlString

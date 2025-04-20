@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Ref } from '@hcengineering/core'
+  import core, { Class, Doc, Ref } from '@hanzo/core'
   import {
     AttributeBarEditor,
     KeyedAttribute,
@@ -21,7 +21,7 @@
     getClient,
     getFiltredKeys,
     isCollectionAttr
-  } from '@hcengineering/presentation'
+  } from '@hanzo/presentation'
 
   export let object: Doc | Record<string, any>
   export let _class: Ref<Class<Doc>>

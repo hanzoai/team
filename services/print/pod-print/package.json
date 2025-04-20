@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/pod-print",
+  "name": "@hanzo/pod-print",
   "version": "0.1.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -31,7 +31,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@tsconfig/node16": "^1.0.4",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
@@ -54,18 +54,18 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/server-token": "^0.6.11",
-    "@hcengineering/server-core": "^0.6.1",
-    "@hcengineering/server-storage": "^0.6.0",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/account-client": "^0.6.0",
+    "@hanzo/server-token": "^0.6.11",
+    "@hanzo/server-core": "^0.6.1",
+    "@hanzo/server-storage": "^0.6.0",
+    "@hanzo/core": "^0.6.32",
+    "@hanzo/platform": "^0.6.11",
+    "@hanzo/account-client": "^0.6.0",
     "cors": "^2.8.5",
     "dotenv": "~16.0.0",
     "express": "^4.21.2",
     "puppeteer": "^22.6.1",
     "mammoth": "^1.9.0",
     "ws": "^8.18.0",
-    "@hcengineering/analytics-service": "^0.6.0"
+    "@hanzo/analytics-service": "^0.6.0"
   }
 }

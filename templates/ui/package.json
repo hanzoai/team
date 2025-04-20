@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/ui-package",
+  "name": "@hanzo/ui-package",
   "version": "0.6.0",
   "main": "src/index.ts",
   "#overrideKeys": [
@@ -14,7 +14,7 @@
     "format": "format src"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "svelte-loader": "^3.2.0",
     "sass": "^1.53.0",
     "svelte-preprocess": "^5.1.3",

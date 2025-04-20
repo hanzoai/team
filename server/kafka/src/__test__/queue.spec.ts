@@ -1,4 +1,4 @@
-import { generateId, MeasureMetricsContext } from '@hcengineering/core'
+import { generateId, MeasureMetricsContext } from '@hanzo/core'
 import { createPlatformQueue, parseQueueConfig } from '..'
 
 jest.setTimeout(120000)

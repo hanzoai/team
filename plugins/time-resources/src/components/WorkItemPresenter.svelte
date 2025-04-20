@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { ItemPresenter, ToDo } from '@hcengineering/time'
-  import type { Class, Doc } from '@hcengineering/core'
-  import type { ObjectPanel } from '@hcengineering/view'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Component, showPanel } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import type { ItemPresenter, ToDo } from '@hanzo/time'
+  import type { Class, Doc } from '@hanzo/core'
+  import type { ObjectPanel } from '@hanzo/view'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Component, showPanel } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import time from '../plugin'
-  import { DocReferencePresenter, getObjectLinkId } from '@hcengineering/view-resources'
+  import { DocReferencePresenter, getObjectLinkId } from '@hanzo/view-resources'
 
   export let todo: ToDo
   export let kind: 'default' | 'todo-line' = 'default'

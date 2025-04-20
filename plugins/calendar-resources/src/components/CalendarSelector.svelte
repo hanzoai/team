@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Calendar, ExternalCalendar } from '@hcengineering/calendar'
-  import { Ref, getCurrentAccount } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
+  import { Calendar, ExternalCalendar } from '@hanzo/calendar'
+  import { Ref, getCurrentAccount } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
   import calendarPlugin from '../plugin'
   import { createEventDispatcher } from 'svelte'
-  import { Dropdown, Icon } from '@hcengineering/ui'
+  import { Dropdown, Icon } from '@hanzo/ui'
   import calendar from '../plugin'
 
   export let value: Ref<Calendar> | undefined

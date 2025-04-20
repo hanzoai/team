@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import core, { type Ref, type SpaceType, type SpaceTypeDescriptor } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { type DropdownTextItem, ButtonKind, ButtonSize, DropdownLabels } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import core, { type Ref, type SpaceType, type SpaceTypeDescriptor } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { type DropdownTextItem, ButtonKind, ButtonSize, DropdownLabels } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   export let descriptors: Ref<SpaceTypeDescriptor>[]
   export let type: Ref<SpaceType> | undefined = undefined

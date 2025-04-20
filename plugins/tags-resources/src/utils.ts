@@ -1,6 +1,6 @@
 // Copyright © 2022 Hardcore Engineering Inc.
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   type Class,
   type Data,
@@ -8,13 +8,13 @@ import core, {
   type DocumentQuery,
   type FindResult,
   type Ref
-} from '@hcengineering/core'
-import { type Asset } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import { type TagCategory, type TagElement, type TagReference, TagsEvents } from '@hcengineering/tags'
-import { type ColorDefinition, getColorNumberByText } from '@hcengineering/ui'
-import { type Filter } from '@hcengineering/view'
-import { FilterQuery } from '@hcengineering/view-resources'
+} from '@hanzo/core'
+import { type Asset } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import { type TagCategory, type TagElement, type TagReference, TagsEvents } from '@hanzo/tags'
+import { type ColorDefinition, getColorNumberByText } from '@hanzo/ui'
+import { type Filter } from '@hanzo/view'
+import { FilterQuery } from '@hanzo/view-resources'
 import { writable } from 'svelte/store'
 import tags from './plugin'
 

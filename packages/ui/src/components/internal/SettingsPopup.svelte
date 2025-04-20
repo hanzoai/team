@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type IntlString, getMetadata } from '@hcengineering/platform'
+  import { type IntlString, getMetadata } from '@hanzo/platform'
   import { getContext } from 'svelte'
   import { type Readable } from 'svelte/store'
 

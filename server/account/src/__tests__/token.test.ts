@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import type { PersonUuid, WorkspaceUuid } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+import type { PersonUuid, WorkspaceUuid } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 
 export function decodeTokenPayload (token: string): any {
   try {

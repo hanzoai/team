@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity from '@hcengineering/activity'
-  import { Analytics } from '@hcengineering/analytics'
-  import { Attachment } from '@hcengineering/attachment'
-  import { AttachmentPresenter, AttachmentStyledBox } from '@hcengineering/attachment-resources'
-  import { Employee } from '@hcengineering/contact'
+  import activity from '@hanzo/activity'
+  import { Analytics } from '@hanzo/analytics'
+  import { Attachment } from '@hanzo/attachment'
+  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
+  import { Employee } from '@hanzo/contact'
   import core, {
     Class,
     Doc,
@@ -30,9 +30,9 @@
     makeCollabId,
     makeDocCollabId,
     toIdMap
-  } from '@hcengineering/core'
-  import { getResource, translate } from '@hcengineering/platform'
-  import preference, { SpacePreference } from '@hcengineering/preference'
+  } from '@hanzo/core'
+  import { getResource, translate } from '@hanzo/platform'
+  import preference, { SpacePreference } from '@hanzo/preference'
   import {
     Card,
     DocCreateExtComponent,
@@ -46,11 +46,11 @@
     createQuery,
     getClient,
     getMarkup
-  } from '@hcengineering/presentation'
-  import tags, { TagReference, type TagElement } from '@hcengineering/tags'
-  import { TaskType, makeRank } from '@hcengineering/task'
-  import { TaskKindSelector } from '@hcengineering/task-resources'
-  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
+  } from '@hanzo/presentation'
+  import tags, { TagReference, type TagElement } from '@hanzo/tags'
+  import { TaskType, makeRank } from '@hanzo/task'
+  import { TaskKindSelector } from '@hanzo/task-resources'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
   import {
     Component as ComponentType,
     Issue,
@@ -63,7 +63,7 @@
     Project,
     ProjectTargetPreference,
     TrackerEvents
-  } from '@hcengineering/tracker'
+  } from '@hanzo/tracker'
   import {
     Button,
     Component,
@@ -76,9 +76,9 @@
     createFocusManager,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { ObjectBox } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { ObjectBox } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import { activeComponent, activeMilestone, generateIssueShortLink, updateIssueRelation } from '../issues'

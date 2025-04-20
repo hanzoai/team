@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangeMode, convertToDay } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
+  import { DateRangeMode, convertToDay } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
   import { createEventDispatcher } from 'svelte'
   import {
     ActionIcon,

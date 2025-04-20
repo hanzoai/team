@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import chunter, { ChatMessage } from '@hcengineering/chunter'
-  import { DocumentQuery, SortingOrder } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Label, Scroller, SearchEdit } from '@hcengineering/ui'
-  import { FilterBar } from '@hcengineering/view-resources'
-  import { ActivityMessagePresenter } from '@hcengineering/activity-resources'
+  import chunter, { ChatMessage } from '@hanzo/chunter'
+  import { DocumentQuery, SortingOrder } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Label, Scroller, SearchEdit } from '@hanzo/ui'
+  import { FilterBar } from '@hanzo/view-resources'
+  import { ActivityMessagePresenter } from '@hanzo/activity-resources'
 
   import plugin from '../../../plugin'
   import { openMessageFromSpecial } from '../../../navigation'

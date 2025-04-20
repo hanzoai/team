@@ -22,8 +22,8 @@
     showPopup,
     eventToHTMLElement,
     ModernEditbox
-  } from '@hcengineering/ui'
-  import type { DropdownIntlItem } from '@hcengineering/ui'
+  } from '@hanzo/ui'
+  import type { DropdownIntlItem } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import setting from '../plugin'
 

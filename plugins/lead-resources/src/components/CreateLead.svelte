@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact } from '@hcengineering/contact'
-  import { UserBox } from '@hcengineering/contact-resources'
+  import contact, { Contact } from '@hanzo/contact'
+  import { UserBox } from '@hanzo/contact-resources'
   import core, {
     AccountRole,
     AttachedData,
@@ -26,17 +26,17 @@
     Ref,
     SortingOrder,
     Status as TaskStatus
-  } from '@hcengineering/core'
-  import { Customer, Funnel, Lead, LeadEvents } from '@hcengineering/lead'
-  import { OK, Status } from '@hcengineering/platform'
-  import { Card, createQuery, getClient, InlineAttributeBar, SpaceSelector } from '@hcengineering/presentation'
-  import task, { getStates, makeRank, TaskType } from '@hcengineering/task'
-  import { TaskKindSelector, typeStore } from '@hcengineering/task-resources'
-  import { Button, createFocusManager, EditBox, FocusHandler, Label, Status as StatusControl } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
+  } from '@hanzo/core'
+  import { Customer, Funnel, Lead, LeadEvents } from '@hanzo/lead'
+  import { OK, Status } from '@hanzo/platform'
+  import { Card, createQuery, getClient, InlineAttributeBar, SpaceSelector } from '@hanzo/presentation'
+  import task, { getStates, makeRank, TaskType } from '@hanzo/task'
+  import { TaskKindSelector, typeStore } from '@hanzo/task-resources'
+  import { Button, createFocusManager, EditBox, FocusHandler, Label, Status as StatusControl } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import lead from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let space: Ref<Funnel>
   export let customer: Ref<Contact> | null = null

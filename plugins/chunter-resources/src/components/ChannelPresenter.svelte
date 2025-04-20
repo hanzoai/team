@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel, chunterId } from '@hcengineering/chunter'
-  import { getClient } from '@hcengineering/presentation'
-  import { Icon, tooltip } from '@hcengineering/ui'
-  import { NavLink } from '@hcengineering/view-resources'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { ObjectPresenterType } from '@hcengineering/view'
+  import { Channel, chunterId } from '@hanzo/chunter'
+  import { getClient } from '@hanzo/presentation'
+  import { Icon, tooltip } from '@hanzo/ui'
+  import { NavLink } from '@hanzo/view-resources'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { ObjectPresenterType } from '@hanzo/view'
 
   export let value: Channel
   export let inline: boolean = false

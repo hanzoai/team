@@ -17,9 +17,9 @@ import {
   ConnectMeetingRequest,
   DisconnectMeetingRequest,
   IdentityResponse
-} from '@hcengineering/ai-bot'
-import attachment, { Attachment } from '@hcengineering/attachment'
-import chunter, { ChatMessage, ThreadMessage } from '@hcengineering/chunter'
+} from '@hanzo/ai-bot'
+import attachment, { Attachment } from '@hanzo/attachment'
+import chunter, { ChatMessage, ThreadMessage } from '@hanzo/chunter'
 import contact, {
   AvatarType,
   combineName,
@@ -27,7 +27,7 @@ import contact, {
   getFirstName,
   getLastName,
   Person
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import core, {
   type Account,
   AccountRole,
@@ -49,25 +49,25 @@ import core, {
   type WorkspaceIds,
   AccountUuid,
   pickPrimarySocialId
-} from '@hcengineering/core'
-import { Room } from '@hcengineering/love'
-import { WorkspaceInfoRecord } from '@hcengineering/server-ai-bot'
+} from '@hanzo/core'
+import { Room } from '@hanzo/love'
+import { WorkspaceInfoRecord } from '@hanzo/server-ai-bot'
 import fs from 'fs'
 import { WithId } from 'mongodb'
 import OpenAI from 'openai'
 import { Tiktoken } from 'js-tiktoken'
 
-import { StorageAdapter } from '@hcengineering/server-core'
+import { StorageAdapter } from '@hanzo/server-core'
 import config from '../config'
 import { HistoryRecord } from '../types'
 import { createChatCompletionWithTools, requestSummary } from '../utils/openai'
 import { connectPlatform } from '../utils/platform'
 import { LoveController } from './love'
 import { DbStorage } from '../storage'
-import { jsonToMarkup, markupToText } from '@hcengineering/text'
-import { markdownToMarkup } from '@hcengineering/text-markdown'
-import { countTokens } from '@hcengineering/openai'
-import { getAccountClient } from '@hcengineering/server-client'
+import { jsonToMarkup, markupToText } from '@hanzo/text'
+import { markdownToMarkup } from '@hanzo/text-markdown'
+import { countTokens } from '@hanzo/openai'
+import { getAccountClient } from '@hanzo/server-client'
 import { getGlobalPerson } from '../utils/account'
 
 export class WorkspaceClient {

@@ -15,17 +15,17 @@
 
 import { type Unsubscriber, get } from 'svelte/store'
 
-import { getCurrentAccount } from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
+import { getCurrentAccount } from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
 import support, {
   type SupportClient,
   type SupportStatusCallback,
   type SupportSystem,
   type SupportWidget,
   type SupportWidgetConfig
-} from '@hcengineering/support'
-import { location, themeStore } from '@hcengineering/ui'
-import { createQuery, type LiveQuery, getClient } from '@hcengineering/presentation'
+} from '@hanzo/support'
+import { location, themeStore } from '@hanzo/ui'
+import { createQuery, type LiveQuery, getClient } from '@hanzo/presentation'
 
 class SupportClientImpl implements SupportClient {
   private readonly supportSystem: SupportSystem

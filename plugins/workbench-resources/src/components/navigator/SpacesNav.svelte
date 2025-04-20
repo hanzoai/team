@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, Ref, Space, AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { IntlString, getResource } from '@hcengineering/platform'
-  import preference from '@hcengineering/preference'
-  import { getClient } from '@hcengineering/presentation'
+  import core, { Doc, Ref, Space, AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { IntlString, getResource } from '@hanzo/platform'
+  import preference from '@hanzo/preference'
+  import { getClient } from '@hanzo/presentation'
   import {
     Action,
     AnyComponent,
@@ -26,12 +26,12 @@
     getCurrentResolvedLocation,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
-  import { TreeNode } from '@hcengineering/view-resources'
-  import { SpacesNavModel } from '@hcengineering/workbench'
+  } from '@hanzo/ui'
+  import { TreeNode } from '@hanzo/view-resources'
+  import { SpacesNavModel } from '@hanzo/workbench'
   import { createEventDispatcher } from 'svelte'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { DocNotifyContext, InboxNotification } from '@hcengineering/notification'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { DocNotifyContext, InboxNotification } from '@hanzo/notification'
 
   import plugin from '../../plugin'
   import TreeSeparator from './TreeSeparator.svelte'

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Doc, type DocumentQuery, type Space, type Ref, type WithLookup } from '@hcengineering/core'
-  import drive, { type Drive, type Folder } from '@hcengineering/drive'
-  import { Scroller, SearchInput, Panel, Button, IconMoreH } from '@hcengineering/ui'
-  import view, { Viewlet, ViewOptions } from '@hcengineering/view'
+  import { type Doc, type DocumentQuery, type Space, type Ref, type WithLookup } from '@hanzo/core'
+  import drive, { type Drive, type Folder } from '@hanzo/drive'
+  import { Scroller, SearchInput, Panel, Button, IconMoreH } from '@hanzo/ui'
+  import view, { Viewlet, ViewOptions } from '@hanzo/view'
   import {
     FilterBar,
     FilterButton,
@@ -25,7 +25,7 @@
     ViewletSettingButton,
     DocAttributeBar,
     showMenu
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
 
   import DrivePresenter from './DrivePresenter.svelte'
   import FolderHeader from './FolderHeader.svelte'

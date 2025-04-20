@@ -25,13 +25,13 @@
     Scroller,
     showPopup,
     Submenu
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
-  import core, { AnyAttribute, Class, Doc, Ref } from '@hcengineering/core'
-  import { Context, Func, ProcessFunction, SelectedContext } from '@hcengineering/process'
-  import { getClient } from '@hcengineering/presentation'
-  import { AttributeCategory } from '@hcengineering/view'
+  import core, { AnyAttribute, Class, Doc, Ref } from '@hanzo/core'
+  import { Context, Func, ProcessFunction, SelectedContext } from '@hanzo/process'
+  import { getClient } from '@hanzo/presentation'
+  import { AttributeCategory } from '@hanzo/view'
   import FallbackEditor from '../contextEditors/FallbackEditor.svelte'
 
   export let contextValue: SelectedContext

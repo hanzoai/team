@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { closeWidget, WidgetState } from '@hcengineering/workbench-resources'
-  import { Widget } from '@hcengineering/workbench'
-  import { getClient, createQuery, getCommunicationClient, createMessagesQuery } from '@hcengineering/presentation'
-  import cardPlugin, { type Card } from '@hcengineering/card'
-  import { Message, CardID } from '@hcengineering/communication-types'
-  import { MessagePresenter, MessageInput, Divider, UploadedFile } from '@hcengineering/ui-next'
-  import core, { fillDefaults, MarkupBlobRef, Ref, SortingOrder } from '@hcengineering/core'
-  import { jsonToMarkup, markupToText } from '@hcengineering/text'
-  import { markdownToMarkup } from '@hcengineering/text-markdown'
-  import { makeRank } from '@hcengineering/rank'
+  import { closeWidget, WidgetState } from '@hanzo/workbench-resources'
+  import { Widget } from '@hanzo/workbench'
+  import { getClient, createQuery, getCommunicationClient, createMessagesQuery } from '@hanzo/presentation'
+  import cardPlugin, { type Card } from '@hanzo/card'
+  import { Message, CardID } from '@hanzo/communication-types'
+  import { MessagePresenter, MessageInput, Divider, UploadedFile } from '@hanzo/ui-next'
+  import core, { fillDefaults, MarkupBlobRef, Ref, SortingOrder } from '@hanzo/core'
+  import { jsonToMarkup, markupToText } from '@hanzo/text'
+  import { markdownToMarkup } from '@hanzo/text-markdown'
+  import { makeRank } from '@hanzo/rank'
 
   import { ChatWidgetData } from '../types'
   import chat from '../plugin'

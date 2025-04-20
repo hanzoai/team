@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { bitrixId } from '@hcengineering/bitrix'
-import bitrix from '@hcengineering/bitrix-resources/src/plugin'
-import { type IntlString, mergeIds } from '@hcengineering/platform'
-import { type Action } from '@hcengineering/view'
+import { bitrixId } from '@hanzo/bitrix'
+import bitrix from '@hanzo/bitrix-resources/src/plugin'
+import { type IntlString, mergeIds } from '@hanzo/platform'
+import { type Action } from '@hanzo/view'
 
-import { type Doc, type Ref } from '@hcengineering/core'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
+import { type Doc, type Ref } from '@hanzo/core'
+import type { AnyComponent } from '@hanzo/ui/src/types'
 
 export default mergeIds(bitrixId, bitrix, {
   component: {

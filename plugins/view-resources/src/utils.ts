@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   AccountRole,
   ClassifierKind,
@@ -53,10 +53,10 @@ import core, {
   type TypeAny,
   type TypedSpace,
   type WithLookup
-} from '@hcengineering/core'
-import { type Restrictions } from '@hcengineering/guest'
-import type { Asset, IntlString } from '@hcengineering/platform'
-import { getResource, translate } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { type Restrictions } from '@hanzo/guest'
+import type { Asset, IntlString } from '@hanzo/platform'
+import { getResource, translate } from '@hanzo/platform'
 import {
   createQuery,
   getAttributePresenterClass,
@@ -66,8 +66,8 @@ import {
   hasResource,
   isAdminUser,
   type KeyedAttribute
-} from '@hcengineering/presentation'
-import { type CollaborationUser } from '@hcengineering/text-editor'
+} from '@hanzo/presentation'
+import { type CollaborationUser } from '@hanzo/text-editor'
 import {
   ErrorPresenter,
   getColorNumberByText,
@@ -81,7 +81,7 @@ import {
   type AnyComponent,
   type AnySvelteComponent,
   type Location
-} from '@hcengineering/ui'
+} from '@hanzo/ui'
 import view, {
   AttributeCategoryOrder,
   type AttributeCategory,
@@ -94,19 +94,19 @@ import view, {
   type LinkIdProvider,
   type Viewlet,
   type ViewletDescriptor
-} from '@hcengineering/view'
+} from '@hanzo/view'
 
 import contact, {
   getCurrentEmployee,
   getAllSocialStringsByPersonRef,
   getName,
   type Contact
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import { get, writable } from 'svelte/store'
 import plugin from './plugin'
 import { noCategory } from './viewOptions'
 
-export { getFiltredKeys, isCollectionAttr } from '@hcengineering/presentation'
+export { getFiltredKeys, isCollectionAttr } from '@hanzo/presentation'
 
 /**
  * Define some properties to be used to show component until data is properly loaded.

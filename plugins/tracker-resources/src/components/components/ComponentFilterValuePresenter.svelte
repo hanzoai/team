@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Component } from '@hcengineering/tracker'
+  import { Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Component } from '@hanzo/tracker'
   import tracker from '../../plugin'
 
   export let value: Ref<Component>[]

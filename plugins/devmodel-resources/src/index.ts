@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -31,11 +31,11 @@ import core, {
   type Tx,
   type TxResult,
   type WithLookup
-} from '@hcengineering/core'
-import { getMetadata, type IntlString, type Resources } from '@hcengineering/platform'
-import { addTxListener } from '@hcengineering/presentation'
-import type { ClientHook } from '@hcengineering/presentation/src/plugin'
-import { testing } from '@hcengineering/ui'
+} from '@hanzo/core'
+import { getMetadata, type IntlString, type Resources } from '@hanzo/platform'
+import { addTxListener } from '@hanzo/presentation'
+import type { ClientHook } from '@hanzo/presentation/src/plugin'
+import { testing } from '@hanzo/ui'
 import devmodel from './plugin'
 
 export interface TxWitHResult {

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import { main } from './main'
 
 void main().catch((err) => {

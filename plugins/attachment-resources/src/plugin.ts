@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import attachment, { attachmentId } from '@hcengineering/attachment'
-import type { IntlString } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import { type ViewAction } from '@hcengineering/view'
+import attachment, { attachmentId } from '@hanzo/attachment'
+import type { IntlString } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import { type ViewAction } from '@hanzo/view'
 
 export default mergeIds(attachmentId, attachment, {
   string: {

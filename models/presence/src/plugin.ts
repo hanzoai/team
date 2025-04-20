@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { presenceId } from '@hcengineering/presence'
-import presence from '@hcengineering/presence-resources/src/plugin'
+import { mergeIds } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { presenceId } from '@hanzo/presence'
+import presence from '@hanzo/presence-resources/src/plugin'
 
 export default mergeIds(presenceId, presence, {
   component: {

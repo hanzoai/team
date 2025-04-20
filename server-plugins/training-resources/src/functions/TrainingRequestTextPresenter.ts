@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { TriggerControl } from '@hcengineering/server-core'
-import type { Presenter } from '@hcengineering/server-notification'
-import type { TrainingRequest } from '@hcengineering/training'
-import training from '@hcengineering/training'
+import type { TriggerControl } from '@hanzo/server-core'
+import type { Presenter } from '@hanzo/server-notification'
+import type { TrainingRequest } from '@hanzo/training'
+import training from '@hanzo/training'
 
 /** @public */
 export const TrainingRequestTextPresenter: Presenter<TrainingRequest> = async (

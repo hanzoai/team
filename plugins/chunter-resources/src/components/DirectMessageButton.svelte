@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ModernButton, getCurrentLocation } from '@hcengineering/ui'
-  import view, { decodeObjectURI } from '@hcengineering/view'
-  import { Employee } from '@hcengineering/contact'
+  import { ModernButton, getCurrentLocation } from '@hanzo/ui'
+  import view, { decodeObjectURI } from '@hanzo/view'
+  import { Employee } from '@hanzo/contact'
 
   import chunter from '../plugin'
   import { createDirect } from '../utils'

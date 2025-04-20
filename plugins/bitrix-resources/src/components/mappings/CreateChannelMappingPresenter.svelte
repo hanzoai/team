@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixFieldMapping, CreateChannelOperation } from '@hcengineering/bitrix'
+  import { BitrixEntityMapping, BitrixFieldMapping, CreateChannelOperation } from '@hanzo/bitrix'
 
-  import contact from '@hcengineering/contact'
-  import { Component } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import contact from '@hanzo/contact'
+  import { Component } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   export let mapping: BitrixEntityMapping
   export let value: BitrixFieldMapping

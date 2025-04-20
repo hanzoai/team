@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import { translateCB } from '@hcengineering/platform'
-  import { themeStore } from '@hcengineering/theme'
+  import type { IntlString } from '@hanzo/platform'
+  import { translateCB } from '@hanzo/platform'
+  import { themeStore } from '@hanzo/theme'
 
   export let label: IntlString
   export let params: Record<string, any> = {}

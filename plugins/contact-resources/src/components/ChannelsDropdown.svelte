@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Channel, ChannelProvider } from '@hcengineering/contact'
-  import contact from '@hcengineering/contact'
-  import { AttachedData, Doc, Ref, toIdMap } from '@hcengineering/core'
-  import notification, { DocNotifyContext, InboxNotification } from '@hcengineering/notification'
-  import { Asset, IntlString, getResource } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
+  import type { Channel, ChannelProvider } from '@hanzo/contact'
+  import contact from '@hanzo/contact'
+  import { AttachedData, Doc, Ref, toIdMap } from '@hanzo/core'
+  import notification, { DocNotifyContext, InboxNotification } from '@hanzo/notification'
+  import { Asset, IntlString, getResource } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
   import {
     Action,
     AnyComponent,
@@ -33,9 +33,9 @@
     getFocusManager,
     getPopupPositionElement,
     showPopup
-  } from '@hcengineering/ui'
-  import view, { Action as ViewAction } from '@hcengineering/view'
-  import { ContextMenu, invokeAction } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view, { Action as ViewAction } from '@hanzo/view'
+  import { ContextMenu, invokeAction } from '@hanzo/view-resources'
   import { createEventDispatcher, tick } from 'svelte'
   import { readable, Readable, Writable, writable } from 'svelte/store'
   import { channelProviders } from '../utils'

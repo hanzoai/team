@@ -1,6 +1,6 @@
 {
-  "name": "@hcengineering/account",
-  "version": "0.6.0",
+  "name": "@hanzo/account",
+  "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -39,17 +39,17 @@
     "@types/pg": "^8.11.6"
   },
   "dependencies": {
-    "@hcengineering/mongo": "^0.6.1",
-    "@hcengineering/postgres": "^0.6.0",
+    "@hanzo/mongo": "^0.6.5",
+    "@hanzo/postgres": "^0.6.4",
     "mongodb": "^6.12.0",
     "postgres": "^3.4.5",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/core": "^0.6.32",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/core": "^0.6.38",
     "otp-generator": "^4.0.1",
-    "@hcengineering/server-token": "^0.6.11",
-    "@hcengineering/analytics": "^0.6.0",
-    "@hcengineering/server-storage": "^0.6.0",
-    "@hcengineering/server-core": "^0.6.1",
-    "@hcengineering/server-pipeline": "^0.6.0"
+    "@hanzo/server-token": "^0.6.16",
+    "@hanzo/analytics": "^0.6.4",
+    "@hanzo/server-storage": "^0.6.4",
+    "@hanzo/server-core": "^0.6.5",
+    "@hanzo/server-pipeline": "^0.6.4"
   }
 }

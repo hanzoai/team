@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Vacancy } from '@hcengineering/recruit'
-  import { Icon, getPlatformAvatarColorForTextDef, themeStore, tooltip } from '@hcengineering/ui'
-  import { ObjectPresenterType } from '@hcengineering/view'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Vacancy } from '@hanzo/recruit'
+  import { Icon, getPlatformAvatarColorForTextDef, themeStore, tooltip } from '@hanzo/ui'
+  import { ObjectPresenterType } from '@hanzo/view'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import recruit from '../plugin'

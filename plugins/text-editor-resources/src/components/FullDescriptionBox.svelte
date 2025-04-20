@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2022, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -15,12 +15,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Markup } from '@hcengineering/core'
-  import { IntlString, Asset } from '@hcengineering/platform'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import { Label, Icon } from '@hcengineering/ui'
-  import type { AnySvelteComponent } from '@hcengineering/ui'
-  import textEditor from '@hcengineering/text-editor'
+  import { Markup } from '@hanzo/core'
+  import { IntlString, Asset } from '@hanzo/platform'
+  import { EmptyMarkup } from '@hanzo/text'
+  import { Label, Icon } from '@hanzo/ui'
+  import type { AnySvelteComponent } from '@hanzo/ui'
+  import textEditor from '@hanzo/text-editor'
 
   import StyledTextBox from './StyledTextBox.svelte'
   import IconDescription from './icons/Description.svelte'

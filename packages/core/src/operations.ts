@@ -1,4 +1,4 @@
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import { deepEqual } from 'fast-equals'
 import { DocumentUpdate, DOMAIN_MODEL, Hierarchy, MixinData, MixinUpdate, ModelDb, platformNow, toFindResult } from '.'
 import type {

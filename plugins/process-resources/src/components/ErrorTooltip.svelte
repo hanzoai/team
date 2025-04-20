@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { translate } from '@hcengineering/platform'
-  import { ExecutionError } from '@hcengineering/process'
-  import { Label } from '@hcengineering/ui'
+  import { translate } from '@hanzo/platform'
+  import { ExecutionError } from '@hanzo/process'
+  import { Label } from '@hanzo/ui'
 
   export let value: ExecutionError[]
 

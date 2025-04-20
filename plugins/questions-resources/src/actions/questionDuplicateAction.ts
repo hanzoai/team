@@ -2,9 +2,9 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import type { AttachedData } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
-import type { Question } from '@hcengineering/questions'
+import type { AttachedData } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
+import type { Question } from '@hanzo/questions'
 import { LexoRank } from 'lexorank'
 import { canUpdateQuestion, findNextQuestion, getCurrentEmployeeRef, isAssessment } from '../utils'
 import { focusActionWithAvailability } from './ActionWithAvailability'

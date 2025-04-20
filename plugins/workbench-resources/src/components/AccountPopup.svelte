@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { formatName } from '@hcengineering/contact'
-  import { myEmployeeStore } from '@hcengineering/contact-resources'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import login, { loginId } from '@hcengineering/login'
-  import { createQuery } from '@hcengineering/presentation'
-  import setting, { SettingsCategory, settingId } from '@hcengineering/setting'
+  import contact, { formatName } from '@hanzo/contact'
+  import { myEmployeeStore } from '@hanzo/contact-resources'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import login, { loginId } from '@hanzo/login'
+  import { createQuery } from '@hanzo/presentation'
+  import setting, { SettingsCategory, settingId } from '@hanzo/setting'
   import {
     Action,
     Component,
@@ -29,8 +29,8 @@
     locationToUrl,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import workbench from '../plugin'
   import { logOut } from '../utils'
   import HelpAndSupport from './HelpAndSupport.svelte'

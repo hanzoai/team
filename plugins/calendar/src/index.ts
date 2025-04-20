@@ -11,13 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Contact, Employee } from '@hcengineering/contact'
-import type { AttachedDoc, Class, Doc, Markup, Mixin, PersonId, Ref, SystemSpace, Timestamp } from '@hcengineering/core'
-import { NotificationType } from '@hcengineering/notification'
-import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { Handler, IntegrationType } from '@hcengineering/setting'
-import { AnyComponent, ComponentExtensionId } from '@hcengineering/ui'
+import { Contact, Employee } from '@hanzo/contact'
+import type { AttachedDoc, Class, Doc, Markup, Mixin, PersonId, Ref, SystemSpace, Timestamp } from '@hanzo/core'
+import { NotificationType } from '@hanzo/notification'
+import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { Handler, IntegrationType } from '@hanzo/setting'
+import { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
 
 /**
  * @public

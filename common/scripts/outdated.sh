@@ -17,7 +17,7 @@ echo '{"name": "combined-dependencies", "dependencies": {}}' > "$COMBINED_PACKAG
 # Find all package.json files recursively, excluding node_modules and focusing on workspace packages
 echo "Finding workspace package.json files..."
 find . -name "package.json" -not -path "*/node_modules/*" -type f | while read -r file; do
-    if grep -q '"name": "@hcengineering/' "$file"; then
+    if grep -q '"name": "@hanzo/' "$file"; then
         echo "$file"
     fi
 done > "$DEPS_DIR/package_list.txt"
@@ -33,7 +33,7 @@ while IFS= read -r package_file; do
 done < "$DEPS_DIR/package_list.txt"
 
 # Create filtered external package.json excluding @hcengineering packages
-jq '{"name": "external-dependencies", "dependencies": (.dependencies | with_entries(select(.key | startswith("@hcengineering/") | not)))}' "$COMBINED_PACKAGE" > "$EXTERNAL_PACKAGE"
+jq '{"name": "external-dependencies", "dependencies": (.dependencies | with_entries(select(.key | startswith("@hanzo/") | not)))}' "$COMBINED_PACKAGE" > "$EXTERNAL_PACKAGE"
 
 # Create a temporary directory for checking outdated packages
 TEMP_DIR="$DEPS_DIR/temp"

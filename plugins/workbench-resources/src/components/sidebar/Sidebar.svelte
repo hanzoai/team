@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { panelstore } from '@hcengineering/ui'
-  import { WidgetPreference } from '@hcengineering/workbench'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { panelstore } from '@hanzo/ui'
+  import { WidgetPreference } from '@hanzo/workbench'
 
   import workbench from '../../plugin'
   import { sidebarStore, SidebarVariant } from '../../sidebar'

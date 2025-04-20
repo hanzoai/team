@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hcengineering/platform'
-  import { MarkupMark, MarkupMarkType } from '@hcengineering/text'
-  import uiPlugin, { navigate, parseLocation } from '@hcengineering/ui'
+  import { getMetadata } from '@hanzo/platform'
+  import { MarkupMark, MarkupMarkType } from '@hanzo/text'
+  import uiPlugin, { navigate, parseLocation } from '@hanzo/ui'
 
   import presentation from '../../plugin'
 

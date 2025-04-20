@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { DOMAIN_TX, type Domain, type MeasureContext } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { DOMAIN_TX, type Domain, type MeasureContext } from '@hanzo/core'
 import { type DbAdapter, type DomainHelper } from './adapter'
 import type { DbConfiguration } from './configuration'
 import { DummyDbAdapter } from './mem'

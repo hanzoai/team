@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Person } from '@hcengineering/contact'
-import type { Metadata, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { AnyComponent } from '@hcengineering/ui/src/types'
+import type { Person } from '@hanzo/contact'
+import type { Metadata, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { AnyComponent } from '@hanzo/ui/src/types'
 
 /** @public */
 export const presenceId = 'presence' as Plugin

@@ -13,22 +13,22 @@
 // limitations under the License.
 //
 
-import core, { ClassifierKind, type Domain, IndexKind } from '@hcengineering/core'
-import { type Builder, Index, Model, Prop, TypeString } from '@hcengineering/model'
-import { TDoc } from '@hcengineering/model-core'
+import core, { ClassifierKind, type Domain, IndexKind } from '@hanzo/core'
+import { type Builder, Index, Model, Prop, TypeString } from '@hanzo/model'
+import { TDoc } from '@hanzo/model-core'
 
-import view, { type Viewlet } from '@hcengineering/model-view'
-import card from '@hcengineering/card'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
+import view, { type Viewlet } from '@hanzo/model-view'
+import card from '@hanzo/card'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import setting from '@hanzo/setting'
 
-import { type MailRoute } from '@hcengineering/mail'
+import { type MailRoute } from '@hanzo/mail'
 import mail from './plugin'
 
 const DOMAIN_MAIL = 'mail' as Domain
 const mailTag = 'Mail'
 
-export { mailId } from '@hcengineering/mail'
+export { mailId } from '@hanzo/mail'
 export { default } from './plugin'
 
 @Model(mail.class.MailRoute, core.class.Doc, DOMAIN_MAIL)

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Request } from '@hcengineering/request'
-  import { Label } from '@hcengineering/ui'
-  import { DocNavLink, ObjectPresenter } from '@hcengineering/view-resources'
+  import { Doc } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Request } from '@hanzo/request'
+  import { Label } from '@hanzo/ui'
+  import { DocNavLink, ObjectPresenter } from '@hanzo/view-resources'
   import requests from '../plugin'
   import RequestLabel from './RequestLabel.svelte'
 

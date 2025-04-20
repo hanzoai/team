@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Process } from '@hcengineering/process'
-  import { Label } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Process } from '@hanzo/process'
+  import { Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import process from '../plugin'
   import { createExecution } from '../utils'

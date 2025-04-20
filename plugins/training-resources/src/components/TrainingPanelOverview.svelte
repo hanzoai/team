@@ -3,14 +3,14 @@
 -->
 
 <script lang="ts">
-  import { Icon, Label, navigate } from '@hcengineering/ui'
-  import { Table } from '@hcengineering/view-resources'
-  import { type Training } from '@hcengineering/training'
-  import { Attachments, AttachmentStyleBoxEditor } from '@hcengineering/attachment-resources'
-  import { AttributeBarEditor, getClient } from '@hcengineering/presentation'
-  import { StyledTextBox } from '@hcengineering/text-editor-resources'
-  import core from '@hcengineering/core'
-  import documents from '@hcengineering/controlled-documents'
+  import { Icon, Label, navigate } from '@hanzo/ui'
+  import { Table } from '@hanzo/view-resources'
+  import { type Training } from '@hanzo/training'
+  import { Attachments, AttachmentStyleBoxEditor } from '@hanzo/attachment-resources'
+  import { AttributeBarEditor, getClient } from '@hanzo/presentation'
+  import { StyledTextBox } from '@hanzo/text-editor-resources'
+  import core from '@hanzo/core'
+  import documents from '@hanzo/controlled-documents'
   import { trainingRoute, TrainingRouteTab } from '../routing/routes/trainingRoute'
   import { canViewTrainingOverview } from '../utils'
   import DocumentPresenter from './DocumentPresenter.svelte'

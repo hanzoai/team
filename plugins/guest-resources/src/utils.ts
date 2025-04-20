@@ -2,16 +2,16 @@ import {
   type AccountClient,
   type WorkspaceLoginInfo,
   getClient as getAccountClientRaw
-} from '@hcengineering/account-client'
-import client from '@hcengineering/client'
-import { type Doc, AccountRole } from '@hcengineering/core'
-import login from '@hcengineering/login'
-import { getMetadata, getResource, setMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
-import { getCurrentLocation, navigate } from '@hcengineering/ui'
-import view from '@hcengineering/view'
-import { getObjectLinkFragment } from '@hcengineering/view-resources'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/account-client'
+import client from '@hanzo/client'
+import { type Doc, AccountRole } from '@hanzo/core'
+import login from '@hanzo/login'
+import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
+import { getCurrentLocation, navigate } from '@hanzo/ui'
+import view from '@hanzo/view'
+import { getObjectLinkFragment } from '@hanzo/view-resources'
+import { workbenchId } from '@hanzo/workbench'
 
 function getAccountClient (token: string | undefined | null): AccountClient {
   const accountsUrl = getMetadata(login.metadata.AccountsUrl)

@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyleBoxCollabEditor } from '@hcengineering/attachment-resources'
-  import { Class, Doc, Ref, WithLookup } from '@hcengineering/core'
-  import { Panel } from '@hcengineering/panel'
+  import { AttachmentStyleBoxCollabEditor } from '@hanzo/attachment-resources'
+  import { Class, Doc, Ref, WithLookup } from '@hanzo/core'
+  import { Panel } from '@hanzo/panel'
   import presentation, {
     ActionContext,
     ComponentExtensions,
     contextStore,
     createQuery,
     getClient
-  } from '@hcengineering/presentation'
-  import setting, { settingId } from '@hcengineering/setting'
-  import { taskTypeStore, typeStore } from '@hcengineering/task-resources'
-  import { Issue, TrackerEvents } from '@hcengineering/tracker'
+  } from '@hanzo/presentation'
+  import setting, { settingId } from '@hanzo/setting'
+  import { taskTypeStore, typeStore } from '@hanzo/task-resources'
+  import { Issue, TrackerEvents } from '@hanzo/tracker'
   import {
     AnyComponent,
     Button,
@@ -38,11 +38,11 @@
     createFocusManager,
     getCurrentResolvedLocation,
     navigate
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { DocNavLink, ParentsNavigator, showMenu, RelationsEditor } from '@hcengineering/view-resources'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import { Analytics } from '@hcengineering/analytics'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { DocNavLink, ParentsNavigator, showMenu, RelationsEditor } from '@hanzo/view-resources'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import { Analytics } from '@hanzo/analytics'
 
   import { createEventDispatcher, onDestroy } from 'svelte'
   import { generateIssueShortLink, getIssueIdByIdentifier } from '../../../issues'

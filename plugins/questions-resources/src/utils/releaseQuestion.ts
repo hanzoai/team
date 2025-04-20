@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Question } from '@hcengineering/questions'
-import { type TxOperations } from '@hcengineering/core'
+import type { Question } from '@hanzo/questions'
+import { type TxOperations } from '@hanzo/core'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 import { updateQuestion } from './updateQuestion'
 

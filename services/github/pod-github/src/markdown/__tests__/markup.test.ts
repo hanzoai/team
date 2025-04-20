@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -14,9 +14,9 @@
 //
 
 /* eslint-env jest */
-import { setMetadata } from '@hcengineering/platform'
-import serverCore from '@hcengineering/server-core'
-import { jsonToHTML, htmlToJSON } from '@hcengineering/text'
+import { setMetadata } from '@hanzo/platform'
+import serverCore from '@hanzo/server-core'
+import { jsonToHTML, htmlToJSON } from '@hanzo/text'
 import { markupToMarkdown, markdownToMarkup, parseMessageMarkdown, serializeMessage } from '..'
 import { appendGuestLinkToModel, stripGuestLink } from '../../sync/guest'
 import { GithubKit } from '../extensions'

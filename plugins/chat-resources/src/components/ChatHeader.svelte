@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
+  import { Card } from '@hanzo/card'
 
   export let card: Card | undefined = undefined
 </script>

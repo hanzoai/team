@@ -1,5 +1,5 @@
-import { getCurrentEmployee } from '@hcengineering/contact'
-import { type Ref } from '@hcengineering/core'
+import { getCurrentEmployee } from '@hanzo/contact'
+import { type Ref } from '@hanzo/core'
 import {
   RequestStatus,
   type DevicesPreference,
@@ -10,10 +10,10 @@ import {
   type ParticipantInfo,
   type Room,
   type MeetingMinutes
-} from '@hcengineering/love'
-import { createQuery, onClient } from '@hcengineering/presentation'
+} from '@hanzo/love'
+import { createQuery, onClient } from '@hanzo/presentation'
 import { derived, get, writable } from 'svelte/store'
-import { aiBotPersonRefStore } from '@hcengineering/ai-bot-resources'
+import { aiBotPersonRefStore } from '@hanzo/ai-bot-resources'
 
 import love from './plugin'
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixFieldMapping, MappingOperation } from '@hcengineering/bitrix'
-  import { AnyAttribute } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, Icon, IconArrowLeft, IconClose, Label } from '@hcengineering/ui'
+  import { BitrixEntityMapping, BitrixFieldMapping, MappingOperation } from '@hanzo/bitrix'
+  import { AnyAttribute } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, Icon, IconArrowLeft, IconClose, Label } from '@hanzo/ui'
   import CopyMappingPresenter from './mappings/CopyMappingPresenter.svelte'
   import CreateAttachedDocPresenter from './mappings/CreateHRApplicationPresenter.svelte'
   import CreateChannelMappingPresenter from './mappings/CreateChannelMappingPresenter.svelte'

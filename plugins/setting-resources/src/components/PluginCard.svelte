@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { getCurrentAccount } from '@hcengineering/core'
-  import { getResource, translate } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import type { Integration, IntegrationType } from '@hcengineering/setting'
-  import { AnyComponent, Button, Component, Label, eventToHTMLElement, showPopup } from '@hcengineering/ui'
+  import core, { getCurrentAccount } from '@hanzo/core'
+  import { getResource, translate } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import type { Integration, IntegrationType } from '@hanzo/setting'
+  import { AnyComponent, Button, Component, Label, eventToHTMLElement, showPopup } from '@hanzo/ui'
   import setting from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let integrationType: IntegrationType
   export let integration: Integration | undefined

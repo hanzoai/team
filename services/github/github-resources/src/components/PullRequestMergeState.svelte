@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { Issue } from '@hcengineering/tracker'
-  import { ButtonSize, Icon, Label } from '@hcengineering/ui'
-  import { GithubPullRequest, GithubPullRequestState } from '@hcengineering/github'
+  import { getClient } from '@hanzo/presentation'
+  import { Issue } from '@hanzo/tracker'
+  import { ButtonSize, Icon, Label } from '@hanzo/ui'
+  import { GithubPullRequest, GithubPullRequestState } from '@hanzo/github'
   import github from '../plugin'
   import PullRequestReviewDecisionValuePresenter from './presenters/PullRequestReviewDecisionValuePresenter.svelte'
 

@@ -33,11 +33,11 @@ import core, {
   type MeasureContext,
   type SessionData,
   type AccountUuid
-} from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
-import { Middleware, TxMiddlewareResult, type PipelineContext } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
+import { Middleware, TxMiddlewareResult, type PipelineContext } from '@hanzo/server-core'
 
-import { BaseMiddleware } from '@hcengineering/server-core'
+import { BaseMiddleware } from '@hanzo/server-core'
 
 /**
  * @public

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Employee } from '@hcengineering/contact'
-import core, { type AttachedData, type Class, type Ref, type TxOperations, Blob, Mixin } from '@hcengineering/core'
+import { type Employee } from '@hanzo/contact'
+import core, { type AttachedData, type Class, type Ref, type TxOperations, Blob, Mixin } from '@hanzo/core'
 import {
   type ControlledDocument,
   type Document,
@@ -27,7 +27,7 @@ import {
   type ProjectDocument,
   DocumentState
 } from './types'
-import { makeRank } from '@hcengineering/rank'
+import { makeRank } from '@hanzo/rank'
 
 import documents from './plugin'
 import { getFirstRank, TEMPLATE_PREFIX } from './utils'

@@ -13,20 +13,20 @@
 // limitations under the License.
 //
 
-import { type Domain, IndexKind, type Ref } from '@hcengineering/core'
-import { type Category, type Product, type Variant, inventoryId } from '@hcengineering/inventory'
-import { type Builder, Collection, Index, Model, Prop, TypeRef, TypeString, UX } from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import core, { TAttachedDoc } from '@hcengineering/model-core'
-import { createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import setting from '@hcengineering/setting'
-import view, { type Viewlet } from '@hcengineering/view'
-import chunter from '@hcengineering/model-chunter'
-import activity from '@hcengineering/activity'
+import { type Domain, IndexKind, type Ref } from '@hanzo/core'
+import { type Category, type Product, type Variant, inventoryId } from '@hanzo/inventory'
+import { type Builder, Collection, Index, Model, Prop, TypeRef, TypeString, UX } from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import core, { TAttachedDoc } from '@hanzo/model-core'
+import { createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import setting from '@hanzo/setting'
+import view, { type Viewlet } from '@hanzo/view'
+import chunter from '@hanzo/model-chunter'
+import activity from '@hanzo/activity'
 
 import inventory from './plugin'
-export { inventoryId } from '@hcengineering/inventory'
+export { inventoryId } from '@hanzo/inventory'
 export { inventoryOperation } from './migration'
 export { default } from './plugin'
 

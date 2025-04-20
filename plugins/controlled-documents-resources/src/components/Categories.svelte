@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import documents, { DocumentCategory } from '@hcengineering/controlled-documents'
-  import { Class, DocumentQuery, Ref, TypedSpace } from '@hcengineering/core'
-  import { ActionContext } from '@hcengineering/presentation'
-  import { Button, IconAdd, Loading, showPopup } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
-  import { TableBrowser, ViewletPanelHeader } from '@hcengineering/view-resources'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
+  import documents, { DocumentCategory } from '@hanzo/controlled-documents'
+  import { Class, DocumentQuery, Ref, TypedSpace } from '@hanzo/core'
+  import { ActionContext } from '@hanzo/presentation'
+  import { Button, IconAdd, Loading, showPopup } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { TableBrowser, ViewletPanelHeader } from '@hanzo/view-resources'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
 
   import document from '../plugin'
   import CreateDocumentCategory from './CreateDocumentCategory.svelte'

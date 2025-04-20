@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Floor, Room } from '@hcengineering/love'
-  import { Component } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
-  import core, { WithLookup } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Floor, Room } from '@hanzo/love'
+  import { Component } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import core, { WithLookup } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
 
   import lovePlg from '../plugin'
 

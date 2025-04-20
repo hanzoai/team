@@ -1,4 +1,4 @@
-import { MeasureContext } from '@hcengineering/core'
+import { MeasureContext } from '@hanzo/core'
 import docx4js from 'docx4js'
 import { AnyNode } from 'domhandler'
 

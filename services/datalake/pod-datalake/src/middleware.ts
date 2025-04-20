@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { extractToken } from '@hcengineering/server-client'
+import { extractToken } from '@hanzo/server-client'
 import { type Response, type Request, type NextFunction, RequestHandler } from 'express'
 import { ApiError } from './error'
 

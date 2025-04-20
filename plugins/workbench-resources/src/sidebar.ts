@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { WorkbenchEvents, type Widget, type WidgetTab } from '@hcengineering/workbench'
-import { type Class, type Doc, getCurrentAccount, type Ref } from '@hcengineering/core'
+import { WorkbenchEvents, type Widget, type WidgetTab } from '@hanzo/workbench'
+import { type Class, type Doc, getCurrentAccount, type Ref } from '@hanzo/core'
 import { get, writable } from 'svelte/store'
-import { getCurrentLocation, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
-import { getResource } from '@hcengineering/platform'
+import { getCurrentLocation, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+import { getResource } from '@hanzo/platform'
 
 import { locationWorkspaceStore } from './utils'
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 
 export enum SidebarVariant {
   MINI = 'mini',

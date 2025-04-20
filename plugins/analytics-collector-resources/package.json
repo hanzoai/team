@@ -1,8 +1,8 @@
 {
-  "name": "@hcengineering/analytics-collector-resources",
-  "version": "0.6.0",
+  "name": "@hanzo/analytics-collector-resources",
+  "version": "0.6.4",
   "main": "src/index.ts",
-  "author": "Anticrm Platform Contributors",
+  "author": "Hanzo <dev@hanzo.ai>",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "^0.6.0",
+    "@hanzo/platform-rig": "^0.6.0",
     "@types/jest": "^29.5.5",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
@@ -38,14 +38,17 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@hcengineering/analytics-collector": "^0.6.0",
-    "@hcengineering/chunter": "^0.6.20",
-    "@hcengineering/chunter-resources": "^0.6.0",
-    "@hcengineering/contact": "^0.6.24",
-    "@hcengineering/contact-resources": "^0.6.0",
-    "@hcengineering/core": "^0.6.32",
-    "@hcengineering/platform": "^0.6.11",
-    "@hcengineering/presentation": "^0.6.3",
+    "@hanzo/analytics-collector": "^0.6.4",
+    "@hanzo/chunter": "^0.6.25",
+    "@hanzo/chunter-resources": "^0.6.4",
+    "@hanzo/contact": "^0.6.29",
+    "@hanzo/contact-resources": "^0.6.4",
+    "@hanzo/core": "^0.6.38",
+    "@hanzo/platform": "^0.6.16",
+    "@hanzo/presentation": "^0.6.7",
     "svelte": "^4.2.19"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

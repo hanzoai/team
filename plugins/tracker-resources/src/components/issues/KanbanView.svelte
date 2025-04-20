@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentsPresenter } from '@hcengineering/attachment-resources'
+  import { AttachmentsPresenter } from '@hanzo/attachment-resources'
   import {
     CategoryType,
     Class,
@@ -26,14 +26,14 @@
     mergeQueries,
     Ref,
     WithLookup
-  } from '@hcengineering/core'
-  import { Item, Kanban as KanbanUI } from '@hcengineering/kanban'
-  import notification from '@hcengineering/notification'
-  import { ActionContext, createQuery, getClient } from '@hcengineering/presentation'
-  import tags from '@hcengineering/tags'
-  import { DocWithRank, getStates } from '@hcengineering/task'
-  import { getTaskKanbanResultQuery, typeStore, updateTaskKanbanCategories } from '@hcengineering/task-resources'
-  import { Issue, IssuesGrouping, IssuesOrdering, Project } from '@hcengineering/tracker'
+  } from '@hanzo/core'
+  import { Item, Kanban as KanbanUI } from '@hanzo/kanban'
+  import notification from '@hanzo/notification'
+  import { ActionContext, createQuery, getClient } from '@hanzo/presentation'
+  import tags from '@hanzo/tags'
+  import { DocWithRank, getStates } from '@hanzo/task'
+  import { getTaskKanbanResultQuery, typeStore, updateTaskKanbanCategories } from '@hanzo/task-resources'
+  import { Issue, IssuesGrouping, IssuesOrdering, Project } from '@hanzo/tracker'
   import {
     Button,
     ColorDefinition,
@@ -45,8 +45,8 @@
     Loading,
     showPopup,
     themeStore
-  } from '@hcengineering/ui'
-  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hanzo/view'
   import {
     enabledConfig,
     focusStore,
@@ -64,8 +64,8 @@
     setGroupByValues,
     showMenu,
     statusStore
-  } from '@hcengineering/view-resources'
-  import { ChatMessagesPresenter } from '@hcengineering/chunter-resources'
+  } from '@hanzo/view-resources'
+  import { ChatMessagesPresenter } from '@hanzo/chunter-resources'
   import { onMount } from 'svelte'
 
   import tracker from '../../plugin'

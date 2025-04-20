@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { DOMAIN_MODEL } from '@hcengineering/core'
-import { type Builder, Model } from '@hcengineering/model'
-import core, { TDoc } from '@hcengineering/model-core'
-import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hcengineering/platform'
+import { DOMAIN_MODEL } from '@hanzo/core'
+import { type Builder, Model } from '@hanzo/model'
+import core, { TDoc } from '@hanzo/model-core'
+import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hanzo/platform'
 import {
   type ExtensionCreator,
   type TextEditorExtensionFactory,
@@ -29,14 +29,14 @@ import {
   type ActiveDescriptor,
   type TogglerDescriptor,
   type TextEditorActionKind
-} from '@hcengineering/text-editor'
+} from '@hanzo/text-editor'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { EditorKitOptions } from '@hcengineering/text-editor-resources/src/kits/editor-kit'
+import type { EditorKitOptions } from '@hanzo/text-editor-resources/src/kits/editor-kit'
 import textEditor from './plugin'
 
 export { textEditorOperation } from './migration'
 export { default } from './plugin'
-export { textEditorId } from '@hcengineering/text-editor'
+export { textEditorId } from '@hanzo/text-editor'
 export type { RefInputAction, RefInputActionItem }
 
 @Model(textEditor.class.RefInputActionItem, core.class.Doc, DOMAIN_MODEL)

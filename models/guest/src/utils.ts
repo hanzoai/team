@@ -1,7 +1,7 @@
-import { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
-import view, { createAction } from '@hcengineering/model-view'
-import { type Action } from '@hcengineering/view'
+import { type Class, type Doc, type Ref } from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
+import view, { createAction } from '@hanzo/model-view'
+import { type Action } from '@hanzo/view'
 import guest from './plugin'
 
 export function createPublicLinkAction (builder: Builder, _class: Ref<Class<Doc>>, _id: Ref<Action<Doc, any>>): void {

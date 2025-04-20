@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import card, { cardId } from '@hcengineering/card'
-import { type Ref } from '@hcengineering/core'
-import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hcengineering/presentation'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { type Viewlet } from '@hcengineering/view'
+import card, { cardId } from '@hanzo/card'
+import { type Ref } from '@hanzo/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/presentation'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type Viewlet } from '@hanzo/view'
 
 export default mergeIds(cardId, card, {
   component: {

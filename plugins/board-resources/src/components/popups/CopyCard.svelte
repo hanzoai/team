@@ -1,16 +1,16 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { Label, Status as StatusControl, TextArea } from '@hcengineering/ui'
-  import { Class, Client, Doc, Ref, generateId, AttachedData } from '@hcengineering/core'
-  import { getResource, OK, Resource, Status } from '@hcengineering/platform'
-  import { Card as Popup, getClient } from '@hcengineering/presentation'
-  import { Card } from '@hcengineering/board'
-  import view from '@hcengineering/view'
+  import { Label, Status as StatusControl, TextArea } from '@hanzo/ui'
+  import { Class, Client, Doc, Ref, generateId, AttachedData } from '@hanzo/core'
+  import { getResource, OK, Resource, Status } from '@hanzo/platform'
+  import { Card as Popup, getClient } from '@hanzo/presentation'
+  import { Card } from '@hanzo/board'
+  import view from '@hanzo/view'
   import board from '../../plugin'
   import SpaceSelect from '../selectors/SpaceSelect.svelte'
   import StateSelect from '../selectors/StateSelect.svelte'
   import RankSelect from '../selectors/RankSelect.svelte'
-  import task from '@hcengineering/task'
+  import task from '@hanzo/task'
 
   export let value: Card
   const client = getClient()

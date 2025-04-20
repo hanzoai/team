@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hcengineering/contact'
-  import { Doc, Ref } from '@hcengineering/core'
-  import { IntlString, translateCB } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import type { ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { Button, eventToHTMLElement, showPopup, themeStore } from '@hcengineering/ui'
+  import contact, { Employee } from '@hanzo/contact'
+  import { Doc, Ref } from '@hanzo/core'
+  import { IntlString, translateCB } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Button, eventToHTMLElement, showPopup, themeStore } from '@hanzo/ui'
   import UsersPopup from './UsersPopup.svelte'
 
   export let value: Doc

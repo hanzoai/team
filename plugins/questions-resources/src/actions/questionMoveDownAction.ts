@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import { getClient } from '@hcengineering/presentation'
-import type { Question } from '@hcengineering/questions'
+import { getClient } from '@hanzo/presentation'
+import type { Question } from '@hanzo/questions'
 import { canUpdateQuestion, findNextQuestion, updateQuestion } from '../utils'
 import { focusActionWithAvailability } from './ActionWithAvailability'
 

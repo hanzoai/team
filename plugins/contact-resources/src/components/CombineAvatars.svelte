@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person as Contact } from '@hcengineering/contact'
-  import type { Class, Ref } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { IconSize } from '@hcengineering/ui'
+  import { Person as Contact } from '@hanzo/contact'
+  import type { Class, Ref } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { IconSize } from '@hanzo/ui'
   import Avatar from './Avatar.svelte'
   import EmptyAvatar from './icons/EmptyAvatar.svelte'
 

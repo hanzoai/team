@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { Calendar, generateEventId } from '@hcengineering/calendar'
-  import contact, { getCurrentEmployee } from '@hcengineering/contact'
-  import { Ref, getCurrentAccount } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { closePopup, showPopup } from '@hcengineering/ui'
-  import { deleteObjects } from '@hcengineering/view-resources'
-  import { TimeEvents, ToDo, WorkSlot } from '@hcengineering/time'
+  import calendar, { Calendar, generateEventId } from '@hanzo/calendar'
+  import contact, { getCurrentEmployee } from '@hanzo/contact'
+  import { Ref, getCurrentAccount } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { closePopup, showPopup } from '@hanzo/ui'
+  import { deleteObjects } from '@hanzo/view-resources'
+  import { TimeEvents, ToDo, WorkSlot } from '@hanzo/time'
   import time from '../plugin'
   import Workslots from './Workslots.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let todo: ToDo
 

@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
+import { type Builder } from '@hanzo/model'
 
-import core from '@hcengineering/core'
-import serverCore from '@hcengineering/server-core'
-import serverRequest from '@hcengineering/server-request'
-import serverNotification from '@hcengineering/server-notification'
-import request from '@hcengineering/model-request'
+import core from '@hanzo/core'
+import serverCore from '@hanzo/server-core'
+import serverRequest from '@hanzo/server-request'
+import serverNotification from '@hanzo/server-notification'
+import request from '@hanzo/model-request'
 
-export { serverRequestId } from '@hcengineering/server-request'
+export { serverRequestId } from '@hanzo/server-request'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {

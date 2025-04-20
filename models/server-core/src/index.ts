@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import { Mixin, Model, type Builder } from '@hcengineering/model'
-import { TClass, TDoc } from '@hcengineering/model-core'
-import type { Resource } from '@hcengineering/platform'
+import { Mixin, Model, type Builder } from '@hanzo/model'
+import { TClass, TDoc } from '@hanzo/model-core'
+import type { Resource } from '@hanzo/platform'
 
-import core, { DOMAIN_MODEL } from '@hcengineering/core'
+import core, { DOMAIN_MODEL } from '@hanzo/core'
 import type {
   FieldTemplateComponent,
   ObjectDDParticipant,
@@ -26,10 +26,10 @@ import type {
   SearchPresenter,
   Trigger,
   TriggerFunc
-} from '@hcengineering/server-core'
-import serverCore from '@hcengineering/server-core'
+} from '@hanzo/server-core'
+import serverCore from '@hanzo/server-core'
 
-export { serverCoreId } from '@hcengineering/server-core'
+export { serverCoreId } from '@hanzo/server-core'
 
 @Model(serverCore.class.Trigger, core.class.Doc, DOMAIN_MODEL)
 export class TTrigger extends TDoc implements Trigger {

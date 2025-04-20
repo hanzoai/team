@@ -2,7 +2,7 @@
 // Copyright © 2024 Hardcore Engineering Inc.
 //
 
-import { getMetadata } from '@hcengineering/platform'
+import { getMetadata } from '@hanzo/platform'
 
 import print from './plugin'
 

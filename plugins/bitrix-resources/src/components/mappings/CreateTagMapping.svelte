@@ -6,12 +6,12 @@
     Fields,
     MappingOperation,
     TagField
-  } from '@hcengineering/bitrix'
-  import { AnyAttribute } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import tags from '@hcengineering/tags'
-  import { WeightPopup } from '@hcengineering/tags-resources'
+  } from '@hanzo/bitrix'
+  import { AnyAttribute } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import tags from '@hanzo/tags'
+  import { WeightPopup } from '@hanzo/tags-resources'
   import {
     Button,
     DropdownLabels,
@@ -21,7 +21,7 @@
     IconAdd,
     IconDelete,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import bitrix from '../../plugin'
 
   export let mapping: BitrixEntityMapping

@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import type { Ref } from '@hcengineering/core'
-import type { Viewlet } from '@hcengineering/view'
+import type { Ref } from '@hanzo/core'
+import type { Viewlet } from '@hanzo/view'
 
-import { mergeIds } from '@hcengineering/platform'
+import { mergeIds } from '@hanzo/platform'
 
-import mail, { mailId } from '@hcengineering/mail'
+import mail, { mailId } from '@hanzo/mail'
 
 export default mergeIds(mailId, mail, {
   string: {},

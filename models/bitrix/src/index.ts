@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -26,8 +26,8 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import core, { TAttachedDoc, TDoc } from '@hcengineering/model-core'
+} from '@hanzo/model'
+import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
 import bitrix from './plugin'
 
 import {
@@ -35,7 +35,7 @@ import {
   type BitrixFieldMapping,
   type BitrixSyncDoc,
   type Fields
-} from '@hcengineering/bitrix'
+} from '@hanzo/bitrix'
 import {
   type AnyAttribute,
   type Class,
@@ -43,14 +43,14 @@ import {
   type Doc,
   type Domain,
   type Ref
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
-import view, { createAction } from '@hcengineering/model-view'
+import view, { createAction } from '@hanzo/model-view'
 
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import setting from '@hanzo/setting'
 
-export { bitrixId } from '@hcengineering/bitrix'
+export { bitrixId } from '@hanzo/bitrix'
 export { bitrixOperation } from './migration'
 export { default } from './plugin'
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString, Asset } from '@hcengineering/platform'
+  import { IntlString, Asset } from '@hanzo/platform'
   import { createEventDispatcher } from 'svelte'
   import { deepEqual } from 'fast-equals'
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import inbox, { inboxId } from '@hcengineering/inbox'
-import { mergeIds } from '@hcengineering/platform'
-import type { AnyComponent } from '@hcengineering/ui'
+import inbox, { inboxId } from '@hanzo/inbox'
+import { mergeIds } from '@hanzo/platform'
+import type { AnyComponent } from '@hanzo/ui'
 
 export default mergeIds(inboxId, inbox, {
   component: {

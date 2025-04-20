@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021, 2023, 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Markup } from '@hcengineering/core'
-  import { IntlString, translate } from '@hcengineering/platform'
-  import { EmptyMarkup, getMarkup, markupToJSON } from '@hcengineering/text'
-  import { themeStore } from '@hcengineering/ui'
-  import textEditor from '@hcengineering/text-editor'
+  import { Analytics } from '@hanzo/analytics'
+  import { Markup } from '@hanzo/core'
+  import { IntlString, translate } from '@hanzo/platform'
+  import { EmptyMarkup, getMarkup, markupToJSON } from '@hanzo/text'
+  import { themeStore } from '@hanzo/ui'
+  import textEditor from '@hanzo/text-editor'
   import { AnyExtension, Content, Editor, FocusPosition, mergeAttributes } from '@tiptap/core'
   import Placeholder from '@tiptap/extension-placeholder'
   import { ParseOptions } from '@tiptap/pm/model'

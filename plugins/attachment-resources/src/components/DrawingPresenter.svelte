@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { type Drawing } from '@hcengineering/attachment'
-  import { DateRangeMode } from '@hcengineering/core'
-  import { DatePresenter, IconScribble } from '@hcengineering/ui'
-  import { PersonIdPresenter } from '@hcengineering/view-resources'
+  import { type Drawing } from '@hanzo/attachment'
+  import { DateRangeMode } from '@hanzo/core'
+  import { DatePresenter, IconScribble } from '@hanzo/ui'
+  import { PersonIdPresenter } from '@hanzo/view-resources'
 
   export let value: Drawing
 </script>

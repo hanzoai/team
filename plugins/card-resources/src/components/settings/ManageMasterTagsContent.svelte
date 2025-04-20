@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import core, { Doc, Ref } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { MasterTag } from '@hanzo/card'
+  import core, { Doc, Ref } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     AnyComponent,
     AnySvelteComponent,
@@ -28,11 +28,11 @@
     getCurrentLocation,
     navigate,
     resolvedLocationStore
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onDestroy, onMount } from 'svelte'
   import card from '../../plugin'
   import MasterTagEditor from './MasterTagEditor.svelte'
-  import { getResource } from '@hcengineering/platform'
+  import { getResource } from '@hanzo/platform'
 
   let masterTag: MasterTag | undefined
   let visibleSecondNav: boolean = true

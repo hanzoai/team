@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { ActivityMessage, ActivityMessageViewlet } from '@hcengineering/activity'
-import type { Class, Doc, Markup, Mixin, Ref, Space, Timestamp } from '@hcengineering/core'
-import { NotificationType } from '@hcengineering/notification'
-import type { Asset, Plugin, Resource } from '@hcengineering/platform'
-import { IntlString, plugin } from '@hcengineering/platform'
-import { AnyComponent } from '@hcengineering/ui'
-import { Action } from '@hcengineering/view'
-import { Person, ChannelProvider as SocialChannelProvider } from '@hcengineering/contact'
-import { Widget, WidgetTab } from '@hcengineering/workbench'
+import { ActivityMessage, ActivityMessageViewlet } from '@hanzo/activity'
+import type { Class, Doc, Markup, Mixin, Ref, Space, Timestamp } from '@hanzo/core'
+import { NotificationType } from '@hanzo/notification'
+import type { Asset, Plugin, Resource } from '@hanzo/platform'
+import { IntlString, plugin } from '@hanzo/platform'
+import { AnyComponent } from '@hanzo/ui'
+import { Action } from '@hanzo/view'
+import { Person, ChannelProvider as SocialChannelProvider } from '@hanzo/contact'
+import { Widget, WidgetTab } from '@hanzo/workbench'
 
 /**
  * @public

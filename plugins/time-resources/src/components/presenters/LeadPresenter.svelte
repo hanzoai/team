@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { getName } from '@hcengineering/contact'
-  import core, { Space } from '@hcengineering/core'
-  import lead, { Customer, Lead } from '@hcengineering/lead'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Label } from '@hcengineering/ui'
+  import { getName } from '@hanzo/contact'
+  import core, { Space } from '@hanzo/core'
+  import lead, { Customer, Lead } from '@hanzo/lead'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
 
   export let value: Lead
   export let withoutSpace: boolean

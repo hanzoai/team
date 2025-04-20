@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import type { Assessment, Question, QuestionDataOf } from '@hcengineering/questions'
-import type { Class, Ref } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
+import type { Assessment, Question, QuestionDataOf } from '@hanzo/questions'
+import type { Class, Ref } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
 import questions from '../plugin'
 
 export function isAssessmentClassRef<Q extends Question<any>, A extends Assessment<QuestionDataOf<Q>, any>> (

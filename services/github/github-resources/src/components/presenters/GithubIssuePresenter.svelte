@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Issue } from '@hcengineering/tracker'
+  import { Issue } from '@hanzo/tracker'
 
-  import { getClient } from '@hcengineering/presentation'
-  import type { ButtonKind } from '@hcengineering/ui'
-  import { HyperlinkEditor } from '@hcengineering/view-resources'
+  import { getClient } from '@hanzo/presentation'
+  import type { ButtonKind } from '@hanzo/ui'
+  import { HyperlinkEditor } from '@hanzo/view-resources'
   import github from '../../plugin'
   import { integrationRepositories } from '../utils'
 

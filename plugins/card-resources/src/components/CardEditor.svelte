@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { AnyAttribute, Ref, RefTo } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { AnyAttribute, Ref, RefTo } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
   import CardSelector from './CardSelector.svelte'

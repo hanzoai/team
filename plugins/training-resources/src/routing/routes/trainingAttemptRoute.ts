@@ -2,10 +2,10 @@
 // Copyright @ 2024 Hardcore Engineering Inc.
 //
 
-import { isEnum, isId } from '@hcengineering/core'
-import { type TrainingAttempt, trainingId } from '@hcengineering/training'
-import { getClient } from '@hcengineering/presentation'
-import { getCurrentLocation, type Location, type ResolvedLocation } from '@hcengineering/ui'
+import { isEnum, isId } from '@hanzo/core'
+import { type TrainingAttempt, trainingId } from '@hanzo/training'
+import { getClient } from '@hanzo/presentation'
+import { getCurrentLocation, type Location, type ResolvedLocation } from '@hanzo/ui'
 import training from '../../plugin'
 import { getCurrentEmployeeRef } from '../../utils'
 import { getPanelFragment } from '../utils/getPanelFragment'

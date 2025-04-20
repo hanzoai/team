@@ -1,4 +1,4 @@
-import { makeLocalesTest } from '@hcengineering/platform'
+import { makeLocalesTest } from '@hanzo/platform'
 
 it(
   'Locales are equale',

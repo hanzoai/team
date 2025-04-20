@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Anticrm Platform Contributors.
+// Copyright © 2020 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import '@hcengineering/platform-rig/profiles/ui/svelte'
+import { Analytics } from '@hanzo/analytics'
+import '@hanzo/platform-rig/profiles/ui/svelte'
 import { derived, writable } from 'svelte/store'
 
 export { default as Theme } from './Theme.svelte'

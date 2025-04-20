@@ -1,6 +1,6 @@
-import { ChatMessage } from '@hcengineering/chunter'
-import { Ref } from '@hcengineering/core'
-import { OnboardingChannel } from '@hcengineering/analytics-collector'
+import { ChatMessage } from '@hanzo/chunter'
+import { Ref } from '@hanzo/core'
+import { OnboardingChannel } from '@hanzo/analytics-collector'
 
 export interface OnboardingMessage {
   messageId: Ref<ChatMessage>

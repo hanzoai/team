@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,16 +14,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachments } from '@hcengineering/attachment-resources'
-  import type { Ref } from '@hcengineering/core'
-  import core from '@hcengineering/core'
-  import { Panel } from '@hcengineering/panel'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { MembersBox } from '@hcengineering/contact-resources'
-  import type { Funnel } from '@hcengineering/lead'
-  import { FullDescriptionBox } from '@hcengineering/text-editor-resources'
-  import { EditBox, Grid } from '@hcengineering/ui'
-  import { ClassAttributeBar } from '@hcengineering/view-resources'
+  import { Attachments } from '@hanzo/attachment-resources'
+  import type { Ref } from '@hanzo/core'
+  import core from '@hanzo/core'
+  import { Panel } from '@hanzo/panel'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { MembersBox } from '@hanzo/contact-resources'
+  import type { Funnel } from '@hanzo/lead'
+  import { FullDescriptionBox } from '@hanzo/text-editor-resources'
+  import { EditBox, Grid } from '@hanzo/ui'
+  import { ClassAttributeBar } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import lead from '../plugin'
 

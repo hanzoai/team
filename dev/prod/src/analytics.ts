@@ -2,7 +2,7 @@
 // Copyright © 2024 Hardcore Engineering Inc
 //
 
-import { type AnalyticProvider, Analytics } from "@hcengineering/analytics"
+import { type AnalyticProvider, Analytics } from "@hanzo/analytics"
 import { PosthogAnalyticProvider } from "./analytics/posthog"
 import { SentryAnalyticProvider } from "./analytics/sentry"
 import { type Config } from "./platform"

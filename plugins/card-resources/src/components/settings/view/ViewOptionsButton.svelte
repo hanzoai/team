@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { ButtonIcon, showPopup, closeTooltip, IconOptions } from '@hcengineering/ui'
-  import view, { ViewOptionsModel, Viewlet } from '@hcengineering/view'
-  import { ViewOptions as ViewOptionsEditor } from '@hcengineering/view-resources'
-  import core, { Data } from '@hcengineering/core'
+  import { getClient } from '@hanzo/presentation'
+  import { ButtonIcon, showPopup, closeTooltip, IconOptions } from '@hanzo/ui'
+  import view, { ViewOptionsModel, Viewlet } from '@hanzo/view'
+  import { ViewOptions as ViewOptionsEditor } from '@hanzo/view-resources'
+  import core, { Data } from '@hanzo/core'
 
   export let viewlet: Data<Viewlet> | undefined = undefined
   export let kind: 'primary' | 'secondary' | 'tertiary' | 'negative' = 'secondary'

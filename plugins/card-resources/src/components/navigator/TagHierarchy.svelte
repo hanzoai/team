@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import { Class, Doc, Ref, Space } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { IconWithEmoji, NavItem, getCurrentLocation, navigate } from '@hcengineering/ui'
+  import { MasterTag } from '@hanzo/card'
+  import { Class, Doc, Ref, Space } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { IconWithEmoji, NavItem, getCurrentLocation, navigate } from '@hanzo/ui'
   import card from '../../plugin'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
 
   export let space: Ref<Space>
   export let classes: MasterTag[] = []

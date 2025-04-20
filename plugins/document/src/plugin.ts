@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Mixin, Ref, SpaceType, SpaceTypeDescriptor } from '@hcengineering/core'
-import { NotificationGroup, NotificationType } from '@hcengineering/notification'
-import type { Asset, Plugin, Resource } from '@hcengineering/platform'
-import { IntlString, plugin } from '@hcengineering/platform'
-import type { AnyComponent, Location, ResolvedLocation } from '@hcengineering/ui/src/types'
-import { Action } from '@hcengineering/view'
+import type { Class, Doc, Mixin, Ref, SpaceType, SpaceTypeDescriptor } from '@hanzo/core'
+import { NotificationGroup, NotificationType } from '@hanzo/notification'
+import type { Asset, Plugin, Resource } from '@hanzo/platform'
+import { IntlString, plugin } from '@hanzo/platform'
+import type { AnyComponent, Location, ResolvedLocation } from '@hanzo/ui/src/types'
+import { Action } from '@hanzo/view'
 import { Document, DocumentSnapshot, SavedDocument, Teamspace } from './types'
 
 /**

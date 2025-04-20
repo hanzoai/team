@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { pushRootBarComponent } from '@hcengineering/ui'
+  import { pushRootBarComponent } from '@hanzo/ui'
   import { RemoteParticipant, RemoteTrack, RemoteTrackPublication, RoomEvent, Track } from 'livekit-client'
   import { onDestroy, onMount } from 'svelte'
   import love from '../plugin'

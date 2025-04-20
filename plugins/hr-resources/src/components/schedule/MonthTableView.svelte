@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hcengineering/contact'
-  import { Doc, Ref } from '@hcengineering/core'
-  import type { Request, RequestType, Staff } from '@hcengineering/hr'
-  import { Department } from '@hcengineering/hr'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Button, DropdownIntlItem, Label, Loading, showPopup, tableToCSV } from '@hcengineering/ui'
-  import { BuildModelKey, Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { TableBrowser, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
+  import { Employee } from '@hanzo/contact'
+  import { Doc, Ref } from '@hanzo/core'
+  import type { Request, RequestType, Staff } from '@hanzo/hr'
+  import { Department } from '@hanzo/hr'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Button, DropdownIntlItem, Label, Loading, showPopup, tableToCSV } from '@hanzo/ui'
+  import { BuildModelKey, Viewlet, ViewletPreference } from '@hanzo/view'
+  import { TableBrowser, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
   import hr from '../../plugin'
   import {
     EmployeeReports,

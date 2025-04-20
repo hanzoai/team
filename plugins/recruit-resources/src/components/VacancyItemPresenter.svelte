@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import type { Vacancy } from '@hcengineering/recruit'
-  import { ActionIcon, Icon, IconEdit } from '@hcengineering/ui'
-  import { openDoc } from '@hcengineering/view-resources'
+  import { Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import type { Vacancy } from '@hanzo/recruit'
+  import { ActionIcon, Icon, IconEdit } from '@hanzo/ui'
+  import { openDoc } from '@hanzo/view-resources'
   import recruit from '../plugin'
 
   export let value: Vacancy

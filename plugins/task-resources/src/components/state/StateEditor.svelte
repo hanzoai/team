@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Status } from '@hcengineering/core'
-  import { Project } from '@hcengineering/task'
-  import type { ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { Button, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { statusStore } from '@hcengineering/view-resources'
+  import { Ref, Status } from '@hanzo/core'
+  import { Project } from '@hanzo/task'
+  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Button, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { statusStore } from '@hanzo/view-resources'
   import StatePresenter from './StatePresenter.svelte'
   import StatesPopup from './StatesPopup.svelte'
   import { selectedTaskTypeStore, selectedTypeStore } from '../../index'

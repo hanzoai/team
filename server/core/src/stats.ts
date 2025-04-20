@@ -1,6 +1,6 @@
-import type { MeasureContext, Metrics } from '@hcengineering/core'
-import { concatLink, MeasureMetricsContext, metricsToString, newMetrics, systemAccountUuid } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+import type { MeasureContext, Metrics } from '@hanzo/core'
+import { concatLink, MeasureMetricsContext, metricsToString, newMetrics, systemAccountUuid } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import { writeFile } from 'fs/promises'
 import os from 'os'
 

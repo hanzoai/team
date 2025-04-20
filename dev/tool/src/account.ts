@@ -6,12 +6,12 @@ import {
   getAccount,
   // listWorkspacesPure,
   type Workspace
-} from '@hcengineering/account'
-import core, { type MeasureContext, TxOperations } from '@hcengineering/core'
-import contact from '@hcengineering/model-contact'
-import { getTransactorEndpoint } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
-import { connect } from '@hcengineering/server-tool'
+} from '@hanzo/account'
+import core, { type MeasureContext, TxOperations } from '@hanzo/core'
+import contact from '@hanzo/model-contact'
+import { getTransactorEndpoint } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
+import { connect } from '@hanzo/server-tool'
 
 // export async function renameAccount (
 //   ctx: MeasureContext,

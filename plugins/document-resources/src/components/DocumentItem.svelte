@@ -15,8 +15,8 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hcengineering/core'
-  import { Document } from '@hcengineering/document'
+  import { WithLookup } from '@hanzo/core'
+  import { Document } from '@hanzo/document'
   import document from '../plugin'
   import DocumentIcon from './DocumentIcon.svelte'
 

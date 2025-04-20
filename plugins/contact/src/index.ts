@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -31,14 +31,14 @@ import {
   type Data,
   type WithLookup,
   AccountUuid
-} from '@hcengineering/core'
-import type { Asset, Metadata, Plugin, Resource } from '@hcengineering/platform'
-import { IntlString, plugin } from '@hcengineering/platform'
-import { TemplateField, TemplateFieldCategory } from '@hcengineering/templates'
-import type { AnyComponent, ColorDefinition, ResolvedLocation, Location, ComponentExtensionId } from '@hcengineering/ui'
-import { Action, FilterMode, Viewlet } from '@hcengineering/view'
+} from '@hanzo/core'
+import type { Asset, Metadata, Plugin, Resource } from '@hanzo/platform'
+import { IntlString, plugin } from '@hanzo/platform'
+import { TemplateField, TemplateFieldCategory } from '@hanzo/templates'
+import type { AnyComponent, ColorDefinition, ResolvedLocation, Location, ComponentExtensionId } from '@hanzo/ui'
+import { Action, FilterMode, Viewlet } from '@hanzo/view'
 import type { Readable } from 'svelte/store'
-import { Card, MasterTag } from '@hcengineering/card'
+import { Card, MasterTag } from '@hanzo/card'
 import { PermissionsStore } from './types'
 
 /**

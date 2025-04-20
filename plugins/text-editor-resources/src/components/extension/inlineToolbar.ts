@@ -1,7 +1,7 @@
 import { Extension, isTextSelection } from '@tiptap/core'
 import { type BubbleMenuOptions } from '@tiptap/extension-bubble-menu'
 import { PluginKey } from '@tiptap/pm/state'
-import { type ActionContext } from '@hcengineering/text-editor'
+import { type ActionContext } from '@hanzo/text-editor'
 
 import { InlinePopupExtension } from './inlinePopup'
 

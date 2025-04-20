@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { ProjectType, TaskType } from '@hcengineering/task'
-  import { StatePresenter } from '@hcengineering/task-resources'
-  import { IssueStatus, Project } from '@hcengineering/tracker'
-  import { IconSize } from '@hcengineering/ui'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { ProjectType, TaskType } from '@hanzo/task'
+  import { StatePresenter } from '@hanzo/task-resources'
+  import { IssueStatus, Project } from '@hanzo/tracker'
+  import { IconSize } from '@hanzo/ui'
   import { activeProjects } from '../../utils'
 
   export let value: WithLookup<IssueStatus> | undefined

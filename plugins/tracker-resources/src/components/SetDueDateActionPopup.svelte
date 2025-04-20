@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Issue, IssueDraft } from '@hcengineering/tracker'
-  import { DatePopup } from '@hcengineering/ui'
+  import { AttachedData } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Issue, IssueDraft } from '@hanzo/tracker'
+  import { DatePopup } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let value: Issue | AttachedData<Issue> | Issue[] | IssueDraft

@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import card, { type Tag, type Card, type MasterTag } from '@hcengineering/card'
-import contact, { type Employee } from '@hcengineering/contact'
+import card, { type Tag, type Card, type MasterTag } from '@hanzo/card'
+import contact, { type Employee } from '@hanzo/contact'
 import core, {
   AccountRole,
   type Class,
@@ -23,7 +23,7 @@ import core, {
   SortingOrder,
   type Space,
   type Tx
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   type Builder,
@@ -35,13 +35,13 @@ import {
   TypeRecord,
   TypeRef,
   TypeString
-} from '@hcengineering/model'
-import { TDoc } from '@hcengineering/model-core'
-import presentation from '@hcengineering/model-presentation'
-import { TToDo } from '@hcengineering/model-time'
-import view, { createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import { type IntlString } from '@hcengineering/platform'
+} from '@hanzo/model'
+import { TDoc } from '@hanzo/model-core'
+import presentation from '@hanzo/model-presentation'
+import { TToDo } from '@hanzo/model-time'
+import view, { createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import { type IntlString } from '@hanzo/platform'
 import {
   type Execution,
   type ExecutionError,
@@ -52,10 +52,10 @@ import {
   type State,
   type Step,
   processId
-} from '@hcengineering/process'
-import time from '@hcengineering/time'
-import { type AnyComponent } from '@hcengineering/ui'
-import { type AttributeCategory } from '@hcengineering/view'
+} from '@hanzo/process'
+import time from '@hanzo/time'
+import { type AnyComponent } from '@hanzo/ui'
+import { type AttributeCategory } from '@hanzo/view'
 import process from './plugin'
 
 const DOMAIN_PROCESS = 'process' as Domain
@@ -541,6 +541,6 @@ export function createModel (builder: Builder): void {
   })
 }
 
-export { processId } from '@hcengineering/process'
+export { processId } from '@hanzo/process'
 
 export default process

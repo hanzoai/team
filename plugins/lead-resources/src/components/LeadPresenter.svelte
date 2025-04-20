@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Lead } from '@hcengineering/lead'
-  import { Icon, tooltip } from '@hcengineering/ui'
-  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
-  import lead from '@hcengineering/lead'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { ObjectPresenterType } from '@hcengineering/view'
+  import type { Lead } from '@hanzo/lead'
+  import { Icon, tooltip } from '@hanzo/ui'
+  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import lead from '@hanzo/lead'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { ObjectPresenterType } from '@hanzo/view'
 
   export let value: Lead
   export let inline: boolean = false

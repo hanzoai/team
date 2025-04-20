@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData } from '@hcengineering/core'
+  import { AttachedData } from '@hanzo/core'
 
-  import { Issue } from '@hcengineering/tracker'
-  import { floorFractionDigits } from '@hcengineering/ui'
+  import { Issue } from '@hanzo/tracker'
+  import { floorFractionDigits } from '@hanzo/ui'
   import EstimationProgressCircle from './EstimationProgressCircle.svelte'
   import TimePresenter from './TimePresenter.svelte'
 

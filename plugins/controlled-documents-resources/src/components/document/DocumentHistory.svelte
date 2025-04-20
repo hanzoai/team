@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Ref } from '@hcengineering/core'
-  import { Label, Scroller } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
-  import documents, { type ChangeControl } from '@hcengineering/controlled-documents'
+  import { type Ref } from '@hanzo/core'
+  import { Label, Scroller } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
+  import documents, { type ChangeControl } from '@hanzo/controlled-documents'
 
   import documentsRes from '../../plugin'
   import {

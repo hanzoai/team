@@ -3,12 +3,12 @@
 //
 -->
 <script lang="ts">
-  import { PersonAccount } from '@hcengineering/contact'
-  import { getCurrentAccount } from '@hcengineering/core'
-  import { createQuery, getClient, getFileUrl } from '@hcengineering/presentation'
-  import { Button, Chevron, Component, ExpandCollapse, Label } from '@hcengineering/ui'
-  import diffview from '@hcengineering/diffview'
-  import { GithubPatch, GithubPullRequest, GithubPullRequestReview } from '@hcengineering/github'
+  import { PersonAccount } from '@hanzo/contact'
+  import { getCurrentAccount } from '@hanzo/core'
+  import { createQuery, getClient, getFileUrl } from '@hanzo/presentation'
+  import { Button, Chevron, Component, ExpandCollapse, Label } from '@hanzo/ui'
+  import diffview from '@hanzo/diffview'
+  import { GithubPatch, GithubPullRequest, GithubPullRequestReview } from '@hanzo/github'
 
   import github from '../plugin'
 

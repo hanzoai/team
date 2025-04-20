@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountUuid, AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { Button, ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { AccountUuid, AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { Button, ButtonKind, ButtonSize } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import AccountArrayEditor from './AccountArrayEditor.svelte'
 
   export let label: IntlString

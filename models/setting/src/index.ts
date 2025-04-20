@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import contact from '@hcengineering/contact'
-import { AccountRole, DOMAIN_MODEL, type Blob, type Domain, type Ref, type AccountUuid } from '@hcengineering/core'
-import { Mixin, Model, type Builder, UX } from '@hcengineering/model'
-import core, { TClass, TConfiguration, TDoc } from '@hcengineering/model-core'
-import view, { createAction } from '@hcengineering/model-view'
-import notification from '@hcengineering/notification'
-import type { Asset, IntlString } from '@hcengineering/platform'
+import activity from '@hanzo/activity'
+import contact from '@hanzo/contact'
+import { AccountRole, DOMAIN_MODEL, type Blob, type Domain, type Ref, type AccountUuid } from '@hanzo/core'
+import { Mixin, Model, type Builder, UX } from '@hanzo/model'
+import core, { TClass, TConfiguration, TDoc } from '@hanzo/model-core'
+import view, { createAction } from '@hanzo/model-view'
+import notification from '@hanzo/notification'
+import type { Asset, IntlString } from '@hanzo/platform'
 import {
   settingId,
   type Editable,
@@ -34,15 +34,15 @@ import {
   type SpaceTypeEditorSection,
   type UserMixin,
   type WorkspaceSetting
-} from '@hcengineering/setting'
-import templates from '@hcengineering/templates'
-import exportPlugin from '@hcengineering/export'
+} from '@hanzo/setting'
+import templates from '@hanzo/templates'
+import exportPlugin from '@hanzo/export'
 import setting from './plugin'
 
-import workbench, { WidgetType } from '@hcengineering/model-workbench'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+import workbench, { WidgetType } from '@hanzo/model-workbench'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 
-export { settingId } from '@hcengineering/setting'
+export { settingId } from '@hanzo/setting'
 export { settingOperation } from './migration'
 export { default } from './plugin'
 
