@@ -3,19 +3,19 @@
 export MODEL_VERSION=$(node ../common/scripts/show_version.js)
 export MINIO_ACCESS_KEY=minioadmin
 export MINIO_SECRET_KEY=minioadmin
-export MINIO_ENDPOINT=huly.local:9002
-export ACCOUNTS_URL=http://huly.local:3003
-export TRANSACTOR_URL=ws://huly.local:3334
-# export ACCOUNT_DB_URL=postgresql://root@huly.local:26258/defaultdb?sslmode=disable
-export ACCOUNT_DB_URL=mongodb://huly.local:27018
-export MONGO_URL=mongodb://huly.local:27018
-export ELASTIC_URL=http://huly.local:9201
+export MINIO_ENDPOINT=hanzoai.local:9002
+export ACCOUNTS_URL=http://hanzoai.local:3003
+export TRANSACTOR_URL=ws://hanzoai.local:3334
+# export ACCOUNT_DB_URL=postgresql://root@hanzoai.local:26258/defaultdb?sslmode=disable
+export ACCOUNT_DB_URL=mongodb://hanzoai.local:27018
+export MONGO_URL=mongodb://hanzoai.local:27018
+export ELASTIC_URL=http://hanzoai.local:9201
 export SERVER_SECRET=secret
-export DB_URL=postgresql://root@huly.local:26258/defaultdb?sslmode=disable
+export DB_URL=postgresql://root@hanzoai.local:26258/defaultdb?sslmode=disable
 
 export REGION_INFO="|America;europe|" # Europe without name will not be available for creation of new workspaces.
-export TRANSACTOR_URL="ws://huly.local:3334;ws://huly.localv:3334,ws://huly.local:3335;ws://huly.local:3335;europe,"
-export QUEUE_CONFIG=huly.local:19093
+export TRANSACTOR_URL="ws://hanzoai.local:3334;ws://hanzoai.localv:3334,ws://hanzoai.local:3335;ws://hanzoai.local:3335;europe,"
+export QUEUE_CONFIG=hanzoai.local:19093
 
 # Check if local bundle.js exists and use it if available
 BUNDLE_PATH="../dev/tool/bundle/bundle.js"

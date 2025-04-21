@@ -22,11 +22,11 @@ grep -B 1 "image: hardcoreeng/" $COMPOSE_FILE | grep -v "\-\-" | grep -v "image:
     service=$(echo $service | tr -d ' ')
     if [ -n "$service" ]; then
         echo "  $service:" >> $OVERRIDE_FILE
-        
+
         # Get the image name
         image=$(grep -A 1 "$service:" $COMPOSE_FILE | grep "image: hardcoreeng/" | awk '{print $2}')
         pod_name=$(echo $image | sed 's/hardcoreeng\///')
-        
+
         echo "    image: hardcoreeng/$pod_name:$VERSION" >> $OVERRIDE_FILE
         echo "    pull_policy: always" >> $OVERRIDE_FILE
         if [ "$pod_name" == "account" ]; then
@@ -35,7 +35,7 @@ grep -B 1 "image: hardcoreeng/" $COMPOSE_FILE | grep -v "\-\-" | grep -v "image:
         fi
         if [ "$pod_name" == "workspace" ]; then
           echo "    environment:" >> $OVERRIDE_FILE
-          echo "      - INIT_WORKSPACE=huly" >> $OVERRIDE_FILE 
+          echo "      - INIT_WORKSPACE=hanzoai" >> $OVERRIDE_FILE
         fi
     fi
 done

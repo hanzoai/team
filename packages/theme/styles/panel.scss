@@ -1,20 +1,20 @@
 //
 // Copyright © 2022 Hardcore Engineering Inc.
-// 
+//
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
 // obtain a copy of the License at https://www.eclipse.org/legal/epl-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// 
+//
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
 
-/* Huly Panels */
-.hulyPanels-container {
+/* hanzoai Panels */
+.hanzoaiPanels-container {
   display: flex;
   width: 100%;
   height: 100%;
@@ -30,7 +30,7 @@
     border-radius: var(--small-focus-BorderRadius);
   }
 }
-.hulyNavPanel-container a.noUnderline {
+.hanzoaiNavPanel-container a.noUnderline {
   display: inline-flex;
   flex-shrink: 0;
   min-width: 0;
@@ -38,12 +38,12 @@
 
   button.type-link { width: 100%; }
 }
-.hulyNavPanel-container .hulyNavItem-container,
-.hulyNavPanel-container .hulyTaskNavLink-container,
-.parentSelector .hulyNavItem-container {
+.hanzoaiNavPanel-container .hanzoaiNavItem-container,
+.hanzoaiNavPanel-container .hanzoaiTaskNavLink-container,
+.parentSelector .hanzoaiNavItem-container {
   margin: 0 0.75rem;
 }
-.hulyNavPanel-header {
+.hanzoaiNavPanel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -64,7 +64,7 @@
   &.small { padding-bottom: var(--spacing-1_5); }
 }
 
-.hulyNavGroup-container {
+.hanzoaiNavGroup-container {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -72,7 +72,7 @@
   min-width: 0;
   min-height: 0;
 
-  .hulyNavGroup-header {
+  .hanzoaiNavGroup-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -115,7 +115,7 @@
       background-color: var(--theme-navpanel-selected);
       border: 1px solid var(--global-subtle-ui-BorderColor);
       border-radius: var(--extra-small-BorderRadius);
-      
+
       &.folder {
         background-color: var(--theme-statusbar-color);
         border-color: var(--global-surface-01-BorderColor);
@@ -151,35 +151,35 @@
     &.highlighted,
     &.selected,
     &:hover {
-      .hulyNavGroup-header__tools { display: flex; }
+      .hanzoaiNavGroup-header__tools { display: flex; }
     }
     &.showMenu,
     &.highlighted,
     &.selected {
-      .hulyNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
-      .hulyNavGroup-header__chevron { color: var(--global-tertiary-TextColor); }
-      .hulyNavGroup-header__label { color: var(--global-secondary-TextColor); }
+      .hanzoaiNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
+      .hanzoaiNavGroup-header__chevron { color: var(--global-tertiary-TextColor); }
+      .hanzoaiNavGroup-header__label { color: var(--global-secondary-TextColor); }
     }
     &.selected { background-color: var(--global-ui-highlight-BackgroundColor); }
-    &.isOpen + .hulyNavGroup-content {
+    &.isOpen + .hanzoaiNavGroup-content {
       max-height: 100%;
 
       &:not(:has(.nested)) { margin-bottom: var(--spacing-1_5); }
     }
   }
-  &.nested .hulyNavGroup-header {
-    .hulyNavGroup-header__icon { margin: 0 var(--spacing-0_25) 0 0; }
-    .hulyNavGroup-header__label { padding: 0 var(--spacing-0_75) 0 0; }
-    &.isOpen .hulyNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
+  &.nested .hanzoaiNavGroup-header {
+    .hanzoaiNavGroup-header__icon { margin: 0 var(--spacing-0_25) 0 0; }
+    .hanzoaiNavGroup-header__label { padding: 0 var(--spacing-0_75) 0 0; }
+    &.isOpen .hanzoaiNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
   }
-  .hulyNavGroup-header:hover,
-  &.nested .hulyNavGroup-header:hover {
-    .hulyNavGroup-header__chevron { background-color: var(--global-ui-BackgroundColor); }
-    .hulyNavGroup-header__label { background-color: var(--global-ui-hover-BackgroundColor); }
-    .hulyNavGroup-header__chevron { color: var(--button-subtle-IconColor); }
-    .hulyNavGroup-header__label { color: var(--global-primary-TextColor); }
+  .hanzoaiNavGroup-header:hover,
+  &.nested .hanzoaiNavGroup-header:hover {
+    .hanzoaiNavGroup-header__chevron { background-color: var(--global-ui-BackgroundColor); }
+    .hanzoaiNavGroup-header__label { background-color: var(--global-ui-hover-BackgroundColor); }
+    .hanzoaiNavGroup-header__chevron { color: var(--button-subtle-IconColor); }
+    .hanzoaiNavGroup-header__label { color: var(--global-primary-TextColor); }
   }
-  &.nested.selectable .hulyNavGroup-header {
+  &.nested.selectable .hanzoaiNavGroup-header {
     margin: 0 var(--spacing-1_5) var(--spacing-1_5);
     padding: var(--spacing-0_5) var(--spacing-0_75) var(--spacing-0_5) var(--spacing-0_5);
     min-height: var(--global-small-Size);
@@ -192,7 +192,7 @@
   &:not(.nested, .noDivider),
   &.noDivider + &.noDivider { border-top: 1px solid var(--theme-navpanel-divider); }
 
-  .hulyNavGroup-content {
+  .hanzoaiNavGroup-content {
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -201,10 +201,10 @@
     max-height: 0;
   }
 }
-.hulyNavItem-container + .hulyNavGroup-container,
-.hulyNavPanel-container a.noUnderline + .hulyNavGroup-container { margin-top: .75rem; }
+.hanzoaiNavItem-container + .hanzoaiNavGroup-container,
+.hanzoaiNavPanel-container a.noUnderline + .hanzoaiNavGroup-container { margin-top: .75rem; }
 
-.hulyNavItem-container .hulyNavItem-chevron:enabled {
+.hanzoaiNavItem-container .hanzoaiNavItem-chevron:enabled {
   & > * {
     transform-origin: center;
     transform: rotate(-90deg);
@@ -213,7 +213,7 @@
   &.isOpen > * { transform: rotate(0deg); }
 }
 
-.hulySidePanel-container {
+.hanzoaiSidePanel-container {
   display: flex;
   flex-direction: column;
   width: 10rem;
@@ -385,7 +385,7 @@
     &__mobile {
       flex-grow: 1;
     }
-    
+
     &__main {
       flex-grow: 2;
       flex-basis: 760px;
@@ -467,7 +467,7 @@
     &__aside {
       width: 25%;
       min-width: var(--panel-aside-width);
-      
+
       &.float {
         position: absolute;
         flex-direction: row;
@@ -569,7 +569,7 @@
     width: 100%;
     visibility: hidden;
   }
-  
+
   .popupPanel-pageFooter {
     @include watermark;
 
