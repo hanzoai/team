@@ -193,7 +193,7 @@ Document content in Markdown...
 ### Run Import Tool
 ```bash
 docker run \
-  -e FRONT_URL="https://huly.app" \
+  -e FRONT_URL="https://hanzoai.app" \
   -v /path/to/workspace:/data \
   hardcoreeng/import-tool:latest \
   -- bundle.js import /data \

@@ -20,7 +20,7 @@ https://docs.github.com/en/apps/sharing-github-apps/sharing-your-github-app
 
 Go to _Settings/Developer settings/GitHub Apps_
 
-* Name: Any unique name. E.g. _XX_huly_dev_. Referred as _GITHUB_APP_ later in the document.
+* Name: Any unique name. E.g. _XX_hanzoai_dev_. Referred as _GITHUB_APP_ later in the document.
 * Homepage URL: http://localhost:8080
 * Callback URL: http://localhost:8080/github
 * Setup URL (optional): http://localhost:8080/github?op=installation

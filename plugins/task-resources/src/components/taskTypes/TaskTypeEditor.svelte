@@ -169,12 +169,12 @@
 </script>
 
 {#if taskType !== undefined}
-  <div class="hulyComponent-content__container columns">
-    <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__container columns">
+    <div class="hanzoaiComponent-content__column content">
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content gap">
-          <div class="hulyComponent-content__column-group mt-4">
-            <div class="hulyComponent-content__header mb-6">
+        <div class="hanzoaiComponent-content gap">
+          <div class="hanzoaiComponent-content__column-group mt-4">
+            <div class="hanzoaiComponent-content__header mb-6">
               <div class="flex-row-center gap-1-5">
                 <TaskTypeKindEditor
                   kind={taskType.kind}
@@ -253,8 +253,8 @@
             </div>
           </div>
 
-          <div class="hulyTableAttr-container">
-            <div class="hulyTableAttr-header font-medium-12">
+          <div class="hanzoaiTableAttr-container">
+            <div class="hanzoaiTableAttr-header font-medium-12">
               <Icon icon={task.icon.ManageTemplates} size={'small'} />
               <span><Label label={plugin.string.ProcessStates} /></span>
               <ButtonIcon

@@ -121,7 +121,7 @@ test.describe('Workspace tests', () => {
       email: `sanity-email+${generateId()}@gmail.com`,
       password: '1234'
     }
-    const newWorkspaceName = `Some HULY #@$ WS - ${generateId(12)}`
+    const newWorkspaceName = `Some hanzoai #@$ WS - ${generateId(12)}`
     await loginPage.goto()
     await loginPage.clickSignUp()
     await signUpPage.signUp(newUser)
@@ -162,7 +162,7 @@ test.describe('Workspace tests', () => {
       email: `sanity-email+${generateId()}@gmail.com`,
       password: '1234'
     }
-    const newWorkspaceName = `Some HULY #@$ WS - ${generateId(12)}`
+    const newWorkspaceName = `Some hanzoai #@$ WS - ${generateId(12)}`
     await loginPage.goto()
     await loginPage.clickSignUp()
     await signUpPage.signUp(newUser)
@@ -221,7 +221,7 @@ test.describe('Workspace tests', () => {
       email: faker.internet.email(),
       password: '1234'
     }
-    const newWorkspaceName = `Some HULY #@$ WS - ${generateId(12)}`
+    const newWorkspaceName = `Some hanzoai #@$ WS - ${generateId(12)}`
     await loginPage.goto()
     await loginPage.clickSignUp()
     await signUpPage.signUp(newUser)

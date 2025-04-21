@@ -55,7 +55,7 @@ export class CustomAttributesPage {
   card = (): Locator => this.page.getByRole('button', { name: 'Card' })
   product = (): Locator => this.page.getByRole('button', { name: 'Product' })
 
-  addAttribute = (): Locator => this.page.locator('.hulyTableAttr-header > .font-medium-14')
+  addAttribute = (): Locator => this.page.locator('.hanzoaiTableAttr-header > .font-medium-14')
 
   async clickAddAttribute (): Promise<void> {
     await this.addAttribute().click()

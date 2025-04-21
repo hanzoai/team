@@ -18,7 +18,7 @@
   export let level: number = 0
 </script>
 
-<div class="hulyFold-container" class:opened={isOpen && !empty} style:margin-left={`${level * 1.5}rem`}>
+<div class="hanzoaiFold-container" class:opened={isOpen && !empty} style:margin-left={`${level * 1.5}rem`}>
   <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     {#if empty}
       <path
@@ -31,7 +31,7 @@
 </div>
 
 <style lang="scss">
-  .hulyFold-container {
+  .hanzoaiFold-container {
     display: flex;
     justify-content: center;
     align-items: center;

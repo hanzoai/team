@@ -8,15 +8,15 @@ import { getPublicLink } from '@hanzo/server-guest-resources'
 import { Task } from '@hanzo/task'
 import { generateToken } from '@hanzo/server-token'
 
-const githubLinkText = process.env.LINK_TEXT ?? 'Huly&reg;:'
+const githubLinkText = process.env.LINK_TEXT ?? 'hanzoai&reg;:'
 
-const githubLinkTextOld = 'View in Huly'
+const githubLinkTextOld = 'View in hanzoai'
 
-export function hasHulyLinkText (text: string): boolean {
+export function hashanzoaiLinkText (text: string): boolean {
   return text.includes(githubLinkText) || text.includes(githubLinkTextOld)
 }
 
-export function hasHulyLink (href: string, guestLink: string): boolean {
+export function hashanzoaiLink (href: string, guestLink: string): boolean {
   return href.includes(guestLink)
 }
 

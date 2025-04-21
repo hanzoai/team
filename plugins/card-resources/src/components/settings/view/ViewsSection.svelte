@@ -59,26 +59,26 @@
   })
 </script>
 
-<div class="hulyTableAttr-header font-medium-12">
+<div class="hanzoaiTableAttr-header font-medium-12">
   <Icon icon={setting.icon.Views} size="small" />
   <span><Label label={card.string.Views} /></span>
   <ButtonIcon kind="primary" icon={IconAdd} size="small" dataId={'btnAdd'} on:click={addRelation} />
 </div>
 {#if viewlets.length}
-  <div class="hulyTableAttr-content task">
+  <div class="hanzoaiTableAttr-content task">
     {#each viewlets as viewlet}
       <button
-        class="hulyTableAttr-content__row justify-start"
+        class="hanzoaiTableAttr-content__row justify-start"
         on:click|stopPropagation={() => {
           handleSelect(viewlet)
         }}
       >
         {#if viewlet.$lookup?.descriptor?.icon !== undefined}
-          <div class="hulyTableAttr-content__row-icon">
+          <div class="hanzoaiTableAttr-content__row-icon">
             <Icon icon={viewlet.$lookup?.descriptor?.icon} size="small" />
           </div>
         {/if}
-        <div class="hulyTableAttr-content__row-label font-medium-14 cursor-pointer">
+        <div class="hanzoaiTableAttr-content__row-label font-medium-14 cursor-pointer">
           {#if viewlet.title !== undefined}
             <span>{viewlet.title}</span>
           {:else if viewlet.$lookup?.descriptor?.label !== undefined}

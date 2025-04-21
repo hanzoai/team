@@ -54,7 +54,7 @@
   }
 </script>
 
-<div class="hulyTableAttr-header font-medium-12">
+<div class="hanzoaiTableAttr-header font-medium-12">
   <Icon icon={card.icon.MasterTag} size="small" />
   <span><Label label={card.string.MasterTags} /></span>
   <ButtonIcon
@@ -71,7 +71,7 @@
   />
 </div>
 {#if descendants.length}
-  <div class="hulyTableAttr-content task">
+  <div class="hanzoaiTableAttr-content task">
     <TagsHierarchy
       classes={descendants}
       _class={undefined}

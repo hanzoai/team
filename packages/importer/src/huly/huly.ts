@@ -61,13 +61,13 @@ import documents, {
   DocumentMeta
 } from '@hanzo/controlled-documents'
 
-export interface HulyComment {
+export interface hanzoaiComment {
   author: string
   text: string
   attachments?: string[]
 }
 
-export interface HulyIssueHeader {
+export interface hanzoaiIssueHeader {
   class: 'tracker:class:Issue'
   title: string
   status: string
@@ -75,10 +75,10 @@ export interface HulyIssueHeader {
   priority?: string
   estimation?: number // in hours
   remainingTime?: number // in hours
-  comments?: HulyComment[]
+  comments?: hanzoaiComment[]
 }
 
-export interface HulySpaceSettings {
+export interface hanzoaiSpaceSettings {
   class: 'tracker:class:Project' | 'document:class:Teamspace' | 'documents:class:OrgSpace'
   title: string
   private?: boolean
@@ -90,7 +90,7 @@ export interface HulySpaceSettings {
   emoji?: string
 }
 
-export interface HulyProjectSettings extends HulySpaceSettings {
+export interface hanzoaiProjectSettings extends hanzoaiSpaceSettings {
   class: 'tracker:class:Project'
   identifier: string
   id?: 'tracker:project:DefaultProject'
@@ -98,16 +98,16 @@ export interface HulyProjectSettings extends HulySpaceSettings {
   defaultIssueStatus?: string
 }
 
-export interface HulyTeamspaceSettings extends HulySpaceSettings {
+export interface hanzoaiTeamspaceSettings extends hanzoaiSpaceSettings {
   class: 'document:class:Teamspace'
 }
 
-export interface HulyDocumentHeader {
+export interface hanzoaiDocumentHeader {
   class: 'document:class:Document'
   title: string
 }
 
-export interface HulyWorkspaceSettings {
+export interface hanzoaiWorkspaceSettings {
   projectTypes?: Array<{
     name: string
     taskTypes?: Array<{
@@ -121,13 +121,13 @@ export interface HulyWorkspaceSettings {
   }>
 }
 
-export interface HulyChangeControlHeader {
+export interface hanzoaiChangeControlHeader {
   description?: string
   reason?: string
   impact?: string
 }
 
-export interface HulyControlledDocumentHeader {
+export interface hanzoaiControlledDocumentHeader {
   class: 'documents:class:ControlledDocument'
   title: string
   template: string
@@ -137,10 +137,10 @@ export interface HulyControlledDocumentHeader {
   reviewers?: string[]
   approvers?: string[]
   coAuthors?: string[]
-  changeControl?: HulyChangeControlHeader
+  changeControl?: hanzoaiChangeControlHeader
 }
 
-export interface HulyDocumentTemplateHeader {
+export interface hanzoaiDocumentTemplateHeader {
   class: 'documents:mixin:DocumentTemplate'
   title: string
   category: string
@@ -151,17 +151,17 @@ export interface HulyDocumentTemplateHeader {
   reviewers?: string[]
   approvers?: string[]
   coAuthors?: string[]
-  changeControl?: HulyChangeControlHeader
+  changeControl?: hanzoaiChangeControlHeader
 }
 
-export interface HulyOrgSpaceSettings extends HulySpaceSettings {
+export interface hanzoaiOrgSpaceSettings extends hanzoaiSpaceSettings {
   class: 'documents:class:OrgSpace'
   qualified?: string
   manager?: string
   qara?: string
 }
 
-class HulyMarkdownPreprocessor extends BaseMarkdownPreprocessor {
+class hanzoaiMarkdownPreprocessor extends BaseMarkdownPreprocessor {
   constructor (
     private readonly urlProvider: (id: string) => string,
     private readonly logger: Logger,
@@ -332,8 +332,8 @@ interface AttachmentMetadata {
   spaceId?: Ref<Space>
 }
 
-export class HulyFormatImporter {
-  private readonly importerEmailPlaceholder = 'newuser@huly.io'
+export class hanzoaiFormatImporter {
+  private readonly importerEmailPlaceholder = 'newuser@hanzoai.io'
   private readonly importerNamePlaceholder = 'New User'
   private readonly pathById = new Map<Ref<Doc>, string>()
   private readonly refMetaByPath = new Map<string, ReferenceMetadata>()
@@ -370,7 +370,7 @@ export class HulyFormatImporter {
     this.logger.log('========================================')
 
     this.logger.log('Importing documents...')
-    const preprocessor = new HulyMarkdownPreprocessor(
+    const preprocessor = new hanzoaiMarkdownPreprocessor(
       this.fileUploader.getFileUrl,
       this.logger,
       this.pathById,
@@ -468,7 +468,7 @@ export class HulyFormatImporter {
     const wsSettingsPath = path.join(folderPath, 'settings.yaml')
     if (fs.existsSync(wsSettingsPath)) {
       const wsSettingsFile = fs.readFileSync(wsSettingsPath, 'utf8')
-      const wsSettings = yaml.load(wsSettingsFile) as HulyWorkspaceSettings
+      const wsSettings = yaml.load(wsSettingsFile) as hanzoaiWorkspaceSettings
 
       // Add project types
       for (const pt of this.processProjectTypes(wsSettings)) {
@@ -486,7 +486,7 @@ export class HulyFormatImporter {
 
       try {
         this.logger.log(`Processing ${spaceName}...`)
-        const spaceConfig = yaml.load(fs.readFileSync(yamlPath, 'utf8')) as HulySpaceSettings
+        const spaceConfig = yaml.load(fs.readFileSync(yamlPath, 'utf8')) as hanzoaiSpaceSettings
 
         if (spaceConfig?.class === undefined) {
           this.logger.error(`Skipping ${spaceName}: not a space - no class specified`)
@@ -495,7 +495,7 @@ export class HulyFormatImporter {
 
         switch (spaceConfig.class) {
           case tracker.class.Project: {
-            const project = await this.processProject(spaceConfig as HulyProjectSettings)
+            const project = await this.processProject(spaceConfig as hanzoaiProjectSettings)
             builder.addProject(spacePath, project)
             if (fs.existsSync(spacePath) && fs.statSync(spacePath).isDirectory()) {
               await this.processIssuesRecursively(builder, project.identifier, spacePath, spacePath)
@@ -504,7 +504,7 @@ export class HulyFormatImporter {
           }
 
           case document.class.Teamspace: {
-            const teamspace = await this.processTeamspace(spaceConfig as HulyTeamspaceSettings)
+            const teamspace = await this.processTeamspace(spaceConfig as hanzoaiTeamspaceSettings)
             builder.addTeamspace(spacePath, teamspace)
             if (fs.existsSync(spacePath) && fs.statSync(spacePath).isDirectory()) {
               await this.processDocumentsRecursively(builder, spacePath, spacePath)
@@ -513,7 +513,7 @@ export class HulyFormatImporter {
           }
 
           case documents.class.OrgSpace: {
-            const orgSpace = await this.processOrgSpace(spaceConfig as HulyOrgSpaceSettings)
+            const orgSpace = await this.processOrgSpace(spaceConfig as hanzoaiOrgSpaceSettings)
             builder.addOrgSpace(spacePath, orgSpace)
             if (fs.existsSync(spacePath) && fs.statSync(spacePath).isDirectory()) {
               await this.processControlledDocumentsRecursively(builder, spacePath, spacePath)
@@ -545,7 +545,7 @@ export class HulyFormatImporter {
 
     for (const issueFile of issueFiles) {
       const issuePath = path.join(currentPath, issueFile)
-      const issueHeader = (await this.readYamlHeader(issuePath)) as HulyIssueHeader
+      const issueHeader = (await this.readYamlHeader(issuePath)) as hanzoaiIssueHeader
 
       if (issueHeader.class === undefined) {
         this.logger.error(`Skipping ${issueFile}: not an issue`)
@@ -657,7 +657,7 @@ export class HulyFormatImporter {
 
     for (const docFile of docFiles) {
       const docPath = path.join(currentPath, docFile)
-      const docHeader = (await this.readYamlHeader(docPath)) as HulyDocumentHeader
+      const docHeader = (await this.readYamlHeader(docPath)) as hanzoaiDocumentHeader
 
       if (docHeader.class === undefined) {
         this.logger.error(`Skipping ${docFile}: not a document`)
@@ -706,8 +706,8 @@ export class HulyFormatImporter {
     for (const docFile of docFiles) {
       const docPath = path.join(currentPath, docFile)
       const docHeader = (await this.readYamlHeader(docPath)) as
-        | HulyControlledDocumentHeader
-        | HulyDocumentTemplateHeader
+        | hanzoaiControlledDocumentHeader
+        | hanzoaiDocumentTemplateHeader
 
       if (docHeader.class === undefined) {
         this.logger.error(`Skipping ${docFile}: not a document`)
@@ -734,7 +734,7 @@ export class HulyFormatImporter {
         this.pathById.set(docId, docPath)
 
         const doc = await this.processControlledDocument(
-          docHeader as HulyControlledDocumentHeader,
+          docHeader as hanzoaiControlledDocumentHeader,
           docPath,
           docId,
           documentMetaId
@@ -753,7 +753,7 @@ export class HulyFormatImporter {
         }
 
         const template = await this.processControlledDocumentTemplate(
-          docHeader as HulyDocumentTemplateHeader,
+          docHeader as hanzoaiDocumentTemplateHeader,
           docPath,
           templateId,
           documentMetaId
@@ -768,7 +768,7 @@ export class HulyFormatImporter {
     }
   }
 
-  private processComments (currentPath: string, comments: HulyComment[] = []): Promise<ImportComment[]> {
+  private processComments (currentPath: string, comments: hanzoaiComment[] = []): Promise<ImportComment[]> {
     return Promise.all(
       comments.map(async (comment) => {
         const attachments: ImportAttachment[] = []
@@ -791,7 +791,7 @@ export class HulyFormatImporter {
     )
   }
 
-  private processProjectTypes (wsHeader: HulyWorkspaceSettings): ImportProjectType[] {
+  private processProjectTypes (wsHeader: hanzoaiWorkspaceSettings): ImportProjectType[] {
     return (
       wsHeader.projectTypes?.map((pt) => ({
         name: pt.name,
@@ -807,7 +807,7 @@ export class HulyFormatImporter {
     )
   }
 
-  private async processProject (projectHeader: HulyProjectSettings): Promise<ImportProject> {
+  private async processProject (projectHeader: hanzoaiProjectSettings): Promise<ImportProject> {
     return {
       class: tracker.class.Project,
       id: projectHeader.id as Ref<Project>,
@@ -828,7 +828,7 @@ export class HulyFormatImporter {
     }
   }
 
-  private async processTeamspace (spaceHeader: HulyTeamspaceSettings): Promise<ImportTeamspace> {
+  private async processTeamspace (spaceHeader: hanzoaiTeamspaceSettings): Promise<ImportTeamspace> {
     return {
       class: document.class.Teamspace,
       title: spaceHeader.title,
@@ -844,7 +844,7 @@ export class HulyFormatImporter {
     }
   }
 
-  private async processOrgSpace (spaceHeader: HulyOrgSpaceSettings): Promise<ImportOrgSpace> {
+  private async processOrgSpace (spaceHeader: hanzoaiOrgSpaceSettings): Promise<ImportOrgSpace> {
     return {
       class: documents.class.OrgSpace,
       title: spaceHeader.title,
@@ -861,7 +861,7 @@ export class HulyFormatImporter {
   }
 
   private async processControlledDocument (
-    header: HulyControlledDocumentHeader,
+    header: hanzoaiControlledDocumentHeader,
     docPath: string,
     id: Ref<ControlledDocument>,
     metaId: Ref<DocumentMeta>
@@ -915,7 +915,7 @@ export class HulyFormatImporter {
   }
 
   private async processControlledDocumentTemplate (
-    header: HulyDocumentTemplateHeader,
+    header: hanzoaiDocumentTemplateHeader,
     docPath: string,
     id: Ref<ControlledDocument>,
     metaId: Ref<DocumentMeta>

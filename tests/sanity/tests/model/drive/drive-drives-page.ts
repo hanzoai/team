@@ -11,7 +11,7 @@ export class DrivesPage extends CommonPage {
   }
 
   readonly buttonView = (): Locator =>
-    this.page.locator('div.hulyHeader-container > .hulyHeader-buttonsGroup.before button[data-id="btn-viewOptions"]')
+    this.page.locator('div.hanzoaiHeader-container > .hanzoaiHeader-buttonsGroup.before button[data-id="btn-viewOptions"]')
 
   readonly buttonHideArchived = (): Locator => this.page.locator('div.popup .toggle span.toggle-switch')
   readonly inputHideArchived = (): Locator => this.page.locator('div.popup .toggle input[type="checkbox"]')

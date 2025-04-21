@@ -34,29 +34,29 @@
   {@const descriptor = type.$lookup?.descriptor}
   {@const dIcon = descriptor?.icon === '' || descriptor?.icon == null ? setting.icon.Setting : descriptor.icon}
   <button
-    class="hulyTaskNavLink-container font-regular-14"
+    class="hanzoaiTaskNavLink-container font-regular-14"
     class:selected={type._id === selectedTypeId}
     on:click={() => {
       handleSelected(type)
     }}
   >
-    <div class="hulyTaskNavLink-avatar">
-      <div class="hulyTaskNavLink-icon">
+    <div class="hanzoaiTaskNavLink-avatar">
+      <div class="hanzoaiTaskNavLink-icon">
         {#if dIcon}
           <Icon icon={dIcon} size="small" fill="currentColor" />
         {/if}
       </div>
     </div>
     {#if descriptor}
-      <div class="hulyTaskNavLink-content">
-        <span class="hulyTaskNavLink-content__title">{type.name}</span>
-        <span class="hulyTaskNavLink-content__descriptor">
+      <div class="hanzoaiTaskNavLink-content">
+        <span class="hanzoaiTaskNavLink-content__title">{type.name}</span>
+        <span class="hanzoaiTaskNavLink-content__descriptor">
           <Label label={descriptor.name} />
         </span>
       </div>
     {/if}
     {#if type._id === selectedTypeId}
-      <div class="hulyTaskNavLink-icon right">
+      <div class="hanzoaiTaskNavLink-icon right">
         <IconOpenedArrow size={'small'} />
       </div>
     {/if}
@@ -64,7 +64,7 @@
 {/each}
 
 <style lang="scss">
-  .hulyTaskNavLink-container {
+  .hanzoaiTaskNavLink-container {
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -79,7 +79,7 @@
     &.selected {
       cursor: auto;
     }
-    .hulyTaskNavLink-avatar {
+    .hanzoaiTaskNavLink-avatar {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -90,7 +90,7 @@
       background-color: var(--global-ui-BackgroundColor);
       border-radius: 0.375rem;
     }
-    .hulyTaskNavLink-icon {
+    .hanzoaiTaskNavLink-icon {
       flex-shrink: 0;
       width: 1rem;
       height: 1rem;
@@ -100,7 +100,7 @@
         visibility: hidden;
       }
     }
-    .hulyTaskNavLink-content {
+    .hanzoaiTaskNavLink-content {
       display: flex;
       flex-direction: column;
       gap: 0.125rem;
@@ -131,18 +131,18 @@
     &.selected {
       background-color: var(--global-ui-highlight-BackgroundColor);
 
-      .hulyTaskNavLink-icon {
+      .hanzoaiTaskNavLink-icon {
         color: var(--global-accent-TextColor);
 
         &.right {
           visibility: visible;
         }
       }
-      .hulyTaskNavLink-content .hulyTaskNavLink-content__title {
+      .hanzoaiTaskNavLink-content .hanzoaiTaskNavLink-content__title {
         font-weight: 700;
         color: var(--global-accent-TextColor);
       }
-      .hulyTaskNavLink-content .hulyTaskNavLink-content__descriptor {
+      .hanzoaiTaskNavLink-content .hanzoaiTaskNavLink-content__descriptor {
         color: var(--global-primary-TextColor);
       }
     }

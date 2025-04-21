@@ -58,7 +58,7 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="hulyModal-container {type} {width ?? ''}" class:hidden class:noTopIndent>
+<div class="hanzoaiModal-container {type} {width ?? ''}" class:hidden class:noTopIndent>
   <Header
     {type}
     {allowFullsize}
@@ -77,7 +77,7 @@
     </svelte:fragment>
   </Header>
   <slot name="beforeContent" />
-  <div class="hulyModal-content">
+  <div class="hanzoaiModal-content">
     <Scroller
       padding={padding ?? typePadding}
       bottomPadding={type === 'type-popup'
@@ -91,7 +91,7 @@
   </div>
   <slot name="afterContent" />
   {#if type !== 'type-component' && !hideFooter}
-    <div class="hulyModal-footer">
+    <div class="hanzoaiModal-footer">
       <ButtonBase
         type={'type-button'}
         kind={'primary'}

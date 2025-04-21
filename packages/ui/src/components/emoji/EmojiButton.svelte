@@ -31,7 +31,7 @@
 {#if emoji}
   <button
     use:tooltip={showTooltip ?? { label: getEmbeddedLabel(capitalizeFirstLetter(displayedEmoji?.label ?? '')) }}
-    class="hulyPopupEmoji-button"
+    class="hanzoaiPopupEmoji-button"
     class:preview
     class:selected
     class:skins={_emoji?.skins !== undefined && _emoji.skins.length === 5}
@@ -50,7 +50,7 @@
 {/if}
 
 <style lang="scss">
-  .hulyPopupEmoji-button {
+  .hanzoaiPopupEmoji-button {
     display: flex;
     justify-content: center;
     align-items: center;

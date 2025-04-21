@@ -30,7 +30,7 @@
   const dispatch = createEventDispatcher()
 </script>
 
-<div class="hulyBreadcrumbs-container {size}">
+<div class="hanzoaiBreadcrumbs-container {size}">
   {#each items as item, i}
     {#if i !== 0}<ChevronRight size={'small'} />{/if}
     <Breadcrumb
@@ -43,7 +43,7 @@
     />
   {/each}
   {#if (afterLabel || $$slots.afterLabel) && !hideAfter}
-    <span class="hulyBreadcrumbs-afterLabel font-medium-12">
+    <span class="hanzoaiBreadcrumbs-afterLabel font-medium-12">
       {#if afterLabel}<Label label={afterLabel} />{/if}
       <slot name="afterLabel" />
     </span>
@@ -51,13 +51,13 @@
 </div>
 
 <style lang="scss">
-  .hulyBreadcrumbs-container {
+  .hanzoaiBreadcrumbs-container {
     display: flex;
     align-items: center;
     height: var(--global-small-Size);
     min-width: 0;
 
-    .hulyBreadcrumbs-afterLabel {
+    .hanzoaiBreadcrumbs-afterLabel {
       max-width: 10rem;
       white-space: nowrap;
       word-break: break-all;

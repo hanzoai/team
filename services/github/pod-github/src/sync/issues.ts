@@ -309,7 +309,7 @@ export class IssueSyncManager extends IssueSyncManagerBase implements DocSyncMan
         external: issueExternal,
         externalVersion: githubExternalSyncVersion,
         lastModified: new Date(issueExternal.updatedAt).getTime(),
-        addHulyLink: true
+        addhanzoaiLink: true
       })
 
       // We need trigger comments, if their sync data created before
@@ -335,7 +335,7 @@ export class IssueSyncManager extends IssueSyncManagerBase implements DocSyncMan
       return { needSync: githubSyncVersion }
     }
 
-    let needCreateConnectedAtHuly = info.addHulyLink === true
+    let needCreateConnectedAthanzoai = info.addhanzoaiLink === true
 
     if (
       (container.project.projectNodeId === undefined ||
@@ -410,13 +410,13 @@ export class IssueSyncManager extends IssueSyncManagerBase implements DocSyncMan
         url: issueExternal.url.toLowerCase(),
         githubNumber: issueExternal.number,
         lastModified: new Date(issueExternal.updatedAt).getTime(),
-        addHulyLink: false, // Do not need, since we create comment on Github about issue is connected.
+        addhanzoaiLink: false, // Do not need, since we create comment on Github about issue is connected.
         current: {
           title: issueExternal.title,
           description: await this.provider.getMarkupSafe(container.container, issueExternal.body, this.stripGuestLink)
         }
       }
-      needCreateConnectedAtHuly = true
+      needCreateConnectedAthanzoai = true
       await derivedClient.update(info, update)
       info.external = update.external
       info.externalVersion = update.externalVersion
@@ -461,8 +461,8 @@ export class IssueSyncManager extends IssueSyncManagerBase implements DocSyncMan
       }
     }
 
-    if (existing !== undefined && issueExternal !== undefined && needCreateConnectedAtHuly) {
-      await this.addHulyLink(info, syncResult, existing, issueExternal, container)
+    if (existing !== undefined && issueExternal !== undefined && needCreateConnectedAthanzoai) {
+      await this.addhanzoaiLink(info, syncResult, existing, issueExternal, container)
     }
 
     return {

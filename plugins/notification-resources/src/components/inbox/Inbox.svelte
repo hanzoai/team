@@ -399,7 +399,7 @@
   }}
 />
 
-<div class="hulyPanels-container">
+<div class="hanzoaiPanels-container">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -407,8 +407,8 @@
         : 'landscape'} border-left"
       class:fly={$deviceInfo.navigator.float}
     >
-      <div class="antiPanel-wrap__content hulyNavPanel-container">
-        <div class="hulyNavPanel-header withButton small">
+      <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
+        <div class="hanzoaiNavPanel-header withButton small">
           <span class="overflow-label"><Label label={notification.string.Inbox} /></span>
           <div class="flex-row-center flex-gap-2">
             <SettingsButton {items} />
@@ -442,7 +442,7 @@
       short
     />
   {/if}
-  <div bind:this={replacedPanel} class="hulyComponent">
+  <div bind:this={replacedPanel} class="hanzoaiComponent">
     {#if selectedContext && selectedComponent}
       <Component
         is={selectedComponent}

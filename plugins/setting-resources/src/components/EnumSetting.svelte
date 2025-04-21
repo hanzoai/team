@@ -54,7 +54,7 @@
   defineSeparators('workspaceSettings', twoPanelsSeparators)
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Enums} label={setting.string.Enums} size={'large'} isCurrent />
     <svelte:fragment slot="actions">
@@ -67,13 +67,13 @@
       />
     </svelte:fragment>
   </Header>
-  <div class="hulyComponent-content__container columns">
-    <div class="hulyComponent-content__column">
-      <div class="hulyComponent-content__navHeader">
-        <div class="hulyComponent-content__navHeader-menu">
+  <div class="hanzoaiComponent-content__container columns">
+    <div class="hanzoaiComponent-content__column">
+      <div class="hanzoaiComponent-content__navHeader">
+        <div class="hanzoaiComponent-content__navHeader-menu">
           <ButtonIcon kind={'tertiary'} icon={IconTableOfContents} size={'small'} inheritColor />
         </div>
-        <div class="hulyComponent-content__navHeader-hint paragraph-regular-14">
+        <div class="hanzoaiComponent-content__navHeader-hint paragraph-regular-14">
           <Label label={setting.string.EnumsSettingHint} />
         </div>
       </div>
@@ -110,9 +110,9 @@
       </Scroller>
     </div>
     <Separator name={'workspaceSettings'} index={0} color={'var(--theme-divider-color)'} />
-    <div class="hulyComponent-content__column content">
+    <div class="hanzoaiComponent-content__column content">
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content">
+        <div class="hanzoaiComponent-content">
           {#if selected !== undefined}
             <EnumValues value={selected} />
           {/if}

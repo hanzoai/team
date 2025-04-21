@@ -725,7 +725,7 @@ export async function backup (
   let connection!: CoreClient & BackupClient
   let printEnd = true
 
-  const tmpRoot = mkdtempSync('huly')
+  const tmpRoot = mkdtempSync('hanzoai')
 
   try {
     let backupInfo: BackupInfo = {

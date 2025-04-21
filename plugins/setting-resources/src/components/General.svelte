@@ -190,16 +190,16 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={settingsRes.icon.Setting} label={settingsRes.string.General} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__column content">
     {#if loading}
       <Spinner size={'small'} />
     {:else}
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content flex-col flex-gap-4">
+        <div class="hanzoaiComponent-content flex-col flex-gap-4">
           <div class="title"><Label label={settingsRes.string.Workspace} /></div>
           <div class="ws">
             <EditableAvatar

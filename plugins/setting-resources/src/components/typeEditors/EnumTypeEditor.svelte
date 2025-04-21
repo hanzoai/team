@@ -59,7 +59,7 @@
   }
 </script>
 
-<div class="hulyModal-content__settingsSet-line">
+<div class="hanzoaiModal-content__settingsSet-line">
   <span class="label">
     <Label label={core.string.Enum} />
   </span>
@@ -83,7 +83,7 @@
   </div>
 </div>
 {#if value && type && !nested}
-  <div class="hulyModal-content__settingsSet-line">
+  <div class="hanzoaiModal-content__settingsSet-line">
     <span class="label">
       <Label label={setting.string.DefaultValue} />
     </span>

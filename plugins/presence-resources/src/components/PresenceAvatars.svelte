@@ -39,12 +39,12 @@
 {#if persons.length > 0}
   {#if adaptive}
     <div
-      class="hulyCombineAvatars-container"
+      class="hanzoaiCombineAvatars-container"
       use:tooltip={{ component: PresenceList, props: { persons, size }, direction: 'bottom' }}
     >
       {#each persons.slice(0, limit) as person, i}
         <div
-          class="hulyCombineAvatar tiny"
+          class="hanzoaiCombineAvatar tiny"
           data-over={i === limit - 1 && overLimit ? `+${persons.length - limit + 1}` : undefined}
         >
           <Avatar name={person.name} {size} {person} />

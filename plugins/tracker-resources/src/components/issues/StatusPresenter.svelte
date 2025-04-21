@@ -35,7 +35,7 @@
 
 {#if value}
   {#if kind === 'table-attrs'}
-    <button class="hulyTableAttr-content__row-icon-wrapper" on:click>
+    <button class="hanzoaiTableAttr-content__row-icon-wrapper" on:click>
       <IssueStatusIcon
         {value}
         {size}
@@ -48,7 +48,7 @@
       />
     </button>
     <span
-      class="hulyTableAttr-content__row-label font-medium-12 uppercase grow overflow-label"
+      class="hanzoaiTableAttr-content__row-label font-medium-12 uppercase grow overflow-label"
       style:color={accentedColor?.color ?? 'var(--global-primary-TextColor)'}
     >
       {value.name}

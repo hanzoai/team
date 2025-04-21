@@ -266,7 +266,7 @@ test.describe('Planning ToDo tests', () => {
     await teamPage.selectTeam('Default')
     await teamPage.buttonNextDay().click()
     await page2
-      .locator('div.hulyComponent div.item', { hasText: 'Tomorrow' })
+      .locator('div.hanzoaiComponent div.item', { hasText: 'Tomorrow' })
       .locator('div.item', { hasText: 'Busy 30m' })
       .isVisible()
 

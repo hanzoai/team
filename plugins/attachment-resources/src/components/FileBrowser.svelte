@@ -122,7 +122,7 @@
     </div>
   </div>
 {/if}
-<div class="hulyHeader-container background-comp-header-color">
+<div class="hanzoaiHeader-container background-comp-header-color">
   <FileBrowserFilters
     {requestedSpaceClasses}
     bind:selectedParticipants
@@ -131,7 +131,7 @@
     bind:selectedFileTypeId
   />
 </div>
-<div class="hulyHeader-container justify-between">
+<div class="hanzoaiHeader-container justify-between">
   <span class="caption-color ml-4">
     <Label label={attachment.string.FileBrowserFileCounter} params={{ results: attachments?.length ?? 0 }} />
   </span>

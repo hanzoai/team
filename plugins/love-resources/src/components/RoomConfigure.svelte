@@ -176,9 +176,9 @@
   class:dragged={top !== undefined || left !== undefined}
   class:placed
   style={dragStyle}
-  style:--huly-floor-roomWidth={room.width}
-  style:--huly-floor-roomHeight={room.height}
-  style:--huly-floor-roomShadow={`var(--theme-popup-shadow), ${$shadow.x}px ${$shadow.y}px ${$shadow.r}px ${$shadow.s}px rgba(${$shadowColor.r}, ${$shadowColor.g}, ${$shadowColor.b}, ${$shadowColor.a})`}
+  style:--hanzoai-floor-roomWidth={room.width}
+  style:--hanzoai-floor-roomHeight={room.height}
+  style:--hanzoai-floor-roomShadow={`var(--theme-popup-shadow), ${$shadow.x}px ${$shadow.y}px ${$shadow.r}px ${$shadow.s}px rgba(${$shadowColor.r}, ${$shadowColor.g}, ${$shadowColor.b}, ${$shadowColor.a})`}
   style:grid-column={`${room.x + 2} / span ${room.width}`}
   style:grid-row={`${room.y + 2} / span ${room.height}`}
   style:grid-template-columns={`repeat(${room.width}, 1fr)`}

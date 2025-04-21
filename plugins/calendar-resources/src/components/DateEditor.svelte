@@ -118,7 +118,7 @@
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
-        class="hulyButton type-button tertiary small rectangle font-medium-14"
+        class="hanzoaiButton type-button tertiary small rectangle font-medium-14"
         class:disabled
         tabindex={focusIndex !== -1 ? focusIndex + 1 : focusIndex}
         on:click={timeClick}
@@ -140,7 +140,7 @@
         <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <div
-          class="hulyButton type-button tertiary small rectangle font-medium-14"
+          class="hanzoaiButton type-button tertiary small rectangle font-medium-14"
           class:disabled
           tabindex={focusIndex !== -1 ? focusIndex + 1 : focusIndex}
           on:click={timeClick}

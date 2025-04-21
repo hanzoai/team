@@ -81,7 +81,7 @@
   <svelte:fragment slot="actions">
     <Button icon={IconDelete} kind={'dangerous'} on:click={remove} />
   </svelte:fragment>
-  <div class="hulyModal-content__settingsSet">
+  <div class="hanzoaiModal-content__settingsSet">
     <div class="flex flex-gap-4">
       <div class="flex-col p-4 flex-gap-2">
         <div class="flex-col-center">A</div>

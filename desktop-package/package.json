@@ -2,7 +2,7 @@
   "name": "desktop",
   "version": "0.6.435",
   "main": "dist/main/electron.js",
-  "author": "Hardcore Engineering <hey@huly.io>",
+  "author": "Hardcore Engineering <hey@hanzoai.io>",
   "template": "@hanzo/default-package",
   "scripts": {
     "_phase:package": "rushx package",
@@ -30,12 +30,12 @@
     "electron-squirrel-startup": "~1.0.0",
     "dotenv": "~16.0.0"
   },
-  "homepage": "https://huly.io/",
-  "productName": "Huly Desktop",
-  "description": "Huly Desktop experience",
+  "homepage": "https://hanzoai.io/",
+  "productName": "hanzoai Desktop",
+  "description": "hanzoai Desktop experience",
   "build": {
-    "productName": "Huly",
-    "appId": "hc.hcengineering.Huly",
+    "productName": "hanzoai",
+    "appId": "hc.hcengineering.hanzoai",
     "directories": {
       "output": "deploy"
     },
@@ -44,7 +44,7 @@
     ],
     "mac": {
       "category": "public.app-category.utilities",
-      "artifactName": "Huly-macos-${version}-${arch}.${ext}",
+      "artifactName": "hanzoai-macos-${version}-${arch}.${ext}",
       "target": "default",
       "icon": "./src/AppIcon.icns",
       "hardenedRuntime": true,
@@ -53,7 +53,7 @@
       "notarize": false,
       "publish": {
         "provider": "generic",
-        "url": "https://dist.huly.io",
+        "url": "https://dist.hanzoai.io",
         "channel": "latest"
       }
     },
@@ -62,17 +62,17 @@
         "zip",
         "nsis"
       ],
-      "artifactName": "Huly-windows-${version}.${ext}",
+      "artifactName": "hanzoai-windows-${version}.${ext}",
       "verifyUpdateCodeSignature": false,
       "icon": "./src/AppIcon.png",
       "publish": {
         "provider": "generic",
-        "url": "https://dist.huly.io",
+        "url": "https://dist.hanzoai.io",
         "channel": "latest"
       }
     },
     "linux": {
-      "artifactName": "Huly-linux-${version}.${ext}",
+      "artifactName": "hanzoai-linux-${version}.${ext}",
       "target": [
         "AppImage",
         "deb",
@@ -81,7 +81,7 @@
       "category": "Utility",
       "publish": {
         "provider": "generic",
-        "url": "https://dist.huly.io",
+        "url": "https://dist.hanzoai.io",
         "channel": "latest"
       }
     }

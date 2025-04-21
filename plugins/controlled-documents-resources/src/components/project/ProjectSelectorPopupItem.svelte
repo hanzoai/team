@@ -19,10 +19,10 @@
   export let onClick: () => void
 </script>
 
-<button class="hulyPopup-row" on:click={onClick}>
+<button class="hanzoaiPopup-row" on:click={onClick}>
   <div class="w-full flex flex-gap-2 clear-mins">
-    <div class="hulyPopup-row__labels-wrapper">
-      <div class="hulyPopup-row__label overflow-label">
+    <div class="hanzoaiPopup-row__labels-wrapper">
+      <div class="hanzoaiPopup-row__label overflow-label">
         {project.name}
       </div>
     </div>

@@ -21,7 +21,7 @@ export class DocumentsPage extends CommonPage {
     this.page.locator('div[data-float="navigator"] button[id="new-document"]')
 
   readonly buttonDocumentWrapper = (name: string): Locator =>
-    this.page.locator(`button.hulyNavItem-container:has-text("${name}")`)
+    this.page.locator(`button.hanzoaiNavItem-container:has-text("${name}")`)
 
   readonly buttonDocument = (name: string): Locator => this.buttonDocumentWrapper(name).locator('span[class*="label"]')
 
@@ -29,20 +29,20 @@ export class DocumentsPage extends CommonPage {
     this.buttonDocumentWrapper(name).getByTestId('document:string:CreateDocument')
 
   readonly breadcrumbsByDocumentParent = (parentDocumentTitle: string): Locator =>
-    this.page.locator(`.hulyHeader-titleGroup:has-text("${parentDocumentTitle}")`)
+    this.page.locator(`.hanzoaiHeader-titleGroup:has-text("${parentDocumentTitle}")`)
 
   readonly buttonDocumentsApp = (): Locator => this.page.locator('button[id$="document:string:DocumentApplication"]')
   readonly divTeamspacesParent = (): Locator =>
-    this.page.locator('button.hulyNavGroup-header', { hasText: 'Teamspaces' })
+    this.page.locator('button.hanzoaiNavGroup-header', { hasText: 'Teamspaces' })
 
   readonly buttonTeamspaces = (): Locator =>
-    this.page.locator('button.hulyNavItem-container', { hasText: 'Teamspaces' })
+    this.page.locator('button.hanzoaiNavItem-container', { hasText: 'Teamspaces' })
 
   readonly rowTeamspace = (hasText: string): Locator =>
-    this.page.locator('div.hulyComponent td ', { hasText }).locator('xpath=..')
+    this.page.locator('div.hanzoaiComponent td ', { hasText }).locator('xpath=..')
 
   readonly buttonJoinTeamspace = (hasText: string): Locator =>
-    this.page.locator('div.hulyComponent td ', { hasText }).locator('xpath=..').locator('button[type="submit"]')
+    this.page.locator('div.hanzoaiComponent td ', { hasText }).locator('xpath=..').locator('button[type="submit"]')
 
   readonly buttonCreateTeamspace = (): Locator => this.page.locator('button#tree-teamspaces')
   readonly formNewTeamspace = (): Locator => this.page.locator('form[id="document:string:NewTeamspace"]')
@@ -89,7 +89,7 @@ export class DocumentsPage extends CommonPage {
 
   async openTeamspace (name: string): Promise<void> {
     const classes = await this.page
-      .locator('button.hulyNavGroup-header span[class*="label"]', { hasText: name })
+      .locator('button.hanzoaiNavGroup-header span[class*="label"]', { hasText: name })
       .locator('xpath=../..')
       .getAttribute('class')
     if (classes != null && !classes.includes('isOpen')) {
@@ -99,20 +99,20 @@ export class DocumentsPage extends CommonPage {
 
   async checkTeamspaceExist (name: string): Promise<void> {
     await expect(
-      this.page.locator('div[class*="hulyNavGroup-content"] span[class*="label"]', { hasText: name })
+      this.page.locator('div[class*="hanzoaiNavGroup-content"] span[class*="label"]', { hasText: name })
     ).toHaveCount(1)
   }
 
   async checkTeamspaceNotExist (name: string): Promise<void> {
     await expect(
-      this.page.locator('button[class*="hulyNavGroup-header"] span[class*="label"]', { hasText: name })
+      this.page.locator('button[class*="hanzoaiNavGroup-header"] span[class*="label"]', { hasText: name })
     ).toHaveCount(0)
   }
 
   async moreActionTeamspace (name: string, action: string): Promise<void> {
-    await this.page.locator('button.hulyNavGroup-header span[class*="label"]', { hasText: name }).hover()
+    await this.page.locator('button.hanzoaiNavGroup-header span[class*="label"]', { hasText: name }).hover()
     await this.page
-      .locator(`xpath=//span[text()="${name}"]/../../div[@class="hulyNavGroup-header__tools"]/button[last()]`)
+      .locator(`xpath=//span[text()="${name}"]/../../div[@class="hanzoaiNavGroup-header__tools"]/button[last()]`)
       .click()
     await this.selectFromDropdown(this.page, action)
   }
@@ -138,9 +138,9 @@ export class DocumentsPage extends CommonPage {
 
   async openDocumentForTeamspace (spaceName: string, documentName: string): Promise<void> {
     await this.page
-      .locator('button.hulyNavGroup-header span[class*="label"]', { hasText: spaceName })
+      .locator('button.hanzoaiNavGroup-header span[class*="label"]', { hasText: spaceName })
       .locator('xpath=../../following-sibling::div[1]')
-      .locator('button.hulyNavItem-container span[class*="label"]', { hasText: documentName })
+      .locator('button.hanzoaiNavItem-container span[class*="label"]', { hasText: documentName })
       .click()
   }
 
@@ -164,11 +164,11 @@ export class DocumentsPage extends CommonPage {
   }
 
   async moreActionsOnDocument (documentName: string, action: string): Promise<void> {
-    await this.page.locator('button.hulyNavItem-container span[class*="label"]', { hasText: documentName }).hover()
+    await this.page.locator('button.hanzoaiNavItem-container span[class*="label"]', { hasText: documentName }).hover()
     await this.page
-      .locator('button.hulyNavItem-container > span[class*="label"]', { hasText: documentName })
+      .locator('button.hanzoaiNavItem-container > span[class*="label"]', { hasText: documentName })
       .locator('xpath=..')
-      .locator('div.hulyNavItem-actions > button:last-child')
+      .locator('div.hanzoaiNavItem-actions > button:last-child')
       .click()
     await this.selectFromDropdown(this.page, action)
   }

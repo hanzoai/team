@@ -59,6 +59,6 @@
   })
 </script>
 
-<div class="hulyPanels-container">
+<div class="hanzoaiPanels-container">
   <Hall />
 </div>

@@ -123,12 +123,12 @@
 </script>
 
 {#if role !== undefined}
-  <div class="hulyComponent-content__container columns">
-    <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__container columns">
+    <div class="hanzoaiComponent-content__column content">
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content gap">
-          <div class="hulyComponent-content__column-group mt-4">
-            <div class="hulyComponent-content__header mb-6 gap-2">
+        <div class="hanzoaiComponent-content gap">
+          <div class="hanzoaiComponent-content__column-group mt-4">
+            <div class="hanzoaiComponent-content__header mb-6 gap-2">
               <ButtonIcon
                 icon={IconDelete}
                 size="large"
@@ -154,8 +154,8 @@
               </div>
             </div>
 
-            <div class="hulyTableAttr-container">
-              <div class="hulyTableAttr-header font-medium-12">
+            <div class="hanzoaiTableAttr-container">
+              <div class="hanzoaiTableAttr-header font-medium-12">
                 <IconSettings size="small" />
                 <span><Label label={settingRes.string.Permissions} /></span>
                 <ButtonIcon
@@ -168,21 +168,21 @@
               </div>
 
               {#if permissions.length > 0}
-                <div class="hulyTableAttr-content task">
+                <div class="hanzoaiTableAttr-content task">
                   {#each permissions as permission}
-                    <div class="hulyTableAttr-content__row">
+                    <div class="hanzoaiTableAttr-content__row">
                       {#if permission.icon !== undefined}
-                        <div class="hulyTableAttr-content__row-icon-wrapper">
+                        <div class="hanzoaiTableAttr-content__row-icon-wrapper">
                           <Icon icon={permission.icon} size="small" />
                         </div>
                       {/if}
 
-                      <div class="hulyTableAttr-content__row-label font-medium-14">
+                      <div class="hanzoaiTableAttr-content__row-label font-medium-14">
                         <Label label={permission.label} />
                       </div>
 
                       {#if permission.description !== undefined}
-                        <div class="hulyTableAttr-content__row-label grow dark font-regular-14">
+                        <div class="hanzoaiTableAttr-content__row-label grow dark font-regular-14">
                           <Label label={permission.description} />
                         </div>
                       {/if}

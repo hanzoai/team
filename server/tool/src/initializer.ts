@@ -20,7 +20,7 @@ import core, {
 } from '@hanzo/core'
 import { ModelLogger } from '@hanzo/model'
 import { makeRank } from '@hanzo/rank'
-import { HulyFormatImporter, StorageFileUploader } from '@hanzo/importer'
+import { hanzoaiFormatImporter, StorageFileUploader } from '@hanzo/importer'
 import type { StorageAdapter } from '@hanzo/server-core'
 import { jsonToMarkup } from '@hanzo/text'
 import { markdownToMarkup } from '@hanzo/text-markdown'
@@ -192,7 +192,7 @@ export class WorkspaceInitializer {
       const initPath = path.resolve(this.initRepoDir, step.path)
       // eslint-disable-next-line no-template-curly-in-string
       const initPerson = vars[`\${${this.creatorPersonVar}}`]
-      const importer = new HulyFormatImporter(this.client, uploader, logger, this.socialKey, initPerson)
+      const importer = new hanzoaiFormatImporter(this.client, uploader, logger, this.socialKey, initPerson)
       await importer.importFolder(initPath)
     } catch (error) {
       logger.error('Import failed', error)

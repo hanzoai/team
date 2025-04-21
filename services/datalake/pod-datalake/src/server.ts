@@ -264,8 +264,8 @@ export function createServer (ctx: MeasureContext, config: Config): { app: Expre
 
   app.get('/', (_req, res) => {
     res.send(`
-      Huly® Datalake™ <a href="https://huly.io">https://huly.io</a>
-      © 2025 <a href="https://hulylabs.com">Huly Labs</a>
+      hanzoai® Datalake™ <a href="https://hanzoai.io">https://hanzoai.io</a>
+      © 2025 <a href="https://hanzoailabs.com">hanzoai Labs</a>
     `)
   })
 

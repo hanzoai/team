@@ -100,7 +100,7 @@
 
 <div
   bind:this={container}
-  class="hulyComponent-content__container columns relative"
+  class="hanzoaiComponent-content__container columns relative"
   use:resizeObserver={(element) => {
     if (visibleNavigator && !floatNavigator && element.clientWidth < FLOAT_LIMIT) {
       floatNavigator = true
@@ -123,7 +123,7 @@
       class:inner={!$deviceInfo.navigator.float}
       class:fly={$deviceInfo.navigator.float}
     >
-      <div class="hulyComponent-content__column">
+      <div class="hanzoaiComponent-content__column">
         <Header adaptive={'disabled'}>
           <ClassHeader _class={parentClass} />
           <svelte:fragment slot="actions">
@@ -152,7 +152,7 @@
     </div>
     <Separator name={'parentsNavigator'} float={floatNavigator} index={0} color={'var(--theme-divider-color)'} />
   {/if}
-  <div class="hulyComponent-content__column">
+  <div class="hanzoaiComponent-content__column">
     <Header adaptive={'disabled'}>
       <svelte:fragment slot="beforeTitle">
         <ButtonIcon

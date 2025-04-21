@@ -64,13 +64,13 @@
 {#each classes as cl}
   {@const clazz = getMasterTag(cl)}
   <button
-    class="hulyTableAttr-content__row justify-start cursor-pointer"
+    class="hanzoaiTableAttr-content__row justify-start cursor-pointer"
     on:click={() => {
       dispatch('select', cl)
     }}
   >
     <div
-      class="hulyTableAttr-content__row-label font-medium-14 flex flex-gap-2"
+      class="hanzoaiTableAttr-content__row-label font-medium-14 flex flex-gap-2"
       style:margin-left={`${level * 1.25}rem`}
     >
       <Icon

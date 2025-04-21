@@ -8,18 +8,18 @@ export class DriveLeftMenu {
     this.page = page
   }
 
-  readonly leftMenu = (): Locator => this.page.locator('.antiPanel-wrap__content.hulyNavPanel-container')
+  readonly leftMenu = (): Locator => this.page.locator('.antiPanel-wrap__content.hanzoaiNavPanel-container')
   readonly buttonCreateDrive = (): Locator => this.page.locator('button#tree-drives')
   readonly buttonUploadFiles = (): Locator => this.leftMenu().getByRole('button', { name: 'Upload files' })
   readonly buttonDrives = (): Locator => this.page.getByRole('link', { name: 'Drives' }).getByRole('button')
   readonly groupHeaderDrive = (): Locator => this.page.getByRole('button', { name: 'Drive', exact: true })
   readonly treeDrives = (): Locator => this.leftMenu().locator('#navGroup-tree-drives')
   readonly buttonDriveInTree = (drive: Drive): Locator =>
-    this.treeDrives().locator('.hulyNavGroup-container').getByRole('button', { name: drive.name })
+    this.treeDrives().locator('.hanzoaiNavGroup-container').getByRole('button', { name: drive.name })
 
   readonly driveContainer = (drive: Drive): Locator =>
     this.treeDrives()
-      .locator('.hulyNavGroup-container')
+      .locator('.hanzoaiNavGroup-container')
       .filter({
         has: this.page.locator(':scope').getByRole('button', { name: drive.name })
       })

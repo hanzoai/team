@@ -133,7 +133,7 @@
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
 </script>
 
-<div class="hulyPanels-container chat next-colors">
+<div class="hanzoaiPanels-container chat next-colors">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -141,7 +141,7 @@
         : 'landscape'} border-left chat__navigator"
       class:fly={$deviceInfo.navigator.float}
     >
-      <div class="antiPanel-wrap__content hulyNavPanel-container">
+      <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
         <ChatNavigation
           card={getSelectedCard(selection)}
           type={getSelectedType(selection)}
@@ -163,7 +163,7 @@
       short
     />
   {/if}
-  <div bind:this={replacedPanelElement} class="hulyComponent chat__panel">
+  <div bind:this={replacedPanelElement} class="hanzoaiComponent chat__panel">
     {#if selectedCard}
       {@const context = contexts.find((c) => c.card === selectedCard?._id)}
       <ChatPanel card={selectedCard} {context} />

@@ -62,12 +62,12 @@
   }
 </script>
 
-<div class="hulyReactions-container">
+<div class="hanzoaiReactions-container">
   {#each [...reactionsPersons] as [emoji, persons]}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      class="hulyReactions-button"
+      class="hanzoaiReactions-button"
       class:highlight={includesAny(persons, me.socialIds)}
       class:cursor-pointer={!readonly}
       use:tooltip={{ component: ReactionsTooltip, props: { reactionAccounts: persons } }}
@@ -80,14 +80,14 @@
   {#if object && reactionsPersons.size > 0 && !readonly}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div class="hulyReactions-button withoutBackground" class:opened on:click={openEmojiPalette}>
+    <div class="hanzoaiReactions-button withoutBackground" class:opened on:click={openEmojiPalette}>
       <IconAdd size="small" />
     </div>
   {/if}
 </div>
 
 <style lang="scss">
-  .hulyReactions-container {
+  .hanzoaiReactions-container {
     display: flex;
     flex-wrap: wrap;
     column-gap: 0.125rem;
@@ -102,7 +102,7 @@
       margin-left: 0.25rem;
     }
 
-    .hulyReactions-button {
+    .hanzoaiReactions-button {
       display: flex;
       justify-content: center;
       align-items: center;

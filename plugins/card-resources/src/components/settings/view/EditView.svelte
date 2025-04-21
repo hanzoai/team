@@ -68,11 +68,11 @@
   <svelte:fragment slot="actions">
     <Button icon={IconDelete} kind={'dangerous'} on:click={remove} />
   </svelte:fragment>
-  <div class="hulyModal-content__titleGroup">
+  <div class="hanzoaiModal-content__titleGroup">
     <ModernEditbox bind:value={title} label={view.string.Title} size={'large'} kind={'ghost'} />
   </div>
-  <div class="hulyModal-content__settingsSet">
-    <div class="hulyModal-content__settingsSet-line">
+  <div class="hanzoaiModal-content__settingsSet">
+    <div class="hanzoaiModal-content__settingsSet-line">
       <span class="label">
         <Label label={view.string.Type} />
       </span>
@@ -80,7 +80,7 @@
         <DescriptorBox label={card.string.SelectViewType} bind:value={type} />
       </div>
     </div>
-    <div class="hulyModal-content__settingsSet-line">
+    <div class="hanzoaiModal-content__settingsSet-line">
       <span class="label">
         <Label label={setting.string.Settings} />
       </span>

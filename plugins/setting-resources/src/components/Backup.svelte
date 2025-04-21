@@ -148,7 +148,7 @@
   $: snapshots = backupInfo?.info?.snapshots ?? []
 </script>
 
-<div class="hulyComponent p-2 flex-no-shrink">
+<div class="hanzoaiComponent p-2 flex-no-shrink">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Setting} label={setting.string.Backup} size={'large'} isCurrent />
   </Header>

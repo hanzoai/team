@@ -289,12 +289,12 @@
   $: rows = calculateFloorSize(rooms) + 2
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header allowFullsize adaptive={'disabled'}>
     <Breadcrumb title={selectedFloor?.name ?? ''} size={'large'} isCurrent />
     <svelte:fragment slot="actions">
       <ButtonIcon icon={IconAdd} size={'small'} on:click={addRoom} />
-      <div class="hulyHeader-divider short" />
+      <div class="hanzoaiHeader-divider short" />
       <ModernButton
         label={lovePlg.string.FinalizeEditing}
         kind={'primary'}
@@ -303,7 +303,7 @@
       />
     </svelte:fragment>
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__column content">
     <Scroller bind:divScroll padding={'1rem'} bottomPadding={'1rem'} horizontal>
       <FloorGrid
         bind:floorContainer

@@ -16,7 +16,7 @@
 import { MarkupNode, jsonToMarkup, markupToJSON, htmlToJSON } from '@hanzo/text'
 import { MarkdownParser, storeNodes, storeMarks, MarkdownState } from '@hanzo/text-markdown'
 import { GithubKit } from './extensions'
-import { hasHulyLink, hasHulyLinkText } from '../sync/guest'
+import { hashanzoaiLink, hashanzoaiLinkText } from '../sync/guest'
 
 /**
  * @public
@@ -30,8 +30,8 @@ export function parseMessageMarkdown (
   const extensions = [
     GithubKit.configure({
       sub: {
-        hasHulyText: hasHulyLinkText,
-        hasHulyLink: (href) => hasHulyLink(href, guestUrl)
+        hashanzoaiText: hashanzoaiLinkText,
+        hashanzoaiLink: (href) => hashanzoaiLink(href, guestUrl)
       }
     })
   ]

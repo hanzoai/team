@@ -18,7 +18,7 @@ import { markupToMarkdown } from '@hanzo/text-markdown'
 import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import * as yaml from 'js-yaml'
 import { basename, dirname, extname, join, relative } from 'path'
-import { HulyControlledDocumentHeader, HulyDocumentTemplateHeader } from '../huly/huly'
+import { hanzoaiControlledDocumentHeader, hanzoaiDocumentTemplateHeader } from '../hanzoai/hanzoai'
 
 export interface DocumentConverterOptions {
   outputPath: string
@@ -32,7 +32,7 @@ export interface DocumentState {
   path: string
   root: string
   markup: MarkupNode
-  header?: HulyControlledDocumentHeader | HulyDocumentTemplateHeader
+  header?: hanzoaiControlledDocumentHeader | hanzoaiDocumentTemplateHeader
 }
 
 export interface DocumentPreprocessorOptions<T> {

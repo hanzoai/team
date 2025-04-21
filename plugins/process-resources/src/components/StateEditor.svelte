@@ -94,7 +94,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="hulyTableAttr-container">
+<div class="hanzoaiTableAttr-container">
   <div class="item flex-col-center w-full mb-4" class:hovered>
     <div class="flex-between w-full header">
       <EditBox bind:value={value.title} on:change={saveTitle} />

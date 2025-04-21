@@ -86,13 +86,13 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={plugin.icon.Export} label={plugin.string.Export} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__column content">
     <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-      <div class="hulyComponent-content">
+      <div class="hanzoaiComponent-content">
         <div class="flex-row-center p-2 flex-no-shrink">
           <div class="p-1 min-w-80">
             <div class="antiGrid-row">

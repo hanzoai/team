@@ -150,7 +150,7 @@
   defineSeparators('workspaceSettings', twoPanelsSeparators)
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb
       icon={templatesPlugin.icon.Templates}
@@ -160,8 +160,8 @@
     />
   </Header>
 
-  <div class="hulyComponent-content__container columns">
-    <div class="hulyComponent-content__column">
+  <div class="hanzoaiComponent-content__container columns">
+    <div class="hanzoaiComponent-content__column">
       <div id="create-template" class="flex-between trans-title flex-no-shrink bottom-divider p-3">
         <Button
           icon={templatesPlugin.icon.Template}
@@ -202,9 +202,9 @@
       </div>
     </div>
     <Separator name={'workspaceSettings'} index={0} color={'var(--theme-divider-color)'} />
-    <div class="hulyComponent-content__column content">
+    <div class="hanzoaiComponent-content__column content">
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content">
+        <div class="hanzoaiComponent-content">
           {#if newTemplate}
             <div class="flex-between mr-4">
               <span class="trans-title mb-3">

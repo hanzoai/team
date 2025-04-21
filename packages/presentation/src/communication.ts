@@ -99,13 +99,13 @@ export async function setCommunicationClient (platformClient: PlatformClient, so
 }
 
 class Client {
-  private readonly hulySocialId: SocialId | undefined
+  private readonly hanzoaiSocialId: SocialId | undefined
 
   constructor (
     private readonly connection: Connection,
     socialIds: SocialId[]
   ) {
-    this.hulySocialId = socialIds.find((it) => it.type === SocialIdType.HULY && it.verifiedOn !== undefined)
+    this.hanzoaiSocialId = socialIds.find((it) => it.type === SocialIdType.hanzoai && it.verifiedOn !== undefined)
 
     connection.pushHandler((...events: any[]) => {
       for (const event of events) {
@@ -259,7 +259,7 @@ class Client {
 
   private getSocialId (): SocialID {
     const me = getCurrentAccount()
-    const id = this.hulySocialId?._id ?? me.primarySocialId
+    const id = this.hanzoaiSocialId?._id ?? me.primarySocialId
     if (id == null || id === '') {
       throw new Error('Social id not found')
     }

@@ -27,7 +27,7 @@ export class VacanciesPage extends CommonRecruitingPage {
 
   readonly buttonExport = (): Locator => this.page.locator('button[type="button"] > span', { hasText: 'Export' })
   readonly buttonView = (): Locator =>
-    this.page.locator('div.hulyHeader-container > .hulyHeader-buttonsGroup.before button[data-id="btn-viewOptions"]')
+    this.page.locator('div.hanzoaiHeader-container > .hanzoaiHeader-buttonsGroup.before button[data-id="btn-viewOptions"]')
 
   readonly buttonHideArchivedVacancies = (): Locator => this.page.locator('div.popup span.toggle-switch')
   readonly popupArchivedVacancy = (): Locator => this.page.locator('div.antiPopup :text("Archive")')

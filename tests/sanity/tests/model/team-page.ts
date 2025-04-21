@@ -9,15 +9,15 @@ export class TeamPage extends CommonPage {
     this.page = page
   }
 
-  appHeader = (): Locator => this.page.locator('div.hulyNavPanel-header', { hasText: 'Team Planner' })
+  appHeader = (): Locator => this.page.locator('div.hanzoaiNavPanel-header', { hasText: 'Team Planner' })
   buttonTeam = (name: string): Locator =>
-    this.page.locator('div#navGroup-projects-planning button.hulyNavItem-container', { hasText: name })
+    this.page.locator('div#navGroup-projects-planning button.hanzoaiNavItem-container', { hasText: name })
 
   buttonNextDay = (): Locator =>
-    this.page.locator('div.hulyComponent div.hulyHeader-container .actions button[data-id="btnNext"]')
+    this.page.locator('div.hanzoaiComponent div.hanzoaiHeader-container .actions button[data-id="btnNext"]')
 
   getItemByText = (column: string, title: string): Locator =>
-    this.page.locator('div.hulyComponent div.item', { hasText: column }).locator('div.item', { hasText: title })
+    this.page.locator('div.hanzoaiComponent div.item', { hasText: column }).locator('div.item', { hasText: title })
 
   async checkTeamPageIsOpened (): Promise<void> {
     await expect(this.appHeader()).toBeVisible()

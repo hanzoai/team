@@ -33,7 +33,7 @@
   }
 </script>
 
-<div class="hulyTableAttr-content__row-label cursor-pointer">
+<div class="hanzoaiTableAttr-content__row-label cursor-pointer">
   {value.nameA} (<Label label={getClassLabel(value.classA)} />) - {value.nameB} (<Label
     label={getClassLabel(value.classB)}
   />)

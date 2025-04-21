@@ -183,7 +183,7 @@
   defineSeparators('schedule', twoPanelsSeparators)
 </script>
 
-<div class="hulyPanels-container">
+<div class="hanzoaiPanels-container">
   {#if $deviceInfo.navigator.visible}
     <Sidebar
       {department}
@@ -203,7 +203,7 @@
     />
   {/if}
 
-  <div class="hulyComponent" bind:this={replacedPanel}>
+  <div class="hanzoaiComponent" bind:this={replacedPanel}>
     <Header
       adaptive={'disabled'}
       hideBefore={mode === CalendarMode.Year}
@@ -256,7 +256,7 @@
         {/if}
       </svelte:fragment>
     </Header>
-    <div class="hulyHeader-container clearPadding justify-between flex-gap-4">
+    <div class="hanzoaiHeader-container clearPadding justify-between flex-gap-4">
       <div class="flex-row-center flex-gap-2">
         <ButtonIcon
           icon={IconBack}
@@ -280,7 +280,7 @@
             inc(1)
           }}
         />
-        <div class="hulyHeader-divider short" />
+        <div class="hanzoaiHeader-divider short" />
         <div class="fs-title flex-row-center flex-grow firstLetter">
           {#if mode === CalendarMode.Month}
             <span class="mr-2 overflow-label">{getMonthName(currentDate)}</span>

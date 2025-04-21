@@ -1426,7 +1426,7 @@ describe('account utils', () => {
       )
     })
 
-    test('should create HULY social id when creating account', async () => {
+    test('should create hanzoai social id when creating account', async () => {
       const email = 'new@example.com'
       const password = 'password123'
       const firstName = 'John'
@@ -1438,10 +1438,10 @@ describe('account utils', () => {
 
       await signUpByEmail(mockCtx, mockDb, mockBranding, email, password, firstName, lastName)
 
-      // Verify HULY social id creation
+      // Verify hanzoai social id creation
       expect(mockDb.socialId.insertOne).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: SocialIdType.HULY,
+          type: SocialIdType.hanzoai,
           value: personUuid,
           personUuid
         })

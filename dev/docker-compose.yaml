@@ -2,10 +2,10 @@ services:
   stream:
     image: 'hardcoreeng/stream'
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     container_name: stream
     environment:
-      - STREAM_ENDPOINT_URL=s3://huly.local:9000
+      - STREAM_ENDPOINT_URL=s3://hanzoai.local:9000
       - STREAM_INSECURE=true
       - STREAM_SERVER_SECRET=secret
       - AWS_ACCESS_KEY_ID=minioadmin
@@ -17,7 +17,7 @@ services:
     image: 'mongo:7-jammy'
     container_name: mongodb
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     healthcheck:
       test: echo "try { db.currentOp().ok } catch (err) { }" | mongosh --port 27017 --quiet
       interval: 5s
@@ -36,7 +36,7 @@ services:
   cockroach:
     image: cockroachdb/cockroach:latest-v24.2
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     ports:
       - '26257:26257'
       - '8089:8080'
@@ -47,7 +47,7 @@ services:
   redpanda:
     image: docker.redpanda.com/redpandadata/redpanda:v24.3.6
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     command:
       - redpanda
       - start
@@ -77,7 +77,7 @@ services:
   redpanda_console:
     image: docker.redpanda.com/redpandadata/console:v2.8.3
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     entrypoint: /bin/sh
     command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
     environment:
@@ -100,7 +100,7 @@ services:
     image: 'minio/minio'
     command: server /data --address ":9000" --console-address ":9001"
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     expose:
       - 9000
       - 9001
@@ -115,7 +115,7 @@ services:
     expose:
       - 9200
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     volumes:
       - elastic:/usr/share/elasticsearch/data
     ports:
@@ -133,7 +133,7 @@ services:
   account:
     image: hardcoreeng/account
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - mongodb
       - minio
@@ -147,28 +147,28 @@ services:
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - SERVER_SECRET=secret
       - ADMIN_EMAILS=admin,${PLATFORM_ADMIN_EMAILS}
-      - STATS_URL=http://huly.local:4900
+      - STATS_URL=http://hanzoai.local:4900
       - WORKSPACE_LIMIT_PER_USER=10000
       - DB_URL=${DB_CR_URL}
       # - DB_URL=${MONGO_URL}
       # - DB_NS=account-2
       # Pass only one region to disallow selection for new workspaces.
       - REGION_INFO=|Mongo;cockroach|CockroachDB
-      - TRANSACTOR_URL=ws://huly.local:3333,ws://huly.local:3332;;cockroach,
+      - TRANSACTOR_URL=ws://hanzoai.local:3333,ws://hanzoai.local:3332;;cockroach,
       - MAIL_URL=
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - FRONT_URL=http://huly.local:8087
+      - FRONT_URL=http://hanzoai.local:8087
       - MODEL_ENABLED=*
       - LAST_NAME_FIRST=true
       # - WS_LIVENESS_DAYS=1
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - BRANDING_PATH=/var/cfg/branding.json
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   stats:
     image: hardcoreeng/stats
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     ports:
       - 4900:4900
     environment:
@@ -178,7 +178,7 @@ services:
   workspace:
     image: hardcoreeng/workspace
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - mongodb
       - minio
@@ -190,12 +190,12 @@ services:
       - SERVER_SECRET=secret
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - DB_URL=${MONGO_URL}
-      - STATS_URL=http://huly.local:4900
+      - STATS_URL=http://hanzoai.local:4900
       - MAIL_URL=
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - MODEL_ENABLED=*
       - REGION=
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
       - BACKUP_BUCKET=${BACKUP_BUCKET_NAME}
@@ -204,7 +204,7 @@ services:
   workspace_cockroach:
     image: hardcoreeng/workspace
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - cockroach
       - minio
@@ -217,10 +217,10 @@ services:
       - SERVER_SECRET=secret
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - DB_URL=${DB_CR_URL}
-      - STATS_URL=http://huly.local:4900
+      - STATS_URL=http://hanzoai.local:4900
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - MODEL_ENABLED=*
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
       - BACKUP_BUCKET=${BACKUP_BUCKET_NAME}
@@ -230,7 +230,7 @@ services:
   collaborator:
     image: hardcoreeng/collaborator
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - mongodb
       - minio
@@ -241,14 +241,14 @@ services:
     environment:
       - COLLABORATOR_PORT=3078
       - SECRET=secret
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://huly.local:4900
+      - STATS_URL=http://hanzoai.local:4900
     restart: unless-stopped
   front:
     image: hardcoreeng/front
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - mongodb
       - minio
@@ -262,29 +262,29 @@ services:
     environment:
       - SERVER_PORT=8080
       - SERVER_SECRET=secret
-      - ACCOUNTS_URL=http://huly.local:3000
-      - STATS_URL=http://huly.local:4900
+      - ACCOUNTS_URL=http://hanzoai.local:3000
+      - STATS_URL=http://hanzoai.local:4900
       - UPLOAD_URL=/files
-      - GMAIL_URL=http://huly.local:8088
-      - CALENDAR_URL=http://huly.local:8095
-      - TELEGRAM_URL=http://huly.local:8086
-      - REKONI_URL=http://huly.local:4004
-      - COLLABORATOR_URL=ws://huly.local:3078
+      - GMAIL_URL=http://hanzoai.local:8088
+      - CALENDAR_URL=http://hanzoai.local:8095
+      - TELEGRAM_URL=http://hanzoai.local:8086
+      - REKONI_URL=http://hanzoai.local:4004
+      - COLLABORATOR_URL=ws://hanzoai.local:3078
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - GITHUB_URL=http://huly.local:3500
-      - PRINT_URL=http://huly.local:4005
-      - SIGN_URL=http://huly.local:4006
-      - ANALYTICS_COLLECTOR_URL=http://huly.local:4017
-      - DESKTOP_UPDATES_URL=https://dist.huly.io
+      - GITHUB_URL=http://hanzoai.local:3500
+      - PRINT_URL=http://hanzoai.local:4005
+      - SIGN_URL=http://hanzoai.local:4006
+      - ANALYTICS_COLLECTOR_URL=http://hanzoai.local:4017
+      - DESKTOP_UPDATES_URL=https://dist.hanzoai.io
       - DESKTOP_UPDATES_CHANNEL=dev
-      - BRANDING_URL=http://huly.local:8087/branding.json
-      - STREAM_URL=http://huly.local:1080/recording
+      - BRANDING_URL=http://hanzoai.local:8087/branding.json
+      - STREAM_URL=http://hanzoai.local:1080/recording
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   transactor:
     image: hardcoreeng/transactor
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - mongodb
       - minio
@@ -300,8 +300,8 @@ services:
       - SERVER_PORT=3333
       - SERVER_SECRET=secret
       - ENABLE_COMPRESSION=true
-      - STATS_URL=http://huly.local:4900
-      - FULLTEXT_URL=http://huly.local:4700
+      - STATS_URL=http://hanzoai.local:4900
+      - FULLTEXT_URL=http://hanzoai.local:4700
       # - DB_URL=${DB_CR_URL}
       - DB_URL=${MONGO_URL}
       - MONGO_URL=${MONGO_URL}
@@ -309,17 +309,17 @@ services:
       - METRICS_CONSOLE=false
       - METRICS_FILE=metrics.txt
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - FRONT_URL=http://huly.local:8087
+      - FRONT_URL=http://hanzoai.local:8087
       - MAIL_URL=''
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://huly.local:4010
+      - AI_BOT_URL=http://hanzoai.local:4010
     restart: unless-stopped
   transactor_cockroach:
     image: hardcoreeng/transactor
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - cockroach
       - minio
@@ -335,34 +335,34 @@ services:
       - REGION=cockroach
       - SERVER_SECRET=secret
       - ENABLE_COMPRESSION=true
-      - FULLTEXT_URL=http://huly.local:4702
-      - STATS_URL=http://huly.local:4900
+      - FULLTEXT_URL=http://hanzoai.local:4702
+      - STATS_URL=http://hanzoai.local:4900
       - DB_URL=${DB_CR_URL}
       - METRICS_CONSOLE=false
       - METRICS_FILE=metrics.txt
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - FRONT_URL=http://huly.local:8087
+      - FRONT_URL=http://hanzoai.local:8087
       - MAIL_URL=''
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://huly.local:4010
-      - MSG2FILE_URL=http://huly.local:9087
+      - AI_BOT_URL=http://hanzoai.local:4010
+      - MSG2FILE_URL=http://hanzoai.local:9087
       - COMMUNICATION_TIME_LOGGING_ENABLED=true
     restart: unless-stopped
   rekoni:
     image: hardcoreeng/rekoni-service
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     restart: unless-stopped
     ports:
       - 4004:4004
     environment:
-      - STATS_URL=http://huly.local:4901
+      - STATS_URL=http://hanzoai.local:4901
   fulltext:
     image: hardcoreeng/fulltext
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     restart: unless-stopped
     links:
       - elastic
@@ -375,16 +375,16 @@ services:
       - SERVER_SECRET=secret
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - DB_URL=${MONGO_URL}
-      - FULLTEXT_DB_URL=http://huly.local:9200
+      - FULLTEXT_DB_URL=http://hanzoai.local:9200
       - ELASTIC_INDEX_NAME=local_storage_index
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://huly.local:4900
-      - REKONI_URL=http://huly.local:4004
-      - ACCOUNTS_URL=http://huly.local:3000
+      - STATS_URL=http://hanzoai.local:4900
+      - REKONI_URL=http://hanzoai.local:4004
+      - ACCOUNTS_URL=http://hanzoai.local:3000
   fulltext_cockroach:
     image: hardcoreeng/fulltext
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     restart: unless-stopped
     links:
       - elastic
@@ -398,16 +398,16 @@ services:
       - SERVER_SECRET=secret
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - DB_URL=${DB_CR_URL}
-      - FULLTEXT_DB_URL=http://huly.local:9200
+      - FULLTEXT_DB_URL=http://hanzoai.local:9200
       - ELASTIC_INDEX_NAME=local_storage_index # Same index for simplicity
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://huly.local:4900
-      - REKONI_URL=http://huly.local:4004
-      - ACCOUNTS_URL=http://huly.local:3000
+      - STATS_URL=http://hanzoai.local:4900
+      - REKONI_URL=http://hanzoai.local:4004
+      - ACCOUNTS_URL=http://hanzoai.local:3000
   print:
     image: hardcoreeng/print
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     restart: unless-stopped
     ports:
       - 4005:4005
@@ -415,12 +415,12 @@ services:
       - SECRET=secret
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://huly.local:4900
-      - ACCOUNTS_URL=http://huly.local:3000
+      - STATS_URL=http://hanzoai.local:4900
+      - ACCOUNTS_URL=http://hanzoai.local:3000
   sign:
     image: hardcoreeng/sign
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     restart: unless-stopped
     ports:
       - 4006:4006
@@ -432,16 +432,16 @@ services:
       - MINIO_ENDPOINT=minio
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - MINIO_ACCESS_KEY=minioadmin
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - MINIO_SECRET_KEY=minioadmin
       - CERTIFICATE_PATH=/var/cfg/certificate.p12
       - SERVICE_ID=sign-service
       - BRANDING_PATH=/var/cfg/branding.json
-      - STATS_URL=http://huly.local:4900
+      - STATS_URL=http://hanzoai.local:4900
   #  analytics:
   #    image: hardcoreeng/analytics-collector
   #    extra_hosts:
-  #      - 'huly.local:host-gateway'
+  #      - 'hanzoai.local:host-gateway'
   #    restart: unless-stopped
   #    ports:
   #      - 4017:4017
@@ -451,39 +451,39 @@ services:
   #      - MONGO_URL=${MONGO_URL}
   #      - 'MONGO_OPTIONS={"appName":"analytics","maxPoolSize":1}'
   #      - SERVICE_ID=analytics-collector-service
-  #      - ACCOUNTS_URL=http://huly.local:3000
-  #      - STATS_URL=http://huly.local:4900
+  #      - ACCOUNTS_URL=http://hanzoai.local:3000
+  #      - STATS_URL=http://hanzoai.local:4900
   aiBot:
     image: hardcoreeng/ai-bot
     ports:
       - 4010:4010
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     restart: unless-stopped
     environment:
       - SERVER_SECRET=secret
       - MONGO_URL=${MONGO_URL}
       - QUEUE_CONFIG=${QUEUE_CONFIG}
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - FIRST_NAME=Jolie
       - LAST_NAME=AI
       - PASSWORD=password
       - AVATAR_PATH=./avatar.png
       - AVATAR_CONTENT_TYPE=.png
-      - STATS_URL=http://huly.local:4900
-#      - LOVE_ENDPOINT=http://huly.local:8096
+      - STATS_URL=http://hanzoai.local:4900
+#      - LOVE_ENDPOINT=http://hanzoai.local:8096
 #      - OPENAI_API_KEY=token
   msg2file:
     image: hardcoreeng/msg2file
     ports:
       - 9087:9087
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     restart: unless-stopped
     environment:
-      - ACCOUNTS_URL=http://huly.local:3000
-      - DB_URL=postgresql://root@huly.local:26257/defaultdb?sslmode=disable
+      - ACCOUNTS_URL=http://hanzoai.local:3000
+      - DB_URL=postgresql://root@hanzoai.local:26257/defaultdb?sslmode=disable
       - PORT=9087
       - SECRET=secret
       - SERVICE_ID=msg2file-service
@@ -491,7 +491,7 @@ services:
   export:
     image: hardcoreeng/export
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     links:
       - mongodb
       - minio
@@ -503,9 +503,9 @@ services:
       - SECRET=secret
       - SERVICE_ID=export-service
       - DB_URL=${MONGO_URL}
-      - STATS_URL=http://huly.local:4900
+      - STATS_URL=http://hanzoai.local:4900
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
 volumes:
   db:
   dbpg:

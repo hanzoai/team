@@ -13,9 +13,9 @@ export class PlanningPage extends CalendarPage {
   }
 
   private readonly popup = (): Locator => this.page.locator('div.popup')
-  private readonly panel = (): Locator => this.page.locator('div.hulyModal-container')
+  private readonly panel = (): Locator => this.page.locator('div.hanzoaiModal-container')
   private readonly toDosContainer = (): Locator => this.page.locator('div.toDos-container')
-  private readonly schedule = (): Locator => this.page.locator('div.hulyComponent.modal')
+  private readonly schedule = (): Locator => this.page.locator('div.hanzoaiComponent.modal')
   private readonly sidebarSchedule = (): Locator => this.page.locator('#sidebar .calendar-container')
   readonly pageHeader = (): Locator =>
     this.page.locator('div[class*="navigator"] div[class*="header"]', { hasText: 'Planning' })
@@ -43,7 +43,7 @@ export class PlanningPage extends CalendarPage {
     this.popup().locator('button.antiButton', { hasText: 'Add label' })
 
   readonly buttonPanelCreateAddLabel = (): Locator =>
-    this.panel().locator('.hulyHeader-titleGroup > button:nth-child(2)')
+    this.panel().locator('.hanzoaiHeader-titleGroup > button:nth-child(2)')
 
   readonly buttonPopupCreateAddSlot = (): Locator => this.popup().locator('button', { hasText: 'Add Slot' })
   readonly buttonPanelCreateAddSlot = (): Locator => this.panel().locator('button', { hasText: 'Add Slot' })
@@ -53,7 +53,7 @@ export class PlanningPage extends CalendarPage {
     this.toDosContainer().locator('input[placeholder="Add Action Item, press Enter to save"]')
 
   readonly buttonCardClose = (): Locator =>
-    this.panel().locator('.hulyHeader-container > .hulyHeader-buttonsGroup > .font-medium-14')
+    this.panel().locator('.hanzoaiHeader-container > .hanzoaiHeader-buttonsGroup > .font-medium-14')
 
   readonly textPanelToDoTitle = (): Locator =>
     this.panel().locator('div.top-content label.editbox-wrapper.ghost.large input')
@@ -61,15 +61,15 @@ export class PlanningPage extends CalendarPage {
   readonly textPanelToDoDescription = (): Locator => this.panel().locator('div.top-content div.tiptap > p')
   readonly textPanelDueDate = (): Locator =>
     this.panel().locator(
-      'div.slots-content div.flex-row-top.justify-between div.flex-row-center .hulyButton:first-child span'
+      'div.slots-content div.flex-row-top.justify-between div.flex-row-center .hanzoaiButton:first-child span'
     )
 
   readonly textPanelPriority = (): Locator => this.panel().locator('button#priorityButton svg')
   readonly textPanelVisible = (): Locator =>
-    this.panel().locator('div.hulyHeader-titleGroup > button:nth-child(3) > span')
+    this.panel().locator('div.hanzoaiHeader-titleGroup > button:nth-child(3) > span')
 
   readonly buttonPanelLabelFirst = (): Locator =>
-    this.panel().locator('div.hulyHeader-titleGroup > button:nth-child(2)')
+    this.panel().locator('div.hanzoaiHeader-titleGroup > button:nth-child(2)')
 
   readonly buttonMenuDelete = (): Locator => this.page.locator('button.ap-menuItem span', { hasText: 'Delete' })
   readonly buttonPopupSelectDateNextMonth = (): Locator =>
@@ -80,13 +80,13 @@ export class PlanningPage extends CalendarPage {
 
   readonly buttonPrevDayInSchedule = (): Locator =>
     this.page
-      .locator('div.hulyHeader-container', { hasText: 'Schedule:' })
-      .locator('div.hulyHeader-buttonsGroup > button:first-child')
+      .locator('div.hanzoaiHeader-container', { hasText: 'Schedule:' })
+      .locator('div.hanzoaiHeader-buttonsGroup > button:first-child')
 
   readonly buttonNextDayInSchedule = (): Locator =>
     this.page
-      .locator('div.hulyHeader-container', { hasText: 'Schedule:' })
-      .locator('div.hulyHeader-buttonsGroup > button:last-child')
+      .locator('div.hanzoaiHeader-container', { hasText: 'Schedule:' })
+      .locator('div.hanzoaiHeader-buttonsGroup > button:last-child')
 
   readonly selectInputToDo = (): Locator =>
     this.toDosContainer().getByPlaceholder('Add Action Item, press Enter to save')
@@ -101,17 +101,17 @@ export class PlanningPage extends CalendarPage {
     this.sidebarSchedule().locator('div.event-container', { hasText: title })
 
   readonly toDoInToDos = (hasText: string): Locator =>
-    this.toDosContainer().locator('button.hulyToDoLine-container', { hasText })
+    this.toDosContainer().locator('button.hanzoaiToDoLine-container', { hasText })
 
   readonly checkboxToDoInToDos = (hasText: string): Locator =>
-    this.toDoInToDos(hasText).locator('div.hulyToDoLine-checkbox')
+    this.toDoInToDos(hasText).locator('div.hanzoaiToDoLine-checkbox')
 
   readonly buttonTagByName = (tagName: string): Locator =>
     this.page.locator(`#navGroup-tags button:has-text("${tagName}")`)
 
   readonly labelToDoReference = (toDoName: string): Locator =>
     this.page
-      .locator('button.hulyToDoLine-container div[class$="overflow-label"]', { hasText: toDoName })
+      .locator('button.hanzoaiToDoLine-container div[class$="overflow-label"]', { hasText: toDoName })
       .locator('xpath=..')
       .locator('button.reference')
 
@@ -238,11 +238,11 @@ export class PlanningPage extends CalendarPage {
   public async setTimeSlot (rowNumber: number, slot: Slot, popup: boolean = false): Promise<void> {
     const p = popup
       ? 'div.popup div.horizontalBox div.end div.scroller-container div.box div.flex-between.min-w-full'
-      : 'div.hulyModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full'
+      : 'div.hanzoaiModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full'
     const row = this.page.locator(p).nth(rowNumber)
 
     // dateStart
-    await row.locator('div.dateEditor-container:first-child > div.min-w-28:first-child .hulyButton').click()
+    await row.locator('div.dateEditor-container:first-child > div.min-w-28:first-child .hanzoaiButton').click()
     if (slot.dateStart === 'today') {
       await this.buttonCalendarToday().click()
     } else if (typeof slot.dateStart === 'string') {
@@ -279,50 +279,50 @@ export class PlanningPage extends CalendarPage {
     // timeStart
     const hours = slot.timeStart.substring(0, 2)
     const minutes = slot.timeStart.substring(2, slot.timeStart.length)
-    await row.locator('div.dateEditor-container:nth-child(1) .hulyButton span.digit:first-child').focus()
+    await row.locator('div.dateEditor-container:nth-child(1) .hanzoaiButton span.digit:first-child').focus()
     await row
-      .locator('div.dateEditor-container:nth-child(1) .hulyButton span.digit:first-child')
+      .locator('div.dateEditor-container:nth-child(1) .hanzoaiButton span.digit:first-child')
       .pressSequentially(hours, { delay: 100 })
-    await row.locator('div.dateEditor-container:nth-child(1) .hulyButton span.digit:last-child').focus()
+    await row.locator('div.dateEditor-container:nth-child(1) .hanzoaiButton span.digit:last-child').focus()
     await row
-      .locator('div.dateEditor-container:nth-child(1) .hulyButton span.digit:last-child')
+      .locator('div.dateEditor-container:nth-child(1) .hanzoaiButton span.digit:last-child')
       .pressSequentially(minutes, { delay: 100 })
 
     // dateEnd + timeEnd
-    await row.locator('div.dateEditor-container.difference .hulyButton').click()
+    await row.locator('div.dateEditor-container.difference .hanzoaiButton').click()
     await this.fillSelectDatePopup(slot.dateEnd.day, slot.dateEnd.month, slot.dateEnd.year, slot.timeEnd)
   }
 
   private async checkTimeSlot (rowNumber: number, slot: Slot, popup: boolean = false): Promise<void> {
     const p = popup
       ? 'div.popup div.horizontalBox div.end div.scroller-container div.box div.flex-between.min-w-full'
-      : 'div.hulyModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full'
+      : 'div.hanzoaiModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full'
     const row = this.page.locator(p).nth(rowNumber)
     // timeStart
     await expect(
-      row.locator('div.dateEditor-container:nth-child(1) .hulyButton:last-child div.datetime-input')
+      row.locator('div.dateEditor-container:nth-child(1) .hanzoaiButton:last-child div.datetime-input')
     ).toHaveText(slot.timeStart)
     // timeEnd
-    await expect(row.locator('div.dateEditor-container.difference .hulyButton > div:first-child')).toHaveText(
+    await expect(row.locator('div.dateEditor-container.difference .hanzoaiButton > div:first-child')).toHaveText(
       slot.timeEnd
     )
   }
 
   async openToDoByName (toDoName: string): Promise<void> {
-    await this.page.locator(`button.hulyToDoLine-container:has-text("${toDoName}")`).click()
+    await this.page.locator(`button.hanzoaiToDoLine-container:has-text("${toDoName}")`).click()
   }
 
   async checkToDoNotExist (toDoName: string): Promise<void> {
-    await expect(this.page.locator(`button.hulyToDoLine-container:has-text("${toDoName}")`)).toHaveCount(0)
+    await expect(this.page.locator(`button.hanzoaiToDoLine-container:has-text("${toDoName}")`)).toHaveCount(0)
   }
 
   async checkToDoExist (toDoName: string): Promise<void> {
-    await expect(this.page.locator(`button.hulyToDoLine-container:has-text("${toDoName}")`)).toHaveCount(1)
+    await expect(this.page.locator(`button.hanzoaiToDoLine-container:has-text("${toDoName}")`)).toHaveCount(1)
   }
 
   async checkToDoExistAndShowDuration (toDoName: string, duration: string): Promise<void> {
     await expect(
-      this.page.locator(`button.hulyToDoLine-container:has-text("${toDoName}"):has-text("${duration}")`)
+      this.page.locator(`button.hanzoaiToDoLine-container:has-text("${toDoName}"):has-text("${duration}")`)
     ).toHaveCount(1)
   }
 
@@ -356,11 +356,11 @@ export class PlanningPage extends CalendarPage {
   }
 
   async deleteToDoByName (toDoName: string): Promise<void> {
-    await this.page.locator('button.hulyToDoLine-container div[class$="overflow-label"]', { hasText: toDoName }).hover()
+    await this.page.locator('button.hanzoaiToDoLine-container div[class$="overflow-label"]', { hasText: toDoName }).hover()
     await this.page
-      .locator('button.hulyToDoLine-container div[class$="overflow-label"]', { hasText: toDoName })
+      .locator('button.hanzoaiToDoLine-container div[class$="overflow-label"]', { hasText: toDoName })
       .locator('xpath=..')
-      .locator('div.hulyToDoLine-statusPriority button.hulyToDoLine-dragbox')
+      .locator('div.hanzoaiToDoLine-statusPriority button.hanzoaiToDoLine-dragbox')
       .click({ button: 'right' })
     await this.buttonMenuDelete().click()
     await this.pressYesDeletePopup(this.page)
@@ -368,9 +368,9 @@ export class PlanningPage extends CalendarPage {
 
   async selectToDoByName (toDoName: string): Promise<void> {
     await this.page
-      .locator('button.hulyToDoLine-container div[class$="overflow-label"]', { hasText: toDoName })
+      .locator('button.hanzoaiToDoLine-container div[class$="overflow-label"]', { hasText: toDoName })
       .locator('xpath=..')
-      .locator('div.hulyToDoLine-checkbox > label')
+      .locator('div.hanzoaiToDoLine-checkbox > label')
       .click()
   }
 
@@ -385,7 +385,7 @@ export class PlanningPage extends CalendarPage {
   async checkIfReferenceIsOpen (toDoName: string): Promise<void> {
     const referenceName = await this.getReferenceNameToDoByName(toDoName)
     await this.openReferenceToDoByName(toDoName)
-    await expect(this.page.locator(`.popupPanel .hulyHeader-row:has-text("${referenceName}")`)).toBeVisible()
+    await expect(this.page.locator(`.popupPanel .hanzoaiHeader-row:has-text("${referenceName}")`)).toBeVisible()
   }
 
   async clickButtonTagByName (tagName: string): Promise<void> {
@@ -401,7 +401,7 @@ export class PlanningPage extends CalendarPage {
   public async deleteTimeSlot (rowNumber: number): Promise<void> {
     const row = this.page
       .locator(
-        'div.hulyModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full button[data-id="btnDelete"]'
+        'div.hanzoaiModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full button[data-id="btnDelete"]'
       )
       .nth(rowNumber)
     await row.click()
@@ -410,11 +410,11 @@ export class PlanningPage extends CalendarPage {
 
   public async checkTimeSlotEndDate (rowNumber: number, dateEnd: string): Promise<void> {
     const row = this.page
-      .locator('div.hulyModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full')
+      .locator('div.hanzoaiModal-container div.slots-content div.scroller-container div.box div.flex-between.min-w-full')
       .nth(rowNumber)
     // dateEnd
     await expect(
-      row.locator('div.dateEditor-container:first-child > div.min-w-28:first-child .hulyButton')
+      row.locator('div.dateEditor-container:first-child > div.min-w-28:first-child .hanzoaiButton')
     ).toContainText(dateEnd)
   }
 }

@@ -77,7 +77,7 @@
       <span class="username">
         <EmployeePresenter value={employee} shouldShowAvatar={false} showPopup={false} compact />
       </span>
-      <span class="hulyAvatar-statusMarker small relative mt-0-5" class:online={isOnline} class:offline={!isOnline} />
+      <span class="hanzoaiAvatar-statusMarker small relative mt-0-5" class:online={isOnline} class:offline={!isOnline} />
     </div>
     <div class="separator" />
     <div class="flex-presenter flex-gap-2 p-2">

@@ -364,7 +364,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       external: pullRequestExternal,
       externalVersion: githubExternalSyncVersion,
       derivedVersion: '',
-      addHulyLink: true,
+      addhanzoaiLink: true,
       lastModified,
       lastGithubUser: account
     })
@@ -973,7 +973,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     if (container?.container === undefined) {
       return { needSync: githubSyncVersion }
     }
-    const needCreateConnectedAtHuly = info.addHulyLink === true
+    const needCreateConnectedAthanzoai = info.addhanzoaiLink === true
     if (
       (container.project.projectNodeId === undefined ||
         !container.container.projectStructure.has(container.project._id)) &&
@@ -1004,8 +1004,8 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
 
     const syncResult = await this.syncToTarget(target, container, existing, pullRequestExternal, derivedClient, info)
 
-    if (existing !== undefined && pullRequestExternal !== undefined && needCreateConnectedAtHuly) {
-      await this.addHulyLink(info, syncResult, existing, pullRequestExternal, container)
+    if (existing !== undefined && pullRequestExternal !== undefined && needCreateConnectedAthanzoai) {
+      await this.addhanzoaiLink(info, syncResult, existing, pullRequestExternal, container)
     }
     return {
       ...syncResult,

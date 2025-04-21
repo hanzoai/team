@@ -125,7 +125,7 @@
   canSave
   on:close
 >
-  <div class="hulyModal-content__titleGroup" style="padding: 0">
+  <div class="hanzoaiModal-content__titleGroup" style="padding: 0">
     {#if isLoading}
       <div class="flex-row-top mt-2 h-32">
         <Loading size="medium" />

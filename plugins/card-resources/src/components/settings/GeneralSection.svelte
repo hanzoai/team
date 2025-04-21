@@ -81,8 +81,8 @@
   $: isEditable = h.hasMixin(masterTag, setting.mixin.Editable) && h.as(masterTag, setting.mixin.Editable).value
 </script>
 
-<div class="hulyComponent-content__column-group">
-  <div class="hulyComponent-content__header items-center">
+<div class="hanzoaiComponent-content__column-group">
+  <div class="hanzoaiComponent-content__header items-center">
     <div class="flex items-center">
       <ButtonIcon
         icon={masterTag.icon === view.ids.IconWithEmoji ? IconWithEmoji : masterTag.icon ?? card.icon.MasterTag}

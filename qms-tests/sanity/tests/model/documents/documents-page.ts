@@ -95,13 +95,13 @@ export class DocumentsPage extends CalendarPage {
   }
 
   async openDocument (name: string): Promise<void> {
-    await this.page.locator('button.hulyNavItem-container > span[class*="label"]', { hasText: name }).click()
+    await this.page.locator('button.hanzoaiNavItem-container > span[class*="label"]', { hasText: name }).click()
   }
 
   async executeMoreActionsOnDocument (documentName: string, action: string): Promise<void> {
-    await this.page.locator('button.hulyNavItem-container > span[class*="label"]', { hasText: documentName }).hover()
+    await this.page.locator('button.hanzoaiNavItem-container > span[class*="label"]', { hasText: documentName }).hover()
     await this.page
-      .locator('button.hulyNavItem-container > span[class*="label"]', { hasText: documentName })
+      .locator('button.hanzoaiNavItem-container > span[class*="label"]', { hasText: documentName })
       .locator('xpath=..')
       .locator('div[class*="actions"]:not([class*="arrow"])')
       .click()

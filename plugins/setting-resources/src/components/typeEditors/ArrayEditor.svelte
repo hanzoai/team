@@ -62,7 +62,7 @@
   }
 </script>
 
-<div class="hulyModal-content__settingsSet-line">
+<div class="hanzoaiModal-content__settingsSet-line">
   <span class="label">
     <Label label={setting.string.Type} />
   </span>

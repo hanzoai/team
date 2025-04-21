@@ -497,7 +497,7 @@ function preProcessMarkdown (
             case NOTION_MD_LINK_TYPES.INTERNAL_LINK: {
               const notionId = getFileId('', href)
               const targetMeta = documentMetaMap.get(notionId)
-              console.log('Target HULY page ID:', targetMeta?.id)
+              console.log('Target hanzoai page ID:', targetMeta?.id)
               if (targetMeta !== undefined) {
                 alterInternalLinkNode(node, targetMeta)
               } else {

@@ -49,22 +49,22 @@
   }
 </script>
 
-<button class="hulyTableAttr-content__row" class:hovered class:selected on:contextmenu on:click>
-  <button class="hulyTableAttr-content__row-dragMenu" on:click|stopPropagation={clickMore}>
+<button class="hanzoaiTableAttr-content__row" class:hovered class:selected on:contextmenu on:click>
+  <button class="hanzoaiTableAttr-content__row-dragMenu" on:click|stopPropagation={clickMore}>
     <IconMoreV2 size={'small'} />
   </button>
   {#if attribute.icon !== undefined}
-    <div class="hulyTableAttr-content__row-icon">
+    <div class="hanzoaiTableAttr-content__row-icon">
       <Icon icon={attribute.icon} size={'small'} />
     </div>
   {/if}
-  <div class="hulyTableAttr-content__row-label font-regular-14 grow" class:accent={!attribute.hidden}>
+  <div class="hanzoaiTableAttr-content__row-label font-regular-14 grow" class:accent={!attribute.hidden}>
     <Label label={attribute.label} />
   </div>
   {#if attributeMapper}
     <svelte:component this={attributeMapper.component} {...attributeMapper.props} {attribute} />
   {/if}
-  <div class="hulyTableAttr-content__row-type font-medium-12">
+  <div class="hanzoaiTableAttr-content__row-type font-medium-12">
     <Label label={attribute.type.label} />
     {#if attributeType !== undefined}
       : <Label label={attributeType} />
@@ -83,7 +83,7 @@
       {/if}
     {/if}
   </div>
-  <div class="hulyTableAttr-content__row-arrow">
+  <div class="hanzoaiTableAttr-content__row-arrow">
     <IconOpenedArrow size={'small'} />
   </div>
 </button>

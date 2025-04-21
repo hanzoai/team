@@ -49,14 +49,14 @@
 </script>
 
 {#if items !== undefined}
-  <div class="hulyCombineAvatars-container">
+  <div class="hanzoaiCombineAvatars-container">
     {#if includeEmpty}
-      <div class="hulyCombineAvatar {size}" data-over={getDataOver(persons.length === 0, items)}>
+      <div class="hanzoaiCombineAvatar {size}" data-over={getDataOver(persons.length === 0, items)}>
         <EmptyAvatar {size} />
       </div>
     {/if}
     {#each persons as person, i}
-      <div class="hulyCombineAvatar {size}" data-over={getDataOver(persons.length === i + 1, items)}>
+      <div class="hanzoaiCombineAvatar {size}" data-over={getDataOver(persons.length === i + 1, items)}>
         <Avatar {person} {size} name={person.name} showStatus={false} />
       </div>
     {/each}

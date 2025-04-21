@@ -7,7 +7,7 @@
   export let value: Space | undefined
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={tracker.icon.Relations} label={tracker.string.RelatedIssues} size={'large'} isCurrent />
   </Header>

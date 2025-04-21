@@ -28,7 +28,7 @@ export const indentExtensionOptions: IndendOptions = {
 }
 
 export const IndentExtension = Extension.create<IndendOptions>({
-  name: 'huly-indent',
+  name: 'hanzoai-indent',
   addKeyboardShortcuts () {
     return {
       Tab: ({ editor }) => {

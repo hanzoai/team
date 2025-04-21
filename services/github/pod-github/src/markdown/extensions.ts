@@ -4,8 +4,8 @@ import { AnyExtension, Extension, Node, mergeAttributes } from '@tiptap/core'
 
 export interface SubLinkOptions {
   HTMLAttributes: Record<string, any>
-  hasHulyText: (text: string) => boolean
-  hasHulyLink: (href: string) => boolean
+  hashanzoaiText: (text: string) => boolean
+  hashanzoaiLink: (href: string) => boolean
 }
 
 export const SubLink = Node.create<SubLinkOptions>({
@@ -14,8 +14,8 @@ export const SubLink = Node.create<SubLinkOptions>({
   addOptions () {
     return {
       HTMLAttributes: {},
-      hasHulyText: (text: string) => false,
-      hasHulyLink: (href: string) => false
+      hashanzoaiText: (text: string) => false,
+      hashanzoaiLink: (href: string) => false
     }
   },
 
@@ -33,13 +33,13 @@ export const SubLink = Node.create<SubLinkOptions>({
         tag: 'sub',
         getAttrs: (el: HTMLElement | string) => {
           if (typeof el !== 'string') {
-            if (this.options.hasHulyText(el.textContent ?? '')) {
+            if (this.options.hashanzoaiText(el.textContent ?? '')) {
               return null
             }
 
             const link = el.querySelector('a[href]')
             const href = link?.getAttribute('href') ?? ''
-            if (link != null && this.options.hasHulyLink(href)) {
+            if (link != null && this.options.hashanzoaiLink(href)) {
               return null
             }
           }

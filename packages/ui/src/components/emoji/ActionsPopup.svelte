@@ -59,10 +59,10 @@
   }
 </script>
 
-<div class="hulyPopup-container noPadding autoWidth">
+<div class="hanzoaiPopup-container noPadding autoWidth">
   {#if haveSkins}
     {#if combinedEmoji && emojiParts?.length === 2}
-      <div class="hulyPopup-row disabled skins-row">
+      <div class="hanzoaiPopup-row disabled skins-row">
         {#each new Array(2) as _, index}
           <EmojiButton
             emoji={emojiParts[index]}
@@ -91,7 +91,7 @@
         {/each}
       </div>
     {:else}
-      <div class="hulyPopup-row disabled skins-row">
+      <div class="hanzoaiPopup-row disabled skins-row">
         {#each new Array((emoji.skins?.length ?? 5) + 1) as _, skin}
           <EmojiButton {emoji} skinTone={skin} preview on:select={(result) => dispatch('close', result.detail)} />
         {/each}
@@ -99,11 +99,11 @@
     {/if}
   {/if}
   {#if remove}
-    {#if haveSkins}<div class="hulyPopup-divider" />{/if}
-    <div class="hulyPopup-group">
-      <button class="hulyPopup-row" on:click={clickRemove}>
-        <div class="hulyPopup-row__icon red-color"><IconDelete size={'small'} /></div>
-        <span class="hulyPopup-row__label red-color"><Label label={plugin.string.Remove} /></span>
+    {#if haveSkins}<div class="hanzoaiPopup-divider" />{/if}
+    <div class="hanzoaiPopup-group">
+      <button class="hanzoaiPopup-row" on:click={clickRemove}>
+        <div class="hanzoaiPopup-row__icon red-color"><IconDelete size={'small'} /></div>
+        <span class="hanzoaiPopup-row__label red-color"><Label label={plugin.string.Remove} /></span>
       </button>
     </div>
   {/if}

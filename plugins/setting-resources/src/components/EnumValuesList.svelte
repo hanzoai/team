@@ -111,7 +111,7 @@
   <button
     bind:this={elements[i]}
     draggable={!disableMouseOver}
-    class="hulyTableAttr-content__row"
+    class="hanzoaiTableAttr-content__row"
     class:disableMouseOver
     class:hovered={opened === i && !disableMouseOver}
     class:selected={selected === item}
@@ -126,10 +126,10 @@
       selected = undefined
     }}
   >
-    <button class="hulyTableAttr-content__row-dragMenu" class:drag={!disableMouseOver}>
+    <button class="hanzoaiTableAttr-content__row-dragMenu" class:drag={!disableMouseOver}>
       <IconMoreV2 size={'small'} />
     </button>
-    <div class="hulyTableAttr-content__row-label font-regular-14 accent">
+    <div class="hanzoaiTableAttr-content__row-label font-regular-14 accent">
       <ModernEditbox
         kind={'ghost'}
         size={'small'}
@@ -142,7 +142,7 @@
         width={'100%'}
       />
     </div>
-    <div class="hulyTableAttr-content__row-label grow" />
+    <div class="hanzoaiTableAttr-content__row-label grow" />
     {#if !disableMouseOver}
       <ButtonIcon
         kind={'tertiary'}

@@ -165,7 +165,7 @@
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
 </script>
 
-<div class="hulyPanels-container">
+<div class="hanzoaiPanels-container">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -173,7 +173,7 @@
         : 'landscape'} border-left"
       class:fly={$deviceInfo.navigator.float}
     >
-      <div class="antiPanel-wrap__content hulyNavPanel-container">
+      <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
         <ChatNavigator {object} {currentSpecial} on:select={handleChannelSelected} />
       </div>
       {#if !($deviceInfo.isMobile && $deviceInfo.isPortrait && $deviceInfo.minWidth)}
@@ -189,7 +189,7 @@
       short
     />
   {/if}
-  <div bind:this={replacedPanel} class="hulyComponent">
+  <div bind:this={replacedPanel} class="hanzoaiComponent">
     {#if currentSpecial}
       <Component
         is={currentSpecial.component}

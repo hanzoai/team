@@ -68,7 +68,7 @@
 </script>
 
 <button
-  class="hulyToDoLine-container"
+  class="hanzoaiToDoLine-container"
   class:hovered
   class:isDone
   on:click|stopPropagation={open}
@@ -77,18 +77,18 @@
   }}
 >
   <div class="flex-row-center flex-grow flex-gap-2">
-    <div class="hulyToDoLine-statusPriority" class:isNew>
+    <div class="hanzoaiToDoLine-statusPriority" class:isNew>
       {#if updating !== undefined}
         <Spinner size={'small'} />
       {:else}
-        <button class="hulyToDoLine-dragbox" on:contextmenu={onMenuClick}>
+        <button class="hanzoaiToDoLine-dragbox" on:contextmenu={onMenuClick}>
           <Icon icon={IconMoreV2} size={'small'} />
         </button>
         <ToDoPriorityPresenter value={todo.priority} muted={isDone} />
       {/if}
     </div>
     <WorkItemPresenter {todo} kind={'todo-line'} withoutSpace />
-    <div class="hulyToDoLine-title text-left font-regular-14 line-height-auto overflow-label">
+    <div class="hanzoaiToDoLine-title text-left font-regular-14 line-height-auto overflow-label">
       {todo.title}
     </div>
   </div>
@@ -112,7 +112,7 @@
       </span>
     {/if}
   </div>
-  <div class="hulyToDoLine-checkbox" class:updating>
+  <div class="hanzoaiToDoLine-checkbox" class:updating>
     <ToDoCheckbox checked={isDone} priority={todo.priority} on:value={markDone} />
   </div>
 </button>

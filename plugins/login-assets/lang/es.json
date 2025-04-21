@@ -3,7 +3,7 @@
     "RequiredField": "Campo obligatorio: {field}",
     "FieldsDoNotMatch": "{field} no coincide con {field2}",
     "ConnectingToServer": "Conectando al servidor...",
-    "IncorrectValue": "Valor incorrecto para {field}"    
+    "IncorrectValue": "Valor incorrecto para {field}"
   },
   "string": {
     "LogIn": "Iniciar sesión",
@@ -58,7 +58,7 @@
     "Next": "Siguiente",
     "Skip": "Saltar",
     "SignUpCompleted": "Registro completado",
-    "StartUsingHuly": "Comienza a usar Huly",
+    "StartUsinghanzoai": "Comienza a usar hanzoai",
     "PasswordMinLength": "{count, plural, =1 {La contraseña debe tener al menos # carácter} other {La contraseña debe tener al menos # caracteres}}",
     "PasswordMinSpecialChars": "{count, plural, =1 {La contraseña debe contener al menos # carácter especial} other {La contraseña debe contener al menos # caracteres especiales}}",
     "PasswordMinDigits": "{count, plural, =1 {La contraseña debe contener al menos # número} other {La contraseña debe contener al menos # números}}",

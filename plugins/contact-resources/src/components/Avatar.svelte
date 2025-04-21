@@ -128,7 +128,7 @@
       withStatus
       {adaptiveName}
     />
-    <div class="hulyAvatar-statusMarker {size}" class:online={isOnline} class:offline={!isOnline} />
+    <div class="hanzoaiAvatar-statusMarker {size}" class:online={isOnline} class:offline={!isOnline} />
   </div>
 {:else}
   <AvatarInstance

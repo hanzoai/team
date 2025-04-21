@@ -83,7 +83,7 @@
   onCancel={handleCancel}
   on:close
 >
-  <div class="hulyModal-content__titleGroup" style="padding: 0">
+  <div class="hanzoaiModal-content__titleGroup" style="padding: 0">
     <ModernEditbox bind:value={channelName} label={chunter.string.NewChannel} size="large" kind="ghost" />
     <TextArea
       placeholder={chunter.string.DescriptionOptional}
@@ -94,8 +94,8 @@
       bind:value={description}
     />
   </div>
-  <div class="hulyModal-content__settingsSet">
-    <div class="hulyModal-content__settingsSet-line">
+  <div class="hanzoaiModal-content__settingsSet">
+    <div class="hanzoaiModal-content__settingsSet-line">
       <span class="label"><Label label={chunter.string.Visibility} /></span>
       <ButtonMenu
         items={visibilityOptions}

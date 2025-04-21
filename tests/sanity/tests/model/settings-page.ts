@@ -5,7 +5,7 @@ import { SpaceTypes, TaskTypes } from './types'
 export class SettingsPage extends CommonPage {
   profileButton = (): Locator => this.page.locator('#profile-button')
   settingsButton = (): Locator => this.page.locator('button:has-text("Settings")')
-  spaceTypesHeader = (): Locator => this.page.locator('button.hulyNavGroup-header', { hasText: 'Space types' })
+  spaceTypesHeader = (): Locator => this.page.locator('button.hanzoaiNavGroup-header', { hasText: 'Space types' })
   newSpaceTypeButton = (): Locator => this.page.locator('#new-space-type')
   popupSelectSpaceTypeButton = (): Locator =>
     this.page.locator('form#setting\\:string\\:NewSpaceType div#selectSpaceType button')
@@ -17,44 +17,44 @@ export class SettingsPage extends CommonPage {
     this.page.locator('form#setting\\:string\\:NewSpaceType div.antiCard-footer button', { hasText: 'Create' })
 
   spaceTypeButton = (name: string, category?: string): Locator =>
-    this.page.locator('div#navGroup-spaceTypes button.hulyTaskNavLink-container', {
+    this.page.locator('div#navGroup-spaceTypes button.hanzoaiTaskNavLink-container', {
       hasText: category !== undefined ? `${name} ${category}` : name
     })
 
-  breadcrumbButton = (hasText: string): Locator => this.page.locator('button.hulyBreadcrumb-container', { hasText })
+  breadcrumbButton = (hasText: string): Locator => this.page.locator('button.hanzoaiBreadcrumb-container', { hasText })
   stateButton = (name: string): Locator =>
     this.page
-      .locator('div.hulyTableAttr-header', { hasText: 'Process states' })
+      .locator('div.hanzoaiTableAttr-header', { hasText: 'Process states' })
       .locator('xpath=..')
-      .locator('button.hulyTableAttr-content__row', { hasText: name })
+      .locator('button.hanzoaiTableAttr-content__row', { hasText: name })
 
   statusNameInput = (): Locator =>
-    this.page.locator('div.hulyModal-container.type-aside', { hasText: 'Edit state' }).getByPlaceholder('Status name')
+    this.page.locator('div.hanzoaiModal-container.type-aside', { hasText: 'Edit state' }).getByPlaceholder('Status name')
 
   selectColorButton = (name: string): Locator =>
-    this.page.locator('div.hulyTableAttr-container', { hasText: 'Color' }).locator(`div.color[data-id="${name}"]`)
+    this.page.locator('div.hanzoaiTableAttr-container', { hasText: 'Color' }).locator(`div.color[data-id="${name}"]`)
 
   selectIconButton = (): Locator => this.page.locator('button[data-id="btnSelectIcon"]')
   emojiSectionButton = (): Locator => this.page.locator('div.popup div.tab', { hasText: 'Emoji' })
   emojiIconButton = (hasText: string): Locator => this.page.getByRole('button', { name: hasText }).first()
   taskTypeRow = (value: string): Locator =>
     this.page
-      .locator('div.hulyTableAttr-header', { hasText: 'Task types' })
+      .locator('div.hanzoaiTableAttr-header', { hasText: 'Task types' })
       .locator('xpath=..')
-      .locator('div.hulyTableAttr-content button.hulyTableAttr-content__row', { hasText: value })
+      .locator('div.hanzoaiTableAttr-content button.hanzoaiTableAttr-content__row', { hasText: value })
 
   addTaskTypeButton = (): Locator =>
-    this.page.locator('div.hulyTableAttr-header', { hasText: 'Task types' }).locator('button[data-id="btnAdd"]')
+    this.page.locator('div.hanzoaiTableAttr-header', { hasText: 'Task types' }).locator('button[data-id="btnAdd"]')
 
   taskNameInput = (): Locator => this.page.getByPlaceholder('Task name *')
   taskTypeButton = (): Locator =>
-    this.page.locator('div.hulyModal-content__settingsSet-line', { hasText: 'Task type' }).locator('button')
+    this.page.locator('div.hanzoaiModal-content__settingsSet-line', { hasText: 'Task type' }).locator('button')
 
   asideFooterButton = (hasText: string): Locator =>
-    this.page.locator('div.hulyModal-container.type-aside div.hulyModal-footer button', { hasText })
+    this.page.locator('div.hanzoaiModal-container.type-aside div.hanzoaiModal-footer button', { hasText })
 
   buttonRoleInComponent = (hasText: string): Locator =>
-    this.page.locator('div.hulyComponent-content > div.flex-row-center', { hasText }).locator('button')
+    this.page.locator('div.hanzoaiComponent-content > div.flex-row-center', { hasText }).locator('button')
 
   async clickButtonRoleInComponent (name: string): Promise<void> {
     await this.buttonRoleInComponent(name).click()

@@ -444,9 +444,9 @@ export async function createAccount (
   automatic = false,
   createdOn = Date.now()
 ): Promise<void> {
-  // Create Huly social id and account
+  // Create hanzoai social id and account
   await db.socialId.insertOne({
-    type: SocialIdType.HULY,
+    type: SocialIdType.hanzoai,
     value: personUuid,
     personUuid,
     ...(confirmed ? { verifiedOn: Date.now() } : {})
@@ -712,7 +712,7 @@ export async function createWorkspaceRecord (
   region: string = '',
   initMode: WorkspaceMode = 'pending-creation'
 ): Promise<CreateWorkspaceRecordResult> {
-  const brandingKey = branding?.key ?? 'huly'
+  const brandingKey = branding?.key ?? 'hanzoai'
   const regionInfo = getRegions().find((it) => it.region === region)
 
   if (regionInfo === undefined) {
@@ -902,10 +902,10 @@ export async function confirmEmail (
   return emailSocialId._id
 }
 
-export async function confirmHulyIds (ctx: MeasureContext, db: AccountDB, account: AccountUuid): Promise<void> {
-  const hulySocialIds = await db.socialId.find({ personUuid: account, type: SocialIdType.HULY, verifiedOn: null })
-  for (const hulySocialId of hulySocialIds) {
-    await db.socialId.updateOne({ _id: hulySocialId._id }, { verifiedOn: Date.now() })
+export async function confirmhanzoaiIds (ctx: MeasureContext, db: AccountDB, account: AccountUuid): Promise<void> {
+  const hanzoaiSocialIds = await db.socialId.find({ personUuid: account, type: SocialIdType.hanzoai, verifiedOn: null })
+  for (const hanzoaiSocialId of hanzoaiSocialIds) {
+    await db.socialId.updateOne({ _id: hanzoaiSocialId._id }, { verifiedOn: Date.now() })
   }
 }
 
@@ -1126,7 +1126,7 @@ export async function loginOrSignUpWithProvider (
     await db.socialId.updateOne({ key: emailSocialId.key }, { verifiedOn: Date.now() })
   }
 
-  await confirmHulyIds(ctx, db, personUuid as AccountUuid)
+  await confirmhanzoaiIds(ctx, db, personUuid as AccountUuid)
 
   return {
     account: personUuid as AccountUuid,

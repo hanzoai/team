@@ -61,7 +61,7 @@
     : readonly
 </script>
 
-<div class="hulyComponent-content hulyComponent-content__container noShrink">
+<div class="hanzoaiComponent-content hanzoaiComponent-content__container noShrink">
   {#if dataProvider !== undefined && channel !== undefined}
     <ReverseChannelScrollView
       bind:selectedMessageId

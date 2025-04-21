@@ -149,8 +149,8 @@
     class:border-right={category?.component === undefined}
     class:fly={$deviceInfo.navigator.float}
   >
-    <div class="antiPanel-wrap__content hulyNavPanel-container">
-      <div class="hulyNavPanel-header">
+    <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
+      <div class="hanzoaiNavPanel-header">
         <Label label={setting.string.Settings} />
       </div>
 
@@ -230,7 +230,7 @@
 </div>
 {#if asideComponent != null && !moveASide}
   <Separator name={'setting'} index={1} color={'transparent'} separatorSize={0} short />
-  <div class="hulySidePanel-container">
+  <div class="hanzoaiSidePanel-container">
     {#key asideProps}
       {#if typeof asideComponent === 'string'}
         <Component is={asideComponent} props={{ ...asideProps }} />
