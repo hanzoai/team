@@ -84,7 +84,7 @@
 
 {#if persons.length > 1 && size !== 'medium'}
   {#if compact}
-    <div class="hulyAvatar-container hulyAvatarSize-{size} group-ava">
+    <div class="hanzoaiAvatar-container hanzoaiAvatarSize-{size} group-ava">
       {persons.length}
     </div>
   {:else}

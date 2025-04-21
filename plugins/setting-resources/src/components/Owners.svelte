@@ -70,16 +70,16 @@
   ).length
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Owners} label={setting.string.Owners} size={'large'} isCurrent />
     <svelte:fragment slot="search">
       <SearchInput bind:value={search} collapsed />
     </svelte:fragment>
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__column content">
     <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-      <div class="hulyComponent-content">
+      <div class="hanzoaiComponent-content">
         {#each employees as employee (employee._id)}
           {@const personUuid = employee.personUuid ?? undefined}
           {@const role = personUuid !== undefined ? workspaceMembers[personUuid] : undefined}

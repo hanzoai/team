@@ -52,7 +52,7 @@
     kind={'regular'}
     size={'medium'}
   />
-  <div class="hulyHeader-divider short" />
+  <div class="hanzoaiHeader-divider short" />
 </Header>
 
 {#if mode === 'week'}

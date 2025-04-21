@@ -33,7 +33,7 @@
   class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal' ? 'portrait' : 'landscape'} border-left"
   class:fly={$deviceInfo.navigator.float}
 >
-  <div class="antiPanel-wrap__content hulyNavPanel-container">
+  <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
     <NavHeader label={plugin.string.Processes} />
     {#each specials as special}
       <NavLink space={special._id}>

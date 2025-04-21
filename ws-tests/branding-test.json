@@ -1,6 +1,6 @@
 {
-  "huly.local:8083": {
-    "key": "huly",
+  "hanzoai.local:8083": {
+    "key": "hanzoai",
     "title": "Platform",
     "protocol": "http",
     "languages": "en,ru,pt,es,zh,fr",

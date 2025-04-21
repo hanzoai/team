@@ -56,7 +56,7 @@ const config: Config = (() => {
     Credentials: process.env[envMap.Credentials],
     WATCH_TOPIC_NAME: process.env[envMap.WATCH_TOPIC_NAME],
     InitLimit: parseNumber(process.env[envMap.InitLimit]) ?? 50,
-    FooterMessage: process.env[envMap.FooterMessage] ?? '<br><br><p>Sent via <a href="https://huly.io">Huly</a></p>'
+    FooterMessage: process.env[envMap.FooterMessage] ?? '<br><br><p>Sent via <a href="https://hanzoai.io">hanzoai</a></p>'
   }
 
   const missingEnv = (Object.keys(params) as Array<keyof Config>)

@@ -171,18 +171,18 @@
     clearSettingsStore()
   }}
 >
-  <div class="hulyModal-content__titleGroup">
+  <div class="hanzoaiModal-content__titleGroup">
     <ModernEditbox bind:value={name} label={task.string.TaskName} size={'large'} kind={'ghost'} autoFocus />
   </div>
-  <div class="hulyModal-content__settingsSet">
-    <div class="hulyModal-content__settingsSet-line">
+  <div class="hanzoaiModal-content__settingsSet">
+    <div class="hanzoaiModal-content__settingsSet-line">
       <span class="label">
         <Label label={task.string.TaskType} />
       </span>
       <TaskTypeKindEditor bind:kind />
     </div>
     {#if taskTypeDescriptors.length > 1}
-      <div class="hulyModal-content__settingsSet-line">
+      <div class="hanzoaiModal-content__settingsSet-line">
         <span class="label">
           <Label label={task.string.Type} />
         </span>

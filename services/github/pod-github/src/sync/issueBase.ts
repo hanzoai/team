@@ -1325,7 +1325,7 @@ export abstract class IssueSyncManagerBase {
     }
   }
 
-  async addHulyLink (
+  async addhanzoaiLink (
     info: DocSyncInfo,
     syncResult: DocumentUpdate<DocSyncInfo>,
     object: Doc,
@@ -1334,7 +1334,7 @@ export abstract class IssueSyncManagerBase {
   ): Promise<void> {
     const repository = await this.provider.getRepositoryById(info.repository)
     if (repository !== undefined) {
-      syncResult.addHulyLink = false
+      syncResult.addhanzoaiLink = false
       const publicLink = await getPublicLink(
         object,
         this.client,
@@ -1351,7 +1351,7 @@ export abstract class IssueSyncManagerBase {
         repo: repository.name,
         issue_number: external.number,
 
-        body: `<p>Connected to <b><a href="${publicLink}">Huly&reg;: ${(object as Task).identifier}</a></b></p>`,
+        body: `<p>Connected to <b><a href="${publicLink}">hanzoai&reg;: ${(object as Task).identifier}</a></b></p>`,
         headers: {
           'X-GitHub-Api-Version': '2022-11-28'
         }

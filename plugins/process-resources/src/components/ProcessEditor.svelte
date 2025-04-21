@@ -142,11 +142,11 @@
   defineSeparators('spaceTypeEditor', secondNavSeparators)
 </script>
 
-<div class="hulyComponent-content__container columns">
+<div class="hanzoaiComponent-content__container columns">
   {#if visibleSecondNav}
-    <div class="hulyComponent-content__column">
-      <div class="hulyComponent-content__navHeader">
-        <div class="hulyComponent-content__navHeader-menu">
+    <div class="hanzoaiComponent-content__column">
+      <div class="hanzoaiComponent-content__navHeader">
+        <div class="hanzoaiComponent-content__navHeader-menu">
           <ButtonIcon kind="tertiary" icon={IconDescription} size="small" inheritColor />
         </div>
       </div>
@@ -162,10 +162,10 @@
     </div>
     <Separator name="spaceTypeEditor" index={0} color="transparent" />
   {/if}
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__column content">
     {#if value}
       <Scroller align="center" padding="var(--spacing-3)" bottomPadding="var(--spacing-3)">
-        <div class="hulyComponent-content gap">
+        <div class="hanzoaiComponent-content gap">
           <div class="header flex-between">
             <EditBox bind:value={value.name} on:change={saveName} placeholder={process.string.Untitled} />
             <ButtonIcon icon={IconDelete} size="small" kind="secondary" on:click={handleDelete} />
@@ -184,7 +184,7 @@
               label={process.string.StartAutomatically}
             />
           </div>
-          <div class="hulyComponent-content flex-col-center">
+          <div class="hanzoaiComponent-content flex-col-center">
             <div class="flex-col-center">
               {#each sortedStates as state (state._id)}
                 <div bind:this={sectionRefs[state._id]}>

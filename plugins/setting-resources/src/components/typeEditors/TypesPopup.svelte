@@ -47,16 +47,16 @@
   }
 </script>
 
-<div class="hulyPopup-container" use:resizeObserver={() => dispatch('changeContent')}>
+<div class="hanzoaiPopup-container" use:resizeObserver={() => dispatch('changeContent')}>
   <Scroller padding={'var(--spacing-0_5)'} gap={'flex-gap-0-5'}>
     {#each items as item}
       <button
-        class="hulyPopup-row"
+        class="hanzoaiPopup-row"
         on:click={() => {
           handleSelection(item.id)
         }}
       >
-        <span class="hulyPopup-row__label overflow-label">
+        <span class="hanzoaiPopup-row__label overflow-label">
           <Label label={item.label} />
         </span>
       </button>

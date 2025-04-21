@@ -61,11 +61,11 @@
 </script>
 
 {#if type !== undefined && descriptor !== undefined}
-  <div class="hulyComponent-content__container columns">
+  <div class="hanzoaiComponent-content__container columns">
     {#if visibleSecondNav}
-      <div class="hulyComponent-content__column">
-        <div class="hulyComponent-content__navHeader">
-          <div class="hulyComponent-content__navHeader-menu">
+      <div class="hanzoaiComponent-content__column">
+        <div class="hanzoaiComponent-content__navHeader">
+          <div class="hanzoaiComponent-content__navHeader-menu">
             <ButtonIcon kind="tertiary" icon={IconDescription} size="small" inheritColor />
           </div>
         </div>
@@ -82,11 +82,11 @@
       <Separator name="spaceTypeEditor" index={0} color="transparent" />
     {/if}
     {#if editorDescriptor !== undefined}
-      <div class="hulyComponent-content__column content">
+      <div class="hanzoaiComponent-content__column content">
         <Scroller align="center" padding="var(--spacing-3)" bottomPadding="var(--spacing-3)">
-          <div class="hulyComponent-content gap">
+          <div class="hanzoaiComponent-content gap">
             {#each editorDescriptor.sections as section}
-              <div bind:this={sectionRefs[section.id]} class:hulyTableAttr-container={!section.withoutContainer}>
+              <div bind:this={sectionRefs[section.id]} class:hanzoaiTableAttr-container={!section.withoutContainer}>
                 <Component
                   is={section.component}
                   disabled={readonly}

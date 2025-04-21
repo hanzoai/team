@@ -840,7 +840,7 @@ export enum SocialIdType {
   GOOGLE = 'google',
   PHONE = 'phone',
   OIDC = 'oidc',
-  HULY = 'huly',
+  hanzoai = 'hanzoai',
   TELEGRAM = 'telegram'
 }
 

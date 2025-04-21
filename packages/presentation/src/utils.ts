@@ -562,7 +562,7 @@ export async function getBlobURL (blob: Blob): Promise<string> {
 export function copyTextToClipboardOldBrowser (text: string): void {
   const textarea = document.createElement('textarea')
   textarea.value = text
-  textarea.classList.add('hulyClipboardArea')
+  textarea.classList.add('hanzoaiClipboardArea')
   document.body.appendChild(textarea)
   textarea.select()
   try {

@@ -132,7 +132,7 @@
 </script>
 
 {#if visibleCategories.length > 1}
-  <div class="hulyHeader-container clearPadding justify-between flex-gap-4">
+  <div class="hanzoaiHeader-container clearPadding justify-between flex-gap-4">
     <ModernButton
       label={tags.string.AllCategories}
       kind={'tertiary'}

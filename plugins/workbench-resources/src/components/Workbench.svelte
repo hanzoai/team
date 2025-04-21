@@ -933,7 +933,7 @@
               : 'landscape'} border-left"
             class:fly={$deviceInfo.navigator.float}
           >
-            <div class="antiPanel-wrap__content hulyNavPanel-container">
+            <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
               {#if currentApplication}
                 <NavHeader label={currentApplication.label} />
                 {#if currentApplication.navHeaderComponent}
@@ -982,7 +982,7 @@
         {/if}
         <div
           bind:this={contentPanel}
-          class={navigatorModel === undefined ? 'hulyPanels-container' : 'hulyComponent overflow-hidden'}
+          class={navigatorModel === undefined ? 'hanzoaiPanels-container' : 'hanzoaiComponent overflow-hidden'}
           class:straighteningCorners={$sidebarStore.float &&
             $sidebarStore.variant === SidebarVariant.EXPANDED &&
             !(mobileAdaptive && $deviceInfo.isPortrait)}

@@ -30,10 +30,10 @@
   export let isCurrent: boolean = false
 </script>
 
-<button class="hulyBreadcrumb-container {size}" class:current={isCurrent} on:click>
+<button class="hanzoaiBreadcrumb-container {size}" class:current={isCurrent} on:click>
   {#if size === 'large' && icon}
     <div
-      class="hulyBreadcrumb-avatar"
+      class="hanzoaiBreadcrumb-avatar"
       style:width={iconWidth ?? null}
       style:margin={iconMargin}
       class:withoutIconBackground
@@ -44,7 +44,7 @@
   <span
     class="{size === 'large'
       ? 'heading-medium-16'
-      : 'font-regular-14'} line-height-auto hulyBreadcrumb-label overflow-label"
+      : 'font-regular-14'} line-height-auto hanzoaiBreadcrumb-label overflow-label"
   >
     {#if label}<Label {label} />{/if}
     {#if title}{title}{/if}
@@ -52,7 +52,7 @@
 </button>
 
 <style lang="scss">
-  .hulyBreadcrumb-container {
+  .hanzoaiBreadcrumb-container {
     display: flex;
     align-items: center;
     gap: var(--spacing-0_75);
@@ -63,7 +63,7 @@
     outline: none;
     cursor: default;
 
-    .hulyBreadcrumb-avatar {
+    .hanzoaiBreadcrumb-avatar {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -79,21 +79,21 @@
         background-color: transparent;
       }
     }
-    .hulyBreadcrumb-label {
+    .hanzoaiBreadcrumb-label {
       padding: var(--spacing-0_5) 0;
       color: var(--global-secondary-TextColor);
     }
-    &.current .hulyBreadcrumb-label {
+    &.current .hanzoaiBreadcrumb-label {
       font-weight: 700;
     }
     &:not(.current) {
       cursor: pointer;
 
       &:hover {
-        .hulyBreadcrumb-avatar {
+        .hanzoaiBreadcrumb-avatar {
           background-color: var(--global-ui-hover-BackgroundColor);
         }
-        .hulyBreadcrumb-label {
+        .hanzoaiBreadcrumb-label {
           color: var(--global-primary-LinkColor);
         }
       }

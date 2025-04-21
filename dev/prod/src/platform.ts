@@ -208,7 +208,7 @@ export type BrandingMap = Record<string, Branding>
 const clientType = process.env.CLIENT_TYPE
 const configs: Record<string, string> = {
   'dev-production': '/config-dev.json',
-  'dev-huly': '/config-huly.json',
+  'dev-hanzoai': '/config-hanzoai.json',
   'dev-bold': '/config.json',
   'dev-server': '/config.json',
   'dev-server-test': '/config-test.json',
@@ -409,7 +409,7 @@ export async function configurePlatform() {
   }
 
   configureAnalytics(config)
-  // tryOpenInDesktopApp(config.APP_PROTOCOL ?? 'huly://')
+  // tryOpenInDesktopApp(config.APP_PROTOCOL ?? 'hanzoai://')
 
   setMetadata(login.metadata.AccountsUrl, config.ACCOUNTS_URL)
   setMetadata(login.metadata.DisableSignUp, config.DISABLE_SIGNUP === 'true')
@@ -437,7 +437,7 @@ export async function configurePlatform() {
     setMetadata(presentation.metadata.FrontVersion, config.VERSION)
   }
   setMetadata(telegram.metadata.TelegramURL, config.TELEGRAM_URL ?? 'http://localhost:8086')
-  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://huly.local:4020')
+  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://hanzoai.local:4020')
   setMetadata(gmail.metadata.GmailURL, config.GMAIL_URL ?? 'http://localhost:8087')
   setMetadata(calendar.metadata.CalendarServiceURL, config.CALENDAR_URL ?? 'http://localhost:8095')
   setMetadata(calendar.metadata.PublicScheduleURL, config.PUBLIC_SCHEDULE_URL)
@@ -542,7 +542,7 @@ export async function configurePlatform() {
   addLocation(textEditorId, () => import(/* webpackChunkName: "text-editor" */ '@hanzo/text-editor-resources'))
   addLocation(uploaderId, () => import(/* webpackChunkName: "uploader" */ '@hanzo/uploader-resources'))
   addLocation(recorderId, () => import(/* webpackChunkName: "recorder" */ '@hanzo/recorder-resources'))
-  
+
   addLocation(
     testManagementId,
     () => import(/* webpackChunkName: "test-management" */ '@hanzo/test-management-resources')

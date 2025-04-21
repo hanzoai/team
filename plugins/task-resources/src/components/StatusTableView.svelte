@@ -150,7 +150,7 @@
   }
 </script>
 
-<div class="hulyHeader-container clearPadding justify-between flex-gap-4">
+<div class="hanzoaiHeader-container clearPadding justify-between flex-gap-4">
   <Switcher
     name={'status-table-states'}
     kind={'subtle'}

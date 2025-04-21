@@ -98,7 +98,7 @@
       currentOnly
     />
   {:else}
-    <div class="hulyHeader-titleGroup">
+    <div class="hanzoaiHeader-titleGroup">
       {#if icon}
         <div class="content-color mr-2 pl-2">
           <Icon {icon} size={'small'} {iconProps} />

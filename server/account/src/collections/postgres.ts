@@ -361,7 +361,7 @@ export class AccountPostgresDbCollection
 
   protected buildSelectClause (): string {
     return `SELECT * FROM (
-      SELECT 
+      SELECT
         a.uuid,
         a.timezone,
         a.locale,
@@ -552,7 +552,7 @@ export class PostgresAccountDB implements AccountDB {
   }
 
   async getAccountWorkspaces (accountUuid: AccountUuid): Promise<WorkspaceInfoWithStatus[]> {
-    const sql = `SELECT 
+    const sql = `SELECT
           w.uuid,
           w.name,
           w.url,
@@ -561,7 +561,7 @@ export class PostgresAccountDB implements AccountDB {
           w.region,
           w.created_by,
           w.created_on,
-          w.billing_account, 
+          w.billing_account,
           json_build_object(
             'mode', s.mode,
             'processing_progress', s.processing_progress,
@@ -574,8 +574,8 @@ export class PostgresAccountDB implements AccountDB {
             'processing_attempts', s.processing_attempts,
             'processing_message', s.processing_message,
             'backup_info', s.backup_info
-          ) status 
-           FROM ${this.getWsMembersTableName()} as m 
+          ) status
+           FROM ${this.getWsMembersTableName()} as m
            INNER JOIN ${this.workspace.getTableName()} as w ON m.workspace_uuid = w.uuid
            INNER JOIN ${this.workspaceStatus.getTableName()} as s ON s.workspace_uuid = w.uuid
            WHERE m.account_uuid = $1
@@ -595,7 +595,7 @@ export class PostgresAccountDB implements AccountDB {
     wsLivenessMs?: number
   ): Promise<WorkspaceInfoWithStatus | undefined> {
     const sqlChunks: string[] = [
-      `SELECT 
+      `SELECT
           w.uuid,
           w.name,
           w.url,
@@ -604,7 +604,7 @@ export class PostgresAccountDB implements AccountDB {
           w.region,
           w.created_by,
           w.created_on,
-          w.billing_account, 
+          w.billing_account,
           json_build_object(
             'mode', s.mode,
             'processing_progress', s.processing_progress,
@@ -730,13 +730,13 @@ export class PostgresAccountDB implements AccountDB {
       `
       /* ======= FUNCTIONS ======= */
 
-      CREATE OR REPLACE FUNCTION current_epoch_ms() 
+      CREATE OR REPLACE FUNCTION current_epoch_ms()
       RETURNS BIGINT AS $$
           SELECT (extract(epoch from current_timestamp) * 1000)::bigint;
       $$ LANGUAGE SQL;
 
       /* ======= T Y P E S ======= */
-      CREATE TYPE IF NOT EXISTS ${this.ns}.social_id_type AS ENUM ('email', 'github', 'google', 'phone', 'oidc', 'huly', 'telegram');
+      CREATE TYPE IF NOT EXISTS ${this.ns}.social_id_type AS ENUM ('email', 'github', 'google', 'phone', 'oidc', 'hanzoai', 'telegram');
       CREATE TYPE IF NOT EXISTS ${this.ns}.location AS ENUM ('kv', 'weur', 'eeur', 'wnam', 'enam', 'apac');
       CREATE TYPE IF NOT EXISTS ${this.ns}.workspace_role AS ENUM ('OWNER', 'MAINTAINER', 'USER', 'GUEST', 'DOCGUEST');
 

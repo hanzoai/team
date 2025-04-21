@@ -224,12 +224,12 @@
   $: outputGroups = updateGroups(searching, emojisCat)
 </script>
 
-<div class="hulyPopupEmoji-container kind-{kind}" class:embedded>
-  <div class="hulyPopupEmoji-header__tabs-wrapper">
-    <div class="hulyPopupEmoji-header__tabs">
+<div class="hanzoaiPopupEmoji-container kind-{kind}" class:embedded>
+  <div class="hanzoaiPopupEmoji-header__tabs-wrapper">
+    <div class="hanzoaiPopupEmoji-header__tabs">
       {#each categoryTabs as category (category.id)}
         <button
-          class="hulyPopupEmoji-header__tab"
+          class="hanzoaiPopupEmoji-header__tab"
           class:selected={(searching && searchCategory[0].id === category.id) ||
             (!searching && currentCategory.id === category.id)}
           data-id={category.id}
@@ -245,11 +245,11 @@
         style:left={`${
           (searching ? 0 : emojisCat.findIndex((ec) => ec.id === currentCategory.id)) * (isMobile ? 1.875 : 2.125)
         }rem`}
-        class="hulyPopupEmoji-header__tab-cursor"
+        class="hanzoaiPopupEmoji-header__tab-cursor"
       />
     </div>
   </div>
-  <div class="hulyPopupEmoji-header__tools">
+  <div class="hanzoaiPopupEmoji-header__tools">
     <SearchInput
       value={$searchEmoji}
       placeholder={plugin.string.SearchDots}
@@ -302,11 +302,11 @@
       />
     {/each}
   </Scroller>
-  {#if !hidden && kind === 'fade'}<div class="hulyPopupEmoji-footer" />{/if}
+  {#if !hidden && kind === 'fade'}<div class="hanzoaiPopupEmoji-footer" />{/if}
 </div>
 
 <style lang="scss">
-  .hulyPopupEmoji-container {
+  .hanzoaiPopupEmoji-container {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -341,10 +341,10 @@
       }
     }
 
-    .hulyPopupEmoji-header__tools,
-    .hulyPopupEmoji-header__tabs-wrapper,
-    .hulyPopupEmoji-header__tabs,
-    .hulyPopupEmoji-header__tab {
+    .hanzoaiPopupEmoji-header__tools,
+    .hanzoaiPopupEmoji-header__tabs-wrapper,
+    .hanzoaiPopupEmoji-header__tabs,
+    .hanzoaiPopupEmoji-header__tab {
       display: flex;
       align-items: center;
       flex-shrink: 0;
@@ -352,18 +352,18 @@
       min-height: 0;
     }
 
-    .hulyPopupEmoji-header__tabs-wrapper {
+    .hanzoaiPopupEmoji-header__tabs-wrapper {
       overflow-x: auto;
       padding: 0.25rem 0.75rem;
       width: 100%;
       border-bottom: 1px solid var(--theme-popup-divider);
     }
-    .hulyPopupEmoji-header__tabs {
+    .hanzoaiPopupEmoji-header__tabs {
       position: relative;
       gap: 0.125rem;
       width: 100%;
     }
-    .hulyPopupEmoji-header__tab {
+    .hanzoaiPopupEmoji-header__tab {
       justify-content: center;
       width: 2rem;
       height: 2rem;
@@ -397,7 +397,7 @@
         }
       }
     }
-    .hulyPopupEmoji-header__tab-cursor {
+    .hanzoaiPopupEmoji-header__tab-cursor {
       position: absolute;
       bottom: -0.25rem;
       width: 2rem;
@@ -409,12 +409,12 @@
         width: 1.75rem;
       }
     }
-    .hulyPopupEmoji-header__tools {
+    .hanzoaiPopupEmoji-header__tools {
       gap: 0.5rem;
       padding: 0 0.75rem;
     }
 
-    .hulyPopupEmoji-footer {
+    .hanzoaiPopupEmoji-footer {
       position: absolute;
       left: 50%;
       bottom: 0.75rem;

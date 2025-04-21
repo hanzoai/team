@@ -56,7 +56,7 @@
 </script>
 
 {#if descriptor !== undefined}
-  <div class="hulyTableAttr-header font-medium-12">
+  <div class="hanzoaiTableAttr-header font-medium-12">
     <IconLayers size={'small'} />
     <span><Label label={task.string.TaskTypes} /></span>
     <ButtonIcon
@@ -74,23 +74,23 @@
     />
   </div>
   {#if taskTypes.length}
-    <div class="hulyTableAttr-content task">
+    <div class="hanzoaiTableAttr-content task">
       {#each taskTypes as taskType}
         <button
-          class="hulyTableAttr-content__row"
+          class="hanzoaiTableAttr-content__row"
           on:click|stopPropagation={() => {
             handleTaskTypeSelected(taskType._id)
           }}
         >
-          <div class="hulyTableAttr-content__row-icon-wrapper">
+          <div class="hanzoaiTableAttr-content__row-icon-wrapper">
             <TaskTypeIcon value={taskType} size={'small'} />
           </div>
           {#if taskType.name}
-            <div class="hulyTableAttr-content__row-label font-medium-14">
+            <div class="hanzoaiTableAttr-content__row-label font-medium-14">
               {taskType.name}
             </div>
           {/if}
-          <div class="hulyTableAttr-content__row-label grow dark font-regular-14">
+          <div class="hanzoaiTableAttr-content__row-label grow dark font-regular-14">
             <TaskTypeKindEditor readonly kind={taskType.kind} />
           </div>
         </button>

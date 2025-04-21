@@ -55,7 +55,7 @@
 {#if (size === 'full' || adaptiveName) && !url && displayName && displayName !== ''}
   <div
     bind:this={element}
-    class="hulyAvatar-container hulyAvatarSize-{size} {variant}"
+    class="hanzoaiAvatar-container hanzoaiAvatarSize-{size} {variant}"
     class:no-img={!hasImg && color}
     class:bordered={!hasImg && color === undefined}
     class:border={bColor !== undefined}
@@ -76,7 +76,7 @@
 {:else}
   <div
     bind:this={element}
-    class="hulyAvatar-container hulyAvatarSize-{size} stat {variant}"
+    class="hanzoaiAvatar-container hanzoaiAvatarSize-{size} stat {variant}"
     class:no-img={!hasImg && color}
     class:bordered={!hasImg && color === undefined}
     class:border={bColor !== undefined}
@@ -85,7 +85,7 @@
     style:background-color={color && !hasImg ? color.icon : 'var(--theme-button-default)'}
   >
     {#if url && !imgError}
-      <img class="hulyAvatarSize-{size} ava-image" src={url} {srcset} alt={''} on:error={handleImgError} />
+      <img class="hanzoaiAvatarSize-{size} ava-image" src={url} {srcset} alt={''} on:error={handleImgError} />
     {:else if displayName && displayName !== ''}
       <div
         class="ava-text"

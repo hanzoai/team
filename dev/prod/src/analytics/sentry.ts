@@ -17,7 +17,7 @@ export class SentryAnalyticProvider implements AnalyticProvider {
         // We recommend adjusting this value in production
         tracesSampleRate: 1.0,
 
-        tracePropagationTargets: [/^https:\/\/huly\.app/, /^https:\/\/app\.huly\.io/, /^https:\/\/account\.huly\.io/],
+        tracePropagationTargets: [/^https:\/\/hanzoai\.app/, /^https:\/\/app\.hanzoai\.io/, /^https:\/\/account\.hanzoai\.io/],
 
         replaysSessionSampleRate: 0.0,
         replaysOnErrorSampleRate: 1.0,

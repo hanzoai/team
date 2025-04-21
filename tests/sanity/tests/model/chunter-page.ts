@@ -8,7 +8,7 @@ export class ChunterPage {
     this.page = page
   }
 
-  readonly buttonChannelBrowser = (): Locator => this.page.locator('.hulyNavPanel-header > button.type-button-icon')
+  readonly buttonChannelBrowser = (): Locator => this.page.locator('.hanzoaiNavPanel-header > button.type-button-icon')
   readonly buttonNewChannelHeader = (): Locator => this.page.getByRole('button', { name: 'New channel' })
   readonly buttonNewDirectChatHeader = (): Locator => this.page.getByRole('button', { name: 'New direct chat' })
   readonly inputNewChannelName = (): Locator => this.page.getByPlaceholder('New channel')
@@ -19,12 +19,12 @@ export class ChunterPage {
   readonly buttonOpenChannel = (): Locator => this.page.locator('div.antiNav-element__dropbox span.an-element__label')
   readonly inputNewDirectChatEmployee = (): Locator => this.page.locator('.popup input[placeholder="Search..."]')
   readonly rowEmployeeInNewDirectChatModal = (): Locator => this.page.locator('.popup .users button.row')
-  readonly buttonNewDirectChatModalNext = (): Locator => this.page.locator('.hulyModal-footer button:has-text("Next")')
+  readonly buttonNewDirectChatModalNext = (): Locator => this.page.locator('.hanzoaiModal-footer button:has-text("Next")')
   readonly buttonNewDirectChatModalCreate = (): Locator =>
-    this.page.locator('.hulyModal-footer button:has-text("Create")')
+    this.page.locator('.hanzoaiModal-footer button:has-text("Create")')
 
   readonly directMessagesButtonInLeftMenu = (): Locator =>
-    this.page.locator('.hulyNavGroup-header:has-text("Direct messages")')
+    this.page.locator('.hanzoaiNavGroup-header:has-text("Direct messages")')
 
   // ACTIONS
 

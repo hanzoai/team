@@ -92,7 +92,7 @@
 <button
   {id}
   bind:this={element}
-  class="hulyButton font-medium-14 {kind} {size} {type} {shape}"
+  class="hanzoaiButton font-medium-14 {kind} {size} {type} {shape}"
   class:loading
   class:pressed
   class:inheritColor

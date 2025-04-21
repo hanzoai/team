@@ -59,15 +59,15 @@
 
 {#each tags as tag}
   <button
-    class="hulyTaskNavLink-container font-regular-14"
+    class="hanzoaiTaskNavLink-container font-regular-14"
     class:selected={tag._id === selectedTagId}
     on:click={() => {
       selectProjectType(tag._id)
     }}
   >
-    <div class="hulyTaskNavLink-avatar">
+    <div class="hanzoaiTaskNavLink-avatar">
       {#if tag.icon}
-        <div class="hulyTaskNavLink-icon">
+        <div class="hanzoaiTaskNavLink-icon">
           <Icon
             icon={tag.icon === view.ids.IconWithEmoji ? IconWithEmoji : tag.icon ?? card.icon.MasterTag}
             iconProps={tag.icon === view.ids.IconWithEmoji ? { icon: tag.color } : {}}
@@ -77,11 +77,11 @@
         </div>
       {/if}
     </div>
-    <div class="hulyTaskNavLink-content">
-      <span class="hulyTaskNavLink-content__title"><Label label={tag.label} /></span>
+    <div class="hanzoaiTaskNavLink-content">
+      <span class="hanzoaiTaskNavLink-content__title"><Label label={tag.label} /></span>
     </div>
     {#if tag._id === selectedTagId}
-      <div class="hulyTaskNavLink-icon right">
+      <div class="hanzoaiTaskNavLink-icon right">
         <IconOpenedArrow size={'small'} />
       </div>
     {/if}
@@ -89,7 +89,7 @@
 {/each}
 
 <style lang="scss">
-  .hulyTaskNavLink-container {
+  .hanzoaiTaskNavLink-container {
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -104,7 +104,7 @@
     &.selected {
       cursor: auto;
     }
-    .hulyTaskNavLink-avatar {
+    .hanzoaiTaskNavLink-avatar {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -115,7 +115,7 @@
       background-color: var(--global-ui-BackgroundColor);
       border-radius: 0.375rem;
     }
-    .hulyTaskNavLink-icon {
+    .hanzoaiTaskNavLink-icon {
       flex-shrink: 0;
       width: 1rem;
       height: 1rem;
@@ -125,7 +125,7 @@
         visibility: hidden;
       }
     }
-    .hulyTaskNavLink-content {
+    .hanzoaiTaskNavLink-content {
       display: flex;
       flex-direction: column;
       gap: 0.125rem;
@@ -150,14 +150,14 @@
     &.selected {
       background-color: var(--global-ui-highlight-BackgroundColor);
 
-      .hulyTaskNavLink-icon {
+      .hanzoaiTaskNavLink-icon {
         color: var(--global-accent-TextColor);
 
         &.right {
           visibility: visible;
         }
       }
-      .hulyTaskNavLink-content .hulyTaskNavLink-content__title {
+      .hanzoaiTaskNavLink-content .hanzoaiTaskNavLink-content__title {
         font-weight: 700;
         color: var(--global-accent-TextColor);
       }

@@ -96,7 +96,7 @@
   defineSeparators('notificationSettings', twoPanelsSeparators)
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb
       icon={notification.icon.Notifications}
@@ -105,8 +105,8 @@
       isCurrent
     />
   </Header>
-  <div class="hulyComponent-content__container columns">
-    <div class="hulyComponent-content__column navigation py-2">
+  <div class="hanzoaiComponent-content__container columns">
+    <div class="hanzoaiComponent-content__column navigation py-2">
       <Scroller shrink>
         {#each preferencesGroups as preferenceGroup}
           <NavItem
@@ -144,9 +144,9 @@
       </Scroller>
     </div>
     <Separator name="notificationSettings" index={0} color={'var(--theme-divider-color)'} />
-    <div class="hulyComponent-content__column content">
+    <div class="hanzoaiComponent-content__column content">
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content">
+        <div class="hanzoaiComponent-content">
           {#if loading}
             <Loading />
           {:else}

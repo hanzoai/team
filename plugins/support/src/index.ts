@@ -21,10 +21,10 @@ import { SupportClientFactory, SupportConversation, SupportSystem } from './type
 export * from './types'
 export { deleteSupportConversation, updateSupportConversation } from './utils'
 
-export const supportLink = 'https://huly.link/slack'
+export const supportLink = 'https://hanzoai.link/slack'
 export const reportBugLink = 'https://github.com/hanzoai/team-manager/issues/new'
-export const docsLink = 'http://docs.huly.io/'
-export const privacyPolicyLink = 'https://v1.huly.io/legal/privacy/'
+export const docsLink = 'http://docs.hanzoai.io/'
+export const privacyPolicyLink = 'https://v1.hanzoai.io/legal/privacy/'
 
 /**
  * @public

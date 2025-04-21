@@ -107,7 +107,7 @@ export class DocumentContentPage extends DocumentCommonPage {
     this.page = page
     this.panel = page.locator('.popupPanel-body')
     this.buttonDocumentTitle = page.locator('button.version-item span.name')
-    this.buttonMoreActions = page.locator('.hulyHeader-buttonsGroup > .no-print > .antiButton').first()
+    this.buttonMoreActions = page.locator('.hanzoaiHeader-buttonsGroup > .no-print > .antiButton').first()
     this.textDocumentStatus = page.locator('button.version-item div.root span.label')
     this.textType = page.locator('div.flex:has(div.label:text("Template name")) div.field')
     this.textCategory = page.locator('div.flex:has(div.label:text("Category")) div.field')
@@ -117,10 +117,10 @@ export class DocumentContentPage extends DocumentCommonPage {
     this.textAuthor = page.locator('div.flex:has(div.label:text("Author")) div.field')
     this.buttonSelectNewOwner = page.locator('div.popup button.small')
     this.buttonSelectNewOwnerChange = page.locator('div.popup button.dangerous')
-    this.buttonSendForReview = page.locator('div.hulyHeader-buttonsGroup.extra button[type="button"] > span', {
+    this.buttonSendForReview = page.locator('div.hanzoaiHeader-buttonsGroup.extra button[type="button"] > span', {
       hasText: 'Send for review'
     })
-    this.buttonSendForApproval = page.locator('div.hulyHeader-buttonsGroup.extra button[type="button"] > span', {
+    this.buttonSendForApproval = page.locator('div.hanzoaiHeader-buttonsGroup.extra button[type="button"] > span', {
       hasText: 'Send for approval'
     })
     this.buttonAddMembers = page.locator('div.popup div.addButton')
@@ -128,12 +128,12 @@ export class DocumentContentPage extends DocumentCommonPage {
     this.textSelectReviewersPopup = page.locator('div.popup span.label', { hasText: 'Select reviewers' })
     this.textSelectApproversPopup = page.locator('div.popup span.label', { hasText: 'Select approvers' })
     this.buttonCurrentRights = page.locator(
-      'div.hulyHeader-buttonsGroup.extra button[type="button"] > span[slot="content"]'
+      'div.hanzoaiHeader-buttonsGroup.extra button[type="button"] > span[slot="content"]'
     )
     this.buttonAddMessageToText = page.locator('div.text-editor-toolbar > button:last-child')
     this.buttonComments = page.locator('button[id$="comment"]')
     this.textDocumentTitle = page.locator('div.panel div.title')
-    this.buttonCompleteReview = page.locator('div.hulyHeader-buttonsGroup.extra button[type="button"] > span', {
+    this.buttonCompleteReview = page.locator('div.hanzoaiHeader-buttonsGroup.extra button[type="button"] > span', {
       hasText: 'Complete review'
     })
     this.inputPassword = page.locator('input[name="documents:string:Password"]')
@@ -143,15 +143,15 @@ export class DocumentContentPage extends DocumentCommonPage {
     this.inputRejectionReason = page.locator('div.popup div[id="rejection-reason"] input')
     this.buttonApprove = page.locator('button[type="button"] > span', { hasText: 'Approve' })
     this.buttonDocument = page.locator('button[id$="info"]')
-    this.buttonEditDocument = page.locator('div.hulyHeader-buttonsGroup.extra button[type="button"] > span', {
+    this.buttonEditDocument = page.locator('div.hanzoaiHeader-buttonsGroup.extra button[type="button"] > span', {
       hasText: 'Edit document'
     })
-    this.buttonDraftNewVersion = page.locator('div.hulyHeader-buttonsGroup.extra button[type="button"] > span', {
+    this.buttonDraftNewVersion = page.locator('div.hanzoaiHeader-buttonsGroup.extra button[type="button"] > span', {
       hasText: 'Draft new version'
     })
     this.buttonDocumentInformation = page.locator('button[id$="info"]')
     this.buttonDocumentApprovals = page.locator('button[id$="approvals"]')
-    this.textPageHeader = page.locator('div.hulyNavPanel-header')
+    this.textPageHeader = page.locator('div.hanzoaiNavPanel-header')
     this.buttonSelectNewOwnerChangeByQaraManager = page.locator('div.popup button[type="submit"]')
     this.textId = page.locator('div.flex:has(div.label:text("ID")) div.field')
     this.contentLocator = page.locator('div.textInput div.tiptap')

@@ -50,7 +50,7 @@
     : [{ label: view.string.IconCategory }]
 </script>
 
-<div class="hulyPopup-container noPadding autoWidth maxWidth">
+<div class="hanzoaiPopup-container noPadding autoWidth maxWidth">
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <TabsControl size={'small'} {model} selected={icon === iconWithEmoji ? 1 : 0} padding={'0 .75rem'} gap={'medium'}>
@@ -118,7 +118,7 @@
     margin: 0.25rem 0.75rem;
     font-size: 1.25rem;
   }
-  .hulyPopup-container.maxWidth {
+  .hanzoaiPopup-container.maxWidth {
     min-width: 25.5rem;
     max-width: 25.5rem;
     min-height: 12rem;

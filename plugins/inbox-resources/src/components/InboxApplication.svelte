@@ -91,7 +91,7 @@
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
 </script>
 
-<div class="hulyPanels-container inbox next-colors">
+<div class="hanzoaiPanels-container inbox next-colors">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -99,7 +99,7 @@
         : 'landscape'} border-left inbox__navigator"
       class:fly={$deviceInfo.navigator.float}
     >
-      <div class="antiPanel-wrap__content hulyNavPanel-container">
+      <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
         <InboxNavigation {card} on:select={selectCard} />
       </div>
       {#if !($deviceInfo.isMobile && $deviceInfo.isPortrait && $deviceInfo.minWidth)}
@@ -115,7 +115,7 @@
       short
     />
   {/if}
-  <div bind:this={replacedPanelElement} class="hulyComponent inbox__panel">
+  <div bind:this={replacedPanelElement} class="hanzoaiComponent inbox__panel">
     {#if card}
       {@const panel = client.getHierarchy().classHierarchyMixin(card._class, view.mixin.ObjectPanel)}
       <Component

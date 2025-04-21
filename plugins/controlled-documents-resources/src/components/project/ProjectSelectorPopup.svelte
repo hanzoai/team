@@ -53,7 +53,7 @@
   }
 </script>
 
-<div class="hulyPopup-container">
+<div class="hanzoaiPopup-container">
   <div class="header flex-between">
     <div class="header__label">
       <Label label={documents.string.Projects} />

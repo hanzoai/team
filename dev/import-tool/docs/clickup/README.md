@@ -11,7 +11,7 @@
 
 ```
 docker run \
-  -e FRONT_URL="https://huly.app" \
+  -e FRONT_URL="https://hanzoai.app" \
   -v /path/to/export:/data \
   hardcoreeng/import-tool:latest \
   -- bundle.js import-clickup-tasks /data/tasks.csv \

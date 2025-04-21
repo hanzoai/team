@@ -119,7 +119,7 @@
 </script>
 
 <div
-  class="hulyComponent"
+  class="hanzoaiComponent"
   use:resizeObserver={(element) => {
     visibleSecondNav = element.clientWidth > 720
   }}

@@ -118,8 +118,8 @@
 
 {#if descriptor !== undefined}
   {@const dIcon = descriptor.icon === '' ? settingRes.icon.Setting : descriptor.icon}
-  <div class="hulyComponent-content__column-group">
-    <div class="hulyComponent-content__header">
+  <div class="hanzoaiComponent-content__column-group">
+    <div class="hanzoaiComponent-content__header">
       <div class="flex gap-1">
         <ButtonIcon icon={dIcon} size={'large'} kind={'secondary'} dataId={'btnSelectIcon'} />
         <ModernEditbox

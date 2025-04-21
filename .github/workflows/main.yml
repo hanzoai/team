@@ -249,7 +249,7 @@ jobs:
           DOCKER_CLI_HINTS: false
       - name: Configure /etc/hosts
         run: |
-          sudo echo "127.0.0.1 huly.local" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 hanzoai.local" | sudo tee -a /etc/hosts
       - name: Prepare server
         run: |
           cd ./tests
@@ -265,7 +265,7 @@ jobs:
           ./profile-start.sh
       - name: Run UI tests
         run: |
-          cd ./tests/sanity          
+          cd ./tests/sanity
           node ../../common/scripts/install-run-rushx.js uitest
       - name: Download profile
         run: |
@@ -377,7 +377,7 @@ jobs:
           DOCKER_CLI_HINTS: false
       - name: Configure /etc/hosts
         run: |
-          sudo echo "127.0.0.1 huly.local" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 hanzoai.local" | sudo tee -a /etc/hosts
       - name: Prepare server
         run: |
           cd ./tests
@@ -453,7 +453,7 @@ jobs:
           DOCKER_CLI_HINTS: false
       - name: Configure /etc/hosts
         run: |
-          sudo echo "127.0.0.1 huly.local" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 hanzoai.local" | sudo tee -a /etc/hosts
       - name: Prepare server
         run: |
           cd ./qms-tests
@@ -532,7 +532,7 @@ jobs:
           DOCKER_CLI_HINTS: false
       - name: Configure /etc/hosts
         run: |
-          sudo echo "127.0.0.1 huly.local" | sudo tee -a /etc/hosts
+          sudo echo "127.0.0.1 hanzoai.local" | sudo tee -a /etc/hosts
       - name: Prepare server
         run: |
           cd ./ws-tests
@@ -750,20 +750,20 @@ jobs:
       - name: Upload MacOS
         uses: actions/upload-artifact@v4
         with:
-          name: Huly-MacOS-x64
-          path: ./desktop-package/deploy/Huly-macos-*-x64.dmg
+          name: hanzoai-MacOS-x64
+          path: ./desktop-package/deploy/hanzoai-macos-*-x64.dmg
       - name: Upload MacOS arm64
         uses: actions/upload-artifact@v4
         with:
-          name: Huly-MacOS-arm64
-          path: ./desktop-package/deploy/Huly-macos-*-arm64.dmg
+          name: hanzoai-MacOS-arm64
+          path: ./desktop-package/deploy/hanzoai-macos-*-arm64.dmg
       - name: Upload Windows
         uses: actions/upload-artifact@v4
         with:
-          name: Huly-Windows
-          path: ./desktop-package/deploy/Huly-windows-*.zip
+          name: hanzoai-Windows
+          path: ./desktop-package/deploy/hanzoai-windows-*.zip
       - name: Upload Linux
         uses: actions/upload-artifact@v4
         with:
-          name: Huly-Linux
-          path: ./desktop-package/deploy/Huly-linux-*.zip
+          name: hanzoai-Linux
+          path: ./desktop-package/deploy/hanzoai-linux-*.zip

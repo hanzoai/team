@@ -365,7 +365,7 @@
       />
     {/if}
   </svelte:fragment>
-  <div class="hulyModal-content__titleGroup">
+  <div class="hanzoaiModal-content__titleGroup">
     <ModernEditbox bind:value label={task.string.StatusName} size={'large'} kind={'ghost'} disabled={readonly} />
     <TextArea
       placeholder={task.string.Description}
@@ -377,8 +377,8 @@
       bind:value={description}
     />
   </div>
-  <div class="hulyModal-content__settingsSet">
-    <div class="hulyModal-content__settingsSet-line">
+  <div class="hanzoaiModal-content__settingsSet">
+    <div class="hanzoaiModal-content__settingsSet-line">
       <span class="label"><Label label={getEmbeddedLabel('Status Category')} /></span>
       <ButtonMenu
         items={categories}
@@ -394,9 +394,9 @@
       />
     </div>
   </div>
-  <div class="hulyModal-content__settingsSet table">
-    <div class="hulyTableAttr-container">
-      <div class="hulyTableAttr-header font-medium-12 withButton">
+  <div class="hanzoaiModal-content__settingsSet table">
+    <div class="hanzoaiTableAttr-container">
+      <div class="hanzoaiTableAttr-header font-medium-12 withButton">
         <ButtonMenu
           {items}
           {selected}
@@ -418,7 +418,7 @@
           <IconWithEmoji icon={color ?? 0} size={'medium'} />
         {/if}
       </div>
-      <div class="hulyTableAttr-content">
+      <div class="hanzoaiTableAttr-content">
         {#if selected === 0}
           <ColorsPopup
             selected={getPlatformColorDef(color ?? 0, $themeStore.dark).name}

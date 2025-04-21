@@ -18,13 +18,13 @@
   const skins: string[] = generateSkinToneEmojis(getEmojiCode(emoji))
 </script>
 
-<div class="hulyPopup-container noPadding">
-  <div class="hulyPopup-group">
+<div class="hanzoaiPopup-container noPadding">
+  <div class="hanzoaiPopup-group">
     {#each skins as skin, index}
       {@const disabled = selected === index}
       {@const label = skinTones.get(index)}
       <button
-        class="hulyPopup-row withKeys"
+        class="hanzoaiPopup-row withKeys"
         class:noHover={disabled}
         on:click={() => {
           if (disabled) return undefined
@@ -32,8 +32,8 @@
         }}
       >
         <span style:font-size={'1.5rem'}>{skin}</span>
-        {#if label}<span class="hulyPopup-row__label"><Label {label} /></span>{/if}
-        {#if disabled}<span class="hulyPopup-row__keys"><ModernCheckbox checked disabled /></span>{/if}
+        {#if label}<span class="hanzoaiPopup-row__label"><Label {label} /></span>{/if}
+        {#if disabled}<span class="hanzoaiPopup-row__keys"><ModernCheckbox checked disabled /></span>{/if}
       </button>
     {/each}
   </div>

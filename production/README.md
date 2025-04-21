@@ -1,9 +1,9 @@
-# Huly Self-Hosted
+# hanzoai Self-Hosted
 
-Please use this README if you want to deploy Huly on your server with `docker compose`. I'm using a Basic Droplet on Digital Ocean with Ubuntu 24.04, but these instructions can be easily adapted for any Linux distribution.
+Please use this README if you want to deploy hanzoai on your server with `docker compose`. I'm using a Basic Droplet on Digital Ocean with Ubuntu 24.04, but these instructions can be easily adapted for any Linux distribution.
 
 > [!NOTE]
-> Huly is quite resource-heavy, so I recommend using a Droplet with 2 vCPUs and 4GB of RAM. Droplets with less RAM may
+> hanzoai is quite resource-heavy, so I recommend using a Droplet with 2 vCPUs and 4GB of RAM. Droplets with less RAM may
 > stop responding or fail.
 
 If you prefer Kubernetes deployment, there is a sample Kubernetes configuration under [kube](kube) directory.
@@ -25,22 +25,22 @@ sudo apt install nginx
 Install docker using the [recommended method](https://docs.docker.com/engine/install/ubuntu/) from docker website.
 Afterwards perform [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/). Pay attention to 3rd step with `newgrp docker` command, it needed for correct execution in setup script.
 
-## Clone the `huly-selfhost` repository and configure `nginx`
+## Clone the `hanzoai-selfhost` repository and configure `nginx`
 
-Next, let's clone the `huly-selfhost` repository and configure Huly.
+Next, let's clone the `hanzoai-selfhost` repository and configure hanzoai.
 
 ```bash
-git clone https://github.com/hcengineering/huly-selfhost.git
-cd huly-selfhost
+git clone https://github.com/hcengineering/hanzoai-selfhost.git
+cd hanzoai-selfhost
 ./setup.sh
 ```
 
-This will generate a [huly.conf](./huly.conf) file with your chosen values and create your nginx config.
+This will generate a [hanzoai.conf](./hanzoai.conf) file with your chosen values and create your nginx config.
 
 To add the generated configuration to your Nginx setup, run the following:
 
 ```bash
-sudo ln -s $(pwd)/nginx.conf /etc/nginx/sites-enabled/huly.conf
+sudo ln -s $(pwd)/nginx.conf /etc/nginx/sites-enabled/hanzoai.conf
 ```
 
 > [!NOTE]
@@ -52,14 +52,14 @@ sudo ln -s $(pwd)/nginx.conf /etc/nginx/sites-enabled/huly.conf
 >You can safely execute this script after adding your custom configurations like ssl. It will only overwrite the
 > necessary settings.
 
-Finally, let's reload `nginx` and start Huly with `docker compose`.
+Finally, let's reload `nginx` and start hanzoai with `docker compose`.
 
 ```bash
 sudo nginx -s reload
 sudo docker compose up -d
 ```
 
-Now, launch your web browser and enjoy Huly!
+Now, launch your web browser and enjoy hanzoai!
 
 ## Generating Public and Private VAPID keys for front-end
 
@@ -206,8 +206,8 @@ To integrate with an external SMTP server, update the `docker-compose.yaml` file
 
 ## Love Service (Audio & Video calls)
 
-Huly audio and video calls are created on top of LiveKit insfrastructure. In order to use Love service in your
-self-hosted Huly, perform the following steps:
+hanzoai audio and video calls are created on top of LiveKit insfrastructure. In order to use Love service in your
+self-hosted hanzoai, perform the following steps:
 
 1. Set up [LiveKit Cloud](https://cloud.livekit.io) account
 2. Add `love` container to the docker-compose.yaml
@@ -245,7 +245,7 @@ self-hosted Huly, perform the following steps:
 
 ## AI Service
 
-Huly provides AI-powered chatbot that provides several services:
+hanzoai provides AI-powered chatbot that provides several services:
 
 - chat with AI
 - text message translations in the chat
@@ -267,7 +267,7 @@ Huly provides AI-powered chatbot that provides several services:
           - MONGO_URL=mongodb://mongodb:27017
           - STATS_URL=http://stats:4900
           - FIRST_NAME=Bot
-          - LAST_NAME=Huly AI
+          - LAST_NAME=hanzoai AI
           - PASSWORD=<PASSWORD>
           - OPENAI_API_KEY=<OPENAI_API_KEY>
           - OPENAI_BASE_URL=<OPENAI_BASE_URL>
@@ -300,18 +300,18 @@ Huly provides AI-powered chatbot that provides several services:
 
 ## Configure OpenID Connect (OIDC)
 
-You can configure a Huly instance to authorize users (sign-in/sign-up) using an OpenID Connect identity provider (IdP).
+You can configure a hanzoai instance to authorize users (sign-in/sign-up) using an OpenID Connect identity provider (IdP).
 
 ### On the IdP side
 1. Create a new OpenID application.
-   * Use `{huly_account_svc}/auth/openid/callback` as the sign-in redirect URI. The `huly_account_svc` is the hostname for the account service of the deployment, which should be accessible externally from the client/browser side. In the provided example setup, the account service runs on port 3000.
+   * Use `{hanzoai_account_svc}/auth/openid/callback` as the sign-in redirect URI. The `hanzoai_account_svc` is the hostname for the account service of the deployment, which should be accessible externally from the client/browser side. In the provided example setup, the account service runs on port 3000.
 
    **URI Example:**
-   - `http://huly.mydomain.com:3000/auth/openid/callback`
+   - `http://hanzoai.mydomain.com:3000/auth/openid/callback`
 
 2. Configure user access to the application as needed.
 
-### On the Huly side
+### On the hanzoai side
 
 For the account service, set the following environment variables as provided by the IdP:
 
@@ -330,16 +330,16 @@ sign-in/sign-up pages.
 
 ## Configure GitHub OAuth
 
-You can also configure a Huly instance to use GitHub OAuth for user authorization (sign-in/sign-up).
+You can also configure a hanzoai instance to use GitHub OAuth for user authorization (sign-in/sign-up).
 
 ### On the GitHub side
 1. Create a new GitHub OAuth application.
-   * Use `{huly_account_svc}/auth/github/callback` as the sign-in redirect URI. The `huly_account_svc` is the hostname for the account service of the deployment, which should be accessible externally from the client/browser side. In the provided example setup, the account service runs on port 3000.
+   * Use `{hanzoai_account_svc}/auth/github/callback` as the sign-in redirect URI. The `hanzoai_account_svc` is the hostname for the account service of the deployment, which should be accessible externally from the client/browser side. In the provided example setup, the account service runs on port 3000.
 
    **URI Example:**
-   - `http://huly.mydomain.com:3000/auth/github/callback`
+   - `http://hanzoai.mydomain.com:3000/auth/github/callback`
 
-### On the Huly side
+### On the hanzoai side
 
 Specify the following environment variables for the account service:
 

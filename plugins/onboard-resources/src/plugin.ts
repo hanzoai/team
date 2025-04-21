@@ -33,6 +33,6 @@ export default mergeIds(onboardId, onboard, {
     Next: '' as IntlString,
     Skip: '' as IntlString,
     SignUpCompleted: '' as IntlString,
-    StartUsingHuly: '' as IntlString
+    StartUsinghanzoai: '' as IntlString
   }
 })

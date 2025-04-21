@@ -228,7 +228,7 @@ export async function getContentByTemplate (
   }
 
   const link = await getNotificationLink(control, doc, message?._id)
-  const app = control.branding?.title ?? 'Huly'
+  const app = control.branding?.title ?? 'hanzoai'
   const linkText = await translate(notification.string.ViewIn, { app })
 
   params.link = `<a href='${link}'>${linkText}</a>`

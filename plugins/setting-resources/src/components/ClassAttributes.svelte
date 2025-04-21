@@ -154,7 +154,7 @@
 {#if showTitle}
   {#if clazz}
     <div class="flex-row-center flex-no-shrink mb-6">
-      <div class="hulyInput-body">
+      <div class="hanzoaiInput-body">
         <Label label={clazz.label} />
       </div>
       {#if hierarchy.hasMixin(clazz, settings.mixin.UserMixin)}
@@ -166,13 +166,13 @@
   {/if}
 {/if}
 <div
-  class="hulyTableAttr-container"
+  class="hanzoaiTableAttr-container"
   use:resizeObserver={(el) => {
     if (el.clientWidth < deviceWidths[0] && !el.classList.contains('short')) el.classList.add('short')
     else if (el.clientWidth >= deviceWidths[0] && el.classList.contains('short')) el.classList.remove('short')
   }}
 >
-  <div class="hulyTableAttr-header font-medium-12" class:withButton={showHierarchy}>
+  <div class="hanzoaiTableAttr-header font-medium-12" class:withButton={showHierarchy}>
     {#if showHeader}
       {#if showHierarchy}
         <ModernButton icon={IconSettings} kind={'secondary'} size={'small'} {disabled} hasMenu>
@@ -198,11 +198,11 @@
     />
   </div>
   {#if showHierarchy}
-    <div class="hulyTableAttr-content class withTitle">
-      <div class="hulyTableAttr-content__title">
+    <div class="hanzoaiTableAttr-content class withTitle">
+      <div class="hanzoaiTableAttr-content__title">
         <Label label={settings.string.Properties} />
       </div>
-      <div class="hulyTableAttr-content__wrapper">
+      <div class="hanzoaiTableAttr-content__wrapper">
         <ClassAttributesList
           {_class}
           {ofClass}
@@ -214,11 +214,11 @@
       </div>
     </div>
     {#each classes as clazz2}
-      <div class="hulyTableAttr-content class withTitle">
-        <div class="hulyTableAttr-content__title">
+      <div class="hanzoaiTableAttr-content class withTitle">
+        <div class="hanzoaiTableAttr-content__title">
           <Label label={clazz2.label} />
         </div>
-        <div class="hulyTableAttr-content__wrapper">
+        <div class="hanzoaiTableAttr-content__wrapper">
           <ClassAttributesList
             _class={clazz2._id}
             {ofClass}
@@ -232,7 +232,7 @@
       </div>
     {/each}
   {:else if attributes.length > 0}
-    <div class="hulyTableAttr-content class">
+    <div class="hanzoaiTableAttr-content class">
       <ClassAttributesList
         {_class}
         {ofClass}
@@ -246,7 +246,7 @@
 </div>
 
 <style lang="scss">
-  .hulyInput-body {
+  .hanzoaiInput-body {
     flex-grow: 1;
     flex-shrink: 0;
     padding: var(--spacing-1) var(--spacing-2);

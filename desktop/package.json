@@ -247,8 +247,8 @@
     "@hanzo/server-backup": "^0.6.0",
     "ws": "^8.18.0"
   },
-  "productName": "Huly Desktop",
-  "description": "Huly Desktop experience",
+  "productName": "hanzoai Desktop",
+  "description": "hanzoai Desktop experience",
   "keywords": [
     "electron",
     "typescript",

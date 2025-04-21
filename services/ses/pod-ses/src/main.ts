@@ -49,9 +49,9 @@ export const main = async (): Promise<void> => {
 
   if (config.PushPublicKey !== undefined && config.PushPrivateKey !== undefined) {
     try {
-      const subj = config.PushSubject ?? 'mailto:hey@huly.io'
+      const subj = config.PushSubject ?? 'mailto:hey@hanzoai.io'
       console.log('Setting VAPID details', subj, config.PushPublicKey.length, config.PushPrivateKey.length)
-      webpush.setVapidDetails(config.PushSubject ?? 'mailto:hey@huly.io', config.PushPublicKey, config.PushPrivateKey)
+      webpush.setVapidDetails(config.PushSubject ?? 'mailto:hey@hanzoai.io', config.PushPublicKey, config.PushPrivateKey)
       webpushInitDone = true
     } catch (err: any) {
       console.error(err)

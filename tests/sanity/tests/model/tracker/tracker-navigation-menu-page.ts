@@ -13,7 +13,7 @@ export class TrackerNavigationMenuPage extends CommonPage {
   starredProjectsMenuSelector = '#navGroup-tree-stared'
 
   buttonCreateProject = (): Locator => this.page.locator(this.yoursProjectsMenuSelector).locator('xpath=../button[1]')
-  buttonProjectsParent = (): Locator => this.page.locator('button.hulyNavGroup-header span')
+  buttonProjectsParent = (): Locator => this.page.locator('button.hanzoaiNavGroup-header span')
   templateLinkForProject = (projectName: string): Locator =>
     this.page.locator(`a[href$="templates"][href*="${projectName}"]`)
 
@@ -25,12 +25,12 @@ export class TrackerNavigationMenuPage extends CommonPage {
       .locator('xpath=following-sibling::div[1]/a[contains(@href, "issues")]', { hasText: 'Issues' })
 
   milestonesLinkForProject = (projectName: string): Locator =>
-    this.page.locator(`a[href$="milestones"][href*="${projectName}"] > button[class*="hulyNavItem-container"] > span`, {
+    this.page.locator(`a[href$="milestones"][href*="${projectName}"] > button[class*="hanzoaiNavItem-container"] > span`, {
       hasText: 'Milestones'
     })
 
   componentsLinkForProject = (projectName: string): Locator =>
-    this.page.locator(`a[href$="components"][href*="${projectName}"] > button[class*="hulyNavItem-container"] > span`, {
+    this.page.locator(`a[href$="components"][href*="${projectName}"] > button[class*="hanzoaiNavItem-container"] > span`, {
       hasText: 'Components'
     })
 

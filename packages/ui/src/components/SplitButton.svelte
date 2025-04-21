@@ -49,7 +49,7 @@
 </script>
 
 <div
-  class="hulySplitButton-container {kind} {size}"
+  class="hanzoaiSplitButton-container {kind} {size}"
   class:no-focus={noFocus}
   class:disabled
   class:separate
@@ -61,7 +61,7 @@
   {:else}
     <button
       use:tooltip={showTooltip}
-      class="hulySplitButton-main"
+      class="hanzoaiSplitButton-main"
       class:pressed
       {disabled}
       {title}
@@ -83,7 +83,7 @@
     </button>
     <button
       use:tooltip={secondShowTooltip}
-      class="hulySplitButton-second"
+      class="hanzoaiSplitButton-second"
       class:pressed={secondPressed}
       {disabled}
       title={secondTitle}

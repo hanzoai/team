@@ -67,10 +67,10 @@
   })
 
   const action = {
-    i18n: onboard.string.StartUsingHuly,
+    i18n: onboard.string.StartUsinghanzoai,
     func: async () => {
       if (account !== undefined && isWorkspaceLoginInfo(account)) {
-        Analytics.handleEvent(OnboardEvents.StartHuly)
+        Analytics.handleEvent(OnboardEvents.Starthanzoai)
         navigateToWorkspace(account.workspace, account)
       }
     }

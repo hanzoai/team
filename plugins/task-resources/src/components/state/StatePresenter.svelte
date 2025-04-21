@@ -137,7 +137,7 @@
 
 {#if value}
   {#if kind === 'table-attrs'}
-    <button class="hulyTableAttr-content__row-icon-wrapper" on:click>
+    <button class="hanzoaiTableAttr-content__row-icon-wrapper" on:click>
       {#if icon != null}
         <Icon {icon} {size} {iconProps} />
       {:else if category?._id === task.statusCategory.Active}
@@ -154,7 +154,7 @@
         <Icon icon={categoryIcons[category?._id ?? task.statusCategory.UnStarted]} {size} {iconProps} />
       {/if}
     </button>
-    <span class="hulyTableAttr-content__row-label font-medium-12 uppercase grow overflow-label">
+    <span class="hanzoaiTableAttr-content__row-label font-medium-12 uppercase grow overflow-label">
       {value.name}
     </span>
   {:else}

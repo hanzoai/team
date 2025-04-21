@@ -193,8 +193,8 @@
   on:change={fileSelected}
 />
 
-<div class="hulyTableAttr-container mt-6">
-  <div class="hulyTableAttr-header font-medium-12">
+<div class="hanzoaiTableAttr-container mt-6">
+  <div class="hanzoaiTableAttr-header font-medium-12">
     <IconBulletList size={'small'} />
     <span><Label label={setting.string.Options} /></span>
     <div class="buttons-group tertiary-textColor">
@@ -221,7 +221,7 @@
     </div>
   </div>
   {#if value.enumValues.length > 0 || newItem}
-    <div class="hulyTableAttr-content options">
+    <div class="hanzoaiTableAttr-content options">
       <EnumValuesList
         bind:values={value.enumValues}
         disableMouseOver={newItem}
@@ -229,11 +229,11 @@
         on:drop={onDrop}
       />
       {#if newItem}
-        <div class="hulyTableAttr-content__row hovered">
-          <div class="hulyTableAttr-content__row-dragMenu">
+        <div class="hanzoaiTableAttr-content__row hovered">
+          <div class="hanzoaiTableAttr-content__row-dragMenu">
             <IconMoreV2 size={'small'} />
           </div>
-          <div class="hulyTableAttr-content__row-label font-regular-14 accent grow">
+          <div class="hanzoaiTableAttr-content__row-label font-regular-14 accent grow">
             <ModernEditbox
               kind={'ghost'}
               size={'small'}
@@ -249,7 +249,7 @@
             />
           </div>
           {#if matched}
-            <div class="hulyChip-item error font-medium-12">
+            <div class="hanzoaiChip-item error font-medium-12">
               <Label label={presentation.string.Match} />
             </div>
           {/if}

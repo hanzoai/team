@@ -36,7 +36,7 @@ const isMac = process.platform === 'darwin'
 const isWindows = process.platform === 'win32'
 const isDev = process.env.NODE_ENV === 'development'
 
-const sessionPartition = !isDev ? 'persist:huly' : 'persist:huly_dev'
+const sessionPartition = !isDev ? 'persist:hanzoai' : 'persist:hanzoai_dev'
 const iconKey = path.join(app.getAppPath(), 'dist', 'ui', 'public', 'AppIcon.png')
 
 const defaultWidth = 1440
@@ -63,10 +63,10 @@ const serverChanged = oldFront !== FRONT_URL
 
 function readServerUrl (): string {
   if (isDev) {
-    return process.env.FRONT_URL ?? 'http://huly.local:8087'
+    return process.env.FRONT_URL ?? 'http://hanzoai.local:8087'
   }
 
-  return ((settings as any).get('server', process.env.FRONT_URL) as string) ?? 'https://huly.app'
+  return ((settings as any).get('server', process.env.FRONT_URL) as string) ?? 'https://hanzoai.app'
 }
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -74,7 +74,7 @@ if (require('electron-squirrel-startup') === true) {
   app.quit()
 }
 
-console.log('Running Huly', process.env.MODEL_VERSION, process.env.VERSION, isMac, isDev, process.env.NODE_ENV)
+console.log('Running hanzoai', process.env.MODEL_VERSION, process.env.VERSION, isMac, isDev, process.env.NODE_ENV)
 
 // Fix screen-sharing thumbnails being missing sometimes
 // See https://github.com/electron/electron/issues/44504
@@ -273,8 +273,8 @@ ipcMain.on('set-combined-config', (event, config: Config) => {
 
   setupCookieHandler(config)
 
-  const updatesUrl = process.env.DESKTOP_UPDATES_URL ?? config.DESKTOP_UPDATES_URL ?? 'https://dist.huly.io'
-  const updatesChannel = process.env.DESKTOP_UPDATES_CHANNEL ?? config.DESKTOP_UPDATES_CHANNEL ?? 'huly'
+  const updatesUrl = process.env.DESKTOP_UPDATES_URL ?? config.DESKTOP_UPDATES_URL ?? 'https://dist.hanzoai.io'
+  const updatesChannel = process.env.DESKTOP_UPDATES_CHANNEL ?? config.DESKTOP_UPDATES_CHANNEL ?? 'hanzoai'
 
   autoUpdater.setFeedURL({
     provider: 'generic',
@@ -314,7 +314,7 @@ ipcMain.on('set-front-cookie', function (event, host: string, name: string, valu
   void win?.webContents?.session.cookies.set(cv)
 })
 
-const DEEP_LINKS_PROTOCOL = 'huly'
+const DEEP_LINKS_PROTOCOL = 'hanzoai'
 /*
   Copy-paste from official tutorial for deep links
   https://www.electronjs.org/docs/latest/tutorial/launch-app-from-url-in-another-app

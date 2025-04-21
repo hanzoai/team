@@ -55,7 +55,7 @@
   }
 </script>
 
-<div class="hulyTableAttr-header font-medium-12">
+<div class="hanzoaiTableAttr-header font-medium-12">
   <Icon icon={card.icon.Tag} size="small" />
   <span><Label label={card.string.Tags} /></span>
   <ButtonIcon
@@ -72,7 +72,7 @@
   />
 </div>
 {#if descendants.length}
-  <div class="hulyTableAttr-content task">
+  <div class="hanzoaiTableAttr-content task">
     <TagsHierarchy
       kind={ClassifierKind.MIXIN}
       classes={descendants}

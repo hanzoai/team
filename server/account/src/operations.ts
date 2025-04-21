@@ -91,7 +91,7 @@ import {
   verifyPassword,
   wrap,
   getWorkspaceByUrl,
-  confirmHulyIds
+  confirmhanzoaiIds
 } from './utils'
 import { type AccountServiceMethods, getServiceMethods } from './serviceOperations'
 
@@ -321,7 +321,7 @@ export async function validateOtp (
 
     ctx.info('OTP signup success', emailSocialId)
   } else {
-    await confirmHulyIds(ctx, db, account.uuid)
+    await confirmhanzoaiIds(ctx, db, account.uuid)
 
     ctx.info('OTP login success', emailSocialId)
   }
@@ -886,7 +886,7 @@ export async function confirm (
 
   const socialId = await confirmEmail(ctx, db, account, email)
 
-  await confirmHulyIds(ctx, db, account)
+  await confirmhanzoaiIds(ctx, db, account)
 
   const person = await db.person.findOne({ uuid: account })
   if (person == null) {

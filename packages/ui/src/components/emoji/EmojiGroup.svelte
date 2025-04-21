@@ -36,8 +36,8 @@
       : $resultEmojis.filter((re) => re.key === group.id)
 </script>
 
-<div class="hulyPopupEmoji-group kind-{kind}" class:lazy>
-  <div id={group.id} class="hulyPopupEmoji-group__header categoryHeader">
+<div class="hanzoaiPopupEmoji-group kind-{kind}" class:lazy>
+  <div id={group.id} class="hanzoaiPopupEmoji-group__header categoryHeader">
     <Label label={searching && $resultEmojis.length === 0 ? plugin.string.NoResults : group.label} />
   </div>
   {#if lazy}
@@ -50,7 +50,7 @@
 </div>
 
 <style lang="scss">
-  .hulyPopupEmoji-group {
+  .hanzoaiPopupEmoji-group {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -93,7 +93,7 @@
     }
 
     &.kind-default {
-      .hulyPopupEmoji-group__header {
+      .hanzoaiPopupEmoji-group__header {
         background: var(--theme-popup-header);
 
         &::before {

@@ -97,7 +97,7 @@
   onCancel={handleCancel}
   on:close
 >
-  <div class="hulyModal-content__titleGroup" style="padding: 0">
+  <div class="hanzoaiModal-content__titleGroup" style="padding: 0">
     <div class="title overflow-label mb-4" title={dmName}>
       {dmName}
     </div>

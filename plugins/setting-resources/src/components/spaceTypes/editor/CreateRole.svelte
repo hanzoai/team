@@ -52,7 +52,7 @@
     clearSettingsStore()
   }}
 >
-  <div class="hulyModal-content__titleGroup">
+  <div class="hanzoaiModal-content__titleGroup">
     <ModernEditbox bind:value={roleData.name} label={settingRes.string.RoleName} size="large" kind="ghost" autoFocus />
   </div>
 </Modal>

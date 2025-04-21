@@ -67,7 +67,7 @@ export function startBackup (window: BrowserWindow, token: string, endpoint: str
     .showOpenDialog(window, {
       properties: ['openDirectory'],
       buttonLabel: 'Select a backup folder',
-      message: 'Select a folder for Huly incremental backup.'
+      message: 'Select a folder for hanzoai incremental backup.'
     })
     .then((response) => {
       if (!response.canceled && response.filePaths.length > 0) {
@@ -77,8 +77,8 @@ export function startBackup (window: BrowserWindow, token: string, endpoint: str
             buttons: ['Backup....', 'Cancel'],
             defaultId: 0,
             textWidth: 500,
-            title: 'Huly desktop need a confirmation for a backup process to be started...',
-            message: `Huly Desktop need a confirmation for a backup process to be started....\n\n
+            title: 'hanzoai desktop need a confirmation for a backup process to be started...',
+            message: `hanzoai Desktop need a confirmation for a backup process to be started....\n\n
                       An incremental backup will be performed to folder:\n ${response.filePaths[0]}\n
                       Backup could be canceled and resumed laterly into same location.`,
             checkboxLabel: 'Include files >= 50mb',

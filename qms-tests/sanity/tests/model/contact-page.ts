@@ -9,7 +9,7 @@ export class ContactPage {
 
   readonly appContact = (): Locator => this.page.locator('[id="app-contact\\:string\\:Contacts"]')
   readonly employeeNavElement = (Employee: string): Locator =>
-    this.page.locator(`.hulyNavItem-container:has-text("${Employee}")`)
+    this.page.locator(`.hanzoaiNavItem-container:has-text("${Employee}")`)
 
   readonly employeeEntry = (first: string, last: string): Locator =>
     this.page.locator(`td:has-text("${last} ${first}")`)

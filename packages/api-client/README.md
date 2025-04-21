@@ -1,6 +1,6 @@
-# Huly Platform API Client
+# hanzoai Platform API Client
 
-A TypeScript client library for interacting with the Huly Platform API.
+A TypeScript client library for interacting with the hanzoai Platform API.
 
 ## Installation
 
@@ -16,7 +16,7 @@ There are two ways to connect to the platform, using email and password, or usin
 
 Parameters:
 
-- `url`: URL of the Huly instance
+- `url`: URL of the hanzoai instance
 - `options`: Connection options
   - `workspace`: Name of the workspace to connect to
   - `token`: Optional authentication token

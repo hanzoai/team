@@ -26,7 +26,7 @@ export class ApplicationsPage extends CommonRecruitingPage {
   readonly buttonTabCreated = (): Locator => this.page.locator('label[data-id="tab-created"]')
   readonly textTableFirstCell = (): Locator => this.page.locator('div[class$="firstCell"]')
   readonly buttonTypeSelector = (): Locator =>
-    this.page.locator('div[class*="hulyHeader-container"] div[class*="hulyHeader-titleGroup"] button')
+    this.page.locator('div[class*="hanzoaiHeader-container"] div[class*="hanzoaiHeader-titleGroup"] button')
 
   // ACTIONS
   async clickButtonTabCreated (): Promise<void> {
@@ -80,7 +80,7 @@ export class ApplicationsPage extends CommonRecruitingPage {
       .locator('div[class*="firstCell"]')
       .click()
     await expect(
-      this.page.locator('div.hulyHeader-container div.hulyHeader-titleGroup', { hasText: talentName.lastName })
+      this.page.locator('div.hanzoaiHeader-container div.hanzoaiHeader-titleGroup', { hasText: talentName.lastName })
     ).toBeVisible({ timeout: 1000 })
   }
 

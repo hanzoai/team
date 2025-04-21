@@ -142,8 +142,8 @@
   class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal' ? 'portrait' : 'landscape'} border-left"
   class:fly={$deviceInfo.navigator.float}
 >
-  <div class="antiPanel-wrap__content hulyNavPanel-container">
-    <div class="hulyNavPanel-header">
+  <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
+    <div class="hanzoaiNavPanel-header">
       <Label label={time.string.Planner} />
       {#if actions.length > 0}
         <ButtonIcon icon={IconMoreV} hasMenu {pressed} kind="tertiary" size="small" on:click={menuButtonClicked} />
@@ -168,7 +168,7 @@
       {/each}
       <div class="min-h-3 flex-no-shrink" />
 
-      <div class="hulyAccordionItem-container border" class:noBorder={tags.length === 0}>
+      <div class="hanzoaiAccordionItem-container border" class:noBorder={tags.length === 0}>
         <Month
           currentDate={mode === 'date' ? currentDate : null}
           on:update={(event) => {

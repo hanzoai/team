@@ -71,21 +71,21 @@
   })
 </script>
 
-<div class="hulyTableAttr-header font-medium-12">
+<div class="hanzoaiTableAttr-header font-medium-12">
   <Icon icon={setting.icon.Relations} size="small" />
   <span><Label label={core.string.Relations} /></span>
   <ButtonIcon kind="primary" icon={IconAdd} size="small" dataId={'btnAdd'} on:click={addRelation} />
 </div>
 {#if filtered.length}
-  <div class="hulyTableAttr-content task">
+  <div class="hanzoaiTableAttr-content task">
     {#each filtered as association}
       <button
-        class="hulyTableAttr-content__row justify-start"
+        class="hanzoaiTableAttr-content__row justify-start"
         on:click|stopPropagation={() => {
           handleSelect(association)
         }}
       >
-        <div class="hulyTableAttr-content__row-label font-medium-14 cursor-pointer">
+        <div class="hanzoaiTableAttr-content__row-label font-medium-14 cursor-pointer">
           {association.nameA} (<Label label={getClassLabel(association.classA)} />) - {association.nameB} (<Label
             label={getClassLabel(association.classB)}
           />)

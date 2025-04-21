@@ -68,12 +68,12 @@
   defineSeparators('workspaceSettings', twoPanelsSeparators)
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={card.icon.MasterTags} label={card.string.MasterTags} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__container columns">
-    <div class="hulyComponent-content__column">
+  <div class="hanzoaiComponent-content__container columns">
+    <div class="hanzoaiComponent-content__column">
       <div class="ulyComponent-content__navHeader flex-between trans-title flex-no-shrink bottom-divider p-3">
         <Button
           icon={view.icon.Add}
@@ -104,9 +104,9 @@
       </Scroller>
     </div>
     <Separator name={'workspaceSettings'} index={0} color={'var(--theme-divider-color)'} />
-    <div class="hulyComponent-content__column content">
+    <div class="hanzoaiComponent-content__column content">
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content">
+        <div class="hanzoaiComponent-content">
           {#if _class !== undefined}
             <ClassAttributes {_class} disabled={false} />
           {/if}

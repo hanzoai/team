@@ -166,7 +166,7 @@
       {/if}
     {/if}
   </svelte:fragment>
-  <div class="hulyModal-content__titleGroup">
+  <div class="hanzoaiModal-content__titleGroup">
     <div class="flex items-center">
       <ButtonIcon
         icon={icon ?? setting.icon.Enums}
@@ -179,8 +179,8 @@
       <ModernEditbox bind:value={name} label={core.string.Name} size={'large'} kind={'ghost'} {disabled} />
     </div>
   </div>
-  <div class="hulyModal-content__settingsSet">
-    <div class="hulyModal-content__settingsSet-line">
+  <div class="hanzoaiModal-content__settingsSet">
+    <div class="hanzoaiModal-content__settingsSet-line">
       <span class="label">
         <Label label={setting.string.Type} />
       </span>

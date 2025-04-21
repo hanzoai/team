@@ -33,16 +33,16 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
-    class="hulyStatusBarButton"
+    class="hanzoaiStatusBarButton"
     class:active
     use:tooltip={{ component: ParticipantsList, props: { items: participants }, direction: 'bottom' }}
     on:click
   >
-    <span class="hulyStatusBarButton-label">{label}</span>
-    <div class="hulyCombineAvatars-container">
+    <span class="hanzoaiStatusBarButton-label">{label}</span>
+    <div class="hanzoaiCombineAvatars-container">
       {#each participants.slice(0, limit) as participant, i (participant._id)}
         <div
-          class="hulyCombineAvatar tiny"
+          class="hanzoaiCombineAvatar tiny"
           data-over={i === limit - 1 && overLimit ? `+${participants.length - limit + 1}` : undefined}
         >
           <Avatar
@@ -57,9 +57,9 @@
 {:else}
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div class="hulyStatusBarButton" class:active on:click>
-    <span class="hulyStatusBarButton-label">{label}</span>
-    <div class="hulyStatusBarButton-icons">
+  <div class="hanzoaiStatusBarButton" class:active on:click>
+    <span class="hanzoaiStatusBarButton-label">{label}</span>
+    <div class="hanzoaiStatusBarButton-icons">
       {#each participants as participant (participant._id)}
         <div
           use:tooltip={{ label: getEmbeddedLabel(formatName(participant.name)), direction: 'bottom' }}

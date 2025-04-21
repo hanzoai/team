@@ -57,21 +57,21 @@
   }
 </script>
 
-<div class="hulyTableAttr-header font-medium-12">
+<div class="hanzoaiTableAttr-header font-medium-12">
   <Icon icon={process.icon.Process} size="small" />
   <span><Label label={process.string.Processes} /></span>
   <ButtonIcon kind="primary" icon={IconAdd} size="small" dataId={'btnAdd'} on:click={add} />
 </div>
 {#if processes.length}
-  <div class="hulyTableAttr-content task">
+  <div class="hanzoaiTableAttr-content task">
     {#each processes as val}
       <button
-        class="hulyTableAttr-content__row justify-start"
+        class="hanzoaiTableAttr-content__row justify-start"
         on:click|stopPropagation={() => {
           handleSelect(val._id)
         }}
       >
-        <div class="hulyTableAttr-content__row-label px-2 font-medium-14 cursor-pointer">
+        <div class="hanzoaiTableAttr-content__row-label px-2 font-medium-14 cursor-pointer">
           {val.name}
         </div>
       </button>

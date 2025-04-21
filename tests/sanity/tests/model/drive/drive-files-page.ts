@@ -10,7 +10,7 @@ export class DriveFilesPage extends CommonPage {
     this.page = page
   }
 
-  readonly leftMenu = (): Locator => this.page.locator('.antiPanel-wrap__content.hulyNavPanel-container')
+  readonly leftMenu = (): Locator => this.page.locator('.antiPanel-wrap__content.hanzoaiNavPanel-container')
   readonly buttonConfirmUpload = (): Locator => this.page.locator('.popup button').last()
   readonly linkFile = (fileName: string): Locator => this.page.locator(`td:has(span:text-is("${fileName}")) a`).first()
   readonly buttonContextMenu = (buttonText: ButtonFilesContextMenu): Locator =>

@@ -146,7 +146,7 @@
     cursor: pointer;
 
     &:hover {
-      background: var(--color-huly-off-white-5);
+      background: var(--color-hanzoai-off-white-5);
     }
   }
 
