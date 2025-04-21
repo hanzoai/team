@@ -1,4 +1,4 @@
-.hulyButton {
+.hanzoaiButton {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -172,15 +172,15 @@
 }
 
 // StatusBar Button
-.hulyStatusBarButton,
-.hulyStatusBarButton .hulyStatusBarButton-icons {
+.hanzoaiStatusBarButton,
+.hanzoaiStatusBarButton .hanzoaiStatusBarButton-icons {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   min-width: 0;
   min-height: 0;
 }
-.hulyStatusBarButton {
+.hanzoaiStatusBarButton {
   overflow: hidden;
   gap: var(--spacing-1);
   padding: var(--spacing-0_25) var(--spacing-0_25) var(--spacing-0_25) var(--spacing-1);
@@ -579,8 +579,8 @@
   }
 }
 
-// Huly SplitButton
-.hulySplitButton-container {
+// hanzoai SplitButton
+.hanzoaiSplitButton-container {
   display: flex;
   align-items: stretch;
   flex-shrink: 0;
@@ -610,13 +610,13 @@
   button.pressed {
     z-index: 1;
   }
-  .hulySplitButton-main {
+  .hanzoaiSplitButton-main {
     display: flex;
     align-items: center;
     gap: var(--spacing-1);
     min-width: 0;
   }
-  .hulySplitButton-second {
+  .hanzoaiSplitButton-second {
     margin: 0;
     padding: 0;
 
@@ -629,26 +629,26 @@
   &.large {
     height: var(--global-large-Size);
 
-    .hulySplitButton-main {
+    .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-1) 0 var(--spacing-2);
     }
-    .hulySplitButton-second {
+    .hanzoaiSplitButton-second {
       width: var(--global-small-Size);
     }
-    &.separate .hulySplitButton-main {
+    &.separate .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-1_25) 0 var(--spacing-2);
     }
   }
   &.medium {
     height: var(--global-medium-Size);
 
-    .hulySplitButton-main {
+    .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-0_75) 0 var(--spacing-1_5);
     }
-    .hulySplitButton-second {
+    .hanzoaiSplitButton-second {
       width: var(--global-small-Size);
     }
-    &.separate .hulySplitButton-main {
+    &.separate .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-1_25) 0 var(--spacing-1_5);
     }
   }
@@ -677,13 +677,13 @@
       border-top-right-radius: var(--small-BorderRadius);
       border-bottom-right-radius: var(--small-BorderRadius);
     }
-    .hulySplitButton-main {
+    .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-0_5) 0 var(--spacing-1);
     }
-    .hulySplitButton-second {
+    .hanzoaiSplitButton-second {
       width: var(--global-extra-small-Size);
     }
-    &.separate .hulySplitButton-main {
+    &.separate .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-0_75) 0 var(--spacing-1);
     }
   }
@@ -703,10 +703,10 @@
       width: var(--spacing-1_5);
       height: var(--spacing-1_5);
     }
-    .hulySplitButton-main {
+    .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-0_75);
     }
-    .hulySplitButton-second {
+    .hanzoaiSplitButton-second {
       width: var(--global-min-Size);
     }
   }
@@ -730,16 +730,16 @@
         height: var(--spacing-1_25);
       }
     }
-    .hulySplitButton-main {
+    .hanzoaiSplitButton-main {
       padding: 0 var(--spacing-0_5);
     }
-    .hulySplitButton-second {
+    .hanzoaiSplitButton-second {
       width: var(--global-min-Size);
     }
   }
-  &.small .hulySplitButton-main,
-  &.extra-small .hulySplitButton-main,
-  &.min .hulySplitButton-main {
+  &.small .hanzoaiSplitButton-main,
+  &.extra-small .hanzoaiSplitButton-main,
+  &.min .hanzoaiSplitButton-main {
     gap: var(--spacing-0_5);
   }
 
@@ -770,7 +770,7 @@
     }
     &.disabled {
       background-color: var(--button-disabled-BackgroundColor);
-      
+
       button {
         color: var(--button-disabled-LabelColor);
         background-color: transparent;
@@ -785,7 +785,7 @@
 
     button {
       color: var(--primary-button-color);
-      
+
       &:enabled {
         &:hover {
           background-color: var(--primary-button-hovered);
@@ -805,7 +805,7 @@
     }
     &.disabled {
       background-color: var(--primary-button-disabled);
-      
+
       button {
         color: var(--primary-button-disabled-color);
         background-color: transparent;
@@ -819,7 +819,7 @@
 
   &.disabled {
     border-color: transparent;
-    
+
     button {
       color: var(--theme-darker-color);
       cursor: not-allowed;
@@ -831,7 +831,7 @@
   }
 
   &.separate {
-    .hulySplitButton-second {
+    .hanzoaiSplitButton-second {
       position: relative;
 
       &::after {
@@ -844,13 +844,13 @@
         opacity: 0.2;
       }
     }
-    &.secondary .hulySplitButton-second::after {
+    &.secondary .hanzoaiSplitButton-second::after {
       background-color: var(--theme-caption-color);
     }
-    &.primary .hulySplitButton-second::after {
+    &.primary .hanzoaiSplitButton-second::after {
       background-color: var(--primary-button-color);
     }
-    &:focus-within .hulySplitButton-second::after {
+    &:focus-within .hanzoaiSplitButton-second::after {
       content: none;
     }
   }

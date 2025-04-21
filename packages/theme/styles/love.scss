@@ -21,8 +21,8 @@
   &::before {
     position: absolute;
     content: '';
-    left: calc(100% / var(--huly-floor-roomWidth) / 5 * -1);
-    right: calc(100% / var(--huly-floor-roomWidth) / 5 * -1);
+    left: calc(100% / var(--hanzoai-floor-roomWidth) / 5 * -1);
+    right: calc(100% / var(--hanzoai-floor-roomWidth) / 5 * -1);
     background-color: var(--theme-popup-color);
     border: 1px solid var(--theme-popup-divider);
     border-radius: 1rem;
@@ -35,7 +35,7 @@
   }
   &__header {
     align-items: center;
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + 0.375rem + 1px);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + 0.375rem + 1px);
 
     & > span {
       color: var(--theme-caption-color);
@@ -67,16 +67,16 @@
   }
 
   &::before {
-    bottom: calc(100% / var(--huly-floor-roomHeight) / 5 * -1);
+    bottom: calc(100% / var(--hanzoai-floor-roomHeight) / 5 * -1);
 
     &.hovered { background-color: var(--theme-popup-hover); }
   }
-  :not(.preview) &::before { top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6); }
+  :not(.preview) &::before { top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6); }
   .preview &::before {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1);
-    bottom: calc(100% / var(--huly-floor-roomHeight) / 3 * -1);
-    left: calc(100% / var(--huly-floor-roomWidth) / 3 * -1);
-    right: calc(100% / var(--huly-floor-roomWidth) / 3 * -1);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1);
+    bottom: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1);
+    left: calc(100% / var(--hanzoai-floor-roomWidth) / 3 * -1);
+    right: calc(100% / var(--hanzoai-floor-roomWidth) / 3 * -1);
     border-radius: .375rem;
 
     .floorGrid-room__field { border-radius: .25rem; }
@@ -95,14 +95,14 @@
 }
 
 // Fix Avatars
-.floorGrid-room .floorGrid-room__field .hulyAvatar-container.hulyAvatarSize-large,
-.floorGrid-room .floorGrid-room__field .hulyAvatar-container.hulyAvatarSize-large img { width: 100%; }
+.floorGrid-room .floorGrid-room__field .hanzoaiAvatar-container.hanzoaiAvatarSize-large,
+.floorGrid-room .floorGrid-room__field .hanzoaiAvatar-container.hanzoaiAvatarSize-large img { width: 100%; }
 
 .floorGrid-configureRoom {
   &__header {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + .75rem - 1px);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + .75rem - 1px);
     // transition: top .15s ease-in-out;
-    
+
     & > .antiEditBox input {
       font-size: .8125rem;
       transition: font-size .15s ease-in-out;
@@ -117,15 +117,15 @@
   }
 
   &::before {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6);
-    bottom: calc(100% / var(--huly-floor-roomHeight) / 5 * -1);
-    box-shadow: var(--huly-floor-roomShadow, --theme-popup-shadow);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6);
+    bottom: calc(100% / var(--hanzoai-floor-roomHeight) / 5 * -1);
+    box-shadow: var(--hanzoai-floor-roomShadow, --theme-popup-shadow);
   }
 
   &.dragged {
     position: absolute;
-    width: var(--huly-floor-roomWidth);
-    height: var(--huly-floor-roomHeight);
+    width: var(--hanzoai-floor-roomWidth);
+    height: var(--hanzoai-floor-roomHeight);
     opacity: .85;
     z-index: 1;
   }
@@ -152,38 +152,38 @@
 // Room conners and header
 @container floorGridContainer (max-width: 800px) {
   .floorGrid-room::before,
-  .floorGrid-configureRoom::before { border-radius: 0.75rem; }  
+  .floorGrid-configureRoom::before { border-radius: 0.75rem; }
   .floorGrid-room .floorGrid-room__header {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + .125rem + 1px);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + .125rem + 1px);
     span { font-size: .75rem; }
     svg { width: 0.75rem; }
   }
   .floorGrid-configureRoom .floorGrid-configureRoom__header {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + .25rem);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + .25rem);
     & > .antiEditBox input { font-size: .75rem; }
   }
 }
 @container floorGridContainer (max-width: 600px) {
   .floorGrid-room::before,
-  .floorGrid-configureRoom::before { border-radius: 0.5rem; }  
+  .floorGrid-configureRoom::before { border-radius: 0.5rem; }
   .floorGrid-room .floorGrid-room__header {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + .125rem);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + .125rem);
     span { font-size: .7rem; }
   }
   .floorGrid-configureRoom .floorGrid-configureRoom__header {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + .125rem);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + .125rem);
     & > .antiEditBox input { font-size: .7rem; }
   }
 }
 @container floorGridContainer (max-width: 380px) {
   .floorGrid-room::before,
-  .floorGrid-configureRoom::before { border-radius: 0.25rem; }  
+  .floorGrid-configureRoom::before { border-radius: 0.25rem; }
   .floorGrid-room .floorGrid-room__header {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + .125rem);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + .125rem);
     span { font-size: .5rem; }
   }
   .floorGrid-configureRoom .floorGrid-configureRoom__header {
-    top: calc(100% / var(--huly-floor-roomHeight) / 3 * -1.6 + .125rem);
+    top: calc(100% / var(--hanzoai-floor-roomHeight) / 3 * -1.6 + .125rem);
     & > .antiEditBox input { font-size: .5rem; }
   }
 }
@@ -200,13 +200,13 @@
 .room-popup {
   .room-btns {
     button.secondary,
-    .hulySplitButton-main {
+    .hanzoaiSplitButton-main {
       flex-grow: 1;
     }
-    .hulySplitButton-container {
+    .hanzoaiSplitButton-container {
       flex-grow: 2;
     }
-    &.no-video .hulySplitButton-container {
+    &.no-video .hanzoaiSplitButton-container {
       flex-grow: 4;
     }
   }
