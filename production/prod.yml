@@ -1,4 +1,4 @@
-name: Hanzo
+name: hanzo
 version: "3"
 services:
   nginx:
@@ -6,7 +6,7 @@ services:
     ports:
       - "0.0.0.0:81:80"
     volumes:
-      - ./.hanzo.nginx:/etc/nginx/conf.d/default.conf
+      - ./.huly.nginx:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
 
   mongodb:
@@ -38,7 +38,7 @@ services:
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
       - http.cors.enabled=true
-      - http.cors.allow-origin=http://localhost:8082
+      - http.cors.allow-origin=http://localhost:8182
     healthcheck:
       interval: 20s
       retries: 10
@@ -46,9 +46,9 @@ services:
     restart: unless-stopped
 
   rekoni:
-    image: hanzoai/rekoni-service:5.1.1
+    image: hanzoai/rekoni-service:latest
     environment:
-      - SECRET=sjdoshfjhsdfjkhsvdfjh
+      - SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
     deploy:
       resources:
         limits:
@@ -56,15 +56,15 @@ services:
     restart: unless-stopped
 
   transactor:
-    image: hanzoai/transactor:5.1.1
+    image: hanzoai/transactor:latest
     environment:
       - SERVER_PORT=3333
-      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
+      - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - SERVER_CURSOR_MAXTIMEMS=30000
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
-      - FRONT_URL=http://localhost:8087
+      - FRONT_URL=http://localhost:8187
       - ACCOUNTS_URL=http://account:3000
       - FULLTEXT_URL=http://fulltext:4700
       - STATS_URL=http://stats:4900
@@ -72,10 +72,10 @@ services:
     restart: unless-stopped
 
   collaborator:
-    image: hanzoai/collaborator:5.1.1
+    image: hanzoai/collaborator:latest
     environment:
       - COLLABORATOR_PORT=3078
-      - SECRET=sjdoshfjhsdfjkhsvdfjh
+      - SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - ACCOUNTS_URL=http://account:3000
       - DB_URL=mongodb://mongodb:27017
       - STATS_URL=http://stats:4900
@@ -83,13 +83,13 @@ services:
     restart: unless-stopped
 
   account:
-    image: hanzoai/account:5.1.1
+    image: hanzoai/account:latest
     environment:
       - SERVER_PORT=3000
-      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
+      - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TRANSACTOR_URL=ws://transactor:3333;wss://127.0.0.1/_transactor
+      - TRANSACTOR_URL=ws://transactor:3333;ws://localhost:81/_transactor
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - FRONT_URL=http://front:8080
       - STATS_URL=http://stats:4900
@@ -99,12 +99,12 @@ services:
     restart: unless-stopped
 
   workspace:
-    image: hanzoai/workspace:5.1.1
+    image: hanzoai/workspace:latest
     environment:
-      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
+      - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TRANSACTOR_URL=ws://transactor:3333;wss://127.0.0.1/_transactor
+      - TRANSACTOR_URL=ws://transactor:3333;ws://localhost:81/_transactor
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - MODEL_ENABLED=*
       - ACCOUNTS_URL=http://account:3000
@@ -112,36 +112,36 @@ services:
     restart: unless-stopped
 
   front:
-    image: hanzoai/front:5.1.1
+    image: hanzoai/front:latest
     environment:
       - SERVER_PORT=8080
-      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
-      - LOVE_ENDPOINT=http://127.0.0.1/_love
-      - ACCOUNTS_URL=http://127.0.0.1/_accounts
-      - REKONI_URL=http://127.0.0.1/_rekoni
-      - CALENDAR_URL=http://127.0.0.1/_calendar
-      - GMAIL_URL=http://127.0.0.1/_gmail
-      - TELEGRAM_URL=http://127.0.0.1/_telegram
-      - STATS_URL=http://127.0.0.1/_stats
+      - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
+      - LOVE_ENDPOINT=http://localhost:81/_love
+      - ACCOUNTS_URL=http://localhost:81/_accounts
+      - REKONI_URL=http://localhost:81/_rekoni
+      - CALENDAR_URL=http://localhost:81/_calendar
+      - GMAIL_URL=http://localhost:81/_gmail
+      - TELEGRAM_URL=http://localhost:81/_telegram
+      - STATS_URL=http://localhost:81/_stats
       - UPLOAD_URL=/files
       - ELASTIC_URL=http://elastic:9200
-      - COLLABORATOR_URL=wss://127.0.0.1/_collaborator
+      - COLLABORATOR_URL=ws://localhost:81/_collaborator
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TITLE=Hanzo Self Host
+      - TITLE=Huly Self Host
       - DEFAULT_LANGUAGE=en
       - LAST_NAME_FIRST=true
       - DESKTOP_UPDATES_CHANNEL=selfhost
     restart: unless-stopped
 
   fulltext:
-    image: hanzoai/fulltext:5.1.1
+    image: hanzoai/fulltext:latest
     environment:
-      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
+      - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - DB_URL=mongodb://mongodb:27017
       - FULLTEXT_DB_URL=http://elastic:9200
-      - ELASTIC_INDEX_NAME=hanzo_index
+      - ELASTIC_INDEX_NAME=huly_storage_index
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - REKONI_URL=http://rekoni:4004
       - ACCOUNTS_URL=http://account:3000
@@ -149,10 +149,10 @@ services:
     restart: unless-stopped
 
   stats:
-    image: hanzoai/stats:5.1.1
+    image: hanzoai/stats:latest
     environment:
       - PORT=4900
-      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
+      - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
     restart: unless-stopped
 
 volumes:
