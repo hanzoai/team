@@ -10,6 +10,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   mongodb:
     image: "mongo:7-jammy"
     environment:
@@ -20,6 +21,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   minio:
     image: "minio/minio"
     command: server /data --address ":9000" --console-address ":9001"
@@ -28,6 +30,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   elastic:
     image: "elasticsearch:7.14.2"
     command: |
@@ -49,6 +52,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   rekoni:
     image: hanzoai/rekoni-service:5.1.1
     environment:
@@ -60,6 +64,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   transactor:
     image: hanzoai/transactor:5.1.1
     environment:
@@ -69,7 +74,7 @@ services:
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
-      - FRONT_URL=http://localhost:8187
+      - FRONT_URL=http://front:8080
       - ACCOUNTS_URL=http://account:3000
       - FULLTEXT_URL=http://fulltext:4700
       - STATS_URL=http://stats:4900
@@ -77,6 +82,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   collaborator:
     image: hanzoai/collaborator:5.1.1
     environment:
@@ -89,6 +95,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   account:
     image: hanzoai/account:5.1.1
     environment:
@@ -96,23 +103,24 @@ services:
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TRANSACTOR_URL=ws://transactor:3333;ws://localhost:81/_transactor
+      - TRANSACTOR_URL=ws://transactor:3333;ws://nginx:80/_transactor
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - FRONT_URL=http://front:8080
       - STATS_URL=http://stats:4900
       - MODEL_ENABLED=*
-      - ACCOUNTS_URL=http://localhost:3000
+      - ACCOUNTS_URL=http://account:3000
       - ACCOUNT_PORT=3000
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   workspace:
     image: hanzoai/workspace:5.1.1
     environment:
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TRANSACTOR_URL=ws://transactor:3333;ws://localhost:81/_transactor
+      - TRANSACTOR_URL=ws://transactor:3333;ws://nginx:80/_transactor
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - MODEL_ENABLED=*
       - ACCOUNTS_URL=http://account:3000
@@ -120,21 +128,22 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   front:
     image: hanzoai/front:5.1.1
     environment:
       - SERVER_PORT=8080
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
-      - LOVE_ENDPOINT=http://localhost:81/_love
-      - ACCOUNTS_URL=http://localhost:81/_accounts
-      - REKONI_URL=http://localhost:81/_rekoni
-      - CALENDAR_URL=http://localhost:81/_calendar
-      - GMAIL_URL=http://localhost:81/_gmail
-      - TELEGRAM_URL=http://localhost:81/_telegram
-      - STATS_URL=http://localhost:81/_stats
+      - LOVE_ENDPOINT=http://nginx:80/_love
+      - ACCOUNTS_URL=http://nginx:80/_accounts
+      - REKONI_URL=http://nginx:80/_rekoni
+      - CALENDAR_URL=http://nginx:80/_calendar
+      - GMAIL_URL=http://nginx:80/_gmail
+      - TELEGRAM_URL=http://nginx:80/_telegram
+      - STATS_URL=http://nginx:80/_stats
       - UPLOAD_URL=/files
       - ELASTIC_URL=http://elastic:9200
-      - COLLABORATOR_URL=ws://localhost:81/_collaborator
+      - COLLABORATOR_URL=ws://nginx:80/_collaborator
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
@@ -145,6 +154,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   fulltext:
     image: hanzoai/fulltext:5.1.1
     environment:
@@ -159,6 +169,7 @@ services:
     restart: unless-stopped
     networks:
       - hanzo-network-platform
+
   stats:
     image: hanzoai/stats:5.1.1
     environment:
@@ -172,6 +183,7 @@ volumes:
   db:
   elastic:
   files:
+
 networks:
   hanzo-network-platform:
     name: hanzo-network-platform
