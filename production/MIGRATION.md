@@ -1,6 +1,6 @@
-# hanzoai Migration
+# Huly Migration
 
-This document describes the changes required to update hanzoai from one version to another. Most of updates require updating Docker containers versions.
+This document describes the changes required to update Huly from one version to another. Most of updates require updating Docker containers versions.
 Though, some updates may require updating other configuration options. In this case, you should review the updated configuration options and update them accordingly.
 
 ## v0.6.482
@@ -99,14 +99,14 @@ Configuration:
 
 ```yaml
   fulltext:
-    image: hardcoreeng/fulltext:${hanzoai_VERSION}
+    image: hardcoreeng/fulltext:${HULY_VERSION}
     ports:
       - 4700:4700
     environment:
-      - SERVER_SECRET=${hanzoai_SECRET}
+      - SERVER_SECRET=${HULY_SECRET}
       - DB_URL=mongodb://mongodb:27017
       - FULLTEXT_DB_URL=http://elastic:9200
-      - ELASTIC_INDEX_NAME=hanzoai_storage_index
+      - ELASTIC_INDEX_NAME=huly_storage_index
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - REKONI_URL=http://rekoni:4004
       - ACCOUNTS_URL=http://account:3000
@@ -124,7 +124,7 @@ Update the `transactor` service to use the new `fulltext` service:
       - FULLTEXT_URL=http://fulltext:4700
       # Remove the following lines
       # - ELASTIC_URL=http://elastic:9200
-      # - ELASTIC_INDEX_NAME=hanzoai_storage_index
+      # - ELASTIC_INDEX_NAME=huly_storage_index
       # - REKONI_URL=http://rekoni:4004
 ```
 
@@ -136,16 +136,16 @@ Configuration:
 
 ```yaml
   stats:
-    image: hardcoreeng/stats:${hanzoai_VERSION}
+    image: hardcoreeng/stats:${HULY_VERSION}
     ports:
       - 4900:4900
     environment:
       - PORT=4900
-      - SERVER_SECRET=${hanzoai_SECRET}
+      - SERVER_SECRET=${HULY_SECRET}
     restart: unless-stopped
 ```
 
-Other hanzoai services have been updated to use the new statistics service:
+Other Huly services have been updated to use the new statistics service:
 
 ```yaml
   ...
