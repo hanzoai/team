@@ -8,7 +8,8 @@ services:
     volumes:
       - ./.hanzo.nginx:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   mongodb:
     image: "mongo:7-jammy"
     environment:
@@ -17,14 +18,16 @@ services:
     volumes:
       - db:/data/db
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   minio:
     image: "minio/minio"
     command: server /data --address ":9000" --console-address ":9001"
     volumes:
       - files:/data
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   elastic:
     image: "elasticsearch:7.14.2"
     command: |
@@ -44,9 +47,10 @@ services:
       retries: 10
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   rekoni:
-    image: hanzoai/rekoni-service:latest
+    image: hanzoai/rekoni-service:5.1.1
     environment:
       - SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
     deploy:
@@ -54,9 +58,10 @@ services:
         limits:
           memory: 500M
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   transactor:
-    image: hanzoai/transactor:latest
+    image: hanzoai/transactor:5.1.1
     environment:
       - SERVER_PORT=3333
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
@@ -70,9 +75,10 @@ services:
       - STATS_URL=http://stats:4900
       - LAST_NAME_FIRST=true
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   collaborator:
-    image: hanzoai/collaborator:latest
+    image: hanzoai/collaborator:5.1.1
     environment:
       - COLLABORATOR_PORT=3078
       - SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
@@ -81,9 +87,10 @@ services:
       - STATS_URL=http://stats:4900
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   account:
-    image: hanzoai/account:latest
+    image: hanzoai/account:5.1.1
     environment:
       - SERVER_PORT=3000
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
@@ -97,9 +104,10 @@ services:
       - ACCOUNTS_URL=http://localhost:3000
       - ACCOUNT_PORT=3000
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   workspace:
-    image: hanzoai/workspace:latest
+    image: hanzoai/workspace:5.1.1
     environment:
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - DB_URL=mongodb://mongodb:27017
@@ -110,9 +118,10 @@ services:
       - ACCOUNTS_URL=http://account:3000
       - STATS_URL=http://stats:4900
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   front:
-    image: hanzoai/front:latest
+    image: hanzoai/front:5.1.1
     environment:
       - SERVER_PORT=8080
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
@@ -134,9 +143,10 @@ services:
       - LAST_NAME_FIRST=true
       - DESKTOP_UPDATES_CHANNEL=selfhost
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   fulltext:
-    image: hanzoai/fulltext:latest
+    image: hanzoai/fulltext:5.1.1
     environment:
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
       - DB_URL=mongodb://mongodb:27017
@@ -147,15 +157,21 @@ services:
       - ACCOUNTS_URL=http://account:3000
       - STATS_URL=http://stats:4900
     restart: unless-stopped
-
+    networks:
+      - hanzo-network
   stats:
-    image: hanzoai/stats:latest
+    image: hanzoai/stats:5.1.1
     environment:
       - PORT=4900
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2
     restart: unless-stopped
+    networks:
+      - hanzo-network
 
 volumes:
   db:
   elastic:
   files:
+networks:
+  hanzo-network:
+    name: hanzo-network
