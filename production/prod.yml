@@ -47,7 +47,6 @@ services:
 
   rekoni:
     image: hanzoai/rekoni-service:5.1.1
-    platform: linux/arm64
     environment:
       - SECRET=${SECRET}
     deploy:
@@ -58,7 +57,6 @@ services:
 
   transactor:
     image: hanzoai/transactor:5.1.1
-    platform: linux/arm64
     environment:
       - SERVER_PORT=3333
       - SERVER_SECRET=${SECRET}
@@ -75,7 +73,6 @@ services:
 
   collaborator:
     image: hanzoai/collaborator:5.1.1
-    platform: linux/arm64
     environment:
       - COLLABORATOR_PORT=3078
       - SECRET=${SECRET}
@@ -87,7 +84,6 @@ services:
 
   account:
     image: hanzoai/account:5.1.1
-    platform: linux/arm64
     environment:
       - SERVER_PORT=3000
       - SERVER_SECRET=${SECRET}
@@ -104,7 +100,6 @@ services:
 
   workspace:
     image: hanzoai/workspace:5.1.1
-    platform: linux/arm64
     environment:
       - SERVER_SECRET=${SECRET}
       - DB_URL=mongodb://mongodb:27017
@@ -118,7 +113,6 @@ services:
 
   front:
     image: hanzoai/front:5.1.1
-    platform: linux/arm64
     environment:
       - SERVER_PORT=8080
       - SERVER_SECRET=${SECRET}
@@ -143,7 +137,6 @@ services:
 
   fulltext:
     image: hanzoai/fulltext:5.1.1
-    platform: linux/arm64
     environment:
       - SERVER_SECRET=${SECRET}
       - DB_URL=mongodb://mongodb:27017
@@ -157,7 +150,6 @@ services:
 
   stats:
     image: hanzoai/stats:5.1.1
-    platform: linux/arm64
     environment:
       - PORT=4900
       - SERVER_SECRET=${SECRET}
