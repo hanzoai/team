@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-hanzoai_VERSION="latest"
-DOCKER_NAME="hanzo"
-CONFIG_FILE="hanzo.conf"
+HANZO_VERSION="latest"
+DOCKER_NAME='hanzo'
+CONFIG_FILE='env.conf'
 
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
@@ -52,7 +52,7 @@ else
             prompt_type="default"
             prompt_value="No"
         fi
-        read -p "Will you serve hanzoai over SSL? (y/n) [${prompt_type}: ${prompt_value}]: " input
+        read -p "Will you serve over SSL? (y/n) [${prompt_type}: ${prompt_value}]: " input
         case "${input}" in
             [Yy]* )
                 _SECURE="true"; break;;
@@ -71,11 +71,11 @@ if [ "$1" == "--secret" ]; then
   SECRET=true
 fi
 
-if [ ! -f .hanzoai.secret ] || [ "$SECRET" == true ]; then
-  openssl rand -hex 32 > .hanzoai.secret
-  echo "Secret generated and stored in .hanzoai.secret"
+if [ ! -f .hanzo.secret ] || [ "$SECRET" == true ]; then
+  openssl rand -hex 32 > .hanzo.secret
+  echo "Secret generated and stored in .hanzp.secret"
 else
-  echo -e "\033[33m.hanzoai.secret already exists, not overwriting."
+  echo -e "\033[33m.hanzp.secret already exists, not overwriting."
   echo "Run this script with --secret to generate a new secret."
 fi
 
@@ -83,12 +83,12 @@ export HOST_ADDRESS=$_HOST_ADDRESS
 export SECURE=$_SECURE
 export HTTP_PORT=$_HTTP_PORT
 export HTTP_BIND=$HTTP_BIND
-export TITLE=${TITLE:-hanzoai}
+export TITLE=${TITLE:-Hanzo}
 export DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
 export LAST_NAME_FIRST=${LAST_NAME_FIRST:-true}
-export hanzoai_SECRET=$(cat .hanzoai.secret)
+export HANZO_SECRET=$(cat .hanzo.secret)
 
-envsubst < .template.hanzoai.conf > $CONFIG_FILE
+envsubst < .template.hanzo.conf > $CONFIG_FILE
 
 echo -e "\n\033[1;34mConfiguration Summary:\033[0m"
 echo -e "Host Address: \033[1;32m$_HOST_ADDRESS\033[0m"
@@ -99,14 +99,14 @@ else
     echo -e "SSL Enabled: \033[1;31mNo\033[0m"
 fi
 
-read -p "Do you want to run 'docker compose up -d' now to start hanzoai? (Y/n): " RUN_DOCKER
+read -p "Do you want to run 'docker compose up -d' now to start ? (Y/n): " RUN_DOCKER
 case "${RUN_DOCKER:-Y}" in
     [Yy]* )
          echo -e "\033[1;32mRunning 'docker compose up -d' now...\033[0m"
          docker compose -f prod.yml up  -d
          ;;
     [Nn]* )
-        echo "You can run 'docker compose up -d' later to start hanzoai."
+        echo "You can run 'docker compose up -d' later to start ."
         ;;
 esac
 
