@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,65 +14,67 @@
 // limitations under the License.
 //
 
-import { type IntlString } from '@hanzo/platform'
+import { type IntlString } from '@hcengineering/platform'
 import InviteLink from './components/InviteLink.svelte'
 import LoginApp from './components/LoginApp.svelte'
 import {
-  changePassword,
-  fetchWorkspace,
-  getInviteLink,
-  getPerson,
-  selectWorkspace,
-  exchangeGuestToken,
-  getWorkspaces,
-  sendInvite,
-  leaveWorkspace,
-  resendInvite
+    changePassword,
+    exchangeGuestToken,
+    fetchWorkspace,
+    getInviteLink,
+    getPerson,
+    getWorkspaces,
+    leaveWorkspace,
+    resendInvite,
+    selectWorkspace,
+    sendInvite
 } from './utils'
 
-import { type Pages, pages } from '@hanzo/login'
+import { type Pages, pages } from '@hcengineering/login'
 export { pages, type Pages }
 /*!
  * Anticrm Platform™ Login Plugin
- * © 2020, 2021 Hanzo <dev@hanzo.ai>.
+ * © 2020, 2021 Anticrm Platform Contributors.
  * © 2021 Hardcore Engineering Inc. All Rights Reserved.
  * Licensed under the Eclipse Public License, Version 2.0
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default async () => ({
-  component: {
-    LoginApp,
-    InviteLink
-  },
-  function: {
-    LeaveWorkspace: leaveWorkspace,
-    ChangePassword: changePassword,
-    SelectWorkspace: selectWorkspace,
-    ExchangeGuestToken: exchangeGuestToken,
-    FetchWorkspace: fetchWorkspace,
-    GetPerson: getPerson,
-    GetWorkspaces: getWorkspaces,
-    SendInvite: sendInvite,
-    ResendInvite: resendInvite,
-    GetInviteLink: getInviteLink
-  }
+    component: {
+        LoginApp,
+        InviteLink
+    },
+    function: {
+        LeaveWorkspace: leaveWorkspace,
+        ChangePassword: changePassword,
+        SelectWorkspace: selectWorkspace,
+        ExchangeGuestToken: exchangeGuestToken,
+        FetchWorkspace: fetchWorkspace,
+        GetPerson: getPerson,
+        GetWorkspaces: getWorkspaces,
+        SendInvite: sendInvite,
+        ResendInvite: resendInvite,
+        GetInviteLink: getInviteLink
+    }
 })
 
 export enum OtpLoginSteps {
-  Email = 'email',
-  Otp = 'otp'
+    Email = 'email',
+    Otp = 'otp',
+    SSO = 'sso'
 }
 
 export enum LoginMethods {
-  Password = 'password',
-  Otp = 'otp'
+    Password = 'password',
+    Otp = 'otp',
+    SSO = "sso"
 }
 
 export interface BottomAction {
-  i18n: IntlString
-  page?: Pages
-  func: () => void
-  caption?: IntlString
+    i18n: IntlString
+    page?: Pages
+    func: () => void
+    caption?: IntlString
 }
 
 export * from './utils'

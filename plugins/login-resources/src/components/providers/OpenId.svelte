@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
+  import { Label } from '@hcengineering/ui'
   import OpenId from '../icons/OpenId.svelte'
   import login from '../../plugin'
 </script>

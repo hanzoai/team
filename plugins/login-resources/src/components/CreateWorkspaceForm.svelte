@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
 // Copyright © 2021, 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type RegionInfo } from '@hanzo/account-client'
-  import { OK, Severity, Status, getEmbeddedLabel } from '@hanzo/platform'
-  import { LoginInfo } from '@hanzo/login'
-  import { ButtonMenu, getCurrentLocation, navigate } from '@hanzo/ui'
-  import { workbenchId } from '@hanzo/workbench'
+  import { type RegionInfo } from '@hcengineering/account-client'
+  import { OK, Severity, Status, getEmbeddedLabel } from '@hcengineering/platform'
+  import { LoginInfo } from '@hcengineering/login'
+  import { ButtonMenu, getCurrentLocation, navigate } from '@hcengineering/ui'
+  import { workbenchId } from '@hcengineering/workbench'
   import { onMount } from 'svelte'
   import login from '../plugin'
   import { createWorkspace, getAccount, getRegionInfo, goTo, setLoginInfo, getAccountDisplayName } from '../utils'

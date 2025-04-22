@@ -14,14 +14,14 @@
 -->
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Analytics } from '@hanzo/analytics'
-  import { logIn, workbenchId } from '@hanzo/workbench'
-  import { setMetadata, translate } from '@hanzo/platform'
-  import { Location, Loading, Label, getCurrentLocation, navigate } from '@hanzo/ui'
-  import { type LoginInfo } from '@hanzo/account-client'
-  import { loginId } from '@hanzo/login'
-  import { themeStore } from '@hanzo/theme'
-  import presentation from '@hanzo/presentation'
+  import { Analytics } from '@hcengineering/analytics'
+  import { logIn, workbenchId } from '@hcengineering/workbench'
+  import { setMetadata, translate } from '@hcengineering/platform'
+  import { Location, Loading, Label, getCurrentLocation, navigate } from '@hcengineering/ui'
+  import { type LoginInfo } from '@hcengineering/account-client'
+  import { loginId } from '@hcengineering/login'
+  import { themeStore } from '@hcengineering/theme'
+  import presentation from '@hcengineering/presentation'
 
   import { setLoginInfo, checkAutoJoin, isWorkspaceLoginInfo, navigateToWorkspace } from '../utils'
   import login from '../plugin'

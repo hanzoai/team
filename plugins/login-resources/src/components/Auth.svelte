@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Loading } from '@hanzo/ui'
-  import { logIn } from '@hanzo/workbench'
+  import { Loading } from '@hcengineering/ui'
+  import { logIn } from '@hcengineering/workbench'
   import { onMount } from 'svelte'
 
   import {

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Status } from '@hanzo/platform'
-  import { Severity } from '@hanzo/platform'
+  import type { Status } from '@hcengineering/platform'
+  import { Severity } from '@hcengineering/platform'
 
-  import { Status as StatusControl } from '@hanzo/ui'
+  import { Status as StatusControl } from '@hcengineering/ui'
 
   export let status: Status
 </script>
