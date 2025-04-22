@@ -6,7 +6,7 @@ services:
     ports:
       - "0.0.0.0:81:80"
     volumes:
-      - ./.huly.nginx:/etc/nginx/conf.d/default.conf
+      - ./.hanzo.nginx:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
 
   mongodb:
