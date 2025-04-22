@@ -48,7 +48,7 @@ services:
   rekoni:
     image: hanzoai/rekoni-service:5.1.1
     environment:
-      - SECRET=${SECRET}
+      - SECRET=sjdoshfjhsdfjkhsvdfjh
     deploy:
       resources:
         limits:
@@ -59,7 +59,7 @@ services:
     image: hanzoai/transactor:5.1.1
     environment:
       - SERVER_PORT=3333
-      - SERVER_SECRET=${SECRET}
+      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
       - SERVER_CURSOR_MAXTIMEMS=30000
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
@@ -68,14 +68,14 @@ services:
       - ACCOUNTS_URL=http://account:3000
       - FULLTEXT_URL=http://fulltext:4700
       - STATS_URL=http://stats:4900
-      - LAST_NAME_FIRST=${LAST_NAME_FIRST:-true}
+      - LAST_NAME_FIRST=true
     restart: unless-stopped
 
   collaborator:
     image: hanzoai/collaborator:5.1.1
     environment:
       - COLLABORATOR_PORT=3078
-      - SECRET=${SECRET}
+      - SECRET=sjdoshfjhsdfjkhsvdfjh
       - ACCOUNTS_URL=http://account:3000
       - DB_URL=mongodb://mongodb:27017
       - STATS_URL=http://stats:4900
@@ -86,10 +86,10 @@ services:
     image: hanzoai/account:5.1.1
     environment:
       - SERVER_PORT=3000
-      - SERVER_SECRET=${SECRET}
+      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TRANSACTOR_URL=ws://transactor:3333;ws${SECURE:+s}://${HOST_ADDRESS}/_transactor
+      - TRANSACTOR_URL=ws://transactor:3333;wss://127.0.0.1/_transactor
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - FRONT_URL=http://front:8080
       - STATS_URL=http://stats:4900
@@ -101,10 +101,10 @@ services:
   workspace:
     image: hanzoai/workspace:5.1.1
     environment:
-      - SERVER_SECRET=${SECRET}
+      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TRANSACTOR_URL=ws://transactor:3333;ws${SECURE:+s}://${HOST_ADDRESS}/_transactor
+      - TRANSACTOR_URL=ws://transactor:3333;wss://127.0.0.1/_transactor
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - MODEL_ENABLED=*
       - ACCOUNTS_URL=http://account:3000
@@ -115,30 +115,30 @@ services:
     image: hanzoai/front:5.1.1
     environment:
       - SERVER_PORT=8080
-      - SERVER_SECRET=${SECRET}
-      - LOVE_ENDPOINT=http${SECURE:+s}://${HOST_ADDRESS}/_love
-      - ACCOUNTS_URL=http${SECURE:+s}://${HOST_ADDRESS}/_accounts
-      - REKONI_URL=http${SECURE:+s}://${HOST_ADDRESS}/_rekoni
-      - CALENDAR_URL=http${SECURE:+s}://${HOST_ADDRESS}/_calendar
-      - GMAIL_URL=http${SECURE:+s}://${HOST_ADDRESS}/_gmail
-      - TELEGRAM_URL=http${SECURE:+s}://${HOST_ADDRESS}/_telegram
-      - STATS_URL=http${SECURE:+s}://${HOST_ADDRESS}/_stats
+      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
+      - LOVE_ENDPOINT=http://127.0.0.1/_love
+      - ACCOUNTS_URL=http://127.0.0.1/_accounts
+      - REKONI_URL=http://127.0.0.1/_rekoni
+      - CALENDAR_URL=http://127.0.0.1/_calendar
+      - GMAIL_URL=http://127.0.0.1/_gmail
+      - TELEGRAM_URL=http://127.0.0.1/_telegram
+      - STATS_URL=http://127.0.0.1/_stats
       - UPLOAD_URL=/files
       - ELASTIC_URL=http://elastic:9200
-      - COLLABORATOR_URL=ws${SECURE:+s}://${HOST_ADDRESS}/_collaborator
+      - COLLABORATOR_URL=wss://127.0.0.1/_collaborator
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TITLE=${TITLE:-Hanzo Self Host}
-      - DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
-      - LAST_NAME_FIRST=${LAST_NAME_FIRST:-true}
+      - TITLE=Hanzo Self Host
+      - DEFAULT_LANGUAGE=en
+      - LAST_NAME_FIRST=true
       - DESKTOP_UPDATES_CHANNEL=selfhost
     restart: unless-stopped
 
   fulltext:
     image: hanzoai/fulltext:5.1.1
     environment:
-      - SERVER_SECRET=${SECRET}
+      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
       - DB_URL=mongodb://mongodb:27017
       - FULLTEXT_DB_URL=http://elastic:9200
       - ELASTIC_INDEX_NAME=hanzo_index
@@ -152,7 +152,7 @@ services:
     image: hanzoai/stats:5.1.1
     environment:
       - PORT=4900
-      - SERVER_SECRET=${SECRET}
+      - SERVER_SECRET=sjdoshfjhsdfjkhsvdfjh
     restart: unless-stopped
 
 volumes:
