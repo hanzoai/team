@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole, Timestamp } from '@hanzo/core'
-  import { copyTextToClipboard, createQuery } from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
-  import { Button, EditBox, Grid, Label, Loading, MiniToggle, ticker } from '@hanzo/ui'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Timestamp } from '@hcengineering/core'
+  import { copyTextToClipboard, createQuery } from '@hcengineering/presentation'
+  import setting from '@hcengineering/setting'
+  import { Button, EditBox, Grid, Label, Loading, MiniToggle, ticker } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
 
   import login from '../plugin'

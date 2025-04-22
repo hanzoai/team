@@ -20,9 +20,9 @@ import type {
   RegionInfo,
   WorkspaceLoginInfo,
   WorkspaceInviteInfo
-} from '@hanzo/account-client'
-import { getClient as getAccountClientRaw } from '@hanzo/account-client'
-import { Analytics } from '@hanzo/analytics'
+} from '@hcengineering/account-client'
+import { getClient as getAccountClientRaw } from '@hcengineering/account-client'
+import { Analytics } from '@hcengineering/analytics'
 import {
   AccountRole,
   concatLink,
@@ -31,8 +31,8 @@ import {
   type Person,
   type WorkspaceInfoWithStatus,
   type WorkspaceUserOperation
-} from '@hanzo/core'
-import { loginId } from '@hanzo/login'
+} from '@hcengineering/core'
+import { loginId } from '@hcengineering/login'
 import platform, {
   OK,
   PlatformError,
@@ -43,8 +43,8 @@ import platform, {
   translate,
   unknownError,
   unknownStatus
-} from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+} from '@hcengineering/platform'
+import presentation from '@hcengineering/presentation'
 import {
   getCurrentLocation,
   isSameSegments,
@@ -53,8 +53,8 @@ import {
   navigate,
   setMetadataLocalStorage,
   type Location
-} from '@hanzo/ui'
-import { logIn, workbenchId } from '@hanzo/workbench'
+} from '@hcengineering/ui'
+import { logIn, workbenchId } from '@hcengineering/workbench'
 
 import { LoginEvents } from './analytics'
 import { type Pages } from './index'

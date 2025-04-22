@@ -131,6 +131,8 @@ services:
 
   front:
     image: hanzoai/front:5.1.1
+    ports:
+      - "8080:8080"
     environment:
       - SERVER_PORT=8080
       - SERVER_SECRET=aa2358fe04da55b8e33accc60568634f53eb1bc7f6fb69fca6cb86eb924824e2

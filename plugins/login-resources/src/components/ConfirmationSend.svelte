@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
+  import { Label } from '@hcengineering/ui'
   import { onMount } from 'svelte'
   import login from '../plugin'
   import { afterConfirm, getAccount } from '../utils'
