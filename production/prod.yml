@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   rekoni:
-    image: hanzoai/rekoni-service:latest
+    image: hanzoai/rekoni-service:5.1.1
     platform: linux/arm64
     environment:
       - SECRET=${SECRET}
@@ -57,7 +57,7 @@ services:
     restart: unless-stopped
 
   transactor:
-    image: hanzoai/transactor:latest
+    image: hanzoai/transactor:5.1.1
     platform: linux/arm64
     environment:
       - SERVER_PORT=3333
@@ -74,7 +74,7 @@ services:
     restart: unless-stopped
 
   collaborator:
-    image: hanzoai/collaborator:latest
+    image: hanzoai/collaborator:5.1.1
     platform: linux/arm64
     environment:
       - COLLABORATOR_PORT=3078
@@ -86,7 +86,7 @@ services:
     restart: unless-stopped
 
   account:
-    image: hanzoai/account:latest
+    image: hanzoai/account:5.1.1
     platform: linux/arm64
     environment:
       - SERVER_PORT=3000
@@ -103,7 +103,7 @@ services:
     restart: unless-stopped
 
   workspace:
-    image: hanzoai/workspace:latest
+    image: hanzoai/workspace:5.1.1
     platform: linux/arm64
     environment:
       - SERVER_SECRET=${SECRET}
@@ -117,7 +117,7 @@ services:
     restart: unless-stopped
 
   front:
-    image: hanzoai/front:latest
+    image: hanzoai/front:5.1.1
     platform: linux/arm64
     environment:
       - SERVER_PORT=8080
@@ -142,7 +142,7 @@ services:
     restart: unless-stopped
 
   fulltext:
-    image: hanzoai/fulltext:latest
+    image: hanzoai/fulltext:5.1.1
     platform: linux/arm64
     environment:
       - SERVER_SECRET=${SECRET}
@@ -156,7 +156,7 @@ services:
     restart: unless-stopped
 
   stats:
-    image: hanzoai/stats:latest
+    image: hanzoai/stats:5.1.1
     platform: linux/arm64
     environment:
       - PORT=4900
