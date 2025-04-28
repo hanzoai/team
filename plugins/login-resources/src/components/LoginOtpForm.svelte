@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type IntlString, OK, Severity, Status } from '@hcengineering/platform'
-  import { LoginInfo } from '@hcengineering/account-client'
+  import { LoginInfo } from '@hanzo/account-client'
+  import { type IntlString, OK, Severity, Status } from '@hanzo/platform'
 
-  import OtpForm from './OtpForm.svelte'
+  import { OtpLoginSteps, loginOtp } from '../index'
   import login from '../plugin'
   import Form from './Form.svelte'
-  import { OtpLoginSteps, loginOtp } from '../index'
+  import OtpForm from './OtpForm.svelte'
 
   export let navigateUrl: string | undefined = undefined
   export let signUpDisabled = false

@@ -14,15 +14,16 @@
 //
 
 export const LoginEvents = {
-  SignUpEmail: 'signup.viaEmail',
-  SignUpGoogle: 'signup.viaGoogle',
-  SignUpGithub: 'signup.viaGitHub',
-
-  LoginPassword: 'login.viaPassword',
-  LoginOtp: 'login.viaOtp',
-  LoginGoogle: 'login.viaGoogle',
-  LoginGithub: 'login.viaGitHub',
-
-  CreateWorkspace: 'onboard.createWorkspace',
-  SelectWorkspace: 'onboard.selectWorkspace'
-}
+    SignUpEmail: 'signup.viaEmail',
+    SignUpOtp: 'signup.viaOtp',
+    SignUpGoogle: 'signup.viaGoogle',
+    SignUpGithub: 'signup.viaGitHub',
+  
+    LoginPassword: 'login.viaPassword',
+    LoginOtp: 'login.viaOtp',
+    LoginGoogle: 'login.viaGoogle',
+    LoginGithub: 'login.viaGitHub',
+  
+    CreateWorkspace: 'onboard.createWorkspace',
+    SelectWorkspace: 'onboard.selectWorkspace'
+  }

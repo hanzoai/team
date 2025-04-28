@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, Severity, Status } from '@hcengineering/platform'
-  import { MessageBox } from '@hcengineering/presentation'
+  import { OK, Severity, Status } from '@hanzo/platform'
+  import { MessageBox } from '@hanzo/presentation'
 
-  import { showPopup } from '@hcengineering/ui'
+  import { showPopup } from '@hanzo/ui'
+  import { BottomAction } from '..'
+  import { signUpAction } from '../actions'
   import login from '../plugin'
   import { goTo, requestPassword } from '../utils'
   import Form from './Form.svelte'
-  import { BottomAction } from '..'
-  import { signUpAction } from '../actions'
 
   export let signUpDisabled = false
 

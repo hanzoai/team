@@ -1,12 +1,10 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { Status, Severity, OK } from '@hcengineering/platform';
-    import { Button } from '@hcengineering/ui';
-    import login from '../plugin';
+    import { OK, Severity, Status } from '@hanzo/platform'
+    import { Button } from '@hanzo/ui'
+    import login from '../plugin'
 
-    export let caption: string = 'Login with SSO';
     export let subtitle: string = "Login with SSO";
-    export let redirectUrl: string = "https://iam.hanzo.ai/login/oauth/authorize?client_id=ce89cf9741eccb80367f&scope=openid%20email%20profile&response_type=code&redirect_uri=http://localhost:8081/api/auth/callback/hanzo-iam";
+    export let redirectUrl: string = "https://iam.hanzo.ai/login/oauth/authorize?client_id=53c6bc50e68466764b58&scope=openid%20email%20profile&response_type=code&redirect_uri=http://localhost:8081/login/authCallback";
     export let onLoginStart: (() => void) | undefined = undefined;
 
     let status = OK;

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type IntlString, OK, Severity, Status } from '@hcengineering/platform'
-  import { type LoginInfo } from '@hcengineering/account-client'
+  import { type LoginInfo } from '@hanzo/account-client'
+  import { type IntlString, OK, Severity, Status } from '@hanzo/platform'
 
-  import { doLogin, doLoginNavigate } from '../utils'
-  import Form from './Form.svelte'
   import { recoveryAction } from '../actions'
   import login from '../plugin'
+  import { doLogin, doLoginNavigate } from '../utils'
+  import Form from './Form.svelte'
 
   export let navigateUrl: string | undefined = undefined
   export let signUpDisabled = false

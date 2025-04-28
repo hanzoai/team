@@ -13,20 +13,20 @@
 // limitations under the License.
 //
 
-import { type IntlString } from '@hcengineering/platform'
+import { type IntlString } from '@hanzo/platform'
 
 export interface Field {
-  id?: string
-  name: string
-  i18n: IntlString
-  password?: boolean
-  optional?: boolean
-  short?: boolean
-  disabled?: boolean
-  rules?: Array<{
-    rule: RegExp | ((value: string) => boolean)
-    notMatch: boolean
-    ruleDescr: IntlString | IntlString<Record<string, any>>
-    ruleDescrParams?: Record<string, any>
-  }>
+    id?: string
+    name: string
+    i18n: IntlString
+    password?: boolean
+    optional?: boolean
+    short?: boolean
+    disabled?: boolean
+    rules?: Array<{
+        rule: RegExp | ((value: string) => boolean)
+        notMatch: boolean
+        ruleDescr: IntlString | IntlString<Record<string, any>>
+        ruleDescrParams?: Record<string, any>
+    }>
 }

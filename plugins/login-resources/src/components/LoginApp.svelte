@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata, setMetadata } from '@hcengineering/platform'
-  import presentation from '@hcengineering/presentation'
+  import { getMetadata, setMetadata } from '@hanzo/platform'
+  import presentation from '@hanzo/presentation'
   import {
     Location,
     Popup,
@@ -26,30 +26,30 @@
     location,
     setMetadataLocalStorage,
     themeStore
-  } from '@hcengineering/ui'
-  import workbench from '@hcengineering/workbench'
+  } from '@hanzo/ui'
   import { onDestroy, onMount } from 'svelte'
+  import { Pages, getAccount, pages } from '..'
+  import login from '../plugin'
   import Auth from './Auth.svelte'
+  import AuthCallback from './AuthCallback.svelte'
+  import AutoJoin from './AutoJoin.svelte'
   import Confirmation from './Confirmation.svelte'
   import ConfirmationSend from './ConfirmationSend.svelte'
   import CreateWorkspaceForm from './CreateWorkspaceForm.svelte'
   import Join from './Join.svelte'
-  import AutoJoin from './AutoJoin.svelte'
   import LoginForm from './LoginForm.svelte'
   import PasswordRequest from './PasswordRequest.svelte'
   import PasswordRestore from './PasswordRestore.svelte'
   import SelectWorkspace from './SelectWorkspace.svelte'
   import SignupForm from './SignupForm.svelte'
-  import LoginIcon from './icons/LoginIcon.svelte'
-  import { Pages, getAccount, pages } from '..'
-  import login from '../plugin'
 
-  import loginBack from '../../img/login_back.png'
-  import loginBack2x from '../../img/login_back_2x.png'
   import loginBackAvif from '../../img/login_back.avif'
-  import loginBack2xAvif from '../../img/login_back_2x.avif'
+  import loginBack from '../../img/login_back.png'
   import loginBackWebp from '../../img/login_back.webp'
+  import loginBack2xAvif from '../../img/login_back_2x.avif'
+  import loginBack2x from '../../img/login_back_2x.png'
   import loginBack2xWebp from '../../img/login_back_2x.webp'
+  import loginLogo from "../../img/logo_login.png"
   import AdminWorkspaces from './AdminWorkspaces.svelte'
 
   export let page: Pages = 'signup'
@@ -75,7 +75,9 @@
       'autoJoin',
       'confirm',
       'confirmationSend',
-      'auth'
+      'auth',
+      "authCallback",
+      "callback"
     ]
     if (token === undefined ? !allowedUnauthPages.includes(page) : !pages.includes(page)) {
       const account = fetchMetadataLocalStorage(login.metadata.LastAccount)
@@ -118,7 +120,7 @@
   <AdminWorkspaces />
 {:else}
   <div
-    class="theme-dark w-full h-full backd"
+    class="w-full h-full backd"
     class:paneld={$deviceInfo.docWidth <= 768}
     class:white={!$themeStore.dark}
   >
@@ -142,7 +144,14 @@
         style:top={'3rem'}
         class="flex-row-center"
       >
-        <LoginIcon /><span class="fs-title ml-2">{getMetadata(workbench.metadata.PlatformTitle)}</span>
+      <img
+            src={loginLogo}
+            srcset={`${loginLogo} 1x, ${loginLogo} 2x`}
+            alt=""
+            style="width: 30px; height: 30px"
+
+    />
+    <span class="fs-title ml-2" style="color: var(--theme-bg-color);">Platform</span>
       </div>
 
       <div class="panel-base" class:panel={$deviceInfo.docWidth > 768} class:white={!$themeStore.dark}>
@@ -150,6 +159,10 @@
           <div class="form-content">
             {#if page === 'login'}
               <LoginForm {navigateUrl} {signUpDisabled} />
+            {:else if page === 'authCallback'}
+              <AuthCallback />
+              {:else if page === 'callback'}
+              <AuthCallback />
             {:else if page === 'signup'}
               <SignupForm {navigateUrl} {signUpDisabled} />
             {:else if page === 'createWorkspace'}
@@ -166,7 +179,7 @@
               <AutoJoin />
             {:else if page === 'confirm'}
               <Confirmation />
-            {:else if page === 'confirmationSend'}
+            {:else if page === 'ConfirmationSend'}
               <ConfirmationSend />
             {:else if page === 'auth'}
               <Auth />
@@ -266,7 +279,8 @@
     position: absolute;
     content: '';
     inset: 0;
-    background: radial-gradient(161.92% 96.11% at 11.33% 3.89%, #313d9a 0%, #202669 100%);
+    // background: radial-gradient(161.92% 96.11% at 11.33% 3.89%, #313d9a 0%, #202669 100%);
+    background: var(--theme-bg-color, black);
     z-index: -1;
   }
   .panel::after {

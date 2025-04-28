@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type IntlString } from '@hcengineering/platform'
+import { type IntlString } from '@hanzo/platform'
 import InviteLink from './components/InviteLink.svelte'
 import LoginApp from './components/LoginApp.svelte'
 import {
@@ -30,7 +30,7 @@ import {
     sendInvite
 } from './utils'
 
-import { type Pages, pages } from '@hcengineering/login'
+import { type Pages, pages } from '@hanzo/login'
 export { pages, type Pages }
 /*!
  * Anticrm Platform™ Login Plugin

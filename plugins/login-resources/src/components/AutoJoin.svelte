@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
+  import { type LoginInfo } from '@hanzo/account-client'
+  import { Analytics } from '@hanzo/analytics'
+  import { loginId } from '@hanzo/login'
+  import { setMetadata, translate } from '@hanzo/platform'
+  import presentation from '@hanzo/presentation'
+  import { themeStore } from '@hanzo/theme'
+  import { Label, Loading, getCurrentLocation, navigate } from '@hanzo/ui'
+  import { logIn } from '@hanzo/workbench'
   import { onMount } from 'svelte'
-  import { Analytics } from '@hcengineering/analytics'
-  import { logIn, workbenchId } from '@hcengineering/workbench'
-  import { setMetadata, translate } from '@hcengineering/platform'
-  import { Location, Loading, Label, getCurrentLocation, navigate } from '@hcengineering/ui'
-  import { type LoginInfo } from '@hcengineering/account-client'
-  import { loginId } from '@hcengineering/login'
-  import { themeStore } from '@hcengineering/theme'
-  import presentation from '@hcengineering/presentation'
 
-  import { setLoginInfo, checkAutoJoin, isWorkspaceLoginInfo, navigateToWorkspace } from '../utils'
   import login from '../plugin'
+  import { checkAutoJoin, isWorkspaceLoginInfo, navigateToWorkspace } from '../utils'
   import LoginForm from './LoginForm.svelte'
 
   const location = getCurrentLocation()

@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, Severity, Status } from '@hcengineering/platform'
+  import { OK, Severity, Status } from '@hanzo/platform'
 
-  import { getCurrentLocation } from '@hcengineering/ui'
-  import { logIn } from '@hcengineering/workbench'
+  import { getCurrentLocation } from '@hanzo/ui'
+  import { logIn } from '@hanzo/workbench'
   import login from '../plugin'
   import type { Field } from '../types'
   import { goTo, restorePassword } from '../utils'
-  import Form from './Form.svelte'
   import { getPasswordValidationRules } from '../validations'
+  import Form from './Form.svelte'
 
   const fields: Array<Field> = [
     {
