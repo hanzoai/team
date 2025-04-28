@@ -14,17 +14,17 @@
 -->
 
 <script lang="ts">
-  import { deviceOptionsStore as deviceInfo, Label, TimeLeft, CodeInput } from '@hcengineering/ui'
-  import { OK, Severity, Status } from '@hcengineering/platform'
+  import { LoginInfo } from '@hanzo/account-client'
+  import { Timestamp } from '@hanzo/core'
+  import { OK, Severity, Status } from '@hanzo/platform'
+  import { CodeInput, deviceOptionsStore as deviceInfo, Label, TimeLeft } from '@hanzo/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { Timestamp } from '@hcengineering/core'
-  import { LoginInfo } from '@hcengineering/account-client'
 
-  import Tabs from './Tabs.svelte'
-  import { BottomAction, doLoginNavigate, validateOtpLogin, OtpLoginSteps, loginOtp } from '../index'
+  import { BottomAction, doLoginNavigate, loginOtp, OtpLoginSteps, validateOtpLogin } from '../index'
   import login from '../plugin'
   import BottomActionComponent from './BottomAction.svelte'
   import StatusControl from './StatusControl.svelte'
+  import Tabs from './Tabs.svelte'
 
   export let navigateUrl: string | undefined = undefined
   export let email: string

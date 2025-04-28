@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type RegionInfo } from '@hcengineering/account-client'
-  import { OK, Severity, Status, getEmbeddedLabel } from '@hcengineering/platform'
-  import { LoginInfo } from '@hcengineering/login'
-  import { ButtonMenu, getCurrentLocation, navigate } from '@hcengineering/ui'
-  import { workbenchId } from '@hcengineering/workbench'
+  import { type RegionInfo } from '@hanzo/account-client'
+  import { LoginInfo } from '@hanzo/login'
+  import { OK, Severity, Status, getEmbeddedLabel } from '@hanzo/platform'
+  import { ButtonMenu, getCurrentLocation, navigate } from '@hanzo/ui'
+  import { workbenchId } from '@hanzo/workbench'
   import { onMount } from 'svelte'
   import login from '../plugin'
-  import { createWorkspace, getAccount, getRegionInfo, goTo, setLoginInfo, getAccountDisplayName } from '../utils'
+  import { createWorkspace, getAccount, getAccountDisplayName, getRegionInfo, goTo, setLoginInfo } from '../utils'
   import Form from './Form.svelte'
 
   const fields = [

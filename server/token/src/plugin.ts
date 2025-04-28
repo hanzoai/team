@@ -25,9 +25,9 @@ export const serverTokenId = 'server-token' as Plugin
  * @public
  */
 const serverToken = plugin(serverTokenId, {
-  metadata: {
-    Secret: '' as Metadata<string>
-  }
+    metadata: {
+        Secret: '' as Metadata<string>
+    }
 })
 
 export default serverToken

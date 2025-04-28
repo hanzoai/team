@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { Loading } from '@hcengineering/ui'
-  import { logIn } from '@hcengineering/workbench'
+  import { Loading } from '@hanzo/ui'
+  import { logIn } from '@hanzo/workbench'
   import { onMount } from 'svelte'
 
   import {
     afterConfirm,
-    getLoginInfoFromQuery,
     getAutoJoinInfo,
+    getLoginInfoFromQuery,
     goTo,
     isWorkspaceLoginInfo,
     navigateToWorkspace

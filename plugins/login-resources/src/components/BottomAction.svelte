@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { Label } from '@hcengineering/ui'
-  import { NavLink } from '@hcengineering/presentation'
+  import { NavLink } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
 
-  import { getHref } from '../utils'
   import { BottomAction, goTo } from '../index'
+  import { getHref } from '../utils'
 
   export let action: BottomAction
 </script>

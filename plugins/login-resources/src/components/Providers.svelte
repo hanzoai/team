@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { concatLink } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
-  import { AnySvelteComponent, Button, Grid, deviceOptionsStore, getCurrentLocation } from '@hcengineering/ui'
+  import { concatLink } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
+  import { AnySvelteComponent, Button, Grid, deviceOptionsStore, getCurrentLocation } from '@hanzo/ui'
   import { onMount } from 'svelte'
   import login from '../plugin'
   import { getProviders } from '../utils'

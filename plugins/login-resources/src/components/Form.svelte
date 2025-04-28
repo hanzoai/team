@@ -14,16 +14,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import { OK, Severity, Status, translate } from '@hcengineering/platform'
-  import { Button, Label, StylishEdit, deviceOptionsStore as deviceInfo, themeStore } from '@hcengineering/ui'
+  import type { IntlString } from '@hanzo/platform'
+  import { OK, Severity, Status, translate } from '@hanzo/platform'
+  import { Button, Label, StylishEdit, deviceOptionsStore as deviceInfo, themeStore } from '@hanzo/ui'
   import StatusControl from './StatusControl.svelte'
 
   import { onMount } from 'svelte'
   import { BottomAction } from '..'
   import { makeSequential } from '../mutex'
-  import type { Field } from '../types'
   import login from '../plugin'
+  import type { Field } from '../types'
   import BottomActionComponent from './BottomAction.svelte'
   import Providers from './Providers.svelte'
   import Tabs from './Tabs.svelte'

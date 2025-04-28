@@ -14,16 +14,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, Severity, Status } from '@hcengineering/platform'
-  import presentation from '@hcengineering/presentation'
-  import { logIn } from '@hcengineering/workbench'
-  import BottomActionComponent from './BottomAction.svelte'
-  import login from '../plugin'
-  import { getPasswordValidationRules } from '../validations'
-  import { goTo, signUp } from '../utils'
-  import Form from './Form.svelte'
+  import { OK, Severity, Status } from '@hanzo/platform'
+  import { logIn } from '@hanzo/workbench'
   import { BottomAction, LoginMethods, OtpLoginSteps, signUpOtp } from '../index'
+  import login from '../plugin'
   import type { Field } from '../types'
+  import { goTo, signUp } from '../utils'
+  import { getPasswordValidationRules } from '../validations'
+  import BottomActionComponent from './BottomAction.svelte'
+  import Form from './Form.svelte'
   import OtpForm from './OtpForm.svelte'
 
   export let signUpDisabled = false

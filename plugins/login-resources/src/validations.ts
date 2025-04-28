@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getMetadata } from '@hcengineering/platform'
+import { getMetadata } from '@hanzo/platform'
 
 import login from './plugin'
 import type { Field } from './types'
@@ -23,42 +23,42 @@ import type { Field } from './types'
  *
  * @returns {Field['rules']} An array of password validation rules.
  */
-export function getPasswordValidationRules (): Field['rules'] {
-  const passwordValidations = getMetadata(login.metadata.PasswordValidations)
+export function getPasswordValidationRules(): Field['rules'] {
+    const passwordValidations = getMetadata(login.metadata.PasswordValidations)
 
-  const passwordValidationRules: Field['rules'] = [
-    {
-      rule: (value: string) => value.length >= (passwordValidations?.MinLength ?? 0),
-      notMatch: false,
-      ruleDescr: login.string.PasswordMinLength,
-      ruleDescrParams: { count: passwordValidations?.MinLength }
-    },
-    {
-      rule: (value: string) =>
-        (value.match(/[^a-zA-Z0-9]/g)?.length ?? 0) >= (passwordValidations?.MinSpecialChars ?? 0),
-      notMatch: false,
-      ruleDescr: login.string.PasswordMinSpecialChars,
-      ruleDescrParams: { count: passwordValidations?.MinSpecialChars }
-    },
-    {
-      rule: (value: string) => (value.match(/[0-9]/g)?.length ?? 0) >= (passwordValidations?.MinDigits ?? 0),
-      notMatch: false,
-      ruleDescr: login.string.PasswordMinDigits,
-      ruleDescrParams: { count: passwordValidations?.MinDigits }
-    },
-    {
-      rule: (value: string) => (value.match(/[A-Z]/g)?.length ?? 0) >= (passwordValidations?.MinUpperChars ?? 0),
-      notMatch: false,
-      ruleDescr: login.string.PasswordMinUpperChars,
-      ruleDescrParams: { count: passwordValidations?.MinUpperChars }
-    },
-    {
-      rule: (value: string) => (value.match(/[a-z]/g)?.length ?? 0) >= (passwordValidations?.MinLowerChars ?? 0),
-      notMatch: false,
-      ruleDescr: login.string.PasswordMinLowerChars,
-      ruleDescrParams: { count: passwordValidations?.MinLowerChars }
-    }
-  ]
+    const passwordValidationRules: Field['rules'] = [
+        {
+            rule: (value: string) => value.length >= (passwordValidations?.MinLength ?? 0),
+            notMatch: false,
+            ruleDescr: login.string.PasswordMinLength,
+            ruleDescrParams: { count: passwordValidations?.MinLength }
+        },
+        {
+            rule: (value: string) =>
+                (value.match(/[^a-zA-Z0-9]/g)?.length ?? 0) >= (passwordValidations?.MinSpecialChars ?? 0),
+            notMatch: false,
+            ruleDescr: login.string.PasswordMinSpecialChars,
+            ruleDescrParams: { count: passwordValidations?.MinSpecialChars }
+        },
+        {
+            rule: (value: string) => (value.match(/[0-9]/g)?.length ?? 0) >= (passwordValidations?.MinDigits ?? 0),
+            notMatch: false,
+            ruleDescr: login.string.PasswordMinDigits,
+            ruleDescrParams: { count: passwordValidations?.MinDigits }
+        },
+        {
+            rule: (value: string) => (value.match(/[A-Z]/g)?.length ?? 0) >= (passwordValidations?.MinUpperChars ?? 0),
+            notMatch: false,
+            ruleDescr: login.string.PasswordMinUpperChars,
+            ruleDescrParams: { count: passwordValidations?.MinUpperChars }
+        },
+        {
+            rule: (value: string) => (value.match(/[a-z]/g)?.length ?? 0) >= (passwordValidations?.MinLowerChars ?? 0),
+            notMatch: false,
+            ruleDescr: login.string.PasswordMinLowerChars,
+            ruleDescrParams: { count: passwordValidations?.MinLowerChars }
+        }
+    ]
 
-  return passwordValidationRules
+    return passwordValidationRules
 }
