@@ -16,26 +16,26 @@
 
 import { getClient as getAccountClient } from '@hanzo/account-client'
 import type {
-  Account,
-  Class,
-  Client,
-  Doc,
-  Ref,
-  Space,
-  TxOperations,
-  WorkspaceInfoWithStatus
+    Account,
+    Class,
+    Client,
+    Doc,
+    Ref,
+    Space,
+    TxOperations,
+    WorkspaceInfoWithStatus
 } from '@hanzo/core'
 import core, { hasAccountRole } from '@hanzo/core'
 import login from '@hanzo/login'
 import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
 import presentation, { closeClient, getClient, setPresentationCookie } from '@hanzo/presentation'
 import {
-  closePanel,
-  getCurrentLocation,
-  type Location,
-  location,
-  navigate,
-  setMetadataLocalStorage
+    closePanel,
+    getCurrentLocation,
+    type Location,
+    location,
+    navigate,
+    setMetadataLocalStorage
 } from '@hanzo/ui'
 import view from '@hanzo/view'
 import workbench, { type Application, type NavigatorModel } from '@hanzo/workbench'
@@ -232,3 +232,29 @@ export async function logOut (): Promise<void> {
 
   void closeClient()
 }
+
+
+
+
+export default async function getPlan() {
+    let  plan = "cloud:free"
+    const accountsUrl = getMetadata(login.metadata.AccountsUrl) ?? "https://hanzo.team/accounts"
+    try {
+      const response = await fetch(`${accountsUrl}/me`, {
+        credentials: 'include',
+      })
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+
+        const data = await response.json()
+      console.log("=>>> Check data:::::", data)
+      if (data?.user?.plan) {
+        plan = data.user.plan
+      } else {
+        console.warn('No plan found in response:', data)
+      }
+    } catch (error) {
+      console.error('Failed to fetch user info from /me:', error)
+      plan = 'cloud:free'
+    }
+    return plan
+  }
