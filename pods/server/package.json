@@ -61,7 +61,7 @@
   "dependencies": {
     "@hanzo/analytics": "^0.6.0",
     "@hanzo/analytics-service": "^0.6.0",
-    "@hanzo/communication-server": "0.1.166",
+    "@hanzo/communication-server": "0.1.176",
     "@hanzo/contact": "^0.6.24",
     "@hanzo/core": "^0.6.32",
     "@hanzo/kafka": "^0.6.0",

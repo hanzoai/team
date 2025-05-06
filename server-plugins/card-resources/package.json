@@ -43,7 +43,7 @@
     "@hanzo/core": "^0.6.38",
     "@hanzo/platform": "^0.6.16",
     "@hanzo/server-core": "^0.6.5",
-    "@hanzo/communication-sdk-types": "0.1.166",
+    "@hanzo/communication-sdk-types": "0.1.176",
     "@hanzo/server-contact": "^0.6.5",
     "@hanzo/contact": "^0.6.29"
   }
