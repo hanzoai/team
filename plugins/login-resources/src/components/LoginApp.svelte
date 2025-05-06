@@ -48,8 +48,8 @@
   import loginBackWebp from '../../img/login_back.webp'
   import loginBack2xAvif from '../../img/login_back_2x.avif'
   import loginBack2x from '../../img/login_back_2x.png'
-  import loginBack2xWebp from '../../img/login_back_2x.webp'
-  import loginLogo from "../../img/logo_login.png"
+  import loginBack2xWebp from "../../img/login_back_2x.webp"
+  import loginLogo from "../../img/logo-dark.svg"
   import AdminWorkspaces from './AdminWorkspaces.svelte'
 
   export let page: Pages = 'signup'
