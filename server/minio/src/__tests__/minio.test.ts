@@ -70,7 +70,7 @@ describe('minio operations', () => {
     const w1Objects2 = await objectsToArray(toolCtx, minioService, wsIds1)
     expect(w1Objects2.map((it) => it._id)).toEqual(['obj1.txt', 'obj2.txt'])
 
-    const data = Buffer.concat(await minioService.read(toolCtx, wsIds1, 'obj1.txt'))
+    const data = Buffer.concat(await minioService.read(toolCtx, wsIds1, 'obj1.txt') as any)
 
     expect('obj1').toEqual(data.toString())
 

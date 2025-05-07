@@ -1441,7 +1441,7 @@ describe('account utils', () => {
       // Verify hanzoai social id creation
       expect(mockDb.socialId.insertOne).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: SocialIdType.hanzoai,
+          type: SocialIdType.HANZOAI,
           value: personUuid,
           personUuid
         })

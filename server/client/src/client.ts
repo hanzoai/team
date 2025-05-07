@@ -19,6 +19,10 @@ import { addLocation, getMetadata, getResource, setMetadata } from '@hanzo/platf
 import crypto from 'node:crypto'
 import plugin from './plugin'
 
+// We need to override default factory with 'ws' one.
+// eslint-disable-next-line
+import WebSocket from 'ws'
+
 /**
  * @public
  *
@@ -30,9 +34,6 @@ export async function createClient (
   model?: Tx[],
   connectTimeout: number = 0
 ): Promise<Client> {
-  // We need to override default factory with 'ws' one.
-  // eslint-disable-next-line
-  const WebSocket = require('ws')
 
   setMetadata(client.metadata.UseBinaryProtocol, true)
   setMetadata(client.metadata.UseProtocolCompression, true)
@@ -44,7 +45,7 @@ export async function createClient (
         'User-Agent': getMetadata(plugin.metadata.UserAgent) ?? 'Anticrm Client'
       }
     })
-    return socket
+    return socket as any
   })
   addLocation(clientId, () => import('@hanzo/client-resources'))
 

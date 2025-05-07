@@ -25,10 +25,15 @@ import {
 export { XmlElement as YXmlElement, XmlText as YXmlText, AbstractType as YAbstractType } from 'yjs'
 
 /** @public */
-export function yDocFromBuffer (buffer: Buffer, ydoc?: YDoc): YDoc {
+export function yDocFromBuffer (buffer: Uint8Array[], ydoc?: YDoc): YDoc {
   ydoc ??= new YDoc({ guid: generateId(), gc: false })
   try {
-    const uint8arr = new Uint8Array(buffer)
+    const uint8arr = new Uint8Array(buffer.reduce((acc, curr) => acc + curr.length, 0))
+    let offset = 0
+    for (const chunk of buffer) {
+      uint8arr.set(chunk, offset)
+      offset += chunk.length
+    }
     applyUpdate(ydoc, uint8arr)
     return ydoc
   } catch (err) {

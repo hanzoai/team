@@ -151,8 +151,8 @@ async function applyPatchesToGroups (
       patches: true,
       limit: 100,
       order: SortingOrder.Ascending,
-      fromSec: {
-        greater: groups[groups.length - 1].toSec
+      fromDate: {
+        greater: groups[groups.length - 1].toDate
       }
     })
   }
@@ -212,7 +212,7 @@ async function newMessages2file (
   const lastGroup = (
     await client.findMessagesGroups({
       card: card._id,
-      orderBy: 'toSec',
+      orderBy: 'toDate',
       order: SortingOrder.Descending,
       limit: 1
     })
@@ -248,9 +248,9 @@ async function newMessages2file (
     const fromSec = new Date(fromDate).setMilliseconds(0)
 
     const messagesFromExistingGroup =
-      lastGroup == null || fromSec > lastGroup.toSec.getTime()
+      lastGroup == null || fromSec > lastGroup.toDate.getTime()
         ? []
-        : messages.filter(({ created }) => new Date(created).setMilliseconds(0) <= lastGroup.toSec.getTime())
+        : messages.filter(({ created }) => new Date(created).setMilliseconds(0) <= lastGroup.toDate.getTime())
     const newMessages =
       messagesFromExistingGroup.length > 0 ? messages.slice(messagesFromExistingGroup.length) : messages
 
@@ -333,7 +333,7 @@ async function pushMessagesToExistingGroup (
     const messagesFromGroup = messages.filter((it) => {
       const date = new Date(it.created)
       date.setMilliseconds(0)
-      return date <= group.toSec && date >= group.fromSec
+      return date <= group.toDate && date >= group.fromDate
     })
 
     messages.splice(0, messagesFromGroup.length)
@@ -379,8 +379,8 @@ async function createGroup (
   client: CommunicationRestClient,
   card: CardID,
   blobId: Ref<Blob>,
-  fromSec: Date,
-  toSec: Date,
+  fromDate: Date,
+  toDate: Date,
   count: number
 ): Promise<void> {
   await retry(
@@ -390,8 +390,8 @@ async function createGroup (
         group: {
           card,
           blobId,
-          fromSec,
-          toSec,
+          fromDate,
+          toDate,
           count
         }
       }),
@@ -463,11 +463,11 @@ async function findTargetGroup (
   return (
     await client.findMessagesGroups({
       card,
-      fromSec: { lessOrEqual: date },
-      toSec: { greaterOrEqual: date },
+      fromDate: { lessOrEqual: date },
+      toDate: { greaterOrEqual: date },
       limit: 1,
       order: SortingOrder.Ascending,
-      orderBy: 'fromSec'
+      orderBy: 'fromDate'
     })
   )[0]
 }

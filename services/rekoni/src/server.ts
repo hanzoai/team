@@ -151,7 +151,7 @@ export const startServer = async (): Promise<void> => {
       await extractQueue.add(async () => {
         res.set('Cache-Control', 'no-cache')
         try {
-          const { resume: doc } = await extractDocument(body)
+          const { resume: doc } = await extractDocument(new Uint8Array(body))
           res.status(200)
           res.json(doc)
         } catch (err: any) {

@@ -74,7 +74,8 @@ function addReply (message: Message, thread: CardID, created: Date): Message {
         message: message.id,
         thread,
         repliesCount: 1,
-        lastReply: created
+        lastReply: created,
+        messageCreated: new Date()
       }
     }
   }

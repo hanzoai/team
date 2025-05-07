@@ -22,7 +22,7 @@ const categories = getCategories()
 async function readFiles (): Promise<void> {
   for (const filename of files) {
     const pdfFile = join(pdfDir, filename)
-    const data = readFileSync(pdfFile)
+    const data: any = readFileSync(pdfFile)
 
     const { resume, model } = await extractDocument(data)
     if (resume !== undefined) {
@@ -57,7 +57,7 @@ async function readFiles (): Promise<void> {
       }
       await writeFile(join(...path, filename), data)
       await writeFile(join(...path, filename + '.resume.json'), JSON.stringify(resume, undefined, 2))
-      for (const img of model.images) {
+      for (const img of model.images as any[]) {
         await writeFile(join(...path, filename + '._' + img.name + '.png'), img.pngBuffer)
       }
       model.images = []

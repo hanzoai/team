@@ -266,19 +266,20 @@ async function saveMessageToSpaces (
         ctx.info('Created new thread', { mailId, threadId, spaceId })
       }
 
-      const messageId = await msgClient.createMessage(
+      const messageRs = await msgClient.createMessage(
         threadId,
         mail.class.MailThread,
         content,
         modifiedBy,
         MessageType.Message
       )
-      ctx.info('Created message', { mailId, messageId, threadId })
+      ctx.info('Created message', { mailId, messageRs, threadId })
 
       for (const a of attachments) {
         await msgClient.createFile(
           threadId,
-          messageId,
+          messageRs.id,
+          new Date(),
           a.id as Ref<Blob>,
           a.contentType,
           a.name,

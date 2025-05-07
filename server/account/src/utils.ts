@@ -446,7 +446,7 @@ export async function createAccount (
 ): Promise<void> {
   // Create hanzoai social id and account
   await db.socialId.insertOne({
-    type: SocialIdType.hanzoai,
+    type: SocialIdType.HANZOAI,
     value: personUuid,
     personUuid,
     ...(confirmed ? { verifiedOn: Date.now() } : {})
@@ -903,7 +903,7 @@ export async function confirmEmail (
 }
 
 export async function confirmhanzoaiIds (ctx: MeasureContext, db: AccountDB, account: AccountUuid): Promise<void> {
-  const hanzoaiSocialIds = await db.socialId.find({ personUuid: account, type: SocialIdType.hanzoai, verifiedOn: null })
+  const hanzoaiSocialIds = await db.socialId.find({ personUuid: account, type: SocialIdType.HANZOAI, verifiedOn: null })
   for (const hanzoaiSocialId of hanzoaiSocialIds) {
     await db.socialId.updateOne({ _id: hanzoaiSocialId._id }, { verifiedOn: Date.now() })
   }

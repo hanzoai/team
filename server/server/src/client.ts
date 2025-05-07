@@ -63,7 +63,6 @@ import {
 } from '@hanzo/communication-types'
 import {
   RequestEvent as CommunicationEvent,
-  ConnectionInfo as CommunicationCtx,
   EventResult
 } from '@hanzo/communication-sdk-types'
 
@@ -436,7 +435,7 @@ export class ClientSession implements Session {
     await ctx.sendResponse(ctx.requestId, {})
   }
 
-  private getCommunicationCtx (): CommunicationCtx {
+  private getCommunicationCtx (): any {
     return {
       sessionId: this.sessionId,
       account: this.account

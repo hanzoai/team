@@ -17,7 +17,7 @@ export const docExtractor: DocumentExtractor = {
     return type === false ? false : isType(type)
   },
 
-  async extract (fileName: string, type: string, data): Promise<string> {
+  async extract (fileName: string, type: string, data: any): Promise<string> {
     const tempDir = await mkdtemp(join(tmpdir(), 'rekoni-'))
     const distFileName = join(tempDir, 'content.doc')
     await writeFile(distFileName, data)

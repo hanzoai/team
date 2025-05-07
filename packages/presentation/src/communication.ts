@@ -55,8 +55,8 @@ import {
   type ClientConnection as PlatformConnection,
   getCurrentAccount,
   type SocialId,
-  SocialIdType,
-  generateId
+  generateId,
+  SocialIdType
 } from '@hanzo/core'
 import { onDestroy } from 'svelte'
 import {
@@ -105,7 +105,7 @@ class Client {
     private readonly connection: Connection,
     socialIds: SocialId[]
   ) {
-    this.hanzoaiSocialId = socialIds.find((it) => it.type === SocialIdType.hanzoai && it.verifiedOn !== undefined)
+    this.hanzoaiSocialId = socialIds.find((it) => it.verifiedOn !== undefined && it.type === SocialIdType.HANZOAI)
 
     connection.pushHandler((...events: any[]) => {
       for (const event of events) {
@@ -119,12 +119,13 @@ class Client {
   onEvent: (event: ResponseEvent) => void = () => {}
   onRequest: (event: RequestEvent, eventPromise: Promise<EventResult>) => void = () => {}
 
-  async createThread (card: CardID, message: MessageID, thread: CardID): Promise<void> {
+  async createThread (card: CardID, message: MessageID, thread: CardID, messageCreated: Date): Promise<void> {
     const event: CreateThreadEvent = {
       type: MessageRequestEventType.CreateThread,
       card,
       message,
-      thread
+      thread,
+      messageCreated
     }
 
     await this.sendEvent(event)
@@ -143,36 +144,39 @@ class Client {
     return (result as CreateMessageResult).id
   }
 
-  async updateMessage (card: CardID, message: MessageID, content: RichText): Promise<void> {
+  async updateMessage (card: CardID, message: MessageID, content: RichText, messageCreated: Date): Promise<void> {
     const event: CreatePatchEvent = {
       type: MessageRequestEventType.CreatePatch,
       patchType: PatchType.update,
       card,
       message,
       content,
-      creator: this.getSocialId()
+      creator: this.getSocialId(),
+      messageCreated
     }
     await this.sendEvent(event)
   }
 
-  async createReaction (card: CardID, message: MessageID, reaction: string): Promise<void> {
+  async createReaction (card: CardID, message: MessageID, reaction: string, messageCreated: Date): Promise<void> {
     const event: CreateReactionEvent = {
       type: MessageRequestEventType.CreateReaction,
       card,
       message,
       reaction,
-      creator: this.getSocialId()
+      creator: this.getSocialId(),
+      messageCreated
     }
     await this.sendEvent(event)
   }
 
-  async removeReaction (card: CardID, message: MessageID, reaction: string): Promise<void> {
+  async removeReaction (card: CardID, message: MessageID, reaction: string, messageCreated: Date): Promise<void> {
     const event: RemoveReactionEvent = {
       type: MessageRequestEventType.RemoveReaction,
       card,
       message,
       reaction,
-      creator: this.getSocialId()
+      creator: this.getSocialId(),
+      messageCreated
     }
     await this.sendEvent(event)
   }
@@ -183,7 +187,8 @@ class Client {
     blobId: BlobID,
     fileType: string,
     filename: string,
-    size: number
+    size: number,
+    messageCreated: Date
   ): Promise<void> {
     const event: CreateFileEvent = {
       type: MessageRequestEventType.CreateFile,
@@ -193,18 +198,20 @@ class Client {
       fileType,
       filename,
       size,
-      creator: this.getSocialId()
+      creator: this.getSocialId(),
+      messageCreated
     }
     await this.sendEvent(event)
   }
 
-  async removeFile (card: CardID, message: MessageID, blobId: BlobID): Promise<void> {
+  async removeFile (card: CardID, message: MessageID, blobId: BlobID, messageCreated: Date): Promise<void> {
     const event: RemoveFileEvent = {
       type: MessageRequestEventType.RemoveFile,
       card,
       message,
       blobId,
-      creator: this.getSocialId()
+      creator: this.getSocialId(),
+      messageCreated
     }
     await this.sendEvent(event)
   }

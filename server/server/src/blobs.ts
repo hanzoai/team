@@ -1,7 +1,6 @@
 import { Analytics } from '@hanzo/analytics'
 import type { MeasureContext, WorkspaceIds } from '@hanzo/core'
 import type { StorageAdapter } from '@hanzo/server-core'
-import type { Readable } from 'stream'
 
 const cacheControlNoCache = 'public, no-store, no-cache, must-revalidate, max-age=0'
 
@@ -10,7 +9,7 @@ export interface BlobResponse {
   writeHead: (code: number, header: Record<string, string | number>) => void
   status: (code: number) => void
   end: () => void
-  pipeFrom: (readable: Readable, size: number) => void
+  pipeFrom: (readable: any, size: number) => void
   cork: (cb: () => void) => void
 }
 
@@ -56,7 +55,7 @@ export async function getFile (
               dataStream.destroy()
               resolve()
             })
-            dataStream.on('error', function (err) {
+            dataStream.on('error', function (err: any) {
               Analytics.handleError(err)
               ctx.error('error', { err })
               reject(err)
@@ -161,7 +160,7 @@ export async function getFileRange (
               dataStream.destroy()
               resolve()
             })
-            dataStream.on('error', function (err) {
+            dataStream.on('error', function (err: any) {
               Analytics.handleError(err)
               ctx.error('error', { err })
               res.cork(() => {

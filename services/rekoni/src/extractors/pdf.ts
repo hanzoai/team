@@ -21,7 +21,7 @@ export const pdfExtractor: DocumentExtractor = {
     return false
   },
 
-  async extract (fileName: string, type: string, data): Promise<string> {
+  async extract (fileName: string, type: string, data: any): Promise<string> {
     const tempDir = await mkdtemp(join(tmpdir(), 'rekoni-'))
     const distFileName = join(tempDir, 'content.pdf')
     await writeFile(distFileName, data)

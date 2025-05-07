@@ -840,8 +840,8 @@ export enum SocialIdType {
   GOOGLE = 'google',
   PHONE = 'phone',
   OIDC = 'oidc',
-  hanzoai = 'hanzoai',
-  TELEGRAM = 'telegram'
+  TELEGRAM = 'telegram',
+  HANZOAI = 'hanzoai'
 }
 
 export interface SocialId {

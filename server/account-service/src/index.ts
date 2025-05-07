@@ -388,7 +388,7 @@ export function serveAccount(measureCtx: MeasureContext, brandings: BrandingMap,
                     headers: { accept: 'application/json' }
                 })
 
-                const json = await res.json()
+                const json: any = await res.json()
                 console.log("check cloud response:>>>>", json)
 
                 if (json.user?.organizations && Array.isArray(json.user.organizations)) {

@@ -933,7 +933,7 @@ export function pickPrimarySocialId (socialIds: SocialId[]): SocialId {
   if (socialIds.length === 0) {
     throw new Error('No social ids provided')
   }
-  const hanzoaiSocialIds = socialIds.filter((si) => si.type === SocialIdType.hanzoai)
+  const hanzoaiSocialIds = socialIds.filter((si) => si.type === SocialIdType.HANZOAI)
 
   return hanzoaiSocialIds[0] ?? socialIds[0]
 }
