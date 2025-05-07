@@ -91,7 +91,7 @@ export class BlobClient {
           let chunk: Buffer
 
           if (this.opt?.storageAdapter !== undefined) {
-            const chunks: Buffer[] = []
+            const chunks: Uint8Array[] = []
             const readable = await this.opt.storageAdapter.partial(ctx, this.workspace, name, written, chunkSize)
             await new Promise<void>((resolve) => {
               readable.on('data', (chunk) => {

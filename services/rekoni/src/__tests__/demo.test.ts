@@ -18,7 +18,7 @@ import { extractDocument } from '../process'
 
 describe('pdf-parse', () => {
   it('check hh6', async () => {
-    const data = await readFile('./demo/pdf6.pdf')
+    const data: any = await readFile('./demo/pdf6.pdf')
     const { resume } = await extractDocument(data)
 
     expect(resume.firstName).toBe('Виктория')
@@ -27,7 +27,7 @@ describe('pdf-parse', () => {
     expect(resume.phone).toBe('+7 952 929 53 49')
   })
   it('check hh5', async () => {
-    const data = await readFile('./demo/pdf5.pdf')
+    const data: any = await readFile('./demo/pdf5.pdf')
     const { resume } = await extractDocument(data)
 
     expect(resume.firstName).toBe('Александр')
@@ -39,7 +39,7 @@ describe('pdf-parse', () => {
     expect(resume.linkedin).toBe('http://linkedin.com/in/asizykh')
   })
   it('check hh4', async () => {
-    const data = await readFile('./demo/pdf4.pdf')
+    const data: any = await readFile('./demo/pdf4.pdf')
     const { resume } = await extractDocument(data)
 
     expect(resume.firstName).toBe('Алексей Владимирович')
@@ -49,7 +49,7 @@ describe('pdf-parse', () => {
   })
 
   it('check hh3', async () => {
-    const data = await readFile('./demo/pdf3.pdf')
+    const data: any = await readFile('./demo/pdf3.pdf')
     const { resume } = await extractDocument(data)
 
     expect(resume.firstName).toBe('Ильнур')
@@ -61,7 +61,7 @@ describe('pdf-parse', () => {
   })
 
   it('check hh2', async () => {
-    const data = await readFile('./demo/pdf2.pdf')
+    const data: any = await readFile('./demo/pdf2.pdf')
     const { resume } = await extractDocument(data)
 
     expect(resume.firstName).toBe('Дмитрий')
@@ -72,7 +72,7 @@ describe('pdf-parse', () => {
   })
 
   it('check podbor', async () => {
-    const data = await readFile('./demo/pdf1.pdf')
+    const data: any = await readFile('./demo/pdf1.pdf')
     const { resume } = await extractDocument(data)
 
     expect(resume.firstName).toBe('Sergey')

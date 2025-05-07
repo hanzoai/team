@@ -198,7 +198,7 @@ export class MinioService implements StorageAdapter {
   @withContext('listStream')
   async listStream (ctx: MeasureContext, wsIds: WorkspaceIds): Promise<BlobStorageIterator> {
     let hasMore = true
-    let stream: BucketStream<BucketItem> | undefined
+    let stream: any;
     let done = false
     let error: Error | undefined
     let onNext: () => void = () => {}
@@ -218,14 +218,14 @@ export class MinioService implements StorageAdapter {
               hasMore = false
               onNext()
             })
-            stream.on('error', (err) => {
+            stream.on('error', (err: any) => {
               stream?.destroy()
               stream = undefined
               error = err
               hasMore = false
               onNext()
             })
-            stream.on('data', (data) => {
+            stream.on('data', (data: any) => {
               if (data.name !== undefined) {
                 const _id = this.stripPrefix(rootPrefix, data.name)
                 buffer.push({
