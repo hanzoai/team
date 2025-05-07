@@ -57,6 +57,7 @@
     "cookies": "^0.9.1",
     "@koa/cors": "^5.0.0",
     "@hanzo/server-token": "^0.6.16",
-    "@hanzo/analytics": "^0.6.4"
+    "@hanzo/analytics": "^0.6.4",
+    "node-fetch": "~3.3.2"
   }
 }
