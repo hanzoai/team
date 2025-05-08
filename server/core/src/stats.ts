@@ -124,9 +124,7 @@ export function initStatisticsContext (
           if (val !== oldMetricsValue) {
             oldMetricsValue = val
             if (metricsFile !== undefined) {
-              void writeFile(metricsFile, val, err =>  {
-                console.error(err)
-              })
+              void writeFile(metricsFile, val)
             }
             if (ops?.logConsole === true) {
               console.info('METRICS:', val)
