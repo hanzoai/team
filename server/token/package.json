@@ -42,8 +42,7 @@
     "@hanzo/core": "^0.6.38",
     "@hanzo/platform": "^0.6.16",
     "jwt-simple": "^0.5.6",
-    "jsonwebtoken": "~9.0.2",
-    "node": "~24.0.0"
+    "jsonwebtoken": "^9.0.2"
   },
   "repository": "https://github.com/hanzoai/team-manager",
   "publishConfig": {
