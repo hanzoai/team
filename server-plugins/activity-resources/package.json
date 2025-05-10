@@ -48,7 +48,7 @@
     "@hanzo/server-core": "^0.6.5",
     "@hanzo/server-notification-resources": "^0.6.4",
     "@hanzo/text-core": "^0.6.5",
-    "@hanzo/communication-sdk-types": "0.1.166",
-    "@hanzo/communication-types": "0.1.166"
+    "@hanzo/communication-sdk-types": "0.1.176",
+    "@hanzo/communication-types": "0.1.176"
   }
 }

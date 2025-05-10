@@ -41,7 +41,7 @@
     "@hanzo/analytics": "^0.6.4",
     "@hanzo/card": "^0.6.5",
     "@hanzo/chat": "^0.6.4",
-    "@hanzo/communication-types": "0.1.166",
+    "@hanzo/communication-types": "0.1.176",
     "@hanzo/contact": "^0.6.29",
     "@hanzo/contact-resources": "^0.6.4",
     "@hanzo/core": "^0.6.38",

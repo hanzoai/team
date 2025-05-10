@@ -55,6 +55,7 @@
     "koa-router": "^12.0.1",
     "koa-bodyparser": "^4.4.1",
     "cookies": "^0.9.1",
+    "node-fetch": "^2.7.0",
     "@koa/cors": "^5.0.0",
     "@hanzo/server-token": "^0.6.16",
     "@hanzo/analytics": "^0.6.4"
