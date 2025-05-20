@@ -61,6 +61,8 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
+      justify-content: start;
+      align-items: center;
     }
     .sso-button {
       background-color: #2c5eff;
