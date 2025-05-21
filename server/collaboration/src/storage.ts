@@ -52,9 +52,8 @@ export async function loadCollabYdoc (
   // no need to apply gc because we load existing document
   // it is either already gc-ed, or gc not needed and it is disabled
   const ydoc = new YDoc({ guid: generateId(), gc: false })
-
   const buffer = await storageAdapter.read(ctx, wsIds, blobId)
-  return yDocFromBuffer(Buffer.concat(buffer as any), ydoc)
+  return yDocFromBuffer(buffer as unknown as Uint8Array[], ydoc)
 }
 
 /** @public */
@@ -104,9 +103,9 @@ export async function loadCollabJson (
     ctx.error('invalid content type', { contentType: blob.contentType })
     return undefined
   }
-
   const buffer = await storageAdapter.read(ctx, wsIds, blobId)
-  return Buffer.concat(buffer as any).toString()
+  const uint8Arrays = buffer as unknown as Uint8Array[]
+  return new TextDecoder().decode(uint8Arrays[0])
 }
 
 /** @public */
@@ -118,10 +117,9 @@ export async function saveCollabJson (
   content: Markup | YDoc
 ): Promise<Ref<Blob>> {
   const blobId = makeCollabJsonId(doc)
-
   const markup = typeof content === 'string' ? content : yDocToMarkup(content, doc.objectAttr)
-  const buffer = Buffer.from(markup)
-  await storageAdapter.put(ctx, wsIds, blobId, buffer, 'application/json', buffer.length)
+  const buffer = new TextEncoder().encode(markup)
+  await storageAdapter.put(ctx, wsIds, blobId, Buffer.from(buffer), 'application/json', buffer.length)
 
   return blobId
 }

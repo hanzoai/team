@@ -78,7 +78,7 @@ export async function signPDF (file: Buffer, certp12: Buffer, pwd: string, ctx: 
 }
 
 async function drawManifestation (file: Buffer, options: Options, rect: Rect): Promise<PDFDocument> {
-  const pdfDoc = await PDFDocument.load(file)
+  const pdfDoc = await PDFDocument.load(new Uint8Array(file))
 
   // Embed the Helvetica font
   const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)

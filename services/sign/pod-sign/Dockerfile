@@ -1,5 +1,5 @@
 
-FROM hanzoai/team:v20250310
+FROM hanzoai/team:latest
 WORKDIR /usr/src/app
 
 COPY bundle/bundle.js ./

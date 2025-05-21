@@ -106,7 +106,9 @@ export function createServer (storageConfig: StorageConfiguration, brandings: Br
       const ctx = {
         title: branding?.title ?? 'hanzoai'
       }
-      const signRes = await signPDF(Buffer.concat(originalFile), config.Cert, config.CertPwd, ctx)
+      
+      const uint8ArrayFile = originalFile.map(b => new Uint8Array(b.buffer, b.byteOffset, b.byteLength));
+      const signRes = await signPDF(Buffer.concat(uint8ArrayFile), config.Cert, config.CertPwd, ctx)
 
       if (signRes === undefined) {
         throw new ApiError(400, 'Failed to sign')

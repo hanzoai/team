@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@hanzo/presentation": "^0.6.7",
-    "@hanzo/communication-types": "0.1.166",
+    "@hanzo/communication-types": "0.1.176",
     "@hanzo/core": "^0.6.38",
     "@hanzo/ui": "^0.6.21",
     "@hanzo/setting": "^0.6.22",

@@ -209,17 +209,6 @@
     </Scroller>
     <div class="grow-separator" />
     <div class="footer">
-      {#if workspaces.length > 0}
-        <div>
-          <span><Label label={login.string.WantAnotherWorkspace} /></span>
-          <NavLink
-            href={getHref('createWorkspace')}
-            onClick={() => {
-              goTo('createWorkspace')
-            }}><Label label={login.string.CreateWorkspace} /></NavLink
-          >
-        </div>
-      {/if}
       <div>
         <span><Label label={login.string.NotSeeingWorkspace} /></span>
         <NavLink
@@ -228,8 +217,11 @@
             await logOut()
             goTo('login')
           }}
+          textDecorationColor='var(--theme-link-color)'
         >
-          <Label label={login.string.ChangeAccount} />
+          <span class="ca-button">
+            <Label label={login.string.ChangeAccount} />
+          </span>
         </NavLink>
       </div>
     </div>
@@ -295,6 +287,13 @@
         &:hover {
           opacity: 1;
         }
+      }
+      .ca-button {
+        font-size: .95rem;
+        color: var(--theme-link-color);
+      }
+      .ca-button:hover {
+        font-weight: 600;
       }
     }
   }

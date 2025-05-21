@@ -18,7 +18,7 @@ import { extractDocument } from '../process'
 
 describe('pdf-parse', () => {
   it('check hh6', async () => {
-    const data = await readFile('./demo/hh_err1.pdf')
+    const data: any = await readFile('./demo/hh_err1.pdf')
     const { resume } = await extractDocument(data)
 
     expect(resume.format).toBe('unknown')

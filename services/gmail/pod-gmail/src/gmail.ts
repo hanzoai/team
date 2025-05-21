@@ -630,7 +630,9 @@ export class GmailClient {
         size: file.size ?? Buffer.from(file.file, 'base64').length,
         lastModified: file.lastModified
       }
-      await this.storageAdapter.put(this.ctx, this.workspaceId as any, id, file.file, data.type, data.size) // TODO: FIXME
+      const buffer = await this.storageAdapter.read(this.ctx, this.workspaceId as any, file.file) // TODO: FIXME
+      const dataBuffer = Buffer.concat(buffer as any).toString('base64')
+      await this.storageAdapter.put(this.ctx, this.workspaceId as any, id, dataBuffer, data.type, data.size) // TODO: FIXME
       await this.client.addCollection(
         attachment.class.Attachment,
         message.space,
@@ -823,7 +825,7 @@ export class GmailClient {
 
   private async makeAttachmentPart (attachment: Attachment): Promise<string[]> {
     const buffer = await this.storageAdapter.read(this.ctx, this.workspaceId as any, attachment.file) // TODO: FIXME
-    const data = arrayBufferToBase64(Buffer.concat(buffer))
+    const data = Buffer.concat(buffer as any).toString('base64')
     const res: string[] = []
     res.push('--mail\n')
     res.push(`Content-Type: ${attachment.type}\n`)

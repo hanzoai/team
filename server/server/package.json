@@ -41,12 +41,13 @@
   "dependencies": {
     "@hanzo/account-client": "^0.6.6",
     "@hanzo/analytics": "^0.6.4",
-    "@hanzo/communication-types": "0.1.166",
-    "@hanzo/communication-sdk-types": "0.1.166",
+    "@hanzo/communication-types": "0.1.176",
+    "@hanzo/communication-sdk-types": "0.1.176",
     "@hanzo/core": "^0.6.38",
     "@hanzo/platform": "^0.6.16",
     "@hanzo/rpc": "^0.6.10",
     "@hanzo/server-core": "^0.6.5",
-    "@hanzo/server-token": "^0.6.16"
+    "@hanzo/server-token": "^0.6.16",
+    "jsonwebtoken": "~9.0.2"
   }
 }

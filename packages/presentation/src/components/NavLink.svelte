@@ -27,6 +27,7 @@
   export let accent: boolean = false
   export let noOverflow: boolean = false
   export let inlineReference: boolean = false
+  export let textDecorationColor: string | undefined = undefined
 
   function clickHandler (e: MouseEvent): void {
     if (disabled) return
@@ -75,6 +76,7 @@
     class:colorInherit
     class:antiMention={inlineReference}
     class:fs-bold={accent}
+    style:text-decoration-color={textDecorationColor + '!important'}
     style:flex-shrink={shrink}
     on:click={clickHandler}
   >
@@ -89,6 +91,7 @@
     class:colorInherit
     class:antiMention={inlineReference}
     class:fs-bold={accent}
+    style:text-decoration-color={textDecorationColor + '!important'}
     style:flex-shrink={shrink}
     on:click={clickHandler}
   >
