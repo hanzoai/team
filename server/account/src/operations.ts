@@ -14,86 +14,86 @@
 //
 import { Analytics } from '@hanzo/analytics'
 import {
-  AccountInfo,
-  AccountRole,
-  type Branding,
-  buildSocialIdString,
-  concatLink,
-  isActiveMode,
-  isWorkspaceCreating,
-  MeasureContext,
-  type Person,
-  type PersonId,
-  type PersonUuid,
-  SocialIdType,
-  systemAccountUuid,
-  type WorkspaceMemberInfo,
-  type WorkspaceUuid,
-  type AccountUuid
+    AccountInfo,
+    AccountRole,
+    type AccountUuid,
+    type Branding,
+    buildSocialIdString,
+    concatLink,
+    isActiveMode,
+    isWorkspaceCreating,
+    MeasureContext,
+    type Person,
+    type PersonId,
+    type PersonUuid,
+    SocialIdType,
+    systemAccountUuid,
+    type WorkspaceMemberInfo,
+    type WorkspaceUuid
 } from '@hanzo/core'
 import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzo/platform'
 import { decodeTokenVerbose, generateToken } from '@hanzo/server-token'
 
 import { isAdminEmail } from './admin'
 import { accountPlugin } from './plugin'
+import { type AccountServiceMethods, getServiceMethods } from './serviceOperations'
 import type {
-  AccountDB,
-  AccountMethodHandler,
-  LoginInfo,
-  Mailbox,
-  MailboxOptions,
-  Meta,
-  OtpInfo,
-  RegionInfo,
-  SocialId,
-  WorkspaceInfoWithStatus,
-  WorkspaceInviteInfo,
-  WorkspaceLoginInfo
+    AccountDB,
+    AccountMethodHandler,
+    LoginInfo,
+    Mailbox,
+    MailboxOptions,
+    Meta,
+    OtpInfo,
+    RegionInfo,
+    SocialId,
+    WorkspaceInfoWithStatus,
+    WorkspaceInviteInfo,
+    WorkspaceLoginInfo
 } from './types'
 import {
-  addSocialId,
-  checkInvite,
-  cleanEmail,
-  confirmEmail,
-  createAccount,
-  createWorkspaceRecord,
-  doJoinByInvite,
-  EndpointKind,
-  generatePassword,
-  getAccount,
-  getEmailSocialId,
-  getEndpoint,
-  getFrontUrl,
-  getInviteEmail,
-  getMailUrl,
-  getPersonName,
-  getRegions,
-  getRolePower,
-  getWorkspaceById,
-  getWorkspaceInfoWithStatusById,
-  getWorkspaceInvite,
-  getWorkspaceRole,
-  GUEST_ACCOUNT,
-  isEmail,
-  isOtpValid,
-  normalizeValue,
-  releaseSocialId,
-  selectWorkspace,
-  sendEmail,
-  sendEmailConfirmation,
-  sendOtp,
-  setPassword,
-  setTimezoneIfNotDefined,
-  signUpByEmail,
-  updateWorkspaceRole,
-  verifyAllowedRole,
-  verifyAllowedServices,
-  verifyPassword,
-  wrap,
-  getWorkspaceByUrl,
-  confirmhanzoaiIds
+    addSocialId,
+    checkInvite,
+    cleanEmail,
+    confirmEmail,
+    confirmhanzoaiIds,
+    createAccount,
+    createWorkspaceRecord,
+    doJoinByInvite,
+    EndpointKind,
+    generatePassword,
+    getAccount,
+    getEmailSocialId,
+    getEndpoint,
+    getFrontUrl,
+    getInviteEmail,
+    getMailUrl,
+    getPersonName,
+    getRegions,
+    getRolePower,
+    getWorkspaceById,
+    getWorkspaceByUrl,
+    getWorkspaceInfoWithStatusById,
+    getWorkspaceInvite,
+    getWorkspaceRole,
+    GUEST_ACCOUNT,
+    isEmail,
+    isOtpValid,
+    normalizeValue,
+    releaseSocialId,
+    selectWorkspace,
+    sendEmail,
+    sendEmailConfirmation,
+    sendOtp,
+    setPassword,
+    setTimezoneIfNotDefined,
+    signUpByEmail,
+    updateWorkspaceRole,
+    verifyAllowedRole,
+    verifyAllowedServices,
+    verifyPassword,
+    wrap
 } from './utils'
-import { type AccountServiceMethods, getServiceMethods } from './serviceOperations'
 
 // Note: it is IMPORTANT to always destructure params passed here to avoid sending extra params
 // to the database layer when searching/inserting as they may contain SQL injection
@@ -723,112 +723,102 @@ export async function checkJoin (
   }
 }
 
-export async function checkAutoJoin (
-  ctx: MeasureContext,
-  db: AccountDB,
-  branding: Branding | null,
-  token: string,
-  params: { inviteId: string, firstName?: string, lastName?: string }
+export async function checkAutoJoin(
+    ctx: MeasureContext,
+    db: AccountDB,
+    branding: Branding | null,
+    token: string,
+    params: { inviteId: string, firstName?: string, lastName?: string }
 ): Promise<WorkspaceLoginInfo | WorkspaceInviteInfo> {
-  const { inviteId, firstName, lastName } = params
-  const invite = await getWorkspaceInvite(db, inviteId)
-  if (invite == null) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
-  }
+    const { inviteId, firstName, lastName } = params
+    const {extra} = decodeTokenVerbose(ctx, token)
+    const invite = await getWorkspaceInvite(db, inviteId)
 
-  if (invite.autoJoin !== true) {
-    ctx.error('Not an auto-join invite', invite)
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
-  }
-
-  if (invite.role !== AccountRole.Guest) {
-    ctx.error('Auto-join not for guest role is forbidden', invite)
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
-  }
-
-  const normalizedEmail = invite.email != null ? cleanEmail(invite.email) : ''
-  const workspaceUuid = invite.workspaceUuid
-  const workspace = await getWorkspaceById(db, workspaceUuid)
-
-  if (workspace === null) {
-    ctx.error('Workspace not found in auto-joining workflow', { workspaceUuid, email: normalizedEmail, inviteId })
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
-  }
-
-  if (normalizedEmail == null || normalizedEmail === '') {
-    ctx.error('Malformed auto-join invite', invite)
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
-  }
-
-  const emailSocialId = await db.socialId.findOne({
-    type: SocialIdType.EMAIL,
-    value: normalizedEmail
-  })
-
-  // If it's an existing account we should check for saved token or ask for login to prevent accidental access through shared link
-  if (emailSocialId != null) {
-    const targetAccount = await getAccount(db, emailSocialId.personUuid as AccountUuid)
-    if (targetAccount != null) {
-      if (targetAccount.automatic == null || !targetAccount.automatic) {
-        if (token == null) {
-          // Login required
-          const person = await db.person.findOne({ uuid: targetAccount.uuid })
-
-          return {
-            workspace: workspace.uuid,
-            name: person == null ? '' : getPersonName(person),
-            email: normalizedEmail
-          }
-        }
-
-        const { account: callerAccount } = decodeTokenVerbose(ctx, token)
-
-        if (callerAccount !== targetAccount.uuid) {
-          // Login with target email required
-          const person = await db.person.findOne({ uuid: targetAccount.uuid })
-
-          return {
-            workspace: workspace.uuid,
-            name: person == null ? '' : getPersonName(person),
-            email: normalizedEmail
-          }
-        }
-      }
-
-      const targetRole = await getWorkspaceRole(db, targetAccount.uuid, workspace.uuid)
-
-      if (targetRole == null) {
-        await db.assignWorkspace(targetAccount.uuid, workspace.uuid, invite.role)
-      } else if (getRolePower(targetRole) < getRolePower(invite.role)) {
-        await db.updateWorkspaceRole(targetAccount.uuid, workspace.uuid, invite.role)
-      }
-
-      if (token === undefined || token === null) {
-        token = generateToken(targetAccount.uuid)
-      }
-      return await selectWorkspace(ctx, db, branding, token, { workspaceUrl: workspace.url, kind: 'external' })
+    if (invite == null) {
+        ctx.logger.error("invite id not found")
+        throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
     }
-  }
 
-  // No account yet, create a new one automatically
-  if (firstName == null || firstName === '') {
-    ctx.error('First name is required for auto-join', { firstName })
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
-  }
+    const normalizedEmail = invite.email != null ? cleanEmail(invite.email) : extra?.email
+    const workspaceUuid = invite.workspaceUuid
+    const workspace = await getWorkspaceById(db, workspaceUuid)
 
-  const { account } = await signUpByEmail(
-    ctx,
-    db,
-    branding,
-    normalizedEmail,
-    null,
-    firstName,
-    lastName ?? '',
-    true,
-    true
-  )
+    if (workspace === null) {
+        ctx.error('Workspace not found in auto-joining workflow', { workspaceUuid, email: normalizedEmail, inviteId })
+        throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
+    }
 
-  return await doJoinByInvite(ctx, db, branding, generateToken(account, workspaceUuid), account, workspace, invite)
+    if (normalizedEmail == null || normalizedEmail === '') {
+        ctx.error('Malformed auto-join invite', invite)
+        throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+    }
+
+    const emailSocialId = await db.socialId.findOne({
+        type: SocialIdType.EMAIL,
+        value: normalizedEmail
+    })
+
+    // If it's an existing account we should check for saved token or ask for login to prevent accidental access through shared link
+    if (emailSocialId != null) {
+        const targetAccount = await getAccount(db, emailSocialId.personUuid as AccountUuid)
+        if (targetAccount != null) {
+            if (targetAccount.automatic == null || !targetAccount.automatic) {
+                if (token == null) {
+                    // Login required
+                    const person = await db.person.findOne({ uuid: targetAccount.uuid })
+
+                    return {
+                        workspace: workspace.uuid,
+                        name: person == null ? '' : getPersonName(person),
+                        email: normalizedEmail
+                    }
+                }
+
+                const { account: callerAccount } = decodeTokenVerbose(ctx, token)
+
+                if (callerAccount !== targetAccount.uuid) {
+                    // Login with target email required
+                    const person = await db.person.findOne({ uuid: targetAccount.uuid })
+
+                    return {
+                        workspace: workspace.uuid,
+                        name: person == null ? '' : getPersonName(person),
+                        email: normalizedEmail
+                    }
+                }
+            }
+
+            const targetRole = await getWorkspaceRole(db, targetAccount.uuid, workspace.uuid)
+
+            if (targetRole == null) {
+                await db.assignWorkspace(targetAccount.uuid, workspace.uuid, invite.role)
+            } else if (getRolePower(targetRole) < getRolePower(invite.role)) {
+                await db.updateWorkspaceRole(targetAccount.uuid, workspace.uuid, invite.role)
+            }
+
+            if (token === undefined || token === null) {
+                token = generateToken(targetAccount.uuid)
+            }
+            return await selectWorkspace(ctx, db, branding, token, { workspaceUrl: workspace.url, kind: 'external' })
+        }
+    }
+
+    // No account yet, create a new one automatically
+
+
+    const { account } = await signUpByEmail(
+        ctx,
+        db,
+        branding,
+        normalizedEmail,
+        null,
+        firstName ?? "",
+        lastName ?? '',
+        true,
+        true
+    )
+
+    return await doJoinByInvite(ctx, db, branding, generateToken(account, workspaceUuid), account, workspace, invite)
 }
 
 /**
