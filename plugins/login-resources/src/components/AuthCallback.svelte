@@ -1,118 +1,134 @@
 <script lang="ts">
-    import { setMetadata } from '@hanzo/platform'
-    import presentation from '@hanzo/presentation'
-    import { navigate, setMetadataLocalStorage } from '@hanzo/ui'
-    import { onMount } from 'svelte'
-    import login from '../plugin'
-    import {
-      doLogin,
-      getWorkspaces,
-      navigateToWorkspace,
-      selectWorkspace,
-      setLoginInfo,
-      signUp,
-    } from '../utils'
+  import { getMetadata } from '@hcengineering/platform'
+  import presentation from '@hcengineering/presentation'
+  import { navigate } from '@hcengineering/ui'
+  import { onMount } from 'svelte'
+  import { StepAuthenticationSSO } from '../const'
 
+  import {
+    checkAutoJoin,
+    clearSSOLogin,
+    doLoginNavigate,
+    exchangeCodeForToken,
+    getSSOLogin,
+    loginOtp,
+    saveSSOLoginToLocalStorage,
+    signUpOtp
+  } from '../utils'
+  import OtpForm from './OtpForm.svelte'
 
-    let domainFE = process.env.URL_FRONTEND || "https://hanzo.team"
+  // meda data
+  const iam_server = getMetadata(presentation.metadata.IamServer) || 'https://iam.hanzo.ai'
 
-    async function exchangeCodeForToken(code: string): Promise<{ token: string, user: any }> {
-      const response = await fetch('https://iam.hanzo.ai/api/login/oauth/access_token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          client_id: '53c6bc50e68466764b58',
-          client_secret: '9d2a2711fd4ce3927dd083e846524bc5c6a8c0c3',
-          code,
-          grant_type: 'authorization_code',
-          redirect_uri: `${domainFE}/login/callback`,
-        }),
-      })
-      const data = await response.json()
-      if (!data.access_token) throw new Error('No token returned')
+  let step: StepAuthenticationSSO = 'authenticating'
+  let email: string = ''
+  let retryOn = 0
+  let ssoToken: string = ''
+  let team_uuid = ''
+  let owner = ''
+  let casdoorName = ''
+  let invitedId = ''
+  export let navigateUrl: string | undefined = undefined
 
-      const userInfo = await fetch(`https://iam.hanzo.ai/api/get-account?access_token=${data.access_token}`)
-        .then(res => res.json())
+  onMount(async () => {
+    // check local storage if exist retryOn, token, userInfo
+    const dataLoginSSOIfExist = getSSOLogin()
+    const urlParams = new URLSearchParams(window.location.search)
+    const code = urlParams.get('code')
+    const error = urlParams.get('error')
+    invitedId = localStorage.getItem('inviteId') || ''
 
-      return { token: data.access_token, user: userInfo }
+    if (error) {
+      alert('SSO Error: ' + error)
+      navigate({ path: ['/login'] })
+      return
     }
 
-    onMount(async () => {
-      const urlParams = new URLSearchParams(window.location.search)
-      const code = urlParams.get('code')
-      const error = urlParams.get('error')
+    if (!code) {
+      alert('Missing code')
+      navigate({ path: ['/login'] })
 
-      if (error) {
-        alert('SSO Error: ' + error)
-        navigate({ path: ['login'] })
-        return
-      }
+      return
+    }
 
-      if (!code) {
-        navigate({ path: ['login'] })
-        return
-      }
-
+    try {
+      let user, token
       try {
-        const { token: iamToken, user } = await exchangeCodeForToken(code)
-
-        const email = user.data.email
-        const password = user.data.password || "1234"
-        const firstName = user.data.firstName ?? ''
-        const lastName = user.data.lastName ?? ''
-
-        let loginInfo = null
-
-        // 👉 B1. Thử signUp
-        const [signUpStatus, signUpResult] = await signUp(email, password, firstName, lastName)
+        const infoToken = await exchangeCodeForToken(code)
+        user = infoToken.user
+        token = infoToken.token
+        if (dataLoginSSOIfExist && dataLoginSSOIfExist.user?.email !== user.email) {
+          clearSSOLogin(true)
+          invitedId = ''
+          localStorage.removeItem('inviteId')
+        }
+        ssoToken = token
+        email = user.email
+        const firstName = user.firstName ?? ''
+        const lastName = user.lastName ?? ''
+        casdoorName = user.name
+        owner = user.owner
+        const [signUpStatus, signUpResult] = await signUpOtp(email, firstName, lastName)
 
         if (signUpResult != null) {
-          loginInfo = signUpResult
-        } else {
-          // 👉 B2. Nếu signUp fail, fallback login
-          const [loginStatus, loginResult] = await doLogin(email, password)
-
-          if (loginResult != null) {
-            loginInfo = loginResult
-          } else {
-            throw new Error('Login after SSO failed')
-          }
+          retryOn = signUpResult.retryOn
+          step = 'otp'
+          saveSSOLoginToLocalStorage({ retryOn, user, token })
+          return
         }
 
-        if (!loginInfo?.token) {
-          throw new Error('No platform token')
+        const [loginStatus, loginResult] = await loginOtp(email)
+
+        if (loginResult != null) {
+          retryOn = loginResult.retryOn
+          step = 'otp'
+          saveSSOLoginToLocalStorage({ retryOn, user, token })
+          return
         }
-
-        // ✅ Gán token vào Platform
-        setMetadata(presentation.metadata.Token, loginInfo.token)
-        setMetadataLocalStorage('sso.isIAM', 'true')
-        setMetadataLocalStorage(login.metadata.LoginAccount, email)
-        setMetadataLocalStorage(login.metadata.LastAccount, email)
-
-        // 👉 Tiếp tục flow chọn workspace
-        const workspaces = await getWorkspaces()
-
-        if (workspaces.length === 0) {
-          navigate({ path: ['login', 'createWorkspace'] })
-        } else if (workspaces.length === 1) {
-          const selected = workspaces[0]
-          const [status, workspaceLoginInfo] = await selectWorkspace(selected.url)
-
-          if (status.code === 'OK' && workspaceLoginInfo) {
-            setLoginInfo(workspaceLoginInfo)
-            navigateToWorkspace(selected.url, workspaceLoginInfo)
-          } else {
-            navigate({ path: ['login', 'selectWorkspace'] })
-          }
-        } else {
-          navigate({ path: ['login', 'selectWorkspace'] })
-        }
+        throw new Error('Login failed')
       } catch (err: any) {
-        console.error('SSO exchange error:', err)
-        alert('SSO error: ' + err.message)
-        navigate({ path: ['login'] })
+        if (dataLoginSSOIfExist && dataLoginSSOIfExist.user?.email === user.email) {
+          retryOn = dataLoginSSOIfExist.retryOn
+          ssoToken = dataLoginSSOIfExist.token
+          email = user?.email
+          casdoorName = user?.name
+          owner = user?.owner
+          step = 'otp'
+          return
+        }
+        alert('Error occure when loggin with SSO')
       }
-    })
-    </script>
+    } catch (err: any) {
+      console.error('SSO error:', err)
+      alert('SSO error: ' + err.message)
+    }
+  })
+</script>
 
-    <p>Authenticating with Hanzo IAM...</p>
+{#if step === 'authenticating'}
+  <div>Authenticating with Hanzo IAM...</div>
+{:else if step === 'otp'}
+  <OtpForm
+    {email}
+    {retryOn}
+    {navigateUrl}
+    signUpDisabled={true}
+    onLogin={async (event) => {
+      const team_uuid = event?.account
+      const token = event?.token
+
+      if (invitedId) {
+        console.log(`🛠️ Auto-Join với inviteId: ${invitedId}`)
+        const [checkStatus, autoJoinResult] = await checkAutoJoin(invitedId, '', '', token)
+
+        if (autoJoinResult && autoJoinResult.workspaceUrl) {
+          clearSSOLogin()
+          localStorage.removeItem('inviteId')
+        }
+      }
+
+      clearSSOLogin()
+      await doLoginNavigate(event, () => {}, navigateUrl)
+    }}
+  />
+{/if}
