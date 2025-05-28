@@ -96,7 +96,7 @@
           step = 'otp'
           return
         }
-        alert('Error occure when loggin with SSO')
+        alert('Error occurred when logging with SSO')
       }
     } catch (err: any) {
       console.error('SSO error:', err)
