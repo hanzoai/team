@@ -1013,6 +1013,7 @@ export const getSSOLogin = () => {
     return null
   }
 
+
 export const clearSSOLogin = (isClearTokenSSO=false) => {
     if(isClearTokenSSO)
         localStorage.removeItem(SSO_TOKEN)
@@ -1026,6 +1027,9 @@ export const saveSSOLoginToLocalStorage = ({ retryOn, token, user}: { retryOn: n
     localStorage.setItem(RETRY_ON_SSO_LOGIN, String(retryOn))
 }
 
-
+export const clearStorage = () => {
+    localStorage.clear()
+    sessionStorage.clear()
+}
 
 

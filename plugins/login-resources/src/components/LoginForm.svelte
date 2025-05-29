@@ -16,7 +16,7 @@
 
   onMount(() => {
     const pathname = window.location.pathname;
-    if (pathname.includes('/login')) {
+    if (pathname ==='/login/login' || pathname === "/login") {
     sessionStorage.clear();
       setTimeout(() => {
         loginWithSSO();
