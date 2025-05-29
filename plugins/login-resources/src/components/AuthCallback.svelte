@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation from '@hcengineering/presentation'
-  import { navigate } from '@hcengineering/ui'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation from '@hanzo/presentation'
+  import { navigate } from '@hanzo/ui'
   import { onMount } from 'svelte'
   import { StepAuthenticationSSO } from '../const'
 
@@ -40,14 +40,13 @@
 
     if (error) {
       alert('SSO Error: ' + error)
-      navigate({ path: ['/login'] })
+      navigate({ path: ['/login'] }, true)
       return
     }
 
     if (!code) {
       alert('Missing code')
-      navigate({ path: ['/login'] })
-
+      navigate({ path: ['/login'] }, true)
       return
     }
 
@@ -96,7 +95,7 @@
           step = 'otp'
           return
         }
-        alert('Error occurred when logging with SSO')
+        alert('Error occurred when loggin with SSO')
       }
     } catch (err: any) {
       console.error('SSO error:', err)
@@ -118,7 +117,6 @@
       const token = event?.token
 
       if (invitedId) {
-        console.log(`🛠️ Auto-Join với inviteId: ${invitedId}`)
         const [checkStatus, autoJoinResult] = await checkAutoJoin(invitedId, '', '', token)
 
         if (autoJoinResult && autoJoinResult.workspaceUrl) {

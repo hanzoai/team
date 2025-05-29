@@ -39,6 +39,7 @@
 
   import login from '../plugin'
   import {
+    clearStorage,
     getAccount,
     getAccountDisplayName,
     getHref,
@@ -215,12 +216,12 @@
           href={getHref('login')}
           onClick={async () => {
             await logOut()
+            clearStorage()
             goTo('login')
           }}
-          textDecorationColor='var(--theme-link-color)'
         >
-          <span class="ca-button">
-            <Label label={login.string.ChangeAccount} />
+            <span class="ca-button">
+                <Label label={login.string.ChangeAccount} />
           </span>
         </NavLink>
       </div>
@@ -288,7 +289,7 @@
           opacity: 1;
         }
       }
-      .ca-button {
+       .ca-button {
         font-size: .95rem;
         color: var(--theme-link-color);
       }
@@ -296,5 +297,6 @@
         font-weight: 600;
       }
     }
+
   }
 </style>
