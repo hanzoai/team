@@ -36,13 +36,18 @@ jobs:
           --health-retries 5
       
       minio:
-        image: minio/minio
+        image: quay.io/minio/minio:latest
         ports:
           - 9000:9000
+          - 9001:9001
         env:
           MINIO_ROOT_USER: minioadmin
           MINIO_ROOT_PASSWORD: minioadmin
-        options: --health-cmd "mc ready local"
+        options: >-
+          --health-cmd "curl -f http://localhost:9000/minio/health/live || exit 1"
+          --health-interval 30s
+          --health-timeout 10s
+          --health-retries 5
     
     steps:
     - uses: actions/checkout@v4
