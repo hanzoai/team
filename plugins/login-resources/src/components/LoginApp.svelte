@@ -155,7 +155,7 @@
             style="width: 30px; height: 30px"
 
     />
-    <span class="fs-title ml-2" style="color: var(--theme-bg-color);">Platform</span>
+    <span class="fs-title ml-2" style="color: #fff;">Team</span>
       </div>
 
       <div class="panel-base" class:panel={$deviceInfo.docWidth > 768} class:white={!$themeStore.dark}>
@@ -208,10 +208,11 @@
     height: 100%;
     object-fit: cover;
     object-position: left top;
+    filter: grayscale(100%) brightness(0.3) contrast(1.2);
   }
   .backd {
     position: relative;
-    background-color: var(--theme-bg-color);
+    background-color: #000000;
 
     .bg-image {
       display: flex;
@@ -220,7 +221,7 @@
       height: 100%;
     }
     &.paneld {
-      background: rgba(45, 50, 160, 0.5);
+      background: rgba(0, 0, 0, 0.9);
 
       .panel-base {
         padding-top: 5rem;
@@ -239,9 +240,9 @@
     height: 100%;
     min-width: 35rem;
     max-width: 41rem;
-    background: rgba(45, 50, 160, 0.5);
+    background: rgba(10, 10, 10, 0.95);
     mix-blend-mode: normal;
-    box-shadow: -30px 1.52px 173.87px #121437;
+    box-shadow: -30px 1.52px 173.87px rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(157.855px);
     border-radius: 1rem;
 
@@ -250,7 +251,7 @@
       position: absolute;
       content: '';
       inset: 0;
-      background: radial-gradient(161.92% 96.11% at 11.33% 3.89%, #313d9a 0%, #202669 100%);
+      background: #0a0a0a;
       border-radius: 1rem;
       z-index: -1;
     }
@@ -259,13 +260,11 @@
       content: '';
       inset: 0;
       padding: 1px;
-      background: conic-gradient(
-          rgba(255, 255, 255, 0.18) 10%,
-          rgba(126, 120, 165, 0.5),
-          rgba(191, 216, 253, 0.5),
-          rgba(246, 247, 249, 0.32),
-          rgba(219, 229, 242, 0.34) 60%,
-          rgba(163, 203, 255, 0.24) 90%
+      background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.15) 0%,
+          rgba(255, 255, 255, 0.05) 50%,
+          rgba(255, 255, 255, 0.1) 100%
         )
         border-box;
       -webkit-mask:
@@ -276,7 +275,7 @@
       border-radius: 1rem;
       transform: rotate(180deg);
       transition: opacity 0.15s var(--timing-main);
-      opacity: 0.7;
+      opacity: 0.5;
     }
   }
   .backd.paneld::after,
@@ -285,8 +284,7 @@
     position: absolute;
     content: '';
     inset: 0;
-    // background: radial-gradient(161.92% 96.11% at 11.33% 3.89%, #313d9a 0%, #202669 100%);
-    background: var(--theme-bg-color, black);
+    background: #0a0a0a;
     z-index: -1;
   }
   .panel::after {
