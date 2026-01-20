@@ -13,23 +13,28 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { getCurrentEmployee } from '@hanzo/contact'
-  import { personByPersonIdStore } from '@hanzo/contact-resources'
-  import { Class, Doc, Markup, Ref, Space, WithLookup } from '@hanzo/core'
-  import { getClient, MessageViewer, pendingCreatedDocs } from '@hanzo/presentation'
-  import { AttachmentDocList, AttachmentImageSize } from '@hanzo/attachment-resources'
-  import { getDocLinkTitle } from '@hanzo/view-resources'
-  import { Action, Button, IconEdit, ShowMore } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import activity, { ActivityMessage, ActivityMessageViewType, DisplayActivityMessage } from '@hanzo/activity'
-  import { ActivityDocLink, ActivityMessageTemplate, MessageInlineAction } from '@hanzo/activity-resources'
-  import chunter, { ChatMessage, ChatMessageViewlet } from '@hanzo/chunter'
-  import { Attachment } from '@hanzo/attachment'
-  import { EmptyMarkup } from '@hanzo/text'
+  import activity, { ActivityMessage, ActivityMessageViewType, DisplayActivityMessage } from '@hcengineering/activity'
+  import {
+    ActivityDocLink,
+    ActivityMessageTemplate,
+    MessageInlineAction,
+    editingMessageStore
+  } from '@hcengineering/activity-resources'
+  import { Attachment } from '@hcengineering/attachment'
+  import { AttachmentDocList, AttachmentImageSize } from '@hcengineering/attachment-resources'
+  import chunter, { ChatMessage, ChatMessageViewlet } from '@hcengineering/chunter'
+  import contact, { getCurrentEmployee, Person, SocialIdentity } from '@hcengineering/contact'
+  import { getPersonByPersonIdCb, getSocialIdByPersonIdCb } from '@hcengineering/contact-resources'
+  import { Class, Doc, Markup, Ref, Space, WithLookup } from '@hcengineering/core'
+  import { getClient, MessageViewer, pendingCreatedDocs } from '@hcengineering/presentation'
+  import { EmptyMarkup } from '@hcengineering/text'
+  import { Action, Button, IconEdit, ShowMore } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import { getDocLinkTitle } from '@hcengineering/view-resources'
 
+  import { shownTranslatedMessagesStore, translatedMessagesStore, translatingMessagesStore } from '../../stores'
   import ChatMessageHeader from './ChatMessageHeader.svelte'
   import ChatMessageInput from './ChatMessageInput.svelte'
-  import { translatedMessagesStore, translatingMessagesStore, shownTranslatedMessagesStore } from '../../stores'
 
   export let value: WithLookup<ChatMessage> | undefined
   export let doc: Doc | undefined = undefined
@@ -45,7 +50,7 @@
   export let actions: Action[] = []
   export let hoverable = true
   export let inline = false
-  export let hoverStyles: 'borderedHover' | 'filledHover' = 'borderedHover'
+  export let hoverStyles: 'filledHover' = 'filledHover'
   export let withShowMore: boolean = true
   export let attachmentImageSize: AttachmentImageSize = 'x-large'
   export let videoPreload = false
@@ -76,7 +81,19 @@
       : []
 
   $: personId = value?.createdBy
-  $: person = personId !== undefined ? $personByPersonIdStore.get(personId) : undefined
+  let person: Person | undefined
+  let socialId: SocialIdentity | undefined
+  $: if (personId !== undefined) {
+    getPersonByPersonIdCb(personId, (p) => {
+      person = p ?? undefined
+    })
+    getSocialIdByPersonIdCb(personId, (s) => {
+      socialId = s ?? undefined
+    })
+  } else {
+    person = undefined
+    socialId = undefined
+  }
 
   let originalText = value?.message
 
@@ -137,10 +154,12 @@
   }
 
   async function handleEditAction (): Promise<void> {
-    isEditing = true
+    if (value == null) return
+    editingMessageStore.set(value._id)
   }
 
   let isEditing = false
+  $: isEditing = $editingMessageStore === value?._id
   let additionalActions: Action[] = []
 
   $: isOwn = person !== undefined && person._id === me
@@ -225,6 +244,7 @@
     {viewlet}
     {parentMessage}
     {person}
+    socialId={socialId?.type !== 'huly' ? socialId : undefined}
     {showNotify}
     {isHighlighted}
     {isSelected}
@@ -257,7 +277,7 @@
       {#if !isEditing}
         {#if withShowMore}
           <ShowMore limit={compact ? 80 : undefined}>
-            <div class="clear-mins">
+            <div class="clear-mins" {...!pending && { 'data-delivered': true }}>
               <MessageViewer message={displayText} />
               {#if (value.attachments ?? 0) > 0}
                 <div class="mt-2" />
@@ -266,7 +286,7 @@
             </div>
           </ShowMore>
         {:else}
-          <div class="clear-mins">
+          <div class="clear-mins" {...!pending && { 'data-delivered': true }}>
             <MessageViewer message={displayText} />
             {#if (value.attachments ?? 0) > 0}
               <div class="mt-2" />
@@ -283,14 +303,14 @@
           autofocus
           {object}
           on:submit={() => {
-            isEditing = false
+            editingMessageStore.set(undefined)
           }}
         />
         <div class="flex-row-center gap-2 justify-end mt-2">
           <Button
             label={view.string.Cancel}
             on:click={() => {
-              isEditing = false
+              editingMessageStore.set(undefined)
             }}
           />
           <Button label={activity.string.Update} accent on:click={() => refInput.submit()} />

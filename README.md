@@ -24,9 +24,33 @@ This project offers a convenient method to host hanzoai using `docker`, designed
 
 ## API Client
 
-If you want to interact with hanzoai programmatically, check out our [API Client](./packages/api-client/README.md) documentation. The API client provides a typed interface for all hanzoai operations and can be used to build integrations and custom applications.
+If you want to interact with Huly programmatically, check out our [API Client](https://github.com/hcengineering/huly.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
 
 You can find API usage examples in the [hanzoai examples](https://github.com/hanzoai/hanzoai-examples) repository.
+
+## Changelog
+
+For detailed information about changes, improvements, and bug fixes in each version, see our [Changelog](./changelog.md).
+
+## Versions
+
+The Huly Platform uses two types of version tags to distinguish between production-ready and development releases:
+
+- **Production Versions (`v*`)** - Stable releases for end users
+  - Example: `v0.7.310`, `v0.7.307`, `v0.6.501`
+  - These versions are recommended for production deployments
+  - Suitable for self-hosted installations
+  - Published with release notes on [GitHub Releases](https://github.com/hcengineering/platform/releases)
+
+- **Development Versions (`s*`)** - Pre-release builds for developers
+  - Example: `s0.7.313`, `s0.7.292`, `s0.7.288`
+  - Used for development and testing purposes
+  - May contain experimental features or bug fixes
+  - Not recommended for production use
+
+## Architecture
+
+For detailed information about the platform architecture, services, and their interactions, see our [Architecture Overview](./ARCHITECTURE_OVERVIEW.md).
 
 ## Table of Contents
 
@@ -35,12 +59,15 @@ You can find API usage examples in the [hanzoai examples](https://github.com/han
   - [Self-Hosting](#self-hosting)
   - [Activity](#activity)
   - [API Client](#api-client)
+  - [Changelog](#changelog)
+  - [Versions](#versions)
+  - [Architecture](#architecture)
   - [Table of Contents](#table-of-contents)
   - [Pre-requisites](#pre-requisites)
   - [Verification](#verification)
-  - [Fast start](#fast-start)
   - [Branches \& Contributing](#branches--contributing)
-  - [Authentication](#authentication)
+  - [Setup dev environment](#setup-dev-environment)
+  - [Fast start](#fast-start)
   - [Installation](#installation)
   - [Build and run](#build-and-run)
   - [Run in development mode](#run-in-development-mode)
@@ -52,6 +79,7 @@ You can find API usage examples in the [hanzoai examples](https://github.com/han
     - [UI tests](#ui-tests)
   - [Package publishing](#package-publishing)
   - [Additional testing](#additional-testing)
+  - [WSL build guide](#wsl-build-guide)
 
 ## Pre-requisites
 
@@ -71,12 +99,6 @@ docker --version
 docker compose version
 ```
 
-## Fast start
-
-```bash
-sh ./scripts/fast-start.sh
-```
-
 ## Branches & Contributing
 
 - The `main` branch is the default branch used for production deployments.
@@ -89,7 +111,22 @@ sh ./scripts/fast-start.sh
 
 We periodically merge `develop` into `staging` to perform testing builds. Once we are satisfied with the build quality in our pre-release deployment, we merge changes into `main` and release a new version to the community.
 
-## Authentication
+## Setup dev environment
+
+### To initialise the communication submodule
+
+```bash
+git submodule init
+git submodule update
+```
+
+### To update the communication submodule
+
+```bash
+git submodule update
+```
+
+### Authentication
 
 This project uses GitHub Packages for dependency management. To successfully download dependencies, you need to generate a GitHub personal access token and log in to npm using that token.
 
@@ -108,6 +145,13 @@ npm login --registry=https://npm.pkg.github.com
 ```
 
 When prompted, enter your GitHub username, use the generated token as your password
+
+
+## Fast start
+
+```bash
+sh ./scripts/fast-start.sh
+```
 
 ## Installation
 
@@ -160,22 +204,6 @@ sh ./scripts/build.sh
 
 By default, Docker volumes named dev_db, dev_elastic, and dev_files will be created for the MongoDB, Elasticsearch, and MinIO instances.
 
-Before you can begin, you need to create a workspace and an account and associate it with the workspace.
-
-```bash
-cd ./tool # dev/tool in the repository root
-rushx run-local create-account user1 -p 1234 -f John -l Appleseed # Create account
-rushx run-local create-workspace ws1 email:user1 # Create workspace
-rushx run-local configure ws1 --list --enable '*' # Enable all modules, even if they are not yet intended to be used by a wide audience
-rushx run-local assign-workspace user1 ws1 # Assign user to workspace
-```
-
-Alternatively, you can just execute:
-
-```bash
-sh ./scripts/create-workspace.sh
-```
-
 Add the following line to your /etc/hosts file
 
 ```plain
@@ -201,13 +229,7 @@ rushx dev-server
 
 Then go to <http://localhost:8080>
 
-Click on "Login with password" link on the bottom of the right panel and use the following login credentials:
-
-```plain
-Email: user1
-Password: 1234
-Workspace: ws1
-```
+Select "Sign up" on the right panel and click the "Sign up with password" link at the bottom. Enter the new user's credentials, then proceed to create a workspace for them.
 
 ## Update project structure and database
 
@@ -275,5 +297,80 @@ node ./common/scripts/bump.js -p projectName
 ## Additional testing
 
 This project is tested with BrowserStack.
+
+## WSL build guide
+
+This guide describes the nuances of building and running the application from source code located on your NTFS drive, which is accessible from both Windows and WSL.
+
+### Prerequisites
+
+#### Disk Space Requirements
+
+Ensure you have sufficient disk space available:
+- A fully deployed local application in clean Docker will consume slightly more than **35 GB** of WSL virtual disk space
+- The application folder after build (sources + artifacts) will occupy **4.5 GB**
+
+If there's insufficient space on your system drive (usually `C:\`), you can change the virtual disk location in Docker Settings → Resources → Advanced.
+
+#### Docker WSL Integration
+
+Make sure Docker is accessible from WSL:
+
+1. Go to Docker Settings → Resources → Advanced → WSL Integration
+2. Select the distribution where you'll be building and running the application
+3. Verify integration works by running this command in WSL:
+   ```bash
+   docker run hello-world
+   ```
+
+### Common Issues and Solutions
+
+#### Git Line Endings on Windows
+
+Windows Git often automatically replaces line endings. Since most build scripts are `.sh` files, ensure your Windows checkout doesn't break them.
+
+**Solution options:**
+- Checkout from WSL instead of Windows
+- Configure Git on Windows to disable auto-replacement:
+  ```bash
+  git config --global core.autocrlf false
+  ```
+  This disables auto-replacement for all repositories on your machine.
+
+#### Elevated Privileges in WSL
+
+Some commands in the instructions require elevated privileges when working in WSL. If you're using Ubuntu distribution, prefix commands with `sudo`:
+
+```bash
+sudo npm install -g @microsoft/rush
+```
+
+#### WSL Configuration
+
+If the source code is located on a Windows NTFS drive, then edit the `/etc/wsl.conf` file in WSL (e.g., `sudo nano /etc/wsl.conf`) and add the following content if it doesn't exist:
+
+```ini
+[automount]
+enabled = true
+root = /mnt/
+options = "metadata,umask=22,fmask=11"
+
+[interop]
+appendWindowsPath = false
+```
+
+However, we recommend storing the repository on a WSL disk, as this dramatically improves build and maintenance operations.
+
+### Running the Application
+
+After these preparations, the build instructions should work without issues.
+
+#### Port Conflicts
+
+When starting the application (`rush docker:up`), some network ports in Windows might be occupied. You can fix port mapping in the `\dev\docker-compose.yaml` file.
+
+**Important:** Depending on which port you change, you'll need to:
+1. Find what's using that port
+2. Update the new address in the corresponding service configuration
 
 <sub><sup>&copy; 2025 <a href="https://hardcoreeng.com">Hardcore Engineering Inc</a>.</sup></sub>

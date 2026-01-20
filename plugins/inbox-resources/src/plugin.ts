@@ -13,12 +13,22 @@
 // limitations under the License.
 //
 
-import inbox, { inboxId } from '@hanzo/inbox'
-import { mergeIds } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui'
+import inbox, { inboxId } from '@hcengineering/inbox'
+import { type IntlString, mergeIds } from '@hcengineering/platform'
+import type { AnyComponent } from '@hcengineering/ui'
 
 export default mergeIds(inboxId, inbox, {
   component: {
     InboxApplication: '' as AnyComponent
+  },
+  string: {
+    ReactedToYourMessage: '' as IntlString,
+    ClearAll: '' as IntlString,
+    InboxIsClear: '' as IntlString,
+    YouDontHaveAnyNewMessages: '' as IntlString,
+    ReadAll: '' as IntlString,
+    Clearing: '' as IntlString,
+    Reading: '' as IntlString,
+    HideUserNames: '' as IntlString
   }
 })

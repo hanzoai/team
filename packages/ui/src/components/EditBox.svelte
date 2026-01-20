@@ -13,15 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { translateCB } from '@hanzo/platform'
-  import { themeStore } from '@hanzo/theme'
-  import { createEventDispatcher, onMount } from 'svelte'
+  import type { IntlString } from '@hcengineering/platform'
+  import { translateCB } from '@hcengineering/platform'
+  import { themeStore } from '@hcengineering/theme'
+  import { afterUpdate, createEventDispatcher, onMount } from 'svelte'
   import { registerFocus } from '../focus'
   import plugin from '../plugin'
   import type { EditStyle } from '../types'
   import { floorFractionDigits } from '../utils'
   import Label from './Label.svelte'
+  import { resizeObserver } from '../resize'
 
   export let id: string | undefined = undefined
   export let label: IntlString | undefined = undefined
@@ -31,6 +32,9 @@
   export let placeholderParam: any | undefined = undefined
   export let format: 'text' | 'password' | 'number' | 'text-multiline' = 'text'
   export let maxDigitsAfterPoint: number | undefined = undefined
+  export let minValue: number | undefined = undefined
+  export let maxValue: number | undefined = undefined
+  export let formatter: ((value: string | number) => string | number) | undefined = undefined
   export let kind: EditStyle = 'editbox'
   export let autoFocus: boolean = false
   export let select: boolean = false
@@ -40,6 +44,7 @@
   export let required: boolean = false
   export let uppercase: boolean = false
   export let propagateClick: boolean = false
+  export let shrink: boolean = false
 
   const dispatch = createEventDispatcher()
 
@@ -47,20 +52,57 @@
   let phTranslate: string = ''
 
   $: {
-    if (
-      format === 'number' &&
-      maxDigitsAfterPoint &&
-      value &&
-      !value.toString().match(`^\\d+\\.?\\d{0,${maxDigitsAfterPoint}}$`)
-    ) {
+    if (format === 'number' && maxDigitsAfterPoint !== undefined && typeof value === 'number' && value) {
       value = floorFractionDigits(Number(value), maxDigitsAfterPoint)
+    } else if (formatter !== undefined && value != null) {
+      value = formatter(value)
     }
   }
+
+  function setValue (
+    val: number | string | undefined,
+    maxValue: number | undefined,
+    minValue: number | undefined
+  ): void {
+    if (typeof val !== 'number' || format !== 'number') return
+    if (minValue !== undefined && maxValue !== undefined && maxValue < minValue) return
+    if (minValue !== undefined && val < minValue) value = minValue
+    if (maxValue !== undefined && val > maxValue) value = maxValue
+    dispatch('value', value)
+  }
+
+  let text: HTMLElement
+  let parentWidth: number | undefined
+
   $: translateCB(placeholder, placeholderParam ?? {}, $themeStore.language, (res) => {
     phTranslate = res
   })
 
-  function handleInput (): void {
+  function computeSize (t: HTMLInputElement | EventTarget | null): void {
+    if (t == null) {
+      return
+    }
+    if (!shrink) return
+    const target = t as HTMLInputElement
+    const value = target.value
+    text.innerHTML = (value === '' ? phTranslate : value)
+      .replaceAll(' ', '&nbsp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+    if (format === 'number') {
+      target.style.width = maxWidth ?? '5rem'
+    } else if (kind === 'underline') {
+      target.style.width = `calc(${text.clientWidth}px + 1.125rem)`
+    } else {
+      target.style.width = Math.max(text.clientWidth, 50) + 'px'
+    }
+  }
+
+  function handleInput (ev: Event): void {
+    const t: HTMLInputElement | EventTarget | null = ev.target
+    if (t !== null && t !== undefined) {
+      computeSize(t)
+    }
     dispatch('input')
     dispatch('value', value)
   }
@@ -74,6 +116,11 @@
       input.select()
       select = false
     }
+    computeSize(input)
+  })
+
+  afterUpdate(() => {
+    computeSize(input)
   })
 
   export function focusInput (): void {
@@ -121,7 +168,11 @@
 
     input.focus()
   }}
+  use:resizeObserver={(element) => {
+    parentWidth = element.parentElement?.getBoundingClientRect().width
+  }}
 >
+  <div class="hidden-text {kind}" bind:this={text} />
   <!-- {focusIndex} -->
   {#if label}
     <div class="mb-1 text-sm font-medium caption-color select-text" class:required>
@@ -181,11 +232,17 @@
         type="number"
         bind:value
         placeholder={phTranslate}
+        min={minValue}
+        max={maxValue}
         on:input={handleInput}
-        on:change
+        on:change={() => {
+          setValue(value, maxValue, minValue)
+          dispatch('change', value)
+        }}
         on:keydown
         on:keypress
         on:blur={() => {
+          setValue(value, maxValue, minValue)
           dispatch('blur', value)
         }}
       />

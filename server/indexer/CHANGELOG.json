@@ -2,8 +2,8 @@
   "name": "@hanzo/server-core",
   "entries": [
     {
-      "version": "0.6.0",
-      "tag": "@hanzo/server-core_v0.6.0",
+      "version": "0.7.0",
+      "tag": "@hcengineering/server-core_v0.6.0",
       "date": "Sun, 08 Aug 2021 10:14:57 GMT",
       "comments": {
         "dependency": [

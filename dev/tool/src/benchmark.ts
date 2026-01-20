@@ -254,14 +254,7 @@ export async function benchmark (
                   // operations = 0
                   requestTime = 0
                   // transfer = 0
-                  const r = extract(
-                    json.metrics as Metrics,
-                    '🧲 session',
-                    'client',
-                    'handleRequest',
-                    'process',
-                    'find-all'
-                  )
+                  const r = extract(json.metrics as Metrics, '🧲 session', 'client', 'process', 'find-all')
                   operations = (r?.operations ?? 0) - oldOperations
                   oldOperations = r?.operations ?? 0
 
@@ -611,7 +604,6 @@ export async function generateEmployee (client: TxOperations): Promise<AccountUu
   const personUuid = generateId() as unknown as AccountUuid // TODO: will it work or need to actually be a UUID?
   const personId = await client.createDoc(contact.class.Person, contact.space.Contacts, {
     name: generateId().toString(),
-    city: '',
     avatarType: AvatarType.COLOR,
     personUuid
   })
@@ -663,7 +655,6 @@ async function generateVacancy (client: TxOperations, members: AccountUuid[]): P
     const personUuid = generateId() as unknown as PersonUuid // TODO: will it work or need to actually be a UUID?
     const personId = await client.createDoc(contact.class.Person, contact.space.Contacts, {
       name: generateId().toString(),
-      city: '',
       avatarType: AvatarType.COLOR,
       personUuid
     })

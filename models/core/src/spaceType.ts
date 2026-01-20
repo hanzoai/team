@@ -17,7 +17,7 @@ import { ArrOf, Prop, TypeString, type Builder } from '@hanzo/model'
 import { type Asset } from '@hanzo/platform'
 import { getRoleAttributeLabel } from '@hanzo/core'
 
-import { TSpacesTypeData } from './security'
+import { TSpacesTypeData, TTxAccessLevel } from './security'
 import core from './component'
 
 const roles = [
@@ -37,6 +37,7 @@ export function defineSpaceType (builder: Builder): void {
   }
 
   builder.createModel(TSpacesTypeData)
+  builder.createModel(TTxAccessLevel)
 
   builder.createDoc(
     core.class.SpaceTypeDescriptor,

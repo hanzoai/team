@@ -12,23 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity from '@hanzo/activity'
-import {
+import activity from '@hcengineering/activity'
+import core, {
   type Account,
+  AccountRole,
   type Client,
-  SortingOrder,
-  getCurrentAccount,
-  toIdMap,
-  type Class,
   type Doc,
+  getCurrentAccount,
   type IdMap,
   type Ref,
+  SortingOrder,
+  toIdMap,
   type TxOperations,
   type WithLookup
 } from '@hanzo/core'
 import notification, {
   type ActivityInboxNotification,
-  type Collaborators,
   type DocNotifyContext,
   type InboxNotification,
   type InboxNotificationsClient
@@ -154,7 +153,7 @@ export class InboxNotificationsClientImpl implements InboxNotificationsClient {
   async readDoc (_id: Ref<Doc>): Promise<void> {
     const docNotifyContext = this._contextByDoc.get(_id)
 
-    if (docNotifyContext === undefined) {
+    if (docNotifyContext === undefined || getCurrentAccount().role === AccountRole.ReadOnlyGuest) {
       return
     }
 
@@ -173,46 +172,25 @@ export class InboxNotificationsClientImpl implements InboxNotificationsClient {
     await op.commit()
   }
 
-  async forceReadDoc (_id: Ref<Doc>, _class: Ref<Class<Doc>>): Promise<void> {
-    const context = this._contextByDoc.get(_id)
+  async forceReadDoc (doc: Doc): Promise<void> {
+    const context = this._contextByDoc.get(doc._id)
 
     if (context !== undefined) {
-      await this.readDoc(_id)
+      await this.readDoc(doc._id)
       return
     }
 
     const client = getClient()
-    const doc = await client.findOne(_class, { _id })
 
-    if (doc === undefined) {
-      return
-    }
+    const current = await client.findOne(core.class.Collaborator, {
+      attachedTo: doc._id,
+      collaborator: getCurrentAccount().uuid
+    })
 
-    const hierarchy = client.getHierarchy()
-    const collaboratorsMixin = hierarchy.as<Doc, Collaborators>(doc, notification.mixin.Collaborators)
-
-    if (collaboratorsMixin.collaborators === undefined) {
-      await client.createMixin<Doc, Collaborators>(
-        collaboratorsMixin._id,
-        collaboratorsMixin._class,
-        collaboratorsMixin.space,
-        notification.mixin.Collaborators,
-        {
-          collaborators: [getCurrentAccount().uuid]
-        }
-      )
-    } else if (collaboratorsMixin.collaborators.includes(getCurrentAccount().uuid)) {
-      await client.updateMixin(
-        collaboratorsMixin._id,
-        collaboratorsMixin._class,
-        collaboratorsMixin.space,
-        notification.mixin.Collaborators,
-        {
-          $push: {
-            collaborators: getCurrentAccount().primarySocialId
-          }
-        }
-      )
+    if (current === undefined) {
+      await client.addCollection(core.class.Collaborator, doc.space, doc._id, doc._class, 'collaborators', {
+        collaborator: getCurrentAccount().uuid
+      })
     }
   }
 
@@ -238,6 +216,31 @@ export class InboxNotificationsClientImpl implements InboxNotificationsClient {
     const inboxNotifications = (get(this.inboxNotifications) ?? []).filter(({ _id }) => ids.includes(_id))
     for (const notification of inboxNotifications) {
       await client.update(notification, { archived: true, isViewed: true })
+    }
+  }
+
+  async removeAllNotifications (): Promise<void> {
+    const ops = getClient().apply(undefined, 'removeAllNotifications', true)
+
+    try {
+      const inboxNotifications = await ops.findAll(
+        notification.class.InboxNotification,
+        {
+          user: getCurrentAccount().uuid,
+          archived: false
+        },
+        { projection: { _id: 1, _class: 1, space: 1 } }
+      )
+      const contexts = get(this.contexts) ?? []
+      for (const notification of inboxNotifications) {
+        await ops.removeDoc(notification._class, notification.space, notification._id)
+      }
+
+      for (const context of contexts) {
+        await ops.update(context, { lastViewedTimestamp: Date.now() })
+      }
+    } finally {
+      await ops.commit()
     }
   }
 

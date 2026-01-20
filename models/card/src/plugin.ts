@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { cardId } from '@hanzo/card'
-import card from '@hanzo/card-resources/src/plugin'
-import type { Client, Doc, Ref } from '@hanzo/core'
-import {} from '@hanzo/core'
-import { mergeIds, type Resource } from '@hanzo/platform'
-import { type Location, type ResolvedLocation } from '@hanzo/ui/src/types'
-import { type LocationData } from '@hanzo/workbench'
-import { type ActionCategory, type Action, type ViewAction } from '@hanzo/view'
-import { type TagCategory, type TagElement } from '@hanzo/tags'
+import { type Card, cardId } from '@hcengineering/card'
+import card from '@hcengineering/card-resources/src/plugin'
+import type { Client, Doc, Ref } from '@hcengineering/core'
+import {} from '@hcengineering/core'
+import { mergeIds, type Resource } from '@hcengineering/platform'
+import { type TagCategory } from '@hcengineering/tags'
+import { type Location, type ResolvedLocation } from '@hcengineering/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction } from '@hcengineering/view'
+import { type LocationData } from '@hcengineering/workbench'
 
 export default mergeIds(cardId, card, {
   app: {
@@ -29,12 +29,15 @@ export default mergeIds(cardId, card, {
   },
   actionImpl: {
     DeleteMasterTag: '' as ViewAction,
+    DuplicateCard: '' as ViewAction,
     EditSpace: '' as ViewAction
   },
   action: {
     DeleteMasterTag: '' as Ref<Action>,
     SetParent: '' as Ref<Action<Doc, any>>,
-    UnsetParent: '' as Ref<Action<Doc, any>>
+    UnsetParent: '' as Ref<Action<Doc, any>>,
+    PublicLink: '' as Ref<Action<Doc, any>>,
+    Duplicate: '' as Ref<Action>
   },
   category: {
     Card: '' as Ref<ActionCategory>,
@@ -51,11 +54,11 @@ export default mergeIds(cardId, card, {
   },
   function: {
     CardTitleProvider: '' as Resource<(client: Client, ref: Ref<Doc>, doc?: Doc) => Promise<string>>,
-    CardIdProvider: '' as Resource<(client: Client, ref: Ref<Doc>, doc?: Doc) => Promise<string>>,
-    GetCardLink: '' as Resource<(doc: Doc, props: Record<string, any>) => Promise<Location>>
-  },
-  label: {
-    Subscribed: '' as Ref<TagElement>,
-    NewMessages: '' as Ref<TagElement>
+    GetCardLink: '' as Resource<(doc: Doc, props: Record<string, any>) => Promise<Location>>,
+    CardCustomLinkMatch: '' as Resource<(doc: Doc) => boolean>,
+    CardCustomLinkEncode: '' as Resource<(doc: Doc) => Location>,
+    CheckRelationsSectionVisibility: '' as Resource<(doc: Card) => Promise<boolean>>,
+    CheckOldMessagesSectionVisibility: '' as Resource<(doc: Card) => Promise<boolean>>,
+    CheckCommunicationMessagesSectionVisibility: '' as Resource<(doc: Card) => Promise<boolean>>
   }
 })

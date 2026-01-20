@@ -32,12 +32,14 @@ export default mergeIds(loveId, love, {
     FloorAttributePresenter: '' as AnyComponent,
     MeetingMinutesTable: '' as AnyComponent,
     FloorView: '' as AnyComponent,
-    PanelControlBar: '' as AnyComponent,
     MeetingMinutesDocEditor: '' as AnyComponent,
-    MeetingMinutesStatusPresenter: '' as AnyComponent
+    MeetingMinutesStatusPresenter: '' as AnyComponent,
+    MeetingScheduleData: '' as AnyComponent,
+    EditMeetingScheduleData: '' as AnyComponent
   },
   function: {
     CreateMeeting: '' as Resource<DocCreateFunction>,
+    CreateMeetingSchedule: '' as Resource<DocCreateFunction>,
     CanShowRoomSettings: '' as Resource<ViewActionAvailabilityFunction>,
     CanCopyGuestLink: '' as Resource<ViewActionAvailabilityFunction>
   },
@@ -98,6 +100,13 @@ export default mergeIds(loveId, love, {
     WithAudio: '' as IntlString,
     ShareWithAudioTooltip: '' as IntlString,
     CamPermission: '' as IntlString,
-    MicPermission: '' as IntlString
+    MicPermission: '' as IntlString,
+    Sharing: '' as IntlString,
+    Browser: '' as IntlString,
+    Monitor: '' as IntlString,
+    Window: '' as IntlString,
+    MeetingEmptyTitle: '' as IntlString,
+    MeetingEmptyMessage: '' as IntlString,
+    StayInRoom: '' as IntlString
   }
 })

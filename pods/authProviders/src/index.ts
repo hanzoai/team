@@ -6,8 +6,9 @@ import { registerGithub } from './github'
 import { registerGoogle } from './google'
 import { registerOpenid } from './openid'
 import { registerToken } from './token'
-import { BrandingMap, MeasureContext } from '@hanzo/core'
-import { type AccountDB } from '@hanzo/account'
+import { BrandingMap, MeasureContext } from '@hcengineering/core'
+import { type AccountDB } from '@hcengineering/account'
+import { type ProviderInfo } from '@hcengineering/account-client'
 
 export type Passport = typeof passport
 
@@ -20,7 +21,7 @@ export type AuthProvider = (
   frontUrl: string,
   brandings: BrandingMap,
   signUpDisabled?: boolean
-) => string | undefined
+) => ProviderInfo | undefined
 
 export function registerProviders (
   ctx: MeasureContext,
@@ -62,7 +63,7 @@ export function registerProviders (
 
   registerToken(ctx, passport, router, accountsUrl, db, frontUrl, brandings)
 
-  const res: string[] = []
+  const res: ProviderInfo[] = []
   const providers: AuthProvider[] = [registerGoogle, registerGithub, registerOpenid]
   for (const provider of providers) {
     const value = provider(ctx, passport, router, accountsUrl, db, frontUrl, brandings, signUpDisabled)

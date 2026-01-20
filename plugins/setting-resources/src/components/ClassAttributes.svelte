@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import core, { AnyAttribute, Class, Doc, Ref, Space, toRank } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
   import {
     ActionIcon,
     AnySvelteComponent,
@@ -81,7 +81,11 @@
     const cl = hierarchy.getClass(_class)
     const attributes = Array.from(
       hierarchy.getAllAttributes(_class, _class === ofClass ? core.class.Doc : cl.extends).values()
-    )
+    ).sort((a, b) => {
+      const rankA = a.rank ?? toRank(a._id) ?? ''
+      const rankB = b.rank ?? toRank(b._id) ?? ''
+      return rankA.localeCompare(rankB)
+    })
     return attributes
   }
 
@@ -183,6 +187,8 @@
         <IconSettings size={'small'} />
         <span><Label label={settings.string.ClassProperties} /></span>
       {/if}
+    {:else if $$slots.header}
+      <slot name="header" />
     {:else}
       <div></div>
     {/if}

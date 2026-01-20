@@ -13,13 +13,12 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref } from '@hanzo/core'
-import { getCurrentEmployee, type Person } from '@hanzo/contact'
-import { type PresenceData } from '@hanzo/presence'
-import { personByIdStore } from '@hanzo/contact-resources'
-import { type Readable, derived, writable, get } from 'svelte/store'
+import { type Ref } from '@hcengineering/core'
+import { type Person } from '@hcengineering/contact'
+import { getPersonByPersonRef } from '@hcengineering/contact-resources'
+import { writable, get } from 'svelte/store'
 
-import type { PersonRoomPresence, Room, RoomPresence, MyDataItem } from './types'
+import type { RoomPresence, MyDataItem } from './types'
 
 type PersonPresenceMap = Map<Ref<Person>, RoomPresence[]>
 
@@ -29,47 +28,7 @@ export const otherPresence = writable<PersonPresenceMap>(new Map())
 export const followee = writable<Ref<Person> | undefined>(undefined)
 
 const personDataMap = new Map<Ref<Person>, Map<string, any>>()
-const followeeDataHandlers = new Map<string, Set<(data: any) => void>>()
-
-export const presenceByObjectId = derived<Readable<PersonPresenceMap>, Map<Ref<Doc>, PersonRoomPresence[]>>(
-  otherPresence,
-  ($presence) => {
-    const map = new Map<Ref<Doc>, PersonRoomPresence[]>()
-    for (const [person, presences] of $presence.entries()) {
-      if (person === getCurrentEmployee()) continue
-
-      presences.forEach((presence) => {
-        const values = map.get(presence.room.objectId) ?? []
-        values.push({ person, ...presence })
-
-        map.set(presence.room.objectId, values)
-      })
-    }
-
-    return map
-  }
-)
-
-export function updateMyPresence (room: Room, presence: PresenceData): void {
-  myPresence.update((rooms) => {
-    const value = { room, presence, lastUpdated: Date.now() }
-
-    const index = rooms.findIndex((it) => it.room.objectId === room.objectId)
-    if (index >= 0) {
-      rooms[index] = value
-    } else {
-      rooms.push(value)
-    }
-
-    return rooms
-  })
-}
-
-export function removeMyPresence (room: Room): void {
-  myPresence.update((old) => {
-    return old.filter((it) => it.room.objectId !== room.objectId)
-  })
-}
+const followeeDataHandlers = new Map<string, Set<(data: any) => Promise<void>>>()
 
 export function onPersonUpdate (person: Ref<Person>, presence: RoomPresence[]): void {
   otherPresence.update((map) => {
@@ -100,13 +59,13 @@ export function onPersonData (person: Ref<Person>, topic: string, data: any): vo
     const handlers = followeeDataHandlers.get(topic)
     if (handlers !== undefined) {
       for (const handler of handlers) {
-        handler(data)
+        void handler(data)
       }
     }
   }
 }
 
-export function followeeDataSubscribe (topic: string, handler: (data: any) => void): void {
+export function followeeDataSubscribe (topic: string, handler: (data: any) => Promise<void>): void {
   const handlers = followeeDataHandlers.get(topic)
   if (handlers !== undefined) {
     handlers.add(handler)
@@ -119,13 +78,13 @@ export function followeeDataSubscribe (topic: string, handler: (data: any) => vo
     if (followeeData !== undefined) {
       const data = followeeData.get(topic)
       if (data !== undefined) {
-        handler(data)
+        void handler(data)
       }
     }
   }
 }
 
-export function followeeDataUnsubscribe (topic: string, handler: (data: any) => void): void {
+export function followeeDataUnsubscribe (topic: string, handler: (data: any) => Promise<void>): void {
   const handlers = followeeDataHandlers.get(topic)
   if (handlers !== undefined) {
     handlers.delete(handler)
@@ -133,7 +92,6 @@ export function followeeDataUnsubscribe (topic: string, handler: (data: any) => 
 }
 
 export function toggleFollowee (person: Ref<Person> | undefined): void {
-  console.log('toggle followee', person)
   followee.update((p) => (p === person ? undefined : person))
 
   const f = get(followee)
@@ -144,28 +102,27 @@ export function toggleFollowee (person: Ref<Person> | undefined): void {
         const handlers = followeeDataHandlers.get(topic)
         if (handlers !== undefined) {
           for (const handler of handlers) {
-            handler(data)
+            void handler(data)
           }
         }
       }
     }
   } else {
-    console.log('no followee')
     for (const handlers of followeeDataHandlers.values()) {
       for (const handler of handlers) {
-        handler(undefined)
+        void handler(undefined)
       }
     }
   }
 }
 
-export function getFollowee (): Person | undefined {
+export async function getFollowee (): Promise<Person | undefined> {
   const followeeId = get(followee)
   if (followeeId === undefined) {
     return undefined
   }
-  const personMap = get(personByIdStore)
-  return personMap.get(followeeId)
+
+  return (await getPersonByPersonRef(followeeId)) ?? undefined
 }
 
 export function publishData (topic: string, data: any): void {

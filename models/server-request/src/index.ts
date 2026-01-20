@@ -15,11 +15,12 @@
 
 import { type Builder } from '@hanzo/model'
 
-import core from '@hanzo/core'
-import serverCore from '@hanzo/server-core'
-import serverRequest from '@hanzo/server-request'
-import serverNotification from '@hanzo/server-notification'
-import request from '@hanzo/model-request'
+import core from '@hcengineering/core'
+import serverCore from '@hcengineering/server-core'
+import serverRequest from '@hcengineering/server-request'
+import serverNotification from '@hcengineering/server-notification'
+import request from '@hcengineering/model-request'
+import notification from '@hcengineering/notification'
 
 export { serverRequestId } from '@hanzo/server-request'
 
@@ -34,4 +35,22 @@ export function createModel (builder: Builder): void {
   builder.mixin(request.class.Request, core.class.Class, serverNotification.mixin.TextPresenter, {
     presenter: serverRequest.function.RequestTextPresenter
   })
+
+  builder.mixin(
+    request.ids.CreateRequestNotification,
+    notification.class.NotificationType,
+    serverNotification.mixin.TypeMatch,
+    {
+      func: serverRequest.function.SendRequestMatch
+    }
+  )
+
+  builder.mixin(
+    request.ids.RemoveRequestNotification,
+    notification.class.NotificationType,
+    serverNotification.mixin.TypeMatch,
+    {
+      func: serverRequest.function.RemoveRequestMatch
+    }
+  )
 }

@@ -36,6 +36,8 @@
     "LinkedIn": "LinkedIn",
     "GitHub": "GitHub",
     "Twitter": "Twitter",
+    "Google": "Google",
+    "Telegram": "Telegram",
     "PhonePlaceholder": "+420 123 456 789",
     "LinkedInPlaceholder": "https://linkedin.com/in/jappleseed",
     "AtPlaceHolder": "@appleseed",
@@ -109,6 +111,20 @@
     "ViewProfile": "Zobrazit profil",
     "Viber": "Viber",
     "ViberPlaceholder": "Viber",
-    "UserProfile": "Uživatelský profil"
+    "UserProfile": "Uživatelský profil",
+    "DeactivatedAccount": "Deaktivovaný účet",
+    "LocalTime": "místní čas",
+    "Everyone": "Všichni",
+    "Here": "Zde",
+    "EveryoneDescription": "Upozornit všechny v tomto {title}",
+    "HereDescription": "Upozornit všechny v tomto {title}",
+    "Guest": "Host",
+    "Deleted": "Smazáno",
+    "CannotMerge": "Chyba: Nelze sloučit globální osoby",
+    "AutoTranslation": "Automatický překlad",
+    "TranslateTo": "Přeložit do",
+    "DontTranslate": "Nepřekládat",
+    "SelectLanguage": "Vyberte jazyk",
+    "SelectLanguages": "Vyberte jazyky"
   }
 }

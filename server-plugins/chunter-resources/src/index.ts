@@ -13,19 +13,21 @@
 // limitations under the License.
 //
 
-import activity, { ActivityMessage, ActivityReference } from '@hanzo/activity'
-import chunter, { Channel, ChatMessage, chunterId, ChunterSpace, ThreadMessage } from '@hanzo/chunter'
-import contact, { Person } from '@hanzo/contact'
-import { getAccountBySocialId, getPerson } from '@hanzo/server-contact'
+import activity, { ActivityMessage, ActivityReference } from '@hcengineering/activity'
+import chunter, { Channel, ChatMessage, chunterId, ChunterSpace, ThreadMessage } from '@hcengineering/chunter'
+import contact, { Employee, Person } from '@hcengineering/contact'
 import core, {
-  PersonId,
+  AccountUuid,
   Class,
+  combineAttributes,
   concatLink,
   Doc,
   DocumentQuery,
   FindOptions,
   FindResult,
   Hierarchy,
+  notEmpty,
+  PersonId,
   Ref,
   Timestamp,
   Tx,
@@ -34,21 +36,21 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   UserStatus,
-  type MeasureContext,
-  combineAttributes,
-  AccountUuid
-} from '@hanzo/core'
-import notification, { DocNotifyContext, NotificationContent } from '@hanzo/notification'
-import { getMetadata, IntlString, translate } from '@hanzo/platform'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
+  getClassCollaborators,
+  type MeasureContext
+} from '@hcengineering/core'
+import notification, { DocNotifyContext, NotificationContent } from '@hcengineering/notification'
+import { getMetadata, IntlString, translate } from '@hcengineering/platform'
+import { getAccountBySocialId, getPerson } from '@hcengineering/server-contact'
+import serverCore, { TriggerControl } from '@hcengineering/server-core'
 import {
   createCollaboratorNotifications,
-  getDocCollaborators,
-  getMixinTx
-} from '@hanzo/server-notification-resources'
-import { markupToText, stripTags } from '@hanzo/text-core'
-import { jsonToHTML, markupToJSON } from '@hanzo/text'
-import { workbenchId } from '@hanzo/workbench'
+  getAddCollaboratTxes,
+  getDocCollaborators
+} from '@hcengineering/server-notification-resources'
+import { jsonToHTML, markupToJSON } from '@hcengineering/text'
+import { extractReferences, markupToText, stripTags } from '@hcengineering/text-core'
+import { workbenchId } from '@hcengineering/workbench'
 
 import { NOTIFICATION_BODY_SIZE } from '@hanzo/server-notification'
 import { encodeObjectURI } from '@hanzo/view'
@@ -114,13 +116,19 @@ export async function CommentRemove (
   })
 }
 
-async function OnThreadMessageCreated (originTx: TxCUD<Doc>, control: TriggerControl): Promise<Tx[]> {
+async function OnThreadMessageCreated (
+  ctx: MeasureContext,
+  originTx: TxCUD<Doc>,
+  control: TriggerControl
+): Promise<Tx[]> {
   const tx = originTx as TxCreateDoc<ThreadMessage>
 
   const threadMessage = TxProcessor.createDoc2Doc(tx)
-  const message = (
-    await control.findAll(control.ctx, activity.class.ActivityMessage, { _id: threadMessage.attachedTo })
-  )[0]
+  const message = await ctx.with(
+    'load-message',
+    {},
+    async () => (await control.findAll(ctx, activity.class.ActivityMessage, { _id: threadMessage.attachedTo }))[0]
+  )
 
   if (message === undefined) {
     return []
@@ -135,7 +143,7 @@ async function OnThreadMessageCreated (originTx: TxCUD<Doc>, control: TriggerCon
     }
   )
 
-  const person = await getPerson(control, originTx.modifiedBy)
+  const person = await ctx.with('load-message', {}, () => getPerson(control, originTx.modifiedBy))
   if (person === undefined) {
     return [lastReplyTx]
   }
@@ -162,7 +170,7 @@ async function OnChatMessageCreated (ctx: MeasureContext, tx: TxCUD<Doc>, contro
 
   const message = TxProcessor.createDoc2Doc(actualTx)
   if (message.modifiedBy === core.account.System) return []
-  const mixin = hierarchy.classHierarchyMixin(message.attachedToClass, notification.mixin.ClassCollaborators)
+  const mixin = getClassCollaborators(control.modelDb, hierarchy, message.attachedToClass)
 
   if (mixin === undefined) {
     return []
@@ -175,37 +183,52 @@ async function OnChatMessageCreated (ctx: MeasureContext, tx: TxCUD<Doc>, contro
   const isChannel = hierarchy.isDerived(targetDoc._class, chunter.class.Channel)
   const res: Tx[] = []
   const account = await getAccountBySocialId(control, message.modifiedBy)
+  const node = markupToJSON(message.message)
+  const references = extractReferences(node)
+  const mentionedPersons = references
+    .filter(({ objectClass }) => control.hierarchy.isDerived(objectClass, contact.class.Person))
+    .map(({ objectId }) => objectId as Ref<Person>)
+  const employees =
+    mentionedPersons.length > 0
+      ? await control.findAll(ctx, contact.mixin.Employee, { _id: { $in: mentionedPersons as Ref<Employee>[] } })
+      : []
+  const collaboratorsFromMessage = [...employees.map((it) => it.personUuid), account].filter(notEmpty)
+  let currentCollaborators = (
+    await control.findAll(ctx, core.class.Collaborator, {
+      attachedTo: targetDoc._id
+    })
+  ).map((it) => it.collaborator)
 
-  if (account == null) {
-    return []
+  if (currentCollaborators.length === 0) {
+    const mixin = getClassCollaborators(control.modelDb, control.hierarchy, targetDoc._class)
+    if (mixin !== undefined) {
+      const collaborators = await getDocCollaborators(ctx, targetDoc, mixin, control)
+      currentCollaborators = collaborators
+      res.push(...getAddCollaboratTxes(tx.objectId, tx.objectClass, tx.objectSpace, control, collaborators))
+    }
   }
 
-  if (hierarchy.hasMixin(targetDoc, notification.mixin.Collaborators)) {
-    const collaboratorsMixin = hierarchy.as(targetDoc, notification.mixin.Collaborators)
-    if (!collaboratorsMixin.collaborators.includes(account)) {
-      res.push(
-        control.txFactory.createTxMixin(
-          targetDoc._id,
-          targetDoc._class,
-          targetDoc.space,
-          notification.mixin.Collaborators,
-          {
-            $push: {
-              collaborators: account
-            }
-          }
-        )
-      )
+  const classCollab = (
+    await control.findAll(control.ctx, core.class.ClassCollaborators, { attachedTo: targetDoc._class })
+  )[0]
+  if (classCollab?.provideSecurity !== true) {
+    for (const collab of collaboratorsFromMessage) {
+      if (currentCollaborators.includes(collab)) {
+        continue
+      }
+
+      const tx = control.txFactory.createTxCreateDoc(core.class.Collaborator, targetDoc.space, {
+        attachedTo: targetDoc._id,
+        attachedToClass: targetDoc._class,
+        collaborator: collab,
+        collection: 'collaborators'
+      })
+
+      res.push(tx)
     }
-  } else {
-    const collaborators = await getDocCollaborators(ctx, targetDoc, mixin, control)
-    if (!collaborators.includes(account)) {
-      collaborators.push(account)
-    }
-    res.push(getMixinTx(tx, control, collaborators))
   }
 
-  if (isChannel && !(targetDoc as Channel).members.includes(account)) {
+  if (account != null && isChannel && !(targetDoc as Channel).members.includes(account)) {
     res.push(...joinChannel(control, targetDoc as Channel, account))
   }
 
@@ -283,7 +306,9 @@ export async function ChunterTrigger (txes: TxCUD<Doc>[], control: TriggerContro
       tx._class === core.class.TxCreateDoc &&
       control.hierarchy.isDerived(tx.objectClass, chunter.class.ThreadMessage)
     ) {
-      res.push(...(await control.ctx.with('OnThreadMessageCreated', {}, (ctx) => OnThreadMessageCreated(tx, control))))
+      res.push(
+        ...(await control.ctx.with('OnThreadMessageCreated', {}, (ctx) => OnThreadMessageCreated(ctx, tx, control)))
+      )
     }
     if (
       tx._class === core.class.TxRemoveDoc &&

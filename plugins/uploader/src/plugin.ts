@@ -13,17 +13,11 @@
 // limitations under the License.
 //
 
-import type { IntlString, Plugin, Resource, Asset } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import type { Class, Ref } from '@hanzo/core'
-import type {
-  GetUploadHandlers,
-  UploadFilesFn,
-  UploadFilesPopupFn,
-  UploadHandlerDefinition,
-  UploadHandler
-} from './types'
+import type { IntlString, Plugin, Resource, Asset } from '@hcengineering/platform'
+import { plugin } from '@hcengineering/platform'
+import type { AnyComponent } from '@hcengineering/ui/src/types'
+import type { Class, Ref } from '@hcengineering/core'
+import type { UploadFilesFn, UploadFilesPopupFn, UploadHandlerDefinition, UploadHandler } from './types'
 
 /** @public */
 export const uploaderId = 'uploader' as Plugin
@@ -55,8 +49,7 @@ export const uploaderPlugin = plugin(uploaderId, {
     ShowFilesUploadPopup: '' as Resource<UploadFilesPopupFn>,
     UploadFiles: '' as Resource<UploadFilesFn>,
     UploadFilesHandler: '' as Resource<UploadHandler>,
-    UploadFoldersHandler: '' as Resource<UploadHandler>,
-    GetUploadHandlers: '' as Resource<GetUploadHandlers>
+    UploadFoldersHandler: '' as Resource<UploadHandler>
   }
 })
 

@@ -1,33 +1,29 @@
 import { Analytics } from '@hanzo/analytics'
 import core, {
-  PersonId,
-  AnyAttribute,
   AttachedDoc,
   Class,
   Doc,
   DocumentQuery,
   DocumentUpdate,
   MeasureContext,
+  PersonId,
   Ref,
   SortingOrder,
   Status,
   Timestamp,
-  TxOperations,
-  Type,
-  toIdMap
-} from '@hanzo/core'
+  TxOperations
+} from '@hcengineering/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubIssueStateReason,
   GithubProject
-} from '@hanzo/github'
-import { PlatformError, unknownStatus } from '@hanzo/platform'
-import task, { TaskType, calculateStatuses, createState, findStatusAttr } from '@hanzo/task'
-import tracker, { IssueStatus } from '@hanzo/tracker'
+} from '@hcengineering/github'
+import { PlatformError, unknownStatus } from '@hcengineering/platform'
+import task from '@hcengineering/task'
+import { IssueStatus } from '@hcengineering/tracker'
 import { deepEqual } from 'fast-equals'
-import { IntegrationManager, githubExternalSyncVersion } from '../types'
-import { GithubDataType } from './githubTypes'
+import { githubExternalSyncVersion } from '../types'
 
 /**
  * Return if github write operations are allowed.
@@ -151,93 +147,8 @@ export function gqlp (params: Record<string, string | number | string[] | undefi
 /**
  * @public
  */
-export async function getCreateStatus (
-  ctx: MeasureContext,
-  provider: IntegrationManager,
-  client: TxOperations,
-  prj: GithubProject,
-  name: string,
-  description: string,
-  colorStr: string,
-  taskType: TaskType
-): Promise<string> {
-  const color = hashCode(colorStr)
-
-  const states = await provider.getStatuses(taskType._id)
-
-  for (const s of states) {
-    if (s.name.toLowerCase().trim() === name.toLowerCase().trim()) {
-      return s._id
-    }
-  }
-  ctx.error('Create new project Status', { name, colorStr, category: 'Backlog' })
-  // No status found, let's create one.
-  const id = await createState(client, taskType.statusClass, {
-    name,
-    description,
-    color,
-    ofAttribute: findStatusAttr(client.getHierarchy(), taskType.statusClass)._id,
-    category: task.statusCategory.UnStarted
-  })
-  const type = await client.findOne(task.class.ProjectType, { _id: prj.type })
-  if (type === undefined) {
-    return id
-  }
-
-  if (!taskType.statuses.includes(id)) {
-    await client.update(taskType, {
-      $push: { statuses: id }
-    })
-    const taskTypes = toIdMap(await client.findAll(task.class.TaskType, { parent: type._id }))
-
-    const index = type.statuses.findIndex((it) => it._id === id)
-    if (index === -1) {
-      await client.update(type, {
-        statuses: calculateStatuses(type, taskTypes, [{ taskTypeId: taskType._id, statuses: taskType.statuses }])
-      })
-    }
-  }
-  return id
-}
-
-/**
- * @public
- */
 export function hashCode (str: string): number {
   return str.split('').reduce((prevHash, currVal) => ((prevHash << 5) - prevHash + currVal.charCodeAt(0)) | 0, 0)
-}
-
-export function getType (attr: AnyAttribute): GithubDataType | undefined {
-  if (attr.type._class === core.class.TypeString) {
-    return 'TEXT'
-  }
-  if (
-    attr.type._class === core.class.TypeNumber ||
-    attr.type._class === tracker.class.TypeReportedTime ||
-    attr.type._class === tracker.class.TypeEstimation ||
-    attr.type._class === tracker.class.TypeRemainingTime
-  ) {
-    return 'NUMBER'
-  }
-  if (attr.type._class === core.class.TypeDate) {
-    return 'DATE'
-  }
-  if (attr.type._class === core.class.EnumOf) {
-    return 'SINGLE_SELECT'
-  }
-}
-
-export function getPlatformType (dataType: GithubDataType): Ref<Class<Type<any>>> | undefined {
-  switch (dataType) {
-    case 'TEXT':
-      return core.class.TypeString
-    case 'NUMBER':
-      return core.class.TypeNumber
-    case 'DATE':
-      return core.class.TypeDate
-    case 'SINGLE_SELECT':
-      return core.class.EnumOf
-  }
 }
 
 export async function guessStatus (
@@ -285,9 +196,11 @@ export class SyncRunner {
       id,
       promise.then(() => {})
     )
-    const result = await promise
-    this.eventSync.delete(id)
-    return result
+    try {
+      return await promise
+    } finally {
+      this.eventSync.delete(id)
+    }
   }
 }
 
@@ -370,12 +283,13 @@ export async function syncDerivedDocuments<T extends { url: string }> (
       })
     } else {
       processed.add(existing._id)
-      if (!deepEqual(existing.external, r)) {
+      if (!deepEqual(existing.external, r) || existing.repository !== repo._id) {
         // Only update if had changes.
         await derivedClient.update(existing, {
           external: r,
           needSync: '', // We need to check if we had any changes.
           derivedVersion: '',
+          repository: repo._id,
           externalVersion: githubExternalSyncVersion,
           lastModified: new Date(r.updatedAt ?? r.createdAt).getTime(),
           ...extra
@@ -416,13 +330,20 @@ export function compareMarkdown (a: string, b: string): boolean {
   return na === nb
 }
 
-export async function syncChilds (info: DocSyncInfo, client: TxOperations, derivedClient: TxOperations): Promise<void> {
-  const childInfos = await client.findAll(github.class.DocSyncInfo, { parent: info.url.toLowerCase() })
+export async function syncChilds (
+  ctx: MeasureContext,
+  info: DocSyncInfo,
+  client: TxOperations,
+  derivedClient: TxOperations
+): Promise<void> {
+  const childInfos = await ctx.with('syncChilds-find', {}, () =>
+    client.findAll(github.class.DocSyncInfo, { parent: info.url.toLowerCase() })
+  )
   if (childInfos.length > 0) {
     const ops = derivedClient.apply()
     for (const child of childInfos) {
       await ops?.update(child, { needSync: '' })
     }
-    await ops.commit()
+    await ctx.with('sync-child-trigger', {}, () => ops.commit())
   }
 }

@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type ReccuringInstance } from '@hanzo/calendar'
-import { type Doc, type TxOperations, concatLink } from '@hanzo/core'
-import { type Resources, getMetadata } from '@hanzo/platform'
-import presentation, { getClient } from '@hanzo/presentation'
-import { closePopup, showPopup } from '@hanzo/ui'
+import { type ReccuringInstance } from '@hcengineering/calendar'
+import { type Doc, type TxOperations } from '@hcengineering/core'
+import { type Resources } from '@hcengineering/platform'
+import { getClient } from '@hcengineering/presentation'
+import { closePopup, showPopup } from '@hcengineering/ui'
 import CalendarView from './components/CalendarView.svelte'
 import CreateEvent from './components/CreateEvent.svelte'
 import DateTimePresenter from './components/DateTimePresenter.svelte'
@@ -43,10 +43,14 @@ import CalendarSelector from './components/CalendarSelector.svelte'
 import ConnectApp from './components/ConnectApp.svelte'
 import CalendarWidget from './components/CalendarWidget.svelte'
 import ScheduleNavSection from './components/ScheduleNavSection.svelte'
+import CalendarSettings from './components/CalendarSettings.svelte'
+import IntegrationState from './components/IntegrationState.svelte'
 import calendar from './plugin'
-import contact from '@hanzo/contact'
-import { deleteObjects } from '@hanzo/view-resources'
-import { shareCalDavLink } from './utils'
+import contact from '@hcengineering/contact'
+import { deleteObjects } from '@hcengineering/view-resources'
+import { eventTitleProvider, configureCalDavAccess } from './utils'
+import { type Integration } from '@hcengineering/account-client'
+import { disconnect, disconnectAll } from './api'
 
 export {
   EventElement,
@@ -108,7 +112,8 @@ async function deleteRecHandler (res: any, object: ReccuringInstance): Promise<v
         visibility: object.visibility,
         access: object.access,
         timeZone: object.timeZone,
-        user: object.user
+        user: object.user,
+        blockTime: object.blockTime
       },
       object._id
     )
@@ -195,27 +200,24 @@ export default async (): Promise<Resources> => ({
     CalendarEventPresenter,
     IntegrationConfigure,
     ConnectApp,
-    CalendarWidget
+    CalendarWidget,
+    CalendarSettings,
+    IntegrationState
   },
   actionImpl: {
     SaveEventReminder: saveEventReminder,
     DeleteRecEvent: deleteRecEvent
   },
   handler: {
-    DisconnectHandler: async (value: string) => {
-      const url = getMetadata(calendar.metadata.CalendarServiceURL)
-      const token = getMetadata(presentation.metadata.Token)
-      if (url === undefined || token === undefined) return
-      await fetch(concatLink(url, `/signout?value=${value}`), {
-        method: 'GET',
-        headers: {
-          Authorization: 'Bearer ' + token,
-          'Content-Type': 'application/json'
-        }
-      })
+    DisconnectHandler: async (integration: Integration) => {
+      await disconnect(integration)
+    },
+    DisconnectAllHandler: async (integration: Integration): Promise<void> => {
+      await disconnectAll(integration)
     }
   },
   function: {
-    ShareCalDavLink: shareCalDavLink
+    ConfigureCalDavAccess: configureCalDavAccess,
+    EventTitleProvider: eventTitleProvider
   }
 })

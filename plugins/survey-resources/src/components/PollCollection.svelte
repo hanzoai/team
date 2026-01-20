@@ -15,15 +15,16 @@
 //
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Survey } from '@hanzo/survey'
-  import { Button, IconAdd, Label, Section, navigate, showPopup } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { Table, ViewletSelector, ViewletSettingButton, getObjectLinkFragment } from '@hanzo/view-resources'
+  import type { Class, Doc, Ref, Space } from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import { Survey } from '@hcengineering/survey'
+  import { Button, IconAdd, Label, Section, navigate, showPopup, Scroller } from '@hcengineering/ui'
+  import view, { Viewlet, ViewletPreference } from '@hcengineering/view'
+  import { Table, ViewletSelector, ViewletSettingButton, getObjectLinkFragment } from '@hcengineering/view-resources'
   import SurveyPopup from './SurveyPopup.svelte'
   import survey from '../plugin'
   import { makePollData } from '../utils'
+  import { Analytics } from '@hcengineering/analytics'
 
   export let objectId: Ref<Doc>
   export let space: Ref<Space>
@@ -49,7 +50,7 @@
 
     const poll = await client.findOne(survey.class.Poll, { _id: pollId })
     if (poll === undefined) {
-      console.error(`Could not find just created poll ${pollId}.`)
+      Analytics.handleError(new Error(`Could not find just created poll ${pollId}.`))
       return
     }
 
@@ -79,14 +80,16 @@
 
   <svelte:fragment slot="content">
     {#if polls > 0 && viewlet}
-      <Table
-        _class={survey.class.Poll}
-        config={preference?.config ?? viewlet.config}
-        options={viewlet.options}
-        query={{ attachedTo: objectId }}
-        loadingProps={{ length: polls }}
-        {readonly}
-      />
+      <Scroller horizontal noFade={false}>
+        <Table
+          _class={survey.class.Poll}
+          config={preference?.config ?? viewlet.config}
+          options={viewlet.options}
+          query={{ attachedTo: objectId }}
+          loadingProps={{ length: polls }}
+          {readonly}
+        />
+      </Scroller>
     {:else}
       <div class="antiSection-empty solid flex-col mt-3">
         <span class="content-dark-color">

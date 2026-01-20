@@ -26,7 +26,8 @@
     "EditDrive": "Modifica drive",
     "Rename": "Rinomina",
     "Restore": "Ripristina",
-    "RoleLabel": "Ruolo",
-    "Root": "/"
+    "Root": "/",
+    "ForbidCreateDrivePermission": "Vieta creazione drive",
+    "ForbidCreateDrivePermissionDescription": "Vieta agli utenti di creare nuovi drive"
   }
 }

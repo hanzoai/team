@@ -36,6 +36,8 @@
     "LinkedIn": "LinkedIn",
     "GitHub": "GitHub",
     "Twitter": "Twitter",
+    "Google": "Google",
+    "Telegram": "Telegram",
     "PhonePlaceholder": "+49 555 333 7777",
     "LinkedInPlaceholder": "https://linkedin.com/in/jappleseed",
     "AtPlaceHolder": "@appleseed",
@@ -109,6 +111,20 @@
     "ViewProfile": "Profil anzeigen",
     "Viber": "Viber",
     "ViberPlaceholder": "Viber",
-    "UserProfile": "Benutzerprofil"
+    "UserProfile": "Benutzerprofil",
+    "DeactivatedAccount": "Deaktivierter Account",
+    "LocalTime": "Ortszeit",
+    "Everyone": "Jeder",
+    "Here": "Hier",
+    "EveryoneDescription": "Benachrichtigen Sie alle in diesem {title}",
+    "HereDescription": "Benachrichtigen Sie alle in diesem {title}",
+    "Guest": "Gast",
+    "Deleted": "Gelöscht",
+    "CannotMerge": "Fehler: Globale Personen können nicht zusammengeführt werden",
+    "AutoTranslation": "Automatische Übersetzung",
+    "TranslateTo": "Übersetzen in",
+    "DontTranslate": "Nicht übersetzen",
+    "SelectLanguage": "Sprache auswählen",
+    "SelectLanguages": "Sprachen auswählen"
   }
 }

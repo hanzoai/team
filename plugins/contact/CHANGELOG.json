@@ -2,8 +2,8 @@
   "name": "@hanzo/contact",
   "entries": [
     {
-      "version": "0.6.2",
-      "tag": "@hanzo/contact_v0.6.2",
+      "version": "0.7.0",
+      "tag": "@hcengineering/contact_v0.6.2",
       "date": "Tue, 09 Nov 2021 17:01:22 GMT",
       "comments": {
         "patch": [
@@ -14,8 +14,8 @@
       }
     },
     {
-      "version": "0.6.0",
-      "tag": "@hanzo/contact_v0.6.0",
+      "version": "0.7.0",
+      "tag": "@hcengineering/contact_v0.6.0",
       "date": "Sun, 08 Aug 2021 10:14:57 GMT",
       "comments": {
         "dependency": [

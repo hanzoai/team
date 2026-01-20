@@ -13,23 +13,26 @@
 // limitations under the License.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { type Attachment } from '@hanzo/attachment'
-import contact, { Employee, SocialIdentity, type Person } from '@hanzo/contact'
+import { type Attachment } from '@hcengineering/attachment'
+import card from '@hcengineering/card'
+import contact, { type Employee, type Person } from '@hcengineering/contact'
+import documents, {
+  type ControlledDocument,
+  type DocumentCategory,
+  type DocumentMeta,
+  DocumentState
+} from '@hcengineering/controlled-documents'
 import {
-  AccountUuid,
-  buildSocialIdString,
-  type Class,
-  type Doc,
+  type AccountUuid,
   generateId,
-  PersonId,
+  type PersonId,
   type Ref,
   SocialIdType,
-  type Space,
   type TxOperations
-} from '@hanzo/core'
-import document, { type Document } from '@hanzo/document'
-import { MarkupMarkType, type MarkupNode, MarkupNodeType, traverseNode, traverseNodeMarks } from '@hanzo/text'
-import tracker, { type Issue, Project } from '@hanzo/tracker'
+} from '@hcengineering/core'
+import document, { type Document } from '@hcengineering/document'
+import core from '@hcengineering/model-core'
+import tracker, { type Issue, type Project } from '@hcengineering/tracker'
 import * as fs from 'fs'
 import sizeOf from 'image-size'
 import * as yaml from 'js-yaml'
@@ -39,29 +42,25 @@ import { ImportWorkspaceBuilder } from '../importer/builder'
 import {
   type ImportAttachment,
   type ImportComment,
-  ImportControlledDocument,
-  ImportControlledDocumentTemplate,
+  type ImportControlledDocument,
+  type ImportControlledDocumentTemplate,
   type ImportDocument,
-  ImportDrawing,
+  type ImportDrawing,
   type ImportIssue,
+  type ImportOrgSpace,
   type ImportProject,
   type ImportProjectType,
   type ImportTeamspace,
   type ImportWorkspace,
-  WorkspaceImporter,
-  ImportOrgSpace
+  WorkspaceImporter
 } from '../importer/importer'
 import { type Logger } from '../importer/logger'
-import { BaseMarkdownPreprocessor } from '../importer/preprocessor'
 import { type FileUploader } from '../importer/uploader'
-import documents, {
-  DocumentState,
-  DocumentCategory,
-  ControlledDocument,
-  DocumentMeta
-} from '@hanzo/controlled-documents'
-
-export interface hanzoaiComment {
+import { CardsProcessor } from './cards'
+import { UnifiedFormatParser } from './parser'
+import { HulyMarkdownPreprocessor, type AttachmentMetadata } from './preprocessor'
+import { MetadataRegistry } from './registry'
+export interface HulyComment {
   author: string
   text: string
   attachments?: string[]
@@ -133,6 +132,7 @@ export interface hanzoaiControlledDocumentHeader {
   template: string
   author: string
   owner: string
+  category?: string
   abstract?: string
   reviewers?: string[]
   approvers?: string[]
@@ -161,202 +161,33 @@ export interface hanzoaiOrgSpaceSettings extends hanzoaiSpaceSettings {
   qara?: string
 }
 
-class hanzoaiMarkdownPreprocessor extends BaseMarkdownPreprocessor {
-  constructor (
-    private readonly urlProvider: (id: string) => string,
-    private readonly logger: Logger,
-    private readonly pathById: Map<Ref<Doc>, string>,
-    private readonly refMetaByPath: Map<string, ReferenceMetadata>,
-    private readonly attachMetaByPath: Map<string, AttachmentMetadata>,
-    personsByName: Map<string, Ref<Person>>
-  ) {
-    super(personsByName)
-  }
-
-  process (json: MarkupNode, id: Ref<Doc>, spaceId: Ref<Space>): MarkupNode {
-    traverseNode(json, (node) => {
-      if (node.type === MarkupNodeType.image) {
-        this.processImageNode(node, id, spaceId)
-      } else {
-        this.processLinkMarks(node, id, spaceId)
-        this.processMentions(node)
-      }
-      return true
-    })
-    return json
-  }
-
-  private processImageNode (node: MarkupNode, id: Ref<Doc>, spaceId: Ref<Space>): void {
-    const src = node.attrs?.src
-    if (src === undefined) return
-
-    const sourcePath = this.getSourcePath(id)
-    if (sourcePath == null) return
-
-    const href = decodeURI(src as string)
-    const fullPath = path.resolve(path.dirname(sourcePath), href)
-    const attachmentMeta = this.attachMetaByPath.get(fullPath)
-
-    if (attachmentMeta === undefined) {
-      this.logger.error(`Attachment image not found for ${fullPath}`)
-      return
-    }
-
-    const sourceMeta = this.refMetaByPath.get(sourcePath)
-    if (sourceMeta === undefined) {
-      this.logger.error(`Source metadata not found for ${sourcePath}`)
-      return
-    }
-
-    this.updateAttachmentMetadata(fullPath, attachmentMeta, id, spaceId, sourceMeta)
-    this.alterImageNode(node, attachmentMeta.id, attachmentMeta.name)
-  }
-
-  private processLinkMarks (node: MarkupNode, id: Ref<Doc>, spaceId: Ref<Space>): void {
-    traverseNodeMarks(node, (mark) => {
-      if (mark.type !== MarkupMarkType.link) return
-
-      const sourcePath = this.getSourcePath(id)
-      if (sourcePath == null) return
-
-      const href = decodeURI(mark.attrs?.href ?? '')
-      const fullPath = path.resolve(path.dirname(sourcePath), href)
-
-      if (this.refMetaByPath.has(fullPath)) {
-        const targetDocMeta = this.refMetaByPath.get(fullPath)
-        if (targetDocMeta !== undefined) {
-          this.alterInternalLinkNode(node, targetDocMeta)
-        }
-      } else if (this.attachMetaByPath.has(fullPath)) {
-        const attachmentMeta = this.attachMetaByPath.get(fullPath)
-        if (attachmentMeta !== undefined) {
-          this.alterAttachmentLinkNode(node, attachmentMeta)
-          const sourceMeta = this.refMetaByPath.get(sourcePath)
-          if (sourceMeta !== undefined) {
-            this.updateAttachmentMetadata(fullPath, attachmentMeta, id, spaceId, sourceMeta)
-          }
-        }
-      } else {
-        this.logger.log('Unknown link type, leave it as is: ' + href)
-      }
-    })
-  }
-
-  private alterImageNode (node: MarkupNode, id: string, name: string): void {
-    node.type = MarkupNodeType.image
-    if (node.attrs !== undefined) {
-      node.attrs = {
-        'file-id': id,
-        src: this.urlProvider(id),
-        width: node.attrs.width ?? null,
-        height: node.attrs.height ?? null,
-        align: node.attrs.align ?? null,
-        alt: name,
-        title: name
-      }
-      const mimeType = this.getContentType(name)
-      if (mimeType !== undefined) {
-        node.attrs['data-file-type'] = mimeType
-      }
-    }
-  }
-
-  private alterInternalLinkNode (node: MarkupNode, targetMeta: ReferenceMetadata): void {
-    node.type = MarkupNodeType.reference
-    node.attrs = {
-      id: targetMeta.id,
-      label: targetMeta.refTitle,
-      objectclass: targetMeta.class,
-      text: '',
-      content: ''
-    }
-  }
-
-  private alterAttachmentLinkNode (node: MarkupNode, targetMeta: AttachmentMetadata): void {
-    const stats = fs.statSync(targetMeta.path)
-    node.type = MarkupNodeType.file
-    node.attrs = {
-      'file-id': targetMeta.id,
-      'data-file-name': targetMeta.name,
-      'data-file-size': stats.size,
-      'data-file-href': targetMeta.path
-    }
-    const mimeType = this.getContentType(targetMeta.name)
-    if (mimeType !== undefined) {
-      node.attrs['data-file-type'] = mimeType
-    }
-  }
-
-  private getContentType (fileName: string): string | undefined {
-    const mimeType = contentType(fileName)
-    return mimeType !== false ? mimeType : undefined
-  }
-
-  private getSourcePath (id: Ref<Doc>): string | null {
-    const sourcePath = this.pathById.get(id)
-    if (sourcePath == null) {
-      this.logger.error(`Source file path not found for ${id}`)
-      return null
-    }
-    return sourcePath
-  }
-
-  private updateAttachmentMetadata (
-    fullPath: string,
-    attachmentMeta: AttachmentMetadata,
-    id: Ref<Doc>,
-    spaceId: Ref<Space>,
-    sourceMeta: ReferenceMetadata
-  ): void {
-    this.attachMetaByPath.set(fullPath, {
-      ...attachmentMeta,
-      spaceId,
-      parentId: id,
-      parentClass: sourceMeta.class as Ref<Class<Doc<Space>>>
-    })
-  }
-}
-
-interface ReferenceMetadata {
-  id: Ref<Doc>
-  class: string
-  refTitle: string
-}
-
-interface AttachmentMetadata {
-  id: Ref<Attachment>
-  name: string
-  path: string
-  parentId?: Ref<Doc>
-  parentClass?: Ref<Class<Doc<Space>>>
-  spaceId?: Ref<Space>
-}
-
-export class hanzoaiFormatImporter {
-  private readonly importerEmailPlaceholder = 'newuser@hanzoai.io'
-  private readonly importerNamePlaceholder = 'New User'
-  private readonly pathById = new Map<Ref<Doc>, string>()
-  private readonly refMetaByPath = new Map<string, ReferenceMetadata>()
-  private readonly fileMetaByPath = new Map<string, AttachmentMetadata>()
-  private readonly ctrlDocTemplateIdByPath = new Map<string, Ref<ControlledDocument>>()
-
-  private personsByName = new Map<string, Ref<Person>>()
+export class HulyFormatImporter {
+  private readonly personsByName = new Map<string, Ref<Person>>()
   private employeesByName = new Map<string, Ref<Employee>>()
-  private accountsByEmail = new Map<string, AccountUuid>()
+  private readonly accountsByName = new Map<string, AccountUuid>()
   private readonly personIdByEmail = new Map<string, PersonId>()
+  private controlledDocumentCategories = new Map<string, Ref<DocumentCategory>>()
+
+  private readonly fileMetaByPath = new Map<string, AttachmentMetadata>()
+
+  private readonly metadataRegistry = new MetadataRegistry()
+  private readonly cardsProcessor: CardsProcessor
+  private readonly parser: UnifiedFormatParser
 
   constructor (
     private readonly client: TxOperations,
     private readonly fileUploader: FileUploader,
     private readonly logger: Logger,
-    private readonly importerSocialId?: PersonId,
-    private readonly importerPerson?: Ref<Person>
-  ) {}
+    variables?: Record<string, any>
+  ) {
+    this.parser = new UnifiedFormatParser(variables ?? {})
+    this.cardsProcessor = new CardsProcessor(this.metadataRegistry, this.parser, this.logger)
+  }
 
   private async initCaches (): Promise<void> {
     await this.cachePersonsByNames()
-    await this.cacheAccountsByEmails()
     await this.cacheEmployeesByName()
+    await this.cacheControlledDocumentCategories()
   }
 
   async importFolder (folderPath: string): Promise<void> {
@@ -373,8 +204,7 @@ export class hanzoaiFormatImporter {
     const preprocessor = new hanzoaiMarkdownPreprocessor(
       this.fileUploader.getFileUrl,
       this.logger,
-      this.pathById,
-      this.refMetaByPath,
+      this.metadataRegistry,
       this.fileMetaByPath,
       this.personsByName
     )
@@ -486,7 +316,7 @@ export class hanzoaiFormatImporter {
 
       try {
         this.logger.log(`Processing ${spaceName}...`)
-        const spaceConfig = yaml.load(fs.readFileSync(yamlPath, 'utf8')) as hanzoaiSpaceSettings
+        const spaceConfig = this.parser.readYaml(yamlPath) as HulySpaceSettings
 
         if (spaceConfig?.class === undefined) {
           this.logger.error(`Skipping ${spaceName}: not a space - no class specified`)
@@ -521,6 +351,13 @@ export class hanzoaiFormatImporter {
             break
           }
 
+          case core.class.Enum:
+          case core.class.Association:
+          case card.class.MasterTag: {
+            this.logger.log(`Skipping ${spaceName}: will be processed later`)
+            break
+          }
+
           default: {
             throw new Error(`Unknown space class ${spaceConfig.class} in ${spaceName}`)
           }
@@ -531,7 +368,16 @@ export class hanzoaiFormatImporter {
       }
     }
 
-    return builder.build()
+    const { docs, mixins, updates, files } = await this.cardsProcessor.processDirectory(folderPath)
+
+    const ws = builder.build()
+    ws.unifiedDocs = {
+      docs: Array.from(docs.values()).flat(),
+      mixins: Array.from(mixins.values()).flat(),
+      updates: Array.from(updates.values()).flat(),
+      files: Array.from(files.values())
+    }
+    return ws
   }
 
   private async processIssuesRecursively (
@@ -545,7 +391,7 @@ export class hanzoaiFormatImporter {
 
     for (const issueFile of issueFiles) {
       const issuePath = path.join(currentPath, issueFile)
-      const issueHeader = (await this.readYamlHeader(issuePath)) as hanzoaiIssueHeader
+      const issueHeader = this.parser.readYamlHeader(issuePath) as HulyIssueHeader
 
       if (issueHeader.class === undefined) {
         this.logger.error(`Skipping ${issueFile}: not an issue`)
@@ -556,20 +402,14 @@ export class hanzoaiFormatImporter {
         const numberMatch = issueFile.match(/^(\d+)\./)
         const issueNumber = numberMatch?.[1]
 
-        const meta: ReferenceMetadata = {
-          id: generateId<Issue>(),
-          class: tracker.class.Issue,
-          refTitle: `${projectIdentifier}-${issueNumber}`
-        }
-        this.pathById.set(meta.id, issuePath)
-        this.refMetaByPath.set(issuePath, meta)
+        this.metadataRegistry.setRefMetadata(issuePath, tracker.class.Issue, `${projectIdentifier}-${issueNumber}`)
 
         const issue: ImportIssue = {
-          id: meta.id as Ref<Issue>,
+          id: this.metadataRegistry.getRef(issuePath) as Ref<Issue>,
           class: tracker.class.Issue,
           title: issueHeader.title,
           number: parseInt(issueNumber ?? 'NaN'),
-          descrProvider: async () => await this.readMarkdownContent(issuePath),
+          descrProvider: () => Promise.resolve(this.parser.readMarkdownContent(issuePath)),
           status: { name: issueHeader.status },
           priority: issueHeader.priority,
           estimation: issueHeader.estimation,
@@ -597,9 +437,6 @@ export class hanzoaiFormatImporter {
       return undefined
     }
 
-    if (name === this.importerNamePlaceholder && this.importerPerson != null) {
-      return this.importerPerson
-    }
     const person = this.personsByName.get(name)
     if (person === undefined) {
       throw new Error(`Person not found: ${name}`)
@@ -608,10 +445,6 @@ export class hanzoaiFormatImporter {
   }
 
   private async getPersonIdByEmail (email: string): Promise<PersonId> {
-    if (email === this.importerEmailPlaceholder && this.importerSocialId != null) {
-      return this.importerSocialId
-    }
-
     const personId = this.personIdByEmail.get(email)
     if (personId !== undefined) {
       return personId
@@ -631,10 +464,10 @@ export class hanzoaiFormatImporter {
     return socialId._id
   }
 
-  private findAccountByEmail (email: string): AccountUuid {
-    const account = this.accountsByEmail.get(email)
+  private findAccountByName (name: string): AccountUuid {
+    const account = this.accountsByName.get(name)
     if (account === undefined) {
-      throw new Error(`Account not found: ${email}`)
+      throw new Error(`Account not found: ${name}`)
     }
     return account
   }
@@ -657,7 +490,7 @@ export class hanzoaiFormatImporter {
 
     for (const docFile of docFiles) {
       const docPath = path.join(currentPath, docFile)
-      const docHeader = (await this.readYamlHeader(docPath)) as hanzoaiDocumentHeader
+      const docHeader = this.parser.readYamlHeader(docPath) as HulyDocumentHeader
 
       if (docHeader.class === undefined) {
         this.logger.error(`Skipping ${docFile}: not a document`)
@@ -665,20 +498,13 @@ export class hanzoaiFormatImporter {
       }
 
       if (docHeader.class === document.class.Document) {
-        const docMeta: ReferenceMetadata = {
-          id: generateId<Document>(),
-          class: document.class.Document,
-          refTitle: docHeader.title
-        }
-
-        this.pathById.set(docMeta.id, docPath)
-        this.refMetaByPath.set(docPath, docMeta)
+        this.metadataRegistry.setRefMetadata(docPath, document.class.Document, docHeader.title)
 
         const doc: ImportDocument = {
-          id: docMeta.id as Ref<Document>,
+          id: this.metadataRegistry.getRef(docPath) as Ref<Document>,
           class: document.class.Document,
           title: docHeader.title,
-          descrProvider: async () => await this.readMarkdownContent(docPath),
+          descrProvider: () => Promise.resolve(this.parser.readMarkdownContent(docPath)),
           subdocs: [] // Will be added via builder
         }
 
@@ -705,9 +531,7 @@ export class hanzoaiFormatImporter {
 
     for (const docFile of docFiles) {
       const docPath = path.join(currentPath, docFile)
-      const docHeader = (await this.readYamlHeader(docPath)) as
-        | hanzoaiControlledDocumentHeader
-        | hanzoaiDocumentTemplateHeader
+      const docHeader = this.parser.readYamlHeader(docPath) as HulyControlledDocumentHeader | HulyDocumentTemplateHeader
 
       if (docHeader.class === undefined) {
         this.logger.error(`Skipping ${docFile}: not a document`)
@@ -722,40 +546,21 @@ export class hanzoaiFormatImporter {
       }
 
       const documentMetaId = generateId<DocumentMeta>()
-      const refMeta: ReferenceMetadata = {
-        id: documentMetaId,
-        class: documents.class.DocumentMeta,
-        refTitle: docHeader.title
-      }
-      this.refMetaByPath.set(docPath, refMeta)
+      this.metadataRegistry.setRefMetadata(docPath, documents.class.DocumentMeta, docHeader.title, documentMetaId)
 
       if (docHeader.class === documents.class.ControlledDocument) {
-        const docId = generateId<ControlledDocument>()
-        this.pathById.set(docId, docPath)
-
         const doc = await this.processControlledDocument(
           docHeader as hanzoaiControlledDocumentHeader,
           docPath,
-          docId,
+          this.metadataRegistry.getRef(docPath) as Ref<ControlledDocument>,
           documentMetaId
         )
         builder.addControlledDocument(spacePath, docPath, doc, parentDocPath)
       } else {
-        if (!this.ctrlDocTemplateIdByPath.has(docPath)) {
-          const templateId = generateId<ControlledDocument>()
-          this.ctrlDocTemplateIdByPath.set(docPath, templateId)
-          this.pathById.set(templateId, docPath)
-        }
-
-        const templateId = this.ctrlDocTemplateIdByPath.get(docPath)
-        if (templateId === undefined) {
-          throw new Error(`Template ID not found: ${docPath}`)
-        }
-
         const template = await this.processControlledDocumentTemplate(
           docHeader as hanzoaiDocumentTemplateHeader,
           docPath,
-          templateId,
+          this.metadataRegistry.getRef(docPath) as Ref<ControlledDocument>,
           documentMetaId
         )
         builder.addControlledDocumentTemplate(spacePath, docPath, template, parentDocPath)
@@ -807,55 +612,52 @@ export class hanzoaiFormatImporter {
     )
   }
 
-  private async processProject (projectHeader: hanzoaiProjectSettings): Promise<ImportProject> {
+  private async processProject (data: HulyProjectSettings): Promise<ImportProject> {
     return {
       class: tracker.class.Project,
-      id: projectHeader.id as Ref<Project>,
-      title: projectHeader.title,
-      identifier: projectHeader.identifier,
-      private: projectHeader.private ?? false,
-      autoJoin: projectHeader.autoJoin ?? true,
-      archived: projectHeader.archived ?? false,
-      description: projectHeader.description,
-      emoji: projectHeader.emoji,
-      defaultIssueStatus:
-        projectHeader.defaultIssueStatus !== undefined ? { name: projectHeader.defaultIssueStatus } : undefined,
-      owners:
-        projectHeader.owners !== undefined ? projectHeader.owners.map((email) => this.findAccountByEmail(email)) : [],
-      members:
-        projectHeader.members !== undefined ? projectHeader.members.map((email) => this.findAccountByEmail(email)) : [],
+      id: data.id as Ref<Project>,
+      title: data.title,
+      identifier: data.identifier,
+      private: data.private ?? false,
+      autoJoin: data.autoJoin ?? true,
+      archived: data.archived ?? false,
+      description: data.description,
+      emoji: data.emoji,
+      defaultIssueStatus: data.defaultIssueStatus !== undefined ? { name: data.defaultIssueStatus } : undefined,
+      owners: data.owners !== undefined ? data.owners.map((name) => this.findAccountByName(name)) : [],
+      members: data.members !== undefined ? data.members.map((name) => this.findAccountByName(name)) : [],
       docs: []
     }
   }
 
-  private async processTeamspace (spaceHeader: hanzoaiTeamspaceSettings): Promise<ImportTeamspace> {
+  private async processTeamspace (data: HulyTeamspaceSettings): Promise<ImportTeamspace> {
     return {
       class: document.class.Teamspace,
-      title: spaceHeader.title,
-      private: spaceHeader.private ?? false,
-      autoJoin: spaceHeader.autoJoin ?? true,
-      archived: spaceHeader.archived ?? false,
-      description: spaceHeader.description,
-      emoji: spaceHeader.emoji,
-      owners: spaceHeader.owners !== undefined ? spaceHeader.owners.map((email) => this.findAccountByEmail(email)) : [],
-      members:
-        spaceHeader.members !== undefined ? spaceHeader.members.map((email) => this.findAccountByEmail(email)) : [],
+      title: data.title,
+      private: data.private ?? false,
+      autoJoin: data.autoJoin ?? true,
+      archived: data.archived ?? false,
+      description: data.description,
+      emoji: data.emoji,
+      owners: data.owners !== undefined ? data.owners.map((name) => this.findAccountByName(name)) : [],
+      members: data.members !== undefined ? data.members.map((name) => this.findAccountByName(name)) : [],
       docs: []
     }
   }
 
-  private async processOrgSpace (spaceHeader: hanzoaiOrgSpaceSettings): Promise<ImportOrgSpace> {
+  private async processOrgSpace (data: HulyOrgSpaceSettings): Promise<ImportOrgSpace> {
     return {
       class: documents.class.OrgSpace,
-      title: spaceHeader.title,
-      private: spaceHeader.private ?? false,
-      archived: spaceHeader.archived ?? false,
-      description: spaceHeader.description,
-      owners: spaceHeader.owners?.map((email) => this.findAccountByEmail(email)) ?? [],
-      members: spaceHeader.members?.map((email) => this.findAccountByEmail(email)) ?? [],
-      qualified: spaceHeader.qualified !== undefined ? this.findAccountByEmail(spaceHeader.qualified) : undefined,
-      manager: spaceHeader.manager !== undefined ? this.findAccountByEmail(spaceHeader.manager) : undefined,
-      qara: spaceHeader.qara !== undefined ? this.findAccountByEmail(spaceHeader.qara) : undefined,
+      title: data.title,
+      private: data.private ?? false,
+      autoJoin: data.autoJoin ?? false,
+      archived: data.archived ?? false,
+      description: data.description,
+      owners: data.owners?.map((name) => this.findAccountByName(name)) ?? [],
+      members: data.members?.map((name) => this.findAccountByName(name)) ?? [],
+      qualified: data.qualified !== undefined ? this.findAccountByName(data.qualified) : undefined,
+      manager: data.manager !== undefined ? this.findAccountByName(data.manager) : undefined,
+      qara: data.qara !== undefined ? this.findAccountByName(data.qara) : undefined,
       docs: []
     }
   }
@@ -879,17 +681,8 @@ export class hanzoaiFormatImporter {
       throw new Error(`Template file not found: ${templatePath}`)
     }
 
-    if (!this.ctrlDocTemplateIdByPath.has(templatePath)) {
-      const templateId = generateId<ControlledDocument>()
-      this.ctrlDocTemplateIdByPath.set(templatePath, templateId)
-      this.pathById.set(templateId, templatePath)
-    }
-
-    const templateId = this.ctrlDocTemplateIdByPath.get(templatePath)
-    if (templateId === undefined) {
-      throw new Error(`Template ID not found: ${templatePath}`)
-    }
-
+    const templateId = this.metadataRegistry.getRef(templatePath) as Ref<ControlledDocument>
+    const category = header.category !== undefined ? this.controlledDocumentCategories.get(header.category) : undefined
     return {
       id,
       metaId,
@@ -900,13 +693,14 @@ export class hanzoaiFormatImporter {
       major: 0,
       minor: 1,
       state: DocumentState.Draft,
+      category,
       author,
       owner,
       abstract: header.abstract,
-      reviewers: header.reviewers?.map((email) => this.findEmployeeByName(email)) ?? [],
-      approvers: header.approvers?.map((email) => this.findEmployeeByName(email)) ?? [],
-      coAuthors: header.coAuthors?.map((email) => this.findEmployeeByName(email)) ?? [],
-      descrProvider: async () => await this.readMarkdownContent(docPath),
+      reviewers: header.reviewers?.map((name) => this.findEmployeeByName(name)) ?? [],
+      approvers: header.approvers?.map((name) => this.findEmployeeByName(name)) ?? [],
+      coAuthors: header.coAuthors?.map((name) => this.findEmployeeByName(name)) ?? [],
+      descrProvider: () => Promise.resolve(this.parser.readMarkdownContent(docPath)),
       ccReason: header.changeControl?.reason,
       ccImpact: header.changeControl?.impact,
       ccDescription: header.changeControl?.description,
@@ -926,6 +720,11 @@ export class hanzoaiFormatImporter {
       throw new Error(`Author or owner not found: ${header.author} or ${header.owner}`)
     }
 
+    const category = this.controlledDocumentCategories.get(header.category)
+    if (category === undefined) {
+      throw new Error(`Category not found: ${header.category}`)
+    }
+
     const codeMatch = path.basename(docPath).match(/^\[([^\]]+)\]/)
     return {
       id,
@@ -937,14 +736,14 @@ export class hanzoaiFormatImporter {
       major: 0,
       minor: 1,
       state: DocumentState.Draft,
-      category: header.category as Ref<DocumentCategory>,
+      category,
       author,
       owner,
       abstract: header.abstract,
-      reviewers: header.reviewers?.map((email) => this.findEmployeeByName(email)) ?? [],
-      approvers: header.approvers?.map((email) => this.findEmployeeByName(email)) ?? [],
-      coAuthors: header.coAuthors?.map((email) => this.findEmployeeByName(email)) ?? [],
-      descrProvider: async () => await this.readMarkdownContent(docPath),
+      reviewers: header.reviewers?.map((name) => this.findEmployeeByName(name)) ?? [],
+      approvers: header.approvers?.map((name) => this.findEmployeeByName(name)) ?? [],
+      coAuthors: header.coAuthors?.map((name) => this.findEmployeeByName(name)) ?? [],
+      descrProvider: () => Promise.resolve(this.parser.readMarkdownContent(docPath)),
       ccReason: header.changeControl?.reason,
       ccImpact: header.changeControl?.impact,
       ccDescription: header.changeControl?.description,
@@ -952,70 +751,14 @@ export class hanzoaiFormatImporter {
     }
   }
 
-  private async readYamlHeader (filePath: string): Promise<any> {
-    this.logger.log('Read YAML header from: ' + filePath)
-    const content = fs.readFileSync(filePath, 'utf8')
-    const match = content.match(/^---\n([\s\S]*?)\n---/)
-    if (match != null) {
-      return yaml.load(match[1])
-    }
-    return {}
-  }
-
-  private async readMarkdownContent (filePath: string): Promise<string> {
-    const content = fs.readFileSync(filePath, 'utf8')
-    const match = content.match(/^---\n[\s\S]*?\n---\n(.*)$/s)
-    return match != null ? match[1] : content
-  }
-
-  private async cacheAccountsByEmails (): Promise<void> {
-    const employees = await this.client.findAll(
-      contact.mixin.Employee,
-      { active: true },
-      { lookup: { _id: { socialIds: contact.class.SocialIdentity } } }
-    )
-
-    this.accountsByEmail = employees.reduce((map, employee) => {
-      employee.$lookup?.socialIds?.forEach((socialId) => {
-        if ((socialId as SocialIdentity).type === SocialIdType.EMAIL) {
-          map.set((socialId as SocialIdentity).value, employee.personUuid)
-        }
-      })
-
-      return map
-    }, new Map())
-  }
-
-  private async cachePersonIdsByEmails (): Promise<void> {
-    const employees = await this.client.findAll(
-      contact.mixin.Employee,
-      { active: true },
-      { lookup: { _id: { socialIds: contact.class.SocialIdentity } } }
-    )
-
-    this.accountsByEmail = employees.reduce((map, employee) => {
-      employee.$lookup?.socialIds?.forEach((socialId) => {
-        if ((socialId as SocialIdentity).type === SocialIdType.EMAIL) {
-          map.set((socialId as SocialIdentity).value, employee.personUuid)
-        }
-      })
-
-      return map
-    }, new Map())
-  }
-
   private async cachePersonsByNames (): Promise<void> {
-    this.personsByName = (await this.client.findAll(contact.class.Person, {}))
-      .map((person) => {
-        return {
-          _id: person._id,
-          name: person.name.split(',').reverse().join(' ')
-        }
-      })
-      .reduce((refByName, person) => {
-        refByName.set(person.name, person._id)
-        return refByName
-      }, new Map())
+    ;(await this.client.findAll(contact.class.Person, {})).forEach((person) => {
+      const name = person.name.split(',').reverse().join(' ')
+      this.personsByName.set(name, person._id)
+      if (person.personUuid !== undefined) {
+        this.accountsByName.set(name, person.personUuid as AccountUuid)
+      }
+    })
   }
 
   private async cacheEmployeesByName (): Promise<void> {
@@ -1030,6 +773,16 @@ export class hanzoaiFormatImporter {
         refByName.set(employee.name, employee._id)
         return refByName
       }, new Map())
+  }
+
+  private async cacheControlledDocumentCategories (): Promise<void> {
+    this.controlledDocumentCategories = (await this.client.findAll(documents.class.DocumentCategory, {})).reduce(
+      (refByCode, category) => {
+        refByCode.set(category.code, category._id)
+        return refByCode
+      },
+      new Map()
+    )
   }
 
   private async collectFileMetadata (folderPath: string): Promise<void> {

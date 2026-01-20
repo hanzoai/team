@@ -11,32 +11,88 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hcengineering/platform'
+import ExecutionContextSelector from './components/attributeEditors/ExecutionContextSelector.svelte'
 import FunctionSelector from './components/attributeEditors/FunctionSelector.svelte'
 import NestedContextSelector from './components/attributeEditors/NestedContextSelector.svelte'
 import RelatedContextSelector from './components/attributeEditors/RelatedContextSelector.svelte'
-import DateOffsetEditor from './components/contextEditors/DateOffsetEditor.svelte'
-import NumberOffsetEditor from './components/contextEditors/NumberOffsetEditor.svelte'
 import RequestUserInput from './components/contextEditors/RequestUserInput.svelte'
+import ResultInput from './components/contextEditors/ResultInput.svelte'
+import RoleEditor from './components/contextEditors/RoleEditor.svelte'
 import ErrorPresenter from './components/ErrorPresenter.svelte'
+import ExecutionMyToDos from './components/ExecutionMyToDos.svelte'
 import ExecutonPresenter from './components/ExecutonPresenter.svelte'
 import ExecutonProgressPresenter from './components/ExecutonProgressPresenter.svelte'
 import Main from './components/Main.svelte'
 import SubProcessPresenter from './components/presenters/SubProcessPresenter.svelte'
 import ToDoPresenter from './components/presenters/ToDoPresenter.svelte'
 import UpdateCardPresenter from './components/presenters/UpdateCardPresenter.svelte'
-import ProcessEditor from './components/ProcessEditor.svelte'
+import ProcessesCardSection from './components/ProcessesCardSection.svelte'
 import ProcessesExtension from './components/ProcessesExtension.svelte'
 import ProcessesSettingSection from './components/ProcessesSection.svelte'
 import ProcessPresenter from './components/ProcessPresenter.svelte'
 import RunProcessCardPopup from './components/RunProcessCardPopup.svelte'
 import RunProcessPopup from './components/RunProcessPopup.svelte'
-import SubProcessEditor from './components/SubProcessEditor.svelte'
-import ToDoEditor from './components/ToDoEditor.svelte'
-import UpdateCardEditor from './components/UpdateCardEditor.svelte'
+import ActionsPresenter from './components/settings/ActionsPresenter.svelte'
+import FunctionSubmenu from './components/settings/FunctionSubmenu.svelte'
+import ProcessEditor from './components/settings/ProcessEditor.svelte'
+import StatePresenter from './components/settings/StatePresenter.svelte'
+import SubProcessEditor from './components/settings/SubProcessEditor.svelte'
+import ToDoEditor from './components/settings/ToDoEditor.svelte'
+import ToDoParamsEditor from './components/settings/ToDoParamsEditor.svelte'
+import ToDoRemoveParamsEditor from './components/settings/ToDoRemoveParamsEditor.svelte'
+import TransitionEditor from './components/settings/TransitionEditor.svelte'
+import TriggerPresenter from './components/settings/TriggerPresenter.svelte'
+import UpdateCardEditor from './components/settings/UpdateCardEditor.svelte'
+import ArrayElementEditor from './components/transformEditors/ArrayElementEditor.svelte'
+import DateOffsetEditor from './components/transformEditors/DateOffsetEditor.svelte'
+import FilterEditor from './components/transformEditors/FilterEditor.svelte'
+import MultiArrayElementEditor from './components/transformEditors/MultiArrayElementEditor.svelte'
+import NumberEditor from './components/transformEditors/NumberEditor.svelte'
 
-import { continueExecution, showDoneQuery } from './utils'
+import ArraySizeCriteria from './components/criterias/ArraySizeCriteria.svelte'
+import BaseCriteria from './components/criterias/BaseCriteria.svelte'
+import RangeCriteria from './components/criterias/RangeCriteria.svelte'
+import LogActionPresenter from './components/LogActionPresenter.svelte'
+import NotifierExtension from './components/NotifierExtension.svelte'
+import AddRelationPresenter from './components/presenters/AddRelationPresenter.svelte'
+import AddTagPresenter from './components/presenters/AddTagPresenter.svelte'
+import CreateCardPresenter from './components/presenters/CreateCardPresenter.svelte'
+import ProcessesHeaderExtension from './components/ProcessesHeaderExtension.svelte'
+import AddRelationEditor from './components/settings/AddRelationEditor.svelte'
+import AddTagEditor from './components/settings/AddTagEditor.svelte'
+import CardUpdateEditor from './components/settings/CardUpdateEditor.svelte'
+import CardUpdatePresenter from './components/settings/CardUpdatePresenter.svelte'
+import CreateCardEditor from './components/settings/CreateCardEditor.svelte'
+import FieldChangesEditor from './components/settings/FieldChangesEditor.svelte'
+import SubProcessMatchEditor from './components/settings/SubProcessMatchEditor.svelte'
+import SubProcessMatchPresenter from './components/settings/SubProcessMatchPresenter.svelte'
+import TimeEditor from './components/settings/TimeEditor.svelte'
+import TimePresenter from './components/settings/TimePresenter.svelte'
+import ToDoSettingPresenter from './components/settings/ToDoPresenter.svelte'
+import TransitionRefPresenter from './components/settings/TransitionRefPresenter.svelte'
+import AppendEditor from './components/transformEditors/AppendEditor.svelte'
+import CutEditor from './components/transformEditors/CutEditor.svelte'
+import ReplaceEditor from './components/transformEditors/ReplaceEditor.svelte'
+import SplitEditor from './components/transformEditors/SplitEditor.svelte'
+import NumberPresenter from './components/transformPresenters/NumberPresenter.svelte'
+import RolePresenter from './components/transformPresenters/RolePresenter.svelte'
+import { exportProcess } from './exporter'
 import { ProcessMiddleware } from './middleware'
+import {
+  checkProcessSectionVisibility,
+  continueExecution,
+  eventCheck,
+  fieldChangesCheck,
+  matchCardCheck,
+  showDoneQuery,
+  subProcessesDoneCheck,
+  subProcessMatchCheck,
+  timeTransitionCheck,
+  todoTranstionCheck
+} from './utils'
+
+export * from './query'
 
 export default async (): Promise<Resources> => ({
   actionImpl: {
@@ -58,16 +114,75 @@ export default async (): Promise<Resources> => ({
     ProcessPresenter,
     NestedContextSelector,
     RelatedContextSelector,
+    ExecutionContextSelector,
     FunctionSelector,
     Main,
     RunProcessCardPopup,
-    DateOffsetEditor,
-    NumberOffsetEditor,
     ErrorPresenter,
-    RequestUserInput
+    RequestUserInput,
+    ResultInput,
+    RoleEditor,
+    ActionsPresenter,
+    StatePresenter,
+    TriggerPresenter,
+    ToDoRemoveEditor: ToDoRemoveParamsEditor,
+    ToDoCloseEditor: ToDoParamsEditor,
+    CardUpdateEditor,
+    ProcessesCardSection,
+    TransitionEditor,
+    TransitionRefPresenter,
+    LogActionPresenter,
+    NotifierExtension,
+    CreateCardEditor,
+    CreateCardPresenter,
+    AddRelationEditor,
+    AddRelationPresenter,
+    CardUpdatePresenter,
+    ToDoSettingPresenter,
+    TimeEditor,
+    TimePresenter,
+    AddTagEditor,
+    AddTagPresenter,
+    ExecutionMyToDos,
+    FieldChangesEditor,
+    FunctionSubmenu,
+    SubProcessMatchEditor,
+    SubProcessMatchPresenter,
+    ProcessesHeaderExtension
+  },
+  criteriaEditor: {
+    BaseCriteria,
+    ArraySizeCriteria,
+    RangeCriteria
+  },
+  transformPresenter: {
+    NumberPresenter,
+    RolePresenter
+  },
+  transformEditor: {
+    ArrayElementEditor,
+    MultiArrayElementEditor,
+    DateOffsetEditor,
+    NumberEditor,
+    AppendEditor,
+    ReplaceEditor,
+    SplitEditor,
+    CutEditor,
+    FilterEditor
+  },
+  triggerCheck: {
+    MatchCheck: matchCardCheck,
+    FieldChangedCheck: fieldChangesCheck,
+    SubProcessesDoneCheck: subProcessesDoneCheck,
+    SubProcessMatchCheck: subProcessMatchCheck,
+    ToDo: todoTranstionCheck,
+    Time: timeTransitionCheck,
+    OnEventCheck: eventCheck
   },
   function: {
+    ExportProcess: exportProcess,
     ShowDoneQuery: showDoneQuery,
+    CheckProcessSectionVisibility: checkProcessSectionVisibility,
     // eslint-disable-next-line @typescript-eslint/unbound-method
     CreateMiddleware: ProcessMiddleware.create
   }

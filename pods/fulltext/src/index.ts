@@ -13,18 +13,20 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
-import { MeasureMetricsContext, newMetrics, type Tx } from '@hanzo/core'
-import { initStatisticsContext, type StorageConfiguration } from '@hanzo/server-core'
+import { Analytics } from '@hcengineering/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { newMetrics, type Tx } from '@hcengineering/core'
+import { initStatisticsContext, type StorageConfiguration } from '@hcengineering/server-core'
 import { join } from 'path'
 
-import { createElasticAdapter } from '@hanzo/elastic'
-import { createRekoniAdapter, type FulltextDBConfiguration } from '@hanzo/server-indexer'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import { createElasticAdapter } from '@hcengineering/elastic'
+import { getPlatformQueue } from '@hcengineering/kafka'
+import { setMetadata } from '@hcengineering/platform'
+import { createRekoniAdapter, type FulltextDBConfiguration } from '@hcengineering/server-indexer'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import serverToken from '@hcengineering/server-token'
 import { readFileSync } from 'fs'
 import { startIndexer } from './server'
-import { getPlatformQueue } from '@hanzo/kafka'
 
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]
 
@@ -34,9 +36,13 @@ if (serverSecret === undefined) {
   process.exit(1)
 }
 
+setMetadata(serverToken.metadata.Secret, serverSecret)
+setMetadata(serverToken.metadata.Service, 'fulltext')
+
+configureAnalytics('fulltext', process.env.VERSION ?? '0.7.0')
 const metricsContext = initStatisticsContext('fulltext', {
   factory: () =>
-    new MeasureMetricsContext(
+    createOpenTelemetryMetricsContext(
       'fulltext',
       {},
       {},
@@ -48,9 +54,6 @@ const metricsContext = initStatisticsContext('fulltext', {
     )
 })
 
-const sentryDSN = process.env.SENTRY_DSN
-
-configureAnalytics(sentryDSN, {})
 Analytics.setTag('application', 'fulltext')
 
 const dbURL = process.env.DB_URL
@@ -101,6 +104,8 @@ if (accountsUrl === undefined) {
   process.exit(1)
 }
 
+const hulylakeUrl = process.env.HULYLAKE_URL ?? ''
+
 const storageConfig: StorageConfiguration = storageConfigFromEnv()
 const externalStorage = buildStorageFromConfig(storageConfig)
 
@@ -113,6 +118,7 @@ const onClose = startIndexer(metricsContext, {
   externalStorage,
   elasticIndexName,
   dbURL,
+  hulylakeUrl,
   port: servicePort,
   serverSecret,
   accountsUrl

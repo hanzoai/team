@@ -25,7 +25,6 @@
     Header,
     themeStore,
     Breadcrumbs,
-    IconWithEmoji,
     getPlatformColorDef,
     getPlatformColorForTextDef
   } from '@hanzo/ui'
@@ -35,11 +34,11 @@
   import TeamNavigator from './TeamNavigator.svelte'
   import Agenda from './agenda/Agenda.svelte'
   import Calendar from './calendar/Calendar.svelte'
-  import { getClient } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { Analytics } from '@hanzo/analytics'
-  import tracker, { Project as Proj } from '@hanzo/tracker'
-  import { TimeEvents } from '@hanzo/time'
+  import { IconWithEmoji, getClient } from '@hcengineering/presentation'
+  import view from '@hcengineering/view'
+  import { Analytics } from '@hcengineering/analytics'
+  import tracker, { Project as Proj } from '@hcengineering/tracker'
+  import { TimeEvents } from '@hcengineering/time'
 
   const client = getClient()
 
@@ -58,13 +57,13 @@
     const _space = await client.findOne(task.class.Project, { _id: space })
     if (_space) {
       const project = _space as Proj
-      const icon = project.icon === view.ids.IconWithEmoji ? IconWithEmoji : project.icon ?? undefined
+      const icon = project.icon === view.ids.IconWithEmoji ? IconWithEmoji : (project.icon ?? undefined)
       const iconProps =
         project.icon === view.ids.IconWithEmoji
           ? { icon: project.color }
           : {
               fill:
-                project.color !== undefined
+                project.color !== undefined && typeof project.color !== 'string'
                   ? getPlatformColorDef(project.color, $themeStore.dark).icon
                   : getPlatformColorForTextDef(project.name, $themeStore.dark).icon
             }

@@ -13,28 +13,28 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentUpdate, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
+  import { Contact } from '@hcengineering/contact'
+  import { DocumentUpdate, Ref } from '@hcengineering/core'
+  import { Floor, GRID_WIDTH, Room, getFreeSpace } from '@hcengineering/love'
+  import { getClient } from '@hcengineering/presentation'
   import {
-    Breadcrumb,
     ButtonIcon,
-    ModernButton,
+    DropdownLabels,
     Header,
     IconAdd,
+    ModernButton,
     Scroller,
     eventToHTMLElement,
     showPopup
-  } from '@hanzo/ui'
-  import { Floor, GRID_WIDTH, Room, getFreeSpace } from '@hanzo/love'
+  } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
-  import { floors, lockedRoom } from '../stores'
+  import lovePlg from '../plugin'
+  import { floors, lockedRoom, selectedFloor } from '../stores'
   import { FloorSize, RGBAColor, ResizeInitParams, RoomSide, shadowError, shadowNormal } from '../types'
   import { calculateFloorSize } from '../utils'
   import AddRoomPopup from './AddRoomPopup.svelte'
   import FloorGrid from './FloorGrid.svelte'
   import RoomConfigure from './RoomConfigure.svelte'
-  import lovePlg from '../plugin'
-  import { Contact } from '@hanzo/contact'
 
   export let rooms: Room[] = []
   export let floor: Ref<Floor>
@@ -99,7 +99,7 @@
     showPopup(AddRoomPopup, { floor }, eventToHTMLElement(e))
   }
 
-  $: selectedFloor = $floors.filter((fl) => fl._id === floor)[0]
+  $: selected = $floors.filter((fl) => fl._id === floor)[0]
 
   const setShadowColor = (color: RGBAColor): void => {
     const { r, g, b, a } = color
@@ -287,11 +287,32 @@
     lockedID = -1
   }
   $: rows = calculateFloorSize(rooms) + 2
+
+  function changeFloor (event: CustomEvent<Ref<Floor>>) {
+    if (event.detail) {
+      selectedFloor.set(event.detail)
+    }
+  }
+
+  let items = $floors.map((p) => {
+    return { id: p._id, label: p.name }
+  })
+  $: items = $floors.map((p) => {
+    return { id: p._id, label: p.name }
+  })
 </script>
 
-<div class="hanzoaiComponent">
-  <Header allowFullsize adaptive={'disabled'}>
-    <Breadcrumb title={selectedFloor?.name ?? ''} size={'large'} isCurrent />
+<div class="hulyComponent">
+  <Header adaptive={'disabled'}>
+    <DropdownLabels
+      {items}
+      selected={selected?._id}
+      size={'large'}
+      kind={'ghost'}
+      enableSearch={false}
+      autoSelect={false}
+      on:selected={changeFloor}
+    />
     <svelte:fragment slot="actions">
       <ButtonIcon icon={IconAdd} size={'small'} on:click={addRoom} />
       <div class="hanzoaiHeader-divider short" />

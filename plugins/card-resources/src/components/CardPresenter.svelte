@@ -13,16 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
-  import { AnySvelteComponent, Icon, tooltip } from '@hanzo/ui'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { Ref } from '@hanzo/core'
+  import { Card, MasterTag } from '@hcengineering/card'
+  import core, { Ref, toRank } from '@hcengineering/core'
+  import { Asset, getEmbeddedLabel } from '@hcengineering/platform'
+  import { getClient } from '@hcengineering/presentation'
+  import { AnySvelteComponent, tooltip } from '@hcengineering/ui'
+  import { ObjectPresenterType } from '@hcengineering/view'
+  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
 
-  import ParentNamesPresenter from './ParentNamesPresenter.svelte'
   import card from '../plugin'
+  import CardIcon from './CardIcon.svelte'
+  import ParentNamesPresenter from './ParentNamesPresenter.svelte'
 
   export let value: Card | Ref<Card> | undefined
   export let disabled: boolean = false
@@ -33,9 +34,9 @@
   export let noSelect: boolean = true
   export let inline = false
   export let showParent: boolean = false
-  export let kind: 'list' | undefined = undefined
   export let type: ObjectPresenterType = 'link'
   export let icon: Asset | AnySvelteComponent | undefined = undefined
+  export let showVersion: boolean = true
 
   const client = getClient()
   let cardObj: Card | undefined = undefined
@@ -51,55 +52,122 @@
   async function readCard (ref: Ref<Card>): Promise<void> {
     cardObj = await client.findOne(card.class.Card, { _id: ref })
   }
+
+  $: _class = cardObj && (client.getHierarchy().getClass(cardObj?._class) as MasterTag)
+  $: icon = _class && _class.icon
+
+  $: ids = getIds(cardObj)
+
+  function getIds (object: Card | undefined): string {
+    if (object === undefined) return ''
+    const h = client.getHierarchy()
+    const attrs = [...h.getAllAttributes(object._class, core.class.Doc).values()].sort((a, b) => {
+      const rankA = a.rank ?? toRank(a._id) ?? ''
+      const rankB = b.rank ?? toRank(b._id) ?? ''
+      return rankA.localeCompare(rankB)
+    })
+    const res: string[] = []
+    for (const attr of attrs) {
+      const val = (object as any)[attr.name]
+      if (attr.showInPresenter === true && val !== undefined) {
+        if (typeof val === 'string' || typeof val === 'number') {
+          res.push(val.toString())
+        } else if (typeof val === 'boolean') {
+          res.push(val ? '✅' : '❌️')
+        }
+      }
+    }
+    return res.join(' ')
+  }
+
+  $: version = getVersion(cardObj)
+
+  function getVersion (val: Card | undefined): string {
+    if (val === undefined) return ''
+    const h = client.getHierarchy()
+    const mixin = h.classHierarchyMixin(val._class, core.mixin.VersionableClass)
+    if (mixin?.enabled) {
+      return 'v' + (val.version ?? 1)
+    }
+    return ''
+  }
 </script>
 
 {#if inline && cardObj}
   <ObjectMention object={cardObj} {disabled} {onClick} component={card.component.EditCard} />
 {:else if cardObj}
   {#if type === 'link'}
-    <div class="flex-row-center">
-      {#if showParent}
-        <ParentNamesPresenter value={cardObj} />
-      {/if}
+    {#if showParent}
+      <ParentNamesPresenter value={cardObj}>
+        <DocNavLink
+          object={cardObj}
+          {onClick}
+          {disabled}
+          {noUnderline}
+          {colorInherit}
+          {noSelect}
+          inline
+          component={card.component.EditCard}
+          shrink={0}
+          title={cardObj?.title}
+        >
+          {#if shouldShowAvatar}
+            <div class="icon" use:tooltip={{ label: _class?.label ?? card.string.Card }}>
+              <CardIcon value={cardObj} />
+            </div>
+          {/if}
+          <span class="overflow-label">
+            {ids}
+            {cardObj.title}
+            {#if showVersion}
+              {version}
+            {/if}
+            <slot name="details" />
+          </span>
+        </DocNavLink>
+      </ParentNamesPresenter>
+    {:else}
       <DocNavLink
         object={cardObj}
         {onClick}
         {disabled}
         {noUnderline}
-        {inline}
         {colorInherit}
+        {noSelect}
+        inline
         component={card.component.EditCard}
         shrink={0}
+        title={cardObj?.title}
       >
-        <span class="presenterRoot" class:cursor-pointer={!disabled}>
-          {#if shouldShowAvatar}
-            <div class="icon" use:tooltip={{ label: card.string.Card }}>
-              <Icon icon={icon ?? card.icon.Card} size={'small'} />
-            </div>
+        {#if shouldShowAvatar}
+          <div class="icon" use:tooltip={{ label: _class?.label ?? card.string.Card }}>
+            <CardIcon value={cardObj} />
+          </div>
+        {/if}
+        <span class="overflow-label cropped-text-presenter">
+          {ids}
+          {cardObj.title}
+          {#if showVersion}
+            {version}
           {/if}
-          <span class="overflow-label" class:select-text={!noSelect} title={cardObj?.title}>
-            {cardObj.title}
-            <slot name="details" />
-          </span>
+          <slot name="details" />
         </span>
       </DocNavLink>
-    </div>
+    {/if}
   {:else}
     <span class="overflow-label" class:select-text={!noSelect} use:tooltip={{ label: getEmbeddedLabel(cardObj.title) }}>
+      {ids}
       {cardObj.title}
+      {#if showVersion}
+        {version}
+      {/if}
     </span>
   {/if}
 {/if}
 
 <style lang="scss">
-  .presenterRoot {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-
-    .icon {
-      margin-right: 0.5rem;
-      color: var(--theme-dark-color);
-    }
+  .icon {
+    margin-right: 0.5rem;
+    color: var(--theme-dark-color);
   }
 </style>

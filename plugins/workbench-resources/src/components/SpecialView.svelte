@@ -18,6 +18,7 @@
   import { getClient, ComponentExtensions } from '@hanzo/presentation'
   import {
     AnyComponent,
+    AnySvelteComponent,
     Breadcrumb,
     Button,
     Component,
@@ -28,8 +29,8 @@
     ModeSelector,
     SearchInput,
     showPopup
-  } from '@hanzo/ui'
-  import { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions, BuildModelKey } from '@hanzo/view'
+  } from '@hcengineering/ui'
+  import view, { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions, BuildModelKey } from '@hcengineering/view'
   import {
     FilterBar,
     FilterButton,
@@ -40,10 +41,13 @@
   } from '@hanzo/view-resources'
   import workbench, { ParentsNavigationModel } from '@hanzo/workbench'
   import ComponentNavigator from './ComponentNavigator.svelte'
+  import { deepEqual } from 'fast-equals'
+  import { ComponentType } from 'svelte'
 
   export let _class: Ref<Class<Doc>>
   export let space: Ref<Space> | undefined = undefined
-  export let icon: Asset
+  export let icon: Asset | AnySvelteComponent | ComponentType | undefined = undefined
+  export let iconProps: any | undefined = undefined
   export let label: IntlString
   export let createEvent: string | undefined = undefined
   export let createLabel: IntlString | undefined = undefined
@@ -74,12 +78,20 @@
 
   let isQueryLoaded = queryBuilder === undefined
 
-  $: _baseQuery = mergeQueries(baseQuery ?? {}, viewlet?.baseQuery ?? {})
+  $: baseQueryMixin = hierarchy.classHierarchyMixin(_class, view.mixin.BaseQuery)
+
+  $: _baseQuery = mergeQueries(mergeQueries(baseQuery ?? {}, baseQueryMixin?.baseQuery ?? {}), viewlet?.baseQuery ?? {})
   $: query = { ..._baseQuery }
   $: searchQuery = search === '' ? query : { ...query, $search: search }
   $: resultQuery = isQueryLoaded ? searchQuery : undefined
 
   let options = viewlet?.options
+  let _options = viewlet?.options ?? {}
+
+  $: if (!deepEqual(viewlet?.options ?? {}, _options)) {
+    _options = viewlet?.options ?? {}
+    options = viewlet?.options
+  }
 
   $: void updateQuery(_baseQuery, viewOptions, viewlet, queryBuilder)
   $: void updateOptions(viewlet?.options, viewOptions, viewlet)
@@ -144,7 +156,7 @@
     <ViewletSettingButton bind:viewOptions bind:viewlet {defaultViewOptions} {defaultConfig} />
   </svelte:fragment>
 
-  <Breadcrumb {icon} {label} size={'large'} isCurrent />
+  <Breadcrumb {icon} {iconProps} {label} size={'large'} isCurrent />
 
   <svelte:fragment slot="search">
     <SearchInput bind:value={search} collapsed />

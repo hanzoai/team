@@ -12,18 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { Employee } from '@hanzo/contact'
-import documents, { DocumentSpace } from '@hanzo/controlled-documents'
-import { MeasureMetricsContext, Ref, systemAccountUuid, WorkspaceUuid, type WorkspaceDataId } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import serverClientPlugin from '@hanzo/server-client'
-import { type StorageAdapter } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken, { generateToken } from '@hanzo/server-token'
+import { type Employee } from '@hcengineering/contact'
+import documents, { type DocumentSpace } from '@hcengineering/controlled-documents'
+import {
+  MeasureMetricsContext,
+  type Ref,
+  systemAccountUuid,
+  type WorkspaceUuid,
+  type WorkspaceDataId
+} from '@hcengineering/core'
+import { setMetadata } from '@hcengineering/platform'
+import serverClientPlugin from '@hcengineering/server-client'
+import { type StorageAdapter } from '@hcengineering/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import serverToken, { generateToken } from '@hcengineering/server-token'
 import { program } from 'commander'
 
 import { importDoc } from './commands'
-import { Config } from './config'
+import { type Config } from './config'
 import { getBackend } from './convert/convert'
 
 /**
@@ -56,6 +62,7 @@ export function docImportTool (): void {
 
   setMetadata(serverClientPlugin.metadata.Endpoint, accountUrl)
   setMetadata(serverToken.metadata.Secret, serverSecret)
+  setMetadata(serverToken.metadata.Service, process.env.SERVICE_ID ?? 'doc-import-tool')
 
   async function withStorage (f: (storageAdapter: StorageAdapter) => Promise<any>): Promise<void> {
     const adapter = buildStorageFromConfig(storageConfigFromEnv())

@@ -14,54 +14,62 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
+  import { Card, MasterTag } from '@hcengineering/card'
   import {
     defineSeparators,
     Separator,
     deviceOptionsStore as deviceInfo,
     resolvedLocationStore,
     Location,
-    restoreLocation
-  } from '@hanzo/ui'
+    restoreLocation,
+    closePanel,
+    Component
+  } from '@hcengineering/ui'
   import { onDestroy } from 'svelte'
-  import { createNotificationContextsQuery, getClient } from '@hanzo/presentation'
-  import { chatId } from '@hanzo/chat'
-  import { Ref, SortingOrder } from '@hanzo/core'
-  import { NotificationContext } from '@hanzo/communication-types'
+  import { getClient } from '@hcengineering/presentation'
+  import chat, { chatId } from '@hcengineering/chat'
+  import { Ref } from '@hcengineering/core'
+  import view from '@hcengineering/view'
+  import { Favorites } from '@hcengineering/card-resources'
+  import workbench from '@hcengineering/workbench'
+  import cardPlugin from '@hcengineering/card-resources/src/plugin'
 
-  import ChatPanel from './ChatPanel.svelte'
   import ChatNavigation from './ChatNavigation.svelte'
-  import { navigateToCard, getCardIdFromLocation, navigateToType, getTypeIdFromLocation } from '../location'
+  import {
+    navigateToCard,
+    getCardIdFromLocation,
+    navigateToType,
+    getTypeIdFromLocation,
+    isAllLocation,
+    isFavoritesLocation,
+    navigateToFavorites,
+    navigateToAll
+  } from '../location'
   import ChatNavigationCategoryList from './ChatNavigationCategoryList.svelte'
 
-  type Selection = { type: 'card', card: Card } | { type: 'type', ref: Ref<MasterTag> }
+  type Selection =
+    | {
+      type: 'card'
+      _id: Ref<Card>
+      doc: Card
+    }
+    | {
+      type: 'type'
+      _id: Ref<MasterTag>
+      doc: MasterTag
+    }
+    | { type: 'favorites' }
+    | { type: 'all' }
 
   const client = getClient()
-
-  const notificationContextsQuery = createNotificationContextsQuery()
+  const hierarchy = client.getHierarchy()
 
   let replacedPanelElement: HTMLElement
   let selection: Selection | undefined = undefined
   let needRestoreLoc = true
 
-  let contexts: NotificationContext[] = []
-
   $: selectedCard = getSelectedCard(selection)
   $: selectedType = getSelectedType(selection)
-
-  // TODO: only for subscribed/loaded cards
-  notificationContextsQuery.query(
-    {
-      notifications: {
-        order: SortingOrder.Descending,
-        read: false,
-        limit: 10
-      }
-    },
-    (res) => {
-      contexts = res.getResult()
-    }
-  )
 
   async function syncLocation (loc: Location): Promise<void> {
     if (loc.path[2] !== chatId) {
@@ -69,13 +77,26 @@
     }
 
     const typeId = getTypeIdFromLocation(loc)
+    const cardId = getCardIdFromLocation(loc)
+    const isFavorites = isFavoritesLocation(loc)
+    const isAll = isAllLocation(loc)
 
-    if (typeId != null && typeId !== '') {
-      selection = { type: 'type', ref: typeId }
+    if (isFavorites) {
+      selection = { type: 'favorites' }
       return
     }
 
-    const cardId = getCardIdFromLocation(loc)
+    if (isAll) {
+      selection = { type: 'all' }
+      return
+    }
+
+    const type = typeId != null ? await client.findOne(cardPlugin.class.MasterTag, { _id: typeId }) : undefined
+
+    if (type != null) {
+      selection = { type: 'type', _id: type._id, doc: type }
+      return
+    }
 
     if (cardId == null || cardId === '') {
       selection = undefined
@@ -90,32 +111,51 @@
 
     if (cardId !== selectedCard?._id) {
       const card = await client.findOne(cardPlugin.class.Card, { _id: cardId })
-      selection = card != null ? { type: 'card', card } : undefined
+      selection = card != null ? { type: 'card', _id: cardId, doc: card } : undefined
+    }
+    if (selection == null) {
+      selection = { type: 'all' }
     }
   }
 
   function selectCard (event: CustomEvent<Card>): void {
+    if (selection?.type === 'card' && selection._id === event.detail._id) return
+    closePanel(false)
     const card = event.detail
-    selection = { type: 'card', card }
+    selection = { type: 'card', _id: card._id, doc: card }
     navigateToCard(card._id)
   }
 
-  function selectType (event: CustomEvent<Ref<MasterTag>>): void {
+  function selectType (event: CustomEvent<MasterTag>): void {
+    if (selection?.type === 'type' && selection._id === event.detail._id) return
+    closePanel(false)
     const type = event.detail
-    selection = { type: 'type', ref: type }
-    navigateToType(type)
+    selection = { type: 'type', _id: type._id, doc: type }
+    navigateToType(type._id)
+  }
+
+  function selectFavorites (): void {
+    if (selection?.type === 'favorites') return
+    closePanel(false)
+    selection = { type: 'favorites' }
+    navigateToFavorites()
+  }
+
+  function selectAll (): void {
+    if (selection?.type === 'all') return
+    closePanel(false)
+    selection = { type: 'all' }
+    navigateToAll()
   }
 
   function getSelectedCard (selection: Selection | undefined): Card | undefined {
-    if (selection == null) return undefined
-    if (selection.type !== 'card') return undefined
-    return selection.card
+    if (selection?.type !== 'card') return undefined
+    return selection.doc
   }
 
   function getSelectedType (selection: Selection | undefined): Ref<MasterTag> | undefined {
-    if (selection == null) return undefined
-    if (selection.type !== 'type') return undefined
-    return selection.ref
+    if (selection?.type !== 'type') return undefined
+    return selection._id
   }
 
   onDestroy(
@@ -133,7 +173,7 @@
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
 </script>
 
-<div class="hanzoaiPanels-container chat next-colors">
+<div class="hulyPanels-container chat">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -145,9 +185,11 @@
         <ChatNavigation
           card={getSelectedCard(selection)}
           type={getSelectedType(selection)}
-          {contexts}
+          special={selection?.type}
           on:selectCard={selectCard}
           on:selectType={selectType}
+          on:favorites={selectFavorites}
+          on:selectAll={selectAll}
         />
       </div>
       {#if !($deviceInfo.isMobile && $deviceInfo.isPortrait && $deviceInfo.minWidth)}
@@ -163,31 +205,45 @@
       short
     />
   {/if}
-  <div bind:this={replacedPanelElement} class="hanzoaiComponent chat__panel">
-    {#if selectedCard}
-      {@const context = contexts.find((c) => c.card === selectedCard?._id)}
-      <ChatPanel card={selectedCard} {context} />
+  <div bind:this={replacedPanelElement} class="hulyComponent chat__panel">
+    {#if selection?.type === 'favorites'}
+      {#key selection.type}
+        <Favorites application={chatId} />
+      {/key}
+    {:else if selectedCard}
+      {@const panelComponent = hierarchy.classHierarchyMixin(selectedCard._class, view.mixin.ObjectPanel)}
+      {@const comp = panelComponent?.component ?? view.component.EditDoc}
+      <Component is={comp} props={{ _id: selectedCard._id, readonly: false, embedded: true, allowClose: false }} />
     {:else if selectedType}
       <ChatNavigationCategoryList type={selectedType} />
+    {:else if selection?.type === 'all'}
+      <Component
+        is={workbench.component.SpecialView}
+        props={{
+          _class: cardPlugin.class.Card,
+          icon: chat.icon.All,
+          label: chat.string.All,
+          defaultViewletDescriptor: cardPlugin.viewlet.CardFeedDescriptor
+        }}
+      />
     {/if}
   </div>
 </div>
 
 <style lang="scss">
   .chat {
-    background: var(--next-background-color);
-    border-color: var(--next-border-color);
-    font-family: 'Inter Display', sans-serif;
+    background: var(--theme-navpanel-color);
+    border-color: var(--theme-divider-color);
   }
 
   .chat__navigator {
-    background: var(--next-background-color);
-    border-color: var(--next-border-color);
+    background: var(--theme-navpanel-color);
+    border-color: var(--theme-divider-color);
   }
 
   .chat__panel {
-    background: var(--next-panel-color-background);
-    border-color: var(--next-panel-color-border);
+    background: var(--theme-panel-color);
+    border-color: var(--theme-divider-color);
     position: relative;
   }
 </style>

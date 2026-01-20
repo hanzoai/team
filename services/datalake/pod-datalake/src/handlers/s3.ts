@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { MeasureContext } from '@hanzo/core'
+import { Analytics } from '@hcengineering/analytics'
+import { MeasureContext, type WorkspaceUuid } from '@hcengineering/core'
 import { type Request, type Response } from 'express'
 
 import { type Datalake } from '../datalake'
@@ -25,7 +25,7 @@ export async function handleS3CreateBlobParams (
   res: Response,
   datalake: Datalake
 ): Promise<void> {
-  const { workspace } = req.params
+  const workspace = req.params.workspace as WorkspaceUuid
   const { location, bucket } = await datalake.selectStorage(ctx, workspace)
   res.status(200).json({ location, bucket: bucket.bucket })
 }
@@ -36,7 +36,8 @@ export async function handleS3CreateBlob (
   res: Response,
   datalake: Datalake
 ): Promise<void> {
-  const { workspace, name } = req.params
+  const { name } = req.params
+  const workspace = req.params.workspace as WorkspaceUuid
   const filename = req.body.filename as string
   if (filename == null) {
     res.status(400).send('missing filename')

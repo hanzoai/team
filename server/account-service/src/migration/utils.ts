@@ -16,6 +16,8 @@ import { getMongoClient } from '@hanzo/mongo'
 
 import { MongoAccountDB } from './collections/mongo'
 
+export { MongoAccountDB }
+
 export async function getMongoAccountDB (uri: string, dbNs?: string): Promise<[MongoAccountDB, () => void]> {
   const isMongo = uri.startsWith('mongodb://')
 

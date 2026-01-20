@@ -63,6 +63,7 @@ import workbench from '@hanzo/model-workbench'
 import { getEmbeddedLabel } from '@hanzo/platform'
 
 import drive from './plugin'
+import { definePermissions } from './permissions'
 
 export { driveId } from '@hanzo/drive'
 export { driveOperation } from './migration'
@@ -790,4 +791,5 @@ export function createModel (builder: Builder): void {
   defineFile(builder)
   defineFileVersion(builder)
   defineApplication(builder)
+  definePermissions(builder)
 }

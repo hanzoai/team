@@ -1,11 +1,12 @@
 <script lang="ts">
-    import core, { getCurrentAccount, type Ref } from '@hanzo/core'
-    import { createQuery } from '@hanzo/presentation'
-    import { Icon, IconCheck, Label, Loading } from '@hanzo/ui'
-    import type { Application } from '@hanzo/workbench'
-    import workbench from '@hanzo/workbench'
-    import { onMount } from 'svelte'
-    import { hideApplication, showApplication } from '../utils'
+  import core, { AccountRole, getCurrentAccount, type Ref } from '@hcengineering/core'
+  import type { Application } from '@hcengineering/workbench'
+  import { createQuery } from '@hcengineering/presentation'
+  import workbench from '@hcengineering/workbench'
+  import { hideApplication, isAllowedToRole, showApplication } from '../utils'
+  import { Loading, IconCheck, Label, Icon } from '@hcengineering/ui'
+  import { getMetadata } from '@hcengineering/platform'
+  // import Drag from './icons/Drag.svelte'
 
     export let apps: Application[] = []
     export let plan: string
@@ -106,20 +107,24 @@
             <Label label={app.label} />
           </span>
 
-          <div class="ap-check" on:click={(e) => {
-            if (plan === 'cloud:free' && i >= 2) {
-              e.stopPropagation()
-              showUpgradePopup()
-            }
-          }}>
-            {#if !hiddenAppsIds.includes(app._id)}
-              <IconCheck size={'small'} />
-            {:else if plan === 'cloud:free' && i >= 2}
-              <span style="color: red; font-size: 18px;">🔒</span>
-            {/if}
-          </div>
-        </button>
-      {/each}
+  const filteredApps = apps.filter(
+    (it) =>
+      !hiddenAppsIds.includes(it._id) &&
+      isAllowedToRole(it.accessLevel, me) &&
+      it.position !== 'top' &&
+      !isExcludedApp(it.alias)
+  )
+
+  function isExcludedApp (alias: string): boolean {
+    const me = getCurrentAccount()
+
+    if (me.role === AccountRole.ReadOnlyGuest || me.role === AccountRole.Guest) {
+      return (getMetadata(workbench.metadata.ExcludedApplicationsForAnonymous) ?? []).includes(alias)
+    } else {
+      return false
+    }
+  }
+</script>
 
         {:else}
           <div class="ap-menuItem empty">

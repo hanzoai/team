@@ -29,12 +29,13 @@ import {
   Space,
   Status,
   Timestamp,
-  Type
-} from '@hanzo/core'
-import { Asset, IntlString, Plugin, Resource, plugin } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
-import { TagCategory, TagElement, TagReference } from '@hanzo/tags'
-import { ToDo } from '@hanzo/time'
+  Type,
+  type Permission
+} from '@hcengineering/core'
+import { Asset, IntlString, Plugin, Resource, plugin } from '@hcengineering/platform'
+import { Preference } from '@hcengineering/preference'
+import { TagCategory, TagElement, TagReference } from '@hcengineering/tags'
+import { ToDo } from '@hcengineering/time'
 import {
   ProjectType,
   ProjectTypeDescriptor,
@@ -477,6 +478,7 @@ const pluginState = plugin(trackerId, {
     Issue: '' as Ref<TaskTypeDescriptor>
   },
   action: {
+    CopyAsMarkdownTable: '' as Ref<Action<Doc, any>>,
     SetDueDate: '' as Ref<Action<Doc, any>>,
     SetParent: '' as Ref<Action<Doc, any>>,
     SetStatus: '' as Ref<Action>,
@@ -519,7 +521,9 @@ const pluginState = plugin(trackerId, {
     RelatedIssues: '' as IntlString,
     Issue: '' as IntlString,
     NewProject: '' as IntlString,
-    UnsetParentIssue: '' as IntlString
+    UnsetParentIssue: '' as IntlString,
+    ForbidCreateProjectPermission: '' as IntlString,
+    ForbidCreateProjectPermissionDescription: '' as IntlString
   },
   extensions: {
     IssueListHeader: '' as ComponentExtensionId,
@@ -529,6 +533,9 @@ const pluginState = plugin(trackerId, {
   taskTypes: {
     Issue: '' as Ref<TaskType>,
     SubIssue: '' as Ref<TaskType>
+  },
+  permission: {
+    ForbidCreateProject: '' as Ref<Permission>
   }
 })
 export default pluginState

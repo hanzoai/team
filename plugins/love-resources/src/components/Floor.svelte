@@ -13,16 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, getCurrentAccount, hasAccountRole, WithLookup } from '@hanzo/core'
-  import { Breadcrumb, Header, IconEdit, ModernButton, Component } from '@hanzo/ui'
-  import { Floor, Room } from '@hanzo/love'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Ref, WithLookup } from '@hcengineering/core'
+  import { Floor, Room } from '@hcengineering/love'
+  import { Component, DropdownLabels, Header, IconEdit, ModernButton } from '@hcengineering/ui'
+  import { Viewlet, ViewletPreference } from '@hcengineering/view'
+  import { ViewletSelector } from '@hcengineering/view-resources'
   import { createEventDispatcher } from 'svelte'
-  import { ViewletSelector } from '@hanzo/view-resources'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
 
   import lovePlg from '../plugin'
-  import { currentRoom, floors } from '../stores'
-  import ControlBar from './ControlBar.svelte'
+  import { floors, selectedFloor } from '../stores'
 
   export let rooms: Room[] = []
   export let floor: Ref<Floor>
@@ -33,17 +32,39 @@
   let preference: ViewletPreference | undefined
   let loading = false
 
-  $: selectedFloor = $floors.filter((fl) => fl._id === floor)[0]
+  let selected = $floors.filter((fl) => fl._id === floor)[0]
+  $: selected = $floors.filter((fl) => fl._id === floor)[0]
 
   const me = getCurrentAccount()
 
   let editable: boolean = false
   $: editable = hasAccountRole(me, AccountRole.Maintainer)
+
+  let items = $floors.map((p) => {
+    return { id: p._id, label: p.name }
+  })
+  $: items = $floors.map((p) => {
+    return { id: p._id, label: p.name }
+  })
+
+  function changeFloor (event: CustomEvent<Ref<Floor>>) {
+    if (event.detail) {
+      selectedFloor.set(event.detail)
+    }
+  }
 </script>
 
 <div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
-    <Breadcrumb title={selectedFloor?.name ?? ''} size={'large'} isCurrent />
+    <DropdownLabels
+      {items}
+      selected={selected?._id}
+      size={'large'}
+      kind={'ghost'}
+      enableSearch={false}
+      autoSelect={false}
+      on:selected={changeFloor}
+    />
     <svelte:fragment slot="beforeTitle">
       <ViewletSelector bind:viewlet bind:preference bind:loading viewletQuery={{ attachTo: lovePlg.class.Floor }} />
     </svelte:fragment>
@@ -63,7 +84,4 @@
       <Component is={viewlet.$lookup.descriptor.component} props={{ floor, rooms }} on:open />
     {/if}
   </div>
-  {#if $currentRoom}
-    <ControlBar room={$currentRoom} />
-  {/if}
 </div>

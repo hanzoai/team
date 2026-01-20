@@ -13,11 +13,12 @@
 // limitations under the License.
 //
 import nodemailer, { type Transporter } from 'nodemailer'
-import aws from '@aws-sdk/client-ses'
+import * as aws from '@aws-sdk/client-ses'
 
 import { type Config, type SmtpConfig, type SesConfig, getTlsSettings } from './config'
 
 function smtp (config: SmtpConfig): Transporter {
+  console.log('Using SMTP config')
   const auth =
     config.Username !== undefined && config.Password !== undefined
       ? {
@@ -37,6 +38,7 @@ function smtp (config: SmtpConfig): Transporter {
 }
 
 function ses (config: SesConfig): Transporter {
+  console.log('Using AWS SES config')
   const ses = new aws.SES({
     region: config.Region,
     credentials: {
@@ -50,7 +52,7 @@ function ses (config: SesConfig): Transporter {
   })
 }
 
-export function getTransport (config: Config): Transporter {
+export function getDefaultTransport (config: Config): Transporter {
   if (config.smtpConfig !== undefined) {
     return smtp(config.smtpConfig)
   }
@@ -58,4 +60,17 @@ export function getTransport (config: Config): Transporter {
     return ses(config.sesConfig)
   }
   throw new Error('No transport protocol is configured')
+}
+
+export function getSmtpTransport (config: SmtpConfig, user: string, pass: string): Transporter {
+  const auth = { user, pass }
+  const tlsSettings = getTlsSettings(config)
+  return nodemailer.createTransport({
+    host: config.Host,
+    port: config.Port,
+    auth,
+    logger: true,
+    debug: config.DebugLog,
+    ...tlsSettings
+  })
 }

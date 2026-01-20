@@ -13,16 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { Calendar, generateEventId } from '@hanzo/calendar'
-  import contact, { getCurrentEmployee } from '@hanzo/contact'
-  import { Ref, getCurrentAccount } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { closePopup, showPopup } from '@hanzo/ui'
-  import { deleteObjects } from '@hanzo/view-resources'
-  import { TimeEvents, ToDo, WorkSlot } from '@hanzo/time'
+  import calendar, { AccessLevel, Calendar, generateEventId } from '@hcengineering/calendar'
+  import contact, { getCurrentEmployee } from '@hcengineering/contact'
+  import { Ref, getCurrentAccount } from '@hcengineering/core'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { closePopup, showPopup } from '@hcengineering/ui'
+  import { deleteObjects } from '@hcengineering/view-resources'
+  import { TimeEvents, ToDo, WorkSlot } from '@hcengineering/time'
   import time from '../plugin'
   import Workslots from './Workslots.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hcengineering/analytics'
+  import { findPrimaryCalendar } from '../utils'
 
   export let todo: ToDo
 
@@ -56,12 +57,7 @@
     const now = Date.now()
     const date = Math.ceil(now / (30 * 60 * 1000)) * (30 * 60 * 1000)
     const currentAccount = getCurrentAccount()
-    const extCalendar = await client.findOne(calendar.class.ExternalCalendar, {
-      createdBy: currentAccount.primarySocialId,
-      hidden: false,
-      default: true
-    })
-    const _calendar = extCalendar ? extCalendar._id : (`${currentAccount.uuid}_calendar` as Ref<Calendar>)
+    const _calendar = await findPrimaryCalendar()
     const dueDate = date + defaultDuration
     await client.addCollection(time.class.WorkSlot, calendar.space.Calendar, todo._id, todo._class, 'workslots', {
       eventId: generateEventId(),
@@ -71,8 +67,9 @@
       description: todo.description,
       participants: [getCurrentEmployee()],
       title: todo.title,
+      blockTime: true,
       allDay: false,
-      access: 'owner',
+      access: AccessLevel.Owner,
       user: currentAccount.primarySocialId,
       visibility: todo.visibility === 'public' ? 'public' : 'freeBusy',
       reminders: []

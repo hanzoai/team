@@ -13,23 +13,28 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Ref } from '@hanzo/core'
+  import { Card } from '@hcengineering/card'
+  import { PermissionsStore } from '@hcengineering/contact'
+  import { permissionsStore } from '@hcengineering/contact-resources'
+  import core, { AnyAttribute, Class, Doc, Ref, toRank, TypedSpace } from '@hcengineering/core'
+  import notification from '@hcengineering/notification'
   import {
     AttributeBarEditor,
-    KeyedAttribute,
     createQuery,
     getClient,
-    getFiltredKeys,
-    isCollectionAttr
-  } from '@hanzo/presentation'
+    isCollectionAttr,
+    KeyedAttribute
+  } from '@hcengineering/presentation'
+  import { canChangeAttribute } from '@hcengineering/view-resources'
 
-  export let object: Doc | Record<string, any>
+  export let object: Card
   export let _class: Ref<Class<Doc>>
-  export let to: Ref<Class<Doc>> | undefined = core.class.Doc
+  export let to: Ref<Class<Doc>> | undefined = core.class.Obj
   export let ignoreKeys: string[] = []
   export let readonly = false
   export let showHeader: boolean = true
   export let fourRows: boolean = false
+  export let showCollaborators: boolean = false
 
   const client = getClient()
   const hierarchy = client.getHierarchy()
@@ -37,8 +42,18 @@
   let keys: KeyedAttribute[] = []
 
   function updateKeys (_class: Ref<Class<Doc>>, ignoreKeys: string[], to: Ref<Class<Doc>> | undefined): void {
-    const filtredKeys = getFiltredKeys(hierarchy, _class, ignoreKeys, to)
-    keys = filtredKeys.filter((key) => !isCollectionAttr(hierarchy, key))
+    const filtredKeys = [...hierarchy.getAllAttributes(_class, to).entries()]
+      .filter(
+        ([key, value]) =>
+          value.hidden !== true && !ignoreKeys.includes(key) && !isCollectionAttr(hierarchy, { key, attr: value })
+      )
+      .map(([key, attr]) => ({ key, attr }))
+
+    keys = filtredKeys.sort((a, b) => {
+      const rankA = a.attr.rank ?? toRank(a.attr._id) ?? ''
+      const rankB = b.attr.rank ?? toRank(b.attr._id) ?? ''
+      return rankA.localeCompare(rankB)
+    })
   }
 
   $: updateKeys(_class, ignoreKeys, to)
@@ -47,12 +62,35 @@
   $: query.query(core.class.Attribute, { attributeOf: _class }, () => {
     updateKeys(_class, ignoreKeys, to)
   })
+
+  function canChange (attr: AnyAttribute, permissionsStore: PermissionsStore): boolean {
+    return canChangeAttribute(attr, object.space as Ref<TypedSpace>, permissionsStore, _class)
+  }
 </script>
 
 <div class="grid" class:fourRows>
-  {#each keys as key (typeof key === 'string' ? key : key.key)}
-    <AttributeBarEditor {key} {_class} {object} {showHeader} {readonly} withIcon on:update />
+  {#each keys as key}
+    <AttributeBarEditor
+      {key}
+      {_class}
+      {object}
+      {showHeader}
+      readonly={readonly || !canChange(key.attr, $permissionsStore)}
+      withIcon
+      on:update
+    />
   {/each}
+  {#if showCollaborators}
+    <AttributeBarEditor
+      key={'collaborators'}
+      _class={notification.mixin.Collaborators}
+      {object}
+      {showHeader}
+      {readonly}
+      withIcon
+      on:update
+    />
+  {/if}
 </div>
 
 <style lang="scss">

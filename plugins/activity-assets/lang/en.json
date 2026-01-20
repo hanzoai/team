@@ -53,6 +53,9 @@
     "UpdatedObject": "Updated {object}",
     "NewObjectType": "New {type}: {title}",
     "RemovedObjectType": "Removed {type} : {title}",
-    "AttributeSetTo": "{name} set to {value}"
+    "AddedTag": "Added tag: {title}",
+    "RemovedTag": "Removed tag: {title}",
+    "AttributeSetTo": "{name} set to {value}",
+    "ValueTooLarge": "Value too large to display"
   }
 }

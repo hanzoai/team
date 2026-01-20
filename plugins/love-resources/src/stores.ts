@@ -1,19 +1,17 @@
-import { getCurrentEmployee } from '@hanzo/contact'
-import { type Ref } from '@hanzo/core'
+import { aiBotSocialIdentityStore } from '@hcengineering/ai-bot-resources'
+import { getCurrentEmployee } from '@hcengineering/contact'
+import { getPersonRefByPersonId } from '@hcengineering/contact-resources'
+import { type Ref } from '@hcengineering/core'
 import {
-  RequestStatus,
   type DevicesPreference,
   type Floor,
-  type Invite,
-  type JoinRequest,
+  type MeetingMinutes,
   type Office,
   type ParticipantInfo,
-  type Room,
-  type MeetingMinutes
-} from '@hanzo/love'
-import { createQuery, onClient } from '@hanzo/presentation'
+  type Room
+} from '@hcengineering/love'
+import { createQuery, onClient } from '@hcengineering/presentation'
 import { derived, get, writable } from 'svelte/store'
-import { aiBotPersonRefStore } from '@hanzo/ai-bot-resources'
 
 import love from './plugin'
 
@@ -42,16 +40,6 @@ export const activeFloor = derived([rooms, myInfo, myOffice], ([rooms, myInfo, m
   }
   return res ?? love.ids.MainFloor
 })
-export const myRequests = writable<JoinRequest[]>([])
-export const invites = writable<Invite[]>([])
-export const myInvites = derived([invites, myInfo], ([val, info]) => {
-  const personId = getCurrentEmployee()
-  return val.filter((p) => p.target === personId && info?.room !== p.room)
-})
-export const activeInvites = derived(invites, (val) => {
-  const personId = getCurrentEmployee()
-  return val.filter((p) => p.from === personId)
-})
 
 export const myPreferences = writable<DevicesPreference | undefined>()
 export let $myPreferences: DevicesPreference | undefined
@@ -59,9 +47,10 @@ export let $myPreferences: DevicesPreference | undefined
 export const currentMeetingMinutes = writable<MeetingMinutes | undefined>(undefined)
 export const selectedRoomPlace = writable<{ _id: Ref<Room>, x: number, y: number } | undefined>(undefined)
 
-function filterParticipantInfo (value: ParticipantInfo[]): ParticipantInfo[] {
+async function filterParticipantInfo (value: ParticipantInfo[]): Promise<ParticipantInfo[]> {
   const map = new Map<string, ParticipantInfo>()
-  const aiPerson = get(aiBotPersonRefStore)
+  const aiSid = get(aiBotSocialIdentityStore)
+  const aiPerson = aiSid !== undefined ? await getPersonRefByPersonId(aiSid._id) : undefined
   for (const val of value) {
     if (aiPerson !== undefined && val.person === aiPerson) {
       map.set(val._id, val)
@@ -77,9 +66,7 @@ const officeLoaded = writable(false)
 const query = createQuery(true)
 const statusQuery = createQuery(true)
 const floorsQuery = createQuery(true)
-const requestsQuery = createQuery(true)
 const preferencesQuery = createQuery(true)
-const invitesQuery = createQuery(true)
 
 onClient(() => {
   const roomPromise = new Promise<void>((resolve) =>
@@ -89,8 +76,8 @@ onClient(() => {
     })
   )
   const infoPromise = new Promise<void>((resolve) =>
-    statusQuery.query(love.class.ParticipantInfo, {}, (res) => {
-      infos.set(filterParticipantInfo(res))
+    statusQuery.query(love.class.ParticipantInfo, {}, async (res) => {
+      infos.set(await filterParticipantInfo(res))
       resolve()
     })
   )
@@ -100,16 +87,6 @@ onClient(() => {
       resolve()
     })
   )
-  const requestPromise = new Promise<void>((resolve) =>
-    requestsQuery.query(
-      love.class.JoinRequest,
-      { person: getCurrentEmployee(), status: RequestStatus.Pending },
-      (res) => {
-        myRequests.set(res)
-        resolve()
-      }
-    )
-  )
   const preferencePromise = new Promise<void>((resolve) =>
     preferencesQuery.query(love.class.DevicesPreference, {}, (res) => {
       myPreferences.set(res[0])
@@ -118,18 +95,9 @@ onClient(() => {
     })
   )
 
-  const invitesPromise = new Promise<void>((resolve) =>
-    invitesQuery.query(love.class.Invite, { status: RequestStatus.Pending }, (res) => {
-      invites.set(res)
-      resolve()
-    })
-  )
-
-  void Promise.all([roomPromise, infoPromise, floorPromise, requestPromise, preferencePromise, invitesPromise]).then(
-    () => {
-      officeLoaded.set(true)
-    }
-  )
+  void Promise.all([roomPromise, infoPromise, floorPromise, preferencePromise]).then(() => {
+    officeLoaded.set(true)
+  })
 })
 
 export async function waitForOfficeLoaded (): Promise<void> {

@@ -46,7 +46,6 @@ services:
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - FRONT_URL=http://localhost:8087
       - RESERVED_DB_NAMES=telegram,gmail,github
-      - MODEL_ENABLED=*
       - LAST_NAME_FIRST=true
       - ACCOUNTS_URL=http://localhost:3000
       - BRANDING_PATH=/var/cfg/branding.json

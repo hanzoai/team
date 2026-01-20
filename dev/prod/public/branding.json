@@ -1,11 +1,40 @@
 {
+  "hanzo.team": {
+    "title": "Hanzo Team",
+    "languages": "en,ru,pt,es,zh,fr,de,ja",
+    "defaultLanguage": "en",
+    "defaultApplication": "tracker",
+    "defaultSpace": "tracker:project:DefaultProject",
+    "lastNameFirst": "false",
+    "defaultSpecial": "issues",
+    "links": [
+      {
+        "rel": "manifest",
+        "href": "/hanzoai/site.webmanifest"
+      },
+      {
+        "rel": "icon",
+        "href": "/hanzoai/favicon.svg",
+        "type": "image/svg+xml"
+      },
+      {
+        "rel": "shortcut icon",
+        "href": "/hanzoai/favicon.ico",
+        "sizes": "any"
+      },
+      {
+        "rel": "apple-touch-icon",
+        "href": "/hanzoai/apple-touch-icon.png"
+      }
+    ]
+  },
   "hanzoai.local:8080": {
-    "title": "hanzoai",
-    "languages": "en,ru,pt,es,zh,fr,de",
+    "title": "Hanzo Team",
+    "languages": "en,ru,pt,es,zh,fr,de,ja",
     "defaultLanguage": "en",
     "defaultApplication": "tracker",
     "defaultSpace": "tracker:project:DefaultProject",
-    "lastNameFirst": "true",
+    "lastNameFirst": "false",
     "defaultSpecial": "issues",
     "links": [
       {
@@ -28,14 +57,14 @@
       }
     ]
   },
-  "hanzoai.local:8087": {
-    "title": "hanzoai",
-    "languages": "en,ru,pt,es,zh,fr,de",
+  "localhost:8080": {
+    "title": "Hanzo Team",
+    "languages": "en,ru,pt,es,zh,fr,de,ja",
     "defaultLanguage": "en",
     "defaultApplication": "tracker",
     "defaultSpace": "tracker:project:DefaultProject",
+    "lastNameFirst": "false",
     "defaultSpecial": "issues",
-    "lastNameFirst": "true",
     "links": [
       {
         "rel": "manifest",
@@ -57,7 +86,65 @@
       }
     ]
   },
-  "hanzoai.local:8081": {
+  "huly.local:8080": {
+    "title": "Huly",
+    "languages": "en,ru,pt,es,zh,fr,de,ja",
+    "defaultLanguage": "en",
+    "defaultApplication": "tracker",
+    "defaultSpace": "tracker:project:DefaultProject",
+    "lastNameFirst": "true",
+    "defaultSpecial": "issues",
+    "links": [
+      {
+        "rel": "manifest",
+        "href": "/huly/site.webmanifest"
+      },
+      {
+        "rel": "icon",
+        "href": "/huly/favicon.svg",
+        "type": "image/svg+xml"
+      },
+      {
+        "rel": "shortcut icon",
+        "href": "/huly/favicon.ico",
+        "sizes": "any"
+      },
+      {
+        "rel": "apple-touch-icon",
+        "href": "/huly/apple-touch-icon.png"
+      }
+    ]
+  },
+  "huly.local:8087": {
+    "title": "Huly",
+    "languages": "en,ru,pt,es,zh,fr,de,ja",
+    "defaultLanguage": "en",
+    "defaultApplication": "tracker",
+    "defaultSpace": "tracker:project:DefaultProject",
+    "defaultSpecial": "issues",
+    "lastNameFirst": "true",
+    "links": [
+      {
+        "rel": "manifest",
+        "href": "/huly/site.webmanifest"
+      },
+      {
+        "rel": "icon",
+        "href": "/huly/favicon.svg",
+        "type": "image/svg+xml"
+      },
+      {
+        "rel": "shortcut icon",
+        "href": "/huly/favicon.ico",
+        "sizes": "any"
+      },
+      {
+        "rel": "apple-touch-icon",
+        "href": "/huly/apple-touch-icon.png"
+      }
+    ]
+  },
+  "huly.local:8081": {
     "title": "TraceX",
     "languages": "en",
     "defaultLanguage": "en",
@@ -97,7 +184,7 @@
       }
     ]
   },
-  "hanzoai.local:8088": {
+  "huly.local:8088": {
     "title": "TraceX",
     "languages": "en",
     "defaultLanguage": "en",

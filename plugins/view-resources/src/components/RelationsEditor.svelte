@@ -13,15 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import core, { Association, Doc, Ref } from '@hanzo/core'
+  import core, { Association, AssociationQuery, Doc } from '@hcengineering/core'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { createEventDispatcher } from 'svelte'
+
   import RelationEditor from './RelationEditor.svelte'
-  import { getEmbeddedLabel } from '@hanzo/platform'
 
   export let object: Doc
   export let readonly: boolean = false
+  export let emptyKind: 'create' | 'placeholder' = 'create'
 
   const client = getClient()
+  const dispatch = createEventDispatcher()
   const h = client.getHierarchy()
 
   let associationsA: Association[] = []
@@ -47,47 +51,48 @@
     getAssociations(object)
   })
 
-  let relationsA: Record<Ref<Association>, Doc[]> = {}
-  let relationsB: Record<Ref<Association>, Doc[]> = {}
+  let relations: Record<string, Doc[]> = {}
+  let relationsLoaded = false
+  $: associations = [
+    ...associationsA.map((a) => [a._id, -1] as AssociationQuery),
+    ...associationsB.map((a) => [a._id, 1] as AssociationQuery)
+  ]
 
   const queryA = createQuery()
   $: queryA.query(
     object._class,
     { _id: object._id },
     (res) => {
-      relationsA = res?.[0]?.$associations ?? {}
+      relations = res?.[0]?.$associations ?? {}
+      relationsLoaded = true
     },
-    { associations: associationsA.map((a) => [a._id, -1]) }
+    { associations }
   )
 
-  const queryB = createQuery()
-  $: queryB.query(
-    object._class,
-    { _id: object._id },
-    (res) => {
-      relationsB = res?.[0]?.$associations ?? {}
-    },
-    { associations: associationsB.map((a) => [a._id, 1]) }
-  )
+  $: if (relationsLoaded) {
+    dispatch('loaded')
+  }
 </script>
 
-{#each associationsB as association (association._id)}
+{#each associationsB as association (`${association._id}_b`)}
   <RelationEditor
     {association}
     {object}
-    docs={relationsB[association._id] ?? []}
+    docs={relations[`${association._id}_b`] ?? []}
     {readonly}
     label={getEmbeddedLabel(association.nameB)}
     direction="B"
+    {emptyKind}
   />
 {/each}
-{#each associationsA as association (association._id)}
+{#each associationsA as association (`${association._id}_a`)}
   <RelationEditor
     {association}
     {object}
-    docs={relationsA[association._id] ?? []}
+    docs={relations[`${association._id}_a`] ?? []}
     {readonly}
     label={getEmbeddedLabel(association.nameA)}
     direction="A"
+    {emptyKind}
   />
 {/each}

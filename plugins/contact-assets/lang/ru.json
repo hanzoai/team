@@ -36,6 +36,8 @@
     "LinkedIn": "LinkedIn",
     "GitHub": "GitHub",
     "Twitter": "Twitter",
+    "Google": "Google",
+    "Telegram": "Telegram",
     "PhonePlaceholder": "+1 555 333 7777",
     "LinkedInPlaceholder": "https://linkedin.com/in/jappleseed",
     "AtPlaceHolder": "@appleseed",
@@ -113,6 +115,20 @@
     "SocialIds": "Социальные ID",
     "Type": "Тип",
     "Confirmed": "Подтвержден",
-    "UserProfile": "Профиль пользователя"
+    "UserProfile": "Профиль пользователя",
+    "DeactivatedAccount": "Деактивированный аккаунт",
+    "LocalTime": "местного времени",
+    "Everyone": "Все",
+    "Here": "Здесь",
+    "EveryoneDescription": "Уведомить всех в этом {title}",
+    "HereDescription": "Уведомить всех в этом {title}",
+    "Guest": "Гость",
+    "Deleted": "Удалён",
+    "CannotMerge": "Ошибка: Невозможно объединить глобальных персон",
+    "AutoTranslation": "Автоматический перевод",
+    "TranslateTo": "Переводить на",
+    "DontTranslate": "Не переводить",
+    "SelectLanguage": "Выберите язык",
+    "SelectLanguages": "Выберите языки"
   }
 }

@@ -11,10 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import tags, { tagsId } from '@hanzo/tags'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type FilterFunction } from '@hanzo/view'
+import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
+import tags, { tagsId } from '@hcengineering/tags'
+import { type AnyComponent } from '@hcengineering/ui/src/types'
+import { type FilterFunction } from '@hcengineering/view'
+import { type Doc, type Ref } from '@hcengineering/core'
 
 export default mergeIds(tagsId, tags, {
   component: {
@@ -55,6 +56,6 @@ export default mergeIds(tagsId, tags, {
   function: {
     FilterTagsInResult: '' as FilterFunction,
     FilterTagsNinResult: '' as FilterFunction,
-    CreateTagElement: '' as Resource<(props?: Record<string, any>) => Promise<void>>
+    CreateTagElement: '' as Resource<(props?: Record<string, any>) => Promise<Ref<Doc> | undefined>>
   }
 })

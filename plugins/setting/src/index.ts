@@ -13,11 +13,23 @@
 // limitations under the License.
 //
 
-import type { AccountRole, Blob, Class, Configuration, Doc, Mixin, Ref, AccountUuid } from '@hanzo/core'
-import type { Metadata, Plugin } from '@hanzo/platform'
-import { Asset, IntlString, Resource, plugin } from '@hanzo/platform'
-import { TemplateField, TemplateFieldCategory } from '@hanzo/templates'
-import { AnyComponent } from '@hanzo/ui'
+import type {
+  AccountRole,
+  Blob,
+  Class,
+  Configuration,
+  Doc,
+  Mixin,
+  Ref,
+  AccountUuid,
+  Domain,
+  IntegrationKind
+} from '@hcengineering/core'
+import type { Metadata, Plugin } from '@hcengineering/platform'
+import { Asset, IntlString, Resource, plugin } from '@hcengineering/platform'
+import { TemplateField, TemplateFieldCategory } from '@hcengineering/templates'
+import { Action, AnyComponent } from '@hcengineering/ui'
+import { type Integration as AccountIntegration } from '@hcengineering/account-client'
 
 import { SpaceTypeCreator, SpaceTypeEditor } from './spaceTypeEditor'
 
@@ -25,10 +37,12 @@ export * from './spaceTypeEditor'
 export * from './utils'
 export * from './analytics'
 
+export const DOMAIN_SETTING = 'setting' as Domain
+
 /**
  * @public
  */
-export type Handler = Resource<(value: string) => Promise<void>>
+export type Handler = Resource<(integration: AccountIntegration) => Promise<void>>
 
 /**
  * @public
@@ -37,14 +51,18 @@ export interface IntegrationType extends Doc {
   label: IntlString
   description: IntlString
   descriptionComponent?: AnyComponent
+  stateComponent?: AnyComponent
   icon: AnyComponent
   allowMultiple: boolean
+  kind: IntegrationKind
 
   createComponent?: AnyComponent
   onDisconnect?: Handler
+  onDisconnectAll?: Handler // Disconnect for all workspaces
   reconnectComponent?: AnyComponent
-
   configureComponent?: AnyComponent
+
+  getActions?: Resource<(integration?: AccountIntegration) => Promise<Action[]>>
 }
 
 /**
@@ -91,6 +109,9 @@ export interface SettingsCategory extends Doc {
   order?: number
   role: AccountRole
 
+  // A feature to be used with hides
+  feature?: string
+
   expandable?: boolean
   adminOnly?: boolean
 }
@@ -107,8 +128,20 @@ export interface InviteSettings extends Configuration {
 /**
  * @public
  */
+export interface OfficeSettings extends Configuration {
+  defaultStartWithTranscription: boolean
+  defaultStartWithRecording: boolean
+}
+
+/**
+ * @public
+ */
 export interface WorkspaceSetting extends Doc {
   icon?: Ref<Blob> | null
+}
+
+export enum IntegrationError {
+  EMAIL_IS_ALREADY_USED = 'EMAIL_IS_ALREADY_USED'
 }
 
 /**
@@ -136,6 +169,7 @@ export default plugin(settingId, {
     Spaces: '' as Ref<Doc>,
     Backup: '' as Ref<Doc>,
     Export: '' as Ref<Doc>,
+    OfficeSettings: '' as Ref<Doc>,
     DisablePermissionsConfiguration: '' as Ref<Configuration>,
     Mailboxes: '' as Ref<Doc>
   },
@@ -151,6 +185,7 @@ export default plugin(settingId, {
     Integration: '' as Ref<Class<Integration>>,
     IntegrationType: '' as Ref<Class<IntegrationType>>,
     InviteSettings: '' as Ref<Class<InviteSettings>>,
+    OfficeSettings: '' as Ref<Class<OfficeSettings>>,
     WorkspaceSetting: '' as Ref<Class<WorkspaceSetting>>
   },
   component: {
@@ -164,6 +199,8 @@ export default plugin(settingId, {
     Terms: '' as AnyComponent,
     ClassSetting: '' as AnyComponent,
     PermissionPresenter: '' as AnyComponent,
+    AttributePermissionPresenter: '' as AnyComponent,
+    ClassPermissionPresenter: '' as AnyComponent,
     SpaceTypeDescriptorPresenter: '' as AnyComponent,
     SpaceTypeGeneralSectionEditor: '' as AnyComponent,
     SpaceTypePropertiesSectionEditor: '' as AnyComponent,
@@ -175,7 +212,9 @@ export default plugin(settingId, {
     CreateAttributePopup: '' as AnyComponent,
     CreateRelation: '' as AnyComponent,
     EditRelation: '' as AnyComponent,
-    Mailboxes: '' as AnyComponent
+    Mailboxes: '' as AnyComponent,
+    AddEmailSocialId: '' as AnyComponent,
+    OfficeSettings: '' as AnyComponent
   },
   string: {
     Settings: '' as IntlString,
@@ -189,16 +228,15 @@ export default plugin(settingId, {
     Categories: '' as IntlString,
     Delete: '' as IntlString,
     Disconnect: '' as IntlString,
+    DisconnectAll: '' as IntlString,
     Add: '' as IntlString,
+    Proceed: '' as IntlString,
+    SendConfirmation: '' as IntlString,
+    NewEmail: '' as IntlString,
     AccountSettings: '' as IntlString,
     ChangePassword: '' as IntlString,
-    CurrentPassword: '' as IntlString,
-    NewPassword: '' as IntlString,
     Saving: '' as IntlString,
     Saved: '' as IntlString,
-    EnterCurrentPassword: '' as IntlString,
-    EnterNewPassword: '' as IntlString,
-    RepeatNewPassword: '' as IntlString,
     Signout: '' as IntlString,
     InviteWorkspace: '' as IntlString,
     SelectWorkspace: '' as IntlString,
@@ -227,19 +265,45 @@ export default plugin(settingId, {
     BackupFileDownload: '' as IntlString,
     BackupFiles: '' as IntlString,
     BackupNoBackup: '' as IntlString,
+    NonBackupedBlobs: '' as IntlString,
     AddAttribute: '' as IntlString,
     Mailboxes: '' as IntlString,
     CreateMailbox: '' as IntlString,
     CreateMailboxPlaceholder: '' as IntlString,
     MailboxNoDomains: '' as IntlString,
     MailboxLimitReached: '' as IntlString,
+    OfficeSettings: '' as IntlString,
+    OfficeDefaultSettings: '' as IntlString,
+    DefaultStartWithTranscription: '' as IntlString,
+    DefaultStartWithRecording: '' as IntlString,
     MailboxErrorInvalidName: '' as IntlString,
     MailboxErrorDomainNotFound: '' as IntlString,
     MailboxErrorNameRulesViolated: '' as IntlString,
     MailboxErrorMailboxExists: '' as IntlString,
     MailboxErrorMailboxCountLimit: '' as IntlString,
     DeleteMailbox: '' as IntlString,
-    MailboxDeleteConfirmation: '' as IntlString
+    MailboxDeleteConfirmation: '' as IntlString,
+    IntegrationFailed: '' as IntlString,
+    IntegrationError: '' as IntlString,
+    EmailIsUsed: '' as IntlString,
+    Customize: '' as IntlString,
+    CodeSent: '' as IntlString,
+    SendAgain: '' as IntlString,
+    SendAgainIn: '' as IntlString,
+    AllIntegrations: '' as IntlString,
+    ConnectedIntegrations: '' as IntlString,
+    AvailableIntegrations: '' as IntlString,
+    Connect: '' as IntlString,
+    Integrate: '' as IntlString,
+    FailedToLoadIntegrations: '' as IntlString,
+    FailedToDisconnect: '' as IntlString,
+    ServiceIsUnavailable: '' as IntlString,
+    Integrated: '' as IntlString,
+    Connected: '' as IntlString,
+    Disconnected: '' as IntlString,
+    Available: '' as IntlString,
+    NotConnectedIntegration: '' as IntlString,
+    IntegrationIsUnstable: '' as IntlString
   },
   icon: {
     AccountSettings: '' as Asset,
@@ -258,7 +322,8 @@ export default plugin(settingId, {
     InviteWorkspace: '' as Asset,
     Views: '' as Asset,
     Relations: '' as Asset,
-    Mailbox: '' as Asset
+    Mailbox: '' as Asset,
+    OfficeSettings: '' as Asset
   },
   templateFieldCategory: {
     Integration: '' as Ref<TemplateFieldCategory>

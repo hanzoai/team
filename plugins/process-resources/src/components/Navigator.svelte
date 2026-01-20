@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { cardId } from '@hanzo/card'
-  import { Process } from '@hanzo/process'
-  import { deviceOptionsStore as deviceInfo, NavItem, Scroller } from '@hanzo/ui'
-  import { NavLink } from '@hanzo/view-resources'
-  import { NavFooter, NavHeader, SavedView } from '@hanzo/workbench-resources'
+  import { cardId } from '@hcengineering/card'
+  import { processId, Process } from '@hcengineering/process'
+  import { deviceOptionsStore as deviceInfo, NavItem, Scroller } from '@hcengineering/ui'
+  import { NavLink } from '@hcengineering/view-resources'
+  import { NavFooter, NavHeader, SavedView } from '@hcengineering/workbench-resources'
   import plugin from '../plugin'
   import { Special } from '../types'
 
@@ -36,7 +36,7 @@
   <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
     <NavHeader label={plugin.string.Processes} />
     {#each specials as special}
-      <NavLink space={special._id}>
+      <NavLink space={special._id} app={processId}>
         <NavItem
           _id={special._id}
           label={special.label}
@@ -53,7 +53,7 @@
       <div class="antiNav-divider line" />
       <Scroller shrink>
         {#each processes as process}
-          <NavLink space={process._id}>
+          <NavLink space={process._id} app={processId}>
             <NavItem
               _id={process._id}
               title={process.name}

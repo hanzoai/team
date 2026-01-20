@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import { ComponentExtensions, getClient, LiteMessageViewer } from '@hanzo/presentation'
-  import { Person } from '@hanzo/contact'
-  import { Avatar, personByPersonIdStore, SystemAvatar } from '@hanzo/contact-resources'
-  import core, { PersonId, Doc, Ref, Timestamp, type WithLookup } from '@hanzo/core'
-  import { Icon, Label, resizeObserver, TimeSince, tooltip } from '@hanzo/ui'
-  import { Asset, getEmbeddedLabel, IntlString } from '@hanzo/platform'
-  import activity, { ActivityMessage, ActivityMessagePreviewType } from '@hanzo/activity'
-  import { classIcon, DocNavLink } from '@hanzo/view-resources'
-  import { markupToText } from '@hanzo/text'
+  import { ComponentExtensions, getClient, LiteMessageViewer } from '@hcengineering/presentation'
+  import { Person } from '@hcengineering/contact'
+  import { Avatar, getPersonByPersonIdCb, SystemAvatar } from '@hcengineering/contact-resources'
+  import core, { PersonId, Doc, Timestamp } from '@hcengineering/core'
+  import { Icon, Label, resizeObserver, TimeSince, tooltip } from '@hcengineering/ui'
+  import { Asset, getEmbeddedLabel, IntlString } from '@hcengineering/platform'
+  import activity, { ActivityMessage, ActivityMessagePreviewType } from '@hcengineering/activity'
+  import { classIcon, DocNavLink } from '@hcengineering/view-resources'
+  import { markupToText } from '@hcengineering/text'
 
   export let message: ActivityMessage | undefined = undefined
   export let text: string | undefined = undefined
@@ -36,18 +36,26 @@
   export let headerIcon: Asset | undefined = undefined
   export let header: IntlString | undefined = undefined
   export let headerParams: Record<string, any> = {}
+  export let color: 'primary' | 'secondary' = 'primary'
+  export let lower = false
 
   const client = getClient()
   const limit = 300
   const tooltipLimit = 512
 
   let isActionsOpened = false
-  let person: WithLookup<Person> | undefined = undefined
+  let person: Person | undefined = undefined
 
   let width: number
 
   $: isCompact = width < limit
-  $: person = account !== undefined ? $personByPersonIdStore.get(account) : undefined
+  $: if (account !== undefined) {
+    getPersonByPersonIdCb(account, (p) => {
+      person = p ?? undefined
+    })
+  } else {
+    person = undefined
+  }
 
   export function onActionsOpened (): void {
     isActionsOpened = true
@@ -126,8 +134,9 @@
 
     {#if text || intlLabel}
       <span
-        class="textContent overflow-label font-normal"
+        class="textContent overflow-label font-normal {color}"
         class:contentOnly={type === 'content-only'}
+        class:lower
         use:tooltip={{ label: text ? getEmbeddedLabel(getTooltipText(text)) : intlLabel }}
       >
         {#if intlLabel}
@@ -243,6 +252,9 @@
     max-height: 1.25rem;
     color: var(--global-primary-TextColor);
 
+    &.secondary {
+      color: var(--global-secondary-TextColor);
+    }
     &.contentOnly {
       margin-left: 0;
     }

@@ -36,6 +36,8 @@
     "LinkedIn": "LinkedIn",
     "GitHub": "GitHub",
     "Twitter": "Twitter",
+    "Google": "Google",
+    "Telegram": "Telegram",
     "PhonePlaceholder": "+39 333 2213456",
     "LinkedInPlaceholder": "https://linkedin.com/in/username",
     "AtPlaceHolder": "@username",
@@ -113,6 +115,20 @@
     "SocialIds": "ID social",
     "Type": "Tipo",
     "Confirmed": "Confermato",
-    "UserProfile": "Profilo utente"
+    "UserProfile": "Profilo utente",
+    "DeactivatedAccount": "Account disattivato",
+    "LocalTime": "ora locale",
+    "Everyone": "Tutti",
+    "Here": "Qui",
+    "EveryoneDescription": "Notifica tutti in questo {title}",
+    "HereDescription": "Notifica tutti in questo {title}",
+    "Guest": "Ospite",
+    "Deleted": "Eliminato",
+    "CannotMerge": "Errore: Impossibile unire persone globali",
+    "AutoTranslation": "Traduzione automatica",
+    "TranslateTo": "Traduci in",
+    "DontTranslate": "Non tradurre",
+    "SelectLanguage": "Seleziona lingua",
+    "SelectLanguages": "Seleziona lingue"
   }
 }

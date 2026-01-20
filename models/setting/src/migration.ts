@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { type AccountUuid, MeasureMetricsContext, type Ref, type Space } from '@hanzo/core'
+import core, { type AccountUuid, type Ref, type Space } from '@hcengineering/core'
 import {
   migrateSpace,
   type MigrateUpdate,
@@ -22,15 +22,9 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import setting, { type Integration, settingId } from '@hanzo/setting'
-import {
-  getSocialKeyByOldAccount,
-  getUniqueAccounts,
-  getUniqueAccountsFromOldAccounts
-} from '@hanzo/model-core'
-
-import { DOMAIN_SETTING } from '.'
+} from '@hcengineering/model'
+import setting, { DOMAIN_SETTING, type Integration, settingId } from '@hcengineering/setting'
+import { getSocialKeyByOldAccount, getUniqueAccountsFromOldAccounts } from '@hcengineering/model-core'
 
 /**
  * Migrates old accounts to new accounts
@@ -39,11 +33,10 @@ import { DOMAIN_SETTING } from '.'
  * @returns
  */
 async function migrateAccounts (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('setting migrateAccounts', {})
   const socialKeyByAccount = await getSocialKeyByOldAccount(client)
   const accountUuidByOldAccount = new Map<string, AccountUuid | null>()
 
-  ctx.info('processing setting integration shared ', {})
+  client.logger.log('processing setting integration shared ', {})
   const iterator = await client.traverse(DOMAIN_SETTING, { _class: setting.class.Integration })
 
   try {
@@ -81,64 +74,12 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
       }
 
       processed += docs.length
-      ctx.info('...processed', { count: processed })
+      client.logger.log('...processed', { count: processed })
     }
   } finally {
     await iterator.close()
   }
-  ctx.info('finished processing setting integration shared ', {})
-}
-
-/**
- * Migrates social ids to new accounts where needed.
- * Should only be applied to staging where old accounts have already been migrated to social ids.
- * REMOVE IT BEFORE MERGING TO PRODUCTION
- * @param client
- * @returns
- */
-async function migrateSocialIdsToAccountUuids (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('setting migrateAccounts', {})
-  const accountUuidBySocialKey = new Map<string, AccountUuid | null>()
-
-  ctx.info('processing setting integration shared ', {})
-  const iterator = await client.traverse(DOMAIN_SETTING, { _class: setting.class.Integration })
-
-  try {
-    let processed = 0
-    while (true) {
-      const docs = await iterator.next(200)
-      if (docs === null || docs.length === 0) {
-        break
-      }
-
-      const operations: { filter: MigrationDocumentQuery<Integration>, update: MigrateUpdate<Integration> }[] = []
-
-      for (const doc of docs) {
-        const integration = doc as Integration
-
-        if (integration.shared === undefined || integration.shared.length === 0) continue
-
-        const newShared = await getUniqueAccounts(client, integration.shared, accountUuidBySocialKey)
-
-        operations.push({
-          filter: { _id: integration._id },
-          update: {
-            shared: newShared
-          }
-        })
-      }
-
-      if (operations.length > 0) {
-        await client.bulk(DOMAIN_SETTING, operations)
-      }
-
-      processed += docs.length
-      ctx.info('...processed', { count: processed })
-    }
-  } finally {
-    await iterator.close()
-  }
-  ctx.info('finished processing setting integration shared ', {})
+  client.logger.log('finished processing setting integration shared ', {})
 }
 
 export const settingOperation: MigrateOperation = {
@@ -155,12 +96,6 @@ export const settingOperation: MigrateOperation = {
         state: 'accounts-to-social-ids',
         mode: 'upgrade',
         func: migrateAccounts
-      },
-      // ONLY FOR STAGING. REMOVE IT BEFORE MERGING TO PRODUCTION
-      {
-        state: 'migrate-social-ids-to-account-uuids',
-        mode: 'upgrade',
-        func: migrateSocialIdsToAccountUuids
       }
     ])
   },

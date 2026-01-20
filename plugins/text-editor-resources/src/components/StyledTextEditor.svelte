@@ -13,15 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Markup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { Button, type ButtonSize, Scroller } from '@hanzo/ui'
-  import { AnyExtension, mergeAttributes, type Editor } from '@tiptap/core'
+  import { type Blob, Markup, type Ref } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { EmptyMarkup } from '@hcengineering/text'
+  import textEditor, { RefAction, TextEditorHandler } from '@hcengineering/text-editor'
+  import { Button, type ButtonSize, Scroller } from '@hcengineering/ui'
+  import { type Editor, mergeAttributes } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
-  import textEditor, { RefAction, TextEditorHandler, TextFormatCategory } from '@hanzo/text-editor'
+  import { EditorKitOptions } from '../kits/editor-kit'
   import { defaultRefActions, getModelRefActions } from './editor/actions'
   import TextEditor from './TextEditor.svelte'
+  import { setEditorHandler } from './editor-context'
 
   const dispatch = createEventDispatcher()
 
@@ -34,10 +36,10 @@
   export let maxHeight: 'max' | 'card' | 'limited' | string | undefined = undefined
   export let autofocus = false
   export let full = false
-  export let extensions: AnyExtension[] = []
   export let editorAttributes: Record<string, string> = {}
   export let extraActions: RefAction[] = []
   export let boundary: HTMLElement | undefined = undefined
+  export let kitOptions: Partial<EditorKitOptions> = {}
 
   let editor: TextEditor | undefined = undefined
 
@@ -79,6 +81,9 @@
     insertText: (text) => {
       editor?.insertText(text)
     },
+    insertEmoji: (text: string, image?: Ref<Blob>) => {
+      editor?.insertEmoji(text, image)
+    },
     insertMarkup: (markup) => {
       editor?.insertMarkup(markup)
     },
@@ -102,6 +107,9 @@
       editor?.focus()
     }
   }
+
+  // Set the editor handler in context so child components can access it
+  setEditorHandler(editorHandler)
 
   let actions: RefAction[] = defaultRefActions.concat(...extraActions).sort((a, b) => a.order - b.order)
 
@@ -160,7 +168,6 @@
             editorAttributes={mergedEditorAttributes}
             bind:content
             {placeholder}
-            {extensions}
             bind:this={editor}
             on:value
             on:content={(ev) => {
@@ -170,6 +177,7 @@
             }}
             on:blur
             on:focus
+            {kitOptions}
             supportSubmit={false}
           />
         </Scroller>
@@ -178,7 +186,6 @@
           editorAttributes={mergedEditorAttributes}
           bind:content
           {placeholder}
-          {extensions}
           bind:this={editor}
           on:value
           on:content={(ev) => {
@@ -188,34 +195,37 @@
           }}
           on:blur
           on:focus
+          {kitOptions}
           supportSubmit={false}
           {boundary}
         />
       {/if}
     </div>
   </div>
-  {#if showButtons}
-    <div class="flex-between">
-      <div class="buttons-group {buttonsGap} mt-3">
-        {#each actions as a}
-          <Button
-            icon={a.icon}
-            iconProps={{ size: buttonSize }}
-            kind="ghost"
-            showTooltip={{ label: a.label }}
-            size={buttonSize}
-            on:click={(evt) => {
-              handleAction(a, evt)
-            }}
-          />
-          {#if a.order % 10 === 1}
-            <div class="buttons-divider {buttonsHeight}" />
-          {/if}
-        {/each}
-        <slot />
+  <slot name="actions">
+    {#if showButtons}
+      <div class="flex-between">
+        <div class="buttons-group {buttonsGap} mt-3">
+          {#each actions as a}
+            <Button
+              icon={a.icon}
+              iconProps={{ size: buttonSize }}
+              kind="ghost"
+              showTooltip={{ label: a.label }}
+              size={buttonSize}
+              on:click={(evt) => {
+                handleAction(a, evt)
+              }}
+            />
+            {#if a.order % 10 === 1}
+              <div class="buttons-divider {buttonsHeight}" />
+            {/if}
+          {/each}
+          <slot />
+        </div>
       </div>
-    </div>
-  {/if}
+    {/if}
+  </slot>
 </div>
 
 <style lang="scss">

@@ -19,6 +19,7 @@
   import DocsNavigator from './DocsNavigator.svelte'
 
   export let element: Doc | AttachedDoc
+  export let maxWidth: string | undefined = undefined
 
   const client = getClient()
 
@@ -31,7 +32,7 @@
   }
 
   function getParentClass (doc: Doc | AttachedDoc): Ref<Class<Doc>> {
-    return isAttachedDoc(doc) ? doc.attachedToClass : doc._class
+    return isAttachedDoc(doc) ? doc.attachedToClass : client.getHierarchy().getParentClass(doc._class)
   }
 
   function withParent (doc: Doc | AttachedDoc): boolean {
@@ -50,6 +51,9 @@
     while (currentDoc && withParent(currentDoc)) {
       const _id = getParentId(currentDoc)
       const _class = getParentClass(currentDoc)
+      if (_id == null || _class == null) {
+        continue
+      }
       const parent: Doc | undefined = await client.findOne(_class, { _id })
 
       if (parent) {
@@ -73,4 +77,4 @@
   })
 </script>
 
-<DocsNavigator elements={parents} />
+<DocsNavigator elements={parents} {maxWidth} />

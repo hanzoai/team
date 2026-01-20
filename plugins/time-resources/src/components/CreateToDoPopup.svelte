@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Calendar, generateEventId } from '@hanzo/calendar'
-  import { VisibilityEditor } from '@hanzo/calendar-resources'
-  import calendar from '@hanzo/calendar-resources/src/plugin'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import core, { AttachedData, Doc, Ref, SortingOrder, generateId, getCurrentAccount } from '@hanzo/core'
-  import { SpaceSelector, createQuery, getClient } from '@hanzo/presentation'
-  import tagsPlugin, { TagReference } from '@hanzo/tags'
-  import task, { makeRank } from '@hanzo/task'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
-  import { TimeEvents, ToDo, ToDoPriority, WorkSlot } from '@hanzo/time'
-  import { Button, Component, EditBox, IconClose, Label, Scroller } from '@hanzo/ui'
+  import { Analytics } from '@hcengineering/analytics'
+  import { AccessLevel, Calendar, generateEventId } from '@hcengineering/calendar'
+  import { VisibilityEditor } from '@hcengineering/calendar-resources'
+  import calendar from '@hcengineering/calendar-resources/src/plugin'
+  import { getCurrentEmployee } from '@hcengineering/contact'
+  import core, { AttachedData, Doc, Ref, SortingOrder, generateId, getCurrentAccount } from '@hcengineering/core'
+  import { SpaceSelector, createQuery, getClient } from '@hcengineering/presentation'
+  import tagsPlugin, { TagReference } from '@hcengineering/tags'
+  import task, { makeRank } from '@hcengineering/task'
+  import { StyledTextBox } from '@hcengineering/text-editor-resources'
+  import { TimeEvents, ToDo, ToDoPriority, WorkSlot } from '@hcengineering/time'
+  import { Button, Component, EditBox, IconClose, Label, Scroller } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
   import time from '../plugin'
   import DueDateEditor from './DueDateEditor.svelte'
@@ -32,14 +32,16 @@
   import Workslots from './Workslots.svelte'
 
   export let object: Doc | undefined
+  export let value: string = ''
 
   const me = getCurrentEmployee()
   const myAccount = getCurrentAccount()
 
   const todo: AttachedData<ToDo> = {
     workslots: 0,
-    title: '',
+    title: value,
     description: '',
+    doneOn: null,
     priority: ToDoPriority.NoPriority,
     attachedSpace: object?.space,
     visibility: 'private',
@@ -82,6 +84,7 @@
         priority: todo.priority,
         visibility: todo.visibility,
         user: me,
+        doneOn: null,
         dueDate: todo.dueDate,
         attachedSpace: todo.attachedSpace,
         rank: makeRank(undefined, latestTodo?.rank)
@@ -96,9 +99,10 @@
         description: todo.description,
         participants: [me],
         calendar: _calendar,
+        blockTime: true,
         title: todo.title,
         allDay: false,
-        access: 'owner',
+        access: AccessLevel.Owner,
         visibility: todo.visibility === 'public' ? 'public' : 'freeBusy',
         reminders: [],
         user: myAccount.primarySocialId
@@ -115,15 +119,11 @@
   let _calendar: Ref<Calendar> = `${myAccount.uuid}_calendar` as Ref<Calendar>
 
   const q = createQuery()
-  q.query(
-    calendar.class.ExternalCalendar,
-    { default: true, hidden: false, createdBy: { $in: myAccount.socialIds } },
-    (res) => {
-      if (res.length > 0) {
-        _calendar = res[0]._id
-      }
+  q.query(calendar.class.ExternalCalendar, { default: true, hidden: false, user: myAccount.primarySocialId }, (res) => {
+    if (res.length > 0) {
+      _calendar = res[0]._id
     }
-  )
+  })
 
   let slots: WorkSlot[] = []
 
@@ -148,7 +148,8 @@
       participants: [me],
       title: todo.title,
       allDay: false,
-      access: 'owner',
+      blockTime: true,
+      access: AccessLevel.Owner,
       visibility: todo.visibility,
       reminders: [],
       calendar: _calendar,
@@ -191,7 +192,7 @@
   <div class="header flex-between">
     <EditBox
       bind:value={todo.title}
-      kind={'ghost-large'}
+      kind={'large-style'}
       placeholder={time.string.AddTitle}
       fullSize
       focusable

@@ -22,8 +22,12 @@ import core, {
   type Client,
   type Doc,
   type DocumentQuery,
+  type DomainParams,
+  type DomainRequestOptions,
+  type DomainResult,
   type FindOptions,
   type FindResult,
+  type OperationDomain,
   type Ref,
   type SearchOptions,
   type SearchQuery,
@@ -102,7 +106,7 @@ export class PresentationClientHook implements ClientHook {
         ' =>model',
         client.getModel(),
         getMetadata(devmodel.metadata.DevModel),
-        platformNow() - startTime,
+        platformNowDiff(startTime),
         this.stackLine()
       )
     }
@@ -129,9 +133,29 @@ export class PresentationClientHook implements ClientHook {
         ' =>model',
         client.getModel(),
         getMetadata(devmodel.metadata.DevModel),
-        platformNow() - startTime,
+        platformNowDiff(startTime),
         JSON.stringify(result).length,
         this.stackLine()
+      )
+    }
+    return result
+  }
+
+  async domainRequest (
+    client: Client,
+    domain: OperationDomain,
+    params: DomainParams,
+    options?: DomainRequestOptions
+  ): Promise<DomainResult> {
+    const result = await client.domainRequest(domain, params)
+    if (this.notifyEnabled) {
+      console.debug(
+        'devmodel# domainRequest=>',
+        domain,
+        testing ? JSON.stringify(cutObjectArray(params)).slice(0, 160) : params,
+        options,
+        'result => ',
+        result
       )
     }
     return result

@@ -14,10 +14,11 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hanzo/core'
-import { TokenError, decodeToken } from '@hanzo/server-token'
-import { StorageAdapter } from '@hanzo/storage'
+import { Analytics } from '@hcengineering/analytics'
+import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hcengineering/core'
+import platform, { PlatformError } from '@hcengineering/platform'
+import { TokenError, decodeToken } from '@hcengineering/server-token'
+import { StorageAdapter } from '@hcengineering/storage'
 import bp from 'body-parser'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
@@ -51,18 +52,18 @@ async function storageUpload (
   storageAdapter: StorageAdapter,
   wsIds: WorkspaceIds,
   file: UploadedFile
-): Promise<string> {
+): Promise<{ uuid: string, etag: string }> {
   const uuid = file.name
   const data = file.tempFilePath !== undefined ? fs.createReadStream(file.tempFilePath) : file.data
   const resp = await ctx.with(
     'storage upload',
-    { workspace: wsIds.uuid },
+    {},
     (ctx) => storageAdapter.put(ctx, wsIds, uuid, data, file.mimetype, file.size),
-    { file: file.name, contentType: file.mimetype }
+    { file: file.name, contentType: file.mimetype, workspace: wsIds.uuid }
   )
 
   ctx.info('storage upload', resp)
-  return uuid
+  return { uuid, etag: resp.etag }
 }
 
 function getRange (range: string, size: number): [number, number] {
@@ -267,12 +268,18 @@ export function start (
     collaborator?: string
     collaboratorUrl: string
     brandingUrl?: string
-    previewConfig: string
-    uploadConfig: string
+    previewUrl?: string
     linkPreviewUrl?: string
     pushPublicKey?: string
     disableSignUp?: string
+    hideLocalLogin?: string
     streamUrl?: string
+    mailUrl?: string
+    billingUrl?: string
+    paymentUrl?: string
+    pulseUrl?: string
+    hulylakeUrl?: string
+    datalakeUrl?: string
   },
   port: number,
   extraConfig?: Record<string, string | undefined>
@@ -313,7 +320,7 @@ export function start (
   const childLogger = ctx.logger.childLogger?.('requests', {
     enableConsole: 'true'
   })
-  const requests = ctx.newChild('requests', {}, {}, childLogger)
+  const requests = ctx.newChild('requests', {}, { logger: childLogger, span: false })
 
   class MyStream {
     write (text: string): void {
@@ -342,10 +349,16 @@ export function start (
       STREAM_URL: config.streamUrl,
       COLLABORATOR_URL: config.collaboratorUrl,
       BRANDING_URL: config.brandingUrl,
-      PREVIEW_CONFIG: config.previewConfig,
-      UPLOAD_CONFIG: config.uploadConfig,
+      PREVIEW_URL: config.previewUrl,
       PUSH_PUBLIC_KEY: config.pushPublicKey,
       DISABLE_SIGNUP: config.disableSignUp,
+      HIDE_LOCAL_LOGIN: config.hideLocalLogin,
+      MAIL_URL: config.mailUrl,
+      BILLING_URL: config.billingUrl,
+      PAYMENT_URL: config.paymentUrl,
+      PULSE_URL: config.pulseUrl,
+      HULYLAKE_URL: config.hulylakeUrl,
+      DATALAKE_URL: config.datalakeUrl,
       ...(extraConfig ?? {})
     }
     res.status(200)
@@ -456,9 +469,12 @@ export function start (
         try {
           const cookies = ((req?.headers?.cookie as string) ?? '').split(';').map((it) => it.trim().split('='))
 
+          const authorization = ((req?.headers?.authorization as string) ?? '').split(' ')
+          const authorizationToken = authorization.at(0)?.toLowerCase() === 'bearer' ? authorization.at(1) : undefined
           const token =
             cookies.find((it) => it[0] === 'presentation-metadata-Token')?.[1] ??
             (req.query.token as string | undefined) ??
+            authorizationToken ??
             ''
           const wsIds = await getWorkspaceIds(ctx, token, req.path)
           if (wsIds === null) {
@@ -487,6 +503,7 @@ export function start (
               'accept-ranges': 'bytes',
               connection: 'keep-alive',
               'Keep-Alive': 'timeout=5',
+              'content-type': blobInfo.contentType,
               'content-length': blobInfo.size,
               'content-security-policy': "default-src 'none';",
               Etag: blobInfo.etag,
@@ -513,19 +530,20 @@ export function start (
 
           const range = req.headers.range
           if (range !== undefined) {
-            await ctx.with('file-range', { workspace: wsIds.uuid }, (ctx) =>
-              getFileRange(ctx, blobInfo as PlatformBlob, range, config.storageAdapter, wsIds, res)
+            await ctx.with(
+              'file-range',
+              {},
+              (ctx) => getFileRange(ctx, blobInfo, range, config.storageAdapter, wsIds, res),
+              { workspace: wsIds.uuid }
             )
           } else {
-            await ctx.with(
-              'file',
-              { workspace: wsIds.uuid },
-              (ctx) => getFile(ctx, blobInfo as PlatformBlob, config.storageAdapter, wsIds, req, res),
-              { uuid }
-            )
+            await ctx.with('file', {}, (ctx) => getFile(ctx, blobInfo, config.storageAdapter, wsIds, req, res), {
+              uuid,
+              workspace: wsIds.uuid
+            })
           }
         } catch (error: any) {
-          if (error instanceof TokenError) {
+          if (error instanceof PlatformError && error.status.code === platform.status.Unauthorized) {
             res.status(401).send()
             return
           }
@@ -595,15 +613,26 @@ export function start (
             res.status(403).send()
             return
           }
-          const uuid = await storageUpload(ctx, config.storageAdapter, workspaceDataId, file)
+          const { uuid, etag } = await storageUpload(ctx, config.storageAdapter, workspaceDataId, file)
 
           res.status(200).send([
             {
               key: 'file',
-              id: uuid
+              id: uuid,
+              metadata: {
+                name: uuid,
+                etag,
+                size: file.size,
+                contentType: file.mimetype,
+                lastModified: Date.now()
+              }
             }
           ])
         } catch (error: any) {
+          if (error instanceof PlatformError && error.status.code === platform.status.Unauthorized) {
+            res.status(401).send()
+            return
+          }
           ctx.error('error-post-files', error)
           res.status(500).send()
         }
@@ -637,7 +666,7 @@ export function start (
 
       res.status(200).send()
     } catch (error: any) {
-      if (error instanceof TokenError) {
+      if (error instanceof PlatformError && error.status.code === platform.status.Unauthorized) {
         res.status(401).send()
         return
       }
@@ -725,6 +754,10 @@ export function start (
           res.status(500).send(e)
         })
     } catch (error: any) {
+      if (error instanceof PlatformError && error.status.code === platform.status.Unauthorized) {
+        res.status(401).send()
+        return
+      }
       Analytics.handleError(error)
       ctx.error('error', { error })
       res.status(500).send()
@@ -801,6 +834,10 @@ export function start (
           })
       })
     } catch (error: any) {
+      if (error instanceof PlatformError && error.status.code === platform.status.Unauthorized) {
+        res.status(401).send()
+        return
+      }
       Analytics.handleError(error)
       ctx.error('error', { error })
       res.status(500).send()

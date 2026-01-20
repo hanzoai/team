@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact, Person } from '@hanzo/contact'
-  import { AssigneeBox, personByIdStore } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { ActionIcon, EditBox, Icon, IconDelete, resizeObserver } from '@hanzo/ui'
-  import { Room, RoomAccess, RoomType, isOffice } from '@hanzo/love'
+  import contact, { Contact, Person } from '@hcengineering/contact'
+  import { AssigneeBox } from '@hcengineering/contact-resources'
+  import { Ref } from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import { ActionIcon, EditBox, Icon, IconDelete, resizeObserver } from '@hcengineering/ui'
+  import { Room, RoomAccess, RoomType, isOffice } from '@hcengineering/love'
   import { createEventDispatcher, onMount } from 'svelte'
   import { cubicOut } from 'svelte/easing'
   import { tweened } from 'svelte/motion'
@@ -26,6 +26,7 @@
   import { infos, lockedRoom } from '../stores'
   import { RoomSide, shadowNormal } from '../types'
   import { getRoomLabel } from '../utils'
+  import { IntlString } from '@hcengineering/platform'
 
   export let room: Room
   export let cellSize: number
@@ -160,6 +161,11 @@
         : undefined
   }
 
+  let roomLabel: IntlString
+  $: void getRoomLabel(room).then((label) => {
+    roomLabel = label
+  })
+
   onMount(() => {
     if (container) roomRect = container.getBoundingClientRect()
   })
@@ -198,13 +204,14 @@
           if (isOffice(room) && rX === 0 && rY === 0) e.stopPropagation()
         }}
       >
-        {#if isOffice(room) && rX === 0 && rY === 0}
+        {#if isOffice(room) && rX === 0 && rY === 0 && !room.person}
           <AssigneeBox
             _class={contact.class.Person}
             excluded={excludedPersons}
             shouldShowName={false}
             showNavigate={false}
             width={'100%'}
+            height={'100%'}
             label={contact.string.Person}
             value={room.person}
             avatarSize={'full'}
@@ -215,12 +222,7 @@
     {/each}
   {/each}
   <div class="floorGrid-configureRoom__header">
-    <EditBox
-      bind:value={room.name}
-      on:change={updateName}
-      placeholder={getRoomLabel(room, $personByIdStore)}
-      kind={'editbox'}
-    />
+    <EditBox bind:value={room.name} on:change={updateName} placeholder={roomLabel} kind={'editbox'} />
     {#if showButtons}
       <div
         class="flex-row-center flex-no-shrink h-full {zoomOut ? 'flex-gap-1' : 'flex-gap-2'}"

@@ -37,6 +37,8 @@ export default mergeIds(settingId, setting, {
     HyperlinkTypeEditor: '' as AnyComponent,
     BooleanTypeEditor: '' as AnyComponent,
     NumberTypeEditor: '' as AnyComponent,
+    IdentifierTypeEditor: '' as AnyComponent,
+    EmployeeRefEditor: '' as AnyComponent,
     DateTypeEditor: '' as AnyComponent,
     RefEditor: '' as AnyComponent,
     AssociationEditor: '' as AnyComponent,
@@ -46,7 +48,6 @@ export default mergeIds(settingId, setting, {
     CreateMixin: '' as AnyComponent,
     InviteSetting: '' as AnyComponent,
     ArrayEditor: '' as AnyComponent,
-    IntegrationPanel: '' as AnyComponent,
     Configure: '' as AnyComponent,
     SettingsWidget: '' as AnyComponent
   },

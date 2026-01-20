@@ -15,70 +15,73 @@
 
 import core, { coreId, type Data, type PluginConfiguration, type Ref, type Tx, type Version } from '@hanzo/core'
 
-import { Builder } from '@hanzo/model'
-import { activityId, createModel as activityModel } from '@hanzo/model-activity'
-import { attachmentId, createModel as attachmentModel } from '@hanzo/model-attachment'
-import bitrix, { bitrixId, createModel as bitrixModel } from '@hanzo/model-bitrix'
-import board, { boardId, createModel as boardModel } from '@hanzo/model-board'
-import calendar, { calendarId, createModel as calendarModel } from '@hanzo/model-calendar'
-import chunter, { chunterId, createModel as chunterModel } from '@hanzo/model-chunter'
-import contact, { contactId, createModel as contactModel } from '@hanzo/model-contact'
-import { createModel as coreModel } from '@hanzo/model-core'
-import gmail, { gmailId, createModel as gmailModel } from '@hanzo/model-gmail'
-import { guestId, createModel as guestModel } from '@hanzo/model-guest'
-import hr, { hrId, createModel as hrModel } from '@hanzo/model-hr'
-import inventory, { inventoryId, createModel as inventoryModel } from '@hanzo/model-inventory'
-import lead, { leadId, createModel as leadModel } from '@hanzo/model-lead'
-import notification, { notificationId, createModel as notificationModel } from '@hanzo/model-notification'
-import { preferenceId, createModel as preferenceModel } from '@hanzo/model-preference'
-import presentation, { presentationId, createModel as presentationModel } from '@hanzo/model-presentation'
-import recruit, { recruitId, createModel as recruitModel } from '@hanzo/model-recruit'
-import { requestId, createModel as requestModel } from '@hanzo/model-request'
-import { aiBotId, createModel as aiBotModel } from '@hanzo/model-ai-bot'
-import { serverActivityId, createModel as serverActivityModel } from '@hanzo/model-server-activity'
-import { serverAttachmentId, createModel as serverAttachmentModel } from '@hanzo/model-server-attachment'
-import { serverCardId, createModel as serverCardModel } from '@hanzo/model-server-card'
-import { serverCalendarId, createModel as serverCalendarModel } from '@hanzo/model-server-calendar'
-import { serverChunterId, createModel as serverChunterModel } from '@hanzo/model-server-chunter'
+import { Builder } from '@hcengineering/model'
+import { activityId, createModel as activityModel } from '@hcengineering/model-activity'
+import { aiBotId, createModel as aiBotModel } from '@hcengineering/model-ai-bot'
+import { attachmentId, createModel as attachmentModel } from '@hcengineering/model-attachment'
+import bitrix, { bitrixId, createModel as bitrixModel } from '@hcengineering/model-bitrix'
+import board, { boardId, createModel as boardModel } from '@hcengineering/model-board'
+import calendar, { calendarId, createModel as calendarModel } from '@hcengineering/model-calendar'
+import card, { cardId, createModel as cardModel } from '@hcengineering/model-card'
+import chunter, { chunterId, createModel as chunterModel } from '@hcengineering/model-chunter'
+import contact, { contactId, createModel as contactModel } from '@hcengineering/model-contact'
+import { createModel as coreModel } from '@hcengineering/model-core'
+import { desktopDownloadsId, createModel as desktopDownloadsModel } from '@hcengineering/model-desktop-downloads'
+import { desktopPreferencesId, createModel as desktopPreferencesModel } from '@hcengineering/model-desktop-preferences'
+import { driveId, createModel as driveModel } from '@hcengineering/model-drive'
+import gmail, { gmailId, createModel as gmailModel } from '@hcengineering/model-gmail'
+import { guestId, createModel as guestModel } from '@hcengineering/model-guest'
+import hr, { hrId, createModel as hrModel } from '@hcengineering/model-hr'
+import inventory, { inventoryId, createModel as inventoryModel } from '@hcengineering/model-inventory'
+import lead, { leadId, createModel as leadModel } from '@hcengineering/model-lead'
+import { mediaId, createModel as mediaModel } from '@hcengineering/model-media'
+import notification, { notificationId, createModel as notificationModel } from '@hcengineering/model-notification'
+import { preferenceId, createModel as preferenceModel } from '@hcengineering/model-preference'
+import presentation, { presentationId, createModel as presentationModel } from '@hcengineering/model-presentation'
+import rating, { ratingId, createModel as ratingModel } from '@hcengineering/model-rating'
+import { recorderId, createModel as recorderModel } from '@hcengineering/model-recorder'
+import recruit, { recruitId, createModel as recruitModel } from '@hcengineering/model-recruit'
+import { requestId, createModel as requestModel } from '@hcengineering/model-request'
+import { serverActivityId, createModel as serverActivityModel } from '@hcengineering/model-server-activity'
+import { serverAiBotId, createModel as serverAiBotModel } from '@hcengineering/model-server-ai-bot'
+import { serverAttachmentId, createModel as serverAttachmentModel } from '@hcengineering/model-server-attachment'
+import { serverCalendarId, createModel as serverCalendarModel } from '@hcengineering/model-server-calendar'
+import { serverCardId, createModel as serverCardModel } from '@hcengineering/model-server-card'
+import { serverChunterId, createModel as serverChunterModel } from '@hcengineering/model-server-chunter'
 import {
   serverCollaborationId,
   createModel as serverCollaborationModel
-} from '@hanzo/model-server-collaboration'
-import { serverContactId, createModel as serverContactModel } from '@hanzo/model-server-contact'
-import { serverCoreId, createModel as serverCoreModel } from '@hanzo/model-server-core'
-import { serverDriveId, createModel as serverDriveModel } from '@hanzo/model-server-drive'
-import { serverGmailId, createModel as serverGmailModel } from '@hanzo/model-server-gmail'
-import { serverGuestId, createModel as serverGuestModel } from '@hanzo/model-server-guest'
-import { serverHrId, createModel as serverHrModel } from '@hanzo/model-server-hr'
-import { serverInventoryId, createModel as serverInventoryModel } from '@hanzo/model-server-inventory'
-import { serverLeadId, createModel as serverLeadModel } from '@hanzo/model-server-lead'
-import { serverNotificationId, createModel as serverNotificationModel } from '@hanzo/model-server-notification'
-import { serverRecruitId, createModel as serverRecruitModel } from '@hanzo/model-server-recruit'
-import { serverRequestId, createModel as serverRequestModel } from '@hanzo/model-server-request'
-import { serverSettingId, createModel as serveSettingModel } from '@hanzo/model-server-setting'
-import { serverTagsId, createModel as serverTagsModel } from '@hanzo/model-server-tags'
-import { serverTaskId, createModel as serverTaskModel } from '@hanzo/model-server-task'
-import { serverTelegramId, createModel as serverTelegramModel } from '@hanzo/model-server-telegram'
-import { serverTemplatesId, createModel as serverTemplatesModel } from '@hanzo/model-server-templates'
-import { serverTrackerId, createModel as serverTrackerModel } from '@hanzo/model-server-tracker'
-import { serverViewId, createModel as serverViewModel } from '@hanzo/model-server-view'
-import { serverAiBotId, createModel as serverAiBotModel } from '@hanzo/model-server-ai-bot'
-import setting, { settingId, createModel as settingModel } from '@hanzo/model-setting'
-import { driveId, createModel as driveModel } from '@hanzo/model-drive'
-import { supportId, createModel as supportModel } from '@hanzo/model-support'
-import { tagsId, createModel as tagsModel } from '@hanzo/model-tags'
-import { taskId, createModel as taskModel } from '@hanzo/model-task'
-import telegram, { telegramId, createModel as telegramModel } from '@hanzo/model-telegram'
-import { templatesId, createModel as templatesModel } from '@hanzo/model-templates'
-import { textEditorId, createModel as textEditorModel } from '@hanzo/model-text-editor'
-import { timeId, createModel as timeModel } from '@hanzo/model-time'
-import tracker, { trackerId, createModel as trackerModel } from '@hanzo/model-tracker'
-import { uploaderId, createModel as uploaderModel } from '@hanzo/model-uploader'
-import { recorderId, createModel as recorderModel } from '@hanzo/model-recorder'
-import view, { viewId, createModel as viewModel } from '@hanzo/model-view'
-import workbench, { workbenchId, createModel as workbenchModel } from '@hanzo/model-workbench'
-import card, { cardId, createModel as cardModel } from '@hanzo/model-card'
-import { desktopPreferencesId, createModel as desktopPreferencesModel } from '@hanzo/model-desktop-preferences'
+} from '@hcengineering/model-server-collaboration'
+import { serverContactId, createModel as serverContactModel } from '@hcengineering/model-server-contact'
+import { serverCoreId, createModel as serverCoreModel } from '@hcengineering/model-server-core'
+import { serverDriveId, createModel as serverDriveModel } from '@hcengineering/model-server-drive'
+import { serverGmailId, createModel as serverGmailModel } from '@hcengineering/model-server-gmail'
+import { serverGuestId, createModel as serverGuestModel } from '@hcengineering/model-server-guest'
+import { serverHrId, createModel as serverHrModel } from '@hcengineering/model-server-hr'
+import { serverInventoryId, createModel as serverInventoryModel } from '@hcengineering/model-server-inventory'
+import { serverLeadId, createModel as serverLeadModel } from '@hcengineering/model-server-lead'
+import { serverNotificationId, createModel as serverNotificationModel } from '@hcengineering/model-server-notification'
+import { serverRecruitId, createModel as serverRecruitModel } from '@hcengineering/model-server-recruit'
+import { serverRequestId, createModel as serverRequestModel } from '@hcengineering/model-server-request'
+import { serverSettingId, createModel as serveSettingModel } from '@hcengineering/model-server-setting'
+import { serverTagsId, createModel as serverTagsModel } from '@hcengineering/model-server-tags'
+import { serverTaskId, createModel as serverTaskModel } from '@hcengineering/model-server-task'
+import { serverTelegramId, createModel as serverTelegramModel } from '@hcengineering/model-server-telegram'
+import { serverTemplatesId, createModel as serverTemplatesModel } from '@hcengineering/model-server-templates'
+import { serverTrackerId, createModel as serverTrackerModel } from '@hcengineering/model-server-tracker'
+import { serverViewId, createModel as serverViewModel } from '@hcengineering/model-server-view'
+import setting, { settingId, createModel as settingModel } from '@hcengineering/model-setting'
+import { supportId, createModel as supportModel } from '@hcengineering/model-support'
+import { tagsId, createModel as tagsModel } from '@hcengineering/model-tags'
+import { taskId, createModel as taskModel } from '@hcengineering/model-task'
+import telegram, { telegramId, createModel as telegramModel } from '@hcengineering/model-telegram'
+import { templatesId, createModel as templatesModel } from '@hcengineering/model-templates'
+import { textEditorId, createModel as textEditorModel } from '@hcengineering/model-text-editor'
+import { timeId, createModel as timeModel } from '@hcengineering/model-time'
+import tracker, { trackerId, createModel as trackerModel } from '@hcengineering/model-tracker'
+import { uploaderId, createModel as uploaderModel } from '@hcengineering/model-uploader'
+import view, { viewId, createModel as viewModel } from '@hcengineering/model-view'
+import workbench, { workbenchId, createModel as workbenchModel } from '@hcengineering/model-workbench'
 
 import document, { documentId, createModel as documentModel } from '@hanzo/model-document'
 import { serverDocumentId, createModel as serverDocumentModel } from '@hanzo/model-server-document'
@@ -86,36 +89,42 @@ import { serverDocumentId, createModel as serverDocumentModel } from '@hanzo/mod
 import github, { githubId, createModel as githubModel } from '@hanzo/model-github'
 import { serverGithubId, createModel as serverGithubModel } from '@hanzo/server-github-model'
 
-import { serverTimeId, createModel as serverTimeModel } from '@hanzo/model-server-time'
-import love, { loveId, createModel as loveModel } from '@hanzo/model-love'
-import { printId, createModel as printModel } from '@hanzo/model-print'
-import { exportId, createModel as exportModel } from '@hanzo/model-export'
-import { analyticsCollectorId, createModel as analyticsCollectorModel } from '@hanzo/model-analytics-collector'
-import { serverLoveId, createModel as serverLoveModel } from '@hanzo/model-server-love'
-import { serverProcessId, createModel as serverProcessModel } from '@hanzo/model-server-process'
+import { analyticsCollectorId, createModel as analyticsCollectorModel } from '@hcengineering/model-analytics-collector'
+import { exportId, createModel as exportModel } from '@hcengineering/model-export'
+import love, { loveId, createModel as loveModel } from '@hcengineering/model-love'
+import { printId, createModel as printModel } from '@hcengineering/model-print'
+import { serverLoveId, createModel as serverLoveModel } from '@hcengineering/model-server-love'
+import { serverProcessId, createModel as serverProcessModel } from '@hcengineering/model-server-process'
+import { serverTimeId, createModel as serverTimeModel } from '@hcengineering/model-server-time'
 
-import { questionsId, createModel as questionsModel } from '@hanzo/model-questions'
-import trainings, { trainingId, createModel as trainingModel } from '@hanzo/model-training'
-import documents, { documentsId, createModel as documentsModel } from '@hanzo/model-controlled-documents'
-import products, { productsId, createModel as productsModel } from '@hanzo/model-products'
-import { serverProductsId, createModel as serverProductsModel } from '@hanzo/model-server-products'
-import { serverTrainingId, createModel as serverTrainingModel } from '@hanzo/model-server-training'
+import aiAssistant, { aiAssistantId, createModel as aiAssistantModel } from '@hcengineering/model-ai-assistant'
+import documents, { documentsId, createModel as documentsModel } from '@hcengineering/model-controlled-documents'
+import { hulyMailId, createModel as hulyMailModel } from '@hcengineering/model-huly-mail'
+import { mailId, createModel as mailModel } from '@hcengineering/model-mail'
+import products, { productsId, createModel as productsModel } from '@hcengineering/model-products'
+import { questionsId, createModel as questionsModel } from '@hcengineering/model-questions'
+import { serverProductsId, createModel as serverProductsModel } from '@hcengineering/model-server-products'
+import { serverTrainingId, createModel as serverTrainingModel } from '@hcengineering/model-server-training'
 import testManagement, {
   testManagementId,
   createModel as testManagementModel
-} from '@hanzo/model-test-management'
-import { mailId, createModel as mailModel } from '@hanzo/model-mail'
+} from '@hcengineering/model-test-management'
+import trainings, { trainingId, createModel as trainingModel } from '@hcengineering/model-training'
 
+import { achievementId, createModel as achievementModel } from '@hcengineering/model-achievement'
+import { billingId, createModel as billingModel } from '@hcengineering/model-billing'
+import chat, { chatId, createModel as chatModel } from '@hcengineering/model-chat'
+import { communicationId, createModel as communicationModel } from '@hcengineering/model-communication'
+import { emojiId, createModel as emojiModel } from '@hcengineering/model-emoji'
+import { inboxId, createModel as inboxModel } from '@hcengineering/model-inbox'
+import { presenceId, createModel as presenceModel } from '@hcengineering/model-presence'
+import processes, { processId, createModel as processModel } from '@hcengineering/model-process'
 import {
   serverDocumentsId,
   createModel as serverDocumentsModel
-} from '@hanzo/model-server-controlled-documents'
-import { surveyId, createModel as surveyModel } from '@hanzo/model-survey'
-import { presenceId, createModel as presenceModel } from '@hanzo/model-presence'
-import { chatId, createModel as chatModel } from '@hanzo/model-chat'
-import processes, { processId, createModel as processModel } from '@hanzo/model-process'
-import { createModel as inboxModel, inboxId } from '@hanzo/model-inbox'
-import { type Plugin } from '@hanzo/platform'
+} from '@hcengineering/model-server-controlled-documents'
+import survey, { surveyId, createModel as surveyModel } from '@hcengineering/model-survey'
+import { type Plugin } from '@hcengineering/platform'
 
 interface ConfigurablePlugin extends Omit<Data<PluginConfiguration>, 'pluginId' | 'transactions'> {}
 
@@ -141,7 +150,7 @@ export type { MigrateOperation } from '@hanzo/model'
  * @param disabled  - a set of disabled plugins
  * @returns
  */
-export default function buildModel (enabled: string[] = ['*'], disabled: string[] = []): Builder {
+export default function buildModel (): Builder {
   const builder = new Builder()
 
   const defaultFilter = [
@@ -153,7 +162,8 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
     contact.class.ChannelProvider,
     setting.class.IntegrationType,
     setting.class.WorkspaceSettingCategory,
-    setting.class.SettingsCategory
+    setting.class.SettingsCategory,
+    workbench.class.Widget
   ]
 
   const builders: BuilderConfig[] = [
@@ -171,7 +181,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         label: card.string.Cards,
         description: card.string.ConfigDescription,
         enabled: true,
-        beta: true,
+        beta: false,
         icon: card.icon.Card,
         classFilter: defaultFilter
       }
@@ -183,6 +193,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         label: contact.string.ConfigLabel,
         description: contact.string.ConfigDescription,
         enabled: true,
+        system: true,
         beta: false,
         icon: contact.icon.ContactApplication,
         classFilter: defaultFilter
@@ -233,7 +244,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         label: telegram.string.ConfigLabel,
         description: telegram.string.ConfigDescription,
         enabled: true,
-        beta: false,
+        beta: true,
         classFilter: defaultFilter
       }
     ],
@@ -256,7 +267,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         label: gmail.string.ConfigLabel,
         description: gmail.string.ConfigDescription,
         enabled: true,
-        beta: false,
+        beta: true,
         classFilter: defaultFilter
       }
     ],
@@ -277,6 +288,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
     [textEditorModel, textEditorId],
     [uploaderModel, uploaderId],
     [recorderModel, recorderId],
+    [mediaModel, mediaId],
     [notificationModel, notificationId],
     [preferenceModel, preferenceId],
     [analyticsCollectorModel, analyticsCollectorId],
@@ -287,7 +299,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         label: hr.string.ConfigLabel,
         description: hr.string.ConfigDescription,
         enabled: true,
-        beta: false,
+        beta: true,
         icon: hr.icon.Structure,
         classFilter: defaultFilter
       }
@@ -324,6 +336,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         description: board.string.ConfigDescription,
         enabled: false,
         beta: true,
+        hidden: true,
         icon: board.icon.Board,
         classFilter: defaultFilter
       }
@@ -336,6 +349,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         description: bitrix.string.ConfigDescription,
         enabled: false,
         beta: true,
+        hidden: true,
         icon: bitrix.icon.Bitrix,
         classFilter: defaultFilter
       }
@@ -344,16 +358,18 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
       requestModel,
       requestId,
       {
-        // label: request.string.ConfigLabel,
+        label: setting.string.Configure,
         // description: request.string.ConfigDescription,
         enabled: false,
         beta: false,
+        hidden: true,
         classFilter: defaultFilter
       }
     ],
     [timeModel, timeId],
     [supportModel, supportId],
     [desktopPreferencesModel, desktopPreferencesId],
+    [desktopDownloadsModel, desktopDownloadsId],
 
     [
       githubModel,
@@ -363,7 +379,8 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         description: github.string.ConfigDescription,
         enabled: true,
         beta: false,
-        icon: github.icon.Github
+        icon: github.icon.Github,
+        classFilter: defaultFilter
       }
     ],
     [
@@ -373,7 +390,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         label: love.string.Office,
         description: love.string.LoveDescription,
         enabled: true,
-        beta: true,
+        beta: false,
         icon: love.icon.Love,
         classFilter: defaultFilter
       }
@@ -388,7 +405,7 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         label: processes.string.ConfigLabel,
         description: processes.string.ConfigDescription,
         enabled: true,
-        beta: true,
+        beta: false,
         icon: processes.icon.Process,
         classFilter: defaultFilter
       }
@@ -409,8 +426,10 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
       questionsModel,
       questionsId,
       {
+        label: setting.string.Configure,
         enabled: false,
         beta: false,
+        hidden: true,
         classFilter: defaultFilter
       }
     ],
@@ -447,11 +466,64 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         classFilter: defaultFilter
       }
     ],
-    [surveyModel, surveyId],
+    [
+      surveyModel,
+      surveyId,
+      {
+        label: survey.string.ConfigLabel,
+        description: survey.string.ConfigDescription,
+        enabled: false,
+        beta: true,
+        classFilter: defaultFilter
+      }
+    ],
     [presenceModel, presenceId],
-    [mailModel, mailId],
-    [chatModel, chatId],
+    [
+      chatModel,
+      chatId,
+      { label: chat.string.Chat, hidden: true, enabled: false, beta: true, classFilter: defaultFilter }
+    ],
     [inboxModel, inboxId],
+    [achievementModel, achievementId],
+    [emojiModel, emojiId],
+    [communicationModel, communicationId],
+    [mailModel, mailId],
+    [
+      billingModel,
+      billingId,
+      {
+        label: setting.string.Configure,
+        beta: false,
+        system: true,
+        enabled: true
+      }
+    ],
+    [hulyMailModel, hulyMailId],
+    [
+      aiAssistantModel,
+      aiAssistantId,
+      {
+        label: aiAssistant.string.ConfigLabel,
+        description: aiAssistant.string.ConfigDescription,
+        hidden: true,
+        enabled: false,
+        beta: true,
+        classFilter: defaultFilter
+      }
+    ],
+    [
+      ratingModel,
+      ratingId,
+      {
+        label: rating.string.Rating,
+        description: rating.string.Rating,
+        icon: rating.icon.Rating,
+        hidden: false,
+        enabled: false,
+        beta: true,
+        classFilter: defaultFilter
+      }
+    ],
 
     [serverCoreModel, serverCoreId],
     [serverAttachmentModel, serverAttachmentId],
@@ -501,9 +573,9 @@ export default function buildModel (enabled: string[] = ['*'], disabled: string[
         pluginId: id,
         transactions: txes.map((it) => it._id),
         ...config,
-        enabled:
-          config?.label === undefined ||
-          ((config?.enabled ?? true) && (enabled.includes(id) || enabled.includes('*')) && !disabled.includes(id)),
+        label: config?.label ?? setting.string.Configure,
+        hidden: config !== undefined ? config.hidden : true,
+        enabled: (config?.enabled ?? true) && !(config?.hidden ?? false),
         beta: config?.beta ?? false
       },
       ('plugin-configuration-' + id) as Ref<PluginConfiguration>

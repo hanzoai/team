@@ -59,7 +59,6 @@
 
   function change (val: Visibility): void {
     if (value !== val) {
-      console.log('Changed', val)
       dispatch('change', val)
       value = val
     }
@@ -70,7 +69,6 @@
       opened = true
       closeTooltip()
       showPopup(ModernPopup, { items, selected: selected?.id }, eventToHTMLElement(ev), (selectedId) => {
-        console.log('Selected', selectedId)
         if (selectedId !== undefined) {
           change(selectedId)
         }
@@ -82,7 +80,7 @@
 
 {#if kind === 'inline'}
   <Button
-    icon={withoutIcon ? undefined : calendar.icon.Hidden}
+    icon={withoutIcon ? undefined : (selected?.icon ?? calendar.icon.Hidden)}
     label={selected?.label}
     kind="ghost"
     justify="left"
@@ -96,7 +94,7 @@
   />
 {:else}
   <ButtonMenu
-    icon={withoutIcon ? undefined : calendar.icon.Hidden}
+    icon={withoutIcon ? undefined : (selected?.icon ?? calendar.icon.Hidden)}
     label={selected?.label}
     selected={selected?.id}
     {items}

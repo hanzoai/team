@@ -35,8 +35,7 @@
     TableBrowser,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hanzo/view-resources'
-  import { socialIdsByPersonRefStore } from '@hanzo/contact-resources'
+  } from '@hcengineering/view-resources'
   import { createEventDispatcher } from 'svelte'
   import lead from '../plugin'
 
@@ -48,9 +47,9 @@
   let search = ''
   const dispatch = createEventDispatcher()
   const me = getCurrentEmployee()
-  $: mySocialStrings = ($socialIdsByPersonRefStore.get(me) ?? []).map((si) => si.key)
+  const myAcc = getCurrentAccount()
   const assigned = { assignee: me }
-  $: created = { createdBy: { $in: mySocialStrings } }
+  const created = { createdBy: { $in: myAcc.socialIds } }
   let subscribed = { _id: { $in: [] as Ref<Lead>[] } }
   let mode: string | undefined = undefined
   let baseQuery: DocumentQuery<Lead> | undefined = undefined
@@ -70,7 +69,7 @@
   function getSubscribed () {
     subscribedQuery.query(
       _class,
-      { 'notification:mixin:Collaborators.collaborators': { $in: getCurrentAccount().socialIds } },
+      { 'notification:mixin:Collaborators.collaborators': myAcc.uuid },
       (result) => {
         const newSub = result.map((p) => p._id as Ref<AttachedDoc> as Ref<Lead>)
         const curSub = subscribed._id.$in

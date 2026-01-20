@@ -22,50 +22,49 @@ import {
   activityMessagesComparator,
   combineActivityMessages,
   isActivityMessageClass,
-  isReactionMessage,
   messageInFocus
 } from '@hanzo/activity-resources'
 import { Analytics } from '@hanzo/analytics'
 import chunter, { type ThreadMessage } from '@hanzo/chunter'
 import core, {
-  SortingOrder,
-  getCurrentAccount,
   type Class,
   type Doc,
-  type DocumentUpdate,
+  getCurrentAccount,
   type Ref,
+  SortingOrder,
   type TxOperations,
-  type WithLookup
-} from '@hanzo/core'
+  type WithLookup,
+  getClassCollaborators
+} from '@hcengineering/core'
 import notification, {
-  notificationId,
   type ActivityInboxNotification,
-  type BaseNotificationType,
-  type Collaborators,
   type DisplayInboxNotification,
   type DocNotifyContext,
   type InboxNotification,
   type MentionInboxNotification,
+  notificationId,
   type NotificationProvider,
   type NotificationProviderSetting,
-  type NotificationTypeSetting
-} from '@hanzo/notification'
-import { getMetadata, getResource } from '@hanzo/platform'
-import { MessageBox, createQuery, getClient } from '@hanzo/presentation'
+  type NotificationType,
+  type NotificationTypeSetting,
+  type ReactionInboxNotification
+} from '@hcengineering/notification'
+import { getMetadata, getResource } from '@hcengineering/platform'
+import { createQuery, getClient, MessageBox } from '@hcengineering/presentation'
 import {
   getCurrentLocation,
   getLocation,
+  type Location,
   locationStorageKeyId,
   navigate,
   parseLocation,
-  showPopup,
-  type Location,
-  type ResolvedLocation
-} from '@hanzo/ui'
-import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hanzo/view'
-import { getObjectLinkId, parseLinkId } from '@hanzo/view-resources'
+  type ResolvedLocation,
+  showPopup
+} from '@hcengineering/ui'
+import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hcengineering/view'
+import { getObjectLinkId, parseLinkId } from '@hcengineering/view-resources'
+import type { LocationData } from '@hcengineering/workbench'
 import { get, writable } from 'svelte/store'
-import type { LocationData } from '@hanzo/workbench'
 
 import { InboxNotificationsClientImpl } from './inboxNotificationsClient'
 import { type InboxData, type InboxNotificationsFilter } from './types'
@@ -201,6 +200,27 @@ export async function archiveContextNotifications (doc?: DocNotifyContext): Prom
   }
 }
 
+export async function removeContextNotifications (doc?: DocNotifyContext): Promise<void> {
+  if (doc === undefined) return
+
+  const ops = getClient().apply(undefined, 'removeContextNotifications', true)
+
+  try {
+    const notifications = await ops.findAll(
+      notification.class.InboxNotification,
+      { docNotifyContext: doc._id, archived: false },
+      { projection: { _id: 1, _class: 1, space: 1 } }
+    )
+
+    for (const notification of notifications) {
+      await ops.removeDoc(notification._class, notification.space, notification._id)
+    }
+    await ops.update(doc, { lastViewedTimestamp: Date.now() })
+  } finally {
+    await ops.commit()
+  }
+}
+
 /**
  * @public
  */
@@ -235,36 +255,22 @@ export async function subscribeDoc (
 ): Promise<void> {
   const myAcc = getCurrentAccount()
   const hierarchy = client.getHierarchy()
-
-  if (hierarchy.classHierarchyMixin(docClass, notification.mixin.ClassCollaborators) === undefined) return
+  const classCollaborators = getClassCollaborators(client.getModel(), hierarchy, docClass)
+  if (classCollaborators === undefined) return
 
   const target = doc ?? (await client.findOne(docClass, { _id: docId }))
   if (target === undefined) return
-  if (hierarchy.hasMixin(target, notification.mixin.Collaborators)) {
-    const collab = hierarchy.as(target, notification.mixin.Collaborators)
-    let collabUpdate: DocumentUpdate<Collaborators> | undefined
-    const includesMe = collab.collaborators.includes(myAcc.uuid)
-
-    if (includesMe && op === 'remove') {
-      collabUpdate = {
-        $pull: {
-          collaborators: myAcc.uuid
-        }
-      }
-    } else if (!includesMe && op === 'add') {
-      collabUpdate = {
-        $push: {
-          collaborators: myAcc.uuid
-        }
-      }
-    }
-
-    if (collabUpdate !== undefined) {
-      await client.updateMixin(collab._id, collab._class, collab.space, notification.mixin.Collaborators, collabUpdate)
-    }
-  } else if (op === 'add') {
-    await client.createMixin(docId, docClass, target.space, notification.mixin.Collaborators, {
-      collaborators: [myAcc.uuid]
+  const current = await client.findOne(core.class.Collaborator, {
+    attachedTo: docId,
+    collaborator: myAcc.uuid
+  })
+  if (op === 'remove') {
+    if (current === undefined) return // already removed
+    await client.remove(current)
+  } else {
+    if (current !== undefined) return // already added
+    await client.addCollection(core.class.Collaborator, target.space, target._id, target._class, 'collaborators', {
+      collaborator: myAcc.uuid
     })
   }
 }
@@ -339,14 +345,18 @@ export function isMentionNotification (doc?: InboxNotification): doc is MentionI
   return doc._class === notification.class.MentionInboxNotification
 }
 
-export async function getDisplayInboxNotifications (
+export function isReactionNotification (doc?: InboxNotification): doc is ReactionInboxNotification {
+  if (doc === undefined) return false
+  return doc._class === notification.class.ReactionInboxNotification
+}
+
+export function getDisplayInboxNotifications (
   notifications: Array<WithLookup<InboxNotification>>,
   filter: InboxNotificationsFilter = 'all',
   objectClass?: Ref<Class<Doc>>
-): Promise<DisplayInboxNotification[]> {
+): DisplayInboxNotification[] {
   const result: DisplayInboxNotification[] = []
   const activityNotifications: Array<WithLookup<ActivityInboxNotification>> = []
-
   for (const notification of notifications) {
     if (filter === 'unread' && notification.isViewed) {
       continue
@@ -375,10 +385,7 @@ export async function getDisplayInboxNotifications (
       return (message as DocUpdateMessage).objectClass === objectClass
     })
 
-  const combinedMessages = await combineActivityMessages(
-    messages.sort(activityMessagesComparator),
-    SortingOrder.Descending
-  )
+  const combinedMessages = combineActivityMessages(messages.sort(activityMessagesComparator), SortingOrder.Descending)
 
   for (const message of combinedMessages) {
     if (message._class === activity.class.DocUpdateMessage) {
@@ -419,17 +426,17 @@ export async function getDisplayInboxNotifications (
   )
 }
 
-export async function getDisplayInboxData (
+export function getDisplayInboxData (
   notificationsByContext: Map<Ref<DocNotifyContext>, InboxNotification[]>,
   filter: InboxNotificationsFilter = 'all',
   objectClass?: Ref<Class<Doc>>
-): Promise<InboxData> {
+): InboxData {
   const result: InboxData = new Map()
 
   for (const key of notificationsByContext.keys()) {
     const notifications = notificationsByContext.get(key) ?? []
 
-    const displayNotifications = await getDisplayInboxNotifications(notifications, filter, objectClass)
+    const displayNotifications = getDisplayInboxNotifications(notifications, filter, objectClass)
 
     if (displayNotifications.length > 0) {
       result.set(key, displayNotifications)
@@ -442,7 +449,7 @@ export async function getDisplayInboxData (
 export async function hasInboxNotifications (
   notificationsByContext: Map<Ref<DocNotifyContext>, InboxNotification[]>
 ): Promise<boolean> {
-  const unreadInboxData = await getDisplayInboxData(notificationsByContext, 'unread')
+  const unreadInboxData = getDisplayInboxData(notificationsByContext, 'unread')
 
   return unreadInboxData.size > 0
 }
@@ -455,7 +462,7 @@ export async function getNotificationsCount (
     return 0
   }
 
-  const unreadNotifications = await getDisplayInboxNotifications(notifications, 'unread')
+  const unreadNotifications = getDisplayInboxNotifications(notifications, 'unread')
 
   return unreadNotifications.length
 }
@@ -605,6 +612,27 @@ export async function selectInboxContext (
 
     return
   }
+
+  if (isReactionNotification(notification)) {
+    const thread = loc.path[4] === objectId ? objectId : undefined
+    const reactedTo = await client.findOne(activity.class.ActivityMessage, { _id: notification.attachedTo })
+    const isThread = reactedTo != null && hierarchy.isDerived(reactedTo._class, chunter.class.ThreadMessage)
+    const channelId = isThread ? (reactedTo as ThreadMessage)?.objectId : (reactedTo?.attachedTo ?? objectId)
+    const channelClass = isThread
+      ? (reactedTo as ThreadMessage)?.objectClass
+      : (reactedTo?.attachedToClass ?? objectClass)
+
+    void navigateToInboxDoc(
+      linkProviders,
+      context._id,
+      channelId,
+      channelClass,
+      thread as Ref<ActivityMessage>,
+      objectId as Ref<ActivityMessage>
+    )
+    return
+  }
+
   if (hierarchy.isDerived(objectClass, activity.class.ActivityMessage)) {
     const message = (notification as WithLookup<ActivityInboxNotification>)?.$lookup?.attachedTo
 
@@ -627,28 +655,6 @@ export async function selectInboxContext (
         thread?.objectClass ?? objectClass,
         thread?.attachedTo,
         thread?._id
-      )
-      return
-    }
-
-    if (isReactionMessage(message)) {
-      const thread = loc.path[4] === objectId ? objectId : undefined
-      const reactedTo =
-        (object as ActivityMessage) ??
-        (await client.findOne(activity.class.ActivityMessage, { _id: message.attachedTo as Ref<ActivityMessage> }))
-      const isThread = hierarchy.isDerived(reactedTo._class, chunter.class.ThreadMessage)
-      const channelId = isThread ? (reactedTo as ThreadMessage)?.objectId : reactedTo?.attachedTo ?? objectId
-      const channelClass = isThread
-        ? (reactedTo as ThreadMessage)?.objectClass
-        : reactedTo?.attachedToClass ?? objectClass
-
-      void navigateToInboxDoc(
-        linkProviders,
-        context._id,
-        channelId,
-        channelClass,
-        thread as Ref<ActivityMessage>,
-        objectId as Ref<ActivityMessage>
       )
       return
     }
@@ -821,7 +827,7 @@ export function notificationsComparator (notifications1: InboxNotification, noti
   return 0
 }
 
-export function isNotificationAllowed (type: BaseNotificationType, providerId: Ref<NotificationProvider>): boolean {
+export function isNotificationAllowed (type: NotificationType, providerId: Ref<NotificationProvider>): boolean {
   const client = getClient()
   const provider = client.getModel().findAllSync(notification.class.NotificationProvider, { _id: providerId })[0]
   if (provider === undefined) return false

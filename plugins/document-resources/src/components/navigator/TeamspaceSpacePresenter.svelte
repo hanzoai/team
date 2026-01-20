@@ -13,12 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Ref, SortingOrder, Space, generateId } from '@hanzo/core'
-  import { Document, DocumentEvents, Teamspace } from '@hanzo/document'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Analytics } from '@hcengineering/analytics'
+  import { Ref, SortingOrder, Space, generateId } from '@hcengineering/core'
+  import { Document, DocumentEvents, Teamspace } from '@hcengineering/document'
+  import { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
   import {
-    IconWithEmoji,
     IconEdit,
     getPlatformColorDef,
     getPlatformColorForTextDef,
@@ -265,12 +264,12 @@
 
   <TreeNode
     _id={space?._id}
-    icon={space?.icon === view.ids.IconWithEmoji ? IconWithEmoji : space?.icon ?? model.icon}
+    icon={space?.icon === view.ids.IconWithEmoji ? IconWithEmoji : (space?.icon ?? model.icon)}
     iconProps={space?.icon === view.ids.IconWithEmoji
       ? { icon: space.color }
       : {
           fill:
-            space.color !== undefined
+            space.color !== undefined && typeof space.color !== 'string'
               ? getPlatformColorDef(space.color, $themeStore.dark).icon
               : getPlatformColorForTextDef(space.name, $themeStore.dark).icon
         }}
@@ -309,11 +308,14 @@
         {@const item = visibleItem}
         <DocTreeElement
           doc={item}
-          icon={item.icon === view.ids.IconWithEmoji ? IconWithEmoji : item.icon ?? document.icon.Document}
+          icon={item.icon === view.ids.IconWithEmoji ? IconWithEmoji : (item.icon ?? document.icon.Document)}
           iconProps={item.icon === view.ids.IconWithEmoji
             ? { icon: visibleItem.color }
             : {
-                fill: item.color !== undefined ? getPlatformColorDef(item.color, $themeStore.dark).icon : 'currentColor'
+                fill:
+                  item.color !== undefined && typeof item.color !== 'string'
+                    ? getPlatformColorDef(item.color, $themeStore.dark).icon
+                    : 'currentColor'
               }}
           title={item.title}
           selected

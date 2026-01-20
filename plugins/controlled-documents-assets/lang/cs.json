@@ -22,11 +22,12 @@
     "Minor": "Vedlejší",
     "Patch": "Oprava",
     "ValidationWorkflow": "Ověřovací pracovní postup",
-    "ChangeOwner": "Změnit vlastníka dokumentu",
-    "ChangeOwnerHintBeginning": "Převést vlastnictví",
+    "Creator": "Tvůrce",
+    "ChangeOwner": "Změnit autora dokumentu",
+    "ChangeOwnerHintBeginning": "Převést autorství dokumentu",
     "ChangeOwnerHintEnd": "na jinou osobu.",
     "ChangeOwnerWarning": "Po této akci nebudete moci dokument upravovat.",
-    "SelectOwner": "Vyberte nového vlastníka",
+    "SelectOwner": "Vyberte nového autora",
     "CreateDocument": "Vytvořit nový dokument",
     "CreateTemplate": "Vytvořit novou šablonu",
     "Documents": "Dokumenty",
@@ -230,6 +231,7 @@
 
     "DocumentInHierarchy": "Dokument v hierarchii",
     "FirstDraftVersion": "Toto je první konceptová verze dokumentu. Historie zatím není k dispozici.",
+    "FirstOrNotAvailable": "Toto je první dostupná verze dokumentu. Historie zatím není k dispozici nebo není dostupná.",
     "EffectiveDocumentLifecycle": "Životní cyklus účinného dokumentu",
     "ReasonAndImpact": "Důvod a dopad",
     "ImpactAnalysis": "Analýza dopadu",
@@ -266,7 +268,6 @@
     "EditDocumentSpace": "Upravit prostor dokumentů",
     "DocSpaceDescriptionPlaceholder": "Popište svůj prostor...",
     "Members": "Členové",
-    "RoleLabel": "Role: {role}",
     "CreateOrgSpace": "Vytvořit prostor organizace",
     "ReviewDocumentPermission": "Revidovat dokument",
     "ReviewDocumentDescription": "Uděluje uživatelům možnost revidovat dokument",
@@ -306,7 +307,9 @@
     "LatestVersionHint": "nejnovější",
 
     "CannotDeleteFolder": "Složku nelze smazat",
-    "CannotDeleteFolderHint": "Před odstraněním složky prosím přesuňte všechny podřízené dokumenty na jiné místo."
+    "CannotDeleteFolderHint": "Před odstraněním složky prosím přesuňte všechny podřízené dokumenty na jiné místo.",
+
+    "AllDocumentSpaces": "Všechny dokumentové prostory"
   },
   "controlledDocStates": {
     "Empty": "",

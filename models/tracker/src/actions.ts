@@ -633,7 +633,8 @@ export function createActions (builder: Builder, issuesId: string, componentsId:
         mode: ['context', 'browser'],
         application: tracker.app.Tracker,
         group: 'copy'
-      }
+      },
+      override: [view.action.CopyLink]
     },
     tracker.action.CopyIssueLink
   )
@@ -720,6 +721,26 @@ export function createActions (builder: Builder, issuesId: string, componentsId:
   builder.mixin(tracker.class.Milestone, core.class.Class, view.mixin.IgnoreActions, {
     actions: [view.action.Delete]
   })
+
+  createAction(
+    builder,
+    {
+      action: view.actionImpl.CopyAsMarkdownTable,
+      actionProps: {
+        cardClass: tracker.class.Issue
+      },
+      label: view.string.CopyAsMarkdownTable,
+      icon: view.icon.Print,
+      input: 'selection',
+      category: view.category.General,
+      target: tracker.class.Issue,
+      context: {
+        mode: ['context', 'browser'],
+        group: 'copy'
+      }
+    },
+    tracker.action.CopyAsMarkdownTable
+  )
 
   createAction(
     builder,

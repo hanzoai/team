@@ -13,7 +13,11 @@
 // limitations under the License.
 //
 
-import { initStatisticsContext } from '@hanzo/server-core'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { newMetrics } from '@hcengineering/core'
+import { setMetadata } from '@hcengineering/platform'
+import { initStatisticsContext } from '@hcengineering/server-core'
+import serverToken from '@hcengineering/server-token'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'
@@ -21,6 +25,7 @@ import formData from 'express-form-data'
 import { type IncomingHttpHeaders, type Server } from 'http'
 import morgan from 'morgan'
 import os from 'os'
+import { join } from 'path'
 import { type Readable } from 'stream'
 import config from './config'
 import { ApiError } from './error'
@@ -29,11 +34,6 @@ import { parseGenericResume } from './generic'
 import { decode } from './jwt'
 import { extractDocument } from './process'
 import { type ReconiDocument } from './types'
-import serverToken from '@hanzo/server-token'
-import { setMetadata } from '@hanzo/platform'
-import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
-import { join } from 'path'
-import { SplitLogger } from '@hanzo/analytics-service'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 
 const extractToken = (header: IncomingHttpHeaders): any => {
@@ -48,9 +48,10 @@ export const startServer = async (): Promise<void> => {
   const app = express()
 
   setMetadata(serverToken.metadata.Secret, process.env.SECRET)
+  setMetadata(serverToken.metadata.Service, 'rekoni')
   const ctx = initStatisticsContext('rekoni', {
     factory: () =>
-      new MeasureMetricsContext(
+      createOpenTelemetryMetricsContext(
         'rekoni',
         {},
         {},
@@ -212,28 +213,33 @@ export const startServer = async (): Promise<void> => {
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   app.post('/toText', async (req, res) => {
-    const token = extractToken(req.headers)
-    decode(token)
-    const name = req.query.name as string
-    const contentType = req.query.type as string
-
     try {
+      const token = extractToken(req.headers)
+      decode(token)
+      const name = req.query.name as string
+      const contentType = req.query.type as string
       const body = typeof req.body === 'string' ? Buffer.from(req.body, 'base64') : (req.body as Buffer)
 
       res.set('Cache-Control', 'no-cache')
-      await extractQueue.add(async () => {
-        const { matched, content, error } = await extract(name, contentType, body)
-        if (error !== undefined) {
-          res.status(400)
-        } else {
-          res.status(200)
-        }
-        res.json({
-          matched,
-          content,
-          error
-        })
-      })
+      await ctx.with(
+        'extract-text',
+        {},
+        () =>
+          extractQueue.add(async () => {
+            const { matched, content, error } = await extract(name, contentType, body)
+            if (error !== undefined) {
+              res.status(400)
+            } else {
+              res.status(200)
+            }
+            res.json({
+              matched,
+              content,
+              error
+            })
+          }),
+        { name, contentType }
+      )
     } catch (err: any) {
       res.status(400)
       res.json({ error: JSON.stringify(err) })
@@ -241,6 +247,7 @@ export const startServer = async (): Promise<void> => {
   })
 
   app.use((_req, res, _next) => {
+    ctx.info('request', { url: _req.url })
     res.status(404).send({ message: 'Not found' })
   })
 

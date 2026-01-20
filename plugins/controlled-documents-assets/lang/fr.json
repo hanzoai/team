@@ -22,11 +22,12 @@
     "Minor": "Mineur",
     "Patch": "Correctif",
     "ValidationWorkflow": "Flux de validation",
-    "ChangeOwner": "Changer le propriétaire du document",
-    "ChangeOwnerHintBeginning": "Transférer la propriété du",
+    "Creator": "Créateur",
+    "ChangeOwner": "Changer l’auteur du document",
+    "ChangeOwnerHintBeginning": "Transférer l’auteur du document",
     "ChangeOwnerHintEnd": "à une autre personne.",
     "ChangeOwnerWarning": "Vous ne pourrez plus modifier ce document après cette action.",
-    "SelectOwner": "Sélectionner un nouveau propriétaire",
+    "SelectOwner": "Sélectionner un nouvel auteur",
     "CreateDocument": "Créer un nouveau document",
     "CreateTemplate": "Créer un nouveau modèle",
     "Documents": "Documents",
@@ -41,6 +42,7 @@
     "SearchDocument": "Rechercher un document...",
     "CreateEnVersion": "Créer une version pour révision",
     "Approvers": "Approuveurs",
+    "ExternalApprovers": "Approuveurs externes",
     "CoAuthors": "Co-auteurs",
     "Status": "Statut",
     "TemplateName": "Nom du modèle",
@@ -197,6 +199,7 @@
     "ArchiveDocsConfirm": "Voulez-vous vraiment archiver les documents suivants : {titles} ?",
     "DocumentInHierarchy": "Document dans la hiérarchie",
     "FirstDraftVersion": "Ceci est la première version brouillon du document. Il n'y a pas encore d'historique.",
+    "FirstOrNotAvailable": "Ceci est la première version disponible du document. Il n'y a pas encore d'historique ou il n'est pas disponible.",
     "EffectiveDocumentLifecycle": "Cycle de vie du document effectif",
     "ReasonAndImpact": "Raison et impact",
     "ImpactAnalysis": "Analyse d'impact",
@@ -233,7 +236,7 @@
     "EditDocumentSpace": "Modifier l'espace de documents",
     "DocSpaceDescriptionPlaceholder": "Décrivez votre espace...",
     "Members": "Membres",
-    "RoleLabel": "Rôle : {role}",
+    "": "Rôle : {role}",
     "CreateOrgSpace": "Créer un espace organisationnel",
     "ReviewDocumentPermission": "Réviser le document",
     "ReviewDocumentDescription": "Accorde aux utilisateurs la capacité de réviser un document",
@@ -273,7 +276,9 @@
     "LatestVersionHint": "dernier",
 
     "CannotDeleteFolder": "Le dossier ne peut pas être supprimé",
-    "CannotDeleteFolderHint": "Veuillez déplacer tous les documents enfants vers un autre emplacement avant de supprimer le dossier."
+    "CannotDeleteFolderHint": "Veuillez déplacer tous les documents enfants vers un autre emplacement avant de supprimer le dossier.",
+
+    "AllDocumentSpaces": "Tous les espaces de documents"
   },
   "controlledDocStates": {
     "Empty": "",

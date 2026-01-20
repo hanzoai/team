@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, Person } from '@hanzo/contact'
-  import { AssigneeBox, AssigneePopup, personRefByAccountUuidStore } from '@hanzo/contact-resources'
-  import { AssigneeCategory } from '@hanzo/contact-resources/src/assignee'
-  import { Doc, DocumentQuery, notEmpty, Ref, Space } from '@hanzo/core'
-  import { RuleApplyResult, getClient, getDocRules } from '@hanzo/presentation'
-  import { Component, Issue, TrackerEvents } from '@hanzo/tracker'
-  import { ButtonKind, ButtonSize, IconSize, TooltipAlignment } from '@hanzo/ui'
-  import { Analytics } from '@hanzo/analytics'
+  import contact, { Employee, Person } from '@hcengineering/contact'
+  import { AssigneeBox, AssigneePopup, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { AssigneeCategory } from '@hcengineering/contact-resources/src/assignee'
+  import { Doc, DocumentQuery, notEmpty, Ref, Space } from '@hcengineering/core'
+  import { RuleApplyResult, getClient, getDocRules } from '@hcengineering/presentation'
+  import { Component, Issue, TrackerEvents } from '@hcengineering/tracker'
+  import { ButtonKind, ButtonSize, IconSize, TooltipAlignment } from '@hcengineering/ui'
+  import { Analytics } from '@hcengineering/analytics'
   import { createEventDispatcher } from 'svelte'
 
   import tracker from '../../plugin'
@@ -123,7 +123,7 @@
         }
 
         const allMembers = projects.map((p) => p.members).flat()
-        const allPersonsSet = new Set(allMembers.map((p) => $personRefByAccountUuidStore.get(p)).filter(notEmpty))
+        const allPersonsSet = new Set(allMembers.map((p) => $employeeRefByAccountUuidStore.get(p)).filter(notEmpty))
 
         return Array.from(allPersonsSet)
       }
@@ -135,8 +135,8 @@
   $: sel =
     (!Array.isArray(_object)
       ? _object.assignee
-      : _object.reduce((v, it) => (v != null && v === it.assignee ? it.assignee : null), _object[0]?.assignee) ??
-        undefined) ?? undefined
+      : (_object.reduce((v, it) => (v != null && v === it.assignee ? it.assignee : null), _object[0]?.assignee) ??
+        undefined)) ?? undefined
 
   let rulesQuery: RuleApplyResult<Employee> | undefined
   let query: DocumentQuery<Employee>

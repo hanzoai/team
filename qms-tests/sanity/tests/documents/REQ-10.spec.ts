@@ -4,6 +4,7 @@ import {
   DocumentURI,
   generateId,
   getSecondPage,
+  getThirdPage,
   HomepageURI,
   PlatformSettingSecond,
   PlatformURI
@@ -69,7 +70,7 @@ test.describe('ISO 13485, 4.2.4 Control of documents ensure that documents of ex
       const documentDetails: DocumentDetails = {
         type: 'HR',
         category: 'Human Resources',
-        version: 'v0.1',
+        version: 'v1.0',
         status: DocumentStatus.DRAFT,
         owner: 'Dirak Kainin',
         author: 'Dirak Kainin'
@@ -77,7 +78,7 @@ test.describe('ISO 13485, 4.2.4 Control of documents ensure that documents of ex
       await documentContentPage.checkDocument({
         ...documentDetails,
         status: DocumentStatus.DRAFT,
-        version: 'v0.1'
+        version: 'v1.0'
       })
       await documentContentPage.clickLeaveFolder(folderName)
       await attachScreenshot('TESTS-347_manager_document_created.png', page)
@@ -121,18 +122,24 @@ test.describe('ISO 13485, 4.2.4 Control of documents ensure that documents of ex
     })
   })
 
-  test('TESTS-404. As a space member only, I cannot create any doc from that space', async ({ page }) => {
+  test('TESTS-404. As a space member only, I cannot create any doc from that space', async ({ page, browser }) => {
     await allure.description('Requirement\nUser is not able to create any document from that space')
     await allure.tms('TESTS-404', 'https://tracex.hc.engineering/workbench/platform/tracker/TESTS-404')
-    await test.step('2. cCheck if user can not create documents as a space member', async () => {
-      const folderName = faker.word.words(1)
-      const documentContentPage = new DocumentContentPage(page)
+    const folderName = faker.word.words(1)
+    const userThirdPage = await getThirdPage(browser)
+    const documentContentPage = new DocumentContentPage(page)
+    const documentContentPageThird = new DocumentContentPage(userThirdPage)
+    await (await userThirdPage.goto(`${PlatformURI}/${DocumentURI}`))?.finished()
+    await test.step('2. Add a user as a space member', async () => {
       await documentContentPage.clickAddFolderButton()
       await documentContentPage.createDocumentSpaceMembersToJustMember(folderName)
-      await documentContentPage.checkIfEditSpaceButtonExists(folderName, false)
-      await page.keyboard.press('Escape')
-      await documentContentPage.checkIfUserCanSelectSpace(folderName, false)
-      await attachScreenshot('TESTS-404_non_space_member_can_not_create_documents.png', page)
+      await documentContentPage.addThirdUserToMembers(folderName)
+    })
+    await test.step('3. Check if user can not create documents as a space member', async () => {
+      await documentContentPageThird.checkIfEditSpaceButtonExists(folderName, false)
+      await userThirdPage.keyboard.press('Escape')
+      await documentContentPageThird.checkIfUserCanSelectSpace(folderName, false)
+      await attachScreenshot('TESTS-404_non_space_member_can_not_create_documents.png', userThirdPage)
     })
   })
 

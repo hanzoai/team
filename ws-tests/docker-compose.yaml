@@ -5,11 +5,9 @@ services:
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     environment:
-      - STREAM_ENDPOINT_URL=s3://hanzoai.local:9000
+      - STREAM_ENDPOINT_URL=datalake://huly.local:4031
       - STREAM_INSECURE=true
       - STREAM_SERVER_SECRET=secret
-      - AWS_ACCESS_KEY_ID=minioadmin
-      - AWS_SECRET_ACCESS_KEY=minioadmin
     ports:
       - 1081:1080
     restart: unless-stopped
@@ -95,11 +93,38 @@ services:
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     expose:
-      - 9002
-      - 9003
+      - 9000
+      - 9001
     ports:
       - 9002:9000
       - 9003:9001
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 5s
+      retries: 10
+  datalake:
+    image: hardcoreeng/datalake
+    depends_on:
+      minio:
+        condition: service_healthy
+      cockroach:
+        condition: service_started
+      stats:
+        condition: service_started
+      account:
+        condition: service_started
+    ports:
+      - 4031:4031
+    environment:
+      - PORT=4031
+      - SECRET=secret
+      - ACCOUNTS_URL=http://account:3003
+      - STATS_URL=http://stats:4901
+      - STREAM_URL=http://localhost:1081/recording
+      - DB_URL=${DB_EU_URL}
+      - BUCKETS=blobs,eu|http://minio:9000?accessKey=minioadmin&secretKey=minioadmin
+      - QUEUE_CONFIG=${QUEUE_CONFIG}
+    restart: unless-stopped
   elastic:
     image: 'elasticsearch:7.14.2'
     expose:
@@ -121,7 +146,10 @@ services:
     image: hardcoreeng/account
     pull_policy: never
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'huly.local:host-gateway'
+    depends_on:
+      cockroach:
+        condition: service_started
     links:
       - mongodb
       - minio
@@ -137,13 +165,12 @@ services:
       - ADMIN_EMAILS=admin,${PLATFORM_ADMIN_EMAILS}
       - STATS_URL=http://hanzoai.local:4901
       - WORKSPACE_LIMIT_PER_USER=100
-      - DB_URL=${MONGO_URL}
+      - DB_URL=${DB_EU_URL}
       # - REGION_INFO=|America;europe| # Europe without name will not be available for creation of new workspaces.
       - REGION_INFO=|America;europe|Europe
       - TRANSACTOR_URL=ws://hanzoai.local:3334;ws://hanzoai.local:3334,ws://hanzoai.local:3335;ws://hanzoai.local:3335;europe
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - FRONT_URL=http://hanzoai.local:8083
-      - MODEL_ENABLED=*
+      - FRONT_URL=http://huly.local:8083
       # - LAST_NAME_FIRST=true
       # - WS_LIVENESS_DAYS=1
       - ACCOUNTS_URL=http://hanzoai.local:3003
@@ -177,9 +204,9 @@ services:
       - DB_URL=${DB_URL}
       - STATS_URL=http://hanzoai.local:4901
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - MODEL_ENABLED=*
       - REGION=
-      - ACCOUNTS_URL=http://hanzoai.local:3003
+      - ACCOUNTS_URL=http://huly.local:3003
+      - ACCOUNTS_DB_URL=${DB_EU_URL}
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
       - BACKUP_BUCKET=${BACKUP_BUCKET_NAME}
@@ -203,8 +230,8 @@ services:
       - DB_URL=${DB_EU_URL}
       - STATS_URL=http://hanzoai.local:4901
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - MODEL_ENABLED=*
-      - ACCOUNTS_URL=http://hanzoai.local:3003
+      - ACCOUNTS_URL=http://huly.local:3003
+      - ACCOUNTS_DB_URL=${DB_EU_URL}
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
       - BACKUP_BUCKET=${BACKUP_BUCKET_NAME}
@@ -294,7 +321,9 @@ services:
       - ACCOUNTS_URL=http://hanzoai.local:3003
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://hanzoai.local:4011
+      - AI_BOT_URL=http://huly.local:4011
+      - RATE_LIMIT_MAX=25000
+      - RATE_LIMIT_WINDOW=1000
   transactor-europe:
     image: hardcoreeng/transactor
     extra_hosts:
@@ -325,7 +354,9 @@ services:
       - ACCOUNTS_URL=http://hanzoai.local:3003
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://hanzoai.local:4011
+      - AI_BOT_URL=http://huly.local:4011
+      - RATE_LIMIT_MAX=25000
+      - RATE_LIMIT_WINDOW=1000
     restart: unless-stopped
   rekoni:
     image: hardcoreeng/rekoni-service
@@ -377,10 +408,9 @@ services:
       - FULLTEXT_DB_URL=http://hanzoai.local:9201
       - ELASTIC_INDEX_NAME=local_eu_storage_index # Use different one to be able to check migration is working
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://hanzoai.local:4901
-      - REKONI_URL=http://hanzoai.local:4007
-      - ACCOUNTS_URL=http://hanzoai.local:3003
-      - SERVER_SECRET=secret
+      - STATS_URL=http://huly.local:4901
+      - REKONI_URL=http://huly.local:4007
+      - ACCOUNTS_URL=http://huly.local:3003
     restart: unless-stopped
   aiBot:
     image: hardcoreeng/ai-bot
@@ -400,4 +430,4 @@ services:
       - PASSWORD=password
       - AVATAR_PATH=./avatar.png
       - AVATAR_CONTENT_TYPE=.png
-      - STATS_URL=http://hanzoai.local:4900
+      - STATS_URL=http://huly.local:4901

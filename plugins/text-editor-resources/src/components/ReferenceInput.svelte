@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Markup } from '@hanzo/core'
-  import { Asset, IntlString } from '@hanzo/platform'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
-  import textEditor, { RefAction, TextEditorHandler } from '@hanzo/text-editor'
+  import { Blob, Class, Doc, Markup, Ref } from '@hcengineering/core'
+  import { Asset, IntlString } from '@hcengineering/platform'
+  import { EmptyMarkup, isEmptyMarkup, mergeKitOptions } from '@hcengineering/text'
+  import textEditor, { RefAction, TextEditorHandler } from '@hcengineering/text-editor'
   import {
     AnySvelteComponent,
     Button,
@@ -34,10 +34,8 @@
   import view from '@hanzo/view'
   import TextEditor from './TextEditor.svelte'
   import { defaultRefActions, getModelRefActions } from './editor/actions'
-  import { EmojiExtension } from './extension/emoji'
-  import { IsEmptyContentExtension } from './extension/isEmptyContent'
-  import { referenceConfig, ReferenceExtension } from './extension/reference'
   import Send from './icons/Send.svelte'
+  import { EditorKitOptions } from '../kits/editor-kit'
 
   export let content: Markup = EmptyMarkup
   export let showHeader = false
@@ -57,10 +55,11 @@
   export let noborder: boolean = false
   export let boundary: HTMLElement | undefined = undefined
   export let autofocus: FocusPosition = false
-  export let canEmbedFiles = true
-  export let canEmbedImages = true
   export let onPaste: ((view: EditorView, event: ClipboardEvent) => boolean) | undefined = undefined
   export let onCancel: (() => void) | undefined = undefined
+  export let docClass: Ref<Class<Doc>> | undefined = undefined
+  export let kitOptions: Partial<EditorKitOptions> = {}
+  export let onKeyDown: ((view: EditorView, event: KeyboardEvent) => boolean) | undefined = undefined
 
   const dispatch = createEventDispatcher()
   const buttonSize = 'medium'
@@ -83,6 +82,9 @@
   const editorHandler: TextEditorHandler = {
     insertText: (text) => {
       editor?.insertText(text)
+    },
+    insertEmoji: (text: string, image?: Ref<Blob>) => {
+      editor?.insertEmoji(text, image)
     },
     insertMarkup: (markup) => {
       editor?.insertMarkup(markup)
@@ -108,10 +110,16 @@
   }
 
   let actions: RefAction[] = defaultRefActions.concat(...extraActions).sort((a, b) => a.order - b.order)
+  let modelActions: RefAction[] = []
 
-  void getModelRefActions().then((modelActions) => {
-    actions = actions.concat(...modelActions).sort((a, b) => a.order - b.order)
+  void getModelRefActions().then((actions) => {
+    modelActions = actions
   })
+
+  $: actions = defaultRefActions
+    .concat(...extraActions)
+    .concat(...modelActions)
+    .sort((a, b) => a.order - b.order)
 
   export function submit (): void {
     editor?.submit()
@@ -140,12 +148,6 @@
       focusManager?.setFocus(idx)
     }
   }
-  const completionPlugin = ReferenceExtension.configure({
-    ...referenceConfig,
-    showDoc (event: MouseEvent, _id: string, _class: string) {
-      dispatch('open-document', { event, _id, _class })
-    }
-  })
 </script>
 
 <div class="ref-container" class:focusable class:noborder>
@@ -160,8 +162,6 @@
       bind:this={editor}
       {autofocus}
       {boundary}
-      {canEmbedFiles}
-      {canEmbedImages}
       on:content={(ev) => {
         if (canSubmit) {
           dispatch('message', ev.detail)
@@ -178,13 +178,25 @@
         updateFocus()
         dispatch('focus')
       }}
-      extensions={[
-        completionPlugin,
-        EmojiExtension.configure(),
-        IsEmptyContentExtension.configure({ onChange: (value) => (isEmpty = value) })
-      ]}
       {onPaste}
+      {onKeyDown}
       on:update
+      kitOptions={mergeKitOptions(
+        {
+          emoji: true,
+          dropcursor: false,
+          reference: {
+            docClass,
+            multipleMentions: true
+          },
+          hooks: {
+            emptyContent: {
+              onChange: (a) => (isEmpty = a)
+            }
+          }
+        },
+        kitOptions
+      )}
       placeholder={placeholder ?? textEditor.string.EditorPlaceholder}
     />
   </div>
@@ -192,7 +204,10 @@
     <div class="buttons-panel flex-between clear-mins">
       <div class="buttons-group {shrinkButtons ? 'xxsmall-gap' : 'xsmall-gap'}">
         {#if showActions}
-          {#each actions as a}
+          {#each actions as a, idx (a)}
+            {#if idx !== 0 && a.order % 10 === 0}
+              <div class="buttons-divider" />
+            {/if}
             <Button
               disabled={a.disabled}
               icon={a.icon}
@@ -200,15 +215,13 @@
               kind="ghost"
               showTooltip={{ label: a.label }}
               size={buttonSize}
+              noFocus
               on:click={handler(a, (a, evt) => {
                 if (a.disabled !== true) {
                   handleAction(a, evt)
                 }
               })}
             />
-            {#if a.order % 10 === 1}
-              <div class="buttons-divider" />
-            {/if}
           {/each}
         {/if}
       </div>

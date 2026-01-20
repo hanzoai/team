@@ -13,21 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Document } from '@hanzo/controlled-documents'
-  import { WithLookup } from '@hanzo/core'
-  import { getPanelURI } from '@hanzo/ui'
-  import documents from '../../../plugin'
+  import { Document } from '@hcengineering/controlled-documents'
+  import { WithLookup } from '@hcengineering/core'
+  import { tooltip } from '@hcengineering/ui'
+  import { DocNavLink } from '@hcengineering/view-resources'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
 
   export let value: WithLookup<Document>
   export let inline = false
 </script>
 
 {#if value}
-  <a
-    class="flex-presenter"
-    href="#{getPanelURI(documents.component.EditDoc, value._id, value._class, 'content')}"
-    class:inline-presenter={inline}
-  >
-    <span class="label nowrap">{value.title}</span>
-  </a>
+  <DocNavLink object={value} {inline}>
+    <div class="flex-presenter" class:inline-presenter={inline} use:tooltip={{ label: getEmbeddedLabel(value.title) }}>
+      <span class="label fs-bold nowrap">{value.title}</span>
+    </div>
+  </DocNavLink>
 {/if}

@@ -20,32 +20,32 @@ import { type MigrateOperation } from '@hanzo/model'
 import builder, { getModelVersion, migrateOperations } from '@hanzo/model-all'
 import { devTool } from '.'
 
-import { addLocation } from '@hanzo/platform'
-import { serverActivityId } from '@hanzo/server-activity'
-import { serverAttachmentId } from '@hanzo/server-attachment'
-import { serverCardId } from '@hanzo/server-card'
-import { serverCalendarId } from '@hanzo/server-calendar'
-import { serverChunterId } from '@hanzo/server-chunter'
-import { serverCollaborationId } from '@hanzo/server-collaboration'
-import { serverContactId } from '@hanzo/server-contact'
-import { serverDriveId } from '@hanzo/server-drive'
-import { serverDocumentId } from '@hanzo/server-document'
-import { serverGmailId } from '@hanzo/server-gmail'
-import { serverGuestId } from '@hanzo/server-guest'
-import { serverHrId } from '@hanzo/server-hr'
-import { serverInventoryId } from '@hanzo/server-inventory'
-import { serverLeadId } from '@hanzo/server-lead'
-import { serverNotificationId } from '@hanzo/server-notification'
-import { serverRecruitId } from '@hanzo/server-recruit'
-import { serverRequestId } from '@hanzo/server-request'
-import { serverSettingId } from '@hanzo/server-setting'
-import { serverTagsId } from '@hanzo/server-tags'
-import { serverTaskId } from '@hanzo/server-task'
-import { serverTelegramId } from '@hanzo/server-telegram'
-import { serverTimeId } from '@hanzo/server-time'
-import { serverTrackerId } from '@hanzo/server-tracker'
-import { serverViewId } from '@hanzo/server-view'
-import { serverAiBotId } from '@hanzo/server-ai-bot'
+import { addLocation } from '@hcengineering/platform'
+import { serverActivityId } from '@hcengineering/server-activity'
+import { serverAiBotId } from '@hcengineering/server-ai-bot'
+import { serverAttachmentId } from '@hcengineering/server-attachment'
+import { serverCalendarId } from '@hcengineering/server-calendar'
+import { serverCardId } from '@hcengineering/server-card'
+import { serverChunterId } from '@hcengineering/server-chunter'
+import { serverCollaborationId } from '@hcengineering/server-collaboration'
+import { serverContactId } from '@hcengineering/server-contact'
+import { serverDocumentId } from '@hcengineering/server-document'
+import { serverDriveId } from '@hcengineering/server-drive'
+import { serverGmailId } from '@hcengineering/server-gmail'
+import { serverGuestId } from '@hcengineering/server-guest'
+import { serverHrId } from '@hcengineering/server-hr'
+import { serverInventoryId } from '@hcengineering/server-inventory'
+import { serverLeadId } from '@hcengineering/server-lead'
+import { serverNotificationId } from '@hcengineering/server-notification'
+import { serverRecruitId } from '@hcengineering/server-recruit'
+import { serverRequestId } from '@hcengineering/server-request'
+import { serverSettingId } from '@hcengineering/server-setting'
+import { serverTagsId } from '@hcengineering/server-tags'
+import { serverTaskId } from '@hcengineering/server-task'
+import { serverTelegramId } from '@hcengineering/server-telegram'
+import { serverTimeId } from '@hcengineering/server-time'
+import { serverTrackerId } from '@hcengineering/server-tracker'
+import { serverViewId } from '@hcengineering/server-view'
 
 addLocation(serverActivityId, () => import('@hanzo/server-activity-resources'))
 addLocation(serverAttachmentId, () => import('@hanzo/server-attachment-resources'))
@@ -79,10 +79,7 @@ function prepareTools (): {
   version: Data<Version>
   migrateOperations: [string, MigrateOperation][]
 } {
-  const enabled = (process.env.MODEL_ENABLED ?? '*').split(',').map((it) => it.trim())
-  const disabled = (process.env.MODEL_DISABLED ?? '').split(',').map((it) => it.trim())
-
-  return { ...prepareToolsRaw(builder(enabled, disabled).getTxes()), version: getModelVersion(), migrateOperations }
+  return { ...prepareToolsRaw(builder().getTxes()), version: getModelVersion(), migrateOperations }
 }
 
 export function getMongoDBUrl (): string {
@@ -98,6 +95,15 @@ export function getAccountDBUrl (): string {
   const url = process.env.ACCOUNT_DB_URL
   if (url === undefined) {
     console.error('please provide mongo ACCOUNT_DB_URL')
+    process.exit(1)
+  }
+  return url
+}
+
+export function getKvsUrl (): string {
+  const url = process.env.KVS_URL
+  if (url === undefined) {
+    console.error('please provide KVS_URL')
     process.exit(1)
   }
   return url

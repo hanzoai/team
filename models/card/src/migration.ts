@@ -13,19 +13,30 @@
 // limitations under the License.
 //
 
-import { cardId, DOMAIN_CARD } from '@hanzo/card'
-import core, { TxOperations, type Client, type Data, type Doc } from '@hanzo/core'
+import cardPlugin, { cardId, DOMAIN_CARD, type Card, type Role } from '@hcengineering/card'
+import core, {
+  DOMAIN_MODEL,
+  TxOperations,
+  type Class,
+  type ClassPermission,
+  type Client,
+  type Data,
+  type Doc,
+  type DocumentUpdate,
+  type Ref
+} from '@hcengineering/core'
 import {
+  createOrUpdate,
   tryMigrate,
   tryUpgrade,
+  TypeNumber,
   type MigrateOperation,
   type MigrationClient,
-  type MigrationUpgradeClient,
-  createOrUpdate
-} from '@hanzo/model'
-import view from '@hanzo/view'
+  type MigrationUpgradeClient
+} from '@hcengineering/model'
+import tags from '@hcengineering/tags'
+import view, { type Viewlet } from '@hcengineering/view'
 import card from '.'
-import tags from '@hanzo/tags'
 
 export const cardOperation: MigrateOperation = {
   async migrate (client: MigrationClient, mode): Promise<void> {
@@ -39,13 +50,28 @@ export const cardOperation: MigrateOperation = {
         state: 'migrate-spaces',
         mode: 'upgrade',
         func: migrateSpaces
+      },
+      {
+        state: 'migrate-childs-spaces',
+        mode: 'upgrade',
+        func: migrateChildsSpaces
+      },
+      {
+        state: 'update-custom-fields-displayprops',
+        mode: 'upgrade',
+        func: updateCustomFieldsDisplayProps
+      },
+      {
+        state: 'fill-versioning',
+        mode: 'upgrade',
+        func: fillVersioning
       }
     ])
   },
   async upgrade (state: Map<string, Set<string>>, client: () => Promise<MigrationUpgradeClient>, mode): Promise<void> {
     await tryUpgrade(mode, state, client, cardId, [
       {
-        state: 'migrateViewlets-v2',
+        state: 'migrateViewlets-v6',
         func: migrateViewlets
       },
       {
@@ -62,9 +88,303 @@ export const cardOperation: MigrateOperation = {
       {
         state: 'default-labels',
         func: defaultLabels
+      },
+      {
+        state: 'fill-parent-info',
+        mode: 'upgrade',
+        func: fillParentInfo
+      },
+      {
+        state: 'make-config-sortable',
+        mode: 'upgrade',
+        func: makeConfigSortable
+      },
+      {
+        state: 'migrate-roles-v2',
+        mode: 'upgrade',
+        func: migrateRolesToBaseRole
+      },
+      {
+        state: 'add-space-type',
+        mode: 'upgrade',
+        func: addSpaceType
+      },
+      {
+        state: 'migrate-role-types',
+        mode: 'upgrade',
+        func: migrateRoleTypes
+      },
+      {
+        state: 'fix-migrated-roles-permissions',
+        mode: 'upgrade',
+        func: migrateRolePermissions
+      },
+      {
+        state: 'version-for-versionable-types',
+        mode: 'upgrade',
+        func: addVersionForVersionableTypes
+      },
+      {
+        state: 'migrate-restricted-permissions',
+        mode: 'upgrade',
+        func: migrateRestrictedPermissions
       }
     ])
   }
+}
+
+async function migrateRestrictedPermissions (_client: MigrationUpgradeClient): Promise<void> {
+  const client = new TxOperations(_client, core.account.System)
+  const hierarchy = client.getHierarchy()
+  const desc = hierarchy.getDescendants(card.class.Card)
+  const permissions = await client.findAll(core.class.ClassPermission, { objectClass: { $in: desc } })
+  const restrictedTargets = new Set<Ref<Class<Doc>>>()
+  for (const perm of permissions) {
+    if (perm.targetClass !== undefined) {
+      restrictedTargets.add(perm.targetClass)
+    }
+  }
+
+  const targets = await client.findAll(card.class.MasterTag, { _id: { $in: [...restrictedTargets] } })
+
+  for (const masterTag of targets) {
+    const isMixin = hierarchy.isMixin(masterTag._id)
+    const objectClass = hierarchy.getBaseClass(masterTag._id)
+    if (isMixin) {
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxMixin,
+          txMatch: {
+            mixin: masterTag._id
+          },
+          scope: 'space',
+          forbid: false,
+          label: card.string.AddTagPermission,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_create_allowed` as Ref<ClassPermission>
+      )
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxMixin,
+          txMatch: {
+            mixin: masterTag._id
+          },
+          scope: 'space',
+          forbid: true,
+          label: card.string.ForbidAddTagPermission,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_create_forbidden` as Ref<ClassPermission>
+      )
+      const key = `operations.$unset.${masterTag._id}`
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxUpdateDoc,
+          txMatch: {
+            [key]: {
+              $exists: true
+            }
+          },
+          scope: 'space',
+          forbid: false,
+          label: card.string.RemoveTag,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_remove_allowed` as Ref<ClassPermission>
+      )
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxUpdateDoc,
+          txMatch: {
+            [key]: { $exists: true }
+          },
+          scope: 'space',
+          forbid: true,
+          label: card.string.ForbidRemoveTag,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_remove_forbidden` as Ref<ClassPermission>
+      )
+    } else {
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxCreateDoc,
+          scope: 'space',
+          forbid: false,
+          label: card.string.CreateCardPermission,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_create_allowed` as Ref<ClassPermission>
+      )
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxCreateDoc,
+          scope: 'space',
+          forbid: true,
+          label: card.string.ForbidCreateCardPermission,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_create_forbidden` as Ref<ClassPermission>
+      )
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxRemoveDoc,
+          scope: 'space',
+          forbid: false,
+          label: card.string.RemoveCard,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_remove_allowed` as Ref<ClassPermission>
+      )
+      await client.createDoc(
+        core.class.ClassPermission,
+        core.space.Model,
+        {
+          objectClass,
+          txClass: core.class.TxRemoveDoc,
+          txMatch: {
+            objectClass: masterTag._id
+          },
+          scope: 'space',
+          forbid: true,
+          label: card.string.ForbidRemoveCard,
+          description: masterTag.label,
+          targetClass: masterTag._id
+        },
+        `${masterTag._id}_remove_forbidden` as Ref<ClassPermission>
+      )
+    }
+  }
+}
+
+async function addVersionForVersionableTypes (client: MigrationUpgradeClient): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const versionableTypes = await client.findAll(card.class.MasterTag, {})
+  for (const type of versionableTypes) {
+    if (client.getHierarchy().as(type, core.mixin.VersionableClass).enabled) {
+      if (client.getHierarchy().findAttribute(type._id, 'version') === undefined) {
+        await txOp.createDoc(core.class.Attribute, core.space.Model, {
+          attributeOf: type._id,
+          _class: core.class.Attribute,
+          isCustrom: false,
+          label: core.string.Version,
+          name: 'version',
+          readonly: true,
+          type: TypeNumber()
+        })
+      }
+    }
+  }
+}
+
+async function addSpaceType (client: MigrationUpgradeClient): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const spaces = await client.findAll(card.class.CardSpace, { type: { $exists: false } })
+  for (const space of spaces) {
+    await txOp.diffUpdate(space, { type: cardPlugin.spaceType.SpaceType })
+  }
+}
+
+async function migrateRolesToBaseRole (client: MigrationUpgradeClient): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const roles = await client.findAll(card.class.Role, { attachedTo: { $ne: cardPlugin.spaceType.SpaceType } })
+  for (const role of roles) {
+    const baseRoleData: DocumentUpdate<Role> = {
+      types: [role.attachedTo as any],
+      attachedTo: cardPlugin.spaceType.SpaceType,
+      attachedToClass: core.class.SpaceType
+    }
+    await txOp.update(role, baseRoleData)
+  }
+}
+
+async function fillParentInfo (client: Client): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const cards = await client.findAll(card.class.Card, { parentInfo: { $exists: false }, parent: { $ne: null } })
+  const cache = new Map<Ref<Card>, Card>()
+  for (const val of cards) {
+    if (val.parent == null) continue
+    const parent = await getCardParentWithParentInfo(txOp, val.parent, cache)
+    if (parent !== undefined) {
+      const parentInfo = [
+        ...(parent.parentInfo ?? []),
+        {
+          _id: parent._id,
+          _class: parent._class,
+          title: parent.title
+        }
+      ]
+      await txOp.update(val, { parentInfo })
+      val.parentInfo = parentInfo
+      cache.set(val._id, val)
+    }
+  }
+}
+
+async function getCardParentWithParentInfo (
+  txOp: TxOperations,
+  _id: Ref<Card>,
+  cache: Map<Ref<Card>, Card>,
+  visited: Set<Ref<Card>> = new Set<Ref<Card>>()
+): Promise<Card | undefined> {
+  if (visited.has(_id)) {
+    return undefined
+  }
+  const doc = cache.get(_id) ?? (await txOp.findOne(card.class.Card, { _id }))
+  if (doc === undefined) return
+  if (doc.parentInfo === undefined) {
+    if (doc.parent == null) {
+      doc.parentInfo = []
+    } else {
+      visited.add(_id) // Add current card to visited set before recursing
+      const parent = await getCardParentWithParentInfo(txOp, doc.parent, cache)
+      visited.delete(_id)
+      if (parent !== undefined) {
+        doc.parentInfo = [
+          ...(parent.parentInfo ?? []),
+          {
+            _id: parent._id,
+            _class: parent._class,
+            title: parent.title
+          }
+        ]
+      } else {
+        doc.parent = null
+        doc.parentInfo = []
+      }
+    }
+  }
+  cache.set(doc._id, doc)
+  return doc
 }
 
 async function removeVariantViewlets (client: Client): Promise<void> {
@@ -91,10 +411,11 @@ async function setParentInfo (client: MigrationClient): Promise<void> {
   )
 }
 
-function extractObjectProps<T extends Doc> (doc: T): Data<T> {
+function extractObjectData<T extends Doc> (doc: T): Data<T> {
+  const dataKeys = ['_id', 'space', 'modifiedOn', 'modifiedBy', 'createdBy', 'createdOn']
   const data: any = {}
   for (const key in doc) {
-    if (key === '_id') {
+    if (dataKeys.includes(key)) {
       continue
     }
     data[key] = doc[key]
@@ -109,8 +430,8 @@ async function migrateViewlets (client: Client): Promise<void> {
   const currentViewlets = await client.findAll(view.class.Viewlet, { attachTo: { $in: masterTags.map((p) => p._id) } })
   for (const masterTag of masterTags) {
     for (const viewlet of viewlets) {
-      const base = extractObjectProps(viewlet)
-      const resConfig = base.config
+      const base = extractObjectData(viewlet)
+      const resConfig = [...base.config]
       let index = -1
       if (viewlet.descriptor === view.viewlet.List) {
         index = viewlet.config.findIndex((p) => typeof p !== 'string' && p.displayProps?.grow === true)
@@ -168,10 +489,19 @@ async function createDefaultProject (tx: TxOperations): Promise<void> {
         members: [],
         archived: false,
         autoJoin: true,
+        type: card.spaceType.SpaceType,
         types: topLevelTypes.map((it) => it._id)
       },
       card.space.Default
     )
+  }
+}
+
+async function migrateChildsSpaces (client: MigrationClient): Promise<void> {
+  const toUpdate = await client.find<Card>(DOMAIN_CARD, { space: core.space.Workspace })
+  for (const doc of toUpdate) {
+    const parent = doc.parent != null ? (await client.find(DOMAIN_CARD, { _id: doc.parent }))[0] : undefined
+    await client.update(DOMAIN_CARD, { _id: doc._id }, { space: parent?.space ?? card.space.Default })
   }
 }
 
@@ -222,4 +552,79 @@ async function defaultLabels (client: Client): Promise<void> {
     },
     card.label.NewMessages
   )
+}
+
+async function updateCustomFieldsDisplayProps (client: MigrationClient): Promise<void> {
+  const viewlets = await client.find<Viewlet>(DOMAIN_MODEL, { _class: view.class.Viewlet })
+
+  for (const viewlet of viewlets) {
+    if (viewlet.config !== undefined && Array.isArray(viewlet.config)) {
+      let hasChanges = false
+      const newConfig = viewlet.config.map((item: any) => {
+        if (typeof item === 'string' && item.startsWith('custom')) {
+          hasChanges = true
+          return { key: item, displayProps: { optional: true } }
+        }
+        return item
+      })
+
+      if (hasChanges) {
+        await client.update(DOMAIN_MODEL, { _id: viewlet._id }, { config: newConfig })
+      }
+    }
+  }
+}
+
+async function makeConfigSortable (client: Client): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const masterTags = await client.findAll(card.class.MasterTag, {})
+  const currentViewlets = await client.findAll(view.class.Viewlet, { attachTo: { $in: masterTags.map((p) => p._id) } })
+  for (const currentViewlet of currentViewlets) {
+    const configOptions = { ...currentViewlet.configOptions, sortable: true }
+    await txOp.update(currentViewlet, { configOptions })
+  }
+}
+
+async function migrateRoleTypes (client: Client): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const roles = await client.findAll(card.class.Role, { types: { $exists: false } })
+  for (const role of roles) {
+    const baseRoleData: DocumentUpdate<Role> = {
+      types: [(role as any).type]
+    }
+    await txOp.update(role, baseRoleData)
+  }
+}
+
+async function migrateRolePermissions (client: Client): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const roles = await client.findAll(card.class.Role, { permissions: { $exists: false } })
+  for (const role of roles) {
+    await txOp.update(role, { permissions: [] })
+  }
+}
+
+async function fillVersioning (client: MigrationClient): Promise<void> {
+  const iterator = await client.traverse<Card>(DOMAIN_CARD, { baseId: { $exists: false } })
+
+  try {
+    while (true) {
+      const cards = await iterator.next(500)
+      if (cards == null || cards.length === 0) break
+      for (const doc of cards) {
+        await client.update(
+          DOMAIN_CARD,
+          { _id: doc._id },
+          {
+            baseId: doc._id,
+            version: 1,
+            isLatest: true,
+            docCreatedBy: doc.createdBy ?? doc.modifiedBy
+          }
+        )
+      }
+    }
+  } finally {
+    await iterator.close()
+  }
 }

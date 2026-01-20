@@ -19,6 +19,7 @@ import {
   isArchivingMode,
   isMigrationMode,
   isRestoringMode,
+  MeasureMetricsContext,
   systemAccountUuid,
   type BrandingMap,
   type Data,
@@ -34,9 +35,10 @@ import {
   getTransactorEndpoint,
   withRetryConnUntilSuccess,
   withRetryConnUntilTimeout
-} from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { FileModelLogger, prepareTools } from '@hanzo/server-tool'
+} from '@hcengineering/server-client'
+import { generateToken } from '@hcengineering/server-token'
+import { FileModelLogger, prepareTools } from '@hcengineering/server-tool'
+import { randomUUID } from 'crypto'
 import path from 'path'
 
 import { Analytics } from '@hanzo/analytics'
@@ -50,6 +52,7 @@ import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
+  setDBExtraOptions,
   shutdownPostgres
 } from '@hanzo/postgres'
 import { doBackupWorkspace, doRestoreWorkspace } from '@hanzo/server-backup'
@@ -69,10 +72,9 @@ import {
   registerServerPlugins,
   registerStringLoaders,
   registerTxAdapterFactory,
-  setAdapterSecurity,
-  sharedPipelineContextVars
-} from '@hanzo/server-pipeline'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+  setAdapterSecurity
+} from '@hcengineering/server-pipeline'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
 import { createWorkspace, upgradeWorkspace } from './ws-operations'
 
 export interface WorkspaceOptions {
@@ -92,10 +94,10 @@ export interface WorkspaceOptions {
 
 // Register close on process exit.
 process.on('exit', () => {
-  shutdownPostgres(sharedPipelineContextVars).catch((err) => {
+  shutdownPostgres().catch((err) => {
     console.error(err)
   })
-  shutdownMongo(sharedPipelineContextVars).catch((err) => {
+  shutdownMongo().catch((err) => {
     console.error(err)
   })
 })
@@ -105,6 +107,7 @@ export type WorkspaceOperation = 'create' | 'upgrade' | 'all' | 'all+backup'
 export class WorkspaceWorker {
   runningTasks: number = 0
   resolveBusy: (() => void) | null = null
+  id = randomUUID().slice(-8)
 
   constructor (
     readonly workspaceQueue: PlatformQueueProducer<QueueWorkspaceMessage>,
@@ -116,7 +119,8 @@ export class WorkspaceWorker {
     readonly operation: WorkspaceOperation,
     readonly brandings: BrandingMap,
     readonly fulltextUrl: string | undefined,
-    readonly accountsUrl: string
+    readonly accountsUrl: string,
+    readonly accountsDbUrl: string
   ) {}
 
   hasAvailableThread (): boolean {
@@ -144,6 +148,7 @@ export class WorkspaceWorker {
     this.wakeup = this.defaultWakeup
     const token = generateToken(systemAccountUuid, undefined, { service: 'workspace' })
 
+    ctx.info(`Starting workspace service worker ${this.id} with limit ${this.limit}...`)
     ctx.info('Sending a handshake to the account service...')
     const accountClient = getAccountClient(this.accountsUrl, token)
 
@@ -156,11 +161,13 @@ export class WorkspaceWorker {
         )
         break
       } catch (err: any) {
-        ctx.error('error', { err })
+        ctx.error('error during handshake', { err })
       }
     }
 
     ctx.info('Successfully connected to the account service')
+
+    setDBExtraOptions({ connection: { application_name: `workspace-${this.id}` } })
 
     registerTxAdapterFactory('mongodb', createMongoTxAdapter)
     registerAdapterFactory('mongodb', createMongoAdapter)
@@ -181,22 +188,25 @@ export class WorkspaceWorker {
         try {
           return await accountClient.getPendingWorkspace(this.region, this.version, this.operation)
         } catch (err) {
-          ctx.error('Error getting pending workspace:', { err })
+          ctx.error('Error getting pending workspace:', { origErr: err })
         }
       })
       if (workspace == null) {
+        // no workspaces available, sleep before another attempt
         await this.doSleep(ctx, opt)
       } else {
         void this.exec(async () => {
-          await ctx
-            .with('workspaceOperation', { mode: workspace.mode }, (ctx) =>
-              this.doWorkspaceOperation(ctx, workspace, opt)
-            )
-            .catch((err) => {
-              Analytics.handleError(err)
-              ctx.error('error', { err })
-            })
+          const job = randomUUID().slice(-8)
+          const opContext = new MeasureMetricsContext(`ws op with job ${job}`, { job })
+          try {
+            await this.doWorkspaceOperation(opContext, workspace, opt)
+          } catch (err: any) {
+            Analytics.handleError(err)
+            opContext.error('Error while performing workspace operation', { origErr: err })
+          }
         })
+        // sleep for a little bit to avoid bombarding the account service, also add jitter to avoid simultaneous requests from multiple workspace services
+        await new Promise((resolve) => setTimeout(resolve, Math.random() * 400 + 200))
       }
     }
   }
@@ -234,6 +244,7 @@ export class WorkspaceWorker {
 
     ctx.info('---CREATING----', {
       workspace: ws.uuid,
+      mode: ws.mode,
       version: this.version,
       region: this.region
     })
@@ -281,9 +292,9 @@ export class WorkspaceWorker {
         time: Date.now() - t
       })
 
-      await this.workspaceQueue.send(ws.uuid, [workspaceEvents.created()])
+      await this.workspaceQueue.send(ctx, ws.uuid, [workspaceEvents.created()])
     } catch (err: any) {
-      await opt.errorHandler(ws, err)
+      void opt.errorHandler(ws, err)
 
       logger.log('error', err)
 
@@ -297,7 +308,7 @@ export class WorkspaceWorker {
         region: this.region,
         time: Date.now() - t
       })
-      await this.workspaceQueue.send(ws.uuid, [workspaceEvents.createFailed()])
+      await this.workspaceQueue.send(ctx, ws.uuid, [workspaceEvents.createFailed()])
     } finally {
       if (!opt.console) {
         ;(logger as FileModelLogger).close()
@@ -339,6 +350,7 @@ export class WorkspaceWorker {
 
     ctx.info('---UPGRADING----', {
       workspace: ws.uuid,
+      mode: ws.mode,
       workspaceVersion,
       requestedVersion: this.version,
       region: this.region
@@ -379,9 +391,9 @@ export class WorkspaceWorker {
         region: this.region,
         time: Date.now() - t
       })
-      await this.workspaceQueue.send(ws.uuid, [workspaceEvents.upgraded()])
+      await this.workspaceQueue.send(ctx, ws.uuid, [workspaceEvents.upgraded()])
     } catch (err: any) {
-      await opt.errorHandler(ws, err)
+      void opt.errorHandler(ws, err)
 
       logger.log('error', err)
 
@@ -396,7 +408,7 @@ export class WorkspaceWorker {
         region: this.region,
         time: Date.now() - t
       })
-      await this.workspaceQueue.send(ws.uuid, [workspaceEvents.upgradeFailed()])
+      await this.workspaceQueue.send(ctx, ws.uuid, [workspaceEvents.upgradeFailed()])
     } finally {
       if (!opt.console) {
         ;(logger as FileModelLogger).close()
@@ -410,9 +422,9 @@ export class WorkspaceWorker {
   async doCleanup (ctx: MeasureContext, workspace: WorkspaceInfoWithStatus, cleanIndexes: boolean): Promise<void> {
     const { dbUrl } = prepareTools([])
     const adapter = getWorkspaceDestroyAdapter(dbUrl)
-    await adapter.deleteWorkspace(ctx, sharedPipelineContextVars, workspace.uuid, workspace.dataId)
+    await adapter.deleteWorkspace(ctx, workspace.uuid, workspace.dataId)
 
-    await this.workspaceQueue.send(workspace.uuid, [workspaceEvents.clearIndex()])
+    await this.workspaceQueue.send(ctx, workspace.uuid, [workspaceEvents.clearIndex()])
   }
 
   async sendTransactorMaitenance (token: string, ws: WorkspaceUuid): Promise<void> {
@@ -481,7 +493,7 @@ export class WorkspaceWorker {
           return
         }
         await sendEvent('archiving-clean-done', 100)
-        await this.workspaceQueue.send(workspace.uuid, [workspaceEvents.archived()])
+        await this.workspaceQueue.send(ctx, workspace.uuid, [workspaceEvents.archived()])
         break
       }
       case 'pending-deletion':
@@ -496,7 +508,7 @@ export class WorkspaceWorker {
           return
         }
         await sendEvent('delete-done', 100)
-        await this.workspaceQueue.send(workspace.uuid, [workspaceEvents.deleted()])
+        await this.workspaceQueue.send(ctx, workspace.uuid, [workspaceEvents.deleted()])
         break
       }
 
@@ -504,7 +516,7 @@ export class WorkspaceWorker {
       case 'migration-backup':
         await sendEvent('migrate-backup-started', 0)
         await this.sendTransactorMaitenance(token, workspace.uuid)
-        if (await this.doBackup(ctx, workspace, opt, false)) {
+        if (await this.doBackup(ctx, workspace, opt, true)) {
           await sendEvent('migrate-backup-done', 100)
         }
         break
@@ -531,7 +543,10 @@ export class WorkspaceWorker {
         if (await this.doRestore(ctx, workspace, opt)) {
           // We should reindex fulltext
           await sendEvent('restore-done', 100)
-          await this.workspaceQueue.send(workspace.uuid, [workspaceEvents.restored()])
+
+          workspace.mode = 'active'
+          await this._upgradeWorkspace(ctx, workspace, opt)
+          await this.workspaceQueue.send(ctx, workspace.uuid, [workspaceEvents.restored()])
         }
         break
       default:
@@ -591,17 +606,18 @@ export class WorkspaceWorker {
         workspace,
         opt.backup.backupStorage,
         {
+          AccountsURL: this.accountsUrl,
+          AccountsDbURL: this.accountsDbUrl,
           Token: token,
           BucketName: opt.backup.bucketName,
           CoolDown: 0,
           Timeout: 0,
           SkipWorkspaces: '',
-          AccountsURL: '',
           Interval: 0,
-          Parallel: 1
+          Parallel: 1,
+          KeepSnapshots: 7 * 12
         },
         pipelineFactory,
-        workspaceStorageAdapter,
         (ctx, workspace, branding, externalStorage) => {
           return getConfig(ctx, dbUrl, ctx, {
             externalStorage,
@@ -611,7 +627,6 @@ export class WorkspaceWorker {
         this.region,
         50000,
         ['blob'],
-        sharedPipelineContextVars,
         doFullCheck, // Do full check based on config, do not do for migration, it is to slow, will perform before migration.
         (_p: number) => {
           if (progress !== Math.round(_p)) {
@@ -682,12 +697,12 @@ export class WorkspaceWorker {
         ctx,
         {
           uuid: workspace.uuid,
-          url: workspace.url
+          url: workspace.url,
+          dataId: workspace.dataId
         },
         opt.backup.backupStorage,
         opt.backup.bucketName,
         pipelineFactory,
-        workspaceStorageAdapter,
         [DOMAIN_BLOB],
         true,
         (_p: number) => {
@@ -701,6 +716,9 @@ export class WorkspaceWorker {
       if (result) {
         ctx.info('restore completed')
         return true
+      } else {
+        // Restore failed
+        await opt.errorHandler(workspace, new Error('Restore failed'))
       }
     } finally {
       clearInterval(notifyInt)
@@ -715,8 +733,10 @@ export class WorkspaceWorker {
         resolve()
         this.wakeup = this.defaultWakeup
       }
-      // sleep for 5 seconds for the next operation, or until a wakeup event
-      const sleepHandle = setTimeout(wakeup, opt.waitTimeout)
+      // sleep for N (5 by default) seconds for the next operation, or until a wakeup event
+      // add jitter to avoid simultaneous requests from multiple workspace services
+      const maxJitter = opt.waitTimeout * 0.2
+      const sleepHandle = setTimeout(wakeup, opt.waitTimeout + Math.random() * maxJitter)
 
       this.wakeup = () => {
         clearTimeout(sleepHandle)

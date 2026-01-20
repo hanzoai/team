@@ -46,5 +46,10 @@ loadMetadata(textEditor.icon, {
   MergeCells: `${icons}#union`,
   SplitCells: `${icons}#divide`,
   Brush: `${icons}#brush`,
-  TextStyle: `${icons}#textStyle`
+  TextStyle: `${icons}#textStyle`,
+  LinkPreview: `${icons}#link`,
+  Refresh: `${icons}#refresh`,
+  ShowDiff: `${icons}#showDiff`,
+  SeeOriginalData: `${icons}#seeOriginal`,
+  EmbedPreview: `${icons}#linkEmbed`
 })

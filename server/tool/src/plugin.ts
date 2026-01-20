@@ -1,4 +1,4 @@
-import { Metadata, plugin, Plugin } from '@hanzo/platform'
+import { type Metadata, plugin, type Plugin } from '@hcengineering/platform'
 
 /**
  * @public

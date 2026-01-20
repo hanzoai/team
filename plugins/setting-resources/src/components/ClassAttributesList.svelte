@@ -14,9 +14,20 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import core, { AnyAttribute, ArrOf, AttachedDoc, Class, Collection, Doc, Ref, RefTo, Type } from '@hanzo/core'
-  import { IntlString, getResource } from '@hanzo/platform'
-  import presentation, { MessageBox, createQuery, getClient } from '@hanzo/presentation'
+  import core, {
+    AnyAttribute,
+    ArrOf,
+    AttachedDoc,
+    Class,
+    Collection,
+    Doc,
+    Rank,
+    Ref,
+    RefTo,
+    Type
+  } from '@hcengineering/core'
+  import { IntlString, getResource } from '@hcengineering/platform'
+  import presentation, { MessageBox, createQuery, getClient } from '@hcengineering/presentation'
   import {
     Action,
     AnySvelteComponent,
@@ -25,10 +36,11 @@
     Menu,
     getEventPositionElement,
     showPopup
-  } from '@hanzo/ui'
-  import { getContextActions } from '@hanzo/view-resources'
+  } from '@hcengineering/ui'
+  import { getContextActions, SortableList } from '@hcengineering/view-resources'
   import settings from '../plugin'
   import ClassAttributeRow from './ClassAttributeRow.svelte'
+  import { makeRank } from '@hcengineering/rank'
   import EditAttribute from './EditAttribute.svelte'
 
   export let _class: Ref<Class<Doc>>
@@ -52,7 +64,7 @@
   const classQuery = createQuery()
 
   let clazz: Class<Doc> | undefined
-  let hovered: number | null = null
+  let hovered: Ref<AnyAttribute> | null = null
 
   $: classQuery.query(core.class.Class, { _id: _class }, (res) => {
     clazz = res.shift()
@@ -63,7 +75,11 @@
     const cl = hierarchy.getClass(_class)
     const attributes = Array.from(
       hierarchy.getAllAttributes(_class, _class === ofClass && !notUseOfClass ? core.class.Doc : cl.extends).values()
-    )
+    ).sort((a, b) => {
+      const rankA = a.rank ?? toRank(a._id) ?? ''
+      const rankB = b.rank ?? toRank(b._id) ?? ''
+      return rankA.localeCompare(rankB)
+    })
     return attributes
   }
 
@@ -96,8 +112,8 @@
     )
   }
 
-  async function showMenu (ev: MouseEvent, attribute: AnyAttribute, row: number): Promise<void> {
-    hovered = row
+  async function showMenu (ev: MouseEvent, attribute: AnyAttribute): Promise<void> {
+    hovered = attribute._id
     const exist = (await client.findOne(attribute.attributeOf, { [attribute.name]: { $exists: true } })) !== undefined
     const actions: Action[] = [
       {
@@ -136,35 +152,49 @@
   function getAttrType (type: Type<any>): IntlString | undefined {
     switch (type._class) {
       case core.class.RefTo:
-        return client.getHierarchy().getClass((type as RefTo<Doc>).to).label
+        return client.getHierarchy().getClass((type as RefTo<Doc>).to)?.label
       case core.class.Collection:
-        return client.getHierarchy().getClass((type as Collection<AttachedDoc>).of).label
+        return client.getHierarchy().getClass((type as Collection<AttachedDoc>).of)?.label
       case core.class.ArrOf:
-        return (type as ArrOf<Doc>).of.label
+        return (type as ArrOf<Doc>).of?.label
       default:
         return undefined
     }
   }
+
+  function toRank (str: string | undefined): Rank | undefined {
+    if (str === undefined) return
+    if (str.startsWith('0|')) {
+      return str
+    }
+    return '0|' + str.replaceAll(/[-:_]/g, '').toLowerCase()
+  }
+
+  async function moveHadler (e: CustomEvent<any>): Promise<void> {
+    const { item, prev, next } = e.detail
+    const rank = makeRank(prev?.rank ?? toRank(prev?._id), next?.rank ?? toRank(next?._id))
+    await client.update(item, { rank })
+  }
 </script>
 
-{#each attributes as attr, i}
-  {@const attrType = getAttrType(attr.type)}
-  <ClassAttributeRow
-    attribute={attr}
-    attributeType={attrType}
-    selected={selected && attr._id === selected._id}
-    hovered={hovered === i}
-    {attributeMapper}
-    clickMore={async (event) => {
-      event.preventDefault()
-      void showMenu(event, attr, i)
-    }}
-    on:contextmenu={async (event) => {
-      void showMenu(event, attr, i)
-    }}
-    on:click={async () => {
-      if (selected && selected._id === attr._id) dispatch('deselect')
-      else dispatch('select', attr)
-    }}
-  />
-{/each}
+<SortableList bind:items={attributes} on:move={moveHadler}>
+  <svelte:fragment slot="object" let:value={attr}>
+    {@const attrType = getAttrType(attr.type)}
+    <ClassAttributeRow
+      attribute={attr}
+      attributeType={attrType}
+      selected={selected && attr._id === selected._id}
+      hovered={hovered === attr._id}
+      {attributeMapper}
+      on:contextmenu={async (event) => {
+        event.stopPropagation()
+        event.preventDefault()
+        void showMenu(event, attr)
+      }}
+      on:click={async () => {
+        if (selected && selected._id === attr._id) dispatch('deselect')
+        else dispatch('select', attr)
+      }}
+    />
+  </svelte:fragment>
+</SortableList>

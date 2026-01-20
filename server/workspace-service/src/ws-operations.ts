@@ -24,11 +24,11 @@ import {
   type PlatformQueueProducer,
   type QueueWorkspaceMessage,
   type StorageAdapter
-} from '@hanzo/server-core'
-import { getServerPipeline, getTxAdapterFactory, sharedPipelineContextVars } from '@hanzo/server-pipeline'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import { generateToken } from '@hanzo/server-token'
-import { initializeWorkspace, initModel, prepareTools, updateModel, upgradeModel } from '@hanzo/server-tool'
+} from '@hcengineering/server-core'
+import { getServerPipeline, getTxAdapterFactory } from '@hcengineering/server-pipeline'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import { generateToken } from '@hcengineering/server-token'
+import { initializeWorkspace, initModel, prepareTools, updateModel, upgradeModel } from '@hcengineering/server-tool'
 
 /**
  * @public
@@ -50,7 +50,7 @@ export async function createWorkspace (
   ) => Promise<void>,
   external: boolean = false
 ): Promise<void> {
-  const childLogger = ctx.newChild('createWorkspace', {}, {})
+  const childLogger = ctx.newChild('createWorkspace', ctx.getParams())
   const ctxModellogger: ModelLogger = {
     log: (msg, data) => {
       childLogger.info(msg, data)
@@ -61,7 +61,9 @@ export async function createWorkspace (
   }
 
   const createPingHandle = setInterval(() => {
-    void handleWsEvent?.('ping', version, 0)
+    handleWsEvent?.('ping', version, 0).catch((err: any) => {
+      ctx.error('Error while updating progress', { origErr: err })
+    })
   }, 5000)
 
   try {
@@ -89,17 +91,13 @@ export async function createWorkspace (
         externalStorage: storageAdapter,
         usePassedCtx: true
       })
-      const txAdapter = await txFactory(
-        ctx,
-        sharedPipelineContextVars,
-        hierarchy,
-        dbUrl,
-        wsIds,
-        modelDb,
-        storageAdapter
-      )
-      await childLogger.withLog('init-workspace', {}, (ctx) =>
-        initModel(ctx, wsId, txes, txAdapter, storageAdapter, ctxModellogger, async (value) => {})
+      const txAdapter = await txFactory(ctx, hierarchy, dbUrl, wsIds, modelDb, storageAdapter)
+      await childLogger.with(
+        'init-workspace',
+        {},
+        (ctx) => initModel(ctx, wsId, txes, txAdapter, storageAdapter, ctxModellogger, async (value) => {}),
+        { workspace: wsId },
+        { log: true }
       )
 
       const client = new TxOperations(wrapPipeline(ctx, pipeline, wsIds), core.account.ConfigUser)
@@ -168,7 +166,8 @@ export async function createWorkspace (
 
       await handleWsEvent?.('create-done', version, 100, '')
     } catch (err: any) {
-      await handleWsEvent?.('ping', version, 0, `Create failed: ${err.message}`)
+      void handleWsEvent?.('ping', version, 0, `Create failed: ${err.message}`)
+      throw err
     } finally {
       await pipeline.close()
       await storageAdapter.close()
@@ -308,7 +307,9 @@ export async function upgradeWorkspaceWith (
   let progress = 0
 
   const updateProgressHandle = setInterval(() => {
-    void handleWsEvent?.('progress', version, progress)
+    handleWsEvent?.('progress', version, progress).catch((err: any) => {
+      ctx.error('Error while updating progress', { origErr: err })
+    })
   }, 5000)
 
   try {
@@ -318,12 +319,12 @@ export async function upgradeWorkspaceWith (
       true,
       undefined,
       wsIds,
-      null,
       true,
       undefined,
       undefined,
       pipeline.context.modelDb,
-      new Map()
+      new Map(),
+      'workspace'
     )
     ctx.contextData = contextData
     await handleWsEvent?.('upgrade-started', version, 0)
@@ -350,7 +351,7 @@ export async function upgradeWorkspaceWith (
     await handleWsEvent?.('upgrade-done', version, 100, '')
   } catch (err: any) {
     ctx.error('upgrade-failed', { message: err.message })
-    await handleWsEvent?.('ping', version, 0, `Upgrade failed: ${err.message}`)
+    void handleWsEvent?.('ping', version, 0, `Upgrade failed: ${err.message}`)
     throw err
   } finally {
     clearInterval(updateProgressHandle)

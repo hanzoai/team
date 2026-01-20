@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Class, Ref } from '@hanzo/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+import { Class, Ref } from '@hcengineering/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hcengineering/platform'
+import { plugin, Metadata } from '@hcengineering/platform'
 import { SupportClientFactory, SupportConversation, SupportSystem } from './types'
 
 export * from './types'
@@ -41,6 +41,12 @@ export default plugin(supportId, {
   },
   icon: {
     Support: '' as Asset
+  },
+  metadata: {
+    SupportLink: '' as Metadata<string>,
+    ReportBugLink: '' as Metadata<string>,
+    DocsLink: '' as Metadata<string>,
+    PrivacyPolicyLink: '' as Metadata<string>
   },
   string: {
     ContactUs: '' as IntlString,

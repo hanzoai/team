@@ -21,18 +21,27 @@ import {
   Doc,
   isId,
   MarkupBlobRef,
+  matchQuery,
   MeasureContext,
   Mixin,
   Ref,
   RefTo,
+  toIdMap,
   Type,
-  WorkspaceIds
-} from '@hanzo/core'
-import attachment from '@hanzo/model-attachment'
-import core from '@hanzo/model-core'
-import { StorageAdapter } from '@hanzo/server-core'
+  WorkspaceIds,
+  type IdMap,
+  type Space
+} from '@hcengineering/core'
+import { type Attachment } from '@hcengineering/attachment'
+import attachment from '@hcengineering/model-attachment'
+import core from '@hcengineering/model-core'
+import { StorageAdapter } from '@hcengineering/server-core'
 import { UnifiedAttachment, UnifiedDoc } from './types'
 
+interface DocCache {
+  byId: IdMap<Doc>
+  byAttached: Map<Ref<Doc>, Doc[]>
+}
 export class UnifiedConverter {
   // Fields that should not be resolved
   private readonly skipResolveFields = new Set(['_class', '_id', 'collection', 'attachedTo', 'attachedToClass'])
@@ -44,9 +53,9 @@ export class UnifiedConverter {
     private readonly wsIds: WorkspaceIds
   ) {}
 
-  async convert (doc: Doc, attributesOnly: boolean = false): Promise<UnifiedDoc> {
-    console.log('Convert', doc._id, doc._class, (doc as any).title)
+  documentCache = new Map<Ref<Class<Doc>>, DocCache | Promise<DocCache>>()
 
+  async convert (doc: Doc, attributesOnly: boolean = false): Promise<UnifiedDoc> {
     const hierarchy = this.client.getHierarchy()
     const attributes = hierarchy.getAllAttributes(doc._class)
     const processed: Record<string, any> = {}
@@ -120,7 +129,9 @@ export class UnifiedConverter {
     }
 
     if (collabFields.length > 1) {
-      console.warn(`Document ${doc._id} of class ${doc._class} has multiple collab fields: ${collabFields.join(', ')}`)
+      this.context.warn(
+        `Document ${doc._id} of class ${doc._class} has multiple collab fields: ${collabFields.join(', ')}`
+      )
     }
 
     const attachments = attributesOnly ? undefined : await this.resolveAttachments(doc._id, doc._class)
@@ -178,7 +189,6 @@ export class UnifiedConverter {
 
     if (type._class === core.class.RefTo) {
       const to = (type as RefTo<Doc>).to
-      console.log('RefTo', key, to, value)
       if (hierarchy.isDerived(to, core.class.Doc)) {
         refFields.push(key)
         return await this.resolveReference(value as Ref<Doc>, to)
@@ -197,14 +207,25 @@ export class UnifiedConverter {
       collectionFields.push(key)
 
       // Get all documents of the collection
-      const collectionDocs = await this.client.findAll((type as Collection<any>).of, {
-        attachedTo: docId,
-        attachedToClass: docClass,
-        collection: key
-      })
+      const { byAttached } = await this.getCache((type as Collection<any>).of)
+      const cdocs = byAttached.get(docId) ?? []
+      const collectionDocs = matchQuery(
+        cdocs,
+        {
+          attachedTo: docId,
+          attachedToClass: docClass,
+          collection: key
+        },
+        (type as Collection<any>).of,
+        hierarchy
+      )
 
       // Convert each document of the collection
-      return await Promise.all(collectionDocs.map(async (doc) => await this.convert(doc)))
+      const result: UnifiedDoc<any>[] = []
+      for (const doc of collectionDocs) {
+        result.push(await this.convert(doc, attributesOnly))
+      }
+      return result
     }
 
     if (type._class === core.class.TypeTimestamp || type._class === core.class.TypeDate) {
@@ -212,10 +233,11 @@ export class UnifiedConverter {
     }
 
     if (type._class === core.class.ArrOf) {
-      return await Promise.all(
-        (value as any[]).map(async (element) => {
-          const of = (type as ArrOf<any>).of
-          return await this.resolveAttribute(
+      const result: any[] = []
+      for (const element of value as any[]) {
+        const of = (type as ArrOf<any>).of
+        result.push(
+          await this.resolveAttribute(
             '',
             of,
             element,
@@ -227,8 +249,9 @@ export class UnifiedConverter {
             docClass,
             attributesOnly
           )
-        })
-      )
+        )
+      }
+      return result
     }
 
     return value
@@ -242,27 +265,68 @@ export class UnifiedConverter {
     if (!isId(ref)) return ref
 
     try {
-      const doc = await this.client.findOne(to, { _id: ref })
+      const { byId } = await this.getCache(to)
+
+      const doc = byId.get(ref)
       if (doc === undefined) {
-        console.warn(`Referenced document not found: ${ref}`)
+        this.context.warn(`Referenced document not found: ${ref}`)
         return ref
       }
 
       // Try to get the most meaningful identifier
       return (doc as any).identifier ?? (doc as any).title ?? (doc as any).email ?? (doc as any).name ?? doc._id
     } catch (err) {
-      console.error(`Failed to resolve reference: ${ref}`, err)
+      this.context.error(`Failed to resolve reference: ${ref}`, {
+        error: err instanceof Error ? err.message : String(err),
+        ref
+      })
       return ref
     }
   }
 
+  private async getCache (to: Ref<Class<Doc<Space>>>): Promise<DocCache> {
+    let p = this.documentCache.get(to)
+    if (p instanceof Promise) {
+      p = await p
+    }
+    if (p === undefined) {
+      p = this.loadCache(to)
+      this.documentCache.set(to, p)
+      p = await p
+      this.documentCache.set(to, p)
+    }
+    return p
+  }
+
+  async loadCache (_class: Ref<Class<Doc>>): Promise<DocCache> {
+    const allIds = await this.client.findAll(_class, {}, { projection: { _id: 1 } })
+    const docs: Doc[] = []
+    this.context.info(`Loading cache for ${_class} with ${allIds.length} documents`)
+    while (allIds.length > 0) {
+      const batch = allIds.splice(0, 10000).map((it) => it._id)
+      const batchDocs = await this.client.findAll(_class, { _id: { $in: batch } })
+      docs.push(...batchDocs)
+    }
+
+    const byAttached = new Map<Ref<Doc>, Doc[]>()
+    for (const doc of docs) {
+      const attachedTo = (doc as any).attachedTo as Ref<Doc>
+      if (attachedTo == null) {
+        continue
+      }
+      byAttached.set(attachedTo, (byAttached.get(attachedTo) ?? []).concat(doc))
+    }
+    return {
+      byId: toIdMap(docs),
+      byAttached
+    }
+  }
+
   private async resolveMarkdown (blobRef: MarkupBlobRef): Promise<string> {
-    console.log(`Resolving markup content for ${blobRef}`)
-    // return 'test'
     try {
       const buffer = await this.storage.read(this.context, this.wsIds, blobRef)
       if (buffer === undefined) {
-        console.error(`Blob not found: ${blobRef}`)
+        this.context.warn(`Blob not found: ${blobRef}`)
         return ''
       }
 
@@ -270,7 +334,10 @@ export class UnifiedConverter {
       // const markdown = await markupToMarkdown(markup, '', '')
       return markup // todo: test it is a markdown
     } catch (err) {
-      console.error(`Failed to resolve markup content: ${blobRef}`, err)
+      this.context.error(`Failed to resolve markup content: ${blobRef}`, {
+        error: err instanceof Error ? err.message : String(err),
+        blobRef
+      })
       return ''
     }
   }
@@ -279,11 +346,18 @@ export class UnifiedConverter {
     docId: Ref<Doc>,
     docClass: Ref<Class<Doc>>
   ): Promise<UnifiedAttachment[] | undefined> {
-    const attachments = await this.client.findAll(attachment.class.Attachment, {
-      attachedTo: docId,
-      attachedToClass: docClass,
-      collection: 'attachments'
-    })
+    const { byAttached } = await this.getCache(attachment.class.Attachment)
+    const rawAttachments = byAttached.get(docId) ?? []
+    const attachments = matchQuery(
+      rawAttachments,
+      {
+        attachedTo: docId,
+        attachedToClass: docClass,
+        collection: 'attachments'
+      },
+      attachment.class.Attachment,
+      this.client.getHierarchy()
+    ) as Attachment[]
 
     if (attachments.length === 0) {
       return undefined
@@ -291,16 +365,16 @@ export class UnifiedConverter {
 
     // Create attachments with getData callbacks
     const resolved = attachments.map(
-      (attachment): UnifiedAttachment => ({
-        id: attachment._id,
-        name: (attachment as any).name,
-        size: (attachment as any).size,
-        contentType: (attachment as any).contentType,
+      (att): UnifiedAttachment => ({
+        id: att._id,
+        name: att.name,
+        size: att.size,
+        contentType: att.type,
         getData: async () => {
-          const buffer = await this.storage.read(this.context, this.wsIds, attachment._id)
+          const buffer = await this.storage.read(this.context, this.wsIds, att.file)
 
           if (buffer === undefined) {
-            console.error(`Attachment not found: ${attachment._id}`)
+            this.context.warn(`Attachment not found: ${att._id}`)
             return Buffer.from([])
           }
 

@@ -28,6 +28,12 @@ import { Widget, WidgetTab } from '@hanzo/workbench'
  */
 export interface ChunterSpace extends Space {
   messages?: number
+
+  __migratedToCard?: {
+    card?: Ref<Doc>
+    space?: Ref<Space>
+  }
+  __migratedUntil?: Timestamp
 }
 
 /**
@@ -172,7 +178,7 @@ export default plugin(chunterId, {
     AllChannels: '' as IntlString,
     AllContacts: '' as IntlString,
     NewChannel: '' as IntlString,
-    DescriptionOptional: '' as IntlString,
+    TopicOptional: '' as IntlString,
     Visibility: '' as IntlString,
     Public: '' as IntlString,
     Private: '' as IntlString,

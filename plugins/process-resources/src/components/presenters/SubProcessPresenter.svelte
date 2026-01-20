@@ -13,14 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Process, MethodParams, Step } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Process, Step } from '@hcengineering/process'
+  import { Label } from '@hcengineering/ui'
   import process from '../../plugin'
   import { Ref } from '@hanzo/core'
 
   export let step: Step<Process>
-  export let params: MethodParams<Process>
 
   const client = getClient()
   $: method = client.getModel().findAllSync(process.class.Method, { _id: step.methodId })[0]
@@ -29,8 +28,8 @@
 
   const query = createQuery()
 
-  $: if (params._id !== undefined) {
-    query.query(process.class.Process, { _id: params._id as Ref<Process> }, (res) => {
+  $: if (step.params._id !== undefined) {
+    query.query(process.class.Process, { _id: step.params._id as Ref<Process> }, (res) => {
       value = res[0]
     })
   } else {

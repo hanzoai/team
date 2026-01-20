@@ -1,12 +1,14 @@
 <script lang="ts">
-  import core, { Association, Doc, WithLookup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hanzo/ui'
+  import core, { Association, Doc, WithLookup } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { getClient, ObjectCreate } from '@hcengineering/presentation'
+  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hcengineering/ui'
+  import { Viewlet, ViewletPreference } from '@hcengineering/view'
   import { showMenu } from '../actions'
-  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
+  import view from '../plugin'
   import DocTable from './DocTable.svelte'
   import ObjectBoxPopup from './ObjectBoxPopup.svelte'
+  import ViewletsSettingButton from './ViewletsSettingButton.svelte'
 
   export let object: Doc
   export let docs: Doc[]
@@ -14,17 +16,38 @@
   export let association: Association
   export let readonly: boolean = false
   export let direction: 'A' | 'B'
+  export let emptyKind: 'create' | 'placeholder' = 'create'
 
   const client = getClient()
 
   $: _class = direction === 'B' ? association.classB : association.classA
 
+  function getCreate (): ObjectCreate | undefined {
+    const factory = client.getHierarchy().classHierarchyMixin(_class, view.mixin.ObjectFactory)
+    if (factory) {
+      return {
+        component: factory.component,
+        func: factory.create,
+        label,
+        props: { _class, space: object.space }
+      }
+    }
+  }
+
   function add (): void {
+    const create = getCreate()
+    const isVersionable = client.getHierarchy().classHierarchyMixin(_class, core.mixin.VersionableClass) !== undefined
+    const baseQuery = { _id: { $nin: docs.map((p) => p._id) } }
+    const docQuery = isVersionable ? { isLatest: true, ...baseQuery } : baseQuery
     showPopup(
       ObjectBoxPopup,
       {
         _class,
-        docQuery: { _id: { $nin: docs.map((p) => p._id) } }
+        docQuery,
+        docProps: {
+          shouldShowAvatar: true
+        },
+        create
       },
       'top',
       async (result) => {
@@ -43,41 +66,7 @@
   let viewlet: WithLookup<Viewlet> | undefined
   let preference: ViewletPreference | undefined = undefined
 
-  const query = createQuery()
-
-  $: query.query(
-    view.class.Viewlet,
-    {
-      attachTo: client.getHierarchy().getBaseClass(_class)
-    },
-    (res) => {
-      viewlet = res[0]
-    },
-    {
-      lookup: {
-        descriptor: view.class.ViewletDescriptor
-      }
-    }
-  )
-
-  const preferenceQuery = createQuery()
-
-  $: if (viewlet != null) {
-    preferenceQuery.query(
-      view.class.ViewletPreference,
-      {
-        space: core.space.Workspace,
-        attachedTo: viewlet._id
-      },
-      (res) => {
-        preference = res[0]
-      },
-      { limit: 1 }
-    )
-  } else {
-    preferenceQuery.unsubscribe()
-    preference = undefined
-  }
+  $: baseClass = client.getHierarchy().getBaseClass(_class)
 
   $: selectedConfig = preference?.config ?? viewlet?.config
   $: config = selectedConfig?.filter((p) =>
@@ -92,9 +81,15 @@
         ? { docA: object._id, docB: doc._id, association: association._id }
         : { docA: doc._id, docB: object._id, association: association._id }
     const relation = await client.findOne(core.class.Relation, q)
+    const overrides = new Map()
     if (relation !== undefined) {
-      showMenu(ev, { object: relation, includedActions: [view.action.RemoveRelation] })
+      overrides.set(view.action.Delete, async (obj: Doc | Doc[], ev?: Event) => {
+        if (relation !== undefined) {
+          await client.remove(relation)
+        }
+      })
     }
+    showMenu(ev, { object: doc, overrides })
   }
 
   function isAllowedToCreate (association: Association, docs: Doc[], direction: 'A' | 'B'): boolean {
@@ -114,6 +109,7 @@
       {#if classLabel}
         <Label label={classLabel} />
       {/if}
+      <ViewletsSettingButton viewletQuery={{ attachTo: baseClass }} kind={'tertiary'} bind:viewlet bind:preference />
       {#if !readonly && allowToCreate}
         <Button id={core.string.AddRelation} icon={IconAdd} kind={'ghost'} on:click={add} />
       {/if}
@@ -126,12 +122,22 @@
         <DocTable objects={docs} {_class} {config} {onContextMenu} />
       </Scroller>
     {:else if !readonly}
-      <div class="antiSection-empty solid clear-mins mt-3">
+      <div
+        class="antiSection-empty clear-mins mt-3"
+        class:solid={emptyKind === 'create'}
+        class:noBorder={emptyKind === 'placeholder'}
+      >
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <span class="over-underline content-color" on:click={add}>
-          <Label label={core.string.AddRelation} />
-        </span>
+        {#if emptyKind === 'create'}
+          <span class="over-underline content-color" on:click={add}>
+            <Label label={core.string.AddRelation} />
+          </span>
+        {:else}
+          <span class=" content-color">
+            <Label label={view.string.NoRelations} />
+          </span>
+        {/if}
       </div>
     {/if}
   </svelte:fragment>

@@ -73,9 +73,12 @@
     const ext = parts[parts.length - 1]
     return ext.substring(0, 4).toUpperCase()
   }
+
   function isImage (contentType: string): boolean {
     return getType(contentType) === 'image'
   }
+
+  $: canShowImage = value?.type?.startsWith('image/') === true || value?.metadata?.thumbnail !== undefined
 
   let canPreview = false
   let useDefaultIcon = false
@@ -180,7 +183,7 @@
       {:else}
         {#await getBlobRef(value.file, value.name, sizeToWidth('large')) then valueRef}
           <a
-            class="no-line"
+            class="no-line no-underline"
             style:flex-shrink={0}
             href={valueRef.src}
             download={value.name}
@@ -188,14 +191,13 @@
             on:mousedown={middleClickHandler}
             on:dragstart={dragStart}
           >
-            {#if showPreview && isImage(value.type)}
+            {#if showPreview && canShowImage}
               <img
                 src={valueRef.src}
                 data-id={value.file}
                 srcset={valueRef.srcset}
-                class="flex-center icon"
+                class="flex-center icon image"
                 class:svg={value.type === 'image/svg+xml'}
-                class:image={isImage(value.type)}
                 alt={value.name}
               />
             {:else}
@@ -211,7 +213,7 @@
               </a>
             </div>
             <div class="info-content flex-row-center">
-              {#if isAttachment(value)}{filesize(value.size, { spacer: '' })}{/if}
+              {#if value.size != null && value.size !== 0}{filesize(value.size, { spacer: '' })}{/if}
               <span class="actions inline-flex clear-mins ml-1 gap-1">
                 <span>•</span>
                 <a class="no-line colorInherit" href={valueRef.src} download={value.name} bind:this={download}>

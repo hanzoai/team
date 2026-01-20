@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import serverClient from '@hanzo/server-client'
-import { initStatisticsContext, type StorageConfiguration } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken, { decodeToken, type Token } from '@hanzo/server-token'
+import { newMetrics } from '@hcengineering/core'
+import { setMetadata } from '@hcengineering/platform'
+import serverClient from '@hcengineering/server-client'
+import { initStatisticsContext, type StorageConfiguration } from '@hcengineering/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import serverToken, { decodeToken, type Token } from '@hcengineering/server-token'
 import { IncomingHttpHeaders } from 'http'
 
-import { SplitLogger } from '@hanzo/analytics-service'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
 import { join } from 'path'
 import config from './config'
 import { PlatformWorker } from './platform'
@@ -28,7 +28,7 @@ const extractToken = (headers: IncomingHttpHeaders): Token | undefined => {
 export const main = async (): Promise<void> => {
   const ctx = initStatisticsContext('telegram', {
     factory: () =>
-      new MeasureMetricsContext(
+      createOpenTelemetryMetricsContext(
         'telegram',
         {},
         {},
@@ -43,6 +43,7 @@ export const main = async (): Promise<void> => {
   setMetadata(serverClient.metadata.Endpoint, config.AccountsURL)
   setMetadata(serverClient.metadata.UserAgent, config.ServiceID)
   setMetadata(serverToken.metadata.Secret, config.Secret)
+  setMetadata(serverToken.metadata.Service, 'telegram')
 
   const storageConfig: StorageConfiguration = storageConfigFromEnv()
   const storageAdapter = buildStorageFromConfig(storageConfig)

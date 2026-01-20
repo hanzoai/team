@@ -3,12 +3,12 @@
 //
 //
 
-import client, { ClientSocket } from '@hanzo/client'
-import clientResources from '@hanzo/client-resources'
-import { Client, ClientConnectEvent, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import serverToken, { generateToken } from '@hanzo/server-token'
+import client, { ClientSocket } from '@hcengineering/client'
+import clientResources from '@hcengineering/client-resources'
+import { Client, ClientConnectEvent, systemAccountUuid, WorkspaceUuid, type MeasureContext } from '@hcengineering/core'
+import { setMetadata } from '@hcengineering/platform'
+import { getTransactorEndpoint } from '@hcengineering/server-client'
+import { generateToken } from '@hcengineering/server-token'
 import WebSocket from 'ws'
 import config from './config'
 
@@ -16,6 +16,7 @@ import config from './config'
  * @public
  */
 export async function createPlatformClient (
+  ctx: MeasureContext,
   workspace: WorkspaceUuid,
   timeout: number,
   reconnect?: (event: ClientConnectEvent, data: any) => Promise<void>
@@ -28,7 +29,6 @@ export async function createPlatformClient (
     }) as never as ClientSocket
   })
 
-  setMetadata(serverToken.metadata.Secret, config.ServerSecret)
   const token = generateToken(systemAccountUuid, workspace, { service: 'github', mode: 'github' })
   setMetadata(client.metadata.UseBinaryProtocol, true)
   setMetadata(client.metadata.UseProtocolCompression, true)
@@ -38,6 +38,7 @@ export async function createPlatformClient (
   const connection = await (
     await clientResources()
   ).function.GetClient(token, endpoint, {
+    ctx,
     onConnect: reconnect,
     useGlobalRPCHandler: true
   })

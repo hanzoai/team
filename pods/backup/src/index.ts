@@ -13,20 +13,19 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
-import { startBackup } from '@hanzo/backup-service'
-import { MeasureMetricsContext, newMetrics, type Tx } from '@hanzo/core'
-import { initStatisticsContext, type PipelineFactory } from '@hanzo/server-core'
+import { Analytics } from '@hcengineering/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { startBackup } from '@hcengineering/backup-service'
+import { newMetrics, type Tx } from '@hcengineering/core'
+import { initStatisticsContext, type PipelineFactory } from '@hcengineering/server-core'
 import {
   createBackupPipeline,
   getConfig,
   registerAdapterFactory,
   registerDestroyFactory,
   registerTxAdapterFactory,
-  setAdapterSecurity,
-  sharedPipelineContextVars
-} from '@hanzo/server-pipeline'
+  setAdapterSecurity
+} from '@hcengineering/server-pipeline'
 import { join } from 'path'
 
 import {
@@ -47,17 +46,17 @@ const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').to
 
 // Register close on process exit.
 process.on('exit', () => {
-  shutdownPostgres(sharedPipelineContextVars).catch((err) => {
+  shutdownPostgres().catch((err) => {
     console.error(err)
   })
-  shutdownMongo(sharedPipelineContextVars).catch((err) => {
+  shutdownMongo().catch((err) => {
     console.error(err)
   })
 })
 
 const metricsContext = initStatisticsContext('backup', {
   factory: () =>
-    new MeasureMetricsContext(
+    createOpenTelemetryMetricsContext(
       'backup',
       {},
       {},
@@ -69,9 +68,7 @@ const metricsContext = initStatisticsContext('backup', {
     )
 })
 
-const sentryDSN = process.env.SENTRY_DSN
-
-configureAnalytics(sentryDSN, {})
+configureAnalytics('backup', process.env.VERSION ?? '0.7.0')
 Analytics.setTag('application', 'backup-service')
 
 const usePrepare = (process.env.DB_PREPARE ?? 'true') === 'true'
@@ -91,8 +88,8 @@ setAdapterSecurity('postgresql', true)
 
 startBackup(
   metricsContext,
-  (mongoUrl, storageAdapter) => {
-    const factory: PipelineFactory = createBackupPipeline(metricsContext, mongoUrl, model, {
+  (url, storageAdapter) => {
+    const factory: PipelineFactory = createBackupPipeline(metricsContext, url, model, {
       externalStorage: storageAdapter,
       usePassedCtx: true
     })
@@ -103,6 +100,5 @@ startBackup(
       externalStorage,
       disableTriggers: true
     })
-  },
-  sharedPipelineContextVars
+  }
 )

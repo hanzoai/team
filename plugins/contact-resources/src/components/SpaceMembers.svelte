@@ -30,7 +30,7 @@
   import { ActionIcon, IconAdd, IconClose, Label, SearchEdit, showPopup, themeStore } from '@hanzo/ui'
   import AddMembersPopup from './AddMembersPopup.svelte'
   import UserInfo from './UserInfo.svelte'
-  import { personRefByAccountUuidStore, primarySocialIdByPersonRefStore } from '../utils'
+  import { employeeByIdStore, employeeRefByAccountUuidStore } from '../utils'
 
   export let space: Space
   export let withAddButton: boolean = false
@@ -38,9 +38,9 @@
   const client = getClient()
   const hierarchy = client.getHierarchy()
   const initialMembers = space.members.reduce<Record<Ref<Person>, AccountUuid>>((acc, m) => {
-    const personRef = $personRefByAccountUuidStore.get(m)
-    if (personRef === undefined) return acc
-    acc[personRef] = m
+    const empRef = $employeeRefByAccountUuidStore.get(m)
+    if (empRef === undefined) return acc
+    acc[empRef] = m
     return acc
   }, {})
   $: label = hierarchy.getClass(space._class).label
@@ -51,17 +51,19 @@
   let members: Set<Ref<Person>> = new Set<Ref<Person>>()
 
   async function getUsers (accounts: AccountUuid[], search: string): Promise<Employee[]> {
-    const employeeRefs = accounts.map((acc) => $personRefByAccountUuidStore.get(acc)).filter(notEmpty)
+    const employeeRefs = accounts.map((acc) => $employeeRefByAccountUuidStore.get(acc)).filter(notEmpty)
     const query: DocumentQuery<Employee> =
       isSearch > 0 ? { name: { $like: '%' + search + '%' } } : { _id: { $in: employeeRefs } }
+    query.active = true
+
     const employees = await client.findAll(contact.mixin.Employee, query, { sort: { name: SortingOrder.Descending } })
     members = new Set(employees.filter((p) => employeeRefs.includes(p._id)).map((p) => p._id))
 
     return employees
   }
 
-  async function add (person: Ref<Person>): Promise<void> {
-    const pid = initialMembers[person] ?? $primarySocialIdByPersonRefStore.get(person)
+  async function add (person: Ref<Employee>): Promise<void> {
+    const pid = initialMembers[person] ?? $employeeByIdStore.get(person)?.personUuid
     if (pid === undefined) return
 
     await client.update(space, {
@@ -71,8 +73,8 @@
     })
   }
 
-  async function removeMember (person: Ref<Person>): Promise<void> {
-    const pid = initialMembers[person] ?? $primarySocialIdByPersonRefStore.get(person)
+  async function removeMember (person: Ref<Employee>): Promise<void> {
+    const pid = initialMembers[person] ?? $employeeByIdStore.get(person)?.personUuid
     if (pid === undefined) return
 
     await client.update(space, { $pull: { members: pid } })

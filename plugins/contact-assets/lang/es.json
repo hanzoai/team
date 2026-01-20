@@ -36,6 +36,8 @@
     "LinkedIn": "LinkedIn",
     "GitHub": "GitHub",
     "Twitter": "Twitter",
+    "Google": "Google",
+    "Telegram": "Telegram",
     "PhonePlaceholder": "+34 666 555 777",
     "LinkedInPlaceholder": "https://linkedin.com/in/jappleseed",
     "AtPlaceHolder": "@appleseed",
@@ -113,6 +115,20 @@
     "SocialIds": "Identificaciones sociales",
     "Type": "Tipo",
     "Confirmed": "Confirmado",
-    "UserProfile": "Perfil de usuario"
+    "UserProfile": "Perfil de usuario",
+    "DeactivatedAccount": "Cuenta desactivada",
+    "LocalTime": "hora local",
+    "Everyone": "Todos",
+    "Here": "Aquí",
+    "EveryoneDescription": "Notificar a todos en este {title}",
+    "HereDescription": "Notificar a todos en este {title}",
+    "Guest": "Invitado",
+    "Deleted": "Eliminado",
+    "CannotMerge": "Error: No se pueden fusionar personas globales",
+    "AutoTranslation": "Traducción automática",
+    "TranslateTo": "Traducir a",
+    "DontTranslate": "No traducir",
+    "SelectLanguage": "Seleccionar idioma",
+    "SelectLanguages": "Seleccionar idiomas"
   }
 }

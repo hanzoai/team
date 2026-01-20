@@ -1,16 +1,17 @@
 <script lang="ts">
-  import { Avatar, personByPersonIdStore } from '@hanzo/contact-resources'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { BrowserNotification } from '@hanzo/notification'
-  import { Button, navigate, Notification as PlatformNotification, NotificationToast } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import chunter, { ThreadMessage } from '@hanzo/chunter'
-  import { getResource } from '@hanzo/platform'
-  import activity, { ActivityMessage } from '@hanzo/activity'
-  import { getClient, playSound } from '@hanzo/presentation'
+  import { Avatar, getPersonByPersonIdCb } from '@hcengineering/contact-resources'
+  import { Class, Doc, Ref } from '@hcengineering/core'
+  import { BrowserNotification } from '@hcengineering/notification'
+  import { Button, navigate, Notification as PlatformNotification, NotificationToast } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import chunter, { ThreadMessage } from '@hcengineering/chunter'
+  import { getResource } from '@hcengineering/platform'
+  import activity, { ActivityMessage } from '@hcengineering/activity'
+  import { getClient, playSound } from '@hcengineering/presentation'
   import { pushAvailable, subscribePush } from '../utils'
   import plugin from '../plugin'
   import { onMount } from 'svelte'
+  import { Person } from '@hcengineering/contact'
 
   export let notification: PlatformNotification
   export let onRemove: () => void
@@ -19,7 +20,15 @@
   const hierarchy = client.getHierarchy()
 
   $: value = notification.params?.value as BrowserNotification
-  $: sender = value.senderId !== undefined ? $personByPersonIdStore.get(value.senderId) : undefined
+
+  let sender: Person | undefined
+  $: if (value.senderId !== undefined) {
+    getPersonByPersonIdCb(value.senderId, (p) => {
+      sender = p ?? undefined
+    })
+  } else {
+    sender = undefined
+  }
 
   async function openChannelInSidebar (): Promise<void> {
     if (!value.onClickLocation) return

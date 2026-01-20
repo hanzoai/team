@@ -13,13 +13,20 @@
 // limitations under the License.
 //
 
-import client from '@hanzo/client'
-import { type Client } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
+import client from '@hcengineering/client'
+import { WorkspaceUuid, type Client } from '@hcengineering/core'
+import { setMetadata } from '@hcengineering/platform'
+import { createClient, getTransactorEndpoint } from '@hcengineering/server-client'
+import { getWorkspaceToken } from './utils'
 
-export async function getClient (token: string): Promise<Client> {
-  const endpoint = await getTransactorEndpoint(token)
+const endpoints = new Map<WorkspaceUuid, string>()
+
+export async function getClient (
+  workspace: WorkspaceUuid,
+  token: string = getWorkspaceToken(workspace)
+): Promise<Client> {
+  const endpoint = endpoints.get(workspace) ?? (await getTransactorEndpoint(token, 'external'))
+  endpoints.set(workspace, endpoint)
   setMetadata(client.metadata.FilterModel, 'client')
   return await createClient(endpoint, token)
 }

@@ -16,43 +16,40 @@
   import { EditBox, ModernButton } from '@hanzo/ui'
   import { Room, isOffice, type ParticipantInfo } from '@hanzo/love'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { personByIdStore } from '@hanzo/contact-resources'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hcengineering/platform'
 
   import love from '../plugin'
-  import { getRoomName, tryConnect, isConnected } from '../utils'
-  import { infos, invites, myInfo, myRequests, selectedRoomPlace, myOffice, currentRoom } from '../stores'
+  import { getRoomName } from '../utils'
+  import { infos, myOffice, currentRoom } from '../stores'
+  import { lkSessionConnected } from '../liveKitClient'
+  import { createMeeting, joinMeeting } from '../meetings'
 
   export let object: Room
 
   const dispatch = createEventDispatcher()
 
-  $: roomName = getRoomName(object, $personByIdStore)
+  let roomName: string
+  $: void getRoomName(object).then((name) => {
+    roomName = name
+  })
+
   let connecting = false
 
   onMount(() => {
     dispatch('open', { ignoreKeys: ['name'] })
   })
 
-  let tryConnecting = false
+  const tryConnecting = false
 
   async function connect (): Promise<void> {
-    tryConnecting = true
-    const place = $selectedRoomPlace
-    await tryConnect(
-      $personByIdStore,
-      $myInfo,
-      object,
-      $infos,
-      $myRequests,
-      $invites,
-      place?._id === object._id ? { x: place.x, y: place.y } : undefined
-    )
-    tryConnecting = false
-    selectedRoomPlace.set(undefined)
+    if ($infos.some(({ room }) => room === object._id)) {
+      await joinMeeting(object)
+    } else {
+      await createMeeting(object)
+    }
   }
 
-  $: connecting = tryConnecting || ($currentRoom?._id === object._id && !$isConnected)
+  $: connecting = tryConnecting || ($currentRoom?._id === object._id && !$lkSessionConnected)
 
   let connectLabel: IntlString = $infos.some(({ room }) => room === object._id)
     ? love.string.JoinMeeting
@@ -98,7 +95,7 @@
     <div class="name">
       <EditBox disabled={true} placeholder={love.string.Room} bind:value={roomName} focusIndex={1} />
     </div>
-    {#if showConnectionButton(object, connecting, $isConnected, $infos, $myOffice, $currentRoom)}
+    {#if showConnectionButton(object, connecting, $lkSessionConnected, $infos, $myOffice, $currentRoom)}
       <ModernButton label={connectLabel} size="large" kind={'primary'} on:click={connect} loading={connecting} />
     {/if}
   </div>

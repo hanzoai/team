@@ -241,15 +241,6 @@ export async function OnToDoCreate (txes: TxCUD<Doc>[], control: TriggerControl)
       continue
     }
 
-    const mixin = hierarchy.classHierarchyMixin(
-      createTx.objectClass as Ref<Class<Doc>>,
-      notification.mixin.ClassCollaborators
-    )
-
-    if (mixin === undefined) {
-      continue
-    }
-
     const todo = TxProcessor.createDoc2Doc(createTx)
     const object = (await control.findAll(control.ctx, todo.attachedToClass, { _id: todo.attachedTo }))[0]
     if (object === undefined) {
@@ -278,12 +269,7 @@ export async function OnToDoCreate (txes: TxCUD<Doc>[], control: TriggerControl)
     }
 
     const employee = (
-      await control.findAll(
-        control.ctx,
-        contact.mixin.Employee,
-        { _id: todo.user as Ref<Employee>, active: true },
-        { limit: 1 }
-      )
+      await control.findAll(control.ctx, contact.mixin.Employee, { _id: todo.user, active: true }, { limit: 1 })
     )[0]
     if (employee === undefined) {
       continue
@@ -307,21 +293,13 @@ export async function OnToDoCreate (txes: TxCUD<Doc>[], control: TriggerControl)
       account,
       socialIds,
       space: personSpace._id,
-      employee: employee._id
+      employee: employee._id,
+      role: employee.role
     }
 
     const senderInfo: SenderInfo = await getSenderInfo(control.ctx, tx.modifiedBy, control)
     const notificationControl = await getNotificationProviderControl(control.ctx, control)
-    const notifyResult = await isShouldNotifyTx(
-      control,
-      createTx,
-      todo,
-      employee._id,
-      socialIds,
-      true,
-      false,
-      notificationControl
-    )
+    const notifyResult = await isShouldNotifyTx(control, createTx, todo, receiverInfo, true, false, notificationControl)
     const content = await getNotificationContent(tx, employee._id, senderInfo, todo, control)
     const data: Partial<Data<CommonInboxNotification>> = {
       ...content,
@@ -351,9 +329,9 @@ export async function OnToDoCreate (txes: TxCUD<Doc>[], control: TriggerControl)
     await control.apply(control.ctx, txes)
 
     const ids = txes.map((it) => it._id)
-    control.ctx.contextData.broadcast.targets.notifications = (it) => {
+    control.ctx.contextData.broadcast.targets.notifications = async (it) => {
       if (ids.includes(it._id)) {
-        return [receiverInfo.account]
+        return { target: [receiverInfo.account] }
       }
     }
   }
@@ -379,6 +357,18 @@ export async function OnToDoUpdate (txes: Tx[], control: TriggerControl): Promis
     const description = updTx.operations.description
     const visibility = updTx.operations.visibility
     if (doneOn != null) {
+      const todo = (await control.findAll(control.ctx, time.class.ToDo, { _id: updTx.objectId }))[0]
+      if (todo === undefined) {
+        continue
+      }
+      const wasProcessed = await control.findAll(control.ctx, core.class.TxUpdateDoc, {
+        objectId: todo._id,
+        doneOn: { $exists: true }
+      })
+      // Do not process already processed todos.
+      if (wasProcessed.filter((p) => p._id !== tx._id).length > 0) {
+        continue
+      }
       const events = await control.findAll(control.ctx, time.class.WorkSlot, { attachedTo: updTx.objectId })
       const resEvents: WorkSlot[] = []
       for (const event of events) {
@@ -419,10 +409,7 @@ export async function OnToDoUpdate (txes: Tx[], control: TriggerControl): Promis
           resEvents.push(event)
         }
       }
-      const todo = (await control.findAll(control.ctx, time.class.ToDo, { _id: updTx.objectId }))[0]
-      if (todo === undefined) {
-        continue
-      }
+
       const funcs = control.hierarchy.classHierarchyMixin<Class<Doc>, OnToDo>(
         todo.attachedToClass,
         serverTime.mixin.OnToDo
@@ -580,7 +567,7 @@ export async function IssueToDoDone (
       total = Math.round(total / 15) * 15
 
       const data: AttachedData<TimeSpendReport> = {
-        employee: todo.user as Ref<Employee>,
+        employee: todo.user,
         date: new Date().getTime(),
         value: total / 60,
         description: ''
@@ -620,12 +607,16 @@ async function getIssueToDoData (
   user: Ref<Person>,
   control: TriggerControl
 ): Promise<AttachedData<ProjectToDo> | undefined> {
+  const employee = (
+    await control.findAll(control.ctx, contact.mixin.Employee, { _id: user as Ref<Employee> }, { limit: 1 })
+  )[0]
+  if (employee === undefined) return
   const firstTodoItem = (
     await control.findAll(
       control.ctx,
       time.class.ToDo,
       {
-        user,
+        user: employee._id,
         doneOn: null
       },
       {
@@ -642,7 +633,8 @@ async function getIssueToDoData (
     priority: ToDoPriority.NoPriority,
     visibility: 'public',
     title: issue.title,
-    user,
+    user: employee._id,
+    doneOn: null,
     rank
   }
   return data
@@ -703,7 +695,7 @@ async function changeIssueStatusHandler (
     if (issue?.assignee != null) {
       const todos = await control.findAll(control.ctx, time.class.ToDo, {
         attachedTo: issue._id,
-        user: issue.assignee
+        user: issue.assignee as Ref<Employee>
       })
       if (todos.length === 0) {
         const tx = await getCreateToDoTx(issue, issue.assignee, control)

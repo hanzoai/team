@@ -13,16 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Employee } from '@hanzo/contact'
-  import {
-    AccountArrayEditor,
-    AssigneeBox,
-    personRefByAccountUuidStore,
-    personRefByPersonIdStore
-  } from '@hanzo/contact-resources'
+  import { Analytics } from '@hcengineering/analytics'
+  import { Employee } from '@hcengineering/contact'
+  import { AccountArrayEditor, AssigneeBox, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
   import core, {
-    PersonId,
     Data,
     DocumentUpdate,
     Ref,
@@ -34,17 +28,16 @@
     getCurrentAccount,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import { Asset } from '@hanzo/platform'
-  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
-  import task, { ProjectType, TaskType } from '@hanzo/task'
-  import { taskTypeStore, typeStore } from '@hanzo/task-resources'
-  import { IssueStatus, Project, TimeReportDayType, TrackerEvents } from '@hanzo/tracker'
+  } from '@hcengineering/core'
+  import { Asset } from '@hcengineering/platform'
+  import presentation, { IconWithEmoji, Card, createQuery, getClient } from '@hcengineering/presentation'
+  import task, { ProjectType, TaskType } from '@hcengineering/task'
+  import { taskTypeStore, typeStore } from '@hcengineering/task-resources'
+  import { IssueStatus, Project, TimeReportDayType, TrackerEvents } from '@hcengineering/tracker'
   import {
     Button,
     Component,
     EditBox,
-    IconWithEmoji,
     Label,
     Toggle,
     getColorNumberByText,
@@ -87,7 +80,7 @@
 
   let typeId: Ref<ProjectType> | undefined = project?.type
   $: typeType = typeId !== undefined ? $typeStore.get(typeId) : undefined
-  $: membersPersons = members.map((m) => $personRefByAccountUuidStore.get(m)).filter(notEmpty)
+  $: membersPersons = members.map((m) => $employeeRefByAccountUuidStore.get(m)).filter(notEmpty)
   let autoJoin = project?.autoJoin ?? typeType?.autoJoin ?? false
 
   const dispatch = createEventDispatcher()
@@ -448,12 +441,12 @@
         <Label label={tracker.string.ChooseIcon} />
       </div>
       <Button
-        icon={icon === view.ids.IconWithEmoji ? IconWithEmoji : icon ?? tracker.icon.Home}
+        icon={icon === view.ids.IconWithEmoji ? IconWithEmoji : (icon ?? tracker.icon.Home)}
         iconProps={icon === view.ids.IconWithEmoji
           ? { icon: color, size: 'medium' }
           : {
               fill:
-                color !== undefined
+                color !== undefined && typeof color !== 'string'
                   ? getPlatformColorDef(color, $themeStore.dark).icon
                   : getPlatformColorForTextDef(name, $themeStore.dark).icon
             }}
@@ -540,7 +533,7 @@
     {#each roles as role}
       <div class="antiGrid-row">
         <div class="antiGrid-row__header">
-          <Label label={tracker.string.RoleLabel} params={{ role: role.name }} />
+          <Label label={view.string.RoleLabel} params={{ role: role.name }} />
         </div>
         <AccountArrayEditor
           value={rolesAssignment?.[role._id] ?? []}

@@ -1,9 +1,7 @@
 <script lang="ts">
-  import calendar, { Event } from '@hanzo/calendar'
-  import { DateRangeMode } from '@hanzo/core'
-  import { Icon } from '@hanzo/ui'
-  import DatePresenter from '@hanzo/ui/src/components/calendar/DatePresenter.svelte'
-  import ArrowRight from '@hanzo/ui/src/components/icons/ArrowRight.svelte'
+  import calendar, { Event } from '@hcengineering/calendar'
+  import { DateRangeMode } from '@hcengineering/core'
+  import { Icon, DatePresenter, IconArrowRight } from '@hcengineering/ui'
   import TimePresenter from '../../presenters/TimePresenter.svelte'
 
   export let item: Event
@@ -25,7 +23,7 @@
         <div class="flex-row-center">
           <DatePresenter mode={DateRangeMode.TIMEONLY} value={item.date} />
           <div class="p-1">
-            <Icon icon={ArrowRight} size={'small'} />
+            <Icon icon={IconArrowRight} size={'small'} />
           </div>
           <DatePresenter mode={DateRangeMode.TIMEONLY} value={item.dueDate} />
         </div>

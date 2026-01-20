@@ -17,17 +17,43 @@
   import { getClient } from '@hanzo/presentation'
   import { Execution } from '@hanzo/process'
   import ErrorPresenter from './ErrorPresenter.svelte'
+  import { continueExecution } from '../utils'
+  import { showPopup } from '@hcengineering/ui'
+  import ExecutionDetails from './ExecutionDetails.svelte'
 
   export let value: WithLookup<Execution>
 
   const client = getClient()
 
   $: process = value?.$lookup?.process ?? client.getModel().findObject(value.process)
+
+  function open (): void {
+    showPopup(
+      ExecutionDetails,
+      {
+        execution: value
+      },
+      'top'
+    )
+  }
 </script>
 
 {#if process}
   <div class="flex-row-center flex-gap-2">
-    <ErrorPresenter value={value.error} />
-    {process.name}
+    <ErrorPresenter value={value.error} on:click={() => continueExecution(value)} />
+    <div class="overflow-label link" on:click={open}>
+      {process.name}
+    </div>
   </div>
 {/if}
+
+<style>
+  .link {
+    color: var(--theme-content-color);
+    cursor: pointer;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import documents from '@hanzo/controlled-documents'
-  import { Label, Button, showPopup } from '@hanzo/ui'
+  import documents, { ControlledDocumentState } from '@hcengineering/controlled-documents'
+  import { Label, Button, showPopup } from '@hcengineering/ui'
 
   import TeamPopup from '../../TeamPopup.svelte'
   import {
@@ -15,9 +15,12 @@
       return
     }
 
+    const isReviewed = $controlledDocument.controlledState === ControlledDocumentState.Reviewed
+
     const teamPopupData: TeamPopupData = {
       controlledDoc: $controlledDocument,
-      requestClass: documents.class.DocumentApprovalRequest
+      requestClass: documents.class.DocumentApprovalRequest,
+      requireSignature: !isReviewed
     }
 
     showPopup(TeamPopup, teamPopupData, 'center')

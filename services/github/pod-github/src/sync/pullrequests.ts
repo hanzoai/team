@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Analytics } from '@hanzo/analytics'
-import { Person } from '@hanzo/contact'
+import { Analytics } from '@hcengineering/analytics'
+import contact, { Employee, Person } from '@hcengineering/contact'
 import core, {
-  PersonId,
   AttachedData,
   Doc,
   DocumentUpdate,
+  PersonId,
   Ref,
   SortingOrder,
   Status,
@@ -17,8 +17,10 @@ import core, {
   cutObjectArray,
   generateId,
   makeCollabId,
-  makeDocCollabId
-} from '@hanzo/core'
+  makeDocCollabId,
+  withContext,
+  type MeasureContext
+} from '@hcengineering/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
@@ -41,10 +43,10 @@ import {
   DocSyncManager,
   ExternalSyncField,
   IntegrationContainer,
-  UserInfo,
   githubDerivedSyncVersion,
   githubExternalSyncVersion,
-  githubSyncVersion
+  githubSyncVersion,
+  type UserInfo
 } from '../types'
 import {
   IssueExternalData,
@@ -57,8 +59,7 @@ import {
   toReviewDecision,
   toReviewState
 } from './githubTypes'
-import { GithubIssueData, IssueSyncManagerBase, IssueSyncTarget, WithMarkup } from './issueBase'
-import { syncConfig } from './syncConfig'
+import { GithubIssueData, IssueSyncManagerBase, WithMarkup } from './issueBase'
 import {
   errorToObj,
   getSinceRaw,
@@ -77,7 +78,14 @@ type GithubPullRequestUpdate = DocumentUpdate<WithMarkup<GithubPullRequest>>
 
 export class PullRequestSyncManager extends IssueSyncManagerBase implements DocSyncManager {
   externalDerivedSync = true
-  async handleEvent<T>(integration: IntegrationContainer, derivedClient: TxOperations, evt: T): Promise<void> {
+
+  @withContext('pullrequests-handleEvent')
+  async handleEvent<T>(
+    ctx: MeasureContext,
+    integration: IntegrationContainer,
+    derivedClient: TxOperations,
+    evt: T
+  ): Promise<void> {
     const _event = evt as PullRequestEvent | ProjectsV2ItemEvent
 
     if (_event.sender.type === 'Bot') {
@@ -87,7 +95,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         return
       }
     }
-    this.ctx.info('pull request:handleEvent', {
+    ctx.info('pull request:handleEvent', {
       nodeId:
         (_event as PullRequestEvent).pull_request?.html_url ??
         (_event as ProjectsV2ItemEvent).projects_v2_item?.node_id,
@@ -99,41 +107,13 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
 
     const projectV2Event = (_event as any as ProjectsV2ItemEvent).projects_v2_item?.id !== undefined
     if (projectV2Event) {
-      const projectV2Event = _event as ProjectsV2ItemEvent
-
-      const githubProjects = await this.provider.liveQuery.findAll(github.mixin.GithubProject, {
-        archived: false
-      })
-      let prj = githubProjects.find((it) => it.projectNodeId === projectV2Event.projects_v2_item.project_node_id)
-      if (prj === undefined) {
-        // Checking for milestones
-        const m = await this.provider.liveQuery.findOne(github.mixin.GithubMilestone, {
-          projectNodeId: projectV2Event.projects_v2_item.project_node_id
-        })
-        if (m !== undefined) {
-          prj = githubProjects.find((it) => it._id === m.space)
-        }
-      }
-
-      if (prj === undefined) {
-        this.ctx.info('Event from unknown v2 project', {
-          nodeId: projectV2Event.projects_v2_item.project_node_id,
-          workspace: this.provider.getWorkspaceId()
-        })
-        return
-      }
-
-      const urlId = projectV2Event.projects_v2_item.node_id
-
-      await syncRunner.exec(urlId, async () => {
-        await this.processProjectV2Event(integration, projectV2Event, derivedClient, prj as GithubProject)
-      })
+      // Ignore
     } else {
       const event = _event as PullRequestEvent
       const { project, repository } = await this.provider.getProjectAndRepository(event.repository.node_id)
 
       if (project === undefined || repository === undefined) {
-        this.ctx.info('No project for repository', {
+        ctx.info('No project for repository', {
           name: event.repository.name,
           workspace: this.provider.getWorkspaceId()
         })
@@ -142,24 +122,31 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       const url = event.pull_request.issue_url
 
       await syncRunner.exec(url, async () => {
-        await this.processEvent(event, derivedClient, repository, integration, project)
+        try {
+          await this.processEvent(ctx, event, derivedClient, repository, integration, project)
+        } catch (err: any) {
+          ctx.error('Error processing event', { error: err })
+        }
       })
     }
   }
 
+  @withContext('pullrequests-processEvent')
   private async processEvent (
+    ctx: MeasureContext,
     event: PullRequestEvent,
     derivedClient: TxOperations,
     repo: GithubIntegrationRepository,
     integration: IntegrationContainer,
     prj: GithubProject
   ): Promise<void> {
-    const account = (await this.provider.getAccountU(event.sender))?._id ?? core.account.System
+    const account = (await this.provider.getAccountU(event.sender)) ?? core.account.System
 
     let externalData: PullRequestExternalData
     try {
-      const response: any = await integration.octokit?.graphql(
-        `query listIssue($name: String!, $owner: String!, $issue: Int!) {
+      const response: any = await ctx.with('graphql', {}, (ctx) =>
+        integration.octokit.graphql(
+          `query listIssue($name: String!, $owner: String!, $issue: Int!) {
           repository(name: $name, owner: $owner) {
             pullRequest(number: $issue) {
               ${pullRequestDetails}
@@ -167,15 +154,16 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
           }
         }
         `,
-        {
-          name: repo.name,
-          owner: repo.owner?.login,
-          issue: event.pull_request.number
-        }
+          {
+            name: repo.name,
+            owner: repo.owner?.login,
+            issue: event.pull_request.number
+          }
+        )
       )
       externalData = response.repository.pullRequest
     } catch (err: any) {
-      this.ctx.error('Error', { err })
+      ctx.error('Error', { err })
       Analytics.handleError(err)
       await this.createErrorSyncDataByUrl(
         event.pull_request.html_url,
@@ -221,31 +209,31 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         if (event.changes.base !== undefined) {
           update.base = externalData.baseRef
         }
-        await this.handleUpdate(externalData, derivedClient, update, account, prj, false, undefined, undefined, du)
+        await this.handleUpdate(ctx, externalData, derivedClient, update, account, prj, false, undefined, undefined, du)
         break
       }
       case 'review_requested': {
         const update: GithubPullRequestUpdate = {}
-        await this.handleUpdate(externalData, derivedClient, update, account, prj, true)
+        await this.handleUpdate(ctx, externalData, derivedClient, update, account, prj, true)
         break
       }
       case 'review_request_removed': {
         const update: GithubPullRequestUpdate = {}
-        await this.handleUpdate(externalData, derivedClient, update, account, prj, true)
+        await this.handleUpdate(ctx, externalData, derivedClient, update, account, prj, true)
         break
       }
       case 'converted_to_draft':
       case 'ready_for_review': {
-        await this.handleUpdate(externalData, derivedClient, {}, account, prj, true)
+        await this.handleUpdate(ctx, externalData, derivedClient, {}, account, prj, true)
         break
       }
       case 'assigned':
       case 'unassigned': {
         const assignees = await this.getAssignees(externalData)
         const update: GithubPullRequestUpdate = {
-          assignee: assignees?.[0]?.person ?? null
+          assignee: assignees?.[0] ?? null
         }
-        await this.handleUpdate(externalData, derivedClient, update, account, prj, true)
+        await this.handleUpdate(ctx, externalData, derivedClient, update, account, prj, true)
         break
       }
       case 'closed':
@@ -288,6 +276,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
               })
         }
         await this.handleUpdate(
+          ctx,
           externalData,
           derivedClient,
           update,
@@ -326,27 +315,33 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     }
   }
 
-  // async getReviewers (issue: PullRequestExternalData): Promise<PersonAccount[]> {
-  //   // Find Assignees and reviewers
-  //   const ids: UserInfo[] = issue.reviewRequests.nodes.map((it: any) => it.requestedReviewer)
+  async getReviewers (issue: PullRequestExternalData): Promise<PersonId[]> {
+    // Find Assignees and reviewers
+    const ids: UserInfo[] = (issue.reviewRequests?.nodes ?? [])
+      .filter((it: any) => it != null)
+      .map((it: any) => it.requestedReviewer)
+      .filter((id: any) => id != null)
 
-  //   const values: PersonAccount[] = []
+    const values: PersonId[] = []
 
-  //   for (const o of ids) {
-  //     const acc = await this.provider.getAccount(o)
-  //     if (acc !== undefined) {
-  //       values.push(acc)
-  //     }
-  //   }
+    for (const o of ids) {
+      const acc = await this.provider.getAccount(o)
+      if (acc !== undefined) {
+        values.push(acc)
+      }
+    }
 
-  //   for (const n of issue.latestReviews.nodes) {
-  //     const acc = await this.provider.getAccount(n.author)
-  //     if (acc !== undefined) {
-  //       values.push(acc)
-  //     }
-  //   }
-  //   return values
-  // }
+    for (const n of issue.latestReviews?.nodes ?? []) {
+      if (n?.author == null) {
+        continue
+      }
+      const acc = await this.provider.getAccount(n.author)
+      if (acc !== undefined) {
+        values.push(acc)
+      }
+    }
+    return values
+  }
 
   private async createSyncData (
     pullRequestExternal: PullRequestExternalData,
@@ -379,7 +374,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
   }
 
   async syncToTarget (
-    target: IssueSyncTarget,
+    ctx: MeasureContext,
     container: ContainerFocus,
     existing: Doc | undefined,
     pullRequestExternal: PullRequestExternalData,
@@ -387,78 +382,20 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     info: DocSyncInfo
   ): Promise<DocumentUpdate<DocSyncInfo>> {
     const account =
-      existing?.modifiedBy ?? (await this.provider.getAccount(pullRequestExternal.author))?._id ?? core.account.System
+      existing?.modifiedBy ?? (await this.provider.getAccount(pullRequestExternal.author)) ?? core.account.System
     const accountGH =
-      info.lastGithubUser ?? (await this.provider.getAccount(pullRequestExternal.author))?._id ?? core.account.System
-
-    // A target node id
-    const targetNodeId: string | undefined = info.targetNodeId as string
-
-    const okit = (await this.provider.getOctokit(account as PersonId)) ?? container.container.octokit
-
-    const isProjectProjectTarget = target.target.projectNodeId === target.project.projectNodeId
-    const supportProjects =
-      (isProjectProjectTarget && syncConfig.MainProject) || (!isProjectProjectTarget && syncConfig.SupportMilestones)
+      info.lastGithubUser ?? (await this.provider.getAccount(pullRequestExternal.author)) ?? core.account.System
 
     const type = await this.provider.getTaskTypeOf(container.project.type, github.class.GithubPullRequest)
     const statuses = await this.provider.getStatuses(type?._id)
 
-    if (
-      targetNodeId !== undefined &&
-      target.target.projectNodeId !== undefined &&
-      targetNodeId !== target.target.projectNodeId &&
-      supportProjects
-    ) {
-      const itemNode = pullRequestExternal.projectItems.nodes.find((it) => it.project.id === targetNodeId)
-      if (itemNode !== undefined) {
-        await this.removeIssueFromProject(okit, target.target.projectNodeId, itemNode.id)
-        // remove data
-        pullRequestExternal.projectItems.nodes = pullRequestExternal.projectItems.nodes.filter(
-          (it) => it.id !== targetNodeId
-        )
-        await derivedClient.update(info, {
-          external: pullRequestExternal,
-          externalVersion: githubExternalSyncVersion
-        })
-        target.prjData = undefined
-        // We need to sync from platform as new to new project.
-        // We need to remove current sync
-        info.current = {}
-      }
-    }
-
-    // Check if issue are added to project.
-    if (target.prjData === undefined && okit !== undefined && supportProjects) {
-      try {
-        target.prjData = await this.ctx.withLog(
-          'add pull request to project}',
-          {},
-          () => this.addIssueToProject(container, okit, pullRequestExternal, target.target.projectNodeId as string),
-          { url: pullRequestExternal.url }
-        )
-        if (target.prjData !== undefined) {
-          pullRequestExternal.projectItems.nodes.push(target.prjData)
-        }
-
-        await derivedClient.update(info, {
-          external: pullRequestExternal,
-          externalVersion: githubExternalSyncVersion
-        })
-      } catch (err: any) {
-        this.ctx.error('Error', { err })
-        Analytics.handleError(err)
-        return { needSync: githubSyncVersion, error: errorToObj(err) }
-      }
-    }
-
     const assignees = await this.getAssignees(pullRequestExternal)
-    // TODO: FIXME
-    const reviewers: any = [] // await this.getReviewers(pullRequestExternal)
+    const reviewers = await this.getPersonsFromId(await this.getReviewers(pullRequestExternal))
 
     const latestReviews: LastReviewState[] = []
 
     for (const d of pullRequestExternal.latestReviews?.nodes ?? []) {
-      const author = (await this.provider.getAccount(d.author))?._id
+      const author = await this.provider.getAccount(d.author)
       if (author !== undefined) {
         latestReviews.push({
           state: toReviewState(d.state),
@@ -473,8 +410,8 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         pullRequestExternal.body,
         this.stripGuestLink
       ),
-      assignee: assignees[0]?.person ?? null,
-      reviewers: reviewers.map((it: any) => it.person),
+      assignee: assignees[0] ?? null,
+      reviewers,
       draft: pullRequestExternal.isDraft,
       head: pullRequestExternal.headRef,
       base: pullRequestExternal.baseRef,
@@ -495,20 +432,20 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
 
     if (taskTypes.length === 0) {
       // Missing required task type
-      this.ctx.error('Missing required task type', { url: pullRequestExternal.url })
+      ctx.error('Missing required task type', { url: pullRequestExternal.url })
       return { needSync: githubSyncVersion }
     }
-    await this.fillProjectV2Fields(target, container, pullRequestData, taskTypes[0])
 
     const lastModified = new Date(pullRequestExternal.updatedAt).getTime()
 
     if (existing === undefined) {
       try {
-        await this.ctx.withLog(
+        await ctx.with(
           'retrieve pull request patch',
           {},
-          () =>
+          (ctx) =>
             this.handlePatch(
+              ctx,
               info,
               container,
               pullRequestExternal,
@@ -520,20 +457,21 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
               lastModified,
               accountGH
             ),
-          { url: pullRequestExternal.url }
+          { url: pullRequestExternal.url },
+          { log: true }
         )
         const { markdownCompatible, markdown } = await this.provider.checkMarkdownConversion(
           container.container,
           pullRequestExternal.body
         )
 
-        const op = this.client.apply()
+        let op = this.client.apply()
         let createdPullRequest: GithubPullRequest | undefined
 
-        await this.ctx.withLog(
+        await ctx.with(
           'create pull request in platform',
           {},
-          async () => {
+          async (ctx) => {
             createdPullRequest = await this.createPullRequest(
               op,
               info,
@@ -550,22 +488,28 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
               !markdownCompatible
             )
           },
-          { url: pullRequestExternal.url }
+          { url: pullRequestExternal.url },
+          { log: true }
         )
 
+        await op.commit()
         const pullRequestObj =
           createdPullRequest ??
           (await this.client.findOne(github.class.GithubPullRequest, {
             _id: info._id as unknown as Ref<GithubPullRequest>
           }))
         if (pullRequestObj !== undefined) {
-          await this.todoSync(op, pullRequestObj, pullRequestExternal, info, account)
+          op = this.client.apply()
+          try {
+            await this.todoSync(ctx, op, pullRequestObj, pullRequestExternal, info, account)
+          } catch (err: any) {
+            ctx.error('failed to sync todos', { err, url: pullRequestExternal.url, id: pullRequestObj._id })
+          }
+          await op.commit()
         }
 
-        await op.commit()
-
         // To sync reviews/review threads in case they are created before us.
-        await syncChilds(info, this.client, derivedClient)
+        await syncChilds(ctx, info, this.client, derivedClient)
 
         return {
           needSync: '',
@@ -576,18 +520,19 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
           markdown
         }
       } catch (err: any) {
-        this.ctx.error('Error', { err })
+        ctx.error('Error', { err })
         Analytics.handleError(err)
         return { needSync: githubSyncVersion, error: errorToObj(err) }
       }
     } else {
       try {
         if (info.updatePatch === true) {
-          await this.ctx.withLog(
+          await ctx.with(
             'update pull request patch',
             {},
-            () =>
+            (ctx) =>
               this.handlePatch(
+                ctx,
                 info,
                 container,
                 pullRequestExternal,
@@ -599,36 +544,38 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
                 lastModified,
                 accountGH
               ),
-            { url: pullRequestExternal.url }
+            { url: pullRequestExternal.url },
+            { log: true }
           )
         }
 
-        const description = await this.ctx.withLog(
+        const description = await ctx.with(
           'query collaborative pull request description',
           {},
-          async () => {
+          async (ctx) => {
             const collabId = makeDocCollabId(existing, 'description')
             return await this.collaborator.getMarkup(collabId, (existing as GithubPullRequest).description)
           },
-          { url: pullRequestExternal.url }
+          { url: pullRequestExternal.url },
+          { log: true }
         )
 
-        const update = await this.ctx.withLog(
+        const update = await ctx.with(
           'perform pull request diff update',
           {},
-          () =>
+          (ctx) =>
             this.handleDiffUpdate(
-              target,
+              ctx,
+              container,
               { ...(existing as any), description },
               info,
               pullRequestData,
-              container,
               pullRequestExternal,
               account,
-              accountGH,
-              supportProjects
+              accountGH
             ),
-          { url: pullRequestExternal.url }
+          { url: pullRequestExternal.url },
+          { log: true }
         )
         return {
           ...update,
@@ -637,19 +584,30 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
           lastGithubAccount: null
         }
       } catch (err: any) {
-        this.ctx.error('Error update pr', { err })
+        ctx.error('Error update pr', { err })
         Analytics.handleError(err)
         return { needSync: githubSyncVersion, error: errorToObj(err), external: pullRequestExternal }
       }
     }
   }
 
-  async afterSync (existing: Issue, account: PersonId, issueExternal: any, info: DocSyncInfo): Promise<void> {
+  async afterSync (
+    ctx: MeasureContext,
+    existing: Issue,
+    account: PersonId,
+    issueExternal: any,
+    info: DocSyncInfo
+  ): Promise<void> {
     const pullRequest = existing as GithubPullRequest
-    await this.todoSync(this.client, pullRequest, issueExternal as PullRequestExternalData, info, account)
+    try {
+      await this.todoSync(ctx, this.client, pullRequest, issueExternal as PullRequestExternalData, info, account)
+    } catch (err: any) {
+      ctx.error('failed to sync todos', { err, url: issueExternal.url, id: pullRequest._id })
+    }
   }
 
   async todoSync (
+    ctx: MeasureContext,
     client: TxOperations,
     pullRequest: Pick<
     GithubPullRequest,
@@ -706,19 +664,19 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       }
     }
 
-    const pendingOrDismissed = new Map<Ref<Person>, PullRequestReviewState>()
+    const pendingOrDismissedIds = new Map<PersonId, PullRequestReviewState>()
 
-    const approvedOrChangesRequested = new Map<Ref<Person>, PullRequestReviewState>()
-    const reviewStates = new Map<Ref<Person>, PullRequestReviewState[]>()
+    const approvedOrChangesRequested = new Map<PersonId, PullRequestReviewState>()
+    const reviewStates = new Map<PersonId, PullRequestReviewState[]>()
 
-    const sortedReviews: (Review & { date: number })[] = external.reviews.nodes
+    const sortedReviews: (Review & { date: number })[] = (external.reviews.nodes ?? [])
       .filter((it) => it != null)
       .map((it) => ({
         ...it,
         date: new Date(it.updatedAt ?? it.submittedAt ?? it.createdAt).getTime()
       }))
 
-    for (const it of external.latestReviews.nodes) {
+    for (const it of external.latestReviews.nodes ?? []) {
       if (sortedReviews.some((qt) => it.id === qt.id)) {
         continue
       }
@@ -734,13 +692,17 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         continue
       }
       if (r.state === 'PENDING' || r.state === 'DISMISSED') {
-        pendingOrDismissed.set(rp.person, r.state)
+        pendingOrDismissedIds.set(rp, r.state)
       }
       if (r.state === 'APPROVED' || r.state === 'CHANGES_REQUESTED') {
-        approvedOrChangesRequested.set(rp.person, r.state)
+        approvedOrChangesRequested.set(rp, r.state)
       }
-      reviewStates.set(rp.person, [...(reviewStates.get(rp.person) ?? []), r.state])
+      reviewStates.set(rp, [...(reviewStates.get(rp) ?? []), r.state])
     }
+
+    const pendingOrDismissed = new Set(
+      await this.getPersonsFromId(Array.from(pendingOrDismissedIds.entries()).map((it) => it[0]))
+    )
 
     for (const r of pullRequest.reviewers ?? []) {
       // Find all related todos's
@@ -750,10 +712,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       const hasPending = todos.some((it) => it.doneOn !== null)
 
       // Create review Todo, if missing.
-      if (
-        pullRequest.state === GithubPullRequestState.open ||
-        (!hasPending && pendingOrDismissed.get(r) !== undefined)
-      ) {
+      if (pullRequest.state === GithubPullRequestState.open || (!hasPending && pendingOrDismissed.has(r))) {
         if (todos.length === 0) {
           await this.requestReview(client, pullRequest, external, r, account)
         }
@@ -763,26 +722,28 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     // Handle change requests.
     // If we have change requests pending, we need to create Todo to resolve them to author or assigned person, to resolve them.
 
-    const changeRequestPersons = new Set<Ref<Person>>()
+    const changeRequestPersonsIds = new Set<PersonId>()
     const author = await this.provider.getAccount(external.author)
     if (author !== undefined) {
-      changeRequestPersons.add(author.person)
+      changeRequestPersonsIds.add(author)
     }
     for (const au of external.assignees.nodes ?? []) {
       const u = await this.provider.getAccount(au)
       if (u !== undefined) {
-        changeRequestPersons.add(u.person)
+        changeRequestPersonsIds.add(u)
       }
     }
 
     // Check review threads and create todo to resolve them.
     const requestedIds: Ref<Person>[] = []
 
+    const changeRequestPersons = await this.getPersonsFromId(Array.from(changeRequestPersonsIds))
+
     let allResolved = true
-    for (const r of external.reviewThreads.nodes) {
+    for (const r of external.reviewThreads.nodes ?? []) {
       if (!r.isResolved) {
         allResolved = false
-        for (const c of Array.from(changeRequestPersons)) {
+        for (const c of changeRequestPersons) {
           // We need to add Todo to resolve PR.
           const todos = [...allTodos, ...removedTodos].filter((it) => it.user === c && it.purpose === 'fix')
           if (todos.length === 0) {
@@ -801,7 +762,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       for (const [, sst] of approvedOrChangesRequested.entries()) {
         if (sst === 'CHANGES_REQUESTED') {
           // We have changes requested and not resolved yet.
-          for (const c of Array.from(changeRequestPersons)) {
+          for (const c of changeRequestPersons) {
             const todos = [...allTodos, ...removedTodos].filter((it) => it.user === c && it.purpose === 'fix')
             if (todos.length === 0 && !requestedIds.includes(c)) {
               requestedIds.push(c)
@@ -816,7 +777,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     if (allResolved) {
       // We need to complete or remove todo, in case all are resolved.
       if (!Array.from(approvedOrChangesRequested.values()).includes('CHANGES_REQUESTED')) {
-        const todos = allTodos.filter((it) => it.purpose === 'fix')
+        const todos = allTodos.filter((it) => it.purpose === 'fix' && it.doneOn == null)
         for (const t of todos) {
           await this.markDoneOrDeleteTodo(t)
         }
@@ -838,10 +799,12 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     todoUser: Ref<Person>,
     account: PersonId
   ): Promise<void> {
+    const employee = (await client.findAll(contact.mixin.Employee, { _id: todoUser as Ref<Employee> }, { limit: 1 }))[0]
+    if (employee === undefined) return
     const latestTodo = await client.findOne(
       time.class.ToDo,
       {
-        user: todoUser,
+        user: employee._id,
         doneOn: null
       },
       {
@@ -858,8 +821,9 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         title: 'Review ' + external.title,
         description: external.url,
         attachedSpace: pullRequest.space,
-        user: todoUser,
+        user: employee._id,
         workslots: 0,
+        doneOn: null,
         priority: ToDoPriority.High,
         visibility: 'public',
         rank: makeRank(undefined, latestTodo?.rank)
@@ -891,10 +855,12 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     todoUser: Ref<Person>,
     account: PersonId
   ): Promise<void> {
+    const employee = (await client.findAll(contact.mixin.Employee, { _id: todoUser as Ref<Employee> }, { limit: 1 }))[0]
+    if (employee === undefined) return
     const latestTodo = await client.findOne(
       time.class.ToDo,
       {
-        user: todoUser,
+        user: employee._id,
         doneOn: null
       },
       {
@@ -912,7 +878,8 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         attachedSpace: pullRequest.space,
         title: 'Resolve ' + pullRequest.title,
         description: external.url,
-        user: todoUser,
+        user: employee._id,
+        doneOn: null,
         workslots: 0,
         priority: ToDoPriority.High,
         visibility: 'public',
@@ -937,7 +904,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
 
   private async markDoneOrDeleteTodo (td: WithLookup<GithubTodo>): Promise<void> {
     // Let's mark as done in any case
-    await this.client.update(td, {
+    await this.client.diffUpdate(td, {
       doneOn: Date.now()
     })
   }
@@ -963,7 +930,9 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     }
   }
 
+  @withContext('pullrequests-sync')
   async sync (
+    ctx: MeasureContext,
     existing: Doc | undefined,
     info: DocSyncInfo,
     parent: DocSyncInfo | undefined,
@@ -973,14 +942,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     if (container?.container === undefined) {
       return { needSync: githubSyncVersion }
     }
-    const needCreateConnectedAthanzoai = info.addhanzoaiLink === true
-    if (
-      (container.project.projectNodeId === undefined ||
-        !container.container.projectStructure.has(container.project._id)) &&
-      syncConfig.MainProject
-    ) {
-      return { needSync: githubSyncVersion }
-    }
+    const needCreateConnectedAtHuly = info.addHulyLink === true
 
     if (info.repository == null) {
       return { needSync: githubSyncVersion }
@@ -992,28 +954,18 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       return { needSync: '' }
     }
 
-    let target = await this.getMilestoneIssueTarget(
-      container.project,
-      container.container,
-      existing as Issue,
-      pullRequestExternal
-    )
-    if (target === undefined) {
-      target = this.getProjectIssueTarget(container.project, pullRequestExternal)
-    }
-
-    const syncResult = await this.syncToTarget(target, container, existing, pullRequestExternal, derivedClient, info)
+    const syncResult = await this.syncToTarget(ctx, container, existing, pullRequestExternal, derivedClient, info)
 
     if (existing !== undefined && pullRequestExternal !== undefined && needCreateConnectedAthanzoai) {
       await this.addhanzoaiLink(info, syncResult, existing, pullRequestExternal, container)
     }
     return {
-      ...syncResult,
-      targetNodeId: target.target.projectNodeId
+      ...syncResult
     }
   }
 
   async performIssueFieldsUpdate (
+    ctx: MeasureContext,
     info: DocSyncInfo,
     existing: WithMarkup<Issue>,
     platformUpdate: DocumentUpdate<Issue>,
@@ -1043,18 +995,18 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
 
     if (hasFieldsUpdate || body !== undefined) {
       if (body !== undefined && !isLocked) {
-        await this.ctx.withLog(
+        await ctx.with(
           '==> updatePullRequest',
           {},
-          async () => {
-            this.ctx.info('update-pr-fields', {
+          async (ctx) => {
+            ctx.info('update-pr-fields', {
               url: issueExternal.url,
               ...issueUpdate,
               body,
               workspace: this.provider.getWorkspaceId()
             })
             if (isGHWriteAllowed()) {
-              await okit?.graphql(
+              await okit.graphql(
                 `
             mutation updatePullRequest($issue: ID!, $body: String!) {
               updatePullRequest(input: {
@@ -1073,19 +1025,23 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
               )
             }
           },
-          { url: issueExternal.url }
+          { url: issueExternal.url },
+          { log: true }
         )
         issueData.description = await this.provider.getMarkupSafe(container.container, body, this.stripGuestLink)
       } else if (hasFieldsUpdate) {
-        await this.ctx.withLog('==> updatePullRequest:', {}, async () => {
-          this.ctx.info('update-fields', {
-            url: issueExternal.url,
-            ...issueUpdate,
-            workspace: this.provider.getWorkspaceId()
-          })
-          if (isGHWriteAllowed()) {
-            await okit?.graphql(
-              `
+        await ctx.with(
+          '==> updatePullRequest:',
+          {},
+          async (ctx) => {
+            ctx.info('update-fields', {
+              url: issueExternal.url,
+              ...issueUpdate,
+              workspace: this.provider.getWorkspaceId()
+            })
+            if (isGHWriteAllowed()) {
+              await okit.graphql(
+                `
           mutation updatePullRequest($issue: ID!) {
             updatePullRequest(input: {
               pullRequestId: $issue,
@@ -1098,10 +1054,13 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
               }
             }
           }`,
-              { issue: issueExternal.id }
-            )
-          }
-        })
+                { issue: issueExternal.id }
+              )
+            }
+          },
+          { issue: issueExternal.id },
+          { log: true }
+        )
       }
       return true
     }
@@ -1109,6 +1068,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
   }
 
   private async handlePatch (
+    ctx: MeasureContext,
     info: DocSyncInfo,
     container: ContainerFocus,
     pullRequestExternal: PullRequestExternalData,
@@ -1121,7 +1081,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       return
     }
     if (info.external?.patch !== true) {
-      const { patch, contentType } = await this.fetchPatch(pullRequestExternal, container.container.octokit, repo)
+      const { patch, contentType } = await this.fetchPatch(ctx, pullRequestExternal, container.container.octokit, repo)
 
       // Update attached patch data.
       const patchAttachment = await this.client.findOne(github.class.GithubPatch, { attachedTo: existingPR._id })
@@ -1245,7 +1205,6 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         descriptionLocked: isDescriptionLocked
       }
     )
-    await client.createMixin<Issue, Issue>(prId, github.mixin.GithubIssue, prj._id, prj.mixinClass, {})
 
     await this.addConnectToMessage(
       github.string.PullRequestConnectedActivityInfo,
@@ -1271,7 +1230,9 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     }
   }
 
+  @withContext('pullrequests-externalSync')
   async externalSync (
+    ctx: MeasureContext,
     integration: IntegrationContainer,
     derivedClient: TxOperations,
     kind: ExternalSyncField,
@@ -1282,7 +1243,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     if (kind === 'externalVersion') {
       // Bulk update of selected PR's
       // Wait global project sync
-      await this.performExternalSync(integration, prj, syncDocs, repo, derivedClient)
+      await this.performExternalSync(ctx, integration, prj, syncDocs, repo, derivedClient)
     }
 
     if (kind === 'derivedVersion') {
@@ -1303,11 +1264,11 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       if (ext == null) {
         continue
       }
-      if (ext.reviews.nodes.length < ext.reviews.totalCount) {
+      if ((ext.reviews.nodes ?? []).length < ext.reviews.totalCount) {
         // TODO: We need to fetch missing items.
       }
 
-      if (ext.reviewThreads.nodes.length < ext.reviewThreads.totalCount) {
+      if ((ext.reviewThreads.nodes ?? []).length < ext.reviewThreads.totalCount) {
         // TODO: We need to fetch missing items.
       }
 
@@ -1319,10 +1280,10 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         repo,
         github.class.GithubReview,
         {},
-        (ext) => ext.reviews.nodes
+        (ext) => ext.reviews.nodes ?? []
       )
       await syncDerivedDocuments(derivedClient, d, ext, prj, repo, github.class.GithubReviewThread, {}, (ext) =>
-        ext.reviewThreads.nodes.map((it) => ({
+        (ext.reviewThreads.nodes ?? []).map((it) => ({
           ...it,
           url: it.id,
           createdAt: new Date(it.comments.nodes[0].createdAt ?? Date.now()).toISOString(),
@@ -1340,6 +1301,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
   }
 
   private async performExternalSync (
+    ctx: MeasureContext,
     integration: IntegrationContainer,
     prj: GithubProject,
     syncDocs: DocSyncInfo[],
@@ -1360,10 +1322,10 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         }
         const idsp = idsPart.map((it) => `"${it}"`).join(', ')
         try {
-          const response: any = await this.ctx.withLog(
+          const response: any = await ctx.with(
             'fetch pull request updates',
             {},
-            async () =>
+            async (ctx) =>
               await integration.octokit.graphql(
                 `query listIssues {
                     nodes(ids: [${idsp}] ) {
@@ -1377,23 +1339,24 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
               prj: prj.name,
               repo: repo.name,
               ids: idsp
-            }
+            },
+            { log: true }
           )
           const issues: PullRequestExternalData[] = response.nodes
 
           if (issues.some((issue) => issue.url === undefined && Object.keys(issue).length === 0)) {
-            this.ctx.error('empty document content updates', {
+            ctx.error('empty document content updates', {
               repo: repo.name,
               workspace: this.provider.getWorkspaceId(),
               data: cutObjectArray(response)
             })
           }
-          await this.syncIssues(github.class.GithubPullRequest, repo, issues, derivedClient, docsPart)
+          await this.syncIssues(ctx, github.class.GithubPullRequest, repo, issues, derivedClient, docsPart)
         } catch (err: any) {
           if (partsize > 1) {
             partsize = 1
             allSyncDocs.push(...docsPart)
-            this.ctx.warn('pull request external retrieval switch to one by one mode', {
+            ctx.warn('pull request external retrieval switch to one by one mode', {
               errors: err.errors,
               msg: err.message,
               workspace: this.provider.getWorkspaceId()
@@ -1402,7 +1365,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
             // We need to update issue, since it is missing on external side.
             const syncDoc = syncDocs.find((it) => it.external.id === idsPart[0])
             if (syncDoc !== undefined) {
-              this.ctx.warn('mark missing external PR', {
+              ctx.warn('mark missing external PR', {
                 errors: err.errors,
                 msg: err.message,
                 url: syncDoc.url,
@@ -1423,7 +1386,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       }
       for (const d of syncDocs) {
         if ((d.external as IssueExternalData).id == null) {
-          this.ctx.error('failed to do external sync for', { objectClass: d.objectClass, _id: d._id })
+          ctx.error('failed to do external sync for', { objectClass: d.objectClass, _id: d._id })
           // no external data for doc
           await derivedClient.update<DocSyncInfo>(d, {
             externalVersion: githubExternalSyncVersion
@@ -1431,17 +1394,19 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         }
       }
     } catch (err: any) {
-      this.ctx.error('Error', { err })
+      ctx.error('Error', { err })
       Analytics.handleError(err)
     }
     this.provider.sync()
   }
 
-  repositoryDisabled (integration: IntegrationContainer, repo: GithubIntegrationRepository): void {
+  repositoryDisabled (ctx: MeasureContext, integration: IntegrationContainer, repo: GithubIntegrationRepository): void {
     integration.synchronized.delete(`${repo._id}:pullRequests`)
   }
 
+  @withContext('pullrequests-externalFullSync')
   async externalFullSync (
+    ctx: MeasureContext,
     integration: IntegrationContainer,
     derivedClient: TxOperations,
     projects: GithubProject[],
@@ -1473,23 +1438,23 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       const since = await getSinceRaw(this.client, github.class.GithubPullRequest, repo)
 
       // We need always sync open PRs, since review changes are not included into PR updated state.
-      this.ctx.info('sync external pull requests', {
+      ctx.info('sync external pull requests', {
         repo: repo.name,
         since,
         workspace: this.provider.getWorkspaceId(),
         state: 'OPEN'
       })
-      await this.performPRSync(integration, repo, 'OPEN', undefined, derivedClient, prj)
+      await this.performPRSync(ctx, integration, repo, 'OPEN', undefined, derivedClient, prj)
 
-      this.ctx.info('sync external pull requests', {
+      ctx.info('sync external pull requests', {
         repo: repo.name,
         since,
         workspace: this.provider.getWorkspaceId(),
         state: 'CLOSED, MERGED'
       })
-      await this.performPRSync(integration, repo, 'CLOSED, MERGED', since, derivedClient, prj)
+      await this.performPRSync(ctx, integration, repo, 'CLOSED, MERGED', since, derivedClient, prj)
 
-      this.ctx.info('sync external pull requests - done', {
+      ctx.info('sync external pull requests - done', {
         repo: repo.name,
         since,
         workspace: this.provider.getWorkspaceId()
@@ -1501,6 +1466,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
   }
 
   private async performPRSync (
+    ctx: MeasureContext,
     integration: IntegrationContainer,
     repo: GithubIntegrationRepository,
     states: string,
@@ -1540,7 +1506,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
           break
         }
         const issues: PullRequestExternalData[] = data.repository.pullRequests.nodes
-        this.ctx.info('retrieve pull requests for', {
+        ctx.info('retrieve pull requests for', {
           repo: repo.name,
           since,
           len: issues.length,
@@ -1559,7 +1525,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
         let emptyIndex = -1
         emptyIndex = issues.findIndex((issue) => issue.url === undefined && Object.keys(issue).length === 0)
         if (emptyIndex !== -1) {
-          this.ctx.error('empty document content', {
+          ctx.error('empty document content', {
             repo: repo.name,
             workspace: this.provider.getWorkspaceId(),
             data: cutObjectArray(data),
@@ -1568,15 +1534,16 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
           })
         }
 
-        await this.syncIssues(github.class.GithubPullRequest, repo, issues, derivedClient)
+        await this.syncIssues(ctx, github.class.GithubPullRequest, repo, issues, derivedClient)
       }
     } catch (err: any) {
-      this.ctx.error('Error', { err })
+      ctx.error('Error', { err })
       Analytics.handleError(err)
     }
   }
 
   async fetchPatch (
+    ctx: MeasureContext,
     pullRequest: PullRequestExternalData,
     octokit: Octokit,
     repository: GithubIntegrationRepository
@@ -1596,13 +1563,18 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
       patch = (patchContent.data as unknown as string) ?? ''
       contentType = patchContent.headers['content-type'] ?? 'application/vnd.github.VERSION.diff'
     } catch (err: any) {
-      this.ctx.error('Error', { err })
+      ctx.error('Error', { err })
       Analytics.handleError(err)
     }
     return { patch, contentType }
   }
 
-  async deleteGithubDocument (container: ContainerFocus, account: PersonId, id: string): Promise<void> {
+  async deleteGithubDocument (
+    ctx: MeasureContext,
+    container: ContainerFocus,
+    account: PersonId,
+    id: string
+  ): Promise<void> {
     // No delete is allowed for pull requests
   }
 }

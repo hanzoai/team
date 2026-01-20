@@ -3,13 +3,12 @@
 export MODEL_VERSION=$(node ../common/scripts/show_version.js)
 export MINIO_ACCESS_KEY=minioadmin
 export MINIO_SECRET_KEY=minioadmin
-export MINIO_ENDPOINT=hanzoai.local:9002
-export ACCOUNTS_URL=http://hanzoai.local:3003
-export TRANSACTOR_URL=ws://hanzoai.local:3334
-# export ACCOUNT_DB_URL=postgresql://root@hanzoai.local:26258/defaultdb?sslmode=disable
-export ACCOUNT_DB_URL=mongodb://hanzoai.local:27018
-export MONGO_URL=mongodb://hanzoai.local:27018
-export ELASTIC_URL=http://hanzoai.local:9201
+export MINIO_ENDPOINT=huly.local:9002
+export ACCOUNTS_URL=http://huly.local:3003
+export TRANSACTOR_URL=ws://huly.local:3334
+export ACCOUNT_DB_URL=postgresql://root@huly.local:26258/defaultdb?sslmode=disable
+export MONGO_URL=mongodb://huly.local:27018
+export ELASTIC_URL=http://huly.local:9201
 export SERVER_SECRET=secret
 export DB_URL=$MONGO_URL
 export QUEUE_CONFIG=hanzoai.local:19093

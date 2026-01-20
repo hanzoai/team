@@ -1,35 +1,24 @@
 //
 // Copyright © 2023 Hardcore Engineering Inc.
 //
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/core'
-import serverCore from '@hanzo/server-core'
-import { RequestStatus } from '@hanzo/request'
-import documents, { DocumentState } from '@hanzo/controlled-documents'
-import serverDocuments from '@hanzo/server-controlled-documents'
-import contact from '@hanzo/contact'
-import serverNotification from '@hanzo/server-notification'
-import notification from '@hanzo/notification'
+import { type Builder } from '@hcengineering/model'
+import core from '@hcengineering/core'
+import serverCore from '@hcengineering/server-core'
+import { RequestStatus } from '@hcengineering/request'
+import documents, { DocumentState } from '@hcengineering/controlled-documents'
+import serverDocuments from '@hcengineering/server-controlled-documents'
+import serverNotification from '@hcengineering/server-notification'
+import notification from '@hcengineering/notification'
 
 export { serverDocumentsId } from '@hanzo/server-controlled-documents/src/index'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {
-    trigger: serverDocuments.trigger.OnEmployeeCreate,
-    txMatch: {
-      objectClass: contact.class.Person,
-      _class: core.class.TxMixin,
-      mixin: contact.mixin.Employee,
-      'attributes.active': true
-    }
-  })
-
-  builder.createDoc(serverCore.class.Trigger, core.space.Model, {
-    trigger: serverDocuments.trigger.OnDocDeleted,
+    trigger: serverDocuments.trigger.OnDocEnteredNonActionableState,
     txMatch: {
       _class: core.class.TxUpdateDoc,
       objectClass: documents.class.ControlledDocument,
-      'operations.state': DocumentState.Deleted
+      'operations.state': { $in: [DocumentState.Deleted, DocumentState.Obsolete, DocumentState.Archived] }
     }
   })
 
@@ -60,6 +49,14 @@ export function createModel (builder: Builder): void {
     }
   })
 
+  builder.createDoc(serverCore.class.Trigger, core.space.Model, {
+    trigger: serverDocuments.trigger.OnDocTitleChanged,
+    txMatch: {
+      _class: core.class.TxUpdateDoc,
+      objectClass: documents.class.ControlledDocument
+    }
+  })
+
   builder.mixin(documents.class.DocumentMeta, core.class.Class, serverCore.mixin.SearchPresenter, {
     iconConfig: {
       component: documents.component.DocumentIcon
@@ -69,6 +66,10 @@ export function createModel (builder: Builder): void {
 
   builder.mixin(documents.class.ControlledDocument, core.class.Class, serverNotification.mixin.TextPresenter, {
     presenter: serverDocuments.function.ControlledDocumentTextPresenter
+  })
+
+  builder.mixin(documents.class.ControlledDocument, core.class.Class, serverNotification.mixin.HTMLPresenter, {
+    presenter: serverDocuments.function.ControlledDocumentHTMLPresenter
   })
 
   builder.mixin(

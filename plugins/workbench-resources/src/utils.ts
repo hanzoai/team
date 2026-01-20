@@ -16,19 +16,20 @@
 
 import { getClient as getAccountClient } from '@hanzo/account-client'
 import type {
-    Account,
-    Class,
-    Client,
-    Doc,
-    Ref,
-    Space,
-    TxOperations,
-    WorkspaceInfoWithStatus
-} from '@hanzo/core'
-import core, { hasAccountRole } from '@hanzo/core'
-import login from '@hanzo/login'
-import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
-import presentation, { closeClient, getClient, setPresentationCookie } from '@hanzo/presentation'
+  Account,
+  AccountRole,
+  Class,
+  Client,
+  Doc,
+  Ref,
+  Space,
+  TxOperations,
+  WorkspaceInfoWithStatus
+} from '@hcengineering/core'
+import core, { hasAccountRole } from '@hcengineering/core'
+import login from '@hcengineering/login'
+import { getMetadata, getResource, setMetadata } from '@hcengineering/platform'
+import presentation, { closeClient, getClient, setPresentationCookie } from '@hcengineering/presentation'
 import {
     closePanel,
     getCurrentLocation,
@@ -141,9 +142,9 @@ export async function doNavigate (
   }
 }
 
-export function isAppAllowed (app: Application, acc: Account): boolean {
-  if (app.accessLevel === undefined) return true
-  return hasAccountRole(acc, app.accessLevel)
+export function isAllowedToRole (role: AccountRole | undefined, acc: Account): boolean {
+  if (role === undefined) return true
+  return hasAccountRole(acc, role)
 }
 
 export async function hideApplication (app: Application): Promise<void> {
@@ -217,7 +218,9 @@ export async function logIn (loginInfo: { account: string, token?: string }): Pr
 
 export async function logOut (): Promise<void> {
   const accountsUrl = getMetadata(login.metadata.AccountsUrl)
-  await getAccountClient(accountsUrl).deleteCookie()
+  try {
+    await getAccountClient(accountsUrl).deleteCookie()
+  } catch (error) {}
 
   const currentWorkspace = getMetadata(presentation.metadata.WorkspaceUuid)
   if (currentWorkspace !== undefined) {

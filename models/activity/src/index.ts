@@ -45,10 +45,12 @@ import core, {
   type Domain,
   type IndexingConfiguration,
   type Ref,
+  type Blob,
   type Timestamp,
   type Tx,
-  type TxCUD
-} from '@hanzo/core'
+  type TxCUD,
+  AccountRole
+} from '@hcengineering/core'
 import {
   ArrOf,
   Collection,
@@ -227,6 +229,8 @@ export class TReaction extends TAttachedDoc implements Reaction {
   @Prop(TypeString(), activity.string.Emoji)
     emoji!: string
 
+  image?: Ref<Blob>
+
   @Prop(TypePersonId(), view.string.Created)
     createBy!: PersonId
 }
@@ -273,6 +277,10 @@ export function createModel (builder: Builder): void {
     TReplyProvider,
     TUserMentionInfo
   )
+
+  builder.mixin(activity.class.Reaction, core.class.Class, core.mixin.TxAccessLevel, {
+    removeAccessLevel: AccountRole.Guest
+  })
 
   builder.mixin(activity.class.DocUpdateMessage, core.class.Class, view.mixin.ObjectPresenter, {
     presenter: activity.component.DocUpdateMessagePresenter

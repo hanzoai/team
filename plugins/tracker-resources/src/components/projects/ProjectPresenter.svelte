@@ -13,18 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { isAdminUser } from '@hanzo/presentation'
-  import { Project } from '@hanzo/tracker'
-  import {
-    Icon,
-    IconWithEmoji,
-    Label,
-    getPlatformColorDef,
-    getPlatformColorForTextDef,
-    themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { NavLink } from '@hanzo/view-resources'
+  import presentation, { IconWithEmoji, isAdminUser } from '@hcengineering/presentation'
+  import { Project } from '@hcengineering/tracker'
+  import { Icon, Label, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import { NavLink } from '@hcengineering/view-resources'
   import tracker from '../../plugin'
   import { getCurrentAccount } from '@hanzo/core'
 
@@ -39,12 +32,12 @@
   <div class="flex-presenter cursor-default" class:inline-presenter={inline} class:colorInherit>
     <div class="icon" class:emoji={value.icon === view.ids.IconWithEmoji}>
       <Icon
-        icon={value.icon === view.ids.IconWithEmoji ? IconWithEmoji : value.icon ?? tracker.icon.Home}
+        icon={value.icon === view.ids.IconWithEmoji ? IconWithEmoji : (value.icon ?? tracker.icon.Home)}
         iconProps={value.icon === view.ids.IconWithEmoji
           ? { icon: value.color }
           : {
               fill:
-                value.color !== undefined
+                value.color !== undefined && typeof value.color !== 'string'
                   ? getPlatformColorDef(value.color, $themeStore.dark).icon
                   : getPlatformColorForTextDef(value.name, $themeStore.dark).icon
             }}

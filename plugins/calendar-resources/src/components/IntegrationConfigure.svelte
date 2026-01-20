@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Calendar } from '@hanzo/calendar'
-  import { getCurrentAccount } from '@hanzo/core'
-  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
-  import { Integration } from '@hanzo/setting'
-  import { Grid, Label, Toggle, tooltip } from '@hanzo/ui'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { Calendar } from '@hcengineering/calendar'
+  import { getCurrentAccount } from '@hcengineering/core'
+  import presentation, { Card, createQuery, getClient } from '@hcengineering/presentation'
+  import { Grid, Label, Toggle, tooltip } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
+  import type { Integration } from '@hcengineering/account-client'
   import calendar from '../plugin'
 
   export let integration: Integration
@@ -32,7 +32,7 @@
     calendar.class.ExternalCalendar,
     {
       createdBy: { $in: getCurrentAccount().socialIds },
-      externalUser: integration.value
+      externalUser: integration.data?.email
     },
     (res) => {
       calendars = res

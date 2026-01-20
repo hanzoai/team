@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
-import { startCollaborator } from '@hanzo/collaborator'
-import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
-import { initStatisticsContext } from '@hanzo/server-core'
+import { Analytics } from '@hcengineering/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { startCollaborator } from '@hcengineering/collaborator'
+import { newMetrics } from '@hcengineering/core'
+import { initStatisticsContext } from '@hcengineering/server-core'
 import { join } from 'path'
 
-configureAnalytics(process.env.SENTRY_DSN, {})
+configureAnalytics('collaborator', process.env.VERSION ?? '0.7.0')
 Analytics.setTag('application', 'collaborator')
 
 const metricsContext = initStatisticsContext('collaborator', {
   factory: () =>
-    new MeasureMetricsContext(
+    createOpenTelemetryMetricsContext(
       'collaborator',
       {},
       {},

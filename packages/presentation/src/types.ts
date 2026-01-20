@@ -11,10 +11,11 @@ import {
   type RelatedDocument,
   type Space,
   type TxOperations,
-  type BlobMetadata
-} from '@hanzo/core'
-import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
-import { type AnyComponent, type AnySvelteComponent, type ComponentExtensionId } from '@hanzo/ui/src/types'
+  type BlobMetadata,
+  type AccountRole
+} from '@hcengineering/core'
+import { type Asset, type IntlString, type Resource } from '@hcengineering/platform'
+import { type AnyComponent, type AnySvelteComponent, type ComponentExtensionId } from '@hcengineering/ui/src/types'
 
 export * from './components/breadcrumbs/types'
 
@@ -34,10 +35,11 @@ export interface ObjectSearchResult {
  * @public
  */
 export interface ObjectCreate {
-  component: AnyComponent
+  component: AnyComponent | undefined
   props?: Record<string, any>
   label: IntlString
   update?: (doc: Doc) => string
+  func?: Resource<(props?: Record<string, any>) => Promise<Ref<Doc> | undefined>>
 }
 
 /**
@@ -92,6 +94,7 @@ export interface ComponentExt {
 export interface ComponentPointExtension extends Doc, ComponentExt {
   // Extension point we should extend.
   extension: ComponentExtensionId
+  accessLevel?: AccountRole
 }
 
 export type DocCreatePhase = 'pre' | 'post'

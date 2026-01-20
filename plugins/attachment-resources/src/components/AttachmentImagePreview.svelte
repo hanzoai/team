@@ -13,10 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Attachment } from '@hanzo/attachment'
-  import type { BlobType, WithLookup } from '@hanzo/core'
-  import { Image } from '@hanzo/presentation'
-  import { Loading } from '@hanzo/ui'
+  import type { Attachment } from '@hcengineering/attachment'
+  import type { BlobType, WithLookup } from '@hcengineering/core'
+  import { Image } from '@hcengineering/presentation'
 
   import BrokenImage from './icons/BrokenImage.svelte'
   import { AttachmentImageSize } from '../types'
@@ -32,7 +31,7 @@
   }
 
   const minSizeRem = 4
-  const maxSizeRem = 20
+  const maxSizeRem = 25
 
   let dimensions: Dimensions
 
@@ -47,8 +46,8 @@
 
     return getImageDimensions(
       {
-        width: metadata.originalWidth,
-        height: metadata.originalHeight
+        width: metadata.thumbnail?.width ?? metadata.originalWidth,
+        height: metadata.thumbnail?.height ?? metadata.originalHeight
       },
       { maxWidth: maxSizeRem, minWidth: minSizeRem, maxHeight: maxSizeRem, minHeight: minSizeRem }
     )
@@ -76,12 +75,6 @@
 </script>
 
 <div class="container" class:loading style="width:{toStyle(dimensions.width)}; height:{toStyle(dimensions.height)}">
-  {#if loading}
-    <div class="image-overlay">
-      <Loading />
-    </div>
-  {/if}
-
   {#if error}
     <div class="image-overlay">
       <BrokenImage size={'large'} />
@@ -90,10 +83,13 @@
 
   <Image
     blob={value.file}
+    loading="lazy"
     alt={value.name}
     fit={dimensions.fit}
     width={dimensions.width}
     height={dimensions.height}
+    blurhash={value.metadata?.thumbnail?.blurhash}
+    showLoading={loading}
     on:load={handleLoad}
     on:error={handleError}
     on:loadstart={handleLoadStart}
@@ -105,6 +101,7 @@
     display: inline-flex;
     background-color: var(--theme-link-preview-bg-color);
     border-radius: 0.75rem;
+    overflow: hidden;
 
     .image-overlay {
       position: absolute;

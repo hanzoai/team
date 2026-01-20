@@ -63,7 +63,6 @@
   export let hideActions: boolean = false
   export let hideExtra: boolean = false
   export let overflowExtra: boolean = false
-  export let newActivity: boolean = false
 
   const account = getCurrentAccount()
   $: isGuest = account.role === AccountRole.DocGuest
@@ -155,6 +154,10 @@
   }}
 >
   <Component is={presence.component.Presence} props={{ object }} />
+
+  <svelte:fragment slot="beforeTitle">
+    <slot name="beforeTitle" />
+  </svelte:fragment>
 
   <svelte:fragment slot="title">
     {#if !withoutTitle}
@@ -304,7 +307,7 @@
         {#if showActivity}
           {#key object._id}
             <Component
-              is={newActivity ? activity.component.NewActivity : activity.component.Activity}
+              is={activity.component.Activity}
               bind:innerRef={activityRef}
               props={{
                 object,

@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { TriggerControl } from '@hanzo/server-core'
-import contact, { Employee, type Person, PersonSpace, SocialIdentityRef } from '@hanzo/contact'
-import { AccountUuid, parseSocialIdString, PersonId, type Ref, SocialId, toIdMap } from '@hanzo/core'
+import { TriggerControl } from '@hcengineering/server-core'
+import contact, { Employee, type Person, PersonSpace, SocialIdentityRef } from '@hcengineering/contact'
+import core, { AccountUuid, parseSocialIdString, PersonId, type Ref, SocialId, toIdMap } from '@hcengineering/core'
 
 export async function getCurrentPerson (control: TriggerControl): Promise<Person | undefined> {
   const { type, value } = parseSocialIdString(control.txFactory.account)
@@ -81,10 +81,12 @@ export async function getAllSocialStringsByPersonId (
 }
 
 export async function getPerson (control: TriggerControl, personId: PersonId): Promise<Person | undefined> {
+  if (personId === core.account.System) return undefined
+
   const { contextData } = control.ctx
   const account: AccountUuid | undefined = contextData.account.socialIds.includes(personId)
     ? contextData.account.uuid
-    : contextData.socialStringsToUsers.get(personId)
+    : contextData.socialStringsToUsers.get(personId)?.accontUuid
 
   if (account !== undefined) {
     return (await control.findAll(control.ctx, contact.class.Person, { personUuid: account }))[0]
@@ -102,30 +104,9 @@ export async function getPerson (control: TriggerControl, personId: PersonId): P
   return (await control.findAll(control.ctx, contact.class.Person, { _id: socialId.attachedTo }))[0]
 }
 
-export async function getPersonsBySocialIds (
-  control: TriggerControl,
-  personIds: PersonId[]
-): Promise<Record<PersonId, Person>> {
-  const socialIds = await control.findAll(control.ctx, contact.class.SocialIdentity, {
-    _id: { $in: personIds as SocialIdentityRef[] }
-  })
-  const persons = toIdMap(
-    await control.findAll(control.ctx, contact.class.Person, { _id: { $in: socialIds.map((s) => s.attachedTo) } })
-  )
-
-  return socialIds.reduce<Record<PersonId, Person>>((acc, s) => {
-    const person = persons.get(s.attachedTo)
-    if (person !== undefined) {
-      acc[s._id] = person
-    } else {
-      console.error('No person found for social id', s.key)
-    }
-
-    return acc
-  }, {})
-}
-
 export async function getEmployee (control: TriggerControl, personId: PersonId): Promise<Employee | undefined> {
+  if (personId === core.account.System) return undefined
+
   const socialId = (
     await control.findAll(control.ctx, contact.class.SocialIdentity, { _id: personId as SocialIdentityRef })
   )[0]
@@ -201,7 +182,7 @@ export async function getSocialIdsByAccounts (
 }
 
 export async function getAccountBySocialId (control: TriggerControl, socialId: PersonId): Promise<AccountUuid | null> {
-  const contextAccount = control.ctx.contextData.socialStringsToUsers.get(socialId)
+  const contextAccount = control.ctx.contextData.socialStringsToUsers.get(socialId)?.accontUuid
   if (contextAccount != null) {
     return contextAccount
   }

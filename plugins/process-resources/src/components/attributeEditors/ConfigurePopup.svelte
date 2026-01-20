@@ -13,6 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
+  import core, { AnyAttribute, Class, Doc, DocumentQuery, Ref } from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import { Context, Func, Process, ProcessFunction, SelectedContext } from '@hcengineering/process'
   import {
     ButtonIcon,
     CheckBox,
@@ -25,21 +28,21 @@
     Scroller,
     showPopup,
     Submenu
-  } from '@hanzo/ui'
+  } from '@hcengineering/ui'
+  import { AttributeCategory } from '@hcengineering/view'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
-  import core, { AnyAttribute, Class, Doc, Ref } from '@hanzo/core'
-  import { Context, Func, ProcessFunction, SelectedContext } from '@hanzo/process'
-  import { getClient } from '@hanzo/presentation'
-  import { AttributeCategory } from '@hanzo/view'
   import FallbackEditor from '../contextEditors/FallbackEditor.svelte'
 
+  export let process: Process
   export let contextValue: SelectedContext
   export let context: Context
   export let attribute: AnyAttribute
   export let attrClass: Ref<Class<Doc>>
   export let category: AttributeCategory
   export let onChange: (contextValue: SelectedContext) => void
+  export let allowArray: boolean = false
+  export let forbidValue: boolean = false
 
   const client = getClient()
 
@@ -61,23 +64,41 @@
     }
   }
 
-  const reduceFuncs = client
-    .getModel()
-    .findAllSync(plugin.class.ProcessFunction, { of: core.class.ArrOf })
-    .map((it) => it._id)
+  function getReduceFunctions (): Ref<ProcessFunction>[] {
+    const model = client.getModel()
+    const h = client.getHierarchy()
+    const res: Ref<ProcessFunction>[] = []
+    const all = model.findAllSync(plugin.class.ProcessFunction, { type: 'reduce' })
+    for (const f of all) {
+      if (f.category === undefined || (allowArray && f.category === 'array')) {
+        if (f.of === core.class.ArrOf || h.isDerived(f.of, attrClass)) {
+          res.push(f._id)
+        }
+      }
+    }
+    return res
+  }
 
-  $: availableFunctions = getAvailableFunctions(context, contextValue.functions, attrClass, category)
+  const reduceFuncs = getReduceFunctions()
+
+  $: availableFunctions = getAvailableFunctions(contextValue.functions, attrClass, category)
 
   $: functionsLength = contextValue.functions?.length ?? 0
 
   function getAvailableFunctions (
-    context: Context,
     functions: Func[] | undefined,
     attrClass: Ref<Class<Doc>>,
     category: AttributeCategory
   ): Ref<ProcessFunction>[] {
     const result: Ref<ProcessFunction>[] = []
-    const allFunctions = client.getModel().findAllSync(plugin.class.ProcessFunction, { of: attrClass, category })
+    const query: DocumentQuery<ProcessFunction> = {
+      type: 'transform',
+      category
+    }
+    if (category !== 'array') {
+      query.of = attrClass
+    }
+    const allFunctions = client.getModel().findAllSync(plugin.class.ProcessFunction, query)
     for (const f of allFunctions) {
       if (functions === undefined || f.allowMany === true || functions.findIndex((p) => p.func === f._id) === -1) {
         result.push(f._id)
@@ -86,13 +107,16 @@
     return result
   }
 
-  $: funcs = client
-    .getModel()
-    .findAllSync(plugin.class.ProcessFunction, { _id: { $in: contextValue.functions?.map((it) => it.func) } })
+  $: funcs =
+    (contextValue.functions?.length ?? 0) > 0
+      ? client
+        .getModel()
+        .findAllSync(plugin.class.ProcessFunction, { _id: { $in: contextValue.functions?.map((it) => it.func) } })
+      : []
 
   $: sourceFunc =
     contextValue.sourceFunction !== undefined
-      ? client.getModel().findAllSync(plugin.class.ProcessFunction, { _id: contextValue.sourceFunction })[0]
+      ? client.getModel().findAllSync(plugin.class.ProcessFunction, { _id: contextValue.sourceFunction.func })[0]
       : undefined
 
   $: functionButtonIndex = functionsLength + (sourceFunc !== undefined ? 1 : 0)
@@ -112,54 +136,80 @@
   }
 
   function onFunctionSelect (e: Ref<ProcessFunction>): void {
-    // if editor is undefined
-    const func = client.getModel().findAllSync(plugin.class.ProcessFunction, { _id: e })[0]
+    onFunction(e, {}, addFunction)
+  }
+
+  function addFunction (func: Func): void {
+    const arr = contextValue.functions ?? []
+    arr.push(func)
+    contextValue.functions = arr
+    onChange(contextValue)
+  }
+
+  function onSourceFunctionSelect (e: Ref<ProcessFunction>): void {
+    onFunction(e, contextValue.sourceFunction?.props ?? {}, (res) => (contextValue.sourceFunction = res))
+  }
+
+  function onSourceFunctionChange (e: Func): void {
+    contextValue.sourceFunction = e
+    onChange(contextValue)
+  }
+
+  function onFunction (_func: Ref<ProcessFunction>, props: Record<string, any>, cb: (res: Func) => void) {
+    const func = client.getModel().findAllSync(plugin.class.ProcessFunction, { _id: _func })[0]
     if (func.editor === undefined) {
-      addFunction(e, {})
+      const res: Func = { func: _func, props: {} }
+      cb(res)
+      onChange(contextValue)
       closeTooltip()
     } else {
       showPopup(
         func.editor,
         {
           func,
+          process,
+          masterTag: process.masterTag,
           context,
-          attribute
+          attribute,
+          props
         },
-        elements[functionButtonIndex],
+        elements[0],
         (res) => {
           if (res != null) {
-            addFunction(e, res)
+            const result: Func = { func: _func, props: res }
+            cb(result)
+            onChange(contextValue)
+            closeTooltip()
           }
         }
       )
     }
   }
 
-  function addFunction (func: Ref<ProcessFunction>, props: Record<string, any>): void {
-    const arr = contextValue.functions ?? []
-    arr.push({
-      func,
-      props
-    })
-    contextValue.functions = arr
-    onChange(contextValue)
-  }
-
-  function onSourceFunctionSelect (e: Ref<ProcessFunction>): void {
-    contextValue.sourceFunction = e
-    onChange(contextValue)
-  }
-
   function onFunctionChange (e: Ref<ProcessFunction>, i: number): void {
-    if (contextValue.functions === undefined) return
-    contextValue.functions[i].func = e
-    contextValue.functions = contextValue.functions
-    onChange(contextValue)
+    onFunction(e, contextValue.functions?.[i]?.props ?? {}, (res) => {
+      if (contextValue.functions === undefined) {
+        contextValue.functions = []
+      }
+      contextValue.functions[i] = res
+      contextValue.functions = contextValue.functions
+    })
   }
 
-  function getFunctionChange (i: number): (e: Ref<ProcessFunction>) => void {
+  function getFunctionSelect (i: number): (e: Ref<ProcessFunction>) => void {
     return (e: Ref<ProcessFunction>) => {
       onFunctionChange(e, i)
+    }
+  }
+
+  function getFunctionChange (i: number): (e: Func) => void {
+    return (e: Func) => {
+      if (contextValue.functions === undefined) {
+        contextValue.functions = []
+      }
+      contextValue.functions[i] = e
+      contextValue.functions = contextValue.functions
+      onChange(contextValue)
     }
   }
 
@@ -172,13 +222,16 @@
     onChange(contextValue)
   }
 
-  function onConfigure (e: MouseEvent, func: ProcessFunction, pos: number): void {
-    if (contextValue.functions === undefined || func.editor === undefined) return
+  function onConfigure (e: MouseEvent, func: Func, pos: number): void {
+    const f = getFunction(func.func)
+    if (contextValue.functions === undefined || f.editor === undefined) return
     const val = contextValue.functions[pos]
     showPopup(
-      func.editor,
+      f.editor,
       {
-        func,
+        func: f,
+        masterTag: process.masterTag,
+        process,
         context,
         attribute,
         props: val?.props ?? {}
@@ -192,7 +245,6 @@
             func.props = res
             contextValue.functions[pos] = func
             contextValue.functions = contextValue.functions
-            console.log(contextValue.functions)
             onChange(contextValue)
           }
         }
@@ -207,6 +259,10 @@
       contextValue.fallbackValue = undefined
     }
     onChange(contextValue)
+  }
+
+  function getFunction (_id: Ref<ProcessFunction>): ProcessFunction {
+    return client.getModel().findAllSync(plugin.class.ProcessFunction, { _id })[0]
   }
 </script>
 
@@ -224,17 +280,25 @@
         }}
         label={sourceFunc.label}
         props={{
+          attribute,
+          process,
+          context,
+          func: contextValue.sourceFunction,
           availableFunctions: reduceFuncs,
-          onSelect: onSourceFunctionSelect
+          onSelect: onSourceFunctionSelect,
+          onChange: onSourceFunctionChange
         }}
+        component={plugin.component.FunctionSubmenu}
         options={{ component: plugin.component.FunctionSelector }}
         withHover
       />
-      <div class="menu-separator" />
     {/if}
     {#if availableFunctions.length > 0 || functionsLength > 0}
-      {#each funcs as f, i}
-        {#if reduceFuncs.includes(f._id)}
+      {#if sourceFunc !== undefined}
+        <div class="menu-separator" />
+      {/if}
+      {#each contextValue.functions ?? [] as f, i}
+        {#if reduceFuncs.includes(f.func)}
           <Submenu
             bind:element={elements[i + (sourceFunc !== undefined ? 1 : 0)]}
             on:keydown={(event) => {
@@ -243,11 +307,17 @@
             on:mouseover={() => {
               elements[i + (sourceFunc !== undefined ? 1 : 0)]?.focus()
             }}
-            label={f.label}
+            label={getFunction(f.func)?.label}
             props={{
+              func: f,
+              attribute,
+              process,
+              context,
               availableFunctions: reduceFuncs,
-              onSelect: getFunctionChange(i)
+              onSelect: getFunctionSelect(i),
+              onChange: getFunctionChange(i)
             }}
+            component={plugin.component.FunctionSubmenu}
             options={{ component: plugin.component.FunctionSelector }}
             withHover
           />
@@ -265,10 +335,10 @@
             }}
           >
             <div>
-              <Label label={f.label} />
+              <Label label={getFunction(f.func).label} />
             </div>
             <div>
-              {#if f.editor}
+              {#if getFunction(f.func).editor}
                 <ButtonIcon
                   icon={IconSettings}
                   size="small"
@@ -310,51 +380,55 @@
         <!-- <div class="menu-separator" /> -->
       {/if}
     {/if}
-    <div class="menu-separator" />
-    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <button
-      bind:this={elements[functionButtonIndex + 1]}
-      on:keydown={(event) => {
-        keyDown(event, functionButtonIndex + 1)
-      }}
-      on:mouseover={() => {
-        elements[functionButtonIndex + 1]?.focus()
-      }}
-      on:click={onFallbackChange}
-      class="menu-item flex-gap-2 fallback"
-    >
-      <div>
-        <div class="label">
-          <Label label={plugin.string.Required} />
-        </div>
-        <div class="text-sm">
-          <Label label={plugin.string.FallbackValueError} />
-        </div>
-      </div>
-      <CheckBox
-        on:click={onFallbackChange}
-        checked={contextValue.fallbackValue === undefined}
-        size={'medium'}
-        kind={'primary'}
-      />
-    </button>
-    {#if contextValue.fallbackValue !== undefined}
+    {#if !forbidValue}
+      {#if sourceFunc !== undefined || availableFunctions.length > 0 || functionsLength > 0}
+        <div class="menu-separator" />
+      {/if}
       <!-- svelte-ignore a11y-mouse-events-have-key-events -->
       <button
-        bind:this={elements[functionButtonIndex + 2]}
+        bind:this={elements[functionButtonIndex + 1]}
         on:keydown={(event) => {
-          keyDown(event, functionButtonIndex + 2)
+          keyDown(event, functionButtonIndex + 1)
         }}
         on:mouseover={() => {
-          elements[functionButtonIndex + 2]?.focus()
+          elements[functionButtonIndex + 1]?.focus()
         }}
-        on:click={onFallback}
-        class="menu-item"
+        on:click={onFallbackChange}
+        class="menu-item flex-gap-2 fallback"
       >
-        <span class="overflow-label pr-1">
-          <Label label={plugin.string.FallbackValue} />
-        </span>
+        <div>
+          <div class="label">
+            <Label label={plugin.string.Required} />
+          </div>
+          <div class="text-sm">
+            <Label label={plugin.string.FallbackValueError} />
+          </div>
+        </div>
+        <CheckBox
+          on:click={onFallbackChange}
+          checked={contextValue.fallbackValue === undefined}
+          size={'medium'}
+          kind={'primary'}
+        />
       </button>
+      {#if contextValue.fallbackValue !== undefined}
+        <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+        <button
+          bind:this={elements[functionButtonIndex + 2]}
+          on:keydown={(event) => {
+            keyDown(event, functionButtonIndex + 2)
+          }}
+          on:mouseover={() => {
+            elements[functionButtonIndex + 2]?.focus()
+          }}
+          on:click={onFallback}
+          class="menu-item"
+        >
+          <span class="overflow-label pr-1">
+            <Label label={plugin.string.FallbackValue} />
+          </span>
+        </button>
+      {/if}
     {/if}
   </Scroller>
   <div class="menu-space" />

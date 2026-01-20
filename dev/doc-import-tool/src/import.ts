@@ -1,24 +1,24 @@
-import attachment, { Attachment } from '@hanzo/attachment'
-import { getClient as getCollaboratorClient } from '@hanzo/collaborator-client'
+import attachment, { type Attachment } from '@hcengineering/attachment'
+import { getClient as getCollaboratorClient } from '@hcengineering/collaborator-client'
 import documents, {
-  ChangeControl,
-  ControlledDocument,
+  type ChangeControl,
+  type ControlledDocument,
   DEFAULT_PERIODIC_REVIEW_INTERVAL,
-  Document,
-  DocumentCategory,
+  type Document,
+  type DocumentCategory,
   DocumentState,
-  DocumentTemplate,
+  type DocumentTemplate,
   createChangeControl,
   createControlledDocFromTemplate,
   createDocumentTemplate
 } from '@hanzo/controlled-documents'
 import core, {
-  AttachedData,
-  BackupClient,
-  Client as CoreClient,
-  Data,
-  MeasureContext,
-  Ref,
+  type AttachedData,
+  type BackupClient,
+  type Client as CoreClient,
+  type Data,
+  type MeasureContext,
+  type Ref,
   TxOperations,
   generateId,
   makeDocCollabId,
@@ -30,9 +30,9 @@ import { generateToken } from '@hanzo/server-token'
 import { findAll, getOuterHTML } from 'domutils'
 import { parseDocument } from 'htmlparser2'
 
-import { Config } from './config'
-import { ExtractedFile } from './extract/extract'
-import { ExtractedSection } from './extract/sections'
+import { type Config } from './config'
+import { type ExtractedFile } from './extract/extract'
+import { type ExtractedSection } from './extract/sections'
 
 export default async function importExtractedFile (
   ctx: MeasureContext,
@@ -84,14 +84,15 @@ async function createDocument (
     prefix,
     code: oldId,
     seqNumber: 0,
-    major: 0,
-    minor: 1,
+    major: 1,
+    minor: 0,
     commentSequence: 0,
     template: templateId,
     state: DocumentState.Draft,
     requests: 0,
     reviewers: [],
     approvers: [],
+    externalApprovers: [],
     coAuthors: [],
     changeControl: ccRecordId,
     author: owner,
@@ -175,6 +176,7 @@ async function createTemplateIfNotExist (
     requests: 0,
     reviewers: [],
     approvers: [],
+    externalApprovers: [],
     coAuthors: [],
     changeControl: ccRecordId,
     content: null,

@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { AttachedDoc, Ref, WithLookup } from '@hanzo/core'
-  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
-  import { getMetadata } from '@hanzo/platform'
-  import presentation, { NavLink, getClient, isAdminUser } from '@hanzo/presentation'
-  import MessageBox from '@hanzo/presentation/src/components/MessageBox.svelte'
-  import tracker, { Project } from '@hanzo/tracker'
+  import { AttachedDoc, Ref, WithLookup } from '@hcengineering/core'
+  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hcengineering/github'
+  import { getMetadata } from '@hcengineering/platform'
+  import presentation, { NavLink, getClient, isAdminUser, MessageBox } from '@hcengineering/presentation'
+  import tracker, { Project } from '@hcengineering/tracker'
   import ui, {
     Action,
     Button,
@@ -26,11 +25,11 @@
   import ConnectProject from './ConnectProject.svelte'
   import { githubLanguageColors } from './languageColors'
   import { sendGHServiceRequest } from './utils'
-  import { BackgroundColor } from '@hanzo/text'
 
   export let integration: WithLookup<GithubIntegration>
   export let projects: Project[] = []
   export let giProjects: GithubProject[] = []
+  export let orphanProjects: GithubProject[] = []
 
   const client = getClient()
 
@@ -235,7 +234,7 @@
                 />
               </div>
             {:else}
-              <ConnectProject {integration} {repository} {projects} />
+              <ConnectProject {integration} {repository} {projects} {orphanProjects} />
             {/if}
           </div>
         </div>

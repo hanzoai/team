@@ -13,29 +13,27 @@
 // limitations under the License.
 //
 
-@import "./_vars.scss";
-@import "./_colors.scss";
-@import "./_lumia-colors.scss";
-@import "./_layouts.scss";
-@import "./_print.scss";
-@import "./common.scss";
-@import "./button.scss";
-@import "./editors.scss";
-@import "./components.scss";
-@import "./dialogs.scss";
-@import "./popups.scss";
-@import "./mixins.scss";
-@import "./panel.scss";
-@import "./prose.scss";
-@import "./tables.scss";
-@import "./_text-editor.scss";
-@import "./_next-colors.scss";
-@import "./_next-vars.scss";
+@use "./_vars.scss" as *;
+@use "./_colors.scss" as *;
+@use "./_lumia-colors.scss" as *;
+@use "./_layouts.scss" as *;
+@use "./_print.scss" as *;
+@use "./common.scss" as *;
+@use "./button.scss" as *;
+@use "./editors.scss" as *;
+@use "./components.scss" as *;
+@use "./dialogs.scss" as *;
+@use "./popups.scss" as *;
+@use "./mixins.scss" as *;
+@use "./panel.scss" as *;
+@use "./prose.scss" as *;
+@use "./tables.scss" as *;
+@use "./_text-editor.scss" as *;
 
-@import "./love.scss";
+@use "./love.scss" as *;
 
-@import "./mono.scss";
-@import "./next-ui.scss";
+@use "./mono.scss" as *;
+@use "./noto-color.scss" as *;
 
 @font-face {
   font-family: 'IBM Plex Sans';
@@ -80,8 +78,6 @@
   scrollbar-color: var(--theme-navpanel-divider) transparent;
   scrollbar-width: none;
   --body-font-size: .875rem;
-  --status-bar-height: 36px;
-  --status-bar-normal-height: 36px;
   --panel-aside-width: 25rem; // 20rem;
   --font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
   --mono-font: 'IBM Plex Mono', monospace;
@@ -93,10 +89,6 @@
   
   &::after,
   &::before { box-sizing: border-box; }
-
-  @media (max-width: 480px) {
-    --status-bar-height: 70px;
-  }
 }
 :root {
   .plyr__volume {
@@ -164,6 +156,15 @@ body {
   color: var(--content-color);
   background-color: var(--theme-bg-color);
   user-select: none;
+
+  --status-bar-height: 36px;
+  --status-bar-normal-height: 36px;
+
+  @media (max-width: 480px) {
+    &:has(.workbench-container) {
+      --status-bar-height: 70px;
+    }
+  }
 }
 
 html,

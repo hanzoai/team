@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
-  import { ButtonKind, IconSize } from '@hanzo/ui'
+  import { Employee } from '@hcengineering/contact'
+  import { AnyAttribute, Ref, Space } from '@hcengineering/core'
+  import { ButtonKind, IconSize } from '@hcengineering/ui'
   import { PersonLabelTooltip } from '..'
   import EmployeeAttributePresenter from './EmployeeAttributePresenter.svelte'
 
@@ -14,6 +14,9 @@
   export let inline: boolean = false
   export let shouldShowName: boolean = true
   export let avatarSize: IconSize = kind === 'regular' ? 'small' : 'card'
+  export let readonly = false
+  export let attribute: AnyAttribute | undefined = undefined
+  export let space: Ref<Space> | undefined = undefined
 </script>
 
 {#if Array.isArray(value)}
@@ -29,6 +32,9 @@
         {accent}
         {shouldShowName}
         {avatarSize}
+        {readonly}
+        {attribute}
+        {space}
         on:accent-color
       />
     {/each}
@@ -44,6 +50,9 @@
     {accent}
     {shouldShowName}
     {avatarSize}
+    {readonly}
+    {attribute}
+    {space}
     on:accent-color
   />
 {/if}

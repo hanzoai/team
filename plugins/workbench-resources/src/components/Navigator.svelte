@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, Ref, SortingOrder, Space, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import preference, { SpacePreference } from '@hanzo/preference'
-  import { createQuery, getClient, isAdminUser } from '@hanzo/presentation'
-  import { Scroller, NavItem } from '@hanzo/ui'
-  import { NavLink } from '@hanzo/view-resources'
-  import type { Application, NavigatorModel, SpecialNavModel } from '@hanzo/workbench'
+  import core, { Doc, Ref, SortingOrder, Space, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+  import { getResource } from '@hcengineering/platform'
+  import preference, { SpacePreference } from '@hcengineering/preference'
+  import { createQuery, getClient, isAdminUser } from '@hcengineering/presentation'
+  import { Scroller, NavItem, Component } from '@hcengineering/ui'
+  import { NavLink } from '@hcengineering/view-resources'
+  import type { Application, NavigatorModel, SpecialNavModel } from '@hcengineering/workbench'
   import { getSpecialSpaceClass } from '../utils'
   import SpacesNav from './navigator/SpacesNav.svelte'
   import StarredNav from './navigator/StarredNav.svelte'
@@ -81,8 +81,8 @@
 
   let requestIndex = 0
   async function update (model: NavigatorModel, spaces: Space[], preferences: Map<Ref<Doc>, SpacePreference>) {
-    shownSpaces = spaces.filter((sp) => !sp.archived && !preferences.has(sp._id))
-    starred = spaces.filter((sp) => preferences.has(sp._id))
+    shownSpaces = spaces.filter((sp) => !sp.archived && (model.hideStarred || !preferences.has(sp._id)))
+    starred = model.hideStarred ? [] : spaces.filter((sp) => preferences.has(sp._id))
     if (model.specials !== undefined) {
       const [sp, resIndex] = await updateSpecials(model.specials, spaces, ++requestIndex)
       if (resIndex !== requestIndex) return
@@ -173,7 +173,7 @@
     <div class="min-h-3 flex-no-shrink" />
 
     <SavedView alias={currentApplication?.alias} on:select={(res) => (menuSelection = res.detail)} />
-    {#if starred.length}
+    {#if starred.length > 0 && !model.hideStarred}
       <StarredNav
         label={preference.string.Starred}
         spaces={starred}
@@ -184,6 +184,15 @@
         {currentFragment}
         deselect={menuSelection}
       />
+    {/if}
+
+    {#if model.groups && model.groups.length > 0}
+      <div class="min-h-3 flex-no-shrink" />
+      {#each model.groups as group (group.id)}
+        {#if group.component}
+          <Component is={group.component} props={{ model: group, currentSpace }} />
+        {/if}
+      {/each}
     {/if}
 
     {#each model.spaces as m (m.label)}

@@ -27,9 +27,9 @@ import {
   type Tx,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
-import platform, { Severity, Status, UNAUTHORIZED, unknownStatus } from '@hanzo/platform'
-import { RPCHandler, type Response } from '@hanzo/rpc'
+} from '@hcengineering/core'
+import { Status, UNAUTHORIZED, unknownStatus } from '@hcengineering/platform'
+import { RPCHandler, type Response } from '@hcengineering/rpc'
 import {
   doSessionOp,
   getFile,
@@ -89,7 +89,6 @@ const rpcHandler = new RPCHandler()
 const backpressureSize = 100 * 1024
 /**
  * @public
- * @param sessionFactory -
  * @param port -
  * @param host -
  */
@@ -132,7 +131,7 @@ export function startHttpServer (
   const childLogger = ctx.logger.childLogger?.('requests', {
     enableConsole: 'true'
   })
-  const requests = ctx.newChild('requests', {}, {}, childLogger)
+  const requests = ctx.newChild('requests', {}, { logger: childLogger, span: false })
 
   class MyStream {
     write (text: string): void {
@@ -157,6 +156,19 @@ export function startHttpServer (
         version: process.env.MODEL_VERSION
       })
     )
+  })
+
+  app.get('/api/v1/health', (req, res) => {
+    try {
+      const status = sessions.checkHealth()
+      const code = status === 'unhealthy' ? 503 : 200
+      res.status(code).send(status)
+    } catch (err: any) {
+      Analytics.handleError(err)
+      ctx.error('error', { err })
+      res.writeHead(404, {})
+      res.end()
+    }
   })
 
   app.get('/api/v1/statistics', (req, res) => {
@@ -206,6 +218,7 @@ export function startHttpServer (
     try {
       const token = (req.query.token as string) ?? (req.headers.authorization ?? '').split(' ')[1]
       const payload = decodeToken(token)
+
       if (payload.extra?.admin !== 'true' && payload.account !== systemAccountUuid) {
         console.warn('Non admin attempt to maintenance action', { payload })
         res.writeHead(404, {})
@@ -217,11 +230,13 @@ export function startHttpServer (
 
       switch (operation) {
         case 'maintenance': {
-          const timeMinutes = parseInt((req.query.timeout as string) ?? '5')
-          sessions.scheduleMaintenance(timeMinutes)
+          void retrieveJson(req).then((message) => {
+            const timeMinutes = parseInt((req.query.timeout as string) ?? '5')
+            sessions.scheduleMaintenance(timeMinutes, message)
 
-          res.writeHead(200)
-          res.end()
+            res.writeHead(200)
+            res.end()
+          })
           return
         }
         case 'wipe-statistics': {
@@ -245,14 +260,21 @@ export function startHttpServer (
         case 'profile-stop': {
           profiling = false
           if (sessions.profiling?.stop != null) {
-            void sessions.profiling.stop().then((profile) => {
-              ctx.warn(
-                '---------------------------------------------PROFILING SESSION STOPPED---------------------------------------------',
-                {}
-              )
-              res.writeHead(200, { 'Content-Type': 'application/json' })
-              res.end(profile ?? '{ error: "no profiling" }')
-            })
+            void sessions.profiling
+              .stop()
+              .then((profile) => {
+                ctx.warn(
+                  '---------------------------------------------PROFILING SESSION STOPPED---------------------------------------------',
+                  {}
+                )
+                res.writeHead(200, { 'Content-Type': 'application/json' })
+                res.end(profile ?? '{ error: "no profiling" }')
+              })
+              .catch((err) => {
+                ctx.error('error', { err })
+                res.writeHead(500)
+                res.end()
+              })
           } else {
             res.writeHead(404)
             res.end()
@@ -260,9 +282,20 @@ export function startHttpServer (
 
           return
         }
+        case 'force-maintenance': {
+          const wsId = req.query.wsId as WorkspaceUuid
+          void sessions.forceMaintenance(ctx, wsId ?? payload.workspace).catch((err) => {
+            ctx.error('error', { err })
+          })
+          res.writeHead(200)
+          res.end()
+          return
+        }
         case 'force-close': {
           const wsId = req.query.wsId as WorkspaceUuid
-          void sessions.forceClose(wsId ?? payload.workspace)
+          void sessions.forceClose(wsId ?? payload.workspace).catch((err) => {
+            ctx.error('error', { err })
+          })
           res.writeHead(200)
           res.end()
           return
@@ -288,7 +321,7 @@ export function startHttpServer (
       try {
         const authHeader = req.headers.authorization
         if (authHeader === undefined) {
-          res.status(403).end(JSON.stringify({ error: 'Unauthorized' }))
+          res.status(401).end(JSON.stringify({ error: 'Unauthorized' }))
           return
         }
 
@@ -296,7 +329,7 @@ export function startHttpServer (
         const wsIds = await getWorkspaceIds(token)
 
         if (wsIds.uuid == null) {
-          res.status(401).end(JSON.stringify({ error: 'No workspace found' }))
+          res.status(403).end(JSON.stringify({ error: 'No workspace found' }))
           return
         }
 
@@ -321,7 +354,7 @@ export function startHttpServer (
         }
         await ctx.with(
           'storage upload',
-          { workspace: wsIds.uuid },
+          {},
           async (ctx) => {
             await externalStorage.put(
               ctx,
@@ -337,7 +370,7 @@ export function startHttpServer (
             })
             res.end(JSON.stringify({ success: true }))
           },
-          { file: name, contentType }
+          { contentType, workspace: wsIds.uuid }
         )
       } catch (err: any) {
         Analytics.handleError(err)
@@ -357,7 +390,7 @@ export function startHttpServer (
       try {
         const authHeader = req.headers.authorization
         if (authHeader === undefined) {
-          res.status(403).send({ error: 'Unauthorized' })
+          res.status(401).send({ error: 'Unauthorized' })
           return
         }
 
@@ -365,7 +398,7 @@ export function startHttpServer (
         const wsIds = await getWorkspaceIds(token)
 
         if (wsIds.uuid == null) {
-          res.status(401).send({ error: 'No workspace found' })
+          res.status(403).send({ error: 'No workspace found' })
         }
 
         const name = req.query.name as string
@@ -397,33 +430,30 @@ export function startHttpServer (
     })
   )
 
-  registerRPC(app, sessions, ctx)
+  registerRPC(app, sessions, ctx, accountsUrl)
 
   app.put('/api/v1/broadcast', (req, res) => {
     try {
       const token = (req.query.token as string) ?? (req.headers.authorization ?? '').split(' ')[1]
       decodeToken(token)
-      const ws = sessions.workspaces.get(req.query.workspace as WorkspaceUuid)
-      if (ws !== undefined) {
-        // push the data to body
-        void retrieveJson(req)
-          .then((data) => {
-            if (Array.isArray(data)) {
-              sessions.broadcastAll(ws, data as Tx[])
-            } else {
-              sessions.broadcastAll(ws, [data as unknown as Tx])
-            }
-            res.end()
-          })
-          .catch((err) => {
-            ctx.error('JSON parse error', { err })
-            res.writeHead(400, {})
-            res.end()
-          })
-      } else {
-        res.writeHead(404, {})
-        res.end()
-      }
+
+      const ws = req.query.workspace as WorkspaceUuid
+
+      // push the data to body
+      void retrieveJson(req)
+        .then((data) => {
+          if (Array.isArray(data)) {
+            sessions.broadcastAll(ctx, ws, data as Tx[])
+          } else {
+            sessions.broadcastAll(ctx, ws, [data as unknown as Tx])
+          }
+          res.end()
+        })
+        .catch((err) => {
+          ctx.error('JSON parse error', { err })
+          res.writeHead(400, {})
+          res.end()
+        })
     } catch (err: any) {
       Analytics.handleError(err)
       ctx.error('error', { err })
@@ -469,40 +499,16 @@ export function startHttpServer (
     if (webSocketData.session instanceof Promise) {
       void webSocketData.session.then((s) => {
         if ('error' in s) {
-          if (s.specialError === 'archived') {
-            void cs.send(
-              ctx,
-              {
-                id: -1,
-                error: new Status(Severity.ERROR, platform.status.WorkspaceArchived, {
-                  workspaceUuid: token.workspace
-                }),
-                terminate: s.terminate
-              },
-              false,
-              false
-            )
-          } else if (s.specialError === 'migration') {
-            void cs.send(
-              ctx,
-              {
-                id: -1,
-                error: new Status(Severity.ERROR, platform.status.WorkspaceMigration, {
-                  workspaceUuid: token.workspace
-                }),
-                terminate: s.terminate
-              },
-              false,
-              false
-            )
-          } else {
-            void cs.send(
-              ctx,
-              { id: -1, error: unknownStatus(s.error.message ?? 'Unknown error'), terminate: s.terminate },
-              false,
-              false
-            )
-          }
+          void cs.send(
+            ctx,
+            {
+              id: -1,
+              error: s.error instanceof Status ? s.error : unknownStatus(s.error.message ?? 'Unknown error'),
+              terminate: s.terminate
+            },
+            false,
+            false
+          )
           // No connection to account service, retry from client.
           setTimeout(() => {
             cs.close()

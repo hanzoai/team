@@ -30,15 +30,18 @@ import {
   type MarkupBlobRef,
   type Data,
   type WithLookup,
-  AccountUuid
-} from '@hanzo/core'
-import type { Asset, Metadata, Plugin, Resource } from '@hanzo/platform'
-import { IntlString, plugin } from '@hanzo/platform'
-import { TemplateField, TemplateFieldCategory } from '@hanzo/templates'
-import type { AnyComponent, ColorDefinition, ResolvedLocation, Location, ComponentExtensionId } from '@hanzo/ui'
-import { Action, FilterMode, Viewlet } from '@hanzo/view'
+  AccountUuid,
+  type SocialIdType
+} from '@hcengineering/core'
+import type { Asset, Metadata, Plugin, Resource } from '@hcengineering/platform'
+import { IntlString, plugin } from '@hcengineering/platform'
+import { TemplateField, TemplateFieldCategory } from '@hcengineering/templates'
+import type { AnyComponent, ColorDefinition, ResolvedLocation, Location, ComponentExtensionId } from '@hcengineering/ui'
+import { Action, FilterMode, Viewlet } from '@hcengineering/view'
 import type { Readable } from 'svelte/store'
-import { Card, MasterTag } from '@hanzo/card'
+import { Card, MasterTag, Role } from '@hcengineering/card'
+import { Preference } from '@hcengineering/preference'
+
 import { PermissionsStore } from './types'
 
 /**
@@ -56,6 +59,11 @@ export interface ChannelProvider extends Doc, UXObject {
 
   // Integration type
   integrationType?: Ref<Doc>
+}
+
+export interface SocialIdentityProvider extends Doc, UXObject {
+  type: SocialIdType
+  creator?: AnyComponent // Component to verify the social identity
 }
 
 export interface SocialIdentity extends SocialId, AttachedDoc {
@@ -144,6 +152,11 @@ export interface Person extends Contact, BasePerson {
   profile?: Ref<Card>
 }
 
+export interface UserRole extends Doc {
+  user: Ref<Employee>
+  role: Ref<Role>
+}
+
 /**
  * @public
  */
@@ -197,6 +210,13 @@ export interface PersonSpace extends Space {
   person: Ref<Person>
 }
 
+export interface Translation extends Preference {
+  attachedTo: Ref<Employee>
+  enabled: boolean
+  translateTo?: string
+  dontTranslate: string[]
+}
+
 /**
  * @public
  */
@@ -204,6 +224,7 @@ export const contactPlugin = plugin(contactId, {
   class: {
     AvatarProvider: '' as Ref<Class<AvatarProvider>>,
     ChannelProvider: '' as Ref<Class<ChannelProvider>>,
+    SocialIdentityProvider: '' as Ref<Class<SocialIdentityProvider>>,
     Channel: '' as Ref<Class<Channel>>,
     Contact: '' as Ref<Class<Contact>>,
     Person: '' as Ref<Class<Person>>,
@@ -213,7 +234,9 @@ export const contactPlugin = plugin(contactId, {
     ContactsTab: '' as Ref<Class<ContactsTab>>,
     PersonSpace: '' as Ref<Class<PersonSpace>>,
     SocialIdentity: '' as Ref<Class<SocialIdentity>>,
-    UserProfile: '' as Ref<MasterTag>
+    UserProfile: '' as Ref<MasterTag>,
+    UserRole: '' as Ref<Class<UserRole>>,
+    Translation: '' as Ref<Class<Translation>>
   },
   mixin: {
     Employee: '' as Ref<Class<Employee>>
@@ -239,7 +262,9 @@ export const contactPlugin = plugin(contactId, {
     SpaceMembersEditor: '' as AnyComponent,
     ContactNamePresenter: '' as AnyComponent,
     PersonFilterValuePresenter: '' as AnyComponent,
-    PersonIdFilter: '' as AnyComponent
+    PersonIdFilter: '' as AnyComponent,
+    AssigneePopup: '' as AnyComponent,
+    EmployeePresenter: '' as AnyComponent
   },
   channelProvider: {
     Email: '' as Ref<ChannelProvider>,
@@ -254,6 +279,14 @@ export const contactPlugin = plugin(contactId, {
     Skype: '' as Ref<ChannelProvider>,
     Profile: '' as Ref<ChannelProvider>,
     Viber: '' as Ref<ChannelProvider>
+  },
+  socialIdentityProvider: {
+    Huly: '' as Ref<SocialIdentityProvider>,
+    Email: '' as Ref<SocialIdentityProvider>,
+    Phone: '' as Ref<SocialIdentityProvider>,
+    Google: '' as Ref<SocialIdentityProvider>,
+    GitHub: '' as Ref<SocialIdentityProvider>,
+    Telegram: '' as Ref<SocialIdentityProvider>
   },
   avatarProvider: {
     Color: '' as Ref<AvatarProvider>,
@@ -270,11 +303,13 @@ export const contactPlugin = plugin(contactId, {
     ContactApplication: '' as Asset,
     Phone: '' as Asset,
     Email: '' as Asset,
+    Huly: '' as Asset,
     Discord: '' as Asset,
     Facebook: '' as Asset,
     Instagram: '' as Asset,
     LinkedIn: '' as Asset,
     Telegram: '' as Asset,
+    Google: '' as Asset,
     Twitter: '' as Asset,
     VK: '' as Asset,
     WhatsApp: '' as Asset,
@@ -292,7 +327,14 @@ export const contactPlugin = plugin(contactId, {
     Profile: '' as Asset,
     KickUser: '' as Asset,
     Contacts: '' as Asset,
-    Viber: '' as Asset
+    Viber: '' as Asset,
+    Clock: '' as Asset,
+    Chat: '' as Asset,
+    User: '' as Asset
+  },
+  image: {
+    ProfileBackground: '' as Asset,
+    ProfileBackgroundLight: '' as Asset
   },
   space: {
     Contacts: '' as Ref<Space>
@@ -327,7 +369,16 @@ export const contactPlugin = plugin(contactId, {
     SocialIds: '' as IntlString,
     Type: '' as IntlString,
     Confirmed: '' as IntlString,
-    UserProfile: '' as IntlString
+    UserProfile: '' as IntlString,
+    DeactivatedAccount: '' as IntlString,
+    LocalTime: '' as IntlString,
+    Everyone: '' as IntlString,
+    Here: '' as IntlString,
+    EveryoneDescription: '' as IntlString,
+    HereDescription: '' as IntlString,
+    Guest: '' as IntlString,
+    Deleted: '' as IntlString,
+    Email: '' as IntlString
   },
   viewlet: {
     TableMember: '' as Ref<Viewlet>,
@@ -360,8 +411,13 @@ export const contactPlugin = plugin(contactId, {
   ids: {
     MentionCommonNotificationType: '' as Ref<Doc>
   },
+  mention: {
+    Everyone: '' as Ref<Employee>,
+    Here: '' as Ref<Employee>
+  },
   extension: {
-    EmployeePopupActions: '' as ComponentExtensionId
+    EmployeePopupActions: '' as ComponentExtensionId,
+    PersonAchievementsPresenter: '' as ComponentExtensionId
   },
   store: {
     Permissions: '' as Resource<Readable<PermissionsStore>>

@@ -14,24 +14,18 @@
 -->
 
 <script lang="ts">
-  import { Notification } from '@hanzo/communication-types'
-  import { MessagePresenter } from '@hanzo/ui-next'
-  import { Card } from '@hanzo/card'
+  import { Notification, NotificationType } from '@hcengineering/communication-types'
+  import { Card } from '@hcengineering/card'
+
+  import MessageNotification from './MessageNotification.svelte'
+  import ReactionNotification from './ReactionNotification.svelte'
 
   export let notification: Notification
   export let card: Card
 </script>
 
-{#if notification.message}
-  <div class="notification">
-    <MessagePresenter {card} message={notification.message} editable={false} />
-  </div>
+{#if notification.type === NotificationType.Message}
+  <MessageNotification {notification} {card} />
+{:else if notification.type === NotificationType.Reaction}
+  <ReactionNotification {notification} {card} />
 {/if}
-
-<style lang="scss">
-  .notification {
-    position: relative;
-    cursor: pointer;
-    user-select: none;
-  }
-</style>

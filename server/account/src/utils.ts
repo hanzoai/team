@@ -13,57 +13,87 @@
 // limitations under the License.
 //
 import {
-  Branding,
+  AccountRole,
+  type AccountUuid,
+  type Branding,
   concatLink,
   generateId,
   groupByArray,
-  MeasureContext,
-  AccountRole,
+  isActiveMode,
+  type MeasureContext,
+  type Person,
+  type PersonId,
+  type PersonUuid,
+  readOnlyGuestAccountUuid,
   roleOrder,
   SocialIdType,
-  WorkspaceUuid,
-  WorkspaceMode,
-  SocialKey,
+  type SocialKey,
   systemAccountUuid,
+  type WorkspaceDataId,
   type WorkspaceInfoWithStatus as WorkspaceInfoWithStatusCore,
-  isActiveMode,
-  type PersonUuid,
-  type PersonId,
-  type Person,
-  AccountUuid
-} from '@hanzo/core'
-import { getMongoClient } from '@hanzo/mongo' // TODO: get rid of this import later
-import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzo/platform'
-import { getDBClient } from '@hanzo/postgres'
-import otpGenerator from 'otp-generator'
+  type WorkspaceMode,
+  type WorkspaceUuid
+} from '@hcengineering/core'
+import { getMongoClient } from '@hcengineering/mongo' // TODO: get rid of this import later
+import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hcengineering/platform'
+import { getDBClient, setDBExtraOptions } from '@hcengineering/postgres'
 import { pbkdf2Sync, randomBytes } from 'crypto'
+import otpGenerator from 'otp-generator'
 
+import { Analytics } from '@hcengineering/analytics'
+import { decodeTokenVerbose, generateToken, type PermissionsGrant, TokenError } from '@hcengineering/server-token'
 import { MongoAccountDB } from './collections/mongo'
-import { PostgresAccountDB } from './collections/postgres'
+import { PostgresAccountDB } from './collections/postgres/postgres'
 import { accountPlugin } from './plugin'
-import { sharedPipelineContextVars } from '@hanzo/server-pipeline'
 import {
-  AccountMethodHandler,
-  OtpInfo,
-  WorkspaceInvite,
-  WorkspaceInfoWithStatus,
   type Account,
   type AccountDB,
+  type AccountEvent,
+  AccountEventType,
+  type AccountMethodHandler,
+  type Integration,
+  type LoginInfo,
+  type LoginInfoRequestData,
+  type Meta,
+  type Operations,
+  type OtpInfo,
   type RegionInfo,
   type SocialId,
   type Workspace,
-  LoginInfo,
-  WorkspaceLoginInfo,
-  WorkspaceStatus,
-  AccountEventType,
-  Meta
+  type WorkspaceInfoWithStatus,
+  type WorkspaceInvite,
+  type WorkspaceJoinInfo,
+  type WorkspaceLoginInfo,
+  type WorkspaceStatus,
+  type DBFlavor
 } from './types'
-import { Analytics } from '@hanzo/analytics'
-import { TokenError, decodeTokenVerbose, generateToken } from '@hanzo/server-token'
+import { isAdminEmail } from './admin'
+import { type Sql } from 'postgres'
 
-export const GUEST_ACCOUNT = 'b6996120-416f-49cd-841e-e4a5d2e49c9b'
+export const GUEST_ACCOUNT = 'b6996120-416f-49cd-841e-e4a5d2e49c9b' as PersonUuid
 
-export async function getAccountDB (uri: string, dbNs?: string): Promise<[AccountDB, () => void]> {
+export async function getDbFlavor (pgClient: Sql<any>): Promise<DBFlavor> {
+  // Run the version query
+  const [{ version }] = await pgClient`SELECT version()`
+
+  // CockroachDB’s string contains “Cockroach” (case‑insensitive)
+  if (/cockroach/i.test(version)) {
+    return 'cockroach'
+  }
+
+  // Anything else that looks like a PostgreSQL version string
+  if (/postgresql/i.test(version)) {
+    return 'postgres'
+  }
+
+  // Fallback – could be a custom build or something unexpected
+  return 'unknown'
+}
+export async function getAccountDB (
+  uri: string,
+  dbNs?: string,
+  appName: string = 'account'
+): Promise<[AccountDB, () => void]> {
   const isMongo = uri.startsWith('mongodb://')
 
   if (isMongo) {
@@ -80,11 +110,31 @@ export async function getAccountDB (uri: string, dbNs?: string): Promise<[Accoun
       }
     ]
   } else {
-    const client = getDBClient(sharedPipelineContextVars, uri)
+    setDBExtraOptions({
+      connection: {
+        application_name: appName
+      }
+    })
+    const client = getDBClient(uri)
     const pgClient = await client.getClient()
-    const pgAccount = new PostgresAccountDB(pgClient, dbNs ?? 'global_account')
+
+    let flavor: DBFlavor = 'unknown'
 
     let error = false
+
+    do {
+      try {
+        flavor = await getDbFlavor(pgClient)
+        error = false
+      } catch (err: any) {
+        error = true
+        console.error('Error while initializing postgres account db', err.message)
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+      }
+    } while (error)
+    error = false
+
+    const pgAccount = new PostgresAccountDB(pgClient, dbNs ?? 'global_account', flavor)
 
     do {
       try {
@@ -106,8 +156,18 @@ export async function getAccountDB (uri: string, dbNs?: string): Promise<[Accoun
   }
 }
 
+export const assignableRoles = [AccountRole.Guest, AccountRole.User, AccountRole.Maintainer, AccountRole.Owner]
+
 export function getRolePower (role: AccountRole): number {
   return roleOrder[role]
+}
+
+export function isReadOnlyOrGuest (account: AccountUuid, extra: Record<string, any> | undefined): boolean {
+  return isGuest(account, extra) || extra?.readonly === 'true'
+}
+
+export function isGuest (account: AccountUuid, extra: Record<string, any> | undefined): boolean {
+  return account === GUEST_ACCOUNT && extra?.guest === 'true'
 }
 
 export function wrap (
@@ -118,15 +178,12 @@ export function wrap (
     db: AccountDB,
     branding: Branding | null,
     request: any,
-    token?: string
+    token?: string,
+    meta?: Meta
   ): Promise<any> {
-    const meta =
-      request.headers !== undefined && request.headers['X-Timezone'] !== undefined
-        ? { timezone: request.headers['X-Timezone'] }
-        : {}
     return await accountMethod(ctx, db, branding, token, { ...request.params }, meta)
       .then((result) => ({ id: request.id, result }))
-      .catch((err) => {
+      .catch((err: Error) => {
         const status =
           err instanceof PlatformError
             ? err.status
@@ -141,9 +198,13 @@ export function wrap (
 
         if (status.code === platform.status.InternalServerError) {
           Analytics.handleError(err)
-          ctx.error('error', { status, err })
+          ctx.error('Error while processing account method', {
+            method: accountMethod.name,
+            status,
+            origErr: err
+          })
         } else {
-          ctx.error('error', { status })
+          ctx.error('Error while processing account method', { method: accountMethod.name, status })
         }
 
         return {
@@ -174,7 +235,7 @@ export enum EndpointKind {
   External
 }
 
-const toTransactor = (line: string): { internalUrl: string, region: string, externalUrl: string } => {
+const toTransactor = (line: string): EndpointInfo => {
   const [internalUrl, externalUrl, region] = line
     .split(';')
     .map((it) => it.trim())
@@ -238,33 +299,46 @@ export const _getRegions = (): RegionInfo[] => {
   return _regionInfo
 }
 
-export const getEndpoint = (
-  ctx: MeasureContext,
-  workspace: string,
-  region: string | undefined,
-  kind: EndpointKind
-): string => {
-  const byRegions = groupByArray(getEndpoints().map(toTransactor), (it) => it.region)
-  let transactors = (byRegions.get(region ?? '') ?? [])
-    .map((it) => (kind === EndpointKind.Internal ? it.internalUrl : it.externalUrl))
-    .flat()
+export interface EndpointInfo {
+  internalUrl: string
+  externalUrl: string
+  region: string
+}
 
-  // This is really bad
+export function getEndpointInfo (): Map<string, EndpointInfo[]> {
+  return groupByArray(getEndpoints().map(toTransactor), (it) => it.region)
+}
+
+export const selectKind = (kind: EndpointKind, it: EndpointInfo): string => {
+  return kind === EndpointKind.Internal ? it.internalUrl : it.externalUrl
+}
+
+export const getEndpoint = (workspace: WorkspaceUuid, region: string | undefined, kind: EndpointKind): string => {
+  const hash = hashWorkspace(workspace)
+  const _endpointInfo = getEndpointInfo()
+
+  let transactors = _endpointInfo.get(region ?? '') ?? []
+
   if (transactors.length === 0) {
-    ctx.error('No transactors for the target region, will use default region', { group: region })
-
-    transactors = (byRegions.get('') ?? [])
-      .map((it) => (kind === EndpointKind.Internal ? it.internalUrl : it.externalUrl))
-      .flat()
+    console.warn('No transactors for the target region, will use default region', { group: region })
+    transactors = _endpointInfo.get('') ?? []
   }
 
   if (transactors.length === 0) {
-    ctx.error('No transactors for the default region')
     throw new Error('Please provide transactor endpoint url')
   }
 
+  return selectKind(kind, transactors[Math.abs(hash % transactors.length)])
+}
+
+export const getWorkspaceEndpoint = (
+  info: Map<string, EndpointInfo[]>,
+  workspace: WorkspaceUuid,
+  region: string | undefined
+): EndpointInfo => {
   const hash = hashWorkspace(workspace)
-  return transactors[Math.abs(hash % transactors.length)]
+  const byRegion = info.get(region ?? '') ?? []
+  return byRegion[Math.abs(hash % byRegion.length)]
 }
 
 export function getAllTransactors (kind: EndpointKind): string[] {
@@ -303,6 +377,66 @@ export function verifyPassword (password: string, hash?: Buffer | null, salt?: B
   return Buffer.compare(hash as any, hashWithSalt(password, salt) as any) === 0
 }
 
+// 0 or negative value means no limit
+const maxFailedLoginAttempts =
+  process.env.MAX_FAILED_LOGIN_ATTEMPTS != null ? parseInt(process.env.MAX_FAILED_LOGIN_ATTEMPTS) : 5
+
+/**
+ * Check if an account is locked due to too many failed login attempts.
+ * An account is locked if failedLoginAttempts >= maxFailedLoginAttempts.
+ * @param account The account to check
+ * @returns true if account is locked, false otherwise
+ */
+export function isAccountPasswordLocked (account: Account): boolean {
+  if (maxFailedLoginAttempts <= 0) {
+    return false
+  }
+
+  const failedAttempts = account.failedLoginAttempts ?? 0
+
+  return failedAttempts >= maxFailedLoginAttempts
+}
+
+/**
+ * Record a failed login attempt for an account.
+ * Increments the failed attempts counter.
+ * @param db Database instance
+ * @param accountUuid Account UUID
+ */
+export async function recordFailedLoginAttempt (db: AccountDB, accountUuid: AccountUuid): Promise<void> {
+  const account = await db.account.findOne({ uuid: accountUuid })
+  if (account == null) {
+    return
+  }
+
+  const currentAttempts = account.failedLoginAttempts ?? 0
+  const newAttempts = currentAttempts + 1
+
+  await db.account.update(
+    { uuid: accountUuid },
+    {
+      failedLoginAttempts: newAttempts
+    }
+  )
+}
+
+/**
+ * Reset failed login attempts for an account.
+ * Called when:
+ * - User successfully logs in with password
+ * - User successfully authenticates via OTP or other alternative method
+ * @param db Database instance
+ * @param accountUuid Account UUID
+ */
+export async function resetFailedLoginAttempts (db: AccountDB, accountUuid: AccountUuid): Promise<void> {
+  await db.account.update(
+    { uuid: accountUuid },
+    {
+      failedLoginAttempts: 0
+    }
+  )
+}
+
 export function cleanEmail (email: string): string {
   return email.toLowerCase().trim()
 }
@@ -329,7 +463,7 @@ export async function setPassword (
   ctx: MeasureContext,
   db: AccountDB,
   branding: Branding | null,
-  personUuid: AccountUuid,
+  accountUuid: AccountUuid,
   password: string
 ): Promise<void> {
   if (password == null || password === '') {
@@ -337,7 +471,45 @@ export async function setPassword (
   }
 
   const salt = randomBytes(32)
-  await db.setPassword(personUuid, hashWithSalt(password, salt), salt)
+  await db.setPassword(accountUuid, hashWithSalt(password, salt), salt)
+
+  // Record password change event
+  try {
+    await db.accountEvent.insertOne({
+      accountUuid,
+      eventType: AccountEventType.PASSWORD_CHANGED,
+      time: Date.now()
+    })
+  } catch (err) {
+    ctx.warn('Failed to record password change event', { accountUuid, err })
+  }
+}
+
+export async function getLastPasswordChangeEvent (
+  db: AccountDB,
+  accountUuid: AccountUuid
+): Promise<AccountEvent | null> {
+  const result = await db.accountEvent.find(
+    { accountUuid, eventType: AccountEventType.PASSWORD_CHANGED },
+    { time: 'descending' },
+    1
+  )
+  return result[0] ?? null
+}
+
+export async function getAccountCreatedEvent (db: AccountDB, accountUuid: AccountUuid): Promise<AccountEvent | null> {
+  const result = await db.accountEvent.find(
+    { accountUuid, eventType: AccountEventType.ACCOUNT_CREATED },
+    { time: 'descending' },
+    1
+  )
+  return result[0] ?? null
+}
+
+export async function isPasswordChangedSince (db: AccountDB, accountUuid: AccountUuid, since: number): Promise<boolean> {
+  const lastEvent =
+    (await getLastPasswordChangeEvent(db, accountUuid)) ?? (await getAccountCreatedEvent(db, accountUuid))
+  return lastEvent != null && lastEvent.time >= since
 }
 
 export async function generateUniqueOtp (db: AccountDB): Promise<string> {
@@ -437,16 +609,20 @@ export async function isOtpValid (db: AccountDB, socialId: PersonId, code: strin
   return (otpData?.expiresOn ?? 0) > Date.now()
 }
 
+/**
+ * Creates an account and a Huly social id for the specified person.
+ * Returns the _id of the newly created Huly social id.
+ */
 export async function createAccount (
   db: AccountDB,
   personUuid: PersonUuid,
   confirmed = false,
   automatic = false,
   createdOn = Date.now()
-): Promise<void> {
-  // Create hanzoai social id and account
-  await db.socialId.insertOne({
-    type: SocialIdType.HANZOAI,
+): Promise<PersonId> {
+  // Create Huly social id and account
+  const socialId = await db.socialId.insertOne({
+    type: SocialIdType.HULY,
     value: personUuid,
     personUuid,
     ...(confirmed ? { verifiedOn: Date.now() } : {})
@@ -457,6 +633,14 @@ export async function createAccount (
     eventType: AccountEventType.ACCOUNT_CREATED,
     time: createdOn
   })
+
+  // Create user profile with default values (private by default)
+  await db.userProfile.insertOne({
+    personUuid,
+    isPublic: false
+  })
+
+  return socialId
 }
 
 export async function signUpByEmail (
@@ -487,7 +671,7 @@ export async function signUpByEmail (
     account = emailSocialId.personUuid as AccountUuid
     socialId = emailSocialId._id
     // Person exists, but may have different name, need to update with what's been provided
-    await db.person.updateOne({ uuid: account }, { firstName, lastName })
+    await db.person.update({ uuid: account }, { firstName, lastName })
   } else {
     // There's no person we can link to this email, so we need to create a new one
     account = await db.person.insertOne({ firstName, lastName })
@@ -507,6 +691,44 @@ export async function signUpByEmail (
   return { account, socialId }
 }
 
+export async function signUpByGrant (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  accountUuid: AccountUuid,
+  grant: PermissionsGrant,
+  info?: LoginInfoRequestData
+): Promise<{ account: AccountUuid, socialId: PersonId }> {
+  const firstName = grant.firstName ?? info?.firstName
+  const lastName = grant.lastName ?? info?.lastName
+
+  if (firstName == null || firstName === '') {
+    ctx.error('First name is required for grant sign up', { grant, info })
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
+  const existingAccount = await db.account.findOne({ uuid: accountUuid })
+
+  if (existingAccount != null) {
+    ctx.error('An account with the provided uuid already exists', { accountUuid })
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.AccountAlreadyExists, {}))
+  }
+
+  const existingPerson = await db.person.findOne({ uuid: accountUuid })
+
+  if (existingPerson == null) {
+    await db.person.insertOne({ uuid: accountUuid, firstName, lastName: lastName ?? '' })
+  }
+
+  // If there's no account there should be no Huly social id associated with the person if it existed
+  // also, there should be no confirmed social ids associated
+  // so we can safely proceed to account creation
+
+  const socialId = await createAccount(db, accountUuid, true, true)
+
+  return { account: accountUuid, socialId }
+}
+
 export async function selectWorkspace (
   ctx: MeasureContext,
   db: AccountDB,
@@ -516,10 +738,46 @@ export async function selectWorkspace (
     workspaceUrl: string
     kind: 'external' | 'internal' | 'byregion'
     externalRegions?: string[]
-  }
+  },
+  meta?: Meta
 ): Promise<WorkspaceLoginInfo> {
   const { workspaceUrl, kind, externalRegions = [] } = params
-  const { account: accountUuid, workspace: tokenWorkspaceUuid, extra } = decodeTokenVerbose(ctx, token ?? '')
+
+  let workspace: Workspace | null = null
+  if (workspaceUrl !== '') {
+    workspace = await getWorkspaceByUrl(db, workspaceUrl)
+  }
+
+  let accountUuid: AccountUuid
+  let extra: Record<string, any> | undefined
+  let grant: PermissionsGrant | undefined
+  let sub: AccountUuid | undefined
+  let exp: number | undefined
+  let nbf: number | undefined
+  try {
+    const decodedToken = decodeTokenVerbose(ctx, token ?? '')
+    accountUuid = decodedToken.account
+    if (workspace == null) {
+      workspace = await getWorkspaceById(db, decodedToken.workspace)
+    }
+    extra = decodedToken.extra
+    grant = decodedToken.grant
+    sub = decodedToken.sub
+    exp = decodedToken.exp
+    nbf = decodedToken.nbf
+  } catch (e) {
+    if (workspace?.allowReadOnlyGuest === true) {
+      accountUuid = readOnlyGuestAccountUuid
+    } else {
+      throw e
+    }
+  }
+
+  if (workspace == null) {
+    ctx.error('Workspace not found in selectWorkspace', { workspaceUrl, kind, accountUuid, extra })
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUrl }))
+  }
+
   const getKind = (region: string | undefined): EndpointKind => {
     switch (kind) {
       case 'external':
@@ -529,11 +787,11 @@ export async function selectWorkspace (
       case 'byregion':
         return externalRegions.includes(region ?? '') ? EndpointKind.External : EndpointKind.Internal
       default:
-        return EndpointKind.External
+        return meta?.clientNetworkPosition === 'internal' ? EndpointKind.Internal : EndpointKind.External
     }
   }
 
-  if (accountUuid === GUEST_ACCOUNT && extra?.guest === 'true') {
+  if (isGuest(accountUuid, extra)) {
     const workspace = await getWorkspaceByUrl(db, workspaceUrl)
     if (workspace == null) {
       ctx.error('Workspace not found in selectWorkspace', { workspaceUrl, kind, accountUuid, extra })
@@ -543,7 +801,7 @@ export async function selectWorkspace (
     // Guest mode select workspace
     return {
       account: accountUuid,
-      endpoint: getEndpoint(ctx, workspace.uuid, workspace.region, getKind(workspace.region)),
+      endpoint: getEndpoint(workspace.uuid, workspace.region, getKind(workspace.region)),
       token,
       workspace: workspace.uuid,
       workspaceUrl: workspace.url,
@@ -552,40 +810,52 @@ export async function selectWorkspace (
     }
   }
 
-  const account = await db.account.findOne({ uuid: accountUuid })
+  if (accountUuid === systemAccountUuid) {
+    return {
+      account: accountUuid,
+      token: generateToken(accountUuid, workspace.uuid, extra, undefined, {
+        grant,
+        sub,
+        exp,
+        nbf
+      }),
+      endpoint: getEndpoint(workspace.uuid, workspace.region, getKind(workspace.region)),
+      workspace: workspace.uuid,
+      workspaceUrl: workspace.url,
+      role: AccountRole.Admin
+    }
+  }
+
+  let role = await db.getWorkspaceRole(accountUuid, workspace.uuid)
+  if (role == null && extra?.admin === 'true') {
+    role = AccountRole.Admin
+  }
+  let account = await db.account.findOne({ uuid: accountUuid })
+
+  if ((role == null || account == null) && workspace.allowReadOnlyGuest) {
+    accountUuid = readOnlyGuestAccountUuid
+    role = await db.getWorkspaceRole(accountUuid, workspace.uuid)
+    account = await db.account.findOne({ uuid: accountUuid })
+  }
+
+  if (role == null) {
+    ctx.error('Not a member of the workspace being selected', { workspaceUrl, accountUuid })
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
 
   if (accountUuid !== systemAccountUuid && account == null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.AccountNotFound, {}))
   }
 
-  let workspace: Workspace | null
-  if (workspaceUrl === '') {
-    // Find from token
-    workspace = await getWorkspaceById(db, tokenWorkspaceUuid)
-  } else {
-    workspace = await getWorkspaceByUrl(db, workspaceUrl)
+  if (accountUuid !== systemAccountUuid && meta !== undefined) {
+    void setTimezone(ctx, db, accountUuid, account, meta)
   }
 
-  if (workspace == null) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUrl }))
-  }
-
-  if (accountUuid === systemAccountUuid || extra?.admin === 'true') {
-    return {
-      account: accountUuid,
-      token: generateToken(accountUuid, workspace.uuid, extra),
-      endpoint: getEndpoint(ctx, workspace.uuid, workspace.region, getKind(workspace.region)),
-      workspace: workspace.uuid,
-      workspaceUrl: workspace.url,
-      role: AccountRole.Owner
+  if (role === AccountRole.ReadOnlyGuest) {
+    if (extra == null) {
+      extra = {}
     }
-  }
-
-  const role = await db.getWorkspaceRole(accountUuid, workspace.uuid)
-
-  if (role == null) {
-    ctx.error('Not a member of the workspace being selected', { workspaceUrl, accountUuid })
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+    extra.readonly = 'true'
   }
 
   const wsStatus = await db.workspaceStatus.findOne({ workspaceUuid: workspace.uuid })
@@ -605,13 +875,147 @@ export async function selectWorkspace (
 
   return {
     account: accountUuid,
-    token: generateToken(accountUuid, workspace.uuid, extra),
-    endpoint: getEndpoint(ctx, workspace.uuid, workspace.region, getKind(workspace.region)),
+    token: generateToken(accountUuid, workspace.uuid, extra, undefined, {
+      grant,
+      sub,
+      exp,
+      nbf
+    }),
+    endpoint: getEndpoint(workspace.uuid, workspace.region, getKind(workspace.region)),
     workspace: workspace.uuid,
     workspaceUrl: workspace.url,
     workspaceDataId: workspace.dataId,
+    allowGuestSignUp: workspace.allowReadOnlyGuest && workspace.allowGuestSignUp,
     role
   }
+}
+
+export async function updateAllowReadOnlyGuests (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: {
+    readOnlyGuestsAllowed: boolean
+  }
+): Promise<{ guestPerson: Person, guestSocialIds: SocialId[] } | undefined> {
+  const { readOnlyGuestsAllowed } = params
+  const { account, workspace } = decodeTokenVerbose(ctx, token)
+
+  if (workspace === null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
+  }
+
+  const accRole = account === systemAccountUuid ? AccountRole.Owner : await db.getWorkspaceRole(account, workspace)
+  if (accRole == null || getRolePower(accRole) < getRolePower(AccountRole.Owner)) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
+  await db.updateAllowReadOnlyGuests(workspace, readOnlyGuestsAllowed)
+  if (!readOnlyGuestsAllowed) {
+    await db.unassignWorkspace(readOnlyGuestAccountUuid, workspace)
+    return undefined
+  }
+
+  let guestPerson = await db.person.findOne({ uuid: readOnlyGuestAccountUuid as PersonUuid })
+  if (guestPerson == null) {
+    await db.person.insertOne({
+      uuid: readOnlyGuestAccountUuid as PersonUuid,
+      firstName: 'Anonymous',
+      lastName: 'Guest'
+    })
+    await createAccount(db, readOnlyGuestAccountUuid as PersonUuid, true)
+    guestPerson = await db.person.findOne({ uuid: readOnlyGuestAccountUuid as PersonUuid })
+  }
+  const roleInWorkspace = await db.getWorkspaceRole(readOnlyGuestAccountUuid, workspace)
+  if (roleInWorkspace == null) {
+    await db.assignWorkspace(readOnlyGuestAccountUuid, workspace, AccountRole.ReadOnlyGuest)
+  }
+
+  const guestAccount = await db.account.findOne({ uuid: readOnlyGuestAccountUuid })
+  if (guestPerson === null || guestAccount == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.InternalServerError, {}))
+  }
+  const guestSocialIds = await db.socialId.find({
+    personUuid: readOnlyGuestAccountUuid as PersonUuid,
+    verifiedOn: { $gt: 0 }
+  })
+
+  return { guestPerson, guestSocialIds: guestSocialIds.filter((si) => si.isDeleted !== true) }
+}
+
+export async function updatePasswordAgingRule (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: {
+    days: number
+  }
+): Promise<void> {
+  const { days } = params
+  const { account, workspace } = decodeTokenVerbose(ctx, token)
+
+  if (workspace === null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
+  }
+
+  const accRole = account === systemAccountUuid ? AccountRole.Owner : await db.getWorkspaceRole(account, workspace)
+  if (accRole == null || getRolePower(accRole) < getRolePower(AccountRole.Maintainer)) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+  await db.updatePasswordAgingRule(workspace, days)
+}
+
+export async function checkPasswordAging (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string
+): Promise<boolean> {
+  const { account, workspace, extra } = decodeTokenVerbose(ctx, token)
+
+  if (extra?.authMethod !== 'password') {
+    return true
+  }
+
+  if (workspace === null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
+  }
+  const ws = await getWorkspaceById(db, workspace)
+  if (ws == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
+  }
+  if (ws.passwordAgingRule == null || ws.passwordAgingRule <= 0) {
+    return true
+  }
+  const since = Date.now() - ws.passwordAgingRule * 24 * 60 * 60 * 1000
+  const res = await isPasswordChangedSince(db, account, since)
+  return res
+}
+
+export async function updateAllowGuestSignUp (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: {
+    guestSignUpAllowed: boolean
+  }
+): Promise<void> {
+  const { guestSignUpAllowed } = params
+  const { account, workspace } = decodeTokenVerbose(ctx, token)
+
+  if (workspace === null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
+  }
+
+  const accRole = account === systemAccountUuid ? AccountRole.Owner : await db.getWorkspaceRole(account, workspace)
+  if (accRole == null || getRolePower(accRole) < getRolePower(AccountRole.Owner)) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
+  await db.updateAllowGuestSignUp(workspace, guestSignUpAllowed)
 }
 
 export async function updateWorkspaceRole (
@@ -625,6 +1029,10 @@ export async function updateWorkspaceRole (
   }
 ): Promise<void> {
   const { targetAccount, targetRole } = params
+
+  if (targetAccount === readOnlyGuestAccountUuid) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
 
   const { account, workspace } = decodeTokenVerbose(ctx, token)
 
@@ -710,13 +1118,14 @@ export async function createWorkspaceRecord (
   workspaceName: string,
   account: PersonUuid,
   region: string = '',
-  initMode: WorkspaceMode = 'pending-creation'
+  initMode: WorkspaceMode = 'pending-creation',
+  dataId?: WorkspaceDataId
 ): Promise<CreateWorkspaceRecordResult> {
   const brandingKey = branding?.key ?? 'hanzoai'
   const regionInfo = getRegions().find((it) => it.region === region)
 
   if (regionInfo === undefined) {
-    ctx.error('Region not found', { region })
+    ctx.error('Region not found', { region, regions: getRegions() })
 
     throw new PlatformError(
       new Status(Severity.ERROR, platform.status.InternalServerError, {
@@ -746,9 +1155,12 @@ export async function createWorkspaceRecord (
         {
           name: workspaceName,
           url: workspaceUrl,
+          dataId,
           branding: brandingKey,
           createdBy: account,
           billingAccount: account,
+          allowReadOnlyGuest: false,
+          allowGuestSignUp: false,
           region
         },
         {
@@ -787,31 +1199,28 @@ export async function createWorkspaceRecord (
 export async function checkInvite (ctx: MeasureContext, invite: WorkspaceInvite, email: string): Promise<WorkspaceUuid> {
   if (invite.remainingUses === 0) {
     ctx.error('Invite limit exceeded', { email, ...invite })
-    Analytics.handleError(new Error(`Invite limit exceeded ${email}`))
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }
 
   if (invite.expiresOn > 0 && invite.expiresOn < Date.now()) {
     ctx.error('Invite link expired', { email, ...invite })
-    Analytics.handleError(new Error(`Invite link expired ${invite.id} ${email}`))
     throw new PlatformError(new Status(Severity.ERROR, platform.status.ExpiredLink, {}))
   }
 
   // TODO: consider not using RegExp with user input as some regexes might
   // be slow or even cause catastrophic backtracking
-  if (
-    invite.emailPattern != null &&
-    invite.emailPattern.trim().length > 0 &&
-    !new RegExp(invite.emailPattern).test(email)
-  ) {
-    ctx.error("Invite doesn't allow this email address", { email, ...invite })
-    Analytics.handleError(new Error(`Invite link email mask check failed ${invite.id} ${email} ${invite.emailPattern}`))
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
-  }
+  // if (
+  //   invite.emailPattern != null &&
+  //   invite.emailPattern.trim().length > 0 &&
+  //   !new RegExp(invite.emailPattern).test(email)
+  // ) {
+  //   ctx.error("Invite doesn't allow this email address", { email, ...invite })
+  //   Analytics.handleError(new Error(`Invite link email mask check failed ${invite.id} ${email} ${invite.emailPattern}`))
+  //   throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  // }
 
   if (invite.email != null && invite.email.trim().length > 0 && invite.email !== email) {
     ctx.error("Invite doesn't allow this email address", { email, ...invite })
-    Analytics.handleError(new Error(`Invite link email check failed ${invite.id} ${email} ${invite.email}`))
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }
 
@@ -898,19 +1307,19 @@ export async function confirmEmail (
     )
   }
 
-  await db.socialId.updateOne({ _id: emailSocialId._id }, { verifiedOn: Date.now() })
+  await db.socialId.update({ _id: emailSocialId._id }, { verifiedOn: Date.now() })
   return emailSocialId._id
 }
 
-export async function confirmhanzoaiIds (ctx: MeasureContext, db: AccountDB, account: AccountUuid): Promise<void> {
-  const hanzoaiSocialIds = await db.socialId.find({ personUuid: account, type: SocialIdType.HANZOAI, verifiedOn: null })
-  for (const hanzoaiSocialId of hanzoaiSocialIds) {
-    await db.socialId.updateOne({ _id: hanzoaiSocialId._id }, { verifiedOn: Date.now() })
+export async function confirmHulyIds (ctx: MeasureContext, db: AccountDB, account: AccountUuid): Promise<void> {
+  const hulySocialIds = await db.socialId.find({ personUuid: account, type: SocialIdType.HULY, verifiedOn: null })
+  for (const hulySocialId of hulySocialIds) {
+    await db.socialId.update({ _id: hulySocialId._id }, { verifiedOn: Date.now() })
   }
 }
 
 export async function useInvite (db: AccountDB, inviteId: string): Promise<void> {
-  await db.invite.updateOne({ id: inviteId }, { $inc: { remainingUses: -1 } })
+  await db.invite.update({ id: inviteId }, { $inc: { remainingUses: -1 } })
 }
 
 export async function getAccount (db: AccountDB, uuid: AccountUuid): Promise<Account | null> {
@@ -957,6 +1366,17 @@ export async function getWorkspacesInfoWithStatusByIds (
 
 export async function getWorkspaceByUrl (db: AccountDB, url: string): Promise<Workspace | null> {
   return await db.workspace.findOne({ url })
+}
+
+export async function getWorkspaceByDataId (
+  db: AccountDB,
+  dataId: string | null | undefined
+): Promise<Workspace | null> {
+  if (dataId == null || dataId === '') {
+    return null
+  }
+
+  return await db.workspace.findOne({ dataId: dataId as WorkspaceDataId })
 }
 
 export async function getWorkspaceInvite (db: AccountDB, id: string): Promise<WorkspaceInvite | null> {
@@ -1009,12 +1429,52 @@ export async function updateArchiveInfo (
     throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
   }
 
-  await db.workspaceStatus.updateOne(
+  await db.workspaceStatus.update(
     { workspaceUuid: workspace },
     {
       mode: 'archived'
     }
   )
+}
+
+export async function getWorkspaceJoinInfo (
+  ctx: MeasureContext,
+  db: AccountDB,
+  email: string,
+  inviteId: string,
+  workspaceUrl: string
+): Promise<WorkspaceJoinInfo> {
+  if (email === undefined || email === '' || email === null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+  const normalizedEmail = cleanEmail(email)
+  if (inviteId !== undefined && inviteId !== '' && inviteId !== null) {
+    const invite = await getWorkspaceInvite(db, inviteId)
+    if (invite == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+    }
+    const workspaceUuid = await checkInvite(ctx, invite, normalizedEmail)
+    const workspace = await getWorkspaceById(db, workspaceUuid)
+    if (workspace == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
+    }
+    return {
+      email,
+      invite,
+      workspace
+    }
+  }
+  if (workspaceUrl !== undefined && workspaceUrl !== '' && workspaceUrl !== null) {
+    const workspace = await getWorkspaceByUrl(db, workspaceUrl)
+    if (workspace == null || !workspace.allowReadOnlyGuest || !workspace.allowGuestSignUp) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+    }
+    return {
+      email,
+      workspace
+    }
+  }
+  throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
 }
 
 export async function doJoinByInvite (
@@ -1024,20 +1484,27 @@ export async function doJoinByInvite (
   token: string,
   account: AccountUuid,
   workspace: Workspace,
-  invite: WorkspaceInvite
+  invite: WorkspaceInvite | null | undefined
 ): Promise<WorkspaceLoginInfo> {
   const role = await db.getWorkspaceRole(account, workspace.uuid)
 
-  // TODO: should we re-join kicked users? How are they marked as inactive?
-  if (role == null) {
-    await db.assignWorkspace(account, workspace.uuid, invite.role)
-  } else if (getRolePower(role) < getRolePower(invite.role)) {
-    await db.updateWorkspaceRole(account, workspace.uuid, invite.role)
+  if (invite !== undefined && invite != null) {
+    // TODO: should we re-join kicked users? How are they marked as inactive?
+    if (role == null) {
+      await db.assignWorkspace(account, workspace.uuid, invite.role)
+    } else if (getRolePower(role) < getRolePower(invite.role)) {
+      await db.updateWorkspaceRole(account, workspace.uuid, invite.role)
+    }
+    await useInvite(db, invite.id)
+  } else if (workspace.allowReadOnlyGuest && workspace.allowGuestSignUp) {
+    if (role == null) {
+      await db.assignWorkspace(account, workspace.uuid, AccountRole.Guest)
+    }
+  } else {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }
 
   const result = await selectWorkspace(ctx, db, branding, token, { workspaceUrl: workspace.url, kind: 'external' })
-
-  await useInvite(db, invite.id)
 
   ctx.info('Successfully joined a workspace using invite', {
     account,
@@ -1053,86 +1520,100 @@ export async function loginOrSignUpWithProvider (
   ctx: MeasureContext,
   db: AccountDB,
   branding: Branding | null,
-  email: string,
+  email: string | undefined,
   first: string,
   last: string,
   socialId: SocialKey,
   signUpDisabled = false
 ): Promise<LoginInfo | null> {
-  const normalizedEmail = cleanEmail(email)
-
-  // Find if any of the target/email social ids exist
-  const targetSocialId = await db.socialId.findOne(socialId)
-  const emailSocialId =
-    normalizedEmail !== '' ? await db.socialId.findOne({ type: SocialIdType.EMAIL, value: normalizedEmail }) : undefined
-  let personUuid = targetSocialId?.personUuid ?? emailSocialId?.personUuid
-
-  if (personUuid == null) {
-    if (signUpDisabled) {
-      return null
+  try {
+    const normalizedEmail = email != null ? cleanEmail(email) : ''
+    const normalizedSocialId: SocialKey = {
+      type: socialId.type,
+      value: normalizeValue(socialId.value)
     }
 
-    personUuid = await db.person.insertOne({ firstName: first, lastName: last })
-  }
+    // Find if any of the target/email social ids exist
+    const targetSocialId = await db.socialId.findOne(normalizedSocialId)
+    const emailSocialId =
+      normalizedEmail !== ''
+        ? await db.socialId.findOne({ type: SocialIdType.EMAIL, value: normalizedEmail })
+        : undefined
+    let personUuid = targetSocialId?.personUuid ?? emailSocialId?.personUuid
 
-  if (personUuid == null) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.InternalServerError, {}))
-  }
+    if (personUuid == null) {
+      if (signUpDisabled) {
+        return null
+      }
 
-  const person = await db.person.findOne({ uuid: personUuid })
-
-  if (person == null) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.InternalServerError, {}))
-  }
-
-  const account = await db.account.findOne({ uuid: personUuid as AccountUuid })
-
-  if (account == null) {
-    if (signUpDisabled) {
-      return null
+      personUuid = await db.person.insertOne({ firstName: first, lastName: last })
     }
 
-    await createAccount(db, personUuid, true)
-    await db.person.updateOne({ uuid: personUuid }, { firstName: first, lastName: last })
-  }
-
-  // We should check and reset password if there's an account with password but no social ids have been
-  // confirmed yet
-  const confirmedSocialId = await db.socialId.findOne({ personUuid, verifiedOn: { $gt: 0 } })
-
-  if (confirmedSocialId == null) {
-    await db.resetPassword(personUuid as AccountUuid)
-  }
-
-  let socialIdId: PersonId | undefined
-  // Create and/or confirm missing social ids
-  if (targetSocialId == null) {
-    socialIdId = await db.socialId.insertOne({ ...socialId, personUuid, verifiedOn: Date.now() })
-  } else if (targetSocialId.verifiedOn == null) {
-    await db.socialId.updateOne({ key: targetSocialId.key }, { verifiedOn: Date.now() })
-    socialIdId = targetSocialId._id
-  }
-
-  if (emailSocialId == null) {
-    if (normalizedEmail !== '') {
-      await db.socialId.insertOne({
-        type: SocialIdType.EMAIL,
-        value: normalizedEmail,
-        personUuid,
-        verifiedOn: Date.now()
-      })
+    if (personUuid == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.InternalServerError, {}))
     }
-  } else if (emailSocialId.verifiedOn == null) {
-    await db.socialId.updateOne({ key: emailSocialId.key }, { verifiedOn: Date.now() })
-  }
 
-  await confirmhanzoaiIds(ctx, db, personUuid as AccountUuid)
+    const person = await db.person.findOne({ uuid: personUuid })
 
-  return {
-    account: personUuid as AccountUuid,
-    socialId: socialIdId,
-    name: getPersonName(person),
-    token: generateToken(personUuid)
+    if (person == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.InternalServerError, {}))
+    }
+
+    const account = await db.account.findOne({ uuid: personUuid as AccountUuid })
+
+    if (account == null) {
+      if (signUpDisabled) {
+        return null
+      }
+
+      await createAccount(db, personUuid, true)
+      await db.person.update({ uuid: personUuid }, { firstName: first, lastName: last })
+    }
+
+    // We should check and reset password if there's an account with password but no social ids have been
+    // confirmed yet
+    const confirmedSocialId = await db.socialId.findOne({ personUuid, verifiedOn: { $gt: 0 } })
+
+    if (confirmedSocialId == null) {
+      await db.resetPassword(personUuid as AccountUuid)
+    }
+
+    let socialIdId: PersonId | undefined
+    // Create and/or confirm missing social ids
+    if (targetSocialId == null) {
+      socialIdId = await db.socialId.insertOne({ ...normalizedSocialId, personUuid, verifiedOn: Date.now() })
+    } else if (targetSocialId.verifiedOn == null) {
+      await db.socialId.update({ key: targetSocialId.key }, { verifiedOn: Date.now() })
+      socialIdId = targetSocialId._id
+    }
+
+    if (emailSocialId == null) {
+      if (normalizedEmail !== '') {
+        await db.socialId.insertOne({
+          type: SocialIdType.EMAIL,
+          value: normalizedEmail,
+          personUuid,
+          verifiedOn: Date.now()
+        })
+      }
+    } else if (emailSocialId.verifiedOn == null) {
+      await db.socialId.update({ key: emailSocialId.key }, { verifiedOn: Date.now() })
+    }
+
+    await confirmHulyIds(ctx, db, personUuid as AccountUuid)
+    const extraToken: Record<string, string> = isAdminEmail(normalizedEmail) ? { admin: 'true' } : {}
+    ctx.info('Provider login succeeded', { email, normalizedEmail, emailSocialId, socialId, ...extraToken })
+
+    return {
+      account: personUuid as AccountUuid,
+      socialId: socialIdId,
+      name: getPersonName(person),
+      token: generateToken(personUuid, undefined, extraToken)
+    }
+  } catch (err: any) {
+    Analytics.handleError(err)
+    ctx.error('Provider login failed', { email, err })
+    throw err
   }
 }
 
@@ -1140,14 +1621,14 @@ export async function joinWithProvider (
   ctx: MeasureContext,
   db: AccountDB,
   branding: Branding | null,
-  email: string,
+  email: string | undefined,
   first: string,
   last: string,
   inviteId: string,
   socialId: SocialKey,
   signUpDisabled = false
 ): Promise<WorkspaceLoginInfo | LoginInfo | null> {
-  const normalizedEmail = cleanEmail(email)
+  const normalizedEmail = email != null ? cleanEmail(email) : ''
   const invite = await getWorkspaceInvite(db, inviteId)
   if (invite == null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
@@ -1192,7 +1673,12 @@ export function flattenStatus (ws: WorkspaceInfoWithStatus): WorkspaceInfoWithSt
   }
 
   const status = ws.status
-  const result: WorkspaceInfoWithStatusCore = { ...ws, ...status, createdOn: ws.createdOn as number }
+  const result: WorkspaceInfoWithStatusCore = {
+    ...ws,
+    ...status,
+    createdOn: ws.createdOn as number,
+    processingAttemps: status.processingAttempts ?? 0
+  }
   delete (result as any).status
 
   return result
@@ -1236,7 +1722,7 @@ export async function getWorkspaces (
 }
 
 export function verifyAllowedServices (services: string[], extra: any, shouldThrow = true): boolean {
-  const ok = services.includes(extra?.service) || extra?.admin === 'true'
+  const ok = services.includes(extra?.service)
 
   if (!ok && shouldThrow) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
@@ -1246,12 +1732,12 @@ export function verifyAllowedServices (services: string[], extra: any, shouldThr
 }
 
 export function verifyAllowedRole (
-  targetRole: AccountRole | null,
+  callerRole: AccountRole | null,
   minRole: AccountRole,
   extra: any,
   shouldThrow = true
 ): boolean {
-  const ok = extra?.admin === 'true' || (targetRole != null && getRolePower(targetRole) >= getRolePower(minRole))
+  const ok = extra?.admin === 'true' || (callerRole != null && getRolePower(callerRole) >= getRolePower(minRole))
 
   if (!ok && shouldThrow) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
@@ -1334,7 +1820,7 @@ export async function getInviteEmail (
   }
 }
 
-export async function addSocialId (
+export async function addSocialIdBase (
   db: AccountDB,
   personUuid: PersonUuid,
   type: SocialIdType,
@@ -1355,7 +1841,42 @@ export async function addSocialId (
 
   const socialId = await db.socialId.findOne({ type, value: normalizedValue })
   if (socialId != null) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.SocialIdAlreadyExists, {}))
+    const update: Operations<SocialId> = {}
+    let needUpdate = false
+
+    if (socialId.personUuid !== personUuid) {
+      if (socialId.verifiedOn != null) {
+        throw new PlatformError(new Status(Severity.ERROR, platform.status.SocialIdAlreadyExists, {}))
+      } else {
+        // Was not verified.
+        const accountFromSocialId = await db.account.findOne({ uuid: socialId.personUuid as AccountUuid })
+
+        if (accountFromSocialId == null && confirmed) {
+          // If attached to a person w/o account and adding verifiedOn - merge this person into the current account.
+          await doMergePersons(db, personUuid, socialId.personUuid)
+        } else {
+          // Re-wire this social id into the current account
+          update.personUuid = personUuid
+          needUpdate = true
+        }
+      }
+    }
+
+    if (confirmed && socialId.verifiedOn == null) {
+      update.verifiedOn = Date.now()
+      needUpdate = true
+    }
+
+    if (displayValue !== socialId.displayValue) {
+      update.displayValue = displayValue
+      needUpdate = true
+    }
+
+    if (needUpdate) {
+      await db.socialId.update({ _id: socialId._id }, update)
+    }
+
+    return socialId._id
   }
 
   const newSocialId: Omit<SocialId, '_id' | 'key'> = {
@@ -1372,16 +1893,54 @@ export async function addSocialId (
   return await db.socialId.insertOne(newSocialId)
 }
 
-export async function releaseSocialId (
+export async function doReleaseSocialId (
   db: AccountDB,
   personUuid: PersonUuid,
   type: SocialIdType,
-  value: string
-): Promise<void> {
-  const socialIds = await db.socialId.find({ personUuid, type, value })
-  for (const socialId of socialIds) {
-    await db.socialId.updateOne({ _id: socialId._id }, { value: `${socialId.value}#${socialId._id}`, isDeleted: true })
+  value: string,
+  releasedBy: string,
+  deleteIntegrations = false
+): Promise<SocialId> {
+  const socialId = await db.socialId.findOne({ personUuid, type, value, isDeleted: { $ne: true } })
+
+  if (socialId == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.SocialIdNotFound, {}))
   }
+
+  const account = await db.account.findOne({ uuid: personUuid as AccountUuid })
+
+  const integrations = await db.integration.find({ socialId: socialId._id })
+  if (!deleteIntegrations && integrations.length > 0) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationExists, {}))
+  }
+
+  // Delete all integrations for this socialId
+  // TODO: Send to pipe? to notify integration services somehow so they can clean up if needed
+  await db.integrationSecret.deleteMany({ socialId: socialId._id })
+  await db.integration.deleteMany({ socialId: socialId._id })
+
+  // Release socialId
+  await db.socialId.update({ _id: socialId._id }, { value: `${socialId.value}#${socialId._id}`, isDeleted: true })
+  if (account != null) {
+    await db.accountEvent.insertOne({
+      accountUuid: account.uuid,
+      eventType: AccountEventType.SOCIAL_ID_RELEASED,
+      time: Date.now(),
+      data: {
+        socialId: socialId._id,
+        releasedBy: releasedBy ?? ''
+      }
+    })
+  }
+
+  // read updated id (to avoid generating updated key manually)
+  const deletedSocialId = await db.socialId.findOne({ _id: socialId._id })
+
+  if (deletedSocialId == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.InternalServerError, {}))
+  }
+
+  return deletedSocialId
 }
 
 export async function getWorkspaceRole (
@@ -1396,11 +1955,18 @@ export async function getWorkspaceRole (
   return await db.getWorkspaceRole(account, workspace)
 }
 
+export async function getWorkspaceRoles (
+  db: AccountDB,
+  account: AccountUuid
+): Promise<Map<WorkspaceUuid, AccountRole | null>> {
+  return await db.getWorkspaceRoles(account)
+}
+
 export function generatePassword (len: number = 24): string {
   return randomBytes(len).toString('base64').slice(0, len)
 }
 
-export async function setTimezoneIfNotDefined (
+export async function setTimezone (
   ctx: MeasureContext,
   db: AccountDB,
   accountId: AccountUuid,
@@ -1414,9 +1980,140 @@ export async function setTimezoneIfNotDefined (
       ctx.warn('Failed to find account')
       return
     }
-    if (existingAccount.timezone != null) return
-    await db.account.updateOne({ uuid: accountId }, { timezone: meta.timezone })
+    if (existingAccount.timezone === meta?.timezone) return
+    await db.account.update({ uuid: accountId }, { timezone: meta.timezone })
   } catch (err: any) {
     ctx.error('Failed to set account timezone', err)
+  }
+}
+
+// Move to config?
+export const integrationServices = [
+  'github',
+  'telegram-bot',
+  'hulygram',
+  'mailbox',
+  'caldav',
+  'gmail',
+  'google-calendar',
+  'huly-mail',
+  'ai-assistant',
+  'tool'
+]
+
+export async function findExistingIntegration (
+  account: AccountUuid,
+  db: AccountDB,
+  params: Integration,
+  extra: any
+): Promise<Integration | null> {
+  const { socialId, kind, workspaceUuid } = params
+  // Note: workspaceUuid === null is a decent use case for account-wise integration not related to a particular workspace
+  if (kind == null || kind === '' || socialId == null || socialId === '' || workspaceUuid === undefined) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
+  if (verifyAllowedServices(integrationServices, extra, false)) {
+    const existingSocialId = await db.socialId.findOne({ _id: socialId, verifiedOn: { $gt: 0 } })
+    if (existingSocialId == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.SocialIdNotFound, { _id: socialId }))
+    }
+  } else {
+    if (account == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+    }
+    // Allow accounts to operate on their own integrations
+    const existingSocialId = await db.socialId.findOne({ _id: socialId, personUuid: account, verifiedOn: { $gt: 0 } })
+    if (existingSocialId == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+    }
+  }
+
+  if (workspaceUuid != null) {
+    const workspace = await getWorkspaceById(db, workspaceUuid)
+    if (workspace == null) {
+      throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
+    }
+  }
+
+  return await db.integration.findOne({ socialId, kind, workspaceUuid })
+}
+
+export async function doMergePersons (
+  db: AccountDB,
+  primaryPerson: PersonUuid,
+  secondaryPerson: PersonUuid,
+  mergeVerified = false
+): Promise<void> {
+  if (primaryPerson === secondaryPerson) {
+    // Nothing to do
+    return
+  }
+
+  const primaryPersonObj = await db.person.findOne({ uuid: primaryPerson })
+  if (primaryPersonObj == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.PersonNotFound, { person: primaryPerson }))
+  }
+
+  const secondaryPersonObj = await db.person.findOne({ uuid: secondaryPerson })
+  if (secondaryPersonObj == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.PersonNotFound, { person: secondaryPerson }))
+  }
+
+  // Merge social ids. Re-wire the secondary person social ids to the primary person.
+  // Keep their ids. This way all PersonIds inside the workspaces will remain the same.
+  const secondarySocialIds = await db.socialId.find({ personUuid: secondaryPerson })
+
+  if (!mergeVerified && secondarySocialIds.some((si) => si.verifiedOn != null)) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Conflict, {}))
+  }
+
+  for (const secondarySocialId of secondarySocialIds) {
+    await db.socialId.update({ _id: secondarySocialId._id, personUuid: secondaryPerson }, { personUuid: primaryPerson })
+  }
+
+  await db.person.update({ uuid: secondaryPerson }, { migratedTo: primaryPerson })
+}
+
+export async function doMergeAccounts (
+  db: AccountDB,
+  primaryAccount: AccountUuid,
+  secondaryAccount: AccountUuid
+): Promise<void> {
+  if (primaryAccount === secondaryAccount) {
+    // Nothing to do
+    return
+  }
+
+  const primaryAccountObj = await db.account.findOne({ uuid: primaryAccount })
+  if (primaryAccountObj == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.AccountNotFound, { account: primaryAccount }))
+  }
+
+  const secondaryAccountObj = await db.account.findOne({ uuid: secondaryAccount })
+  if (secondaryAccountObj == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.AccountNotFound, { account: secondaryAccount }))
+  }
+
+  await doMergePersons(db, primaryAccount, secondaryAccount, true)
+
+  // Workspace assignments. Assign primary account to all workspaces of the secondary account.
+  const secondaryWorkspacesRoles = await db.getWorkspaceRoles(secondaryAccount)
+  for (const [workspaceUuid, role] of secondaryWorkspacesRoles) {
+    await db.unassignWorkspace(secondaryAccount, workspaceUuid)
+
+    const primaryRole = await db.getWorkspaceRole(primaryAccount, workspaceUuid)
+    if (primaryRole != null) {
+      if (getRolePower(primaryRole) < getRolePower(role)) {
+        await db.updateWorkspaceRole(primaryAccount, workspaceUuid, role)
+      }
+    } else {
+      await db.assignWorkspace(primaryAccount, workspaceUuid, role)
+    }
+  }
+
+  // Merge passwords. Keep the primary account password if exists, otherwise take the secondary account password.
+  if (primaryAccountObj.hash == null && secondaryAccountObj.hash != null && secondaryAccountObj.salt != null) {
+    await db.setPassword(primaryAccount, secondaryAccountObj.hash, secondaryAccountObj.salt)
   }
 }

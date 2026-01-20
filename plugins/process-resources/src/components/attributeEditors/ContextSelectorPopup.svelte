@@ -13,16 +13,30 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, generateId } from '@hanzo/core'
-  import { Context, SelectedContext } from '@hanzo/process'
-  import { Label, resizeObserver, Scroller, Submenu } from '@hanzo/ui'
+  import { MasterTag, Tag } from '@hcengineering/card'
+  import { AnyAttribute, Ref } from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import {
+    Context,
+    Process,
+    ProcessExecutionContext,
+    ProcessFunction,
+    RelatedContext,
+    SelectedContext
+  } from '@hcengineering/process'
+  import { eventToHTMLElement, Label, resizeObserver, Scroller, showPopup, Submenu } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
-  import { getValueReduceFunc } from '../../utils'
+  import { generateContextId, getRelationObjectReduceFunc, getValueReduceFunc } from '../../utils'
+  import ExecutionContextPresenter from './ExecutionContextPresenter.svelte'
+  import ConstValuePopup from './ConstValuePopup.svelte'
 
+  export let process: Process
+  export let masterTag: Ref<MasterTag | Tag>
   export let context: Context
   export let attribute: AnyAttribute
   export let onSelect: (val: SelectedContext | null) => void
+  export let forbidValue: boolean = false
 
   const dispatch = createEventDispatcher()
 
@@ -31,19 +45,16 @@
     dispatch('close')
   }
 
-  function onCustom (): void {
-    onSelect(null)
-    dispatch('close')
-  }
-
   function onAttribute (val: AnyAttribute): void {
     const valueFunc = getValueReduceFunc(val, attribute)
     onClick({
       type: 'attribute',
       key: val.name,
-      functions: valueFunc !== undefined ? [{ func: valueFunc, props: {} }] : []
+      functions: valueFunc !== undefined ? [valueFunc] : []
     })
   }
+
+  $: processContext = Object.values(context.executionContext)
 
   $: nested = Object.values(context.nested)
   $: relations = Object.entries(context.relations)
@@ -51,27 +62,60 @@
   function onUserRequest (): void {
     onSelect({
       type: 'userRequest',
-      id: generateId(),
+      id: generateContextId(),
       _class: attribute.attributeOf,
       key: attribute.name
     })
     dispatch('close')
   }
 
-  function getIndex (ownIndex: number, kind: 'attribute' | 'relation' | 'nested' | 'total'): number {
-    if (kind === 'attribute') {
-      return ownIndex + 1
-    }
-    if (kind === 'nested') {
-      return ownIndex + context.attributes.length + 1
-    }
-    if (kind === 'relation') {
-      return ownIndex + context.attributes.length + nested.length + 1
-    }
-    if (kind === 'total') {
-      return ownIndex + context.attributes.length + relations.length + nested.length + 1
-    }
-    return ownIndex
+  function onFunc (func: Ref<ProcessFunction>): void {
+    onSelect({
+      type: 'function',
+      key: attribute.name,
+      func,
+      props: {}
+    })
+    dispatch('close')
+  }
+
+  function onProcessContext (ctx: ProcessExecutionContext): void {
+    onSelect(ctx.value)
+    dispatch('close')
+  }
+
+  function getFunc (func: Ref<ProcessFunction>): ProcessFunction {
+    const client = getClient()
+    const f = client.getModel().getObject(func)
+    return f
+  }
+
+  function onRelation (val: RelatedContext): void {
+    const client = getClient()
+    const reduceFunc = getRelationObjectReduceFunc(client, val.association, val.direction, attribute)
+    onSelect({
+      type: 'relation',
+      key: '_id',
+      association: val.association,
+      direction: val.direction,
+      name: val.name,
+      functions: [],
+      sourceFunction: reduceFunc
+    })
+    dispatch('close')
+  }
+
+  function onConst (e: MouseEvent): void {
+    showPopup(ConstValuePopup, { attribute }, eventToHTMLElement(e), (res) => {
+      if (res != null) {
+        onSelect({
+          type: 'const',
+          key: attribute.name,
+          value: res
+        })
+      }
+      dispatch('close')
+    })
   }
 </script>
 
@@ -89,8 +133,66 @@
       </span>
     </button>
     <div class="menu-separator" />
+    {#if context.functions.length > 0}
+      {#each context.functions as f}
+        {@const func = getFunc(f)}
+        {#if func.editor !== undefined}
+          <Submenu
+            label={func.label}
+            props={{
+              masterTag,
+              context: func,
+              target: attribute,
+              onSelect: onClick
+            }}
+            options={{ component: func.editor }}
+            withHover
+          />
+        {:else}
+          <button
+            on:click={() => {
+              onFunc(func._id)
+            }}
+            class="menu-item"
+          >
+            <span class="overflow-label pr-1">
+              <Label label={func.label} />
+            </span>
+          </button>
+        {/if}
+      {/each}
+      <div class="menu-separator" />
+    {/if}
+    {#if processContext.length > 0}
+      {#each processContext as pc}
+        {#if pc.attributes.length > 0}
+          <Submenu
+            component={ExecutionContextPresenter}
+            props={{
+              context: pc,
+              target: attribute,
+              contextValue: pc.value,
+              process,
+              onSelect: onClick
+            }}
+            options={{ component: plugin.component.ExecutionContextSelector }}
+            withHover
+          />
+        {:else}
+          <button
+            on:click={() => {
+              onProcessContext(pc)
+            }}
+            class="menu-item"
+          >
+            <ExecutionContextPresenter {process} contextValue={pc.value} />
+          </button>
+        {/if}
+      {/each}
+      <div class="menu-separator" />
+    {/if}
     {#if context.attributes.length > 0}
-      {#each context.attributes as attr, i}
+      {#each context.attributes as attr}
         <button
           on:click={() => {
             onAttribute(attr)
@@ -105,8 +207,7 @@
       <div class="menu-separator" />
     {/if}
     {#if nested.length > 0}
-      {#each nested as object, i}
-        {@const index = getIndex(i, 'nested')}
+      {#each nested as object}
         <Submenu
           label={object.attribute.label}
           props={{
@@ -121,32 +222,40 @@
       <div class="menu-separator" />
     {/if}
     {#if relations.length > 0}
-      {#each relations as object, i}
-        {@const index = getIndex(i, 'relation')}
-        <Submenu
-          text={object[0]}
-          props={{
-            context: object[1],
-            onSelect: onClick,
-            target: attribute
-          }}
-          options={{ component: plugin.component.RelatedContextSelector }}
-          withHover
-        />
+      {#each relations as object}
+        {#if object[1].attributes.length === 0}
+          <button
+            on:click={() => {
+              onRelation(object[1])
+            }}
+            class="menu-item"
+          >
+            <span class="overflow-label pr-1">
+              {object[1].name}
+            </span>
+          </button>
+        {:else}
+          <Submenu
+            text={object[1].name}
+            props={{
+              context: object[1],
+              onSelect: onClick,
+              target: attribute
+            }}
+            options={{ component: plugin.component.RelatedContextSelector }}
+            withHover
+          />
+        {/if}
       {/each}
       <div class="menu-separator" />
     {/if}
-    <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-    <button
-      on:click={() => {
-        onCustom()
-      }}
-      class="menu-item"
-    >
-      <span class="overflow-label pr-1">
-        <Label label={plugin.string.CustomValue} />
-      </span>
-    </button>
+    {#if !forbidValue}
+      <button on:click={onConst} class="menu-item">
+        <span class="overflow-label pr-1">
+          <Label label={plugin.string.CustomValue} />
+        </span>
+      </button>
+    {/if}
   </Scroller>
   <div class="menu-space" />
 </div>

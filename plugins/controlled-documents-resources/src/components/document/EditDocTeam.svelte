@@ -13,37 +13,143 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Scroller } from '@hanzo/ui'
-  import { Ref } from '@hanzo/core'
-  import { ControlledDocument, ControlledDocumentState, DocumentState } from '@hanzo/controlled-documents'
-  import { Employee } from '@hanzo/contact'
-  import { getClient } from '@hanzo/presentation'
+  import contact, { Employee, Person } from '@hcengineering/contact'
+  import documents, {
+    ControlledDocument,
+    ControlledDocumentState,
+    DocumentApprovalRequest,
+    DocumentReviewRequest,
+    DocumentState
+  } from '@hcengineering/controlled-documents'
+  import core, { AccountUuid, DocumentUpdate, notEmpty, PersonUuid, Ref } from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import { Scroller } from '@hcengineering/ui'
 
   import DocTeam from './DocTeam.svelte'
+  import { updateExternalApproversAccess } from '../../utils'
 
   export let controlledDoc: ControlledDocument
   export let editable: boolean = true
+  export let reviewRequest: DocumentReviewRequest | undefined
+  export let approvalRequest: DocumentApprovalRequest | undefined
 
-  $: canChangeCoAuthors =
-    editable && controlledDoc.state === DocumentState.Draft && controlledDoc.controlledState == null
-  $: canChangeReviewers =
-    editable && controlledDoc.state === DocumentState.Draft && controlledDoc.controlledState == null
-  $: canChangeApprovers =
-    editable &&
-    ((controlledDoc.state === DocumentState.Draft && controlledDoc.controlledState == null) ||
-      controlledDoc.controlledState === ControlledDocumentState.InReview ||
-      controlledDoc.controlledState === ControlledDocumentState.Reviewed)
+  $: controlledState = controlledDoc.controlledState ?? null
+
+  $: isEditableDraft = editable && controlledDoc.state === DocumentState.Draft
+
+  $: inCleanState = controlledState === null
+  $: inReview = controlledState === ControlledDocumentState.InReview && reviewRequest !== undefined
+  $: inApproval = controlledState === ControlledDocumentState.InApproval && approvalRequest !== undefined
+  $: isReviewed = controlledState === ControlledDocumentState.Reviewed
+
+  $: canChangeCoAuthors = isEditableDraft && inCleanState
+  $: canChangeReviewers = isEditableDraft && (inCleanState || inReview)
+  $: canChangeApprovers = isEditableDraft && (inCleanState || inApproval || inReview || isReviewed)
+
+  $: reviewers = (reviewRequest?.requested as Ref<Employee>[]) ?? controlledDoc.reviewers
+  $: approvers = controlledDoc.approvers
+  $: externalApprovers = controlledDoc.externalApprovers
+  $: coAuthors = controlledDoc.coAuthors
 
   const client = getClient()
 
   async function handleUpdate ({
     detail
   }: {
-    detail: { type: 'reviewers' | 'approvers', users: Ref<Employee>[] }
+    detail: { type: 'reviewers' | 'approvers' | 'externalApprovers', users: Ref<Person>[] }
   }): Promise<void> {
     const { type, users } = detail
 
-    await client.update(controlledDoc, { [type]: users })
+    const request = detail.type === 'reviewers' ? reviewRequest : approvalRequest
+    let requestUsers: Ref<Person>[] = []
+
+    if (type === 'reviewers') {
+      requestUsers = users
+    } else if (type === 'externalApprovers') {
+      requestUsers = [...controlledDoc.approvers, ...users]
+    } else if (type === 'approvers') {
+      requestUsers = [...users, ...controlledDoc.externalApprovers]
+    }
+
+    const ops = client.apply(controlledDoc._id)
+
+    if (request?._id !== undefined) {
+      const requested = request.requested?.slice() ?? []
+      const requestedSet = new Set<Ref<Person>>(requested)
+
+      const addedPersons = new Set<Ref<Person>>()
+      const removedPersons = new Set<Ref<Person>>(requested)
+
+      for (const u of requestUsers) {
+        if (requestedSet.has(u)) {
+          removedPersons.delete(u)
+        } else {
+          addedPersons.add(u)
+        }
+      }
+
+      const approved = request.approved?.slice() ?? []
+      const approvedDates = request.approvedDates?.slice() ?? []
+
+      for (const u of removedPersons) {
+        const idx = approved.indexOf(u)
+        if (idx === -1) continue
+        approved.splice(idx, 1)
+        approvedDates.splice(idx, 1)
+      }
+
+      const requiredApprovesCount = requestUsers.length
+      const requestedQuery: DocumentUpdate<DocumentReviewRequest | DocumentApprovalRequest> = {}
+
+      if (addedPersons.size > 0) {
+        requestedQuery.$push = { requested: { $each: Array.from(addedPersons), $position: 0 } }
+      }
+      if (removedPersons.size > 0) {
+        requestedQuery.$pull = { requested: { $in: Array.from(removedPersons) } }
+      }
+
+      if (Object.keys(requestedQuery).length > 0) {
+        await ops.update(request, requestedQuery)
+      }
+      await ops.update(request, {
+        approved,
+        approvedDates,
+        requiredApprovesCount
+      })
+    }
+
+    const added = new Set<Ref<Person>>()
+    const removed = new Set<Ref<Person>>()
+
+    for (const user of users) {
+      if (!controlledDoc[type].includes(user as Ref<Employee>)) {
+        added.add(user)
+      }
+    }
+
+    for (const user of controlledDoc[type]) {
+      if (!users.includes(user)) {
+        removed.add(user)
+      }
+    }
+
+    const updateQuery: DocumentUpdate<ControlledDocument> = {}
+    if (added.size > 0) {
+      updateQuery.$push = { [type]: { $each: Array.from(added), $position: 0 } }
+    }
+    if (removed.size > 0) {
+      updateQuery.$pull = { [type]: { $in: Array.from(removed) } }
+    }
+
+    if (Object.keys(updateQuery).length > 0) {
+      await ops.update(controlledDoc, updateQuery)
+    }
+
+    if (type === 'externalApprovers') {
+      await updateExternalApproversAccess(client, controlledDoc, Array.from(added), Array.from(removed))
+    }
+
+    await ops.commit()
   }
 </script>
 
@@ -56,6 +162,10 @@
         {canChangeCoAuthors}
         {canChangeReviewers}
         {canChangeApprovers}
+        {reviewers}
+        {approvers}
+        {externalApprovers}
+        {coAuthors}
         on:update={handleUpdate}
       />
     </div>

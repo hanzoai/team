@@ -127,7 +127,7 @@ export class WorkspaceClient {
     if (this.aiPerson !== undefined && config.LoveEndpoint !== '') {
       this.love = new LoveController(
         this.wsIds.uuid,
-        this.ctx.newChild('love', {}),
+        this.ctx.newChild('love', {}, { span: false }),
         this.token,
         opClient,
         this.aiPerson
@@ -248,7 +248,13 @@ export class WorkspaceClient {
     }
 
     this.summarizing.add(objectId)
-    const { summary, tokens } = await requestSummary(this.openai, this.openaiEncoding, toSummarize)
+    const { summary, tokens } = await requestSummary(
+      this.ctx,
+      this.wsIds.uuid,
+      this.openai,
+      this.openaiEncoding,
+      toSummarize
+    )
 
     if (summary === undefined) {
       this.ctx.error('Failed to summarize history', { objectId, objectClass, user })

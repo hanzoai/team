@@ -13,25 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Person } from '@hanzo/contact'
-  import { personByIdStore } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
-  import love, { Floor as FloorType, Office, Room, RoomInfo, isOffice } from '@hanzo/love'
-  import { getClient } from '@hanzo/presentation'
-  import { deviceOptionsStore as deviceInfo, getCurrentLocation, navigate } from '@hanzo/ui'
-  import { onDestroy, onMount } from 'svelte'
-  import {
-    activeFloor,
-    floors,
-    infos,
-    invites,
-    myInfo,
-    myRequests,
-    rooms,
-    selectedFloor,
-    waitForOfficeLoaded
-  } from '../stores'
-  import { connectToMeeting, tryConnect } from '../utils'
+  import { Contact, Person } from '@hcengineering/contact'
+  import { Ref } from '@hcengineering/core'
+  import { Floor as FloorType, Office, Room, isOffice } from '@hcengineering/love'
+  import { deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
+  import { onDestroy } from 'svelte'
+  import { activeFloor, floors, rooms, selectedFloor } from '../stores'
   import Floor from './Floor.svelte'
   import FloorConfigure from './FloorConfigure.svelte'
 
@@ -39,6 +26,7 @@
     return rooms.filter((p) => p.floor === floor)
   }
 
+  let floor = $selectedFloor ?? ($activeFloor === '' ? $floors[0]?._id : $activeFloor)
   $: floor = $selectedFloor ?? ($activeFloor === '' ? $floors[0]?._id : $activeFloor)
   let configure: boolean = false
   let replacedPanel: HTMLElement
@@ -50,36 +38,6 @@
 
   $: $deviceInfo.replacedPanel = replacedPanel
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
-
-  async function connectToSession (sessionId: string): Promise<void> {
-    const client = getClient()
-    const info = await client.findOne(love.class.RoomInfo, { _id: sessionId as Ref<RoomInfo> })
-    if (info === undefined) return
-    const room = $rooms.find((p) => p._id === info.room)
-    if (room === undefined) return
-    tryConnect(
-      $personByIdStore,
-      $myInfo,
-      room,
-      $infos.filter((p) => p.room === room._id),
-      $myRequests,
-      $invites
-    )
-  }
-
-  onMount(async () => {
-    const loc = getCurrentLocation()
-    const { sessionId, meetId, ...query } = loc.query ?? {}
-    loc.query = Object.keys(query).length === 0 ? undefined : query
-    navigate(loc, true)
-    if (sessionId) {
-      await waitForOfficeLoaded()
-      await connectToSession(sessionId)
-    } else if (meetId) {
-      await waitForOfficeLoaded()
-      await connectToMeeting($personByIdStore, $myInfo, $infos, $myRequests, $invites, meetId)
-    }
-  })
 </script>
 
 <div class="antiPanel-component filledNav" bind:this={replacedPanel}>

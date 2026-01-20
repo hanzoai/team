@@ -13,8 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Blob, Ref } from '@hanzo/core'
-  import { Image } from '@hanzo/ui'
+  import type { Blob, Ref } from '@hcengineering/core'
+  import { Blurhash, Image, Loading } from '@hcengineering/ui'
+  import { createEventDispatcher } from 'svelte'
   import { getBlobRef } from '../preview'
 
   export let blob: Ref<Blob>
@@ -23,22 +24,71 @@
   export let width: number
   export let height: number
   export let responsive: boolean = false
+  export let loading: 'lazy' | 'eager' = 'eager'
+  export let blurhash: string | undefined = undefined
+  export let showLoading: boolean = false
+
+  const dispatch = createEventDispatcher()
 
   let blobSrc: { src: string, srcset: string } | undefined
 
   $: void getBlobRef(blob, alt, width, height).then((val) => {
     blobSrc = val
   })
+
+  let loaded = false
+
+  function handleLoad (): void {
+    loaded = true
+    dispatch('load')
+  }
+
+  function handleLoadStart (): void {
+    loaded = false
+    dispatch('loadstart')
+  }
 </script>
 
-<Image
-  src={blobSrc?.src}
-  srcset={blobSrc?.srcset}
-  {alt}
-  width={responsive ? '100%' : width}
-  height={responsive ? '100%' : height}
-  {fit}
-  on:load
-  on:error
-  on:loadstart
-/>
+<div class="container relative w-full h-full">
+  {#if !loaded}
+    {#if blurhash !== undefined}
+      <div class="overlay">
+        <Blurhash {blurhash} {width} {height} />
+      </div>
+    {:else if showLoading}
+      <div class="overlay">
+        <Loading />
+      </div>
+    {/if}
+  {/if}
+
+  <Image
+    src={blobSrc?.src}
+    srcset={blobSrc?.srcset}
+    {alt}
+    width={responsive ? '100%' : width}
+    height={responsive ? '100%' : height}
+    {loading}
+    {fit}
+    on:error
+    on:load={handleLoad}
+    on:loadstart={handleLoadStart}
+  />
+</div>
+
+<style lang="scss">
+  .container {
+    border-radius: inherit;
+  }
+  .overlay {
+    border-radius: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

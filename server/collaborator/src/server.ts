@@ -44,15 +44,17 @@ export type Shutdown = () => Promise<void>
  */
 export async function start (ctx: MeasureContext, config: Config, storageAdapter: StorageAdapter): Promise<Shutdown> {
   const port = config.Port
+  const retryCount = config.StorageRetryCount
+  const retryInterval = config.StorageRetryInterval
 
-  ctx.info('Starting collaborator server', { port })
+  ctx.info('Starting collaborator server', { config })
 
   const app = express()
   app.use(cors())
   app.use(express.json({ limit: '10mb' }))
   app.use(bp.json({ limit: '10mb' }))
 
-  const extensionsCtx = ctx.newChild('extensions', {})
+  const extensionsCtx = ctx.newChild('extensions', {}, { span: false })
   const transformer = new MarkupTransformer()
 
   const hocuspocus = new Hocuspocus({
@@ -92,17 +94,17 @@ export async function start (ctx: MeasureContext, config: Config, storageAdapter
 
     extensions: [
       new AuthenticationExtension({
-        ctx: extensionsCtx.newChild('authenticate', {})
+        ctx: extensionsCtx.newChild('authenticate', {}, { span: false })
       }),
       new StorageExtension({
-        ctx: extensionsCtx.newChild('storage', {}),
-        adapter: new PlatformStorageAdapter(storageAdapter),
+        ctx: extensionsCtx.newChild('storage', {}, { span: false }),
+        adapter: new PlatformStorageAdapter(storageAdapter, { retryCount, retryInterval }),
         transformer
       })
     ]
   })
 
-  const rpcCtx = ctx.newChild('rpc', {})
+  const rpcCtx = ctx.newChild('rpc', {}, { span: false })
 
   const getContext = async (rawToken: string, token: Token): Promise<Context> => {
     const wsIds = await getWorkspaceIds(rawToken)
@@ -184,17 +186,24 @@ export async function start (ctx: MeasureContext, config: Config, storageAdapter
     const context = await getContext(rawToken, token)
 
     rpcCtx.info('rpc', { method: request.method, connectionId: context.connectionId, mode: token.extra?.mode ?? '' })
-    await rpcCtx.with('/rpc', { method: request.method }, async (ctx) => {
-      try {
-        const response: RpcResponse = await rpcCtx.with(request.method, {}, (ctx) => {
-          return method(ctx, context, documentId, request.payload, { hocuspocus, storageAdapter, transformer })
-        })
-        res.status(200).send(response)
-      } catch (err: any) {
-        Analytics.handleError(err)
-        res.status(500).send({ error: err.message })
+    await rpcCtx.with(
+      '/rpc',
+      {
+        source: token.extra?.service ?? '🤦‍♂️user',
+        method: request.method
+      },
+      async (ctx) => {
+        try {
+          const response: RpcResponse = await rpcCtx.with(request.method, {}, (ctx) => {
+            return method(ctx, context, documentId, request.payload, { hocuspocus, storageAdapter, transformer })
+          })
+          res.status(200).send(response)
+        } catch (err: any) {
+          Analytics.handleError(err)
+          res.status(500).send({ error: err.message })
+        }
       }
-    })
+    )
   })
 
   const wss = new WebSocketServer({

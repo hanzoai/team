@@ -31,11 +31,12 @@ import { createDoc, test, type TestDocument } from './minmodel'
 import { dbConfig, dbUrl, elasticIndexName, model, prepare, preparePipeline } from './utils'
 
 prepare()
+jest.mock('franc-min', () => ({ franc: () => 'en' }), { virtual: true })
 
-jest.setTimeout(500000)
+jest.setTimeout(30000)
 
 class TestWorkspaceManager extends WorkspaceManager {
-  public async getWorkspaceInfo (token?: string): Promise<WorkspaceInfoWithStatus | undefined> {
+  public async getWorkspaceInfo (ctx: MeasureContext, token?: string): Promise<WorkspaceInfoWithStatus | undefined> {
     const decodedToken = decodeToken(token ?? '')
     return {
       uuid: decodedToken.workspace,
@@ -45,6 +46,7 @@ class TestWorkspaceManager extends WorkspaceManager {
       dataId: decodedToken.workspace as unknown as WorkspaceDataId,
       mode: 'active',
       processingProgress: 0,
+      processingAttemps: 0,
       backupInfo: {
         dataSize: 0,
         blobsSize: 0,
@@ -53,7 +55,7 @@ class TestWorkspaceManager extends WorkspaceManager {
         backups: 0
       },
       versionMajor: 0,
-      versionMinor: 0,
+      versionMinor: 6,
       versionPatch: 0,
       lastVisit: 0,
       createdOn: 0,
@@ -81,6 +83,7 @@ class TestQueue {
       elasticIndexName,
       serverSecret: 'secret',
       dbURL: dbUrl,
+      hulylakeUrl: 'http://localhost:8096',
       config: dbConfig,
       externalStorage: createDummyStorageAdapter(),
       listener: {
@@ -127,17 +130,17 @@ describe('full-text-indexing', () => {
     const queue = new TestQueue(toolCtx)
     await queue.start()
     try {
-      const txProducer = queue.queue.createProducer<Tx>(toolCtx, QueueTopic.Tx)
+      const txProducer = queue.queue.getProducer<Tx>(toolCtx, QueueTopic.Tx)
       const personId = randomUUID().toString() as PersonUuid
       const wsId: WorkspaceUuid = randomUUID().toString() as WorkspaceUuid
       const token = generateToken(personId, wsId)
-      const indexer = await queue.mgr.getIndexer(toolCtx, wsId, token, true)
+      const indexer = await queue.mgr.withIndexer(toolCtx, wsId, token, true, async () => {})
       expect(indexer).toBeDefined()
 
       const dataId = generateId()
 
       await queue.expectIndexingDoc(dataId, async () => {
-        await txProducer.send(wsId, [
+        await txProducer.send(toolCtx, wsId, [
           createDoc(test.class.TestDocument, {
             title: 'first doc',
             description: dataId
@@ -184,7 +187,7 @@ describe('full-text-indexing', () => {
     const queue = new TestQueue(toolCtx)
     await queue.start()
     const { pipeline, wsIds } = await preparePipeline(toolCtx, queue.queue, false) // Do not use broadcast
-    const wsProcessor = queue.queue.createProducer<QueueWorkspaceMessage>(toolCtx, QueueTopic.Workspace)
+    const wsProcessor = queue.queue.getProducer<QueueWorkspaceMessage>(toolCtx, QueueTopic.Workspace)
     try {
       const pipelineClient = wrapPipeline(toolCtx, pipeline, wsIds)
 
@@ -210,7 +213,7 @@ describe('full-text-indexing', () => {
         }
       })
 
-      await wsProcessor.send(wsIds.uuid, [workspaceEvents.fullReindex()])
+      await wsProcessor.send(toolCtx, wsIds.uuid, [workspaceEvents.fullReindex()])
 
       // Wait for reindex
       await reindexAllP

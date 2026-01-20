@@ -13,40 +13,36 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, CardEvents } from '@hanzo/card'
-  import core, { Data, Doc, fillDefaults, MarkupBlobRef, SortingOrder, WithLookup } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import {
-    Label,
-    Scroller,
-    Button,
-    getCurrentLocation,
-    IconAdd,
-    navigate,
-    resizeObserver,
-    Section
-  } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { Analytics } from '@hcengineering/analytics'
+  import { Card, CardEvents, cardId } from '@hcengineering/card'
+  import { chatId } from '@hcengineering/chat'
+  import { Data, Doc, fillDefaults, MarkupBlobRef, SortingOrder, WithLookup } from '@hcengineering/core'
+  import { translate } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { makeRank } from '@hcengineering/rank'
+  import { ButtonIcon, getCurrentLocation, IconAdd, Label, navigate, resizeObserver, Section } from '@hcengineering/ui'
+  import view, { encodeObjectURI, Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
   import {
     List,
     ListSelectionProvider,
     restrictionStore,
     SelectDirection,
     ViewletsSettingButton
-  } from '@hanzo/view-resources'
+  } from '@hcengineering/view-resources'
+  import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
-  import { translate } from '@hanzo/platform'
-  import { makeRank } from '@hanzo/rank'
 
   export let object: Card
   export let readonly: boolean = false
+  export let emptyKind: 'create' | 'placeholder' = 'create'
+  export let limit = 20
 
   let viewlet: WithLookup<Viewlet> | undefined
   let viewOptions: ViewOptions | undefined
   let preference: ViewletPreference | undefined = undefined
 
   const query = createQuery()
+  const dispatch = createEventDispatcher()
 
   const viewletId = card.viewlet.CardChildList
 
@@ -59,8 +55,6 @@
       }
     }
   )
-
-  let docs: Doc[] = []
 
   $: query.query(
     view.class.Viewlet,
@@ -83,7 +77,6 @@
     preferenceQuery.query(
       view.class.ViewletPreference,
       {
-        space: core.space.Workspace,
         attachedTo: viewletId
       },
       (res) => {
@@ -129,12 +122,17 @@
 
     const filledData = fillDefaults(hierarchy, data, object._class)
 
-    const _id = await client.createDoc(object._class, core.space.Workspace, filledData)
+    const _id = await client.createDoc(object._class, object.space, filledData)
 
     Analytics.handleEvent(CardEvents.CardCreated)
 
     const loc = getCurrentLocation()
-    loc.path[3] = _id
+    if (loc.path[2] === chatId) {
+      loc.path[3] = encodeObjectURI(_id, card.class.Card)
+    } else {
+      loc.path[2] = cardId
+      loc.path[3] = _id
+    }
     loc.path.length = 4
     navigate(loc)
   }
@@ -142,64 +140,71 @@
   const selection = listProvider.selection
 </script>
 
-<Section label={card.string.Children} icon={card.icon.Card}>
+<Section label={card.string.Children} icon={card.icon.Card} spaceBeforeContent>
   <svelte:fragment slot="header">
-    <ViewletsSettingButton bind:viewOptions viewletQuery={{ _id: viewletId }} kind={'tertiary'} bind:viewlet />
-    {#if !$restrictionStore.readonly && !readonly}
-      <Button
-        id="add-child-card"
-        icon={IconAdd}
-        label={card.string.CreateChild}
-        kind={'ghost'}
-        showTooltip={{ label: card.string.CreateChild, direction: 'bottom' }}
-        on:click={() => {
-          void createCard()
-        }}
-      />
-    {/if}
+    <div class="buttons-group xsmall-gap">
+      <ViewletsSettingButton bind:viewOptions viewletQuery={{ _id: viewletId }} kind={'tertiary'} bind:viewlet />
+      {#if !$restrictionStore.readonly && !readonly}
+        <ButtonIcon
+          id="add-child-card"
+          icon={IconAdd}
+          size={'small'}
+          kind={'tertiary'}
+          tooltip={{ label: card.string.CreateChild, direction: 'bottom' }}
+          on:click={() => {
+            void createCard()
+          }}
+        />
+      {/if}
+    </div>
   </svelte:fragment>
   <svelte:fragment slot="content">
     {#if (object?.children ?? 0) > 0 && viewOptions !== undefined && viewlet}
-      <Scroller horizontal>
-        <div
-          class="list"
-          use:resizeObserver={(evt) => {
-            listWidth = evt.clientWidth
+      <div
+        class="list"
+        use:resizeObserver={(evt) => {
+          listWidth = evt.clientWidth
+        }}
+      >
+        <List
+          bind:this={list}
+          {listProvider}
+          _class={card.class.Card}
+          query={{
+            parent: object._id
           }}
-        >
-          <List
-            bind:this={list}
-            {listProvider}
-            _class={card.class.Card}
-            query={{
-              parent: object._id
-            }}
-            selectedObjectIds={$selection ?? []}
-            configurations={undefined}
-            {config}
-            {viewOptions}
-            compactMode={listWidth <= 600}
-            on:docs
-            on:row-focus={(event) => {
-              listProvider.updateFocus(event.detail ?? undefined)
-            }}
-            on:check={(event) => {
-              listProvider.updateSelection(event.detail.docs, event.detail.value)
-            }}
-            on:content={(evt) => {
-              docs = evt.detail
-              listProvider.update(evt.detail)
-            }}
-          />
-        </div>
-      </Scroller>
+          selectedObjectIds={$selection ?? []}
+          configurations={undefined}
+          {config}
+          {viewOptions}
+          compactMode={listWidth <= 600}
+          singleCategoryLimit={limit}
+          on:docs
+          on:row-focus={(event) => {
+            listProvider.updateFocus(event.detail ?? undefined)
+          }}
+          on:check={(event) => {
+            listProvider.updateSelection(event.detail.docs, event.detail.value)
+          }}
+          on:content={(evt) => {
+            dispatch('loaded')
+            listProvider.update(evt.detail)
+          }}
+        />
+      </div>
     {:else if !readonly}
-      <div class="antiSection-empty solid clear-mins mt-3">
+      <div class="antiSection-empty" class:solid={emptyKind === 'create'} class:noBorder={emptyKind === 'placeholder'}>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <span class="over-underline content-color" on:click={createCard}>
-          <Label label={card.string.CreateChild} />
-        </span>
+        {#if emptyKind === 'create'}
+          <span class="over-underline content-color" on:click={createCard}>
+            <Label label={card.string.CreateChild} />
+          </span>
+        {:else}
+          <span class="content-color">
+            <Label label={card.string.NoChildren} />
+          </span>
+        {/if}
       </div>
     {/if}
   </svelte:fragment>

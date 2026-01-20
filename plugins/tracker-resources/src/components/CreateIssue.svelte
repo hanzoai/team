@@ -19,38 +19,40 @@
   import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
   import { Employee } from '@hanzo/contact'
   import core, {
+    AccountRole,
     Class,
     Doc,
     DocData,
+    fillDefaults,
+    generateId,
+    getCurrentAccount,
+    makeCollabId,
+    makeDocCollabId,
     type PersonId,
     Ref,
     SortingOrder,
-    fillDefaults,
-    generateId,
-    makeCollabId,
-    makeDocCollabId,
     toIdMap
   } from '@hanzo/core'
   import { getResource, translate } from '@hanzo/platform'
   import preference, { SpacePreference } from '@hanzo/preference'
   import {
     Card,
+    createMarkup,
+    createQuery,
     DocCreateExtComponent,
     DocCreateExtensionManager,
     DraftController,
+    getClient,
+    getMarkup,
     KeyedAttribute,
     MessageBox,
     MultipleDraftController,
-    SpaceSelector,
-    createMarkup,
-    createQuery,
-    getClient,
-    getMarkup
-  } from '@hanzo/presentation'
-  import tags, { TagReference, type TagElement } from '@hanzo/tags'
-  import { TaskType, makeRank } from '@hanzo/task'
-  import { TaskKindSelector } from '@hanzo/task-resources'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+    SpaceSelector
+  } from '@hcengineering/presentation'
+  import tags, { type TagElement, TagReference } from '@hcengineering/tags'
+  import { makeRank, TaskType } from '@hcengineering/task'
+  import { TaskKindSelector } from '@hcengineering/task-resources'
+  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
   import {
     Component as ComponentType,
     Issue,
@@ -65,15 +67,15 @@
     TrackerEvents
   } from '@hanzo/tracker'
   import {
+    addNotification,
     Button,
     Component,
+    createFocusManager,
     DatePresenter,
     EditBox,
     FocusHandler,
     IconAttachment,
     Label,
-    addNotification,
-    createFocusManager,
     showPopup,
     themeStore
   } from '@hanzo/ui'
@@ -109,7 +111,7 @@
   const mDraftController = new MultipleDraftController(tracker.ids.IssueDraft)
   const id: Ref<Issue> = generateId()
   const draftController = new DraftController<IssueDraft>(
-    shouldSaveDraft ? mDraftController.getNext() ?? id : undefined,
+    shouldSaveDraft ? (mDraftController.getNext() ?? id) : undefined,
     tracker.ids.IssueDraft
   )
 
@@ -120,6 +122,7 @@
       draft = shouldSaveDraft ? val : undefined
     })
   )
+  const me = getCurrentAccount()
   const client = getClient()
   const hierarchy = client.getHierarchy()
   const parentQuery = createQuery()
@@ -310,12 +313,12 @@
         dueDate: null,
         labels:
           p.labels !== undefined
-            ? (p.labels
-                .map((p) => {
-                  const val = tagElements.get(p)
-                  return val !== undefined ? tagAsRef(val) : undefined
-                })
-                .filter((p) => p !== undefined) as TagReference[])
+            ? p.labels
+              .map((p) => {
+                const val = tagElements.get(p)
+                return val !== undefined ? tagAsRef(val) : undefined
+              })
+              .filter((p) => p !== undefined)
             : [],
         status: currentProject?.defaultIssueStatus
       }
@@ -332,12 +335,12 @@
     appliedTemplateId = templateId
     object.labels =
       labels !== undefined
-        ? (labels
-            .map((p) => {
-              const val = tagElements.get(p)
-              return val !== undefined ? tagAsRef(val) : undefined
-            })
-            .filter((p) => p !== undefined) as TagReference[])
+        ? labels
+          .map((p) => {
+            const val = tagElements.get(p)
+            return val !== undefined ? tagAsRef(val) : undefined
+          })
+          .filter((p) => p !== undefined)
         : []
 
     if (object.kind !== undefined) {
@@ -419,6 +422,7 @@
   })
 
   async function updateCurrentProjectPref (currentProject: Ref<Project>): Promise<void> {
+    if (me?.role === AccountRole.ReadOnlyGuest || me?.role === AccountRole.Guest) return
     const spacePreferences = await client.findOne(tracker.class.ProjectTargetPreference, { attachedTo: currentProject })
     if (spacePreferences === undefined) {
       await client.createDoc(tracker.class.ProjectTargetPreference, currentProject, {
@@ -860,7 +864,7 @@
         showButtons={false}
         kind={'indented'}
         isScrollable={false}
-        enableBackReferences={true}
+        kitOptions={{ reference: true }}
         enableAttachments={false}
         bind:content={object.description}
         placeholder={tracker.string.IssueDescriptionPlaceholder}

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { ArrOf, Class, Doc, Ref, Type } from '@hanzo/core'
-  import { ArrOf as createArrOf } from '@hanzo/model'
-  import { getClient } from '@hanzo/presentation'
-  import { AnyComponent, Component, DropdownLabelsIntl, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import core, { AnyAttribute, ArrOf, Class, Doc, Ref, Type } from '@hcengineering/core'
+  import { ArrOf as createArrOf } from '@hcengineering/model'
+  import { getClient } from '@hcengineering/presentation'
+  import { AnyComponent, Component, DropdownLabelsIntl, Label } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
   import type { ButtonKind, ButtonSize } from '@hanzo/ui'
@@ -26,7 +26,10 @@
   export let editable: boolean = true
   export let kind: ButtonKind = 'regular'
   export let size: ButtonSize = 'medium'
+  export let width: string | undefined = undefined
   export let isCard: boolean = false
+  export let attribute: AnyAttribute | undefined
+  export let attributeOf: Ref<Class<Doc>>
 
   const dispatch = createEventDispatcher()
   const client = getClient()
@@ -51,9 +54,13 @@
   $: selected = types.find((p) => p._id === refClass)
 
   const handleChange = (e: any): void => {
-    const type = e.detail?.type
-    const res = { type: createArrOf(type) }
-    dispatch('change', res)
+    if (e.detail?.type !== undefined) {
+      const type = e.detail?.type
+      const res = { type: createArrOf(type) }
+      dispatch('change', res)
+    } else {
+      dispatch('change', e.detail)
+    }
   }
 
   function getComponent (selected: Class<Type<Doc>>): AnyComponent {
@@ -62,32 +69,33 @@
   }
 </script>
 
-<div class="hanzoaiModal-content__settingsSet-line">
-  <span class="label">
-    <Label label={setting.string.Type} />
-  </span>
-  {#if editable}
-    <DropdownLabelsIntl
-      label={core.string.Class}
-      {kind}
-      {size}
-      items={types.map((p) => {
-        return { id: p._id, label: p.label }
-      })}
-      width="8rem"
-      bind:selected={refClass}
-    />
-  {:else if selected}
-    <Label label={selected.label} />
-  {/if}
-</div>
+<span class="label">
+  <Label label={setting.string.Type} />
+</span>
+{#if editable}
+  <DropdownLabelsIntl
+    label={core.string.Class}
+    {kind}
+    {size}
+    items={types.map((p) => {
+      return { id: p._id, label: p.label }
+    })}
+    {width}
+    bind:selected={refClass}
+  />
+{:else if selected}
+  <Label label={selected.label} />
+{/if}
 {#if selected}
   <Component
     is={getComponent(selected)}
     props={{
       type: type?.of,
       nested: true,
+      width,
       isCard,
+      attribute,
+      attributeOf,
       editable,
       kind,
       size

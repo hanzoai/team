@@ -13,9 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { PluginConfiguration } from '@hanzo/core'
-  import { pluginConfigurationStore, getClient } from '@hanzo/presentation'
-  import { Breadcrumb, Button, Header, Icon, IconInfo, Label, Scroller } from '@hanzo/ui'
+  import { PluginConfiguration, systemAccountUuid } from '@hcengineering/core'
+  import {
+    createQuery,
+    getClient,
+    pluginConfigurationStore,
+    hasResource,
+    isDisabled,
+    isAdminUser
+  } from '@hcengineering/presentation'
+  import ratingPlugin, { getRaiting, type PersonRating } from '@hcengineering/rating'
+  import { Breadcrumb, Button, Header, Icon, IconInfo, Label, Scroller } from '@hcengineering/ui'
   import setting from '../plugin'
 
   const client = getClient()
@@ -25,17 +33,34 @@
       enabled: value
     })
   }
+
+  const sysQuery = createQuery()
+  let sysRating: PersonRating | undefined
+
+  sysQuery.query(ratingPlugin.class.PersonRating, { accountId: systemAccountUuid }, (res) => {
+    sysRating = res[0]
+  })
+
+  $: totalVisible = getRaiting(
+    100,
+    sysRating,
+    $pluginConfigurationStore.list.filter((it) => it.enabled && it.hidden !== true && it.system !== true)
+  )
 </script>
 
 <div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Setting} label={setting.string.Configuration} size={'large'} isCurrent />
   </Header>
-  <div class="hanzoaiComponent-content__column content">
+  <div class="hulyComponent-content__column content">
+    <div class="flex-row-center flex-wrap m-4 px-4">
+      <Label label={setting.string.BetaWarning} />
+    </div>
     <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
       <div class="flex-row-center flex-wrap gap-around-4">
         {#each $pluginConfigurationStore.list as config}
-          {#if config.label}
+          {#if config.hidden !== true && config.system !== true && !isDisabled(config.pluginId)}
+            {@const pluginRating = getRaiting(totalVisible, sysRating, [config])}
             <div class="cardBox flex-col clear-mins" class:enabled={config.enabled ?? true}>
               <div class="flex-row-center">
                 <span class="mr-2">
@@ -43,6 +68,10 @@
                 </span>
                 <span class="fs-title">
                   <Label label={config.label} />
+
+                  {#if hasResource(ratingPlugin.component.RatingRing)}
+                    - ({pluginRating}%)
+                  {/if}
                 </span>
               </div>
               {#if config.description}
@@ -56,7 +85,7 @@
                 {/if}
                 <div class="flex-row-center flex-reverse flex-grow max-h-9">
                   <Button
-                    label={config.enabled ?? true ? setting.string.ConfigDisable : setting.string.ConfigEnable}
+                    label={(config.enabled ?? true) ? setting.string.ConfigDisable : setting.string.ConfigEnable}
                     size={'large'}
                     on:click={() => change(config, !(config.enabled ?? true))}
                   />

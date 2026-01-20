@@ -14,15 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, Status, StatusCategory } from '@hanzo/core'
-  import { Asset } from '@hanzo/platform'
-  import { getClient, reduceCalls } from '@hanzo/presentation'
-  import task, { Project, ProjectType, TaskType } from '@hanzo/task'
+  import core, { IdMap, Ref, Status, StatusCategory } from '@hcengineering/core'
+  import { Asset } from '@hcengineering/platform'
+  import { IconWithEmoji, getClient, reduceCalls } from '@hcengineering/presentation'
+  import task, { Project, ProjectType, TaskType } from '@hcengineering/task'
   import {
     ColorDefinition,
     Icon,
     IconSize,
-    IconWithEmoji,
     getColorNumberByText,
     getPlatformColorDef,
     themeStore
@@ -86,7 +85,9 @@
   $: projectState = type?.statuses.find((p) => p._id === value?._id)
 
   $: color = getPlatformColorDef(
-    projectState?.color ?? category?.color ?? getColorNumberByText(value?.name ?? ''),
+    projectState?.color !== undefined && typeof projectState?.color !== 'string'
+      ? projectState?.color
+      : (category?.color ?? getColorNumberByText(value?.name ?? '')),
     $themeStore.dark
   )
   $: void updateCategory(value)

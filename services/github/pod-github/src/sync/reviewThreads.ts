@@ -8,8 +8,9 @@ import core, {
   DocumentUpdate,
   MeasureContext,
   Ref,
-  TxOperations
-} from '@hanzo/core'
+  TxOperations,
+  withContext
+} from '@hcengineering/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
@@ -39,7 +40,6 @@ import { collectUpdate, deleteObjects, errorToObj, isGHWriteAllowed, syncChilds,
 import { Analytics } from '@hanzo/analytics'
 import { PullRequestReviewThreadEvent } from '@octokit/webhooks-types'
 import config from '../config'
-import { syncConfig } from './syncConfig'
 import { githubConfiguration } from './configuration'
 
 export type ReviewThreadData = Pick<
@@ -67,7 +67,6 @@ export class ReviewThreadSyncManager implements DocSyncManager {
   externalDerivedSync = true
 
   constructor (
-    readonly ctx: MeasureContext,
     readonly client: TxOperations,
     readonly lq: LiveQuery
   ) {}
@@ -77,7 +76,14 @@ export class ReviewThreadSyncManager implements DocSyncManager {
   }
 
   eventSync = new Map<string, Promise<void>>()
-  async handleEvent<T>(integration: IntegrationContainer, derivedClient: TxOperations, evt: T): Promise<void> {
+
+  @withContext('review-threads-handleEvent')
+  async handleEvent<T>(
+    ctx: MeasureContext,
+    integration: IntegrationContainer,
+    derivedClient: TxOperations,
+    evt: T
+  ): Promise<void> {
     await this.createCommentPromise
     const event = evt as PullRequestReviewThreadEvent
 
@@ -88,11 +94,11 @@ export class ReviewThreadSyncManager implements DocSyncManager {
         return
       }
     }
-    this.ctx.info('reviewThreads:handleEvent', { event, workspace: this.provider.getWorkspaceId() })
+    ctx.info('reviewThreads:handleEvent', { event, workspace: this.provider.getWorkspaceId() })
 
     const { project, repository } = await this.provider.getProjectAndRepository(event.repository.node_id)
     if (project === undefined || repository === undefined) {
-      this.ctx.info('No project for repository', {
+      ctx.info('No project for repository', {
         name: event.repository.name,
         workspace: this.provider.getWorkspaceId()
       })
@@ -100,13 +106,19 @@ export class ReviewThreadSyncManager implements DocSyncManager {
     }
 
     await this.eventSync.get(event.thread.node_id)
-    const promise = this.processEvent(event, derivedClient, repository, integration)
+    const promise = this.processEvent(ctx, event, derivedClient, repository, integration)
     this.eventSync.set(event.thread.node_id, promise)
-    await promise
-    this.eventSync.delete(event.thread.node_id)
+    try {
+      await promise
+    } catch (err: any) {
+      ctx.error('Error processing event', { error: err })
+    } finally {
+      this.eventSync.delete(event.thread.node_id)
+    }
   }
 
   async handleDelete (
+    ctx: MeasureContext,
     existing: Doc | undefined,
     info: DocSyncInfo,
     derivedClient: TxOperations,
@@ -114,14 +126,6 @@ export class ReviewThreadSyncManager implements DocSyncManager {
   ): Promise<boolean> {
     const container = await this.provider.getContainer(info.space)
     if (container === undefined) {
-      return false
-    }
-    if (
-      container?.container === undefined ||
-      ((container.project.projectNodeId === undefined ||
-        !container.container.projectStructure.has(container.project._id)) &&
-        syncConfig.MainProject)
-    ) {
       return false
     }
 
@@ -132,7 +136,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
       return true
     }
     const account =
-      existing?.createdBy ?? (await this.provider.getAccountU(commentExternal.user))?._id ?? core.account.System
+      existing?.createdBy ?? (await this.provider.getAccountU(commentExternal.user)) ?? core.account.System
 
     if (commentExternal !== undefined) {
       try {
@@ -149,7 +153,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
           }
         }
         if (!cnt) {
-          this.ctx.error('Error', { err })
+          ctx.error('Error', { err })
           Analytics.handleError(err)
           await derivedClient.update(info, { error: errorToObj(err) })
         }
@@ -157,7 +161,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
     }
 
     if (existing !== undefined && deleteExisting) {
-      await deleteObjects(this.ctx, this.client, [existing], account)
+      await deleteObjects(ctx, this.client, [existing], account)
     }
     return true
   }
@@ -167,16 +171,17 @@ export class ReviewThreadSyncManager implements DocSyncManager {
   }
 
   private async processEvent (
+    ctx: MeasureContext,
     event: PullRequestReviewThreadEvent,
     derivedClient: TxOperations,
     repo: GithubIntegrationRepository,
     integration: IntegrationContainer
   ): Promise<void> {
-    const account = (await this.provider.getAccountU(event.sender))?._id ?? core.account.System
+    const account = (await this.provider.getAccountU(event.sender)) ?? core.account.System
 
     let externalData: ReviewThreadExternalData
     try {
-      const response: any = await integration.octokit?.graphql(
+      const response: any = await integration.octokit.graphql(
         `
         query listReview($reviewID: ID!) {
           node(id: $reviewID) {
@@ -192,7 +197,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
       )
       externalData = response.node
     } catch (err: any) {
-      this.ctx.error('Error', { err })
+      ctx.error('Error', { err })
       Analytics.handleError(err)
       return
     }
@@ -257,7 +262,9 @@ export class ReviewThreadSyncManager implements DocSyncManager {
     }
   }
 
+  @withContext('review-threads-sync')
   async sync (
+    ctx: MeasureContext,
     existing: Doc | undefined,
     info: DocSyncInfo,
     parent: DocSyncInfo | undefined,
@@ -279,7 +286,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
       }
 
       // If no external document, we need to create it.
-      this.createCommentPromise = this.createGithubReviewThread(container, existing, info, parent, derivedClient)
+      this.createCommentPromise = this.createGithubReviewThread(ctx, container, existing, info, parent, derivedClient)
       return await this.createCommentPromise
     }
     const review = info.external as ReviewThreadExternalData
@@ -287,7 +294,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
     // Use first comment as author, since github doesn't provide one.
     const account =
       existing?.modifiedBy ??
-      (await this.provider.getAccount(review.comments.nodes[0].author ?? null))?._id ??
+      (await this.provider.getAccount(review.comments.nodes[0].author ?? null)) ??
       core.account.System
 
     const messageData: ReviewThreadData = {
@@ -301,7 +308,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
       originalLine: review.originalLine,
       originalStartLine: review.originalStartLine,
       path: review.path,
-      resolvedBy: (await this.provider.getAccount(review.resolvedBy))?._id ?? core.account.System,
+      resolvedBy: (await this.provider.getAccount(review.resolvedBy)) ?? core.account.System,
       startDiffSide: review.startDiffSide
     }
     if (existing === undefined) {
@@ -309,20 +316,21 @@ export class ReviewThreadSyncManager implements DocSyncManager {
         await this.createReviewThread(info, messageData, parent, review, account)
 
         // We need trigger comments, if their sync data created before
-        await syncChilds(info, this.client, derivedClient)
+        await syncChilds(ctx, info, this.client, derivedClient)
         return { needSync: githubSyncVersion, current: messageData }
       } catch (err: any) {
-        this.ctx.error('Error', { err })
+        ctx.error('Error', { err })
         Analytics.handleError(err)
         return { needSync: githubSyncVersion, error: errorToObj(err) }
       }
     } else {
-      await this.handleDiffUpdate(existing, info, messageData, container, parent, review, account, derivedClient)
+      await this.handleDiffUpdate(ctx, existing, info, messageData, container, parent, review, account, derivedClient)
     }
     return { current: messageData, needSync: githubSyncVersion }
   }
 
   private async handleDiffUpdate (
+    ctx: MeasureContext,
     existing: Doc,
     info: DocSyncInfo,
     reviewData: ReviewThreadData,
@@ -363,7 +371,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
     if (Object.keys(platformUpdate).length > 0) {
       // Check and update  external
       if (platformUpdate.isResolved !== undefined && githubConfiguration.ResolveThreadSupported) {
-        const okit = (await this.provider.getOctokit(account)) ?? container.container.octokit
+        const okit = (await this.provider.getOctokit(ctx, account)) ?? container.container.octokit
         const q = `mutation updateReviewThread($threadID: ID!) {
           ${platformUpdate.isResolved ? 'resolveReviewThread' : 'unresolveReviewThread'} (
             input: {
@@ -377,14 +385,14 @@ export class ReviewThreadSyncManager implements DocSyncManager {
         }`
         try {
           if (isGHWriteAllowed()) {
-            await okit?.graphql(q, {
+            await okit.graphql(q, {
               threadID: review.id
             })
           }
         } catch (err: any) {
           update.isResolved = !platformUpdate.isResolved
           platformUpdate.isResolved = !platformUpdate.isResolved
-          this.ctx.error('Error', { err })
+          ctx.error('Error', { err })
           Analytics.handleError(err)
         }
         await derivedClient.update(info, { external: { ...info.external, isResolved: platformUpdate.isResolved } })
@@ -420,6 +428,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
   }
 
   async createGithubReviewThread (
+    ctx: MeasureContext,
     container: ContainerFocus,
     existing: Doc | undefined,
     info: DocSyncInfo,
@@ -437,7 +446,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
       return {}
     }
     const existingReview = existing as GithubReviewThread
-    const okit = (await this.provider.getOctokit(existingReview.modifiedBy)) ?? container.container.octokit
+    const okit = (await this.provider.getOctokit(ctx, existingReview.modifiedBy)) ?? container.container.octokit
 
     // No external version yet, create it.
     // Will be added into pending state.
@@ -465,7 +474,7 @@ export class ReviewThreadSyncManager implements DocSyncManager {
             thread: ReviewThreadExternalData
           }
         }
-        | undefined = await okit?.graphql(q, {
+        | undefined = await okit.graphql(q, {
           prID: (parent.external as PullRequestExternalData).id,
           body: EmptyMarkup // TODO: Need to replace with first comment on comment sync.
         })
@@ -487,13 +496,15 @@ export class ReviewThreadSyncManager implements DocSyncManager {
       }
       return {}
     } catch (err: any) {
-      this.ctx.error('Error', { err })
+      ctx.error('Error', { err })
       Analytics.handleError(err)
       return { needSync: githubSyncVersion, error: errorToObj(err) }
     }
   }
 
+  @withContext('review-threads-externalSync')
   async externalSync (
+    ctx: MeasureContext,
     integration: IntegrationContainer,
     derivedClient: TxOperations,
     kind: ExternalSyncField,
@@ -559,9 +570,11 @@ export class ReviewThreadSyncManager implements DocSyncManager {
     }
   }
 
-  repositoryDisabled (integration: IntegrationContainer, repo: GithubIntegrationRepository): void {}
+  repositoryDisabled (ctx: MeasureContext, integration: IntegrationContainer, repo: GithubIntegrationRepository): void {}
 
+  @withContext('review-threads-externalFullSync')
   async externalFullSync (
+    ctx: MeasureContext,
     integration: IntegrationContainer,
     derivedClient: TxOperations,
     projects: GithubProject[],

@@ -18,25 +18,21 @@ import activity, {
   type DisplayActivityMessage,
   type DisplayDocUpdateMessage,
   type DocUpdateMessage
-} from '@hanzo/activity'
-import { isReactionMessage } from '@hanzo/activity-resources'
-import aiBot from '@hanzo/ai-bot'
-import { summarizeMessages as aiSummarizeMessages, translate as aiTranslate } from '@hanzo/ai-bot-resources'
-import { type Channel, type ChatMessage, type DirectMessage, type ThreadMessage } from '@hanzo/chunter'
-import contact, { getCurrentEmployee, getName, type Employee, type Person } from '@hanzo/contact'
-import {
-  employeeByAccountStore,
-  employeeByIdStore,
-  PersonIcon,
-  personRefByAccountUuidStore
-} from '@hanzo/contact-resources'
+} from '@hcengineering/activity'
+import aiBot from '@hcengineering/ai-bot'
+import { summarizeMessages as aiSummarizeMessages, translate as aiTranslate } from '@hcengineering/ai-bot-resources'
+import { type Channel, type ChatMessage, type DirectMessage, type ThreadMessage } from '@hcengineering/chunter'
+import contact, { type Employee, getCurrentEmployee, getName, type Person } from '@hcengineering/contact'
+import { employeeByAccountStore, employeeByIdStore, PersonIcon } from '@hcengineering/contact-resources'
 import core, {
-  getCurrentAccount,
-  notEmpty,
+  AccountRole,
   type AccountUuid,
   type Class,
   type Client,
   type Doc,
+  getCurrentAccount,
+  hasAccountRole,
+  notEmpty,
   type Ref,
   type Space,
   type Timestamp
@@ -45,13 +41,14 @@ import notification, { type DocNotifyContext, type InboxNotification } from '@ha
 import {
   InboxNotificationsClientImpl,
   isActivityNotification,
-  isMentionNotification
-} from '@hanzo/notification-resources'
-import { getMetadata, translate, type Asset } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import { languageStore, type AnySvelteComponent } from '@hanzo/ui'
-import { classIcon, getDocLinkTitle, getDocTitle } from '@hanzo/view-resources'
-import { get, writable, type Unsubscriber } from 'svelte/store'
+  isMentionNotification,
+  isReactionNotification
+} from '@hcengineering/notification-resources'
+import { type Asset, getMetadata, translate } from '@hcengineering/platform'
+import { getClient } from '@hcengineering/presentation'
+import { type AnySvelteComponent, languageStore } from '@hcengineering/ui'
+import { classIcon, getDocLinkTitle, getDocTitle } from '@hcengineering/view-resources'
+import { get, type Unsubscriber, writable } from 'svelte/store'
 
 import ChannelIcon from './components/ChannelIcon.svelte'
 import DirectIcon from './components/DirectIcon.svelte'
@@ -91,7 +88,7 @@ export async function buildDmName (client: Client, accounts: AccountUuid[]): Pro
   let myName = ''
 
   for (const acc of accounts) {
-    const employee = employeeByAccount.get(acc)
+    const employee = employeeByAccount.get(acc) ?? (await client.findOne(contact.class.Person, { personUuid: acc }))
 
     if (employee === undefined) {
       continue
@@ -124,6 +121,10 @@ export async function canDeleteMessage (doc?: ChatMessage): Promise<boolean> {
   }
 
   const me = getCurrentAccount()
+
+  if (hasAccountRole(me, AccountRole.Maintainer)) {
+    return true
+  }
 
   return doc.createdBy !== undefined && me.socialIds.includes(doc.createdBy)
 }
@@ -164,7 +165,7 @@ export async function getDmPersons (client: Client, space: Space): Promise<Perso
   }
   const myAcc = getCurrentAccount().uuid
 
-  const accounts = space.members.length > 0 ? space.members.filter((m) => m !== myAcc) : [myAcc]
+  const accounts = space.members.length > 1 ? space.members.filter((m) => m !== myAcc) : [myAcc]
 
   return await client.findAll(contact.class.Person, {
     personUuid: { $in: accounts }
@@ -249,7 +250,6 @@ export async function getChannelName (
 
 export function getUnreadThreadsCount (): number {
   const notificationClient = InboxNotificationsClientImpl.getClient()
-
   const threadIds = get(notificationClient.activityInboxNotifications)
     .filter(({ attachedToClass, isViewed }) => attachedToClass === chunter.class.ThreadMessage && !isViewed)
     .map(({ $lookup }) => $lookup?.attachedTo?.attachedTo)
@@ -414,18 +414,16 @@ export async function readChannelMessages (
     const notifications = get(inboxClient.activityInboxNotifications)
       .filter(({ attachedTo, $lookup, isViewed }) => {
         if (isViewed) return false
-        const includes = allIds.includes(attachedTo)
-        if (includes) return true
-        const msg = $lookup?.attachedTo
-        if (isReactionMessage(msg)) {
-          return allIds.includes(msg.attachedTo as Ref<ActivityMessage>)
-        }
-        return false
+        return allIds.includes(attachedTo)
       })
       .map((n) => n._id)
 
     const relatedMentions = get(inboxClient.otherInboxNotifications)
       .filter((n) => !n.isViewed && isMentionNotification(n) && allIds.includes(n.mentionedIn as Ref<ActivityMessage>))
+      .map((n) => n._id)
+
+    const reactionNotifications = get(inboxClient.otherInboxNotifications)
+      .filter((n) => !n.isViewed && isReactionNotification(n) && allIds.includes(n.attachedTo))
       .map((n) => n._id)
 
     chatReadMessagesStore.update((store) => new Set([...store, ...allIds]))
@@ -441,7 +439,7 @@ export async function readChannelMessages (
       })
       await op.update(context, { lastViewedTimestamp: newTimestamp })
     }
-    await inboxClient.readNotifications(op, [...notifications, ...relatedMentions])
+    await inboxClient.readNotifications(op, [...notifications, ...relatedMentions, ...reactionNotifications])
   } finally {
     await op.commit()
   }
@@ -562,29 +560,29 @@ export async function startConversationAction (docs?: Employee | Employee[]): Pr
   }
 }
 
-export async function createDirect (employeeIds: Array<Ref<Person>>): Promise<Ref<DirectMessage>> {
+export async function createDirect (employeeIds: Array<Ref<Employee>>): Promise<Ref<DirectMessage>> {
   const client = getClient()
   const me = getCurrentEmployee()
   const myAcc = getCurrentAccount()
 
   const existingDms = await client.findAll(chunter.class.DirectMessage, {})
-  const newDirectPersons = employeeIds.includes(me) ? employeeIds : [...employeeIds, me]
-  const newPersonsSet = new Set(newDirectPersons)
+  const newDirectEmployeeIds = Array.from(new Set([...employeeIds, me]))
 
   let direct: DirectMessage | undefined
-  const personRefByAccountUuid = get(personRefByAccountUuidStore)
+
   const employeeById = get(employeeByIdStore)
+  const newDirectAccounts = new Set(newDirectEmployeeIds.map((it) => employeeById.get(it)?.personUuid).filter(notEmpty))
 
   for (const dm of existingDms) {
-    const existPersonsSet = new Set(dm.members.map((acc) => personRefByAccountUuid.get(acc)).filter(notEmpty))
+    const existAccounts = new Set(dm.members)
 
-    if (existPersonsSet.size !== newPersonsSet.size) {
+    if (existAccounts.size !== newDirectAccounts.size) {
       continue
     }
 
     let match = true
-    for (const person of existPersonsSet) {
-      if (!newPersonsSet.has(person as Ref<Person>)) {
+    for (const acc of existAccounts) {
+      if (!newDirectAccounts.has(acc)) {
         match = false
         break
       }
@@ -603,15 +601,7 @@ export async function createDirect (employeeIds: Array<Ref<Person>>): Promise<Re
       description: '',
       private: true,
       archived: false,
-      members: newDirectPersons.map((person) => {
-        const employee = employeeById.get(person as Ref<Employee>)
-
-        if (employee?.personUuid === undefined) {
-          throw new Error(`Account id not found for person ${person}`)
-        }
-
-        return employee.personUuid
-      })
+      members: Array.from(newDirectAccounts)
     }))
 
   const context = await client.findOne(notification.class.DocNotifyContext, {

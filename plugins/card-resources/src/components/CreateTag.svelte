@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { CardEvents, MasterTag, Tag } from '@hanzo/card'
-  import core, { Class, ClassifierKind, Data, Ref } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { EditBox, Icon, Label } from '@hanzo/ui'
+  import { CardEvents, MasterTag, Tag } from '@hcengineering/card'
+  import core, { Class, ClassifierKind, Data, Ref } from '@hcengineering/core'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { Card, getClient } from '@hcengineering/presentation'
+  import { EditBox, getColorNumberByText, Icon, Label } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
   import { Analytics } from '@hanzo/analytics'
@@ -36,7 +36,8 @@
       extends: parent?._id ?? card.class.Card,
       label: getEmbeddedLabel(name),
       kind: isMasterTag ? ClassifierKind.CLASS : ClassifierKind.MIXIN,
-      icon: isMasterTag ? card.icon.MasterTag : card.icon.Tag
+      icon: isMasterTag ? card.icon.MasterTag : card.icon.Tag,
+      background: getColorNumberByText(name)
     }
 
     const id = await client.createDoc(_class, core.space.Model, data)

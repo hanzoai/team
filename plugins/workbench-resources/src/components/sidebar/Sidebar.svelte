@@ -13,18 +13,24 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { panelstore } from '@hanzo/ui'
-  import { WidgetPreference } from '@hanzo/workbench'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { panelstore } from '@hcengineering/ui'
+  import { Widget, WidgetPreference } from '@hcengineering/workbench'
 
   import workbench from '../../plugin'
   import { sidebarStore, SidebarVariant } from '../../sidebar'
   import SidebarExpanded from './SidebarExpanded.svelte'
   import SidebarMini from './SidebarMini.svelte'
+  import { isAllowedToRole } from '../../utils'
+  import { getCurrentAccount } from '@hcengineering/core'
 
+  const account = getCurrentAccount()
   const client = getClient()
 
-  const widgets = client.getModel().findAllSync(workbench.class.Widget, {})
+  const widgets = client
+    .getModel()
+    .findAllSync<Widget>(workbench.class.Widget, {})
+    .filter((it) => isAllowedToRole(it.accessLevel, account))
   const preferencesQuery = createQuery()
 
   let preferences: WidgetPreference[] = []
@@ -50,6 +56,7 @@
     flex-direction: row;
     min-width: 25rem;
     border-radius: 0 var(--medium-BorderRadius) var(--medium-BorderRadius) 0;
+    border-bottom: 1px solid transparent; // adjust the side panel body height to match the main panel
 
     &.mini {
       justify-content: flex-end;

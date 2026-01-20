@@ -58,6 +58,10 @@ export const uis = plugin(uiId, {
     None: '' as IntlString,
     NotSelected: '' as IntlString,
     Today: '' as IntlString,
+    Yesterday: '' as IntlString,
+    ThisWeek: '' as IntlString,
+    ThisMonth: '' as IntlString,
+    ThisYear: '' as IntlString,
     NoDate: '' as IntlString,
     StartDate: '' as IntlString,
     TargetDate: '' as IntlString,
@@ -77,6 +81,7 @@ export const uis = plugin(uiId, {
     Italian: '' as IntlString,
     Czech: '' as IntlString,
     German: '' as IntlString,
+    Japanese: '' as IntlString,
     MinutesBefore: '' as IntlString,
     HoursBefore: '' as IntlString,
     DaysBefore: '' as IntlString,
@@ -142,7 +147,16 @@ export const uis = plugin(uiId, {
     Language: '' as IntlString,
     DaysWOValue: '' as IntlString,
     WeeksWOValue: '' as IntlString,
-    MonthsWOValue: '' as IntlString
+    MonthsWOValue: '' as IntlString,
+
+    Filter: '' as IntlString,
+    Clear: '' as IntlString,
+
+    ReadOnlyModeWarning: '' as IntlString,
+
+    EmojiStyle: '' as IntlString,
+    EmojiSystem: '' as IntlString,
+    EmojiNoto: '' as IntlString
   },
   metadata: {
     DefaultApplication: '' as Metadata<AnyComponent>,

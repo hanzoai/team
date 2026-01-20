@@ -89,7 +89,7 @@
       (res) => {
         messages = res.reverse()
         if (channel !== undefined) {
-          inboxClient.forceReadDoc(channel._id, channel._class)
+          inboxClient.forceReadDoc(channel)
         }
       },
       {
@@ -214,6 +214,7 @@
   //   return Array.from(res.values())
   // }
 
+  let participants: Contact[]
   $: participants = [] // getParticipants(messages, $personAccountByIdStore, object, $personByIdStore)
 </script>
 

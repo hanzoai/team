@@ -13,16 +13,19 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import type { CollectionSize, MarkupBlobRef, Domain, Rank, Ref, Role, RolesAssignment } from '@hanzo/core'
-import { AccountUuid, AccountRole, IndexKind } from '@hanzo/core'
-import {
-  type Document,
-  type DocumentSnapshot,
-  type SavedDocument,
-  type Teamspace,
-  documentId
-} from '@hanzo/document'
+import activity from '@hcengineering/activity'
+import type {
+  ClassCollaborators,
+  CollectionSize,
+  Domain,
+  MarkupBlobRef,
+  Rank,
+  Ref,
+  Role,
+  RolesAssignment
+} from '@hcengineering/core'
+import { AccountRole, AccountUuid, IndexKind } from '@hcengineering/core'
+import { type Document, type DocumentSnapshot, type Teamspace, documentId } from '@hcengineering/document'
 import {
   type Builder,
   Collection,
@@ -32,27 +35,27 @@ import {
   Model,
   Prop,
   ReadOnly,
+  TypeAccountUuid,
   TypeCollaborativeDoc,
   TypeNumber,
   TypeRef,
   TypeString,
-  UX,
-  TypeAccountUuid
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import chunter from '@hanzo/model-chunter'
-import core, { TDoc, TTypedSpace } from '@hanzo/model-core'
-import { createPublicLinkAction } from '@hanzo/model-guest'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import preference, { TPreference } from '@hanzo/model-preference'
-import presentation from '@hanzo/model-presentation'
-import tracker from '@hanzo/model-tracker'
-import view, { actionTemplates, createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import { type Asset, getEmbeddedLabel } from '@hanzo/platform'
-import tags from '@hanzo/tags'
-import time, { type ToDo, type Todoable } from '@hanzo/time'
+  UX
+} from '@hcengineering/model'
+import attachment from '@hcengineering/model-attachment'
+import chunter from '@hcengineering/model-chunter'
+import core, { TDoc, TTypedSpace } from '@hcengineering/model-core'
+import { createPublicLinkAction } from '@hcengineering/model-guest'
+import { generateClassNotificationTypes } from '@hcengineering/model-notification'
+import presentation from '@hcengineering/model-presentation'
+import tracker from '@hcengineering/model-tracker'
+import view, { actionTemplates, createAction } from '@hcengineering/model-view'
+import workbench from '@hcengineering/model-workbench'
+import notification from '@hcengineering/notification'
+import { type Asset, getEmbeddedLabel } from '@hcengineering/platform'
+import tags from '@hcengineering/tags'
+import time, { type ToDo, type Todoable } from '@hcengineering/time'
+import { definePermissions } from './permissions'
 import document from './plugin'
 
 export { documentId } from '@hanzo/document'
@@ -136,12 +139,6 @@ export class TDocumentSnapshot extends TDoc implements DocumentSnapshot {
 
   @Prop(TypeRef(document.class.Document), document.string.ParentDocument)
     parent!: Ref<Document>
-}
-
-@Model(document.class.SavedDocument, preference.class.Preference)
-export class TSavedDocument extends TPreference implements SavedDocument {
-  @Prop(TypeRef(document.class.Document), document.string.SavedDocuments)
-  declare attachedTo: Ref<Document>
 }
 
 @Model(document.class.Teamspace, core.class.TypedSpace)
@@ -271,7 +268,7 @@ function defineTeamspace (builder: Builder): void {
 }
 
 function defineDocument (builder: Builder): void {
-  builder.createModel(TDocument, TDocumentSnapshot, TSavedDocument, TDefaultTeamspaceTypeData)
+  builder.createModel(TDocument, TDocumentSnapshot, TDefaultTeamspaceTypeData)
 
   builder.mixin(document.class.Document, core.class.Class, time.mixin.ItemPresenter, {
     presenter: document.component.DocumentToDoPresenter
@@ -363,27 +360,6 @@ function defineDocument (builder: Builder): void {
   createAction(
     builder,
     {
-      action: view.actionImpl.CopyTextToClipboard,
-      actionProps: {
-        textProvider: document.function.GetDocumentLink
-      },
-      label: document.string.CopyDocumentUrl,
-      icon: view.icon.CopyLink,
-      input: 'focus',
-      category: document.category.Document,
-      target: document.class.Document,
-      context: {
-        mode: ['context', 'browser'],
-        application: document.app.Documents,
-        group: 'copy'
-      }
-    },
-    document.action.CopyDocumentLink
-  )
-
-  createAction(
-    builder,
-    {
       action: document.actionImpl.LockContent,
       label: document.string.Lock,
       icon: document.icon.Lock,
@@ -423,7 +399,8 @@ function defineDocument (builder: Builder): void {
 
   builder.mixin(document.class.Document, core.class.Class, activity.mixin.ActivityDoc, {})
 
-  builder.mixin(document.class.Document, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<Document>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: document.class.Document,
     fields: ['createdBy', 'modifiedBy']
   })
 
@@ -561,6 +538,7 @@ export function createModel (builder: Builder): void {
   defineDocument(builder)
 
   defineApplication(builder)
+  definePermissions(builder)
 
   builder.createDoc(core.class.DomainIndexConfiguration, core.space.Model, {
     domain: DOMAIN_DOCUMENT,

@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { AccountRole, Person, WorkspaceInfoWithStatus } from '@hanzo/core'
-import type { Asset, IntlString, Metadata, Plugin, Resource, Status } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui'
-import type { LoginInfo, WorkspaceLoginInfo } from '@hanzo/account-client'
+import { AccountRole, Person, type WorkspaceUuid, WorkspaceInfoWithStatus } from '@hcengineering/core'
+import type { Asset, IntlString, Metadata, Plugin, Resource, Status } from '@hcengineering/platform'
+import { plugin } from '@hcengineering/platform'
+import type { AnyComponent } from '@hcengineering/ui'
+import type { LoginInfo, WorkspaceLoginInfo } from '@hcengineering/account-client'
 
 export type { LoginInfo, WorkspaceLoginInfo, OtpInfo, RegionInfo } from '@hanzo/account-client'
 
@@ -39,7 +39,8 @@ export const pages = [
   'confirm',
   'confirmationSend',
   'auth',
-  'login-password'
+  'login-password',
+  'changePassword'
 ] as const
 
 export type Pages = (typeof pages)[number]
@@ -50,6 +51,7 @@ export default plugin(loginId, {
     LoginEndpoint: '' as Metadata<string>,
     LoginAccount: '' as Metadata<string>,
     DisableSignUp: '' as Metadata<boolean>,
+    HideLocalLogin: '' as Metadata<boolean>,
     TransactorOverride: '' as Metadata<string>,
     PasswordValidations: '' as Metadata<{
       MinLength: number
@@ -67,6 +69,7 @@ export default plugin(loginId, {
     InviteWorkspace: '' as Asset
   },
   string: {
+    LogIn: '' as IntlString,
     LinkValidHours: '' as IntlString,
     EmailMask: '' as IntlString,
     NoLimit: '' as IntlString,
@@ -76,9 +79,17 @@ export default plugin(loginId, {
     PasswordMinDigits: '' as IntlString<{ count: number }>,
     PasswordMinUpperChars: '' as IntlString<{ count: number }>,
     PasswordMinLowerChars: '' as IntlString<{ count: number }>,
+    SelectWorkspace: '' as IntlString,
+    ChangePassword: '' as IntlString,
+    CurrentPassword: '' as IntlString,
+    NewPassword: '' as IntlString,
+    EnterCurrentPassword: '' as IntlString,
+    EnterNewPassword: '' as IntlString,
+    RepeatNewPassword: '' as IntlString,
     WorkspaceArchived: '' as IntlString,
     WorkspaceArchivedDesc: '' as IntlString,
-    RestoreArchivedWorkspace: '' as IntlString
+    RestoreArchivedWorkspace: '' as IntlString,
+    PasswordExpiredDesc: '' as IntlString
   },
   function: {
     SendInvite: '' as Resource<(email: string, role: AccountRole) => Promise<void>>,
@@ -95,11 +106,15 @@ export default plugin(loginId, {
     LeaveWorkspace: '' as Resource<(account: string) => Promise<LoginInfo | null>>,
     ChangePassword: '' as Resource<(oldPassword: string, password: string) => Promise<void>>,
     SelectWorkspace: '' as Resource<
-    (workspace: string, token: string | null | undefined) => Promise<[Status, WorkspaceLoginInfo | undefined]>
+    (
+      workspace: string,
+      token: string | null | undefined
+    ) => Promise<[Status, WorkspaceLoginInfo | undefined, boolean]>
     >,
     ExchangeGuestToken: '' as Resource<(token: string) => Promise<string>>,
-    FetchWorkspace: '' as Resource<() => Promise<[Status, WorkspaceInfoWithStatus | undefined]>>,
+    FetchWorkspace: '' as Resource<() => Promise<[Status, WorkspaceInfoWithStatus | undefined, boolean]>>,
     GetPerson: '' as Resource<() => Promise<[Status, Person]>>,
-    GetWorkspaces: '' as Resource<() => Promise<WorkspaceInfoWithStatus[]>>
+    GetWorkspaces: '' as Resource<() => Promise<WorkspaceInfoWithStatus[]>>,
+    GetWorkspacePermissions: '' as Resource<(permission: string) => Promise<WorkspaceUuid[]>>
   }
 })

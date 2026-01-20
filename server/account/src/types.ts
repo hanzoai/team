@@ -13,23 +13,27 @@
 // limitations under the License.
 //
 import {
-  AccountRole,
-  type Person,
-  Branding,
-  Data,
-  MeasureContext,
-  Timestamp,
-  Version,
-  WorkspaceMode,
-  WorkspaceMemberInfo,
-  BackupStatus,
-  type SocialId as SocialIdBase,
-  type PersonUuid,
-  type WorkspaceUuid,
-  type WorkspaceDataId,
+  type AccountRole,
+  type BackupStatus,
+  type Branding,
+  type Data,
+  type MeasureContext,
+  type Timestamp,
+  type Version,
+  type WorkspaceMemberInfo,
+  type WorkspaceMode,
+  type AccountUuid,
+  type Person as BasePerson,
   type PersonId,
-  type AccountUuid
-} from '@hanzo/core'
+  type PersonUuid,
+  type SocialId as SocialIdBase,
+  type UsageStatus,
+  type WorkspaceDataId,
+  type WorkspaceUuid,
+  type WorkspaceInfo,
+  type IntegrationKind
+} from '@hcengineering/core'
+import type { EndpointInfo } from './utils'
 
 /* ========= D A T A B A S E  E N T I T I E S ========= */
 export enum Location {
@@ -41,13 +45,15 @@ export enum Location {
 }
 
 // AccountRole in core
-// Person in core
+
+export interface Person extends BasePerson {
+  migratedTo?: PersonUuid
+}
 
 export interface SocialId extends SocialIdBase {
   personUuid: PersonUuid
   createdOn?: Timestamp
   verifiedOn?: Timestamp
-  isDeleted?: boolean
 }
 
 export interface Account {
@@ -57,6 +63,8 @@ export interface Account {
   locale?: string
   hash?: Buffer | null
   salt?: Buffer | null
+  maxWorkspaces?: number
+  failedLoginAttempts?: number // Number of consecutive failed login attempts
 }
 
 // TODO: type data with generic type
@@ -68,7 +76,10 @@ export interface AccountEvent {
 }
 
 export enum AccountEventType {
-  ACCOUNT_CREATED = 'account_created'
+  ACCOUNT_CREATED = 'account_created',
+  SOCIAL_ID_RELEASED = 'social_id_released',
+  ACCOUNT_DELETED = 'account_deleted',
+  PASSWORD_CHANGED = 'password_changed'
 }
 
 export interface Member {
@@ -76,19 +87,23 @@ export interface Member {
   role: AccountRole
 }
 
-export interface WorkspaceStatus {
-  workspaceUuid: WorkspaceUuid
-  mode: WorkspaceMode
-  processingProgress?: number
+export interface WorkspaceVersion {
   versionMajor: number
   versionMinor: number
   versionPatch: number
+}
+
+export interface WorkspaceStatus extends WorkspaceVersion {
+  workspaceUuid: WorkspaceUuid
+  mode: WorkspaceMode
+  processingProgress?: number
   lastProcessingTime?: Timestamp
   lastVisit?: Timestamp
   isDisabled: boolean
   processingAttempts?: number
   processingMessage?: string
   backupInfo?: BackupStatus
+  usageInfo?: UsageStatus
 
   targetRegion?: string
 }
@@ -97,6 +112,9 @@ export interface Workspace {
   uuid: WorkspaceUuid
   name: string
   url: string
+  allowReadOnlyGuest: boolean
+  allowGuestSignUp: boolean
+  passwordAgingRule?: number // Number of days after which password must be changed
   dataId?: WorkspaceDataId // Old workspace identifier. E.g. Database name in Mongo, bucket in R2, etc.
   branding?: string
   location?: Location
@@ -125,6 +143,19 @@ export interface WorkspaceInvite {
   autoJoin?: boolean
 }
 
+export interface WorkspacePermission {
+  workspaceUuid: WorkspaceUuid
+  accountUuid: AccountUuid
+  permission: string
+  createdOn?: Timestamp
+}
+
+export interface WorkspaceJoinInfo {
+  email: string
+  workspace: Workspace
+  invite?: WorkspaceInvite | null
+}
+
 export interface Mailbox {
   accountUuid: PersonUuid
   mailbox: string
@@ -142,7 +173,7 @@ export interface MailboxInfo {
 
 export interface Integration {
   socialId: PersonId
-  kind: string // Integration kind. E.g. 'github', 'mail', 'telegram-bot', 'telegram' etc.
+  kind: IntegrationKind // Integration kind. E.g. 'github', 'mail', 'telegram-bot', 'telegram' etc.
   workspaceUuid: WorkspaceUuid | null
   data?: Record<string, any>
 }
@@ -151,13 +182,112 @@ export type IntegrationKey = Omit<Integration, 'data'>
 
 export interface IntegrationSecret {
   socialId: PersonId
-  kind: string // Integration kind. E.g. 'github', 'mail', 'telegram-bot', 'telegram' etc.
+  kind: IntegrationKind // Integration kind. E.g. 'github', 'mail', 'telegram-bot', 'telegram' etc.
   workspaceUuid: WorkspaceUuid | null
   key: string // Key for the secret in the integration. Different secrets for the same integration must have different keys. Can be any string. E.g. '', 'user_app_1' etc.
   secret: string
 }
 
 export type IntegrationSecretKey = Omit<IntegrationSecret, 'secret'>
+
+/**
+ * Known social link keys for user profiles
+ * Stored flexibly in JSONB/object but with known common keys
+ */
+export interface KnownSocialLinks {
+  twitter?: string
+  linkedin?: string
+  github?: string
+  telegram?: string
+  facebook?: string
+  instagram?: string
+}
+
+/**
+ * User profile with additional information for public sharing
+ * Stored in accounts database (global, not workspace-specific)
+ */
+export interface UserProfile {
+  personUuid: PersonUuid
+  bio?: string // LinkedIn-style bio (up to ~2000 chars)
+  country?: string
+  city?: string
+  website?: string // Personal website URL
+  socialLinks?: Record<string, string> // Flexible storage, keys follow KnownSocialLinks convention
+  isPublic: boolean // Public visibility toggle (default: false)
+}
+
+export type PersonWithProfile = Person & Omit<UserProfile, 'personUuid'>
+
+/**
+ * Workspace subscription status
+ * Provider-agnostic abstraction for billing state
+ */
+export enum SubscriptionStatus {
+  Active = 'active', // Subscription is active and in good standing
+  Trialing = 'trialing', // In trial period
+  PastDue = 'past_due', // Payment failed but still providing service
+  Canceled = 'canceled', // Subscription has been canceled
+  Paused = 'paused', // Subscription is paused
+  Expired = 'expired' // Subscription or trial has expired
+}
+
+/**
+ * Subscription type/purpose
+ * Allows multiple active subscriptions per workspace for different purposes
+ */
+export enum SubscriptionType {
+  Tier = 'tier', // Main workspace tier (free, starter, pro, enterprise)
+  Support = 'support' // Voluntary support/donation subscription
+}
+
+/**
+ * Workspace subscription information
+ * Provider-agnostic subscription data managed by billing service
+ * Multiple subscriptions can be active per workspace (tier + addons + support)
+ * Historical subscriptions are preserved with status: canceled/expired
+ */
+export interface Subscription {
+  id: string // Our internal unique subscription ID (UUID)
+  workspaceUuid: WorkspaceUuid
+  accountUuid: AccountUuid // Account that paid for the subscription
+
+  // Provider details
+  provider: string // Payment provider identifier (e.g. 'polar', 'stripe', 'manual')
+  providerSubscriptionId: string // External subscription ID from the provider
+  providerCheckoutId?: string // External checkout/session ID that created this subscription
+
+  // Subscription classification
+  type: SubscriptionType // What this subscription is for (tier, addon, support)
+  status: SubscriptionStatus // Current status
+  plan: string // Plan/product identifier (e.g. 'free', 'pro', 'storage-100gb', 'supporter')
+
+  // Amount paid (in cents, e.g. 9999 = $99.99)
+  // Used primarily for pay-what-you-want/donation subscriptions to track actual payment
+  amount?: number
+
+  // Billing period (optional - not set for free/manual plans)
+  periodStart?: Timestamp
+  periodEnd?: Timestamp
+
+  // Trial information (optional)
+  trialEnd?: Timestamp
+
+  // Cancellation info (optional)
+  canceledAt?: Timestamp
+  willCancelAt?: Timestamp // Scheduled cancellation date (cancel at period end)
+
+  // Provider-specific data (stored as JSONB for flexibility)
+  // This allows billing service to store additional provider fields if needed
+  // e.g. customerExternalId, metadata, etc. Some providers (like Polar.sh) allow using
+  // our own customer ID and don't require tracking their external customer ID
+  providerData?: Record<string, any>
+
+  createdOn: Timestamp
+  updatedOn: Timestamp
+}
+
+export type SubscriptionData = Omit<Subscription, 'createdOn' | 'updatedOn'>
 
 /* ========= S U P P L E M E N T A R Y ========= */
 
@@ -174,6 +304,8 @@ export type WorkspaceStatusData = Omit<WorkspaceStatus, 'workspaceUuid'>
 
 export type WorkspaceInviteData = Omit<WorkspaceInvite, 'id'>
 
+export type DBFlavor = 'postgres' | 'cockroach' | 'unknown'
+
 /* ========= D A T A B A S E  C O L L E C T I O N S ========= */
 export interface AccountDB {
   person: DbCollection<Person>
@@ -188,15 +320,36 @@ export interface AccountDB {
   mailboxSecret: DbCollection<MailboxSecret>
   integration: DbCollection<Integration>
   integrationSecret: DbCollection<IntegrationSecret>
+  userProfile: DbCollection<UserProfile>
+  subscription: DbCollection<Subscription>
+  workspacePermission: DbCollection<WorkspacePermission>
 
   init: () => Promise<void>
   createWorkspace: (data: WorkspaceData, status: WorkspaceStatusData) => Promise<WorkspaceUuid>
+  updateAllowReadOnlyGuests: (workspaceId: WorkspaceUuid, readOnlyGuestsAllowed: boolean) => Promise<void>
+  updateAllowGuestSignUp: (workspaceId: WorkspaceUuid, guestSignUpAllowed: boolean) => Promise<void>
+  updatePasswordAgingRule: (workspaceId: WorkspaceUuid, days: number) => Promise<void>
   assignWorkspace: (accountId: AccountUuid, workspaceId: WorkspaceUuid, role: AccountRole) => Promise<void>
+  batchAssignWorkspace: (data: [AccountUuid, WorkspaceUuid, AccountRole][]) => Promise<void>
   updateWorkspaceRole: (accountId: AccountUuid, workspaceId: WorkspaceUuid, role: AccountRole) => Promise<void>
   unassignWorkspace: (accountId: AccountUuid, workspaceId: WorkspaceUuid) => Promise<void>
   getWorkspaceRole: (accountId: AccountUuid, workspaceId: WorkspaceUuid) => Promise<AccountRole | null>
+  getWorkspaceRoles: (accountId: AccountUuid) => Promise<Map<WorkspaceUuid, AccountRole>>
   getWorkspaceMembers: (workspaceId: WorkspaceUuid) => Promise<WorkspaceMemberInfo[]>
   getAccountWorkspaces: (accountId: AccountUuid) => Promise<WorkspaceInfoWithStatus[]>
+  batchAssignWorkspacePermission: (
+    workspaceId: WorkspaceUuid,
+    accountIds: AccountUuid[],
+    permission: string
+  ) => Promise<void>
+  batchRevokeWorkspacePermission: (
+    workspaceId: WorkspaceUuid,
+    accountIds: AccountUuid[],
+    permission: string
+  ) => Promise<void>
+  hasWorkspacePermission: (accountId: AccountUuid, workspaceId: WorkspaceUuid, permission: string) => Promise<boolean>
+  getWorkspacePermissions: (accountId: AccountUuid, permission: string) => Promise<WorkspaceUuid[]>
+  getWorkspaceUsersWithPermission: (workspaceId: WorkspaceUuid, permission: string) => Promise<AccountUuid[]>
   getPendingWorkspace: (
     region: string,
     version: Data<Version>,
@@ -206,13 +359,18 @@ export interface AccountDB {
   ) => Promise<WorkspaceInfoWithStatus | undefined>
   setPassword: (accountId: AccountUuid, passwordHash: Buffer, salt: Buffer) => Promise<void>
   resetPassword: (accountId: AccountUuid) => Promise<void>
+  deleteAccount: (accountId: AccountUuid) => Promise<void>
+  listAccounts: (search?: string, skip?: number, limit?: number) => Promise<AccountAggregatedInfo[]>
+  generatePersonUuid: () => Promise<PersonUuid>
 }
 
 export interface DbCollection<T> {
+  exists: (query: Query<T>) => Promise<boolean>
   find: (query: Query<T>, sort?: Sort<T>, limit?: number) => Promise<T[]>
   findOne: (query: Query<T>) => Promise<T | null>
   insertOne: (data: Partial<T>) => Promise<any>
-  updateOne: (query: Query<T>, ops: Operations<T>) => Promise<void>
+  insertMany: (data: Partial<T>[]) => Promise<any>
+  update: (query: Query<T>, ops: Operations<T>) => Promise<void>
   deleteMany: (query: Query<T>) => Promise<void>
 }
 
@@ -230,6 +388,7 @@ export interface QueryOperator<T> {
   $lte?: T
   $gt?: T
   $gte?: T
+  $ne?: T | null
 }
 
 export type Operations<T> = Partial<T> & {
@@ -275,12 +434,41 @@ export interface LoginInfo {
   token?: string
 }
 
+export interface LoginInfoRequestData {
+  firstName?: string
+  lastName?: string
+}
+
+export type LoginInfoRequest = {
+  request: true
+} & LoginInfoRequestData
+
+export interface LoginInfoWorkspace {
+  url: string
+  dataId?: WorkspaceDataId
+  mode: WorkspaceMode
+  version: WorkspaceVersion
+  endpoint: EndpointInfo
+  role: AccountRole | null
+
+  progress?: number
+  branding?: string
+  passwordAgingRule?: number
+}
+
+export interface LoginInfoWithWorkspaces extends LoginInfo {
+  // Information necessary to handle user <--> transactor connectivity.
+  workspaces: Record<WorkspaceUuid, LoginInfoWorkspace>
+  socialIds: SocialId[]
+}
+
 export interface WorkspaceLoginInfo extends LoginInfo {
   workspace: WorkspaceUuid
   workspaceUrl: string
   workspaceDataId?: WorkspaceDataId
   endpoint: string
   role: AccountRole
+  allowGuestSignUp?: boolean
 }
 
 export interface OtpInfo {
@@ -306,6 +494,16 @@ export interface MailboxOptions {
   maxMailboxCount: number
 }
 
+export type ClientNetworkPosition = 'internal' | 'external'
+
 export interface Meta {
   timezone?: string
+  clientNetworkPosition?: ClientNetworkPosition
+}
+
+export interface AccountAggregatedInfo extends Omit<Account, 'hash' | 'salt'>, Person {
+  uuid: AccountUuid
+  integrations: Omit<Integration, 'data'>[]
+  socialIds: SocialId[]
+  workspaces: Omit<WorkspaceInfo, 'allowReadOnlyGuest' | 'allowGuestSignUp'>[]
 }

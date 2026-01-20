@@ -27,38 +27,29 @@ import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
 import github from './plugin'
 
 import {
+  AccountRole,
   DateRangeMode,
   IndexKind,
-  type PersonId,
   type Class,
+  type ClassCollaborators,
   type Data,
   type Doc,
   type Domain,
   type Hyperlink,
   type Markup,
+  type PersonId,
   type Ref,
   type Timestamp
 } from '@hanzo/core'
 
-import { type Person } from '@hanzo/contact'
-import contact, { TPerson } from '@hanzo/model-contact'
-import presentation from '@hanzo/model-presentation'
-import tracker, { TComponent, TIssue, TMilestone, TProject, issuesOptions } from '@hanzo/model-tracker'
-import view, { classPresenter } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import { getEmbeddedLabel } from '@hanzo/platform'
-import setting from '@hanzo/setting'
-import tags from '@hanzo/tags'
-import task from '@hanzo/task'
+import { type Person } from '@hcengineering/contact'
 import {
   type DocSyncInfo,
   type GithubAuthentication,
   type GithubComponent,
-  type GithubFieldMapping,
   type GithubIntegration,
   type GithubIntegrationRepository,
   type GithubIssue,
-  type GithubMilestone,
   type GithubPatch,
   type GithubProject,
   type GithubPullRequest,
@@ -76,8 +67,18 @@ import {
   type GithubUserInfo,
   type LastReviewState,
   type MinimizeReason,
-  type PullRequestMergeable
-} from '@hanzo/github'
+  type PullRequestMergeable,
+  githubIntegrationKind
+} from '@hcengineering/github'
+import contact, { TPerson } from '@hcengineering/model-contact'
+import presentation from '@hcengineering/model-presentation'
+import tracker, { TComponent, TIssue, TProject, issuesOptions } from '@hcengineering/model-tracker'
+import view, { classPresenter } from '@hcengineering/model-view'
+import workbench from '@hcengineering/model-workbench'
+import { getEmbeddedLabel } from '@hcengineering/platform'
+import setting from '@hcengineering/setting'
+import tags from '@hcengineering/tags'
+import task from '@hcengineering/task'
 
 import { generateClassNotificationTypes } from '@hanzo/model-notification'
 
@@ -374,16 +375,6 @@ export class TGithubProject extends TProject implements GithubProject {
   @ReadOnly()
   @Hidden()
     projectNumber!: number
-
-  @Prop(TypeRef(core.class.Class), getEmbeddedLabel('Attribute Class'))
-  @ReadOnly()
-  @Hidden()
-    mixinClass!: Ref<Class<GithubIssue>>
-
-  @Prop(ArrOf(TypeRecord()), getEmbeddedLabel('Field mappings'))
-  @Hidden()
-  // Mapping of all fields in this project.
-    mappings!: GithubFieldMapping[]
 }
 
 @Mixin(github.mixin.GithubIssue, tracker.class.Issue)
@@ -431,29 +422,6 @@ export class TGithubComponent extends TComponent implements GithubComponent {
   @ReadOnly()
   @Hidden()
     represent!: boolean
-}
-
-@Mixin(github.mixin.GithubMilestone, tracker.class.Milestone)
-@UX(github.string.GithubMilestone)
-export class TGithubMilestone extends TMilestone implements GithubMilestone {
-  @Prop(TypeHyperlink(), getEmbeddedLabel('Github Project URL'))
-  @Index(IndexKind.FullText)
-  @ReadOnly()
-    url!: Hyperlink
-
-  @Prop(TypeString(), getEmbeddedLabel('NodeID'))
-  @Hidden()
-  @ReadOnly()
-    projectNodeId!: string
-
-  @Prop(TypeNumber(), getEmbeddedLabel('Number'))
-  @Hidden()
-  @ReadOnly()
-    projectNumber!: number
-
-  @Prop(ArrOf(TypeRecord()), getEmbeddedLabel('Field mappings'))
-  // Mapping of all fields in this project.
-    mappings!: GithubFieldMapping[]
 }
 
 @Model(github.class.GithubPullRequest, tracker.class.Issue)
@@ -603,7 +571,6 @@ export function createModel (builder: Builder): void {
     TGithubIntegrationRepository,
     TGithubPatch,
     TGithubUserInfo,
-    TGithubMilestone,
     TGithubComponent,
     TGithubUser,
     TGithubTodo
@@ -618,7 +585,9 @@ export function createModel (builder: Builder): void {
       icon: github.component.GithubIcon,
       allowMultiple: false,
       createComponent: github.component.Connect,
-      configureComponent: github.component.Configure
+      configureComponent: github.component.Configure,
+      stateComponent: github.component.IntegrationState,
+      kind: githubIntegrationKind
     },
     github.integrationType.Github
   )
@@ -652,7 +621,8 @@ export function createModel (builder: Builder): void {
     editor: github.component.EditPullRequest
   })
 
-  builder.mixin(github.class.GithubPullRequest, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<GithubPullRequest>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: github.class.GithubPullRequest,
     fields: ['createdBy', 'assignee', 'reviewers']
   })
 
@@ -885,12 +855,14 @@ export function createModel (builder: Builder): void {
 
   builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {
     extension: tracker.extensions.IssueListHeader,
-    component: github.component.AuthenticationCheck
+    component: github.component.AuthenticationCheck,
+    accessLevel: AccountRole.User
   })
 
   builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {
     extension: tracker.extensions.EditIssueHeader,
     component: github.component.AuthenticationCheck,
+    accessLevel: AccountRole.User,
     props: {
       kind: 'ghost'
     }

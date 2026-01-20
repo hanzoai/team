@@ -20,6 +20,7 @@
     "Description": "Описание",
     "Major": "Мажорная",
     "Minor": "Минорная",
+    "Patch": "Патч",
     "Codename": "Название",
     "ProductVersionStateActive": "Активная",
     "ProductVersionStateReleased": "Релизная",
@@ -28,8 +29,6 @@
     "Private": "Приватный",
     "Public": "Публичный",
     "Members": "Участники",
-    "RoleLabel": "Роль: {role}",
-
     "UpdateProductPermission": "Обновлять продукт",
     "UpdateProductDescription": "Предоставляет пользователям разрешение обновлять продукт",
     "ChangeControl": "Контроль изменений",

@@ -34,20 +34,10 @@
 
   const defaultConfig: (BuildModelKey | string)[] = [
     {
-      displayProps: {
-        fixed: 'left',
-        key: 'createdBy'
-      },
-      key: 'createdBy'
-    },
-    {
-      displayProps: {
-        fixed: 'left',
-        key: 'card'
-      },
       key: '',
       props: {
-        showParent: false
+        showParent: false,
+        shrink: true
       }
     },
     {
@@ -59,28 +49,31 @@
     {
       displayProps: {
         fixed: 'left',
-        key: 'tags'
+        key: 'tags',
+        compression: true
       },
       key: '',
       label: card.string.Tags,
-      presenter: view.component.RolePresenter,
+      presenter: card.component.CardTagsColored,
       props: {
-        fullSize: true
+        showType: false
       }
     },
     {
-      displayProps: {
-        fixed: 'right',
-        key: 'parent'
-      },
-      key: 'parent'
+      key: '',
+      presenter: card.component.LabelsPresenter,
+      label: card.string.Labels,
+      displayProps: { compression: true },
+      props: { fullSize: true }
     },
     {
-      displayProps: {
-        fixed: 'right',
-        key: 'createdOn'
-      },
-      key: 'createdOn'
+      key: 'modifiedOn', // 'createdOn',
+      displayProps: { key: 'modifiedOn', fixed: 'left', dividerBefore: true }
+    },
+    {
+      key: 'modifiedBy', // 'createdBy',
+      displayProps: { key: 'modifiedBy', fixed: 'right', align: 'center' },
+      props: { kind: 'list', shouldShowName: false, avatarSize: 'x-small' }
     }
   ]
 </script>

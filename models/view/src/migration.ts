@@ -20,11 +20,11 @@ import {
   type MigrationDocumentQuery,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hanzo/model'
-import { DOMAIN_PREFERENCE } from '@hanzo/preference'
-import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hanzo/view'
-import { getSocialKeyByOldAccount, getUniqueAccounts } from '@hanzo/model-core'
-import { type AccountUuid, MeasureMetricsContext } from '@hanzo/core'
+} from '@hcengineering/model'
+import { DOMAIN_PREFERENCE } from '@hcengineering/preference'
+import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hcengineering/view'
+import { getSocialIdFromOldAccount, getSocialKeyByOldAccount, getUniqueAccounts } from '@hcengineering/model-core'
+import core, { type AccountUuid, type PersonId } from '@hcengineering/core'
 
 import { DOMAIN_VIEW } from '.'
 
@@ -82,10 +82,9 @@ async function removeDoneStateFilter (client: MigrationClient): Promise<void> {
 }
 
 async function migrateAccountsToSocialIds (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('view migrateAccountsToSocialIds', {})
   const socialKeyByAccount = await getSocialKeyByOldAccount(client)
 
-  ctx.info('processing view filtered view users ', {})
+  client.logger.log('processing view filtered view users ', {})
   const iterator = await client.traverse(DOMAIN_VIEW, { _class: view.class.FilteredView })
 
   try {
@@ -118,19 +117,18 @@ async function migrateAccountsToSocialIds (client: MigrationClient): Promise<voi
       }
 
       processed += docs.length
-      ctx.info('...processed', { count: processed })
+      client.logger.log('...processed', { count: processed })
     }
   } finally {
     await iterator.close()
   }
-  ctx.info('finished processing view filtered view users ', {})
+  client.logger.log('finished processing view filtered view users ', {})
 }
 
 async function migrateSocialIdsToGlobalAccounts (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('view migrateSocialIdsToGlobalAccounts', {})
   const accountUuidBySocialKey = new Map<string, AccountUuid | null>()
 
-  ctx.info('processing view filtered view users ', {})
+  client.logger.log('processing view filtered view users ', {})
   const iterator = await client.traverse(DOMAIN_VIEW, { _class: view.class.FilteredView })
 
   try {
@@ -163,12 +161,86 @@ async function migrateSocialIdsToGlobalAccounts (client: MigrationClient): Promi
       }
 
       processed += docs.length
-      ctx.info('...processed', { count: processed })
+      client.logger.log('...processed', { count: processed })
     }
   } finally {
     await iterator.close()
   }
-  ctx.info('finished processing view filtered view users ', {})
+  client.logger.log('finished processing view filtered view users ', {})
+}
+
+async function migrateAccsInSavedFilters (client: MigrationClient): Promise<void> {
+  const hierarchy = client.hierarchy
+  const socialKeyByAccount = await getSocialKeyByOldAccount(client)
+  const socialIdBySocialKey = new Map<string, PersonId | null>()
+  const socialIdByOldAccount = new Map<string, PersonId | null>()
+
+  client.logger.log('processing view filtered view accounts in filters ', {})
+  const affectedViews = await client.find<FilteredView>(DOMAIN_VIEW, {
+    _class: view.class.FilteredView,
+    filters: { $regex: '%core:class:Account%' }
+  })
+  for (const view of affectedViews) {
+    const filters = JSON.parse(view.filters)
+    const newFilters = []
+    let needUpdate = false
+    for (const filter of filters) {
+      const key = filter?.key
+      if (key == null) {
+        newFilters.push(filter)
+        continue
+      }
+
+      const type = key.attribute?.type
+      const objClass = key._class
+      const objKey = key.key
+
+      if (type == null || objClass == null || objKey == null) {
+        newFilters.push(filter)
+        continue
+      }
+
+      if (type._class !== 'core:class:RefTo' || type.to !== 'core:class:Account') {
+        newFilters.push(filter)
+        continue
+      }
+
+      const newAttrType = hierarchy.getAttribute(objClass, objKey)
+
+      if (newAttrType.type._class !== core.class.TypePersonId) {
+        newFilters.push(filter)
+        continue
+      }
+
+      const newFilter = { ...filter }
+      newFilter.key.attribute.type = {
+        _class: newAttrType.type._class,
+        label: newAttrType.type.label
+      }
+      const oldValue = newFilter.value
+      newFilter.value = []
+      for (const accId of oldValue) {
+        const socialId = await getSocialIdFromOldAccount(
+          client,
+          accId,
+          socialKeyByAccount,
+          socialIdBySocialKey,
+          socialIdByOldAccount
+        )
+
+        newFilter.value.push(socialId ?? accId)
+      }
+
+      newFilters.push(newFilter)
+      needUpdate = true
+    }
+
+    if (needUpdate) {
+      await client.update(DOMAIN_VIEW, { _id: view._id }, { filters: JSON.stringify(newFilters) })
+    }
+  }
+
+  client.logger.log('finished processing view filtered view accounts in filters ', {})
 }
 
 export const viewOperation: MigrateOperation = {
@@ -193,6 +265,11 @@ export const viewOperation: MigrateOperation = {
         state: 'social-ids-to-global-accounts',
         mode: 'upgrade',
         func: migrateSocialIdsToGlobalAccounts
+      },
+      {
+        state: 'accs-in-saved-filters',
+        mode: 'upgrade',
+        func: migrateAccsInSavedFilters
       }
     ])
   },

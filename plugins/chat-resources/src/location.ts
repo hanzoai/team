@@ -13,53 +13,50 @@
 // limitations under the License.
 //
 
-import { type Card, type MasterTag } from '@hanzo/card'
-import type { Doc, Ref } from '@hanzo/core'
-import { navigate, type Location, getCurrentResolvedLocation } from '@hanzo/ui'
-import { chatId } from '@hanzo/chat'
-import { getClient } from '@hanzo/presentation'
-import { type Message } from '@hanzo/communication-types'
-import workbench from '@hanzo/workbench'
-import { openWidget } from '@hanzo/workbench-resources'
+import cardPlugin, { type Card, type MasterTag } from '@hcengineering/card'
+import type { Class, Doc, Ref } from '@hcengineering/core'
+import { navigate, getCurrentResolvedLocation, type Location, type ResolvedLocation } from '@hcengineering/ui'
+import { chatId } from '@hcengineering/chat'
+import { getClient } from '@hcengineering/presentation'
+import { type LocationData } from '@hcengineering/workbench'
+import { encodeObjectURI, decodeObjectURI } from '@hcengineering/view'
+import { accessDeniedStore } from '@hcengineering/view-resources'
 
-import chat from './plugin'
-import { type ChatWidgetData } from './types'
-
-export function decodeURI (value: string): ['type', Ref<MasterTag>] | ['card', Ref<Card>] {
-  return decodeURIComponent(value).split('|') as any
+export function isFavoritesLocation (loc: Location): boolean {
+  return loc.path[2] === chatId && loc.path[3] === 'favorites'
 }
 
-export function encodeURI (type: 'type' | 'card', ref: Ref<Doc>): string {
-  return [type, ref].join('|')
+export function isAllLocation (loc: Location): boolean {
+  return loc.path[2] === chatId && loc.path[3] === 'all'
 }
 
 export function getCardIdFromLocation (loc: Location): Ref<Card> | undefined {
   if (loc.path[2] !== chatId) {
     return undefined
   }
-  const [type, ref] = decodeURI(loc.path[3])
-  if (type !== 'card') {
+  const [_id, _class] = decodeObjectURI(loc.path[3])
+  if (_class !== cardPlugin.class.Card) {
     return undefined
   }
-  return ref
+  return _id as Ref<Card>
 }
 
 export function getTypeIdFromLocation (loc: Location): Ref<MasterTag> | undefined {
   if (loc.path[2] !== chatId) {
     return undefined
   }
-  const [type, ref] = decodeURI(loc.path[3])
-  if (type !== 'type') {
+  const [_id, _class] = decodeObjectURI(loc.path[3])
+  if (_class !== cardPlugin.class.MasterTag) {
     return undefined
   }
-  return ref
+  return _id as Ref<MasterTag>
 }
 
 export function navigateToCard (_id: Ref<Card>): void {
   const loc = getCurrentResolvedLocation()
 
   loc.path[2] = chatId
-  loc.path[3] = encodeURI('card', _id)
+  loc.path[3] = encodeObjectURI(_id, cardPlugin.class.Card)
   delete loc.query?.message
 
   navigate(loc)
@@ -69,24 +66,98 @@ export function navigateToType (_id: Ref<MasterTag>): void {
   const loc = getCurrentResolvedLocation()
 
   loc.path[2] = chatId
-  loc.path[3] = encodeURI('type', _id)
+  loc.path[3] = encodeObjectURI(_id, cardPlugin.class.MasterTag)
   delete loc.query?.message
 
   navigate(loc)
 }
 
-export async function openThreadInSidebar (message: Message): Promise<void> {
-  const client = getClient()
+export function navigateToFavorites (): void {
+  const loc = getCurrentResolvedLocation()
 
-  const widget = client.getModel().findAllSync(workbench.class.Widget, { _id: chat.ids.ChatWidget })[0]
-  if (widget === undefined) return
+  loc.path[2] = chatId
+  loc.path[3] = 'favorites'
+  delete loc.query?.message
 
-  const data: ChatWidgetData = {
-    id: `${message.card}-${message.id}`,
-    name: 'Thread',
-    message: message.id,
-    card: message.card as Ref<Card>
+  navigate(loc)
+}
+
+export function navigateToAll (): void {
+  const loc = getCurrentResolvedLocation()
+
+  loc.path[2] = chatId
+  loc.path[3] = 'all'
+  delete loc.query?.message
+
+  navigate(loc)
+}
+
+export async function resolveLocation (loc: Location): Promise<ResolvedLocation | undefined> {
+  if (loc.path[2] !== chatId) {
+    return undefined
   }
 
-  openWidget(widget, data)
+  const [_id, _class] = decodeObjectURI(loc.path[3])
+
+  if (_id != null && _class != null && _id !== '' && _class !== '') {
+    return await generateLocation(loc, _id, _class)
+  }
+}
+
+async function generateLocation (
+  loc: Location,
+  _id: Ref<Doc>,
+  _class: Ref<Class<Doc>>
+): Promise<ResolvedLocation | undefined> {
+  const client = getClient()
+  const doc = await client.findOne(_class, { _id })
+  if (doc === undefined) {
+    accessDeniedStore.set(true)
+    return undefined
+  }
+  const appComponent = loc.path[0] ?? ''
+  const workspace = loc.path[1] ?? ''
+
+  return {
+    loc: {
+      path: [appComponent, workspace, chatId, encodeObjectURI(_id, _class)],
+      fragment: undefined
+    },
+    defaultLocation: {
+      path: [appComponent, workspace, chatId, encodeObjectURI(_id, _class)],
+      fragment: undefined
+    }
+  }
+}
+
+export async function resolveLocationData (loc: Location): Promise<LocationData> {
+  const cardId = getCardIdFromLocation(loc)
+  const typeId = getTypeIdFromLocation(loc)
+  const client = getClient()
+
+  if (cardId !== undefined) {
+    const object = await client.findOne(cardPlugin.class.Card, { _id: cardId })
+
+    if (object === undefined) {
+      return {}
+    }
+
+    return {
+      name: object.title,
+      objectId: object._id,
+      objectClass: object._class
+    }
+  }
+
+  if (typeId !== undefined) {
+    const object = await client.findOne(cardPlugin.class.MasterTag, { _id: typeId })
+
+    if (object === undefined) {
+      return {}
+    }
+
+    return { nameIntl: object.label }
+  }
+
+  return {}
 }

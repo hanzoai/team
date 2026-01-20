@@ -22,11 +22,12 @@
     "Minor": "Minore",
     "Patch": "Patch",
     "ValidationWorkflow": "Flusso di convalida",
-    "ChangeOwner": "Cambia proprietario del documento",
-    "ChangeOwnerHintBeginning": "Trasferisci la proprietà del",
+    "Creator": "Creatore",
+    "ChangeOwner": "Modifica autore del documento",
+    "ChangeOwnerHintBeginning": "Trasferisci la paternità del documento",
     "ChangeOwnerHintEnd": "a un'altra persona.",
     "ChangeOwnerWarning": "Non potrai modificare questo documento dopo questa azione.",
-    "SelectOwner": "Seleziona nuovo proprietario",
+    "SelectOwner": "Seleziona un nuovo autore",
     "CreateDocument": "Crea nuovo documento",
     "CreateTemplate": "Crea nuovo modello",
     "Documents": "Documenti",
@@ -41,6 +42,7 @@
     "SearchDocument": "Cerca documento...",
     "CreateEnVersion": "Crea versione per revisione",
     "Approvers": "Approvatori",
+    "ExternalApprovers": "Approvatori esterni",
     "CoAuthors": "Co-autori",
     "Status": "Stato",
     "TemplateName": "Nome del modello",
@@ -195,6 +197,7 @@
     "ArchiveDocsConfirm": "Vuoi davvero archiviare i seguenti documenti: {titles}?",
     "DocumentInHierarchy": "Documento nella gerarchia",
     "FirstDraftVersion": "Questa è la prima versione bozza del documento. Non c'è ancora una storia.",
+    "FirstOrNotAvailable": "Questa è la prima versione disponibile del documento. Non c'è ancora una storia o non è disponibile.",
     "EffectiveDocumentLifecycle": "Ciclo di vita del documento effettivo",
     "ReasonAndImpact": "Motivo e Impatto",
     "ImpactAnalysis": "Analisi dell'impatto",
@@ -231,7 +234,6 @@
     "EditDocumentSpace": "Modifica spazio documenti",
     "DocSpaceDescriptionPlaceholder": "Descrivi il tuo spazio...",
     "Members": "Membri",
-    "RoleLabel": "Ruolo: {role}",
     "CreateOrgSpace": "Crea spazio organizzativo",
     "ReviewDocumentPermission": "Revisiona documento",
     "ReviewDocumentDescription": "Concede agli utenti la possibilità di revisionare un documento",
@@ -271,7 +273,9 @@
     "LatestVersionHint": "ultimo",
 
     "CannotDeleteFolder": "Impossibile eliminare la cartella",
-    "CannotDeleteFolderHint": "Sposta tutti i documenti figli in un'altra posizione prima di eliminare la cartella."
+    "CannotDeleteFolderHint": "Sposta tutti i documenti figli in un'altra posizione prima di eliminare la cartella.",
+
+    "AllDocumentSpaces": "Tutti gli spazi documenti"
   },
   "controlledDocStates": {
     "Empty": "",

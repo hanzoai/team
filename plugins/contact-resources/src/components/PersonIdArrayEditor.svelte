@@ -13,15 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hanzo/contact'
-  import { PersonId, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hcengineering/contact'
+  import { notEmpty, PersonId, Ref } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { getClient } from '@hcengineering/presentation'
+  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
   import { onDestroy } from 'svelte'
   import contact from '../plugin'
-  import { personRefByPersonIdStore, primarySocialIdByPersonRefStore } from '../utils'
+  import { employeeByPersonIdStore, primarySocialIdByEmployeeRefStore } from '../utils'
   import UserBoxList from './UserBoxList.svelte'
+  import { Analytics } from '@hcengineering/analytics'
 
   export let label: IntlString
   export let value: PersonId[]
@@ -39,16 +40,21 @@
   const client = getClient()
   let update: (() => Promise<void>) | undefined
 
-  $: valueByPersonRef = new Map(
-    value.map((p) => {
-      const person = $personRefByPersonIdStore.get(p)
+  $: valueByPersonRef = new Map<Ref<Employee>, PersonId>(
+    value
+      .map((p) => {
+        const employee = $employeeByPersonIdStore.get(p)
+        const ref = employee?._id
 
-      if (person === undefined) {
-        console.error('Person not found for social id', p)
-      }
+        if (ref == null) {
+          console.error('Employee not found for social id', p)
+          Analytics.handleError(new Error(`Employee not found for social id ${p}`))
+          return null
+        }
 
-      return [person, p] as const
-    })
+        return [ref, p] as const
+      })
+      .filter(notEmpty)
   )
 
   function onUpdate (evt: CustomEvent<Ref<Employee>[]>): void {
@@ -63,10 +69,11 @@
         if (socialId !== undefined) {
           newSocialIds.push(socialId)
         } else {
-          const primaryId = $primarySocialIdByPersonRefStore.get(person)
+          const primaryId = $primarySocialIdByEmployeeRefStore.get(person)
 
           if (primaryId === undefined) {
             console.error('Primary social id not found for person', person)
+            Analytics.handleError(new Error(`Primary social id not found for person ${person}`))
             continue
           }
 
@@ -89,7 +96,7 @@
     void update?.()
   })
 
-  $: employees = value.map((p) => $personRefByPersonIdStore.get(p)).filter((p) => p !== undefined) as Ref<Employee>[]
+  $: employees = value.map((p) => $employeeByPersonIdStore.get(p)?._id).filter((p) => p !== undefined)
   $: docQuery =
     excludeItems.length === 0 && includeItems.length === 0
       ? {}
@@ -133,7 +140,7 @@
 </script>
 
 <UserBoxList
-  _class={!allowGuests ? contact.mixin.Employee : contact.class.Person}
+  _class={contact.mixin.Employee}
   items={employees}
   {label}
   {emptyLabel}

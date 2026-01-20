@@ -36,13 +36,13 @@ import core, {
   toIdMap,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { Room } from '@hanzo/love'
-import { WorkspaceInfoRecord } from '@hanzo/server-ai-bot'
-import { getAccountClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { htmlToMarkup, jsonToHTML, jsonToMarkup, markupToJSON } from '@hanzo/text'
-import { encodingForModel } from 'js-tiktoken'
+} from '@hcengineering/core'
+import { Room } from '@hcengineering/love'
+import { WorkspaceInfoRecord } from '@hcengineering/server-ai-bot'
+import { getAccountClient } from '@hcengineering/server-client'
+import { generateToken } from '@hcengineering/server-token'
+import { htmlToMarkup, jsonToHTML, jsonToMarkup, markupToJSON } from '@hcengineering/text'
+import { encodingForModel, getEncoding } from 'js-tiktoken'
 import OpenAI from 'openai'
 
 import chunter from '@hanzo/chunter'
@@ -66,7 +66,18 @@ export class AIControl {
   readonly storageAdapter: StorageAdapter
 
   private readonly openai?: OpenAI
-  private readonly openaiEncoding = encodingForModel(config.OpenAIModel)
+
+  // Try to obtain the encoding for the configured model. If the model is not recognised by js-tiktoken
+  // (e.g. non-OpenAI models such as Together AI Llama derivatives) we gracefully fall back to the
+  // universal `cl100k_base` encoding. This prevents a runtime "Unknown model" error while still
+  // giving us a reasonable token count estimate for summaries.
+  private readonly openaiEncoding = (() => {
+    try {
+      return encodingForModel(config.OpenAIModel as any)
+    } catch (err) {
+      return getEncoding('cl100k_base')
+    }
+  })()
 
   constructor (
     readonly personUuid: AccountUuid,
@@ -152,7 +163,7 @@ export class AIControl {
       wsIds,
       this.personUuid,
       this.socialIds,
-      this.ctx.newChild('create-workspace', {}),
+      this.ctx.newChild('create-workspace', {}, { span: false }),
       this.openai,
       this.openaiEncoding,
       info
@@ -207,12 +218,12 @@ export class AIControl {
     return this.workspaces.get(workspace)
   }
 
-  async translate (req: TranslateRequest): Promise<TranslateResponse | undefined> {
+  async translate (workspace: WorkspaceUuid, req: TranslateRequest): Promise<TranslateResponse | undefined> {
     if (this.openai === undefined) {
       return undefined
     }
     const html = jsonToHTML(markupToJSON(req.text))
-    const result = await translateHtml(this.openai, html, req.lang)
+    const result = await translateHtml(this.ctx, workspace, this.openai, html, req.lang)
     const text = result !== undefined ? htmlToMarkup(result) : req.text
     return {
       text,
@@ -291,7 +302,7 @@ export class AIControl {
       }
     }
 
-    const summary = await summarizeMessages(this.openai, messagesToSummarize, req.lang)
+    const summary = await summarizeMessages(this.ctx, workspace, this.openai, messagesToSummarize, req.lang)
     if (summary === undefined) return
 
     const summaryMarkup = jsonToMarkup(markdownToMarkup(summary))

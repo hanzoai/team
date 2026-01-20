@@ -16,8 +16,7 @@
 -->
 
 <script lang="ts">
-  import { Notification, NotificationToast } from '@hanzo/ui'
-  import Label from '@hanzo/ui/src/components/Label.svelte'
+  import { Notification, NotificationToast, Label } from '@hcengineering/ui'
 
   import documents from '../plugin'
 

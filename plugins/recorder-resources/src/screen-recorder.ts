@@ -13,73 +13,82 @@
 // limitations under the License.
 //
 
-import plugin from '@hanzo/recorder'
+import { getMetadata } from '@hcengineering/platform'
+import presentation from '@hcengineering/presentation'
+
+import { DefaultAudioBps, DefaultChunkIntervalMs, DefaultVideoBps } from './const'
 import { Recorder } from './recorder'
-import { TusUploader, type Uploader, type Options } from './uploader'
-import { getMetadata } from '@hanzo/platform'
+import { type RecordingResult } from './types'
+import { type Uploader, TusUploader } from './uploader'
+import { getVideoDimensions } from './utils'
+
+import plugin from './plugin'
+
+export interface ScreenRecorderOptions {
+  audioBps?: number
+  videoBps?: number
+  videoRes?: 720 | 1080 | 1440 | 2160 | number
+  chunkIntervalMs?: number
+}
+
+export async function createScreenRecorder (
+  stream: MediaStream,
+  options: ScreenRecorderOptions = {}
+): Promise<ScreenRecorder> {
+  const audioBps = options.audioBps ?? DefaultAudioBps
+  const videoBps = options.videoBps ?? DefaultVideoBps
+  const chunkIntervalMs = options.chunkIntervalMs ?? DefaultChunkIntervalMs
+
+  const { width, height } = await getVideoDimensions(stream)
+
+  const token = getMetadata(presentation.metadata.Token) ?? ''
+  const workspace = getMetadata(presentation.metadata.WorkspaceUuid) ?? ''
+  const endpoint = getMetadata(plugin.metadata.StreamUrl) ?? ''
+
+  const recorder = new Recorder(stream, { chunkIntervalMs, audioBps, videoBps })
+  const contentType = recorder.mimeType
+  const uploader = new TusUploader(recorder.asStream(), {
+    token,
+    workspace,
+    endpoint,
+    width,
+    height,
+    contentType
+  })
+  return new ScreenRecorder(stream, recorder, uploader)
+}
 
 export class ScreenRecorder {
-  private readonly recorder: Recorder
-  private readonly uploader: Uploader
+  constructor (
+    readonly stream: MediaStream,
+    private readonly recorder: Recorder,
+    private readonly uploader: Uploader
+  ) {}
 
-  constructor (recorder: Recorder, uploader: Uploader) {
-    this.recorder = recorder
-    this.uploader = uploader
+  get elapsedTime (): number {
+    return this.recorder.getRecordedTimeMs()
   }
 
-  static async fromNavigatorMediaDevices (opts: Options): Promise<ScreenRecorder> {
-    let width = 0
-    let height = 0
-    const combinedStream = new MediaStream()
-    const getMediaStream =
-      getMetadata(plugin.metadata.GetCustomMediaStream) ??
-      (async (op) => await navigator.mediaDevices.getDisplayMedia(op))
-    const displayStream = await getMediaStream({
-      video: { frameRate: opts.fps ?? 30 }
-    })
-    try {
-      const microphoneStream = await navigator.mediaDevices.getUserMedia({ audio: true })
-      microphoneStream.getAudioTracks().forEach((track) => {
-        combinedStream.addTrack(track)
-      })
-    } catch (err) {
-      console.warn('microphone is disabled', err)
-    }
-    displayStream.getVideoTracks().forEach((track) => {
-      combinedStream.addTrack(track)
-      width = Math.max(track.getSettings().width ?? width, width)
-      height = Math.max(track.getSettings().height ?? height, height)
-    })
-    displayStream.getAudioTracks().forEach((track) => {
-      combinedStream.addTrack(track)
-    })
-
-    const recorder = new Recorder(combinedStream)
-    const uploader = new TusUploader(recorder.asStream(), { ...opts, metadata: { resolution: width + ':' + height } })
-
-    return new ScreenRecorder(recorder, uploader)
-  }
-
-  public start (): void {
+  public async start (): Promise<void> {
     this.uploader.start()
     this.recorder.start()
   }
 
-  public pause (): void {
+  public async pause (): Promise<void> {
     this.recorder.pause()
   }
 
-  public resume (): void {
+  public async resume (): Promise<void> {
     this.recorder.resume()
   }
 
-  public async stop (): Promise<void> {
-    this.recorder.stop()
-    await this.uploader.wait()
+  public async stop (): Promise<RecordingResult> {
+    await this.recorder.stop()
+    return await this.uploader.wait()
   }
 
   public async cancel (): Promise<void> {
-    this.recorder.stop()
+    await this.recorder.stop()
     await this.uploader.cancel()
   }
 }

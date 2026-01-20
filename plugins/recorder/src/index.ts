@@ -11,8 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Asset, IntlString, plugin, Plugin, Resource, Metadata } from '@hanzo/platform'
-import { type UploadHandler } from '@hanzo/uploader'
+import { type Ref } from '@hcengineering/core'
+import { type Drive } from '@hcengineering/drive'
+import { Asset, plugin, Plugin, Resource, Metadata } from '@hcengineering/platform'
+import { type UploadHandler } from '@hcengineering/uploader'
 
 /**
  * @public
@@ -22,26 +24,15 @@ export const recorderId = 'recorder' as Plugin
 /**
  * @public
  */
-export type GetMediaStream = (options?: DisplayMediaStreamOptions) => Promise<MediaStream>
-
-/**
- * @public
- */
 const recordPlugin = plugin(recorderId, {
   icon: {
     Record: '' as Asset
   },
   metadata: {
-    StreamUrl: '' as Metadata<string>,
-    GetCustomMediaStream: '' as Metadata<GetMediaStream>
+    StreamUrl: '' as Metadata<string>
   },
-  string: {
-    Pause: '' as IntlString,
-    Stop: '' as IntlString,
-    Resume: '' as IntlString,
-    Record: '' as IntlString,
-    Cancel: '' as IntlString,
-    ClickToSkip: '' as IntlString
+  space: {
+    Drive: '' as Ref<Drive>
   },
   function: {
     Record: '' as Resource<UploadHandler>

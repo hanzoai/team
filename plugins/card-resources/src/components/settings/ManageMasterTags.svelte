@@ -13,14 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { clearSettingsStore } from '@hanzo/setting-resources'
+  import { MasterTag } from '@hcengineering/card'
+  import { Ref } from '@hcengineering/core'
+  import { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
+  import { clearSettingsStore } from '@hcengineering/setting-resources'
   import {
     Icon,
     IconOpenedArrow,
-    IconWithEmoji,
     Label,
     Location,
     getCurrentResolvedLocation,
@@ -41,10 +40,16 @@
     selectedTagId = loc.path[4] as Ref<MasterTag>
   }
 
+  const client = getClient()
+  const h = client.getHierarchy()
+
   let tags: MasterTag[] = []
   const tagsQuery = createQuery()
   $: tagsQuery.query(card.class.MasterTag, {}, (result) => {
-    tags = result.filter((p) => p.removed !== true).sort((a, b) => a.label.localeCompare(b.label))
+    tags = [
+      h.getClass(card.class.Card),
+      ...result.filter((p) => p.removed !== true).sort((a, b) => a.label.localeCompare(b.label))
+    ]
   })
 
   function selectProjectType (id: string): void {
@@ -69,7 +74,7 @@
       {#if tag.icon}
         <div class="hanzoaiTaskNavLink-icon">
           <Icon
-            icon={tag.icon === view.ids.IconWithEmoji ? IconWithEmoji : tag.icon ?? card.icon.MasterTag}
+            icon={tag.icon === view.ids.IconWithEmoji ? IconWithEmoji : (tag.icon ?? card.icon.MasterTag)}
             iconProps={tag.icon === view.ids.IconWithEmoji ? { icon: tag.color } : {}}
             size="small"
             fill="currentColor"

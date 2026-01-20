@@ -13,21 +13,36 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onDestroy } from 'svelte'
   import { type Editor } from '@tiptap/core'
-  import { type TextEditorAction, type ActionContext } from '@hanzo/text-editor'
-  import { getResource } from '@hanzo/platform'
-  import { Icon, IconSize, tooltip } from '@hanzo/ui'
+  import { type TextEditorAction, type ActionContext } from '@hcengineering/text-editor'
+  import { getResource } from '@hcengineering/platform'
+  import { Icon, IconSize, tooltip, type LabelAndProps } from '@hcengineering/ui'
+  import { Transaction } from '@tiptap/pm/state'
 
   export let action: TextEditorAction
   export let size: IconSize
   export let editor: Editor
   export let actionCtx: ActionContext
   export let blockMouseEvents = true
+  export let listenCursorUpdate = false
+  export let tooltipOptions: LabelAndProps | undefined = undefined
 
   const dispatch = createEventDispatcher()
   let selected: boolean = false
   $: void updateSelected(editor, action)
+
+  if (listenCursorUpdate) {
+    const listener = ({ transaction }: { transaction: Transaction }): void => {
+      if (transaction.getMeta('contextCursorUpdate') === true) {
+        void updateSelected(editor, action)
+      }
+    }
+    editor.on('transaction', listener)
+    onDestroy(() => {
+      editor.off('transaction', listener)
+    })
+  }
 
   async function updateSelected (e: Editor, { isActive }: TextEditorAction): Promise<void> {
     if (isActive === undefined) {
@@ -48,6 +63,7 @@
     if (blockMouseEvents) {
       event.preventDefault()
       event.stopPropagation()
+      editor.view.focus()
     }
 
     const handler = action.action
@@ -59,7 +75,7 @@
       const { command, params } = handler
 
       const cmd = (editor.commands as any)[command]
-      if (cmd) {
+      if (cmd !== null && cmd !== undefined) {
         cmd(params)
       }
     }
@@ -70,7 +86,7 @@
 <button
   class="button {size}"
   class:selected
-  use:tooltip={{ label: action.label }}
+  use:tooltip={{ label: action.label, ...tooltipOptions }}
   tabindex="0"
   data-id={'btn' + action.label.split(':').pop()}
   on:click={handleClick}

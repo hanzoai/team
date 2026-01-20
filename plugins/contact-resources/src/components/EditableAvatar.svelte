@@ -47,8 +47,9 @@
     if (selectedAvatarType === AvatarType.IMAGE && direct !== undefined) {
       const uploadFile = await getResource(attachment.helper.UploadFile)
       const file = new File([direct], 'avatar', { type: direct.type })
+      const { uuid } = await uploadFile(file)
 
-      result.avatar = await uploadFile(file)
+      result.avatar = uuid
     }
     return result
   }
@@ -93,18 +94,16 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="cursor-pointer" on:click|self={showSelectionPopup}>
-  <AvatarComponent
-    {direct}
-    {size}
-    {icon}
-    person={{
-      avatarType: selectedAvatarType,
-      avatarProps: selectedAvatarProps,
-      avatar: selectedAvatar
-    }}
-    {name}
-  />
-</div>
+<AvatarComponent
+  {direct}
+  {size}
+  {icon}
+  person={{
+    avatarType: selectedAvatarType,
+    avatarProps: selectedAvatarProps,
+    avatar: selectedAvatar
+  }}
+  {name}
+  clickable
+  on:click={showSelectionPopup}
+/>

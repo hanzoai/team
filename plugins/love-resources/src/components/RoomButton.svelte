@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Avatar, personByIdStore } from '@hanzo/contact-resources'
-  import { tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hanzo/ui'
-  import { ParticipantInfo } from '@hanzo/love'
-  import { formatName } from '@hanzo/contact'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { Avatar, getPersonByPersonRefStore } from '@hcengineering/contact-resources'
+  import { tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hcengineering/ui'
+  import { ParticipantInfo } from '@hcengineering/love'
+  import { formatName } from '@hcengineering/contact'
   import ParticipantsList from './ParticipantsList.svelte'
 
   export let label: string
@@ -27,6 +27,7 @@
 
   $: overLimit = participants.length > limit
   $: adaptive = checkAdaptiveMatching($deviceInfo.size, 'md') || overLimit
+  $: personByRefStore = getPersonByPersonRefStore(participants.map((p) => p.person))
 </script>
 
 {#if adaptive}
@@ -46,9 +47,9 @@
           data-over={i === limit - 1 && overLimit ? `+${participants.length - limit + 1}` : undefined}
         >
           <Avatar
-            name={$personByIdStore.get(participant.person)?.name ?? participant.name}
+            name={$personByRefStore.get(participant.person)?.name ?? participant.name}
             size={'card'}
-            person={$personByIdStore.get(participant.person)}
+            person={$personByRefStore.get(participant.person)}
           />
         </div>
       {/each}
@@ -66,9 +67,9 @@
           on:click={participant.onclick}
         >
           <Avatar
-            name={$personByIdStore.get(participant.person)?.name ?? participant.name}
+            name={$personByRefStore.get(participant.person)?.name ?? participant.name}
             size={'card'}
-            person={$personByIdStore.get(participant.person)}
+            person={$personByRefStore.get(participant.person)}
           />
         </div>
       {/each}

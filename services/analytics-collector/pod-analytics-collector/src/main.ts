@@ -13,17 +13,24 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { SplitLogger, configureAnalytics } from '@hanzo/analytics-service'
-import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
+import { setMetadata } from '@hcengineering/platform'
+import serverClient from '@hcengineering/server-client'
+import serverToken from '@hcengineering/server-token'
+
+import { Analytics } from '@hcengineering/analytics'
+import { SplitLogger, configureAnalytics, createOpenTelemetryMetricsContext } from '@hcengineering/analytics-service'
+import { newMetrics } from '@hcengineering/core'
 import { join } from 'path'
 
+import { initStatisticsContext } from '@hcengineering/server-core'
 import config from './config'
-import { initStatisticsContext } from '@hanzo/server-core'
+import { createServer, listen } from './server'
+import { setGeoipLogContext } from './geoip'
 
+configureAnalytics('analytics-collector', process.env.VERSION ?? '0.7.0')
 const ctx = initStatisticsContext('analytics-collector', {
   factory: () =>
-    new MeasureMetricsContext(
+    createOpenTelemetryMetricsContext(
       'analytics-collector-service',
       {},
       {},
@@ -35,40 +42,33 @@ const ctx = initStatisticsContext('analytics-collector', {
     )
 })
 
-configureAnalytics(config.SentryDSN, config)
 Analytics.setTag('application', 'analytics-collector-service')
 
 export const main = async (): Promise<void> => {
-  ctx.info('Analytics collector service is not implemented yet')
-  process.exit()
-  // setMetadata(serverToken.metadata.Secret, config.Secret)
-  // setMetadata(serverClient.metadata.Endpoint, config.AccountsUrl)
-  // setMetadata(serverClient.metadata.UserAgent, config.ServiceID)
-  //
-  // ctx.info('Analytics service started', {
-  //   accountsUrl: config.AccountsUrl
-  // })
-  //
-  // registerLoaders()
-  //
-  // const db = await getDB()
-  // const collector = new Collector(ctx, db)
-  //
-  // const app = createServer(collector)
-  // const server = listen(app, config.Port)
-  //
-  // const shutdown = (): void => {
-  //   void collector.close()
-  //   void closeDB()
-  //   server.close(() => process.exit())
-  // }
-  //
-  // process.on('SIGINT', shutdown)
-  // process.on('SIGTERM', shutdown)
-  // process.on('uncaughtException', (e) => {
-  //   console.error(e)
-  // })
-  // process.on('unhandledRejection', (e) => {
-  //   console.error(e)
-  // })
+  setMetadata(serverToken.metadata.Secret, config.Secret)
+  setMetadata(serverClient.metadata.Endpoint, config.AccountsUrl)
+  setMetadata(serverClient.metadata.UserAgent, config.ServiceID)
+
+  // Set context for geoip logging
+  setGeoipLogContext(ctx)
+
+  ctx.info('Analytics service started', {
+    accountsUrl: config.AccountsUrl
+  })
+
+  const app = createServer(ctx)
+  const server = listen(app, config.Port)
+
+  const shutdown = (): void => {
+    server.close(() => process.exit())
+  }
+
+  process.on('SIGINT', shutdown)
+  process.on('SIGTERM', shutdown)
+  process.on('uncaughtException', (e) => {
+    console.error(e)
+  })
+  process.on('unhandledRejection', (e) => {
+    console.error(e)
+  })
 }

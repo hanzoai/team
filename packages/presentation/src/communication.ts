@@ -12,74 +12,91 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+import { closeLiveQueries, initLiveQueries, refreshLiveQueries } from '@hcengineering/communication-client-query'
 import {
-  type AccountID,
-  type BlobID,
+  type AddAttachmentsOperation,
+  type AddCollaboratorsEvent,
+  type AttachmentPatchEvent,
+  type CreateMessageEvent,
+  type CreateMessageResult,
+  type Event,
+  type EventResult,
+  MessageEventType,
+  NotificationEventType,
+  type ReactionPatchEvent,
+  type RemoveAttachmentsOperation,
+  type RemoveCollaboratorsEvent,
+  type RemoveNotificationContextEvent,
+  type RemovePatchEvent,
+  type SetAttachmentsOperation,
+  type ThreadPatchEvent,
+  type UpdateAttachmentsOperation,
+  type UpdateNotificationContextEvent,
+  type UpdateNotificationEvent,
+  type NotificationQuery,
+  type UpdatePatchEvent
+} from '@hcengineering/communication-sdk-types'
+import {
+  type AccountUuid,
   type CardID,
+  type CardType,
+  type Collaborator,
   type ContextID,
-  type FindMessagesGroupsParams,
-  type FindMessagesParams,
+  type FindCollaboratorsParams,
+  type FindLabelsParams,
   type FindNotificationContextParams,
   type FindNotificationsParams,
+  type FindMessagesMetaParams,
+  type Label,
+  type Markdown,
   type Message,
   type MessageID,
-  type MessagesGroup,
   MessageType,
   type Notification,
   type NotificationContext,
-  PatchType,
-  type RichText,
   type SocialID,
-  type CardType,
-  type Label,
-  type FindLabelsParams
-} from '@hanzo/communication-types'
-import {
-  type CreateFileEvent,
-  type CreateMessageEvent,
-  type CreateMessageResult,
-  type CreatePatchEvent,
-  type CreateReactionEvent,
-  type CreateThreadEvent,
-  type EventResult,
-  type RemoveFileEvent,
-  type RemoveReactionEvent,
-  type RequestEvent,
-  type ResponseEvent,
-  type UpdateNotificationContextEvent,
-  MessageRequestEventType,
-  NotificationRequestEventType
-} from '@hanzo/communication-sdk-types'
-import {
-  type Client as PlatformClient,
-  type ClientConnection as PlatformConnection,
-  getCurrentAccount,
-  type SocialId,
+  type AttachmentID,
+  type AttachmentData,
+  type AttachmentParams,
+  type AttachmentUpdateData,
+  type WithTotal,
+  type NotificationID,
+  type Emoji,
+  type MessageMeta,
+  type FindMessagesGroupParams,
+  type MessagesGroup
+} from '@hcengineering/communication-types'
+import core, {
   generateId,
-  SocialIdType
-} from '@hanzo/core'
+  getCurrentAccount,
+  type OperationDomain,
+  type Client as PlatformClient,
+  SocialIdType,
+  type Tx,
+  type TxDomainEvent,
+  AccountRole
+} from '@hcengineering/core'
 import { onDestroy } from 'svelte'
-import {
+import { addNotification, NotificationSeverity, languageStore } from '@hcengineering/ui'
+import { getMetadata, translate } from '@hcengineering/platform'
+import view from '@hcengineering/view'
+import { get } from 'svelte/store'
+import { getWorkspaceClient as getHulylakeClient } from '@hcengineering/hulylake-client'
+import { v4 as uuid } from 'uuid'
+
+import { getCurrentWorkspaceUuid } from './file'
+import { addTxListener, removeTxListener, type TxListener } from './utils'
+import presentation from './plugin'
+
+export {
+  createCollaboratorsQuery,
+  createLabelsQuery,
   createMessagesQuery,
   createNotificationContextsQuery,
   createNotificationsQuery,
-  createLabelsQuery,
-  initLiveQueries
-} from '@hanzo/communication-client-query'
-
-import { getCurrentWorkspaceUuid, getFilesUrl } from './file'
-
-export { createMessagesQuery, createNotificationsQuery, createNotificationContextsQuery, createLabelsQuery }
-
-interface Connection extends PlatformConnection {
-  findMessages: (params: FindMessagesParams, queryId?: number) => Promise<Message[]>
-  findMessagesGroups: (params: FindMessagesGroupsParams) => Promise<MessagesGroup[]>
-  findNotificationContexts: (params: FindNotificationContextParams, queryId?: number) => Promise<NotificationContext[]>
-  findNotifications: (params: FindNotificationsParams, queryId?: number) => Promise<Notification[]>
-  findLabels: (params: FindLabelsParams) => Promise<Label[]>
-  sendEvent: (event: RequestEvent) => Promise<EventResult>
-  unsubscribeQuery: (id: number) => Promise<void>
-}
+  initLiveQueries,
+  type MessageQueryParams
+} from '@hcengineering/communication-client-query'
 
 let client: CommunicationClient
 
@@ -89,191 +106,383 @@ export function getCommunicationClient (): CommunicationClient {
   return client
 }
 
-export async function setCommunicationClient (platformClient: PlatformClient, socialIds: SocialId[]): Promise<void> {
-  const connection = platformClient.getConnection?.()
-  if (connection === undefined) {
-    return
+export async function setCommunicationClient (platformClient: PlatformClient): Promise<void> {
+  console.log('setCommunicationClient')
+  if (client !== undefined) {
+    client.close()
   }
-  client = new Client(connection as unknown as Connection, socialIds)
-  initLiveQueries(client, getCurrentWorkspaceUuid(), getFilesUrl(), onDestroy)
+  const _client = new Client(platformClient)
+
+  const token = getMetadata(presentation.metadata.Token) ?? ''
+  const hulylakeUrl = getMetadata(presentation.metadata.HulylakeUrl) ?? ''
+  const hulylake = getHulylakeClient(hulylakeUrl, getCurrentWorkspaceUuid(), token)
+
+  initLiveQueries(_client, hulylake, onDestroy)
+  client = _client
+  onClientListeners.forEach((fn) => {
+    fn()
+  })
 }
 
+export type AttachmentDataWithOptionalId<P extends AttachmentParams = AttachmentParams> = Omit<
+AttachmentData<P>,
+'id'
+> & {
+  id?: AttachmentID
+}
+
+const COMMUNICATION = 'communication' as OperationDomain
+
 class Client {
-  private readonly hanzoaiSocialId: SocialId | undefined
-
-  constructor (
-    private readonly connection: Connection,
-    socialIds: SocialId[]
-  ) {
-    this.hanzoaiSocialId = socialIds.find((it) => it.verifiedOn !== undefined && it.type === SocialIdType.HANZOAI)
-
-    connection.pushHandler((...events: any[]) => {
-      for (const event of events) {
-        if (event != null && 'type' in event) {
-          this.onEvent(event as ResponseEvent)
-        }
-      }
-    })
+  txHandler: TxListener
+  constructor (private readonly connection: PlatformClient) {
+    this.txHandler = this.doHandleEvents.bind(this)
+    addTxListener(this.txHandler)
   }
 
-  onEvent: (event: ResponseEvent) => void = () => {}
-  onRequest: (event: RequestEvent, eventPromise: Promise<EventResult>) => void = () => {}
+  doHandleEvents (events: Tx[]): void {
+    for (const event of events) {
+      if (event._class === core.class.TxDomainEvent && (event as TxDomainEvent).domain === COMMUNICATION) {
+        const evt = event as TxDomainEvent<Event>
+        this.onEvent(evt.event)
+      }
+    }
+  }
 
-  async createThread (card: CardID, message: MessageID, thread: CardID, messageCreated: Date): Promise<void> {
-    const event: CreateThreadEvent = {
-      type: MessageRequestEventType.CreateThread,
-      card,
-      message,
-      thread,
-      messageCreated
+  onEvent: (event: Event) => void = () => {}
+  onRequest: (event: Event, eventPromise: Promise<EventResult>) => void = () => {}
+
+  async attachThread (cardId: CardID, messageId: MessageID, threadId: CardID, threadType: CardType): Promise<void> {
+    const event: ThreadPatchEvent = {
+      type: MessageEventType.ThreadPatch,
+      cardId,
+      messageId,
+      operation: {
+        opcode: 'attach',
+        threadId,
+        threadType
+      },
+      socialId: this.getSocialId()
     }
 
     await this.sendEvent(event)
   }
 
-  async createMessage (card: CardID, cardType: CardType, content: RichText): Promise<MessageID> {
+  async createMessage (cardId: CardID, cardType: CardType, content: Markdown): Promise<CreateMessageResult> {
     const event: CreateMessageEvent = {
-      type: MessageRequestEventType.CreateMessage,
-      messageType: MessageType.Message,
-      card,
+      type: MessageEventType.CreateMessage,
+      messageType: MessageType.Text,
+      cardId,
       cardType,
       content,
-      creator: this.getSocialId()
+      socialId: this.getSocialId(),
+      options: {
+        skipLinkPreviews: true
+      }
     }
     const result = await this.sendEvent(event)
-    return (result as CreateMessageResult).id
+    return result as CreateMessageResult
   }
 
-  async updateMessage (card: CardID, message: MessageID, content: RichText, messageCreated: Date): Promise<void> {
-    const event: CreatePatchEvent = {
-      type: MessageRequestEventType.CreatePatch,
-      patchType: PatchType.update,
-      card,
-      message,
+  async updateMessage (cardId: CardID, messageId: MessageID, content: Markdown): Promise<void> {
+    const event: UpdatePatchEvent = {
+      type: MessageEventType.UpdatePatch,
+      cardId,
+      messageId,
       content,
-      creator: this.getSocialId(),
-      messageCreated
+      socialId: this.getSocialId(),
+      options: {
+        skipLinkPreviewsUpdate: true
+      }
     }
     await this.sendEvent(event)
   }
 
-  async createReaction (card: CardID, message: MessageID, reaction: string, messageCreated: Date): Promise<void> {
-    const event: CreateReactionEvent = {
-      type: MessageRequestEventType.CreateReaction,
-      card,
-      message,
-      reaction,
-      creator: this.getSocialId(),
-      messageCreated
+  async removeMessage (cardId: CardID, messageId: MessageID): Promise<void> {
+    const event: RemovePatchEvent = {
+      type: MessageEventType.RemovePatch,
+      cardId,
+      messageId,
+      socialId: this.getSocialId()
     }
     await this.sendEvent(event)
   }
 
-  async removeReaction (card: CardID, message: MessageID, reaction: string, messageCreated: Date): Promise<void> {
-    const event: RemoveReactionEvent = {
-      type: MessageRequestEventType.RemoveReaction,
-      card,
-      message,
-      reaction,
-      creator: this.getSocialId(),
-      messageCreated
+  async addReaction (cardId: CardID, messageId: MessageID, emoji: Emoji): Promise<void> {
+    const event: ReactionPatchEvent = {
+      type: MessageEventType.ReactionPatch,
+      cardId,
+      messageId,
+      operation: {
+        opcode: 'add',
+        reaction: emoji
+      },
+      socialId: this.getSocialId()
     }
     await this.sendEvent(event)
   }
 
-  async createFile (
-    card: CardID,
-    message: MessageID,
-    blobId: BlobID,
-    fileType: string,
-    filename: string,
-    size: number,
-    messageCreated: Date
+  async removeReaction (cardId: CardID, messageId: MessageID, emoji: Emoji): Promise<void> {
+    const event: ReactionPatchEvent = {
+      type: MessageEventType.ReactionPatch,
+      cardId,
+      messageId,
+      operation: {
+        opcode: 'remove',
+        reaction: emoji
+      },
+      socialId: this.getSocialId()
+    }
+    await this.sendEvent(event)
+  }
+
+  async attachmentPatch<P extends AttachmentParams>(
+    cardId: CardID,
+    messageId: MessageID,
+    ops: {
+      add?: Array<AttachmentDataWithOptionalId<P>>
+      remove?: AttachmentID[]
+      set?: Array<AttachmentDataWithOptionalId<P>>
+      update?: Array<AttachmentUpdateData<P>>
+    }
   ): Promise<void> {
-    const event: CreateFileEvent = {
-      type: MessageRequestEventType.CreateFile,
-      card,
-      message,
-      blobId,
-      fileType,
-      filename,
-      size,
-      creator: this.getSocialId(),
-      messageCreated
+    const operations: Array<
+    AddAttachmentsOperation | RemoveAttachmentsOperation | SetAttachmentsOperation | UpdateAttachmentsOperation
+    > = []
+
+    if (ops.add != null && ops.add.length > 0) {
+      operations.push({
+        opcode: 'add',
+        attachments: ops.add.map((it) => ({
+          ...it,
+          id: it.id ?? (uuid() as AttachmentID)
+        }))
+      })
+    }
+
+    if (ops.remove != null && ops.remove.length > 0) {
+      operations.push({
+        opcode: 'remove',
+        ids: ops.remove
+      })
+    }
+
+    if (ops.set != null && ops.set.length > 0) {
+      operations.push({
+        opcode: 'set',
+        attachments: ops.set.map((it) => ({
+          ...it,
+          id: it.id ?? (uuid() as AttachmentID)
+        }))
+      })
+    }
+
+    if (ops.update != null && ops.update.length > 0) {
+      operations.push({
+        opcode: 'update',
+        attachments: ops.update
+      })
+    }
+
+    if (operations.length === 0) return
+
+    const event: AttachmentPatchEvent = {
+      type: MessageEventType.AttachmentPatch,
+      cardId,
+      messageId,
+      operations,
+      socialId: this.getSocialId()
     }
     await this.sendEvent(event)
   }
 
-  async removeFile (card: CardID, message: MessageID, blobId: BlobID, messageCreated: Date): Promise<void> {
-    const event: RemoveFileEvent = {
-      type: MessageRequestEventType.RemoveFile,
-      card,
-      message,
-      blobId,
-      creator: this.getSocialId(),
-      messageCreated
+  async addCollaborators (cardId: CardID, cardType: CardType, collaborators: AccountUuid[]): Promise<void> {
+    const event: AddCollaboratorsEvent = {
+      type: NotificationEventType.AddCollaborators,
+      cardId,
+      cardType,
+      collaborators,
+      socialId: this.getSocialId()
     }
     await this.sendEvent(event)
   }
 
-  async updateNotificationContext (context: ContextID, lastView?: Date): Promise<void> {
+  async removeCollaborators (cardId: CardID, cardType: CardType, collaborators: AccountUuid[]): Promise<void> {
+    const event: RemoveCollaboratorsEvent = {
+      type: NotificationEventType.RemoveCollaborators,
+      cardId,
+      cardType,
+      collaborators,
+      socialId: this.getSocialId()
+    }
+    await this.sendEvent(event)
+  }
+
+  async updateNotificationContext (contextId: ContextID, lastView: Date): Promise<void> {
     const event: UpdateNotificationContextEvent = {
-      type: NotificationRequestEventType.UpdateNotificationContext,
-      context,
+      type: NotificationEventType.UpdateNotificationContext,
+      contextId,
       account: this.getAccount(),
-      lastView
+      updates: {
+        lastView
+      }
     }
     await this.sendEvent(event)
   }
 
-  async findMessages (params: FindMessagesParams, queryId?: number): Promise<Message[]> {
-    return await this.connection.findMessages(params, queryId)
+  async removeNotificationContext (contextId: ContextID): Promise<void> {
+    const event: RemoveNotificationContextEvent = {
+      type: NotificationEventType.RemoveNotificationContext,
+      contextId,
+      account: this.getAccount()
+    }
+    await this.sendEvent(event)
   }
 
-  async findMessagesGroups (params: FindMessagesGroupsParams): Promise<MessagesGroup[]> {
-    return await this.connection.findMessagesGroups(params)
+  async updateNotifications (
+    contextId: ContextID,
+    query: Pick<NotificationQuery, 'type' | 'untilDate'> & { id?: NotificationID },
+    read: boolean
+  ): Promise<void> {
+    const event: UpdateNotificationEvent = {
+      type: NotificationEventType.UpdateNotification,
+      contextId,
+      account: this.getAccount(),
+      query,
+      updates: {
+        read
+      }
+    }
+    await this.sendEvent(event)
+  }
+
+  async findMessagesMeta (params: FindMessagesMetaParams): Promise<MessageMeta[]> {
+    return (
+      await this.connection.domainRequest<MessageMeta[]>(COMMUNICATION, {
+        findMessagesMeta: { params }
+      })
+    ).value
+  }
+
+  async findMessagesGroups (params: FindMessagesGroupParams): Promise<MessagesGroup[]> {
+    return (
+      await this.connection.domainRequest<MessagesGroup[]>(COMMUNICATION, {
+        findMessagesGroups: { params }
+      })
+    ).value
   }
 
   async findNotificationContexts (
     params: FindNotificationContextParams,
-    queryId?: number
+    subscription?: number | string
   ): Promise<NotificationContext[]> {
-    return await this.connection.findNotificationContexts(params, queryId)
+    return (
+      await this.connection.domainRequest<NotificationContext[]>(COMMUNICATION, {
+        findNotificationContexts: { params, subscription }
+      })
+    ).value
   }
 
-  async findNotifications (params: FindNotificationsParams, queryId?: number): Promise<Notification[]> {
-    return await this.connection.findNotifications(params, queryId)
+  async findNotifications (
+    params: FindNotificationsParams,
+    subscription?: number | string
+  ): Promise<WithTotal<Notification>> {
+    return (
+      await this.connection.domainRequest<WithTotal<Notification>>(COMMUNICATION, {
+        findNotifications: { params, subscription }
+      })
+    ).value
   }
 
   async findLabels (params: FindLabelsParams): Promise<Label[]> {
-    return await this.connection.findLabels(params)
+    return (
+      await this.connection.domainRequest<Label[]>(COMMUNICATION, {
+        findLabels: { params }
+      })
+    ).value
   }
 
-  async unsubscribeQuery (id: number): Promise<void> {
-    await this.connection.unsubscribeQuery(id)
+  async findCollaborators (params: FindCollaboratorsParams): Promise<Collaborator[]> {
+    return (
+      await this.connection.domainRequest<Collaborator[]>(COMMUNICATION, {
+        findCollaborators: { params }
+      })
+    ).value
+  }
+
+  async subscribeCard (cardId: CardID, subscription: string | number): Promise<void> {
+    await this.connection.domainRequest<Message[]>(COMMUNICATION, {
+      subscribeCard: { cardId, subscription }
+    })
+  }
+
+  async unsubscribeCard (cardId: CardID, subscription: string | number): Promise<void> {
+    await this.connection.domainRequest<Message[]>(COMMUNICATION, {
+      unsubscribeCard: { cardId, subscription }
+    })
   }
 
   close (): void {
-    // do nothing
+    removeTxListener(this.txHandler)
   }
 
-  private async sendEvent (event: RequestEvent): Promise<EventResult> {
-    const ev: RequestEvent = { ...event, _id: generateId() }
-    const eventPromise = this.connection.sendEvent(ev)
+  private async sendEvent (event: Event): Promise<EventResult> {
+    const lang = get(languageStore)
+    if (getCurrentAccount().role === AccountRole.ReadOnlyGuest) {
+      addNotification(
+        await translate(view.string.ReadOnlyWarningTitle, {}, lang),
+        await translate(view.string.ReadOnlyWarningMessage, {}, lang),
+        view.component.ReadOnlyNotification,
+        undefined,
+        NotificationSeverity.Info,
+        'readOnlyNotification'
+      )
+      return {}
+    }
+
+    const ev: Event = { ...event, _id: generateId() }
+
+    const eventPromise: Promise<EventResult> = this.connection
+      .domainRequest<EventResult>(COMMUNICATION, {
+      event: ev
+    })
+      .then((result) => result.value)
     this.onRequest(ev, eventPromise)
     return await eventPromise
   }
 
   private getSocialId (): SocialID {
     const me = getCurrentAccount()
-    const id = this.hanzoaiSocialId?._id ?? me.primarySocialId
+    const hulySocialId = me.fullSocialIds.find((it) => it.type === SocialIdType.HULY && it.verifiedOn !== undefined)
+    const id = hulySocialId?._id ?? me.primarySocialId
     if (id == null || id === '') {
       throw new Error('Social id not found')
     }
     return id
   }
 
-  private getAccount (): AccountID {
+  private getAccount (): AccountUuid {
     return getCurrentAccount().uuid
   }
+}
+
+const onClientListeners: Array<() => void> = []
+
+export function onCommunicationClient (fn: () => void): void {
+  onClientListeners.push(fn)
+  if (client !== undefined) {
+    setTimeout(() => {
+      fn()
+    })
+  }
+}
+
+export async function refreshCommunicationClient (): Promise<void> {
+  console.log('refreshCommunicationClient')
+  await refreshLiveQueries()
+}
+
+export async function purgeCommunicationClient (): Promise<void> {
+  client.close()
+  closeLiveQueries()
 }

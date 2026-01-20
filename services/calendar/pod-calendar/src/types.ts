@@ -13,14 +13,15 @@
 // limitations under the License.
 //
 
-import { RecurringRule } from '@hanzo/calendar'
-import type { PersonId, Timestamp, WorkspaceUuid } from '@hanzo/core'
+import { RecurringRule } from '@hcengineering/calendar'
+import type { AccountUuid, PersonId, Timestamp, WorkspaceUuid } from '@hcengineering/core'
 import type { NextFunction, Request, Response } from 'express'
 import type { Credentials } from 'google-auth-library'
 
+export type GoogleEmail = string & { googleEmail: true }
+
 export interface WatchBase {
-  userId: PersonId
-  workspace: WorkspaceUuid
+  email: GoogleEmail
   expired: Timestamp
   channelId: string
   resourceId: string
@@ -37,25 +38,7 @@ export interface EventWatch extends WatchBase {
 
 export type Watch = CalendarsWatch | EventWatch
 
-export interface DummyWatch {
-  timer: NodeJS.Timeout
-  calendarId: string
-}
-
-export type Token = User & Credentials
-
-export interface CalendarHistory {
-  userId: PersonId
-  workspace: string
-  historyId: string
-}
-
-export interface EventHistory {
-  calendarId: string
-  userId: PersonId
-  workspace: string
-  historyId: string
-}
+export type Token = User & Credentials & { email: GoogleEmail }
 
 export interface SyncHistory {
   workspace: string
@@ -71,11 +54,12 @@ export interface ReccuringData {
 export interface User {
   userId: PersonId
   workspace: WorkspaceUuid
-  token: string
 }
 
-export type State = User & {
+export interface State {
   redirectURL: string
+  workspace: WorkspaceUuid
+  accountUuid: AccountUuid
 }
 
 export interface AttachedFile {
@@ -109,3 +93,10 @@ export interface ProjectCredentialsData {
   client_secret: string
   redirect_uris: string[]
 }
+
+export const SCOPES = [
+  'https://www.googleapis.com/auth/calendar.calendars.readonly',
+  'https://www.googleapis.com/auth/calendar.calendarlist.readonly',
+  'https://www.googleapis.com/auth/calendar.events',
+  'https://www.googleapis.com/auth/userinfo.email'
+]

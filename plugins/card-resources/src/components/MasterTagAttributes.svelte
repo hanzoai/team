@@ -21,16 +21,14 @@
     Chevron,
     ExpandCollapse,
     getCurrentResolvedLocation,
-    Icon,
     IconAdd,
-    IconWithEmoji,
     Label,
     navigate,
     showPopup
-  } from '@hanzo/ui'
-  import card from '../plugin'
+  } from '@hcengineering/ui'
   import CardAttributes from './CardAttributes.svelte'
-  import view from '@hanzo/view'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+  import CardIcon from './CardIcon.svelte'
 
   export let value: Card
   export let readonly: boolean = false
@@ -55,44 +53,42 @@
 
 <div class="header flex flex-gap-2">
   <div class="label flex flex-gap-2" on:click={isCollapsed ? expand : collapse}>
-    <Icon
-      icon={clazz.icon === view.ids.IconWithEmoji ? IconWithEmoji : clazz.icon ?? card.icon.MasterTag}
-      iconProps={clazz.icon === view.ids.IconWithEmoji ? { icon: clazz.color } : {}}
-      size="large"
-    />
+    <CardIcon {value} size="large" buttonSize={'x-large'} editable={!readonly} />
     <Label {label} />
     <Chevron expanded={!isCollapsed} outline fill={'var(--content-color)'} />
   </div>
-  <div class="btns">
-    <Button
-      icon={IconAdd}
-      kind={'link'}
-      size={'medium'}
-      showTooltip={{ label: setting.string.AddAttribute }}
-      on:click={(ev) => {
-        showPopup(setting.component.CreateAttributePopup, { _class: value._class, isCard: true }, 'top')
-      }}
-    />
-    <Button
-      icon={setting.icon.Setting}
-      kind={'link'}
-      size={'medium'}
-      showTooltip={{ label: setting.string.Setting }}
-      on:click={(ev) => {
-        ev.stopPropagation()
-        const loc = getCurrentResolvedLocation()
-        loc.path[2] = settingId
-        loc.path[3] = 'types'
-        loc.path[4] = value._class
-        loc.path.length = 5
-        loc.fragment = undefined
-        navigate(loc)
-      }}
-    />
-  </div>
+  {#if hasAccountRole(getCurrentAccount(), AccountRole.Maintainer)}
+    <div class="btns">
+      <Button
+        icon={IconAdd}
+        kind={'link'}
+        size={'medium'}
+        showTooltip={{ label: setting.string.AddAttribute }}
+        on:click={() => {
+          showPopup(setting.component.CreateAttributePopup, { _class: value._class, isCard: true }, 'top')
+        }}
+      />
+      <Button
+        icon={setting.icon.Setting}
+        kind={'link'}
+        size={'medium'}
+        showTooltip={{ label: setting.string.Setting }}
+        on:click={(ev) => {
+          ev.stopPropagation()
+          const loc = getCurrentResolvedLocation()
+          loc.path[2] = settingId
+          loc.path[3] = 'types'
+          loc.path[4] = value._class
+          loc.path.length = 5
+          loc.fragment = undefined
+          navigate(loc)
+        }}
+      />
+    </div>
+  {/if}
 </div>
 <ExpandCollapse isExpanded={!isCollapsed}>
-  <CardAttributes object={value} _class={value._class} {readonly} {ignoreKeys} {fourRows} />
+  <CardAttributes object={value} _class={value._class} {readonly} {ignoreKeys} {fourRows} showCollaborators />
 </ExpandCollapse>
 
 <style lang="scss">

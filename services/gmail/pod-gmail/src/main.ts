@@ -15,21 +15,23 @@
 // limitations under the License.
 //
 
-import { SplitLogger } from '@hanzo/analytics-service'
-import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import serverClient from '@hanzo/server-client'
-import { initStatisticsContext, type StorageConfiguration } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken from '@hanzo/server-token'
+import { isWorkspaceLoginInfo } from '@hcengineering/account-client'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { newMetrics, PersonId } from '@hcengineering/core'
+import { closeQueue, initQueue } from '@hcengineering/mail-common'
+import { setMetadata } from '@hcengineering/platform'
+import serverClient, { getAccountClient } from '@hcengineering/server-client'
+import { initStatisticsContext, type StorageConfiguration } from '@hcengineering/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import serverToken, { decodeToken } from '@hcengineering/server-token'
 import { type IncomingHttpHeaders } from 'http'
 import { join } from 'path'
+
 import { decode64 } from './base64'
 import config from './config'
 import { GmailController } from './gmailController'
 import { createServer, listen } from './server'
-import { closeDB, getDB } from './storage'
-import { type Endpoint, type State } from './types'
+import { IntegrationVersion, type Endpoint, type State } from './types'
 
 const extractToken = (header: IncomingHttpHeaders): any => {
   try {
@@ -42,7 +44,7 @@ const extractToken = (header: IncomingHttpHeaders): any => {
 export const main = async (): Promise<void> => {
   const ctx = initStatisticsContext('gmail', {
     factory: () =>
-      new MeasureMetricsContext(
+      createOpenTelemetryMetricsContext(
         'gmail',
         {},
         {},
@@ -57,12 +59,16 @@ export const main = async (): Promise<void> => {
   setMetadata(serverClient.metadata.Endpoint, config.AccountsURL)
   setMetadata(serverClient.metadata.UserAgent, config.ServiceID)
   setMetadata(serverToken.metadata.Secret, config.Secret)
+  setMetadata(serverToken.metadata.Service, 'gmail')
 
   const storageConfig: StorageConfiguration = storageConfigFromEnv()
   const storageAdapter = buildStorageFromConfig(storageConfig)
 
-  const db = await getDB()
-  const gmailController = GmailController.create(ctx, db, storageAdapter)
+  if (config.Version === IntegrationVersion.V2) {
+    initQueue(ctx, 'gmail-service', config)
+  }
+
+  const gmailController = GmailController.create(ctx, storageAdapter)
   await gmailController.startAll()
   const endpoints: Endpoint[] = [
     {
@@ -70,22 +76,30 @@ export const main = async (): Promise<void> => {
       type: 'get',
       handler: async (req, res) => {
         try {
-          // TODO: FIXME
-          throw new Error('Not implemented')
-          // const token = extractToken(req.headers)
+          ctx.info('Signin request received')
+          const token = extractToken(req.headers)
 
-          // if (token === undefined) {
-          //   res.status(401).send()
-          //   return
-          // }
-          // const redirectURL = req.query.redirectURL as string
+          if (token === undefined) {
+            res.status(401).send()
+            return
+          }
+          const redirectURL = req.query.redirectURL as string
 
-          // const { workspace } = decodeToken(token)
-          // const gmail = await gmailController.getGmailClient(email, workspace, token)
-          // const url = gmail.getAutUrl(redirectURL)
-          // res.send(url)
+          const accountClient = getAccountClient(token)
+          const wsLoginInfo = await accountClient.getLoginInfoByToken()
+          if (!isWorkspaceLoginInfo(wsLoginInfo)) {
+            res.status(400).send({ err: "Couldn't find workspace with the provided token" })
+            return
+          }
+
+          const authProvider = gmailController.getAuthProvider()
+          const url = authProvider.getAuthUrl(redirectURL, {
+            workspace: wsLoginInfo.workspace,
+            userId: wsLoginInfo.account
+          })
+          res.send(url)
         } catch (err) {
-          console.log('signin error', (err as any).message)
+          ctx.error('signin error', { message: (err as any).message })
           res.status(500).send()
         }
       }
@@ -94,31 +108,44 @@ export const main = async (): Promise<void> => {
       endpoint: '/signin/code',
       type: 'get',
       handler: async (req, res) => {
-        const code = req.query.code as string
-        const state = JSON.parse(decode64(req.query.state as string)) as unknown as State
-        const gmail = await gmailController.createClient(state)
-        await gmail.authorize(code)
-        res.redirect(state.redirectURL)
+        let state: State | undefined
+        try {
+          ctx.info('Signin code request received')
+          const code = req.query.code as string
+          state = JSON.parse(decode64(req.query.state as string)) as unknown as State
+          await gmailController.createClient(state, code)
+          res.redirect(state.redirectURL)
+        } catch (err: any) {
+          ctx.error('Failed to process signin code', { message: err.message })
+          if (state !== undefined) {
+            const errorMessage = encodeURIComponent(err.message)
+            const url = new URL(state.redirectURL)
+            url.searchParams.append('integrationError', errorMessage)
+            res.redirect(url.toString())
+          } else {
+            res.status(500).send()
+          }
+        }
       }
     },
     {
       endpoint: '/signout',
       type: 'get',
       handler: async (req, res) => {
+        ctx.info('Signout request received')
         try {
-          // TODO: FIXME
-          throw new Error('Not implemented')
-          // const token = extractToken(req.headers)
+          const token = extractToken(req.headers)
 
-          // if (token === undefined) {
-          //   res.status(401).send()
-          //   return
-          // }
+          if (token === undefined) {
+            res.status(401).send()
+            return
+          }
 
-          // const { email, workspace } = decodeToken(token)
-          // await gmailController.signout(workspace.name, email)
+          const { account, workspace } = decodeToken(token)
+
+          await gmailController.signout(workspace, account)
         } catch (err) {
-          console.log('signout error', JSON.stringify(err))
+          ctx.error('signout error', { message: JSON.stringify(err) })
         }
 
         res.send()
@@ -128,14 +155,76 @@ export const main = async (): Promise<void> => {
       endpoint: '/push',
       type: 'post',
       handler: async (req, res) => {
-        const data = req.body?.message?.data
-        if (data === undefined) {
-          res.status(400).send({ err: "'data' is missing" })
-          return
-        }
-        gmailController.push(data)
+        try {
+          const data = req.body?.message?.data
+          if (data === undefined) {
+            res.status(400).send({ err: "'data' is missing" })
+            return
+          }
+          gmailController.push(data)
 
-        res.send()
+          res.send()
+        } catch (err: any) {
+          ctx.error('Push request failed', { message: err.message })
+          res.status(500).send()
+        }
+      }
+    },
+    {
+      endpoint: '/state',
+      type: 'get',
+      handler: async (req, res) => {
+        try {
+          const token = extractToken(req.headers)
+
+          if (token === undefined) {
+            res.status(401).send()
+            return
+          }
+
+          const { workspace } = decodeToken(token)
+          const socialId = req.query.socialId as PersonId | undefined
+          if (socialId == null || socialId === '') {
+            res.status(400).send({ error: 'Missing socialId param' })
+            return
+          }
+          const state = await gmailController.getState(workspace, socialId)
+          if (state === undefined) {
+            res.status(404).send({ error: 'No gmail clients found for social id' })
+            return
+          }
+          res.send(state)
+        } catch (err: any) {
+          ctx.error('Failed to get integration state', { message: err.message })
+          res.status(500).send({ error: err.message })
+        }
+      }
+    },
+    {
+      endpoint: '/start-sync',
+      type: 'post',
+      handler: async (req, res) => {
+        try {
+          const token = extractToken(req.headers)
+
+          if (token === undefined) {
+            res.status(401).send()
+            return
+          }
+
+          const { workspace } = decodeToken(token)
+          const socialId = req.query.socialId as PersonId | undefined
+          ctx.info('Sync request received', { workspace, socialId })
+          if (socialId == null || socialId === '') {
+            res.status(400).send({ error: 'Missing socialId param' })
+            return
+          }
+          await gmailController.startSyncForClient(workspace, socialId)
+          res.send({ success: true })
+        } catch (err: any) {
+          ctx.error('Failed to start sync for client', { message: err.message })
+          res.status(500).send({ error: err.message })
+        }
       }
     }
   ]
@@ -145,7 +234,7 @@ export const main = async (): Promise<void> => {
   const asyncClose = async (): Promise<void> => {
     await gmailController.close()
     await storageAdapter.close()
-    await closeDB()
+    await closeQueue()
   }
 
   const shutdown = (): void => {

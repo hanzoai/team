@@ -4,16 +4,16 @@
 -->
 
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Doc, type Blob, type Ref } from '@hanzo/core'
-  import presentation, { PDFViewer, createQuery, getClient } from '@hanzo/presentation'
-  import guest, { PublicLink, createPublicLink } from '@hanzo/guest'
-  import view from '@hanzo/view'
-  import { Location } from '@hanzo/ui'
-  import { getObjectLinkFragment } from '@hanzo/view-resources'
-  import { printToPDF } from '@hanzo/print'
-  import { signPDF } from '@hanzo/sign'
-  import { getMetadata } from '@hanzo/platform'
+  import { Analytics } from '@hcengineering/analytics'
+  import { Doc, type Blob, type Ref } from '@hcengineering/core'
+  import presentation, { PDFViewer, createQuery, getClient } from '@hcengineering/presentation'
+  import guest, { PublicLink, createPublicLink } from '@hcengineering/guest'
+  import view from '@hcengineering/view'
+  import { Location } from '@hcengineering/ui'
+  import { getDocTitle, getObjectLinkFragment } from '@hcengineering/view-resources'
+  import { printToPDF } from '@hcengineering/print'
+  import { signPDF } from '@hcengineering/sign'
+  import { getMetadata } from '@hcengineering/platform'
 
   export let object: Doc
   export let signed: boolean = false
@@ -24,6 +24,7 @@
   let isLinkLoading = true
   let link: PublicLink | undefined = undefined
   let file: Ref<Blob> | undefined = undefined
+  let title = ''
 
   $: objId = object?._id
 
@@ -57,7 +58,6 @@
             },
             (err) => {
               Analytics.handleError(err)
-              console.error(err)
               isLoading = false
             }
           )
@@ -68,7 +68,6 @@
       },
       (err) => {
         Analytics.handleError(err)
-        console.error(err)
         isLoading = false
       }
     )
@@ -96,6 +95,13 @@
       await createPublicLink(client, obj, location)
     }
   }
+
+  async function updateDocTitle (obj: Doc): Promise<void> {
+    const value = (await getDocTitle(client, obj._id, obj._class, obj)) ?? ''
+    title = value !== '' ? value + '.pdf' : ''
+  }
+
+  $: void updateDocTitle(object)
 </script>
 
-<PDFViewer {file} name="PDF print preview" contentType="application/pdf" {isLoading} on:close on:fullsize />
+<PDFViewer {file} name={title} contentType="application/pdf" showIcon={false} {isLoading} on:close on:fullsize />

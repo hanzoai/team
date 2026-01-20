@@ -13,19 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Attribute, Class, Ref, Status, StatusCategory } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
-  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
-  import { ProjectType, TaskType, calculateStatuses, createState } from '@hanzo/task'
+  import core, { Attribute, Class, Ref, Status, StatusCategory } from '@hcengineering/core'
+  import { Asset, getEmbeddedLabel } from '@hcengineering/platform'
+  import presentation, { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
+  import { clearSettingsStore, settingsStore } from '@hcengineering/setting-resources'
+  import { ProjectType, TaskType, calculateStatuses, createState } from '@hcengineering/task'
   import {
+    Component,
     ButtonIcon,
     ButtonMenu,
-    EmojiPopup,
     IconCopy,
     IconDelete,
     IconSettings,
-    IconWithEmoji,
     Label,
     Modal,
     ModernEditbox,
@@ -35,9 +34,10 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { ColorsPopup, statusStore } from '@hanzo/view-resources'
-  import view from '@hanzo/view-resources/src/plugin'
+  } from '@hcengineering/ui'
+  import { ColorsPopup, statusStore } from '@hcengineering/view-resources'
+  import view from '@hcengineering/view-resources/src/plugin'
+  import emojiPlugin from '@hcengineering/emoji'
   import { taskTypeStore, typeStore } from '../..'
   import task from '../../plugin'
   import ApproveStatusRenamePopup from './ApproveStatusRenamePopup.svelte'
@@ -59,16 +59,23 @@
   export let selectableStates: Status[] = []
   export let readonly: boolean = true
 
-  $: _taskType = $taskTypeStore.get(taskType._id) as TaskType
-  $: _type = $typeStore.get(type._id) as ProjectType
-
   value = status?.name ?? valuePattern ?? ''
 
   const client = getClient()
 
-  let description: string | undefined = status?.description
+  let description: string | undefined
 
+  $: _taskType = $taskTypeStore.get(taskType._id) as TaskType
+  $: _typeId = type._id
+  $: _type = $typeStore.get(_typeId) as ProjectType
+  $: projectStatus = _type.statuses.find((s) => s._id === status?._id)
+  $: finalColor = projectStatus?.color ?? status?.color
+  $: finalDescription = projectStatus?.description ?? status?.description
   $: allowEditCategory = status === undefined
+
+  $: if (_typeId !== undefined) {
+    description = finalDescription
+  }
 
   let total: number = 0
 
@@ -91,8 +98,8 @@
   $: needUpdate =
     (status === undefined ||
       status.name.trim() !== value.trim() ||
-      description !== status?.description ||
-      color !== status.color) &&
+      description !== finalDescription ||
+      color !== finalColor) &&
     value.trim() !== '' &&
     !selectableStates.some((it) => it.name === value)
 
@@ -129,7 +136,7 @@
         description
       })
 
-      const states = _taskType.statuses.map((p) => $statusStore.byId.get(p)).filter((p) => p !== undefined) as Status[]
+      const states = _taskType.statuses.map((p) => $statusStore.byId.get(p)).filter((p) => p !== undefined)
       const lastIndex = states.findLastIndex((p) => p.category === category)
       const statuses = [..._taskType.statuses.slice(0, lastIndex + 1), _id, ..._taskType.statuses.slice(lastIndex + 1)]
 
@@ -164,6 +171,7 @@
         if (status._id === _id) {
           status.color = color
           status.icon = icon as any // Fix me
+          status.description = description
           found = true
         }
       }
@@ -189,12 +197,11 @@
       status = await client.findOne(_class, { _id })
     }
 
-    const sameCategory = (
-      _taskType.statuses
-        .map((it) => $statusStore.byId.get(it))
-        .filter((it) => it !== undefined)
-        .filter((it) => it?.category === status?.category) as Status[]
-    ).filter((it, idx, arr) => arr.findIndex((qt) => qt._id === it._id) === idx)
+    const sameCategory = _taskType.statuses
+      .map((it) => $statusStore.byId.get(it))
+      .filter((it) => it !== undefined)
+      .filter((it) => it?.category === status?.category)
+      .filter((it, idx, arr) => arr.findIndex((qt) => qt._id === it._id) === idx)
 
     canDelete = sameCategory.length > 1
     selectableStates = sameCategory.filter((it) => it._id !== status?._id)
@@ -432,11 +439,13 @@
             }}
           />
         {:else}
-          <EmojiPopup
-            embedded
-            selected={Array.isArray(color) ? fromCodePoint(...color) : color ? fromCodePoint(color) : undefined}
-            disabled={readonly}
-            kind={'default'}
+          <Component
+            is={emojiPlugin.component.EmojiPopup}
+            props={{
+              selected: Array.isArray(color) ? fromCodePoint(...color) : color ? fromCodePoint(color) : undefined,
+              disabled: readonly,
+              kind: 'default'
+            }}
             on:close={(evt) => {
               if (readonly) return
               color = evt.detail.codes

@@ -79,7 +79,7 @@
     label === undefined &&
     $$slots.content === undefined &&
     (icon !== undefined || iconRight !== undefined || $$slots.icon || $$slots.iconRight)
-  $: primary = ['primary', 'secondary', 'positive', 'negative'].some((p) => p === kind)
+  $: primary = ['primary', 'secondary', 'positive', 'negative', 'attention'].some((p) => p === kind)
 
   $: devSize = $deviceInfo.size
   $: adaptive = adaptiveShrink !== null ? checkAdaptiveMatching(devSize, adaptiveShrink) : false
@@ -173,7 +173,7 @@
   {/if}
   {#if loading}
     <div
-      class="btn-icon pointer-events-none spinner"
+      class="btn-icon pointer-events-none spinner pl-2"
       class:resetIconSize={resetIconSize === 'icon'}
       style:color={primary ? 'var(--primary-button-color)' : 'var(--theme-caption-color)'}
     >

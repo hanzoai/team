@@ -14,10 +14,11 @@
 -->
 
 <script lang="ts">
-  import activity, { ActivityMessage, Reaction } from '@hanzo/activity'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { EmojiPopup, showPopup, type Emojis } from '@hanzo/ui'
-  import { SortingOrder } from '@hanzo/core'
+  import activity, { ActivityMessage, Reaction } from '@hcengineering/activity'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { showPopup } from '@hcengineering/ui'
+  import { SortingOrder } from '@hcengineering/core'
+  import emojiPlugin from '@hcengineering/emoji'
 
   import { updateDocReactions } from '../../utils'
 
@@ -65,8 +66,8 @@
 
     e.stopPropagation()
     e.preventDefault()
-    showPopup(EmojiPopup, {}, e.target as HTMLElement, (emoji: Emojis) => {
-      if (emoji?.emoji !== undefined) void updateDocReactions(reactions, message, emoji.emoji)
+    showPopup(emojiPlugin.component.EmojiPopup, {}, e.target as HTMLElement, (emoji) => {
+      if (emoji?.text !== undefined) void updateDocReactions(reactions, message, emoji.text)
     })
   }
 </script>

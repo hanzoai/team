@@ -14,13 +14,15 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Reaction } from '@hanzo/activity'
-  import { Doc, getCurrentAccount, PersonId } from '@hanzo/core'
-  import { EmojiPopup, IconAdd, showPopup, tooltip, type Emojis } from '@hanzo/ui'
-  import { includesAny } from '@hanzo/contact'
+  import { Reaction } from '@hcengineering/activity'
+  import { Doc, getCurrentAccount, PersonId, Ref, Blob } from '@hcengineering/core'
+  import { IconAdd, showPopup, tooltip } from '@hcengineering/ui'
+  import { includesAny } from '@hcengineering/contact'
+  import emojiPlugin from '@hcengineering/emoji'
 
   import ReactionsTooltip from './ReactionsTooltip.svelte'
   import { updateDocReactions } from '../../utils'
+  import { getBlobRef } from '@hcengineering/presentation'
 
   export let reactions: Reaction[] = []
   export let object: Doc | undefined = undefined
@@ -29,19 +31,19 @@
   const dispatch = createEventDispatcher()
   const me = getCurrentAccount()
 
-  let reactionsPersons = new Map<string, PersonId[]>()
+  let reactionsPersons = new Map<string, { persons: PersonId[], image?: Ref<Blob> }>()
   let opened: boolean = false
 
   $: {
     reactionsPersons.clear()
     reactions.forEach((r) => {
-      const persons = reactionsPersons.get(r.emoji) ?? []
-      reactionsPersons.set(r.emoji, [...persons, r.createBy])
+      const emojiInfo = reactionsPersons.get(r.emoji) ?? { persons: [], image: r.image }
+      reactionsPersons.set(r.emoji, { persons: [...emojiInfo.persons, r.createBy], image: r.image })
     })
     reactionsPersons = reactionsPersons
   }
 
-  function getClickHandler (emoji: string): ((e: CustomEvent) => void) | undefined {
+  function getClickHandler (emoji: { text: string, image?: Ref<Blob> }): ((e: CustomEvent) => void) | undefined {
     if (readonly) return
     return (e: CustomEvent) => {
       e.stopPropagation()
@@ -55,26 +57,36 @@
     ev.preventDefault()
     ev.stopPropagation()
     opened = true
-    showPopup(EmojiPopup, {}, ev.target as HTMLElement, async (emoji: Emojis) => {
-      if (emoji?.emoji !== undefined) await updateDocReactions(reactions, object, emoji.emoji)
+    showPopup(emojiPlugin.component.EmojiPopup, {}, ev.target as HTMLElement, async (emoji) => {
+      if (emoji?.text !== undefined) {
+        await updateDocReactions(reactions, object, emoji.text, emoji.image)
+      }
       opened = false
     })
   }
 </script>
 
-<div class="hanzoaiReactions-container">
-  {#each [...reactionsPersons] as [emoji, persons]}
+<div class="hulyReactions-container">
+  {#each [...reactionsPersons] as [emoji, emojiInfo]}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      class="hanzoaiReactions-button"
-      class:highlight={includesAny(persons, me.socialIds)}
+      class="hulyReactions-button"
+      class:highlight={includesAny(emojiInfo.persons, me.socialIds)}
       class:cursor-pointer={!readonly}
-      use:tooltip={{ component: ReactionsTooltip, props: { reactionAccounts: persons } }}
-      on:click={getClickHandler(emoji)}
+      use:tooltip={{ component: ReactionsTooltip, props: { socialIds: emojiInfo.persons } }}
+      on:click={getClickHandler({ text: emoji, image: emojiInfo.image })}
     >
-      <span class="emoji">{emoji}</span>
-      <span class="counter">{persons.length}</span>
+      <span class="emoji">
+        {#if emojiInfo.image === undefined || emojiInfo.image == null}
+          {emoji}
+        {:else}
+          {#await getBlobRef(emojiInfo.image) then blobSrc}
+            <img src={blobSrc.src} alt={emoji} />
+          {/await}
+        {/if}
+      </span>
+      <span class="counter">{emojiInfo.persons.length}</span>
     </div>
   {/each}
   {#if object && reactionsPersons.size > 0 && !readonly}
@@ -118,9 +130,13 @@
       .emoji {
         font-size: 1rem;
       }
+      .emoji > img {
+        height: 1.05em;
+        margin: 0 0.05em 0.08em 0.1em;
+      }
       &.highlight {
         background: var(--global-ui-highlight-BackgroundColor);
-        border-color: var(--global-accent-BackgroundColor);
+        border-color: var(--global-accent-SkyText);
       }
 
       &:hover {

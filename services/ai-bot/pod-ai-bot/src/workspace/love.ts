@@ -28,8 +28,9 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   WorkspaceUuid,
-  pickPrimarySocialId
-} from '@hanzo/core'
+  pickPrimarySocialId,
+  AccountUuid
+} from '@hcengineering/core'
 import love, {
   getFreeRoomPlace,
   MeetingMinutes,
@@ -273,6 +274,7 @@ export class LoveController {
       room: room._id,
       person: this.currentPerson._id,
       name: this.currentPerson.name,
+      account: (this.currentPerson.personUuid as AccountUuid) ?? null,
       sessionId: null
     })
   }

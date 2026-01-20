@@ -12,7 +12,7 @@
 
   export let label: IntlString
   export let value: string | undefined = undefined
-  export let kind: 'default' | 'ghost' = 'default'
+  export let kind: 'default' | 'ghost' | 'secondary' | 'transparent' = 'default'
   export let size: 'small' | 'medium' | 'large' = 'small'
   export let disabled: boolean = false
   export let error: boolean = false
@@ -119,6 +119,7 @@
       }}
     />
   {/if}
+  <slot name="after" />
   {#if labeled}<div class="font-regular-14 label"><Label {label} /></div>{/if}
 </svelte:element>
 
@@ -131,6 +132,25 @@
     border-radius: var(--medium-BorderRadius);
 
     &.default {
+      background-color: var(--input-BackgroundColor);
+      box-shadow: inset 0 0 0 1px var(--input-BorderColor);
+
+      &.small {
+        padding: var(--spacing-1) var(--spacing-1_5);
+        height: var(--global-small-Size);
+      }
+      &.medium {
+        padding: var(--spacing-1_5) var(--spacing-2);
+        height: var(--global-medium-Size);
+      }
+      &.large {
+        position: relative;
+        padding: 0 var(--spacing-2);
+        height: var(--global-extra-large-Size);
+      }
+    }
+
+    &.secondary {
       background-color: var(--input-BackgroundColor);
       box-shadow: inset 0 0 0 1px var(--input-BorderColor);
 
@@ -165,6 +185,23 @@
         }
       }
     }
+    &.transparent {
+      &.small,
+      &.medium {
+        // medium/ghost - not designed
+        padding: var(--spacing-1_5) var(--spacing-2);
+        height: var(--spacing-5);
+      }
+      &.large {
+        padding: var(--spacing-1) var(--spacing-2);
+        height: var(--spacing-6);
+
+        input {
+          font-weight: 500;
+          font-size: 1rem;
+        }
+      }
+    }
 
     &.error {
       box-shadow: inset 0 0 0 1px var(--input-error-BorderColor);
@@ -186,7 +223,25 @@
           background-color: var(--input-hover-BackgroundColor);
         }
       }
+
+      &.secondary {
+        input::placeholder {
+          color: var(--input-PlaceholderColor);
+        }
+        &:active,
+        &:focus-within {
+          background-color: var(--input-BackgroundColor);
+          outline: 2px solid var(--global-focus-BorderColor);
+          outline-offset: 2px;
+        }
+        &:hover {
+          background-color: var(--input-hover-BackgroundColor);
+        }
+      }
       &.ghost input::placeholder {
+        color: var(--input-PlaceholderColor);
+      }
+      &.secondary input::placeholder {
         color: var(--input-PlaceholderColor);
       }
       &:hover input:not(:focus)::placeholder {

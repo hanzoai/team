@@ -33,9 +33,12 @@ import {
   TAttribute,
   TBlob,
   TClass,
+  TClassCollaborators,
+  TCollaborator,
   TCollection,
   TConfiguration,
   TConfigurationElement,
+  TCustomSequence,
   TDoc,
   TDomainIndexConfiguration,
   TEnum,
@@ -49,8 +52,10 @@ import {
   TPluginConfiguration,
   TRefTo,
   TRelation,
+  TSequence,
   TTransientConfiguration,
   TType,
+  TTypeAccountUuid,
   TTypeAny,
   TTypeBlob,
   TTypeBoolean,
@@ -58,21 +63,31 @@ import {
   TTypeDate,
   TTypeFileSize,
   TTypeHyperlink,
+  TTypeIdentifier,
   TTypeIntlString,
   TTypeMarkup,
-  TTypePersonId,
-  TTypeAccountUuid,
   TTypeNumber,
+  TTypePersonId,
   TTypeRank,
   TTypeRecord,
   TTypeRelatedDocument,
   TTypeString,
   TTypeTimestamp,
   TVersion,
-  TSequence
+  TVersionableClass
 } from './core'
 import { definePermissions } from './permissions'
-import { TPermission, TRole, TSpace, TSpaceType, TSpaceTypeDescriptor, TSystemSpace, TTypedSpace } from './security'
+import {
+  TAttributePermission,
+  TClassPermission,
+  TPermission,
+  TRole,
+  TSpace,
+  TSpaceType,
+  TSpaceTypeDescriptor,
+  TSystemSpace,
+  TTypedSpace
+} from './security'
 import { defineSpaceType } from './spaceType'
 import { TDomainStatusPlaceholder, TStatus, TStatusCategory } from './status'
 import { TUserStatus } from './transient'
@@ -82,15 +97,15 @@ export { coreId, DOMAIN_SPACE } from '@hanzo/core'
 export * from './core'
 export {
   coreOperation,
-  getSocialKeyByOldAccount,
   getAccountsFromTxes,
-  getSocialKeyByOldEmail,
-  getAccountUuidBySocialKey,
-  getUniqueAccounts,
   getAccountUuidByOldAccount,
-  getUniqueAccountsFromOldAccounts,
+  getAccountUuidBySocialKey,
   getSocialIdBySocialKey,
-  getSocialIdFromOldAccount
+  getSocialIdFromOldAccount,
+  getSocialKeyByOldAccount,
+  getSocialKeyByOldEmail,
+  getUniqueAccounts,
+  getUniqueAccountsFromOldAccounts
 } from './migration'
 export * from './security'
 export * from './status'
@@ -120,6 +135,8 @@ export function createModel (builder: Builder): void {
     TSpaceTypeDescriptor,
     TRole,
     TPermission,
+    TAttributePermission,
+    TClassPermission,
     TAttribute,
     TType,
     TEnumOf,
@@ -133,6 +150,7 @@ export function createModel (builder: Builder): void {
     TTypeFileSize,
     TTypeTimestamp,
     TTypeNumber,
+    TTypeIdentifier,
     TTypeBoolean,
     TTypeString,
     TTypeRank,
@@ -153,6 +171,7 @@ export function createModel (builder: Builder): void {
     TIndexConfiguration,
     TStatus,
     TSequence,
+    TCustomSequence,
     TDomainStatusPlaceholder,
     TStatusCategory,
     TMigrationState,
@@ -161,7 +180,10 @@ export function createModel (builder: Builder): void {
     TAssociation,
     TDomainIndexConfiguration,
     TBenchmarkDoc,
-    TTransientConfiguration
+    TTransientConfiguration,
+    TClassCollaborators,
+    TCollaborator,
+    TVersionableClass
   )
 
   builder.createDoc(core.class.DomainIndexConfiguration, core.space.Model, {

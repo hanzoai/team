@@ -25,13 +25,14 @@ import {
   type RelatedDocument,
   Timestamp,
   Tx,
-  TxCUD
-} from '@hanzo/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
-import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
-import type { Action } from '@hanzo/view'
+  TxCUD,
+  Blob
+} from '@hcengineering/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hcengineering/platform'
+import { plugin } from '@hcengineering/platform'
+import { Preference } from '@hcengineering/preference'
+import type { AnyComponent, ComponentExtensionId } from '@hcengineering/ui'
+import type { Action } from '@hcengineering/view'
 
 /**
  * @public
@@ -220,6 +221,7 @@ export interface Reaction extends AttachedDoc {
   attachedTo: Ref<ActivityMessage>
   attachedToClass: Ref<Class<ActivityMessage>>
   emoji: string
+  image?: Ref<Blob>
   createBy: PersonId
 }
 
@@ -320,11 +322,13 @@ export default plugin(activityId, {
     UpdatedObject: '' as IntlString,
     NewObjectType: '' as IntlString,
     RemovedObjectType: '' as IntlString,
-    AttributeSetTo: '' as IntlString
+    AttributeSetTo: '' as IntlString,
+    AddedTag: '' as IntlString,
+    RemovedTag: '' as IntlString,
+    ValueTooLarge: '' as IntlString
   },
   component: {
     Activity: '' as AnyComponent,
-    NewActivity: '' as AnyComponent,
     ActivityMessagePresenter: '' as AnyComponent,
     DocUpdateMessagePresenter: '' as AnyComponent,
     ActivityInfoMessagePresenter: '' as AnyComponent,
@@ -337,7 +341,8 @@ export default plugin(activityId, {
   },
   ids: {
     AllFilter: '' as Ref<ActivityMessagesFilter>,
-    MentionNotification: '' as Ref<Doc>
+    MentionNotification: '' as Ref<Doc>,
+    AddReactionNotification: '' as Ref<any>
   },
   extension: {
     ActivityEmployeePresenter: '' as ComponentExtensionId

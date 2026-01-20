@@ -13,9 +13,10 @@
 // limitations under the License.
 //
 
-import { AccountClient } from '@hanzo/account-client'
+import { type AccountClient } from '@hcengineering/account-client'
 import core, {
-  Branding,
+  type Branding,
+  type Client,
   coreId,
   DOMAIN_BENCHMARK,
   DOMAIN_MIGRATION,
@@ -24,42 +25,47 @@ import core, {
   DOMAIN_TX,
   groupByArray,
   Hierarchy,
-  MeasureContext,
-  MigrationState,
+  type MeasureContext,
+  type MigrationState,
   ModelDb,
+  type PersonInfo,
   platformNow,
   platformNowDiff,
-  systemAccountUuid,
-  Tx,
-  TxOperations,
-  WorkspaceIds,
-  WorkspaceUuid,
-  type Client,
-  type PersonInfo,
   type Ref,
-  type WithLookup
-} from '@hanzo/core'
-import { consoleModelLogger, MigrateOperation, ModelLogger, tryMigrate, type MigrateMode } from '@hanzo/model'
+  type Tx,
+  type TxOperations,
+  type WithLookup,
+  type WorkspaceIds,
+  type WorkspaceUuid
+} from '@hcengineering/core'
 import {
-  DomainIndexHelperImpl,
-  Pipeline,
-  StorageAdapter,
+  consoleModelLogger,
+  type MigrateMode,
+  type MigrateOperation,
+  type ModelLogger,
+  tryMigrate
+} from '@hcengineering/model'
+import {
   type DbAdapter,
+  DomainIndexHelperImpl,
+  type Pipeline,
   type PlatformQueueProducer,
-  type QueueWorkspaceMessage
-} from '@hanzo/server-core'
-import { InitScript, WorkspaceInitializer } from './initializer'
+  type QueueWorkspaceMessage,
+  type StorageAdapter
+} from '@hcengineering/server-core'
+import { type InitScript, WorkspaceInitializer } from './initializer'
 import toolPlugin from './plugin'
 import { MigrateClientImpl } from './upgrade'
 
-import { getMetadata, PlatformError, unknownError } from '@hanzo/platform'
-import { generateToken } from '@hanzo/server-token'
+import { getMetadata, PlatformError, unknownError } from '@hcengineering/platform'
 import fs from 'fs'
 import * as yaml from 'js-yaml'
 import path from 'path'
+import { sendTransactorEvent } from './utils'
 
 export * from './connect'
 export * from './plugin'
+export * from './utils'
 export { toolPlugin as default }
 
 export class FileModelLogger implements ModelLogger {
@@ -208,9 +214,8 @@ export async function initializeWorkspace (
   progress: (value: number) => Promise<void>
 ): Promise<void> {
   const initWS = branding?.initWorkspace ?? getMetadata(toolPlugin.metadata.InitWorkspace)
-  const initRepoDir = getMetadata(toolPlugin.metadata.InitRepoDir)
+  const initRepoDir = getMetadata(toolPlugin.metadata.InitRepoDir) ?? ''
   ctx.info('Init script details', { initWS, initRepoDir })
-  if (initWS === undefined || initRepoDir === undefined) return
 
   const initScriptFile = path.resolve(initRepoDir, 'script.yaml')
   if (!fs.existsSync(initScriptFile)) {
@@ -269,6 +274,7 @@ export async function upgradeModel (
 
   const { hierarchy, modelDb, model } = await buildModel(ctx, newModel)
   const { migrateClient: preMigrateClient } = await prepareMigrationClient(
+    ctx,
     pipeline,
     hierarchy,
     modelDb,
@@ -303,6 +309,7 @@ export async function upgradeModel (
   })
 
   const { migrateClient, migrateState } = await prepareMigrationClient(
+    ctx,
     pipeline,
     hierarchy,
     modelDb,
@@ -322,7 +329,7 @@ export async function upgradeModel (
       modelDb,
       pipeline,
       async (value) => {
-        await progress(90 + (Math.min(value, 100) / 100) * 10)
+        await progress(10 + (Math.min(value, 100) / 100) * 10)
       },
       wsIds.uuid
     )
@@ -377,20 +384,13 @@ export async function upgradeModel (
 
   // We need to send reboot for workspace
   ctx.info('send force close', { workspace: wsIds, transactorUrl })
-  const serverEndpoint = transactorUrl.replaceAll('wss://', 'https://').replace('ws://', 'http://')
-  const token = generateToken(systemAccountUuid, wsIds.uuid, { service: 'tool', admin: 'true' })
 
-  try {
-    await fetch(serverEndpoint + `/api/v1/manage?token=${token}&operation=force-close`, {
-      method: 'PUT'
-    })
-  } catch (err: any) {
-    // Ignore error if transactor is not yet ready
-  }
+  await sendTransactorEvent(wsIds.uuid, 'force-close')
   return model
 }
 
 async function prepareMigrationClient (
+  ctx: MeasureContext,
   pipeline: Pipeline,
   hierarchy: Hierarchy,
   model: ModelDb,
@@ -411,7 +411,8 @@ async function prepareMigrationClient (
     storageAdapter,
     accountClient,
     wsIds,
-    queue
+    queue,
+    ctx
   )
   const states = await migrateClient.find<MigrationState>(DOMAIN_MIGRATION, { _class: core.class.MigrationState })
   const sts = Array.from(groupByArray(states, (it) => it.plugin).entries())

@@ -13,25 +13,26 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import chunter from '@hanzo/chunter'
-import { AccountRole, type Ref, type Status } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import presentation from '@hanzo/model-presentation'
-import task from '@hanzo/model-task'
-import view from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import setting from '@hanzo/setting'
-import pluginState, { trackerId } from '@hanzo/tracker'
+import activity from '@hcengineering/activity'
+import chunter from '@hcengineering/chunter'
+import { AccountRole, type ClassCollaborators, type Ref, type Status } from '@hcengineering/core'
+import { type Builder } from '@hcengineering/model'
+import core from '@hcengineering/model-core'
+import { generateClassNotificationTypes } from '@hcengineering/model-notification'
+import presentation from '@hcengineering/model-presentation'
+import task from '@hcengineering/model-task'
+import view from '@hcengineering/model-view'
+import workbench from '@hcengineering/model-workbench'
+import notification from '@hcengineering/notification'
+import setting from '@hcengineering/setting'
+import pluginState, { type Issue, trackerId } from '@hcengineering/tracker'
 
 import type { TaskStatusFactory } from '@hanzo/task'
 import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
 import { createActions as defineActions } from './actions'
 import tracker from './plugin'
 import { definePresenters } from './presenters'
+import { definePermissions } from './permissions'
 import {
   DOMAIN_TRACKER,
   TClassicProjectTypeData,
@@ -502,7 +503,8 @@ export function createModel (builder: Builder): void {
 
   defineSortAndGrouping(builder)
 
-  builder.mixin(tracker.class.Issue, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<Issue>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: tracker.class.Issue,
     fields: ['createdBy', 'assignee']
   })
 
@@ -708,6 +710,7 @@ export function createModel (builder: Builder): void {
     ]
   })
 
+  definePermissions(builder)
   defineSpaceType(builder)
 }
 

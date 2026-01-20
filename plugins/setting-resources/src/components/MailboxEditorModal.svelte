@@ -19,9 +19,10 @@
   import setting from '@hanzo/setting'
   import { createEventDispatcher } from 'svelte'
   import { getAccountClient } from '../utils'
-  import { IntlString, translateCB } from '@hanzo/platform'
-  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hanzo/contact'
-  import { buildSocialIdString, SocialIdType } from '@hanzo/core'
+  import { IntlString, translateCB } from '@hcengineering/platform'
+  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hcengineering/contact'
+  import { buildSocialIdString, SocialIdType } from '@hcengineering/core'
+  import { Analytics } from '@hcengineering/analytics'
 
   export let mailboxOptions: MailboxOptions
 
@@ -56,7 +57,8 @@
         key: buildSocialIdString({ type: SocialIdType.EMAIL, value: mailbox }),
         type: SocialIdType.EMAIL,
         value: mailbox,
-        verifiedOn: Date.now()
+        verifiedOn: Date.now(),
+        isDeleted: false
       },
       socialId as SocialIdentityRef
     )
@@ -83,6 +85,7 @@
       loading = false
       formatError(err)
       console.error('Failed to create mailbox', err)
+      Analytics.handleError(err)
     }
   }
 

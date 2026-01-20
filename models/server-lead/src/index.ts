@@ -15,13 +15,11 @@
 
 import { type Builder } from '@hanzo/model'
 
-import core from '@hanzo/core'
-import lead from '@hanzo/model-lead'
-import notification from '@hanzo/notification'
-import serverCore from '@hanzo/server-core'
-import serverLead from '@hanzo/server-lead'
-import serverNotification from '@hanzo/server-notification'
-import contact from '@hanzo/contact'
+import core from '@hcengineering/core'
+import lead from '@hcengineering/model-lead'
+import notification from '@hcengineering/notification'
+import serverLead from '@hcengineering/server-lead'
+import serverNotification from '@hcengineering/server-notification'
 
 export { serverLeadId } from '@hanzo/server-lead'
 
@@ -42,14 +40,4 @@ export function createModel (builder: Builder): void {
       func: serverNotification.function.IsUserEmployeeInFieldValueTypeMatch
     }
   )
-
-  builder.createDoc(serverCore.class.Trigger, core.space.Model, {
-    trigger: serverLead.trigger.OnEmployeeCreate,
-    txMatch: {
-      objectClass: contact.class.Person,
-      _class: core.class.TxMixin,
-      mixin: contact.mixin.Employee,
-      'attributes.active': true
-    }
-  })
 }

@@ -14,27 +14,27 @@
 -->
 
 <script lang="ts">
-  import { createLabelsQuery, getClient } from '@hanzo/presentation'
-  import { Card } from '@hanzo/card'
-  import { Label } from '@hanzo/communication-types'
-  import tag, { type TagElement } from '@hanzo/tags'
-  import { TagElementPresenter } from '@hanzo/tags-resources'
+  import { getClient } from '@hcengineering/presentation'
+  import { Card } from '@hcengineering/card'
+  import { Label } from '@hcengineering/communication-types'
+  import tag, { type TagElement } from '@hcengineering/tags'
+  import { TagElementPresenter } from '@hcengineering/tags-resources'
+  import { Ref } from '@hcengineering/core'
+  import { labelsStore } from '@hcengineering/communication-resources'
 
-  export let value: Card
+  export let value: Card | undefined = undefined
 
   const client = getClient()
 
   let labels: Label[] = []
+  $: labels = value ? $labelsStore.filter((it) => it.cardId === value?._id) : []
   let tags: TagElement[] = []
 
-  const query = createLabelsQuery()
-  $: query.query({ card: value._id }, (res) => {
-    labels = res
-  })
-
-  $: client.findAll(tag.class.TagElement, { _id: { $in: labels.map((it) => it.label) } }).then((res) => {
-    tags = res
-  })
+  $: client
+    .findAll(tag.class.TagElement, { _id: { $in: labels.map((it) => it.labelId) as any as Ref<TagElement>[] } })
+    .then((res) => {
+      tags = res
+    })
 </script>
 
 {#if tags.length > 0}

@@ -14,14 +14,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
+  import { Markup } from '@hcengineering/core'
+  import { Asset, IntlString } from '@hcengineering/platform'
+  import { EmptyMarkup } from '@hcengineering/text'
+  import textEditor from '@hcengineering/text-editor'
+  import type { AnySvelteComponent } from '@hcengineering/ui'
+  import { Icon, Label } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
-  import { Markup } from '@hanzo/core'
-  import { IntlString, Asset } from '@hanzo/platform'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { Label, Icon } from '@hanzo/ui'
-  import type { AnySvelteComponent } from '@hanzo/ui'
-  import textEditor from '@hanzo/text-editor'
 
+  import { EditorKitOptions } from '../kits/editor-kit'
   import StyledTextBox from './StyledTextBox.svelte'
   import IconDescription from './icons/Description.svelte'
 
@@ -29,7 +30,7 @@
   export let icon: Asset | AnySvelteComponent = IconDescription
   export let content: Markup = EmptyMarkup
   export let maxHeight: string = '40vh'
-  export let enableBackReferences = false
+  export let kitOptions: Partial<EditorKitOptions> = {}
 
   const dispatch = createEventDispatcher()
 
@@ -56,6 +57,6 @@
     hideExtraButtons
     {maxHeight}
     on:value={checkValue}
-    {enableBackReferences}
+    {kitOptions}
   />
 </div>

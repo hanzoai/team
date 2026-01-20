@@ -14,6 +14,7 @@
 //
 import {
   AccountUuid,
+  IntegrationKind,
   Person,
   PersonId,
   SocialId,
@@ -28,9 +29,11 @@ import { Integration } from '@hanzo/account-client'
 import { serviceToken } from './utils'
 import { IntegrationInfo } from './types'
 
+const integrationKind = 'telegram-bot' as IntegrationKind
+
 export async function getAccountPerson (account: AccountUuid): Promise<Person | undefined> {
   try {
-    const accountClient = getAccountClient(generateToken(account))
+    const accountClient = getAccountClient(generateToken(account, undefined, { service: 'telegram-bot' }))
     return await accountClient.getPerson()
   } catch (e) {
     console.error(e)
@@ -40,7 +43,8 @@ export async function getAccountPerson (account: AccountUuid): Promise<Person | 
 
 export async function getAccountSocialIds (account: AccountUuid): Promise<SocialId[]> {
   try {
-    const accountClient = getAccountClient(generateToken(account))
+    const accountClient = getAccountClient(generateToken(account, undefined, { service: 'telegram-bot' }))
+    // We only want not-deleted social ids here?
     return await accountClient.getSocialIds()
   } catch (e) {
     console.error(e)
@@ -49,8 +53,8 @@ export async function getAccountSocialIds (account: AccountUuid): Promise<Social
 }
 
 export async function listIntegrationsByAccount (account: AccountUuid): Promise<IntegrationInfo[]> {
-  const client = getAccountClient(generateToken(account))
-  const integrations = await client.listIntegrations({ kind: 'telegram-bot' })
+  const client = getAccountClient(generateToken(account, undefined, { service: 'telegram-bot' }))
+  const integrations = await client.listIntegrations({ kind: integrationKind })
   if (integrations.length === 0) return []
   const socialIds = await getAccountSocialIds(account)
 
@@ -78,7 +82,7 @@ export async function listIntegrationsByTelegramId (telegramId: number): Promise
   )
   if (socialId == null) return []
 
-  const integrations = await client.listIntegrations({ kind: 'telegram-bot', socialId: socialId._id })
+  const integrations = await client.listIntegrations({ kind: integrationKind, socialId: socialId._id })
   if (integrations == null) return []
 
   return integrations.map((it) => ({
@@ -100,7 +104,7 @@ export async function getAnyIntegrationByTelegramId (
   )
   if (socialId == null) return undefined
 
-  const integrations = await client.listIntegrations({ kind: 'telegram-bot', socialId: socialId._id })
+  const integrations = await client.listIntegrations({ kind: integrationKind, socialId: socialId._id })
   if (integrations.length === 0) return undefined
 
   const integration = workspace != null ? integrations.find((it) => it.workspaceUuid === workspace) : integrations[0]
@@ -118,8 +122,8 @@ export async function getAnyIntegrationByAccount (
   account: AccountUuid,
   workspace?: WorkspaceUuid
 ): Promise<IntegrationInfo | undefined> {
-  const client = getAccountClient(generateToken(account))
-  const integrations = await client.listIntegrations({ kind: 'telegram-bot', workspaceUuid: workspace })
+  const client = getAccountClient(generateToken(account, undefined, { service: 'telegram-bot' }))
+  const integrations = await client.listIntegrations({ kind: integrationKind, workspaceUuid: workspace })
   if (integrations.length === 0) return undefined
 
   const integration = integrations[0]
@@ -135,42 +139,21 @@ export async function getAnyIntegrationByAccount (
   }
 }
 
-export async function getOrCreateSocialId (
+export async function addSocialIdToPerson (
   account: AccountUuid,
   telegramId: number,
   username?: string
 ): Promise<PersonId> {
   const accountClient = getAccountClient(serviceToken())
-  const socialId = await accountClient.findFullSocialIdBySocialKey(
-    buildSocialIdString({ type: SocialIdType.TELEGRAM, value: telegramId.toString() })
-  )
-  if (socialId == null) {
-    return await accountClient.addSocialIdToPerson(
-      account,
-      SocialIdType.TELEGRAM,
-      telegramId.toString(),
-      true,
-      username
-    )
-  }
 
-  // TODO: proper handle if connected to other account
-  if (socialId.personUuid !== account) {
-    throw new Error('Social id connected to another account')
-  }
-
-  if (socialId.displayValue !== username) {
-    await accountClient.updateSocialId(socialId._id, username ?? '')
-  }
-
-  return socialId._id
+  return await accountClient.addSocialIdToPerson(account, SocialIdType.TELEGRAM, telegramId.toString(), true, username)
 }
 
 export async function createIntegration (socialId: PersonId, workspace: WorkspaceUuid): Promise<Integration> {
   const accountClient = getAccountClient(serviceToken())
   const integration = {
     socialId,
-    kind: 'telegram-bot',
+    kind: integrationKind,
     workspaceUuid: workspace
   }
   await accountClient.createIntegration(integration)
@@ -183,9 +166,13 @@ export async function removeIntegrationsByTg (telegramId: number): Promise<void>
     buildSocialIdString({ type: SocialIdType.TELEGRAM, value: telegramId.toString() })
   )
   if (socialId == null) return
-  const integrations = await accountClient.listIntegrations({ kind: 'telegram-bot', socialId })
+  const integrations = await accountClient.listIntegrations({ kind: integrationKind, socialId })
   for (const integration of integrations) {
-    await accountClient.deleteIntegration({ socialId, kind: 'telegram-bot', workspaceUuid: integration.workspaceUuid })
+    await accountClient.deleteIntegration({
+      socialId,
+      kind: integrationKind,
+      workspaceUuid: integration.workspaceUuid
+    })
   }
 }
 

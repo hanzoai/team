@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import card from '@hcengineering/card'
 import {
   DOMAIN_BENCHMARK,
   DOMAIN_BLOB,
@@ -9,7 +10,10 @@ import {
   ModelDb,
   systemAccountUuid,
   type Branding,
+  type Class,
+  type Doc,
   type MeasureContext,
+  type Ref,
   type Tx,
   type WorkspaceIds
 } from '@hanzo/core'
@@ -22,7 +26,9 @@ import {
   DBAdapterMiddleware,
   DomainFindMiddleware,
   DomainTxMiddleware,
+  FindSecurityMiddleware,
   FullTextMiddleware,
+  GuestPermissionsMiddleware,
   IdentityMiddleware,
   LiveQueryMiddleware,
   LookupMiddleware,
@@ -30,20 +36,26 @@ import {
   MarkDerivedEntryMiddleware,
   ModelMiddleware,
   ModifiedMiddleware,
-  NotificationsMiddleware,
+  IdentifierMiddleware,
+  NormalizeTxMiddleware,
+  PluginConfigurationMiddleware,
   PrivateMiddleware,
   QueryJoinMiddleware,
   QueueMiddleware,
   SpacePermissionsMiddleware,
   SpaceSecurityMiddleware,
+  VersioningMiddleware,
   TriggersMiddleware,
-  TxMiddleware
-} from '@hanzo/middleware'
+  TxMiddleware,
+  TxOrderingMiddleware,
+  UserStatusMiddleware
+} from '@hcengineering/middleware'
 import {
   createBenchmarkAdapter,
   createInMemoryAdapter,
   createNullAdapter,
   createPipeline,
+  type BroadcastOps,
   type DbAdapterFactory,
   type DbConfiguration,
   type Middleware,
@@ -51,12 +63,15 @@ import {
   type Pipeline,
   type PipelineContext,
   type PipelineFactory,
+  type PlatformQueue,
   type StorageAdapter,
-  type WorkspaceDestroyAdapter,
-  type PlatformQueue
-} from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
+  type WorkspaceDestroyAdapter
+} from '@hcengineering/server-core'
+import { generateToken } from '@hcengineering/server-token'
 import { createStorageDataAdapter } from './blobStorage'
+import { CommunicationMiddleware, type CommunicationApiFactory } from './communication'
+
+import { RatingMiddleware } from '@hcengineering/server-rating'
 
 /**
  * @public
@@ -81,11 +96,18 @@ export function getTxAdapterFactory (
   return adapter.factory
 }
 
-/**
- * A pipelice context used by standalong services to hold global variables.
- * In case of Durable Objects, it should not be shared and individual context should be created.
- */
-export const sharedPipelineContextVars: Record<string, any> = {}
+function addMessagesToFullText (fulltext: MiddlewareCreator): MiddlewareCreator {
+  return async (ctx: MeasureContext, context: PipelineContext, next?: Middleware) => {
+    const result: FullTextMiddleware = (await fulltext(ctx, context, next)) as FullTextMiddleware
+    result.addExtraFind = (baseClass, childClasses) => {
+      if (context.hierarchy.isDerived(baseClass, card.class.Card)) {
+        // Using Card as base class because messages are the same for any card subclass
+        childClasses.add(`${card.class.Card}%message` as Ref<Class<Doc>>)
+      }
+    }
+    return result
+  }
+}
 
 /**
  * @public
@@ -107,33 +129,52 @@ export function createServerPipeline (
 
     extraLogging?: boolean // If passed, will log every request/etc.
     pipelineContextVars?: Record<string, any>
+    communicationApiFactory?: CommunicationApiFactory
   },
   extensions?: Partial<DbConfiguration>
 ): PipelineFactory {
-  return (ctx, workspace, upgrade, broadcast, branding, communicationApi) => {
+  return (ctx, workspace, broadcast, branding) => {
     const metricsCtx = opt.usePassedCtx === true ? ctx : metrics
-    const wsMetrics = metricsCtx.newChild('🧲 session', {})
+    const wsMetrics = metricsCtx.newChild('🧲 session', {}, { span: false })
     const conf = getConfig(metrics, dbUrl, wsMetrics, opt, extensions)
 
     const middlewares: MiddlewareCreator[] = [
       LookupMiddleware.create,
+      NormalizeTxMiddleware.create,
       IdentityMiddleware.create,
       ModifiedMiddleware.create,
+      FindSecurityMiddleware.create,
+      PluginConfigurationMiddleware.create,
       PrivateMiddleware.create,
-      NotificationsMiddleware.create,
       (ctx: MeasureContext, context: PipelineContext, next?: Middleware) =>
         SpaceSecurityMiddleware.create(opt.adapterSecurity ?? false, ctx, context, next),
       SpacePermissionsMiddleware.create,
+      GuestPermissionsMiddleware.create,
       ConfigurationMiddleware.create,
       ContextNameMiddleware.create,
       MarkDerivedEntryMiddleware.create,
+      ...(opt.communicationApiFactory !== undefined
+        ? [CommunicationMiddleware.create(opt.communicationApiFactory)]
+        : []),
+      UserStatusMiddleware.create,
       ApplyTxMiddleware.create, // Extract apply
+      VersioningMiddleware.create,
+      IdentifierMiddleware.create, // After ApplyTx to ensure that it pass
+      RatingMiddleware.create, // Rating editing restrictions
       TxMiddleware.create, // Store tx into transaction domain
       ...(opt.disableTriggers === true ? [] : [TriggersMiddleware.create]),
       ...(opt.fulltextUrl !== undefined
-        ? [FullTextMiddleware.create(opt.fulltextUrl, generateToken(systemAccountUuid, workspace.uuid))]
+        ? [
+            addMessagesToFullText(
+              FullTextMiddleware.create(
+                opt.fulltextUrl,
+                generateToken(systemAccountUuid, workspace.uuid, { service: 'transactor' })
+              )
+            )
+          ]
         : []),
       LowLevelMiddleware.create,
+      TxOrderingMiddleware.create(),
       QueryJoinMiddleware.create,
       LiveQueryMiddleware.create,
       DomainFindMiddleware.create,
@@ -154,8 +195,7 @@ export function createServerPipeline (
       hierarchy,
       queue: opt.queue,
       storageAdapter: opt.externalStorage,
-      contextVars: opt.pipelineContextVars ?? sharedPipelineContextVars,
-      communicationApi
+      contextVars: opt.pipelineContextVars ?? {}
     }
     return createPipeline(ctx, middlewares, context)
   }
@@ -176,9 +216,9 @@ export function createBackupPipeline (
     externalStorage: StorageAdapter
   }
 ): PipelineFactory {
-  return (ctx, workspace, upgrade, broadcast, branding, communicationApi) => {
+  return (ctx, workspace, broadcast, branding) => {
     const metricsCtx = opt.usePassedCtx === true ? ctx : metrics
-    const wsMetrics = metricsCtx.newChild('🧲 backup', {})
+    const wsMetrics = metricsCtx.newChild('🧲 backup', {}, { span: false })
     const conf = getConfig(metrics, dbUrl, wsMetrics, {
       ...opt,
       disableTriggers: true
@@ -202,10 +242,16 @@ export function createBackupPipeline (
       modelDb,
       hierarchy,
       storageAdapter: opt.externalStorage,
-      contextVars: {},
-      communicationApi
+      contextVars: {}
     }
     return createPipeline(ctx, middlewares, context)
+  }
+}
+
+export function createEmptyBroadcastOps (): BroadcastOps {
+  return {
+    broadcast: (): void => {},
+    broadcastSessions: (): void => {}
   }
 }
 
@@ -218,6 +264,7 @@ export async function getServerPipeline (
   opt?: {
     queue?: PlatformQueue
     disableTriggers?: boolean
+    communicationApiFactory?: CommunicationApiFactory
   }
 ): Promise<Pipeline> {
   const pipelineFactory = createServerPipeline(ctx, dbUrl, model, {
@@ -225,11 +272,11 @@ export async function getServerPipeline (
     usePassedCtx: true,
     disableTriggers: opt?.disableTriggers ?? false,
     adapterSecurity: isAdapterSecurity(dbUrl),
-    queue: opt?.queue
+    queue: opt?.queue,
+    communicationApiFactory: opt?.communicationApiFactory
   })
 
-  // TODO: Communication API ??
-  return await pipelineFactory(ctx, wsUrl, true, () => {}, null, null)
+  return await pipelineFactory(ctx, wsUrl, createEmptyBroadcastOps(), null)
 }
 
 const txAdapterFactories: Record<string, DbAdapterFactory> = {}
@@ -318,7 +365,7 @@ export function getConfig (
   extensions?: Partial<DbConfiguration>
 ): DbConfiguration {
   const metricsCtx = opt.usePassedCtx === true ? ctx : metrics
-  const wsMetrics = metricsCtx.newChild('🧲 session', {})
+  const wsMetrics = metricsCtx.newChild('🧲 session', {}, { span: false })
   const conf: DbConfiguration = {
     domains: {
       [DOMAIN_TX]: 'Tx',

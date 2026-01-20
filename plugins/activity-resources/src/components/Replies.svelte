@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { personByIdStore, Avatar } from '@hanzo/contact-resources'
-  import { Doc, IdMap, Ref, WithLookup } from '@hanzo/core'
-  import { Label, TimeSince } from '@hanzo/ui'
-  import activity, { ActivityMessage } from '@hanzo/activity'
+  import { Person } from '@hcengineering/contact'
+  import { Avatar, getPersonByPersonRefStore } from '@hcengineering/contact-resources'
+  import { Doc, IdMap, notEmpty, Ref, WithLookup } from '@hcengineering/core'
+  import { Label, TimeSince } from '@hcengineering/ui'
+  import activity, { ActivityMessage } from '@hcengineering/activity'
   import notification, {
     ActivityInboxNotification,
     DocNotifyContext,
@@ -49,7 +49,8 @@
   $: notificationsByContextStore = inboxClient?.inboxNotificationsByContext
 
   $: hasNew = hasNewReplies(object, $contextByDocStore, $notificationsByContextStore)
-  $: updateQuery(persons, $personByIdStore)
+  $: personByRefStore = getPersonByPersonRefStore(Array.from(persons))
+  $: updateQuery(persons, $personByRefStore)
 
   function hasNewReplies (
     message: ActivityMessage,
@@ -63,9 +64,12 @@
     }
 
     return (inboxNotificationsByContext?.get(context._id) ?? [])
-      .filter((notification) => {
-        const activityNotifications = notification as ActivityInboxNotification
-        return activityNotifications.attachedToClass !== activity.class.DocUpdateMessage
+      .filter((it) => {
+        const activityNotifications = it as ActivityInboxNotification
+        return (
+          activityNotifications.attachedToClass !== activity.class.DocUpdateMessage &&
+          it._class !== notification.class.ReactionInboxNotification
+        )
       })
       .some(({ isViewed }) => !isViewed)
   }
@@ -73,7 +77,7 @@
   function updateQuery (personIds: Set<Ref<Person>>, personById: IdMap<Person>): void {
     displayPersons = Array.from(personIds)
       .map((id) => personById.get(id))
-      .filter((person): person is Person => person !== undefined)
+      .filter(notEmpty)
       .slice(0, maxDisplayPersons - 1)
   }
 

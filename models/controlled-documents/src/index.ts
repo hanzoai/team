@@ -16,28 +16,34 @@
 import activity from '@hanzo/activity'
 import contact from '@hanzo/contact'
 import documentsPlugin, {
+  type ControlledDocument,
   documentsId,
   DocumentState,
   type Document,
-  type DocumentSpace
-} from '@hanzo/controlled-documents'
-import { type Builder } from '@hanzo/model'
-import chunter from '@hanzo/model-chunter'
-import core from '@hanzo/model-core'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import presentation from '@hanzo/model-presentation'
-import print from '@hanzo/model-print'
-import request from '@hanzo/model-request'
-import tracker from '@hanzo/model-tracker'
-import view, { classPresenter, createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import setting from '@hanzo/setting'
-import tags from '@hanzo/tags'
-import textEditor from '@hanzo/text-editor'
+  type DocumentSpace,
+  type ProjectDocument,
+  type ChangeControl,
+  type DocumentRequest
+} from '@hcengineering/controlled-documents'
+import exportPlugin, { type RelationDefinition } from '@hcengineering/export'
+import { type Builder } from '@hcengineering/model'
+import chunter from '@hcengineering/model-chunter'
+import core from '@hcengineering/model-core'
+import { generateClassNotificationTypes } from '@hcengineering/model-notification'
+import presentation from '@hcengineering/model-presentation'
+import print from '@hcengineering/model-print'
+import request from '@hcengineering/model-request'
+import tracker from '@hcengineering/model-tracker'
+import view, { classPresenter, createAction } from '@hcengineering/model-view'
+import workbench from '@hcengineering/model-workbench'
+import notification from '@hcengineering/notification'
+import contacts from '@hcengineering/model-contact'
+import setting from '@hcengineering/setting'
+import tags from '@hcengineering/tags'
+import textEditor from '@hcengineering/text-editor'
 
-import { type Class, type Doc, type Ref } from '@hanzo/core'
-import { type Action } from '@hanzo/view'
+import { AccountRole, type ClassCollaborators, type Class, type Doc, type Ref } from '@hcengineering/core'
+import { type Action } from '@hcengineering/view'
 import { definePermissions } from './permissions'
 import documents from './plugin'
 import { defineSpaceType } from './spaceType'
@@ -192,6 +198,19 @@ export function createModel (builder: Builder): void {
             componentProps: {
               space: documents.space.QualityDocuments
             }
+          },
+          {
+            id: 'space-browser',
+            accessLevel: AccountRole.User,
+            label: documents.string.AllDocumentSpaces,
+            icon: view.icon.List,
+            component: workbench.component.SpecialView,
+            componentProps: {
+              _class: documents.class.DocumentSpace,
+              icon: view.icon.List,
+              label: documents.string.AllDocumentSpaces
+            },
+            position: 'bottom'
           }
         ],
         spaces: [
@@ -266,7 +285,7 @@ export function createModel (builder: Builder): void {
         },
         {
           key: '$lookup.owner',
-          label: documents.string.Owner,
+          label: documents.string.Author,
           presenter: documents.component.OwnerPresenter,
           props: { shouldShowLabel: true, isEditable: false },
           sortingKey: '$lookup.owner.name'
@@ -329,7 +348,7 @@ export function createModel (builder: Builder): void {
         },
         {
           key: '$lookup.owner',
-          label: documents.string.Owner,
+          label: documents.string.Author,
           presenter: documents.component.OwnerPresenter,
           props: { shouldShowLabel: true, isEditable: false },
           sortingKey: '$lookup.owner.name'
@@ -630,13 +649,23 @@ export function createModel (builder: Builder): void {
       'state',
       'space',
       'template',
-      'owner',
+      {
+        _class: documents.class.Document,
+        component: contacts.component.EmployeeFilter,
+        key: 'owner',
+        label: documents.string.Author
+      },
       'category',
       'modifiedOn',
       'labels',
       'major',
       'minor',
-      'author'
+      {
+        _class: documents.class.Document,
+        component: contacts.component.EmployeeFilter,
+        key: 'author',
+        label: documents.string.Creator
+      }
     ],
     getVisibleFilters: documents.function.GetVisibleFilters
   })
@@ -724,6 +753,34 @@ export function createModel (builder: Builder): void {
     actions: [view.action.Archive]
   })
 
+  builder.createDoc(
+    view.class.Viewlet,
+    core.space.Model,
+    {
+      attachTo: documents.class.DocumentSpace,
+      descriptor: view.viewlet.Table,
+      configOptions: {
+        hiddenKeys: ['name', 'description']
+      },
+      config: ['', 'members', 'private', 'owners', 'archived'],
+      viewOptions: {
+        groupBy: [],
+        orderBy: [],
+        other: [
+          {
+            key: 'hideArchived',
+            type: 'toggle',
+            defaultValue: true,
+            actionTarget: 'options',
+            action: view.function.HideArchived,
+            label: view.string.HideArchived
+          }
+        ]
+      }
+    },
+    documents.viewlet.DocumentSpaceTable
+  )
+
   builder.mixin(documents.class.Project, core.class.Class, view.mixin.ObjectPresenter, {
     presenter: documents.component.ProjectPresenter
   })
@@ -768,6 +825,93 @@ export function createModel (builder: Builder): void {
       }
     },
     documents.action.TransferDocument
+  )
+
+  const relations: RelationDefinition[] = [
+    // Forward relations - migrate referenced documents first
+    { field: 'attachedTo', class: documents.class.DocumentMeta },
+    { field: 'changeControl', class: documents.class.ChangeControl },
+    { field: 'category', class: documents.class.DocumentCategory },
+    { field: 'template', class: documents.class.Document },
+    // Inverse relations - find documents that reference this one
+    // ProjectMeta references DocumentMeta via 'meta' field - must be migrated before ProjectDocument
+    { field: 'meta', class: documents.class.ProjectMeta, direction: 'inverse' },
+    // ProjectDocument references ControlledDocument via 'document' field
+    { field: 'document', class: documents.class.ProjectDocument, direction: 'inverse' }
+  ]
+
+  createAction(
+    builder,
+    {
+      action: view.actionImpl.ShowPopup,
+      actionProps: {
+        component: exportPlugin.component.ExportToWorkspaceModal,
+        fillProps: {
+          _objects: 'value'
+        },
+        props: {
+          relations
+        }
+      },
+      label: exportPlugin.string.ExportToWorkspace,
+      icon: exportPlugin.icon.Export,
+      input: 'any',
+      category: view.category.General,
+      target: documents.class.Document,
+      context: {
+        mode: ['context', 'browser'],
+        group: 'copy'
+      }
+    },
+    documents.action.ExportDocuments
+  )
+
+  createAction(
+    builder,
+    {
+      action: view.actionImpl.ShowPopup,
+      actionProps: {
+        component: exportPlugin.component.ExportToWorkspaceModal,
+        fillProps: {
+          _object: 'value'
+        },
+        props: {
+          relations,
+          spaceExport: true,
+          docClass: documents.class.ControlledDocument
+        }
+      },
+      label: exportPlugin.string.ExportToWorkspace,
+      icon: exportPlugin.icon.Export,
+      input: 'none',
+      category: view.category.General,
+      target: documents.class.DocumentSpace,
+      context: {
+        mode: ['context', 'browser'],
+        group: 'copy'
+      }
+    },
+    documents.action.ExportDocumentsFromSpace
+  )
+
+  createAction(
+    builder,
+    {
+      action: view.actionImpl.CopyAsMarkdownTable,
+      actionProps: {
+        cardClass: documents.class.ControlledDocument
+      },
+      label: view.string.CopyAsMarkdownTable,
+      icon: view.icon.Print,
+      input: 'selection',
+      category: view.category.General,
+      target: documents.class.Document,
+      context: {
+        mode: ['context', 'browser'],
+        group: 'copy'
+      }
+    },
+    documents.action.CopyAsMarkdownTable
   )
 
   createAction(
@@ -924,8 +1068,38 @@ export function defineNotifications (builder: Builder): void {
     components: { input: { component: chunter.component.ChatMessageInput } }
   })
 
-  builder.mixin(documents.class.ControlledDocument, core.class.Class, notification.mixin.ClassCollaborators, {
-    fields: ['author', 'owner', 'reviewers', 'approvers', 'coAuthors']
+  builder.createDoc<ClassCollaborators<Document>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: documents.class.Document,
+    fields: ['author', 'owner'],
+    provideSecurity: true
+  })
+
+  builder.createDoc<ClassCollaborators<ProjectDocument>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: documents.class.ProjectDocument,
+    fields: [],
+    provideSecurity: true
+  })
+
+  builder.createDoc<ClassCollaborators<ChangeControl>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: documents.class.ChangeControl,
+    fields: [],
+    provideSecurity: true
+  })
+
+  builder.createDoc<ClassCollaborators<DocumentRequest>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: documents.class.DocumentRequest,
+    fields: ['requested', 'createdBy'],
+    provideSecurity: true
+  })
+
+  builder.mixin(documents.class.DocumentApprovalRequest, core.class.Class, core.mixin.TxAccessLevel, {
+    updateAccessLevel: AccountRole.Guest
+  })
+
+  builder.createDoc<ClassCollaborators<ControlledDocument>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: documents.class.ControlledDocument,
+    fields: ['author', 'owner', 'reviewers', 'approvers', 'coAuthors', 'externalApprovers'],
+    provideSecurity: true
   })
 
   builder.createDoc(
@@ -1070,6 +1244,7 @@ export function defineSearch (builder: Builder): void {
 export function defineTextActions (builder: Builder): void {
   // Comment category
   builder.createDoc(textEditor.class.TextEditorAction, core.space.Model, {
+    tags: ['text'],
     action: documents.function.Comment,
     icon: chunter.icon.Chunter,
     visibilityTester: documents.function.IsCommentVisible,

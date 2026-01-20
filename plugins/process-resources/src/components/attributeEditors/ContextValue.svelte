@@ -13,19 +13,22 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SelectedContext, Context } from '@hanzo/process'
-  import { eventToHTMLElement, showPopup } from '@hanzo/ui'
-  import ConfigurePopup from './ConfigurePopup.svelte'
-  import { Ref, Class, Doc, AnyAttribute } from '@hanzo/core'
-  import ContextValuePresenter from './ContextValuePresenter.svelte'
-  import { AttributeCategory } from '@hanzo/view'
+  import { AnyAttribute, Class, Doc, Ref } from '@hcengineering/core'
+  import { Context, Process, SelectedContext } from '@hcengineering/process'
+  import { Button, eventToHTMLElement, showPopup } from '@hcengineering/ui'
+  import { AttributeCategory } from '@hcengineering/view'
   import { createEventDispatcher } from 'svelte'
+  import ConfigurePopup from './ConfigurePopup.svelte'
+  import ContextValuePresenter from './ContextValuePresenter.svelte'
 
+  export let process: Process
   export let contextValue: SelectedContext
   export let context: Context
   export let attribute: AnyAttribute
   export let attrClass: Ref<Class<Doc>>
   export let category: AttributeCategory
+  export let allowArray: boolean = false
+  export let forbidValue: boolean = false
 
   const dispatch = createEventDispatcher()
 
@@ -46,16 +49,29 @@
     }
     showPopup(
       ConfigurePopup,
-      { contextValue, attrClass, category, attribute, context, onChange },
+      { contextValue, attrClass, process, category, attribute, context, onChange, allowArray, forbidValue },
       eventToHTMLElement(e)
     )
   }
 </script>
 
 {#if configurable}
-  <button on:click={configure}>
-    <ContextValuePresenter {contextValue} {context} />
-  </button>
+  <Button kind={'ghost'} on:click={configure} width={'100%'} shrink={1} justify={'left'} padding={'0.25rem'}>
+    <svelte:fragment slot="content">
+      <ContextValuePresenter {contextValue} {context} {process} />
+    </svelte:fragment>
+  </Button>
 {:else}
-  <ContextValuePresenter {contextValue} {context} />
+  <div class="container">
+    <ContextValuePresenter {contextValue} {context} {process} />
+  </div>
 {/if}
+
+<style>
+  .container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.25rem;
+  }
+</style>

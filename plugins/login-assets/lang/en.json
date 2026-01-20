@@ -6,6 +6,13 @@
     "IncorrectValue": "Incorrect value {field}"
   },
   "string": {
+    "ChangePassword": "Change password",
+    "CurrentPassword": "Current password",
+    "NewPassword": "New password",
+    "EnterCurrentPassword": "Enter current password",
+    "EnterNewPassword": "Enter new password",
+    "RepeatNewPassword": "Repeat new password",
+    "PasswordExpiredDesc": "Your password has expired. Please set a new password to continue.",
     "LogIn": "Log In",
     "SignUp": "Sign Up",
     "CreateWorkspace": "Create workspace",
@@ -69,6 +76,13 @@
     "Hello": "Hello {name},",
     "ProcessingInvite": "Processing invite, please wait...",
     "SignToProceed": "Please sign in to proceed",
-    "Proceed": "Proceed"
+    "Proceed": "Proceed",
+    "SetPasswordLater": "I'll set a password later",
+    "SetPasswordNow": "I'll set a password now",
+    "LoginAsGuest": "Continue as a guest",
+    "SignUpToCreateWorkspace": "There are no workspaces with guest access. Please sign up to create your own.",
+    "WhatIsYourName": "What is your name?",
+    "AccessExpired": "Access time expired. Please ask for a new access link.",
+    "AccessNotActive": "Access time hasn't started yet. It is starting in: "
   }
 }

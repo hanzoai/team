@@ -13,15 +13,14 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import { type Application } from '@hanzo/model-workbench'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory } from '@hanzo/view'
-import { timeId } from '@hanzo/time'
-import time from '@hanzo/time-resources/src/plugin'
-import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
-import { type ExtensionCreator } from '@hanzo/text-editor'
+import { type Client, type Doc, type Ref } from '@hcengineering/core'
+import { type Application } from '@hcengineering/model-workbench'
+import { type NotificationType } from '@hcengineering/notification'
+import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
+import { timeId } from '@hcengineering/time'
+import time from '@hcengineering/time-resources/src/plugin'
+import type { AnyComponent } from '@hcengineering/ui/src/types'
+import { type Action, type ActionCategory } from '@hcengineering/view'
 
 export default mergeIds(timeId, time, {
   action: {
@@ -57,12 +56,9 @@ export default mergeIds(timeId, time, {
     Team: '' as Ref<Application>
   },
   ids: {
-    TimeNotificationGroup: '' as Ref<NotificationGroup>,
     ToDoCreated: '' as Ref<NotificationType>
   },
   function: {
-    ToDoTitleProvider: '' as Resource<(client: Client, ref: Ref<Doc>, doc?: Doc) => Promise<string>>,
-    CreateTodoItemExtension: '' as Resource<ExtensionCreator>,
-    CreateTodoListExtension: '' as Resource<ExtensionCreator>
+    ToDoTitleProvider: '' as Resource<(client: Client, ref: Ref<Doc>, doc?: Doc) => Promise<string>>
   }
 })

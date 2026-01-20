@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
   import core, {
     getCurrentAccount,
     Ref,
@@ -33,7 +33,8 @@
   import { createEventDispatcher } from 'svelte'
 
   import leadRes from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hcengineering/analytics'
+  import view from '@hcengineering/view'
 
   export let funnel: Funnel | undefined = undefined
   const dispatch = createEventDispatcher()
@@ -54,7 +55,7 @@
     funnel?.members !== undefined ? hierarchy.clone(funnel.members) : [getCurrentAccount().uuid]
   let owners: AccountUuid[] = funnel?.owners !== undefined ? hierarchy.clone(funnel.owners) : [getCurrentAccount().uuid]
 
-  $: membersPersons = members.map((m) => $personRefByAccountUuidStore.get(m)).filter(notEmpty)
+  $: membersPersons = members.map((m) => $employeeRefByAccountUuidStore.get(m)).filter(notEmpty)
   $: void loadSpaceType(typeId)
   async function loadSpaceType (id: typeof typeId): Promise<void> {
     spaceType =
@@ -260,7 +261,7 @@
   {#each roles as role}
     <div class="antiGrid-row">
       <div class="antiGrid-row__header">
-        <Label label={leadRes.string.RoleLabel} params={{ role: role.name }} />
+        <Label label={view.string.RoleLabel} params={{ role: role.name }} />
       </div>
       <AccountArrayEditor
         value={rolesAssignment?.[role._id] ?? []}

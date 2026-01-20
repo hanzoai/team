@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { Card } from '@hanzo/card'
-  import { getClient } from '@hanzo/presentation'
+  import card, { Card } from '@hcengineering/card'
+  import { getClient, FilePreview } from '@hcengineering/presentation'
   import Description from './Description.svelte'
-  import FilePreview from '@hanzo/presentation/src/components/FilePreview.svelte'
   import FilePlaceholder from './FilePlaceholder.svelte'
 
   export let doc: Card
   export let readonly: boolean = false
   export let content: HTMLElement
+  export let showToc: boolean = true
 
   const client = getClient()
   const hierarchy = client.getHierarchy()
@@ -43,4 +43,4 @@
   />
 {/each}
 
-<Description {doc} {readonly} bind:content minHeight={isFile ? '15vh' : '25vh'} />
+<Description {doc} {readonly} {showToc} bind:content minHeight="4rem" on:loaded on:headings />

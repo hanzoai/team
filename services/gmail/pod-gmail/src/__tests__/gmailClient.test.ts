@@ -1,0 +1,1037 @@
+import {
+  AccountUuid,
+  PersonId,
+  WorkspaceUuid,
+  type SocialId,
+  type SocialIdType,
+  type MeasureContext
+} from '@hcengineering/core'
+
+import { GmailClient } from '../gmail'
+import { ProjectCredentials, ProjectCredentialsData, Token, User } from '../types'
+import { TokenStorage } from '../tokens'
+import { SyncManager } from '../message/sync'
+
+// Mock dependencies
+const mockedGoogleAuth = {
+  generateAuthUrl: jest.fn().mockReturnValue('https://auth-url.com'),
+  getToken: jest.fn().mockResolvedValue({ tokens: { access_token: 'new-token' } }),
+  setCredentials: jest.fn(),
+  refreshAccessToken: jest.fn().mockResolvedValue({ credentials: { access_token: 'refreshed-token' } }),
+  revokeCredentials: jest.fn().mockResolvedValue({})
+}
+
+const mockedGmailUsers = {
+  getProfile: jest.fn().mockResolvedValue({ data: { emailAddress: 'test@example.com' } }),
+  messages: {
+    send: jest.fn().mockResolvedValue({}),
+    list: jest.fn().mockResolvedValue({ data: { messages: [] } })
+  },
+  watch: jest.fn().mockResolvedValue({}),
+  stop: jest.fn().mockResolvedValue({})
+}
+
+// Mock all imports before they're used
+jest.mock('@hcengineering/core', () => {
+  return {
+    AccountUuid: String,
+    PersonId: String,
+    WorkspaceUuid: String,
+    // Provide missing properties
+    configUserAccountUuid: 'test-user-id',
+    systemAccountUuid: 'system-user-id',
+    core: {
+      space: {
+        Workspace: 'workspace'
+      }
+    },
+    // Add toFindResult function to fix the import error
+    toFindResult: jest.fn().mockImplementation((items: any[]) => ({
+      items,
+      total: items.length
+    })),
+    // Add withContext decorator mock
+    withContext: jest.fn().mockImplementation((name: string) => {
+      return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        return descriptor
+      }
+    }),
+    TxOperations: jest.fn().mockImplementation(() => ({
+      findAll: jest.fn().mockResolvedValue([]),
+      findOne: jest.fn().mockResolvedValue(undefined),
+      createDoc: jest.fn().mockResolvedValue({}),
+      update: jest.fn().mockResolvedValue({}),
+      remove: jest.fn().mockResolvedValue({}),
+      updateDoc: jest.fn().mockResolvedValue({}),
+      tx: jest.fn().mockResolvedValue({})
+    })),
+    SocialIdType: {
+      Email: 'email'
+    }
+  }
+})
+
+jest.mock('@hcengineering/mail-common', () => ({
+  createMessages: jest.fn().mockResolvedValue(undefined),
+  getChannel: jest.fn().mockResolvedValue({ _id: 'test-channel-id' }),
+  isSyncedMessage: jest.fn().mockReturnValue(false),
+  getMessageExtra: jest.fn().mockReturnValue({}),
+  getMailHeaders: jest.fn().mockReturnValue([]),
+  isHulyMessage: jest.fn().mockReturnValue(false)
+}))
+
+jest.mock('googleapis', () => ({
+  gmail_v1: {},
+  google: {
+    auth: {
+      OAuth2: jest.fn().mockImplementation(() => mockedGoogleAuth)
+    },
+    gmail: jest.fn().mockImplementation(() => ({
+      users: mockedGmailUsers
+    }))
+  }
+}))
+
+jest.mock('../tokens')
+jest.mock('../message/adapter')
+jest.mock('../message/sync')
+jest.mock('../message/attachments')
+jest.mock('../message/v2/send', () => ({
+  makeHTMLBodyV2: jest.fn().mockResolvedValue('encoded-html-body')
+}))
+jest.mock('@hcengineering/server-core', () => ({
+  withContext: jest.fn().mockImplementation((name: string) => {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+      return descriptor
+    }
+  })
+}))
+jest.mock('../accounts', () => ({
+  getOrCreateSocialId: jest.fn().mockResolvedValue({ _id: 'test-social-id' })
+}))
+jest.mock('../gmail/utils', () => ({
+  getEmail: jest.fn().mockResolvedValue('test@example.com')
+}))
+jest.mock('../integrations', () => ({
+  createIntegrationIfNotExists: jest.fn().mockResolvedValue({ _id: 'test-integration-id' }),
+  disableIntegration: jest.fn(),
+  removeIntegration: jest.fn()
+}))
+jest.mock('../utils', () => ({
+  addFooter: jest.fn().mockImplementation((content: string) => content),
+  isToken: jest.fn().mockImplementation((obj: any) => 'token' in obj),
+  serviceToken: jest.fn().mockReturnValue('service-token'),
+  getKvsClient: jest.fn().mockImplementation(() => ({
+    getValue: jest.fn(),
+    setValue: jest.fn().mockImplementation(() => Promise.resolve(undefined)),
+    deleteKey: jest.fn().mockImplementation(() => Promise.resolve(undefined)),
+    listKeys: jest.fn()
+  })),
+  getSpaceId: jest.fn().mockReturnValue('test-space-id'),
+  createGmailSearchQuery: jest.fn().mockReturnValue('after:2024-01-01 before:2024-01-02 from:test@example.com')
+}))
+
+// Mock gmail module
+jest.mock('@hcengineering/gmail', () => ({
+  integrationType: {
+    Gmail: 'gmail'
+  },
+  class: {
+    NewMessage: 'class.NewMessage'
+  }
+}))
+
+// Mock setting module
+jest.mock('@hcengineering/setting', () => ({
+  class: {
+    Integration: 'class.Integration'
+  }
+}))
+
+// Mock chat module
+jest.mock('@hcengineering/chat', () => ({
+  masterTag: {
+    Thread: 'chat.class.Thread'
+  }
+}))
+
+// Mock config
+jest.mock('../config', () => ({
+  WATCH_TOPIC_NAME: 'test-topic',
+  OutgoingSyncStartDate: new Date('2020-01-01')
+}))
+
+jest.mock('@hcengineering/account-client', () => ({
+  getClient: jest.fn().mockImplementation(() => ({
+    getLoginInfoByToken: jest.fn().mockResolvedValue({
+      endpoint: 'wss://test-endpoint.com',
+      workspace: 'mockWorkspaceId',
+      token: 'test-token'
+    }),
+    getPersonInfo: jest.fn().mockResolvedValue({
+      socialIds: [
+        {
+          _id: 'test-social-id',
+          value: 'test@example.com',
+          type: 'email'
+        }
+      ]
+    })
+  })),
+  isWorkspaceLoginInfo: jest.fn().mockImplementation(() => true)
+}))
+
+describe('GmailClient', () => {
+  const mockContext: MeasureContext = {
+    info: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    measure: jest.fn().mockImplementation((name: string, fn: () => any) => fn()),
+    with: jest.fn().mockImplementation((data: any, fn: () => any) => fn())
+  } as any
+
+  const mockWorkspaceId = 'test-workspace' as WorkspaceUuid
+  const mockUserId = 'test-user-id' as AccountUuid
+
+  // Fix the SocialId type issue
+  const mockSocialId: SocialId = {
+    _id: 'test-social-id' as PersonId,
+    value: 'test@example.com',
+    type: 'email' as SocialIdType,
+    key: 'email'
+  }
+
+  const credentialsData: ProjectCredentialsData = {
+    client_id: 'client-id',
+    client_secret: 'client-secret',
+    redirect_uris: ['https://redirect-uri.com'],
+    project_id: 'test-project',
+    auth_uri: 'https://auth-uri.com',
+    token_uri: 'https://token-uri.com',
+    auth_provider_x509_cert_url: 'https://cert-url.com'
+  }
+  const mockCredentials: ProjectCredentials = {
+    web: credentialsData
+  }
+
+  const mockUser: User = {
+    userId: mockUserId,
+    workspace: mockWorkspaceId,
+    socialId: mockSocialId,
+    email: 'test@example.com',
+    token: 'user-token'
+  }
+
+  const mockToken: Token = {
+    userId: mockUserId,
+    workspace: mockWorkspaceId,
+    socialId: mockSocialId,
+    token: 'test-token',
+    access_token: 'test-access-token',
+    refresh_token: 'test-refresh-token',
+    scope: 'test-scope',
+    token_type: 'Bearer',
+    expiry_date: 123456789
+  }
+
+  const mockClient = {
+    findAll: jest.fn().mockResolvedValue([]),
+    findOne: jest.fn().mockResolvedValue(undefined),
+    createDoc: jest.fn().mockResolvedValue({}),
+    update: jest.fn().mockResolvedValue({}),
+    remove: jest.fn().mockResolvedValue({}),
+    updateDoc: jest.fn().mockResolvedValue({}),
+    tx: jest.fn().mockResolvedValue({})
+  }
+
+  const mockWorkspaceClient = {
+    subscribeMessages: jest.fn().mockResolvedValue({}),
+    signoutBySocialId: jest.fn().mockResolvedValue({})
+  }
+
+  const mockStorageAdapter = {}
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+    // Fix unbound method errors by using the proper mock assignment approach
+    jest.spyOn(TokenStorage.prototype, 'getToken').mockResolvedValue(mockToken)
+    jest.spyOn(TokenStorage.prototype, 'saveToken').mockResolvedValue({} as any)
+    jest.spyOn(TokenStorage.prototype, 'deleteToken').mockResolvedValue()
+    jest.spyOn(SyncManager.prototype, 'sync').mockResolvedValue()
+    jest.spyOn(SyncManager.prototype, 'fullSync').mockResolvedValue()
+  })
+
+  it('should create a GmailClient instance', async () => {
+    const client = await GmailClient.create(
+      mockContext as any,
+      mockCredentials,
+      mockUser,
+      mockClient as any,
+      mockWorkspaceClient as any,
+      mockWorkspaceId,
+      mockStorageAdapter as any
+    )
+
+    expect(client).toBeInstanceOf(GmailClient)
+    expect(TokenStorage).toHaveBeenCalled()
+    expect(mockContext.info).toHaveBeenCalledWith('Created gmail client', expect.any(Object))
+  })
+
+  it('should create a GmailClient instance with auth code', async () => {
+    const client = await GmailClient.create(
+      mockContext as any,
+      mockCredentials,
+      mockUser,
+      mockClient as any,
+      mockWorkspaceClient as any,
+      mockWorkspaceId,
+      mockStorageAdapter as any,
+      'auth-code'
+    )
+
+    expect(client).toBeInstanceOf(GmailClient)
+    expect(mockedGoogleAuth.setCredentials).toHaveBeenCalled()
+    expect(mockContext.info).toHaveBeenCalledWith('Created gmail client', expect.any(Object))
+  })
+
+  it('should generate auth URL', async () => {
+    const client = await GmailClient.create(
+      mockContext as any,
+      mockCredentials,
+      mockUser,
+      mockClient as any,
+      mockWorkspaceClient as any,
+      mockWorkspaceId,
+      mockStorageAdapter as any
+    )
+
+    const authUrl = client.getAuthUrl('https://callback-url.com')
+    expect(authUrl).toBe('https://auth-url.com')
+  })
+
+  it('should sign out and clean up resources', async () => {
+    const client = await GmailClient.create(
+      mockContext as any,
+      mockCredentials,
+      mockUser,
+      mockClient as any,
+      mockWorkspaceClient as any,
+      mockWorkspaceId,
+      mockStorageAdapter as any
+    )
+
+    await client.signout()
+
+    // Fix unbound method reference by using the spy
+    expect(jest.spyOn(TokenStorage.prototype, 'deleteToken')).toHaveBeenCalledWith(mockSocialId._id)
+    expect(mockContext.info).toHaveBeenCalledWith('Deactivate gmail client', expect.any(Object))
+  })
+
+  it('should create a message', async () => {
+    const client = await GmailClient.create(
+      mockContext as any,
+      mockCredentials,
+      mockUser,
+      mockClient as any,
+      mockWorkspaceClient as any,
+      mockWorkspaceId,
+      mockStorageAdapter as any
+    )
+
+    const newMessage = {
+      _id: 'test-message-id',
+      _class: 'class.NewMessage',
+      space: 'space',
+      status: 'new',
+      from: mockSocialId._id,
+      to: 'recipient@example.com',
+      subject: 'Test Subject',
+      content: '<p>Test content</p>'
+    }
+
+    // Mock internal TxOperations instance
+    const mockTxOperations = {
+      findAll: jest.fn().mockResolvedValue([]),
+      findOne: jest.fn().mockResolvedValue(undefined),
+      createDoc: jest.fn().mockResolvedValue({}),
+      update: jest.fn().mockResolvedValue({}),
+      remove: jest.fn().mockResolvedValue({}),
+      updateDoc: jest.fn().mockResolvedValue({}),
+      tx: jest.fn().mockResolvedValue({})
+    }
+
+    // Access and replace the private TxOperations instance
+    Object.defineProperty(client, 'client', {
+      value: mockTxOperations,
+      writable: true
+    })
+
+    await client.createMessage(newMessage as any)
+
+    expect(mockTxOperations.updateDoc).toHaveBeenCalledWith('class.NewMessage', 'space', 'test-message-id', {
+      status: 'sent'
+    })
+  })
+
+  it('should sync messages', async () => {
+    const client = await GmailClient.create(
+      mockContext as any,
+      mockCredentials,
+      mockUser,
+      mockClient as any,
+      mockWorkspaceClient as any,
+      mockWorkspaceId,
+      mockStorageAdapter as any
+    )
+
+    await client.sync({ noNotify: true })
+
+    // Fix unbound method reference by using the spy
+    expect(jest.spyOn(SyncManager.prototype, 'sync')).toHaveBeenCalledWith(
+      mockSocialId._id,
+      { noNotify: true, spaceId: 'test-space-id' },
+      'test@example.com'
+    )
+  })
+
+  it('should initialize integration', async () => {
+    const client = await GmailClient.create(
+      mockContext as any,
+      mockCredentials,
+      mockUser,
+      mockClient as any,
+      mockWorkspaceClient as any,
+      mockWorkspaceId,
+      mockStorageAdapter as any
+    )
+
+    await client.initIntegration()
+
+    expect(mockContext.info).toHaveBeenCalledWith('Init integration', expect.any(Object))
+  })
+
+  describe('initIntegration', () => {
+    let client: GmailClient
+    let mockTxOperations: any
+
+    beforeEach(async () => {
+      mockTxOperations = {
+        findAll: jest.fn(),
+        findOne: jest.fn(),
+        createDoc: jest.fn(),
+        update: jest.fn(),
+        remove: jest.fn(),
+        updateDoc: jest.fn(),
+        tx: jest.fn()
+      }
+
+      client = await GmailClient.create(
+        mockContext as any,
+        mockCredentials,
+        mockUser,
+        mockClient as any,
+        mockWorkspaceClient as any,
+        mockWorkspaceId,
+        mockStorageAdapter as any
+      )
+
+      // Replace the private TxOperations instance
+      Object.defineProperty(client, 'client', {
+        value: mockTxOperations,
+        writable: true
+      })
+
+      // Mock the methods that are called with void in initIntegration
+      jest.spyOn(client, 'startSync' as any).mockResolvedValue(undefined)
+      jest.spyOn(client, 'getNewMessagesAfterAuth').mockResolvedValue(undefined)
+    })
+
+    it('should use active integration if it exists', async () => {
+      const activeIntegration = {
+        _id: 'active-integration-1',
+        value: 'test@example.com',
+        disabled: false,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      mockTxOperations.findAll.mockResolvedValue([activeIntegration])
+
+      await client.initIntegration()
+
+      expect(mockTxOperations.findAll).toHaveBeenCalledWith('class.Integration', {
+        createdBy: mockSocialId._id,
+        type: 'gmail',
+        value: 'test@example.com'
+      })
+
+      // Should not update the active integration
+      expect(mockTxOperations.update).not.toHaveBeenCalled()
+      // Should not create new integration
+      expect(mockTxOperations.createDoc).not.toHaveBeenCalled()
+    })
+
+    it('should enable disabled integration if no active one exists', async () => {
+      const disabledIntegration = {
+        _id: 'disabled-integration-1',
+        value: 'test@example.com',
+        disabled: true,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      mockTxOperations.findAll.mockResolvedValue([disabledIntegration])
+
+      await client.initIntegration()
+
+      expect(mockTxOperations.update).toHaveBeenCalledWith(disabledIntegration, {
+        disabled: false
+      })
+
+      // Should not create new integration
+      expect(mockTxOperations.createDoc).not.toHaveBeenCalled()
+    })
+
+    it('should prefer active integration over disabled one', async () => {
+      const activeIntegration = {
+        _id: 'active-integration-1',
+        value: 'test@example.com',
+        disabled: false,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      const disabledIntegration = {
+        _id: 'disabled-integration-1',
+        value: 'test@example.com',
+        disabled: true,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      mockTxOperations.findAll.mockResolvedValue([disabledIntegration, activeIntegration])
+
+      await client.initIntegration()
+
+      // Should not update the active integration
+      expect(mockTxOperations.update).not.toHaveBeenCalledWith(activeIntegration, expect.any(Object))
+      // Should not create new integration
+      expect(mockTxOperations.createDoc).not.toHaveBeenCalled()
+    })
+
+    it('should disable multiple active integrations and keep one', async () => {
+      const activeIntegration1 = {
+        _id: 'active-integration-1',
+        value: 'test@example.com',
+        disabled: false,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      const activeIntegration2 = {
+        _id: 'active-integration-2',
+        value: 'test@example.com',
+        disabled: false,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      mockTxOperations.findAll.mockResolvedValue([activeIntegration1, activeIntegration2])
+
+      await client.initIntegration()
+
+      // Should disable one of the active integrations
+      expect(mockTxOperations.update).toHaveBeenCalledWith(activeIntegration2, {
+        disabled: true
+      })
+
+      // Should warn about multiple active integrations
+      expect(mockContext.warn).toHaveBeenCalledWith(
+        'Found several active integrations for the same email, disabling one',
+        {
+          email: 'test@example.com',
+          integrationId: 'active-integration-2'
+        }
+      )
+
+      // Should not create new integration
+      expect(mockTxOperations.createDoc).not.toHaveBeenCalled()
+    })
+
+    it('should handle mixed active and disabled integrations correctly', async () => {
+      const activeIntegration = {
+        _id: 'active-integration-1',
+        value: 'test@example.com',
+        disabled: false,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      const disabledIntegration1 = {
+        _id: 'disabled-integration-1',
+        value: 'test@example.com',
+        disabled: true,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      const disabledIntegration2 = {
+        _id: 'disabled-integration-2',
+        value: 'test@example.com',
+        disabled: true,
+        type: 'gmail',
+        createdBy: mockSocialId._id
+      }
+
+      mockTxOperations.findAll.mockResolvedValue([disabledIntegration1, activeIntegration, disabledIntegration2])
+
+      await client.initIntegration()
+
+      // Should not update any integration (disabled ones should remain disabled, active one should remain active)
+      expect(mockTxOperations.update).not.toHaveBeenCalled()
+
+      // Should not create new integration
+      expect(mockTxOperations.createDoc).not.toHaveBeenCalled()
+    })
+
+    it('should handle errors gracefully', async () => {
+      mockTxOperations.findAll.mockRejectedValue(new Error('Database error'))
+
+      await client.initIntegration()
+
+      expect(mockContext.info).toHaveBeenCalledWith('Failed to start message sync', {
+        workspaceUuid: mockUser.workspace,
+        userId: mockUser.userId,
+        error: 'Database error'
+      })
+    })
+  })
+
+  describe('Deduplication - createMessage (V1)', () => {
+    let client: GmailClient
+    let mockTxOperations: any
+
+    beforeEach(async () => {
+      // Clear the global processing set before each test
+      ;(GmailClient as any).processingMessages.clear()
+
+      mockTxOperations = {
+        findAll: jest.fn().mockResolvedValue([]),
+        findOne: jest.fn().mockResolvedValue(undefined),
+        createDoc: jest.fn().mockResolvedValue({}),
+        update: jest.fn().mockResolvedValue({}),
+        remove: jest.fn().mockResolvedValue({}),
+        updateDoc: jest.fn().mockResolvedValue({}),
+        tx: jest.fn().mockResolvedValue({})
+      }
+
+      client = await GmailClient.create(
+        mockContext as any,
+        mockCredentials,
+        mockUser,
+        mockClient as any,
+        mockWorkspaceClient as any,
+        mockWorkspaceId,
+        mockStorageAdapter as any
+      )
+
+      // Replace the private TxOperations instance
+      Object.defineProperty(client, 'client', {
+        value: mockTxOperations,
+        writable: true
+      })
+
+      // Reset the gmail.messages.send mock
+      mockedGmailUsers.messages.send.mockClear()
+    })
+
+    it('should send message only once when called concurrently', async () => {
+      const newMessage = {
+        _id: 'test-message-id',
+        _class: 'class.NewMessage',
+        space: 'space',
+        status: 'new',
+        from: mockSocialId._id,
+        to: 'recipient@example.com',
+        subject: 'Test Subject',
+        content: '<p>Test content</p>'
+      }
+
+      // Call createMessage twice concurrently
+      const promise1 = client.createMessage(newMessage as any)
+      const promise2 = client.createMessage(newMessage as any)
+
+      await Promise.all([promise1, promise2])
+
+      // Should only send once
+      expect(mockedGmailUsers.messages.send).toHaveBeenCalledTimes(1)
+
+      // Should log that duplicate was skipped
+      expect(mockContext.info).toHaveBeenCalledWith(
+        'Message already being processed, skipping duplicate',
+        expect.objectContaining({
+          messageKey: expect.stringContaining('v1-test-workspace-test-social-id-test-message-id')
+        })
+      )
+    })
+
+    it('should allow retry after first call completes', async () => {
+      const newMessage = {
+        _id: 'test-message-id',
+        _class: 'class.NewMessage',
+        space: 'space',
+        status: 'new',
+        from: mockSocialId._id,
+        to: 'recipient@example.com',
+        subject: 'Test Subject',
+        content: '<p>Test content</p>'
+      }
+
+      // First call
+      await client.createMessage(newMessage as any)
+
+      // Reset mocks to check second call
+      mockedGmailUsers.messages.send.mockClear()
+      mockTxOperations.updateDoc.mockClear()
+
+      // Second call after first completes - should succeed since lock is released
+      await client.createMessage(newMessage as any)
+
+      // Should send again
+      expect(mockedGmailUsers.messages.send).toHaveBeenCalledTimes(1)
+      expect(mockTxOperations.updateDoc).toHaveBeenCalledWith('class.NewMessage', 'space', 'test-message-id', {
+        status: 'sent'
+      })
+    })
+
+    it('should skip message if already marked as sent', async () => {
+      const sentMessage = {
+        _id: 'sent-message-id',
+        _class: 'class.NewMessage',
+        space: 'space',
+        status: 'sent',
+        from: mockSocialId._id,
+        to: 'recipient@example.com',
+        subject: 'Test Subject',
+        content: '<p>Test content</p>'
+      }
+
+      await client.createMessage(sentMessage as any)
+
+      // Should not send
+      expect(mockedGmailUsers.messages.send).not.toHaveBeenCalled()
+    })
+
+    it('should handle errors and still clean up lock', async () => {
+      const newMessage = {
+        _id: 'error-message-id',
+        _class: 'class.NewMessage',
+        space: 'space',
+        status: 'new',
+        from: mockSocialId._id,
+        to: 'recipient@example.com',
+        subject: 'Test Subject',
+        content: '<p>Test content</p>'
+      }
+
+      // Make send fail
+      mockedGmailUsers.messages.send.mockRejectedValueOnce(new Error('Send failed'))
+
+      await client.createMessage(newMessage as any)
+
+      // Should update status to error
+      expect(mockTxOperations.updateDoc).toHaveBeenCalledWith('class.NewMessage', 'space', 'error-message-id', {
+        status: 'error',
+        error: expect.any(String)
+      })
+
+      // Should be able to retry after first call completes (lock is released in finally)
+      mockedGmailUsers.messages.send.mockResolvedValueOnce({})
+      mockTxOperations.updateDoc.mockClear()
+
+      await client.createMessage(newMessage as any)
+
+      // Should update status to sent this time
+      expect(mockTxOperations.updateDoc).toHaveBeenCalledWith('class.NewMessage', 'space', 'error-message-id', {
+        status: 'sent'
+      })
+    })
+
+    it('should handle multiple different messages concurrently', async () => {
+      const message1 = {
+        _id: 'message-1',
+        _class: 'class.NewMessage',
+        space: 'space',
+        status: 'new',
+        from: mockSocialId._id,
+        to: 'recipient1@example.com',
+        subject: 'Subject 1',
+        content: '<p>Content 1</p>'
+      }
+
+      const message2 = {
+        _id: 'message-2',
+        _class: 'class.NewMessage',
+        space: 'space',
+        status: 'new',
+        from: mockSocialId._id,
+        to: 'recipient2@example.com',
+        subject: 'Subject 2',
+        content: '<p>Content 2</p>'
+      }
+
+      // Send two different messages concurrently
+      await Promise.all([client.createMessage(message1 as any), client.createMessage(message2 as any)])
+
+      // Should send both messages
+      expect(mockedGmailUsers.messages.send).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('Deduplication - handleNewMessage (V2)', () => {
+    let client: GmailClient
+    let mockTxOperations: any
+
+    beforeEach(async () => {
+      // Clear the global processing set before each test
+      ;(GmailClient as any).processingMessages.clear()
+
+      // Don't use fake timers for V2 tests to avoid rate limiter issues
+      mockTxOperations = {
+        findAll: jest.fn().mockResolvedValue([]),
+        findOne: jest.fn().mockResolvedValue({
+          _id: 'test-thread-id',
+          parent: 'test-channel-id'
+        }),
+        createDoc: jest.fn().mockResolvedValue({}),
+        update: jest.fn().mockResolvedValue({}),
+        remove: jest.fn().mockResolvedValue({}),
+        updateDoc: jest.fn().mockResolvedValue({}),
+        tx: jest.fn().mockResolvedValue({}),
+        getHierarchy: jest.fn().mockReturnValue({
+          isDerived: jest.fn().mockReturnValue(false)
+        })
+      }
+
+      client = await GmailClient.create(
+        mockContext as any,
+        mockCredentials,
+        mockUser,
+        mockClient as any,
+        mockWorkspaceClient as any,
+        mockWorkspaceId,
+        mockStorageAdapter as any
+      )
+
+      // Replace the private TxOperations instance
+      Object.defineProperty(client, 'client', {
+        value: mockTxOperations,
+        writable: true
+      })
+
+      // Mock integration to be configured
+      Object.defineProperty(client, 'integration', {
+        value: {
+          _id: 'test-integration',
+          data: {
+            integrationVersion: 'v2',
+            spaceId: 'test-space-id'
+          }
+        },
+        writable: true
+      })
+
+      // Mock the email property
+      Object.defineProperty(client, 'email', {
+        value: 'test@example.com',
+        writable: true
+      })
+
+      // Reset the gmail.messages.send mock
+      mockedGmailUsers.messages.send.mockClear()
+      mockedGmailUsers.messages.list.mockResolvedValue({ data: { messages: [] } })
+    })
+
+    it('should send V2 message only once when called concurrently', async () => {
+      const messageEvent = {
+        _id: 'test-message-id',
+        messageId: 'msg-123',
+        cardId: 'card-456',
+        socialId: mockSocialId._id,
+        date: new Date('2024-01-01T12:00:00Z'),
+        content: 'Test message content'
+      }
+
+      // Call handleNewMessage twice concurrently
+      const promise1 = client.handleNewMessage(messageEvent as any)
+      const promise2 = client.handleNewMessage(messageEvent as any)
+
+      await Promise.all([promise1, promise2])
+
+      // Should only send once
+      expect(mockedGmailUsers.messages.send).toHaveBeenCalledTimes(1)
+
+      // Should log that duplicate was skipped
+      expect(mockContext.info).toHaveBeenCalledWith(
+        'Message already being processed, skipping duplicate',
+        expect.objectContaining({
+          messageKey: expect.stringContaining('v2-test-workspace-test-social-id-msg-123-card-456')
+        })
+      )
+    })
+
+    it('should use _id as fallback when messageId is not present', async () => {
+      const messageEvent = {
+        _id: 'test-message-id',
+        cardId: 'card-456',
+        socialId: mockSocialId._id,
+        date: new Date('2024-01-01T12:00:00Z'),
+        content: 'Test message content'
+      }
+
+      // Call handleNewMessage twice concurrently
+      const promise1 = client.handleNewMessage(messageEvent as any)
+      const promise2 = client.handleNewMessage(messageEvent as any)
+
+      await Promise.all([promise1, promise2])
+
+      // Should only send once
+      expect(mockedGmailUsers.messages.send).toHaveBeenCalledTimes(1)
+
+      // Should log with _id in messageKey
+      expect(mockContext.info).toHaveBeenCalledWith(
+        'Message already being processed, skipping duplicate',
+        expect.objectContaining({
+          messageKey: expect.stringContaining('v2-test-workspace-test-social-id-test-message-id-card-456')
+        })
+      )
+    })
+
+    it('should allow V2 retry after first call completes', async () => {
+      const messageEvent = {
+        _id: 'test-message-id',
+        messageId: 'msg-123',
+        cardId: 'card-456',
+        socialId: mockSocialId._id,
+        date: new Date('2024-01-01T12:00:00Z'),
+        content: 'Test message content'
+      }
+
+      // First call
+      await client.handleNewMessage(messageEvent as any)
+
+      // Reset mocks to check second call
+      mockedGmailUsers.messages.send.mockClear()
+
+      // Second call after first completes - should succeed since lock is released
+      await client.handleNewMessage(messageEvent as any)
+
+      // Should send again
+      expect(mockedGmailUsers.messages.send).toHaveBeenCalledTimes(1)
+    })
+
+    it('should skip message if it belongs to different social ID', async () => {
+      const messageEvent = {
+        _id: 'test-message-id',
+        messageId: 'msg-123',
+        cardId: 'card-456',
+        socialId: 'different-social-id' as PersonId,
+        date: new Date('2024-01-01T12:00:00Z'),
+        content: 'Test message content'
+      }
+
+      await client.handleNewMessage(messageEvent as any)
+
+      // Should not send
+      expect(mockedGmailUsers.messages.send).not.toHaveBeenCalled()
+    })
+
+    it('should handle V2 errors and still clean up lock', async () => {
+      const messageEvent = {
+        _id: 'test-message-id',
+        messageId: 'msg-123',
+        cardId: 'card-456',
+        socialId: mockSocialId._id,
+        date: new Date('2024-01-01T12:00:00Z'),
+        content: 'Test message content'
+      }
+
+      // Make send fail
+      mockedGmailUsers.messages.send.mockRejectedValueOnce(new Error('Send failed'))
+
+      await client.handleNewMessage(messageEvent as any)
+
+      // Should log error
+      expect(mockContext.error).toHaveBeenCalledWith('Send gmail message v2 error', expect.any(Object))
+
+      // Reset mocks for second call
+      mockedGmailUsers.messages.send.mockClear()
+      mockedGmailUsers.messages.send.mockResolvedValueOnce({})
+      ;(mockContext.error as jest.Mock).mockClear()
+
+      // Should be able to retry after first call completes (lock is released in finally)
+      await client.handleNewMessage(messageEvent as any)
+
+      // Should send successfully this time (only 1 call since we cleared)
+      expect(mockedGmailUsers.messages.send).toHaveBeenCalledTimes(1)
+      expect(mockContext.error).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('Deduplication - Processing Set Cleanup', () => {
+    let client: GmailClient
+
+    beforeEach(async () => {
+      client = await GmailClient.create(
+        mockContext as any,
+        mockCredentials,
+        mockUser,
+        mockClient as any,
+        mockWorkspaceClient as any,
+        mockWorkspaceId,
+        mockStorageAdapter as any
+      )
+    })
+
+    it('should clean up message from global processing set after completion', async () => {
+      const mockTxOperations = {
+        findAll: jest.fn().mockResolvedValue([]),
+        findOne: jest.fn().mockResolvedValue(undefined),
+        updateDoc: jest.fn().mockResolvedValue({})
+      }
+
+      Object.defineProperty(client, 'client', {
+        value: mockTxOperations,
+        writable: true
+      })
+
+      const newMessage = {
+        _id: 'test-message-id',
+        _class: 'class.NewMessage',
+        space: 'space',
+        status: 'new',
+        from: mockSocialId._id,
+        to: 'recipient@example.com',
+        subject: 'Test Subject',
+        content: '<p>Test content</p>'
+      }
+
+      // Get access to the global static processing set
+      const processingMessages = (GmailClient as any).processingMessages
+
+      // Verify set is empty initially
+      expect(processingMessages.size).toBe(0)
+
+      // Start processing a message
+      const promise = client.createMessage(newMessage as any)
+
+      // Verify message is in processing set while processing
+      expect(processingMessages.size).toBeGreaterThan(0)
+
+      await promise
+
+      // Verify message is removed from processing set after completion
+      expect(processingMessages.size).toBe(0)
+    })
+  })
+})

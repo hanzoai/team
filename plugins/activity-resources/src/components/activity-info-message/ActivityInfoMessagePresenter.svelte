@@ -13,14 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityInfoMessage } from '@hanzo/activity'
-  import { Avatar, SystemAvatar, personByPersonIdStore } from '@hanzo/contact-resources'
-  import { translateCB } from '@hanzo/platform'
-  import { HTMLViewer } from '@hanzo/presentation'
-  import { Action, themeStore } from '@hanzo/ui'
+  import { ActivityInfoMessage } from '@hcengineering/activity'
+  import { Avatar, SystemAvatar, getPersonByPersonIdCb } from '@hcengineering/contact-resources'
+  import { translateCB } from '@hcengineering/platform'
+  import { HTMLViewer } from '@hcengineering/presentation'
+  import { Action, themeStore } from '@hcengineering/ui'
 
   import ActivityMessageHeader from '../activity-message/ActivityMessageHeader.svelte'
   import ActivityMessageTemplate from '../activity-message/ActivityMessageTemplate.svelte'
+  import { Person } from '@hcengineering/contact'
 
   export let value: ActivityInfoMessage
   export let showNotify: boolean = false
@@ -31,12 +32,15 @@
   export let withActions: boolean = true
   export let actions: Action[] = []
   export let hoverable = true
-  export let hoverStyles: 'borderedHover' | 'filledHover' = 'borderedHover'
+  export let hoverStyles: 'filledHover' = 'filledHover'
   export let hideLink = false
   export let readonly: boolean = false
   export let onClick: (() => void) | undefined = undefined
 
-  $: person = $personByPersonIdStore.get(value.createdBy ?? value.modifiedBy)
+  let person: Person | undefined
+  $: getPersonByPersonIdCb(value.createdBy ?? value.modifiedBy, (p) => {
+    person = p ?? undefined
+  })
 
   let content = ''
 

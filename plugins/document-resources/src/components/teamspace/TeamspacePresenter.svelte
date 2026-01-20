@@ -13,26 +13,28 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Teamspace } from '@hanzo/document'
-  import { Icon, IconWithEmoji, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Teamspace } from '@hcengineering/document'
+  import { IconWithEmoji } from '@hcengineering/presentation'
+  import { Icon, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
   import document from '../../plugin'
 
   export let value: Teamspace | undefined
   export let inline: boolean = false
   export let accent: boolean = false
+  export let noCursor: boolean = false
 </script>
 
 {#if value}
-  <div class="flex-presenter cursor-default" class:inline-presenter={inline}>
+  <div class="flex-presenter cursor-default" class:inline-presenter={inline} class:no-pointer={noCursor}>
     <div class="icon" class:emoji={value.icon === view.ids.IconWithEmoji}>
       <Icon
-        icon={value.icon === view.ids.IconWithEmoji ? IconWithEmoji : value.icon ?? document.icon.Teamspace}
+        icon={value.icon === view.ids.IconWithEmoji ? IconWithEmoji : (value.icon ?? document.icon.Teamspace)}
         iconProps={value.icon === view.ids.IconWithEmoji
           ? { icon: value.color }
           : {
               fill:
-                value.color !== undefined
+                value.color !== undefined && typeof value.color !== 'string'
                   ? getPlatformColorDef(value.color, $themeStore.dark).icon
                   : getPlatformColorForTextDef(value.name, $themeStore.dark).icon
             }}

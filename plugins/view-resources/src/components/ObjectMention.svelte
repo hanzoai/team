@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getResource, translateCB } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { AnyComponent, Icon, LabelAndProps, themeStore, tooltip } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Class, Doc, Ref } from '@hcengineering/core'
+  import { getResource, translateCB } from '@hcengineering/platform'
+  import { createQuery, getClient, IconWithEmoji } from '@hcengineering/presentation'
+  import { AnyComponent, Icon, LabelAndProps, themeStore, tooltip } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
 
   import { getReferenceLabel } from '@hanzo/text-editor-resources/src/components/extension/reference'
   import { classIcon } from '../utils'
@@ -31,6 +31,7 @@
   export let component: AnyComponent | undefined = undefined
   export let disabled: boolean = false
   export let onClick: ((event: MouseEvent) => void) | undefined = undefined
+  export let transparent: boolean = false
 
   const client = getClient()
   const hierarchy = client.getHierarchy()
@@ -40,7 +41,9 @@
 
   let docLabel: string = ''
   let docTitle: string | undefined = undefined
-  let docTooltip: LabelAndProps = {}
+  let docTooltip: LabelAndProps = {
+    label: view.string.Loading
+  }
   let docComponent: AnyComponent
 
   let displayTitle = ''
@@ -57,6 +60,8 @@
     doc = object
   }
 
+  $: cl = doc?._class ?? _class
+  $: clazz = cl ? hierarchy.findClass(cl) : undefined
   $: icon =
     doc !== undefined && !hierarchy.isDerived(doc._class, contact.class.Contact) ? classIcon(client, doc._class) : null
 
@@ -115,9 +120,19 @@
 </script>
 
 {#if displayTitle}
-  <span data-type={'reference'} data-id={doc?._id} data-objectclass={doc?._class} data-label={displayTitle}>
-    <DocNavLink object={doc} component={docComponent} {disabled} inlineReference {onClick}>
-      {#if icon}<Icon {icon} size="small" />{' '}{:else}@{/if}{displayTitle}
+  <span
+    data-type={'reference'}
+    data-id={doc?._id}
+    data-objectclass={doc?._class}
+    data-label={displayTitle}
+    use:tooltip={docTooltip}
+  >
+    <DocNavLink object={doc} component={docComponent} {disabled} inlineReference {onClick} {transparent}>
+      {#if icon}{#if icon === view.ids.IconWithEmoji}<IconWithEmoji
+            icon={clazz?.color ?? 0}
+            size={'smaller'}
+            inline
+          />{:else}<Icon {icon} size="small" />{/if}{' '}{:else}@{/if}{displayTitle}
     </DocNavLink>
   </span>
 {/if}

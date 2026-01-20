@@ -38,10 +38,11 @@ import {
   TxOperations,
   Type,
   UXObject,
-  AccountUuid
-} from '@hanzo/core'
-import { Asset, IntlString, Resource, Status } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
+  AccountUuid,
+  Blob
+} from '@hcengineering/core'
+import { Asset, IntlString, Resource, Status } from '@hcengineering/platform'
+import { Preference } from '@hcengineering/preference'
 import {
   AnyComponent,
   AnySvelteComponent,
@@ -229,6 +230,10 @@ export interface ObjectEditor extends Class<Doc> {
   pinned?: boolean
 }
 
+export interface TypeEditor extends Class<Doc> {
+  editor: AnyComponent
+}
+
 /**
  * @public
  */
@@ -247,6 +252,10 @@ export interface ObjectPanelFooter extends Class<Doc> {
  */
 export interface SpaceHeader extends Class<Doc> {
   header: AnyComponent
+}
+
+export interface BaseQuery<T extends Doc> extends Class<T> {
+  baseQuery: DocumentQuery<T>
 }
 
 /**
@@ -488,6 +497,11 @@ export type ViewActionAvailabilityFunction<T extends Doc = Doc> = (doc: T | T[] 
 /**
  * @public
  */
+export type OpenDocumentFunction<T extends Doc = Doc> = (_class: Ref<Class<T>>, _id: Ref<T>) => Promise<boolean>
+
+/**
+ * @public
+ */
 export type ViewAction<P = Record<string, any>> = Resource<ViewActionFunction<Doc, P>>
 
 /**
@@ -679,7 +693,7 @@ export interface BuildModelOptions {
  */
 export interface ObjectFactory extends Class<Obj> {
   component?: AnyComponent
-  create?: Resource<(props?: Record<string, any>) => Promise<void>>
+  create?: Resource<(props?: Record<string, any>) => Promise<Ref<Doc> | undefined>>
 }
 
 /**
@@ -812,6 +826,12 @@ export interface ObjectPanel extends Class<Doc> {
   component: AnyComponent
 }
 
+// Temp workaround for cards-based apps navigation
+export interface CustomObjectLinkProvider extends Class<Doc> {
+  match: Resource<(doc: Doc) => boolean>
+  encode: Resource<(doc: Doc) => Location>
+}
+
 /**
  * @public
  */
@@ -853,7 +873,7 @@ export interface MasterDetailOption {
  */
 export interface IconProps {
   icon?: Asset
-  color?: number | number[]
+  color?: number | number[] | Ref<Blob>
 }
 
 export type AttributeCategory = 'attribute' | 'inplace' | 'collection' | 'array' | 'object'
@@ -873,4 +893,15 @@ export interface AttrPresenter extends Doc {
   category: AttributeCategory
   objectClass: Ref<Class<Doc>>
   component: AnyComponent
+}
+
+/**
+ * @public
+ * Metadata for markdown table generation and refresh
+ */
+export interface BuildMarkdownTableMetadata {
+  cardClass: string | Ref<Class<Doc>>
+  viewletId?: string | Ref<Viewlet>
+  config?: Array<string | BuildModelKey>
+  query?: Record<string, any> | DocumentQuery<Doc>
 }

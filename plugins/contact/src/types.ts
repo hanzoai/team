@@ -52,10 +52,13 @@ export const AVATAR_COLORS: ColorDefinition[] = [
 
 export type PermissionsBySpace = Record<Ref<Space>, Set<Ref<Permission>>>
 export type PersonsByPermission = Record<Ref<Space>, Record<Ref<Permission>, Set<Ref<Person>>>>
+export type MembersBySpace = Record<Ref<Space>, Set<Ref<Person>>>
 export interface PermissionsStore {
   ps: PermissionsBySpace
   ap: PersonsByPermission
+  ms: MembersBySpace
   whitelist: Set<Ref<Space>>
+  restrictedSpaces: Set<Ref<Space>>
 }
 
 export type UserProfile = Card & { person: Ref<Person> }

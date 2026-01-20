@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 import {
-  MeasureContext,
   systemAccountUuid,
   type Branding,
+  type MeasureContext,
   type WorkspaceIds,
-  WorkspaceInfoWithStatus
-} from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import { backupService, doBackupWorkspace } from '@hanzo/server-backup'
-import serverClientPlugin from '@hanzo/server-client'
-import { type DbConfiguration, type PipelineFactory, type StorageAdapter } from '@hanzo/server-core'
-import { buildStorageFromConfig, createStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken, { generateToken } from '@hanzo/server-token'
+  type WorkspaceInfoWithStatus
+} from '@hcengineering/core'
+import { setMetadata } from '@hcengineering/platform'
+import { backupService, doBackupWorkspace } from '@hcengineering/server-backup'
+import serverClientPlugin from '@hcengineering/server-client'
+import { type DbConfiguration, type PipelineFactory, type StorageAdapter } from '@hcengineering/server-core'
+import { buildStorageFromConfig, createStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import serverToken, { generateToken } from '@hcengineering/server-token'
 import { config as _config } from './config'
 
 export function startBackup (
@@ -36,11 +36,11 @@ export function startBackup (
     workspace: WorkspaceIds,
     branding: Branding | null,
     externalStorage: StorageAdapter
-  ) => DbConfiguration,
-  contextVars: Record<string, any>
+  ) => DbConfiguration
 ): void {
   const config = _config()
   setMetadata(serverToken.metadata.Secret, config.Secret)
+  setMetadata(serverToken.metadata.Service, 'backup')
   setMetadata(serverClientPlugin.metadata.Endpoint, config.AccountsURL)
   setMetadata(serverClientPlugin.metadata.UserAgent, config.ServiceID)
 
@@ -62,12 +62,10 @@ export function startBackup (
     storageAdapter,
     { ...config, Token: token },
     pipelineFactory,
-    workspaceStorageAdapter,
     (ctx, workspace, branding, externalStorage) => {
       return getConfig(ctx, mainDbUrl, workspace, branding, externalStorage)
     },
-    config.Region,
-    contextVars
+    config.Region
   )
 
   process.on('SIGINT', shutdown)
@@ -99,6 +97,7 @@ export async function backupWorkspace (
 ): Promise<boolean> {
   const config = _config()
   setMetadata(serverToken.metadata.Secret, config.Secret)
+  setMetadata(serverToken.metadata.Service, 'backup')
   setMetadata(serverClientPlugin.metadata.Endpoint, config.AccountsURL)
   setMetadata(serverClientPlugin.metadata.UserAgent, config.ServiceID)
 
@@ -122,14 +121,12 @@ export async function backupWorkspace (
       storageAdapter,
       { ...config, Token: token },
       pipelineFactory,
-      workspaceStorageAdapter,
       (ctx, workspace, branding, externalStorage) => {
         return getConfig(ctx, mainDbUrl, workspace, branding, externalStorage)
       },
       region,
       downloadLimit,
       [],
-      contextVars,
       fullCheck
     )
     if (result && onFinish !== undefined) {

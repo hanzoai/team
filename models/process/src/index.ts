@@ -11,54 +11,76 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import card, { type Tag, type Card, type MasterTag } from '@hanzo/card'
-import contact, { type Employee } from '@hanzo/contact'
+import card, { type Card, type MasterTag, type Tag } from '@hcengineering/card'
 import core, {
   AccountRole,
   type Class,
   DOMAIN_MODEL,
+  DOMAIN_TRANSIENT,
   type Doc,
   type Domain,
+  type Rank,
   type Ref,
   SortingOrder,
   type Space,
   type Tx
 } from '@hanzo/core'
 import {
-  ArrOf,
   type Builder,
+  Hidden,
   Model,
   Prop,
   ReadOnly,
   TypeAny,
   TypeBoolean,
-  TypeRecord,
+  TypeRank,
   TypeRef,
-  TypeString
-} from '@hanzo/model'
-import { TDoc } from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import { TToDo } from '@hanzo/model-time'
-import view, { createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import { type IntlString } from '@hanzo/platform'
+  TypeString,
+  UX
+} from '@hcengineering/model'
+import { TDoc } from '@hcengineering/model-core'
+import presentation from '@hcengineering/model-presentation'
+import { TToDo } from '@hcengineering/model-time'
+import view, { createAction } from '@hcengineering/model-view'
+import workbench from '@hcengineering/model-workbench'
+import notification from '@hcengineering/notification'
+import { type Asset, type IntlString, type Resource } from '@hcengineering/platform'
 import {
+  type CheckFunc,
+  type ContextId,
+  type CreatedContext,
+  type EventButton,
   type Execution,
+  type ExecutionContext,
   type ExecutionError,
+  type ExecutionLog,
+  type ExecutionLogAction,
+  type ExecutionStatus,
   type Method,
+  type MethodParams,
   type Process,
+  type ProcessContext,
+  type ProcessCustomEvent,
   type ProcessFunction,
   type ProcessToDo,
   type State,
   type Step,
+  type Transition,
+  type Trigger,
+  type UpdateCriteriaComponent,
   processId
-} from '@hanzo/process'
-import time from '@hanzo/time'
-import { type AnyComponent } from '@hanzo/ui'
-import { type AttributeCategory } from '@hanzo/view'
+} from '@hcengineering/process'
+import time from '@hcengineering/time'
+import { type AnyComponent } from '@hcengineering/ui'
+import { type AttributeCategory } from '@hcengineering/view'
+import { defineMethods } from './actions'
+import { defineFunctions } from './functions'
+import { definePermissions } from './permission'
 import process from './plugin'
+import { defineTriggers } from './triggers'
 
-const DOMAIN_PROCESS = 'process' as Domain
+export const DOMAIN_PROCESS = 'process' as Domain
+const DOMAIN_PROCESS_LOG = 'process-log' as Domain
 
 @Model(process.class.Process, core.class.Doc, DOMAIN_MODEL)
 export class TProcess extends TDoc implements Process {
@@ -71,41 +93,90 @@ export class TProcess extends TDoc implements Process {
   @Prop(TypeRef(card.class.MasterTag), card.string.MasterTag)
     masterTag!: Ref<MasterTag | Tag>
 
-  @Prop(ArrOf(TypeRef(process.class.State)), process.string.States)
-    states!: Ref<State>[]
+  @Prop(TypeRef(process.class.State), process.string.NewState)
+    initState!: Ref<State>
 
   @Prop(TypeBoolean(), process.string.ParallelExecutionForbidden)
     parallelExecutionForbidden?: boolean
 
   @Prop(TypeBoolean(), process.string.StartAutomatically)
     autoStart: boolean | undefined
+
+  context!: Record<ContextId, ProcessContext>
+}
+
+@Model(process.class.Trigger, core.class.Doc, DOMAIN_MODEL)
+export class TTrigger extends TDoc implements Trigger {
+  label!: IntlString
+
+  editor?: AnyComponent
+
+  presenter?: AnyComponent
+
+  icon!: Asset
+
+  requiredParams!: string[]
+
+  checkFunction?: Resource<CheckFunc>
+
+  init!: boolean
+
+  auto?: boolean
+}
+
+@Model(process.class.Transition, core.class.Doc, DOMAIN_MODEL)
+export class TTransition extends TDoc implements Transition {
+  @Prop(TypeRef(process.class.Process), process.string.Process)
+    process!: Ref<Process>
+
+  @Prop(TypeRef(process.class.State), process.string.From)
+    from!: Ref<State> | null
+
+  @Prop(TypeRef(process.class.State), process.string.To)
+    to!: Ref<State>
+
+  @Prop(TypeAny(process.component.ActionsPresenter, process.string.Actions), process.string.Actions)
+    actions!: Step<Doc>[]
+
+  @Prop(TypeRef(process.class.Trigger), process.string.Trigger)
+    trigger!: Ref<Trigger>
+
+  triggerParams!: Record<string, any>
+
+  @Prop(TypeRank(), core.string.Rank)
+  @Hidden()
+    rank!: Rank
+}
+
+@Model(process.class.ExecutionLog, core.class.Doc, DOMAIN_PROCESS_LOG)
+export class TExecutionLog extends TDoc implements ExecutionLog {
+  @Prop(TypeRef(process.class.Execution), process.string.Execution)
+    execution!: Ref<Execution>
+
+  @Prop(TypeRef(process.class.Process), process.string.Process)
+    process!: Ref<Process>
+
+  @Prop(TypeRef(card.class.Card), card.string.Card)
+    card!: Ref<Card>
+
+  @Prop(TypeRef(process.class.Transition), process.string.Transition)
+    transition?: Ref<Transition>
+
+  @Prop(TypeAny(process.component.LogActionPresenter, process.string.LogAction), process.string.LogAction)
+    action!: ExecutionLogAction
 }
 
 @Model(process.class.Execution, core.class.Doc, DOMAIN_PROCESS)
 export class TExecution extends TDoc implements Execution {
-  @Prop(TypeRef(contact.mixin.Employee), contact.string.Employee)
-  @ReadOnly()
-    assignee!: Ref<Employee>
-
   @Prop(TypeRef(process.class.Process), process.string.Process)
   @ReadOnly()
-    process!: Ref<TProcess>
-
-  @Prop(TypeRef(process.class.ProcessToDo), time.string.ToDo)
-  @ReadOnly()
-    currentToDo!: Ref<ProcessToDo> | null
+    process!: Ref<Process>
 
   @Prop(TypeRef(process.class.State), process.string.Step)
   @ReadOnly()
     currentState!: Ref<State>
 
-  @Prop(TypeBoolean(), process.string.Done)
-  @ReadOnly()
-    done!: boolean
-
-  @Prop(TypeRecord(), process.string.Rollback)
-  @ReadOnly()
-    rollback!: Record<Ref<State>, Tx[]>
+  rollback!: Tx[][]
 
   @Prop(TypeRef(card.class.Card), card.string.Card)
   @ReadOnly()
@@ -116,13 +187,21 @@ export class TExecution extends TDoc implements Execution {
     error?: ExecutionError[] | null
 
   parentId?: Ref<Execution>
+
+  context!: ExecutionContext
+
+  result?: any
+
+  status!: ExecutionStatus
 }
 
 @Model(process.class.ProcessToDo, time.class.ToDo)
+@UX(process.string.ToDo)
 export class TProcessToDo extends TToDo implements ProcessToDo {
   execution!: Ref<Execution>
 
-  state!: Ref<State>
+  @Prop(TypeBoolean(), process.string.Rollback)
+    withRollback!: boolean
 }
 
 @Model(process.class.Method, core.class.Doc, DOMAIN_MODEL)
@@ -135,19 +214,51 @@ export class TMethod extends TDoc implements Method<Doc> {
 
   editor!: AnyComponent
 
-  systemOnly!: boolean
+  createdContext!: CreatedContext
 
   presenter?: AnyComponent
 
   requiredParams!: string[]
+
+  defaultParams?: MethodParams<Doc>
 }
 
 @Model(process.class.State, core.class.Doc, DOMAIN_MODEL)
 export class TState extends TDoc implements State {
-  process!: Ref<Process>
+  @Prop(TypeRef(process.class.Process), process.string.Process)
+  @ReadOnly()
+    process!: Ref<Process>
+
+  @Prop(TypeString(), core.string.Name)
+    title!: string
+
+  @Prop(TypeRank(), core.string.Rank)
+  @Hidden()
+    rank!: Rank
+}
+
+@Model(process.class.ProcessCustomEvent, core.class.Doc, DOMAIN_TRANSIENT)
+export class TProcessCustomEvent extends TDoc implements ProcessCustomEvent {
+  eventType!: string
+
+  @Prop(TypeRef(process.class.Execution), process.string.Execution)
+    execution!: Ref<Execution>
+
+  @Prop(TypeRef(card.class.Card), card.string.Card)
+    card!: Ref<Card>
+}
+
+@Model(process.class.EventButton, core.class.Doc, DOMAIN_PROCESS)
+export class TEventButton extends TDoc implements EventButton {
   title!: string
-  actions!: Step<Doc>[]
-  endAction?: Step<Doc> | null
+
+  eventType!: string
+
+  @Prop(TypeRef(process.class.Execution), process.string.Execution)
+    execution!: Ref<Execution>
+
+  @Prop(TypeRef(card.class.Card), card.string.Card)
+    card!: Ref<Card>
 }
 
 @Model(process.class.ProcessFunction, core.class.Doc, DOMAIN_MODEL)
@@ -156,13 +267,73 @@ export class TProcessFunction extends TDoc implements ProcessFunction {
   category: AttributeCategory | undefined
   label!: IntlString
   editor?: AnyComponent
+  presenter?: AnyComponent
   allowMany?: boolean
+  type!: 'transform' | 'reduce' | 'context'
+}
+
+@Model(process.class.UpdateCriteriaComponent, core.class.Doc, DOMAIN_MODEL)
+export class TUpdateCriteriaComponent extends TDoc implements UpdateCriteriaComponent {
+  category!: AttributeCategory
+
+  editor!: AnyComponent
+
+  of!: Ref<Class<Doc<Space>>>
+
+  props!: Record<string, any>
 }
 
 export * from './migration'
 
 export function createModel (builder: Builder): void {
-  builder.createModel(TProcess, TExecution, TProcessToDo, TMethod, TState, TProcessFunction)
+  builder.createModel(
+    TProcess,
+    TExecution,
+    TProcessToDo,
+    TMethod,
+    TState,
+    TProcessFunction,
+    TTransition,
+    TTrigger,
+    TExecutionLog,
+    TUpdateCriteriaComponent,
+    TProcessCustomEvent,
+    TEventButton
+  )
+
+  builder.createDoc(
+    notification.class.NotificationType,
+    core.space.Model,
+    {
+      hidden: false,
+      generated: false,
+      allowedForAuthor: true,
+      label: process.string.NewProcessToDo,
+      group: time.ids.TimeNotificationGroup,
+      txClasses: [core.class.TxCreateDoc],
+      objectClass: process.class.ProcessToDo,
+      onlyOwn: true,
+      defaultEnabled: true,
+      templates: {
+        textTemplate: '{body}',
+        htmlTemplate: '<p>{body}</p>',
+        subjectTemplate: '{title}'
+      }
+    },
+    process.ids.ProcessToDoCreated
+  )
+
+  createAction(builder, {
+    action: view.actionImpl.Delete,
+    label: view.string.Delete,
+    icon: view.icon.Delete,
+    keyBinding: ['Meta + Backspace'],
+    category: view.category.General,
+    input: 'any',
+    target: process.class.Transition,
+    context: { mode: ['context', 'browser'], group: 'remove' },
+    visibilityTester: view.function.CanDeleteObject
+  })
 
   createAction(
     builder,
@@ -174,7 +345,7 @@ export function createModel (builder: Builder): void {
       },
       label: process.string.RunProcess,
       icon: process.icon.Process,
-      input: 'focus',
+      input: 'any',
       category: view.category.General,
       target: card.class.Card,
       context: {
@@ -226,123 +397,20 @@ export function createModel (builder: Builder): void {
     process.pipeline.ProcessMiddleware
   )
 
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.TypeString,
-      category: 'attribute',
-      label: process.string.UpperCase
-    },
-    process.function.UpperCase
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.TypeString,
-      category: 'attribute',
-      label: process.string.LowerCase
-    },
-    process.function.LowerCase
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.TypeString,
-      category: 'attribute',
-      label: process.string.Trim
-    },
-    process.function.Trim
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.ArrOf,
-      category: undefined,
-      label: process.string.FirstValue
-    },
-    process.function.FirstValue
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.ArrOf,
-      category: undefined,
-      label: process.string.LastValue
-    },
-    process.function.LastValue
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.ArrOf,
-      category: undefined,
-      label: process.string.Random
-    },
-    process.function.Random
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.TypeNumber,
-      category: 'attribute',
-      label: process.string.Add,
-      allowMany: true,
-      editor: process.component.NumberOffsetEditor
-    },
-    process.function.Add
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.TypeNumber,
-      category: 'attribute',
-      label: process.string.Subtract,
-      allowMany: true,
-      editor: process.component.NumberOffsetEditor
-    },
-    process.function.Subtract
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.TypeDate,
-      category: 'attribute',
-      label: process.string.Offset,
-      editor: process.component.DateOffsetEditor
-    },
-    process.function.Offset
-  )
-
-  builder.createDoc(
-    process.class.ProcessFunction,
-    core.space.Model,
-    {
-      of: core.class.TypeDate,
-      category: 'attribute',
-      label: process.string.FirstWorkingDayAfter
-    },
-    process.function.FirstWorkingDayAfter
-  )
+  defineFunctions(builder)
+  defineMethods(builder)
+  defineTriggers(builder)
 
   builder.mixin(process.class.Process, core.class.Class, view.mixin.AttributePresenter, {
     presenter: process.component.ProcessPresenter
+  })
+
+  builder.mixin(process.class.Trigger, core.class.Class, view.mixin.AttributePresenter, {
+    presenter: process.component.TriggerPresenter
+  })
+
+  builder.mixin(process.class.State, core.class.Class, view.mixin.AttributePresenter, {
+    presenter: process.component.StatePresenter
   })
 
   builder.createDoc(
@@ -356,7 +424,7 @@ export function createModel (builder: Builder): void {
         baseMenuClass: process.class.Execution
       },
       viewOptions: {
-        groupBy: ['process', 'assignee', 'done'],
+        groupBy: ['process', 'currentState'],
         orderBy: [
           ['modifiedOn', SortingOrder.Descending],
           ['createdOn', SortingOrder.Descending]
@@ -370,7 +438,8 @@ export function createModel (builder: Builder): void {
             action: process.function.ShowDoneQuery,
             label: process.string.ShowDone
           }
-        ]
+        ],
+        groupDepth: 1
       },
       configOptions: {
         strict: true,
@@ -380,28 +449,27 @@ export function createModel (builder: Builder): void {
         {
           key: '',
           label: process.string.Process,
-          presenter: process.component.ExecutonPresenter,
-          displayProps: { key: 'process', fixed: 'left' }
+          presenter: process.component.ExecutonPresenter
+        },
+        {
+          key: 'currentState',
+          label: process.string.Step,
+          presenter: process.component.ExecutonProgressPresenter
         },
         {
           key: '',
-          label: process.string.Step,
-          presenter: process.component.ExecutonProgressPresenter,
-          displayProps: { key: 'state', fixed: 'left' }
+          presenter: process.component.ExecutionMyToDos,
+          label: process.string.ToDo,
+          displayProps: { key: 'todos' }
         },
         { key: '', presenter: process.component.ExecutonPresenter, displayProps: { grow: true } },
         {
-          key: 'assignee',
-          displayProps: { key: 'assignee', fixed: 'right' },
-          props: { kind: 'list', shouldShowName: false, avatarSize: 'x-small' }
-        },
-        {
           key: 'modifiedOn',
-          displayProps: { fixed: 'right' }
+          displayProps: { fixed: 'right', dividerBefore: true }
         },
         {
           key: 'createdOn',
-          displayProps: { fixed: 'right' }
+          displayProps: { fixed: 'right', dividerBefore: true }
         }
       ]
     },
@@ -418,7 +486,7 @@ export function createModel (builder: Builder): void {
         baseMenuClass: process.class.Execution
       },
       viewOptions: {
-        groupBy: ['process', 'assignee', 'done'],
+        groupBy: ['process', 'currentState', 'card'],
         orderBy: [
           ['modifiedOn', SortingOrder.Descending],
           ['createdOn', SortingOrder.Descending]
@@ -440,38 +508,90 @@ export function createModel (builder: Builder): void {
       },
       config: [
         {
-          key: 'card',
-          displayProps: { key: 'card', fixed: 'left' }
+          key: 'card'
         },
         {
           key: '',
           label: process.string.Process,
-          presenter: process.component.ExecutonPresenter,
-          displayProps: { key: 'process', fixed: 'left' }
+          presenter: process.component.ExecutonPresenter
+        },
+        {
+          key: 'currentState',
+          label: process.string.Step,
+          presenter: process.component.ExecutonProgressPresenter
         },
         {
           key: '',
-          label: process.string.Step,
-          presenter: process.component.ExecutonProgressPresenter,
-          displayProps: { key: 'state', fixed: 'left' }
+          presenter: process.component.ExecutionMyToDos,
+          label: process.string.ToDo,
+          displayProps: { key: 'todos' }
         },
         { key: '', presenter: process.component.ExecutonPresenter, displayProps: { grow: true } },
         {
-          key: 'assignee',
-          displayProps: { key: 'assignee', fixed: 'right' },
-          props: { kind: 'list', shouldShowName: false, avatarSize: 'x-small' }
-        },
-        {
           key: 'modifiedOn',
-          displayProps: { fixed: 'right' }
+          displayProps: { fixed: 'right', dividerBefore: true }
         },
         {
           key: 'createdOn',
-          displayProps: { fixed: 'right' }
+          displayProps: { fixed: 'right', dividerBefore: true }
         }
       ]
     },
     process.viewlet.ExecutionsList
+  )
+
+  builder.mixin(process.class.Transition, core.class.Class, view.mixin.AttributePresenter, {
+    presenter: process.component.TransitionRefPresenter
+  })
+
+  builder.createDoc(
+    view.class.Viewlet,
+    core.space.Model,
+    {
+      attachTo: process.class.ExecutionLog,
+      descriptor: view.viewlet.List,
+      props: {
+        baseMenuClass: process.class.ExecutionLog
+      },
+      viewOptions: {
+        groupBy: ['transition', 'action'],
+        orderBy: [
+          ['modifiedOn', SortingOrder.Descending],
+          ['createdOn', SortingOrder.Descending]
+        ],
+        other: [],
+        groupDepth: 1
+      },
+      configOptions: {
+        strict: true,
+        hiddenKeys: []
+      },
+      config: [
+        {
+          key: 'action',
+          presenter: process.component.LogActionPresenter
+        },
+        {
+          key: 'transition',
+          label: process.string.Transition,
+          presenter: process.component.TransitionRefPresenter
+        },
+        {
+          key: '',
+          presenter: view.component.GrowPresenter,
+          displayProps: { grow: true }
+        },
+        {
+          key: 'createdBy',
+          displayProps: { fixed: 'right' }
+        },
+        {
+          key: 'createdOn',
+          displayProps: { fixed: 'right', dividerBefore: true }
+        }
+      ]
+    },
+    process.viewlet.ExecutionLogList
   )
 
   builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {
@@ -480,64 +600,125 @@ export function createModel (builder: Builder): void {
     props: {}
   })
 
-  builder.createDoc(
-    process.class.Method,
-    core.space.Model,
-    {
-      label: process.string.RunProcess,
-      objectClass: process.class.Process,
-      editor: process.component.SubProcessEditor,
-      presenter: process.component.SubProcessPresenter,
-      systemOnly: false,
-      requiredParams: ['_id']
-    },
-    process.method.RunSubProcess
-  )
+  builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {
+    extension: card.extensions.EditCardHeaderExtension,
+    component: process.component.ProcessesHeaderExtension,
+    props: {}
+  })
+
+  builder.createDoc(card.class.ExportExtension, core.space.Model, {
+    func: process.function.ExportProcess
+  })
 
   builder.createDoc(
-    process.class.Method,
+    card.class.CardSection,
     core.space.Model,
     {
-      label: process.string.CreateToDo,
-      editor: process.component.ToDoEditor,
-      objectClass: process.class.ProcessToDo,
-      presenter: process.component.ToDoPresenter,
-      systemOnly: true,
-      requiredParams: ['state', 'title', 'user']
+      label: process.string.Processes,
+      component: process.component.ProcessesCardSection,
+      checkVisibility: process.function.CheckProcessSectionVisibility,
+      order: 350,
+      navigation: []
     },
-    process.method.CreateToDo
-  )
-
-  builder.createDoc(
-    process.class.Method,
-    core.space.Model,
-    {
-      label: process.string.UpdateCard,
-      editor: process.component.UpdateCardEditor,
-      objectClass: card.class.Card,
-      presenter: process.component.UpdateCardPresenter,
-      systemOnly: false,
-      requiredParams: []
-    },
-    process.method.UpdateCard
-  )
-
-  builder.createDoc(
-    process.class.Method,
-    core.space.Model,
-    {
-      label: process.string.OnSubProcessesDone,
-      objectClass: process.class.Execution,
-      systemOnly: true,
-      requiredParams: []
-    },
-    process.method.WaitSubProcess
+    process.section.CardProcesses
   )
 
   builder.createDoc(card.class.MasterTagEditorSection, core.space.Model, {
     id: 'processes',
     label: process.string.Processes,
     component: process.component.ProcessesSettingSection
+  })
+
+  // builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {
+  //   extension: workbench.extensions.WorkbenchExtensions,
+  //   component: process.component.NotifierExtension
+  // })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'attribute',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.TypeString,
+    props: {
+      modes: ['Equal', 'StringContains', 'Exists']
+    }
+  })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'attribute',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.TypeHyperlink,
+    props: {
+      modes: ['Equal', 'StringContains', 'Exists']
+    }
+  })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'attribute',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.TypeNumber,
+    props: {
+      modes: ['Equal', 'GT', 'LT', 'Between', 'Exists']
+    }
+  })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'attribute',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.TypeDate,
+    props: {
+      modes: ['Equal', 'GT', 'LT', 'Between', 'Exists']
+    }
+  })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'attribute',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.TypeBoolean,
+    props: {
+      modes: ['Equal', 'NotEqual', 'Exists']
+    }
+  })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'array',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.ArrOf,
+    props: {
+      modes: [
+        'ArrayAll',
+        'ArrayAny',
+        'ArrayNotIncludes',
+        'ArraySizeEquals',
+        'ArraySizeGt',
+        'ArraySizeGte',
+        'ArraySizeLt',
+        'ArraySizeLte'
+      ]
+    }
+  })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'attribute',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.EnumOf,
+    props: {
+      modes: ['Equal', 'NotEqual', 'Exists']
+    }
+  })
+
+  builder.createDoc(process.class.UpdateCriteriaComponent, core.space.Model, {
+    category: 'object',
+    editor: process.criteriaEditor.BaseCriteria,
+    of: core.class.RefTo,
+    props: {
+      modes: ['Equal', 'NotEqual', 'Exists']
+    }
+  })
+
+  definePermissions(builder)
+
+  builder.createDoc(card.class.PermissionObjectClass, core.space.Model, {
+    objectClass: process.class.Execution
   })
 }
 

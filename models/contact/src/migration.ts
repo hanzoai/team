@@ -13,6 +13,7 @@ import {
 } from '@hanzo/contact'
 import {
   AccountRole,
+  type AccountUuid,
   buildSocialIdString,
   type Class,
   type Doc,
@@ -21,9 +22,10 @@ import {
   DOMAIN_TX,
   generateId,
   type MarkupBlobRef,
-  MeasureMetricsContext,
   type PersonId,
+  type PersonUuid,
   type Ref,
+  type SocialKey,
   SortingOrder,
   type Space,
   type TxCUD
@@ -111,8 +113,7 @@ async function getOldPersonAccounts (
 }
 
 async function fillAccountUuids (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('contact fillAccountUuids', {})
-  ctx.info('filling account uuids...')
+  client.logger.log('filling account uuids...', {})
   const iterator = await client.traverse<Person>(DOMAIN_CONTACT, { _class: contact.class.Person })
 
   try {
@@ -166,69 +167,8 @@ async function fillAccountUuids (client: MigrationClient): Promise<void> {
   }
 }
 
-async function fillSocialIdentitiesIds (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('contact fillSocialIdentitiesIds', {})
-  ctx.info('filling social identities genenrated ids...')
-  const socialIdBySocialKey = new Map<string, PersonId | null>()
-  const iterator = await client.traverse<SocialIdentity>(DOMAIN_CHANNEL, { _class: contact.class.SocialIdentity })
-  let count = 0
-
-  try {
-    let newSids: SocialIdentity[] = []
-    let newSidIds = new Set<Ref<SocialIdentity>>()
-    let deleteSids: Ref<SocialIdentity>[] = []
-
-    while (true) {
-      const socialIdentities = await iterator.next(200)
-      if (socialIdentities === null || socialIdentities.length === 0) {
-        break
-      }
-
-      for (const socialIdentity of socialIdentities) {
-        const socialId = await getSocialIdBySocialKey(client, socialIdentity.key, socialIdBySocialKey)
-
-        if (socialId == null || socialId === socialIdentity._id) continue
-
-        const socialIdRef = socialId as SocialIdentityRef
-        // Some old data might contain duplicate accounts for github users
-        // so need to filter just in case
-        if (!newSidIds.has(socialIdRef)) {
-          newSidIds.add(socialIdRef)
-          newSids.push({
-            ...socialIdentity,
-            _id: socialIdRef
-          })
-        }
-
-        deleteSids.push(socialIdentity._id)
-        count++
-
-        if (newSids.length > 50) {
-          await client.create(DOMAIN_CHANNEL, newSids)
-          await client.deleteMany(DOMAIN_CHANNEL, { _id: { $in: deleteSids } })
-          newSids = []
-          newSidIds = new Set()
-          deleteSids = []
-        }
-      }
-    }
-
-    if (newSids.length > 0) {
-      await client.create(DOMAIN_CHANNEL, newSids)
-      await client.deleteMany(DOMAIN_CHANNEL, { _id: { $in: deleteSids } })
-      newSids = []
-      newSidIds = new Set()
-      deleteSids = []
-    }
-    ctx.info('finished filling social identities genenrated ids. Updated count: ', { count })
-  } finally {
-    await iterator.close()
-  }
-}
-
 async function assignWorkspaceRoles (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('contact assignWorkspaceRoles', {})
-  ctx.info('assigning workspace roles...')
+  client.logger.log('assigning workspace roles...', {})
   const oldPersonAccounts = await getOldPersonAccounts(client)
   for (const { person, email, role } of oldPersonAccounts) {
     // check it's an active employee
@@ -244,25 +184,24 @@ async function assignWorkspaceRoles (client: MigrationClient): Promise<void> {
     try {
       await client.accountClient.updateWorkspaceRoleBySocialKey(buildSocialIdString(socialKey), role)
     } catch (err: any) {
-      ctx.error('Failed to update workspace role', { email, ...socialKey, role, err })
+      client.logger.error('Failed to update workspace role', { email, ...socialKey, role, err })
     }
   }
 
-  ctx.info('finished assigning workspace roles', { users: oldPersonAccounts.length })
+  client.logger.log('finished assigning workspace roles', { users: oldPersonAccounts.length })
 }
 
 async function assignEmployeeRoles (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('contact assignEmployeeRoles', {})
-  ctx.info('assigning roles to employees...')
+  client.logger.log('assigning roles to employees...', {})
 
   const wsMembers = await client.accountClient.getWorkspaceMembers()
-  const persons = await client.traverse<Person>(DOMAIN_CONTACT, {
+  const personsIterator = await client.traverse<Person>(DOMAIN_CONTACT, {
     _class: contact.class.Person
   })
 
   try {
     while (true) {
-      const docs = await persons.next(50)
+      const docs = await personsIterator.next(50)
       if (docs === null || docs?.length === 0) {
         break
       }
@@ -297,14 +236,13 @@ async function assignEmployeeRoles (client: MigrationClient): Promise<void> {
       }
     }
   } finally {
-    await persons.close()
-    ctx.info('finished assigning roles to employees...')
+    await personsIterator.close()
+    client.logger.log('finished assigning roles to employees...', {})
   }
 }
 
 async function createSocialIdentities (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('createSocialIdentities', {})
-  ctx.info('processing person accounts ', {})
+  client.logger.log('processing person accounts ', {})
 
   const socialIdBySocialKey = new Map<string, PersonId | null>()
   const personAccountsTxes: any[] = await client.find<TxCUD<Doc>>(DOMAIN_MODEL_TX, {
@@ -343,9 +281,89 @@ async function createSocialIdentities (client: MigrationClient): Promise<void> {
   }
 }
 
+async function migrateMergedAccounts (client: MigrationClient): Promise<void> {
+  client.logger.log('migrating merged person accounts ', {})
+  const accountsByPerson = new Map<string, any[]>()
+  const personAccountsTxes: any[] = await client.find<TxCUD<Doc>>(DOMAIN_MODEL_TX, {
+    objectClass: 'contact:class:PersonAccount' as Ref<Class<Doc>>
+  })
+  const personAccounts = getAccountsFromTxes(personAccountsTxes)
+
+  for (const account of personAccounts) {
+    if (!accountsByPerson.has(account.person)) {
+      accountsByPerson.set(account.person, [])
+    }
+
+    // exclude empty emails
+    // also exclude Hulia account
+    if (account.email === '' || account.email === 'huly.ai.bot@hc.engineering') {
+      continue
+    }
+    accountsByPerson.get(account.person)?.push(account)
+  }
+
+  for (const [person, oldAccounts] of accountsByPerson.entries()) {
+    try {
+      if (oldAccounts.length < 2) continue
+
+      // Every social id in the old account might either be already in the new account or not in the accounts at all
+      // So we want to
+      // 1. Take the first social id with the existing account
+      // 2. Merge all other accounts into the first one
+      // 3. Create social ids for the first account which haven't had their own accounts
+      const toAdd: Array<SocialKey> = []
+      const toMergePersons = new Set<PersonUuid>()
+      const toMerge = new Set<AccountUuid>()
+      for (const oldAccount of oldAccounts) {
+        const socialIdKeyObj = getSocialKeyByOldEmail(oldAccount.email)
+        const socialIdKey = buildSocialIdString(socialIdKeyObj)
+
+        const socialId = await client.accountClient.findFullSocialIdBySocialKey(socialIdKey)
+        const personUuid = socialId?.personUuid
+        const accountUuid = (await client.accountClient.findPersonBySocialKey(socialIdKey, true)) as AccountUuid
+
+        if (personUuid == null) {
+          toAdd.push(socialIdKeyObj)
+          // Means not attached to any account yet, simply add the social id to the primary account
+        } else if (accountUuid == null) {
+          // Attached to a person without an account. Should not be the case if being run before the global accounts migration.
+          // Merge the person into the primary account.
+          toMergePersons.add(personUuid)
+        } else {
+          // This is the case when the social id is already attached to an account. Merge the accounts.
+          toMerge.add(accountUuid)
+        }
+      }
+
+      if (toMerge.size === 0) {
+        // No existing accounts for the person's social ids. Normally this should never be the case.
+        continue
+      }
+
+      const toMergeAccountsArray = Array.from(toMerge)
+      const primaryAccount = toMergeAccountsArray[0]
+
+      for (let i = 1; i < toMergeAccountsArray.length; i++) {
+        const accountToMerge = toMergeAccountsArray[i]
+        await client.accountClient.mergeSpecifiedAccounts(primaryAccount, accountToMerge)
+      }
+
+      const toMergePersonsArray = Array.from(toMergePersons)
+      for (const personToMerge of toMergePersonsArray) {
+        await client.accountClient.mergeSpecifiedPersons(primaryAccount, personToMerge)
+      }
+
+      for (const addTarget of toAdd) {
+        await client.accountClient.addSocialIdToPerson(primaryAccount, addTarget.type, addTarget.value, false)
+      }
+    } catch (err: any) {
+      client.logger.error('Failed to merge accounts for person', { person, oldAccounts, err })
+    }
+  }
+}
+
 async function ensureGlobalPersonsForLocalAccounts (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('contact ensureGlobalPersonsForLocalAccounts', {})
-  ctx.info('ensuring global persons for local accounts ', {})
+  client.logger.log('ensuring global persons for local accounts ', {})
 
   const personAccountsTxes: any[] = await client.find<TxCUD<Doc>>(DOMAIN_MODEL_TX, {
     objectClass: 'contact:class:PersonAccount' as Ref<Class<Doc>>
@@ -368,21 +386,21 @@ async function ensureGlobalPersonsForLocalAccounts (client: MigrationClient): Pr
       await client.accountClient.ensurePerson(socialIdKey.type, socialIdKey.value, effectiveFirstName, lastName)
       count++
     } catch (err: any) {
-      ctx.error('Failed to ensure person', { socialIdKey, email: pAcc.email, firstName, lastName, effectiveFirstName })
+      client.logger.error('Failed to ensure person', {
+        socialIdKey,
+        email: pAcc.email,
+        firstName,
+        lastName,
+        effectiveFirstName
+      })
       console.error(err)
     }
   }
-  ctx.info('finished ensuring global persons for local accounts. Total persons ensured: ', { count })
+  client.logger.log('finished ensuring global persons for local accounts. Total persons ensured: ', { count })
 }
 
 async function createUserProfiles (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('contact createUserProfiles', {})
-  ctx.info('creating user profiles for persons...')
-
-  const persons = await client.traverse<Person>(DOMAIN_CONTACT, {
-    _class: contact.class.Person,
-    profile: { $exists: false }
-  })
+  client.logger.log('creating user profiles for persons...', {})
 
   const lastCard = (
     await client.find<Card>(
@@ -393,9 +411,14 @@ async function createUserProfiles (client: MigrationClient): Promise<void> {
   )[0]
   let prevRank = lastCard?.rank
 
+  const personsIterator = await client.traverse<Person>(DOMAIN_CONTACT, {
+    _class: contact.class.Person,
+    profile: { $exists: false }
+  })
+
   try {
     while (true) {
-      const docs = await persons.next(200)
+      const docs = await personsIterator.next(200)
       if (docs === null || docs?.length === 0) {
         break
       }
@@ -407,7 +430,7 @@ async function createUserProfiles (client: MigrationClient): Promise<void> {
         const userProfile: UserProfile = {
           _id: generateId(),
           _class: contact.class.UserProfile,
-          space: contact.space.Contacts,
+          space: card.space.Default,
 
           person: d._id,
           title,
@@ -429,14 +452,75 @@ async function createUserProfiles (client: MigrationClient): Promise<void> {
       }
     }
   } finally {
-    await persons.close()
-    ctx.info('finished creating user profiles for persons...')
+    await personsIterator.close()
+    client.logger.log('finished creating user profiles for persons...', {})
   }
+}
+
+async function fixSocialIdCase (client: MigrationClient): Promise<void> {
+  client.logger.log('Fixing social id case...', {})
+
+  const socialIdsIterator = await client.traverse<SocialIdentity>(DOMAIN_CHANNEL, {
+    _class: contact.class.SocialIdentity
+  })
+  let updated = 0
+
+  try {
+    while (true) {
+      const docs = await socialIdsIterator.next(200)
+      if (docs === null || docs?.length === 0) {
+        break
+      }
+
+      for (const d of docs) {
+        const newKey = d.key.toLowerCase()
+        const newVal = d.value.toLowerCase()
+        if (newKey !== d.key || newVal !== d.value) {
+          await client.update(DOMAIN_CHANNEL, { _id: d._id }, { key: newKey, value: newVal })
+          updated++
+        }
+      }
+    }
+  } finally {
+    await socialIdsIterator.close()
+    client.logger.log('Finished fixing social id case. Total updated:', { updated })
+  }
+}
+
+async function setSocialIdentityIsDeleted (client: MigrationClient): Promise<void> {
+  client.logger.log('Setting isDeleted: false for SocialIdentity records missing the field...', {})
+  await client.update(
+    DOMAIN_CHANNEL,
+    {
+      _class: contact.class.SocialIdentity,
+      isDeleted: { $exists: false }
+    },
+    {
+      isDeleted: false
+    }
+  )
+  client.logger.log('Finished setting isDeleted for SocialIdentity records.', {})
+}
+
+async function migrateUserProfiles (client: MigrationClient): Promise<void> {
+  await client.update(
+    DOMAIN_CARD,
+    {
+      _class: contact.class.UserProfile,
+      space: contact.space.Contacts
+    },
+    { space: card.space.Default }
+  )
 }
 
 export const contactOperation: MigrateOperation = {
   async preMigrate (client: MigrationClient, logger: ModelLogger, mode): Promise<void> {
     await tryMigrate(mode, client, contactId, [
+      {
+        state: 'migrate-merged-accounts',
+        mode: 'upgrade',
+        func: (client) => migrateMergedAccounts(client)
+      },
       {
         state: 'ensure-accounts-global-persons-v2',
         mode: 'upgrade',
@@ -606,16 +690,25 @@ export const contactOperation: MigrateOperation = {
         mode: 'upgrade',
         func: assignEmployeeRoles
       },
-      // ONLY FOR STAGING. REMOVE IT BEFORE MERGING TO PRODUCTION
-      {
-        state: 'fill-social-identities-ids-v2',
-        mode: 'upgrade',
-        func: fillSocialIdentitiesIds
-      },
       {
         state: 'create-user-profiles',
         mode: 'upgrade',
         func: createUserProfiles
+      },
+      {
+        state: 'fix-social-id-case',
+        mode: 'upgrade',
+        func: fixSocialIdCase
+      },
+      {
+        state: 'migrate-user-profiles',
+        mode: 'upgrade',
+        func: migrateUserProfiles
+      },
+      {
+        state: 'set-social-identity-is-deleted',
+        mode: 'upgrade',
+        func: setSocialIdentityIsDeleted
       }
     ])
   },

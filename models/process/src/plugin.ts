@@ -11,22 +11,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Doc, type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { processId } from '@hanzo/process'
-import { type PresentationMiddlewareFactory } from '@hanzo/presentation/src/pipeline'
-import process from '@hanzo/process-resources/src/plugin'
-import { type ViewAction, type Action } from '@hanzo/view'
+import { type CardSection } from '@hcengineering/card'
+import { type Doc, type Ref } from '@hcengineering/core'
+import { mergeIds, type IntlString } from '@hcengineering/platform'
+import { type PresentationMiddlewareFactory } from '@hcengineering/presentation/src/pipeline'
+import { processId } from '@hcengineering/process'
+import process from '@hcengineering/process-resources/src/plugin'
+import { type Action, type ViewAction } from '@hcengineering/view'
 
 export default mergeIds(processId, process, {
   app: {
     Process: '' as Ref<Doc>
   },
+  section: {
+    CardProcesses: '' as Ref<CardSection>
+  },
   pipeline: {
     ProcessMiddleware: '' as Ref<PresentationMiddlewareFactory>
   },
   ids: {
-    ProcessSettings: '' as Ref<Doc>
+    ProcessSettings: '' as Ref<Doc>,
+    ProcessToDoCreated: '' as Ref<Doc>
   },
   actionImpl: {
     ContinueExecution: '' as ViewAction
@@ -36,8 +41,9 @@ export default mergeIds(processId, process, {
     ContinueExecution: '' as Ref<Action<Doc, any>>
   },
   string: {
-    Done: '' as IntlString,
+    NewProcessToDo: '' as IntlString,
     ConfigLabel: '' as IntlString,
-    ConfigDescription: '' as IntlString
+    ConfigDescription: '' as IntlString,
+    LogAction: '' as IntlString
   }
 })

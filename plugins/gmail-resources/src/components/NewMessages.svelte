@@ -99,7 +99,7 @@
           .filter((m) => m.length)
       })
       Analytics.handleEvent(GmailEvents.SentEmail, { to: channel.value })
-      await inboxClient.forceReadDoc(channel._id, channel._class)
+      await inboxClient.forceReadDoc(channel)
       for (const attachment of attachments) {
         await client.addCollection(
           attachmentP.class.Attachment,
@@ -147,7 +147,7 @@
   async function createAttachment (file: File) {
     try {
       const uploadFile = await getResource(attachmentP.helper.UploadFile)
-      const uuid = await uploadFile(file)
+      const { uuid, metadata } = await uploadFile(file)
       await client.addCollection(
         attachmentP.class.Attachment,
         core.space.Workspace,
@@ -159,11 +159,11 @@
           file: uuid,
           type: file.type,
           size: file.size,
-          lastModified: file.lastModified
+          lastModified: file.lastModified,
+          metadata
         }
       )
     } catch (err: any) {
-      Analytics.handleError(err)
       setPlatformStatus(unknownError(err))
     }
   }

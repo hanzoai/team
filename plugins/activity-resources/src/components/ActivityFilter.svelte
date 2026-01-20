@@ -24,7 +24,8 @@
   import activity from '../plugin'
   import FilterPopup from './FilterPopup.svelte'
   import IconClose from './icons/Close.svelte'
-  import { sortActivityMessages } from '../activityMessagesUtils'
+  import { activityMessagesComparator } from '../activityMessagesUtils'
+  import { setActivityNewestFirst } from '../utils'
 
   export let messages: ActivityMessage[]
   export let object: Doc
@@ -45,7 +46,7 @@
   let selectedFilters: ActivityMessagesFilter[] = []
 
   $: localStorage.setItem('activity-filter', JSON.stringify(selectedFiltersRefs))
-  $: localStorage.setItem('activity-newest-first', JSON.stringify(isNewestFirst))
+  $: setActivityNewestFirst(isNewestFirst)
 
   void client.findAll(activity.class.ActivityMessagesFilter, {}).then((res) => {
     filters = res
@@ -90,9 +91,13 @@
     selected: Ref<Doc>[] | Ref<ActivityMessagesFilter>,
     sortOrder: SortingOrder
   ): Promise<void> {
-    const sortedMessages = sortActivityMessages(messages, sortOrder).sort(({ isPinned }) =>
-      isPinned && sortOrder === SortingOrder.Ascending ? -1 : 1
-    )
+    const baseComparator = (m1: ActivityMessage, m2: ActivityMessage): number =>
+      sortOrder === SortingOrder.Ascending ? activityMessagesComparator(m1, m2) : activityMessagesComparator(m2, m1)
+    const sortedMessages = messages.sort((message1, message2) => {
+      const isPinned1 = message1.isPinned ?? false
+      const isPinned2 = message2.isPinned ?? false
+      return isPinned1 === isPinned2 ? baseComparator(message1, message2) : Number(isPinned2) - Number(isPinned1)
+    })
 
     if (selected === allId) {
       filtered = sortedMessages
@@ -105,7 +110,7 @@
         const fltr = await getResource(filter.filter)
         filterActions.push(fltr)
       }
-      filtered = messages.filter((message) => filterActions.some((f) => f(message, object._class)))
+      filtered = sortedMessages.filter((message) => filterActions.some((f) => f(message, object._class)))
       dispatch('update', filtered)
     }
   }

@@ -33,10 +33,9 @@ import {
   registerServerPlugins,
   registerStringLoaders,
   registerTxAdapterFactory,
-  setAdapterSecurity,
-  sharedPipelineContextVars
-} from '@hanzo/server-pipeline'
-import serverToken, { decodeToken } from '@hanzo/server-token'
+  setAdapterSecurity
+} from '@hcengineering/server-pipeline'
+import serverToken, { decodeToken } from '@hcengineering/server-token'
 import cors from '@koa/cors'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
@@ -71,10 +70,10 @@ interface Reindex {
 }
 // Register close on process exit.
 process.on('exit', () => {
-  shutdownPostgres(sharedPipelineContextVars).catch((err) => {
+  shutdownPostgres().catch((err) => {
     console.error(err)
   })
-  shutdownMongo(sharedPipelineContextVars).catch((err) => {
+  shutdownMongo().catch((err) => {
     console.error(err)
   })
 })
@@ -85,6 +84,7 @@ export async function startIndexer (
     queue: PlatformQueue
     model: Tx[]
     dbURL: string
+    hulylakeUrl: string
     config: FulltextDBConfiguration
     externalStorage: StorageAdapter
     elasticIndexName: string
@@ -100,6 +100,7 @@ export async function startIndexer (
   })
 
   setMetadata(serverToken.metadata.Secret, opt.serverSecret)
+  setMetadata(serverToken.metadata.Service, 'fulltext')
   setMetadata(serverCore.metadata.ElasticIndexName, opt.elasticIndexName)
   setMetadata(serverClientPlugin.metadata.Endpoint, opt.accountsUrl)
 
@@ -133,13 +134,23 @@ export async function startIndexer (
       const token = request.token ?? req.headers.authorization?.split(' ')[1]
       const decoded = decodeToken(token) // Just to be safe
 
-      ctx.info('search', { classes: request._classes, query: request.query, workspace: decoded.workspace })
-      await ctx.with('search', {}, async (ctx) => {
-        const docs = await ctx.with('search', { workspace: decoded.workspace }, (ctx) =>
-          manager.fulltextAdapter.search(ctx, decoded.workspace, request._classes, request.query, request.fullTextLimit)
-        )
-        req.body = docs
-      })
+      await ctx.with(
+        'search',
+        {},
+        async (ctx) => {
+          req.body = await manager.fulltextAdapter.search(
+            ctx,
+            decoded.workspace,
+            request._classes,
+            request.query,
+            request.fullTextLimit
+          )
+        },
+        {
+          workspace: decoded.workspace,
+          classes: request._classes
+        }
+      )
     } catch (err: any) {
       Analytics.handleError(err)
       console.error(err)
@@ -153,10 +164,11 @@ export async function startIndexer (
       const request = req.request.body as FulltextSearch
       const token = request.token ?? req.headers.authorization?.split(' ')[1]
       const decoded = decodeToken(token) // Just to be safe
-      ctx.info('fulltext-search', { ...request.query, workspace: decoded.workspace })
-      await ctx.with('full-text-search', {}, async (ctx) => {
-        const result = await ctx.with('searchFulltext', {}, (ctx) =>
-          searchFulltext(
+      await ctx.with(
+        'full-text-search',
+        {},
+        async (ctx) => {
+          const result = await searchFulltext(
             ctx,
             decoded.workspace,
             manager.sysHierarchy,
@@ -164,9 +176,12 @@ export async function startIndexer (
             request.query,
             request.options
           )
-        )
-        req.body = result
-      })
+          req.body = result
+        },
+        {
+          workspace: decoded.workspace
+        }
+      )
     } catch (err: any) {
       Analytics.handleError(err)
       console.error(err)
@@ -198,12 +213,9 @@ export async function startIndexer (
       const token = request.token ?? req.headers.authorization?.split(' ')[1]
       const decoded = decodeToken(token) // Just to be safe
 
-      const indexer = await manager.getIndexer(ctx, decoded.workspace, token)
-      if (indexer !== undefined) {
+      await manager.withIndexer(ctx, decoded.workspace, token, false, async (indexer) => {
         indexer.lastUpdate = Date.now()
-        // TODO: Fixme
-        // await ctx.with('index-documents', {}, (ctx) => indexer.fulltext.indexDocuments(ctx, request.requests))
-      }
+      })
       req.body = {}
     } catch (err: any) {
       Analytics.handleError(err)
@@ -221,15 +233,24 @@ export async function startIndexer (
       req.body = {}
 
       ctx.info('reindex', { workspace: decoded.workspace })
-      const indexer = await manager.getIndexer(ctx, decoded.workspace, token, true)
-      if (indexer !== undefined) {
-        indexer.lastUpdate = Date.now()
-        if (request?.onlyDrop ?? false) {
-          await manager.workspaceProducer.send(decoded.workspace, [workspaceEvents.clearIndex()])
-        } else {
-          await manager.workspaceProducer.send(decoded.workspace, [workspaceEvents.fullReindex()])
+      await ctx.with(
+        'reindex',
+        {},
+        async (ctx) => {
+          await manager.withIndexer(ctx, decoded.workspace, token, true, async (indexer) => {
+            indexer.lastUpdate = Date.now()
+            if (request?.onlyDrop ?? false) {
+              await manager.fulltextProducer.send(ctx, decoded.workspace, [workspaceEvents.clearIndex()])
+            } else {
+              await manager.fulltextProducer.send(ctx, decoded.workspace, [workspaceEvents.fullReindex()])
+            }
+          })
+        },
+        {},
+        {
+          span: 'inherit'
         }
-      }
+      )
     } catch (err: any) {
       Analytics.handleError(err)
       console.error(err)

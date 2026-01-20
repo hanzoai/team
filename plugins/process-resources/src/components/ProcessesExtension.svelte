@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import core, { Doc, FindOptions, SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Execution } from '@hanzo/process'
+  import { Card } from '@hcengineering/card'
+  import core, { Doc, FindOptions, Ref, SortingOrder, TypedSpace } from '@hcengineering/core'
+  import { createQuery } from '@hcengineering/presentation'
+  import { Execution } from '@hcengineering/process'
   import {
     Button,
     eventToHTMLElement,
@@ -26,15 +26,26 @@
     resizeObserver,
     Section,
     showPopup
-  } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
-  import { List, ListSelectionProvider, SelectDirection, ViewletsSettingButton } from '@hanzo/view-resources'
+  } from '@hcengineering/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  import {
+    List,
+    ListSelectionProvider,
+    noCategory,
+    SelectDirection,
+    ViewletsSettingButton
+  } from '@hcengineering/view-resources'
   import process from '../plugin'
   import RunProcessPopup from './RunProcessPopup.svelte'
+  import { createEventDispatcher } from 'svelte'
+  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
+  import { PermissionsStore } from '@hcengineering/contact'
 
   export let card: Card
+  export let readonly: boolean = false
 
   const viewletId = process.viewlet.CardExecutions
+  const dispatch = createEventDispatcher()
 
   $: query = {
     card: card._id
@@ -47,6 +58,9 @@
   }
 
   function add (e: MouseEvent): void {
+    if (readonly) {
+      return
+    }
     showPopup(RunProcessPopup, { value: card }, eventToHTMLElement(e))
   }
 
@@ -100,19 +114,25 @@
   let viewOptions: ViewOptions | undefined
 
   let docsProvided = false
+
+  function checkForbiddenPermission (permissionsStore: PermissionsStore): boolean {
+    return checkMyPermission(process.permission.ForbidRunProcess, card.space as Ref<TypedSpace>, permissionsStore)
+  }
 </script>
 
-<Section icon={process.icon.Process} label={process.string.Processes}>
+<Section icon={process.icon.Process} label={process.string.Processes} spaceBeforeContent>
   <svelte:fragment slot="header">
     <div class="buttons-group xsmall-gap">
       <ViewletsSettingButton bind:viewOptions viewletQuery={{ _id: viewletId }} kind={'tertiary'} bind:viewlet />
-      <Button id={process.string.RunProcess} icon={IconAdd} kind={'ghost'} on:click={add} />
+      {#if !readonly && !checkForbiddenPermission($permissionsStore)}
+        <Button id={process.string.RunProcess} icon={IconAdd} kind={'ghost'} on:click={add} />
+      {/if}
     </div>
   </svelte:fragment>
 
   <svelte:fragment slot="content">
     <div
-      class="antiSection-empty solid flex-col flex-gap-2 mt-3"
+      class="antiSection-empty {docsProvided && docs.length === 0 ? 'solid' : 'none-appearance flex-gap-2'}"
       use:resizeObserver={(evt) => {
         listWidth = evt.clientWidth
       }}
@@ -130,7 +150,7 @@
           {options}
           compactMode={listWidth <= 600}
           flatHeaders={true}
-          disableHeader={true}
+          disableHeader={viewOptions.groupBy?.length === 0 || viewOptions.groupBy[0] === noCategory}
           {listProvider}
           selectedObjectIds={$selection ?? []}
           on:row-focus={(event) => {
@@ -143,16 +163,21 @@
             docsProvided = true
             docs = evt.detail
             listProvider.update(evt.detail)
+            dispatch('loaded')
           }}
         />
         {#if docsProvided && docs.length === 0}
-          <div class="flex-col-center">
-            <div class="caption-color">
-              <Label label={process.string.NoProcesses} />
-            </div>
+          <div class="flex-center content-color empty-content">
+            <Label label={process.string.NoProcesses} />
           </div>
         {/if}
       {/if}
     </div>
   </svelte:fragment>
 </Section>
+
+<style lang="scss">
+  .antiSection-empty:has(.empty-content) :global(.list-container) {
+    display: none;
+  }
+</style>

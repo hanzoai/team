@@ -34,13 +34,12 @@
     AnySvelteComponent,
     navigate,
     getCurrentResolvedLocation,
-    IconWithEmoji,
     deviceOptionsStore as deviceInfo
-  } from '@hanzo/ui'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting, { SpaceTypeEditor } from '@hanzo/setting'
-  import { Asset, getResource } from '@hanzo/platform'
-  import view from '@hanzo/view'
+  } from '@hcengineering/ui'
+  import { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
+  import setting, { SpaceTypeEditor } from '@hcengineering/setting'
+  import { Asset, getResource } from '@hcengineering/platform'
+  import view from '@hcengineering/view'
 
   import SpaceTypeEditorComponent from './editor/SpaceTypeEditor.svelte'
   import { clearSettingsStore } from '../../store'

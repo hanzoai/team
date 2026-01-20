@@ -59,6 +59,15 @@
     "SeparatorLine": "Línea de separación",
     "TodoList": "Lista de tareas",
     "TodoItem": "Tarea pendiente",
-    "DrawingBoard": "Tablero de dibujos"
+    "DrawingBoard": "Tablero de dibujos",
+    "RefreshTable": "Actualizar tabla",
+    "ShowDiff": "Mostrar diferencias",
+    "SeeOriginalData": "Ver datos originales",
+    "CategoryVersioning": "Control de versiones",
+    "TableDiffLabel": "Cambios en la tabla",
+    "ConvertToLinkPreview": "Mostrar como enlace",
+    "ConvertToEmbedPreview": "Mostrar como vista previa de contenido",
+    "UnableToLoadEmbeddedContent": "No se pudo cargar la vista previa del enlace debido a la configuración de permisos o contenido no compatible",
+    "CannotConnectToCollaborationService": "No se puede conectar con el colaborador"
   }
 }

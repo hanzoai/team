@@ -22,7 +22,6 @@
   import view from '../../plugin'
   import GrowPresenter from './GrowPresenter.svelte'
   import ListPresenter from './ListPresenter.svelte'
-  import { restrictionStore } from '../../utils'
 
   export let docObject: Doc
   export let model: AttributeModel[]
@@ -84,7 +83,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   bind:this={elem}
-  class="listGrid antiList__row row gap-2 flex-grow"
+  class="listGrid antiList__row row flex-gap-2 flex-grow"
   class:compactMode
   class:checking={checked}
   class:mListGridSelected={selected}

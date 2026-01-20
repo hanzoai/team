@@ -13,15 +13,16 @@
 // limitations under the License.
 //
 
-import { AccountRole } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import workbench from '@hanzo/model-workbench'
-import { chatId } from '@hanzo/chat'
-import { WidgetType } from '@hanzo/workbench'
-import { createSystemType } from '@hanzo/model-card'
+import { type Builder } from '@hcengineering/model'
+import core from '@hcengineering/model-core'
+import workbench from '@hcengineering/model-workbench'
+import { chatId } from '@hcengineering/chat'
+import { createSystemType } from '@hcengineering/model-card'
+import communication from '@hcengineering/communication'
+import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
 
 import chat from './plugin'
+import { AccountRole } from '@hcengineering/core'
 
 export { chatId } from '@hanzo/chat'
 export { chatOperation } from './migration'
@@ -35,25 +36,31 @@ export function createModel (builder: Builder): void {
       label: chat.string.Chat,
       icon: chat.icon.ChatBubble,
       alias: chatId,
-      accessLevel: AccountRole.User,
-      hidden: true,
-      component: chat.component.ChatApplication
+      hidden: false,
+      component: chat.component.ChatApplication,
+      locationResolver: chat.resolver.Location,
+      locationDataResolver: chat.resolver.LocationData,
+      type: 'cards',
+      position: 'top',
+      order: 200
     },
     chat.app.Chat
   )
 
-  builder.createDoc(
-    workbench.class.Widget,
-    core.space.Model,
+  // TODO: move types to communication-plugin
+  createSystemType(
+    builder,
+    chat.masterTag.Thread,
+    chat.icon.Thread,
+    chat.string.Thread,
+    chat.string.Threads,
     {
-      label: chat.string.Chat,
-      type: WidgetType.Flexible,
-      icon: chat.icon.ChatBubble,
-      component: chat.component.ChatWidget
+      defaultSection: communication.ids.CardMessagesSection
     },
-    chat.ids.ChatWidget
+    PaletteColorIndexes.Houseplant
   )
 
-  createSystemType(builder, chat.masterTag.Thread, chat.icon.Thread, chat.string.Thread, chat.string.Threads)
-  createSystemType(builder, chat.masterTag.Channel, chat.icon.Channel, chat.string.Channel, chat.string.Channels)
+  builder.mixin(chat.masterTag.Thread, core.class.Class, core.mixin.TxAccessLevel, {
+    updateAccessLevel: AccountRole.Guest
+  })
 }

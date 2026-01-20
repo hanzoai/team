@@ -13,20 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Space } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { TestProject } from '@hanzo/test-management'
-  import {
-    IconWithEmoji,
-    getPlatformColorDef,
-    getPlatformColorForTextDef,
-    themeStore,
-    type Action
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { NavLink, TreeNode } from '@hanzo/view-resources'
-  import { SpacesNavModel, SpecialNavModel } from '@hanzo/workbench'
-  import { SpecialElement } from '@hanzo/workbench-resources'
+  import { Ref, Space } from '@hcengineering/core'
+  import { getResource } from '@hcengineering/platform'
+  import { TestProject } from '@hcengineering/test-management'
+  import { IconWithEmoji } from '@hcengineering/presentation'
+  import { getPlatformColorDef, getPlatformColorForTextDef, themeStore, type Action } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import { NavLink, TreeNode } from '@hcengineering/view-resources'
+  import { SpacesNavModel, SpecialNavModel } from '@hcengineering/workbench'
+  import { SpecialElement } from '@hcengineering/workbench-resources'
 
   export let space: TestProject
   export let model: SpacesNavModel
@@ -66,12 +61,12 @@
 {#if specials}
   <TreeNode
     _id={space?._id}
-    icon={space?.icon === view.ids.IconWithEmoji ? IconWithEmoji : space?.icon ?? model?.icon}
+    icon={space?.icon === view.ids.IconWithEmoji ? IconWithEmoji : (space?.icon ?? model?.icon)}
     iconProps={space?.icon === view.ids.IconWithEmoji
       ? { icon: space.color }
       : {
           fill:
-            space.color !== undefined
+            space.color !== undefined && typeof space.color !== 'string'
               ? getPlatformColorDef(space.color, $themeStore.dark).icon
               : getPlatformColorForTextDef(space.name, $themeStore.dark).icon
         }}

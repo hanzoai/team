@@ -13,47 +13,50 @@
 // limitations under the License.
 -->
 <script lang="ts">
+  import { getCurrentEmployee, type Employee } from '@hcengineering/contact'
+  import { UserBoxItems, getPermittedPersons, permissionsStore } from '@hcengineering/contact-resources'
+  import documents, { type ControlledDocument } from '@hcengineering/controlled-documents'
+  import { TypedSpace, type Data, type Ref } from '@hcengineering/core'
+  import { Label } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
-  import { Label } from '@hanzo/ui'
-  import { TypedSpace, type Data, type Ref, type Permission } from '@hanzo/core'
-  import { type Employee, type PermissionsStore, getCurrentEmployee } from '@hanzo/contact'
-  import documents, { type ControlledDocument } from '@hanzo/controlled-documents'
-  import { UserBoxItems, permissionsStore } from '@hanzo/contact-resources'
 
   export let controlledDoc: Data<ControlledDocument>
   export let space: Ref<TypedSpace>
   export let canChangeReviewers: boolean = true
   export let canChangeApprovers: boolean = true
   export let canChangeCoAuthors: boolean = true
+  export let reviewers: Ref<Employee>[] = controlledDoc?.reviewers ?? []
+  export let approvers: Ref<Employee>[] = controlledDoc?.approvers ?? []
+  export let externalApprovers: Ref<Employee>[] = controlledDoc?.externalApprovers ?? []
+  export let coAuthors: Ref<Employee>[] = controlledDoc?.coAuthors ?? []
 
   const dispatch = createEventDispatcher()
   const currentEmployee = getCurrentEmployee()
 
-  $: reviewers = controlledDoc.reviewers
-  $: approvers = controlledDoc.approvers
-  $: coAuthors = controlledDoc.coAuthors
-
   $: permissionsSpace = space === documents.space.UnsortedTemplates ? documents.space.QualityDocuments : space
 
-  function getPermittedPersons (
-    permission: Ref<Permission>,
-    space: Ref<TypedSpace>,
-    permissionsStore: PermissionsStore
-  ): Ref<Employee>[] {
-    return Array.from(permissionsStore.ap[space]?.[permission] ?? []) as Ref<Employee>[]
-  }
+  $: permittedReviewers = getPermittedPersons(
+    documents.permission.ReviewDocument,
+    permissionsSpace,
+    $permissionsStore
+  ) as Ref<Employee>[]
 
-  $: permittedReviewers = getPermittedPersons(documents.permission.ReviewDocument, permissionsSpace, $permissionsStore)
-
-  $: permittedApprovers = getPermittedPersons(documents.permission.ApproveDocument, permissionsSpace, $permissionsStore)
+  $: permittedApprovers = getPermittedPersons(
+    documents.permission.ApproveDocument,
+    permissionsSpace,
+    $permissionsStore
+  ) as Ref<Employee>[]
 
   $: permittedCoAuthors = getPermittedPersons(
     documents.permission.CoAuthorDocument,
     permissionsSpace,
     $permissionsStore
-  ).filter((person) => person !== currentEmployee)
+  ).filter((person) => person !== currentEmployee) as Ref<Employee>[]
 
-  function handleUsersUpdated (type: 'reviewers' | 'approvers' | 'coAuthors', users: Ref<Employee>[]): void {
+  function handleUsersUpdated (
+    type: 'reviewers' | 'approvers' | 'coAuthors' | 'externalApprovers',
+    users: Ref<Employee>[]
+  ): void {
     dispatch('update', { type, users })
   }
 </script>
@@ -118,6 +121,28 @@
       readonly={!canChangeApprovers}
       on:update={({ detail }) => {
         handleUsersUpdated('approvers', detail)
+      }}
+    />
+  </div>
+  <div class="mt-6 mb-6 divider" />
+  <div class="flex labelContainer">
+    <div class="label mr-1">
+      <Label label={documents.string.ExternalApprovers} />
+    </div>
+    {externalApprovers?.length}
+  </div>
+  <div class="flex-col mt-4">
+    <UserBoxItems
+      items={externalApprovers}
+      docQuery={{
+        active: true,
+        role: 'GUEST',
+        _id: { $nin: permittedApprovers }
+      }}
+      label={documents.string.ExternalApprovers}
+      readonly={!canChangeApprovers}
+      on:update={({ detail }) => {
+        handleUsersUpdated('externalApprovers', detail)
       }}
     />
   </div>

@@ -13,32 +13,26 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { SplitLogger, configureAnalytics } from '@hanzo/analytics-service'
-import { MeasureMetricsContext, WorkspaceUuid, newMetrics } from '@hanzo/core'
-import { setMetadata, translate } from '@hanzo/platform'
-import serverClient from '@hanzo/server-client'
-import { initStatisticsContext, QueueTopic } from '@hanzo/server-core'
-import serverToken from '@hanzo/server-token'
+import { Analytics } from '@hcengineering/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { newMetrics } from '@hcengineering/core'
+import { getPlatformQueue } from '@hcengineering/kafka'
+import { setMetadata } from '@hcengineering/platform'
+import serverClient from '@hcengineering/server-client'
+import { initStatisticsContext, QueueTopic } from '@hcengineering/server-core'
+import { TelegramQueueMessage, TelegramQueueMessageType } from '@hcengineering/server-telegram'
+import serverToken from '@hcengineering/server-token'
 import { join } from 'path'
-import { getPlatformQueue } from '@hanzo/kafka'
-import { TelegramQueueMessage, TelegramQueueMessageType } from '@hanzo/server-telegram'
-import telegram from '@hanzo/telegram'
 
 import config from './config'
 import { registerLoaders } from './loaders'
 import { createServer, listen } from './server'
 import { setUpBot } from './telegraf/bot'
 import { PlatformWorker } from './worker'
-import { Telegraf } from 'telegraf'
-import { TgContext } from './telegraf/types'
-import { Limiter } from './limiter'
-import { MongoDb } from './mongoDb'
-import { Command } from './telegraf/commands'
 
 const ctx = initStatisticsContext('telegram-bot', {
   factory: () =>
-    new MeasureMetricsContext(
+    createOpenTelemetryMetricsContext(
       'telegram-bot-service',
       {},
       {},
@@ -50,45 +44,25 @@ const ctx = initStatisticsContext('telegram-bot', {
     )
 })
 
-configureAnalytics(config.SentryDSN, config)
+configureAnalytics('telegram-bot-service', process.env.VERSION ?? '0.7.0')
 Analytics.setTag('application', 'telegram-bot-service')
-
-export async function requestReconnect (bot: Telegraf<TgContext>, limiter: Limiter): Promise<void> {
-  if (config.MongoDB === '' || config.MongoURL === '') {
-    return
-  }
-
-  const mongoDb = await MongoDb.create()
-  const toReconnect = await mongoDb.getAllUsers()
-
-  if (toReconnect.length > 0) {
-    ctx.info('Disconnecting users', { users: toReconnect.map((it) => [it.telegramUsername, it.email]) })
-    const message = await translate(telegram.string.DisconnectMessage, { app: config.App, command: Command.Connect })
-    for (const userRecord of toReconnect) {
-      try {
-        await limiter.add(userRecord.telegramId, async () => {
-          await bot.telegram.sendMessage(userRecord.telegramId, message)
-        })
-      } catch (e) {
-        ctx.error('Failed to send message', { email: userRecord.email, tg: userRecord.telegramUsername, error: e })
-      }
-    }
-    await mongoDb.removeAllUsers()
-    await mongoDb.close()
-  }
-}
 
 export const start = async (): Promise<void> => {
   setMetadata(serverToken.metadata.Secret, config.Secret)
+  setMetadata(serverToken.metadata.Service, 'telegram-bot-service')
   setMetadata(serverClient.metadata.Endpoint, config.AccountsUrl)
   setMetadata(serverClient.metadata.UserAgent, config.ServiceId)
   registerLoaders()
 
+  ctx.info('Creating worker...')
   const worker = await PlatformWorker.create(ctx)
+  ctx.info('Set up bot...')
   const bot = await setUpBot(worker)
-
+  ctx.info('Creating server...')
   const app = createServer(bot, worker, ctx)
+  ctx.info('Creating queue...')
   const queue = getPlatformQueue('telegramBotService', config.QueueRegion)
+  ctx.info('queue', { clientId: queue.getClientId() })
 
   if (config.Domain === '') {
     ctx.info('Starting bot with polling')
@@ -110,27 +84,23 @@ export const start = async (): Promise<void> => {
     res.status(200).send()
   })
 
-  await requestReconnect(bot, worker.limiter)
+  ctx.info('Starting server...')
   const server = listen(app, ctx, config.Port)
 
   const consumer = queue.createConsumer<TelegramQueueMessage>(
     ctx,
     QueueTopic.TelegramBot,
     queue.getClientId(),
-    async (messages) => {
-      for (const message of messages) {
-        const id = message.id as WorkspaceUuid
-        const records = message.value
-        for (const record of records) {
-          switch (record.type) {
-            case TelegramQueueMessageType.Notification:
-              await worker.processNotification(id, record, bot)
-              break
-            case TelegramQueueMessageType.WorkspaceSubscription:
-              await worker.processWorkspaceSubscription(id, record)
-              break
-          }
-        }
+    async (ctx, message) => {
+      const workspace = message.workspace
+      const record = message.value
+      switch (record.type) {
+        case TelegramQueueMessageType.Notification:
+          await worker.processNotification(workspace, record, bot)
+          break
+        case TelegramQueueMessageType.WorkspaceSubscription:
+          await worker.processWorkspaceSubscription(workspace, record)
+          break
       }
     }
   )

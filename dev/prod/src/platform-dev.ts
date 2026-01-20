@@ -19,12 +19,15 @@ import login from '@hanzo/login'
 import { addLocation, setMetadata } from '@hanzo/platform'
 import presentation from '@hanzo/presentation'
 
-export function configurePlatformDevServer() {  
+export function configurePlatformDevServer () {
   // Set devmodel to hook client to be able to present all activity
   enableDevModel()
 }
 
-function enableDevModel() {
+function enableDevModel () {
   setMetadata(presentation.metadata.ClientHook, new PresentationClientHook())
-  addLocation(devModelId, () => import(/* webpackChunkName: "devmodel" */ '@hanzo/devmodel-resources'))
+  addLocation(
+    devModelId,
+    async () => await import(/* webpackChunkName: "devmodel" */ '@hcengineering/devmodel-resources')
+  )
 }

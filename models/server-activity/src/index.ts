@@ -26,10 +26,6 @@ export { activityServerOperation } from './migration'
 export { serverActivityId } from '@hanzo/server-activity'
 
 export function createModel (builder: Builder): void {
-  builder.mixin(activity.class.Reaction, core.class.Class, serverNotification.mixin.NotificationPresenter, {
-    presenter: serverActivity.function.ReactionNotificationContentProvider
-  })
-
   builder.mixin(activity.class.DocUpdateMessage, core.class.Class, serverNotification.mixin.TextPresenter, {
     presenter: serverActivity.function.DocUpdateMessageTextPresenter
   })
@@ -59,7 +55,8 @@ export function createModel (builder: Builder): void {
   })
 
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {
-    trigger: serverActivity.trigger.OnDocRemoved
+    trigger: serverActivity.trigger.OnDocRemoved,
+    isAsync: true
   })
 
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {

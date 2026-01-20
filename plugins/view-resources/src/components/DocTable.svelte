@@ -13,15 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, Ref, TxOperations, getObjectValue } from '@hanzo/core'
-  import { getClient, reduceCalls, updateAttribute } from '@hanzo/presentation'
-  import { Label, Loading, mouseAttractor, resizeObserver } from '@hanzo/ui'
-  import { AttributeModel, BuildModelKey, BuildModelOptions, Viewlet } from '@hanzo/view'
+  import contact, { PermissionsStore } from '@hcengineering/contact'
+  import core, { AnyAttribute, Class, Doc, Ref, TxOperations, TypedSpace, getObjectValue } from '@hcengineering/core'
+  import { getClient, reduceCalls, updateAttribute } from '@hcengineering/presentation'
+  import { Label, Loading, mouseAttractor } from '@hcengineering/ui'
+  import { AttributeModel, BuildModelKey, BuildModelOptions, Viewlet } from '@hcengineering/view'
   import { deepEqual } from 'fast-equals'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import { showMenu } from '../actions'
-  import { buildModel, restrictionStore } from '../utils'
   import view from '../plugin'
+  import { buildModel, restrictionStore } from '../utils'
+  import { getResource } from '@hcengineering/platform'
+  import { Readable } from 'svelte/store'
+  import { canChangeAttribute } from '../permissions'
 
   export let objects: Doc[]
   export let config: Array<string | BuildModelKey>
@@ -86,7 +90,7 @@
             disabled: true
           }
         : {}
-    if (attribute.collectionAttr) {
+    if (attribute.collectionAttr || attribute.attribute?.type?._class === core.class.TypeIdentifier) {
       return { object, ...attribute.props, ...readonlyParams }
     }
     if (attribute.attribute?.type._class === core.class.EnumOf) {
@@ -150,6 +154,22 @@
       }
     }
   }
+
+  let permissionsStore: Readable<PermissionsStore> | undefined = undefined
+
+  onMount(async () => {
+    permissionsStore = await getResource(contact.store.Permissions)
+  })
+
+  function canChangeAttr (
+    object: Doc,
+    attr: AnyAttribute | undefined,
+    permissionsStore: PermissionsStore | undefined
+  ): boolean {
+    if (attr === undefined) return true
+    if (permissionsStore === undefined) return true
+    return canChangeAttribute(attr, object.space as Ref<TypedSpace>, permissionsStore, object._class)
+  }
 </script>
 
 {#if !model || isBuildingModel}
@@ -204,7 +224,15 @@
                     this={attribute.presenter}
                     value={getValue(attribute, object)}
                     onChange={getOnChange(object, attribute)}
-                    {...joinProps(attribute, object, readonly || $restrictionStore.readonly)}
+                    label={attribute.label}
+                    attribute={attribute.attribute}
+                    {...joinProps(
+                      attribute,
+                      object,
+                      readonly ||
+                        $restrictionStore.readonly ||
+                        !canChangeAttr(object, attribute.attribute, $permissionsStore)
+                    )}
                   />
                 </div>
               </td>

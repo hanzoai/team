@@ -14,14 +14,14 @@
 //
 import {
   AccountRole,
-  Data,
-  Version,
+  type Data,
+  type Version,
   type AccountUuid,
   type WorkspaceMode,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { AccountPostgresDbCollection, PostgresAccountDB, PostgresDbCollection } from '../collections/postgres'
-import { Sql } from 'postgres'
+} from '@hcengineering/core'
+import { AccountPostgresDbCollection, PostgresAccountDB, PostgresDbCollection } from '../collections/postgres/postgres'
+import { type Sql } from 'postgres'
 
 interface TestWorkspace {
   uuid: WorkspaceUuid
@@ -174,7 +174,7 @@ describe('PostgresDbCollection', () => {
 
   describe('updateOne', () => {
     it('should handle simple field updates', async () => {
-      await collection.updateOne({ uuid: 'ws1' as WorkspaceUuid }, { mode: 'creating' as const })
+      await collection.update({ uuid: 'ws1' as WorkspaceUuid }, { mode: 'creating' as const })
 
       expect(mockClient.unsafe).toHaveBeenCalledWith(
         'UPDATE global_account.workspace SET "mode" = $1 WHERE "uuid" = $2',
@@ -183,7 +183,7 @@ describe('PostgresDbCollection', () => {
     })
 
     it('should handle increment operations', async () => {
-      await collection.updateOne({ uuid: 'ws1' as WorkspaceUuid }, { $inc: { processingAttempts: 1 } })
+      await collection.update({ uuid: 'ws1' as WorkspaceUuid }, { $inc: { processingAttempts: 1 } })
 
       expect(mockClient.unsafe).toHaveBeenCalledWith(
         'UPDATE global_account.workspace SET "processing_attempts" = "processing_attempts" + $1 WHERE "uuid" = $2',
@@ -330,11 +330,13 @@ describe('AccountPostgresDbCollection', () => {
 
       expect(mockClient.unsafe).toHaveBeenCalledWith(
         `SELECT * FROM (
-      SELECT 
+      SELECT
         a.uuid,
         a.timezone,
         a.locale,
         a.automatic,
+        a.max_workspaces,
+        a.failed_login_attempts,
         p.hash,
         p.salt
       FROM global_account.account as a
@@ -405,19 +407,19 @@ describe('AccountPostgresDbCollection', () => {
 
   describe('updateOne', () => {
     it('should prevent updating with password fields in query', async () => {
-      await expect(collection.updateOne({ hash: Buffer.from([]) }, { timezone: 'UTC' })).rejects.toThrow(
+      await expect(collection.update({ hash: Buffer.from([]) }, { timezone: 'UTC' })).rejects.toThrow(
         'Passwords are not allowed in update query'
       )
     })
 
     it('should prevent updating password fields', async () => {
       await expect(
-        collection.updateOne({ uuid: 'acc1' as AccountUuid }, { hash: Buffer.from([]), salt: Buffer.from([]) })
+        collection.update({ uuid: 'acc1' as AccountUuid }, { hash: Buffer.from([]), salt: Buffer.from([]) })
       ).rejects.toThrow('Passwords are not allowed in update query')
     })
 
     it('should allow updating non-password fields', async () => {
-      await collection.updateOne({ uuid: 'acc1' as AccountUuid }, { timezone: 'UTC', locale: 'en' })
+      await collection.update({ uuid: 'acc1' as AccountUuid }, { timezone: 'UTC', locale: 'en' })
 
       expect(mockClient.unsafe).toHaveBeenCalledWith(
         'UPDATE global_account.account SET "timezone" = $1, "locale" = $2 WHERE "uuid" = $3',
@@ -474,10 +476,13 @@ describe('PostgresAccountDB', () => {
 
       expect(mockClient.begin).toHaveBeenCalled()
       expect(mockClient).toHaveBeenCalledWith(
-        'global_account' // First call with schema name
+        'global_account' // Verify schema name
+      )
+      expect(mockClient.mock.calls[3][0].map((s: string) => s.replace(/\s+/g, ' ')).join('')).toBe(
+        ' INSERT INTO ._account_applied_migrations (identifier, ddl, last_processed_at) VALUES (, , NOW()) ON CONFLICT (identifier) DO NOTHING '
       )
       expect(mockClient).toHaveBeenCalledWith(
-        ['INSERT INTO ', '._account_applied_migrations (identifier, ddl) VALUES (', ', ', ') ON CONFLICT DO NOTHING'],
+        expect.anything(),
         expect.anything(),
         'test_migration',
         'CREATE TABLE test'
@@ -573,12 +578,16 @@ describe('PostgresAccountDB', () => {
             uuid: workspaceId,
             name: 'Test',
             url: 'test',
+            allowReadOnlyGuest: false,
+            password_aging_rule: null,
+            created_on: '1234567890000',
             status: {
               mode: 'active',
               version_major: 1,
               version_minor: 0,
               version_patch: 0,
-              is_disabled: false
+              is_disabled: false,
+              last_processing_time: '1234567890000'
             }
           }
         ]
@@ -591,12 +600,17 @@ describe('PostgresAccountDB', () => {
           uuid: workspaceId,
           name: 'Test',
           url: 'test',
+          allowReadOnlyGuest: false,
+          passwordAgingRule: null,
+          createdOn: 1234567890000,
           status: {
             mode: 'active',
             versionMajor: 1,
             versionMinor: 0,
             versionPatch: 0,
-            isDisabled: false
+            isDisabled: false,
+            lastProcessingTime: 1234567890000,
+            lastVisit: null
           }
         })
       })
@@ -624,6 +638,7 @@ describe('PostgresAccountDB', () => {
               w.uuid,
               w.name,
               w.url,
+              w.data_id,
               w.branding,
               w.location,
               w.region,
@@ -641,7 +656,8 @@ describe('PostgresAccountDB', () => {
                 'is_disabled', s.is_disabled,
                 'processing_attempts', s.processing_attempts,
                 'processing_message', s.processing_message,
-                'backup_info', s.backup_info
+                'backup_info', s.backup_info,
+                'usage_info', s.usage_info
               ) status
                FROM global_account.workspace as w
                INNER JOIN global_account.workspace_status as s ON s.workspace_uuid = w.uuid
@@ -651,8 +667,7 @@ describe('PostgresAccountDB', () => {
                AND (s.last_processing_time IS NULL OR s.last_processing_time < $1)
                AND (w.region IS NULL OR w.region = '')
                ORDER BY s.last_visit DESC
-               LIMIT 1
-               FOR UPDATE SKIP LOCKED`.replace(/\s+/g, ' ')
+               LIMIT 1`.replace(/\s+/g, ' ')
         )
         expect(mockClient.unsafe.mock.calls[0][1]).toEqual([NOW - processingTimeoutMs])
       })
@@ -663,16 +678,17 @@ describe('PostgresAccountDB', () => {
         expect(
           mockClient.unsafe.mock.calls[0][0].replace(/\s+/g, ' ').replace(/\(\s/g, '(').replace(/\s\)/g, ')')
         ).toEqual(
-          `SELECT 
+          `SELECT
               w.uuid,
               w.name,
               w.url,
+              w.data_id,
               w.branding,
               w.location,
               w.region,
               w.created_by,
               w.created_on,
-              w.billing_account, 
+              w.billing_account,
               json_build_object(
                 'mode', s.mode,
                 'processing_progress', s.processing_progress,
@@ -684,7 +700,8 @@ describe('PostgresAccountDB', () => {
                 'is_disabled', s.is_disabled,
                 'processing_attempts', s.processing_attempts,
                 'processing_message', s.processing_message,
-                'backup_info', s.backup_info
+                'backup_info', s.backup_info,
+                'usage_info', s.usage_info
               ) status
                FROM global_account.workspace as w
                INNER JOIN global_account.workspace_status as s ON s.workspace_uuid = w.uuid
@@ -710,8 +727,7 @@ describe('PostgresAccountDB', () => {
                AND (s.last_processing_time IS NULL OR s.last_processing_time < $5)
                AND (w.region IS NULL OR w.region = '')
                ORDER BY s.last_visit DESC
-               LIMIT 1
-               FOR UPDATE SKIP LOCKED`
+               LIMIT 1`
             .replace(/\s+/g, ' ')
             .replace(/\(\s/g, '(')
             .replace(/\s\)/g, ')')
@@ -731,16 +747,17 @@ describe('PostgresAccountDB', () => {
         expect(
           mockClient.unsafe.mock.calls[0][0].replace(/\s+/g, ' ').replace(/\(\s/g, '(').replace(/\s\)/g, ')')
         ).toEqual(
-          `SELECT 
+          `SELECT
               w.uuid,
               w.name,
               w.url,
+              w.data_id,
               w.branding,
               w.location,
               w.region,
               w.created_by,
               w.created_on,
-              w.billing_account, 
+              w.billing_account,
               json_build_object(
                 'mode', s.mode,
                 'processing_progress', s.processing_progress,
@@ -752,7 +769,8 @@ describe('PostgresAccountDB', () => {
                 'is_disabled', s.is_disabled,
                 'processing_attempts', s.processing_attempts,
                 'processing_message', s.processing_message,
-                'backup_info', s.backup_info
+                'backup_info', s.backup_info,
+                'usage_info', s.usage_info
               ) status
                FROM global_account.workspace as w
                INNER JOIN global_account.workspace_status as s ON s.workspace_uuid = w.uuid
@@ -782,8 +800,7 @@ describe('PostgresAccountDB', () => {
                AND (s.last_processing_time IS NULL OR s.last_processing_time < $5)
                AND (w.region IS NULL OR w.region = '')
                ORDER BY s.last_visit DESC
-               LIMIT 1
-               FOR UPDATE SKIP LOCKED`
+               LIMIT 1`
             .replace(/\s+/g, ' ')
             .replace(/\(\s/g, '(')
             .replace(/\s\)/g, ')')
@@ -803,16 +820,17 @@ describe('PostgresAccountDB', () => {
         expect(
           mockClient.unsafe.mock.calls[0][0].replace(/\s+/g, ' ').replace(/\(\s/g, '(').replace(/\s\)/g, ')')
         ).toEqual(
-          `SELECT 
+          `SELECT
               w.uuid,
               w.name,
               w.url,
+              w.data_id,
               w.branding,
               w.location,
               w.region,
               w.created_by,
               w.created_on,
-              w.billing_account, 
+              w.billing_account,
               json_build_object(
                 'mode', s.mode,
                 'processing_progress', s.processing_progress,
@@ -824,7 +842,8 @@ describe('PostgresAccountDB', () => {
                 'is_disabled', s.is_disabled,
                 'processing_attempts', s.processing_attempts,
                 'processing_message', s.processing_message,
-                'backup_info', s.backup_info
+                'backup_info', s.backup_info,
+                'usage_info', s.usage_info
               ) status
                FROM global_account.workspace as w
                INNER JOIN global_account.workspace_status as s ON s.workspace_uuid = w.uuid
@@ -872,8 +891,7 @@ describe('PostgresAccountDB', () => {
                AND (s.last_processing_time IS NULL OR s.last_processing_time < $5)
                AND (w.region IS NULL OR w.region = '')
                ORDER BY s.last_visit DESC
-               LIMIT 1
-               FOR UPDATE SKIP LOCKED`
+               LIMIT 1`
             .replace(/\s+/g, ' ')
             .replace(/\(\s/g, '(')
             .replace(/\s\)/g, ')')
@@ -894,16 +912,17 @@ describe('PostgresAccountDB', () => {
         expect(
           mockClient.unsafe.mock.calls[0][0].replace(/\s+/g, ' ').replace(/\(\s/g, '(').replace(/\s\)/g, ')')
         ).toEqual(
-          `SELECT 
+          `SELECT
               w.uuid,
               w.name,
               w.url,
+              w.data_id,
               w.branding,
               w.location,
               w.region,
               w.created_by,
               w.created_on,
-              w.billing_account, 
+              w.billing_account,
               json_build_object(
                 'mode', s.mode,
                 'processing_progress', s.processing_progress,
@@ -915,7 +934,8 @@ describe('PostgresAccountDB', () => {
                 'is_disabled', s.is_disabled,
                 'processing_attempts', s.processing_attempts,
                 'processing_message', s.processing_message,
-                'backup_info', s.backup_info
+                'backup_info', s.backup_info,
+                'usage_info', s.usage_info
               ) status
                FROM global_account.workspace as w
                INNER JOIN global_account.workspace_status as s ON s.workspace_uuid = w.uuid
@@ -925,8 +945,7 @@ describe('PostgresAccountDB', () => {
                AND (s.last_processing_time IS NULL OR s.last_processing_time < $1)
                AND region = $2
                ORDER BY s.last_visit DESC
-               LIMIT 1
-               FOR UPDATE SKIP LOCKED`
+               LIMIT 1`
             .replace(/\s+/g, ' ')
             .replace(/\(\s/g, '(')
             .replace(/\s\)/g, ')')
@@ -944,8 +963,8 @@ describe('PostgresAccountDB', () => {
         expect(
           mockClient.unsafe.mock.calls[1][0].replace(/\s+/g, ' ').replace(/\(\s/g, '(').replace(/\s\)/g, ')')
         ).toEqual(
-          `UPDATE global_account.workspace_status 
-           SET processing_attempts = processing_attempts + 1, "last_processing_time" = $1 
+          `UPDATE global_account.workspace_status
+           SET processing_attempts = processing_attempts + 1, "last_processing_time" = $1
            WHERE workspace_uuid = $2`
             .replace(/\s+/g, ' ')
             .replace(/\(\s/g, '(')
@@ -978,7 +997,13 @@ describe('PostgresAccountDB', () => {
 
       expect(mockClient).toHaveBeenCalledWith('global_account.account_passwords')
       expect(mockClient).toHaveBeenCalledWith(
-        ['UPSERT INTO ', ' (account_uuid, hash, salt) VALUES (', ', ', '::bytea, ', '::bytea)'],
+        [
+          'INSERT INTO ',
+          ' (account_uuid, hash, salt) VALUES (',
+          ', ',
+          '::bytea, ',
+          '::bytea) ON CONFLICT (account_uuid) DO UPDATE SET hash = EXCLUDED.hash, salt = EXCLUDED.salt;'
+        ],
         expect.anything(),
         accountId,
         hash.buffer,

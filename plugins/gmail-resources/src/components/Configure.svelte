@@ -13,27 +13,61 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor } from '@hanzo/contact-resources'
-  import { AccountUuid } from '@hanzo/core'
-  import presentation, { Card, getClient } from '@hanzo/presentation'
-  import { Integration } from '@hanzo/setting'
-  import { Grid, Label, Toggle } from '@hanzo/ui'
-  import { getCurrentEmployee } from '@hanzo/contact'
   import { createEventDispatcher } from 'svelte'
 
-  import gmail from '../plugin'
+  import { AccountArrayEditor } from '@hcengineering/contact-resources'
+  import { AccountUuid } from '@hcengineering/core'
+  import presentation, { Card, getClient, getCurrentWorkspaceUuid } from '@hcengineering/presentation'
+  import setting, { Integration } from '@hcengineering/setting'
+  import { Grid, Label, Toggle } from '@hcengineering/ui'
+  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { isWorkspaceIntegration } from '@hcengineering/integration-client'
+  import { Integration as AccountIntegration } from '@hcengineering/account-client'
 
-  export let integration: Integration
-  let shared = (integration.shared?.length ?? 0) > 0
+  import ConfigureV2 from './ConfigureV2.svelte'
+  import { getIntegrationClient } from '../api'
+  import gmail from '../plugin'
+  import { isNewGmailIntegration } from '../utils'
+  import { Analytics } from '@hcengineering/analytics'
+
+  export let integration: AccountIntegration
+  let integrationSettings: Integration | undefined
+  let shared = false
 
   const currentEmployee = getCurrentEmployee()
   const client = getClient()
 
+  $: loadSettings(integration)
+
+  async function loadSettings (integration: AccountIntegration): Promise<void> {
+    const type = await client.findOne(setting.class.IntegrationType, {
+      kind: integration.kind
+    })
+    integrationSettings = await client.findOne(setting.class.Integration, {
+      createdBy: integration.socialId,
+      type: type?._id
+    })
+    shared = (integrationSettings?.shared?.length ?? 0) > 0
+  }
+
   async function change (shared: AccountUuid[]) {
-    integration.shared = shared
-    await client.update(integration, {
+    if (integrationSettings == null) {
+      Analytics.handleError(
+        new Error(`Integrations settings are not found for ${integration.socialId} ${integration.kind}`)
+      )
+      return
+    }
+    integrationSettings.shared = shared
+    await client.update(integrationSettings, {
       shared
     })
+  }
+
+  async function apply () {
+    const integrationClient = await getIntegrationClient()
+    integration = isWorkspaceIntegration(integration)
+      ? integration
+      : await integrationClient.integrate(integration, getCurrentWorkspaceUuid())
   }
 
   async function disable () {
@@ -45,35 +79,40 @@
   const dispatch = createEventDispatcher()
 </script>
 
-<Card
-  label={gmail.string.Shared}
-  okAction={() => {
-    dispatch('close')
-  }}
-  canSave={true}
-  fullSize
-  okLabel={presentation.string.Ok}
-  on:close={() => dispatch('close')}
-  on:changeContent
->
-  <div style="width: 25rem;">
-    <Grid rowGap={1}>
-      <div>
-        <Label label={gmail.string.Shared} />
-      </div>
-      <Toggle bind:on={shared} on:change={disable} />
-      {#if shared}
+{#if isNewGmailIntegration(integration)}
+  <ConfigureV2 {integration} on:close />
+{:else}
+  <Card
+    label={gmail.string.Shared}
+    okAction={async () => {
+      await apply()
+      dispatch('close')
+    }}
+    canSave={true}
+    fullSize
+    okLabel={presentation.string.Ok}
+    on:close={() => dispatch('close')}
+    on:changeContent
+  >
+    <div style="width: 25rem;">
+      <Grid rowGap={1}>
         <div>
-          <Label label={gmail.string.AvailableTo} />
+          <Label label={gmail.string.Shared} />
         </div>
-        <AccountArrayEditor
-          kind={'regular'}
-          label={gmail.string.AvailableTo}
-          excludeItems={[currentEmployee]}
-          value={integration.shared ?? []}
-          onChange={(res) => change(res)}
-        />
-      {/if}
-    </Grid>
-  </div>
-</Card>
+        <Toggle bind:on={shared} on:change={disable} />
+        {#if shared}
+          <div>
+            <Label label={gmail.string.AvailableTo} />
+          </div>
+          <AccountArrayEditor
+            kind={'regular'}
+            label={gmail.string.AvailableTo}
+            excludeItems={[currentEmployee]}
+            value={integrationSettings?.shared ?? []}
+            onChange={(res) => change(res)}
+          />
+        {/if}
+      </Grid>
+    </div>
+  </Card>
+{/if}

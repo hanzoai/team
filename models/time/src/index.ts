@@ -13,62 +13,64 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import board from '@hanzo/board'
-import calendarPlugin, { type Visibility } from '@hanzo/calendar'
-import contactPlugin, { type Person } from '@hanzo/contact'
+import activity from '@hcengineering/activity'
+import board from '@hcengineering/board'
+import calendarPlugin, { type Visibility } from '@hcengineering/calendar'
+import contactPlugin, { type Employee } from '@hcengineering/contact'
 import {
+  AccountRole,
   DOMAIN_MODEL,
+  DateRangeMode,
+  IndexKind,
   type Class,
+  type ClassCollaborators,
   type Domain,
   type Markup,
   type Ref,
   type Space,
   type Timestamp,
-  type Type,
-  DateRangeMode,
-  IndexKind
-} from '@hanzo/core'
-import lead from '@hanzo/lead'
+  type Type
+} from '@hcengineering/core'
+import lead from '@hcengineering/lead'
 import {
   Collection,
+  Hidden,
+  Index,
   Mixin,
   Model,
   Prop,
+  TypeDate,
   TypeRef,
   TypeString,
   UX,
   type Builder,
-  TypeDate,
-  Hidden,
-  Index
-} from '@hanzo/model'
-import textEditor from '@hanzo/text-editor'
-import { TEvent } from '@hanzo/model-calendar'
-import core, { TAttachedDoc, TClass, TDoc, TType } from '@hanzo/model-core'
-import tracker from '@hanzo/model-tracker'
-import document from '@hanzo/model-document'
-import view, { createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import recruit from '@hanzo/recruit'
-import tags from '@hanzo/tags'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+  TypeMarkup
+} from '@hcengineering/model'
+import { TEvent } from '@hcengineering/model-calendar'
+import core, { TAttachedDoc, TClass, TDoc, TType } from '@hcengineering/model-core'
+import document from '@hcengineering/model-document'
+import tracker from '@hcengineering/model-tracker'
+import view, { createAction } from '@hcengineering/model-view'
+import workbench from '@hcengineering/model-workbench'
+import notification, { type NotificationGroup } from '@hcengineering/notification'
+import recruit from '@hcengineering/recruit'
+import tags from '@hcengineering/tags'
 import {
-  type TodoDoneTester,
   timeId,
   type ItemPresenter,
   type ProjectToDo,
   type ToDo,
   type ToDoPriority,
   type TodoAutomationHelper,
+  type TodoDoneTester,
   type WorkSlot
-} from '@hanzo/time'
+} from '@hcengineering/time'
+import { type AnyComponent } from '@hcengineering/ui/src/types'
 
-import type { Resource } from '@hanzo/platform'
-import type { Rank } from '@hanzo/task'
+import type { Resource } from '@hcengineering/platform'
+import type { Rank } from '@hcengineering/task'
+import task from '@hcengineering/task'
 import time from './plugin'
-import task from '@hanzo/task'
 
 export { timeId } from '@hanzo/time'
 export { default } from './plugin'
@@ -101,6 +103,7 @@ export class TToDo extends TAttachedDoc implements ToDo {
     dueDate?: number | null | undefined
 
   @Prop(TypeToDoPriority(), time.string.Priority)
+  @Index(IndexKind.Indexed)
     priority!: ToDoPriority
 
   visibility!: Visibility
@@ -109,15 +112,18 @@ export class TToDo extends TAttachedDoc implements ToDo {
     attachedSpace?: Ref<Space> | undefined
 
   @Prop(TypeString(), calendarPlugin.string.Title)
+  @Index(IndexKind.FullText)
     title!: string
 
-  @Prop(TypeString(), calendarPlugin.string.Description)
+  @Prop(TypeMarkup(), calendarPlugin.string.Description)
+  @Index(IndexKind.FullText)
     description!: Markup
 
-  doneOn?: Timestamp | null
+  doneOn!: Timestamp | null
 
-  @Prop(TypeRef(contactPlugin.class.Person), contactPlugin.string.Employee)
-    user!: Ref<Person>
+  @Prop(TypeRef(contactPlugin.mixin.Employee), contactPlugin.string.Employee)
+  @Index(IndexKind.Indexed)
+    user!: Ref<Employee>
 
   @Prop(Collection(time.class.WorkSlot, time.string.WorkSlot), time.string.WorkSlot)
     workslots!: number
@@ -197,7 +203,8 @@ export function createModel (builder: Builder): void {
       alias: timeId,
       hidden: false,
       position: 'top',
-      component: time.component.Me
+      component: time.component.Me,
+      order: 300
     },
     time.app.Me
   )
@@ -208,6 +215,7 @@ export function createModel (builder: Builder): void {
     {
       label: time.string.Team,
       icon: time.icon.Team,
+      accessLevel: AccountRole.User,
       alias: 'team',
       hidden: false,
       component: time.component.Team
@@ -364,7 +372,7 @@ export function createModel (builder: Builder): void {
       generated: false,
       allowedForAuthor: true,
       label: time.string.NewToDo,
-      group: time.ids.TimeNotificationGroup,
+      group: time.ids.TimeNotificationGroup as Ref<NotificationGroup>,
       txClasses: [core.class.TxCreateDoc],
       objectClass: time.class.ProjectToDo,
       onlyOwn: true,
@@ -384,7 +392,8 @@ export function createModel (builder: Builder): void {
     enabledTypes: [time.ids.ToDoCreated]
   })
 
-  builder.mixin(time.class.ToDo, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<ToDo>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: time.class.ToDo,
     fields: ['user']
   })
 
@@ -406,16 +415,6 @@ export function createModel (builder: Builder): void {
       { createdOn: -1 },
       { modifiedOn: 1 }
     ]
-  })
-
-  builder.createDoc(textEditor.class.TextEditorExtensionFactory, core.space.Model, {
-    index: 510,
-    create: time.function.CreateTodoItemExtension
-  })
-
-  builder.createDoc(textEditor.class.TextEditorExtensionFactory, core.space.Model, {
-    index: 520,
-    create: time.function.CreateTodoListExtension
   })
 }
 

@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
   import core, {
     Data,
     DocumentUpdate,
@@ -27,14 +27,13 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import document, { Teamspace, DocumentEvents } from '@hanzo/document'
-  import { Asset } from '@hanzo/platform'
-  import presentation, { Card, getClient, reduceCalls } from '@hanzo/presentation'
+  } from '@hcengineering/core'
+  import document, { Teamspace, DocumentEvents } from '@hcengineering/document'
+  import { Asset } from '@hcengineering/platform'
+  import presentation, { IconWithEmoji, Card, getClient, reduceCalls } from '@hcengineering/presentation'
   import {
     Button,
     EditBox,
-    IconWithEmoji,
     Label,
     Toggle,
     getColorNumberByText,
@@ -71,7 +70,7 @@
   let rolesAssignment: RolesAssignment = {}
 
   $: isNew = teamspace === undefined
-  $: membersPersons = members.map((m) => $personRefByAccountUuidStore.get(m)).filter(notEmpty)
+  $: membersPersons = members.map((m) => $employeeRefByAccountUuidStore.get(m)).filter(notEmpty)
 
   let typeId: Ref<SpaceType> | undefined = teamspace?.type ?? document.spaceType.DefaultTeamspaceType
   let spaceType: WithLookup<SpaceType> | undefined
@@ -358,12 +357,12 @@
         <Label label={documentRes.string.ChooseIcon} />
       </div>
       <Button
-        icon={icon === view.ids.IconWithEmoji ? IconWithEmoji : icon ?? document.icon.Teamspace}
+        icon={icon === view.ids.IconWithEmoji ? IconWithEmoji : (icon ?? document.icon.Teamspace)}
         iconProps={icon === view.ids.IconWithEmoji
           ? { icon: color }
           : {
               fill:
-                color !== undefined
+                color !== undefined && typeof color !== 'string'
                   ? getPlatformColorDef(color, $themeStore.dark).icon
                   : getPlatformColorForTextDef(name, $themeStore.dark).icon
             }}
@@ -418,7 +417,7 @@
     {#each roles as role}
       <div class="antiGrid-row">
         <div class="antiGrid-row__header">
-          <Label label={documentRes.string.RoleLabel} params={{ role: role.name }} />
+          <Label label={view.string.RoleLabel} params={{ role: role.name }} />
         </div>
         <AccountArrayEditor
           value={rolesAssignment?.[role._id] ?? []}

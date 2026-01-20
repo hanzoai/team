@@ -1,11 +1,22 @@
-// preload.js
+//
+// Copyright © 2025 Hardcore Engineering Inc.
+//
+// Licensed under the Eclipse Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License. You may
+// obtain a copy of the License at https://www.eclipse.org/legal/epl-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
 import { contextBridge, ipcRenderer } from 'electron'
-import { BrandingMap, Config, IPCMainExposed, NotificationParams } from './types'
+import { BrandingMap, Config, IPCMainExposed, JumpListSpares, MenuBarAction, NotificationParams } from './types'
+import { IpcMessage } from './ipcMessages'
 
-/**
- * @public
- */
 export function concatLink (host: string, path: string): string {
   if (!host.endsWith('/') && !path.startsWith('/')) {
     return `${host}/${path}`
@@ -18,27 +29,23 @@ export function concatLink (host: string, path: string): string {
 }
 
 async function loadServerConfig (url: string): Promise<any> {
-  let retries = 5
+  let retries = 1
   let res: Response | undefined
 
-  do {
+  while (true) {
     try {
       res = await fetch(url, {
         keepalive: true
       })
+      if (res === undefined) {
+        // In theory should never get here
+        throw new Error('Failed to load server config')
+      }
       break
     } catch (e) {
-      retries--
-      if (retries === 0) {
-        throw new Error(`Failed to load server config: ${e}`)
-      }
-      await new Promise((resolve) => setTimeout(resolve, 1000 * (5 - retries)))
+      retries++
+      await new Promise((resolve) => setTimeout(resolve, 1000 * Math.min(5, retries)))
     }
-  } while (retries > 0)
-
-  if (res === undefined) {
-    // In theory should never get here
-    throw new Error('Failed to load server config')
   }
 
   return await res.json()
@@ -50,22 +57,50 @@ let configPromise: Promise<Config> | undefined
 
 const expose: IPCMainExposed = {
   setBadge: (badge: number) => {
-    ipcRenderer.send('set-badge', badge)
+    ipcRenderer.send(IpcMessage.SetBadge, badge)
   },
   setTitle: (title: string) => {
-    ipcRenderer.send('set-title', title)
+    ipcRenderer.send(IpcMessage.SetTitle, title)
   },
   dockBounce: () => {
-    ipcRenderer.send('dock-bounce')
+    ipcRenderer.send(IpcMessage.DockBounce)
   },
   sendNotification: (notificationParams: NotificationParams) => {
-    ipcRenderer.send('send-notification', notificationParams)
+    ipcRenderer.send(IpcMessage.SendNotification, notificationParams)
+  },
+
+  minimizeWindow: () => {
+    void ipcRenderer.invoke(IpcMessage.WindowMinimize)
+  },
+
+  maximizeWindow: () => {
+    void ipcRenderer.invoke(IpcMessage.WindowMaximize)
+  },
+
+  closeWindow: () => {
+    void ipcRenderer.invoke(IpcMessage.WindowClose)
+  },
+
+  onWindowStateChange: (callback) => {
+    ipcRenderer.on(IpcMessage.WindowStateChanged, callback)
+  },
+
+  onWindowFocusLoss: (callback) => {
+    ipcRenderer.on(IpcMessage.WindowFocusLoss, callback)
+  },
+
+  isOsUsingDarkTheme: async () => {
+    return await ipcRenderer.invoke(IpcMessage.GetIsOsUsingDarkTheme)
+  },
+
+  executeMenuBarAction: (action: MenuBarAction) => {
+    void ipcRenderer.invoke(IpcMessage.MenuAction, action)
   },
 
   config: async () => {
     if (configPromise === undefined) {
       configPromise = new Promise((resolve, reject) => {
-        ipcRenderer.invoke('get-main-config').then(
+        ipcRenderer.invoke(IpcMessage.GetMainConfig).then(
           async (mainConfig) => {
             const serverConfig = await loadServerConfig(concatLink(mainConfig.FRONT_URL, mainConfig.CONFIG_URL))
             const combinedConfig = {
@@ -79,7 +114,7 @@ const expose: IPCMainExposed = {
               VERSION: mainConfig.VERSION
             }
 
-            ipcRenderer.send('set-combined-config', combinedConfig)
+            ipcRenderer.send(IpcMessage.SetCombinedConfig, combinedConfig)
 
             resolve(combinedConfig)
           },
@@ -97,7 +132,7 @@ const expose: IPCMainExposed = {
     const branding: BrandingMap = await (
       await fetch(cfg.BRANDING_URL ?? concatLink(cfg.FRONT_URL, 'branding.json'), { keepalive: true })
     ).json()
-    const host = await ipcRenderer.invoke('get-host')
+    const host = await ipcRenderer.invoke(IpcMessage.GetHost)
     return branding[host] ?? {}
   },
   on: (event: string, op: (...args: any[]) => void) => {
@@ -108,43 +143,64 @@ const expose: IPCMainExposed = {
   },
 
   handleDeepLink: (callback) => {
-    ipcRenderer.on('handle-deep-link', (event, value) => {
+    ipcRenderer.on(IpcMessage.HandleDeepLink, (event, value) => {
       try {
         if (typeof value === 'string' && value !== '') {
           callback(value)
         }
       } catch (e) {
-        // Just do nothing. Nothing is ok if there is something with URL
+        // Just do nothing. Nothing is ok if there is something with URL.
       }
     })
-    ipcRenderer.send('on-deep-link-handler')
+    ipcRenderer.send(IpcMessage.OnDeepLinkHandler)
   },
 
   handleNotificationNavigation: (callback) => {
-    ipcRenderer.on('handle-notification-navigation', (event) => {
-      callback()
+    ipcRenderer.on(IpcMessage.HandleNotificationNavigation, (event, notificationParams) => {
+      callback(notificationParams)
     })
   },
 
   handleUpdateDownloadProgress: (callback) => {
-    ipcRenderer.on('handle-update-download-progress', (event, value) => {
+    ipcRenderer.on(IpcMessage.HandleUpdateDownloadProgress, (event, value) => {
       callback(value)
     })
   },
 
   handleAuth: (callback) => {
-    ipcRenderer.on('handle-auth', (event, value) => {
+    ipcRenderer.on(IpcMessage.HandleAuth, (event, value) => {
+      callback(value)
+    })
+  },
+
+  handleDownloadItem: (callback) => {
+    ipcRenderer.on(IpcMessage.HandleDownloadItem, (event, value) => {
       callback(value)
     })
   },
 
   async setFrontCookie (host: string, name: string, value: string): Promise<void> {
-    ipcRenderer.send('set-front-cookie', host, name, value)
+    ipcRenderer.send(IpcMessage.SetFrontCookie, host, name, value)
   },
 
-  getScreenAccess: () => ipcRenderer.invoke('get-screen-access'),
-  getScreenSources: () => ipcRenderer.invoke('get-screen-sources'),
-  cancelBackup: () => { ipcRenderer.send('cancel-backup') },
-  startBackup: (token, endpoint, wsIds) => { ipcRenderer.send('start-backup', token, endpoint, wsIds) }
+  getScreenAccess: () => ipcRenderer.invoke(IpcMessage.GetScreenAccess),
+  getScreenSources: () => ipcRenderer.invoke(IpcMessage.GetScreenSources),
+  cancelBackup: () => { ipcRenderer.send(IpcMessage.CancelBackup) },
+  startBackup: (token, endpoint, wsIds) => { ipcRenderer.send(IpcMessage.StartBackup, token, endpoint, wsIds) },
+
+  rebuildJumpList: (spares: JumpListSpares) => { ipcRenderer.send(IpcMessage.RebuildUserJumpList, spares) },
+
+  isMinimizeToTrayEnabled: async () => {
+    return await ipcRenderer.invoke(IpcMessage.GetMinimizeToTrayEnabled)
+  },
+  onMinimizeToTraySettingChanged: (callback: (enabled: boolean) => void) => {
+    ipcRenderer.on(IpcMessage.MinimizeToTraySettingChanged, (_event, enabled: boolean) => { callback(enabled) })
+  },
+  isAutoLaunchEnabled: async () => {
+    return await ipcRenderer.invoke(IpcMessage.GetAutoLaunchEnabled)
+  },
+  onAutoLaunchSettingChanged: (callback: (enabled: boolean) => void) => {
+    ipcRenderer.on(IpcMessage.AutoLaunchSettingChanged, (_event, enabled: boolean) => { callback(enabled) })
+  }
 }
 contextBridge.exposeInMainWorld('electron', expose)

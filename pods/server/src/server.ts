@@ -14,19 +14,16 @@
 // limitations under the License.
 //
 
-import { type Account, type BrandingMap, type MeasureContext, type Tx } from '@hanzo/core'
-import { buildStorageFromConfig } from '@hanzo/server-storage'
+import { type BrandingMap, type MeasureContext, type Tx, type WorkspaceIds } from '@hcengineering/core'
+import { buildStorageFromConfig } from '@hcengineering/server-storage'
 
-import { ClientSession, startSessionManager } from '@hanzo/server'
+import { startSessionManager } from '@hcengineering/server'
 import {
-  type CommunicationApiFactory,
+  type CommunicationCallbacks,
   type PlatformQueue,
-  type Session,
   type SessionManager,
-  type StorageConfiguration,
-  type Workspace
-} from '@hanzo/server-core'
-import { type Token } from '@hanzo/server-token'
+  type StorageConfiguration
+} from '@hcengineering/server-core'
 
 import { Api as CommunicationApi } from '@hanzo/communication-server'
 import {
@@ -37,9 +34,8 @@ import {
   registerServerPlugins,
   registerStringLoaders,
   registerTxAdapterFactory,
-  setAdapterSecurity,
-  sharedPipelineContextVars
-} from '@hanzo/server-pipeline'
+  setAdapterSecurity
+} from '@hcengineering/server-pipeline'
 
 import {
   createMongoAdapter,
@@ -56,16 +52,17 @@ import {
 } from '@hanzo/postgres'
 import { readFileSync } from 'node:fs'
 import { startHttpServer } from './server_http'
+import type { ServerApi } from '@hcengineering/communication-sdk-types'
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]
 
 registerStringLoaders()
 
 // Register close on process exit.
 process.on('exit', () => {
-  shutdownPostgres(sharedPipelineContextVars).catch((err) => {
+  shutdownPostgres().catch((err) => {
     console.error(err)
   })
-  shutdownMongo(sharedPipelineContextVars).catch((err) => {
+  shutdownMongo().catch((err) => {
     console.error(err)
   })
 })
@@ -81,6 +78,7 @@ export function start (
     storageConfig: StorageConfiguration
     port: number
     brandingMap: BrandingMap
+    communicationApiEnabled: boolean
 
     enableCompression?: boolean
 
@@ -113,25 +111,22 @@ export function start (
 
   const externalStorage = buildStorageFromConfig(opt.storageConfig)
 
-  const pipelineFactory = createServerPipeline(
-    metrics,
-    dbUrl,
-    model,
-    { ...opt, externalStorage, adapterSecurity: isAdapterSecurity(dbUrl), queue: opt.queue },
-    {}
-  )
-  const sessionFactory = (token: Token, workspace: Workspace, account: Account): Session => {
-    return new ClientSession(token, workspace, account, token.extra?.mode === 'backup')
-  }
-  const communicationApiFactory: CommunicationApiFactory = async (ctx, workspace, broadcastSessions) => {
-    if (dbUrl.startsWith('mongodb')) {
+  const communicationApiFactory = async (
+    ctx: MeasureContext,
+    workspace: WorkspaceIds,
+    broadcastSessions: CommunicationCallbacks
+  ): Promise<ServerApi> => {
+    if (dbUrl.startsWith('mongodb') || !opt.communicationApiEnabled) {
       return {
-        findMessages: async () => [],
+        findMessagesMeta: async () => [],
         findMessagesGroups: async () => [],
         findNotificationContexts: async () => [],
+        findCollaborators: async () => [],
         findNotifications: async () => [],
         findLabels: async () => [],
-        unsubscribeQuery: async () => {},
+        findPeers: async () => [],
+        subscribeCard: () => {},
+        unsubscribeCard: () => {},
         event: async () => {
           return {}
         },
@@ -141,17 +136,22 @@ export function start (
     }
 
     return await CommunicationApi.create(
-      ctx.newChild('💬 communication api', {}),
+      ctx.newChild('💬 communication api', {}, { span: false }),
       workspace.uuid,
       dbUrl,
       broadcastSessions
     )
   }
+  const pipelineFactory = createServerPipeline(
+    metrics,
+    dbUrl,
+    model,
+    { ...opt, externalStorage, adapterSecurity: isAdapterSecurity(dbUrl), queue: opt.queue, communicationApiFactory },
+    {}
+  )
 
   const sessionManager = startSessionManager(metrics, {
     pipelineFactory,
-    sessionFactory,
-    communicationApiFactory,
     brandingMap: opt.brandingMap,
     enableCompression: opt.enableCompression,
     accountsUrl: opt.accountsUrl,

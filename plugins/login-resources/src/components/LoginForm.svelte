@@ -1,17 +1,46 @@
+<!--
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2021, 2022 Hardcore Engineering Inc.
+//
+// Licensed under the Eclipse Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License. You may
+// obtain a copy of the License at https://www.eclipse.org/legal/epl-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//
+// See the License for the specific language governing permissions and
+// limitations under the License.
+-->
+<script lang="ts">
+  import { type IntlString, Severity, Status } from '@hcengineering/platform'
+  import { signupStore } from '@hcengineering/analytics-providers'
+  import { onMount } from 'svelte'
 
-  <script lang="ts">
-    import { getMetadata } from '@hcengineering/platform'
-    import presentation from '@hcengineering/presentation'
-    import { onMount } from 'svelte'
-    import loginLogo from "../../img/logo_login.png"
-    const urlFE = getMetadata(presentation.metadata.FrontUrl) || "https://hanzo.team"
-    const clientId = getMetadata(presentation.metadata.IamClientId) || "unknown"
-    const iamServer = getMetadata(presentation.metadata.IamServer) || "https://iam.hanzo.ai"
-    const ssoDefaultRedirect = `${iamServer}/login/oauth/authorize?client_id=${clientId}&scope=openid%20email%20profile&response_type=code&redirect_uri=${urlFE}/login/authCallback`
+  import { type BottomAction, doLoginAsGuest, doLoginNavigate, LoginMethods } from '../index'
+  import LoginPasswordForm from './LoginPasswordForm.svelte'
+  import LoginOtpForm from './LoginOtpForm.svelte'
+  import BottomActionComponent from './BottomAction.svelte'
+  import login from '../plugin'
+  import { LoginInfo } from '@hcengineering/account-client'
 
+  export let navigateUrl: string | undefined = undefined
+  export let signUpDisabled = false
+  export let useOTP = true
+  export let email: string | undefined = undefined
+  export let caption: IntlString | undefined = undefined
+  export let subtitle: string | undefined = undefined
+  export let onLogin: ((loginInfo: LoginInfo | null, status: Status) => void | Promise<void>) | undefined = undefined
 
-  function loginWithSSO(): void {
-    window.location.href = ssoDefaultRedirect;
+  let method: LoginMethods = useOTP ? LoginMethods.Otp : LoginMethods.Password
+
+  onMount(() => {
+    signupStore.setSignUpFlow(false)
+  })
+
+  function changeMethod (event: CustomEvent<LoginMethods>): void {
+    method = event.detail
   }
 
   onMount(() => {
@@ -22,68 +51,58 @@
         loginWithSSO();
       }, 2000);
     }
-  });
+  }
+
+  const loginWithCodeAction: BottomAction = {
+    i18n: login.string.LoginWithCode,
+    func: () => {
+      method = LoginMethods.Otp
+    }
+  }
+
+  async function guestLogin (): Promise<void> {
+    let status = new Status(Severity.INFO, login.status.ConnectingToServer, {})
+    const [loginStatus, result] = await doLoginAsGuest()
+    status = loginStatus
+
+    if (onLogin !== undefined) {
+      void onLogin(result, status)
+    } else {
+      await doLoginNavigate(
+        result,
+        (st) => {
+          status = st
+        },
+        navigateUrl
+      )
+    }
+  }
+
+  const loginAsGuest: BottomAction = {
+    i18n: login.string.LoginAsGuest,
+    func: () => {
+      void guestLogin()
+    }
+  }
 </script>
 
-<div class="login-container">
-    <img
-        src={loginLogo}
-        srcset={`${loginLogo} 1x, ${loginLogo} 2x`}
-        alt=""
-        style="
-            width: 50px;
-            height: 50px;
-        "
-    />
-    <h2>Sign in to your account</h2>
-    <button class="sso-button" on:click={loginWithSSO}>Hanzo IAM</button>
-    <p>
-        By signing in you are agreeing to our
-        <a href="/terms">Terms and Conditions</a>,
-        <a href="/privacy">Privacy Policy</a>, and
-        <a href="/cookies">Cookie Policy</a>.
-        You also confirm that the entered data is accurate.
-    </p>
+{#if method === LoginMethods.Otp}
+  <LoginOtpForm {navigateUrl} {signUpDisabled} {email} {caption} {subtitle} {onLogin} on:change={changeMethod} />
+{:else}
+  <LoginPasswordForm {navigateUrl} {signUpDisabled} {email} {caption} {subtitle} {onLogin} on:change={changeMethod} />
+{/if}
+<div class="actions">
+  <BottomActionComponent action={method === LoginMethods.Otp ? loginWithPasswordAction : loginWithCodeAction} />
+  <div class="login-as-guest">
+    <BottomActionComponent action={loginAsGuest} />
+  </div>
 </div>
 
 <style lang="scss">
-    .login-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1rem;
-        padding: 2rem;
-        color: var(--theme-content-color);
-    }
-
-    .sso-button {
-        background-color: #2c5eff;
-        color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .sso-button:hover {
-        background-color: #1d45cc;
-    }
-
-    a {
-        color: var(--theme-link-color);
-        text-decoration: underline;
-    }
-
-    a:hover {
-        color: #1d45cc;
-    }
-
-    p {
-        text-align: center;
-        font-size: 0.875rem;
-        margin-top: 1rem;
-    }
+  .actions {
+    margin-left: 5rem;
+  }
+  .login-as-guest {
+    margin-top: 1rem;
+  }
 </style>

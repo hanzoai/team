@@ -26,7 +26,7 @@
   async function handleUpdate ({
     detail
   }: {
-    detail: { type: 'reviewers' | 'approvers', users: Ref<Employee>[] }
+    detail: { type: 'reviewers' | 'approvers' | 'coAuthors' | 'externalApprovers', users: Ref<Employee>[] }
   }): Promise<void> {
     if (docObject === undefined) {
       return
@@ -36,11 +36,24 @@
 
     docObject[type] = users
   }
+
+  $: reviewers = docObject?.reviewers ?? []
+  $: approvers = docObject?.approvers ?? []
+  $: coAuthors = docObject?.coAuthors ?? []
+  $: externalApprovers = docObject?.externalApprovers ?? []
 </script>
 
 {#if docObject !== undefined}
   <div class="root">
-    <DocTeam controlledDoc={docObject} {space} on:update={handleUpdate} />
+    <DocTeam
+      controlledDoc={docObject}
+      {space}
+      on:update={handleUpdate}
+      {approvers}
+      {reviewers}
+      {coAuthors}
+      {externalApprovers}
+    />
   </div>
 {/if}
 

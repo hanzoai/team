@@ -14,46 +14,50 @@
 // limitations under the License.
 //
 
+import card from '@hcengineering/card'
 import contact, {
   Channel,
   Contact,
-  Employee,
-  Organization,
-  Person,
-  PersonSpace,
   contactId,
+  Employee,
   formatContactName,
   formatName,
   getFirstName,
   getLastName,
   getName,
+  Organization,
+  Person,
+  PersonSpace,
   type UserProfile
 } from '@hanzo/contact'
 import core, {
+  AccountRole,
+  AccountUuid,
+  concatLink,
   Doc,
   Hierarchy,
+  MarkupBlobRef,
   Ref,
+  SocialIdType,
+  type Space,
   SpaceType,
+  systemAccountUuid,
+  readOnlyGuestAccountUuid,
   Tx,
+  TxCreateDoc,
   TxCUD,
   TxMixin,
   TxRemoveDoc,
   TxUpdateDoc,
-  concatLink,
-  type Space,
-  SocialIdType,
-  AccountUuid,
-  TxCreateDoc,
-  SortingOrder,
-  MarkupBlobRef
-} from '@hanzo/core'
-import { makeRank } from '@hanzo/rank'
-import card from '@hanzo/card'
-import notification, { Collaborators } from '@hanzo/notification'
-import { getMetadata } from '@hanzo/platform'
-import { getAccountBySocialId, getCurrentPerson } from '@hanzo/server-contact'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
-import { workbenchId } from '@hanzo/workbench'
+  TypedSpace,
+  TxFactory,
+  PermissionsGrant
+} from '@hcengineering/core'
+import { getMetadata } from '@hcengineering/platform'
+import { makeRank } from '@hcengineering/rank'
+import { getAccountBySocialId, getCurrentPerson } from '@hcengineering/server-contact'
+import serverCore, { TriggerControl } from '@hcengineering/server-core'
+import { workbenchId } from '@hcengineering/workbench'
 
 export async function OnSpaceTypeMembers (txes: Tx[], control: TriggerControl): Promise<Tx[]> {
   const result: Tx[] = []
@@ -89,8 +93,46 @@ export async function OnSpaceTypeMembers (txes: Tx[], control: TriggerControl): 
   return result
 }
 
+async function getGrantSpaces (control: TriggerControl, grant?: PermissionsGrant): Promise<Space[]> {
+  const spacesRefs = grant?.spaces
+  if (spacesRefs == null) {
+    return []
+  }
+
+  const grantSpaces = await control.findAll(control.ctx, core.class.Space, { _id: { $in: spacesRefs } })
+  const allowedGrantedSpaces: Space[] = []
+
+  for (const space of grantSpaces) {
+    if (!space.private) {
+      allowedGrantedSpaces.push(space)
+      continue
+    }
+
+    const grantedBy = grant?.grantedBy
+    if (grantedBy == null) {
+      control.ctx.warn('Granted private space access without grantor is not allowed', { space })
+      continue
+    }
+
+    if (space.members.includes(grantedBy)) {
+      allowedGrantedSpaces.push(space)
+    } else {
+      control.ctx.warn('Granted private space access but the grantor is not a member of the workspace', {
+        space,
+        grantedBy
+      })
+    }
+  }
+
+  return allowedGrantedSpaces
+}
+
 export async function OnEmployeeCreate (_txes: Tx[], control: TriggerControl): Promise<Tx[]> {
   const result: Tx[] = []
+
+  const systemTxFactory = new TxFactory(core.account.System, false)
+  const systemTxes: Tx[] = []
+
   for (const tx of _txes) {
     const mixinTx = tx as TxMixin<Person, Employee>
     if (mixinTx.attributes.active !== true) continue
@@ -99,20 +141,110 @@ export async function OnEmployeeCreate (_txes: Tx[], control: TriggerControl): P
     const account = person?.personUuid as AccountUuid
     if (account === undefined) continue
 
-    const spaces = await control.findAll(control.ctx, core.class.Space, { autoJoin: true })
-
     const txes = await createPersonSpace(account, mixinTx.objectId, control)
     result.push(...txes)
 
-    for (const space of spaces) {
+    const emp = control.hierarchy.as(person, contact.mixin.Employee)
+    if (emp.role === 'GUEST') {
+      let readOnlyGuestSpaces: Space[] = []
+      const readonlyEmployees = await control.findAll(control.ctx, contact.mixin.Employee, {
+        personUuid: readOnlyGuestAccountUuid
+      })
+      if (readonlyEmployees.length !== 0) {
+        const readonlyEmployee = readonlyEmployees[0]
+        if (readonlyEmployee.active) {
+          readOnlyGuestSpaces = await control.findAll(control.ctx, core.class.Space, {
+            members: readOnlyGuestAccountUuid
+          })
+        }
+      }
+
+      const grantSpaces = await getGrantSpaces(control, control.ctx.contextData.grant)
+
+      for (const space of [...readOnlyGuestSpaces, ...grantSpaces]) {
+        if (space._class === contact.class.PersonSpace || space.members.includes(account)) continue
+
+        const pushTx = systemTxFactory.createTxUpdateDoc(space._class, space.space, space._id, {
+          $push: {
+            members: account
+          }
+        })
+        systemTxes.push(pushTx)
+      }
+
+      const collabs = await control.findAll(control.ctx, core.class.Collaborator, {
+        collaborator: readOnlyGuestAccountUuid
+      })
+
+      for (const collab of collabs) {
+        const pushTx = systemTxFactory.createTxCreateDoc(core.class.Collaborator, collab.space, {
+          attachedTo: collab.attachedTo,
+          collaborator: account,
+          attachedToClass: collab.attachedToClass,
+          collection: 'collaborators'
+        })
+        systemTxes.push(pushTx)
+      }
+
+      continue
+    }
+
+    const spaces = await control.findAll(control.ctx, core.class.Space, { autoJoin: true })
+    const grantSpaces = await getGrantSpaces(control, control.ctx.contextData.grant)
+
+    for (const space of [...spaces, ...grantSpaces]) {
       if (space.members.includes(account)) continue
 
-      const pushTx = control.txFactory.createTxUpdateDoc(space._class, space.space, space._id, {
+      const pushTx = systemTxFactory.createTxUpdateDoc(space._class, space.space, space._id, {
         $push: {
           members: account
         }
       })
-      result.push(pushTx)
+      systemTxes.push(pushTx)
+    }
+  }
+
+  await control.apply(control.ctx, systemTxes)
+
+  const account = control.ctx.contextData.account
+  if (account.role !== AccountRole.Owner) return result
+
+  const typedSpaces: Space[] = [
+    ...(await control.findAll(control.ctx, core.class.TypedSpace, {})),
+    ...(await control.findAll(control.ctx, card.class.CardSpace, { space: core.space.Space }))
+  ]
+
+  for (const space of typedSpaces) {
+    if (space === undefined) continue
+
+    const owners = space.owners ?? []
+
+    if (owners.length === 0 || (owners.length === 1 && owners[0] === systemAccountUuid)) {
+      result.push(
+        control.txFactory.createTxUpdateDoc(space._class, space.space, space._id, {
+          owners: [account.uuid]
+        })
+      )
+    }
+  }
+
+  return result
+}
+
+export async function OnTypedSpaceCreate (_txes: Tx[], control: TriggerControl): Promise<Tx[]> {
+  const result: Tx[] = []
+  for (const tx of _txes) {
+    const ctx = tx as TxCreateDoc<TypedSpace>
+    const owners = ctx.attributes.owners ?? []
+
+    if (owners.length === 0 || (owners.length === 1 && owners[0] === systemAccountUuid)) {
+      const members = ctx.attributes.members
+      if (members.length === 0) continue
+      result.push(
+        control.txFactory.createTxUpdateDoc(ctx.objectClass, ctx.space, ctx.objectId, {
+          owners: [members[0]]
+        })
+      )
     }
   }
   return result
@@ -122,21 +254,22 @@ export async function OnPersonCreate (_txes: Tx[], control: TriggerControl): Pro
   const result: Tx[] = []
   for (const tx of _txes) {
     const ctx = tx as TxCreateDoc<Person>
-    const lastOne = (
-      await control.findAll(control.ctx, card.class.Card, {}, { sort: { rank: SortingOrder.Descending }, limit: 1 })
-    )[0]
-    const userProfileTx = control.txFactory.createTxCreateDoc<UserProfile>(contact.class.UserProfile, ctx.space, {
-      person: ctx.objectId,
-      title: formatName(ctx.attributes.name),
-      rank: makeRank(lastOne?.rank, undefined),
-      content: '' as MarkupBlobRef,
-      parentInfo: [],
-      blobs: {}
-    })
+    const userProfileTx = control.txFactory.createTxCreateDoc<UserProfile>(
+      contact.class.UserProfile,
+      card.space.Default,
+      {
+        person: ctx.objectId,
+        title: formatName(ctx.attributes.name),
+        rank: makeRank(undefined, undefined),
+        content: '' as MarkupBlobRef,
+        parentInfo: [],
+        blobs: {}
+      }
+    )
 
     result.push(userProfileTx)
     result.push(
-      control.txFactory.createTxUpdateDoc<Person>(ctx.objectClass, ctx.space, ctx.objectId, {
+      control.txFactory.createTxUpdateDoc<Person>(ctx.objectClass, ctx.objectSpace, ctx.objectId, {
         profile: userProfileTx.objectId
       })
     )
@@ -210,29 +343,13 @@ export async function OnChannelUpdate (txes: Tx[], control: TriggerControl): Pro
       const doc = (await control.findAll(control.ctx, uTx.objectClass, { _id: uTx.objectId }, { limit: 1 }))[0]
       const account = await getAccountBySocialId(control, tx.modifiedBy)
       if (doc !== undefined && account != null) {
-        if (control.hierarchy.hasMixin(doc, notification.mixin.Collaborators)) {
-          const collab = control.hierarchy.as(doc, notification.mixin.Collaborators) as Doc as Collaborators
-          if (collab.collaborators.includes(account)) {
-            result.push(
-              control.txFactory.createTxMixin(doc._id, doc._class, doc.space, notification.mixin.Collaborators, {
-                $push: {
-                  collaborators: account
-                }
-              })
-            )
-          }
-        } else {
-          const res = control.txFactory.createTxMixin<Doc, Collaborators>(
-            doc._id,
-            doc._class,
-            doc.space,
-            notification.mixin.Collaborators,
-            {
-              collaborators: [account]
-            }
-          )
-          result.push(res)
-        }
+        const tx = control.txFactory.createTxCreateDoc(core.class.Collaborator, doc.space, {
+          attachedTo: doc._id,
+          attachedToClass: doc._class,
+          collection: 'collaborators',
+          collaborator: account
+        })
+        result.push(tx)
       }
     }
   }
@@ -369,6 +486,7 @@ export async function getContactFirstName (
 export default async () => ({
   trigger: {
     OnEmployeeCreate,
+    OnTypedSpaceCreate,
     OnPersonCreate,
     OnContactDelete,
     OnChannelUpdate,

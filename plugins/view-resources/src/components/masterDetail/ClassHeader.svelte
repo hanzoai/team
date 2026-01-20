@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { MasterTag } from '@hanzo/card'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Icon, IconWithEmoji, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import card, { MasterTag } from '@hcengineering/card'
+  import { Class, Doc, Ref } from '@hcengineering/core'
+  import { IconWithEmoji, getClient } from '@hcengineering/presentation'
+  import { Icon, Label } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
 
   export let _class: Ref<Class<Doc>>
 
@@ -30,7 +30,7 @@
 {#if clazz !== undefined}
   <div class="header flex flex-gap-2">
     <Icon
-      icon={clazz.icon === view.ids.IconWithEmoji ? IconWithEmoji : clazz.icon ?? card.icon.MasterTag}
+      icon={clazz.icon === view.ids.IconWithEmoji ? IconWithEmoji : (clazz.icon ?? card.icon.MasterTag)}
       iconProps={clazz.icon === view.ids.IconWithEmoji ? { icon: clazz.color } : {}}
       size="medium"
     />

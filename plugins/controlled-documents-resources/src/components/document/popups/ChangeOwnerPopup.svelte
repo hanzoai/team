@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import documents, { Document } from '@hanzo/controlled-documents'
-  import { Employee } from '@hanzo/contact'
-  import { EmployeeBox, EmployeePresenter, personRefByAccountUuidStore } from '@hanzo/contact-resources'
-  import core, { Ref, Space, notEmpty } from '@hanzo/core'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
-  import { Button, Icon, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import documents, { Document } from '@hcengineering/controlled-documents'
+  import { Employee } from '@hcengineering/contact'
+  import { EmployeeBox, EmployeePresenter, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import core, { Ref, Space, notEmpty } from '@hcengineering/core'
+  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
+  import { Button, Icon, Label } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
   import { createEventDispatcher } from 'svelte'
 
   import { canChangeDocumentOwner, isDocOwner } from '../../../utils'
@@ -60,9 +60,9 @@
   $: isOwner = isDocOwner(object)
 
   $: members = space?.members ?? []
-  $: employees = members.map((m) => $personRefByAccountUuidStore.get(m) as Ref<Employee>).filter(notEmpty)
+  $: employees = members.map((m) => $employeeRefByAccountUuidStore.get(m) as Ref<Employee>).filter(notEmpty)
 
-  $: docQuery = space?.private ?? false ? { active: true, _id: { $in: employees } } : { active: true }
+  $: docQuery = (space?.private ?? false) ? { active: true, _id: { $in: employees } } : { active: true }
 </script>
 
 {#if object}

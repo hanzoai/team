@@ -115,7 +115,7 @@
     isHeader={false}
     isAside={true}
     isSub={false}
-    adaptive={'default'}
+    adaptive={'disabled'}
     withoutActivity={true}
     on:open
     on:close={() => dispatch('close')}
@@ -141,7 +141,7 @@
       placeholder={core.string.Description}
       kind="indented"
       isScrollable={false}
-      enableBackReferences={true}
+      kitOptions={{ reference: true }}
       enableAttachments={false}
       on:attachments={(ev) => {
         if (ev.detail.size > 0) attachments = ev.detail.values

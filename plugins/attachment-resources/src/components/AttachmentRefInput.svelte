@@ -15,6 +15,8 @@
 <script lang="ts">
   import { Attachment, AttachmentMetadata } from '@hanzo/attachment'
   import {
+    Blob as PlatformBlob,
+    BlobMetadata,
     Class,
     Doc,
     IdMap,
@@ -25,8 +27,8 @@
     Space,
     generateId,
     toIdMap
-  } from '@hanzo/core'
-  import { Asset, IntlString, setPlatformStatus, unknownError } from '@hanzo/platform'
+  } from '@hcengineering/core'
+  import { Asset, IntlString, getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
   import {
     DraftController,
     canDisplayLinkPreview,
@@ -35,15 +37,19 @@
     draftsStore,
     fetchLinkPreviewDetails,
     getClient,
-    getFileMetadata,
     isLinkPreviewEnabled,
     uploadFile,
     LinkPreviewAttachmentMetadata
-  } from '@hanzo/presentation'
-  import { EmptyMarkup } from '@hanzo/text'
-  import textEditor, { type RefAction } from '@hanzo/text-editor'
-  import { AttachIcon, ReferenceInput } from '@hanzo/text-editor-resources'
-  import { Loading, type AnySvelteComponent } from '@hanzo/ui'
+  } from '@hcengineering/presentation'
+  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
+  import textEditor, { type RefAction } from '@hcengineering/text-editor'
+  import { AttachIcon, ReferenceInput } from '@hcengineering/text-editor-resources'
+  import { Loading, type AnySvelteComponent } from '@hcengineering/ui'
+  import {
+    type FileUploadCallbackParams,
+    type UploadHandlerDefinition,
+    getUploadHandlers
+  } from '@hcengineering/uploader'
   import { createEventDispatcher, onDestroy, tick } from 'svelte'
   import attachment from '../plugin'
   import AttachmentPresenter from './AttachmentPresenter.svelte'
@@ -51,6 +57,8 @@
   export let objectId: Ref<Doc>
   export let space: Ref<Space>
   export let _class: Ref<Class<Doc>>
+  export let docId: Ref<Doc> | undefined = undefined
+  export let docClass: Ref<Class<Doc>> | undefined = undefined
   export let content: Markup = EmptyMarkup
   export let iconSend: Asset | AnySvelteComponent | undefined = undefined
   export let labelSend: IntlString | undefined = undefined
@@ -68,6 +76,7 @@
   export let extraActions: RefAction[] = []
   export let boundary: HTMLElement | undefined = undefined
   export let skipAttachmentsPreload = false
+  export let onKeyDown: ((event: KeyboardEvent) => boolean) | undefined = undefined
 
   let refInput: ReferenceInput
 
@@ -179,8 +188,20 @@
 
   async function createAttachment (file: File, meta?: AttachmentMetadata): Promise<void> {
     try {
-      const uuid = await uploadFile(file)
-      const metadata = meta ?? (await getFileMetadata(file, uuid))
+      const { uuid, metadata } = await uploadFile(file)
+      await _createAttachment(uuid, file.name, file, meta ?? metadata)
+    } catch (err: any) {
+      void setPlatformStatus(unknownError(err))
+    }
+  }
+
+  async function _createAttachment (
+    file: Ref<PlatformBlob>,
+    name: string,
+    blob: File | Blob,
+    metadata?: BlobMetadata
+  ): Promise<void> {
+    try {
       const _id: Ref<Attachment> = generateId()
 
       attachments.set(_id, {
@@ -192,11 +213,11 @@
         space,
         attachedTo: objectId,
         attachedToClass: _class,
-        name: file.name,
-        file: uuid,
-        type: file.type,
-        size: file.size,
-        lastModified: file.lastModified,
+        name,
+        file,
+        type: blob.type,
+        size: blob.size,
+        lastModified: blob instanceof File ? blob.lastModified : Date.now(),
         metadata
       })
       newAttachments.add(_id)
@@ -296,6 +317,10 @@
         }
       })
     }
+  }
+
+  export function isEmptyDraft (): boolean {
+    return attachments.size === 0 && isEmptyMarkup(content)
   }
 
   export async function createAttachments (): Promise<void> {
@@ -410,6 +435,32 @@
 
     return false
   }
+
+  async function onFileUploaded ({ uuid, name, file, metadata }: FileUploadCallbackParams): Promise<void> {
+    try {
+      await updateAttachments(objectId)
+      await _createAttachment(uuid, name, file, metadata)
+    } catch (err: any) {
+      void setPlatformStatus(unknownError(err))
+    }
+  }
+
+  async function uploadWith (uploader: UploadHandlerDefinition): Promise<void> {
+    const upload = await getResource(uploader.handler)
+    const target = { objectId: docId ?? objectId, objectClass: docClass ?? _class }
+    await upload({ onFileUploaded, target })
+  }
+
+  let uploadActionIndex = 1000
+  const uploadHandlers = getUploadHandlers(client, { category: 'media' })
+  const uploadActions: RefAction[] = uploadHandlers.map((handler) => ({
+    order: handler.order ?? uploadActionIndex++,
+    label: handler.label,
+    icon: handler.icon,
+    action: () => {
+      void uploadWith(handler)
+    }
+  }))
 </script>
 
 <div class="flex-col no-print" bind:this={refContainer}>
@@ -441,8 +492,7 @@
       autofocus={autofocus ? 'end' : false}
       loading={loading || progress}
       {boundary}
-      canEmbedFiles={false}
-      canEmbedImages={false}
+      {docClass}
       extraActions={[
         ...extraActions,
         {
@@ -453,7 +503,8 @@
             inputFile.click()
           },
           order: 1001
-        }
+        },
+        ...uploadActions
       ]}
       showHeader={attachments.size > 0 || progress}
       haveAttachment={attachments.size > 0}
@@ -462,7 +513,12 @@
       on:message={onMessage}
       on:update={onUpdate}
       onPaste={pasteAction}
+      onKeyDown={(_, ev) => onKeyDown?.(ev) ?? false}
       {placeholder}
+      kitOptions={{
+        file: false,
+        image: false
+      }}
     >
       <div slot="header">
         {#if attachments.size > 0 || progress}
@@ -476,6 +532,7 @@
               <div class="item flex">
                 <AttachmentPresenter
                   value={attachment}
+                  showPreview
                   removable
                   on:remove={(result) => {
                     if (result !== undefined) void removeAttachment(attachment)

@@ -1,4 +1,6 @@
-import {
+import contact from '@hcengineering/contact'
+import core, {
+  type Blob,
   type Class,
   type Doc,
   type DocumentQuery,
@@ -6,17 +8,22 @@ import {
   type Ref,
   type Space,
   type TxResult,
-  getCurrentAccount
-} from '@hanzo/core'
-import { type Asset, type IntlString, type Resource, getResource } from '@hanzo/platform'
+  getCurrentAccount,
+  makeDocCollabId
+} from '@hcengineering/core'
+import { type Asset, type IntlString, type Resource, getResource } from '@hcengineering/platform'
 import {
-  MessageBox,
-  getClient,
-  updateAttribute,
   type ContextStore,
+  MessageBox,
   contextStore,
-  copyTextToClipboardOldBrowser
-} from '@hanzo/presentation'
+  copyTextToClipboardOldBrowser,
+  getClient,
+  getMarkup,
+  hasResource,
+  updateAttribute
+} from '@hcengineering/presentation'
+import { markupToJSON } from '@hcengineering/text'
+import { markupToMarkdown } from '@hcengineering/text-markdown'
 import {
   type AnyComponent,
   type AnySvelteComponent,
@@ -24,10 +31,12 @@ import {
   type PopupPosAlignment,
   closeTooltip,
   isPopupPosAlignment,
+  locationToUrl,
   navigate,
   showPanel,
   showPopup
-} from '@hanzo/ui'
+} from '@hcengineering/ui'
+import { get } from 'svelte/store'
 import MoveView from './components/Move.svelte'
 import view from './plugin'
 import {
@@ -36,13 +45,13 @@ import {
   type SelectionStore,
   focusStore,
   previewDocument,
-  selectionStore,
-  selectionLimit
+  selectionLimit,
+  selectionStore
 } from './selection'
 import { deleteObjects, getObjectId, getObjectLinkFragment, restrictionStore } from './utils'
-import contact from '@hanzo/contact'
-import { locationToUrl } from '@hanzo/ui'
-import { get } from 'svelte/store'
+import workbenchPlugin from '@hcengineering/workbench'
+import { CopyAsMarkdownTable } from './copyAsMarkdownTable'
+import { viewletContextStore } from './viewletContextStore'
 
 /**
  * Action to be used for copying text to clipboard.
@@ -65,25 +74,107 @@ async function CopyTextToClipboard (
   }
 ): Promise<void> {
   const getText = await getResource(props.textProvider)
+  const text = Array.isArray(doc)
+    ? (await Promise.all(doc.map(async (d) => await getText(d, props.props)))).join(',')
+    : await getText(doc, props.props)
+  await copyText(text, 'text/plain')
+}
+
+export async function copyText (text: any, contentType: string = 'text/plain'): Promise<void> {
   try {
-    // Safari specific behavior
-    // see https://bugs.webkit.org/show_bug.cgi?id=222262
-    const text = Array.isArray(doc)
-      ? (await Promise.all(doc.map(async (d) => await getText(d, props.props)))).join(',')
-      : await getText(doc, props.props)
-    const clipboardItem = new ClipboardItem({
-      'text/plain': text
-    })
-    await navigator.clipboard.write([clipboardItem])
-  } catch {
-    // Fallback to default clipboard API implementation
-    const text = Array.isArray(doc)
-      ? (await Promise.all(doc.map(async (d) => await getText(d, props.props)))).join(',')
-      : await getText(doc, props.props)
+    // Check if ClipboardItem is available
+    if (typeof ClipboardItem !== 'undefined') {
+      const clipboardData: Record<string, any> = {
+        [contentType]: text instanceof Promise ? text : Promise.resolve(text)
+      }
+
+      const clipboardItem = new ClipboardItem(clipboardData)
+      await navigator.clipboard.write([clipboardItem])
+    } else {
+      // Fallback if ClipboardItem is not available
+      if (navigator.clipboard != null && typeof navigator.clipboard.writeText === 'function') {
+        await navigator.clipboard.writeText(text instanceof Promise ? await text : text)
+      } else {
+        copyTextToClipboardOldBrowser(text instanceof Promise ? await text : text)
+      }
+    }
+  } catch (error) {
+    // Log error and fallback: only copy main content
+    console.error('Failed to copy to clipboard, falling back to plain text:', error)
     if (navigator.clipboard != null && typeof navigator.clipboard.writeText === 'function') {
-      await navigator.clipboard.writeText(text)
-    } else copyTextToClipboardOldBrowser(text)
+      try {
+        await navigator.clipboard.writeText(text instanceof Promise ? await text : text)
+      } catch (fallbackError) {
+        console.error('Failed to copy to clipboard with writeText, using old browser fallback:', fallbackError)
+        copyTextToClipboardOldBrowser(text instanceof Promise ? await text : text)
+      }
+    } else {
+      copyTextToClipboardOldBrowser(text instanceof Promise ? await text : text)
+    }
   }
+}
+
+/**
+ * Copy markdown text to clipboard with optional metadata for refreshable tables.
+ * This function is specifically designed for copying markdown tables with metadata
+ * that enables refresh, diff, and "see original data" functionality in text editors.
+ *
+ * @param markdown - The markdown text to copy
+ * @param metadata - Optional metadata object containing table information (query, config, document IDs, etc.)
+ */
+export async function copyMarkdown (markdown: string, metadata?: Record<string, any>): Promise<void> {
+  // Step 1: Always embed metadata in markdown FIRST (if metadata exists)
+  let markdownToCopy = markdown
+  if (metadata !== undefined) {
+    try {
+      const metadataComment = `<!-- huly-table-metadata:${JSON.stringify(metadata)} -->`
+      // Insert comment before first table (or at start if no table)
+      const tableIndex = markdown.indexOf('|')
+      markdownToCopy =
+        tableIndex !== -1
+          ? markdown.slice(0, tableIndex) + metadataComment + '\n' + markdown.slice(tableIndex)
+          : metadataComment + '\n' + markdown
+    } catch (e) {
+      console.error('Failed to embed metadata in markdown:', e)
+      // Continue with original markdown if embedding fails
+    }
+  }
+
+  // Step 2: Try modern ClipboardItem API (with custom MIME type for performance)
+  try {
+    if (typeof ClipboardItem !== 'undefined') {
+      const clipboardData: Record<string, any> = {
+        'text/markdown': Promise.resolve(markdownToCopy)
+      }
+      // Add custom MIME type for fast parsing in modern browsers
+      if (metadata !== undefined) {
+        try {
+          clipboardData['application/x-huly-table-metadata'] = Promise.resolve(JSON.stringify(metadata))
+        } catch (e) {
+          console.error('Failed to stringify metadata for custom MIME type:', e)
+        }
+      }
+
+      const clipboardItem = new ClipboardItem(clipboardData)
+      await navigator.clipboard.write([clipboardItem])
+      return // Success, exit early
+    }
+  } catch (error) {
+    console.error('Failed to copy with ClipboardItem, falling back:', error)
+  }
+
+  // Step 3: Fallback to writeText (markdownToCopy already has metadata)
+  try {
+    if (navigator.clipboard != null && typeof navigator.clipboard.writeText === 'function') {
+      await navigator.clipboard.writeText(markdownToCopy)
+      return // Success, exit early
+    }
+  } catch (fallbackError) {
+    console.error('Failed to copy with writeText, using old browser fallback:', fallbackError)
+  }
+
+  // Step 4: Final fallback to old browser method (markdownToCopy already has metadata)
+  copyTextToClipboardOldBrowser(markdownToCopy)
 }
 
 function Delete (
@@ -324,8 +415,13 @@ async function OpenInNewTab (
   const panelComponent = hierarchy.classHierarchyMixin(d._class, view.mixin.ObjectPanel)
   const component = props?.component ?? panelComponent?.component ?? view.component.EditDoc
   const loc = await getObjectLinkFragment(hierarchy, d, {}, component)
-  const url = locationToUrl(loc)
-  window.open(url, '_blank')
+  if (hasResource(workbenchPlugin.function.OpenInNewTab) === true) {
+    const res = await getResource(workbenchPlugin.function.OpenInNewTab)
+    await res(loc)
+  } else {
+    const url = locationToUrl(loc)
+    window.open(url, '_blank')
+  }
 }
 
 /**
@@ -589,6 +685,73 @@ async function getPopupAlignment (
   }
 }
 
+async function CopyDocumentMarkdown (
+  doc: Doc | Doc[],
+  evt: Event,
+  props: {
+    contentClass: Ref<Class<Doc>>
+    contentField: string
+  }
+): Promise<void> {
+  const docs = Array.isArray(doc) ? doc : doc !== undefined ? [doc] : []
+  if (docs.length !== 1) {
+    return
+  }
+  const client = getClient()
+  const hierarchy = client.getHierarchy()
+  const contentClass = hierarchy.getClass(props.contentClass)
+  if (contentClass == null) {
+    return
+  }
+  const contentField = hierarchy.findAttribute(props.contentClass, props.contentField)
+  if (contentField == null) {
+    return
+  }
+  if (contentField.type._class === core.class.TypeCollaborativeDoc) {
+    const content = await getMarkup(
+      makeDocCollabId(docs[0], props.contentField),
+      (docs[0] as any)[props.contentField] as Ref<Blob>
+    )
+    if (content !== null) {
+      const jsonMarkup = markupToJSON(content)
+      const contentJson = markupToMarkdown(jsonMarkup)
+      await copyText(contentJson, 'text/markdown')
+    }
+  }
+}
+
+/**
+ * CopyAsMarkdownTable action implementation
+ * Reads viewlet config from store if not provided in props
+ * @public
+ */
+async function CopyAsMarkdownTableAction (
+  doc: Doc | Doc[],
+  evt: Event,
+  props: {
+    cardClass: Ref<Class<Doc>>
+    viewlet?: any
+    config?: Array<string | any>
+    query?: DocumentQuery<Doc>
+    viewOptions?: any
+  }
+): Promise<void> {
+  // Get viewlet context from store if not provided in props
+  const $viewletContextStore = get(viewletContextStore)
+  const viewletContext = $viewletContextStore.getLastContext()
+
+  // Merge store context with props (props take precedence)
+  const mergedProps = {
+    cardClass: props.cardClass,
+    viewlet: props.viewlet ?? viewletContext?.viewlet,
+    config: props.config ?? viewletContext?.config,
+    query: props.query ?? viewletContext?.query,
+    viewOptions: props.viewOptions ?? viewletContext?.viewOptions
+  }
+
+  await CopyAsMarkdownTable(doc, evt, mergedProps)
+}
+
 /**
  * @public
  */
@@ -616,5 +779,7 @@ export const actionImpl = {
   ShowPopup,
   ShowEditor,
   ValueSelector,
-  AttributeSelector
+  AttributeSelector,
+  CopyDocumentMarkdown,
+  CopyAsMarkdownTable: CopyAsMarkdownTableAction
 }

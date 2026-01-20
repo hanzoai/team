@@ -22,5 +22,11 @@ loadMetadata(process.icon, {
   States: `${icons}#trigger`,
   Steps: `${icons}#steps`,
   ToDo: `${icons}#todo`,
-  WaitSubprocesses: `${icons}#subprocesses`
+  ToDoRemove: `${icons}#todo-remove`,
+  WaitSubprocesses: `${icons}#subprocesses`,
+  Start: `${icons}#start`,
+  WhenCardMatches: `${icons}#card-matches`,
+  WhenFieldChanges: `${icons}#field-change`,
+  Time: `${icons}#time`,
+  OnEvent: `${icons}#start`
 })

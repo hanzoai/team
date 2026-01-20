@@ -45,6 +45,8 @@
   import { getProjectDocumentLink } from '../navigation'
   import documentRes from '../plugin'
   import {
+    $approvalRequest as approvalRequest,
+    $reviewRequest as reviewRequest,
     $activeRightPanelTab as activeRightPanelTab,
     $availableEditorModes as availableEditorModes,
     $availableRightPanelTabs as availableRightPanelTabs,
@@ -126,11 +128,15 @@
 
   let tabs: Tab[]
 
+  let content: HTMLElement
+
   $: tabs = [
     {
       label: documentRes.string.ContentTab,
       component: EditDocContent,
-      props: {}
+      props: {
+        boundary: content
+      }
     },
     {
       label: documentRes.string.ReasonAndImpact,
@@ -140,7 +146,12 @@
     {
       label: documentRes.string.TeamTab,
       component: EditDocTeam,
-      props: { controlledDoc: $controlledDocument, editable: $isDocumentOwner }
+      props: {
+        controlledDoc: $controlledDocument,
+        editable: $isDocumentOwner,
+        reviewRequest: $reviewRequest,
+        approvalRequest: $approvalRequest
+      }
     },
     {
       label: documentRes.string.ReleaseTab,
@@ -300,6 +311,7 @@
 {#if $controlledDocument !== null && attribute !== undefined}
   <Panel
     bind:innerWidth
+    bind:content
     isHeader={false}
     object={$controlledDocument}
     customAside={sideBar}

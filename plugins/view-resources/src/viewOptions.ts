@@ -128,7 +128,7 @@ export function migrateViewOpttions (): void {
 }
 
 export function hideArchived (value: any, options: FindOptions<Doc> | undefined): FindOptions<Doc> {
-  return typeof value === 'boolean' ? { ...options, showArchived: !value } : options ?? {}
+  return typeof value === 'boolean' ? { ...options, showArchived: !value } : (options ?? {})
 }
 
 export async function showEmptyGroups (
@@ -145,7 +145,7 @@ export async function showEmptyGroups (
   if (key === noCategory) return
   const attr = hierarchy.getAttribute(_class, key)
   if (attr === undefined) return
-  const { attrClass } = getAttributePresenterClass(hierarchy, attr)
+  const { attrClass } = getAttributePresenterClass(hierarchy, attr.type)
   const attributeClass = hierarchy.getClass(attrClass)
 
   let groupMixin: Groupping | undefined

@@ -13,17 +13,33 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { ObjectBox } from '@hanzo/view-resources'
-  import view, { ViewletDescriptor } from '@hanzo/view'
-  import { IntlString } from '@hanzo/platform'
+  import { Ref } from '@hcengineering/core'
+  import { ObjectBox } from '@hcengineering/view-resources'
+  import view, { ViewletDescriptor } from '@hcengineering/view'
+  import { IntlString } from '@hcengineering/platform'
+  import card from '../../../plugin'
 
   export let value: Ref<ViewletDescriptor> | undefined = undefined
   export let withSingleViews: boolean = false
   export let label: IntlString
   $: supportedTypes = withSingleViews
-    ? [view.viewlet.Table, view.viewlet.List, view.viewlet.Tree, view.viewlet.MasterDetail, view.viewlet.Document]
-    : [view.viewlet.Table, view.viewlet.List, view.viewlet.Tree, view.viewlet.MasterDetail]
+    ? [
+        view.viewlet.Table,
+        view.viewlet.List,
+        view.viewlet.Tree,
+        view.viewlet.MasterDetail,
+        card.viewlet.CardFeedDescriptor,
+        view.viewlet.RelationshipTable,
+        view.viewlet.Document
+      ]
+    : [
+        view.viewlet.Table,
+        view.viewlet.List,
+        view.viewlet.Tree,
+        view.viewlet.MasterDetail,
+        card.viewlet.CardFeedDescriptor,
+        view.viewlet.RelationshipTable
+      ]
 </script>
 
 <ObjectBox

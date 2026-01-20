@@ -382,6 +382,9 @@ export class TControlledDocument extends THierarchyDocument implements Controlle
   @Prop(ArrOf(TypeRef(contact.mixin.Employee)), documents.string.Approvers)
     approvers!: Ref<Employee>[]
 
+  @Prop(ArrOf(TypeRef(contact.mixin.Employee)), documents.string.ExternalApprovers)
+    externalApprovers!: Ref<Employee>[]
+
   @Prop(ArrOf(TypeRef(contact.mixin.Employee)), documents.string.CoAuthors)
     coAuthors!: Ref<Employee>[]
 
@@ -462,11 +465,11 @@ export class TDocumentComment extends TChatMessage implements DocumentComment {
 export class TDocumentRequest extends TRequest implements DocumentRequest {}
 
 @Model(documents.class.DocumentReviewRequest, documents.class.DocumentRequest)
-@UX(documents.string.DocumentReviewRequest)
+@UX(documents.string.DocumentReviewRequest, documents.icon.Document)
 export class TDocumentReviewRequest extends TDocumentRequest implements DocumentReviewRequest {}
 
 @Model(documents.class.DocumentApprovalRequest, documents.class.DocumentRequest)
-@UX(documents.string.DocumentApprovalRequest)
+@UX(documents.string.DocumentApprovalRequest, documents.icon.Document)
 export class TDocumentApprovalRequest extends TDocumentRequest implements DocumentApprovalRequest {}
 
 @Mixin(documents.mixin.DocumentSpaceTypeData, documents.class.DocumentSpace)

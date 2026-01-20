@@ -14,47 +14,71 @@
 //
 
 import * as tus from 'tus-js-client'
+import type { RecordingResult } from './types'
 import type { ChunkReader } from './stream'
 
-interface IMap<T> {
-  [index: string]: T
-  [index: number]: T
+export interface Uploader {
+  start: () => void
+  cancel: () => Promise<void>
+  wait: () => Promise<RecordingResult>
 }
 
-export interface Options {
-  fps?: number
+export interface TusUploaderOptions {
   endpoint: string
-  token: string
   workspace: string
-  metadata?: IMap<string>
-  onFinish?: (x: string) => Promise<void>
+  token: string
+  contentType: string
+  width: number
+  height: number
 }
 
-export abstract class Uploader {
-  public abstract start (): void
-  public abstract cancel (): Promise<void>
-  public abstract wait (): Promise<void>
-}
-
-export class TusUploader extends Uploader {
+export class TusUploader implements Uploader {
   private readonly upload: tus.Upload
-  private waiter: (() => void) | null = null
+  private readonly waiterPromise: Promise<RecordingResult>
+  private waiterResolve: (value: RecordingResult) => void = () => {}
+  private waiterReject: (reason?: any) => void = () => {}
+  private bytesSent = 0
 
-  constructor (target: ChunkReader, opts: Options) {
-    super()
-    this.upload = new tus.Upload(target, {
+  constructor (reader: ChunkReader, options: TusUploaderOptions) {
+    const { endpoint, workspace, token, width, height, contentType } = options
+
+    this.waiterPromise = new Promise<RecordingResult>((resolve, reject) => {
+      this.waiterResolve = resolve
+      this.waiterReject = reject
+    })
+
+    console.debug('TusUploader: uploading', workspace, endpoint)
+
+    this.upload = new tus.Upload(reader, {
       retryDelays: [0, 1000, 1500, 2000, 2500, 3000],
       chunkSize: 2 * 1024 * 1024,
       uploadLengthDeferred: true,
-      endpoint: opts.endpoint,
-      metadata: { ...opts.metadata, token: opts.token, workspace: opts.workspace },
+      endpoint,
+      metadata: {
+        width: width.toString(),
+        height: height.toString(),
+        contentType,
+        token,
+        workspace
+      },
+      onProgress: (bytesSent) => {
+        this.bytesSent = bytesSent
+      },
       onSuccess: () => {
-        if (this.waiter !== null) {
-          this.waiter()
+        const uuid = this.upload.url?.split('/').pop()
+        console.debug('TusUploader: upload success:', uuid)
+        if (uuid === undefined) {
+          console.error('TusUploader: upload URL does not contain upload ID')
+          return
         }
-        if (this.upload.url !== null && opts.onFinish !== undefined) {
-          void opts.onFinish(this.upload.url.substring(this.upload.url.lastIndexOf('/') + 1))
-        }
+
+        const size = this.bytesSent
+        const type = contentType.split(';')[0]
+        this.waiterResolve({ uuid, type, width, height, size })
+      },
+      onError: (error) => {
+        console.error('TusUploader: upload failed:', error)
+        this.waiterReject(error)
       }
     })
   }
@@ -63,13 +87,15 @@ export class TusUploader extends Uploader {
     this.upload.start()
   }
 
-  public async wait (): Promise<void> {
-    await new Promise<void>((resolve) => {
-      this.waiter = resolve
-    })
+  public async wait (): Promise<RecordingResult> {
+    return await this.waiterPromise
   }
 
   public async cancel (): Promise<void> {
-    await this.upload.abort()
+    try {
+      await this.upload.abort()
+    } catch (error) {
+      console.error('TusUploader: abort failed:', error)
+    }
   }
 }

@@ -1,4 +1,4 @@
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022-2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -11,13 +11,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Contact, Employee } from '@hanzo/contact'
-import type { AttachedDoc, Class, Doc, Markup, Mixin, PersonId, Ref, SystemSpace, Timestamp } from '@hanzo/core'
-import { NotificationType } from '@hanzo/notification'
-import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { Handler, IntegrationType } from '@hanzo/setting'
-import { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
+import { Contact, Employee } from '@hcengineering/contact'
+import type {
+  AttachedDoc,
+  Class,
+  Client,
+  Doc,
+  IntegrationKind,
+  Markup,
+  Mixin,
+  PersonId,
+  Ref,
+  SystemSpace,
+  Timestamp
+} from '@hcengineering/core'
+import { NotificationType } from '@hcengineering/notification'
+import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hcengineering/platform'
+import { plugin } from '@hcengineering/platform'
+import { Preference } from '@hcengineering/preference'
+import { Handler, IntegrationType } from '@hcengineering/setting'
+import { AnyComponent, ComponentExtensionId } from '@hcengineering/ui'
 
 /**
  * @public
@@ -31,6 +44,8 @@ export interface Calendar extends Doc {
   name: string
   hidden: boolean
   visibility: Visibility
+  user: PersonId
+  access: AccessLevel
 }
 
 /**
@@ -40,6 +55,10 @@ export interface ExternalCalendar extends Calendar {
   default: boolean
   externalId: string
   externalUser: string
+}
+
+export interface PrimaryCalendar extends Preference {
+  attachedTo: Ref<Calendar>
 }
 
 /**
@@ -105,11 +124,20 @@ export interface Event extends AttachedDoc {
 
   visibility?: Visibility
 
-  access: 'freeBusyReader' | 'reader' | 'writer' | 'owner'
+  access: AccessLevel
 
   timeZone?: string
 
   user: PersonId
+
+  blockTime: boolean
+}
+
+export enum AccessLevel {
+  FreeBusyReader = 'freeBusyReader',
+  Reader = 'reader',
+  Writer = 'writer',
+  Owner = 'owner'
 }
 
 /**
@@ -143,7 +171,18 @@ export interface Schedule extends Doc {
   meetingInterval: number
   availability: ScheduleAvailability
   timeZone: string
+  calendar?: Ref<Calendar>
 }
+
+/**
+ * @public
+ */
+export const calendarIntegrationKind = 'google-calendar' as IntegrationKind
+
+/**
+ * @public
+ */
+export const caldavIntegrationKind = 'caldav' as IntegrationKind
 
 /**
  * @public
@@ -160,7 +199,8 @@ const calendarPlugin = plugin(calendarId, {
     Event: '' as Ref<Class<Event>>,
     ReccuringEvent: '' as Ref<Class<ReccuringEvent>>,
     ReccuringInstance: '' as Ref<Class<ReccuringInstance>>,
-    Schedule: '' as Ref<Class<Schedule>>
+    Schedule: '' as Ref<Class<Schedule>>,
+    PrimaryCalendar: '' as Ref<Class<PrimaryCalendar>>
   },
   mixin: {
     CalendarEventPresenter: '' as Ref<Mixin<CalendarEventPresenter>>
@@ -200,7 +240,8 @@ const calendarPlugin = plugin(calendarId, {
     DateTimePresenter: '' as AnyComponent,
     DocReminder: '' as AnyComponent,
     ConnectApp: '' as AnyComponent,
-    ScheduleEditor: '' as AnyComponent
+    ScheduleEditor: '' as AnyComponent,
+    IntegrationState: '' as AnyComponent
   },
   string: {
     Title: '' as IntlString,
@@ -240,11 +281,23 @@ const calendarPlugin = plugin(calendarId, {
     Day: '' as IntlString,
     Week: '' as IntlString,
     Month: '' as IntlString,
-    CalDavShareLink: '' as IntlString,
-    CalDavSharedLinkMessage: '' as IntlString
+    CalDavAccess: '' as IntlString,
+    CalDavAccessPrompt: '' as IntlString,
+    CalDavAccessEnable: '' as IntlString,
+    CalDavAccessServer: '' as IntlString,
+    CalDavAccessAccount: '' as IntlString,
+    CalDavAccessPassword: '' as IntlString,
+    CalDavAccessPasswordWarning: '' as IntlString,
+    MeetingScheduledNotification: '' as IntlString,
+    MeetingRescheduledNotification: '' as IntlString,
+    MeetingCanceledNotification: '' as IntlString,
+    SynchronizedCalendars: '' as IntlString,
+    Account: '' as IntlString,
+    NoCalendars: '' as IntlString
   },
   handler: {
-    DisconnectHandler: '' as Handler
+    DisconnectHandler: '' as Handler,
+    DisconnectAllHandler: '' as Handler
   },
   integrationType: {
     Calendar: '' as Ref<IntegrationType>
@@ -255,14 +308,16 @@ const calendarPlugin = plugin(calendarId, {
     CalDavServerURL: '' as Metadata<string>
   },
   extensions: {
-    EditEventExtensions: '' as ComponentExtensionId
+    EditEventExtensions: '' as ComponentExtensionId,
+    EditScheduleExtensions: '' as ComponentExtensionId
   },
   ids: {
     ReminderNotification: '' as Ref<NotificationType>,
     NoAttached: '' as Ref<Event>
   },
   function: {
-    ShareCalDavLink: '' as Resource<() => Promise<void>>
+    ConfigureCalDavAccess: '' as Resource<() => Promise<void>>,
+    EventTitleProvider: '' as Resource<(client: Client, ref: Ref<Doc>, doc?: Doc) => Promise<string>>
   }
 })
 

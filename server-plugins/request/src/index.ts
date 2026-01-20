@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Plugin, plugin, Resource } from '@hanzo/platform'
-import type { TriggerFunc } from '@hanzo/server-core'
-import { Presenter } from '@hanzo/server-notification'
+import { Plugin, plugin, Resource } from '@hcengineering/platform'
+import type { TriggerFunc } from '@hcengineering/server-core'
+import { Presenter, TypeMatchFunc } from '@hcengineering/server-notification'
 
 /**
  * @public
@@ -27,7 +27,9 @@ export const serverRequestId = 'server-request' as Plugin
  */
 export default plugin(serverRequestId, {
   function: {
-    RequestTextPresenter: '' as Resource<Presenter>
+    RequestTextPresenter: '' as Resource<Presenter>,
+    SendRequestMatch: '' as TypeMatchFunc,
+    RemoveRequestMatch: '' as TypeMatchFunc
   },
   trigger: {
     OnRequest: '' as Resource<TriggerFunc>

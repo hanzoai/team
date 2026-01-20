@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, getCurrentAccount, Ref } from '@hanzo/core'
-  import notification, { BrowserNotification } from '@hanzo/notification'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { addNotification, getCurrentResolvedLocation, Location, NotificationSeverity } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { parseLinkId } from '@hanzo/view-resources'
-  import { Analytics } from '@hanzo/analytics'
-  import workbench, { Application } from '@hanzo/workbench'
-  import { getResource } from '@hanzo/platform'
+  import { AccountRole, Class, Doc, getCurrentAccount, Ref } from '@hcengineering/core'
+  import notification, { BrowserNotification } from '@hcengineering/notification'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { addNotification, getCurrentResolvedLocation, Location, NotificationSeverity } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import { parseLinkId } from '@hcengineering/view-resources'
+  import { Analytics } from '@hcengineering/analytics'
+  import workbench, { Application } from '@hcengineering/workbench'
+  import { getResource } from '@hcengineering/platform'
 
   import { checkPermission, pushAllowed, subscribePush } from '../utils'
   import Notification from './Notification.svelte'
@@ -54,6 +54,7 @@
     )
   }
 
+  const account = getCurrentAccount()
   const client = getClient()
   const linkProviders = client.getModel().findAllSync(view.mixin.LinkIdProvider, {})
 
@@ -73,7 +74,6 @@
         return await parseLinkId(linkProviders, id, _class as Ref<Class<Doc>>)
       } catch (err: any) {
         Analytics.handleError(err)
-        console.error(err)
       }
     }
   }
@@ -85,14 +85,14 @@
     const sidebarObjectId = getSidebarObject()?._id
 
     if (_id && _id === sidebarObjectId) {
-      await client.remove(value)
+      await removeNotification(value)
       return
     }
 
     const locObjectId = await getObjectIdFromLocation(getCurrentResolvedLocation())
 
     if (_id && _id === locObjectId) {
-      await client.remove(value)
+      await removeNotification(value)
       return
     }
     addNotification(
@@ -103,7 +103,13 @@
       NotificationSeverity.Info,
       `notification-${value.objectId}`
     )
-    await client.remove(value)
+    await removeNotification(value)
+  }
+
+  async function removeNotification (value: BrowserNotification): Promise<void> {
+    if (account.role !== AccountRole.ReadOnlyGuest) {
+      await client.remove(value)
+    }
   }
 
   const query = createQuery()

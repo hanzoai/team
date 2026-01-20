@@ -22,9 +22,10 @@ import {
   TypeMarkup,
   TypeRef,
   TypeString,
-  UX
-} from '@hanzo/model'
-import core, { TClass, TDoc, TSpace } from '@hanzo/model-core'
+  UX,
+  Hidden
+} from '@hcengineering/model'
+import core, { TClass, TDoc, TSpace } from '@hcengineering/model-core'
 import type {
   Channel,
   ChatMessage,
@@ -42,6 +43,7 @@ import {
   DOMAIN_MODEL,
   IndexKind,
   type Ref,
+  type Space,
   type Timestamp
 } from '@hanzo/core'
 import contact, { type ChannelProvider as SocialChannelProvider, type Person } from '@hanzo/contact'
@@ -59,6 +61,15 @@ export const DOMAIN_CHUNTER = 'chunter' as Domain
 export class TChunterSpace extends TSpace implements ChunterSpace {
   @Prop(PropCollection(activity.class.ActivityMessage), chunter.string.Messages)
     messages?: number
+
+  @Hidden()
+    __migratedToCard?: {
+    card: Ref<Doc>
+    space: Ref<Space>
+  }
+
+  @Hidden()
+    __migratedUntil?: Timestamp
 }
 
 @Model(chunter.class.Channel, chunter.class.ChunterSpace)

@@ -13,21 +13,38 @@
 // limitations under the License.
 //
 
-import activity, { DocUpdateMessage } from '@hanzo/activity'
-import { Analytics } from '@hanzo/analytics'
-import { loadCollabJson, loadCollabYdoc, saveCollabJson, saveCollabYdoc } from '@hanzo/collaboration'
-import { decodeDocumentId } from '@hanzo/collaborator-client'
-import core, { AttachedData, MeasureContext, Ref, Space, TxOperations } from '@hanzo/core'
-import { StorageAdapter } from '@hanzo/server-core'
-import { areEqualMarkups } from '@hanzo/text'
-import { markupToYDoc } from '@hanzo/text-ydoc'
+import activity, { DocUpdateMessage } from '@hcengineering/activity'
+import { Analytics } from '@hcengineering/analytics'
+import { loadCollabJson, loadCollabYdoc, saveCollabJson, saveCollabYdoc } from '@hcengineering/collaboration'
+import { decodeDocumentId } from '@hcengineering/collaborator-client'
+import { CreateMessageEvent, MessageEventType } from '@hcengineering/communication-sdk-types'
+import { ActivityCollaborativeChange, ActivityUpdateType, MessageType } from '@hcengineering/communication-types'
+import core, { AttachedData, Doc, MeasureContext, OperationDomain, Ref, Space, TxOperations } from '@hcengineering/core'
+import { StorageAdapter } from '@hcengineering/server-core'
+import { areEqualMarkups } from '@hcengineering/text'
+import { markupToYDoc } from '@hcengineering/text-ydoc'
 import { Doc as YDoc } from 'yjs'
 
 import { Context } from '../context'
 import { CollabStorageAdapter } from './adapter'
 
+const activityMarkupLimit = 100 * 1024 // 100kb
+
+export interface PlatformStorageAdapterOptions {
+  retryCount?: number
+  retryInterval?: number
+}
 export class PlatformStorageAdapter implements CollabStorageAdapter {
-  constructor (private readonly storage: StorageAdapter) {}
+  private readonly retryCount: number
+  private readonly retryInterval: number
+
+  constructor (
+    private readonly storage: StorageAdapter,
+    options: PlatformStorageAdapterOptions = {}
+  ) {
+    this.retryCount = options.retryCount ?? 5
+    this.retryInterval = options.retryInterval ?? 50
+  }
 
   async loadDocument (ctx: MeasureContext, documentName: string, context: Context): Promise<YDoc | undefined> {
     const { content, wsIds } = context
@@ -37,13 +54,27 @@ export class PlatformStorageAdapter implements CollabStorageAdapter {
     try {
       ctx.info('load document content', { documentName })
 
-      const ydoc = await ctx.with('loadCollabYdoc', {}, (ctx) => {
-        return withRetry(ctx, 5, () => {
-          return loadCollabYdoc(ctx, this.storage, wsIds, documentId)
-        })
-      })
+      const ydoc = await ctx.with(
+        'loadCollabYdoc',
+        {},
+        (ctx) => {
+          return withRetry(
+            ctx,
+            this.retryCount,
+            () => {
+              return loadCollabYdoc(ctx, this.storage, wsIds, documentId)
+            },
+            this.retryInterval
+          )
+        },
+        {
+          workspace: context.wsIds.uuid,
+          documentName
+        }
+      )
 
       if (ydoc !== undefined) {
+        ctx.info('loaded from storage', { documentName })
         return ydoc
       }
     } catch (err: any) {
@@ -57,11 +88,19 @@ export class PlatformStorageAdapter implements CollabStorageAdapter {
       try {
         ctx.info('load document initial content', { documentName, content })
 
-        const markup = await ctx.with('loadCollabJson', {}, (ctx) => {
-          return withRetry(ctx, 5, () => {
-            return loadCollabJson(ctx, this.storage, wsIds, content)
-          })
-        })
+        const markup = await ctx.with(
+          'loadCollabJson',
+          {},
+          (ctx) => {
+            return withRetry(ctx, 5, () => {
+              return loadCollabJson(ctx, this.storage, wsIds, content)
+            })
+          },
+          {
+            workspace: context.wsIds.uuid,
+            documentName
+          }
+        )
         if (markup !== undefined) {
           const ydoc = markupToYDoc(markup, documentId.objectAttr)
 
@@ -69,6 +108,7 @@ export class PlatformStorageAdapter implements CollabStorageAdapter {
           // it to ensure the next time we load it from the ydoc document
           await saveCollabYdoc(ctx, this.storage, wsIds, documentId, ydoc)
 
+          ctx.info('loaded from initial content', { documentName, content })
           return ydoc
         }
       } catch (err: any) {
@@ -97,11 +137,24 @@ export class PlatformStorageAdapter implements CollabStorageAdapter {
 
     try {
       ctx.info('save document ydoc content', { documentName })
-      await ctx.with('saveCollabYdoc', {}, (ctx) => {
-        return withRetry(ctx, 5, () => {
-          return saveCollabYdoc(ctx, this.storage, wsIds, documentId, document)
-        })
-      })
+      await ctx.with(
+        'saveCollabYdoc',
+        {},
+        (ctx) => {
+          return withRetry(
+            ctx,
+            this.retryCount,
+            () => {
+              return saveCollabYdoc(ctx, this.storage, wsIds, documentId, document)
+            },
+            this.retryInterval
+          )
+        },
+        {
+          workspace: context.wsIds.uuid,
+          documentName
+        }
+      )
     } catch (err: any) {
       Analytics.handleError(err)
       ctx.error('failed to save document ydoc content', { documentName, error: err })
@@ -121,9 +174,17 @@ export class PlatformStorageAdapter implements CollabStorageAdapter {
 
     try {
       ctx.info('save document content to platform', { documentName })
-      return await ctx.with('save-to-platform', {}, (ctx) => {
-        return this.saveDocumentToPlatform(ctx, client, context, documentName, getMarkup)
-      })
+      return await ctx.with(
+        'save-to-platform',
+        {},
+        (ctx) => {
+          return this.saveDocumentToPlatform(ctx, client, context, documentName, getMarkup)
+        },
+        {
+          workspace: context.wsIds.uuid,
+          documentName
+        }
+      )
     } finally {
       await client.close()
     }
@@ -154,8 +215,8 @@ export class PlatformStorageAdapter implements CollabStorageAdapter {
       curr: getMarkup.curr()
     }
 
-    const currMarkup = markup.curr[objectAttr]
-    const prevMarkup = markup.prev[objectAttr]
+    const currMarkup = markup.curr[objectAttr] ?? ''
+    const prevMarkup = markup.prev[objectAttr] ?? ''
 
     if (areEqualMarkups(currMarkup, prevMarkup)) {
       ctx.info('markup not changed, skip platform update', { documentName })
@@ -177,43 +238,99 @@ export class PlatformStorageAdapter implements CollabStorageAdapter {
       return
     }
 
-    const blobId = await ctx.with('saveCollabJson', {}, (ctx) => {
-      return withRetry(ctx, 5, () => {
-        return saveCollabJson(ctx, this.storage, wsIds, documentId, markup.curr[objectAttr])
-      })
-    })
+    const blobId = await ctx.with(
+      'saveCollabJson',
+      {},
+      (ctx) => {
+        return withRetry(
+          ctx,
+          this.retryCount,
+          () => {
+            return saveCollabJson(ctx, this.storage, wsIds, documentId, markup.curr[objectAttr])
+          },
+          this.retryInterval
+        )
+      },
+      {
+        workspace: context.wsIds.uuid,
+        documentName
+      }
+    )
 
     await ctx.with('update', {}, () => client.diffUpdate(current, { [objectAttr]: blobId }))
 
-    await ctx.with('activity', {}, () => {
-      const space = hierarchy.isDerived(current._class, core.class.Space) ? (current._id as Ref<Space>) : current.space
+    const prevValue = prevMarkup.length > activityMarkupLimit ? activity.string.ValueTooLarge : prevMarkup
+    const currValue = currMarkup.length > activityMarkupLimit ? activity.string.ValueTooLarge : currMarkup
 
-      const data: AttachedData<DocUpdateMessage> = {
-        objectId,
-        objectClass,
-        action: 'update',
-        attributeUpdates: {
-          attrKey: objectAttr,
-          attrClass: core.class.TypeMarkup,
-          prevValue: prevMarkup,
-          set: [currMarkup],
-          added: [],
-          removed: [],
-          isMixin: hierarchy.isMixin(objectClass)
+    await ctx.with(
+      'activity',
+      {},
+      async () => {
+        const space = hierarchy.isDerived(current._class, core.class.Space)
+          ? (current._id as Ref<Space>)
+          : current.space
+        await sendEvent(client, objectAttr, prevValue, currValue, current)
+        const data: AttachedData<DocUpdateMessage> = {
+          objectId,
+          objectClass,
+          action: 'update',
+          attributeUpdates: {
+            attrKey: objectAttr,
+            attrClass: core.class.TypeMarkup,
+            prevValue,
+            set: [currValue],
+            added: [],
+            removed: [],
+            isMixin: hierarchy.isMixin(objectClass)
+          }
         }
+        return await client.addCollection(
+          activity.class.DocUpdateMessage,
+          space,
+          current._id,
+          current._class,
+          'docUpdateMessages',
+          data
+        )
+      },
+      {
+        workspace: context.wsIds.uuid,
+        documentName
       }
-      return client.addCollection(
-        activity.class.DocUpdateMessage,
-        space,
-        current._id,
-        current._class,
-        'docUpdateMessages',
-        data
-      )
-    })
+    )
 
     return markup.curr
   }
+}
+
+async function sendEvent (
+  client: Omit<TxOperations, 'close'>,
+  attrKey: string,
+  prevValue: string,
+  value: string,
+  doc: Doc
+): Promise<void> {
+  const eventData: ActivityCollaborativeChange = {
+    type: ActivityUpdateType.CollaborativeChange,
+    attrKey,
+    value,
+    prevValue
+  }
+  const event: CreateMessageEvent = {
+    type: MessageEventType.CreateMessage,
+    messageType: MessageType.Activity,
+    cardId: doc._id,
+    cardType: doc._class,
+    extra: {
+      action: 'update',
+      update: eventData
+    },
+    content: '',
+    socialId: client.txFactory.account,
+    date: new Date()
+  }
+
+  await client.domainRequest('communication' as OperationDomain, { event })
 }
 
 async function withRetry<T> (

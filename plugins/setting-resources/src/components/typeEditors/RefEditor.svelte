@@ -13,21 +13,24 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hanzo/core'
-  import { TypeRef } from '@hanzo/model'
-  import { getClient } from '@hanzo/presentation'
-  import { DropdownLabelsIntl, Label } from '@hanzo/ui'
-  import view from '@hanzo/view-resources/src/plugin'
-  import card from '@hanzo/card'
+  import core, { AnyAttribute, Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hcengineering/core'
+  import { TypeRef } from '@hcengineering/model'
+  import { getClient } from '@hcengineering/presentation'
+  import { Component, DropdownLabelsIntl, Label } from '@hcengineering/ui'
+  import view from '@hcengineering/view-resources/src/plugin'
+  import card from '@hcengineering/card'
   import { createEventDispatcher } from 'svelte'
   import type { ButtonKind, ButtonSize, DropdownIntlItem } from '@hanzo/ui'
   import contactPlugin from '@hanzo/contact'
 
   export let type: RefTo<Doc> | undefined
+  export let attribute: AnyAttribute | undefined
+  export let attributeOf: Ref<Class<Doc>>
   export let editable: boolean = true
   export let kind: ButtonKind = 'regular'
   export let size: ButtonSize = 'medium'
   export let isCard: boolean = false
+  export let width: string | undefined = undefined
 
   const _classes = isCard ? [card.class.Card, contactPlugin.class.Contact] : [core.class.Doc]
   const exclude = !isCard ? [card.class.Card] : []
@@ -40,12 +43,7 @@
 
   function fillClasses (classes: Ref<Class<Doc>>[], exclude: Ref<Class<Doc>>[]): DropdownIntlItem[] {
     const res: DropdownIntlItem[] = []
-    const descendants = new Set(
-      classes
-        .map((p) => hierarchy.getDescendants(p))
-        .reduce((a, b) => a.concat(b))
-        .filter((p) => p !== card.class.Card)
-    )
+    const descendants = new Set(classes.map((p) => hierarchy.getDescendants(p)).reduce((a, b) => a.concat(b)))
     // exclude removed card types
     const removedTypes = client.getModel().findAllSync(card.class.MasterTag, { removed: true })
     const excluded = new Set(removedTypes.map((p) => p._id))
@@ -72,15 +70,26 @@
   $: selected = classes.find((p) => p.id === refClass)
 
   $: refClass !== undefined && dispatch('change', { type: TypeRef(refClass) })
+
+  $: editor = refClass !== undefined && hierarchy.classHierarchyMixin(refClass, view.mixin.TypeEditor)?.editor
 </script>
 
-<div class="hanzoaiModal-content__settingsSet-line">
-  <span class="label">
-    <Label label={core.string.Class} />
-  </span>
-  {#if editable}
-    <DropdownLabelsIntl label={core.string.Class} items={classes} width="8rem" bind:selected={refClass} {kind} {size} />
-  {:else if selected}
-    <Label label={selected.label} />
-  {/if}
-</div>
+<span class="label">
+  <Label label={core.string.Class} />
+</span>
+{#if editable}
+  <DropdownLabelsIntl
+    label={core.string.Class}
+    items={classes}
+    {width}
+    bind:selected={refClass}
+    {kind}
+    {size}
+    withSearch
+  />
+{:else if selected}
+  <Label label={selected.label} />
+{/if}
+{#if editor}
+  <Component is={editor} props={{ attribute, type, editable, attributeOf, isCard }} on:change />
+{/if}

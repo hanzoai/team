@@ -13,20 +13,23 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, formatName } from '@hanzo/contact'
-  import { EmployeePresenter } from '@hanzo/contact-resources'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Breadcrumb, DropdownIntlItem, DropdownLabelsIntl, SearchInput, Header, Scroller } from '@hanzo/ui'
+  import contact, { Employee, formatName } from '@hcengineering/contact'
+  import { EmployeePresenter } from '@hcengineering/contact-resources'
+  import { Account, AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+  import { createQuery } from '@hcengineering/presentation'
+  import { Breadcrumb, DropdownIntlItem, DropdownLabelsIntl, Header, Scroller, SearchInput } from '@hcengineering/ui'
   import { onMount } from 'svelte'
 
-  import { getAccountClient } from '../utils'
   import setting from '../plugin'
+  import { getAccountClient } from '../utils'
+  import { Analytics } from '@hcengineering/analytics'
 
   const query = createQuery()
   const currentAccount = getCurrentAccount()
 
   const items: DropdownIntlItem[] = [
+    { id: AccountRole.ReadOnlyGuest, label: setting.string.ReadonlyGuest },
+    { id: AccountRole.Guest, label: setting.string.Guest },
     { id: AccountRole.User, label: setting.string.User },
     { id: AccountRole.Maintainer, label: setting.string.Maintainer },
     { id: AccountRole.Owner, label: setting.string.Owner }
@@ -59,8 +62,8 @@
     try {
       await accountClient.updateWorkspaceRole(personUuid, value)
       workspaceMembers[personUuid] = value
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      Analytics.handleError(e)
     }
   }
   let search = ''
@@ -68,6 +71,10 @@
   $: ownersCount = employees.filter(
     (e) => e.personUuid != null && workspaceMembers[e.personUuid] === AccountRole.Owner
   ).length
+
+  function getItems (role: AccountRole, currentAccount: Account): DropdownIntlItem[] {
+    return items.filter((i) => i.id === role || hasAccountRole(currentAccount, i.id as AccountRole))
+  }
 </script>
 
 <div class="hanzoaiComponent">
@@ -90,10 +97,12 @@
               </div>
               <DropdownLabelsIntl
                 label={setting.string.Role}
-                disabled={!hasAccountRole(currentAccount, role) || (role === AccountRole.Owner && ownersCount === 1)}
+                disabled={!hasAccountRole(currentAccount, role) ||
+                  (role === AccountRole.Owner && ownersCount === 1) ||
+                  currentAccount.uuid === personUuid}
                 kind={'primary'}
                 size={'medium'}
-                {items}
+                items={getItems(role, currentAccount)}
                 selected={role}
                 on:selected={(e) => {
                   void change(personUuid, e.detail)

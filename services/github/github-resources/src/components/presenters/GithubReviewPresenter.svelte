@@ -6,13 +6,14 @@
   import { WithLookup } from '@hanzo/core'
   import { GithubPullRequestReviewState, GithubReview } from '@hanzo/github'
 
-  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hanzo/activity-resources'
-  import { personByPersonIdStore } from '@hanzo/contact-resources'
-  import { IntlString } from '@hanzo/platform'
-  import { MessageViewer } from '@hanzo/presentation'
-  import { isEmptyMarkup } from '@hanzo/text'
-  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzo/ui'
+  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hcengineering/activity-resources'
+  import { getPersonByPersonIdCb } from '@hcengineering/contact-resources'
+  import { IntlString } from '@hcengineering/platform'
+  import { MessageViewer } from '@hcengineering/presentation'
+  import { isEmptyMarkup } from '@hcengineering/text'
+  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hcengineering/ui'
   import github from '../../plugin'
+  import { Person } from '@hcengineering/contact'
 
   export let value: WithLookup<GithubReview>
   export let showNotify: boolean = false
@@ -22,7 +23,15 @@
   export let embedded: boolean = false
   export let onClick: (() => void) | undefined = undefined
 
-  $: person = $personByPersonIdStore.get(value?.createdBy ?? value?.modifiedBy)
+  $: personId = value?.createdBy ?? value?.modifiedBy
+  let person: Person | undefined
+  $: if (personId !== undefined) {
+    getPersonByPersonIdCb(personId, (p) => {
+      person = p ?? undefined
+    })
+  } else {
+    person = undefined
+  }
 
   function getCommentFromState (value?: GithubPullRequestReviewState): {
     label: IntlString

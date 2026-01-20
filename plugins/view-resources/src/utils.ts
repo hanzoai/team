@@ -24,9 +24,11 @@ import core, {
   TxProcessor,
   getCurrentAccount,
   getObjectValue,
-  type PersonId,
   type AggregateValue,
   type AnyAttribute,
+  type ApplyOperations,
+  type Association,
+  type AssociationQuery,
   type AttachedDoc,
   type CategoryType,
   type Class,
@@ -39,6 +41,7 @@ import core, {
   type Lookup,
   type Mixin,
   type Obj,
+  type PersonId,
   type Ref,
   type RefTo,
   type ReverseLookup,
@@ -50,14 +53,15 @@ import core, {
   type TxMixin,
   type TxOperations,
   type TxUpdateDoc,
+  type Type,
   type TypeAny,
   type TypedSpace,
   type WithLookup
-} from '@hanzo/core'
-import { type Restrictions } from '@hanzo/guest'
-import type { Asset, IntlString } from '@hanzo/platform'
-import { getResource, translate } from '@hanzo/platform'
-import {
+} from '@hcengineering/core'
+import { type Restrictions } from '@hcengineering/guest'
+import type { Asset, IntlString } from '@hcengineering/platform'
+import { getEmbeddedLabel, getMetadata, getResource, translate } from '@hcengineering/platform'
+import presentation, {
   createQuery,
   getAttributePresenterClass,
   getClient,
@@ -97,8 +101,8 @@ import view, {
 } from '@hanzo/view'
 
 import contact, {
-  getCurrentEmployee,
   getAllSocialStringsByPersonRef,
+  getCurrentEmployee,
   getName,
   type Contact
 } from '@hanzo/contact'
@@ -279,34 +283,57 @@ export async function getObjectPreview (client: Client, _class: Ref<Class<Obj>>)
   return presenterMixin?.presenter
 }
 
-export async function getAttributePresenter (
-  client: Client,
-  _class: Ref<Class<Obj>>,
-  key: string,
-  preserveKey: BuildModelKey,
-  mixinClass?: Ref<Mixin<CollectionPresenter>>,
-  _category?: AttributeCategory
-): Promise<AttributeModel> {
-  const actualMixinClass = mixinClass ?? view.mixin.AttributePresenter
+export function getAttrTypePresenter (hierarchy: Hierarchy, type: Type<any>): AnyComponent | undefined {
+  const actualMixinClass = view.mixin.AttributePresenter
 
-  const hierarchy = client.getHierarchy()
-  const attribute = hierarchy.getAttribute(_class, key)
-  let { attrClass, category } = getAttributePresenterClass(hierarchy, attribute)
-  if (_category !== undefined) {
-    category = _category
-  }
-
-  let overridedPresenter = await client
-    .getModel()
-    .findOne(view.class.AttrPresenter, { objectClass: _class, attribute: attribute._id, category })
-  if (overridedPresenter === undefined) {
-    overridedPresenter = await client
-      .getModel()
-      .findOne(view.class.AttrPresenter, { attribute: attribute._id, category })
-  }
+  const { attrClass, category } = getAttributePresenterClass(hierarchy, type)
 
   const isCollectionAttr = category === 'collection'
   const mixin = isCollectionAttr ? view.mixin.CollectionPresenter : actualMixinClass
+
+  const presenterMixin: AttributePresenter | CollectionPresenter | undefined = hierarchy.classHierarchyMixin(
+    attrClass,
+    mixin
+  )
+
+  const attributePresenter = presenterMixin as AttributePresenter
+  if (category === 'array' && attributePresenter.arrayPresenter !== undefined) {
+    return attributePresenter.arrayPresenter
+  } else if (presenterMixin?.presenter !== undefined) {
+    return presenterMixin.presenter
+  } else if (attrClass === core.class.TypeAny) {
+    const typeAny = type as TypeAny
+    return typeAny.presenter
+  }
+}
+
+export function findAttributePresenter (
+  client: Client,
+  _class: Ref<Class<Obj>>,
+  key: string,
+  mixinClass: Ref<Mixin<CollectionPresenter>> = view.mixin.CollectionPresenter,
+  _category?: AttributeCategory
+): AnyComponent | undefined {
+  const model = client.getModel()
+  const hierarchy = client.getHierarchy()
+
+  const attribute = hierarchy.findAttribute(_class, key)
+  if (attribute === undefined) return
+  const { attrClass, category } = getAttributePresenterClass(hierarchy, attribute.type)
+  let overridedPresenter = model.findAllSync(view.class.AttrPresenter, {
+    objectClass: _class,
+    attribute: attribute._id,
+    category
+  })[0]
+  if (overridedPresenter === undefined) {
+    overridedPresenter = model.findAllSync(view.class.AttrPresenter, { attribute: attribute._id, category })[0]
+  }
+  if (overridedPresenter !== undefined) {
+    return overridedPresenter.component
+  }
+
+  const isCollectionAttr = category === 'collection'
+  const mixin = isCollectionAttr ? view.mixin.CollectionPresenter : mixinClass
 
   let presenterMixin: AttributePresenter | CollectionPresenter | undefined = hierarchy.classHierarchyMixin(
     attrClass,
@@ -317,26 +344,49 @@ export async function getAttributePresenter (
     presenterMixin = hierarchy.classHierarchyMixin(attrClass, view.mixin.AttributePresenter)
   }
 
-  let presenter: AnySvelteComponent | undefined
+  const attributePresenter = presenterMixin as AttributePresenter
+  if (category === 'array' && attributePresenter.arrayPresenter !== undefined) {
+    return attributePresenter.arrayPresenter
+  } else if (presenterMixin?.presenter !== undefined) {
+    return presenterMixin.presenter
+  } else if (attrClass === core.class.TypeAny) {
+    const typeAny = attribute.type as TypeAny
+    return typeAny.presenter
+  }
+}
 
-  if (overridedPresenter !== undefined) {
-    presenter = await getResource(overridedPresenter.component)
+export async function getAttributePresenter (
+  client: Client,
+  _class: Ref<Class<Obj>>,
+  key: string,
+  preserveKey: BuildModelKey,
+  mixinClass?: Ref<Mixin<CollectionPresenter>>,
+  _category?: AttributeCategory
+): Promise<AttributeModel> {
+  const actualMixinClass = mixinClass ?? view.mixin.AttributePresenter
+  const hierarchy = client.getHierarchy()
+  const attribute = hierarchy.getAttribute(_class, key)
+  let { attrClass, category } = getAttributePresenterClass(hierarchy, attribute.type)
+  if (_category !== undefined) {
+    category = _category
   }
 
-  if (presenter === undefined) {
-    const attributePresenter = presenterMixin as AttributePresenter
-    if (category === 'array' && attributePresenter.arrayPresenter !== undefined) {
-      presenter = await getResource(attributePresenter.arrayPresenter)
-    } else if (presenterMixin?.presenter !== undefined) {
-      presenter = await getResource(presenterMixin.presenter)
-    } else if (attrClass === core.class.TypeAny) {
-      const typeAny = attribute.type as TypeAny
-      presenter = await getResource(typeAny.presenter)
-    }
-  }
-
-  if (presenter === undefined) {
+  const presenterRef = findAttributePresenter(client, _class, key, actualMixinClass, category)
+  if (presenterRef === undefined) {
     throw new Error('attribute presenter not found for ' + JSON.stringify(preserveKey))
+  }
+
+  const isCollectionAttr = category === 'collection'
+
+  const mixin = isCollectionAttr ? view.mixin.CollectionPresenter : actualMixinClass
+
+  let presenterMixin: AttributePresenter | CollectionPresenter | undefined = hierarchy.classHierarchyMixin(
+    attrClass,
+    mixin
+  )
+
+  if (presenterMixin?.presenter === undefined && mixinClass != null && mixin === mixinClass) {
+    presenterMixin = hierarchy.classHierarchyMixin(attrClass, view.mixin.AttributePresenter)
   }
 
   const resultKey = preserveKey.sortingKey ?? preserveKey.key
@@ -351,7 +401,7 @@ export async function getAttributePresenter (
     sortingKey,
     _class: attrClass,
     label: preserveKey.label ?? attribute.shortLabel ?? attribute.label,
-    presenter,
+    presenter: await getResource(presenterRef),
     props: preserveKey.props,
     displayProps: preserveKey.displayProps,
     icon: presenterMixin?.icon,
@@ -372,7 +422,7 @@ export function hasAttributePresenter (
   const hierarchy = client.getHierarchy()
   const attribute = hierarchy.getAttribute(_class, key)
 
-  const presenterClass = getAttributePresenterClass(hierarchy, attribute)
+  const presenterClass = getAttributePresenterClass(hierarchy, attribute.type)
   const isCollectionAttr = presenterClass.category === 'collection'
   const mixin = isCollectionAttr ? view.mixin.CollectionPresenter : actualMixinClass
 
@@ -457,6 +507,49 @@ function getKeyLookup<T extends Doc> (
   return lookup
 }
 
+export function buildConfigAssociation (config: Array<BuildModelKey | string>): AssociationQuery[] | undefined {
+  const record: Record<string, any> = {}
+  for (const key of config) {
+    const k = typeof key === 'string' ? key : key.key
+    if (k.startsWith('$associations')) {
+      buildaAssociation(k, record)
+    }
+  }
+  return convertAssociationsRecord(record)
+}
+
+function buildaAssociation (stringKey: string, record: Record<string, any>): void {
+  const parts = stringKey.split('$associations.').filter((it) => it.length > 0)
+  let curr = record
+  for (let part of parts) {
+    if (part.endsWith('.')) {
+      part = part.slice(0, -1)
+    }
+    if (curr[part] === undefined) {
+      curr[part] = {}
+    }
+    curr = curr[part]
+  }
+}
+
+function convertAssociationsRecord (record: Record<string, any>): AssociationQuery[] {
+  const res: AssociationQuery[] = []
+  for (const key of Object.keys(record)) {
+    const segments = key.split('_')
+    if (segments?.length >= 2) {
+      const nested = Object.keys(record[key]).length > 0 ? convertAssociationsRecord(record[key]) : undefined
+      if (nested !== undefined) {
+        const r: AssociationQuery = [segments[0] as Ref<Association>, segments[1] === 'a' ? -1 : 1, nested]
+        res.push(r)
+      } else {
+        const base: AssociationQuery = [segments[0] as Ref<Association>, segments[1] === 'a' ? -1 : 1]
+        res.push(base)
+      }
+    }
+  }
+  return res
+}
+
 export function buildConfigLookup<T extends Doc> (
   hierarchy: Hierarchy,
   _class: Ref<Class<T>>,
@@ -492,6 +585,9 @@ export async function buildModel (options: BuildModelOptions): Promise<Attribute
     .map(async (key) => {
       try {
         // Check if it is a mixin attribute configuration
+        if (key.key.startsWith('$associations')) {
+          return await getRelationPresenter(options.client, key)
+        }
         const pos = key.key.lastIndexOf('.')
         if (pos !== -1) {
           const mixinName = key.key.substring(0, pos) as Ref<Class<Doc>>
@@ -527,7 +623,45 @@ export async function buildModel (options: BuildModelOptions): Promise<Attribute
         return errorPresenter
       }
     })
-  return (await Promise.all(model)).filter((a) => a !== undefined) as AttributeModel[]
+  return (await Promise.all(model)).filter((a) => a !== undefined)
+}
+
+async function getRelationPresenter (client: Client, key: BuildModelKey): Promise<AttributeModel> {
+  const parts = key.key.split('.')
+  if (parts.length < 2) {
+    throw new Error('invalid relation key ' + key.key)
+  }
+  const fragments = parts[parts.length - 1].split('_')
+  const assocId = fragments[0] as Ref<Association>
+  const assoc = client.getModel().findObject(assocId)
+  if (assoc === undefined) {
+    throw new Error('association not found for ' + assocId)
+  }
+  const _class = fragments[1] === 'a' ? assoc.classA : assoc.classB
+  const name = fragments[1] === 'a' ? assoc.nameA : assoc.nameB
+
+  const hierarchy = client.getHierarchy()
+
+  const presenterMixin = hierarchy.classHierarchyMixin(_class, view.mixin.CollectionPresenter)
+  if (presenterMixin?.presenter === undefined) {
+    console.error(
+      `object presenter not found for class=${_class}, mixin=${view.mixin.ObjectPresenter}, preserve key ${JSON.stringify(key)}`
+    )
+    throw new Error('presenter not found for ' + _class)
+  }
+  const presenter = await getResource(presenterMixin.presenter)
+
+  return {
+    key: key.key,
+    sortingKey: '',
+    _class,
+    label: getEmbeddedLabel(name),
+    presenter,
+    props: key.props,
+    displayProps: key.displayProps,
+    collectionAttr: false,
+    isLookup: true
+  }
 }
 
 export async function deleteObject (client: TxOperations, object: Doc): Promise<void> {
@@ -720,7 +854,7 @@ export function categorizeFields (
   }
 
   for (const key of keys) {
-    const cl = getAttributePresenterClass(hierarchy, key.attr)
+    const cl = getAttributePresenterClass(hierarchy, key.attr.type)
     if (useAsCollection.includes(key.key)) {
       result.collections.push({ key, category: cl.category })
     } else if (useAsAttribute.includes(key.key)) {
@@ -728,7 +862,7 @@ export function categorizeFields (
     } else if (cl.category === 'collection' || cl.category === 'inplace') {
       result.collections.push({ key, category: cl.category })
     } else if (cl.category === 'array') {
-      const attrClass = getAttributePresenterClass(hierarchy, key.attr)
+      const attrClass = getAttributePresenterClass(hierarchy, key.attr.type)
       const clazz = hierarchy.getClass(attrClass.attrClass)
       const mix = hierarchy.as(clazz, view.mixin.ArrayEditor)
       if (mix.editor !== undefined && mix.inlineEditor === undefined) {
@@ -895,7 +1029,7 @@ export async function groupByCategory (
   if (attr === undefined) return categories
   if (key === noCategory) return [undefined]
 
-  const attrClass = getAttributePresenterClass(h, attr).attrClass
+  const attrClass = getAttributePresenterClass(h, attr.type).attrClass
   const mixin = h.classHierarchyMixin(attrClass, view.mixin.Groupping)
   let existingCategories: any[] = []
 
@@ -939,11 +1073,31 @@ export async function getCategories (
  */
 export function getCategorySpaces (categories: CategoryType[]): Array<Ref<Space>> {
   return Array.from(
-    (categories.filter((it) => typeof it === 'object') as AggregateValue[]).reduce<Set<Ref<Space>>>((arr, val) => {
+    categories
+      .filter((it) => typeof it === 'object')
+      .reduce<Set<Ref<Space>>>((arr, val) => {
       val.values.forEach((it) => arr.add(it.space))
       return arr
     }, new Set())
   )
+}
+
+/**
+ * Get value from a document for a given attribute model
+ * @public
+ */
+export function getAttributeValue (attribute: AttributeModel, object: Doc, hierarchy: Hierarchy): any {
+  const assoc = '$associations'
+  if (attribute.castRequest !== undefined && attribute.castRequest !== null) {
+    return getObjectValue(
+      attribute.key.substring(attribute.castRequest.length + 1),
+      hierarchy.as(object, attribute.castRequest)
+    )
+  }
+  if (attribute.key.startsWith(assoc)) {
+    return object
+  }
+  return getObjectValue(attribute.key, object)
 }
 
 export function concatCategories (arr1: CategoryType[], arr2: CategoryType[]): CategoryType[] {
@@ -999,7 +1153,19 @@ export function getKeyLabel<T extends Doc> (
   key: string,
   lookup: Lookup<T> | undefined
 ): IntlString {
-  if (key.startsWith('$lookup') && lookup !== undefined) {
+  if (key.startsWith('$relation')) {
+    // Handle association: $relation.[associationId]
+    const parts = key.split('.')
+    if (parts.length === 3) {
+      const associationId = parts[1] as Ref<Association>
+      const association = client.getModel().findObject(associationId)
+      if (association !== undefined) {
+        const name = parts[2] === 'A' ? association.nameA : association.nameB
+        return getEmbeddedLabel(name)
+      }
+    }
+    return key as IntlString
+  } else if (key.startsWith('$lookup') && lookup !== undefined) {
     const lookupClass = getLookupClass(key, lookup, _class)
     const lookupProperty = getLookupProperty(key)
     const lookupKey = { key: lookupProperty[0] }
@@ -1068,7 +1234,7 @@ export function calcSørensenDiceCoefficient (a: string, b: string): number {
  * @public
  */
 export async function moveToSpace (
-  client: TxOperations,
+  client: ApplyOperations,
   doc: Doc,
   space: Ref<Space>,
   extra?: DocumentUpdate<any>
@@ -1078,7 +1244,7 @@ export async function moveToSpace (
   for (const [name, attribute] of attributes) {
     if (hierarchy.isDerived(attribute.type._class, core.class.Collection)) {
       const collection = attribute.type as Collection<AttachedDoc>
-      const allAttached = await client.findAll(collection.of, { attachedTo: doc._id })
+      const allAttached = await client.findAll(collection.of, { attachedTo: doc._id, space: doc.space })
       for (const attached of allAttached) {
         // Do not use extra for childs.
         await moveToSpace(client, attached, space).catch((err: any) => {
@@ -1116,6 +1282,20 @@ export async function getObjectLinkFragment (
   props: Record<string, any> = {},
   component: AnyComponent = view.component.EditDoc
 ): Promise<Location> {
+  const customProvider = hierarchy.classHierarchyMixin(
+    Hierarchy.mixinOrClass(object),
+    view.mixin.CustomObjectLinkProvider,
+    (m) => hasResource(m.encode) ?? false
+  )
+  if (customProvider !== undefined) {
+    const matchFn = await getResource(customProvider.match)
+    if (matchFn(object)) {
+      const encodeFn = await getResource(customProvider.encode)
+
+      return encodeFn(object)
+    }
+  }
+
   const provider = hierarchy.classHierarchyMixin(
     Hierarchy.mixinOrClass(object),
     view.mixin.LinkProvider,
@@ -1163,6 +1343,36 @@ export async function openDoc (hierarchy: Hierarchy, object: Doc): Promise<void>
   const comp = panelComponent?.component ?? view.component.EditDoc
   const loc = await getObjectLinkFragment(hierarchy, object, {}, comp)
   navigate(loc)
+}
+
+export async function openDocFromRef<T extends Doc = Doc> (_class: Ref<Class<T>>, _id: Ref<T>): Promise<boolean> {
+  const client = getClient()
+  const doc = await client.findOne<Doc>(_class, { _id })
+  if (doc?._id !== undefined) {
+    await openDoc(client.getHierarchy(), doc)
+    return true
+  }
+  return false
+}
+
+export async function getLink (doc?: Doc | Doc[]): Promise<string> {
+  doc = Array.isArray(doc) ? doc[0] : doc
+  if (doc === undefined) {
+    return ''
+  }
+
+  const client = getClient()
+  const hierarchy = client.getHierarchy()
+
+  const panelComponent = hierarchy.classHierarchyMixin(doc._class, view.mixin.ObjectPanel)
+  const comp = panelComponent?.component ?? view.component.EditDoc
+  const loc = await getObjectLinkFragment(hierarchy, doc, {}, comp)
+  const url = locationToUrl(loc)
+
+  const frontUrl = getMetadata(presentation.metadata.FrontUrl)
+  const protocolAndHost = frontUrl ?? `${window.location.protocol}//${window.location.host}`
+
+  return `${protocolAndHost}${url}`
 }
 
 /**
@@ -1441,7 +1651,7 @@ export async function getDocAttrsInfo (
 
   for (const k of collections) {
     if (allowedCollections.includes(k.key.key)) continue
-    const editor = await getAttrEditor(k.key, hierarchy)
+    const editor = getAttrEditor(k.key, hierarchy)
     if (editor === undefined) continue
     if (k.category === 'inplace') {
       inplaceAttributes.push(k.key.key)
@@ -1456,8 +1666,8 @@ export async function getDocAttrsInfo (
   }
 }
 
-async function getAttrEditor (key: KeyedAttribute, hierarchy: Hierarchy): Promise<AnyComponent | undefined> {
-  const attrClass = getAttributePresenterClass(hierarchy, key.attr)
+function getAttrEditor (key: KeyedAttribute, hierarchy: Hierarchy): AnyComponent | undefined {
+  const attrClass = getAttributePresenterClass(hierarchy, key.attr.type)
   const clazz = hierarchy.getClass(attrClass.attrClass)
   const mix = {
     array: view.mixin.ArrayEditor,
@@ -1475,6 +1685,7 @@ async function getAttrEditor (key: KeyedAttribute, hierarchy: Hierarchy): Promis
   }
 }
 
+export const allowGuestSignUpStore = writable<boolean>(false)
 export const accessDeniedStore = writable<boolean>(false)
 
 const spaceSpaceQuery = createQuery(true)
@@ -1526,7 +1737,7 @@ export async function parseLinkId<T extends Doc> (
 ): Promise<Ref<T>> {
   const hierarchy = getClient().getHierarchy()
   const provider =
-    providers.find(({ _id }) => id === _class) ?? providers.find(({ _id }) => hierarchy.isDerived(_class, _id))
+    providers.find(({ _id }) => _id === _class) ?? providers.find(({ _id }) => hierarchy.isDerived(_class, _id))
 
   if (provider === undefined) {
     return id as Ref<T>

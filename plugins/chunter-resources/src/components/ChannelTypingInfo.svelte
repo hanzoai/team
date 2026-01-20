@@ -13,64 +13,93 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { onMount } from 'svelte'
-  import chunter from '@hanzo/chunter'
-  import { getName, Person, getCurrentEmployee } from '@hanzo/contact'
-  import { personByIdStore } from '@hanzo/contact-resources'
-  import { IdMap } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
-  import { PresenceTyping } from '../types'
+  import chunter from '@hcengineering/chunter'
+  import { type Doc, type PersonId, getCurrentAccount } from '@hcengineering/core'
+  import { getName } from '@hcengineering/contact'
+  import { getPersonsByPersonIds } from '@hcengineering/contact-resources'
+  import { IntlString } from '@hcengineering/platform'
+  import { getClient } from '@hcengineering/presentation'
+  import { Label } from '@hcengineering/ui'
+  import { type TypingInfo, typing } from '@hcengineering/presence-resources'
 
-  export let typingInfo: PresenceTyping[] = []
+  export let object: Doc
 
-  const typingDelay = 2000
   const maxTypingPersons = 3
-  const me = getCurrentEmployee()
+  const acc = getCurrentAccount()
   const hierarchy = getClient().getHierarchy()
 
-  let typingPersonsLabel: string = ''
-  let typingPersonsCount = 0
-  let moreCount: number = 0
-
-  $: updateTypingPersons($personByIdStore, typingInfo)
-
-  function updateTypingPersons (personById: IdMap<Person>, typingInfo: PresenceTyping[]): void {
-    const now = Date.now()
-    const personIds = new Set(
-      typingInfo.filter((info) => info.person !== me && now - info.lastTyping < typingDelay).map((info) => info.person)
-    )
-    const names = Array.from(personIds)
-      .map((personId) => personById.get(personId))
-      .filter((person): person is Person => person !== undefined)
-      .map((person) => getName(hierarchy, person))
-      .sort((name1, name2) => name1.localeCompare(name2))
-
-    typingPersonsCount = names.length
-    typingPersonsLabel = names.slice(0, maxTypingPersons).join(', ')
-    moreCount = Math.max(names.length - maxTypingPersons, 0)
+  interface TypingGroup {
+    status: IntlString
+    names: string
+    count: number
+    moreCount: number
   }
 
-  onMount(() => {
-    const interval = setInterval(() => {
-      updateTypingPersons($personByIdStore, typingInfo)
-    }, typingDelay)
-    return () => {
-      clearInterval(interval)
+  let typingInfo = new Map<string, TypingInfo>()
+  let typingGroups: TypingGroup[] = []
+
+  $: void updateTypingPersons(typingInfo)
+
+  async function updateTypingPersons (typingInfo: Map<string, TypingInfo>): Promise<void> {
+    if (typingInfo.size === 0) {
+      typingGroups = []
+      return
     }
-  })
+
+    const groupedByStatus = new Map<IntlString, PersonId[]>()
+    for (const info of typingInfo.values()) {
+      const status = info.status ?? chunter.string.IsTyping
+      const existing = groupedByStatus.get(status) ?? []
+      existing.push(info.socialId)
+      groupedByStatus.set(status, existing)
+    }
+
+    const groups: TypingGroup[] = []
+
+    for (const [status, personIds] of groupedByStatus.entries()) {
+      const persons = await getPersonsByPersonIds(personIds)
+      const names = Array.from(persons.values())
+        .map((person) => getName(hierarchy, person))
+        .sort((name1, name2) => name1.localeCompare(name2))
+
+      if (names.length > 0) {
+        const displayNames = names.slice(0, maxTypingPersons).join(', ')
+        const moreCount = Math.max(names.length - maxTypingPersons, 0)
+
+        groups.push({
+          status,
+          names: displayNames,
+          count: names.length,
+          moreCount
+        })
+      }
+    }
+
+    groups.sort((a, b) => a.status.localeCompare(b.status))
+
+    typingGroups = groups
+  }
+
+  function handleTyping (typing: Map<string, TypingInfo>): void {
+    typingInfo = typing
+  }
 </script>
 
-<span class="root h-4 mt-1 mb-1 ml-0-5 overflow-label">
-  {#if typingPersonsLabel !== ''}
-    <span class="fs-bold">
-      {typingPersonsLabel}
-    </span>
-    {#if moreCount > 0}
-      <span class="ml-1"><Label label={chunter.string.AndMore} params={{ count: moreCount }} /></span>
+<span
+  class="root h-4 mt-1 mb-1 ml-0-5 overflow-label"
+  use:typing={{
+    socialId: acc.primarySocialId,
+    objectId: object._id,
+    onTyping: handleTyping
+  }}
+>
+  {#each typingGroups as group, index}
+    <span class="fs-bold" class:ml-1={index > 0}>{group.names}</span>
+    {#if group.moreCount > 0}
+      <span class="ml-1"><Label label={chunter.string.AndMore} params={{ count: group.moreCount }} /></span>
     {/if}
-    <span class="ml-1"><Label label={chunter.string.IsTyping} params={{ count: typingPersonsCount }} /></span>
-  {/if}
+    <span class="ml-1"><Label label={group.status} params={{ count: group.count }} /></span>
+  {/each}
 </span>
 
 <style>

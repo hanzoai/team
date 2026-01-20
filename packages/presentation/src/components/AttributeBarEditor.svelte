@@ -14,12 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref } from '@hanzo/core'
-  import type { AnySvelteComponent, ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { Icon, Label, tooltip } from '@hanzo/ui'
+  import { checkForbiddenPermission, type Class, type Doc, type Ref } from '@hcengineering/core'
+  import type { AnySvelteComponent, ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { Icon, Label, tooltip } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
   import { getAttribute, KeyedAttribute, updateAttribute } from '../attributes'
   import { getAttributeEditor, getClient } from '../utils'
+  import view from '@hcengineering/view'
 
   export let key: KeyedAttribute | string
   export let object: Doc | Record<string, any>
@@ -66,7 +67,7 @@
 
   $: attribute = typeof key === 'string' ? hierarchy.getAttribute(_class, key) : key.attr
   $: attributeKey = typeof key === 'string' ? key : key.key
-  $: isReadonly = (attribute.readonly ?? false) || readonly
+  $: isReadonly = readonly || (attribute.readonly ?? false)
 
   $: icon = attribute?.icon ?? attribute?.type?.icon
 </script>
@@ -77,12 +78,12 @@
       class="labelOnPanel"
       use:tooltip={{
         component: Label,
-        props: { label: attribute.label }
+        props: { label: attribute.automationOnly ? view.string.AutomationOnly : attribute.label }
       }}
     >
-      {#if withIcon && icon}
+      {#if attribute.automationOnly || (icon && withIcon)}
         <div class="flex flex-gap-1 items-center">
-          <Icon {icon} size="small" />
+          <Icon icon={icon ?? view.icon.Setting} size="small" />
           <Label label={attribute.label} />
         </div>
       {:else}

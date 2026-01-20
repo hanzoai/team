@@ -16,41 +16,42 @@
 import { saveCollabJson } from '@hanzo/collaboration'
 import core, {
   buildSocialIdString,
+  configUserAccountUuid,
   coreId,
   DOMAIN_MODEL_TX,
   DOMAIN_SPACE,
   DOMAIN_STATUS,
   DOMAIN_TX,
   generateId,
+  groupByArray,
   makeCollabJsonId,
   makeCollabYdocId,
   makeDocCollabId,
-  MeasureMetricsContext,
   RateLimiter,
   SocialIdType,
-  type PersonId,
+  systemAccountUuid,
+  toIdMap,
+  TxProcessor,
+  type AccountUuid,
   type AnyAttribute,
+  type AttachedDoc,
   type Blob,
   type Class,
   type Doc,
   type Domain,
-  type MeasureContext,
+  type PersonId,
   type Ref,
+  type Role,
+  type SocialKey,
   type Space,
+  type SpaceType,
   type Status,
   type TxCreateDoc,
   type TxCUD,
-  type SpaceType,
+  type TxMixin,
   type TxUpdateDoc,
-  type Role,
-  toIdMap,
-  type TypedSpace,
-  TxProcessor,
-  type SocialKey,
-  type AccountUuid,
-  systemAccountUuid,
-  configUserAccountUuid
-} from '@hanzo/core'
+  type TypedSpace
+} from '@hcengineering/core'
 import {
   createDefaultSpace,
   tryMigrate,
@@ -166,7 +167,6 @@ async function migrateStatusTransactions (client: MigrationClient): Promise<void
 }
 
 async function migrateCollaborativeContentToStorage (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('migrate_content', {})
   const storageAdapter = client.storageAdapter
 
   const hierarchy = client.hierarchy
@@ -187,8 +187,8 @@ async function migrateCollaborativeContentToStorage (client: MigrationClient): P
 
     const iterator = await client.traverse(domain, query)
     try {
-      ctx.info('processing', { _class })
-      await processMigrateContentFor(ctx, domain, attributes, client, storageAdapter, iterator)
+      client.logger.log('processing', { _class })
+      await processMigrateContentFor(domain, attributes, client, storageAdapter, iterator)
     } finally {
       await iterator.close()
     }
@@ -196,7 +196,6 @@ async function migrateCollaborativeContentToStorage (client: MigrationClient): P
 }
 
 async function processMigrateContentFor (
-  ctx: MeasureContext,
   domain: Domain,
   attributes: AnyAttribute[],
   client: MigrationClient,
@@ -236,9 +235,14 @@ async function processMigrateContentFor (
           if (value != null && value.startsWith('{')) {
             try {
               const buffer = Buffer.from(value)
-              await storageAdapter.put(ctx, client.wsIds, blobId, buffer, 'application/json', buffer.length)
-            } catch (err) {
-              ctx.error('failed to process document', { _class: doc._class, _id: doc._id, err })
+              await storageAdapter.put(client.ctx, client.wsIds, blobId, buffer, 'application/json', buffer.length)
+            } catch (err: any) {
+              client.logger.error('failed to process document', {
+                _class: doc._class,
+                _id: doc._id,
+                err: err.message,
+                stack: err.stack
+              })
             }
 
             update[attributeName] = blobId
@@ -260,12 +264,50 @@ async function processMigrateContentFor (
     }
 
     processed += docs.length
-    ctx.info('...processed', { count: processed })
+    client.logger.log('...processed', { count: processed })
+  }
+}
+
+export async function migrateBackupMixins (client: MigrationClient): Promise<void> {
+  // Go via classes with domain and check if mixin exists and need to flush %hash%
+  const hierarchy = client.hierarchy
+  const curHash = Date.now().toString(16) // Current hash value
+
+  const txIterator = await client.traverse<TxMixin<Doc, AttachedDoc>>(DOMAIN_TX, { _class: core.class.TxMixin })
+
+  try {
+    while (true) {
+      const mixinOps = await txIterator.next(500)
+      if (mixinOps === null || mixinOps.length === 0) break
+      const _classes = groupByArray(mixinOps, (it) => it.objectClass)
+
+      for (const [_class, ops] of _classes.entries()) {
+        const domain = hierarchy.findDomain(_class)
+        if (domain === undefined) continue
+        let docs = await client.find(domain, { _id: { $in: ops.map((it) => it.objectId) } })
+
+        docs = docs.filter((it) => {
+          // Check if mixin is last operation by modifiedOn
+          const mops = ops.filter((mi) => mi.objectId === it._id)
+          if (mops.length === 0) return false
+          return mops.some((mi) => mi.modifiedOn === it.modifiedOn && mi.modifiedBy === it.modifiedBy)
+        })
+
+        if (docs.length > 0) {
+          // Check if docs has mixins from list
+          const toUpdate = docs.filter((it) => hierarchy.findAllMixins(it).length > 0)
+          if (toUpdate.length > 0) {
+            await client.update(domain, { _id: { $in: toUpdate.map((it) => it._id) } }, { '%hash%': curHash })
+          }
+        }
+      }
+    }
+  } finally {
+    await txIterator.close()
   }
 }
 
 async function migrateCollaborativeDocsToJson (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('migrateCollaborativeDocsToJson', {})
   const storageAdapter = client.storageAdapter
 
   const hierarchy = client.hierarchy
@@ -286,8 +328,8 @@ async function migrateCollaborativeDocsToJson (client: MigrationClient): Promise
 
     const iterator = await client.traverse(domain, query)
     try {
-      ctx.info('processing', { _class })
-      await processMigrateJsonForDomain(ctx, domain, attributes, client, storageAdapter, iterator)
+      client.logger.log('processing', { _class })
+      await processMigrateJsonForDomain(domain, attributes, client, storageAdapter, iterator)
     } finally {
       await iterator.close()
     }
@@ -316,7 +358,7 @@ export async function getSocialKeyByOldAccount (client: MigrationClient): Promis
   })
   const accounts = getAccountsFromTxes(accountsTxes)
 
-  const socialKeyByAccount: Record<string, PersonId> = {}
+  const socialKeyByAccount: Record<string, string> = {}
   for (const account of accounts) {
     if (account.email === undefined) {
       continue
@@ -360,13 +402,12 @@ export function getSocialKeyByOldEmail (rawEmail: string): SocialKey {
  * @returns
  */
 async function migrateAccounts (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('core migrateAccounts', {})
   const hierarchy = client.hierarchy
   const socialKeyByAccount = await getSocialKeyByOldAccount(client)
   const socialIdBySocialKey = new Map<string, PersonId | null>()
   const socialIdByOldAccount = new Map<string, PersonId | null>()
 
-  ctx.info('migrating createdBy and modifiedBy')
+  client.logger.log('migrating createdBy and modifiedBy', {})
   function chunkArray<T> (array: T[], chunkSize: number): T[][] {
     const chunks: T[][] = []
     for (let i = 0; i < array.length; i += chunkSize) {
@@ -376,7 +417,7 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
   }
 
   for (const domain of client.hierarchy.domains()) {
-    ctx.info('processing domain ', { domain })
+    client.logger.log('processing domain ', { domain })
     const operations: { filter: MigrationDocumentQuery<Doc>, update: MigrateUpdate<Doc> }[] = []
     const groupByCreated = await client.groupBy<any, Doc>(domain, 'createdBy', {})
     const groupByModified = await client.groupBy<any, Doc>(domain, 'modifiedBy', {})
@@ -421,7 +462,7 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
 
     if (operations.length > 0) {
       const operationsChunks = chunkArray(operations, 40)
-      ctx.info('chunks to process ', { total: operationsChunks.length })
+      client.logger.log('chunks to process ', { total: operationsChunks.length })
       let processed = 0
       for (const operationsChunk of operationsChunks) {
         if (operationsChunk.length === 0) continue
@@ -429,15 +470,15 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
         await client.bulk(domain, operationsChunk)
         processed++
         if (operationsChunks.length > 1) {
-          ctx.info('processed chunk', { processed, of: operationsChunks.length })
+          client.logger.log('processed chunk', { processed, of: operationsChunks.length })
         }
       }
     } else {
-      ctx.info('no user accounts to migrate')
+      client.logger.log('no user accounts to migrate', {})
     }
   }
 
-  ctx.info('finished migrating createdBy and modifiedBy')
+  client.logger.log('finished migrating createdBy and modifiedBy', {})
 
   const spaceTypes = client.model.findAllSync(core.class.SpaceType, {})
   const spaceTypesById = toIdMap(spaceTypes)
@@ -455,7 +496,7 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
 
   const accountUuidBySocialKey = new Map<string, AccountUuid | null>()
 
-  ctx.info('processing spaces members, owners and roles assignment', {})
+  client.logger.log('processing spaces members, owners and roles assignment', {})
   let processedSpaces = 0
   const spacesIterator = await client.traverse(DOMAIN_SPACE, {})
 
@@ -506,9 +547,10 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
                   accountUuidBySocialKey
                 )
 
-                update[`${type.targetClass}`] = {
-                  [role._id]: newAssignees
+                if (update[`${type.targetClass}`] == null) {
+                  update[`${type.targetClass}`] = {}
                 }
+                update[`${type.targetClass}`][role._id] = newAssignees
               }
             }
           }
@@ -525,15 +567,15 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
       }
 
       processedSpaces += spaces.length
-      ctx.info('...spaces processed', { count: processedSpaces })
+      client.logger.log('...spaces processed', { count: processedSpaces })
     }
 
-    ctx.info('finished processing spaces members, owners and roles assignment', { processedSpaces })
+    client.logger.log('finished processing spaces members, owners and roles assignment', { processedSpaces })
   } finally {
     await spacesIterator.close()
   }
 
-  ctx.info('processing space types members', {})
+  client.logger.log('processing space types members', {})
   let updatedSpaceTypes = 0
   for (const spaceType of spaceTypes) {
     if (spaceType.members === undefined || spaceType.members.length === 0) continue
@@ -563,7 +605,10 @@ async function migrateAccounts (client: MigrationClient): Promise<void> {
     await client.create(DOMAIN_MODEL_TX, tx)
     updatedSpaceTypes++
   }
-  ctx.info('finished processing space types members', { totalSpaceTypes: spaceTypes.length, updatedSpaceTypes })
+  client.logger.log('finished processing space types members', {
+    totalSpaceTypes: spaceTypes.length,
+    updatedSpaceTypes
+  })
 }
 
 export async function getAccountUuidBySocialKey (
@@ -630,13 +675,13 @@ export async function getAccountUuidByOldAccount (
   const cached = accountUuidByOldAccount.has(oldAccount)
 
   if (!cached) {
-    const socialId = socialKeyByOldAccount[oldAccount]
-    if (socialId == null) {
+    const socialKey = socialKeyByOldAccount[oldAccount]
+    if (socialKey == null) {
       accountUuidByOldAccount.set(oldAccount, null)
       return null
     }
 
-    const personUuid = await client.accountClient.findPersonBySocialKey(socialId)
+    const personUuid = await client.accountClient.findPersonBySocialKey(socialKey)
 
     accountUuidByOldAccount.set(oldAccount, (personUuid as AccountUuid | undefined) ?? null)
   }
@@ -707,199 +752,7 @@ export async function getUniqueAccountsFromOldAccounts (
   return Array.from(accounts)
 }
 
-/**
- * Migrates social keys to new accounts where needed.
- * Should only be applied to staging where old accounts have already been migrated to social keys.
- * REMOVE IT BEFORE MERGING TO PRODUCTION
- * @param client
- * @returns
- */
-async function migrateSpaceMembersToAccountUuids (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('core migrateSpaceMembersToAccountUuids', {})
-  const hierarchy = client.hierarchy
-  const accountUuidBySocialKey = new Map<string, AccountUuid | null>()
-
-  const spaceTypes = client.model.findAllSync(core.class.SpaceType, {})
-  const spaceTypesById = toIdMap(spaceTypes)
-  const roles = client.model.findAllSync(core.class.Role, {})
-  const rolesBySpaceType = new Map<Ref<SpaceType>, Role[]>()
-  for (const role of roles) {
-    const spaceType = role.attachedTo
-    if (spaceType === undefined) continue
-    if (rolesBySpaceType.has(spaceType)) {
-      rolesBySpaceType.get(spaceType)?.push(role)
-    } else {
-      rolesBySpaceType.set(spaceType, [role])
-    }
-  }
-
-  ctx.info('processing spaces members, owners and roles assignment', {})
-  let processedSpaces = 0
-  const spacesIterator = await client.traverse(DOMAIN_SPACE, {})
-
-  try {
-    while (true) {
-      const spaces = await spacesIterator.next(200)
-      if (spaces === null || spaces.length === 0) {
-        break
-      }
-
-      const operations: { filter: MigrationDocumentQuery<Space>, update: MigrateUpdate<Space> }[] = []
-
-      for (const s of spaces) {
-        if (!hierarchy.isDerived(s._class, core.class.Space)) continue
-        const space = s as Space
-        const update: MigrateUpdate<Space> = {
-          members: await getUniqueAccounts(client, space.members, accountUuidBySocialKey),
-          owners: await getUniqueAccounts(client, space.owners ?? [], accountUuidBySocialKey)
-        }
-
-        const type = spaceTypesById.get((space as TypedSpace).type)
-
-        if (type !== undefined) {
-          const mixin = hierarchy.as(space, type.targetClass)
-          if (mixin !== undefined) {
-            const roles = rolesBySpaceType.get(type._id)
-
-            for (const role of roles ?? []) {
-              const oldAssignees: PersonId[] | undefined = (mixin as any)[role._id]
-              if (oldAssignees != null && oldAssignees.length > 0) {
-                const newAssignees = await getUniqueAccounts(client, oldAssignees, accountUuidBySocialKey)
-
-                update[`${type.targetClass}`] = {
-                  [role._id]: newAssignees
-                }
-              }
-            }
-          }
-        }
-
-        operations.push({
-          filter: { _id: space._id },
-          update
-        })
-      }
-
-      if (operations.length > 0) {
-        await client.bulk(DOMAIN_SPACE, operations)
-      }
-
-      processedSpaces += spaces.length
-      ctx.info('...spaces processed', { count: processedSpaces })
-    }
-
-    ctx.info('finished processing spaces members, owners and roles assignment', { processedSpaces })
-  } finally {
-    await spacesIterator.close()
-  }
-
-  ctx.info('processing space types members', {})
-  let updatedSpaceTypes = 0
-  for (const spaceType of spaceTypes) {
-    if (spaceType.members === undefined || spaceType.members.length === 0) continue
-
-    const newMembers = await getUniqueAccounts(
-      client,
-      spaceType.members as unknown as PersonId[],
-      accountUuidBySocialKey
-    )
-    const tx: TxUpdateDoc<SpaceType> = {
-      _id: generateId(),
-      _class: core.class.TxUpdateDoc,
-      space: core.space.Tx,
-      objectId: spaceType._id,
-      objectClass: spaceType._class,
-      objectSpace: spaceType.space,
-      operations: {
-        members: newMembers
-      },
-      modifiedOn: Date.now(),
-      createdBy: core.account.ConfigUser,
-      createdOn: Date.now(),
-      modifiedBy: core.account.ConfigUser
-    }
-
-    await client.create(DOMAIN_MODEL_TX, tx)
-    updatedSpaceTypes++
-  }
-  ctx.info('finished processing space types members', { totalSpaceTypes: spaceTypes.length, updatedSpaceTypes })
-}
-
-/**
- * Migrates social keys to social ids where needed.
- * Should only be applied to staging where old accounts have already been migrated to social keys.
- * REMOVE IT BEFORE MERGING TO PRODUCTION
- * @param client
- * @returns
- */
-async function migrateCreatedByToGenSocialIds (client: MigrationClient): Promise<void> {
-  const ctx = new MeasureMetricsContext('core migrateCreatedByToGenSocialIds', {})
-  const socialIdBySocialKey = new Map<string, PersonId | null>()
-
-  ctx.info('migrating createdBy and modifiedBy')
-  function chunkArray<T> (array: T[], chunkSize: number): T[][] {
-    const chunks: T[][] = []
-    for (let i = 0; i < array.length; i += chunkSize) {
-      chunks.push(array.slice(i, i + chunkSize))
-    }
-    return chunks
-  }
-
-  for (const domain of client.hierarchy.domains()) {
-    ctx.info('processing domain ', { domain })
-    const operations: { filter: MigrationDocumentQuery<Doc>, update: MigrateUpdate<Doc> }[] = []
-    const groupByCreated = await client.groupBy<any, Doc>(domain, 'createdBy', {})
-    const groupByModified = await client.groupBy<any, Doc>(domain, 'modifiedBy', {})
-
-    for (const socialKey of groupByCreated.keys()) {
-      if (socialKey == null) continue
-      const socialId = await getSocialIdBySocialKey(client, socialKey, socialIdBySocialKey)
-      if (socialId == null || socialKey === socialId) continue
-
-      operations.push({
-        filter: { createdBy: socialKey },
-        update: {
-          createdBy: socialId
-        }
-      })
-    }
-
-    for (const socialKey of groupByModified.keys()) {
-      if (socialKey == null) continue
-      const socialId = await getSocialIdBySocialKey(client, socialKey, socialIdBySocialKey)
-      if (socialId == null || socialKey === socialId) continue
-
-      operations.push({
-        filter: { modifiedBy: socialKey },
-        update: {
-          modifiedBy: socialId
-        }
-      })
-    }
-
-    if (operations.length > 0) {
-      const operationsChunks = chunkArray(operations, 40)
-      ctx.info('chunks to process ', { total: operationsChunks.length })
-      let processed = 0
-      for (const operationsChunk of operationsChunks) {
-        if (operationsChunk.length === 0) continue
-
-        await client.bulk(domain, operationsChunk)
-        processed++
-        if (operationsChunks.length > 1) {
-          ctx.info('processed chunk', { processed, of: operationsChunks.length })
-        }
-      }
-    } else {
-      ctx.info('no social keys to migrate')
-    }
-  }
-
-  ctx.info('finished migrating createdBy and modifiedBy')
-}
-
 async function processMigrateJsonForDomain (
-  ctx: MeasureContext,
   domain: Domain,
   attributes: AnyAttribute[],
   client: MigrationClient,
@@ -920,7 +773,7 @@ async function processMigrateJsonForDomain (
 
     for (const doc of docs) {
       await rateLimiter.add(async () => {
-        const update = await processMigrateJsonForDoc(ctx, doc, attributes, client, storageAdapter)
+        const update = await processMigrateJsonForDoc(doc, attributes, client, storageAdapter)
         if (Object.keys(update).length > 0) {
           operations.push({ filter: { _id: doc._id }, update })
         }
@@ -934,12 +787,11 @@ async function processMigrateJsonForDomain (
     }
 
     processed += docs.length
-    ctx.info('...processed', { count: processed })
+    client.logger.log('...processed', { count: processed })
   }
 }
 
 async function processMigrateJsonForDoc (
-  ctx: MeasureContext,
   doc: Doc,
   attributes: AnyAttribute[],
   client: MigrationClient,
@@ -966,7 +818,7 @@ async function processMigrateJsonForDoc (
     if (value.startsWith('{')) {
       // For some reason we have documents that are already markups
       const jsonId = await retry(5, async () => {
-        return await saveCollabJson(ctx, storageAdapter, wsIds, collabId, value)
+        return await saveCollabJson(client.ctx, storageAdapter, wsIds, collabId, value)
       })
 
       update[attributeName] = jsonId
@@ -988,17 +840,22 @@ async function processMigrateJsonForDoc (
       const ydocId = makeCollabYdocId(collabId)
       if (ydocId !== currentYdocId) {
         await retry(5, async () => {
-          const stat = await storageAdapter.stat(ctx, wsIds, currentYdocId)
+          const stat = await storageAdapter.stat(client.ctx, wsIds, currentYdocId)
           if (stat !== undefined) {
-            const data = await storageAdapter.read(ctx, wsIds, currentYdocId)
+            const data = await storageAdapter.read(client.ctx, wsIds, currentYdocId)
             const buffer = Buffer.concat(data as any)
-            await storageAdapter.put(ctx, wsIds, ydocId, buffer, 'application/ydoc', buffer.length)
+            await storageAdapter.put(client.ctx, wsIds, ydocId, buffer, 'application/ydoc', buffer.length)
           }
         })
       }
     } catch (err) {
       const error = err instanceof Error ? err.message : String(err)
-      ctx.warn('failed to process collaborative doc', { workspace: wsIds.uuid, collabId, currentYdocId, error })
+      client.logger.error('failed to process collaborative doc', {
+        workspace: wsIds.uuid,
+        collabId,
+        currentYdocId,
+        error
+      })
     }
 
     const unset = update.$unset ?? {}
@@ -1070,7 +927,7 @@ export const coreOperation: MigrateOperation = {
                       attachedTo: objectId,
                       attachedToClass: objectClass,
                       ...(tx as any).tx,
-                      objectSpace: (tx as any).tx.objectSpace ?? tx.objectClass
+                      objectSpace: (tx as any).tx.objectSpace ?? tx.objectSpace
                     }
                   })
                 )
@@ -1113,18 +970,24 @@ export const coreOperation: MigrateOperation = {
         mode: 'upgrade',
         func: migrateAccounts
       },
-      // ONLY FOR STAGING. REMOVE IT BEFORE MERGING TO PRODUCTION
       {
-        state: 'created-by-to-account-uuids',
+        state: 'clean-old-model',
         mode: 'upgrade',
-        func: migrateSpaceMembersToAccountUuids
+        func: cleanOldModel
       },
-      // ONLY FOR STAGING. REMOVE IT BEFORE MERGING TO PRODUCTION
       {
-        state: 'created-by-to-gen-social-ids-v2',
+        state: 'reindex-after-elastic-mapping-change',
         mode: 'upgrade',
-        func: migrateCreatedByToGenSocialIds
+        func: async (client) => {
+          await client.fullReindex()
+        }
       }
+      // ,
+      // {
+      //   state: 'migrate-backup-mixins',
+      //   mode: 'upgrade',
+      //   func: migrateBackupMixins
+      // }
     ])
   },
   async upgrade (state: Map<string, Set<string>>, client: () => Promise<MigrationUpgradeClient>, mode): Promise<void> {
@@ -1168,4 +1031,11 @@ async function retry<T> (retries: number, op: () => Promise<T>): Promise<T> {
     }
   }
   throw error
+}
+
+async function cleanOldModel (client: MigrationClient): Promise<void> {
+  await client.deleteMany(DOMAIN_MODEL_TX, {
+    modifiedBy: core.account.System,
+    objectClass: { $nin: ['core:class:Account', 'contact:class:PersonAccount'] }
+  })
 }

@@ -3,6 +3,8 @@ lib/
 _api-extractor-temp/
 temp/
 .idea
+pods/workspace/init/
+pods/workspace/init-scripts/
 
 # Logs
 *.log

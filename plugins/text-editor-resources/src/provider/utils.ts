@@ -13,16 +13,15 @@
 // limitations under the License.
 //
 
-import { type Blob, type CollaborativeDoc, type Ref, generateId } from '@hanzo/core'
-import { encodeDocumentId } from '@hanzo/collaborator-client'
-import { getMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
-import textEditor from '@hanzo/text-editor'
+import { type Blob, type CollaborativeDoc, type Ref, generateId } from '@hcengineering/core'
+import { encodeDocumentId } from '@hcengineering/collaborator-client'
+import { OK, Severity, Status, getMetadata, setPlatformStatus } from '@hcengineering/platform'
+import presentation from '@hcengineering/presentation'
 import { Doc as Ydoc } from 'yjs'
 
-import { CloudCollabProvider } from './cloud'
+import plugin from '../plugin'
+
 import { HocuspocusCollabProvider } from './hocuspocus'
-import { IndexeddbProvider } from './indexeddb'
 import { type Provider } from './types'
 
 function getDocumentId (doc: CollaborativeDoc): string {
@@ -30,34 +29,31 @@ function getDocumentId (doc: CollaborativeDoc): string {
   return encodeDocumentId(workspace, doc)
 }
 
-export function createLocalProvider (ydoc: Ydoc, doc: CollaborativeDoc): Provider {
-  const documentId = getDocumentId(doc)
-  return new IndexeddbProvider(documentId, ydoc)
-}
-
 export function createRemoteProvider (ydoc: Ydoc, doc: CollaborativeDoc, content: Ref<Blob> | null): Provider {
-  const collaborator = getMetadata(textEditor.metadata.Collaborator)
-
   const token = getMetadata(presentation.metadata.Token) ?? ''
   const collaboratorUrl = getMetadata(presentation.metadata.CollaboratorUrl) ?? ''
 
   const documentId = getDocumentId(doc)
 
-  return collaborator === 'cloud'
-    ? new CloudCollabProvider({
-      url: collaboratorUrl,
-      name: documentId,
-      document: ydoc,
-      content,
-      token
-    })
-    : new HocuspocusCollabProvider({
-      url: collaboratorUrl,
-      name: documentId,
-      document: ydoc,
-      token,
-      parameters: { content }
-    })
+  const provider = new HocuspocusCollabProvider({
+    url: collaboratorUrl,
+    name: documentId,
+    document: ydoc,
+    token,
+    parameters: { content },
+    onConnect: () => {
+      void setPlatformStatus(OK)
+    },
+    onClose: (data) => {
+      if (data.event.code === 1006) {
+        console.error('Failed to connect to collaborator', data.event)
+        const status = new Status(Severity.ERROR, plugin.string.CannotConnectToCollaborationService, {})
+        void setPlatformStatus(status)
+      }
+    }
+  })
+
+  return provider
 }
 
 export const createTiptapCollaborationData = (

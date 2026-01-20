@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { ButtonIcon, IconDelete, ModernButton, Scroller } from '@hanzo/ui'
-  import { IconAddMember, personByIdStore, UserDetails } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
+  import { Person } from '@hcengineering/contact'
+  import { ButtonIcon, IconDelete, ModernButton, Scroller } from '@hcengineering/ui'
+  import { getPersonByPersonRefStore, IconAddMember, UserDetails } from '@hcengineering/contact-resources'
+  import { notEmpty, Ref } from '@hcengineering/core'
   import { createEventDispatcher } from 'svelte'
 
   import chunter from '../plugin'
@@ -27,13 +27,8 @@
 
   const dispatch = createEventDispatcher()
 
-  let persons: Person[] = []
-
-  $: updatePersons(ids)
-
-  function updatePersons (ids: Ref<Person>[]): void {
-    persons = ids.map((_id) => $personByIdStore.get(_id)).filter((person): person is Person => !!person)
-  }
+  $: personByRefStore = getPersonByPersonRefStore(ids)
+  $: persons = ids.map((_id) => $personByRefStore.get(_id)).filter(notEmpty)
 </script>
 
 <div class="root">

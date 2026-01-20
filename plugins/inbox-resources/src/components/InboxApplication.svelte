@@ -14,7 +14,6 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card } from '@hanzo/card'
   import {
     defineSeparators,
     Separator,
@@ -22,33 +21,58 @@
     resolvedLocationStore,
     Location,
     restoreLocation,
-    Component
-  } from '@hanzo/ui'
+    Component,
+    closePanel,
+    getCurrentLocation
+  } from '@hcengineering/ui'
   import { onDestroy } from 'svelte'
-  import { getClient, getCommunicationClient } from '@hanzo/presentation'
-  import { inboxId } from '@hanzo/inbox'
-  import view from '@hanzo/view'
-  import { NotificationContext } from '@hanzo/communication-types'
+  import { getClient } from '@hcengineering/presentation'
+  import { inboxId } from '@hcengineering/inbox'
+  import view from '@hcengineering/view'
+  import { Class, Doc, getCurrentAccount, Ref } from '@hcengineering/core'
+  import notification, { DocNotifyContext, InboxNotification } from '@hcengineering/notification'
+  import { Notification } from '@hcengineering/communication-types'
+  import chunter from '@hcengineering/chunter'
+  import activity, { ActivityMessage } from '@hcengineering/activity'
+  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
+  import { getResource } from '@hcengineering/platform'
+  import { get } from 'svelte/store'
+  import cardPlugin from '@hcengineering/card'
 
   import InboxNavigation from './InboxNavigation.svelte'
-  import { getCardIdFromLocation, navigateToCard } from '../location'
+  import { closeDoc, getDocInfoFromLocation, getMessageInfoFromLocation, navigateToDoc } from '../location'
+  import InboxHeader from './InboxHeader.svelte'
+  import { NavigationItem } from '../type'
 
   const client = getClient()
-  const communicationClient = getCommunicationClient()
+  const hierarchy = client.getHierarchy()
+
+  const inboxClient = InboxNotificationsClientImpl.getClient()
+  const notificationsByContextStore = inboxClient.inboxNotificationsByContext
+  const contextByIdStore = inboxClient.contextById
+  const contextByDocStore = inboxClient.contextByDoc
 
   let replacedPanelElement: HTMLElement
-  let card: Card | undefined = undefined
+  let doc: Doc | undefined = undefined
+  let legacyContext: DocNotifyContext | undefined = undefined
+  let legacyMessage: ActivityMessage | undefined = undefined
   let needRestoreLoc = true
+
+  let urlObjectId: Ref<Doc> | undefined = undefined
+  let urlObjectClass: Ref<Class<Doc>> | undefined = undefined
 
   async function syncLocation (loc: Location): Promise<void> {
     if (loc.path[2] !== inboxId) {
       return
     }
 
-    const cardId = getCardIdFromLocation(loc)
+    const docInfo = getDocInfoFromLocation(loc)
 
-    if (cardId == null || cardId === '') {
-      card = undefined
+    if (docInfo == null) {
+      doc = undefined
+      urlObjectId = undefined
+      urlObjectClass = undefined
+      legacyContext = undefined
       if (needRestoreLoc) {
         needRestoreLoc = false
         restoreLocation(loc, inboxId)
@@ -56,24 +80,122 @@
       return
     }
 
+    urlObjectId = docInfo._id
+    urlObjectClass = docInfo._class
+
     needRestoreLoc = false
 
-    if (cardId !== card?._id) {
-      card = await client.findOne(cardPlugin.class.Card, { _id: cardId })
+    const thread = loc?.path[4] as Ref<ActivityMessage>
+
+    if (docInfo._id !== doc?._id) {
+      doc = await client.findOne(docInfo._class, { _id: docInfo._id })
+
+      if (doc != null) {
+        const queryContext = loc.query?.context as Ref<DocNotifyContext>
+        const ctx =
+          $contextByIdStore.get(queryContext) ?? $contextByDocStore.get(thread) ?? $contextByDocStore.get(urlObjectId)
+
+        legacyContext =
+          ctx ??
+          (await client.findOne(notification.class.DocNotifyContext, {
+            objectId: doc._id,
+            user: getCurrentAccount().uuid
+          }))
+      }
+    }
+
+    const messageInfo = getMessageInfoFromLocation(loc)
+    const messageId = messageInfo?.id
+
+    if (thread !== undefined) {
+      const fn = await getResource(chunter.function.OpenThreadInSidebar)
+      void fn(thread, undefined, undefined, messageInfo?.id as Ref<ActivityMessage>, { autofocus: false }, false)
+    }
+
+    if (messageId != null && messageInfo?.date == null) {
+      legacyMessage = get(inboxClient.activityInboxNotifications).find(({ attachedTo }) => attachedTo === messageId)
+        ?.$lookup?.attachedTo
+      if (legacyMessage === undefined) {
+        legacyMessage = await client.findOne(activity.class.ActivityMessage, { _id: messageId as Ref<ActivityMessage> })
+      }
     }
   }
 
-  async function readCard (context: NotificationContext): Promise<void> {
-    const lastView = context.notifications?.[0]?.created
-    if (lastView == null) return
-    await communicationClient.updateNotificationContext(context.id, lastView)
+  let selectedNotificationId: string | undefined = undefined
+
+  function select (
+    event: CustomEvent<{
+      navItem: NavigationItem
+      doc: Doc
+      notification?: InboxNotification | Notification
+    }>
+  ): void {
+    const { navItem, notification, doc: ddoc } = event.detail
+    if (ddoc == null) return
+
+    const loc = getCurrentLocation()
+
+    const notificationId = (notification as any)?._id ?? (notification as any)?.id
+    if (
+      navItem.type === 'modern' &&
+      doc?._id === navItem._id &&
+      loc.path[2] === inboxId &&
+      selectedNotificationId === notificationId
+    ) {
+      return
+    }
+    if (
+      navItem.type === 'legacy' &&
+      doc?._id === navItem._id &&
+      legacyContext?._id === navItem.context._id &&
+      loc.path[2] === inboxId &&
+      selectedNotificationId === notificationId
+    ) {
+      return
+    }
+    closePanel()
+    selectedNotificationId = notificationId
+    navigateToDoc(navItem, ddoc, notification)
   }
 
-  function selectCard (event: CustomEvent<{ context: NotificationContext, card: Card }>): void {
-    if (card?._id === event.detail.card._id) return
-    card = event.detail.card
-    void readCard(event.detail.context)
-    navigateToCard(card._id)
+  function handleClose (): void {
+    closePanel()
+    doc = undefined
+    legacyContext = undefined
+    legacyMessage = undefined
+    closeDoc()
+  }
+
+  function isChunterChannel (_class: Ref<Class<Doc>>, urlObjectClass?: Ref<Class<Doc>>): boolean {
+    const isActivityMessageContext = hierarchy.isDerived(_class, activity.class.ActivityMessage)
+    const chunterClass = isActivityMessageContext ? (urlObjectClass ?? _class) : _class
+    return hierarchy.isDerived(chunterClass, chunter.class.ChunterSpace)
+  }
+
+  $: void readLegacyDoc(doc, legacyContext, urlObjectClass)
+  async function readLegacyDoc (
+    doc: Doc | undefined,
+    selectedContext?: DocNotifyContext,
+    urlObjectClass?: Ref<Class<Doc>>
+  ): Promise<void> {
+    if (doc == null) return
+    const isChunter = isChunterChannel(doc._class, urlObjectClass)
+
+    const contextNotifications = $notificationsByContextStore.get(selectedContext?._id ?? ('' as any)) ?? []
+
+    const ops = getClient().apply(undefined, 'readNotifications')
+    try {
+      await inboxClient.readNotifications(
+        ops,
+        contextNotifications
+          .filter(({ _class, isViewed }) =>
+            isChunter ? _class === notification.class.CommonInboxNotification : !isViewed
+          )
+          .map(({ _id }) => _id)
+      )
+    } finally {
+      await ops.commit()
+    }
   }
 
   onDestroy(
@@ -83,7 +205,7 @@
   )
 
   defineSeparators('new-inbox', [
-    { minSize: 10, maxSize: 60, size: 30, float: 'navigator' },
+    { minSize: 15, maxSize: 60, size: 30, float: 'navigator' },
     { size: 'auto', minSize: 20, maxSize: 'auto' }
   ])
 
@@ -91,7 +213,7 @@
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
 </script>
 
-<div class="hanzoaiPanels-container inbox next-colors">
+<div class="hulyPanels-container inbox">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -99,8 +221,11 @@
         : 'landscape'} border-left inbox__navigator"
       class:fly={$deviceInfo.navigator.float}
     >
-      <div class="antiPanel-wrap__content hanzoaiNavPanel-container">
-        <InboxNavigation {card} on:select={selectCard} />
+      <div class="antiPanel-wrap__content hulyNavPanel-container">
+        <InboxHeader />
+        <div class="antiPanel-wrap__content hulyNavPanel-container">
+          <InboxNavigation {doc} {legacyContext} on:select={select} />
+        </div>
       </div>
       {#if !($deviceInfo.isMobile && $deviceInfo.isPortrait && $deviceInfo.minWidth)}
         <Separator name="new-inbox" float={$deviceInfo.navigator.float ? 'navigator' : true} index={0} />
@@ -115,15 +240,22 @@
       short
     />
   {/if}
-  <div bind:this={replacedPanelElement} class="hanzoaiComponent inbox__panel">
-    {#if card}
-      {@const panel = client.getHierarchy().classHierarchyMixin(card._class, view.mixin.ObjectPanel)}
+
+  <div bind:this={replacedPanelElement} class="hulyComponent inbox__panel">
+    {#if doc}
+      {@const panel = client.getHierarchy().classHierarchyMixin(doc._class, view.mixin.ObjectPanel)}
       <Component
         is={panel?.component ?? view.component.EditDoc}
         props={{
-          _id: card._id,
-          embedded: true
+          _id: doc._id,
+          _class: doc._class,
+          context: legacyContext,
+          autofocus: false,
+          embedded: true,
+          activityMessage: legacyMessage,
+          props: { autofocus: false, context: legacyContext, activityMessage: legacyMessage }
         }}
+        on:close={handleClose}
       />
     {/if}
   </div>
@@ -131,19 +263,12 @@
 
 <style lang="scss">
   .inbox {
-    background: var(--next-background-color);
-    border-color: var(--next-border-color);
-    font-family: 'Inter Display', sans-serif;
-  }
+    &__navigator {
+      position: relative;
+    }
 
-  .inbox__navigator {
-    background: var(--next-background-color);
-    border-color: var(--next-border-color);
-  }
-
-  .inbox__panel {
-    //background: var(--next-panel-color-background);
-    //border-color: var(--next-panel-color-border);
-    position: relative;
+    &__panel {
+      position: relative;
+    }
   }
 </style>

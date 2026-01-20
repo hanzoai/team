@@ -16,8 +16,11 @@
 import { Analytics } from '@hanzo/analytics'
 import '@hanzo/platform-rig/profiles/ui/svelte'
 import { derived, writable } from 'svelte/store'
+import { ThemeVariant, type ThemeVariantType } from './variants'
 
 export { default as Theme } from './Theme.svelte'
+export { default as InvertedTheme } from './InvertedTheme.svelte'
+export { ThemeVariant, type ThemeVariantType } from './variants'
 
 /**
  * @public
@@ -59,13 +62,21 @@ export const getCurrentLanguage = (): string => {
   Analytics.setTag('language', lang)
   return lang
 }
+/**
+ * @public
+ */
+export const getCurrentEmoji = (): string => localStorage.getItem('emoji') ?? getDefaultProps('emoji', 'emoji-system')
 
 export class ThemeOptions {
+  readonly variant: ThemeVariantType
   constructor (
     readonly fontSize: number,
     readonly dark: boolean,
-    readonly language: string
-  ) {}
+    readonly language: string,
+    readonly emoji: string
+  ) {
+    this.variant = dark ? ThemeVariant.Dark : ThemeVariant.Light
+  }
 }
 export const themeStore = writable<ThemeOptions>()
 
@@ -74,7 +85,8 @@ export function initThemeStore (): void {
     new ThemeOptions(
       getCurrentFontSize() === 'normal-font' ? 16 : 14,
       isThemeDark(getCurrentTheme()),
-      getCurrentLanguage()
+      getCurrentLanguage(),
+      getCurrentEmoji()
     )
   )
 }

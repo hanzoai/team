@@ -44,7 +44,9 @@ export type {
   DefSeparators,
   SeparatedElement,
   TimeZone,
-  MouseTargetEvent
+  MouseTargetEvent,
+  IHeaderState,
+  IPanelState
 } from './types'
 
 export { themeStore, languageStore } from '@hanzo/theme'
@@ -54,9 +56,13 @@ export { getCurrentLocation, locationToUrl, navigate, location, setLocationStora
 export { default as EditBox } from './components/EditBox.svelte'
 export { default as Label } from './components/Label.svelte'
 export { default as Button } from './components/Button.svelte'
+export { default as HeaderButton } from './components/HeaderButton.svelte'
 export { default as ButtonWithDropdown } from './components/ButtonWithDropdown.svelte'
 export { default as ButtonGroup } from './components/ButtonGroup.svelte'
+export { default as FilterButton } from './components/FilterButton.svelte'
+export { default as FilterCategoryPopup } from './components/FilterCategoryPopup.svelte'
 export { default as Status } from './components/Status.svelte'
+export { default as StatusBadge } from './components/StatusBadge.svelte'
 export { default as StateTag } from './components/StateTag.svelte'
 export { default as Component } from './components/Component.svelte'
 export { default as Icon } from './components/Icon.svelte'
@@ -216,7 +222,6 @@ export { default as IconMixin } from './components/icons/Mixin.svelte'
 export { default as IconCircles } from './components/icons/Circles.svelte'
 export { default as IconLike } from './components/icons/Like.svelte'
 export { default as IconCollapseArrow } from './components/icons/CollapseArrow.svelte'
-export { default as IconEmoji } from './components/icons/Emoji.svelte'
 export { default as IconUndo } from './components/icons/Undo.svelte'
 export { default as IconRedo } from './components/icons/Redo.svelte'
 export { default as IconOpenedArrow } from './components/icons/OpenedArrow.svelte'
@@ -270,7 +275,6 @@ export { NotificationSeverity } from './components/notifications/NotificationSev
 export type { Notification } from './components/notifications/Notification'
 export { default as Wizard } from './components/wizard/Wizard.svelte'
 export { default as StepsDialog } from './components/StepsDialog.svelte'
-export { default as IconWithEmoji } from './components/IconWithEmoji.svelte'
 export { default as ModeSelector } from './components/ModeSelector.svelte'
 export { default as SimpleTimePopup } from './components/calendar/SimpleTimePopup.svelte'
 export { default as NumberInput } from './components/NumberInput.svelte'
@@ -283,11 +287,13 @@ export { default as SectionEmpty } from './components/SectionEmpty.svelte'
 export { default as EmbeddedPDF } from './components/EmbeddedPDF.svelte'
 export { default as NestedMenu } from './components/NestedMenu.svelte'
 export { default as NestedDropdown } from './components/NestedDropdown.svelte'
+export { default as StatusBarButton } from './components/StatusBarButton.svelte'
+export { default as AppLoading } from './components/AppLoading.svelte'
 
+export { default as Blurhash } from './components/Blurhash.svelte'
 export { default as Dock } from './components/Dock.svelte'
 export { default as Image } from './components/Image.svelte'
 export { default as Video } from './components/Video.svelte'
-export { default as HlsVideo } from './components/HlsVideo.svelte'
 
 export * from './types'
 export * from './location'
@@ -301,7 +307,7 @@ export * from './colors'
 export * from './focus'
 export * from './resize'
 export * from './lazy'
-export * from './components/emoji'
+export * from './stores'
 
 export function createApp (target: HTMLElement): SvelteComponent {
   return new Root({ target })

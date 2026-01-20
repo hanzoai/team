@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type AccountDB } from '@hanzo/account'
-import { BrandingMap, concatLink, MeasureContext, getBranding, SocialIdType } from '@hanzo/core'
+import { type AccountDB } from '@hcengineering/account'
+import { type ProviderInfo } from '@hcengineering/account-client'
+import { BrandingMap, concatLink, MeasureContext, getBranding, SocialIdType } from '@hcengineering/core'
 import Router from 'koa-router'
 import { Issuer, Strategy } from 'openid-client'
 
@@ -29,10 +30,12 @@ export function registerOpenid (
   frontUrl: string,
   brandings: BrandingMap,
   signUpDisabled?: boolean
-): string | undefined {
+): ProviderInfo | undefined {
   const openidClientId = process.env.OPENID_CLIENT_ID
   const openidClientSecret = process.env.OPENID_CLIENT_SECRET
   const issuer = process.env.OPENID_ISSUER
+  const name = 'openid'
+  const displayName = process.env.OPENID_DISPLAY_NAME
 
   const redirectURL = '/auth/openid/callback'
   if (openidClientId === undefined || openidClientSecret === undefined || issuer === undefined) return
@@ -110,5 +113,5 @@ export function registerOpenid (
     }
   )
 
-  return 'openid'
+  return { name, displayName }
 }

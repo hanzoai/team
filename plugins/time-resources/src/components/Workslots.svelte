@@ -21,14 +21,14 @@
     Hotkey,
     HotkeyGroup,
     Scroller,
-    formatDuration
-  } from '@hanzo/ui'
-  import { EventTimeEditor } from '@hanzo/calendar-resources'
-  import { WorkSlot } from '@hanzo/time'
+    formatDuration,
+    Label
+  } from '@hcengineering/ui'
+  import { EventTimeEditor } from '@hcengineering/calendar-resources'
+  import { WorkSlot } from '@hcengineering/time'
   import { createEventDispatcher } from 'svelte'
   import time from '../plugin'
   import { calculateEventsDuration } from '../utils'
-  import Label from '@hanzo/ui/src/components/Label.svelte'
 
   export let slots: WorkSlot[] = []
   export let shortcuts: boolean = true

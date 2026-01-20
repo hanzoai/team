@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Calendar, Event, generateEventId, getAllEvents } from '@hanzo/calendar'
-  import { getCurrentEmployee } from '@hanzo/contact'
+  import { AccessLevel, Calendar, Event, generateEventId, getAllEvents } from '@hcengineering/calendar'
+  import { getCurrentEmployee } from '@hcengineering/contact'
   import {
     Class,
     Doc,
@@ -255,13 +255,14 @@
           eventId: generateEventId(),
           title: '',
           description: '',
-          access: 'owner',
+          access: AccessLevel.Owner,
           attachedTo: dragItem._id,
           attachedToClass: dragItem._class,
           _class: dragEventClass,
           collection: 'events',
           calendar: `${acc.uuid}_calendar` as Ref<Calendar>,
           modifiedBy: myPrimaryId,
+          blockTime: true,
           participants: [me],
           modifiedOn: Date.now(),
           date: e.detail.date.getTime(),

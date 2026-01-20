@@ -17,35 +17,47 @@
   import { IntlString } from '@hanzo/platform'
   import Header from './Header.svelte'
   import Label from './Label.svelte'
-  import ButtonIcon from './ButtonIcon.svelte'
   import ButtonBase from './ButtonBase.svelte'
   import Scroller from './Scroller.svelte'
-  import ui from '..'
+  import ui, { LabelAndProps } from '..'
 
   export let type: 'type-aside' | 'type-popup' | 'type-component'
   export let width: 'large' | 'medium' | 'small' | 'x-small' | 'menu' | undefined = undefined
+  export let maxWidth: string | undefined = undefined
   export let label: IntlString | undefined = undefined
   export let labelProps: any | undefined = undefined
   export let okAction: () => Promise<void> | void = () => {}
+  export let okLoading: boolean = false
+  export let okTooltip: LabelAndProps | undefined = undefined
   export let onCancel: (() => void) | undefined = undefined
   export let canSave: boolean = false
   export let okLabel: IntlString = ui.string.Ok
   export let padding: string | undefined = undefined
+  export let bottomPadding: string | undefined = undefined
   export let hidden: boolean = false
-  export let allowFullsize: boolean = false
   export let noTopIndent: boolean = false
   export let hideFooter: boolean = false
   export let adaptive: 'default' | 'freezeActions' | 'doubleRow' | 'disabled' = 'disabled'
   export let showCancelButton: boolean = true
+  export let scrollableContent = true
 
   const dispatch = createEventDispatcher()
 
   function close (): void {
-    if (onCancel) onCancel()
-    else dispatch('close')
+    if (onCancel !== undefined) {
+      onCancel()
+    } else {
+      dispatch('close')
+    }
   }
-  function onKeyDown (ev: KeyboardEvent) {
-    if (ev.key === 'Escape') close()
+
+  function onKeyDown (ev: KeyboardEvent): void {
+    if (ev.key === 'Escape') {
+      ev.preventDefault()
+      ev.stopPropagation()
+
+      close()
+    }
   }
 
   $: typePadding =
@@ -58,12 +70,17 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div class="hanzoaiModal-container {type} {width ?? ''}" class:hidden class:noTopIndent>
+<div
+  class="hulyModal-container {type} {width ?? ''}"
+  class:hidden
+  class:noTopIndent
+  style={maxWidth ? `max-width: ${maxWidth};` : ''}
+>
   <Header
     {type}
-    {allowFullsize}
     {adaptive}
     on:close={close}
+    closeOnEscape={false}
     hideBefore={!$$slots.beforeTitle}
     hideActions={!$$slots.actions}
   >
@@ -77,17 +94,21 @@
     </svelte:fragment>
   </Header>
   <slot name="beforeContent" />
-  <div class="hanzoaiModal-content">
-    <Scroller
-      padding={padding ?? typePadding}
-      bottomPadding={type === 'type-popup'
-        ? undefined
-        : type === 'type-aside'
-          ? 'var(--spacing-2)'
-          : 'var(--spacing-4)'}
-    >
+  <div class="hulyModal-content">
+    {#if scrollableContent}
+      <Scroller
+        padding={padding ?? typePadding}
+        bottomPadding={(bottomPadding ?? type === 'type-popup')
+          ? undefined
+          : type === 'type-aside'
+            ? 'var(--spacing-2)'
+            : 'var(--spacing-4)'}
+      >
+        <slot />
+      </Scroller>
+    {:else}
       <slot />
-    </Scroller>
+    {/if}
   </div>
   <slot name="afterContent" />
   {#if type !== 'type-component' && !hideFooter}
@@ -96,7 +117,9 @@
         type={'type-button'}
         kind={'primary'}
         size={type === 'type-aside' ? 'large' : 'medium'}
+        tooltip={okTooltip}
         label={okLabel}
+        loading={okLoading}
         on:click={okAction}
         disabled={!canSave}
       />
@@ -112,6 +135,7 @@
       {#if $$slots.buttons}
         <slot name="buttons" />
       {/if}
+      <slot name="footer" />
     </div>
   {/if}
 </div>

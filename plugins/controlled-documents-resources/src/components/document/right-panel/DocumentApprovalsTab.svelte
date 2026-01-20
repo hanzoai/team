@@ -1,25 +1,28 @@
 <script lang="ts">
   import documents, {
+    ControlledDocument,
     ControlledDocumentState,
     DocumentRequest,
     DocumentState,
-    emptyBundle,
-    extractValidationWorkflow
-  } from '@hanzo/controlled-documents'
+    DocumentValidationState,
+    emptyBundle
+  } from '@hcengineering/controlled-documents'
 
   import { createQuery, getClient } from '@hanzo/presentation'
   import { Label, Scroller } from '@hanzo/ui'
 
-  import chunter, { ChatMessage } from '@hanzo/chunter'
-  import { personRefByPersonIdStore } from '@hanzo/contact-resources'
+  import chunter, { ChatMessage } from '@hcengineering/chunter'
   import documentsRes from '../../../plugin'
   import {
     $controlledDocument as controlledDocument,
-    $documentSnapshots as documentSnapshots
+    $documentSnapshots as documentSnapshots,
+    $isDocumentOwner as isDocumentOwner
   } from '../../../stores/editors/document'
   import DocumentApprovalGuideItem from './DocumentApprovalGuideItem.svelte'
   import DocumentApprovalItem from './DocumentApprovalItem.svelte'
   import RightPanelTabHeader from './RightPanelTabHeader.svelte'
+  import { extractValidationWorkflow } from '../../../utils'
+  import { Ref } from '@hcengineering/core'
 
   const client = getClient()
   const hierarchy = client.getHierarchy()
@@ -42,26 +45,26 @@
     })
   }
 
-  $: workflow = extractValidationWorkflow(
-    hierarchy,
-    {
-      ...emptyBundle(),
-      ControlledDocument: doc ? [doc] : [],
-      DocumentRequest: requests,
-      DocumentSnapshot: $documentSnapshots,
-      ChatMessage: messages
-    },
-    (ref) => $personRefByPersonIdStore.get(ref)
-  )
+  let workflow: Map<Ref<ControlledDocument>, DocumentValidationState[]> | undefined
+  $: void extractValidationWorkflow(hierarchy, {
+    ...emptyBundle(),
+    ControlledDocument: doc ? [doc] : [],
+    DocumentRequest: requests,
+    DocumentSnapshot: $documentSnapshots,
+    ChatMessage: messages
+  }).then((res) => {
+    workflow = res
+  })
 
-  $: validationStates = ((doc ? workflow.get(doc._id) : []) ?? []).slice()
+  $: validationStates = ((doc ? workflow?.get(doc._id) : []) ?? []).slice()
 
   const noGuideStates: (ControlledDocumentState | undefined)[] = [
     ControlledDocumentState.Approved,
     ControlledDocumentState.Rejected,
     ControlledDocumentState.InApproval
   ]
-  $: hasGuide = doc && doc.state === DocumentState.Draft && !noGuideStates.includes(doc.controlledState)
+  $: hasGuide =
+    doc && doc.state === DocumentState.Draft && !noGuideStates.includes(doc.controlledState) && $isDocumentOwner
 </script>
 
 <RightPanelTabHeader>

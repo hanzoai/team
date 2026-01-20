@@ -13,10 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Ref } from '@hanzo/core'
-  import { Label, Scroller } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import documents, { type ChangeControl } from '@hanzo/controlled-documents'
+  import { type Ref } from '@hcengineering/core'
+  import { Label, Scroller } from '@hcengineering/ui'
+  import { getClient } from '@hcengineering/presentation'
+  import documents, { type ChangeControl } from '@hcengineering/controlled-documents'
+  import { getCurrentEmployee } from '@hcengineering/contact'
 
   import documentsRes from '../../plugin'
   import {
@@ -26,6 +27,7 @@
   import { documentCompareFn, getDocumentVersionString } from '../../utils'
 
   const client = getClient()
+  const me = getCurrentEmployee()
 
   let changeControls: Record<Ref<ChangeControl>, ChangeControl> = {}
   $: if ($documentReleasedVersions.length > 0) {
@@ -53,6 +55,8 @@
       )
     })
     .sort(documentCompareFn)
+
+  $: isExternalApprover = $controlledDocument?.externalApprovers?.includes(me) ?? false
 
   function getDescription (cc: ChangeControl | undefined): string {
     if (cc === undefined) {
@@ -90,7 +94,9 @@
         {/each}
       </div>
     {:else}
-      <Label label={documentsRes.string.FirstDraftVersion} />
+      <Label
+        label={isExternalApprover ? documentsRes.string.FirstOrNotAvailable : documentsRes.string.FirstDraftVersion}
+      />
     {/if}
   </div>
 </Scroller>

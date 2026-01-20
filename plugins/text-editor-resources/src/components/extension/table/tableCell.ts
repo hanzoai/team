@@ -13,75 +13,36 @@
 // limitations under the License.
 //
 
-import { type Editor } from '@tiptap/core'
 import TiptapTableCell from '@tiptap/extension-table-cell'
-import { Plugin, PluginKey, type Selection } from '@tiptap/pm/state'
-import { DecorationSet } from '@tiptap/pm/view'
-
-import { CellSelection, type Rect, TableMap } from '@tiptap/pm/tables'
-import { columnHandlerDecoration } from './decorations/columnHandlerDecoration'
-import { columnInsertDecoration } from './decorations/columnInsertDecoration'
-import { rowHandlerDecoration } from './decorations/rowHandlerDecoration'
-import { rowInsertDecoration } from './decorations/rowInsertDecoration'
-import { tableDragMarkerDecoration } from './decorations/tableDragMarkerDecoration'
-import { tableSelectionDecoration } from './decorations/tableSelectionDecoration'
-import { findTable } from './utils'
+import { Plugin } from '@tiptap/pm/state'
 import { type Node } from '@tiptap/pm/model'
+import { CellSelection, TableMap } from '@tiptap/pm/tables'
+
+import { TableCachePlugin } from './decorations/plugins'
+import { TableColumnHandlerDecorationPlugin } from './decorations/columnHandlerDecoration'
+import { TableColumnInsertDecorationPlugin } from './decorations/columnInsertDecoration'
+import { TableRowHandlerDecorationPlugin } from './decorations/rowHandlerDecoration'
+import { TableRowInsertDecorationPlugin } from './decorations/rowInsertDecoration'
+import { TableDragMarkerDecorationPlugin } from './decorations/tableDragMarkerDecoration'
+import { TableSelectionDecorationPlugin } from './decorations/tableSelectionDecoration'
+import { findTable } from './utils'
 
 export const TableCell = TiptapTableCell.extend({
   addProseMirrorPlugins () {
-    return [tableCellDecorationPlugin(this.editor), tableSelectionNormalizer()]
+    return [
+      TableCachePlugin(),
+      TableSelectionNormalizerPlugin(),
+      TableSelectionDecorationPlugin(this.editor),
+      TableDragMarkerDecorationPlugin(this.editor),
+      TableColumnHandlerDecorationPlugin(this.editor),
+      TableColumnInsertDecorationPlugin(this.editor),
+      TableRowHandlerDecorationPlugin(this.editor),
+      TableRowInsertDecorationPlugin(this.editor)
+    ]
   }
 })
 
-interface TableCellDecorationPluginState {
-  decorations?: DecorationSet
-  selection?: Selection
-}
-
-const tableCellDecorationPlugin = (editor: Editor): Plugin<TableCellDecorationPluginState> => {
-  const key = new PluginKey('table-cell-decoration-plugin')
-  return new Plugin({
-    key,
-    state: {
-      init: (): TableCellDecorationPluginState => {
-        return {}
-      },
-      apply (tr, prev, oldState, newState) {
-        if (!editor.isEditable) {
-          return { selection: newState.selection, decorations: DecorationSet.empty }
-        }
-
-        const newTable = findTable(newState.selection)
-
-        if (newTable === undefined) {
-          return {}
-        }
-
-        if (prev.selection === newState.selection) {
-          return prev
-        }
-
-        const decorations = DecorationSet.create(newState.doc, [
-          ...tableSelectionDecoration(newState, newTable),
-          ...tableDragMarkerDecoration(newState, newTable),
-          ...columnHandlerDecoration(newState, newTable, editor),
-          ...columnInsertDecoration(newState, newTable, editor),
-          ...rowHandlerDecoration(newState, newTable, editor),
-          ...rowInsertDecoration(newState, newTable, editor)
-        ])
-        return { selection: newState.selection, decorations }
-      }
-    },
-    props: {
-      decorations (state) {
-        return key.getState(state).decorations
-      }
-    }
-  })
-}
-
-const tableSelectionNormalizer = (): Plugin<any> => {
+const TableSelectionNormalizerPlugin = (): Plugin<any> => {
   return new Plugin({
     appendTransaction: (transactions, oldState, newState) => {
       const selection = newState.selection
@@ -92,43 +53,70 @@ const tableSelectionNormalizer = (): Plugin<any> => {
 
       const tableMap = TableMap.get(table.node)
 
-      let rect: Rect | undefined
+      // Single pass to build initial rect and collect selected positions
+      let minLeft = Infinity
+      let minTop = Infinity
+      let maxRight = -Infinity
+      let maxBottom = -Infinity
 
-      const walkCell = (pos: number): void => {
-        const cell = tableMap.findCell(pos)
-        if (cell === undefined) return
-
-        if (rect === undefined) {
-          rect = { ...cell }
-        } else {
-          rect.left = Math.min(rect.left, cell.left)
-          rect.top = Math.min(rect.top, cell.top)
-
-          rect.right = Math.max(rect.right, cell.right)
-          rect.bottom = Math.max(rect.bottom, cell.bottom)
-        }
-      }
+      const selectedPositions = new Set<number>()
 
       selection.forEachCell((_node, pos) => {
-        walkCell(pos - table.pos - 1)
-      })
-      if (rect === undefined) return
+        const relPos = pos - table.pos - 1
+        selectedPositions.add(relPos)
 
-      const rectSelection: number[] = []
-      for (let row = rect.top; row < rect.bottom; row++) {
-        for (let col = rect.left; col < rect.right; col++) {
-          rectSelection.push(tableMap.map[row * tableMap.width + col])
+        const cell = tableMap.findCell(relPos)
+        if (cell === undefined) return
+
+        minLeft = Math.min(minLeft, cell.left)
+        minTop = Math.min(minTop, cell.top)
+        maxRight = Math.max(maxRight, cell.right)
+        maxBottom = Math.max(maxBottom, cell.bottom)
+      })
+
+      if (!isFinite(minLeft)) return
+
+      // Expand rect to include all cells in the rectangular region
+      // and check if we need to expand further
+      let needsExpansion = false
+      const { width } = tableMap
+
+      for (let row = minTop; row < maxBottom; row++) {
+        for (let col = minLeft; col < maxRight; col++) {
+          const pos = tableMap.map[row * width + col]
+          if (!selectedPositions.has(pos)) {
+            // Found a cell in rect that's not selected, need to expand
+            const cell = tableMap.findCell(pos)
+            if (cell !== undefined) {
+              minLeft = Math.min(minLeft, cell.left)
+              minTop = Math.min(minTop, cell.top)
+              maxRight = Math.max(maxRight, cell.right)
+              maxBottom = Math.max(maxBottom, cell.bottom)
+              needsExpansion = true
+            }
+          }
         }
       }
-      rectSelection.forEach((pos) => {
-        walkCell(pos)
-      })
 
-      if (rect === undefined) return
+      // If we expanded, we need to check again (for merged cells)
+      if (needsExpansion) {
+        for (let row = minTop; row < maxBottom; row++) {
+          for (let col = minLeft; col < maxRight; col++) {
+            const pos = tableMap.map[row * width + col]
+            const cell = tableMap.findCell(pos)
+            if (cell !== undefined) {
+              minLeft = Math.min(minLeft, cell.left)
+              minTop = Math.min(minTop, cell.top)
+              maxRight = Math.max(maxRight, cell.right)
+              maxBottom = Math.max(maxBottom, cell.bottom)
+            }
+          }
+        }
+      }
 
-      // Original promemirror implementation of TableMap.positionAt skips rowspawn cells, which leads to unpredictable selection behaviour
-      const firstCellOffset = cellPositionAt(tableMap, rect.bottom - 1, rect.right - 1, table.node)
-      const lastCellOffset = cellPositionAt(tableMap, rect.top, rect.left, table.node)
+      // Original promemirror implementation of TableMap.positionAt skips rowspan cells, which leads to unpredictable selection behaviour
+      const firstCellOffset = cellPositionAt(tableMap, maxBottom - 1, maxRight - 1, table.node)
+      const lastCellOffset = cellPositionAt(tableMap, minTop, minLeft, table.node)
 
       const firstCellPos = newState.doc.resolve(table.start + firstCellOffset)
       const lastCellPos = newState.doc.resolve(table.start + lastCellOffset)

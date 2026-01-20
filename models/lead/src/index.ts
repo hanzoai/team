@@ -14,24 +14,25 @@
 //
 
 // To help typescript locate view plugin properly
-import activity from '@hanzo/activity'
-import { AccountRole, SortingOrder, type FindOptions } from '@hanzo/core'
-import { leadId, type Lead } from '@hanzo/lead'
-import { type Builder } from '@hanzo/model'
-import chunter from '@hanzo/model-chunter'
-import contact from '@hanzo/model-contact'
-import core from '@hanzo/model-core'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import task, { actionTemplates } from '@hanzo/model-task'
-import tracker from '@hanzo/model-tracker'
-import view, { createAction, actionTemplates as viewTemplates } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import setting from '@hanzo/setting'
-import { type ViewOptionsModel } from '@hanzo/view'
+import activity from '@hcengineering/activity'
+import { AccountRole, type ClassCollaborators, SortingOrder, type FindOptions } from '@hcengineering/core'
+import { leadId, type Lead } from '@hcengineering/lead'
+import { type Builder } from '@hcengineering/model'
+import chunter from '@hcengineering/model-chunter'
+import contact from '@hcengineering/model-contact'
+import core from '@hcengineering/model-core'
+import { generateClassNotificationTypes } from '@hcengineering/model-notification'
+import task, { actionTemplates } from '@hcengineering/model-task'
+import tracker from '@hcengineering/model-tracker'
+import view, { createAction, actionTemplates as viewTemplates } from '@hcengineering/model-view'
+import workbench from '@hcengineering/model-workbench'
+import notification from '@hcengineering/notification'
+import setting from '@hcengineering/setting'
+import { type ViewOptionsModel } from '@hcengineering/view'
 
 import lead from './plugin'
 import { defineSpaceType } from './spaceType'
+import { definePermissions } from './permissions'
 import { TCustomer, TFunnel, TLead } from './types'
 
 export { leadId } from '@hanzo/lead'
@@ -455,7 +456,7 @@ export function createModel (builder: Builder): void {
       defaultEnabled: false,
       templates: {
         textTemplate: '{body}',
-        htmlTemplate: '<p>{body}</p>',
+        htmlTemplate: '<p>{body}</p><p>{link}</p>',
         subjectTemplate: '{title}'
       }
     },
@@ -539,7 +540,8 @@ export function createModel (builder: Builder): void {
     filters: ['attachedTo']
   })
 
-  builder.mixin(lead.class.Lead, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<Lead>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: lead.class.Lead,
     fields: ['createdBy', 'assignee']
   })
 
@@ -659,4 +661,5 @@ export function createModel (builder: Builder): void {
   })
 
   defineSpaceType(builder)
+  definePermissions(builder)
 }

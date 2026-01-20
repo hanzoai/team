@@ -23,7 +23,6 @@
   import CardPresenter from './CardPresenter.svelte'
 
   export let value: Ref<Card> | undefined
-  export let kind: 'list' | undefined = undefined
   export let type: ObjectPresenterType = 'link'
   export let icon: Asset | AnySvelteComponent | undefined = undefined
 
@@ -40,4 +39,4 @@
     )
 </script>
 
-<CardPresenter value={doc} {kind} {type} {icon} />
+<CardPresenter value={doc} {type} {icon} />

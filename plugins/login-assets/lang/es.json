@@ -6,6 +6,13 @@
     "IncorrectValue": "Valor incorrecto para {field}"
   },
   "string": {
+    "ChangePassword": "Cambiar contraseña",
+    "CurrentPassword": "Contraseña actual",
+    "NewPassword": "Nueva contraseña",
+    "EnterCurrentPassword": "Introduce la contraseña actual",
+    "EnterNewPassword": "Introduce la nueva contraseña",
+    "RepeatNewPassword": "Repite la nueva contraseña",
+    "PasswordExpiredDesc": "Tu contraseña ha expirado. Por favor, establece una nueva contraseña para continuar.",
     "LogIn": "Iniciar sesión",
     "SignUp": "Registrarse",
     "CreateWorkspace": "Crear espacio de trabajo",
@@ -69,6 +76,13 @@
     "Hello": "Hola {name},",
     "ProcessingInvite": "Procesando invitación, por favor espere...",
     "SignToProceed": "Por favor inicie sesión para continuar",
-    "Proceed": "Continuar"
+    "Proceed": "Continuar",
+    "SetPasswordLater": "Estableceré una contraseña más tarde",
+    "SetPasswordNow": "Estableceré una contraseña ahora",
+    "LoginAsGuest": "Continuar como invitado",
+    "SignUpToCreateWorkspace": "No hay espacios de trabajo con acceso de invitado. Por favor, regístrese para crear el suyo.",
+    "WhatIsYourName": "¿Cuál es su nombre?",
+    "AccessExpired": "El tiempo de acceso ha expirado. Por favor, solicite un nuevo enlace de acceso.",
+    "AccessNotActive": "El tiempo de acceso aún no ha comenzado. Comienza en: "
   }
 }

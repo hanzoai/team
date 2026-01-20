@@ -13,8 +13,10 @@
 // limitations under the License.
 //
 
-/* hanzoai Panels */
-.hanzoaiPanels-container {
+@use './_print.scss' as *;
+
+/* Huly Panels */
+.hulyPanels-container {
   display: flex;
   width: 100%;
   height: 100%;
@@ -131,7 +133,7 @@
       color: var(--global-tertiary-TextColor);
       border-radius: var(--extra-small-BorderRadius);
     }
-    &__tools {
+    &__tools, &__actions {
       display: none;
       align-items: center;
       flex-shrink: 0;
@@ -153,6 +155,11 @@
     &:hover {
       .hanzoaiNavGroup-header__tools { display: flex; }
     }
+
+    &:hover {
+      .hulyNavGroup-header__actions { display: flex; }
+    }
+
     &.showMenu,
     &.highlighted,
     &.selected {
@@ -167,19 +174,26 @@
       &:not(:has(.nested)) { margin-bottom: var(--spacing-1_5); }
     }
   }
-  &.nested .hanzoaiNavGroup-header {
-    .hanzoaiNavGroup-header__icon { margin: 0 var(--spacing-0_25) 0 0; }
-    .hanzoaiNavGroup-header__label { padding: 0 var(--spacing-0_75) 0 0; }
-    &.isOpen .hanzoaiNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
+  &.nested .hulyNavGroup-header,
+  &.selectableHeader .hulyNavGroup-header {
+    .hulyNavGroup-header__icon { margin: 0 var(--spacing-0_25) 0 0; }
+    .hulyNavGroup-header__label { padding: 0 var(--spacing-0_75) 0 0; }
+    &.isOpen .hulyNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
   }
-  .hanzoaiNavGroup-header:hover,
-  &.nested .hanzoaiNavGroup-header:hover {
-    .hanzoaiNavGroup-header__chevron { background-color: var(--global-ui-BackgroundColor); }
-    .hanzoaiNavGroup-header__label { background-color: var(--global-ui-hover-BackgroundColor); }
-    .hanzoaiNavGroup-header__chevron { color: var(--button-subtle-IconColor); }
-    .hanzoaiNavGroup-header__label { color: var(--global-primary-TextColor); }
+
+  &.selectableHeader.noIcon {
+    .hulyNavGroup-header__label {     padding: var(--spacing-0_25) var(--spacing-0_5); }
   }
-  &.nested.selectable .hanzoaiNavGroup-header {
+
+  .hulyNavGroup-header:hover,
+  &.nested .hulyNavGroup-header:hover {
+    .hulyNavGroup-header__chevron { background-color: var(--global-ui-BackgroundColor); }
+    .hulyNavGroup-header__label { background-color: var(--global-ui-hover-BackgroundColor); }
+    .hulyNavGroup-header__chevron { color: var(--button-subtle-IconColor); }
+    .hulyNavGroup-header__label { color: var(--global-primary-TextColor); }
+  }
+  &.nested.selectable .hulyNavGroup-header,
+  &.selectableHeader .hulyNavGroup-header {
     margin: 0 var(--spacing-1_5) var(--spacing-1_5);
     padding: var(--spacing-0_5) var(--spacing-0_75) var(--spacing-0_5) var(--spacing-0_5);
     min-height: var(--global-small-Size);
@@ -189,7 +203,7 @@
     &.isOpen { margin-bottom: 0; }
   }
 
-  &:not(.nested, .noDivider),
+  &:not(.nested, .selectableHeader, .noDivider),
   &.noDivider + &.noDivider { border-top: 1px solid var(--theme-navpanel-divider); }
 
   .hanzoaiNavGroup-content {

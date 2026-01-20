@@ -20,24 +20,12 @@ import core, {
   type Client as CoreClient,
   type Doc,
   DOMAIN_TX,
-  type MeasureContext,
   type Ref,
   type Tx,
-  type WorkspaceDataId,
-  type WorkspaceIds,
-  type WorkspaceInfoWithStatus,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
-import { createStorageBackupStorage, restore } from '@hanzo/server-backup'
-import {
-  createDummyStorageAdapter,
-  type PipelineFactory,
-  type StorageAdapter,
-  wrapPipeline
-} from '@hanzo/server-core'
-import { createStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import { connect } from '@hanzo/server-tool'
+} from '@hcengineering/core'
+import { getMongoClient, getWorkspaceMongoDB } from '@hcengineering/mongo'
+import { connect } from '@hcengineering/server-tool'
 import { generateModelDiff, printDiff } from './mdiff'
 
 export async function diffWorkspace (mongoUrl: string, dbName: string, rawTxes: Tx[]): Promise<void> {
@@ -114,62 +102,5 @@ export async function updateField (
     await connection.upload(connection.getHierarchy().getDomain(doc?._class), [doc])
   } finally {
     await connection.close()
-  }
-}
-
-export async function backupRestore (
-  ctx: MeasureContext,
-  dbURL: string,
-  bucketName: string,
-  workspace: WorkspaceInfoWithStatus,
-  pipelineFactoryFactory: (mongoUrl: string, storage: StorageAdapter) => PipelineFactory,
-  skipDomains: string[]
-): Promise<boolean> {
-  const storageEnv = process.env.STORAGE
-  if (storageEnv === undefined) {
-    console.error('please provide STORAGE env')
-    process.exit(1)
-  }
-  if (bucketName.trim() === '') {
-    console.error('please provide butket name env')
-    process.exit(1)
-  }
-  const backupStorageConfig = storageConfigFromEnv(storageEnv)
-
-  const storageAdapter = createStorageFromConfig(backupStorageConfig.storages[0])
-
-  const workspaceStorage = createDummyStorageAdapter()
-  const pipelineFactory = pipelineFactoryFactory(dbURL, workspaceStorage)
-
-  try {
-    const storage = await createStorageBackupStorage(
-      ctx,
-      storageAdapter,
-      {
-        uuid: 'backup' as WorkspaceUuid,
-        url: bucketName,
-        dataId: bucketName as WorkspaceDataId
-      },
-      workspace.dataId ?? workspace.uuid
-    )
-    const wsUrl: WorkspaceIds = {
-      uuid: workspace.uuid,
-      dataId: workspace.dataId,
-      url: workspace.url
-    }
-    const result: boolean = await ctx.with('restore', { workspace: workspace.url }, (ctx) =>
-      restore(ctx, '', wsUrl, storage, {
-        date: -1,
-        skip: new Set(skipDomains),
-        recheck: false,
-        storageAdapter: workspaceStorage,
-        getConnection: async () => {
-          return wrapPipeline(ctx, await pipelineFactory(ctx, wsUrl, true, () => {}, null, null), wsUrl)
-        }
-      })
-    )
-    return result
-  } finally {
-    await storageAdapter.close()
   }
 }

@@ -13,18 +13,22 @@
 // limitations under the License.
 //
 
-import {
+import core, {
   type AnyAttribute,
   type Class,
   type Doc,
+  docKey,
   type FullTextSearchContext,
   getFullTextContext,
   type Hierarchy,
   type Ref,
-  type Space
-} from '@hanzo/core'
-import { type IndexedDoc } from '@hanzo/server-core'
+  type Space,
+  type VersionableDoc
+} from '@hcengineering/core'
+import { type IndexedDoc } from '@hcengineering/server-core'
 import { type FullTextPipeline } from './types'
+import { type Message } from '@hcengineering/communication-types'
+import cardPlugin, { type Card } from '@hcengineering/card'
 
 export { docKey, isFullTextAttribute } from '@hanzo/core'
 
@@ -94,12 +98,43 @@ export function isCustomAttr (attr: string): boolean {
  * @public
  */
 export function createIndexedDoc (doc: Doc, mixins: Ref<Class<Doc>>[] | undefined, space: Ref<Space>): IndexedDoc {
-  const indexedDoc = {
+  const indexedDoc: IndexedDoc = {
     id: doc._id,
     _class: [doc._class, ...(mixins ?? [])],
     modifiedBy: doc.modifiedBy,
     modifiedOn: doc.modifiedOn,
     space
+  }
+  if ((doc as VersionableDoc).baseId !== undefined) {
+    indexedDoc.baseId = (doc as VersionableDoc).baseId
+  }
+  return indexedDoc
+}
+
+export const messagePseudoClass = `${cardPlugin.class.Card}%message` as Ref<Class<Doc>>
+export const blobPseudoClass = `${cardPlugin.class.Card}%blob` as Ref<Class<Doc>>
+
+/**
+ * @public
+ */
+export function createIndexedDocFromMessage (
+  cardId: Ref<Card>,
+  cardSpace: Ref<Space>,
+  cardClass: Ref<Class<Card>>,
+  message: Pick<Message, 'id' | 'modified' | 'created' | 'creator'>
+): IndexedDoc {
+  const modifiedDate = message.modified ?? message.created
+  const modifiedOn = modifiedDate.getTime()
+  const indexedDoc = {
+    id: `${message.id}@${cardId}` as any,
+    _class: [messagePseudoClass],
+    space: cardSpace,
+    [docKey('createdOn', core.class.Doc)]: message.created.getTime(),
+    [docKey('createdBy', core.class.Doc)]: message.creator,
+    modifiedBy: message.creator,
+    modifiedOn,
+    attachedTo: cardId,
+    attachedToClass: cardClass
   }
   return indexedDoc
 }

@@ -17,8 +17,14 @@ import {
   DOMAIN_MODEL,
   DOMAIN_SPACE,
   IndexKind,
+  type AccountRole,
+  type AccountUuid,
+  type AnyAttribute,
+  type AttributePermission,
   type Class,
+  type ClassPermission,
   type CollectionSize,
+  type Doc,
   type Permission,
   type Ref,
   type Role,
@@ -26,9 +32,10 @@ import {
   type Space,
   type SpaceType,
   type SpaceTypeDescriptor,
-  type TypedSpace,
-  type AccountUuid
-} from '@hanzo/core'
+  type Tx,
+  type TxAccessLevel,
+  type TypedSpace
+} from '@hcengineering/core'
 import {
   ArrOf,
   Collection,
@@ -37,16 +44,15 @@ import {
   Mixin,
   Model,
   Prop,
-  TypeBoolean,
   TypeAccountUuid,
+  TypeBoolean,
   TypeRef,
   TypeString,
   UX
 } from '@hanzo/model'
 import { getEmbeddedLabel, type Asset, type IntlString } from '@hanzo/platform'
 import core from './component'
-import { TAttachedDoc, TDoc } from './core'
-
+import { TAttachedDoc, TClass, TDoc } from './core'
 // S P A C E
 
 @Model(core.class.Space, core.class.Doc, DOMAIN_SPACE)
@@ -154,12 +160,36 @@ export class TRole extends TAttachedDoc implements Role {
 @UX(core.string.Permission)
 export class TPermission extends TDoc implements Permission {
   label!: IntlString
+  txClass?: Ref<Class<Tx>>
+  forbid?: boolean
+  objectClass?: Ref<Class<Doc<Space>>>
+  scope?: 'space' | 'workspace'
   description?: IntlString
   icon?: Asset
+}
+
+@Model(core.class.AttributePermission, core.class.Permission)
+@UX(core.string.Permission)
+export class TAttributePermission extends TPermission implements AttributePermission {
+  attribute!: Ref<AnyAttribute>
+}
+
+@Model(core.class.ClassPermission, core.class.Permission)
+@UX(core.string.Permission)
+export class TClassPermission extends TPermission implements ClassPermission {
+  targetClass!: Ref<Class<Doc>>
 }
 
 @Mixin(core.mixin.SpacesTypeData, core.class.Space)
 @UX(getEmbeddedLabel("All spaces' type")) // TODO: add icon?
 export class TSpacesTypeData extends TSpace implements RolesAssignment {
   [key: Ref<Role>]: AccountUuid[]
+}
+
+@Mixin(core.mixin.TxAccessLevel, core.class.Class)
+export class TTxAccessLevel extends TClass implements TxAccessLevel {
+  createAccessLevel?: AccountRole
+  removeAccessLevel?: AccountRole
+  updateAccessLevel?: AccountRole
+  isIdentity?: boolean
 }

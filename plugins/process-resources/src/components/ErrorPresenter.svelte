@@ -13,15 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ExecutionError } from '@hanzo/process'
-  import { IconError, tooltip } from '@hanzo/ui'
+  import { ExecutionError } from '@hcengineering/process'
+  import { ButtonIcon, IconError } from '@hcengineering/ui'
   import ErrorTooltip from './ErrorTooltip.svelte'
 
   export let value: ExecutionError[] | null | undefined
 </script>
 
 {#if value}
-  <div use:tooltip={{ component: ErrorTooltip, props: { value } }} class="error">
-    <IconError size="medium" />
-  </div>
+  <ButtonIcon
+    icon={IconError}
+    size="small"
+    iconSize="medium"
+    kind={'tertiary'}
+    tooltip={{ component: ErrorTooltip, props: { value } }}
+    on:click
+  />
 {/if}

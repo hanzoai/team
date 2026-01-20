@@ -13,20 +13,26 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { formatName } from '@hanzo/contact'
-  import { myEmployeeStore } from '@hanzo/contact-resources'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import login, { loginId } from '@hanzo/login'
-  import { createQuery } from '@hanzo/presentation'
-  import setting, { SettingsCategory, settingId } from '@hanzo/setting'
+  import contact, { formatName, getCurrentEmployee } from '@hcengineering/contact'
+  import { myEmployeeStore } from '@hcengineering/contact-resources'
+  import core, { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+  import rating, { type PersonRating } from '@hcengineering/rating'
+  import login, { loginId } from '@hcengineering/login'
+  import presentation, {
+    createQuery,
+    getCurrentWorkspaceUrl,
+    hasResource,
+    isDisabled
+  } from '@hcengineering/presentation'
+  import setting, { settingId, SettingsCategory } from '@hcengineering/setting'
   import {
     Action,
-    Component,
-    Menu,
     closePopup,
+    Component,
     deviceOptionsStore as deviceInfo,
     getCurrentResolvedLocation,
     locationToUrl,
+    Menu,
     navigate,
     showPopup
   } from '@hanzo/ui'
@@ -34,6 +40,9 @@
   import workbench from '../plugin'
   import { logOut } from '../utils'
   import HelpAndSupport from './HelpAndSupport.svelte'
+  import { Analytics } from '@hcengineering/analytics'
+  import { allowGuestSignUpStore } from '@hcengineering/view-resources'
+  import { getMetadata } from '@hcengineering/platform'
 
   let items: SettingsCategory[] = []
 
@@ -112,15 +121,17 @@
   let actions: Action[] = []
   $: {
     actions = []
-    actions.push({
-      icon: view.icon.Setting,
-      label: setting.string.Settings,
-      action: async () => {
-        selectCategory()
-      }
-    })
+    if (hasAccountRole(account, AccountRole.DocGuest)) {
+      actions.push({
+        icon: view.icon.Setting,
+        label: setting.string.Settings,
+        action: async () => {
+          selectCategory()
+        }
+      })
+    }
     actions.push(...getMenu(items, ['main']))
-    if (hasAccountRole(account, AccountRole.User)) {
+    if (hasAccountRole(account, AccountRole.User) && !isDisabled('invites')) {
       actions.push({
         icon: setting.icon.InviteWorkspace,
         label: setting.string.InviteWorkspace,
@@ -149,28 +160,60 @@
       })
     }
 
-    actions.push(
-      {
-        icon: setting.icon.Support,
-        label: workbench.string.HelpAndSupport,
-        action: async () => {
-          helpAndSupport()
-        },
-        group: 'end'
+    actions.push({
+      icon: setting.icon.Support,
+      label: workbench.string.HelpAndSupport,
+      action: async () => {
+        helpAndSupport()
       },
-      {
-        icon: setting.icon.Signout,
-        label: setting.string.Signout,
+      group: 'end'
+    })
+
+    if (account.role === AccountRole.ReadOnlyGuest) {
+      if ($allowGuestSignUpStore) {
+        actions.push({
+          icon: setting.icon.InviteWorkspace,
+          label: view.string.ReadOnlyJoinWorkspace,
+          action: async () => {
+            navigate({ path: ['login', 'join'], query: { workspace: getCurrentWorkspaceUrl() } })
+          },
+          group: 'end'
+        })
+      }
+      actions.push({
+        icon: setting.icon.InviteWorkspace,
+        label: view.string.ReadOnlySignUp,
         action: async () => {
-          await logOut()
-          navigate({ path: [loginId] })
+          open(getMetadata(presentation.metadata.SignupUrl))
         },
         group: 'end'
-      }
-    )
+      })
+    }
+
+    actions.push({
+      icon: setting.icon.Signout,
+      label: hasAccountRole(account, AccountRole.DocGuest) ? setting.string.Signout : login.string.LogIn,
+      action: async () => {
+        await logOut()
+        navigate({ path: [loginId] })
+        Analytics.handleEvent('workbench.SignOut')
+        Analytics.logout()
+      },
+      group: 'end'
+    })
   }
   let menu: Menu
   $: addClass = $deviceInfo.isMobile && $deviceInfo.isPortrait ? 'self-end' : undefined
+
+  const levelQuery = createQuery()
+
+  let personRating: PersonRating | undefined
+
+  levelQuery.query(rating.class.PersonRating, { accountId: getCurrentAccount().uuid }, (res) => {
+    personRating = res[0]
+  })
+
+  const hasRating = hasResource(rating.component.RatingRing)
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -186,19 +229,34 @@
         editProfile(items)
       }}
     >
-      {#if person}
-        <Component is={contact.component.Avatar} props={{ person, size: 'medium', name: person.name }} />
-      {/if}
-      <div class="ml-2 flex-col">
+      {#if getCurrentEmployee() === core.employee.System}
+        <div class="ml-2 flex-col">
+          <div class="overflow-label fs-bold">System</div>
+        </div>
+      {:else}
         {#if person}
-          <div class="overflow-label fs-bold caption-color">
-            {formatName(person.name)}
-          </div>
-          <!-- TODO: Show current primary social id? -->
-          <!-- <div class="overflow-label text-sm content-dark-color">{account.email}</div> -->
+          <Component is={contact.component.Avatar} props={{ person, size: 'medium', name: person.name }} />
         {/if}
-      </div>
+        <div class="ml-2 flex-col">
+          {#if person}
+            <div class="overflow-label fs-bold caption-color" class:mt-2={hasRating}>
+              {formatName(person.name)}
+            </div>
+            <!-- TODO: Show current primary social id? -->
+            <!-- <div class="overflow-label text-sm content-dark-color">{account.email}</div> -->
+            {#if hasRating}
+              <div class="flex-row-center text-sm">
+                <Component
+                  is={rating.component.RatingRing}
+                  props={{ rating: personRating?.rating ?? 0, showValues: true }}
+                />
+              </div>
+            {/if}
+          {/if}
+        </div>
+      {/if}
     </div>
+
     <div class="ap-menuItem separator" />
   </svelte:fragment>
 </svelte:component>

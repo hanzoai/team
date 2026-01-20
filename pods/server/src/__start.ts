@@ -3,24 +3,21 @@
 //
 
 // Add this to the VERY top of the first file loaded in your app
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
-import contactPlugin from '@hanzo/contact'
-import { MeasureMetricsContext, newMetrics, setOperationLogProfiling } from '@hanzo/core'
-import { getPlatformQueue } from '@hanzo/kafka'
-import { setMetadata } from '@hanzo/platform'
-import { setDBExtraOptions } from '@hanzo/postgres'
-import { serverConfigFromEnv } from '@hanzo/server'
-import serverAiBot from '@hanzo/server-ai-bot'
-import serverCalendar from '@hanzo/server-calendar'
+import { Analytics } from '@hcengineering/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import contactPlugin from '@hcengineering/contact'
+import { newMetrics, setOperationLogProfiling } from '@hcengineering/core'
+import { getPlatformQueue } from '@hcengineering/kafka'
+import { setMetadata } from '@hcengineering/platform'
+import { setDBExtraOptions } from '@hcengineering/postgres'
+import { serverConfigFromEnv } from '@hcengineering/server'
+import serverAiBot from '@hcengineering/server-ai-bot'
+import serverCalendar from '@hcengineering/server-calendar'
+import serverCard from '@hcengineering/server-card'
 import serverCore, {
   initStatisticsContext,
   loadBrandingMap,
-  type ConnectionSocket,
-  type Session,
   type StorageConfiguration,
-  type UserStatistics,
-  type Workspace,
   type WorkspaceStatistics
 } from '@hanzo/server-core'
 import serverNotification from '@hanzo/server-notification'
@@ -28,12 +25,12 @@ import { storageConfigFromEnv } from '@hanzo/server-storage'
 import serverToken from '@hanzo/server-token'
 import { join } from 'path'
 import { start } from '.'
-import { profileStart, profileStop } from './inspector'
+import { profileStart, profileStop } from './profiler'
 
-configureAnalytics(process.env.SENTRY_DSN, {})
+configureAnalytics('server', process.env.VERSION ?? '0.7.0')
 Analytics.setTag('application', 'transactor')
 
-let getUsers: () => WorkspaceStatistics[] = () => {
+let getStats: () => WorkspaceStatistics[] = () => {
   return []
 }
 
@@ -50,11 +47,11 @@ void queue.createTopics(10).catch((err) => {
 
 // Force create server metrics context with proper logging
 const metricsContext = initStatisticsContext('transactor', {
-  getUsers: (): WorkspaceStatistics[] => {
-    return getUsers()
+  getStats: (): WorkspaceStatistics[] => {
+    return getStats()
   },
   factory: () =>
-    new MeasureMetricsContext(
+    createOpenTelemetryMetricsContext(
       'server',
       {},
       {},
@@ -62,7 +59,8 @@ const metricsContext = initStatisticsContext('transactor', {
       new SplitLogger('server', {
         root: join(process.cwd(), 'logs'),
         enableConsole: (process.env.ENABLE_CONSOLE ?? 'true') === 'true'
-      })
+      }),
+      process.env.VERSION
     )
 })
 
@@ -82,11 +80,13 @@ setMetadata(contactPlugin.metadata.LastNameFirst, lastNameFirst)
 setMetadata(serverCore.metadata.FrontUrl, config.frontUrl)
 setMetadata(serverCore.metadata.FilesUrl, config.filesUrl)
 setMetadata(serverToken.metadata.Secret, config.serverSecret)
+setMetadata(serverToken.metadata.Service, 'transactor')
 setMetadata(serverNotification.metadata.MailUrl, config.mailUrl ?? '')
 setMetadata(serverNotification.metadata.MailAuthToken, config.mailAuthToken)
 setMetadata(serverNotification.metadata.WebPushUrl, config.webPushUrl)
 setMetadata(serverAiBot.metadata.EndpointURL, process.env.AI_BOT_URL)
 setMetadata(serverCalendar.metadata.EndpointURL, process.env.CALENDAR_URL)
+setMetadata(serverCard.metadata.CommunicationEnabled, process.env.COMMUNICATION_API_ENABLED === 'true')
 
 const { shutdown, sessionManager } = start(metricsContext, config.dbUrl, {
   fulltextUrl: config.fulltextUrl,
@@ -95,6 +95,7 @@ const { shutdown, sessionManager } = start(metricsContext, config.dbUrl, {
   brandingMap: loadBrandingMap(config.brandingPath),
   accountsUrl: config.accountsUrl,
   enableCompression: config.enableCompression,
+  communicationApiEnabled: process.env.COMMUNICATION_API_ENABLED === 'true',
   profiling: {
     start: profileStart,
     stop: profileStop
@@ -103,29 +104,8 @@ const { shutdown, sessionManager } = start(metricsContext, config.dbUrl, {
   queue
 })
 
-const entryToUserStats = (session: Session, socket: ConnectionSocket): UserStatistics => {
-  return {
-    current: session.current,
-    mins5: session.mins5,
-    userId: session.getUser(),
-    sessionId: socket.id,
-    total: session.total,
-    data: socket.data
-  }
-}
-
-const workspaceToWorkspaceStats = (ws: Workspace): WorkspaceStatistics => {
-  return {
-    clientsTotal: new Set(Array.from(ws.sessions.values()).map((it) => it.session.getUser())).size,
-    sessionsTotal: ws.sessions.size,
-    workspaceName: ws.workspaceName,
-    wsId: ws.workspaceUuid,
-    sessions: Array.from(ws.sessions.values()).map((it) => entryToUserStats(it.session, it.socket))
-  }
-}
-
-getUsers = () => {
-  return Array.from(sessionManager.workspaces.values()).map((it) => workspaceToWorkspaceStats(it))
+getStats = (): WorkspaceStatistics[] => {
+  return sessionManager.getStatistics()
 }
 
 const close = (): void => {

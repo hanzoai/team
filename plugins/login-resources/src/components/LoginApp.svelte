@@ -38,6 +38,7 @@
   import CreateWorkspaceForm from './CreateWorkspaceForm.svelte'
   import Join from './Join.svelte'
   import LoginForm from './LoginForm.svelte'
+  import ProvidersOnlyForm from './ProvidersOnlyForm.svelte'
   import PasswordRequest from './PasswordRequest.svelte'
   import PasswordRestore from './PasswordRestore.svelte'
   import SelectWorkspace from './SelectWorkspace.svelte'
@@ -51,10 +52,13 @@
   import loginBack2xWebp from "../../img/login_back_2x.webp"
   import loginLogo from "../../img/logo-dark.svg"
   import AdminWorkspaces from './AdminWorkspaces.svelte'
+  import ChangePassword from './ChangePassword.svelte'
 
   export let page: Pages = 'signup'
 
   const signUpDisabled = getMetadata(login.metadata.DisableSignUp) ?? false
+  const localLoginHidden = getMetadata(login.metadata.HideLocalLogin) ?? false
+  const useOTP = getMetadata(presentation.metadata.MailUrl) != null && getMetadata(presentation.metadata.MailUrl) !== ''
   let navigateUrl: string | undefined
 
   onDestroy(location.subscribe(updatePageLoc))
@@ -141,7 +145,7 @@
       <div
         style:position="fixed"
         style:left={$deviceInfo.docWidth <= 480 ? '.75rem' : '1.75rem'}
-        style:top={'3rem'}
+        style:top={'calc(3rem + var(--huly-top-indent, 0rem))'}
         class="flex-row-center"
       >
       <img
@@ -158,13 +162,13 @@
         <Scroller padding={'1rem 0'}>
           <div class="form-content">
             {#if page === 'login'}
-              <LoginForm {navigateUrl} {signUpDisabled} />
-            {:else if page === 'authCallback'}
-              <AuthCallback />
-              {:else if page === 'callback'}
-              <AuthCallback />
+              {#if localLoginHidden}
+                <ProvidersOnlyForm />
+              {:else}
+                <LoginForm {navigateUrl} {signUpDisabled} {useOTP} />
+              {/if}
             {:else if page === 'signup'}
-              <SignupForm {navigateUrl} {signUpDisabled} />
+              <SignupForm {navigateUrl} {signUpDisabled} {localLoginHidden} {useOTP} />
             {:else if page === 'createWorkspace'}
               <CreateWorkspaceForm />
             {:else if page === 'password'}
@@ -183,6 +187,8 @@
               <ConfirmationSend />
             {:else if page === 'auth'}
               <Auth />
+            {:else if page === 'changePassword'}
+              <ChangePassword />
             {/if}
           </div>
         </Scroller>

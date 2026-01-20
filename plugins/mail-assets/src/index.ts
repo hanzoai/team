@@ -18,8 +18,5 @@ import mail from '@hanzo/mail'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(mail.icon, {
-  NewMail: `${icons}#new-mail`,
-  Inbox: `${icons}#inbox`,
-  Done: `${icons}#done`,
-  Sent: `${icons}#sent`
+  Mail: `${icons}#mail`
 })

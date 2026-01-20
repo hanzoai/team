@@ -13,10 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association, Class, Doc, Ref } from '@hanzo/core'
-  import { Label } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import { IntlString } from '@hanzo/platform'
+  import core, { Association, Class, Doc, Ref } from '@hcengineering/core'
+  import { Label } from '@hcengineering/ui'
+  import { getClient } from '@hcengineering/presentation'
+  import { IntlString } from '@hcengineering/platform'
+  import { Analytics } from '@hcengineering/analytics'
 
   export let value: Association
 
@@ -26,8 +27,8 @@
     try {
       const _classLabel = hierarchy.getClass(_class)
       return _classLabel.label
-    } catch (err) {
-      console.error(err)
+    } catch (err: any) {
+      Analytics.handleError(err)
       return core.string.Class
     }
   }

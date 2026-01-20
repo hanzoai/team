@@ -18,7 +18,7 @@
   }
   span { white-space: nowrap; }
 
-  &:focus {
+  &:not(.no-focus):focus {
     outline: 2px solid var(--global-focus-BorderColor);
     outline-offset: 2px;
   }
@@ -54,6 +54,7 @@
   }
   &.extra-small {
     height: var(--global-extra-small-Size);
+    gap: var(--spacing-0_5);
     border-radius: var(--extra-small-BorderRadius);
 
     &.round { border-radius: var(--large-BorderRadius); }
@@ -168,6 +169,65 @@
     }
   }
 
+  &.attention {
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    border: 2px solid var(--theme-button-attention-border);
+    background: var(--theme-button-attention-gradient);
+    animation: attention-pulse 2s ease-in-out infinite;
+
+    .icon { color: var(--button-accent-IconColor); }
+    span { color: var(--button-accent-LabelColor); }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--theme-button-attention-shine);
+      transition: left 0.6s ease;
+    }
+
+    &:not(.disabled, :disabled):hover {
+      background: var(--theme-button-attention-hover-gradient);
+      border-color: var(--theme-button-attention-hover-border);
+      transform: translateY(-2px);
+      box-shadow: var(--theme-button-attention-hover-shadow);
+      
+      &::before { left: 100%; }
+    }
+
+    &:not(.disabled, :disabled):active,
+    &.pressed:not(.disabled, :disabled) {
+      transform: translateY(0) scale(0.98);
+      box-shadow: var(--theme-button-attention-active-shadow);
+    }
+
+    &:not(.no-focus):focus {
+      box-shadow: var(--theme-button-attention-focus-shadow);
+    }
+
+    &:disabled:not(.loading),
+    &.disabled:not(.loading) {
+      background: var(--button-disabled-BackgroundColor);
+      border-color: var(--button-disabled-BackgroundColor);
+      animation: none;
+      transform: none;
+      box-shadow: none;
+
+      &::before { display: none; }
+    }
+
+    &.loading {
+      background: var(--theme-button-attention-active-gradient);
+      
+      span { color: var(--button-accent-LabelColor); }
+    }
+  }
+
   & > * { pointer-events: none; }
 }
 
@@ -184,7 +244,7 @@
   overflow: hidden;
   gap: var(--spacing-1);
   padding: var(--spacing-0_25) var(--spacing-0_25) var(--spacing-0_25) var(--spacing-1);
-  height: 1.625rem;
+  height: 1.75rem;
   font-weight: 500;
   background-color: var(--theme-button-pressed);
   border: 1px solid transparent;
@@ -210,6 +270,44 @@
     border-color: var(--highlight-select-border);
 
     &:hover { background-color: var(--highlight-select-hover); }
+  }
+
+  &.mini {
+    color: var(--theme-dark-color);
+    padding: var(--spacing-0_5);
+    width: var(--global-extra-small-Size);
+    height: var(--global-extra-small-Size);
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    &:disabled {
+      color: var(--theme-button-disabled);
+      cursor: default;
+    }
+
+    &.positive {
+      &:hover { background-color: var(--theme-state-positive-background-color); }
+      &.pressed,
+      &:active { background-color: var(--theme-state-positive-background-hover); }
+    }
+    &.positiveContent {
+      color: var(--theme-state-positive-color);
+      &.pressed,
+      &:hover,
+      &:active { color: var(--theme-state-positive-hover); }
+    }
+    &.negative {
+      &:hover { background-color: var(--theme-state-negative-background-color); }
+      &.pressed,
+      &:active { background-color: var(--theme-state-negative-background-hover); }
+    }
+    &.negativeContent {
+      color: var(--theme-state-negative-color);
+      &.pressed,
+      &:hover,
+      &:active { color: var(--theme-state-negative-hover); }
+    }
   }
 }
 
@@ -323,7 +421,7 @@
     &:active,
     &.pressed,
     &.pressed:hover { background-color: var(--theme-button-pressed); }
-    &:focus {
+    &:not(.no-focus):focus {
       background-color: var(--theme-button-focused);
       outline: 2px solid var(--global-focus-BorderColor);
       outline-offset: 2px;
@@ -447,7 +545,7 @@
     &:active,
     &.pressed,
     &.pressed:hover { background-color: var(--primary-button-pressed); }
-    &:focus { background-color: var(--primary-button-focused); }
+    &:not(.no-focus):focus { background-color: var(--primary-button-focused); }
     &:disabled {
       color: var(--primary-button-disabled-color);
       background-color: var(--primary-button-disabled);
@@ -463,7 +561,7 @@
     &:active,
     &.pressed,
     &.pressed:hover { background-color: var(--secondary-button-pressed); }
-    &:focus { background-color: var(--secondary-button-focused); }
+    &:not(.no-focus):focus { background-color: var(--secondary-button-focused); }
     &:disabled {
       color: var(--secondary-button-disabled-color);
       background-color: var(--secondary-button-disabled);
@@ -475,7 +573,7 @@
     &:active,
     &.pressed,
     &.pressed:hover { background-color: var(--positive-button-pressed); }
-    &:focus { background-color: var(--positive-button-focused); }
+    &:not(.no-focus):focus { background-color: var(--positive-button-focused); }
     &:disabled {
       color: var(--positive-button-disabled-color);
       background-color: var(--positive-button-disabled);
@@ -487,10 +585,67 @@
     &:active,
     &.pressed,
     &.pressed:hover { background-color: var(--negative-button-pressed); }
-    &:focus { background-color: var(--negative-button-focused); }
+    &:not(.no-focus):focus { background-color: var(--negative-button-focused); }
     &:disabled {
       color: var(--negative-button-disabled-color);
       background-color: var(--negative-button-disabled);
+    }
+  }
+  &.attention {
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    color: var(--primary-button-color);
+    background: var(--theme-button-attention-gradient);
+    border: 2px solid var(--theme-button-attention-border);
+    animation: attention-pulse 2s ease-in-out infinite;
+
+    .btn-icon,
+    .btn-right-icon { color: var(--primary-button-color); }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--theme-button-attention-shine);
+      transition: left 0.6s ease;
+    }
+
+    &:hover {
+      background: var(--theme-button-attention-hover-gradient);
+      border-color: var(--theme-button-attention-hover-border);
+      transform: translateY(-2px);
+      box-shadow: var(--theme-button-attention-hover-shadow);
+      
+      &::before { left: 100%; }
+    }
+
+    &:active,
+    &.pressed,
+    &.pressed:hover {
+      transform: translateY(0) scale(0.98);
+      box-shadow: var(--theme-button-attention-active-shadow);
+    }
+
+    &:not(.no-focus):focus {
+      box-shadow: var(--theme-button-attention-focus-shadow);
+    }
+
+    &:disabled {
+      color: var(--primary-button-disabled-color);
+      background: var(--primary-button-disabled);
+      border-color: var(--primary-button-disabled);
+      animation: none;
+      transform: none;
+      box-shadow: none;
+
+      &::before { display: none; }
+
+      .btn-icon,
+      .btn-right-icon { color: var(--primary-button-disabled-color); }
     }
   }
   &.contrast {
@@ -507,7 +662,7 @@
     &:active,
     &.pressed,
     &.pressed:hover { background-color: var(--theme-button-contrast-pressed); }
-    &:focus { background-color: var(--theme-button-contrast-hovered); }
+    &:not(.no-focus):focus { background-color: var(--theme-button-contrast-hovered); }
     &:disabled {
       color: var(--theme-button-contrast-disabled-color);
       background-color: var(--theme-button-contrast-disabled);
@@ -571,7 +726,7 @@
 
     .btn-icon { color: var(--theme-dark-color); }
 
-    &:hover, &:focus, &.selected { background-color: var(--theme-button-icon-hovered); }
+    &:hover, &:not(.no-focus):focus, &.selected { background-color: var(--theme-button-icon-hovered); }
     &:active { background-color: var(--theme-button-icon-pressed); }
     &:hover, &:focus, &.selected, &:active {
       .btn-icon { color: var(--theme-caption-color); }
@@ -589,9 +744,10 @@
   border: 1px solid transparent;
 
   button {
-    font-weight: 500;
     font-size: 0.875rem;
     border: none;
+
+    &.accent { font-weight: 500; }
 
     .btn-icon {
       width: var(--spacing-2_5);
@@ -621,6 +777,7 @@
     padding: 0;
 
     .btn-icon {
+      color: var(--theme-dark-color);
       width: var(--global-min-Size);
       height: var(--global-min-Size);
     }
@@ -669,6 +826,9 @@
     height: var(--global-small-Size);
     border-radius: var(--small-BorderRadius);
 
+    button {
+      font-size: .8125rem;
+    }
     button:first-child {
       border-top-left-radius: var(--small-BorderRadius);
       border-bottom-left-radius: var(--small-BorderRadius);
@@ -677,7 +837,11 @@
       border-top-right-radius: var(--small-BorderRadius);
       border-bottom-right-radius: var(--small-BorderRadius);
     }
-    .hanzoaiSplitButton-main {
+    button .btn-icon {
+      width: var(--spacing-2);
+      height: var(--spacing-2);
+    }
+    .hulySplitButton-main {
       padding: 0 var(--spacing-0_5) 0 var(--spacing-1);
     }
     .hanzoaiSplitButton-second {
@@ -751,7 +915,7 @@
       color: var(--button-subtle-LabelColor);
 
       &:enabled {
-        &:hover {
+        &:not(.no-focus):hover {
           background-color: var(--button-secondary-hover-BackgroundColor);
         }
         &:active,
@@ -759,13 +923,13 @@
         &.pressed:hover {
           background-color: var(--button-secondary-active-BackgroundColor);
         }
-        &:focus {
+        &:not(.no-focus):focus {
           color: var(--theme-caption-color);
           background-color: var(--theme-button-focused);
         }
       }
     }
-    &:not(.disabled):focus-within {
+    &:not(.disabled):not(.no-focus):focus-within {
       border-color: var(--theme-button-focused-border);
     }
     &.disabled {
@@ -795,7 +959,7 @@
         &.pressed:hover {
           background-color: var(--primary-button-pressed);
         }
-        &:focus {
+        &:not(.no-focus):focus {
           background-color: var(--primary-button-focused);
         }
       }
@@ -850,8 +1014,19 @@
     &.primary .hanzoaiSplitButton-second::after {
       background-color: var(--primary-button-color);
     }
-    &:focus-within .hanzoaiSplitButton-second::after {
+    &:not(.no-focus):focus-within .hulySplitButton-second::after {
       content: none;
+    }
+  }
+
+  @keyframes attention-pulse {
+    0%, 100% {
+      box-shadow: var(--theme-button-attention-active-shadow), 0 0 0 0 var(--theme-button-attention-border);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: var(--theme-button-attention-hover-shadow), 0 0 0 4px rgba(124, 58, 237, 0.1);
+      transform: scale(1.02);
     }
   }
 }

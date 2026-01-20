@@ -13,22 +13,23 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, Tag } from '@hanzo/card'
-  import { getClient } from '@hanzo/presentation'
-  import setting, { settingId } from '@hanzo/setting'
+  import { Card, Tag } from '@hcengineering/card'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import setting, { settingId } from '@hcengineering/setting'
   import {
     Button,
     Chevron,
     ExpandCollapse,
-    getColorNumberByText,
     getCurrentResolvedLocation,
     getPlatformColorDef,
     IconAdd,
     Label,
     navigate,
     showPopup,
-    themeStore
-  } from '@hanzo/ui'
+    themeStore,
+    tooltip
+  } from '@hcengineering/ui'
   import CardAttributes from './CardAttributes.svelte'
 
   export let value: Card
@@ -37,8 +38,8 @@
   export let ignoreKeys: string[]
 
   const client = getClient()
-  const hierarchy = client.getHierarchy()
-  const label = hierarchy.getClass(tag._id).label
+  const h = client.getHierarchy()
+  const label = h.getClass(tag._id).label
 
   let isCollapsed = false
 
@@ -50,45 +51,52 @@
     isCollapsed = false
   }
 
-  $: color = getPlatformColorDef(getColorNumberByText(tag.label), $themeStore.dark).color
+  $: color = getPlatformColorDef(tag.background ?? 0, $themeStore.dark).color
+
+  $: isEditable = h.hasMixin(tag, setting.mixin.Editable) && h.as(tag, setting.mixin.Editable).value
 </script>
 
 <div class="header flex flex-gap-2">
   <div
     class="label flex flex-gap-2"
     style="background: {color + '33'}; border-color: {color}"
+    use:tooltip={{ label }}
     on:click={isCollapsed ? expand : collapse}
   >
-    <Label {label} />
+    <span class="overflow-label">
+      <Label {label} />
+    </span>
     <Chevron expanded={!isCollapsed} outline fill={'var(--content-color'} />
   </div>
-  <div class="btns">
-    <Button
-      icon={IconAdd}
-      kind={'link'}
-      size={'medium'}
-      showTooltip={{ label: setting.string.AddAttribute }}
-      on:click={(ev) => {
-        showPopup(setting.component.CreateAttributePopup, { _class: tag._id, isCard: true }, 'top')
-      }}
-    />
-    <Button
-      icon={setting.icon.Setting}
-      kind={'link'}
-      size={'medium'}
-      showTooltip={{ label: setting.string.Setting }}
-      on:click={(ev) => {
-        ev.stopPropagation()
-        const loc = getCurrentResolvedLocation()
-        loc.path[2] = settingId
-        loc.path[3] = 'types'
-        loc.path[4] = tag._id
-        loc.path.length = 5
-        loc.fragment = undefined
-        navigate(loc)
-      }}
-    />
-  </div>
+  {#if hasAccountRole(getCurrentAccount(), AccountRole.Maintainer) && isEditable}
+    <div class="btns">
+      <Button
+        icon={IconAdd}
+        kind={'link'}
+        size={'medium'}
+        showTooltip={{ label: setting.string.AddAttribute }}
+        on:click={() => {
+          showPopup(setting.component.CreateAttributePopup, { _class: tag._id, isCard: true }, 'top')
+        }}
+      />
+      <Button
+        icon={setting.icon.Setting}
+        kind={'link'}
+        size={'medium'}
+        showTooltip={{ label: setting.string.Setting }}
+        on:click={(ev) => {
+          ev.stopPropagation()
+          const loc = getCurrentResolvedLocation()
+          loc.path[2] = settingId
+          loc.path[3] = 'types'
+          loc.path[4] = tag._id
+          loc.path.length = 5
+          loc.fragment = undefined
+          navigate(loc)
+        }}
+      />
+    </div>
+  {/if}
 </div>
 <ExpandCollapse isExpanded={!isCollapsed}>
   <CardAttributes object={value} _class={tag._id} to={tag.extends} {readonly} {ignoreKeys} />
@@ -105,6 +113,8 @@
     border: 1px solid;
     border-radius: 6rem;
     color: var(--theme-caption-color);
+    height: 2rem;
+    overflow: hidden;
   }
 
   .header {
@@ -112,6 +122,7 @@
     align-items: center;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
+    max-width: 100%;
 
     &:hover {
       .btns {

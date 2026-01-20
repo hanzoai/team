@@ -24,24 +24,37 @@ import {
   Doc,
   FindResult,
   generateId,
-  Person as GlobalPerson,
   Hierarchy,
   MeasureContext,
   notEmpty,
+  Person as GlobalPerson,
   PersonId,
   pickPrimarySocialId,
   Ref,
   SocialId,
   toIdMap,
-  TxFactory
-} from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import { ColorDefinition } from '@hanzo/ui'
-import contact, { AvatarProvider, AvatarType, Channel, Contact, Employee, Person, SocialIdentityRef } from '.'
+  TxFactory,
+  DocumentUpdate
+} from '@hcengineering/core'
+import platform, { getMetadata, PlatformError } from '@hcengineering/platform'
+import { ColorDefinition } from '@hcengineering/ui'
+import contact, {
+  AvatarProvider,
+  AvatarType,
+  Channel,
+  Contact,
+  Employee,
+  Person,
+  PersonSpace,
+  SocialIdentity,
+  SocialIdentityRef
+} from '.'
 
 import { AVATAR_COLORS, GravatarPlaceholderType } from './types'
+import ContactCache from './cache'
 
 let currentEmployee: Ref<Employee>
+let currentEmployeeSpace: Ref<PersonSpace>
 
 const employeeListeners: ((ref: Ref<Employee>) => void)[] = []
 /**
@@ -50,6 +63,10 @@ const employeeListeners: ((ref: Ref<Employee>) => void)[] = []
  */
 export function getCurrentEmployee (): Ref<Employee> {
   return currentEmployee
+}
+
+export function getCurrentEmployeeSpace (): Ref<PersonSpace> {
+  return currentEmployeeSpace
 }
 
 export function addEmployeeListenrer (l: (ref: Ref<Employee>) => void): void {
@@ -65,6 +82,10 @@ export function setCurrentEmployee (employee: Ref<Employee>): void {
   for (const l of employeeListeners) {
     l(employee)
   }
+}
+
+export function setCurrentEmployeeSpace (space: Ref<PersonSpace>): void {
+  currentEmployeeSpace = space
 }
 
 /**
@@ -223,7 +244,7 @@ const SEP = ','
  * @public
  */
 export function combineName (first: string, last: string): string {
-  return last + SEP + first
+  return (last ?? '') + SEP + (first ?? '')
 }
 
 /**
@@ -294,21 +315,12 @@ export async function getPersonBySocialKey (client: Client, socialKey: string): 
   return await client.findOne(contact.class.Person, { _id: socialId?.attachedTo, _class: socialId?.attachedToClass })
 }
 
-export async function getPersonBySocialId (client: Client, socialIdString: PersonId): Promise<Person | undefined> {
+export async function getEmployeeBySocialId (client: Client, socialIdString: PersonId): Promise<Employee | undefined> {
   const socialId = await client.findOne(contact.class.SocialIdentity, { _id: socialIdString as SocialIdentityRef })
 
   if (socialId === undefined) return undefined
 
-  return await client.findOne(contact.class.Person, { _id: socialId?.attachedTo, _class: socialId?.attachedToClass })
-}
-
-export async function getPersonRefBySocialId (
-  client: Client,
-  socialIdString: PersonId
-): Promise<Ref<Person> | undefined> {
-  const socialId = await client.findOne(contact.class.SocialIdentity, { _id: socialIdString as SocialIdentityRef })
-
-  return socialId?.attachedTo
+  return await client.findOne(contact.mixin.Employee, { _id: socialId.attachedTo as Ref<Employee> })
 }
 
 export async function getPersonRefsBySocialIds (
@@ -398,141 +410,485 @@ export async function ensureEmployee (
   socialIds: SocialId[],
   getGlobalPerson: () => Promise<GlobalPerson | undefined>
 ): Promise<Ref<Employee> | null> {
-  const txFactory = new TxFactory(me.primarySocialId)
-  const personByUuid = await client.findOne(contact.class.Person, { personUuid: me.uuid })
-  let personRef: Ref<Person> | undefined = personByUuid?._id
-  if (personRef === undefined) {
-    const socialIdentity = await client.findOne(contact.class.SocialIdentity, {
-      _id: { $in: me.socialIds as SocialIdentityRef[] }
-    })
+  const globalPerson = await getGlobalPerson()
+  return await ensureEmployeeForPerson(ctx, me, me, client, socialIds, globalPerson)
+}
 
-    // This social id is confirmed globally as we only have ids of confirmed social identities in socialIds array
-    personRef = socialIdentity?.attachedTo
-  }
+export async function ensureEmployeeForPerson (
+  ctx: MeasureContext,
+  me: Account,
+  person: Account,
+  client: Pick<Client, 'findOne' | 'findAll' | 'tx'>,
+  socialIds: SocialId[],
+  globalPerson?: GlobalPerson
+): Promise<Ref<Employee> | null> {
+  let personRef: Ref<Person> | undefined
+  try {
+    const txFactory = new TxFactory(me.primarySocialId)
+    const personByUuid = await client.findOne(contact.class.Person, { personUuid: person.uuid })
+    personRef = personByUuid?._id
 
-  if (personRef === undefined) {
-    await ctx.with('create-person', {}, async () => {
-      const globalPerson = await getGlobalPerson()
+    if (personRef === undefined) {
+      const socialIdentity = await client.findOne(contact.class.SocialIdentity, {
+        _id: { $in: person.socialIds as SocialIdentityRef[] }
+      })
 
-      if (globalPerson === undefined) {
-        console.error('Cannot get global person')
-        return null
+      // This social id is confirmed globally as we only have ids of confirmed social identities in socialIds array
+      personRef = socialIdentity?.attachedTo
+    }
+
+    if (personRef === undefined) {
+      // Local person not found: neither by personUuid nor by a local social identity
+      // Creating a new local person
+      await ctx.with('create-person', {}, async () => {
+        if (globalPerson === undefined) {
+          console.error('Cannot get global person')
+          return null
+        }
+
+        const data = {
+          personUuid: person.uuid,
+          name: combineName(globalPerson.firstName, globalPerson.lastName),
+          city: '',
+          avatarType: AvatarType.COLOR
+        }
+        personRef = generateId()
+
+        const createPersonTx = txFactory.createTxCreateDoc(
+          contact.class.Person,
+          contact.space.Contacts,
+          data,
+          personRef
+        )
+        await client.tx(createPersonTx)
+      })
+    } else if (personByUuid === undefined) {
+      // Local person found only by social identity, need to set personUuid
+      const updatePersonTx = txFactory.createTxUpdateDoc(contact.class.Person, contact.space.Contacts, personRef, {
+        personUuid: person.uuid
+      })
+      await client.tx(updatePersonTx)
+    }
+
+    const existingIdentifiers = toIdMap(
+      await client.findAll(contact.class.SocialIdentity, { _id: { $in: person.socialIds as SocialIdentityRef[] } })
+    )
+
+    for (const socialId of socialIds) {
+      const existing = existingIdentifiers.get(socialId._id as SocialIdentityRef)
+
+      if (existing == null) {
+        await ctx.with('create-social-identity', {}, async () => {
+          if (personRef === undefined) {
+            // something went wrong
+            console.error('Person not found')
+            return null
+          }
+
+          const createSocialIdTx = txFactory.createTxCollectionCUD(
+            contact.class.Person,
+            personRef,
+            contact.space.Contacts,
+            'socialIds',
+            txFactory.createTxCreateDoc(
+              contact.class.SocialIdentity,
+              contact.space.Contacts,
+              {
+                attachedTo: personRef,
+                attachedToClass: contact.class.Person,
+                collection: 'socialIds',
+                type: socialId.type,
+                value: socialId.value,
+                key: buildSocialIdString(socialId), // TODO: fill it in trigger or on DB level as stored calculated column or smth?
+                verifiedOn: socialId.verifiedOn,
+                isDeleted: socialId.isDeleted ?? false
+              },
+              socialId._id as SocialIdentityRef
+            )
+          )
+          await client.tx(createSocialIdTx)
+        })
+      } else {
+        // If not confirmed locally can be attached to a different person (persons merge scenario)
+        // Confirmed social identity should not be attached to a different person for now
+        // It will change with accounts merge function
+        if (existing.verifiedOn != null && existing.attachedTo !== personRef) {
+          throw new Error('Confirmed social identity is attached to the wrong person')
+        }
+
+        // Check and update if needed. It can:
+        // 1. Become verified (maybe with persons merge) (changes verifiedOn, attachedTo)
+        const sidUpdate: DocumentUpdate<SocialIdentity> = {}
+        let needUpdate = false
+
+        // become verified
+        if (existing.verifiedOn == null) {
+          sidUpdate.verifiedOn = socialId.verifiedOn
+          needUpdate = true
+        }
+
+        // merged from another person
+        if (existing.attachedTo !== personRef) {
+          sidUpdate.attachedTo = personRef
+          // Bump collection in Person?
+          needUpdate = true
+        }
+
+        // become deleted
+        if (existing.isDeleted !== socialId.isDeleted && socialId.isDeleted === true) {
+          sidUpdate.value = socialId.value
+          sidUpdate.key = socialId.key
+          sidUpdate.isDeleted = socialId.isDeleted
+          needUpdate = true
+        }
+
+        if (needUpdate) {
+          const updateSocialIdentityTx = txFactory.createTxUpdateDoc(
+            contact.class.SocialIdentity,
+            contact.space.Contacts,
+            existing._id,
+            sidUpdate
+          )
+
+          await client.tx(updateSocialIdentityTx)
+        }
       }
+    }
 
-      const data = {
-        personUuid: me.uuid,
-        name: combineName(globalPerson.firstName, globalPerson.lastName),
-        city: globalPerson.city,
-        avatarType: AvatarType.COLOR
-      }
-      personRef = generateId()
+    // NOTE: it is important to create Employee after Person and SocialIdentities are ensured so all the triggers applied
+    // on Employee creation will be able to properly map things
+    const employeeRole =
+      person.role === AccountRole.Guest || person.role === AccountRole.ReadOnlyGuest ? 'GUEST' : 'USER'
+    const employee = await client.findOne(contact.mixin.Employee, { _id: personRef as Ref<Employee> })
 
-      const createPersonTx = txFactory.createTxCreateDoc(contact.class.Person, contact.space.Contacts, data, personRef)
-
-      await client.tx(createPersonTx)
-    })
-  } else if (personByUuid === undefined) {
-    const updatePersonTx = txFactory.createTxUpdateDoc(contact.class.Person, contact.space.Contacts, personRef, {
-      personUuid: me.uuid
-    })
-
-    await client.tx(updatePersonTx)
-  }
-
-  const existingIdentifiers = toIdMap(
-    await client.findAll(contact.class.SocialIdentity, { _id: { $in: me.socialIds as SocialIdentityRef[] } })
-  )
-
-  for (const socialId of socialIds) {
-    const existing = existingIdentifiers.get(socialId._id as SocialIdentityRef)
-
-    if (existing === undefined) {
-      await ctx.with('create-social-identity', {}, async () => {
+    if (
+      employee === undefined ||
+      !Hierarchy.hasMixin(employee, contact.mixin.Employee) ||
+      !employee.active ||
+      employee.role !== employeeRole
+    ) {
+      await ctx.with('create-employee', {}, async () => {
         if (personRef === undefined) {
           // something went wrong
           console.error('Person not found')
           return null
         }
 
-        const createSocialIdTx = txFactory.createTxCollectionCUD(
-          contact.class.Person,
+        const createEmployeeTx = txFactory.createTxMixin(
           personRef,
+          contact.class.Person,
           contact.space.Contacts,
-          'socialIds',
-          txFactory.createTxCreateDoc(
-            contact.class.SocialIdentity,
-            contact.space.Contacts,
-            {
-              attachedTo: personRef,
-              attachedToClass: contact.class.Person,
-              collection: 'socialIds',
-              type: socialId.type,
-              value: socialId.value,
-              key: buildSocialIdString(socialId), // TODO: fill it in trigger or on DB level as stored calculated column or smth?
-              verifiedOn: socialId.verifiedOn
-            },
-            socialId._id as SocialIdentityRef
-          )
-        )
-
-        await client.tx(createSocialIdTx)
-      })
-    } else {
-      // This social identity must be attached to the correct person. If it's not the case, something is wrong.
-      // personRef must be readonly after creation and must NEVER be changed.
-      if (existing.attachedTo !== personRef) {
-        throw new Error('Social identity is attached to the wrong person')
-      }
-
-      // Check and update if needed
-      if (existing.verifiedOn == null) {
-        const updateSocialIdentityTx = txFactory.createTxUpdateDoc(
-          contact.class.SocialIdentity,
-          contact.space.Contacts,
-          existing._id,
+          contact.mixin.Employee,
           {
-            verifiedOn: socialId.verifiedOn
+            active: true,
+            role: employeeRole
           }
         )
+        await client.tx(createEmployeeTx)
+      })
+    }
 
-        await client.tx(updateSocialIdentityTx)
+    // TODO: check for merged persons with this one and do the merge
+    return personRef as Ref<Employee>
+  } catch (err: any) {
+    // If Forbidden error occurred, return personRef if it exists, otherwise throw error
+    if (err instanceof PlatformError && err.status.code === platform.status.Forbidden) {
+      if (personRef != null) {
+        ctx.info('Skip employee update for person without full access rights')
+        return personRef as Ref<Employee>
       }
     }
+    throw err
+  }
+}
+
+export const contactCache = ContactCache.instance
+
+export async function loadCachesForPersonId (client: Client, personId: PersonId): Promise<void> {
+  if (personId == null || personId === '') return
+  const sidObj = await client.findOne(
+    contact.class.SocialIdentity,
+    {
+      _id: personId as SocialIdentityRef
+    },
+    {
+      lookup: {
+        attachedTo: contact.class.Person
+      }
+    }
+  )
+
+  contactCache.fillCachesForPersonId(personId, sidObj)
+}
+
+export async function loadCachesForPersonIds (client: Client, personIds: PersonId[]): Promise<void> {
+  const sidObjsMap = toIdMap(
+    await client.findAll(
+      contact.class.SocialIdentity,
+      {
+        _id: { $in: personIds as SocialIdentityRef[] }
+      },
+      {
+        lookup: {
+          attachedTo: contact.class.Person
+        }
+      }
+    )
+  )
+
+  for (const personId of personIds) {
+    const sidObj = sidObjsMap.get(personId as SocialIdentityRef)
+
+    contactCache.fillCachesForPersonId(personId, sidObj)
+  }
+}
+
+export async function loadCachesForPersonRef (client: Client, personRef: Ref<Person>): Promise<void> {
+  const person = await client.findOne(
+    contact.class.Person,
+    {
+      _id: personRef
+    },
+    {
+      lookup: {
+        _id: { socialIds: contact.class.SocialIdentity }
+      }
+    }
+  )
+
+  contactCache.fillCachesForPersonRef(personRef, person)
+}
+
+export async function loadCachesForPersonRefs (client: Client, personRefs: Array<Ref<Person>>): Promise<void> {
+  const persons = toIdMap(
+    await client.findAll(
+      contact.class.Person,
+      {
+        _id: { $in: personRefs }
+      },
+      {
+        lookup: {
+          _id: { socialIds: contact.class.SocialIdentity }
+        }
+      }
+    )
+  )
+
+  for (const personRef of personRefs) {
+    const person = persons.get(personRef)
+
+    contactCache.fillCachesForPersonRef(personRef, person)
+  }
+}
+
+export async function getPersonRefByPersonId (client: Client, personId: PersonId): Promise<Ref<Person> | null> {
+  if (!contactCache.personRefByPersonId.has(personId)) {
+    await loadCachesForPersonId(client, personId)
   }
 
-  // NOTE: it is important to create Employee after Person and SocialIdentities are ensured so all the triggers applied
-  // on Employee creation will be able to properly map things
-  const employeeRole = me.role === AccountRole.Guest ? 'GUEST' : 'USER'
-  const employee = await client.findOne(contact.mixin.Employee, { _id: personRef as Ref<Employee> })
+  return contactCache.personRefByPersonId.get(personId) ?? null
+}
 
-  if (
-    employee === undefined ||
-    !Hierarchy.hasMixin(employee, contact.mixin.Employee) ||
-    !employee.active ||
-    employee.role !== employeeRole
-  ) {
-    await ctx.with('create-employee', {}, async () => {
-      if (personRef === undefined) {
-        // something went wrong
-        console.error('Person not found')
-        return null
-      }
-
-      const createEmployeeTx = txFactory.createTxMixin(
-        personRef,
-        contact.class.Person,
-        contact.space.Contacts,
-        contact.mixin.Employee,
-        {
-          active: true,
-          role: employeeRole
-        }
-      )
-
-      await client.tx(createEmployeeTx)
+export function getPersonRefByPersonIdCb (
+  client: Client,
+  personId: PersonId,
+  cb: (person: Ref<Person> | null) => void
+): void {
+  let personRef: Ref<Person> | null | undefined = contactCache.personRefByPersonId.get(personId)
+  if (personRef !== undefined) {
+    cb(personRef)
+  } else {
+    void loadCachesForPersonId(client, personId).then(() => {
+      personRef = contactCache.personRefByPersonId.get(personId)
+      cb(personRef ?? null)
     })
   }
-
-  // TODO: check for merged persons with this one and do the merge
-  return personRef as Ref<Employee>
 }
+
+function getPersonRefsByPersonIdsFromCache (personIds: PersonId[]): Map<PersonId, Ref<Person>> {
+  return new Map(
+    personIds
+      .map((pid) => {
+        const ref = contactCache.personRefByPersonId.get(pid)
+        return ref != null ? ([pid, ref] as const) : undefined
+      })
+      .filter(notEmpty)
+  )
+}
+
+export async function getPersonRefsByPersonIds (
+  client: Client,
+  personIds: PersonId[]
+): Promise<Map<PersonId, Ref<Person>>> {
+  if (personIds.some((personId) => !contactCache.personRefByPersonId.has(personId))) {
+    await loadCachesForPersonIds(client, personIds)
+  }
+
+  return getPersonRefsByPersonIdsFromCache(personIds)
+}
+
+export function getPersonRefsByPersonIdsCb (
+  client: Client,
+  personIds: PersonId[],
+  cb: (personRefs: Map<PersonId, Ref<Person>>) => void
+): void {
+  if (personIds.some((personId) => !contactCache.personRefByPersonId.has(personId))) {
+    void loadCachesForPersonIds(client, personIds).then(() => {
+      const personRefs = getPersonRefsByPersonIdsFromCache(personIds)
+      cb(personRefs)
+    })
+  } else {
+    const personRefs = getPersonRefsByPersonIdsFromCache(personIds)
+    cb(personRefs)
+  }
+}
+
+export async function getPersonByPersonId (client: Client, personId: PersonId): Promise<Readonly<Person> | null> {
+  if (!contactCache.personByPersonId.has(personId)) {
+    await loadCachesForPersonId(client, personId)
+  }
+
+  return contactCache.personByPersonId.get(personId) ?? null
+}
+
+export function getPersonByPersonIdCb (
+  client: Client,
+  personId: PersonId,
+  cb: (person: Readonly<Person> | null) => void
+): void {
+  let person: Readonly<Person> | null | undefined = contactCache.personByPersonId.get(personId)
+  if (person !== undefined) {
+    cb(person)
+  } else {
+    void loadCachesForPersonId(client, personId).then(() => {
+      person = contactCache.personByPersonId.get(personId) ?? null
+      cb(person ?? null)
+    })
+  }
+}
+
+function getPersonsByPersonIdsFromCache (personIds: PersonId[]): Map<PersonId, Readonly<Person>> {
+  return new Map(
+    personIds
+      .map((pid) => {
+        const person = contactCache.personByPersonId.get(pid)
+        return person != null ? ([pid, person] as const) : undefined
+      })
+      .filter(notEmpty)
+  )
+}
+
+export async function getPersonsByPersonIds (
+  client: Client,
+  personIds: PersonId[]
+): Promise<Map<PersonId, Readonly<Person>>> {
+  if (personIds.some((personId) => !contactCache.personByPersonId.has(personId))) {
+    await loadCachesForPersonIds(client, personIds)
+  }
+
+  return getPersonsByPersonIdsFromCache(personIds)
+}
+
+export function getPersonsByPersonIdsCb (
+  client: Client,
+  personIds: PersonId[],
+  cb: (persons: Map<PersonId, Readonly<Person>>) => void
+): void {
+  if (personIds.some((personId) => !contactCache.personByPersonId.has(personId))) {
+    void loadCachesForPersonIds(client, personIds).then(() => {
+      const persons = getPersonsByPersonIdsFromCache(personIds)
+      cb(persons)
+    })
+  } else {
+    const persons = getPersonsByPersonIdsFromCache(personIds)
+    cb(persons)
+  }
+}
+
+export async function getPersonByPersonRef (client: Client, personRef: Ref<Person>): Promise<Readonly<Person> | null> {
+  if (!contactCache.personByRef.has(personRef)) {
+    await loadCachesForPersonRef(client, personRef)
+  }
+
+  return contactCache.personByRef.get(personRef) ?? null
+}
+
+export function getPersonByPersonRefCb (
+  client: Client,
+  personRef: Ref<Person>,
+  cb: (person: Readonly<Person> | null) => void
+): void {
+  let person: Readonly<Person> | null | undefined = contactCache.personByRef.get(personRef)
+  if (person !== undefined) {
+    cb(person)
+  } else {
+    void loadCachesForPersonRef(client, personRef).then(() => {
+      person = contactCache.personByRef.get(personRef) ?? null
+      cb(person ?? null)
+    })
+  }
+}
+
+function getPersonsByPersonRefsFromCache (personRefs: Array<Ref<Person>>): Map<Ref<Person>, Readonly<Person>> {
+  return new Map(
+    personRefs
+      .map((personRef) => {
+        const person = contactCache.personByRef.get(personRef)
+        return person != null ? ([personRef, person] as const) : undefined
+      })
+      .filter(notEmpty)
+  )
+}
+
+export async function getPersonsByPersonRefs (
+  client: Client,
+  personRefs: Array<Ref<Person>>
+): Promise<Map<Ref<Person>, Readonly<Person>>> {
+  if (personRefs.some((personRef) => !contactCache.personByRef.has(personRef))) {
+    await loadCachesForPersonRefs(client, personRefs)
+  }
+
+  return getPersonsByPersonRefsFromCache(personRefs)
+}
+
+export function getPersonsByPersonRefsCb (
+  client: Client,
+  personRefs: Array<Ref<Person>>,
+  cb: (persons: Map<Ref<Person>, Readonly<Person>>) => void
+): void {
+  if (personRefs.some((personRef) => !contactCache.personByRef.has(personRef))) {
+    void loadCachesForPersonRefs(client, personRefs).then(() => {
+      const persons = getPersonsByPersonRefsFromCache(personRefs)
+      cb(persons)
+    })
+  } else {
+    const persons = getPersonsByPersonRefsFromCache(personRefs)
+    cb(persons)
+  }
+}
+
+export async function getSocialIdByPersonId (client: Client, personId: PersonId): Promise<SocialIdentity | null> {
+  if (!contactCache.personRefByPersonId.has(personId)) {
+    await loadCachesForPersonId(client, personId)
+  }
+
+  return contactCache.socialIdByPersonId.get(personId) ?? null
+}
+
+export function getSocialIdByPersonIdCb (
+  client: Client,
+  personId: PersonId,
+  cb: (socialId: SocialIdentity | null) => void
+): void {
+  let socialId: SocialIdentity | null | undefined = contactCache.socialIdByPersonId.get(personId)
+  if (socialId !== undefined) {
+    cb(socialId)
+  } else {
+    void loadCachesForPersonId(client, personId).then(() => {
+      socialId = contactCache.socialIdByPersonId.get(personId) ?? null
+      cb(socialId ?? null)
+    })
+  }
+}
+
+export type { Change as ContactCacheChange } from './cache'

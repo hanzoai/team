@@ -15,8 +15,8 @@
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
-  import { Asset } from '@hanzo/platform'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { Asset } from '@hcengineering/platform'
   import core, {
     Data,
     DocumentUpdate,
@@ -29,14 +29,13 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import view from '@hanzo/view'
-  import testManagement, { TestProject } from '@hanzo/test-management'
-  import presentation, { Card, getClient, reduceCalls } from '@hanzo/presentation'
+  } from '@hcengineering/core'
+  import view from '@hcengineering/view'
+  import testManagement, { TestProject } from '@hcengineering/test-management'
+  import presentation, { Card, IconWithEmoji, getClient, reduceCalls } from '@hcengineering/presentation'
   import {
     Button,
     EditBox,
-    IconWithEmoji,
     Label,
     Toggle,
     getColorNumberByText,
@@ -64,7 +63,7 @@
 
   let members: AccountUuid[] =
     project?.members !== undefined ? hierarchy.clone(project.members) : [getCurrentAccount().uuid]
-  $: membersPersons = members.map((m) => $personRefByAccountUuidStore.get(m)).filter(notEmpty)
+  $: membersPersons = members.map((m) => $employeeRefByAccountUuidStore.get(m)).filter(notEmpty)
   let owners: AccountUuid[] =
     project?.owners !== undefined ? hierarchy.clone(project.owners) : [getCurrentAccount().uuid]
   let rolesAssignment: RolesAssignment = {}
@@ -323,12 +322,12 @@
         <Label label={testManagementRes.string.ChooseIcon} />
       </div>
       <Button
-        icon={icon === view.ids.IconWithEmoji ? IconWithEmoji : icon ?? testManagement.icon.Home}
+        icon={icon === view.ids.IconWithEmoji ? IconWithEmoji : (icon ?? testManagement.icon.Home)}
         iconProps={icon === view.ids.IconWithEmoji
           ? { icon: color, size: 'medium' }
           : {
               fill:
-                color !== undefined
+                color !== undefined && typeof color !== 'string'
                   ? getPlatformColorDef(color, $themeStore.dark).icon
                   : getPlatformColorForTextDef(name, $themeStore.dark).icon
             }}
@@ -376,7 +375,7 @@
       {#each roles as role}
         <div class="antiGrid-row">
           <div class="antiGrid-row__header">
-            <Label label={testManagementRes.string.RoleLabel} params={{ role: role.name }} />
+            <Label label={view.string.RoleLabel} params={{ role: role.name }} />
           </div>
           <AccountArrayEditor
             value={rolesAssignment?.[role._id] ?? []}

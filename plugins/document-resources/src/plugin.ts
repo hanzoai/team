@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import document, { type Document, documentId } from '@hanzo/document'
-import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
-import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
+import { type Client, type Doc, type Ref } from '@hcengineering/core'
+import document, { documentId, type Document } from '@hcengineering/document'
+import { mergeIds, type IntlString, type Resource } from '@hcengineering/platform'
+import { type AnyComponent, type Location } from '@hcengineering/ui/src/types'
 
 export default mergeIds(documentId, document, {
   component: {
@@ -28,7 +28,6 @@ export default mergeIds(documentId, document, {
   },
   function: {
     DocumentTitleProvider: '' as Resource<<T extends Doc>(client: Client, ref: Ref<T>, doc?: T) => Promise<string>>,
-    GetDocumentLink: '' as Resource<(doc: Doc, props: Record<string, any>) => Promise<string>>,
     GetObjectLinkFragment: '' as Resource<(doc: Doc, props: Record<string, any>) => Promise<Location>>,
     GetDocumentLinkId: '' as Resource<(doc: Doc) => Promise<string>>,
     ParseDocumentId: '' as Resource<(id: string) => Promise<Ref<Document> | undefined>>
@@ -51,7 +50,6 @@ export default mergeIds(documentId, document, {
     Authors: '' as IntlString,
     Backlinks: '' as IntlString,
     History: '' as IntlString,
-    SavedDocuments: '' as IntlString,
     AddLabel: '' as IntlString,
     NewTeamspace: '' as IntlString,
     CreateTeamspace: '' as IntlString,
@@ -72,6 +70,7 @@ export default mergeIds(documentId, document, {
     Star: '' as IntlString,
     Unstar: '' as IntlString,
     CopyDocumentUrl: '' as IntlString,
+    DocumentUrlCopied: '' as IntlString,
 
     Lock: '' as IntlString,
     Unlock: '' as IntlString,
@@ -88,8 +87,6 @@ export default mergeIds(documentId, document, {
     CompareTo: '' as IntlString,
 
     Color: '' as IntlString,
-    Icon: '' as IntlString,
-
-    RoleLabel: '' as IntlString
+    Icon: '' as IntlString
   }
 })

@@ -13,30 +13,40 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import contact from '@hanzo/contact'
-import { AccountRole, DOMAIN_MODEL, type Blob, type Domain, type Ref, type AccountUuid } from '@hanzo/core'
-import { Mixin, Model, type Builder, UX } from '@hanzo/model'
-import core, { TClass, TConfiguration, TDoc } from '@hanzo/model-core'
-import view, { createAction } from '@hanzo/model-view'
-import notification from '@hanzo/notification'
-import type { Asset, IntlString } from '@hanzo/platform'
+import activity from '@hcengineering/activity'
+import contact from '@hcengineering/contact'
 import {
+  AccountRole,
+  DOMAIN_MODEL,
+  type AccountUuid,
+  type Blob,
+  type ClassCollaborators,
+  type Ref,
+  type IntegrationKind
+} from '@hcengineering/core'
+import exportPlugin from '@hcengineering/export'
+import { Mixin, Model, UX, type Builder } from '@hcengineering/model'
+import core, { TClass, TConfiguration, TDoc } from '@hcengineering/model-core'
+import view, { createAction } from '@hcengineering/model-view'
+import notification from '@hcengineering/notification'
+import type { Asset, IntlString } from '@hcengineering/platform'
+import {
+  DOMAIN_SETTING,
   settingId,
   type Editable,
   type Handler,
   type Integration,
   type IntegrationType,
   type InviteSettings,
+  type OfficeSettings,
   type SettingsCategory,
   type SpaceTypeCreator,
   type SpaceTypeEditor,
   type SpaceTypeEditorSection,
   type UserMixin,
   type WorkspaceSetting
-} from '@hanzo/setting'
-import templates from '@hanzo/templates'
-import exportPlugin from '@hanzo/export'
+} from '@hcengineering/setting'
+import templates from '@hcengineering/templates'
 import setting from './plugin'
 
 import workbench, { WidgetType } from '@hanzo/model-workbench'
@@ -45,8 +55,6 @@ import { type AnyComponent } from '@hanzo/ui/src/types'
 export { settingId } from '@hanzo/setting'
 export { settingOperation } from './migration'
 export { default } from './plugin'
-
-export const DOMAIN_SETTING = 'setting' as Domain
 
 @Model(setting.class.Integration, core.class.Doc, DOMAIN_SETTING)
 @UX(setting.string.Integrations)
@@ -86,6 +94,8 @@ export class TIntegrationType extends TDoc implements IntegrationType {
   reconnectComponent?: AnyComponent
   onDisconnect!: Handler
   configureComponent?: AnyComponent
+  kind!: IntegrationKind
+  stateComponent?: AnyComponent
 }
 
 @Mixin(setting.mixin.Editable, core.class.Class)
@@ -102,6 +112,13 @@ export class TInviteSettings extends TConfiguration implements InviteSettings {
   expirationTime!: number
   emailMask!: string
   limit!: number
+}
+
+@Model(setting.class.OfficeSettings, core.class.Configuration, DOMAIN_SETTING)
+@UX(setting.string.OfficeSettings)
+export class TOfficeSettings extends TConfiguration implements OfficeSettings {
+  defaultStartWithTranscription!: boolean
+  defaultStartWithRecording!: boolean
 }
 
 @Model(setting.class.WorkspaceSetting, core.class.Doc, DOMAIN_SETTING)
@@ -129,6 +146,7 @@ export function createModel (builder: Builder): void {
     TEditable,
     TUserMixin,
     TInviteSettings,
+    TOfficeSettings,
     TWorkspaceSetting,
     TSpaceTypeEditor,
     TSpaceTypeCreator
@@ -146,12 +164,9 @@ export function createModel (builder: Builder): void {
     setting.ids.SettingsWidget
   )
 
-  builder.mixin(setting.class.Integration, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<Integration>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: setting.class.Integration,
     fields: ['modifiedBy']
-  })
-
-  builder.mixin(setting.class.Integration, core.class.Class, view.mixin.ObjectPanel, {
-    component: setting.component.IntegrationPanel
   })
 
   builder.createDoc(
@@ -210,6 +225,7 @@ export function createModel (builder: Builder): void {
       component: setting.component.Integrations,
       group: 'settings-account',
       role: AccountRole.User,
+      feature: 'integrations',
       order: 1500
     },
     setting.ids.Integrations
@@ -223,6 +239,7 @@ export function createModel (builder: Builder): void {
       icon: setting.icon.Mailbox,
       component: setting.component.Mailboxes,
       group: 'settings-account',
+      feature: 'mailboxes',
       role: AccountRole.User,
       order: 1700
     },
@@ -249,6 +266,7 @@ export function createModel (builder: Builder): void {
       label: setting.string.Backup,
       icon: setting.icon.Setting,
       component: setting.component.Backup,
+      feature: 'backup',
       order: 950,
       role: AccountRole.Owner
     },
@@ -289,8 +307,7 @@ export function createModel (builder: Builder): void {
       icon: setting.icon.Setting,
       component: setting.component.Configure,
       order: 1200,
-      role: AccountRole.Owner,
-      adminOnly: true
+      role: AccountRole.Owner
     },
     setting.ids.Configure
   )
@@ -346,6 +363,7 @@ export function createModel (builder: Builder): void {
       icon: setting.icon.InviteSettings,
       component: setting.component.InviteSetting,
       group: 'settings-editor',
+      feature: 'invites',
       role: AccountRole.Maintainer,
       order: 4700
     },
@@ -360,10 +378,26 @@ export function createModel (builder: Builder): void {
       icon: exportPlugin.icon.Export,
       component: exportPlugin.component.ExportSettings,
       group: 'settings-editor',
+      feature: 'export',
       role: AccountRole.User,
       order: 4800
     },
     setting.ids.Export
+  )
+  builder.createDoc(
+    setting.class.WorkspaceSettingCategory,
+    core.space.Model,
+    {
+      name: 'office',
+      label: setting.string.OfficeSettings,
+      icon: setting.icon.OfficeSettings,
+      component: setting.component.OfficeSettings,
+      group: 'settings-editor',
+      feature: 'love',
+      role: AccountRole.Maintainer,
+      order: 4900
+    },
+    setting.ids.OfficeSettings
   )
   // Currently remove Support item from settings
   // builder.createDoc(
@@ -413,7 +447,7 @@ export function createModel (builder: Builder): void {
     workbench.class.Application,
     core.space.Model,
     {
-      label: setting.string.Setting,
+      label: setting.string.Settings,
       icon: setting.icon.Setting,
       alias: settingId,
       hidden: true,
@@ -451,8 +485,16 @@ export function createModel (builder: Builder): void {
     editor: setting.component.DateTypeEditor
   })
 
+  builder.mixin(contact.mixin.Employee, core.class.Class, view.mixin.TypeEditor, {
+    editor: setting.component.EmployeeRefEditor
+  })
+
   builder.mixin(core.class.TypeNumber, core.class.Class, view.mixin.ObjectEditor, {
     editor: setting.component.NumberTypeEditor
+  })
+
+  builder.mixin(core.class.TypeIdentifier, core.class.Class, view.mixin.ObjectEditor, {
+    editor: setting.component.IdentifierTypeEditor
   })
 
   builder.mixin(core.class.RefTo, core.class.Class, view.mixin.ObjectEditor, {
@@ -693,6 +735,14 @@ export function createModel (builder: Builder): void {
 
   builder.mixin(core.class.Permission, core.class.Class, view.mixin.ObjectPresenter, {
     presenter: setting.component.PermissionPresenter
+  })
+
+  builder.mixin(core.class.AttributePermission, core.class.Class, view.mixin.ObjectPresenter, {
+    presenter: setting.component.AttributePermissionPresenter
+  })
+
+  builder.mixin(core.class.ClassPermission, core.class.Class, view.mixin.ObjectPresenter, {
+    presenter: setting.component.ClassPermissionPresenter
   })
 
   builder.createDoc(core.class.DomainIndexConfiguration, core.space.Model, {

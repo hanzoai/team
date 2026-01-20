@@ -1,7 +1,5 @@
 import { getWorkspaceById, getWorkspaceByUrl, type AccountDB, type Workspace } from '@hanzo/account'
 import {
-  systemAccountUuid,
-  type WorkspaceUuid,
   type AttachedData,
   type AttachedDoc,
   type Class,
@@ -9,10 +7,9 @@ import {
   type DocumentUpdate,
   type Ref,
   type Space,
-  type TxOperations
-} from '@hanzo/core'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
+  type TxOperations,
+  type WorkspaceUuid
+} from '@hcengineering/core'
 
 export async function findOrUpdateAttached<T extends AttachedDoc> (
   client: TxOperations,
@@ -61,13 +58,4 @@ export async function getWorkspace (db: AccountDB, workspace: string): Promise<W
   return wsObj
 }
 
-export function getToolToken (workspace?: WorkspaceUuid): string {
-  return generateToken(systemAccountUuid, workspace, { service: 'tool' })
-}
-
-export async function getWorkspaceTransactorEndpoint (
-  workspace: WorkspaceUuid,
-  type: 'external' | 'internal' = 'external'
-): Promise<string> {
-  return await getTransactorEndpoint(getToolToken(workspace), type)
-}
+export { getToolToken, getWorkspaceTransactorEndpoint } from '@hcengineering/server-tool'

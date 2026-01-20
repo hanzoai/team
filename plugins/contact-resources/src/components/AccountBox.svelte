@@ -13,14 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Person } from '@hanzo/contact'
-  import { PersonId, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { ButtonKind, ButtonSize, IconSize } from '@hanzo/ui'
+  import { Employee } from '@hcengineering/contact'
+  import { notEmpty, PersonId, Ref } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { ButtonKind, ButtonSize, IconSize } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
   import contact from '../plugin'
-  import { personRefByPersonIdStore, primarySocialIdByPersonRefStore } from '../utils'
+  import { employeeByPersonIdStore, primarySocialIdByEmployeeRefStore } from '../utils'
   import UserBox from './UserBox.svelte'
+  import { Analytics } from '@hcengineering/analytics'
 
   export let label: IntlString = contact.string.Employee
   export let value: PersonId | null | undefined
@@ -31,28 +32,49 @@
   export let justify: 'left' | 'center' = 'center'
   export let width: string | undefined = undefined
   export let readonly = false
+  export let mapToPrimarySocialId = true
 
   $: docQuery =
     include.length === 0
       ? {}
       : {
           _id: {
-            $in: include
-              .map((personId) => $personRefByPersonIdStore.get(personId))
-              .filter((p) => p !== undefined) as Ref<Contact>[]
+            $in: include.map((personId) => $employeeByPersonIdStore.get(personId)?._id).filter(notEmpty)
           }
         }
-  $: selectedEmp = value != null ? $personRefByPersonIdStore.get(value) : value
+  $: selectedEmp = value != null ? $employeeByPersonIdStore.get(value)?._id : value
+  let employeeToPersonIdMap = new Map<Ref<Employee>, PersonId>()
+  $: employeeToPersonIdMap = mapToPrimarySocialId
+    ? employeeToPersonIdMap
+    : new Map(
+      include
+        .map((personId) => {
+          const employee = $employeeByPersonIdStore.get(personId)
+          return employee !== undefined ? ([employee._id, personId] as const) : null
+        })
+        .filter(notEmpty)
+    )
 
   const dispatch = createEventDispatcher()
 
-  function change (e: CustomEvent<Ref<Person> | null>): void {
+  function change (e: CustomEvent<Ref<Employee> | null>): void {
     if (e.detail === null) {
       dispatch('change', null)
     } else {
-      const socialString = $primarySocialIdByPersonRefStore.get(e.detail)
+      let socialString: PersonId | undefined
+
+      if (mapToPrimarySocialId) {
+        socialString = $primarySocialIdByEmployeeRefStore.get(e.detail)
+      } else {
+        socialString = employeeToPersonIdMap.get(e.detail)
+        if (socialString === undefined) {
+          socialString = $primarySocialIdByEmployeeRefStore.get(e.detail)
+          console.warn('PersonId not found in provided social id list, falling back to primary social ID:', e.detail)
+        }
+      }
       if (socialString === undefined) {
         console.error('Social id not found for person', e.detail)
+        Analytics.handleError(new Error(`Social id not found for person ${e.detail}`))
         return
       }
 

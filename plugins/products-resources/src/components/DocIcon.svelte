@@ -13,17 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset } from '@hanzo/platform'
-  import {
-    AnySvelteComponent,
-    Icon,
-    IconFolder,
-    IconSize,
-    IconWithEmoji,
-    getPlatformColorDef,
-    themeStore
-  } from '@hanzo/ui'
-  import view, { IconProps } from '@hanzo/view'
+  import { Asset } from '@hcengineering/platform'
+  import { IconWithEmoji } from '@hcengineering/presentation'
+  import { AnySvelteComponent, Icon, IconFolder, IconSize, getPlatformColorDef, themeStore } from '@hcengineering/ui'
+  import view, { IconProps } from '@hcengineering/view'
 
   import { ComponentType } from 'svelte'
 
@@ -35,10 +28,13 @@
 
 <Icon
   {size}
-  icon={value.icon === iconWithEmoji && iconWithEmoji !== undefined ? IconWithEmoji : value.icon ?? defaultIcon}
+  icon={value.icon === iconWithEmoji && iconWithEmoji !== undefined ? IconWithEmoji : (value.icon ?? defaultIcon)}
   iconProps={value.icon === iconWithEmoji && iconWithEmoji !== undefined
     ? { icon: value.color }
     : {
-        fill: value.color !== undefined ? getPlatformColorDef(value.color, $themeStore.dark).icon : 'currentColor'
+        fill:
+          value.color !== undefined && typeof value.color !== 'string'
+            ? getPlatformColorDef(value.color, $themeStore.dark).icon
+            : 'currentColor'
       }}
 />

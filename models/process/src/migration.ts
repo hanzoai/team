@@ -13,81 +13,119 @@
 // limitations under the License.
 //
 
-import core, { type Ref, TxOperations } from '@hanzo/core'
+import core, { type Client, type Doc, type Rank, TxOperations } from '@hcengineering/core'
 import {
-  tryUpgrade,
   type MigrateOperation,
   type MigrationClient,
-  type MigrationUpgradeClient
-} from '@hanzo/model'
-import { type Func, parseContext, type ProcessFunction } from '@hanzo/process'
-import { processId } from '.'
-import process from './plugin'
+  type MigrationUpgradeClient,
+  tryMigrate,
+  tryUpgrade
+} from '@hcengineering/model'
+import process, { type State, type Step } from '@hcengineering/process'
+import { makeRank } from '@hcengineering/rank'
+import { DOMAIN_PROCESS, processId } from '.'
 
 export const processOperation: MigrateOperation = {
-  async migrate (client: MigrationClient, mode): Promise<void> {},
+  async migrate (client: MigrationClient, mode): Promise<void> {
+    await tryMigrate(mode, client, processId, [
+      {
+        state: 'cleanup-rollback',
+        mode: 'upgrade',
+        func: cleanupRollback
+      }
+    ])
+  },
   async upgrade (state: Map<string, Set<string>>, client: () => Promise<MigrationUpgradeClient>, mode): Promise<void> {
     await tryUpgrade(mode, state, client, processId, [
       {
-        state: 'migrateStateFuncs',
-        func: migrateStateFuncs
+        state: 'migrateActionsFromStates',
+        mode: 'upgrade',
+        func: migrateActionsFromStates
+      },
+      {
+        state: 'fillStatesRanks',
+        mode: 'upgrade',
+        func: fillStatesRanks
       }
     ])
   }
 }
 
-function getContext (value: string): string | undefined {
-  const context = parseContext(value)
-  if (context !== undefined) {
-    let contextChanged = false
-    if (context.functions !== undefined) {
-      for (let i = 0; i < context.functions.length; i++) {
-        const func = context.functions[i] as any
-        if (typeof func === 'string') {
-          const res: Func = {
-            func: func as Ref<ProcessFunction>,
-            props: {}
-          }
-          context.functions[i] = res
-          contextChanged = true
+interface OldState extends State {
+  actions: Step<Doc>[]
+}
+
+async function fillStatesRanks (client: Client): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const states = await client.findAll(process.class.State, { rank: { $exists: false } })
+  let prevRank: Rank | undefined
+  for (const state of states) {
+    prevRank = makeRank(prevRank, undefined)
+    await txOp.update(state, { rank: prevRank })
+  }
+
+  const transitions = await client.findAll(process.class.Transition, { rank: { $exists: false } })
+  prevRank = undefined
+  for (const transition of transitions) {
+    prevRank = makeRank(prevRank, undefined)
+    await txOp.update(transition, { rank: prevRank })
+  }
+}
+
+async function migrateActionsFromStates (client: Client): Promise<void> {
+  const txOp = new TxOperations(client, core.account.System)
+  const rollbackTransitions = await client.findAll(process.class.Transition, { to: null as any })
+  for (const toRemove of rollbackTransitions) {
+    await txOp.remove(toRemove, undefined, toRemove.modifiedBy)
+  }
+  const states = (await client.findAll(process.class.State, {})) as any as OldState[]
+  const transitions = await client.findAll(process.class.Transition, {})
+  const transitionsMap = new Map()
+  for (const transition of transitions) {
+    const arr = transitionsMap.get(transition.to) ?? []
+    arr.push(transition)
+    transitionsMap.set(transition.to, arr)
+  }
+  let prevRank: Rank | undefined
+  for (const state of states) {
+    if (state.actions?.length > 0) {
+      const transitions = transitionsMap.get(state._id) ?? []
+      if (transitions.length === 0) {
+        prevRank = makeRank(prevRank, undefined)
+        await txOp.createDoc(
+          process.class.Transition,
+          core.space.Model,
+          {
+            from: null,
+            to: state._id,
+            actions: state.actions,
+            rank: prevRank,
+            trigger: process.trigger.OnExecutionStart,
+            triggerParams: {},
+            process: state.process
+          },
+          undefined,
+          undefined,
+          state.modifiedBy
+        )
+      } else {
+        for (const transition of transitions) {
+          const actions = [...state.actions, ...transition.actions]
+          await txOp.update(transition, actions, undefined, undefined, state.modifiedBy)
         }
       }
-    }
-    if (contextChanged) {
-      return '$' + JSON.stringify(context)
     }
   }
 }
 
-async function migrateStateFuncs (client: MigrationUpgradeClient): Promise<void> {
-  const txOp = new TxOperations(client, core.account.System)
-  const states = await client.findAll(process.class.State, {})
-  for (const state of states) {
-    let changed = false
-    const actions = state.actions
-    for (const action of actions) {
-      for (const key of Object.keys(action.params)) {
-        const value = (action.params as any)[key]
-        const context = getContext(value)
-        if (context !== undefined) {
-          ;(action.params as any)[key] = context
-          changed = true
-        }
-      }
+async function cleanupRollback (client: MigrationClient): Promise<void> {
+  await client.update(
+    DOMAIN_PROCESS,
+    {
+      _class: process.class.Execution
+    },
+    {
+      rollback: []
     }
-    const endAction = state.endAction
-    if (endAction?.params != null) {
-      for (const key of Object.keys(endAction.params)) {
-        const value = (endAction.params as any)[key]
-        const context = getContext(value)
-        if (context !== undefined) {
-          ;(endAction.params as any)[key] = context
-          changed = true
-        }
-      }
-    }
-    if (changed) {
-      await txOp.updateDoc(state._class, state.space, state._id, { actions, endAction })
-    }
-  }
+  )
 }

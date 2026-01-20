@@ -18,6 +18,7 @@
   import uiPlugin, { navigate, parseLocation } from '@hanzo/ui'
 
   import presentation from '../../plugin'
+  import { Analytics } from '@hcengineering/analytics'
 
   export let mark: MarkupMark
 
@@ -40,8 +41,8 @@
           }
         }
       }
-    } catch (err) {
-      console.error('Failed to handle link', mark, err)
+    } catch (err: any) {
+      Analytics.handleError(err)
     }
   }
 </script>
@@ -56,7 +57,12 @@
   {:else if mark.type === MarkupMarkType.em}
     <em><slot /></em>
   {:else if mark.type === MarkupMarkType.link}
-    <a href={attrs.href} target={attrs.target} on:click|stopPropagation={handleLink} on:contextmenu|stopPropagation>
+    <a
+      href={attrs.href}
+      target={attrs.target ?? '_blank'}
+      on:click|stopPropagation={handleLink}
+      on:contextmenu|stopPropagation
+    >
       <slot />
     </a>
   {:else if mark.type === MarkupMarkType.strike}

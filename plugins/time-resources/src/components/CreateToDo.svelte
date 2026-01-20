@@ -10,7 +10,7 @@
   import { Analytics } from '@hanzo/analytics'
 
   export let fullSize: boolean = false
-  let value: string = ''
+  export let value: string = ''
   let disabled: boolean = false
 
   const client = getClient()
@@ -43,6 +43,7 @@
         description,
         user: me,
         workslots: 0,
+        doneOn: null,
         priority: ToDoPriority.NoPriority,
         visibility: 'private',
         rank: makeRank(undefined, latestTodo?.rank)
@@ -53,12 +54,12 @@
     clear()
   }
 
-  function clear () {
+  function clear (): void {
     value = ''
   }
 
-  function openPopup () {
-    showPopup(CreateToDoPopup, {}, 'top')
+  function openPopup (): void {
+    showPopup(CreateToDoPopup, { value }, 'top')
   }
 </script>
 

@@ -13,13 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import love, { Room } from '@hanzo/love'
-  import { WithLookup } from '@hanzo/core'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { tooltip, Icon } from '@hanzo/ui'
-  import { personByIdStore } from '@hanzo/contact-resources'
+  import love, { Room } from '@hcengineering/love'
+  import { WithLookup } from '@hcengineering/core'
+  import { ObjectPresenterType } from '@hcengineering/view'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { DocNavLink, ObjectMention } from '@hcengineering/view-resources'
+  import { tooltip, Icon } from '@hcengineering/ui'
 
   import { getRoomName } from '../utils'
 
@@ -31,7 +30,10 @@
   export let shouldShowAvatar = true
   export let type: ObjectPresenterType = 'link'
 
-  $: roomName = getRoomName(value, $personByIdStore)
+  let roomName: string
+  $: void getRoomName(value).then((name) => {
+    roomName = name
+  })
 </script>
 
 {#if value}

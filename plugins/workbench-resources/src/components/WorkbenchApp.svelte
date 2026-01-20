@@ -18,15 +18,15 @@
   import {
     Button,
     Component,
+    AppLoading,
     Label,
-    Loading,
     Notifications,
     deviceOptionsStore,
     fetchMetadataLocalStorage,
     location,
     setMetadataLocalStorage
-  } from '@hanzo/ui'
-  import { connect, disconnect, versionError } from '../connect'
+  } from '@hcengineering/ui'
+  import { connect, disconnect, error, errorActions } from '../connect'
 
   import workbench, { workbenchId } from '@hanzo/workbench'
   import { onDestroy } from 'svelte'
@@ -56,26 +56,33 @@
   {:else}
     {#key $location.path[1]}
       {#await connect(getMetadata(workbenchRes.metadata.PlatformTitle) ?? 'Platform')}
-        <Loading>
+        <AppLoading>
           {#if ($workspaceCreating ?? -1) >= 0}
             <div class="ml-1">
               <Label label={workbenchRes.string.WorkspaceCreating} />
               {$workspaceCreating} %
             </div>
           {/if}
-          {#if $versionError}
+          {#if $error}
             <div class="ml-2">
-              {$versionError}
+              {$error}
             </div>
           {/if}
           {#if $upgradeDownloadProgress >= 0}
-            <div class="ml-1" class:ml-2={$versionError === undefined}>
+            <div class="ml-1" class:ml-2={$error === undefined}>
               <Label label={workbench.string.UpgradeDownloadProgress} params={{ percent: $upgradeDownloadProgress }} />
             </div>
           {/if}
-        </Loading>
+          <svelte:fragment slot="actions">
+            {#if $error && $errorActions.length > 0}
+              {#each $errorActions as action}
+                <Button label={action.label} on:click={action.action} />
+              {/each}
+            {/if}
+          </svelte:fragment>
+        </AppLoading>
       {:then client}
-        {#if $versionError}
+        {#if $error}
           <div class="version-wrapper">
             <div class="antiPopup version-popup">
               {#if isNeedUpgrade}
@@ -84,7 +91,7 @@
               {:else}
                 <h1><Label label={workbenchRes.string.ServerUnderMaintenance} /></h1>
               {/if}
-              {$versionError}
+              {$error}
               {#if $upgradeDownloadProgress >= 0}
                 <div class="mt-1">
                   <Label

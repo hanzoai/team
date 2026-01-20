@@ -54,8 +54,8 @@
     code: '',
     prefix: '',
     labels: 0,
-    major: 0,
-    minor: 1,
+    major: 1,
+    minor: 0,
     commentSequence: 0,
     author: currentUser,
     owner: currentUser,
@@ -67,6 +67,7 @@
     snapshots: 0,
     reviewers: [],
     approvers: [],
+    externalApprovers: [],
     coAuthors: [],
     changeControl: '' as Ref<ChangeControl>,
     content: null

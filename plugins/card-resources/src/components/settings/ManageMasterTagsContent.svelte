@@ -13,26 +13,27 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import core, { Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Analytics } from '@hcengineering/analytics'
+  import { MasterTag } from '@hcengineering/card'
+  import core, { Doc, Ref } from '@hcengineering/core'
+  import { getResource } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
   import {
     AnyComponent,
     AnySvelteComponent,
     BreadcrumbItem,
     Breadcrumbs,
-    Header,
-    Location,
-    resizeObserver,
     deviceOptionsStore as deviceInfo,
     getCurrentLocation,
+    Header,
+    Location,
     navigate,
+    resizeObserver,
     resolvedLocationStore
   } from '@hanzo/ui'
   import { onDestroy, onMount } from 'svelte'
   import card from '../../plugin'
   import MasterTagEditor from './MasterTagEditor.svelte'
-  import { getResource } from '@hanzo/platform'
 
   let masterTag: MasterTag | undefined
   let visibleSecondNav: boolean = true
@@ -50,23 +51,27 @@
 
   let selectedSubObjectId: Ref<Doc> | undefined = undefined
   let subEditor: AnySvelteComponent | undefined = undefined
-  let subEditorTitle: string | undefined = undefined
+  let subEditorParamas: SubEditorParams[] = []
+  interface SubEditorParams {
+    id: Ref<Doc>
+    editor: AnyComponent
+    title: string
+  }
 
   function selectSubItem (editorId: AnyComponent | undefined, objId: Ref<Doc> | undefined): void {
     if (editorId !== undefined && objId !== undefined) {
       selectedSubObjectId = objId
       void getResource(editorId)
         .then((res) => (subEditor = res))
-        .catch((err) => {
+        .catch((err: any) => {
           subEditor = undefined
-          subEditorTitle = undefined
-          console.error(err)
+          subEditorParamas = []
+          Analytics.handleError(err)
         })
     } else {
+      subEditorParamas = []
       selectedSubObjectId = undefined
-      subEditorTitle = undefined
       subEditor = undefined
-      subEditorTitle = undefined
     }
   }
 
@@ -79,10 +84,12 @@
   })
 
   function handleSubEditorOpen (event: CustomEvent): void {
-    subEditorTitle = event.detail
+    if (Array.isArray(event.detail)) {
+      subEditorParamas = event.detail
+    }
   }
 
-  function getBreadcrumbs (tag: Ref<MasterTag> | undefined, subEditorTitle: string | undefined): BreadcrumbItem[] {
+  function getBreadcrumbs (tag: Ref<MasterTag> | undefined, subEditorParams: SubEditorParams[]): BreadcrumbItem[] {
     if (tag === undefined) return []
     const toAncestors = hierarchy.getAncestors(card.class.Card)
     const ancestors = hierarchy.getAncestors(tag)
@@ -91,13 +98,16 @@
       id: it,
       label: hierarchy.getClass(it).label
     }))
-    if (subEditorTitle !== undefined) {
-      res.push({ id: subEditorTitle, title: subEditorTitle })
+    for (const subEditorParam of subEditorParams) {
+      res.push({
+        id: subEditorParam.id,
+        title: subEditorParam.title
+      })
     }
     return res
   }
 
-  $: items = getBreadcrumbs(masterTag?._id, subEditorTitle)
+  $: items = getBreadcrumbs(masterTag?._id, subEditorParamas)
 
   onMount(() => {
     setTimeout(() => {
@@ -108,9 +118,15 @@
   function handleSelect (e: CustomEvent<any>): void {
     const id = items[e.detail]?.id
     if (id !== undefined) {
+      const isSub = subEditorParamas.find((it) => it.id === id)
       const loc = getCurrentLocation()
-      loc.path[4] = id
-      loc.path.length = 5
+      if (isSub !== undefined) {
+        loc.path[5] = isSub.editor
+        loc.path[6] = isSub.id
+      } else {
+        loc.path[4] = id
+        loc.path.length = 5
+      }
       navigate(loc)
     }
   }

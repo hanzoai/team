@@ -52,12 +52,13 @@
   const client = getClient()
   const dispatch = createEventDispatcher()
 
-  async function onFileUploaded ({ uuid, name, file }: FileUploadCallbackParams): Promise<void> {
+  async function onFileUploaded ({ uuid, name, file, metadata }: FileUploadCallbackParams): Promise<void> {
     await createAttachment(
       client,
       uuid,
       name,
       file,
+      metadata,
       { objectClass: object?._class ?? _class, objectId, space },
       attachmentClass,
       attachmentClassOptions
@@ -70,11 +71,11 @@
 
     loading++
     try {
+      const target = { objectId, objectClass: object?._class ?? _class }
       const options = {
+        target,
         onFileUploaded,
-        showProgress: {
-          target: { objectId, objectClass: object?._class ?? _class }
-        }
+        showProgress: { target }
       }
       await uploadFiles(list, options)
     } finally {
@@ -156,7 +157,7 @@
       </div>
     </AttachmentDroppable>
   {:else if wSection < 640}
-    <Scroller horizontal>
+    <Scroller horizontal noFade={false}>
       <Table
         _class={attachmentClass}
         config={[

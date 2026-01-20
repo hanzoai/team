@@ -15,16 +15,15 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import contact, { Channel, Contact, getName } from '@hanzo/contact'
-  import { employeeByIdStore } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
-  import { Message, SharedMessage } from '@hanzo/gmail'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { getResource } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting, { Integration } from '@hanzo/setting'
-  import templates, { TemplateDataProvider } from '@hanzo/templates'
-  import { Button, Dialog, eventToHTMLElement, Icon, Label, showPopup } from '@hanzo/ui'
+  import contact, { Channel, Contact, getName } from '@hcengineering/contact'
+  import { Ref, SocialIdType, getCurrentAccount } from '@hcengineering/core'
+  import { Message, SharedMessage } from '@hcengineering/gmail'
+  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
+  import { getResource } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import setting, { Integration } from '@hcengineering/setting'
+  import templates, { TemplateDataProvider } from '@hcengineering/templates'
+  import { Button, Dialog, eventToHTMLElement, Icon, Label, showPopup } from '@hcengineering/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import gmail from '../plugin'
   import { convertMessage } from '../utils'
@@ -49,11 +48,11 @@
   let currentMessage: SharedMessage | undefined = undefined
 
   let newMessage: boolean = false
-  const allIntegrations: Integration[] = []
-  const integrations: Integration[] = []
+  let allIntegrations: Integration[] = []
+  let integrations: Integration[] = []
   let selectedIntegration: Integration | undefined = undefined
 
-  channel && inboxClient.forceReadDoc(channel._id, channel._class)
+  channel && inboxClient.forceReadDoc(channel)
 
   const dispatch = createEventDispatcher()
 
@@ -96,20 +95,33 @@
 
   $: templateProvider && selectedIntegration && templateProvider.set(setting.class.Integration, selectedIntegration)
 
-  // TODO: FIXME
-  settingsQuery.query(setting.class.Integration, { type: gmail.integrationType.Gmail }, (res) => {
-    // allIntegrations = res.filter((p) => !p.disabled && p.value !== '')
-    // integrations = allIntegrations.filter((p) => p.createdBy === me || p.shared?.includes(me))
-    // selectedIntegration = integrations.find((p) => p.createdBy === me) ?? integrations[0]
-  })
+  settingsQuery.query(
+    setting.class.Integration,
+    {
+      type: gmail.integrationType.Gmail,
+      disabled: false
+    },
+    (res) => {
+      allIntegrations = res.filter((p) => !p.disabled && p.value !== '')
+      const account = getCurrentAccount()
+      const emailSocialIds = account.fullSocialIds
+        .filter((s) => s.type === SocialIdType.EMAIL && s.value !== '')
+        .map((s) => s._id)
+      const isAvailable = (p: Integration): boolean => {
+        const isOwner = p.createdBy !== undefined && emailSocialIds.includes(p.createdBy)
+        const shared = p.shared?.includes(account.uuid) ?? false
+        return isOwner || shared
+      }
+      integrations = allIntegrations.filter(isAvailable)
+      selectedIntegration =
+        integrations.find((p) => p.createdBy !== undefined && emailSocialIds.includes(p.createdBy)) ?? integrations[0]
+    }
+  )
 
-  // TODO: FIXME
-  // $: gmailMessage &&
-  //   channel &&
-  //   object &&
-  //   convertMessage(object, channel, gmailMessage, allIntegrations, $personAccountByIdStore, $employeeByIdStore).then(
-  //     (p) => (currentMessage = p)
-  //   )
+  $: gmailMessage &&
+    channel &&
+    object &&
+    convertMessage(object, channel, gmailMessage).then((p) => (currentMessage = p))
 </script>
 
 {#if channel && object}
@@ -154,14 +166,7 @@
     {:else if currentMessage}
       <FullMessage {currentMessage} bind:newMessage on:close={back} />
     {:else}
-      <Chats
-        {object}
-        {channel}
-        bind:newMessage
-        {allIntegrations}
-        enabled={integrations.length > 0}
-        on:select={selectHandler}
-      />
+      <Chats {object} {channel} bind:newMessage enabled={integrations.length > 0} on:select={selectHandler} />
     {/if}
   </Dialog>
 {/if}

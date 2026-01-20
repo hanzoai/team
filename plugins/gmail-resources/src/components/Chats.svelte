@@ -15,15 +15,13 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import { Channel, Contact } from '@hanzo/contact'
-  import { employeeByIdStore } from '@hanzo/contact-resources'
-  import { Ref, SortingOrder } from '@hanzo/core'
-  import { Message, SharedMessage } from '@hanzo/gmail'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import plugin, { Button, Icon, IconShare, Label, Scroller } from '@hanzo/ui'
+  import { Channel, Contact } from '@hcengineering/contact'
+  import { Ref, SortingOrder } from '@hcengineering/core'
+  import { Message, SharedMessage } from '@hcengineering/gmail'
+  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import plugin, { Button, Icon, IconShare, Label, Scroller } from '@hcengineering/ui'
 
-  import { Integration } from '@hanzo/setting'
   import gmail from '../plugin'
   import { convertMessages } from '../utils'
   import Messages from './Messages.svelte'
@@ -33,7 +31,6 @@
   export let channel: Channel
   export let newMessage: boolean
   export let enabled: boolean
-  export let allIntegrations: Integration[]
 
   let plainMessages: Message[] = []
   let newMessages: Message[] = []
@@ -76,28 +73,19 @@
   const client = getClient()
 
   async function share (): Promise<void> {
-    // TODO: FIXME
-    throw new Error('Not implemented')
-    // const selectedMessages = messages.filter((m) => selected.has(m._id as string as Ref<SharedMessage>))
-    // await client.addCollection(
-    //   gmail.class.SharedMessages,
-    //   object.space,
-    //   object._id,
-    //   object._class,
-    //   'gmailSharedMessages',
-    //   {
-    //     messages: convertMessages(
-    //       object,
-    //       channel,
-    //       selectedMessages,
-    //       allIntegrations,
-    //       $personAccountByIdStore,
-    //       $employeeByIdStore
-    //     )
-    //   }
-    // )
-    // await inboxClient.readDoc(channel._id)
-    // clear()
+    const selectedMessages = messages.filter((m) => selected.has(m._id as string as Ref<SharedMessage>))
+    await client.addCollection(
+      gmail.class.SharedMessages,
+      object.space,
+      object._id,
+      object._class,
+      'gmailSharedMessages',
+      {
+        messages: await convertMessages(object, channel, selectedMessages)
+      }
+    )
+    await inboxClient.readDoc(channel._id)
+    clear()
   }
 
   function clear (): void {
@@ -138,25 +126,14 @@
 </div>
 
 {#if messages && messages.length > 0}
-  <div class="antiVSpacer x2" />
-  <Scroller padding={'.5rem 1rem'}>
-    <!-- TODO: FIXME -->
-    <!-- <Messages
-      messages={convertMessages(
-        object,
-        channel,
-        messages,
-        allIntegrations,
-        $personAccountByIdStore,
-        $employeeByIdStore
-      )}
-      {selectable}
-      bind:selected
-      on:select
-    /> -->
+  {#await convertMessages(object, channel, messages) then convertedMessages}
     <div class="antiVSpacer x2" />
-  </Scroller>
-  <div class="antiVSpacer x2" />
+    <Scroller padding={'.5rem 1rem'}>
+      <Messages messages={convertedMessages} {selectable} bind:selected on:select />
+      <div class="antiVSpacer x2" />
+    </Scroller>
+    <div class="antiVSpacer x2" />
+  {/await}
 {:else}
   <div class="flex-col-center justify-center h-full">
     <Icon icon={IconInbox} size={'full'} />

@@ -276,8 +276,9 @@
     "DefaultIssueStatus": "Výchozí stav úkolu",
     "IssueStatus": "Stav",
     "Extensions": "Rozšíření",
-    "RoleLabel": "Role: {role}",
-    "UnsetParentIssue": "Odebrat nadřazený úkol"
+    "UnsetParentIssue": "Odebrat nadřazený úkol",
+    "ForbidCreateProjectPermission": "Zakázat vytvoření projektu",
+    "ForbidCreateProjectPermissionDescription": "Zakazuje uživatelům vytvářet nové projekty"
   },
   "status": {}
 }

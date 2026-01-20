@@ -24,9 +24,6 @@ import { start } from '.'
 export function startFront (ctx: MeasureContext, extraConfig?: Record<string, string | undefined>): void {
   const SERVER_PORT = parseInt(process.env.SERVER_PORT ?? '8080')
 
-  const storageConfig: StorageConfiguration = storageConfigFromEnv()
-  const storageAdapter = buildStorageFromConfig(storageConfig)
-
   const accountsUrl = process.env.ACCOUNTS_URL
   if (accountsUrl === undefined) {
     console.error('please provide accounts url')
@@ -91,20 +88,19 @@ export function startFront (ctx: MeasureContext, extraConfig?: Record<string, st
     process.exit(1)
   }
 
-  let uploadConfig = process.env.UPLOAD_CONFIG
-  if (uploadConfig === undefined) {
-    uploadConfig = ''
-  }
-
-  let previewConfig = process.env.PREVIEW_CONFIG
-  if (previewConfig === undefined) {
-    // Use universal preview config
-    previewConfig = `${uploadUrl}/:workspace?file=:blobId&size=:size`
+  let previewUrl = process.env.PREVIEW_URL
+  if (previewUrl === undefined) {
+    previewUrl = ''
   }
 
   let filesUrl = process.env.FILES_URL
   if (filesUrl === undefined) {
     filesUrl = `${uploadUrl}/:workspace/:filename?file=:blobId&workspace=:workspace`
+  }
+
+  let pulseUrl = process.env.PULSE_URL
+  if (pulseUrl === undefined) {
+    pulseUrl = ''
   }
 
   const pushPublicKey = process.env.PUSH_PUBLIC_KEY
@@ -115,9 +111,25 @@ export function startFront (ctx: MeasureContext, extraConfig?: Record<string, st
 
   const streamUrl = process.env.STREAM_URL
 
-  setMetadata(serverToken.metadata.Secret, serverSecret)
-
   const disableSignUp = process.env.DISABLE_SIGNUP
+
+  const hideLocalLogin = process.env.HIDE_LOCAL_LOGIN
+
+  const mailUrl = process.env.MAIL_URL
+
+  const billingUrl = process.env.BILLING_URL
+
+  const paymentUrl = process.env.PAYMENT_URL
+
+  const hulylakeUrl = process.env.HULYLAKE_URL
+
+  const datalakeUrl = process.env.DATALAKE_URL
+
+  setMetadata(serverToken.metadata.Secret, serverSecret)
+  setMetadata(serverToken.metadata.Service, 'front')
+
+  const storageConfig: StorageConfiguration = storageConfigFromEnv()
+  const storageAdapter = buildStorageFromConfig(storageConfig)
 
   const config = {
     storageAdapter,
@@ -134,12 +146,18 @@ export function startFront (ctx: MeasureContext, extraConfig?: Record<string, st
     collaboratorUrl,
     collaborator,
     brandingUrl,
-    previewConfig,
-    uploadConfig,
+    previewUrl,
     pushPublicKey,
     disableSignUp,
+    hideLocalLogin,
     linkPreviewUrl,
-    streamUrl
+    streamUrl,
+    mailUrl,
+    billingUrl,
+    paymentUrl,
+    pulseUrl,
+    hulylakeUrl,
+    datalakeUrl
   }
   console.log('Starting Front service with', config)
   const shutdown = start(ctx, config, SERVER_PORT, extraConfig)

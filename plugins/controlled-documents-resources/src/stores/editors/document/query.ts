@@ -18,12 +18,13 @@ import {
   type ControlledDocument,
   type DocumentComment,
   type DocumentTraining,
-  type Project
-} from '@hanzo/controlled-documents'
-import attachment from '@hanzo/attachment'
-import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hanzo/core'
-import { createQuery } from '@hanzo/presentation'
-import { RequestStatus } from '@hanzo/request'
+  type Project,
+  type DocumentTemplate
+} from '@hcengineering/controlled-documents'
+import attachment from '@hcengineering/attachment'
+import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hcengineering/core'
+import { createQuery } from '@hcengineering/presentation'
+import { RequestStatus } from '@hcengineering/request'
 
 import documents from '../../../plugin'
 import {
@@ -94,7 +95,7 @@ const queryDocumentVersionsFx = createEffect((payload: ControlledDocument) => {
     documents.class.ControlledDocument,
     {
       seqNumber: payload.seqNumber,
-      template: payload.template
+      template: (payload.template ?? null) as Ref<DocumentTemplate>
     },
     (result) => {
       documentAllVersionsUpdated(result ?? [])
@@ -119,9 +120,7 @@ const queryReviewRequestFx = createEffect(
       documents.class.DocumentReviewRequest,
       { attachedTo: _id, attachedToClass: _class, status: RequestStatus.Active },
       (result) => {
-        if (result !== null && result !== undefined && result.length > 0) {
-          reviewRequestUpdated(result[0])
-        }
+        reviewRequestUpdated(result[0] ?? null)
       }
     )
   }
@@ -146,24 +145,20 @@ const queryReviewRequestHistoryFx = createEffect(
   }
 )
 
-const queryApprovalRequestFx = createEffect(
-  (payload: { _id: Ref<ControlledDocument>, _class: Ref<Class<ControlledDocument>> }) => {
-    const { _id, _class } = payload
-    if (_id == null || _class == null) {
-      approvalRequestQuery.unsubscribe()
-      return
-    }
-    approvalRequestQuery.query(
-      documents.class.DocumentApprovalRequest,
-      { attachedTo: _id, attachedToClass: _class, status: RequestStatus.Active },
-      (result) => {
-        if (result !== null && result !== undefined && result.length > 0) {
-          approvalRequestUpdated(result[0])
-        }
-      }
-    )
+const queryApprovalRequestFx = createEffect((payload: { _id: Ref<ControlledDocument> }) => {
+  const { _id } = payload
+  if (_id == null) {
+    approvalRequestQuery.unsubscribe()
+    return
   }
-)
+  approvalRequestQuery.query(
+    documents.class.DocumentApprovalRequest,
+    { attachedTo: _id, status: RequestStatus.Active },
+    (result) => {
+      approvalRequestUpdated(result[0] ?? null)
+    }
+  )
+})
 
 const queryDocumentCommentsFx = createEffect(
   (payload: { document: Document | null, filter: DocumentCommentsFilter }) => {

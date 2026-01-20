@@ -13,22 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hanzo/card'
-  import { AnyAttribute, Class, Ref, RefTo } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import {
-    Button,
-    ButtonKind,
-    ButtonSize,
-    eventToHTMLElement,
-    IconWithEmoji,
-    Label,
-    showPopup
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Card, MasterTag } from '@hcengineering/card'
+  import { Class, Ref } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, Label, showPopup } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
+  import CardPresenter from './CardPresenter.svelte'
   import CardsPopup from './CardsPopup.svelte'
 
   export let value: Ref<Card> | undefined
@@ -78,9 +70,6 @@
 
   $: _classRef = doc?._class ?? _class
   $: clazz = _classRef !== undefined ? (hierarchy.findClass(_classRef) as MasterTag) : undefined
-
-  $: icon = clazz?.icon === view.ids.IconWithEmoji ? IconWithEmoji : clazz?.icon
-  $: iconProps = clazz?.icon === view.ids.IconWithEmoji ? { icon: clazz?.color } : {}
 </script>
 
 <Button
@@ -89,15 +78,13 @@
   {focusIndex}
   {width}
   {size}
-  {icon}
-  {iconProps}
   {kind}
   disabled={readonly}
   on:click={handleOpen}
 >
   <div slot="content" class="overflow-label">
     {#if doc}
-      {doc.title}
+      <CardPresenter value={doc} type={'text'} />
     {:else}
       <Label {label} />
     {/if}

@@ -16,6 +16,8 @@
 //
 
 import {
+  type AccountUuid,
+  type AnyAttribute,
   type Class,
   type Client,
   DOMAIN_MODEL,
@@ -25,33 +27,36 @@ import {
   type DocumentQuery,
   type Domain,
   type Ref,
-  type Space,
-  type AnyAttribute,
-  type AccountUuid
-} from '@hanzo/core'
-import { type Builder, Mixin, Model, UX } from '@hanzo/model'
-import core, { TClass, TDoc } from '@hanzo/model-core'
-import preference, { TPreference } from '@hanzo/model-preference'
-import presentation from '@hanzo/model-presentation'
-import { type Asset, type IntlString, type Resource, type Status } from '@hanzo/platform'
-import { type AnyComponent, type LabelAndProps, type Location } from '@hanzo/ui/src/types'
+  type Space
+} from '@hcengineering/core'
+import { type Builder, Mixin, Model, UX } from '@hcengineering/model'
+import core, { TClass, TDoc } from '@hcengineering/model-core'
+import preference, { TPreference } from '@hcengineering/model-preference'
+import presentation from '@hcengineering/model-presentation'
+import { type Asset, type IntlString, type Resource, type Status } from '@hcengineering/platform'
+import { type AnyComponent, type LabelAndProps, type Location } from '@hcengineering/ui/src/types'
 import {
+  type TypeEditor,
   type Action,
   type ActionCategory,
   type ActivityAttributePresenter,
   type Aggregation,
   type AllValuesFunc,
   type ArrayEditor,
+  type AttrPresenter,
+  type AttributeCategory,
   type AttributeEditor,
   type AttributeFilter,
   type AttributeFilterPresenter,
   type AttributePresenter,
+  type BaseQuery,
   type BuildModelKey,
   type ClassFilters,
   type ClassSortFuncs,
   type CollectionEditor,
   type CollectionPresenter,
   type CreateAggregationManagerFunc,
+  type CustomObjectLinkProvider,
   type Filter,
   type FilterMode,
   type FilteredView,
@@ -63,20 +68,25 @@ import {
   type KeyBinding,
   type KeyFilter,
   type KeyFilterPreset,
+  type LinkIdProvider,
   type LinkPresenter,
   type LinkProvider,
   type ListHeaderExtra,
   type ListItemPresenter,
   type ObjectEditor,
   type ObjectEditorFooter,
-  type ObjectPanelFooter,
   type ObjectEditorHeader,
   type ObjectFactory,
+  type ObjectIcon,
+  type ObjectIdentifier,
   type ObjectPanel,
+  type ObjectPanelFooter,
   type ObjectPresenter,
   type ObjectTitle,
+  type ObjectTooltip,
   type ObjectValidator,
   type PreviewPresenter,
+  type ReferenceObjectProvider,
   type SortFunc,
   type SpaceHeader,
   type SpaceName,
@@ -89,15 +99,8 @@ import {
   type ViewOptionsModel,
   type Viewlet,
   type ViewletDescriptor,
-  type ViewletPreference,
-  type ObjectIdentifier,
-  type ReferenceObjectProvider,
-  type ObjectIcon,
-  type ObjectTooltip,
-  type AttrPresenter,
-  type AttributeCategory,
-  type LinkIdProvider
-} from '@hanzo/view'
+  type ViewletPreference
+} from '@hcengineering/view'
 
 import view from './plugin'
 import { classPresenter, createAction } from './utils'
@@ -210,6 +213,11 @@ export class TObjectEditor extends TClass implements ObjectEditor {
   pinned?: boolean
 }
 
+@Mixin(view.mixin.TypeEditor, core.class.Class)
+export class TTypeEditor extends TClass implements TypeEditor {
+  editor!: AnyComponent
+}
+
 @Mixin(view.mixin.ObjectEditorHeader, core.class.Class)
 export class TObjectEditorHeader extends TClass implements ObjectEditorHeader {
   editor!: AnyComponent
@@ -243,7 +251,7 @@ export class TObjectValidator extends TClass implements ObjectValidator {
 @Mixin(view.mixin.ObjectFactory, core.class.Class)
 export class TObjectFactory extends TClass implements ObjectFactory {
   component?: AnyComponent
-  create?: Resource<() => Promise<void>>
+  create?: Resource<(props?: Record<string, any>) => Promise<Ref<Doc> | undefined>>
 }
 
 @Mixin(view.mixin.ObjectTitle, core.class.Class)
@@ -390,6 +398,17 @@ export class TAttrPresenter extends TDoc implements AttrPresenter {
   component!: AnyComponent
 }
 
+@Mixin(view.mixin.CustomObjectLinkProvider, core.class.Class)
+export class TCustomObjectLinkProvider extends TClass implements CustomObjectLinkProvider {
+  match!: Resource<(doc: Doc) => boolean>
+  encode!: Resource<(doc: Doc) => Location>
+}
+
+@Mixin(view.mixin.BaseQuery, core.class.Class)
+export class TBaseQuery extends TClass implements BaseQuery<Doc> {
+  baseQuery!: DocumentQuery<Doc>
+}
+
 export type ActionTemplate = Partial<Data<Action>>
 
 /**
@@ -478,7 +497,10 @@ export function createModel (builder: Builder): void {
     TObjectTooltip,
     TObjectIcon,
     TAttrPresenter,
-    TLinkIdProvider
+    TLinkIdProvider,
+    TCustomObjectLinkProvider,
+    TBaseQuery,
+    TTypeEditor
   )
 
   classPresenter(
@@ -498,6 +520,7 @@ export function createModel (builder: Builder): void {
   )
   classPresenter(builder, core.class.TypeIntlString, view.component.IntlStringPresenter)
   classPresenter(builder, core.class.TypeNumber, view.component.NumberPresenter, view.component.NumberEditor)
+  classPresenter(builder, core.class.TypeIdentifier, view.component.IdPresenter, view.component.IdPresenter)
   classPresenter(
     builder,
     core.class.TypeMarkup,
@@ -593,6 +616,17 @@ export function createModel (builder: Builder): void {
     view.class.ViewletDescriptor,
     core.space.Model,
     {
+      label: view.string.RelationshipTable,
+      icon: view.icon.Table2,
+      component: view.component.RelationshipTableBrowser
+    },
+    view.viewlet.RelationshipTable
+  )
+
+  builder.createDoc(
+    view.class.ViewletDescriptor,
+    core.space.Model,
+    {
       label: view.string.List,
       icon: view.icon.List,
       component: view.component.ListView
@@ -649,6 +683,15 @@ export function createModel (builder: Builder): void {
       createPresentationMiddleware: view.function.AnalyticsMiddleware
     },
     view.pipeline.AnalyticsMiddleware
+  )
+
+  builder.createDoc(
+    presentation.class.PresentationMiddlewareFactory,
+    core.space.Model,
+    {
+      createPresentationMiddleware: view.function.ReadOnlyAccessMiddleware
+    },
+    view.pipeline.ReadOnlyAccessMiddleware
   )
 
   builder.createDoc(
@@ -732,6 +775,24 @@ export function createModel (builder: Builder): void {
   createAction(
     builder,
     {
+      action: view.actionImpl.CopyTextToClipboard,
+      actionProps: {
+        textProvider: view.function.GetLink
+      },
+      label: view.string.CopyLink,
+      icon: view.icon.CopyLink,
+      category: view.category.General,
+      input: 'any',
+      target: core.class.Doc,
+      context: { mode: ['context', 'browser'] },
+      visibilityTester: view.function.CanCopyLink
+    },
+    view.action.CopyLink
+  )
+
+  createAction(
+    builder,
+    {
       action: view.actionImpl.Delete,
       actionProps: {
         confirmation: view.string.RemoveRelationConfirmation
@@ -800,6 +861,25 @@ export function createModel (builder: Builder): void {
     view.action.Join
   )
 
+  createAction(builder, {
+    action: view.actionImpl.ShowPopup,
+    actionProps: {
+      component: view.component.AddRelationPopup,
+      fillProps: {
+        _objects: 'value'
+      }
+    },
+    label: core.string.AddRelation,
+    input: 'any',
+    icon: view.icon.CopyLink,
+    category: view.category.Editor,
+    target: core.class.Doc,
+    context: {
+      mode: ['context', 'browser'],
+      group: 'associate'
+    }
+  })
+
   createAction(
     builder,
     {
@@ -853,7 +933,7 @@ export function createModel (builder: Builder): void {
       category: view.category.GeneralNavigation,
       input: 'none',
       target: core.class.Doc,
-      context: { mode: 'browser' }
+      context: { mode: ['browser'] }
     },
     view.action.MoveLeft
   )
@@ -867,7 +947,7 @@ export function createModel (builder: Builder): void {
       category: view.category.GeneralNavigation,
       input: 'none',
       target: core.class.Doc,
-      context: { mode: 'browser' }
+      context: { mode: ['browser'] }
     },
     view.action.MoveRight
   )
@@ -1287,6 +1367,10 @@ export function createModel (builder: Builder): void {
     searchDisabled: true
   })
 
+  builder.mixin(core.class.TypePersonId, core.class.Class, view.mixin.AttributeEditor, {
+    inlineEditor: view.component.PersonIdPresenter
+  })
+
   builder.mixin(core.class.TypePersonId, core.class.Class, view.mixin.AttributePresenter, {
     presenter: view.component.PersonIdPresenter,
     arrayPresenter: view.component.PersonArrayEditor
@@ -1298,11 +1382,6 @@ export function createModel (builder: Builder): void {
 
   builder.mixin(core.class.TypePersonId, core.class.Class, view.mixin.AttributeFilter, {
     component: view.component.PersonIdFilter
-  })
-
-  builder.mixin(core.class.TypeAccountUuid, core.class.Class, view.mixin.AttributePresenter, {
-    presenter: view.component.PersonIdPresenter,
-    arrayPresenter: view.component.PersonArrayEditor
   })
 
   builder.mixin(core.class.TypeAccountUuid, core.class.Class, view.mixin.AttributeFilterPresenter, {

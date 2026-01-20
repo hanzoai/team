@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
+import { Api as CommunicationApi } from '@hcengineering/communication-server'
 import core, {
   type Class,
   type Doc,
@@ -14,7 +15,8 @@ import core, {
   type TxWorkspaceEvent,
   WorkspaceEvent,
   type WorkspaceIds
-} from '@hanzo/core'
+} from '@hcengineering/core'
+import { type HulylakeWorkspaceClient } from '@hcengineering/hulylake-client'
 import {
   ContextNameMiddleware,
   DBAdapterInitMiddleware,
@@ -47,6 +49,9 @@ export class WorkspaceIndexer {
 
   lastUpdate: number = Date.now()
 
+  operations: number = 0
+  closing: boolean = false
+
   constructor (readonly fulltextAdapter: FullTextAdapter) {}
 
   static async create (
@@ -57,6 +62,7 @@ export class WorkspaceIndexer {
     externalStorage: StorageAdapter,
     ftadapter: FullTextAdapter,
     contentAdapter: ContentTextAdapter,
+    hulylake: HulylakeWorkspaceClient,
     endpointProvider: (token: string) => Promise<string | undefined>,
     listener?: FulltextListener
   ): Promise<WorkspaceIndexer> {
@@ -84,9 +90,7 @@ export class WorkspaceIndexer {
       modelDb,
       hierarchy,
       storageAdapter: externalStorage,
-      contextVars: {},
-      // TODO: Communication API ??
-      communicationApi: null
+      contextVars: {}
     }
     result.pipeline = await createPipeline(ctx, middlewares, context)
 
@@ -95,8 +99,17 @@ export class WorkspaceIndexer {
       throw new PlatformError(unknownError('Default adapter should be set'))
     }
 
-    const token = generateToken(systemAccountUuid, workspace.uuid)
+    const token = generateToken(systemAccountUuid, workspace.uuid, { service: 'fulltext' })
     const transactorEndpoint = await endpointProvider(token)
+
+    let communicationApi: CommunicationApi | undefined
+    if (process.env.COMMUNICATION_API_ENABLED === 'true') {
+      communicationApi = await CommunicationApi.create(ctx, workspace.uuid, dbURL, {
+        broadcast: () => {},
+        enqueue: () => {},
+        registerAsyncRequest: () => {}
+      })
+    }
 
     result.fulltext = new FullTextIndexPipeline(
       ftadapter,
@@ -136,6 +149,8 @@ export class WorkspaceIndexer {
           })
         }
       },
+      hulylake,
+      communicationApi,
       listener
     )
     return result
@@ -158,8 +173,30 @@ export class WorkspaceIndexer {
     return await this.fulltext.getIndexClassess()
   }
 
-  async close (): Promise<void> {
-    this.fulltext.cancel()
-    await this.pipeline.close()
+  async doOperation (op: (indexer: WorkspaceIndexer) => Promise<void>): Promise<boolean> {
+    this.operations++
+    try {
+      await op(this)
+    } finally {
+      this.operations--
+    }
+    if (this.closing) {
+      return await this.close()
+    }
+    return false
+  }
+
+  async close (): Promise<boolean> {
+    this.closing = true
+    if (this.operations === 0) {
+      try {
+        this.fulltext.cancel()
+        await this.pipeline.close()
+      } catch (err: any) {
+        console.error('error during closing', { err })
+      }
+      return true
+    }
+    return false
   }
 }

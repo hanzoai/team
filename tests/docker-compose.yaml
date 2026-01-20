@@ -34,6 +34,21 @@ services:
       - '18089:8080'
     command: start-single-node --insecure
     restart: unless-stopped
+  postgres:
+    image: postgres:18.1
+    command: ["postgres", "-p", "5433"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -p 5433"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - 5433:5433
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    restart: unless-stopped
   redpanda:
     image: docker.redpanda.com/redpandadata/redpanda:v24.3.6
     command:
@@ -88,6 +103,10 @@ services:
     ports:
       - 9002:9000
       - 9003:9001
+    healthcheck:
+      test: ['CMD', 'mc', 'ready', 'local']
+      interval: 5s
+      retries: 10
   elastic:
     image: 'elasticsearch:7.14.2'
     expose:
@@ -100,16 +119,20 @@ services:
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xms1024m -Xmx1024m
     healthcheck:
-      interval: 20s
+      interval: 5s
       retries: 10
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
   account:
     image: hardcoreeng/account
     pull_policy: never
+    depends_on:
+      postgres:
+        condition: service_healthy
     links:
       - mongodb
       - minio
       - cockroach
+      - postgres
     ports:
       - 3003:3003
     volumes:
@@ -121,10 +144,10 @@ services:
       - ADMIN_EMAILS=admin,${PLATFORM_ADMIN_EMAILS}
       - WORKSPACE_LIMIT_PER_USER=100
       - DB_URL=${MONGO_URL}
+      - PROCEED_V7_MONGO=true
       - REGION_INFO=|America
       - TRANSACTOR_URL=ws://transactor:3334;ws://localhost:3334
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - MODEL_ENABLED=*
       - BRANDING_PATH=/var/cfg/branding.json
       - STATS_URL=http://stats:4901
   workspace:
@@ -132,8 +155,12 @@ services:
     links:
       - mongodb
       - cockroach
+      - postgres
       - minio
       - redpanda
+    depends_on:
+      redpanda:
+        condition: service_started
     volumes:
       - ./branding-test.json:/var/cfg/branding.json
     environment:
@@ -142,9 +169,9 @@ services:
       - TRANSACTOR_URL=ws://transactor:3334;ws://localhost:3334
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - MODEL_ENABLED=*
       - REGION=
       - ACCOUNTS_URL=http://account:3003
+      - ACCOUNTS_DB_URL=${MONGO_URL}
       - BRANDING_PATH=/var/cfg/branding.json
       - STATS_URL=http://stats:4901
     restart: unless-stopped
@@ -182,12 +209,16 @@ services:
   transactor:
     image: hardcoreeng/transactor
     pull_policy: never
+    depends_on:
+      redpanda:
+        condition: service_started
     links:
       - mongodb
       - elastic
       - minio
       - rekoni
       - cockroach
+      - postgres
       - account
       - stats
       - redpanda
@@ -212,6 +243,8 @@ services:
       - FULLTEXT_URL=http://fulltext:4710
       - STATS_URL=http://stats:4901
       - ENABLE_COMPRESSION=true
+      - RATE_LIMIT_MAX=25000
+      - RATE_LIMIT_WINDOW=1000
   collaborator:
     image: hardcoreeng/collaborator
     links:
@@ -239,6 +272,13 @@ services:
   fulltext:
     image: hardcoreeng/fulltext
     restart: unless-stopped
+    depends_on:
+      redpanda:
+        condition: service_started
+      cockroach:
+        condition: service_started
+      elastic:
+        condition: service_healthy
     links:
       - elastic
       - mongodb

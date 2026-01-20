@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Mixin, Ref, Space } from '@hanzo/core'
-import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
-import { ViewAction } from '@hanzo/view'
+import type { Class, Doc, Mixin, Ref, Space } from '@hcengineering/core'
+import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hcengineering/platform'
+import { plugin } from '@hcengineering/platform'
+import { AnyComponent, ComponentExtensionId, Location } from '@hcengineering/ui'
+import { Action, ViewAction } from '@hcengineering/view'
 
 import type {
   Application,
@@ -47,6 +47,9 @@ export const workbenchPlugin = plugin(workbenchId, {
   mixin: {
     SpaceView: '' as Ref<Mixin<SpaceView>>
   },
+  action: {
+    CloseCurrentTab: '' as Ref<Action>
+  },
   component: {
     WorkbenchApp: '' as AnyComponent,
     InviteLink: '' as AnyComponent,
@@ -74,6 +77,7 @@ export const workbenchPlugin = plugin(workbenchId, {
   metadata: {
     PlatformTitle: '' as Metadata<string>,
     ExcludedApplications: '' as Metadata<Ref<Application>[]>,
+    ExcludedApplicationsForAnonymous: '' as Metadata<string[]>,
     DefaultApplication: '' as Metadata<string>,
     DefaultSpace: '' as Metadata<Ref<Space>>,
     DefaultSpecial: '' as Metadata<string>,
@@ -91,7 +95,8 @@ export const workbenchPlugin = plugin(workbenchId, {
     CloseWidget: '' as Resource<(widget: Ref<Widget>) => Promise<void>>,
     GetSidebarObject: '' as Resource<() => Partial<Pick<Doc, '_id' | '_class'>>>,
     LogIn: '' as Resource<(loginInfo: { account: string, token?: string }) => Promise<void>>,
-    LogOut: '' as Resource<() => Promise<void>>
+    LogOut: '' as Resource<() => Promise<void>>,
+    OpenInNewTab: '' as Resource<(loc: Location) => Promise<void>>
   },
   actionImpl: {
     Navigate: '' as ViewAction<{

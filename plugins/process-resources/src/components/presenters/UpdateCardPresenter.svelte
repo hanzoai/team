@@ -13,48 +13,42 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Process, MethodParams, Step } from '@hanzo/process'
-  import { tooltip, Icon, IconError, Label } from '@hanzo/ui'
+  import { Card } from '@hcengineering/card'
+  import { AnyAttribute } from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import { MethodParams, Process, Step } from '@hcengineering/process'
+  import { Icon, IconError, Label, tooltip } from '@hcengineering/ui'
   import plugin from '../../plugin'
+  import UpdateAttributePresenter from './UpdateAttributePresenter.svelte'
 
   export let step: Step<Card>
-  export let params: MethodParams<Card>
   export let process: Process
+  export let params: MethodParams<Card>
 
   const client = getClient()
   $: method = client.getModel().findAllSync(plugin.class.Method, { _id: step.methodId })[0]
-
-  $: attributes = getAttributes(params, process)
-
-  function getAttributes (params: Record<string, any>, process: Process): IntlString[] {
-    const res: IntlString[] = []
-    for (const key in params) {
-      if (params[key] !== undefined) {
-        const attr = client.getHierarchy().findAttribute(process.masterTag, key)
-        if (attr?.label !== undefined) {
-          res.push(attr.label)
-        }
-      }
-    }
-    return res
-  }
 </script>
 
-{#if attributes.length === 0}
+{#if Object.keys(params).length === 0}
   <div class="mr-2" use:tooltip={{ label: plugin.string.NoAttributesForUpdate }}>
     <Icon icon={IconError} size="medium" />
   </div>
 {/if}
 <div class="flex-row-center flex-gap-1">
   <Label label={method.label} />
-  {#if attributes.length > 0}
-    {#each attributes as attr}
-      <div>
-        <Label label={attr} />
-      </div>
+  {#if Object.keys(params).length > 0}
+    :
+    {#each Object.entries(params) as [key, value]}
+      <UpdateAttributePresenter {process} {key} {value} />
     {/each}
   {/if}
 </div>
+
+<style lang="scss">
+  .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--theme-caption-color);
+  }
+</style>

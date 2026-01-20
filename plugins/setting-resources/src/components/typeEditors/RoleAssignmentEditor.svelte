@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
-  import { type AccountUuid, TypedSpace, notEmpty } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { type AccountUuid, TypedSpace, notEmpty } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
 
   export let object: TypedSpace | undefined
   export let label: IntlString
@@ -27,7 +27,7 @@
   export let size: ButtonSize = 'large'
   export let width: string | undefined = undefined
 
-  $: persons = (object?.members ?? []).map((m) => $personRefByAccountUuidStore.get(m)).filter(notEmpty)
+  $: persons = (object?.members ?? []).map((m) => $employeeRefByAccountUuidStore.get(m)).filter(notEmpty)
 </script>
 
 {#if object !== undefined}

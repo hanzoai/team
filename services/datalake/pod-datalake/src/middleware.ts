@@ -13,13 +13,20 @@
 // limitations under the License.
 //
 
-import { extractToken } from '@hanzo/server-client'
+import { systemAccountUuid } from '@hcengineering/core'
+import { extractToken } from '@hcengineering/server-client'
+import { Token } from '@hcengineering/server-token'
 import { type Response, type Request, type NextFunction, RequestHandler } from 'express'
+import { validate } from 'uuid'
 import { ApiError } from './error'
 
 export interface KeepAliveOptions {
   timeout: number
   max: number
+}
+
+export interface RequestWithAuth extends Request {
+  token?: Token
 }
 
 export const keepAlive = (options: KeepAliveOptions): RequestHandler => {
@@ -31,12 +38,13 @@ export const keepAlive = (options: KeepAliveOptions): RequestHandler => {
   }
 }
 
-export const withAuthorization = (req: Request, res: Response, next: NextFunction): void => {
+export const withAdminAuthorization = (req: RequestWithAuth, res: Response, next: NextFunction): void => {
   try {
     const token = extractToken(req.headers)
-    if (token == null) {
+    if (token == null || !(token.account === systemAccountUuid || token.extra?.admin === 'true')) {
       throw new ApiError(401, 'Unauthorized')
     }
+    req.token = token
 
     next()
   } catch (err: any) {
@@ -44,17 +52,41 @@ export const withAuthorization = (req: Request, res: Response, next: NextFunctio
   }
 }
 
-export const withWorkspace = (req: Request, res: Response, next: NextFunction): void => {
-  if (req.params.workspace === undefined || req.params.workspace === '') {
+export const withAuthorization = (req: RequestWithAuth, res: Response, next: NextFunction): void => {
+  try {
+    const token = extractToken(req.headers)
+    if (token == null || token.extra?.guest === 'true' || token.extra?.readonly === 'true') {
+      throw new ApiError(401, 'Unauthorized')
+    }
+    req.token = token
+
+    next()
+  } catch (err: any) {
+    next(err)
+  }
+}
+
+export const withWorkspace = (req: RequestWithAuth, res: Response, next: NextFunction): void => {
+  if (req.params.workspace === undefined || req.params.workspace === '' || !validate(req.params.workspace)) {
     next(new ApiError(400, 'Missing workspace'))
     return
+  }
+  // If authorization is not enforced allow any workspace
+  if (req.token != null) {
+    const hasWorkspaceAccess =
+      (req.token.workspace as string) === req.params.workspace ||
+      req.token.account === systemAccountUuid ||
+      req.token.extra?.admin === 'true'
+    if (!hasWorkspaceAccess) {
+      throw new ApiError(401, 'Unauthorized')
+    }
   }
 
   next()
 }
 
-export const withBlob = (req: Request, res: Response, next: NextFunction): void => {
-  if (req.params.workspace === undefined || req.params.workspace === '') {
+export const withBlob = (req: RequestWithAuth, res: Response, next: NextFunction): void => {
+  if (req.params.workspace === undefined || req.params.workspace === '' || !validate(req.params.workspace)) {
     next(new ApiError(400, 'Missing workspace'))
     return
   }
@@ -62,6 +94,25 @@ export const withBlob = (req: Request, res: Response, next: NextFunction): void 
     next(new ApiError(400, 'Missing blob name'))
     return
   }
+  // If authorization is not enforced allow any workspace
+  if (req.token != null) {
+    const hasWorkspaceAccess =
+      (req.token.workspace as string) === req.params.workspace ||
+      req.token.account === systemAccountUuid ||
+      req.token.extra?.admin === 'true'
+    if (!hasWorkspaceAccess) {
+      throw new ApiError(401, 'Unauthorized')
+    }
+  }
 
   next()
+}
+
+export const withReadonly = (req: RequestWithAuth, res: Response, next: NextFunction): void => {
+  if (req.method === 'GET' || req.method === 'HEAD') {
+    next()
+    return
+  }
+
+  next(new ApiError(403, 'Service is in read-only mode'))
 }

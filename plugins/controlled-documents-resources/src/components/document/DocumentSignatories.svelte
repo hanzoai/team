@@ -13,24 +13,25 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, Person, formatName } from '@hanzo/contact'
-  import { employeeByIdStore, personRefByPersonIdStore } from '@hanzo/contact-resources'
+  import { Employee, Person, formatName } from '@hcengineering/contact'
+  import { employeeByIdStore } from '@hcengineering/contact-resources'
   import documents, {
+    ControlledDocument,
     DocumentRequest,
-    emptyBundle,
-    extractValidationWorkflow
-  } from '@hanzo/controlled-documents'
-  import { Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Label, Scroller } from '@hanzo/ui'
+    DocumentValidationState,
+    emptyBundle
+  } from '@hcengineering/controlled-documents'
+  import { Ref } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { getClient } from '@hcengineering/presentation'
+  import { Label, Scroller } from '@hcengineering/ui'
 
   import documentsRes from '../../plugin'
   import {
     $controlledDocument as controlledDocument,
     $documentSnapshots as documentSnapshots
   } from '../../stores/editors/document/editor'
-  import { formatSignatureDate } from '../../utils'
+  import { formatSignatureDate, extractValidationWorkflow } from '../../utils'
 
   let requests: DocumentRequest[] = []
 
@@ -45,18 +46,17 @@
     })
   }
 
-  $: workflow = extractValidationWorkflow(
-    hierarchy,
-    {
-      ...emptyBundle(),
-      ControlledDocument: doc ? [doc] : [],
-      DocumentRequest: requests,
-      DocumentSnapshot: $documentSnapshots
-    },
-    (ref) => $personRefByPersonIdStore.get(ref)
-  )
+  let workflow: Map<Ref<ControlledDocument>, DocumentValidationState[]>
+  $: void extractValidationWorkflow(hierarchy, {
+    ...emptyBundle(),
+    ControlledDocument: doc ? [doc] : [],
+    DocumentRequest: requests,
+    DocumentSnapshot: $documentSnapshots
+  }).then((res) => {
+    workflow = res
+  })
 
-  $: state = (doc ? workflow?.get(doc._id) ?? [] : [])[0]
+  $: state = (doc ? (workflow?.get(doc._id) ?? []) : [])[0]
   $: signers = (state?.approvals ?? [])
     .filter((a) => a.state === 'approved')
     .map((a) => {

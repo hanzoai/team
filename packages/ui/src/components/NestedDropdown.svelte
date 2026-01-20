@@ -17,7 +17,7 @@
   import { createEventDispatcher } from 'svelte'
   import ui from '../plugin'
   import { showPopup } from '../popups'
-  import type { DropdownIntlItem } from '../types'
+  import type { ButtonKind, ButtonSize, DropdownIntlItem } from '../types'
   import Button from './Button.svelte'
   import DropdownIcon from './icons/Dropdown.svelte'
   import NestedMenu from './NestedMenu.svelte'
@@ -28,6 +28,14 @@
   export let disabled: boolean = false
   export let selected: DropdownIntlItem | undefined = undefined
 
+  export let width: string | undefined = undefined
+  export let kind: ButtonKind = 'regular'
+  export let size: ButtonSize | undefined = undefined
+  export let withIcon: boolean = false
+  export let withSelectIcon: boolean = true
+  export let disableFocusOnMouseover: boolean = false
+  export let withSearch: boolean = true
+
   let container: HTMLElement
   let opened: boolean = false
 
@@ -36,7 +44,7 @@
   function openPopup (): void {
     if (!opened) {
       opened = true
-      showPopup(NestedMenu, { items }, container, (result) => {
+      showPopup(NestedMenu, { items, withIcon, disableFocusOnMouseover, withSearch }, container, (result) => {
         if (result !== undefined) {
           selected = result
           dispatch('selected', result.id)
@@ -48,15 +56,22 @@
 </script>
 
 <div bind:this={container}>
-  <Button width={'min-content'} {disabled} on:click={openPopup}>
+  <Button
+    width={width ?? 'min-content'}
+    {kind}
+    {size}
+    {disabled}
+    on:click={openPopup}
+    icon={withIcon ? selected?.icon : undefined}
+    iconProps={selected?.iconProps}
+  >
     <span slot="content" class="overflow-label disabled flex-grow text-left mr-2">
       <Label label={selected !== undefined ? selected.label : label} />
     </span>
     <svelte:fragment slot="iconRight">
-      <DropdownIcon
-        size={'small'}
-        fill={!disabled ? 'var(--primary-button-content-color)' : 'var(--theme-dark-color)'}
-      />
+      {#if withSelectIcon}
+        <DropdownIcon size={'small'} fill={!disabled ? 'var(--theme-content-color)' : 'var(--theme-dark-color)'} />
+      {/if}
     </svelte:fragment>
   </Button>
 </div>

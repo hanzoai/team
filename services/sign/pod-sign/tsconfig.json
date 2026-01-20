@@ -5,7 +5,8 @@
     "rootDir": "./src",
     "outDir": "./lib",
     "declarationDir": "./types",
-    "tsBuildInfoFile": ".build/build.tsbuildinfo",
-    "types": ["node"]
-  }
+    "tsBuildInfoFile": ".build/build.tsbuildinfo"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "lib", "dist", "types", "bundle"]
 }

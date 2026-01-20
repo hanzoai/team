@@ -1,7 +1,7 @@
-import { ChannelProvider } from '@hanzo/contact'
-import { AnyAttribute, AttachedDoc, Class, Doc, Mixin, Ref } from '@hanzo/core'
-import { ExpertKnowledge, InitialKnowledge, MeaningfullKnowledge } from '@hanzo/tags'
-import { ProjectType } from '@hanzo/task'
+import { ChannelProvider } from '@hcengineering/contact'
+import { AnyAttribute, AttachedDoc, Class, Doc, IntegrationKind, Mixin, Ref } from '@hcengineering/core'
+import { ExpertKnowledge, InitialKnowledge, MeaningfullKnowledge } from '@hcengineering/tags'
+import { ProjectType } from '@hcengineering/task'
 
 /**
  * @public
@@ -375,3 +375,8 @@ string,
   urlShow: string
 }
 >
+
+/**
+ * @public
+ */
+export const bitrixIntegrationKind = 'bitrix' as IntegrationKind

@@ -14,24 +14,29 @@
 //
 
 import {
-  type PersonId,
+  type AccountUuid,
   type AnyAttribute,
   type ArrOf,
   type Association,
   type AttachedDoc,
   type Blob,
   type Class,
+  type ClassCollaborators,
   type ClassifierKind,
+  type Collaborator,
   type Collection,
   type Configuration,
   type ConfigurationElement,
+  type CustomSequence,
   type Doc,
   type Domain,
   DOMAIN_BLOB,
+  DOMAIN_COLLABORATOR,
   DOMAIN_CONFIGURATION,
   DOMAIN_MIGRATION,
   DOMAIN_MODEL,
   DOMAIN_RELATION,
+  DOMAIN_SEQUENCE,
   type DomainIndexConfiguration,
   type Enum,
   type EnumOf,
@@ -43,19 +48,20 @@ import {
   type MigrationState,
   type Mixin,
   type Obj,
+  type PersonId,
   type PluginConfiguration,
   type Ref,
   type RefTo,
   type Relation,
-  type Space,
   type Sequence,
+  type Space,
   type Timestamp,
   type TransientConfiguration,
   type Type,
   type TypeAny,
   type Version,
-  DOMAIN_SEQUENCE
-} from '@hanzo/core'
+  type VersionableClass
+} from '@hcengineering/core'
 import {
   Hidden,
   Index,
@@ -66,10 +72,10 @@ import {
   TypeBoolean,
   TypeFileSize,
   TypeIntlString,
+  TypePersonId,
   TypeRef,
   TypeString,
   TypeTimestamp,
-  TypePersonId,
   UX
 } from '@hanzo/model'
 import { getEmbeddedLabel, type IntlString, type Plugin } from '@hanzo/platform'
@@ -146,6 +152,7 @@ export class TAssociation extends TDoc implements Association {
 }
 
 @Model(core.class.Relation, core.class.Doc, DOMAIN_RELATION)
+@UX(core.string.Relation)
 export class TRelation extends TDoc implements Relation {
   docA!: Ref<Doc<Space>>
 
@@ -220,6 +227,7 @@ export class TAttribute extends TDoc implements AnyAttribute {
   label!: IntlString
   isCustom?: boolean
   defaultValue?: any
+  automationOnly?: boolean
 }
 
 @Model(core.class.Type, core.class.Obj, DOMAIN_MODEL)
@@ -250,6 +258,12 @@ export class TTypeIntlString extends TType {}
 @UX(core.string.Number)
 @Model(core.class.TypeNumber, core.class.Type)
 export class TTypeNumber extends TType {}
+
+@UX(core.string.Id)
+@Model(core.class.TypeIdentifier, core.class.Type)
+export class TTypeIdentifier extends TType {
+  of!: Ref<Sequence>
+}
 
 @UX(core.string.BlobSize)
 @Model(core.class.TypeFileSize, core.class.Type)
@@ -389,4 +403,27 @@ export class TSequence extends TDoc implements Sequence {
     attachedTo!: Ref<Class<Doc>>
 
   sequence!: number
+}
+
+@Model(core.class.CustomSequence, core.class.Sequence)
+export class TCustomSequence extends TSequence implements CustomSequence {
+  prefix!: string
+}
+
+@Model(core.class.ClassCollaborators, core.class.Doc, DOMAIN_MODEL)
+export class TClassCollaborators extends TDoc implements ClassCollaborators<Doc> {
+  attachedTo!: Ref<Class<Doc>>
+  allFields?: boolean
+  fields!: (keyof Doc)[]
+  provideSecurity?: boolean
+}
+
+@Model(core.class.Collaborator, core.class.Doc, DOMAIN_COLLABORATOR)
+export class TCollaborator extends TAttachedDoc implements Collaborator {
+  collaborator!: AccountUuid
+}
+
+@MMixin(core.mixin.VersionableClass, core.class.Class)
+export class TVersionableClass extends TClass implements VersionableClass {
+  enabled!: boolean
 }

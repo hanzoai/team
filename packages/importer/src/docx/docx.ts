@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { MarkupNode, htmlToJSON } from '@hanzo/text'
-import { markupToMarkdown } from '@hanzo/text-markdown'
+import { htmlToJSON, type MarkupNode } from '@hcengineering/text'
+import { markupToMarkdown } from '@hcengineering/text-markdown'
 import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import * as yaml from 'js-yaml'
 import { basename, dirname, extname, join, relative } from 'path'
-import { hanzoaiControlledDocumentHeader, hanzoaiDocumentTemplateHeader } from '../hanzoai/hanzoai'
+import { type HulyControlledDocumentHeader, type HulyDocumentTemplateHeader } from '../huly/huly'
 
 export interface DocumentConverterOptions {
   outputPath: string

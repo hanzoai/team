@@ -13,9 +13,8 @@
 // limitations under the License.
 //
 
-import { AccountUuid, Doc, MarkupBlobRef, Rank, Ref, TypedSpace } from '@hanzo/core'
-import { Preference } from '@hanzo/preference'
-import { IconProps } from '@hanzo/view'
+import { AccountUuid, Doc, MarkupBlobRef, Rank, Ref, TypedSpace } from '@hcengineering/core'
+import { IconProps } from '@hcengineering/view'
 
 /** @public */
 export interface Teamspace extends TypedSpace, IconProps {}
@@ -44,9 +43,4 @@ export interface DocumentSnapshot extends Doc {
   title: string
   content: MarkupBlobRef
   parent: Ref<Document>
-}
-
-/** @public */
-export interface SavedDocument extends Preference {
-  attachedTo: Ref<Document>
 }

@@ -1,13 +1,22 @@
-import core, { Class, Doc, Hierarchy, Ref, systemAccount, TxCreateDoc, TxCUD, TxProcessor } from '@hanzo/core'
-import { Card } from '@hanzo/card'
-import { TriggerControl } from '@hanzo/server-core'
-import activity from '@hanzo/activity'
-import { ActivityControl } from '@hanzo/server-activity'
-import { ServerApi as CommunicationApi, MessageRequestEventType } from '@hanzo/communication-sdk-types'
+import core, {
+  type Class,
+  type Doc,
+  type Hierarchy,
+  type OperationDomain,
+  type Ref,
+  type TxCreateDoc,
+  type TxCUD,
+  TxProcessor
+} from '@hcengineering/core'
+import { type Card } from '@hcengineering/card'
+import { type TriggerControl } from '@hcengineering/server-core'
+import activity from '@hcengineering/activity'
+import { type ActivityControl } from '@hcengineering/server-activity'
+import { MessageEventType, type CreateMessageEvent } from '@hcengineering/communication-sdk-types'
 import {
-  ActivityAttributeUpdate,
-  ActivityMessageData,
-  ActivityUpdate,
+  type ActivityAttributeUpdate,
+  type ActivityMessageExtra,
+  type ActivityUpdate,
   ActivityUpdateType,
   MessageType
 } from '@hanzo/communication-types'
@@ -20,10 +29,9 @@ export async function generateActivity (
   control: TriggerControl,
   cache: Map<Ref<Card>, Card>
 ): Promise<void> {
-  const { hierarchy, communicationApi } = control
+  const { hierarchy } = control
 
-  if (communicationApi == null) return
-  if (tx.space === core.space.DerivedTx) return
+  // if (tx.space === core.space.DerivedTx) return
 
   if (
     hierarchy.isDerived(tx.objectClass, activity.class.ActivityMessage) ||
@@ -35,7 +43,10 @@ export async function generateActivity (
   switch (tx._class) {
     case core.class.TxCreateDoc: {
       const card = TxProcessor.createDoc2Doc(tx as TxCreateDoc<Card>)
-      await createMessages(tx, control, card, communicationApi)
+      if (card._class === 'chat:masterTag:Thread') {
+        break
+      }
+      await createMessages(tx, control, card)
       break
     }
     case core.class.TxMixin:
@@ -45,23 +56,18 @@ export async function generateActivity (
         (await control.findAll(control.ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 }))[0]
       if (card !== undefined) {
         cache.set(tx.objectId, card)
-        await createMessages(tx, control, card, communicationApi)
+        await createMessages(tx, control, card)
       }
     }
   }
 }
 
-async function createMessages (
-  tx: TxCUD<Card>,
-  control: TriggerControl,
-  card: Card | undefined,
-  api: CommunicationApi
-): Promise<void> {
+async function createMessages (tx: TxCUD<Card>, control: TriggerControl, card: Card | undefined): Promise<void> {
   if (card === undefined) return
 
   const action = getActivityAction(control, tx)
 
-  const result: ActivityMessageData[] = []
+  const result: ActivityMessageExtra[] = []
   const attributesUpdates = await getNewActivityUpdates(control, tx, card)
 
   for (const attributeUpdates of attributesUpdates) {
@@ -72,22 +78,24 @@ async function createMessages (
     result.push({ action })
   }
 
+  const events: CreateMessageEvent[] = []
   for (const data of result) {
-    void api.event(
-      {
-        account: systemAccount
-      },
-      {
-        type: MessageRequestEventType.CreateMessage,
-        messageType: MessageType.Activity,
-        card: card._id,
-        cardType: card._class,
-        content: await getActivityContent(control, data, card),
-        creator: tx.modifiedBy,
-        data
-      }
-    )
+    const event: CreateMessageEvent = {
+      type: MessageEventType.CreateMessage,
+      messageType: MessageType.Activity,
+      cardId: card._id,
+      cardType: card._class,
+      content: await getActivityContent(control, data, card),
+      socialId: tx.modifiedBy,
+      extra: data,
+      date: new Date(tx.modifiedOn)
+    }
+    events.push(event)
   }
+
+  await Promise.all(
+    events.map((event) => control.domainRequest(control.ctx, 'communication' as OperationDomain, { event }))
+  )
 }
 
 function getActivityAction (control: ActivityControl, tx: TxCUD<Doc>): 'create' | 'remove' | 'update' {
@@ -99,8 +107,8 @@ function getActivityAction (control: ActivityControl, tx: TxCUD<Doc>): 'create' 
   return 'update'
 }
 
-async function getActivityContent (control: TriggerControl, data: ActivityMessageData, card: Card): Promise<string> {
-  const { action, update } = data
+async function getActivityContent (control: TriggerControl, extra: ActivityMessageExtra, card: Card): Promise<string> {
+  const { action, update } = extra
   const { hierarchy } = control
   const clazz = hierarchy.getClass(card._class)
   const objectType = await translate(clazz.label, {})
@@ -161,11 +169,11 @@ async function getUpdateText (update: ActivityUpdate, card: Card, hierarchy: Hie
     const clazz = hierarchy.getClass(update.tag)
     if (update.action === 'add') {
       const tagName = await translate(clazz.label, {})
-      return await translate(activity.string.NewObjectType, { type: 'tag', title: tagName })
+      return await translate(activity.string.AddedTag, { title: tagName })
     }
     if (update.action === 'remove') {
       const tagName = await translate(clazz.label, {})
-      return await translate(activity.string.RemovedObjectType, { type: 'tag', title: tagName })
+      return await translate(activity.string.RemovedTag, { title: tagName })
     }
   }
   return undefined
@@ -179,7 +187,8 @@ async function getAttrName (
   const { attrKey } = attributeUpdates
 
   try {
-    const attribute = hierarchy.getAttribute(objectClass, attrKey)
+    const attribute = hierarchy.findAttribute(objectClass, attrKey)
+    if (attribute === undefined) return
 
     const label = attribute.shortLabel ?? attribute.label
 

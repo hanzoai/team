@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chunter from '@hanzo/chunter'
-import { type Employee, type Person, getCurrentEmployee } from '@hanzo/contact'
+import chunter from '@hcengineering/chunter'
+import contact, { type Employee, type Person, getCurrentEmployee } from '@hcengineering/contact'
 import documents, {
   type ControlledDocument,
   type Document,
@@ -29,7 +29,9 @@ import documents, {
   type ProjectDocument,
   type ProjectMeta,
   ControlledDocumentState,
+  type DocumentApprovalState,
   DocumentState,
+  type DocumentValidationState,
   ProjectDocumentTree,
   compareDocumentVersions,
   emptyBundle,
@@ -50,21 +52,25 @@ import core, {
   type Tx,
   type TxOperations,
   type WithLookup,
+  type AccountUuid,
+  type Collaborator,
   SortingOrder,
   checkPermission,
-  getCurrentAccount
-} from '@hanzo/core'
-import { type IntlString, translate } from '@hanzo/platform'
-import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
-import request, { type Request, RequestStatus } from '@hanzo/request'
-import { isEmptyMarkup } from '@hanzo/text'
-import { type Location, getUserTimezone, showPopup } from '@hanzo/ui'
-import { type KeyFilter } from '@hanzo/view'
+  getCurrentAccount,
+  notEmpty
+} from '@hcengineering/core'
+import { type IntlString, translate } from '@hcengineering/platform'
+import { createQuery, getClient, MessageBox } from '@hcengineering/presentation'
+import request, { type Request, RequestStatus } from '@hcengineering/request'
+import { isEmptyMarkup } from '@hcengineering/text'
+import { type Location, getUserTimezone, showPopup } from '@hcengineering/ui'
+import { type KeyFilter } from '@hcengineering/view'
 
 import { makeRank } from '@hanzo/rank'
 import { getProjectDocumentLink } from './navigation'
 import documentsResources from './plugin'
 import { wizardOpened } from './stores/wizards/create-document'
+import { getPersonRefByPersonId, getPersonRefsByPersonIds } from '@hcengineering/contact-resources'
 
 export type TranslatedDocumentStates = Readonly<Record<DocumentState, string>>
 
@@ -242,7 +248,9 @@ export async function sendReviewRequest (
 export async function sendApprovalRequest (
   client: TxOperations,
   controlledDoc: ControlledDocument,
-  approvers: Array<Ref<Employee>>
+  approvers: Array<Ref<Employee>>,
+  externalApprovers: Array<Ref<Employee>>,
+  oldExternalApprovers: Array<Ref<Employee>>
 ): Promise<void> {
   const approveTx = client.txFactory.createTxUpdateDoc(controlledDoc._class, controlledDoc.space, controlledDoc._id, {
     controlledState: ControlledDocumentState.Approved
@@ -252,10 +260,32 @@ export async function sendApprovalRequest (
     controlledState: ControlledDocumentState.Rejected
   })
 
-  await client.update(controlledDoc, {
+  const added = new Set<Ref<Person>>()
+  const removed = new Set<Ref<Person>>()
+
+  for (const user of externalApprovers) {
+    if (!oldExternalApprovers.includes(user)) {
+      added.add(user)
+    }
+  }
+
+  for (const user of oldExternalApprovers) {
+    if (!externalApprovers.includes(user)) {
+      removed.add(user)
+    }
+  }
+
+  const ops = client.apply(controlledDoc._id)
+
+  await ops.update(controlledDoc, {
     approvers,
+    externalApprovers,
     controlledState: ControlledDocumentState.InApproval
   })
+
+  await updateExternalApproversAccess(ops, controlledDoc, Array.from(added), Array.from(removed))
+
+  await ops.commit()
 
   await createRequest(
     client,
@@ -263,11 +293,85 @@ export async function sendApprovalRequest (
     controlledDoc._class,
     documents.class.DocumentApprovalRequest,
     controlledDoc.space,
-    approvers,
+    [...approvers, ...externalApprovers],
     approveTx,
     rejectTx,
     true
   )
+}
+
+export async function updateExternalApproversAccess (
+  client: TxOperations,
+  controlledDoc: ControlledDocument,
+  added: Array<Ref<Person>>,
+  removed: Array<Ref<Person>>
+): Promise<void> {
+  if (added.length > 0) {
+    const addedPersons = (
+      await client.findAll(contact.class.Person, {
+        _id: { $in: added }
+      })
+    ).filter((p) => p.personUuid != null)
+    const projectDocs = await client.findAll(documents.class.ProjectDocument, {
+      document: controlledDoc._id
+    })
+
+    for (const person of addedPersons) {
+      for (const projectDoc of projectDocs) {
+        await client.createDoc(core.class.Collaborator, controlledDoc.space, {
+          attachedTo: projectDoc._id,
+          attachedToClass: projectDoc._class,
+          collection: 'collaborators',
+          collaborator: person.personUuid as AccountUuid
+        })
+      }
+
+      if (controlledDoc.changeControl !== undefined) {
+        await client.createDoc(core.class.Collaborator, controlledDoc.space, {
+          attachedTo: controlledDoc.changeControl,
+          attachedToClass: documents.class.ChangeControl,
+          collection: 'collaborators',
+          collaborator: person.personUuid as AccountUuid
+        })
+      }
+    }
+  }
+
+  if (removed.length > 0) {
+    const removedPersons = await client.findAll(contact.class.Person, {
+      _id: { $in: removed }
+    })
+    const removedPersonUuids = removedPersons.map((rp) => rp.personUuid as AccountUuid).filter(notEmpty)
+    const removedControlledDocCollabs: Collaborator[] =
+      removedPersons.length === 0
+        ? []
+        : await client.findAll(core.class.Collaborator, {
+          attachedTo: controlledDoc._id,
+          attachedToClass: controlledDoc._class,
+          collection: 'collaborators',
+          collaborator: { $in: removedPersonUuids }
+        })
+    const projectDocs = await client.findAll(documents.class.ProjectDocument, {
+      document: controlledDoc._id
+    })
+    const removedProjectDocCollabs = await client.findAll(core.class.Collaborator, {
+      attachedTo: { $in: projectDocs.map((pd) => pd._id) },
+      attachedToClass: documents.class.ProjectDocument,
+      collection: 'collaborators',
+      collaborator: { $in: removedPersonUuids }
+    })
+
+    const changeControlCollabs = await client.findAll(core.class.Collaborator, {
+      attachedTo: controlledDoc.changeControl,
+      attachedToClass: documents.class.ChangeControl,
+      collection: 'collaborators',
+      collaborator: { $in: removedPersonUuids }
+    })
+
+    for (const collab of [...removedControlledDocCollabs, ...removedProjectDocCollabs, ...changeControlCollabs]) {
+      await client.remove(collab)
+    }
+  }
 }
 
 async function createRequest<T extends Doc> (
@@ -280,8 +384,22 @@ async function createRequest<T extends Doc> (
   approveTx: Tx,
   rejectedTx?: Tx,
   areAllApprovesRequired = true
-): Promise<Ref<Request>> {
-  return await client.addCollection(reqClass, space, attachedTo, attachedToClass, 'requests', {
+): Promise<Ref<Request> | undefined> {
+  const sequentialRequestClassGroup = [documents.class.DocumentReviewRequest, documents.class.DocumentApprovalRequest]
+
+  const ops = client.apply('create-qms-doc-request')
+
+  if (sequentialRequestClassGroup.includes(reqClass)) {
+    for (const _class of sequentialRequestClassGroup) {
+      ops.notMatch(_class, {
+        attachedTo,
+        attachedToClass,
+        status: RequestStatus.Active
+      })
+    }
+  }
+
+  const ref = await ops.addCollection(reqClass, space, attachedTo, attachedToClass, 'requests', {
     requested: users,
     approved: [],
     tx: approveTx,
@@ -289,6 +407,12 @@ async function createRequest<T extends Doc> (
     status: RequestStatus.Active,
     requiredApprovesCount: areAllApprovesRequired ? users.length : 1
   })
+
+  const commit = await ops.commit()
+
+  if (commit.result) {
+    return ref
+  }
 }
 
 async function getActiveRequest (
@@ -319,11 +443,22 @@ export async function completeRequest (
     return
   }
 
-  await client.update(req, {
+  const ops = client.apply(req._id)
+
+  // Check on the server side if the user has already approved - do not add the second time
+  // otherwise request is never finished and ends up in a broken state
+  ops.notMatch(reqClass, {
+    _id: req._id,
+    approved: me
+  })
+
+  await ops.update(req, {
     $push: {
       approved: me
     }
   })
+
+  await ops.commit()
 }
 
 export async function saveComment (message: Markup | undefined, req: DocumentRequest): Promise<void> {
@@ -587,22 +722,6 @@ export async function canDeleteDocumentCategory (doc?: Doc | Doc[]): Promise<boo
   return await checkPermission(client, documents.permission.DeleteDocumentCategory, (doc as DocumentCategory).space)
 }
 
-function getCurrentProjectId (space: Ref<DocumentSpace>): string {
-  return `${space}_###_project`
-}
-
-export function getCurrentProject (space: Ref<DocumentSpace>): Ref<Project> | undefined {
-  return localStorage.getItem(getCurrentProjectId(space)) as Ref<Project>
-}
-
-export function setCurrentProject (space: Ref<DocumentSpace>, project: Ref<Project> | undefined): void {
-  if (project !== undefined) {
-    localStorage.setItem(getCurrentProjectId(space), project)
-  } else {
-    localStorage.removeItem(getCurrentProjectId(space))
-  }
-}
-
 async function getLatestProject (space: Ref<DocumentSpace>, includeReadonly = false): Promise<Project | undefined> {
   const client = getClient()
 
@@ -703,7 +822,9 @@ export async function getDocumentMetaTitle (
 
   if (object === undefined) return ''
 
-  return object.title
+  const hint = await translate(documentsResources.string.LatestVersionHint, {})
+
+  return object.title + ` (${hint})`
 }
 
 export async function controlledDocumentReferenceObjectProvider (
@@ -991,14 +1112,124 @@ export function createDocumentHierarchyQuery (): DocumentHiearchyQuery {
   return new DocumentHiearchyQuery()
 }
 
-export async function syncDocumentMetaTitle (
-  client: Client & TxOperations,
-  _id: Ref<DocumentMeta>,
-  code: string,
-  title: string
-): Promise<void> {
-  const meta = await client.findOne(documents.class.DocumentMeta, { _id })
-  if (meta !== undefined) {
-    await client.update(meta, { title: `${code} ${title}` })
+export async function extractValidationWorkflow (
+  hierarchy: Hierarchy,
+  bundle: DocumentBundle
+): Promise<Map<Ref<ControlledDocument>, DocumentValidationState[]>> {
+  const result = new Map<Ref<ControlledDocument>, DocumentValidationState[]>()
+
+  const getApprovalStates = async (request: DocumentRequest | undefined): Promise<DocumentApprovalState[]> => {
+    if (request === undefined) return []
+
+    const role = hierarchy.isDerived(request._class, documents.class.DocumentReviewRequest) ? 'reviewer' : 'approver'
+
+    const rejected: DocumentApprovalState[] =
+      request.rejected !== undefined
+        ? [
+            {
+              person: request.rejected,
+              role,
+              state: 'rejected',
+              timestamp: request.modifiedOn
+            }
+          ]
+        : []
+
+    const approved: DocumentApprovalState[] = request.approved.map((person, idx) => {
+      return {
+        person,
+        role,
+        state: 'approved',
+        timestamp: request.approvedDates?.[idx] ?? request.modifiedOn
+      }
+    })
+
+    const ignored: DocumentApprovalState[] = request.requested
+      .filter((person) => person !== request.rejected)
+      .filter((person) => !request.approved.includes(person))
+      .map((person) => {
+        return {
+          person,
+          role,
+          state: request.rejected !== undefined ? 'cancelled' : 'waiting'
+        }
+      })
+
+    const states = [...rejected, ...approved, ...ignored]
+
+    const messages = bundle.ChatMessage.filter((m) => m.attachedTo === request._id)
+    const personRefByPersonId = await getPersonRefsByPersonIds(messages.map((m) => m.createdBy ?? m.modifiedBy))
+    for (const state of states) {
+      state.messages = messages.filter((m) => personRefByPersonId.get(m.createdBy ?? m.modifiedBy) === state.person)
+    }
+
+    return states
   }
+
+  for (const document of bundle.ControlledDocument) {
+    const snapshots = bundle.DocumentSnapshot.filter((s) => s.attachedTo === document._id).sort(
+      (a, b) => (a.createdOn ?? 0) - (b.createdOn ?? 0)
+    )
+    const requests = bundle.DocumentRequest.filter((s) => s.attachedTo === document._id).sort(
+      (a, b) => (a.createdOn ?? 0) - (b.createdOn ?? 0)
+    )
+
+    const states = [...snapshots, undefined].map((snapshot) => {
+      const state: DocumentValidationState = {
+        requests: [],
+        snapshot,
+        document,
+        approvals: [],
+        messages: []
+      }
+
+      return state
+    })
+
+    for (const request of requests) {
+      if (request.status === RequestStatus.Cancelled) {
+        continue
+      }
+      const state =
+        states.find((s) => (s.snapshot?.createdOn ?? 0) > (request.createdOn ?? 0)) ?? states[states.length - 1]
+      state.requests.push(request)
+    }
+
+    for (const state of states) {
+      const review = state.requests.findLast((r) =>
+        hierarchy.isDerived(r._class, documents.class.DocumentReviewRequest)
+      )
+      let approval = state.requests.findLast((r) =>
+        hierarchy.isDerived(r._class, documents.class.DocumentApprovalRequest)
+      )
+
+      if ((approval?.createdOn ?? 0) < (review?.createdOn ?? 0)) approval = undefined
+
+      const anchor = review ?? approval
+      const author =
+        anchor?.createdBy !== undefined
+          ? ((await getPersonRefByPersonId(anchor.createdBy)) ?? document.author)
+          : document.author
+
+      state.approvals = [
+        {
+          person: author,
+          role: 'author',
+          state: anchor !== undefined ? 'approved' : 'waiting',
+          timestamp: anchor !== undefined ? (anchor.createdOn ?? document.createdOn) : undefined
+        },
+        ...(await getApprovalStates(review)),
+        ...(await getApprovalStates(approval))
+      ]
+
+      if (state.requests.length > 0) {
+        state.modifiedOn = Math.max(...state.requests.map((r) => r.modifiedOn ?? 0))
+      }
+    }
+
+    states.reverse()
+    result.set(document._id, states)
+  }
+
+  return result
 }

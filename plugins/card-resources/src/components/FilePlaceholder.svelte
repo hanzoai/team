@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hanzo/attachment'
-  import { Card } from '@hanzo/card'
-  import { getClient, getFileMetadata } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
-  import { FileUploadCallbackParams, uploadFiles } from '@hanzo/uploader'
+  import attachment from '@hcengineering/attachment'
+  import { Card } from '@hcengineering/card'
+  import { getClient } from '@hcengineering/presentation'
+  import { Label } from '@hcengineering/ui'
+  import { FileUploadCallbackParams, uploadFiles } from '@hcengineering/uploader'
   import UploadDuo from './icons/UploadDuo.svelte'
 
   export let doc: Card
@@ -27,14 +27,14 @@
   let inputFile: HTMLInputElement
   let dragover = false
 
-  async function onFileUploaded ({ uuid, name, file, type }: FileUploadCallbackParams): Promise<void> {
-    const metadata = await getFileMetadata(file, uuid)
+  async function onFileUploaded ({ uuid, name, file, metadata }: FileUploadCallbackParams): Promise<void> {
     const blobs = doc.blobs ?? {}
     blobs[uuid] = {
       name,
-      type,
+      type: file.type,
       metadata,
-      file: uuid
+      file: uuid,
+      size: file.size
     }
     await client.update(doc, {
       blobs

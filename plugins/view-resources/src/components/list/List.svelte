@@ -53,6 +53,7 @@
   export let selection: number | undefined = undefined
   export let compactMode: boolean = false
   export let listProvider: SelectionFocusProvider
+  export let singleCategoryLimit: number | undefined = undefined
 
   const limiter = new RateLimiter(10)
 
@@ -109,7 +110,6 @@
     queryNoLookup,
     (res) => {
       fastDocs = res
-      // console.log('query, res', res)
       fastQueryIds = new Set(res.map((it) => it._id))
     },
     { ...categoryQueryOptions, limit: 1000 }
@@ -218,6 +218,7 @@
     {createItemDialogProps}
     {createItemLabel}
     {createItemEvent}
+    {singleCategoryLimit}
     on:check
     on:uncheckAll={uncheckAll}
     on:row-focus
@@ -250,6 +251,6 @@
     width: 100%;
     height: max-content;
     min-width: auto;
-    min-height: auto;
+    min-height: 0;
   }
 </style>

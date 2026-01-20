@@ -13,77 +13,26 @@
 // limitations under the License.
 //
 
-import core, { ClassifierKind, type Domain, IndexKind } from '@hanzo/core'
-import { type Builder, Index, Model, Prop, TypeString } from '@hanzo/model'
-import { TDoc } from '@hanzo/model-core'
+import core, { ClassifierKind } from '@hcengineering/core'
+import { type Builder } from '@hcengineering/model'
+import chat from '@hcengineering/chat'
 
-import view, { type Viewlet } from '@hanzo/model-view'
-import card from '@hanzo/card'
-import { getEmbeddedLabel } from '@hanzo/platform'
-import setting from '@hanzo/setting'
+import card from '@hcengineering/card'
+import mail from '@hcengineering/mail'
 
-import { type MailRoute } from '@hanzo/mail'
-import mail from './plugin'
-
-const DOMAIN_MAIL = 'mail' as Domain
-const mailTag = 'Mail'
-
-export { mailId } from '@hanzo/mail'
-export { default } from './plugin'
-
-@Model(mail.class.MailRoute, core.class.Doc, DOMAIN_MAIL)
-export class TMailRoute extends TDoc implements MailRoute {
-  @Prop(TypeString(), mail.string.MailId)
-  @Index(IndexKind.Indexed)
-    mailId!: string
-
-  @Prop(TypeString(), mail.string.MailThreadId)
-  @Index(IndexKind.Indexed)
-    threadId!: string
-}
+export { mailId } from '@hcengineering/mail'
 
 export function createModel (builder: Builder): void {
-  builder.createModel(TMailRoute)
-
-  createMailTag(builder)
-  createMailViewlet(builder)
-}
-
-function createMailTag (builder: Builder): void {
+  // Create mail tags for Thread and Channel master tags
   builder.createDoc(
-    card.class.MasterTag,
+    card.class.Tag,
     core.space.Model,
     {
-      extends: card.class.Card,
-      label: getEmbeddedLabel(mailTag),
-      kind: ClassifierKind.CLASS,
-      icon: card.icon.MasterTag
+      extends: chat.masterTag.Thread,
+      label: mail.string.MailTag,
+      kind: ClassifierKind.MIXIN,
+      icon: mail.icon.Mail
     },
-    mail.class.MailThread
-  )
-  builder.mixin(mail.class.MailThread, core.class.Mixin, setting.mixin.Editable, {
-    value: false
-  })
-  builder.mixin(mail.class.MailThread, core.class.Mixin, setting.mixin.UserMixin, {})
-}
-
-function createMailViewlet (builder: Builder): void {
-  builder.createDoc<Viewlet>(
-    view.class.Viewlet,
-    core.space.Model,
-    {
-      attachTo: mail.class.MailThread,
-      descriptor: view.viewlet.Table,
-      config: [
-        { key: 'createdBy', displayProps: { fixed: 'left', key: 'app' } },
-        '',
-        { key: 'modifiedOn', displayProps: { key: 'modified', fixed: 'right' } }
-      ],
-      configOptions: {
-        hiddenKeys: ['name'],
-        sortable: true
-      }
-    },
-    mail.viewlet.TableMail
+    mail.tag.MailThread
   )
 }

@@ -193,7 +193,7 @@
         on:repeat={setRecurrance}
         {readOnly}
         on:allday={allDayChangeHandler}
-        noRepeat
+        noRepeat={object._class !== calendar.class.ReccuringInstance}
       />
     </div>
     <div class="block rightCropPadding">
@@ -214,9 +214,6 @@
         readonly={readOnly}
         placeholder={calendar.string.Description}
         bind:content={description}
-        on:changeSize={(e) => {
-          console.log('ChangeSize', e)
-        }}
       />
     </div>
     <div class="divider" />
@@ -282,6 +279,7 @@
       }
       &.description {
         padding: 0 1.25rem;
+        min-height: 2.625rem;
       }
     }
     .top-icon {

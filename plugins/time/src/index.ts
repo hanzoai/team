@@ -26,12 +26,12 @@ import {
   Space,
   Timestamp,
   Type
-} from '@hanzo/core'
-import { IntlString, plugin } from '@hanzo/platform'
-import { Event, Visibility } from '@hanzo/calendar'
-import { AnyComponent } from '@hanzo/ui'
-import { Person } from '@hanzo/contact'
-import type { Rank } from '@hanzo/rank'
+} from '@hcengineering/core'
+import { IntlString, plugin } from '@hcengineering/platform'
+import { Event, Visibility } from '@hcengineering/calendar'
+import { AnyComponent } from '@hcengineering/ui'
+import { Employee } from '@hcengineering/contact'
+import type { Rank } from '@hcengineering/rank'
 
 export * from './analytics'
 
@@ -60,8 +60,8 @@ export interface ToDo extends AttachedDoc {
   dueDate?: Timestamp | null
   priority: ToDoPriority
   visibility: Visibility
-  doneOn?: Timestamp | null
-  user: Ref<Person>
+  doneOn: Timestamp | null
+  user: Ref<Employee>
   attachedSpace?: Ref<Space>
   labels?: number
   rank: Rank
@@ -121,7 +121,8 @@ export default plugin(timeId, {
   component: {
     Me: '' as AnyComponent,
     Team: '' as AnyComponent,
-    EditToDo: '' as AnyComponent
+    EditToDo: '' as AnyComponent,
+    ToDoPresenter: '' as AnyComponent
   },
   class: {
     WorkSlot: '' as Ref<Class<WorkSlot>>,
@@ -134,7 +135,8 @@ export default plugin(timeId, {
     ItemPresenter: '' as Ref<Mixin<ItemPresenter>>
   },
   ids: {
-    NotAttached: '' as Ref<Doc>
+    NotAttached: '' as Ref<Doc>,
+    TimeNotificationGroup: '' as Ref<Doc>
   },
   space: {
     ToDos: '' as Ref<Space>
@@ -161,6 +163,10 @@ export default plugin(timeId, {
     AddToDo: '' as IntlString,
     NewToDoDetails: '' as IntlString,
     ToDo: '' as IntlString,
-    NewToDo: '' as IntlString
+    NewToDo: '' as IntlString,
+    UnassignToDo: '' as IntlString,
+    UnassignToDoConfirm: '' as IntlString,
+    ReassignToDo: '' as IntlString,
+    ReassignToDoConfirm: '' as IntlString
   }
 })

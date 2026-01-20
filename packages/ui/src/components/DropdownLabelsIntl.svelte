@@ -36,11 +36,14 @@
   export let size: ButtonSize = 'small'
   export let justify: 'left' | 'center' = 'center'
   export let width: string | undefined = undefined
+  export let minWidth: string | undefined = undefined
   export let labelDirection: TooltipAlignment | undefined = undefined
   export let shouldUpdateUndefined: boolean = true
   export let minW0 = true
   export let focusIndex: number = -1
   export let dataId: string | undefined = undefined
+  export let noFocus: boolean = false
+  export let withSearch: boolean = false
 
   let container: HTMLElement
   let opened: boolean = false
@@ -56,7 +59,7 @@
   function openPopup () {
     if (!opened) {
       opened = true
-      showPopup(DropdownLabelsPopupIntl, { items, selected, params }, container, (result) => {
+      showPopup(DropdownLabelsPopupIntl, { items, selected, params, withSearch }, container, (result) => {
         if (result) {
           selected = result
           dispatch('selected', result)
@@ -85,17 +88,19 @@
     {icon}
     {iconProps}
     width={width ?? 'min-content'}
+    {minWidth}
     {size}
     {kind}
     {disabled}
     {justify}
+    {noFocus}
     showTooltip={{ label, direction: labelDirection }}
     on:click={openPopup}
   >
     <span slot="content" class="overflow-label disabled flex-grow text-left mr-2">
       <Label
         label={selectedItem ? selectedItem.label : label}
-        params={selectedItem ? selectedItem.params ?? params : params}
+        params={selectedItem ? (selectedItem.params ?? params) : params}
       />
     </span>
     <svelte:fragment slot="iconRight">

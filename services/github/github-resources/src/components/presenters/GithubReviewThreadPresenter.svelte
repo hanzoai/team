@@ -6,14 +6,14 @@
   import core, { PersonId, Ref, WithLookup, getCurrentAccount } from '@hanzo/core'
   import { GithubPullRequest, GithubReviewComment, GithubReviewThread } from '@hanzo/github'
 
-  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hanzo/activity-resources'
-  import { Person } from '@hanzo/contact'
-  import { EmployeePresenter, personByPersonIdStore } from '@hanzo/contact-resources'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { ReferenceInput } from '@hanzo/text-editor-resources'
-  import { Button, Component, Label, PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzo/ui'
-  import diffview from '@hanzo/diffview'
+  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hcengineering/activity-resources'
+  import { Person } from '@hcengineering/contact'
+  import { EmployeePresenter, getPersonByPersonId, getPersonByPersonIdCb } from '@hcengineering/contact-resources'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { ReferenceInput } from '@hcengineering/text-editor-resources'
+  import { Button, Component, Label, PaletteColorIndexes, getPlatformColor, themeStore } from '@hcengineering/ui'
+  import diffview from '@hcengineering/diffview'
   import github from '../../plugin'
   import ReviewCommentPresenter from './ReviewCommentPresenter.svelte'
   import { githubConfiguration } from '../../configuration'
@@ -26,7 +26,15 @@
   export let embedded: boolean = false
   export let onClick: (() => void) | undefined = undefined
 
-  $: person = $personByPersonIdStore.get(value?.createdBy ?? value?.modifiedBy)
+  $: personId = value?.createdBy ?? value?.modifiedBy
+  let person: Person | undefined
+  $: if (personId !== undefined) {
+    getPersonByPersonIdCb(personId, (p) => {
+      person = p ?? undefined
+    })
+  } else {
+    person = undefined
+  }
 
   const commentsQuery = createQuery()
 
@@ -141,24 +149,25 @@
               />
             {/if}
             {#if value.isResolved && value.resolvedBy != null}
-              {@const resolvePerson = $personByPersonIdStore.get(value.resolvedBy)}
-              {#if resolvePerson !== undefined}
-                <div class="flex-row-center ml-4">
-                  <Label label={getEmbeddedLabel('resolved by')} />
+              {#await getPersonByPersonId(value.resolvedBy) then resolvePerson}
+                {#if resolvePerson !== undefined}
+                  <div class="flex-row-center ml-4">
+                    <Label label={getEmbeddedLabel('resolved by')} />
 
-                  <div class="content ml-2 clear-mins">
-                    <div class="header clear-mins">
-                      {#if resolvePerson}
-                        <EmployeePresenter value={resolvePerson} shouldShowAvatar={true} />
-                      {:else}
-                        <div class="strong">
-                          <Label label={core.string.System} />
-                        </div>
-                      {/if}
+                    <div class="content ml-2 clear-mins">
+                      <div class="header clear-mins">
+                        {#if resolvePerson}
+                          <EmployeePresenter value={resolvePerson} shouldShowAvatar={true} />
+                        {:else}
+                          <div class="strong">
+                            <Label label={core.string.System} />
+                          </div>
+                        {/if}
+                      </div>
                     </div>
                   </div>
-                </div>
-              {/if}
+                {/if}
+              {/await}
             {/if}
           </div>
         {/if}

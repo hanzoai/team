@@ -46,14 +46,14 @@
     dispatch('close', parent)
   }
 
-  $: selected = !Array.isArray(value) ? value.parent ?? undefined : undefined
+  $: selected = !Array.isArray(value) ? (value.parent ?? undefined) : undefined
   $: ignoreObjects = !Array.isArray(value) ? [value._id] : undefined
 
   $: cards = new Set(Array.isArray(value) ? value.map((p) => p._id) : [value._id])
 
   const filter = (it: Doc): boolean => {
     const card = it as Card
-    return !card.parentInfo.some((p) => cards.has(p._id))
+    return !card.parentInfo?.some((p) => cards.has(p._id))
   }
 </script>
 

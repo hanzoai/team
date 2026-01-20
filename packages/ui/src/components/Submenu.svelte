@@ -27,11 +27,13 @@
   export let focusIndex = -1
 
   export let icon: Asset | AnySvelteComponent | undefined = undefined
+  export let iconProps: Record<string, any> = {}
   export let text: string | undefined = undefined
   export let label: IntlString | undefined = undefined
   export let labelProps: Record<string, any> = {}
   export let withHover: boolean = false
   export let element: HTMLElement | undefined = undefined
+  export let withoutMargin: boolean = false
 
   let optionsMod: LabelAndProps
   $: optionsMod = { component: options.component ?? Menu, props, element, kind: 'submenu' }
@@ -47,6 +49,7 @@
   on:click
   use:tooltip={optionsMod}
   class="antiPopup-submenu"
+  class:withoutMargin
   class:withHover
   tabindex={focusIndex}
 >
@@ -56,9 +59,11 @@
     {:else}
       <svelte:component this={component} {...props} />
     {/if}
+  {:else if $$slots.item}
+    <slot name="item" />
   {:else}
     {#if icon}
-      <div class="icon"><Icon {icon} size={'small'} /></div>
+      <div class="icon"><Icon {icon} {iconProps} size={'small'} /></div>
     {/if}
     <span class="overflow-label pr-1">
       {#if label}<Label {label} params={labelProps} />
@@ -66,3 +71,9 @@
     </span>
   {/if}
 </div>
+
+<style lang="scss">
+  .withoutMargin {
+    margin: 0;
+  }
+</style>

@@ -15,17 +15,27 @@ import { type Resources } from '@hanzo/platform'
 import MasterTags from './components/MasterTags.svelte'
 import CreateTag from './components/CreateTag.svelte'
 import CardPresenter from './components/CardPresenter.svelte'
+import CardsPresenter from './components/CardsPresenter.svelte'
 import EditCard from './components/EditCard.svelte'
 import Main from './components/Main.svelte'
 import {
-  getCardId,
   getCardTitle,
   resolveLocation,
   resolveLocationData,
   getCardLink,
   queryCard,
   deleteMasterTag,
-  editSpace
+  editSpace,
+  cardCustomLinkEncode,
+  cardCustomLinkMatch,
+  openCardInSidebar,
+  checkRelationsSectionVisibility,
+  checkOldMessagesSectionVisibility,
+  checkCommunicationMessagesSectionVisibility,
+  getSpaceAccessPublicLink,
+  canGetSpaceAccessPublicLink,
+  cardFactory,
+  duplicateCard
 } from './utils'
 import ManageMasterTagsContent from './components/settings/ManageMasterTagsContent.svelte'
 import ManageMasterTagsTools from './components/settings/ManageMasterTagsTools.svelte'
@@ -44,11 +54,47 @@ import CardRefPresenter from './components/CardRefPresenter.svelte'
 import ChangeType from './components/ChangeType.svelte'
 import CreateCardButton from './components/CreateCardButton.svelte'
 import CardArrayEditor from './components/CardArrayEditor.svelte'
-import NewCardHeader from './components/navigator/NewCardHeader.svelte'
 import SpacePresenter from './components/navigator/SpacePresenter.svelte'
+import TypesNavigator from './components/navigator/TypesNavigator.svelte'
 import LabelsPresenter from './components/LabelsPresenter.svelte'
+import RolesSection from './components/settings/RolesSection.svelte'
+import EditRole from './components/settings/EditRole.svelte'
+import CreateRolePopup from './components/settings/CreateRolePopup.svelte'
+import CardWidget from './components/CardWidget.svelte'
+import CreateSpace from './components/navigator/CreateSpace.svelte'
+import CardHeaderButton from './components/navigator/CardHeaderButton.svelte'
+
+// Card Sections
+import AttachmentsCardSection from './components/sections/AttachmentsSection.svelte'
+import ChildrenCardSection from './components/sections/ChildrenSection.svelte'
+import ContentCardSection from './components/sections/ContentSection.svelte'
+import PropertiesCardSection from './components/sections/PropertiesSection.svelte'
+import RelationsCardSection from './components/sections/RelationsSection.svelte'
+import CardCommunicatiomMessages from './components/sections/CardCommunicatiomMessages.svelte'
+import OldMessagesCardSection from './components/sections/OldMessagesCardSection.svelte'
+
+import FavoriteCardPresenter from './components/FavoriteCardPresenter.svelte'
+import CardTagsColored from './components/CardTagsColored.svelte'
+import CardTagColored from './components/CardTagColored.svelte'
+import CardWidgetTab from './components/CardWidgetTab.svelte'
+import CardIcon from './components/CardIcon.svelte'
+import CardFeedView from './components/CardFeedView.svelte'
+
+import './cardTableFormatter'
 
 export { default as CardSelector } from './components/CardSelector.svelte'
+export { default as CardIcon } from './components/CardIcon.svelte'
+export { default as Navigator } from './components/navigator-next/Navigator.svelte'
+export { default as Favorites } from './components/Favorites.svelte'
+export { default as CardPresenter } from './components/CardPresenter.svelte'
+export { default as TypeSelector } from './components/TypeSelector.svelte'
+export { default as AssociationsSelect } from './components/settings/view/AssociationsSelect.svelte'
+export { default as CardTagsColored } from './components/CardTagsColored.svelte'
+export { default as CardPathPresenter } from './components/CardPathPresenter.svelte'
+export { default as CardTimestamp } from './components/CardTimestamp.svelte'
+
+export * from './types'
+export { getCardIconInfo, openCardInSidebar } from './utils'
 
 export default async (): Promise<Resources> => ({
   component: {
@@ -71,12 +117,34 @@ export default async (): Promise<Resources> => ({
     EditView,
     CardEditor,
     CardRefPresenter,
+    CardsPresenter,
     ChangeType,
     CreateCardButton,
     CardArrayEditor,
-    NewCardHeader,
     SpacePresenter,
-    LabelsPresenter
+    TypesNavigator,
+    LabelsPresenter,
+    RolesSection,
+    EditRole,
+    CardWidget,
+    CardWidgetTab,
+    FavoriteCardPresenter,
+    CardTagColored,
+    CardTagsColored,
+    CardIcon,
+    CardFeedView,
+    CreateSpace,
+    CardHeaderButton,
+    CreateRolePopup
+  },
+  sectionComponent: {
+    AttachmentsSection: AttachmentsCardSection,
+    ChildrenSection: ChildrenCardSection,
+    ContentSection: ContentCardSection,
+    PropertiesSection: PropertiesCardSection,
+    RelationsSection: RelationsCardSection,
+    OldMessagesSection: OldMessagesCardSection,
+    CommunicationMessagesSection: CardCommunicatiomMessages
   },
   completion: {
     CardQuery: queryCard
@@ -87,11 +155,20 @@ export default async (): Promise<Resources> => ({
   },
   actionImpl: {
     DeleteMasterTag: deleteMasterTag,
+    DuplicateCard: duplicateCard,
     EditSpace: editSpace
   },
   function: {
     CardTitleProvider: getCardTitle,
-    CardIdProvider: getCardId,
-    GetCardLink: getCardLink
+    GetCardLink: getCardLink,
+    CardCustomLinkMatch: cardCustomLinkMatch,
+    CardCustomLinkEncode: cardCustomLinkEncode,
+    OpenCardInSidebar: openCardInSidebar,
+    CheckRelationsSectionVisibility: checkRelationsSectionVisibility,
+    CheckOldMessagesSectionVisibility: checkOldMessagesSectionVisibility,
+    CheckCommunicationMessagesSectionVisibility: checkCommunicationMessagesSectionVisibility,
+    GetSpaceAccessPublicLink: getSpaceAccessPublicLink,
+    CanGetSpaceAccessPublicLink: canGetSpaceAccessPublicLink,
+    CardFactory: cardFactory
   }
 })

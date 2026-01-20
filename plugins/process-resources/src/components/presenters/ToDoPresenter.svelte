@@ -13,33 +13,44 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { ProcessToDo, MethodParams, Step, Process, parseContext } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import core from '@hcengineering/core'
+  import { getClient } from '@hcengineering/presentation'
+  import { Process, ProcessToDo, Step, parseContext } from '@hcengineering/process'
+  import { Label } from '@hcengineering/ui'
   import plugin from '../../plugin'
   import { getContext } from '../../utils'
   import ContextValuePresenter from '../attributeEditors/ContextValuePresenter.svelte'
 
   export let step: Step<ProcessToDo>
-  export let params: MethodParams<ProcessToDo>
   export let process: Process
 
   const client = getClient()
   $: method = client.getModel().findAllSync(plugin.class.Method, { _id: step.methodId })[0]
 
-  $: contextValue = params.title !== undefined ? parseContext(params.title) : undefined
+  $: contextValue = step.params.title !== undefined ? parseContext(step.params.title) : undefined
 
   $: context = getContext(client, process, core.class.TypeString, 'attribute')
 </script>
 
 <div class="flex-row-center flex-gap-2">
   <Label label={method.label} />
-  {#if params.title}
-    {#if contextValue}
-      - <ContextValuePresenter {contextValue} {context} />
-    {:else}
-      - {params.title}
-    {/if}
+  {#if step.params.title}
+    :
+    <div class="title">
+      {#if contextValue}
+        <ContextValuePresenter {contextValue} {context} {process} />
+      {:else}
+        {step.params.title}
+      {/if}
+    </div>
   {/if}
 </div>
+
+<style lang="scss">
+  .title {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--theme-caption-color);
+  }
+</style>

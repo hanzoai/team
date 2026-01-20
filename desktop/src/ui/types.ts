@@ -1,8 +1,24 @@
-import { ScreenSource } from '@hanzo/love'
+//
+// Copyright © 2025 Hardcore Engineering Inc.
+//
+// Licensed under the Eclipse Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License. You may
+// obtain a copy of the License at https://www.eclipse.org/legal/epl-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
-/**
- * @public
- */
+import { DownloadItem } from '@hcengineering/desktop-downloads'
+import { ScreenSource } from '@hcengineering/love'
+import { Plugin } from '@hcengineering/platform'
+import { Ref, Class, Doc } from '@hcengineering/core'
+import { IpcRendererEvent } from 'electron'
+
 export interface Config {
   ACCOUNTS_URL: string
   AI_URL?: string
@@ -12,10 +28,14 @@ export interface Config {
   COLLABORATOR?: string
   COLLABORATOR_URL: string
   CONFIG_URL: string
-  DESKTOP_UPDATES_CHANNEL?: string
+  DESKTOP_UPDATES_CHANNEL?: string // deprecated, kept for backwards compatibility of old desktop versions that will still need to be upgraded
+  DESKTOP_UPDATES_CHANNELS?: string
   DESKTOP_UPDATES_URL?: string
   DISABLE_SIGNUP?: string
+  HIDE_LOCAL_LOGIN?: string
   FILES_URL: string
+  UPLOAD_URL: string
+  DATALAKE_URL?: string
   FRONT_URL: string
   GITHUB_APP: string
   GITHUB_CLIENTID: string
@@ -25,9 +45,9 @@ export interface Config {
   LINK_PREVIEW_URL?: string
   LIVEKIT_WS?: string
   LOVE_ENDPOINT?: string
-  MODEL_VERSION?: string
+  MODEL_VERSION: string
   PRESENCE_URL?: string
-  PREVIEW_CONFIG: string
+  PREVIEW_URL?: string
   PRINT_URL?: string
   PUSH_PUBLIC_KEY: string
   REKONI_URL: string
@@ -35,14 +55,22 @@ export interface Config {
   STATS_URL?: string
   TELEGRAM_BOT_URL?: string
   TELEGRAM_URL: string
-  UPLOAD_CONFIG: string
-  UPLOAD_URL: string
-  VERSION?: string
+  VERSION: string
   STREAM_URL?: string
   BACKUP_URL?: string
   PUBLIC_SCHEDULE_URL?: string
   CALDAV_SERVER_URL?: string
   EXPORT_URL?: string
+  MAIL_URL?: string
+  COMMUNICATION_API_ENABLED?: string
+  BILLING_URL?: string
+  PAYMENT_URL?: string
+  PULSE_URL?: string
+  PASSWORD_STRICTNESS?: 'very_strict' | 'strict' | 'normal' | 'none'
+  EXCLUDED_APPLICATIONS_FOR_ANONYMOUS?: string
+  HULYLAKE_URL?: string
+  DISABLED_FEATURES?: string
+  SIGNUP_URL?: string
 }
 
 export interface Branding {
@@ -53,6 +81,12 @@ export interface Branding {
     type?: string
     sizes?: string
   }[]
+  support?: {
+    supportLink?: string
+    reportBugLink?: string
+    docsLink?: string
+    privacyPolicyLink?: string
+  }
   languages?: string
   lastNameFirst?: string
   defaultLanguage?: string
@@ -64,18 +98,71 @@ export interface Branding {
 
 export type BrandingMap = Record<string, Branding>
 
-/**
- * @public
- */
+export const CommandOpenSettings = 'open-settings' as const
+export const CommandOpenInbox = 'open-inbox' as const
+export const CommandOpenOffice = 'open-office' as const
+export const CommandOpenPlanner = 'open-planner' as const
+export const CommandSelectWorkspace = 'select-workspace' as const
+export const CommandLogout = 'logout' as const
+export const CommandOpenApplication = 'open-application' as const
+export const CommandCloseTab = 'close-tab' as const
+
+export type Command =
+  typeof CommandOpenSettings |
+  typeof CommandOpenInbox |
+  typeof CommandOpenOffice |
+  typeof CommandOpenPlanner |
+  typeof CommandSelectWorkspace |
+  typeof CommandLogout |
+  typeof CommandOpenApplication |
+  typeof CommandCloseTab
+
 export interface NotificationParams {
   title: string
   body: string
   silent: boolean
+  application: Plugin
+  cardId?: string
+  objectId?: Ref<Doc>
+  objectClass?: Ref<Class<Doc>>
 }
 
-/**
- * @public
- */
+export const MenuBarActions = [
+  'settings',
+  'select-workspace',
+  'logout',
+  'exit',
+  'undo',
+  'redo',
+  'cut',
+  'copy',
+  'paste',
+  'delete',
+  'select-all',
+  'reload',
+  'force-reload',
+  'toggle-devtools',
+  'zoom-in',
+  'zoom-out',
+  'restore-size',
+  'toggle-fullscreen',
+  'toggle-minimize-to-tray',
+  'toggle-auto-launch'] as const
+
+export type MenuBarAction = typeof MenuBarActions[number]
+
+export interface JumpListSpares {
+  applications: LaunchApplication[]
+  settingsLabel: string
+  inboxLabel: string
+}
+
+export interface LaunchApplication {
+  title: string
+  id: string
+  alias: string
+}
+
 export interface IPCMainExposed {
   setBadge: (badge: number) => void
   setTitle: (title: string) => void
@@ -83,7 +170,7 @@ export interface IPCMainExposed {
   branding: () => Promise<Branding>
   on: (event: string, op: (channel: any, args: any[]) => void) => void
   handleDeepLink: (callback: (url: string) => void) => void
-  handleNotificationNavigation: (callback: () => void) => void
+  handleNotificationNavigation: (callback: (notificationParams: NotificationParams) => void) => void
   handleUpdateDownloadProgress: (callback: (progress: number) => void) => void
   setFrontCookie: (host: string, name: string, value: string) => Promise<void>
   dockBounce: () => void
@@ -91,7 +178,27 @@ export interface IPCMainExposed {
   getScreenAccess: () => Promise<boolean>
   getScreenSources: () => Promise<ScreenSource[]>
   handleAuth: (callback: (token: string) => void) => void
+  handleDownloadItem: (callback: (item: DownloadItem) => void) => void
 
   cancelBackup: () => void
   startBackup: (token: string, endpoint: string, workspace: string) => void
+
+  minimizeWindow: () => void
+  maximizeWindow: () => void
+  closeWindow: () => void
+  onWindowStateChange: (callback: (event: IpcRendererEvent, newState: string) => void) => void
+  onWindowFocusLoss: (callback: () => void) => void
+
+  isOsUsingDarkTheme: () => Promise<boolean>
+  executeMenuBarAction: (action: MenuBarAction) => void
+
+  rebuildJumpList: (spares: JumpListSpares) => void
+
+  isMinimizeToTrayEnabled: () => Promise<boolean>
+  onMinimizeToTraySettingChanged: (callback: (enabled: boolean) => void) => void
+  isAutoLaunchEnabled: () => Promise<boolean>
+  onAutoLaunchSettingChanged: (callback: (enabled: boolean) => void) => void
 }
+
+export type SendCommandDelegate = (cmd: Command, ...args: any[]) => void
+export type WindowAction = () => void

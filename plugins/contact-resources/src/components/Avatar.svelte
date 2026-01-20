@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -32,24 +32,34 @@
     getPlatformAvatarColorForTextDef,
     getPlatformColor,
     IconSize,
-    themeStore
-  } from '@hanzo/ui'
+    themeStore,
+    tooltip
+  } from '@hcengineering/ui'
   import { onMount } from 'svelte'
   import { AccountUuid, type Data, PersonUuid, Ref, type WithLookup } from '@hanzo/core'
 
   import { loadUsersStatus, statusByUserStore } from '../utils'
   import AvatarInstance from './AvatarInstance.svelte'
+  import { getPreviewPopup } from './person/utils'
 
-  export let person: (Data<WithLookup<AvatarInfo>> & { _id?: Ref<Person>, personUuid?: PersonUuid }) | undefined =
-    undefined
+  export let person:
+  | (Data<WithLookup<AvatarInfo>> & { _id?: Ref<Person>, personUuid?: PersonUuid })
+  | Person
+  | undefined = undefined
   export let name: string | null | undefined = undefined
   export let direct: Blob | undefined = undefined
   export let size: IconSize
+  export let statusSize: IconSize | undefined = undefined
   export let icon: Asset | AnySvelteComponent | undefined = undefined
   export let variant: 'circle' | 'roundedRect' | 'none' = 'roundedRect'
   export let borderColor: number | undefined = undefined
   export let showStatus: boolean = false
   export let adaptiveName: boolean = false
+  export let showPreview: boolean = false
+  export let disabled: boolean = false
+  export let style: 'modern' | undefined = undefined
+  export let clickable: boolean = false
+  export let clipPath: string | undefined = undefined
 
   export function pulse (): void {
     avatarInst.pulse()
@@ -112,8 +122,35 @@
     person?.personUuid !== undefined && $statusByUserStore.get(person.personUuid as AccountUuid)?.online === true
 </script>
 
-{#if showStatus && person}
-  <div class="relative">
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div class="flex-presenter" class:no-pointer={!clickable} use:tooltip={getPreviewPopup(person, showPreview)} on:click>
+  {#if showStatus && person}
+    <div class="relative">
+      <AvatarInstance
+        bind:this={avatarInst}
+        {url}
+        srcset={srcSet}
+        {displayName}
+        {size}
+        {icon}
+        {variant}
+        {color}
+        {bColor}
+        bind:element
+        {adaptiveName}
+        {disabled}
+        {style}
+        withStatus
+        {clipPath}
+      />
+      <div
+        class="hulyAvatar-statusMarker {statusSize ?? size} {style}"
+        class:online={isOnline}
+        class:offline={!isOnline}
+      />
+    </div>
+  {:else}
     <AvatarInstance
       bind:this={avatarInst}
       {url}
@@ -125,23 +162,10 @@
       {color}
       {bColor}
       bind:element
-      withStatus
       {adaptiveName}
+      {disabled}
+      {style}
+      {clipPath}
     />
-    <div class="hanzoaiAvatar-statusMarker {size}" class:online={isOnline} class:offline={!isOnline} />
-  </div>
-{:else}
-  <AvatarInstance
-    bind:this={avatarInst}
-    {url}
-    srcset={srcSet}
-    {displayName}
-    {size}
-    {icon}
-    {variant}
-    {color}
-    {bColor}
-    bind:element
-    {adaptiveName}
-  />
-{/if}
+  {/if}
+</div>

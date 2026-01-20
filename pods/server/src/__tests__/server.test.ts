@@ -39,9 +39,9 @@ import {
   type Tx,
   type TxResult,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { ClientSession, startSessionManager, type SessionManagerOptions } from '@hanzo/server'
-import { createDummyQueue, createDummyStorageAdapter } from '@hanzo/server-core'
+} from '@hcengineering/core'
+import { startSessionManager, type SessionManagerOptions } from '@hcengineering/server'
+import { createDummyQueue, createDummyStorageAdapter } from '@hcengineering/server-core'
 import { startHttpServer } from '../server_http'
 import { genMinModel } from './minmodel'
 
@@ -81,6 +81,8 @@ describe('server', () => {
           [],
           undefined
         ],
+        domainRequest: async (ctx, domain, params) => ({ domain, value: null as any }),
+        closeSession: async (ctx, sessionId) => {},
         close: async () => {},
         domains: async () => [],
         groupBy: async () => new Map(),
@@ -97,10 +99,6 @@ describe('server', () => {
         loadModel: async (ctx, lastModelTx, hash) => []
       }
     },
-    communicationApiFactory: async () => {
-      return {} as any
-    },
-    sessionFactory: (token, workspace, account) => new ClientSession(token, workspace, account, true),
     brandingMap: {},
     accountsUrl: '',
     queue: createDummyQueue()
@@ -110,7 +108,10 @@ describe('server', () => {
   const serverShutdown = startHttpServer(toolCtx, sessionMgr, port, opt.accountsUrl, createDummyStorageAdapter())
 
   function connect (): WebSocket {
-    const token: string = generateToken('' as PersonUuid, 'latest' as WorkspaceUuid)
+    const token: string = generateToken(
+      '123e4567-e89b-12d3-a456-426614174000' as PersonUuid,
+      '123e4567-e89b-12d3-a456-426614174001' as WorkspaceUuid
+    )
     return new WebSocket(`ws://localhost:${port}/${token}`)
   }
 
@@ -197,6 +198,8 @@ describe('server', () => {
             [],
             undefined
           ],
+          domainRequest: async (ctx, domain, params) => ({ domain, value: null as any }),
+          closeSession: async (ctx, sessionId) => {},
           groupBy: async () => new Map(),
           close: async () => {},
           domains: async () => [],
@@ -213,10 +216,6 @@ describe('server', () => {
           loadModel: async (ctx, lastModelTx, hash) => []
         }
       },
-      communicationApiFactory: async () => {
-        return {} as any
-      },
-      sessionFactory: (token, workspace, account) => new ClientSession(token, workspace, account, true),
       brandingMap: {},
       accountsUrl: '',
       queue: createDummyQueue()
@@ -273,7 +272,10 @@ describe('server', () => {
 
     try {
       //
-      const token: string = generateToken('my-account-uuid' as PersonUuid, 'latest' as WorkspaceUuid)
+      const token: string = generateToken(
+        '123e4567-e89b-12d3-a456-426614174000' as PersonUuid,
+        '123e4567-e89b-12d3-a456-426614174001' as WorkspaceUuid
+      )
       let clearTo: any
       const timeoutPromise = new Promise<void>((resolve) => {
         clearTo = setTimeout(resolve, 4000)

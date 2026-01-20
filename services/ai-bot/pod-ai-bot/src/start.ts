@@ -17,9 +17,9 @@ import serverClient, { withRetry } from '@hanzo/server-client'
 import { initStatisticsContext } from '@hanzo/server-core'
 import serverToken, { generateToken } from '@hanzo/server-token'
 
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import { SplitLogger } from '@hanzo/analytics-service'
-import { MeasureMetricsContext, newMetrics, type SocialId } from '@hanzo/core'
+import { getClient as getAccountClient } from '@hcengineering/account-client'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { newMetrics, type SocialId } from '@hcengineering/core'
 import { join } from 'path'
 import config from './config'
 import { AIControl } from './controller'
@@ -27,9 +27,11 @@ import { registerLoaders } from './loaders'
 import { createServer, listen } from './server/server'
 import { getDbStorage } from './storage'
 import { getAccountUuid } from './utils/account'
+import { updateDeepgramBilling } from './billing'
 
 export const start = async (): Promise<void> => {
   setMetadata(serverToken.metadata.Secret, config.ServerSecret)
+  setMetadata(serverToken.metadata.Service, 'ai-bot-service')
   setMetadata(serverClient.metadata.UserAgent, config.ServiceID)
   setMetadata(serverClient.metadata.Endpoint, config.AccountsURL)
 
@@ -37,7 +39,7 @@ export const start = async (): Promise<void> => {
 
   const ctx = initStatisticsContext('ai-bot-service', {
     factory: () =>
-      new MeasureMetricsContext(
+      createOpenTelemetryMetricsContext(
         'ai-bot-service',
         {},
         {},
@@ -63,14 +65,35 @@ export const start = async (): Promise<void> => {
   ctx.info('AI person uuid', { personUuid })
 
   const storage = await getDbStorage()
-  const socialIds: SocialId[] = await getAccountClient(config.AccountsURL, generateToken(personUuid)).getSocialIds()
+  const socialIds: SocialId[] = await getAccountClient(
+    config.AccountsURL,
+    generateToken(personUuid, undefined, { service: 'aibot' })
+  ).getSocialIds()
 
   const aiControl = new AIControl(personUuid, socialIds, storage, ctx)
 
   const app = createServer(aiControl, ctx)
   const server = listen(app, config.Port)
 
+  let billingIntervalId: any | undefined
+  if (config.BillingUrl !== '') {
+    billingIntervalId = setInterval(
+      () => {
+        try {
+          void updateDeepgramBilling(ctx)
+        } catch {}
+      },
+      config.DeepgramPollIntervalMinutes * 60 * 1000
+    )
+    try {
+      void updateDeepgramBilling(ctx)
+    } catch {}
+  }
+
   const onClose = (): void => {
+    if (billingIntervalId !== undefined) {
+      clearInterval(billingIntervalId)
+    }
     void aiControl.close()
     storage.close()
     server.close(() => process.exit())

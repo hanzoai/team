@@ -19,11 +19,11 @@
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
 
-  import { type DocumentSpaceType } from '@hanzo/controlled-documents'
-  import { type Product, ProductVersionState } from '@hanzo/products'
-  import { type Attachment } from '@hanzo/attachment'
-  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import { AccountArrayEditor, personRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { type DocumentSpaceType } from '@hcengineering/controlled-documents'
+  import { type Product, ProductVersionState } from '@hcengineering/products'
+  import { type Attachment } from '@hcengineering/attachment'
+  import { AttachmentPresenter, AttachmentStyledBox } from '@hcengineering/attachment-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
   import core, {
     AccountUuid,
     Data,
@@ -36,16 +36,15 @@
     generateId,
     getCurrentAccount,
     notEmpty
-  } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Card, MessageBox, createQuery, getClient } from '@hanzo/presentation'
+  } from '@hcengineering/core'
+  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { Card, MessageBox, IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
   import {
     Button,
     DropdownLabelsIntl,
     EditBox,
     FocusHandler,
     IconAttachment,
-    IconWithEmoji,
     createFocusManager,
     getPlatformColorDef,
     showPopup,
@@ -72,7 +71,7 @@
   let typeId: Ref<DocumentSpaceType> = products.spaceType.ProductType
   let spaceType: WithLookup<SpaceType> | undefined
 
-  $: membersPersons = object.members.map((m) => $personRefByAccountUuidStore.get(m)).filter(notEmpty)
+  $: membersPersons = object.members.map((m) => $employeeRefByAccountUuidStore.get(m)).filter(notEmpty)
 
   let roles: Role[] = []
   const rolesQuery = createQuery()
@@ -173,7 +172,8 @@
       readonly: false,
       major: 1,
       minor: 0,
-      name: '1.0',
+      patch: 0,
+      name: '1.0.0',
       codename: '',
       description: '',
       parent: products.ids.NoParentVersion,
@@ -258,11 +258,14 @@
       size={'medium'}
       kind={'link-bordered'}
       noFocus
-      icon={object.icon === view.ids.IconWithEmoji ? IconWithEmoji : object.icon ?? products.icon.Product}
+      icon={object.icon === view.ids.IconWithEmoji ? IconWithEmoji : (object.icon ?? products.icon.Product)}
       iconProps={object.icon === view.ids.IconWithEmoji
         ? { icon: object.color }
         : {
-            fill: object.color !== undefined ? getPlatformColorDef(object.color, $themeStore.dark).icon : 'currentColor'
+            fill:
+              object.color !== undefined && typeof object.color !== 'string'
+                ? getPlatformColorDef(object.color, $themeStore.dark).icon
+                : 'currentColor'
           }}
       on:click={chooseIcon}
     />
@@ -286,7 +289,7 @@
       showButtons={false}
       kind={'indented'}
       maxHeight="limited"
-      enableBackReferences={true}
+      kitOptions={{ reference: true }}
       enableAttachments={false}
       bind:content={object.fullDescription}
       placeholder={core.string.Description}

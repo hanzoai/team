@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { AttributesBar, KeyedAttribute, createQuery, getAttribute, getClient } from '@hanzo/presentation'
-  import setting, { settingId } from '@hanzo/setting'
-  import { Button, Label, getCurrentResolvedLocation, navigate } from '@hanzo/ui'
+  import core, { Class, Doc, Rank, Ref, toRank } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { AttributesBar, KeyedAttribute, createQuery, getAttribute, getClient } from '@hcengineering/presentation'
+  import setting, { settingId } from '@hcengineering/setting'
+  import { Button, Label, getCurrentResolvedLocation, navigate } from '@hcengineering/ui'
   import { getFiltredKeys, isCollectionAttr, restrictionStore } from '../utils'
 
   export let object: Doc | Record<string, any>
@@ -38,7 +38,13 @@
 
   function updateKeys (_class: Ref<Class<Doc>>, ignoreKeys: string[], to: Ref<Class<Doc>> | undefined): void {
     const filtredKeys = getFiltredKeys(hierarchy, _class, ignoreKeys, to)
-    keys = filtredKeys.filter((key) => !isCollectionAttr(hierarchy, key) || allowedCollections.includes(key.key))
+    keys = filtredKeys
+      .filter((key) => !isCollectionAttr(hierarchy, key) || allowedCollections.includes(key.key))
+      .sort((a, b) => {
+        const rankA = a.attr.rank ?? toRank(a.attr._id) ?? ''
+        const rankB = b.attr.rank ?? toRank(b.attr._id) ?? ''
+        return rankA.localeCompare(rankB)
+      })
   }
 
   $: updateKeys(_class, ignoreKeys, to)

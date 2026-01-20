@@ -1,26 +1,31 @@
 import {
-  Doc,
-  DocumentQuery,
-  Domain,
-  FindOptions,
-  Hierarchy,
-  LowLevelStorage,
-  MeasureContext,
+  type Doc,
+  type DocumentQuery,
+  type Domain,
+  type FindOptions,
+  type Hierarchy,
+  type LowLevelStorage,
+  type MeasureContext,
   MeasureMetricsContext,
-  ModelDb,
-  Ref,
-  WorkspaceIds,
+  type ModelDb,
+  type Ref,
+  type WorkspaceIds,
   type Class
-} from '@hanzo/core'
-import { MigrateUpdate, MigrationClient, MigrationIterator, ModelLogger } from '@hanzo/model'
+} from '@hcengineering/core'
 import {
-  Pipeline,
-  StorageAdapter,
+  type MigrateUpdate,
+  type MigrationClient,
+  type MigrationIterator,
+  type ModelLogger
+} from '@hcengineering/model'
+import {
+  type Pipeline,
+  type StorageAdapter,
   workspaceEvents,
   type PlatformQueueProducer,
   type QueueWorkspaceMessage
-} from '@hanzo/server-core'
-import { AccountClient } from '@hanzo/account-client'
+} from '@hcengineering/server-core'
+import { type AccountClient } from '@hcengineering/account-client'
 
 /**
  * Upgrade client implementation.
@@ -36,13 +41,14 @@ export class MigrateClientImpl implements MigrationClient {
     readonly storageAdapter: StorageAdapter,
     readonly accountClient: AccountClient,
     readonly wsIds: WorkspaceIds,
-    readonly queue: PlatformQueueProducer<QueueWorkspaceMessage>
+    readonly queue: PlatformQueueProducer<QueueWorkspaceMessage>,
+    ctx?: MeasureContext
   ) {
     if (this.pipeline.context.lowLevelStorage === undefined) {
       throw new Error('lowLevelStorage is not defined')
     }
     this.lowLevel = this.pipeline.context.lowLevelStorage
-    this.ctx = new MeasureMetricsContext('migrateClient', {})
+    this.ctx = ctx ?? new MeasureMetricsContext('migrateClient', {})
   }
 
   migrateState = new Map<string, Set<string>>()
@@ -121,7 +127,11 @@ export class MigrateClientImpl implements MigrationClient {
     await this.lowLevel.rawDeleteMany(domain, query)
   }
 
+  async fullReindex (): Promise<void> {
+    await this.queue.send(this.ctx, this.wsIds.uuid, [workspaceEvents.fullReindex()])
+  }
+
   async reindex (domain: Domain, classes: Ref<Class<Doc>>[]): Promise<void> {
-    await this.queue.send(this.wsIds.uuid, [workspaceEvents.reindex(domain, classes)])
+    await this.queue.send(this.ctx, this.wsIds.uuid, [workspaceEvents.reindex(domain, classes)])
   }
 }

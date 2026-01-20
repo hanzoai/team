@@ -9,11 +9,11 @@ import {
   type Permission,
   Role,
   Sequence
-} from '@hanzo/core'
-import type { Asset, Plugin, Resource } from '@hanzo/platform'
-import { IntlString, plugin } from '@hanzo/platform'
-import type { AnyComponent, ResolvedLocation, Location } from '@hanzo/ui/src/types'
-import { Action } from '@hanzo/view'
+} from '@hcengineering/core'
+import type { Asset, Plugin, Resource } from '@hcengineering/platform'
+import { IntlString, plugin } from '@hcengineering/platform'
+import type { AnyComponent, ResolvedLocation, Location } from '@hcengineering/ui/src/types'
+import { Action, Viewlet } from '@hcengineering/view'
 
 import type {
   ChangeControl,
@@ -124,10 +124,13 @@ export const documentsPlugin = plugin(documentsId, {
     MakeDocumentObsolete: '' as Ref<Action>,
     EditDocSpace: '' as Ref<Action>,
     TransferDocument: '' as Ref<Action>,
+    ExportDocuments: '' as Ref<Action<Document, any>>,
+    ExportDocumentsFromSpace: '' as Ref<Action<DocumentSpace, any>>,
     Print: '' as Ref<Action<Doc, { signed: boolean }>>,
     PrintProjectDocument: '' as Ref<Action<Doc, { signed: boolean }>>,
     OpenDocument: '' as Ref<Action<Doc, { signed: boolean }>>,
-    OpenDocumentInNewTab: '' as Ref<Action<Doc, { signed: boolean }>>
+    OpenDocumentInNewTab: '' as Ref<Action<Doc, { signed: boolean }>>,
+    CopyAsMarkdownTable: '' as Ref<Action<Doc, any>>
   },
   function: {
     CanChangeDocumentOwner: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
@@ -172,6 +175,7 @@ export const documentsPlugin = plugin(documentsId, {
     Category: '' as IntlString,
     Author: '' as IntlString,
     Owner: '' as IntlString,
+    Creator: '' as IntlString,
     Status: '' as IntlString,
     Labels: '' as IntlString,
     Description: '' as IntlString,
@@ -182,6 +186,7 @@ export const documentsPlugin = plugin(documentsId, {
     Approval: '' as IntlString,
     Reviewers: '' as IntlString,
     Approvers: '' as IntlString,
+    ExternalApprovers: '' as IntlString,
     CoAuthors: '' as IntlString,
     ReviewInterval: '' as IntlString,
     EffectiveDate: '' as IntlString,
@@ -257,6 +262,7 @@ export const documentsPlugin = plugin(documentsId, {
     CreateNewDraft: '' as IntlString,
     RestoreDraft: '' as IntlString,
     CreateOrgSpace: '' as IntlString,
+    AllDocumentSpaces: '' as IntlString,
 
     ReviewDocumentPermission: '' as IntlString,
     ReviewDocumentDescription: '' as IntlString,
@@ -282,7 +288,8 @@ export const documentsPlugin = plugin(documentsId, {
     Transfer: '' as IntlString,
     TransferWarning: '' as IntlString,
     TransferDocuments: '' as IntlString,
-    TransferDocumentsHint: '' as IntlString
+    TransferDocumentsHint: '' as IntlString,
+    ExportDocuments: '' as IntlString
   },
   ids: {
     NoParent: '' as Ref<DocumentMeta>,
@@ -328,6 +335,9 @@ export const documentsPlugin = plugin(documentsId, {
   },
   notification: {
     CoAuthorsNotification: '' as Ref<NotificationType>
+  },
+  viewlet: {
+    DocumentSpaceTable: '' as Ref<Viewlet>
   }
 })
 

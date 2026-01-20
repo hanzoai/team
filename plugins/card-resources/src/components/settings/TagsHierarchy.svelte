@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import cardPlugin, { MasterTag } from '@hanzo/card'
-  import core, { Class, ClassifierKind, Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Icon, IconWithEmoji, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import cardPlugin, { MasterTag } from '@hcengineering/card'
+  import core, { Class, ClassifierKind, Doc, Ref } from '@hcengineering/core'
+  import { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
+  import { Icon, Label } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
   import { createEventDispatcher } from 'svelte'
 
   export let classes: Ref<Class<Doc>>[] = []
@@ -35,7 +35,13 @@
     const desc = hierarchy.getDescendants(_class)
     for (const clazz of desc) {
       const cls = hierarchy.getClass(clazz)
-      if (cls.extends === _class && !cls.hidden && kind === cls.kind && cls.label !== undefined) {
+      if (
+        cls.extends === _class &&
+        !cls.hidden &&
+        kind === cls.kind &&
+        cls.label !== undefined &&
+        (cls as MasterTag).removed !== true
+      ) {
         result.push(clazz)
       }
     }
@@ -74,7 +80,7 @@
       style:margin-left={`${level * 1.25}rem`}
     >
       <Icon
-        icon={clazz.icon === view.ids.IconWithEmoji ? IconWithEmoji : clazz.icon ?? cardPlugin.icon.Tag}
+        icon={clazz.icon === view.ids.IconWithEmoji ? IconWithEmoji : (clazz.icon ?? cardPlugin.icon.Tag)}
         iconProps={clazz.icon === view.ids.IconWithEmoji ? { icon: clazz.color, size: 'small' } : {}}
         size="small"
       />

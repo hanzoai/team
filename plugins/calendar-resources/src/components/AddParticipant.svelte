@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hanzo/contact'
-  import { CreateGuest, personRefByPersonIdStore } from '@hanzo/contact-resources'
-  import { Ref, type PersonId } from '@hanzo/core'
-  import { IntlString, translateCB } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting, { Integration } from '@hanzo/setting'
-  import { themeStore } from '@hanzo/theme'
-  import { Button, IconAdd, closePopup, registerFocus, resizeObserver, showPopup } from '@hanzo/ui'
+  import contact, { Person } from '@hcengineering/contact'
+  import { CreateGuest, getPersonRefByPersonId } from '@hcengineering/contact-resources'
+  import { Ref, type PersonId } from '@hcengineering/core'
+  import { IntlString, translateCB } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import setting, { Integration } from '@hcengineering/setting'
+  import { themeStore } from '@hcengineering/theme'
+  import { Button, IconAdd, closePopup, registerFocus, resizeObserver, showPopup } from '@hcengineering/ui'
   import { afterUpdate, createEventDispatcher, onMount } from 'svelte'
   import calendar from '../plugin'
   import ParticipantsPopup from './ParticipantsPopup.svelte'
@@ -117,12 +117,11 @@
     }
   )
 
-  $: findCompletions(value, integrations, $personRefByPersonIdStore, excluded)
+  $: findCompletions(value, integrations, excluded)
 
   async function findCompletions (
     val: string | undefined,
     integrations: Integration[],
-    personRefByPersonIdStore: Map<PersonId, Ref<Person>>,
     excluded: Ref<Person>[]
   ): Promise<void> {
     if (val === undefined || val.length < 3) {
@@ -133,8 +132,8 @@
     const res = new Set<Ref<Person>>()
     for (const integration of integrations) {
       if (integration.value.includes(val)) {
-        const authorPerson = personRefByPersonIdStore.get(integration.createdBy ?? integration.modifiedBy)
-        if (authorPerson !== undefined && !excluded.includes(authorPerson)) {
+        const authorPerson = await getPersonRefByPersonId(integration.createdBy ?? integration.modifiedBy)
+        if (authorPerson != null && !excluded.includes(authorPerson)) {
           res.add(authorPerson)
         }
       }

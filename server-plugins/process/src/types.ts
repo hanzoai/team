@@ -1,11 +1,13 @@
-import { Doc, Tx } from '@hanzo/core'
-import { Execution, ExecutionError, MethodParams } from '@hanzo/process'
-import { TriggerControl } from '@hanzo/server-core'
+import { Card } from '@hcengineering/card'
+import { Doc, MeasureContext, PersonId, Ref, Timestamp, Tx, TxOperations, WorkspaceUuid } from '@hcengineering/core'
+import { Execution, ExecutionError, MethodParams, Trigger, UserResult } from '@hcengineering/process'
+import { CollaboratorClient } from '@hcengineering/collaborator-client'
 
 export type ExecuteFunc = (
   params: MethodParams<Doc>,
   execution: Execution,
-  control: TriggerControl
+  control: ProcessControl,
+  results: UserResult[] | undefined
 ) => Promise<ExecuteResult>
 
 export type ExecuteResult = SuccessExecutionResult | ExecutionError
@@ -13,11 +15,39 @@ export type ExecuteResult = SuccessExecutionResult | ExecutionError
 export interface SuccessExecutionResult {
   txes: Tx[]
   rollback: Tx[] | undefined
+  context: SuccessExecutionContext[] | null
+}
+
+export interface SuccessExecutionContext {
+  _id: string
+  value: any
 }
 
 export type TransformFunc = (
   value: any,
   props: Record<string, any>,
-  control: TriggerControl,
+  control: ProcessControl,
   execution: Execution
 ) => Promise<any>
+
+export interface ProcessMessage {
+  account: PersonId
+  createdOn: Timestamp
+  event: Ref<Trigger>
+  context: Record<string, any>
+  execution?: Ref<Execution>
+  card?: Ref<Card>
+}
+
+export interface ProcessControl {
+  ctx: MeasureContext
+  client: TxOperations
+  collaboratorFactory: () => CollaboratorClient
+  cache: Map<string, any>
+  messageContext: Record<string, any>
+  workspace: WorkspaceUuid
+  modifiedBy: PersonId
+  modifiedOn: Timestamp
+}
+
+export type RollbackFunc = (context: Record<string, any>, control: ProcessControl) => Tx

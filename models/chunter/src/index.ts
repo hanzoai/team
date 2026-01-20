@@ -37,6 +37,7 @@ import {
   TObjectChatPanel,
   TThreadMessage
 } from './types'
+import { AccountRole } from '@hcengineering/core'
 
 export { chunterId } from '@hanzo/chunter'
 export { chunterOperation } from './migration'
@@ -86,6 +87,18 @@ export function createModel (builder: Builder): void {
   builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {
     extension: workbench.extensions.WorkbenchTabExtensions,
     component: chunter.component.WorkbenchTabExtension
+  })
+
+  builder.mixin(chunter.class.DirectMessage, core.class.Class, core.mixin.TxAccessLevel, {
+    createAccessLevel: AccountRole.Guest
+  })
+
+  builder.mixin(chunter.class.ChatMessage, core.class.Class, core.mixin.TxAccessLevel, {
+    createAccessLevel: AccountRole.Guest
+  })
+
+  builder.mixin(chunter.class.ThreadMessage, core.class.Class, core.mixin.TxAccessLevel, {
+    createAccessLevel: AccountRole.Guest
   })
 
   const spaceClasses = [chunter.class.Channel, chunter.class.DirectMessage]
@@ -162,10 +175,24 @@ export function createModel (builder: Builder): void {
       attachTo: chunter.class.Channel,
       descriptor: view.viewlet.Table,
       configOptions: {
-        strict: true
+        hiddenKeys: ['name', 'description']
       },
       config: ['', 'topic', 'private', 'archived', 'members'],
-      props: { enableChecking: false }
+      props: { enableChecking: false },
+      viewOptions: {
+        groupBy: [],
+        orderBy: [],
+        other: [
+          {
+            key: 'hideArchived',
+            type: 'toggle',
+            defaultValue: true,
+            actionTarget: 'options',
+            action: view.function.HideArchived,
+            label: view.string.HideArchived
+          }
+        ]
+      }
     },
     chunter.viewlet.Channels
   )
@@ -182,7 +209,7 @@ export function createModel (builder: Builder): void {
   )
 
   builder.mixin(chunter.class.Channel, core.class.Class, chunter.mixin.ObjectChatPanel, {
-    ignoreKeys: ['archived', 'collaborators', 'lastMessage', 'pinned', 'topic', 'description', 'members', 'owners']
+    ignoreKeys: ['archived', 'collaborators', 'lastMessage', 'pinned', 'description', 'members', 'owners']
   })
 
   builder.mixin(chunter.class.DirectMessage, core.class.Class, chunter.mixin.ObjectChatPanel, {

@@ -21,15 +21,12 @@ export interface Config {
   BotToken: string
   DbUrl: string
   Domain: string
-  MongoDB: string
-  MongoURL: string
   OtpRetryDelaySec: number
   OtpTimeToLiveSec: number
   Port: number
   QueueConfig: string
   QueueRegion: string
   Secret: string
-  SentryDSN: string
   ServiceId: string
 }
 
@@ -39,9 +36,6 @@ const config: Config = (() => {
   const params: Partial<Config> = {
     Port: parseNumber(process.env.PORT) ?? 4020,
     BotToken: process.env.BOT_TOKEN,
-    // TODO: remove mongo
-    MongoURL: process.env.MONGO_URL ?? '',
-    MongoDB: process.env.MONGO_DB ?? '',
     AccountsUrl: process.env.ACCOUNTS_URL,
     ServiceId: process.env.SERVICE_ID ?? 'telegram-bot',
     Secret: process.env.SECRET,
@@ -51,7 +45,6 @@ const config: Config = (() => {
     App: process.env.APP ?? 'hanzoai',
     OtpTimeToLiveSec: parseNumber(process.env.OTP_TIME_TO_LIVE_SEC) ?? 5 * 60,
     OtpRetryDelaySec: parseNumber(process.env.OTP_RETRY_DELAY_SEC) ?? 60,
-    SentryDSN: process.env.SENTRY_DSN ?? '',
     AccountsURL: process.env.ACCOUNTS_URL,
     DbUrl: process.env.DB_URL,
     QueueRegion: process.env.QUEUE_REGION,

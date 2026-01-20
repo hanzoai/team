@@ -15,13 +15,13 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Doc, Ref, SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import activity from '@hanzo/activity'
-  import chunter, { ChatMessage } from '@hanzo/chunter'
-  import { closeTooltip, Label, Lazy, Spinner, resizeObserver, MiniToggle } from '@hanzo/ui'
-  import { ObjectPresenter, DocNavLink } from '@hanzo/view-resources'
-  import { canGroupMessages } from '@hanzo/activity-resources'
+  import { Doc, Ref, SortingOrder } from '@hcengineering/core'
+  import { createQuery } from '@hcengineering/presentation'
+  import activity from '@hcengineering/activity'
+  import chunter, { ChatMessage } from '@hcengineering/chunter'
+  import { closeTooltip, Label, Lazy, Spinner, resizeObserver, MiniToggle } from '@hcengineering/ui'
+  import { ObjectPresenter, DocNavLink } from '@hcengineering/view-resources'
+  import { canGroupMessages, getActivityNewestFirst, setActivityNewestFirst } from '@hcengineering/activity-resources'
 
   import ChatMessageInput from './ChatMessageInput.svelte'
   import ChatMessagePresenter from './ChatMessagePresenter.svelte'
@@ -37,8 +37,8 @@
   let loading = true
   let messages: ChatMessage[] = []
 
-  let activityOrderNewestFirst = JSON.parse(localStorage.getItem('activity-newest-first') ?? 'false')
-  $: localStorage.setItem('activity-newest-first', JSON.stringify(activityOrderNewestFirst))
+  let activityOrderNewestFirst = getActivityNewestFirst()
+  $: setActivityNewestFirst(activityOrderNewestFirst)
   $: query.query(
     chunter.class.ChatMessage,
     { attachedTo: objectId, space: getChannelSpace(object._class, object._id, object.space) },

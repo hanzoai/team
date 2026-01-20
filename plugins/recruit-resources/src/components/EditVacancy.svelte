@@ -14,26 +14,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyleBoxCollabEditor } from '@hanzo/attachment-resources'
-  import core, {
-    ClassifierKind,
-    type CollaborativeDoc,
-    Data,
-    Doc,
-    type MarkupBlobRef,
-    Mixin,
-    Ref
-  } from '@hanzo/core'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource } from '@hanzo/platform'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
-  import { Vacancy } from '@hanzo/recruit'
-  import survey from '@hanzo/survey'
-  import tracker from '@hanzo/tracker'
-  import { Button, Component, EditBox, IconMixin, IconMoreH, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { DocAttributeBar, DocNavLink, showMenu } from '@hanzo/view-resources'
+  import { AttachmentStyleBoxCollabEditor } from '@hcengineering/attachment-resources'
+  import { Data, Doc, type MarkupBlobRef, Mixin, Ref } from '@hcengineering/core'
+  import notification from '@hcengineering/notification'
+  import { Panel } from '@hcengineering/panel'
+  import { getResource } from '@hcengineering/platform'
+  import presentation, { createQuery, getClient } from '@hcengineering/presentation'
+  import { Vacancy } from '@hcengineering/recruit'
+  import survey from '@hcengineering/survey'
+  import tracker from '@hcengineering/tracker'
+  import { Button, Component, EditBox, IconMixin, IconMoreH, Label } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import { DocAttributeBar, DocNavLink, getDocMixins, showMenu } from '@hcengineering/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import recruit from '../plugin'
   import VacancyApplications from './VacancyApplications.svelte'
@@ -80,24 +72,10 @@
 
   $: updateObject(_id)
 
-  const ignoreMixins: Set<Ref<Mixin<Doc>>> = new Set<Ref<Mixin<Doc>>>()
   const hierarchy = client.getHierarchy()
   let mixins: Mixin<Doc>[] = []
 
-  function getMixins (object: Doc, showAllMixins: boolean): void {
-    if (object === undefined) return
-    const descendants = hierarchy.getDescendants(core.class.Doc).map((p) => hierarchy.getClass(p))
-
-    mixins = descendants.filter(
-      (m) =>
-        m.kind === ClassifierKind.MIXIN &&
-        !ignoreMixins.has(m._id) &&
-        (hierarchy.hasMixin(object, m._id) ||
-          (showAllMixins && hierarchy.isDerived(object._class, hierarchy.getBaseClass(m._id))))
-    )
-  }
-
-  $: getMixins(object, showAllMixins)
+  $: mixins = getDocMixins(object, showAllMixins)
 
   let descriptionBox: AttachmentStyleBoxCollabEditor
   $: descriptionKey = client.getHierarchy().getAttribute(recruit.class.Vacancy, 'fullDescription')

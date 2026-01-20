@@ -16,13 +16,11 @@
 import chunter, { ChatMessage } from '@hanzo/chunter'
 import { Person } from '@hanzo/contact'
 import core, {
-  AccountRole,
   concatLink,
   Doc,
   DocumentUpdate,
   Ref,
   Space,
-  systemAccountUuid,
   Tx,
   TxCreateDoc,
   TxCUD,
@@ -153,30 +151,6 @@ export async function getIssueNotificationContent (
   }
 }
 
-export async function OnEmployeeCreate (_txes: Tx[], control: TriggerControl): Promise<Tx[]> {
-  // Fill owner of default space with the very first owner account creating a social identity
-  const account = control.ctx.contextData.account
-  if (account.role !== AccountRole.Owner) return []
-
-  const defaultSpace = (
-    await control.findAll(control.ctx, tracker.class.Project, { _id: tracker.project.DefaultProject })
-  )[0]
-
-  if (defaultSpace === undefined) return []
-
-  const owners = defaultSpace.owners ?? []
-
-  if (owners.length === 0 || (owners.length === 1 && owners[0] === systemAccountUuid)) {
-    const setOwnerTx = control.txFactory.createTxUpdateDoc(defaultSpace._class, defaultSpace.space, defaultSpace._id, {
-      owners: [account.uuid]
-    })
-
-    return [setOwnerTx]
-  }
-
-  return []
-}
-
 /**
  * @public
  */
@@ -193,8 +167,10 @@ export async function OnProjectRemove (txes: Tx[], control: TriggerControl): Pro
       }
     }
   }
-  control.ctx.contextData.broadcast.targets.projectRemove = (it) => {
-    return []
+  control.ctx.contextData.broadcast.targets.projectRemove = async (it) => {
+    return {
+      target: []
+    }
   }
   return result
 }
@@ -537,7 +513,6 @@ export default async () => ({
     IssueLinkIdProvider: issueLinkIdProvider
   },
   trigger: {
-    OnEmployeeCreate,
     OnIssueUpdate,
     OnComponentRemove,
     OnProjectRemove

@@ -106,7 +106,17 @@ export default plugin(textEditorId, {
     TableOptions: '' as IntlString,
     SelectTable: '' as IntlString,
     SetCellHighlightColor: '' as IntlString,
-    SetTextColor: '' as IntlString
+    SetTextColor: '' as IntlString,
+
+    RefreshTable: '' as IntlString,
+    ShowDiff: '' as IntlString,
+    SeeOriginalData: '' as IntlString,
+    CategoryVersioning: '' as IntlString,
+    TableDiffLabel: '' as IntlString,
+
+    ConvertToLinkPreview: '' as IntlString,
+    ConvertToEmbedPreview: '' as IntlString,
+    UnableToLoadEmbeddedContent: '' as IntlString
   },
   icon: {
     Header1: '' as Asset,
@@ -137,6 +147,11 @@ export default plugin(textEditorId, {
     MergeCells: '' as Asset,
     SplitCells: '' as Asset,
     Brush: '' as Asset,
-    TextStyle: '' as Asset
+    TextStyle: '' as Asset,
+    LinkPreview: '' as Asset,
+    Refresh: '' as Asset,
+    ShowDiff: '' as Asset,
+    SeeOriginalData: '' as Asset,
+    EmbedPreview: '' as Asset
   }
 })

@@ -13,11 +13,10 @@
 // limitations under the License.
 //
 
-import { AccountRole } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import workbench from '@hanzo/model-workbench'
-import { inboxId } from '@hanzo/inbox'
+import { type Builder } from '@hcengineering/model'
+import core from '@hcengineering/model-core'
+import workbench from '@hcengineering/model-workbench'
+import { inboxId } from '@hcengineering/inbox'
 
 import inbox from './plugin'
 
@@ -33,9 +32,10 @@ export function createModel (builder: Builder): void {
       label: inbox.string.Inbox,
       icon: inbox.icon.Inbox,
       alias: inboxId,
-      accessLevel: AccountRole.User,
       hidden: true,
-      component: inbox.component.InboxApplication
+      component: inbox.component.InboxApplication,
+      position: 'top',
+      order: 100
     },
     inbox.app.Inbox
   )

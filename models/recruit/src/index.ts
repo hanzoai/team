@@ -13,30 +13,31 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import { AccountRole, SortingOrder, type Lookup, type Ref } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import calendar from '@hanzo/model-calendar'
-import chunter from '@hanzo/model-chunter'
-import contact from '@hanzo/model-contact'
-import core from '@hanzo/model-core'
-import gmail from '@hanzo/model-gmail'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import presentation from '@hanzo/model-presentation'
-import tags from '@hanzo/model-tags'
-import task, { actionTemplates } from '@hanzo/model-task'
-import tracker from '@hanzo/model-tracker'
-import view, { createAction, showColorsViewOption, actionTemplates as viewTemplates } from '@hanzo/model-view'
-import workbench, { createNavigateAction, type Application } from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import { type IntlString } from '@hanzo/platform'
-import { recruitId, type Applicant, RecruitEvents } from '@hanzo/recruit'
-import setting from '@hanzo/setting'
-import { type KeyBinding, type ViewOptionModel, type ViewOptionsModel } from '@hanzo/view'
+import activity from '@hcengineering/activity'
+import { AccountRole, type ClassCollaborators, SortingOrder, type Lookup, type Ref } from '@hcengineering/core'
+import { type Builder } from '@hcengineering/model'
+import calendar from '@hcengineering/model-calendar'
+import chunter from '@hcengineering/model-chunter'
+import contact from '@hcengineering/model-contact'
+import core from '@hcengineering/model-core'
+import gmail from '@hcengineering/model-gmail'
+import { generateClassNotificationTypes } from '@hcengineering/model-notification'
+import presentation from '@hcengineering/model-presentation'
+import tags from '@hcengineering/model-tags'
+import task, { actionTemplates } from '@hcengineering/model-task'
+import tracker from '@hcengineering/model-tracker'
+import view, { createAction, showColorsViewOption, actionTemplates as viewTemplates } from '@hcengineering/model-view'
+import workbench, { createNavigateAction, type Application } from '@hcengineering/model-workbench'
+import notification from '@hcengineering/notification'
+import { type IntlString } from '@hcengineering/platform'
+import { recruitId, type Applicant, RecruitEvents, type Vacancy } from '@hcengineering/recruit'
+import setting from '@hcengineering/setting'
+import { type KeyBinding, type ViewOptionModel, type ViewOptionsModel } from '@hcengineering/view'
 
 import recruit from './plugin'
 import { createReviewModel, reviewTableConfig, reviewTableOptions } from './review'
 import { defineSpaceType } from './spaceType'
+import { definePermissions } from './permissions'
 import { TApplicant, TApplicantMatch, TCandidate, TOpinion, TReview, TVacancy, TVacancyList } from './types'
 
 export { recruitId } from '@hanzo/recruit'
@@ -84,7 +85,8 @@ export function createModel (builder: Builder): void {
     editor: recruit.component.VacancyList
   })
 
-  builder.mixin(recruit.class.Vacancy, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<Vacancy>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: recruit.class.Vacancy,
     fields: ['createdBy']
   })
 
@@ -96,7 +98,8 @@ export function createModel (builder: Builder): void {
     inlineEditor: view.component.ArrayEditor
   })
 
-  builder.mixin(recruit.class.Applicant, core.class.Class, notification.mixin.ClassCollaborators, {
+  builder.createDoc<ClassCollaborators<Applicant>>(core.class.ClassCollaborators, core.space.Model, {
+    attachedTo: recruit.class.Applicant,
     fields: ['createdBy', 'assignee']
   })
 
@@ -1017,24 +1020,28 @@ export function createModel (builder: Builder): void {
     },
     override: [recruit.action.CreateGlobalApplication]
   })
-  createAction(builder, {
-    action: view.actionImpl.ShowPopup,
-    actionProps: {
-      component: recruit.component.CreateCandidate,
-      element: 'top'
+  createAction(
+    builder,
+    {
+      action: view.actionImpl.ShowPopup,
+      actionProps: {
+        component: recruit.component.CreateCandidate,
+        element: 'top'
+      },
+      label: recruit.string.CreateTalent,
+      icon: recruit.icon.Create,
+      keyBinding: ['keyC'],
+      input: 'none',
+      category: recruit.category.Recruit,
+      target: core.class.Doc,
+      context: {
+        mode: ['workbench', 'browser'],
+        application: recruit.app.Recruit,
+        group: 'create'
+      }
     },
-    label: recruit.string.CreateTalent,
-    icon: recruit.icon.Create,
-    keyBinding: ['keyC'],
-    input: 'none',
-    category: recruit.category.Recruit,
-    target: core.class.Doc,
-    context: {
-      mode: ['workbench', 'browser'],
-      application: recruit.app.Recruit,
-      group: 'create'
-    }
-  })
+    recruit.action.CreateTalent
+  )
 
   createAction(builder, {
     action: view.actionImpl.ShowPopup,
@@ -1284,7 +1291,8 @@ export function createModel (builder: Builder): void {
         mode: ['context', 'browser'],
         application: recruit.app.Recruit,
         group: 'copy'
-      }
+      },
+      override: [view.action.CopyLink]
     },
     recruit.action.CopyApplicationLink
   )
@@ -1304,7 +1312,8 @@ export function createModel (builder: Builder): void {
         mode: ['context', 'browser'],
         application: recruit.app.Recruit,
         group: 'copy'
-      }
+      },
+      override: [view.action.CopyLink]
     },
     recruit.action.CopyCandidateLink
   )
@@ -1383,7 +1392,7 @@ export function createModel (builder: Builder): void {
       defaultEnabled: false,
       templates: {
         textTemplate: '{body}',
-        htmlTemplate: '<p>{body}</p>',
+        htmlTemplate: '<p>{body}</p><p>{link}</p>',
         subjectTemplate: '{title}'
       }
     },
@@ -1592,4 +1601,5 @@ export function createModel (builder: Builder): void {
   )
 
   defineSpaceType(builder)
+  definePermissions(builder)
 }

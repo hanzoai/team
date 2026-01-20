@@ -21,6 +21,7 @@
   import {
     ActionContext,
     AttributesBar,
+    ComponentExtensions,
     KeyedAttribute,
     createQuery,
     getClient,
@@ -114,7 +115,7 @@
 
   let ignoreKeys: string[] = []
   let activityOptions = { enabled: true, showInput: true }
-  let allowedCollections: string[] = []
+  let allowedCollections: string[] = ['collaborators']
   let collectionArrays: string[] = []
   let inplaceAttributes: string[] = []
   let ignoreMixins: Set<Ref<Mixin<Doc>>> = new Set<Ref<Mixin<Doc>>>()
@@ -218,7 +219,7 @@
     ignoreKeys = ev.detail.ignoreKeys
     activityOptions = ev.detail.activityOptions ?? activityOptions
     ignoreMixins = new Set(ev.detail.ignoreMixins)
-    allowedCollections = ev.detail.allowedCollections ?? []
+    allowedCollections = [...(ev.detail.allowedCollections ?? []), 'collaborators']
     collectionArrays = ev.detail.collectionArrays ?? []
     title = ev.detail.title
     mixins = getDocMixins(object, showAllMixins, ignoreMixins, realObjectClass)
@@ -268,6 +269,10 @@
     </svelte:fragment>
 
     <svelte:fragment slot="utils">
+      <ComponentExtensions
+        extension={view.extensions.EditDocTitleExtension}
+        props={{ size: 'medium', kind: 'ghost', _id, _class, value: object, readonly }}
+      />
       {#if !readonly}
         <Button
           icon={IconMoreH}

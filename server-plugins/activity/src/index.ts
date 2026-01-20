@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Plugin, Resource, plugin } from '@hanzo/platform'
-import type { TriggerFunc } from '@hanzo/server-core'
-import { NotificationContentProvider, Presenter } from '@hanzo/server-notification'
+import { Plugin, Resource, plugin } from '@hcengineering/platform'
+import type { TriggerFunc } from '@hcengineering/server-core'
+import { Presenter } from '@hcengineering/server-notification'
 
 export * from './types'
 export * from './utils'
@@ -37,7 +37,6 @@ export default plugin(serverActivityId, {
     HandleCardActivity: '' as Resource<TriggerFunc>
   },
   function: {
-    ReactionNotificationContentProvider: '' as Resource<NotificationContentProvider>,
     DocUpdateMessageTextPresenter: '' as Resource<Presenter>
   }
 })

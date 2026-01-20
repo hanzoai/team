@@ -127,9 +127,9 @@ p {
   user-select:inherit;
 
   a {
-    word-break: break-all;
-    word-break: break-word;
-    hyphens: auto;
+    // word-break: break-all;
+    // word-break: break-word;
+    // hyphens: auto;
     color: var(--theme-link-color);
 
     &:hover,
@@ -206,6 +206,7 @@ input.search {
 .flex-grow { flex-grow: 1; }
 .flex-no-shrink { flex-shrink: 0; }
 .flex-shrink { flex-shrink: 1 !important; }
+.flex-shrink-15 { flex-shrink: 15 !important; }
 .flex-wrap { flex-wrap: wrap !important; }
 .flex-nowrap { flex-wrap: nowrap !important; }
 .flex-baseline {
@@ -320,7 +321,8 @@ input.search {
 .flex-presenter, .inline-presenter {
   flex-wrap: nowrap;
   min-width: 0;
-  cursor: pointer;
+
+  &:not(.no-pointer) { cursor: pointer; }
 
   .icon {
     color: var(--theme-dark-color);
@@ -479,7 +481,6 @@ input.search {
 .gapV-12 > *:not(:last-child) { margin-bottom: 3rem; }
 .gap-around-2 > * { margin: .25rem; }
 .gap-around-4 > * { margin: .5rem; }
-.gap-statusbar > *:not(:last-child) { margin-right: 12px; }
 
 /* --------- */
 .sm-tool-icon {
@@ -560,6 +561,7 @@ input.search {
 .mx-2 { margin: 0 .5rem; }
 .mx-3 { margin: 0 .75rem; }
 .mx-4 { margin: 0 1rem; }
+.mx-8 { margin: 0 2rem; }
 .mx-10 { margin: 0 2.5rem; }
 .mx-auto { margin: 0 auto; }
 .my-1 { margin: .25rem 0; }

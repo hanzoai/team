@@ -13,24 +13,45 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import core, { Ref } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Process } from '@hanzo/process'
-  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, Label, navigate } from '@hanzo/ui'
+  import { MasterTag } from '@hcengineering/card'
+  import core, { generateId, Ref } from '@hcengineering/core'
+  import { translate } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Process, State } from '@hcengineering/process'
+  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, Label, navigate } from '@hcengineering/ui'
   import process from '../plugin'
+  import { makeRank } from '@hcengineering/rank'
 
   export let masterTag: MasterTag
 
   const client = getClient()
 
   async function add (): Promise<void> {
+    const initState = generateId<State>()
     const id = await client.createDoc(process.class.Process, core.space.Model, {
       name: await translate(process.string.NewProcess, {}),
       masterTag: masterTag._id,
-      description: '',
-      states: []
+      context: {},
+      description: ''
+    })
+    await client.createDoc(
+      process.class.State,
+      core.space.Model,
+      {
+        process: id,
+        rank: makeRank(undefined, undefined),
+        title: await translate(process.string.NewState, {})
+      },
+      initState
+    )
+    await client.createDoc(process.class.Transition, core.space.Model, {
+      process: id,
+      from: null,
+      to: initState,
+      trigger: process.trigger.OnExecutionStart,
+      rank: makeRank(undefined, undefined),
+      actions: [],
+      triggerParams: {}
     })
     handleSelect(id)
   }

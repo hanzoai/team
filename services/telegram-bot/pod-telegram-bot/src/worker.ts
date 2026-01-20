@@ -48,7 +48,7 @@ import {
   addWorkspace,
   createIntegration,
   listIntegrationsByAccount,
-  getOrCreateSocialId,
+  addSocialIdToPerson,
   disableIntegration,
   getAnyIntegrationByTelegramId,
   enableIntegration
@@ -87,7 +87,9 @@ export class PlatformWorker {
     const storageConfig: StorageConfiguration = storageConfigFromEnv()
     const storage = buildStorageFromConfig(storageConfig)
 
+    ctx.info('Connecting to database...', { dbUrl: config.DbUrl })
     const db = await getDb()
+    ctx.info('Database connected')
     const limiter = new Limiter()
 
     return new PlatformWorker(ctx, storage, limiter, db)
@@ -290,7 +292,7 @@ export class PlatformWorker {
     }
 
     try {
-      const accountClient = getAccountClient(generateToken(account, workspaceId))
+      const accountClient = getAccountClient(generateToken(account, workspaceId, { service: 'telegram-bot' }))
       const result = await accountClient.getWorkspaceInfo(false)
 
       if (result === undefined) {
@@ -325,11 +327,11 @@ export class PlatformWorker {
 
     await this.db.removeOtp(code)
 
-    const socialId = await getOrCreateSocialId(account, otpData.telegramId, otpData.telegramUsername)
+    const socialId = await addSocialIdToPerson(account, otpData.telegramId, otpData.telegramUsername)
     return await this.addIntegration(otpData.telegramId, account, workspace, socialId, otpData.telegramUsername)
   }
 
-  async generateCode (telegramId: number, telegramUsername?: string): Promise<string> {
+  async generateCode (telegramId: number, telegramUsername: string): Promise<string> {
     const now = new Date()
     const otpData = await this.db.getOtpByTelegramId(telegramId)
     const retryDelay = config.OtpRetryDelaySec * 1000

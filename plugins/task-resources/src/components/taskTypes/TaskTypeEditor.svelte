@@ -63,7 +63,7 @@
   $: taskType = taskTypes.find((tt) => tt._id === objectId)
   $: name = taskType?.name
   $: icon = taskType?.icon
-  $: color = taskType?.color
+  $: color = taskType?.color !== undefined && typeof taskType?.color !== 'string' ? taskType?.color : undefined
   $: descriptor = client.getModel().findAllSync(task.class.TaskTypeDescriptor, { _id: taskType?.descriptor })
   $: states = (taskType?.statuses.map((p) => $statusStore.byId.get(p)).filter((p) => p !== undefined) as Status[]) ?? []
 
@@ -317,7 +317,7 @@
             />
           </div>
 
-          <ClassAttributes ofClass={taskType.ofClass} _class={taskType.targetClass} showHierarchy disabled={readonly} />
+          <ClassAttributes _class={taskType.targetClass} showHierarchy disabled={readonly} />
         </div>
       </Scroller>
     </div>

@@ -13,15 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Class, Ref, updateAttribute } from '@hanzo/core'
+  import { Class, Doc, Ref, updateAttribute } from '@hcengineering/core'
 
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getAttribute, getClient, KeyedAttribute } from '@hanzo/presentation'
-  import { navigate } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { getObjectLinkFragment } from '@hanzo/view-resources'
-  import { createEventDispatcher } from 'svelte'
+  import { IntlString } from '@hcengineering/platform'
+  import { createQuery, getAttribute, getClient, KeyedAttribute } from '@hcengineering/presentation'
+  import { createEventDispatcher, onDestroy } from 'svelte'
   import AttachmentStyledBox from './AttachmentStyledBox.svelte'
+  import { EditorKitOptions } from '@hcengineering/text-editor-resources'
 
   export let object: Doc
   export let key: KeyedAttribute
@@ -111,12 +109,16 @@
   export function setEditable (editable: boolean): void {
     descriptionBox.setEditable(editable)
   }
+
+  onDestroy(() => {
+    void save(object, description)
+  })
 </script>
 
 {#key object?._id}
   <AttachmentStyledBox
     {focusIndex}
-    enableBackReferences={true}
+    kitOptions={{ reference: true }}
     bind:this={descriptionBox}
     useAttachmentPreview={false}
     isScrollable={false}
@@ -133,13 +135,5 @@
     bind:content={description}
     {placeholder}
     {boundary}
-    on:open-document={async (event) => {
-      save(object, description)
-      const doc = await client.findOne(event.detail._class, { _id: event.detail._id })
-      if (doc != null) {
-        const location = await getObjectLinkFragment(client.getHierarchy(), doc, {}, view.component.EditDoc)
-        navigate(location)
-      }
-    }}
   />
 {/key}

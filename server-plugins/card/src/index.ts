@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { TriggerFunc } from '@hanzo/server-core'
+import type { Metadata, Plugin, Resource } from '@hcengineering/platform'
+import { plugin } from '@hcengineering/platform'
+import type { TriggerFunc } from '@hcengineering/server-core'
 
 /**
  * @public
@@ -26,6 +26,9 @@ export const serverCardId = 'server-card' as Plugin
  * @public
  */
 export default plugin(serverCardId, {
+  metadata: {
+    CommunicationEnabled: '' as Metadata<boolean>
+  },
   trigger: {
     OnAttribute: '' as Resource<TriggerFunc>,
     OnAttributeRemove: '' as Resource<TriggerFunc>,
@@ -33,6 +36,8 @@ export default plugin(serverCardId, {
     OnTagRemove: '' as Resource<TriggerFunc>,
     OnMasterTagRemove: '' as Resource<TriggerFunc>,
     OnCardCreate: '' as Resource<TriggerFunc>,
+    OnDirectCreate: '' as Resource<TriggerFunc>,
+    OnThreadCreate: '' as Resource<TriggerFunc>,
     OnCardUpdate: '' as Resource<TriggerFunc>,
     OnCardTag: '' as Resource<TriggerFunc>,
     OnCardRemove: '' as Resource<TriggerFunc>

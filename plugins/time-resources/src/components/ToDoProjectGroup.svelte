@@ -18,17 +18,11 @@
   import type { Project } from '@hanzo/tracker'
   import type { ToDo } from '@hanzo/time'
   import type { ToDosMode } from '..'
-  import {
-    AccordionItem,
-    IconWithEmoji,
-    getPlatformColorDef,
-    getPlatformColorForTextDef,
-    themeStore
-  } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import { makeRank } from '@hanzo/task'
-  import tracker from '@hanzo/tracker'
-  import view from '@hanzo/view'
+  import { AccordionItem, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hcengineering/ui'
+  import { IconWithEmoji, getClient } from '@hcengineering/presentation'
+  import { makeRank } from '@hcengineering/task'
+  import tracker from '@hcengineering/tracker'
+  import view from '@hcengineering/view'
   import ToDoDraggable from './ToDoDraggable.svelte'
   import ToDoElement from './ToDoElement.svelte'
   import time from '../plugin'
@@ -47,14 +41,14 @@
   $: icon = project
     ? project.icon === view.ids.IconWithEmoji
       ? IconWithEmoji
-      : project.icon ?? tracker.icon.Home
+      : (project.icon ?? tracker.icon.Home)
     : undefined
   $: iconProps = project
     ? project.icon === view.ids.IconWithEmoji
       ? { icon: project.color }
       : {
           fill:
-            project.color !== undefined
+            project.color !== undefined && typeof project.color !== 'string'
               ? getPlatformColorDef(project.color, $themeStore.dark).icon
               : getPlatformColorForTextDef(project.name, $themeStore.dark).icon
         }

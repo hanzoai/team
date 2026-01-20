@@ -33,9 +33,10 @@
     ModernEditbox,
     Label,
     showPopup,
-    ButtonIcon
-  } from '@hanzo/ui'
-  import { DropdownIntlItem } from '@hanzo/ui/src/types'
+    ButtonIcon,
+    Toggle
+  } from '@hcengineering/ui'
+  import { DropdownIntlItem } from '@hcengineering/ui/src/types'
   import setting from '../plugin'
   import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
@@ -52,6 +53,8 @@
   let index: IndexKind | undefined
   let defaultValue: any | undefined
   let is: AnyComponent | undefined
+  let readonly: boolean = false
+  let extra: Record<string, any> = {}
   const client = getClient()
   const hierarchy = client.getHierarchy()
 
@@ -67,10 +70,15 @@
       isCustom: true,
       icon,
       type,
-      defaultValue
+      defaultValue,
+      readonly,
+      automationOnly: readonly
     }
     if (index !== undefined) {
       data.index = index
+    }
+    for (const [k, v] of Object.entries(extra)) {
+      data[k] = v
     }
     await client.createDoc(core.class.Attribute, core.space.Model, data)
     dispatch('close')
@@ -107,9 +115,16 @@
     selectedType = e.detail
   }
   const handleChange = (e: any): void => {
-    type = e.detail?.type
-    index = e.detail?.index
-    defaultValue = e.detail?.defaultValue
+    if (e.detail.type !== undefined && e.detail.type !== type) {
+      type = e.detail?.type
+      index = e.detail?.index
+      defaultValue = e.detail?.defaultValue
+      extra = e.detail?.extra ?? {}
+    } else {
+      index = e.detail?.index ?? index
+      defaultValue = e.detail?.defaultValue ?? defaultValue
+      extra = e.detail?.extra ?? extra
+    }
   }
 
   function setIcon (): void {
@@ -141,33 +156,51 @@
         <ModernEditbox bind:value={name} label={core.string.Name} size={'large'} kind={'ghost'} autoFocus />
       </div>
     </div>
-    <div class="hanzoaiModal-content__settingsSet">
-      <div class="hanzoaiModal-content__settingsSet-line">
-        <span class="label">
-          <Label label={setting.string.Type} />
-        </span>
-        <DropdownLabelsIntl
-          label={setting.string.Type}
-          {items}
-          size={'large'}
-          width="8rem"
-          bind:selected={selectedType}
-          on:selected={handleSelection}
-        />
-      </div>
+    <div class="grid">
+      <span class="label">
+        <Label label={setting.string.Type} />
+      </span>
+      <DropdownLabelsIntl
+        label={setting.string.Type}
+        {items}
+        size={'large'}
+        width={'100%'}
+        bind:selected={selectedType}
+        on:selected={handleSelection}
+      />
       {#if is}
         <Component
           {is}
           props={{
             type,
+            width: '100%',
             defaultValue,
             isCard,
             kind: 'regular',
-            size: 'large'
+            size: 'large',
+            attributeOf: _class
           }}
           on:change={handleChange}
         />
       {/if}
+      <span class="label">
+        <Label label={view.string.AutomationOnly} />
+      </span>
+      <Toggle bind:on={readonly} />
     </div>
   </div>
 </Card>
+
+<style lang="scss">
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-auto-rows: minmax(2rem, max-content);
+    justify-content: start;
+    padding: 0.5rem;
+    align-items: center;
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+    height: min-content;
+  }
+</style>

@@ -20,14 +20,14 @@
     DisplayDocUpdateMessage,
     DocUpdateMessage,
     DocUpdateMessageViewlet
-  } from '@hanzo/activity'
-  import { personByPersonIdStore } from '@hanzo/contact-resources'
-  import { AttachedDoc, Class, Collection, Doc, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Action, Component, ShowMore } from '@hanzo/ui'
-  import { AttributeModel } from '@hanzo/view'
-  import { buildRemovedDoc, checkIsObjectRemoved } from '@hanzo/view-resources'
+  } from '@hcengineering/activity'
+  import { getPersonByPersonIdCb } from '@hcengineering/contact-resources'
+  import { AttachedDoc, Class, Collection, Doc, Ref, Space } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Action, Component, ShowMore } from '@hcengineering/ui'
+  import { AttributeModel } from '@hcengineering/view'
+  import { buildRemovedDoc, checkIsObjectRemoved } from '@hcengineering/view-resources'
 
   import ActivityMessageTemplate from '../activity-message/ActivityMessageTemplate.svelte'
   import DocUpdateMessageAttributes from './DocUpdateMessageAttributes.svelte'
@@ -36,6 +36,7 @@
 
   import { getAttributeModel, getCollectionAttribute } from '../../activityMessagesUtils'
   import { getIsTextType } from '../../utils'
+  import { Person } from '@hcengineering/contact'
 
   export let value: DisplayDocUpdateMessage
   export let doc: Doc | undefined = undefined
@@ -50,7 +51,7 @@
   export let actions: Action[] = []
   export let skipLabel = false
   export let hoverable = true
-  export let hoverStyles: 'borderedHover' | 'filledHover' = 'borderedHover'
+  export let hoverStyles: 'filledHover' = 'filledHover'
   export let hideLink = false
   export let type: ActivityMessageViewType = 'default'
   export let readonly = false
@@ -101,7 +102,14 @@
     parentMessage = res as DisplayActivityMessage
   })
 
-  $: person = value.createdBy !== undefined ? $personByPersonIdStore.get(value.createdBy) : undefined
+  let person: Person | undefined
+  $: if (value.createdBy !== undefined) {
+    getPersonByPersonIdCb(value.createdBy, (p) => {
+      person = p ?? undefined
+    })
+  } else {
+    person = undefined
+  }
 
   $: void loadObject(value.objectId, value.objectClass, doc)
   $: void loadParentObject(value, parentMessage, doc)

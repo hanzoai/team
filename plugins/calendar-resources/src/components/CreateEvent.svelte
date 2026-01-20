@@ -13,9 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Calendar, Event, ReccuringEvent, RecurringRule, Visibility, generateEventId } from '@hanzo/calendar'
-  import { getCurrentEmployee, Person } from '@hanzo/contact'
-  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hanzo/core'
+  import {
+    AccessLevel,
+    Calendar,
+    Event,
+    ReccuringEvent,
+    RecurringRule,
+    Visibility,
+    generateEventId
+  } from '@hcengineering/calendar'
+  import { getCurrentEmployee, Person } from '@hcengineering/contact'
+  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hcengineering/core'
   import presentation, {
     createQuery,
     DocCreateExtComponent,
@@ -49,7 +57,6 @@
 
   const acc = getCurrentAccount()
   const currentUser = getCurrentEmployee()
-  const socialStrings = acc.socialIds
   const myPrimaryId = acc.primarySocialId
 
   export let attachedTo: Ref<Doc> = calendar.ids.NoAttached
@@ -77,18 +84,7 @@
 
   let description: Markup = EmptyMarkup
   let visibility: Visibility = 'private'
-  let _calendar: Ref<Calendar> = `${acc.uuid}_calendar` as Ref<Calendar>
-
-  const q = createQuery()
-  q.query(
-    calendar.class.ExternalCalendar,
-    { default: true, createdBy: { $in: socialStrings }, hidden: false },
-    (res) => {
-      if (res.length > 0) {
-        _calendar = res[0]._id
-      }
-    }
-  )
+  let _calendar: Ref<Calendar> | undefined = undefined
 
   const spaceQ = createQuery()
   let space: Space | undefined = undefined
@@ -111,6 +107,7 @@
     let date: number | undefined
     if (startDate != null) date = startDate
     if (date === undefined) return
+    if (_calendar === undefined) return
     if (title === '') return
     const user = myPrimaryId
     const _id = generateId<Event>()
@@ -136,8 +133,9 @@
           visibility,
           title,
           location,
+          blockTime: !allDay,
           allDay,
-          access: 'owner',
+          access: AccessLevel.Owner,
           originalStartTime: allDay ? saveUTC(date) : date,
           timeZone,
           user
@@ -163,9 +161,10 @@
           reminders,
           title,
           location,
+          blockTime: !allDay,
           allDay,
           timeZone,
-          access: 'owner',
+          access: AccessLevel.Owner,
           user
         },
         _id
@@ -310,7 +309,7 @@
         padding-top: 0;
       }
       &:not(.rightCropPadding) {
-        padding: 0.75rem 1.25rem;
+        padding: 0.75rem 1rem;
       }
       &.rightCropPadding {
         padding: 0.75rem 1rem 0.75rem 1.25rem;

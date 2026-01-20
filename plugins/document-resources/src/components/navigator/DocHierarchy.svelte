@@ -14,13 +14,13 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Ref, generateId } from '@hanzo/core'
-  import { Document } from '@hanzo/document'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Action, IconAdd, IconEdit, IconWithEmoji, getPlatformColorDef, themeStore } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { getActions as getContributedActions, openDoc } from '@hanzo/view-resources'
+  import { Ref, generateId } from '@hcengineering/core'
+  import { Document } from '@hcengineering/document'
+  import { getResource } from '@hcengineering/platform'
+  import { IconWithEmoji, getClient } from '@hcengineering/presentation'
+  import { Action, IconAdd, IconEdit, getPlatformColorDef, themeStore } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import { getActions as getContributedActions, openDoc } from '@hcengineering/view-resources'
 
   import document from '../../plugin'
   import { createEmptyDocument } from '../../utils'
@@ -88,7 +88,7 @@
     dispatch('selected', obj)
   }
 
-  $: _documents = documents.map((it) => documentById.get(it)).filter((it) => it !== undefined) as Document[]
+  $: _documents = documents.map((it) => documentById.get(it)).filter((it) => it !== undefined)
   $: _descendants = new Map(_documents.map((it) => [it._id, getDescendants(it._id)]))
 </script>
 
@@ -103,11 +103,14 @@
 
       <DocTreeElement
         {doc}
-        icon={doc.icon === view.ids.IconWithEmoji ? IconWithEmoji : doc.icon ?? document.icon.Document}
+        icon={doc.icon === view.ids.IconWithEmoji ? IconWithEmoji : (doc.icon ?? document.icon.Document)}
         iconProps={doc.icon === view.ids.IconWithEmoji
           ? { icon: doc.color }
           : {
-              fill: doc.color !== undefined ? getPlatformColorDef(doc.color, $themeStore.dark).icon : 'currentColor'
+              fill:
+                doc.color !== undefined && typeof doc.color !== 'string'
+                  ? getPlatformColorDef(doc.color, $themeStore.dark).icon
+                  : 'currentColor'
             }}
         title={doc.title}
         selected={selected === doc._id && draggedItem === undefined}

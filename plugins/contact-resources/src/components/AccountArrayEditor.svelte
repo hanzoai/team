@@ -13,18 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hanzo/contact'
-  import { AccountUuid, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Analytics } from '@hcengineering/analytics'
+  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hcengineering/contact'
+  import { AccountUuid, notEmpty, Ref } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { getClient } from '@hcengineering/presentation'
+  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
   import { onDestroy } from 'svelte'
   import contact from '../plugin'
-  import { employeeByIdStore, personRefByAccountUuidStore } from '../utils'
+  import { employeeByIdStore, employeeRefByAccountUuidStore } from '../utils'
   import UserBoxList from './UserBoxList.svelte'
 
   export let label: IntlString
-  export let value: AccountUuid[]
+  export let value: AccountUuid | AccountUuid[] | undefined
   export let onChange: ((refs: AccountUuid[]) => void | Promise<void>) | undefined
   export let readonly = false
   export let kind: ButtonKind = 'link'
@@ -34,21 +35,33 @@
   export let excludeItems: Ref<Person>[] = []
   export let emptyLabel: IntlString | undefined = undefined
   export let allowGuests: boolean = false
+  export let attributeKey: string | undefined = undefined
+
+  $: accounts = typeof value === 'string' ? [value] : (value ?? [])
 
   let timer: any = null
   const client = getClient()
   let update: (() => Promise<void>) | undefined
 
-  $: valueByPersonRef = new Map(
-    value.map((p) => {
-      const person = $personRefByAccountUuidStore.get(p)
+  $: accountsByPersonRef = new Map(
+    accounts
+      .map((uuid) => {
+        const empRef = $employeeRefByAccountUuidStore.get(uuid)
 
-      if (person === undefined) {
-        console.error('Person not found for social id', p)
-      }
+        if (empRef === undefined) {
+          Analytics.handleError(new Error(`Employee not found by account id ${uuid}`))
+          return null
+        }
 
-      return [person, p] as const
-    })
+        const employee = $employeeByIdStore.get(empRef)
+
+        if (employee?.active !== true) {
+          return null
+        }
+
+        return [empRef, uuid] as const
+      })
+      .filter(notEmpty)
   )
 
   function onUpdate (evt: CustomEvent<Ref<Employee>[]>): void {
@@ -60,7 +73,7 @@
       const newAccounts: AccountUuid[] = []
 
       for (const person of newPersons) {
-        const acc = valueByPersonRef.get(person)
+        const acc = accountsByPersonRef.get(person)
         if (acc !== undefined) {
           newAccounts.push(acc)
         } else {
@@ -86,7 +99,7 @@
     void update?.()
   })
 
-  $: employees = value.map((p) => $personRefByAccountUuidStore.get(p)).filter((p) => p !== undefined) as Ref<Employee>[]
+  $: employees = accounts.map((p) => $employeeRefByAccountUuidStore.get(p)).filter(notEmpty)
   $: docQuery =
     excludeItems.length === 0 && includeItems.length === 0
       ? {}
@@ -130,7 +143,7 @@
 </script>
 
 <UserBoxList
-  _class={!allowGuests ? contact.mixin.Employee : contact.class.Person}
+  _class={contact.mixin.Employee}
   items={employees}
   {label}
   {emptyLabel}

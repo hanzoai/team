@@ -13,33 +13,39 @@
 // limitations under the License.
 //
 import {
-  AccountRole,
-  Data,
+  type AccountRole,
+  type Data,
   isActiveMode,
-  MeasureContext,
+  type MeasureContext,
   SocialIdType,
-  Version,
-  WorkspaceMode,
+  type Version,
+  type WorkspaceMode,
   type PersonInfo,
   type BackupStatus,
   type Branding,
   type PersonId,
   type PersonUuid,
   type WorkspaceUuid,
-  type AccountUuid
-} from '@hanzo/core'
-import platform, { getMetadata, PlatformError, Severity, Status, unknownError } from '@hanzo/platform'
-import { decodeTokenVerbose } from '@hanzo/server-token'
+  type AccountUuid,
+  type UsageStatus,
+  readOnlyGuestAccountUuid
+} from '@hcengineering/core'
+import platform, { getMetadata, PlatformError, Severity, Status, unknownError } from '@hcengineering/platform'
+import { decodeTokenVerbose } from '@hcengineering/server-token'
 
 import { accountPlugin } from './plugin'
 import type {
+  AccountAggregatedInfo,
   AccountDB,
   AccountMethodHandler,
   Integration,
   IntegrationKey,
   IntegrationSecret,
   IntegrationSecretKey,
+  Query,
   SocialId,
+  Subscription,
+  SubscriptionData,
   Workspace,
   WorkspaceEvent,
   WorkspaceInfoWithStatus,
@@ -47,6 +53,8 @@ import type {
   WorkspaceStatus
 } from './types'
 import {
+  integrationServices,
+  findExistingIntegration,
   cleanEmail,
   getAccount,
   getEmailSocialId,
@@ -54,14 +62,15 @@ import {
   getRolePower,
   getSocialIdByKey,
   getWorkspaceById,
-  getWorkspaceInfoWithStatusById,
   getWorkspacesInfoWithStatusByIds,
   verifyAllowedServices,
   wrap,
-  addSocialId,
+  addSocialIdBase,
   getWorkspaces,
   updateWorkspaceRole,
-  getPersonName
+  getPersonName,
+  doMergeAccounts,
+  assignableRoles
 } from './utils'
 
 // Note: it is IMPORTANT to always destructure params passed here to avoid sending extra params
@@ -84,11 +93,30 @@ export async function listWorkspaces (
   const { region, mode } = params
   const { extra } = decodeTokenVerbose(ctx, token)
 
-  if (!['tool', 'backup', 'admin'].includes(extra?.service) && extra?.admin !== 'true') {
+  if (!['tool', 'backup', 'admin', 'github'].includes(extra?.service) && extra?.admin !== 'true') {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }
 
   return await getWorkspaces(db, false, region, mode)
+}
+
+export async function listAccounts (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: { search?: string, skip?: number, limit?: number }
+): Promise<AccountAggregatedInfo[]> {
+  const { extra } = decodeTokenVerbose(ctx, token)
+  const isAdmin = extra?.admin === 'true'
+
+  if (!isAdmin) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
+  const { skip, limit, search } = params
+
+  return await db.listAccounts(search, skip, limit)
 }
 
 export async function performWorkspaceOperation (
@@ -186,7 +214,7 @@ export async function performWorkspaceOperation (
     }
 
     if (Object.keys(update).length !== 0) {
-      await db.workspaceStatus.updateOne({ workspaceUuid: workspace.uuid }, update)
+      await db.workspaceStatus.update({ workspaceUuid: workspace.uuid }, update)
       ops++
     }
   }
@@ -204,6 +232,11 @@ export async function updateWorkspaceRoleBySocialKey (
   }
 ): Promise<void> {
   const { socialKey, targetRole } = params
+
+  if (socialKey == null || socialKey === '' || targetRole == null || !assignableRoles.includes(targetRole)) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
   const { extra } = decodeTokenVerbose(ctx, token)
   verifyAllowedServices(['workspace', 'tool'], extra)
 
@@ -249,6 +282,7 @@ export async function getPendingWorkspace (
     ctx.info('getPendingWorkspace', {
       workspaceId: result.uuid,
       workspaceName: result.name,
+      dataId: result.dataId,
       mode: result.status.mode,
       operation,
       region,
@@ -276,31 +310,45 @@ export async function updateWorkspaceInfo (
   }
 ): Promise<void> {
   const { workspaceUuid, event, version, message } = params
-  let progress = params.progress
 
   const { extra } = decodeTokenVerbose(ctx, token)
   if (!['workspace', 'tool'].includes(extra?.service)) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }
 
-  const workspace = await getWorkspaceInfoWithStatusById(db, workspaceUuid)
-  if (workspace === null) {
+  if (workspaceUuid == null || workspaceUuid === '' || event == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
+  let progress = params.progress
+
+  const wsExists = await db.workspace.exists({ uuid: workspaceUuid })
+  if (!wsExists) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
   }
   progress = Math.round(progress)
 
+  const ts = Date.now()
   const update: Partial<WorkspaceStatus> = {}
   const wsUpdate: Partial<Workspace> = {}
+  const query: Query<WorkspaceStatus> = { workspaceUuid }
+
+  // Only read status for certain events because it is not needed for others
+  // and it interferes with status updates when concurrency is high
+  let wsStatus: WorkspaceStatus | null = null
+  if (['create-started', 'upgrade-started', 'migrate-clean-done'].includes(event)) {
+    wsStatus = await db.workspaceStatus.findOne({ workspaceUuid })
+  }
   switch (event) {
     case 'create-started':
       update.mode = 'creating'
-      if (workspace.status.mode !== 'creating') {
+      if (wsStatus != null && wsStatus.mode !== 'creating') {
         update.processingAttempts = 0
       }
       update.processingProgress = progress
       break
     case 'upgrade-started':
-      if (workspace.status.mode !== 'upgrading') {
+      if (wsStatus != null && wsStatus.mode !== 'upgrading') {
         update.processingAttempts = 0
       }
       update.mode = 'upgrading'
@@ -325,6 +373,7 @@ export async function updateWorkspaceInfo (
       break
     case 'progress':
       update.processingProgress = progress
+      query.processingProgress = { $lte: progress }
       break
     case 'migrate-backup-started':
       update.mode = 'migration-backup'
@@ -341,7 +390,7 @@ export async function updateWorkspaceInfo (
       update.processingProgress = progress
       break
     case 'migrate-clean-done':
-      wsUpdate.region = workspace.status.targetRegion ?? ''
+      wsUpdate.region = wsStatus?.targetRegion ?? ''
       update.mode = 'pending-restore'
       update.processingProgress = progress
       update.lastProcessingTime = Date.now() - processingTimeoutMs // To not wait for next step
@@ -377,6 +426,7 @@ export async function updateWorkspaceInfo (
       break
     case 'ping':
     default:
+      query.lastProcessingTime = { $lte: ts }
       break
   }
 
@@ -384,16 +434,13 @@ export async function updateWorkspaceInfo (
     update.processingMessage = message
   }
 
-  await db.workspaceStatus.updateOne(
-    { workspaceUuid: workspace.uuid },
-    {
-      lastProcessingTime: Date.now(), // Some operations override it.
-      ...update
-    }
-  )
+  await db.workspaceStatus.update(query, {
+    lastProcessingTime: ts, // Some operations override it.
+    ...update
+  })
 
   if (Object.keys(wsUpdate).length !== 0) {
-    await db.workspace.updateOne({ uuid: workspace.uuid }, wsUpdate)
+    await db.workspace.update({ uuid: workspaceUuid }, wsUpdate)
   }
 }
 
@@ -436,10 +483,37 @@ export async function updateBackupInfo (
     throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
   }
 
-  await db.workspaceStatus.updateOne(
+  await db.workspaceStatus.update(
     { workspaceUuid: workspace },
     {
       backupInfo,
+      lastProcessingTime: Date.now()
+    }
+  )
+}
+
+export async function updateUsageInfo (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: { usageInfo: UsageStatus }
+): Promise<void> {
+  const { usageInfo } = params
+  const { extra, workspace } = decodeTokenVerbose(ctx, token)
+  if (extra?.service !== 'billing') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
+  const workspaceInfo = await getWorkspaceById(db, workspace)
+  if (workspaceInfo === null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid: workspace }))
+  }
+
+  await db.workspaceStatus.update(
+    { workspaceUuid: workspace },
+    {
+      usageInfo,
       lastProcessingTime: Date.now()
     }
   )
@@ -460,6 +534,17 @@ export async function assignWorkspace (
   const { extra } = decodeTokenVerbose(ctx, token)
   if (!['aibot', 'tool', 'workspace'].includes(extra?.service)) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
+  if (
+    email == null ||
+    email === '' ||
+    workspaceUuid == null ||
+    workspaceUuid === '' ||
+    role == null ||
+    !assignableRoles.includes(role)
+  ) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
   }
 
   const normalizedEmail = cleanEmail(email)
@@ -499,7 +584,11 @@ export async function getPersonInfo (
 ): Promise<PersonInfo> {
   const { account } = params
   const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(['workspace', 'tool'], extra)
+  verifyAllowedServices(['workspace', 'tool', 'gmail', 'huly-mail', 'export'], extra)
+
+  if (account == null || account === '') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
 
   const person = await db.person.findOne({ uuid: account })
 
@@ -526,9 +615,18 @@ export async function addSocialIdToPerson (
   const { person, type, value, confirmed, displayValue } = params
   const { extra } = decodeTokenVerbose(ctx, token)
 
-  verifyAllowedServices(['github', 'telegram-bot'], extra)
+  if (extra?.admin !== 'true') {
+    verifyAllowedServices(
+      ['github', 'telegram-bot', 'gmail', 'tool', 'workspace', 'hulygram', 'google-calendar', 'ai-assistant'],
+      extra
+    )
+  }
 
-  return await addSocialId(db, person, type, value, confirmed, displayValue)
+  if (person == null || person === '' || !Object.values(SocialIdType).includes(type) || value == null || value === '') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
+  return await addSocialIdBase(db, person, type, value, confirmed, displayValue)
 }
 
 export async function updateSocialId (
@@ -541,18 +639,19 @@ export async function updateSocialId (
   const { personId, displayValue } = params
   const { extra } = decodeTokenVerbose(ctx, token)
 
-  verifyAllowedServices(['telegram-bot'], extra)
+  verifyAllowedServices(['telegram-bot', 'gmail'], extra)
+
+  if (personId == null || personId === '') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
 
   const socialId = await db.socialId.findOne({ _id: personId })
   if (socialId != null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.SocialIdNotFound, { _id: personId }))
   }
 
-  await db.socialId.updateOne({ _id: personId }, { displayValue })
+  await db.socialId.update({ _id: personId }, { displayValue })
 }
-
-// Move to config?
-const integrationServices = ['github', 'telegram-bot', 'telegram', 'mailbox']
 
 export async function createIntegration (
   ctx: MeasureContext,
@@ -561,29 +660,18 @@ export async function createIntegration (
   token: string,
   params: Integration
 ): Promise<void> {
-  const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(integrationServices, extra)
-  const { socialId, kind, workspaceUuid, data } = params
-
-  if (kind == null || socialId == null || workspaceUuid === undefined) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
-  }
-
-  const existingSocialId = await db.socialId.findOne({ _id: socialId })
-  if (existingSocialId == null) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.SocialIdNotFound, { _id: socialId }))
-  }
-
-  if (workspaceUuid != null) {
-    const workspace = await getWorkspaceById(db, workspaceUuid)
-    if (workspace == null) {
-      throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
-    }
-  }
-
-  const existing = await db.integration.findOne({ socialId, kind, workspaceUuid })
+  const { extra, account } = decodeTokenVerbose(ctx, token)
+  // it checks params and throws BadRequest if params are invalid
+  const existing = await findExistingIntegration(account, db, params, extra)
   if (existing != null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationAlreadyExists, {}))
+  }
+
+  const { socialId, kind, workspaceUuid, data } = params
+  const social = await db.socialId.findOne({ _id: socialId })
+
+  if (social?.personUuid === readOnlyGuestAccountUuid) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }
 
   await db.integration.insertOne({ socialId, kind, workspaceUuid, data })
@@ -596,20 +684,15 @@ export async function updateIntegration (
   token: string,
   params: Integration
 ): Promise<void> {
-  const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(integrationServices, extra)
-  const { socialId, kind, workspaceUuid, data } = params
-
-  if (kind == null || socialId == null || workspaceUuid === undefined) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
-  }
-
-  const existing = await db.integration.findOne({ socialId, kind, workspaceUuid })
+  const { extra, account } = decodeTokenVerbose(ctx, token)
+  // it checks params and throws BadRequest if params are invalid
+  const existing = await findExistingIntegration(account, db, params, extra)
   if (existing == null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationNotFound, {}))
   }
 
-  await db.integration.updateOne({ socialId, kind, workspaceUuid }, { data })
+  const { socialId, kind, workspaceUuid, data } = params
+  await db.integration.update({ socialId, kind, workspaceUuid }, { data })
 }
 
 export async function deleteIntegration (
@@ -619,19 +702,14 @@ export async function deleteIntegration (
   token: string,
   params: IntegrationKey
 ): Promise<void> {
-  const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(integrationServices, extra)
-  const { socialId, kind, workspaceUuid } = params
-
-  if (kind == null || socialId == null || workspaceUuid === undefined) {
-    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
-  }
-
-  const existing = await db.integration.findOne({ socialId, kind, workspaceUuid })
+  const { extra, account } = decodeTokenVerbose(ctx, token)
+  // it checks params and throws BadRequest if params are invalid
+  const existing = await findExistingIntegration(account, db, params, extra)
   if (existing == null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationNotFound, {}))
   }
 
+  const { socialId, kind, workspaceUuid } = params
   await db.integrationSecret.deleteMany({ socialId, kind, workspaceUuid })
   await db.integration.deleteMany({ socialId, kind, workspaceUuid })
 }
@@ -688,7 +766,7 @@ export async function getIntegration (
   const isAllowedService = verifyAllowedServices(integrationServices, extra, false)
   const { socialId, kind, workspaceUuid } = params
 
-  if (kind == null || socialId == null || workspaceUuid === undefined) {
+  if (kind == null || kind === '' || socialId == null || socialId === '' || workspaceUuid === undefined) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
   }
 
@@ -710,22 +788,25 @@ export async function addIntegrationSecret (
   token: string,
   params: IntegrationSecret
 ): Promise<void> {
-  const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(integrationServices, extra)
+  const { extra, account } = decodeTokenVerbose(ctx, token)
   const { socialId, kind, workspaceUuid, key, secret } = params
-
-  if (kind == null || socialId == null || workspaceUuid === undefined || key == null) {
+  if (
+    kind == null ||
+    kind === '' ||
+    socialId == null ||
+    socialId === '' ||
+    workspaceUuid === undefined ||
+    key == null
+  ) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
   }
 
-  const integrationKey: IntegrationKey = { socialId, kind, workspaceUuid }
-  const secretKey: IntegrationSecretKey = { ...integrationKey, key }
-
-  const existingIntegration = await db.integration.findOne(integrationKey)
+  const existingIntegration = await findExistingIntegration(account, db, params, extra)
   if (existingIntegration == null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationNotFound, {}))
   }
 
+  const secretKey: IntegrationSecretKey = { socialId, kind, workspaceUuid, key }
   const existingSecret = await db.integrationSecret.findOne(secretKey)
   if (existingSecret != null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationSecretAlreadyExists, {}))
@@ -741,21 +822,31 @@ export async function updateIntegrationSecret (
   token: string,
   params: IntegrationSecret
 ): Promise<void> {
-  const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(integrationServices, extra)
+  const { extra, account } = decodeTokenVerbose(ctx, token)
   const { socialId, kind, workspaceUuid, key, secret } = params
-  const secretKey: IntegrationSecretKey = { socialId, kind, workspaceUuid, key }
-
-  if (kind == null || socialId == null || workspaceUuid === undefined || key == null) {
+  if (
+    kind == null ||
+    kind === '' ||
+    socialId == null ||
+    socialId === '' ||
+    workspaceUuid === undefined ||
+    key == null
+  ) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
   }
 
+  const existingIntegration = await findExistingIntegration(account, db, params, extra)
+  if (existingIntegration == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationNotFound, {}))
+  }
+
+  const secretKey: IntegrationSecretKey = { socialId, kind, workspaceUuid, key }
   const existingSecret = await db.integrationSecret.findOne(secretKey)
   if (existingSecret == null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationSecretNotFound, {}))
   }
 
-  await db.integrationSecret.updateOne(secretKey, { secret })
+  await db.integrationSecret.update(secretKey, { secret })
 }
 
 export async function deleteIntegrationSecret (
@@ -765,15 +856,25 @@ export async function deleteIntegrationSecret (
   token: string,
   params: IntegrationSecretKey
 ): Promise<void> {
-  const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(integrationServices, extra)
+  const { extra, account } = decodeTokenVerbose(ctx, token)
   const { socialId, kind, workspaceUuid, key } = params
-  const secretKey: IntegrationSecretKey = { socialId, kind, workspaceUuid, key }
-
-  if (kind == null || socialId == null || workspaceUuid === undefined || key == null) {
+  if (
+    kind == null ||
+    kind === '' ||
+    socialId == null ||
+    socialId === '' ||
+    workspaceUuid === undefined ||
+    key == null
+  ) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
   }
 
+  const existingIntegration = await findExistingIntegration(account, db, params, extra)
+  if (existingIntegration == null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationNotFound, {}))
+  }
+
+  const secretKey: IntegrationSecretKey = { socialId, kind, workspaceUuid, key }
   const existingSecret = await db.integrationSecret.findOne(secretKey)
   if (existingSecret == null) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.IntegrationSecretNotFound, {}))
@@ -793,10 +894,16 @@ export async function getIntegrationSecret (
   verifyAllowedServices(integrationServices, extra)
   const { socialId, kind, workspaceUuid, key } = params
 
-  if (kind == null || socialId == null || workspaceUuid === undefined || key == null) {
+  if (
+    kind == null ||
+    kind === '' ||
+    socialId == null ||
+    socialId === '' ||
+    workspaceUuid === undefined ||
+    key == null
+  ) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
   }
-
   const existing = await db.integrationSecret.findOne({ socialId, kind, workspaceUuid, key })
 
   return existing
@@ -824,11 +931,191 @@ export async function findFullSocialIdBySocialKey (
   params: { socialKey: string }
 ): Promise<SocialId | null> {
   const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(['telegram-bot'], extra)
+  verifyAllowedServices(['telegram-bot', 'gmail', 'tool', 'workspace', 'google-calendar'], extra)
 
   const { socialKey } = params
 
+  if (socialKey == null || socialKey === '') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
   return await db.socialId.findOne({ key: socialKey })
+}
+
+export async function findFullSocialIds (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: { socialIds: PersonId[] }
+): Promise<SocialId[]> {
+  const { socialIds } = params
+  const { extra } = decodeTokenVerbose(ctx, token)
+  verifyAllowedServices(['gmail', 'tool', 'workspace', 'huly-mail', 'rating'], extra)
+
+  if (socialIds == null || socialIds.length === 0) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
+  // Add validation to social Ids
+
+  return await db.socialId.find({ _id: { $in: socialIds } })
+}
+
+export async function mergeSpecifiedAccounts (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: {
+    primaryAccount: AccountUuid
+    secondaryAccount: AccountUuid
+  }
+): Promise<void> {
+  const { extra } = decodeTokenVerbose(ctx, token)
+  verifyAllowedServices(['tool', 'workspace'], extra)
+
+  const { primaryAccount, secondaryAccount } = params
+  if (primaryAccount == null || primaryAccount === '' || secondaryAccount == null || secondaryAccount === '') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
+  await doMergeAccounts(db, primaryAccount, secondaryAccount)
+}
+
+export async function findPersonBySocialKey (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: { socialString: string, requireAccount?: boolean }
+): Promise<PersonUuid | undefined> {
+  const { socialString } = params
+
+  if (socialString == null || socialString === '') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
+
+  const { extra } = decodeTokenVerbose(ctx, token)
+
+  verifyAllowedServices(['tool', 'workspace', 'aibot', ...integrationServices], extra)
+
+  const socialId = await db.socialId.findOne({ key: socialString })
+
+  if (socialId == null) {
+    return
+  }
+
+  if (params.requireAccount === true) {
+    const account = await db.account.findOne({ uuid: socialId.personUuid as AccountUuid })
+
+    return account?.uuid
+  }
+
+  return socialId.personUuid
+}
+
+/**
+ * Upsert (create or update) subscription for a workspace
+ * Only accessible by payment service
+ * Creates new subscription or updates existing one based on providerId
+ * @public
+ */
+export async function upsertSubscription (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: SubscriptionData
+): Promise<void> {
+  const { extra } = decodeTokenVerbose(ctx, token)
+
+  // Only payment service can upsert subscriptions
+  if (extra?.service !== 'payment') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
+  const { workspaceUuid, provider, providerSubscriptionId } = params
+
+  // Verify workspace exists
+  const workspace = await getWorkspaceById(db, workspaceUuid)
+  if (workspace === null) {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
+  }
+
+  // Check if subscription exists by provider + providerSubscriptionId (unique external ID)
+  const existing = await db.subscription.findOne({ provider, providerSubscriptionId })
+  const updateData = {
+    workspaceUuid: params.workspaceUuid,
+    accountUuid: params.accountUuid,
+    provider: params.provider,
+    providerSubscriptionId: params.providerSubscriptionId,
+    providerCheckoutId: params.providerCheckoutId,
+    amount: params.amount,
+    type: params.type,
+    status: params.status,
+    plan: params.plan,
+    periodStart: params.periodStart,
+    periodEnd: params.periodEnd,
+    trialEnd: params.trialEnd,
+    canceledAt: params.canceledAt,
+    willCancelAt: params.willCancelAt,
+    providerData: params.providerData,
+    updatedOn: Date.now()
+  }
+  if (existing !== null) {
+    // Update existing subscription
+    await db.subscription.update({ id: existing.id }, updateData)
+    ctx.info('Subscription updated', {
+      id: existing.id,
+      workspaceUuid,
+      status: params.status,
+      type: params.type,
+      plan: params.plan
+    })
+  } else {
+    // Create new subscription
+    await db.subscription.insertOne({
+      ...updateData,
+      id: params.id,
+      createdOn: Date.now()
+    })
+    ctx.info('Subscription created', {
+      id: params.id,
+      workspaceUuid,
+      status: params.status,
+      type: params.type,
+      plan: params.plan
+    })
+  }
+}
+
+export async function getSubscriptionByProviderId (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: {
+    provider: string
+    providerSubscriptionId: string
+  }
+): Promise<Subscription | null> {
+  const { extra } = decodeTokenVerbose(ctx, token)
+
+  // Only payment service can query subscriptions by provider ID
+  if (extra?.service !== 'payment') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
+  const { provider, providerSubscriptionId } = params
+
+  // Find subscription by provider and providerSubscriptionId (unique external ID)
+  const subscription = await db.subscription.findOne({
+    provider,
+    providerSubscriptionId
+  })
+
+  return subscription ?? null
 }
 
 export type AccountServiceMethods =
@@ -836,6 +1123,7 @@ export type AccountServiceMethods =
   | 'updateWorkspaceInfo'
   | 'workerHandshake'
   | 'updateBackupInfo'
+  | 'updateUsageInfo'
   | 'assignWorkspace'
   | 'listWorkspaces'
   | 'performWorkspaceOperation'
@@ -854,6 +1142,12 @@ export type AccountServiceMethods =
   | 'getIntegrationSecret'
   | 'listIntegrationsSecrets'
   | 'findFullSocialIdBySocialKey'
+  | 'mergeSpecifiedAccounts'
+  | 'findPersonBySocialKey'
+  | 'listAccounts'
+  | 'findFullSocialIds'
+  | 'getSubscriptionByProviderId'
+  | 'upsertSubscription'
 
 /**
  * @public
@@ -864,6 +1158,7 @@ export function getServiceMethods (): Partial<Record<AccountServiceMethods, Acco
     updateWorkspaceInfo: wrap(updateWorkspaceInfo),
     workerHandshake: wrap(workerHandshake),
     updateBackupInfo: wrap(updateBackupInfo),
+    updateUsageInfo: wrap(updateUsageInfo),
     assignWorkspace: wrap(assignWorkspace),
     listWorkspaces: wrap(listWorkspaces),
     performWorkspaceOperation: wrap(performWorkspaceOperation),
@@ -881,6 +1176,12 @@ export function getServiceMethods (): Partial<Record<AccountServiceMethods, Acco
     deleteIntegrationSecret: wrap(deleteIntegrationSecret),
     getIntegrationSecret: wrap(getIntegrationSecret),
     listIntegrationsSecrets: wrap(listIntegrationsSecrets),
-    findFullSocialIdBySocialKey: wrap(findFullSocialIdBySocialKey)
+    findFullSocialIdBySocialKey: wrap(findFullSocialIdBySocialKey),
+    findFullSocialIds: wrap(findFullSocialIds),
+    mergeSpecifiedAccounts: wrap(mergeSpecifiedAccounts),
+    findPersonBySocialKey: wrap(findPersonBySocialKey),
+    listAccounts: wrap(listAccounts),
+    getSubscriptionByProviderId: wrap(getSubscriptionByProviderId),
+    upsertSubscription: wrap(upsertSubscription)
   }
 }

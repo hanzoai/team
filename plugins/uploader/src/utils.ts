@@ -13,7 +13,8 @@
 // limitations under the License.
 //
 
-import { getResource } from '@hanzo/platform'
+import { Client, type DocumentQuery } from '@hcengineering/core'
+import { getResource } from '@hcengineering/platform'
 
 import uploader from './plugin'
 import type { FileUploadOptions, FileUploadPopupOptions, FileWithPath, UploadHandlerDefinition } from './types'
@@ -34,9 +35,11 @@ export async function uploadFile (file: File, options: FileUploadOptions): Promi
 }
 
 /** @public */
-export async function getUploadHandlers (): Promise<UploadHandlerDefinition[]> {
-  const fn = await getResource(uploader.function.GetUploadHandlers)
-  return await fn()
+export function getUploadHandlers (
+  client: Client,
+  query?: DocumentQuery<UploadHandlerDefinition>
+): UploadHandlerDefinition[] {
+  return client.getModel().findAllSync(uploader.class.UploadHandlerDefinition, query ?? {})
 }
 
 /** @public */

@@ -13,21 +13,22 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { location } from '@hanzo/ui'
-  import { SpecialView } from '@hanzo/workbench-resources'
+  import { MasterTag } from '@hcengineering/card'
+  import { Class, Doc, Ref, Space } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { createQuery, IconWithEmoji } from '@hcengineering/presentation'
+  import { location } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import { SpecialView } from '@hcengineering/workbench-resources'
   import { onDestroy } from 'svelte'
   import card from '../plugin'
 
-  export let currentSpace: Ref<Space>
-
   let _class: Ref<Class<Doc>> | undefined
+  let space: Ref<Space> | undefined
 
   onDestroy(
     location.subscribe((loc) => {
+      space = loc.path[3] === 'type' ? undefined : loc.path[3]
       _class = loc.path[4]
     })
   )
@@ -39,7 +40,7 @@
     allClasses = res.filter((it) => it.removed !== true)
   })
 
-  $: clazz = allClasses.find((it) => it._id === _class)
+  $: clazz = allClasses.find((it) => it._id === _class) ?? allClasses.find((it) => it._id === card.class.Card)
 
   $: label = getLabel(clazz)
 
@@ -51,9 +52,10 @@
 {#if clazz !== undefined && label !== undefined}
   <SpecialView
     _class={clazz._id}
-    baseQuery={{ space: currentSpace }}
-    space={currentSpace}
+    baseQuery={space !== undefined ? { space } : {}}
+    {space}
     {label}
-    icon={card.icon.Card}
+    icon={clazz.icon === view.ids.IconWithEmoji ? IconWithEmoji : clazz.icon}
+    iconProps={clazz.icon === view.ids.IconWithEmoji ? { icon: clazz.color } : {}}
   />
 {/if}

@@ -95,6 +95,12 @@ export function serveWorkspaceAccount (
   }
   setMetadata(serverClientPlugin.metadata.Endpoint, accountUri)
 
+  const accountDbUrl = process.env.ACCOUNTS_DB_URL
+  if (accountDbUrl === undefined) {
+    console.log('Please provide account db url')
+    process.exit(1)
+  }
+
   const serverSecret = process.env.SERVER_SECRET
   if (serverSecret === undefined) {
     console.log('Please provide server secret')
@@ -104,6 +110,7 @@ export function serveWorkspaceAccount (
   const waitTimeout = parseInt(process.env.WAIT_TIMEOUT ?? '5000')
 
   setMetadata(serverToken.metadata.Secret, serverSecret)
+  setMetadata(serverToken.metadata.Service, 'workspace')
 
   const initWS = process.env.INIT_WORKSPACE
   if (initWS !== undefined) {
@@ -123,7 +130,7 @@ export function serveWorkspaceAccount (
 
   let canceled = false
 
-  const wsProducer = queue.createProducer<QueueWorkspaceMessage>(measureCtx, QueueTopic.Workspace)
+  const wsProducer = queue.getProducer<QueueWorkspaceMessage>(measureCtx, QueueTopic.Workspace)
   const worker = new WorkspaceWorker(
     wsProducer,
     version,
@@ -134,7 +141,8 @@ export function serveWorkspaceAccount (
     wsOperation,
     brandings,
     fulltextUrl,
-    accountUri
+    accountUri,
+    accountDbUrl
   )
 
   void worker
@@ -158,7 +166,6 @@ export function serveWorkspaceAccount (
 
   const close = (): void => {
     canceled = true
-    void wsProducer.close()
     void queue.shutdown()
     onClose?.()
   }

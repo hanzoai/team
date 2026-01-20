@@ -55,7 +55,8 @@ export type TypeMatchFunc = Resource<
   person: Ref<Person>,
   socialIds: PersonId[],
   type: NotificationType,
-  control: TriggerControl
+  control: TriggerControl,
+  account: AccountUuid
 ) => boolean | Promise<boolean>
 >
 
@@ -86,6 +87,7 @@ export interface NotificationPresenter extends Class<Doc> {
 export interface ReceiverInfo {
   account: AccountUuid
   employee: Ref<Employee>
+  role: 'USER' | 'GUEST' | undefined
   socialIds: PersonId[]
   space: Ref<PersonSpace>
 }
@@ -123,6 +125,7 @@ export default plugin(serverNotificationId, {
     PushNotificationsHandler: '' as Resource<TriggerFunc>
   },
   function: {
-    IsUserEmployeeInFieldValueTypeMatch: '' as TypeMatchFunc
+    IsUserEmployeeInFieldValueTypeMatch: '' as TypeMatchFunc,
+    MentionTypeMatch: '' as TypeMatchFunc
   }
 })

@@ -2,8 +2,8 @@
   "name": "@hanzo/panel",
   "entries": [
     {
-      "version": "0.6.0",
-      "tag": "@hanzo/panel_v0.6.0",
+      "version": "0.7.0",
+      "tag": "@hcengineering/panel_v0.6.0",
       "date": "Tue, 09 Nov 2021 17:01:22 GMT",
       "comments": {
         "dependency": [

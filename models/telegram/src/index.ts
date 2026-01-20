@@ -28,19 +28,20 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import contact from '@hanzo/model-contact'
-import core, { TAttachedDoc } from '@hanzo/model-core'
-import setting from '@hanzo/setting'
-import type {
-  NewTelegramMessage,
-  SharedTelegramMessage,
-  SharedTelegramMessages,
-  TelegramMessage
-} from '@hanzo/telegram'
-import templates from '@hanzo/templates'
-import view from '@hanzo/view'
+} from '@hcengineering/model'
+import attachment from '@hcengineering/model-attachment'
+import contact from '@hcengineering/model-contact'
+import core, { TAttachedDoc } from '@hcengineering/model-core'
+import setting from '@hcengineering/setting'
+import {
+  type NewTelegramMessage,
+  type SharedTelegramMessage,
+  type SharedTelegramMessages,
+  type TelegramMessage,
+  telegramIntegrationKind
+} from '@hcengineering/telegram'
+import templates from '@hcengineering/templates'
+import view from '@hcengineering/view'
 
 import telegram from './plugin'
 import { defineNotifications } from './notification'
@@ -158,10 +159,14 @@ export function createModel (builder: Builder): void {
       description: telegram.string.TelegramIntegrationDesc,
       descriptionComponent: telegram.component.TelegramIntegrationDescription,
       icon: telegram.component.IconTelegram,
-      allowMultiple: false,
+      allowMultiple: true,
       createComponent: telegram.component.Connect,
       reconnectComponent: telegram.component.Reconnect,
-      onDisconnect: telegram.handler.DisconnectHandler
+      configureComponent: telegram.component.Configure,
+      stateComponent: telegram.component.StateComponent,
+      onDisconnect: telegram.handler.DisconnectHandler,
+      onDisconnectAll: telegram.handler.DisconnectAllHandler,
+      kind: telegramIntegrationKind
     },
     telegram.integrationType.Telegram
   )

@@ -261,7 +261,12 @@ test.describe('Channel tests', () => {
     await leftSideMenuPage.clickChunter()
     await channelPage.clickChannel('random')
     await channelPage.sendMessage('Test message')
-    await channelPage.replyToMessage('Test message', 'Reply message')
+    await channelPage.replyMessage('Test message')
+    await sidebarPage.checkIfSidebarIsOpen(true)
+    await sidebarPage.checkIfSidebarHasVerticalTab(true, 'random')
+    await sidebarPage.checkIfChatSidebarTabIsOpen(true, 'Thread')
+    await sidebarPage.checkIfChatSidebarTabIsOpen(true, 'random')
+    await channelPage.sendReply('Reply message')
     await channelPage.checkIfMessageExistInSidebar(true, 'Reply message')
     await channelPage.closeAndOpenReplyMessage()
     await channelPage.checkIfMessageExistInSidebar(true, 'Reply message')
@@ -426,6 +431,7 @@ test.describe('Channel tests', () => {
 
       await channelPage.clickChooseChannel(data.channelName)
       await channelPage.sendMessage('Test message')
+      await channelPage.checkMessageExist('Test message', true, 'Test message')
     })
 
     await test.step('Leave channel #1', async () => {
@@ -572,7 +578,7 @@ test.describe('Channel tests', () => {
     })
   })
 
-  test('User is able to create thread automatically in Sidebar', async () => {
+  test('User is able to create thread automatically in Sidebar', async ({ page }) => {
     await test.step('Prepare channel', async () => {
       await leftSideMenuPage.clickChunter()
       await chunterPage.clickChannelBrowser()
@@ -584,12 +590,12 @@ test.describe('Channel tests', () => {
     })
 
     await test.step('Open channel in Sidebar', async () => {
-      await channelPage.replyToMessage('Test message', 'Reply message')
-
+      await channelPage.replyMessage('Test message')
       await sidebarPage.checkIfSidebarIsOpen(true)
       await sidebarPage.checkIfSidebarHasVerticalTab(true, data.channelName)
       await sidebarPage.checkIfChatSidebarTabIsOpen(true, 'Thread')
       await sidebarPage.checkIfChatSidebarTabIsOpen(true, data.channelName)
+      await channelPage.sendReply('Reply message')
     })
 
     await test.step('User go to another chat and Sidebar with tread disappears', async () => {

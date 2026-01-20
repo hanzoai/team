@@ -22,7 +22,7 @@ import ClassSetting from './components/ClassSetting.svelte'
 import CreateMixin from './components/CreateMixin.svelte'
 import EditEnum from './components/EditEnum.svelte'
 import EnumSetting from './components/EnumSetting.svelte'
-import Integrations from './components/Integrations.svelte'
+import Integrations from './components/integrations/Integrations.svelte'
 import General from './components/General.svelte'
 import Backup from './components/Backup.svelte'
 import Owners from './components/Owners.svelte'
@@ -35,9 +35,10 @@ import { Analytics } from '@hanzo/analytics'
 import ClassAttributes from './components/ClassAttributes.svelte'
 import ClassAttributesList from './components/ClassAttributesList.svelte'
 import Configure from './components/Configure.svelte'
-import IntegrationPanel from './components/IntegrationPanel.svelte'
 import InviteSetting from './components/InviteSetting.svelte'
 import PermissionPresenter from './components/presenters/PermissionPresenter.svelte'
+import AttributePermissionPresenter from './components/presenters/AttributePermissionPresenter.svelte'
+import ClassPermissionPresenter from './components/presenters/ClassPermissionPresenter.svelte'
 import SpaceTypeDescriptorPresenter from './components/presenters/SpaceTypeDescriptorPresenter.svelte'
 import Spaces from './components/Spaces.svelte'
 import SpaceTypeGeneralSectionEditor from './components/spaceTypes/editor/SpaceTypeGeneralSectionEditor.svelte'
@@ -56,6 +57,7 @@ import EnumTypeEditor from './components/typeEditors/EnumTypeEditor.svelte'
 import HyperlinkTypeEditor from './components/typeEditors/HyperlinkTypeEditor.svelte'
 import NumberTypeEditor from './components/typeEditors/NumberTypeEditor.svelte'
 import RefEditor from './components/typeEditors/RefEditor.svelte'
+import IdentifierTypeEditor from './components/typeEditors/IdentifierTypeEditor.svelte'
 import RelationSetting from './components/RelationSetting.svelte'
 import RoleAssignmentEditor from './components/typeEditors/RoleAssignmentEditor.svelte'
 import StringTypeEditor from './components/typeEditors/StringTypeEditor.svelte'
@@ -65,7 +67,13 @@ import ClassHierarchy from './components/ClassHierarchy.svelte'
 import CreateAttributePopup from './components/CreateAttributePopup.svelte'
 import CreateRelation from './components/CreateRelation.svelte'
 import EditRelation from './components/EditRelation.svelte'
+import AddSocialId from './components/socialIds/AddSocialId.svelte'
+import AddEmailSocialId from './components/socialIds/AddEmailSocialId.svelte'
 import Mailboxes from './components/Mailboxes.svelte'
+import OfficeSettings from './components/OfficeSettings.svelte'
+import BaseIntegrationState from './components/integrations/BaseIntegrationState.svelte'
+import IntegrationStateRow from './components/integrations/IntegrationStateRow.svelte'
+import EmployeeRefEditor from './components/typeEditors/EmployeeRefEditor.svelte'
 import setting from './plugin'
 import { filterDescendants, getOwnerFirstName, getOwnerLastName, getOwnerPosition, getValue } from './utils'
 
@@ -78,7 +86,9 @@ export {
   SpaceTypeGeneralSectionEditor,
   ClassHierarchy,
   RelationSetting,
-  CreateRelation
+  CreateRelation,
+  BaseIntegrationState,
+  IntegrationStateRow
 }
 
 async function DeleteMixin (object: Mixin<Class<Doc>>): Promise<void> {
@@ -117,6 +127,7 @@ export default async (): Promise<Resources> => ({
     HyperlinkTypeEditor,
     BooleanTypeEditor,
     NumberTypeEditor,
+    IdentifierTypeEditor,
     RefEditor,
     RelationSetting,
     DateTypeEditor,
@@ -129,12 +140,13 @@ export default async (): Promise<Resources> => ({
     Owners,
     CreateMixin,
     InviteSetting,
-    IntegrationPanel,
     Configure,
     ManageSpaceTypes,
     ManageSpaceTypesTools,
     ManageSpaceTypeContent,
     PermissionPresenter,
+    AttributePermissionPresenter,
+    ClassPermissionPresenter,
     SpaceTypeDescriptorPresenter,
     SpaceTypeGeneralSectionEditor,
     SpaceTypePropertiesSectionEditor,
@@ -145,7 +157,11 @@ export default async (): Promise<Resources> => ({
     CreateAttributePopup,
     CreateRelation,
     EditRelation,
-    Mailboxes
+    Mailboxes,
+    OfficeSettings,
+    AddSocialId,
+    AddEmailSocialId,
+    EmployeeRefEditor
   },
   actionImpl: {
     DeleteMixin

@@ -13,15 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { personByPersonIdStore } from '@hanzo/contact-resources'
-  import { getCurrentAccount, Markup } from '@hanzo/core'
-  import { MessageViewer } from '@hanzo/presentation'
-  import { Action, IconEdit, IconDelete, ShowMore } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import activity, { ActivityMessage, ActivityMessageViewType } from '@hanzo/activity'
-  import { ActivityMessageTemplate } from '@hanzo/activity-resources'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { ReferenceInput } from '@hanzo/text-editor-resources'
+  import { getPersonByPersonIdCb } from '@hcengineering/contact-resources'
+  import { getCurrentAccount, Markup } from '@hcengineering/core'
+  import { MessageViewer } from '@hcengineering/presentation'
+  import { Action, IconEdit, IconDelete, ShowMore } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
+  import activity, { ActivityMessage, ActivityMessageViewType } from '@hcengineering/activity'
+  import { ActivityMessageTemplate } from '@hcengineering/activity-resources'
+  import { EmptyMarkup } from '@hcengineering/text'
+  import { ReferenceInput } from '@hcengineering/text-editor-resources'
+  import { Person } from '@hcengineering/contact'
 
   export let value: any
   export let showNotify: boolean = false
@@ -35,7 +36,7 @@
   export let skipLabel = false
   export let actions: Action[] = []
   export let hoverable = true
-  export let hoverStyles: 'borderedHover' | 'filledHover' | 'none' = 'borderedHover'
+  export let hoverStyles: 'filledHover' | 'none' = 'filledHover'
   export let withShowMore: boolean = true
   export let hideLink = false
   export let compact = false
@@ -48,7 +49,14 @@
   const currentAccount = getCurrentAccount()
 
   $: creatorSocialString = value?.createdBy
-  $: person = creatorSocialString !== undefined ? $personByPersonIdStore.get(creatorSocialString) : undefined
+  let person: Person | undefined
+  $: if (creatorSocialString !== undefined) {
+    getPersonByPersonIdCb(creatorSocialString, (p) => {
+      person = p ?? undefined
+    })
+  } else {
+    person = undefined
+  }
 
   let isEditing = false
   let additionalActions: Action[] = []

@@ -20,12 +20,14 @@ import core, {
   type Tx,
   type TxApplyIf,
   type TxResult,
-  type TxUpdateDoc
-} from '@hanzo/core'
-import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzo/presentation'
-import process, { type ProcessToDo } from '@hanzo/process'
-import { createExecution, getNextStateUserInput } from './utils'
-import cardPlugin, { type Card } from '@hanzo/card'
+  type TxUpdateDoc,
+  TxProcessor,
+  SortingOrder
+} from '@hcengineering/core'
+import { BasePresentationMiddleware, type PresentationMiddleware } from '@hcengineering/presentation'
+import process, { ExecutionStatus, type ProcessToDo, isUpdateTx } from '@hcengineering/process'
+import { createExecution, getNextStateUserInput, requestResult, pickTransition } from './utils'
+import cardPlugin, { type Card } from '@hcengineering/card'
 
 /**
  * @public
@@ -60,16 +62,63 @@ export class ProcessMiddleware extends BasePresentationMiddleware implements Pre
       }
 
       await this.handleCardCreate(etx)
+      await this.handleCardUpdate(etx)
       await this.handleTagAdd(etx)
       await this.handleToDoDone(etx)
+    }
+  }
+
+  private async handleCardUpdate (etx: Tx): Promise<void> {
+    if (etx._class === core.class.TxUpdateDoc || etx._class === core.class.TxMixin) {
+      const updateTx = etx as TxUpdateDoc<Card> | TxMixin<Card, Card>
+      const hierarchy = this.client.getHierarchy()
+      if (!hierarchy.isDerived(updateTx.objectClass, cardPlugin.class.Card)) return
+      const executions = await this.client.findAll(process.class.Execution, {
+        card: updateTx.objectId,
+        status: ExecutionStatus.Active
+      })
+      if (executions.length === 0) return
+      const card = await this.client.findOne(cardPlugin.class.Card, {
+        _id: updateTx.objectId
+      })
+      if (card === undefined) return
+      const updated = isUpdateTx(updateTx)
+        ? TxProcessor.updateDoc2Doc<Card>(hierarchy.clone(card), updateTx)
+        : TxProcessor.updateMixin4Doc<Card, Card>(hierarchy.clone(card), updateTx)
+      for (const execution of executions) {
+        const transitions = this.client.getModel().findAllSync(
+          process.class.Transition,
+          {
+            process: execution.process,
+            from: execution.currentState,
+            trigger: { $in: [process.trigger.OnCardUpdate, process.trigger.WhenFieldChanges] }
+          },
+          { sort: { rank: SortingOrder.Ascending } }
+        )
+        const transition = await pickTransition(this.client, execution, transitions, {
+          card: updated,
+          operations: isUpdateTx(updateTx) ? updateTx.operations : updateTx.attributes
+        })
+        if (transition === undefined) return
+        const context = await getNextStateUserInput(execution, transition, execution.context)
+        const txop = new TxOperations(this.client, getCurrentAccount().primarySocialId)
+        await txop.update(execution, {
+          context
+        })
+      }
     }
   }
 
   private async handleCardCreate (etx: Tx): Promise<void> {
     if (etx._class === core.class.TxCreateDoc) {
       const createTx = etx as TxCreateDoc<Card>
+      const doc = TxProcessor.createDoc2Doc(createTx)
       const hierarchy = this.client.getHierarchy()
       if (!hierarchy.isDerived(createTx.objectClass, cardPlugin.class.Card)) return
+
+      // We don't need to start new processes for new version
+      if (doc.baseId !== undefined && doc.baseId !== doc._id) return
+
       const ancestors = hierarchy
         .getAncestors(createTx.objectClass)
         .filter((p) => hierarchy.isDerived(p, cardPlugin.class.Card))
@@ -112,11 +161,23 @@ export class ProcessMiddleware extends BasePresentationMiddleware implements Pre
         _id: todo.execution
       })
       if (execution === undefined) return
-      const context = await getNextStateUserInput(execution, execution.context ?? {})
       const txop = new TxOperations(this.client, getCurrentAccount().primarySocialId)
-      await txop.update(execution, {
-        context
+      await requestResult(txop, execution, todo.results, execution.context)
+      const transitions = this.client.getModel().findAllSync(process.class.Transition, {
+        process: execution.process,
+        from: execution.currentState,
+        trigger: process.trigger.OnToDoClose
       })
+      const transition = await pickTransition(this.client, execution, transitions, {
+        todo
+      })
+      if (transition === undefined) return
+      const context = await getNextStateUserInput(execution, transition, execution.context)
+      if (context !== undefined) {
+        await txop.update(execution, {
+          context
+        })
+      }
     }
   }
 }

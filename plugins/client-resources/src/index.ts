@@ -36,9 +36,10 @@ import core, {
   type PluginConfiguration,
   type Ref,
   type TxCUD,
-  platformNow
-} from '@hanzo/core'
-import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hanzo/platform'
+  platformNow,
+  ClientConnectEvent
+} from '@hcengineering/core'
+import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hcengineering/platform'
 import { connect } from './connection'
 
 export { connect }
@@ -112,7 +113,8 @@ export default async () => {
                 if (event.event === WorkspaceEvent.MaintenanceNotification) {
                   void setPlatformStatus(
                     new Status(Severity.WARNING, platform.status.MaintenanceWarning, {
-                      time: event.params.timeMinutes
+                      time: event.params.timeMinutes,
+                      message: event.params.message ?? ''
                     })
                   )
                 }
@@ -139,10 +141,20 @@ export default async () => {
                 }
               }, connectTimeout)
               newOpt.onConnect = async (event, lastTx, data) => {
-                // Any event is fine, it means server is alive.
-                clearTimeout(connectTO)
-                await opt?.onConnect?.(event, lastTx, data)
-                resolve()
+                try {
+                  await opt?.onConnect?.(event, lastTx, data)
+                } catch (error) {
+                  void clientConnection?.close()
+                  void opt?.onDialTimeout?.()
+                  reject(error)
+                  return
+                }
+
+                if (event !== ClientConnectEvent.Maintenance) {
+                  // Any event is fine, it means server is alive.
+                  clearTimeout(connectTO)
+                  resolve()
+                }
               }
             })
           }
@@ -196,7 +208,6 @@ function returnClientTxes (txes: Tx[]): Tx[] {
     'text-editor:class:TextEditorAction' as Ref<Class<Doc>>,
     'templates:class:TemplateField' as Ref<Class<Doc>>,
     'activity:class:DocUpdateMessageViewlet' as Ref<Class<Doc>>,
-    'core:class:PluginConfiguration' as Ref<Class<Doc>>,
     'core:class:DomainIndexConfiguration' as Ref<Class<Doc>>,
     'view:class:ViewletDescriptor' as Ref<Class<Doc>>,
     'presentation:class:ComponentPointExtension' as Ref<Class<Doc>>,

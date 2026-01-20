@@ -1,15 +1,37 @@
-import { getPersonBySocialId, formatName } from '@hanzo/contact'
-import { Ref, TxOperations } from '@hanzo/core'
-import notification, { DocNotifyContext, CommonInboxNotification, ActivityInboxNotification, InboxNotification } from '@hanzo/notification'
-import { IntlString, addEventListener, translate } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import { location } from '@hanzo/ui'
-import workbench, { workbenchId } from '@hanzo/workbench'
-import desktopPreferences, { defaultNotificationPreference } from '@hanzo/desktop-preferences'
-import { activePreferences } from '@hanzo/desktop-preferences-resources'
-import { InboxNotificationsClientImpl, getDisplayInboxData } from '@hanzo/notification-resources'
+//
+// Copyright © 2025 Hardcore Engineering Inc.
+//
+// Licensed under the Eclipse Public License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License. You may
+// obtain a copy of the License at https://www.eclipse.org/legal/epl-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
 
-import { IPCMainExposed } from './types'
+import { formatName, getPersonByPersonId } from '@hcengineering/contact'
+import { Ref, SortingOrder, TxOperations } from '@hcengineering/core'
+import notification, {
+  notificationId,
+  ActivityInboxNotification,
+  CommonInboxNotification,
+  DocNotifyContext,
+  InboxNotification
+} from '@hcengineering/notification'
+import { addEventListener, getMetadata, IntlString, translate } from '@hcengineering/platform'
+import { createNotificationsQuery, getClient } from '@hcengineering/presentation'
+import { location } from '@hcengineering/ui'
+import workbench, { workbenchId } from '@hcengineering/workbench'
+import desktopPreferences, { defaultNotificationPreference } from '@hcengineering/desktop-preferences'
+import { activePreferences } from '@hcengineering/desktop-preferences-resources'
+import { getDisplayInboxData, InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
+import { inboxId } from '@hcengineering/inbox'
+import communication from '@hcengineering/communication'
+import { ipcMainExposed } from './typesUtils'
 
 let client: TxOperations
 
@@ -67,7 +89,7 @@ async function hydrateNotificationAsYouCan (lastNotification: InboxNotification)
     body: ''
   }
 
-  const person = await getPersonBySocialId(client, lastNotification.modifiedBy)
+  const person = await getPersonByPersonId(client, lastNotification.modifiedBy)
   if (person == null) {
     return noPersonData
   }
@@ -114,12 +136,63 @@ export function configureNotifications (): void {
   // because we generate them on a client
   let initTimestamp = 0
   const notificationHistory = new Map<string, number>()
+  let newUnreadNotifications = 0
 
   addEventListener(workbench.event.NotifyConnection, async () => {
     client = getClient()
-    const electronAPI: IPCMainExposed = (window as any).electron
+    const electronAPI = ipcMainExposed()
 
     const inboxClient = InboxNotificationsClientImpl.getClient()
+    const notificationsQuery = createNotificationsQuery(true)
+    const notificationsCountQuery = createNotificationsQuery(true)
+
+    const isCommunicationEnabled = getMetadata(communication.metadata.Enabled) ?? false
+
+    if (isCommunicationEnabled) {
+      notificationsCountQuery.query({ read: false, limit: 1, strict: true, total: true }, res => {
+        newUnreadNotifications = res.getTotal()
+
+        if (preferences.showUnreadCounter) {
+          electronAPI.setBadge(prevUnViewdNotificationsCount + newUnreadNotifications)
+        }
+
+        if (preferences.bounceAppIcon) {
+          electronAPI.dockBounce()
+        }
+      })
+    }
+
+    function startNotificationQuery (): void {
+      if (!isCommunicationEnabled) return
+      notificationsQuery.query({
+        read: false,
+        limit: 1,
+        strict: true,
+        order: SortingOrder.Descending,
+        created: {
+          greaterOrEqual: new Date()
+        }
+      }, (res) => {
+        if (!preferences.showNotifications) return
+        const notification = res.getResult()[0]
+        if (notification !== undefined && !notificationHistory.has(notification.id)) {
+          notificationHistory.set(notification.id, notification.created.getTime())
+          electronAPI.sendNotification({
+            silent: !preferences.playSound,
+            application: inboxId,
+            title: notification.content.title,
+            body: `${notification.content.senderName}: ${notification.content.shortText}`,
+            cardId: notification.cardId,
+            objectId: notification.content.objectId,
+            objectClass: notification.content.objectClass
+          })
+        }
+      })
+    }
+
+    if (preferences.showNotifications) {
+      startNotificationQuery()
+    }
 
     async function handleNotifications (notificationsByContext: Map<Ref<DocNotifyContext>, InboxNotification[]>): Promise<void> {
       const inboxData = await getDisplayInboxData(notificationsByContext)
@@ -138,7 +211,7 @@ export function configureNotifications (): void {
 
       if (prevUnViewdNotificationsCount !== unViewedNotifications.length) {
         if (preferences.showUnreadCounter) {
-          electronAPI.setBadge(unViewedNotifications.length)
+          electronAPI.setBadge(unViewedNotifications.length + newUnreadNotifications)
         }
         if (preferences.bounceAppIcon) {
           electronAPI.dockBounce()
@@ -160,6 +233,9 @@ export function configureNotifications (): void {
 
           electronAPI.sendNotification({
             silent: !preferences.playSound,
+            application: notificationId,
+            objectId: notification.objectId,
+            objectClass: notification.objectClass,
             ...notificationData
           })
         }
@@ -179,20 +255,24 @@ export function configureNotifications (): void {
         electronAPI.setBadge(0)
       }
       if (!preferences.showUnreadCounter && newPreferences.showUnreadCounter) {
-        electronAPI.setBadge(prevUnViewdNotificationsCount)
+        electronAPI.setBadge(prevUnViewdNotificationsCount + newUnreadNotifications)
+      }
+
+      if (newPreferences.showNotifications && !preferences.showNotifications) {
+        startNotificationQuery()
       }
       preferences = newPreferences
     })
   })
 
   addEventListener(workbench.event.NotifyTitle, async (event, title: string) => {
-    ;((window as any).electron as IPCMainExposed).setTitle(title)
+    ipcMainExposed().setTitle(title)
   })
 
   location.subscribe((location) => {
     if (!(location.path[0] === workbenchId || location.path[0] === workbench.component.WorkbenchApp)) {
       // We need to clear badge
-      ;((window as any).electron as IPCMainExposed).setBadge(0)
+      ipcMainExposed().setBadge(0)
     }
   })
 }

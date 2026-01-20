@@ -13,14 +13,51 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TypeBoolean } from '@hanzo/model'
+  import core, { AnyAttribute, Type } from '@hcengineering/core'
+  import { TypeBoolean } from '@hcengineering/model'
+  import { Label, Toggle } from '@hcengineering/ui'
+  import { BooleanEditor } from '@hcengineering/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
+  import setting from '../../plugin'
+
+  export let type: Type<boolean> | undefined
+  export let attribute: AnyAttribute | undefined
+  export let defaultValue: boolean | undefined
+
+  let showInPresenter = attribute?.showInPresenter ?? false
 
   const dispatch = createEventDispatcher()
 
   onMount(() => {
-    dispatch('change', {
-      type: TypeBoolean()
-    })
+    if (type?._class !== core.class.TypeBoolean) {
+      change()
+    }
   })
+
+  function change () {
+    dispatch('change', {
+      type: TypeBoolean(),
+      defaultValue,
+      extra: { showInPresenter }
+    })
+  }
+
+  async function changeShowing () {
+    dispatch('change', { extra: { showInPresenter } })
+  }
 </script>
+
+<span class="label">
+  <Label label={setting.string.DefaultValue} />
+</span>
+<BooleanEditor
+  bind:value={defaultValue}
+  onChange={(value) => {
+    defaultValue = value
+    change()
+  }}
+/>
+<span class="label">
+  <Label label={setting.string.ShowInTitle} />
+</span>
+<Toggle bind:on={showInPresenter} on:change={changeShowing} />

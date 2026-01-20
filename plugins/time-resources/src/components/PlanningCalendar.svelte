@@ -1,10 +1,10 @@
 <script lang="ts">
-  import calendar, { Calendar, Event, generateEventId, getAllEvents } from '@hanzo/calendar'
-  import { DayCalendar, calendarByIdStore, hidePrivateEvents } from '@hanzo/calendar-resources'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { Ref, SortingOrder, Timestamp, getCurrentAccount } from '@hanzo/core'
-  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
+  import calendar, { AccessLevel, Calendar, Event, generateEventId, getAllEvents } from '@hcengineering/calendar'
+  import { DayCalendar, calendarByIdStore, hidePrivateEvents } from '@hcengineering/calendar-resources'
+  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { Ref, SortingOrder, Timestamp, getCurrentAccount } from '@hcengineering/core'
+  import { IntlString, getEmbeddedLabel } from '@hcengineering/platform'
+  import { createQuery } from '@hcengineering/presentation'
   import {
     AnyComponent,
     ButtonBase,
@@ -49,6 +49,7 @@
 
   const myAcc = getCurrentAccount()
   const socialStrings = myAcc.socialIds
+  const personalCalendar = `${myAcc.uuid}_calendar` as Ref<Calendar>
 
   const calendarsQ = createQuery()
 
@@ -65,7 +66,7 @@
   function update (calendars: Calendar[]): void {
     q.query<Event>(
       calendar.class.Event,
-      { calendar: { $in: calendars.map((p) => p._id) } },
+      { calendar: { $in: [personalCalendar, ...calendars.map((p) => p._id)] } },
       (result) => {
         raw = result
       },
@@ -114,20 +115,20 @@
         current.date = e.detail.date.getTime()
         current.dueDate = new Date(e.detail.date).setMinutes(new Date(e.detail.date).getMinutes() + 30)
       } else {
-        const _calendar = `${myAcc.uuid}_calendar` as Ref<Calendar>
         const ev: WorkSlot = {
           _id: dragItemId,
           allDay: false,
           eventId: generateEventId(),
           title: '',
           description: '',
-          access: 'owner',
+          access: AccessLevel.Owner,
           attachedTo: dragItem._id,
           attachedToClass: dragItem._class,
           _class: time.class.WorkSlot,
           collection: 'events',
           visibility: 'public',
-          calendar: _calendar,
+          blockTime: true,
+          calendar: personalCalendar,
           space: calendar.space.Calendar,
           modifiedBy: myAcc.primarySocialId,
           participants: [getCurrentEmployee()],

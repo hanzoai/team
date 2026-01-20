@@ -18,14 +18,10 @@ interface Config {
   EnterpriseHostname: string
   Port: number
 
-  MongoURL: string
-  ConfigurationDB: string
-
   CollaboratorURL: string
 
   BotName: string
 
-  SentryDSN: string
   BrandingPath: string
 
   WorkspaceInactivityInterval: number // Interval in days to stop workspace synchronization if not visited
@@ -50,12 +46,8 @@ const envMap: { [key in keyof Config]: string } = {
   AllowedWorkspaces: 'ALLOWED_WORKSPACES',
   BotName: 'BOT_NAME',
 
-  MongoURL: 'MONGO_URL',
-  ConfigurationDB: 'MONGO_DB',
-
   CollaboratorURL: 'COLLABORATOR_URL',
 
-  SentryDSN: 'SENTRY_DSN',
   BrandingPath: 'BRANDING_PATH',
 
   WorkspaceInactivityInterval: 'WORKSPACE_INACTIVITY_INTERVAL',
@@ -74,9 +66,6 @@ const required: Array<keyof Config> = [
   'ClientID',
   'ClientSecret',
   'PrivateKey',
-
-  'MongoURL',
-  'ConfigurationDB',
 
   'CollaboratorURL',
 
@@ -101,14 +90,10 @@ const config: Config = (() => {
     Port: parseInt(process.env[envMap.Port] ?? '3500'),
     BotName: process.env[envMap.BotName] ?? 'ao-hanzoai-dev[bot]',
 
-    MongoURL: process.env[envMap.MongoURL],
-    ConfigurationDB: process.env[envMap.ConfigurationDB] ?? '%github',
-
     CollaboratorURL: process.env[envMap.CollaboratorURL],
 
-    SentryDSN: process.env[envMap.SentryDSN],
     BrandingPath: process.env[envMap.BrandingPath] ?? '',
-    WorkspaceInactivityInterval: parseInt(process.env[envMap.WorkspaceInactivityInterval] ?? '5'), // In days
+    WorkspaceInactivityInterval: parseInt(process.env[envMap.WorkspaceInactivityInterval] ?? '3'), // In days
     RateLimit: parseInt(process.env[envMap.RateLimit] ?? '25')
   }
 

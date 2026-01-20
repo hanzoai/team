@@ -13,17 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, ArrOf, Doc, EnumOf, RefTo, Type } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, Icon, IconMoreV2, Label, IconOpenedArrow } from '@hanzo/ui'
-  import settings from '../plugin'
+  import core, { AnyAttribute, ArrOf, Doc, EnumOf, RefTo, Type } from '@hcengineering/core'
+  import { IntlString } from '@hcengineering/platform'
+  import { getClient } from '@hcengineering/presentation'
+  import { AnySvelteComponent, Icon, IconMoreV2, IconOpenedArrow, Label, tooltip } from '@hcengineering/ui'
+  import view from '@hcengineering/view'
 
   export let attribute: AnyAttribute
   export let attributeType: IntlString | undefined = undefined
   export let selected: boolean = false
   export let hovered: boolean = false
-  export let clickMore: (event: MouseEvent) => Promise<void>
 
   export let attributeMapper:
   | {
@@ -49,12 +48,17 @@
   }
 </script>
 
-<button class="hanzoaiTableAttr-content__row" class:hovered class:selected on:contextmenu on:click>
-  <button class="hanzoaiTableAttr-content__row-dragMenu" on:click|stopPropagation={clickMore}>
+<button class="hulyTableAttr-content__row w-full" class:hovered class:selected on:contextmenu on:click>
+  <button class="hulyTableAttr-content__row-dragMenu">
     <IconMoreV2 size={'small'} />
   </button>
-  {#if attribute.icon !== undefined}
-    <div class="hanzoaiTableAttr-content__row-icon">
+  {#if attribute.automationOnly === true}
+    <div class="hulyTableAttr-content__row-icon" use:tooltip={{ label: view.string.AutomationOnly }}>
+      <Icon icon={view.icon.Setting} size={'small'} />
+    </div>
+  {/if}
+  {#if attribute.icon !== undefined && attribute.icon !== null}
+    <div class="hulyTableAttr-content__row-icon">
       <Icon icon={attribute.icon} size={'small'} />
     </div>
   {/if}

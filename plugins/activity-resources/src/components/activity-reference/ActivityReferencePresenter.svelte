@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityReference } from '@hanzo/activity'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Action, Label, ShowMore } from '@hanzo/ui'
-  import { personByPersonIdStore } from '@hanzo/contact-resources'
-  import { Doc } from '@hanzo/core'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import view, { ObjectPanel } from '@hanzo/view'
-  import { DocNavLink, getDocLinkTitle } from '@hanzo/view-resources'
+  import activity, { ActivityReference } from '@hcengineering/activity'
+  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Action, Label, ShowMore } from '@hcengineering/ui'
+  import { getPersonByPersonIdCb } from '@hcengineering/contact-resources'
+  import { Doc } from '@hcengineering/core'
+  import { getCurrentEmployee, Person } from '@hcengineering/contact'
+  import view, { ObjectPanel } from '@hcengineering/view'
+  import { DocNavLink, getDocLinkTitle } from '@hcengineering/view-resources'
 
   import ReferenceContent from './ReferenceContent.svelte'
   import ReferenceSrcPresenter from './ReferenceSrcPresenter.svelte'
@@ -37,9 +37,8 @@
   export let showEmbedded = false
   export let hideFooter = false
   export let actions: Action[] = []
-  export let skipLabel = false
   export let hoverable = true
-  export let hoverStyles: 'borderedHover' | 'filledHover' = 'borderedHover'
+  export let hoverStyles: 'filledHover' = 'filledHover'
   export let hideLink = false
   export let compact = false
   export let readonly: boolean = false
@@ -60,7 +59,10 @@
 
   let targetTitle: string | undefined = undefined
 
-  $: person = $personByPersonIdStore.get(value.createdBy ?? value.modifiedBy)
+  let person: Person | undefined
+  $: getPersonByPersonIdCb(value.createdBy ?? value.modifiedBy, (p) => {
+    person = p ?? undefined
+  })
 
   $: srcDocQuery.query(value.srcDocClass, { _id: value.srcDocId }, (result) => {
     srcDoc = result.shift()
@@ -92,7 +94,6 @@
   {showEmbedded}
   {hideFooter}
   {actions}
-  {skipLabel}
   {hoverable}
   {hoverStyles}
   showDatePreposition

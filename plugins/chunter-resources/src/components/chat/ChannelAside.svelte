@@ -21,11 +21,11 @@
   import { Employee, Person } from '@hanzo/contact'
   import {
     EmployeeBox,
-    personRefByPersonIdStore,
-    personRefByAccountUuidStore,
+    employeeRefByAccountUuidStore,
     SelectUsersPopup,
-    employeeByIdStore
-  } from '@hanzo/contact-resources'
+    employeeByIdStore,
+    getPersonRefByPersonIdCb
+  } from '@hcengineering/contact-resources'
 
   import ChannelMembers from '../ChannelMembers.svelte'
   import DocAside from './DocAside.svelte'
@@ -38,7 +38,13 @@
 
   let members = new Set<Ref<Person>>()
 
-  $: creatorPersonRef = object.createdBy !== undefined ? $personRefByPersonIdStore.get(object.createdBy) : undefined
+  let creatorPersonRef: Ref<Person>
+  $: if (object.createdBy !== undefined) {
+    getPersonRefByPersonIdCb(object.createdBy, (personRef) => {
+      if (personRef == null) return
+      creatorPersonRef = personRef
+    })
+  }
 
   $: disabledRemoveFor =
     object.createdBy !== undefined && !socialStrings.includes(object.createdBy) && creatorPersonRef !== undefined
@@ -52,7 +58,7 @@
       return
     }
 
-    members = new Set(object.members.map((account) => $personRefByAccountUuidStore.get(account)).filter(notEmpty))
+    members = new Set(object.members.map((account) => $employeeRefByAccountUuidStore.get(account)).filter(notEmpty))
   }
 
   function getAccountsByPersons (persons: Ref<Person>[]): AccountUuid[] {

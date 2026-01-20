@@ -17,17 +17,19 @@
 import { type IntlString } from '@hanzo/platform'
 import InviteLink from './components/InviteLink.svelte'
 import LoginApp from './components/LoginApp.svelte'
+import LoginOtpForm from './components/LoginOtpForm.svelte'
 import {
-    changePassword,
-    exchangeGuestToken,
-    fetchWorkspace,
-    getInviteLink,
-    getPerson,
-    getWorkspaces,
-    leaveWorkspace,
-    resendInvite,
-    selectWorkspace,
-    sendInvite
+  changePassword,
+  fetchWorkspace,
+  getInviteLink,
+  getPerson,
+  selectWorkspace,
+  exchangeGuestToken,
+  getWorkspaces,
+  getWorkspacePermissions,
+  sendInvite,
+  leaveWorkspace,
+  resendInvite
 } from './utils'
 
 import { type Pages, pages } from '@hanzo/login'
@@ -40,22 +42,24 @@ export { pages, type Pages }
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default async () => ({
-    component: {
-        LoginApp,
-        InviteLink
-    },
-    function: {
-        LeaveWorkspace: leaveWorkspace,
-        ChangePassword: changePassword,
-        SelectWorkspace: selectWorkspace,
-        ExchangeGuestToken: exchangeGuestToken,
-        FetchWorkspace: fetchWorkspace,
-        GetPerson: getPerson,
-        GetWorkspaces: getWorkspaces,
-        SendInvite: sendInvite,
-        ResendInvite: resendInvite,
-        GetInviteLink: getInviteLink
-    }
+  component: {
+    LoginApp,
+    LoginOtpForm,
+    InviteLink
+  },
+  function: {
+    LeaveWorkspace: leaveWorkspace,
+    ChangePassword: changePassword,
+    SelectWorkspace: selectWorkspace,
+    ExchangeGuestToken: exchangeGuestToken,
+    FetchWorkspace: fetchWorkspace,
+    GetPerson: getPerson,
+    GetWorkspaces: getWorkspaces,
+    GetWorkspacePermissions: getWorkspacePermissions,
+    SendInvite: sendInvite,
+    ResendInvite: resendInvite,
+    GetInviteLink: getInviteLink
+  }
 })
 
 export enum OtpLoginSteps {

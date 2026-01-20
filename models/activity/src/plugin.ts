@@ -22,8 +22,8 @@ import {
   type ActionCategory,
   type ViewAction,
   type ViewActionAvailabilityFunction
-} from '@hanzo/view'
-import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
+} from '@hcengineering/view'
+import { type NotificationGroup } from '@hcengineering/notification'
 
 export default mergeIds(activityId, activity, {
   string: {
@@ -44,7 +44,6 @@ export default mergeIds(activityId, activity, {
   ids: {
     ReactionAddedActivityViewlet: '' as Ref<DocUpdateMessageViewlet>,
     ActivityNotificationGroup: '' as Ref<NotificationGroup>,
-    AddReactionNotification: '' as Ref<NotificationType>,
     AddReactionAction: '' as Ref<Action>,
     SaveForLaterAction: '' as Ref<Action>,
     RemoveFromLaterAction: '' as Ref<Action>,

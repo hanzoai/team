@@ -13,19 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment, { Attachment, AttachmentsEvents } from '@hanzo/attachment'
-  import contact from '@hanzo/contact'
-  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hanzo/core'
-  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import {
-    FileOrBlob,
-    KeyedAttribute,
-    createQuery,
-    getClient,
-    getFileMetadata,
-    uploadFile
-  } from '@hanzo/presentation'
-  import textEditor, { type RefAction, type TextEditorHandler } from '@hanzo/text-editor'
+  import { Analytics } from '@hcengineering/analytics'
+  import attachment, { Attachment, AttachmentsEvents } from '@hcengineering/attachment'
+  import contact from '@hcengineering/contact'
+  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hcengineering/core'
+  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  import { FileOrBlob, KeyedAttribute, createQuery, getClient, uploadFile } from '@hcengineering/presentation'
+  import textEditor, { type RefAction, type TextEditorHandler } from '@hcengineering/text-editor'
   import {
     AttachIcon,
     CollaborativeAttributeBox,
@@ -33,12 +27,15 @@
     addTableHandler,
     defaultRefActions,
     getModelRefActions
-  } from '@hanzo/text-editor-resources'
-  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement, navigate } from '@hanzo/ui'
-  import { type FileUploadCallbackParams, uploadFiles } from '@hanzo/uploader'
-  import view from '@hanzo/view'
-  import { getCollaborationUser, getObjectId, getObjectLinkFragment } from '@hanzo/view-resources'
-  import { Analytics } from '@hanzo/analytics'
+  } from '@hcengineering/text-editor-resources'
+  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement } from '@hcengineering/ui'
+  import {
+    getUploadHandlers,
+    uploadFiles,
+    UploadHandlerDefinition,
+    type FileUploadCallbackParams
+  } from '@hcengineering/uploader'
+  import { getCollaborationUser, getObjectId } from '@hcengineering/view-resources'
 
   import AttachmentsGrid from './AttachmentsGrid.svelte'
 
@@ -67,6 +64,7 @@
   let refActions: RefAction[] = []
   let extraActions: RefAction[] = []
   let modelRefActions: RefAction[] = []
+  let uploadActions: RefAction[] = []
 
   $: if (enableAttachments && !readonly) {
     extraActions = [
@@ -80,7 +78,7 @@
         label: textEditor.string.Table,
         icon: TableIcon,
         action: handleTable,
-        order: 1501
+        order: 1500
       }
     ]
   } else {
@@ -90,11 +88,30 @@
   void getModelRefActions().then((actions) => {
     modelRefActions = actions
   })
+
+  async function uploadWith (uploader: UploadHandlerDefinition): Promise<void> {
+    const upload = await getResource(uploader.handler)
+    const target = { objectId: object._id, objectClass: object._class }
+    await upload({ onFileUploaded, target })
+  }
+
+  let uploadActionIndex = 1000
+  const uploadHandlers = getUploadHandlers(client, { category: 'media' })
+  uploadActions = uploadHandlers.map((handler) => ({
+    order: handler.order ?? uploadActionIndex++,
+    label: handler.label,
+    icon: handler.icon,
+    action: () => {
+      void uploadWith(handler)
+    }
+  }))
+
   $: refActions = readonly
     ? []
     : defaultRefActions
       .concat(extraActions)
       .concat(modelRefActions)
+      .concat(uploadActions)
       .sort((a, b) => a.order - b.order)
 
   let progress = false
@@ -151,8 +168,7 @@
 
   async function attachFile (file: File): Promise<{ file: Ref<Blob>, type: string } | undefined> {
     try {
-      const uuid = await uploadFile(file)
-      const metadata = await getFileMetadata(file, uuid)
+      const { uuid, metadata } = await uploadFile(file)
       await createAttachment(uuid, file.name, file, metadata)
       return { file: uuid, type: file.type }
     } catch (err: any) {
@@ -321,13 +337,6 @@
       {refActions}
       {readonly}
       {attachFile}
-      on:open-document={async (event) => {
-        const doc = await client.findOne(event.detail._class, { _id: event.detail._id })
-        if (doc != null) {
-          const location = await getObjectLinkFragment(client.getHierarchy(), doc, {}, view.component.EditDoc)
-          navigate(location)
-        }
-      }}
       on:focus
       on:blur
       on:update

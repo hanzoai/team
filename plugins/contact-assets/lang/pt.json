@@ -36,6 +36,8 @@
     "LinkedIn": "LinkedIn",
     "GitHub": "GitHub",
     "Twitter": "Twitter",
+    "Google": "Google",
+    "Telegram": "Telegram",
     "PhonePlaceholder": "+351 21 123 4567",
     "LinkedInPlaceholder": "https://pt.linkedin.com/in/jappleseed",
     "AtPlaceHolder": "@appleseed",
@@ -113,6 +115,20 @@
     "SocialIds": "Identificações sociais",
     "Type": "Tipo",
     "Confirmed": "Confirmado",
-    "UserProfile": "Perfil do usuário"
+    "UserProfile": "Perfil do usuário",
+    "DeactivatedAccount": "Conta desativada",
+    "LocalTime": "hora local",
+    "Everyone": "Todos",
+    "Here": "Aqui",
+    "EveryoneDescription": "Notificar todos neste {title}",
+    "HereDescription": "Notificar todos neste {title}",
+    "Guest": "Convidado",
+    "Deleted": "Excluído",
+    "CannotMerge": "Erro: Não é possível mesclar pessoas globais",
+    "AutoTranslation": "Tradução automática",
+    "TranslateTo": "Traduzir para",
+    "DontTranslate": "Não traduzir",
+    "SelectLanguage": "Selecionar idioma",
+    "SelectLanguages": "Selecionar idiomas"
   }
 }

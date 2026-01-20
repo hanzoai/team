@@ -11,16 +11,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { type PresentationMiddlewareCreator } from '@hanzo/presentation'
-import process, { processId } from '@hanzo/process'
-import { type AnyComponent } from '@hanzo/ui'
-import { type ViewQueryAction, type Viewlet } from '@hanzo/view'
+import { type Permission, type Ref } from '@hcengineering/core'
+import { mergeIds, type IntlString, type Resource } from '@hcengineering/platform'
+import { type PresentationMiddlewareCreator } from '@hcengineering/presentation'
+import process, { processId } from '@hcengineering/process'
+import { type AnyComponent } from '@hcengineering/ui'
+import { type ViewQueryAction, type Viewlet } from '@hcengineering/view'
 
 export default mergeIds(processId, process, {
   viewlet: {
     ExecutionsList: '' as Ref<Viewlet>,
+    ExecutionLogList: '' as Ref<Viewlet>,
     CardExecutions: '' as Ref<Viewlet>
   },
   component: {
@@ -35,17 +36,68 @@ export default mergeIds(processId, process, {
     RunProcessPopup: '' as AnyComponent,
     UpdateCardPresenter: '' as AnyComponent,
     ProcessesExtension: '' as AnyComponent,
+    ProcessesHeaderExtension: '' as AnyComponent,
     ProcessPresenter: '' as AnyComponent,
     ExecutonPresenter: '' as AnyComponent,
+    ExecutionMyToDos: '' as AnyComponent,
     ExecutonProgressPresenter: '' as AnyComponent,
+    ExecutionContextSelector: '' as AnyComponent,
     NestedContextSelector: '' as AnyComponent,
     RelatedContextSelector: '' as AnyComponent,
     FunctionSelector: '' as AnyComponent,
     RunProcessCardPopup: '' as AnyComponent,
-    DateOffsetEditor: '' as AnyComponent,
-    NumberOffsetEditor: '' as AnyComponent,
     ErrorPresenter: '' as AnyComponent,
-    RequestUserInput: '' as AnyComponent
+    RequestUserInput: '' as AnyComponent,
+    ResultInput: '' as AnyComponent,
+    RoleEditor: '' as AnyComponent,
+    ActionsPresenter: '' as AnyComponent,
+    TriggerPresenter: '' as AnyComponent,
+    StatePresenter: '' as AnyComponent,
+    ToDoCloseEditor: '' as AnyComponent,
+    ToDoRemoveEditor: '' as AnyComponent,
+    ProcessesCardSection: '' as AnyComponent,
+    TransitionEditor: '' as AnyComponent,
+    StateEditor: '' as AnyComponent,
+    TransitionRefPresenter: '' as AnyComponent,
+    LogActionPresenter: '' as AnyComponent,
+    NotifierExtension: '' as AnyComponent,
+    CreateCardEditor: '' as AnyComponent,
+    CreateCardPresenter: '' as AnyComponent,
+    AddRelationEditor: '' as AnyComponent,
+    AddRelationPresenter: '' as AnyComponent,
+    CardUpdateEditor: '' as AnyComponent,
+    CardUpdatePresenter: '' as AnyComponent,
+    FieldChangesEditor: '' as AnyComponent,
+    OnEventEditor: '' as AnyComponent,
+    OnEventPresenter: '' as AnyComponent,
+    ToDoSettingPresenter: '' as AnyComponent,
+    TimeEditor: '' as AnyComponent,
+    TimePresenter: '' as AnyComponent,
+    AddTagEditor: '' as AnyComponent,
+    AddTagPresenter: '' as AnyComponent,
+    SubProcessMatchEditor: '' as AnyComponent,
+    SubProcessMatchPresenter: '' as AnyComponent,
+    FunctionSubmenu: '' as AnyComponent
+  },
+  criteriaEditor: {
+    BaseCriteria: '' as AnyComponent,
+    RangeCriteria: '' as AnyComponent,
+    ArraySizeCriteria: '' as AnyComponent
+  },
+  transformEditor: {
+    MultiArrayElementEditor: '' as AnyComponent,
+    ArrayElementEditor: '' as AnyComponent,
+    DateOffsetEditor: '' as AnyComponent,
+    NumberEditor: '' as AnyComponent,
+    AppendEditor: '' as AnyComponent,
+    ReplaceEditor: '' as AnyComponent,
+    SplitEditor: '' as AnyComponent,
+    CutEditor: '' as AnyComponent,
+    FilterEditor: '' as AnyComponent
+  },
+  transformPresenter: {
+    NumberPresenter: '' as AnyComponent,
+    RolePresenter: '' as AnyComponent
   },
   function: {
     ShowDoneQuery: '' as ViewQueryAction,
@@ -77,6 +129,14 @@ export default mergeIds(processId, process, {
     UpperCase: '' as IntlString,
     LowerCase: '' as IntlString,
     Trim: '' as IntlString,
+    Prepend: '' as IntlString,
+    Append: '' as IntlString,
+    Replace: '' as IntlString,
+    ReplaceAll: '' as IntlString,
+    Split: '' as IntlString,
+    Cut: '' as IntlString,
+    Filter: '' as IntlString,
+    FirstMatchValue: '' as IntlString,
     FirstValue: '' as IntlString,
     LastValue: '' as IntlString,
     Random: '' as IntlString,
@@ -87,9 +147,22 @@ export default mergeIds(processId, process, {
     Decrement: '' as IntlString,
     Add: '' as IntlString,
     Subtract: '' as IntlString,
+    Multiply: '' as IntlString,
+    Divide: '' as IntlString,
+    Modulo: '' as IntlString,
+    Power: '' as IntlString,
+    Sqrt: '' as IntlString,
+    Round: '' as IntlString,
+    Absolute: '' as IntlString,
+    Ceil: '' as IntlString,
+    Floor: '' as IntlString,
     Offset: '' as IntlString,
     Value: '' as IntlString,
     FirstWorkingDayAfter: '' as IntlString,
+    Insert: '' as IntlString,
+    Remove: '' as IntlString,
+    RemoveFirst: '' as IntlString,
+    RemoveLast: '' as IntlString,
     FallbackValueError: '' as IntlString,
     Required: '' as IntlString,
     ParallelExecutionForbidden: '' as IntlString,
@@ -97,7 +170,59 @@ export default mergeIds(processId, process, {
     Continue: '' as IntlString,
     RequestFromUser: '' as IntlString,
     EnterValue: '' as IntlString,
-    OnToDoClose: '' as IntlString,
-    OnSubProcessesDone: '' as IntlString
+    OnToDoDone: '' as IntlString,
+    OnSubProcessesDone: '' as IntlString,
+    WhenSubProcessMatches: '' as IntlString,
+    WaitUntil: '' as IntlString,
+    WhenCardMatches: '' as IntlString,
+    WhenFieldChanges: '' as IntlString,
+    OnEvent: '' as IntlString,
+    Result: '' as IntlString,
+    RequestResult: '' as IntlString,
+    NoResultRequired: '' as IntlString,
+    Transition: '' as IntlString,
+    OnToDoCancelled: '' as IntlString,
+    DeleteTransition: '' as IntlString,
+    DeleteTransitionConfirm: '' as IntlString,
+    AddTransition: '' as IntlString,
+    ToDo: '' as IntlString,
+    CurrentCard: '' as IntlString,
+    Data: '' as IntlString,
+    Transitions: '' as IntlString,
+    OnExecutionStart: '' as IntlString,
+    Replacement: '' as IntlString,
+    Search: '' as IntlString,
+    Separator: '' as IntlString,
+    Start: '' as IntlString,
+    End: '' as IntlString,
+    Started: '' as IntlString,
+    Each: '' as IntlString,
+    CreateCard: '' as IntlString,
+    Done: '' as IntlString,
+    Cancelled: '' as IntlString,
+    ArraySizeEquals: '' as IntlString,
+    ArraySizeGt: '' as IntlString,
+    ArraySizeGte: '' as IntlString,
+    ArraySizeLt: '' as IntlString,
+    ArraySizeLte: '' as IntlString,
+    CurrentUser: '' as IntlString,
+    CurrentDate: '' as IntlString,
+    AddResult: '' as IntlString,
+    For: '' as IntlString,
+    Attribute: '' as IntlString,
+    Context: '' as IntlString,
+    EmptyArray: '' as IntlString,
+    ExecutionInitiator: '' as IntlString,
+    ExecutionStarted: '' as IntlString,
+    RunProcessPermission: '' as IntlString,
+    CancelProcessPermission: '' as IntlString,
+    ForbidRunProcessPermission: '' as IntlString,
+    ForbidCancelProcessPermission: '' as IntlString
+  },
+  permission: {
+    RunProcess: '' as Ref<Permission>,
+    CancelProcess: '' as Ref<Permission>,
+    ForbidRunProcess: '' as Ref<Permission>,
+    ForbidCancelProcess: '' as Ref<Permission>
   }
 })

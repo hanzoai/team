@@ -16,6 +16,7 @@
 <script lang="ts">
   import core, {
     AnyAttribute,
+    AssociationQuery,
     Class,
     Doc,
     DocumentQuery,
@@ -24,6 +25,7 @@
     Ref,
     SortingOrder,
     TxOperations,
+    TypedSpace,
     getObjectValue,
     mergeQueries
   } from '@hanzo/core'
@@ -42,12 +44,17 @@
   } from '@hanzo/ui'
   import { AttributeModel, BuildModelKey, BuildModelOptions, ViewOptionModel, ViewOptions } from '@hanzo/view'
   import { deepEqual } from 'fast-equals'
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import { showMenu } from '../actions'
   import view from '../plugin'
-  import { LoadingProps, buildConfigLookup, buildModel, restrictionStore } from '../utils'
+  import { LoadingProps, buildConfigAssociation, buildConfigLookup, buildModel, restrictionStore } from '../utils'
   import IconUpDown from './icons/UpDown.svelte'
   import { getResultOptions, getResultQuery } from '../viewOptions'
+  import { canEditSpace } from '../visibilityTester'
+  import contact, { PermissionsStore } from '@hcengineering/contact'
+  import { Readable } from 'svelte/store'
+  import { getResource } from '@hcengineering/platform'
+  import { canChangeAttribute } from '../permissions'
 
   export let _class: Ref<Class<Doc>>
   export let query: DocumentQuery<Doc>
@@ -79,7 +86,11 @@
   const client = getClient()
   const hierarchy = client.getHierarchy()
 
+  let lookup = buildConfigLookup(hierarchy, _class, config, options?.lookup)
+  let associations = buildConfigAssociation(config)
+
   $: lookup = buildConfigLookup(hierarchy, _class, config, options?.lookup)
+  $: associations = buildConfigAssociation(config)
 
   let _sortKey = prefferedSorting
   let userSorting = false
@@ -129,6 +140,7 @@
     sortKey: string | string[],
     sortOrder: SortingOrder,
     lookup: Lookup<Doc>,
+    associations: AssociationQuery[] | undefined,
     limit: number,
     options: FindOptions<Doc> | undefined
   ) {
@@ -147,12 +159,12 @@
         objectsRecieved = true
         loading = 0
       },
-      { limit, ...options, sort: getSort(sortKey), lookup, total: false }
+      { limit, ...options, sort: getSort(sortKey), lookup, associations, total: false }
     )
       ? 1
       : 0
   })
-  $: void update(_class, query, _sortKey, sortOrder, lookup, limit, resultOptions)
+  $: void update(_class, query, _sortKey, sortOrder, lookup, associations, limit, resultOptions)
 
   $: void getResultOptions(options, viewOptionsConfig, viewOptions).then((p) => {
     resultOptions = p
@@ -170,7 +182,7 @@
         gtotal = total
       }
     },
-    { limit: 1, ...resultOptions, sort: getSort(_sortKey), lookup, total: true }
+    { limit: 1, ...resultOptions, sort: getSort(_sortKey), lookup, associations, total: true }
   )
 
   const totalQueryQ = createQuery()
@@ -250,7 +262,7 @@
     }
   }
 
-  const joinProps = (attribute: AttributeModel, object: Doc, readonly: boolean) => {
+  const joinProps = (attribute: AttributeModel, object: Doc, readonly: boolean, editable: boolean) => {
     const readonlyParams =
       readonly || (attribute?.attribute?.readonly ?? false)
         ? {
@@ -258,8 +270,11 @@
             editable: false,
             disabled: true
           }
-        : {}
-    if (attribute.collectionAttr) {
+        : {
+            readonly: !editable,
+            editable
+          }
+    if (attribute.collectionAttr || attribute.attribute?.type?._class === core.class.TypeIdentifier) {
       return { object, ...attribute.props, ...readonlyParams }
     }
     if (attribute.attribute?.type._class === core.class.EnumOf) {
@@ -327,6 +342,29 @@
       }
     }
   }
+
+  let permissionsStore: Readable<PermissionsStore> | undefined = undefined
+
+  onMount(async () => {
+    permissionsStore = await getResource(contact.store.Permissions)
+  })
+
+  function canChangeAttr (
+    object: Doc,
+    attr: AnyAttribute | undefined,
+    permissionsStore: PermissionsStore | undefined
+  ): boolean {
+    if (permissionsStore === undefined) return true
+    if (attr === undefined) return true
+    return canChangeAttribute(attr, object.space as Ref<TypedSpace>, permissionsStore, object._class)
+  }
+
+  async function canEdit (object: Doc): Promise<boolean> {
+    if (client.getHierarchy().isDerived(object._class, core.class.Space)) {
+      return await canEditSpace(object)
+    }
+    return true
+  }
 </script>
 
 {#if !model || isBuildingModel}
@@ -359,7 +397,7 @@
               {/if}
             </th>
           {/if}
-          {#each model as attribute}
+          {#each model.filter((m) => !m.displayProps?.grow) as attribute}
             <th
               class:w-full={attribute.displayProps?.grow === true}
               class:sortable={attribute.sortingKey}
@@ -440,27 +478,54 @@
                 {/if}
               </td>
             {/if}
-            {#if row < rowLimit}
-              {#each model as attribute, cell}
-                <td
-                  class:align-left={attribute.displayProps?.align === 'left'}
-                  class:align-center={attribute.displayProps?.align === 'center'}
-                  class:align-right={attribute.displayProps?.align === 'right'}
-                >
-                  <div class:antiTable-cells__firstCell={!cell}>
-                    <!-- {getOnChange(object, attribute) !== undefined} -->
-                    <svelte:component
-                      this={attribute.presenter}
-                      value={getValue(attribute, object)}
-                      onChange={getOnChange(object, attribute)}
-                      label={attribute.label}
-                      attribute={attribute.attribute}
-                      {...joinProps(attribute, object, readonly || $restrictionStore.readonly)}
-                    />
-                  </div>
-                </td>
-              {/each}
-            {/if}
+            {#await canEdit(object) then canEditObject}
+              {#if row < rowLimit}
+                {#each model.filter((m) => !m.displayProps?.grow) as attribute, cell}
+                  <td
+                    class:align-left={attribute.displayProps?.align === 'left'}
+                    class:align-center={attribute.displayProps?.align === 'center'}
+                    class:align-right={attribute.displayProps?.align === 'right'}
+                  >
+                    {#if !cell}
+                      <div class="antiTable-cells__firstCell">
+                        <!-- {getOnChange(object, attribute) !== undefined} -->
+                        <svelte:component
+                          this={attribute.presenter}
+                          value={getValue(attribute, object)}
+                          onChange={getOnChange(object, attribute)}
+                          label={attribute.label}
+                          attribute={attribute.attribute}
+                          {...joinProps(
+                            attribute,
+                            object,
+                            readonly ||
+                              $restrictionStore.readonly ||
+                              !canChangeAttr(object, attribute.attribute, $permissionsStore),
+                            canEditObject
+                          )}
+                        />
+                      </div>
+                    {:else}
+                      <svelte:component
+                        this={attribute.presenter}
+                        value={getValue(attribute, object)}
+                        onChange={getOnChange(object, attribute)}
+                        label={attribute.label}
+                        attribute={attribute.attribute}
+                        {...joinProps(
+                          attribute,
+                          object,
+                          readonly ||
+                            $restrictionStore.readonly ||
+                            !canChangeAttr(object, attribute.attribute, $permissionsStore),
+                          canEditObject
+                        )}
+                      />
+                    {/if}
+                  </td>
+                {/each}
+              {/if}
+            {/await}
           </tr>
         {/each}
       </tbody>
@@ -468,7 +533,7 @@
       <tbody>
         {#each Array(getLoadingLength(loadingProps, options)) as i, row}
           <tr class="antiTable-body__row" class:fixed={row === selection}>
-            {#each model as attribute, cell}
+            {#each model.filter((m) => !m.displayProps?.grow) as attribute, cell}
               {#if !cell}
                 {#if enableChecking}
                   <td>

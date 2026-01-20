@@ -15,28 +15,35 @@
 //
 -->
 <script lang="ts">
-  import attachment, { Attachment } from '@hanzo/attachment'
-  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hanzo/core'
-  import { Document, DocumentEvents } from '@hanzo/document'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { copyTextToClipboard, createQuery, getClient } from '@hanzo/presentation'
-  import tags from '@hanzo/tags'
-  import { Heading } from '@hanzo/text-editor'
-  import { TableOfContents } from '@hanzo/text-editor-resources'
+  import { Analytics } from '@hcengineering/analytics'
+  import attachment, { Attachment } from '@hcengineering/attachment'
+  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hcengineering/core'
+  import { Document, DocumentEvents, Teamspace } from '@hcengineering/document'
+  import notification from '@hcengineering/notification'
+  import { Panel } from '@hcengineering/panel'
+  import { getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  import {
+    ComponentExtensions,
+    IconWithEmoji,
+    copyTextToClipboard,
+    createQuery,
+    getClient
+  } from '@hcengineering/presentation'
+  import tags from '@hcengineering/tags'
+  import { Heading } from '@hcengineering/text-editor'
+  import { TableOfContents } from '@hcengineering/text-editor-resources'
+  import TeamspacePresenter from './teamspace/TeamspacePresenter.svelte'
+
   import {
     Button,
     ButtonItem,
     Component,
     FocusHandler,
     IconMoreH,
-    IconWithEmoji,
     Label,
     TimeSince,
     createFocusManager,
     getPlatformColorDef,
-    navigate,
     showPopup,
     themeStore
   } from '@hanzo/ui'
@@ -46,14 +53,12 @@
     IconPicker,
     ParentsNavigator,
     RelationsEditor,
-    getObjectLinkFragment,
     restrictionStore,
     showMenu
   } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { Analytics } from '@hanzo/analytics'
 
-  import { starDocument, unstarDocument, unlockContent } from '..'
+  import { unlockContent } from '..'
   import document from '../plugin'
   import { getDocumentUrl } from '../utils'
   import DocumentEditor from './DocumentEditor.svelte'
@@ -85,6 +90,9 @@
   let title = ''
   let innerWidth: number
 
+  let isCopied = false
+  let copyTimeout: ReturnType<typeof setTimeout>
+
   let headings: Heading[] = []
 
   let loadedDocumentContent = false
@@ -103,18 +111,8 @@
 
   onDestroy(async () => {
     void notificationClient.then((client) => client.readDoc(_id))
+    clearTimeout(copyTimeout)
   })
-
-  const starredQuery = createQuery()
-  let isStarred = false
-  $: starredQuery.query(
-    document.class.SavedDocument,
-    { attachedTo: _id },
-    (res) => {
-      isStarred = res.length !== 0
-    },
-    { limit: 1 }
-  )
 
   async function createEmbedding (file: File): Promise<{ file: Ref<Blob>, type: string } | undefined> {
     if (doc === undefined) {
@@ -123,7 +121,7 @@
 
     try {
       const uploadFile = await getResource(attachment.helper.UploadFile)
-      const uuid = await uploadFile(file)
+      const { uuid, metadata } = await uploadFile(file)
       const attachmentId: Ref<Attachment> = generateId()
 
       await client.addCollection(
@@ -137,7 +135,8 @@
           name: file.name,
           type: file.type,
           size: file.size,
-          lastModified: file.lastModified
+          lastModified: file.lastModified,
+          metadata
         },
         attachmentId
       )
@@ -217,29 +216,23 @@
   ]
   let selectedAside: string | boolean = false
 
-  $: starAction = isStarred
-    ? {
-        icon: document.icon.Starred,
-        label: document.string.Unstar,
-        action: () => doc !== undefined && unstarDocument(doc)
-      }
-    : {
-        icon: document.icon.Star,
-        label: document.string.Star,
-        action: () => doc !== undefined && starDocument(doc)
-      }
-
   $: actions = [
     {
       icon: view.icon.CopyId,
-      label: document.string.CopyDocumentUrl,
+      label: isCopied ? document.string.DocumentUrlCopied : document.string.CopyDocumentUrl,
       action: () => {
         if (doc !== undefined) {
           void copyTextToClipboard(getDocumentUrl(doc))
+          isCopied = true
+
+          clearTimeout(copyTimeout)
+
+          copyTimeout = setTimeout(() => {
+            isCopied = false
+          }, 2000)
         }
       }
-    },
-    starAction
+    }
   ]
 
   let editor: DocumentEditor
@@ -250,6 +243,16 @@
   onMount(() => {
     Analytics.handleEvent(DocumentEvents.DocumentOpened, { id: _id })
   })
+
+  let spaceElement: Teamspace | undefined
+
+  $: if (doc?.space !== undefined) {
+    void client.findOne(document.class.Teamspace, { _id: doc.space }).then((res) => {
+      spaceElement = res
+    })
+  } else {
+    spaceElement = undefined
+  }
 </script>
 
 <FocusHandler {manager} />
@@ -277,6 +280,9 @@
     on:close={() => dispatch('close')}
   >
     <svelte:fragment slot="title">
+      {#if spaceElement !== undefined}
+        <TeamspacePresenter value={spaceElement} noCursor /> /
+      {/if}
       <ParentsNavigator element={doc} />
       <DocumentPresenter value={doc} breadcrumb noUnderline />
       {#if locked}
@@ -299,6 +305,12 @@
     </svelte:fragment>
 
     <svelte:fragment slot="utils">
+      {#if doc}
+        <ComponentExtensions
+          extension={view.extensions.EditDocTitleExtension}
+          props={{ size: 'medium', kind: 'ghost', _id: doc._id, _class: doc._class, value: doc, readonly }}
+        />
+      {/if}
       {#if !$restrictionStore.disableActions}
         <Button
           id="btn-doc-title-open-more"
@@ -327,12 +339,15 @@
             size={'x-large'}
             kind={'ghost'}
             noFocus
-            icon={doc.icon === view.ids.IconWithEmoji ? IconWithEmoji : doc.icon ?? document.icon.Document}
+            icon={doc.icon === view.ids.IconWithEmoji ? IconWithEmoji : (doc.icon ?? document.icon.Document)}
             iconProps={doc.icon === view.ids.IconWithEmoji
               ? { icon: doc.color, size: 'large' }
               : {
                   size: 'large',
-                  fill: doc.color !== undefined ? getPlatformColorDef(doc.color, $themeStore.dark).icon : 'currentColor'
+                  fill:
+                    doc.color !== undefined && typeof doc.color !== 'string'
+                      ? getPlatformColorDef(doc.color, $themeStore.dark).icon
+                      : 'currentColor'
                 }}
             disabled={readonly}
             showTooltip={{ label: document.string.Icon, direction: 'bottom' }}
@@ -383,13 +398,6 @@
             }}
             on:headings={(evt) => {
               headings = evt.detail
-            }}
-            on:open-document={async (event) => {
-              const doc = await client.findOne(event.detail._class, { _id: event.detail._id })
-              if (doc != null) {
-                const location = await getObjectLinkFragment(client.getHierarchy(), doc, {}, view.component.EditDoc)
-                navigate(location)
-              }
             }}
             on:loaded={() => {
               loadedDocumentContent = true
