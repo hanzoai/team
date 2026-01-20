@@ -22,8 +22,8 @@ import {
   Doc,
   Space,
   toFindResult
-} from '@hcengineering/core'
-import contact, { PersonSpace } from '@hcengineering/contact'
+} from '@hanzo/core'
+import contact, { PersonSpace } from '@hanzo/contact'
 import { PersonSpacesCache, PersonSpacesCacheFactory } from '../personSpaces'
 
 /* eslint-disable @typescript-eslint/unbound-method */

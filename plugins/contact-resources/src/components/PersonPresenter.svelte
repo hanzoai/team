@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getName, Person } from '@hcengineering/contact'
-  import { getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import type { LabelAndProps, IconSize } from '@hcengineering/ui'
+  import { getName, Person } from '@hanzo/contact'
+  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import type { LabelAndProps, IconSize } from '@hanzo/ui'
   import { getPersonByPersonRefStore, getPersonTooltip, PersonLabelTooltip } from '..'
   import PersonContent from './PersonContent.svelte'
   import { getClient } from '@hanzo/presentation'

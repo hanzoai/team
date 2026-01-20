@@ -15,18 +15,18 @@
 //
 -->
 <script lang="ts">
-  import { Schedule } from '@hcengineering/calendar'
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { Schedule } from '@hanzo/calendar'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import presentation, {
     copyTextToClipboard,
     createQuery,
     getClient,
     getCurrentWorkspaceUrl,
     MessageBox
-  } from '@hcengineering/presentation'
-  import { Action, ButtonIcon, IconAdd, IconDelete, IconLink, NavItem, showPopup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { TreeElement } from '@hcengineering/view-resources'
+  } from '@hanzo/presentation'
+  import { Action, ButtonIcon, IconAdd, IconDelete, IconLink, NavItem, showPopup } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { TreeElement } from '@hanzo/view-resources'
   import ScheduleEditor from './ScheduleEditor.svelte'
   import calendar from '../plugin'
   import { SortingOrder } from '@hanzo/core'

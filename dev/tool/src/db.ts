@@ -10,8 +10,8 @@ import {
   mergeSpecifiedPersons,
   mergeSpecifiedAccounts,
   createAccount
-} from '@hcengineering/account'
-import { getFirstName, getLastName } from '@hcengineering/contact'
+} from '@hanzo/account'
+import { getFirstName, getLastName } from '@hanzo/contact'
 import {
   systemAccountUuid,
   type BackupClient,
@@ -31,8 +31,8 @@ import {
   generateUuid,
   type WorkspaceMode,
   type Tx
-} from '@hcengineering/core'
-import { getMongoClient, getWorkspaceMongoDB } from '@hcengineering/mongo'
+} from '@hanzo/core'
+import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
 import {
   convertDoc,
   createTables,
@@ -41,31 +41,31 @@ import {
   retryTxn,
   translateDomain,
   setDBExtraOptions
-} from '@hcengineering/postgres'
-import { type DBDoc } from '@hcengineering/postgres/types/utils'
-import { getTransactorEndpoint } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
-import { connect, sendTransactorEvent } from '@hcengineering/server-tool'
+} from '@hanzo/postgres'
+import { type DBDoc } from '@hanzo/postgres/types/utils'
+import { getTransactorEndpoint } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
+import { connect, sendTransactorEvent } from '@hanzo/server-tool'
 import {
   type MongoAccountDB as v6MongoAccountDB,
   type Account as OldAccount,
   type Workspace as OldWorkspace
-} from '@hcengineering/account-service'
+} from '@hanzo/account-service'
 import { type MongoClient } from 'mongodb'
 import type postgres from 'postgres'
 import { type Row } from 'postgres'
 import { getToolToken } from './utils'
-import { type BackupStorage, createFileBackupStorage, restore } from '@hcengineering/server-backup'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import { getPlatformQueue } from '@hcengineering/kafka'
+import { type BackupStorage, createFileBackupStorage, restore } from '@hanzo/server-backup'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import { getPlatformQueue } from '@hanzo/kafka'
 import {
   type Pipeline,
   QueueTopic,
   type QueueWorkspaceMessage,
   type StorageAdapter,
   workspaceEvents
-} from '@hcengineering/server-core'
-import { createBackupPipeline, createEmptyBroadcastOps } from '@hcengineering/server-pipeline'
+} from '@hanzo/server-core'
+import { createBackupPipeline, createEmptyBroadcastOps } from '@hanzo/server-pipeline'
 
 export async function moveFromMongoToPG (
   accountDb: AccountDB,

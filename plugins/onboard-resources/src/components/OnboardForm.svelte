@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { LoginInfo, WorkspaceLoginInfo } from '@hcengineering/login'
-  import { getAccount, getAccountDisplayName, getWorkspaces, navigateToWorkspace } from '@hcengineering/login-resources'
-  import { OK } from '@hcengineering/platform'
+  import { LoginInfo, WorkspaceLoginInfo } from '@hanzo/login'
+  import { getAccount, getAccountDisplayName, getWorkspaces, navigateToWorkspace } from '@hanzo/login-resources'
+  import { OK } from '@hanzo/platform'
   import { onMount } from 'svelte'
   import { Analytics } from '@hanzo/analytics'
 

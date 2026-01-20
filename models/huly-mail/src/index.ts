@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { hulyMailIntegrationKind } from '@hcengineering/huly-mail'
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import setting from '@hcengineering/setting'
+import { hulyMailIntegrationKind } from '@hanzo/huly-mail'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import setting from '@hanzo/setting'
 
 import hulyMail from './plugin'
 
-export { hulyMailId } from '@hcengineering/huly-mail'
+export { hulyMailId } from '@hanzo/huly-mail'
 export { default } from './plugin'
 
 export function createModel (builder: Builder): void {

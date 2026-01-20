@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Markup } from '@hcengineering/core'
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import textEditor from '@hcengineering/text-editor'
-  import type { AnySvelteComponent } from '@hcengineering/ui'
-  import { Icon, Label } from '@hcengineering/ui'
+  import { Markup } from '@hanzo/core'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { EmptyMarkup } from '@hanzo/text'
+  import textEditor from '@hanzo/text-editor'
+  import type { AnySvelteComponent } from '@hanzo/ui'
+  import { Icon, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   import { EditorKitOptions } from '../kits/editor-kit'

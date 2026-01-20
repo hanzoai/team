@@ -1,10 +1,10 @@
 <script lang="ts">
-  import calendar, { AccessLevel, Calendar, Event, generateEventId, getAllEvents } from '@hcengineering/calendar'
-  import { DayCalendar, calendarByIdStore, hidePrivateEvents } from '@hcengineering/calendar-resources'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { Ref, SortingOrder, Timestamp, getCurrentAccount } from '@hcengineering/core'
-  import { IntlString, getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
+  import calendar, { AccessLevel, Calendar, Event, generateEventId, getAllEvents } from '@hanzo/calendar'
+  import { DayCalendar, calendarByIdStore, hidePrivateEvents } from '@hanzo/calendar-resources'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { Ref, SortingOrder, Timestamp, getCurrentAccount } from '@hanzo/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
   import {
     AnyComponent,
     ButtonBase,

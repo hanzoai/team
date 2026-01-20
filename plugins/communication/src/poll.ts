@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { AttachedDoc, Ref, AccountUuid } from '@hcengineering/core'
-import { PersonSpace } from '@hcengineering/contact'
-import { MessageID } from '@hcengineering/communication-types'
-import { Card } from '@hcengineering/card'
+import { AttachedDoc, Ref, AccountUuid } from '@hanzo/core'
+import { PersonSpace } from '@hanzo/contact'
+import { MessageID } from '@hanzo/communication-types'
+import { Card } from '@hanzo/card'
 
 export interface PollAnswer extends AttachedDoc<Poll> {
   options: string[]

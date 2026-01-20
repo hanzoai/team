@@ -21,7 +21,7 @@
 
   import { getPersonByPersonIdCb } from '../utils'
   import Avatar from './Avatar.svelte'
-  import { Person } from '@hcengineering/contact'
+  import { Person } from '@hanzo/contact'
 
   export let user: CollaborationUser
   export let lastUpdate: number

@@ -39,7 +39,7 @@ import {
   getMeetingMinutesTitle,
   queryMeetingMinutes
 } from './utils'
-import { toggleMicState, toggleCamState } from '@hcengineering/media-resources'
+import { toggleMicState, toggleCamState } from '@hanzo/media-resources'
 
 export { setCustomCreateScreenTracks } from './utils'
 

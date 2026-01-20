@@ -12,16 +12,16 @@ import core, {
   Status,
   Timestamp,
   TxOperations
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubIssueStateReason,
   GithubProject
-} from '@hcengineering/github'
-import { PlatformError, unknownStatus } from '@hcengineering/platform'
-import task from '@hcengineering/task'
-import { IssueStatus } from '@hcengineering/tracker'
+} from '@hanzo/github'
+import { PlatformError, unknownStatus } from '@hanzo/platform'
+import task from '@hanzo/task'
+import { IssueStatus } from '@hanzo/tracker'
 import { deepEqual } from 'fast-equals'
 import { githubExternalSyncVersion } from '../types'
 

@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { Card } from '@hcengineering/card'
-  import { AttributeModel } from '@hcengineering/view'
-  import { ActivityMessage, ActivityMessageExtra } from '@hcengineering/communication-types'
-  import { Person } from '@hcengineering/contact'
+  import { getClient } from '@hanzo/presentation'
+  import { Card } from '@hanzo/card'
+  import { AttributeModel } from '@hanzo/view'
+  import { ActivityMessage, ActivityMessageExtra } from '@hanzo/communication-types'
+  import { Person } from '@hanzo/contact'
 
   import ActivityObjectValue from './activity/ActivityObjectValue.svelte'
   import ActivityUpdateViewer from './activity/ActivityUpdateViewer.svelte'

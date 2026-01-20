@@ -12,12 +12,12 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { AccountUuid, notEmpty, PersonUuid } from '@hcengineering/core'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
-  import { Employee } from '@hcengineering/contact'
-  import { employeeByAccountStore } from '@hcengineering/contact-resources'
-  import { EmojiPresenter, getEmojiByUnicode } from '@hcengineering/emoji-resources'
-  import { isCustomEmoji } from '@hcengineering/emoji'
+  import { AccountUuid, notEmpty, PersonUuid } from '@hanzo/core'
+  import { ObjectPresenter } from '@hanzo/view-resources'
+  import { Employee } from '@hanzo/contact'
+  import { employeeByAccountStore } from '@hanzo/contact-resources'
+  import { EmojiPresenter, getEmojiByUnicode } from '@hanzo/emoji-resources'
+  import { isCustomEmoji } from '@hanzo/emoji'
 
   export let persons: PersonUuid[] = []
   export let emoji: string

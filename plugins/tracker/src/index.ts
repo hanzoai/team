@@ -31,11 +31,11 @@ import {
   Timestamp,
   Type,
   type Permission
-} from '@hcengineering/core'
-import { Asset, IntlString, Plugin, Resource, plugin } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import { TagCategory, TagElement, TagReference } from '@hcengineering/tags'
-import { ToDo } from '@hcengineering/time'
+} from '@hanzo/core'
+import { Asset, IntlString, Plugin, Resource, plugin } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import { TagCategory, TagElement, TagReference } from '@hanzo/tags'
+import { ToDo } from '@hanzo/time'
 import {
   ProjectType,
   ProjectTypeDescriptor,

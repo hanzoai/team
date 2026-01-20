@@ -21,9 +21,9 @@ import {
   type ServerConfig,
   type StorageClient,
   type WorkspaceToken
-} from '@hcengineering/api-client'
-import { systemAccountUuid, generateUuid, type Ref, type Blob } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/api-client'
+import { systemAccountUuid, generateUuid, type Ref, type Blob } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 
 describe('storage-api-server', () => {
   const frontUrl = 'http://huly.local:8083'

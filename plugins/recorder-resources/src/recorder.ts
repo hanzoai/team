@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { releaseStream } from '@hcengineering/media'
+import { releaseStream } from '@hanzo/media'
 import { ChunkReader } from './stream'
 import { formatElapsedTime } from './utils'
 

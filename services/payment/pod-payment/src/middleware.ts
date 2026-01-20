@@ -14,10 +14,10 @@
 //
 
 import type { NextFunction, Request, Response } from 'express'
-import { extractToken, getAccountClient } from '@hcengineering/server-client'
-import { AccountRole, systemAccountUuid } from '@hcengineering/core'
-import { Token } from '@hcengineering/server-token'
-import type { LoginInfo, LoginInfoRequest, WorkspaceLoginInfo } from '@hcengineering/account-client'
+import { extractToken, getAccountClient } from '@hanzo/server-client'
+import { AccountRole, systemAccountUuid } from '@hanzo/core'
+import { Token } from '@hanzo/server-token'
+import type { LoginInfo, LoginInfoRequest, WorkspaceLoginInfo } from '@hanzo/account-client'
 
 export interface RequestWithAuth extends Request {
   token?: Token

@@ -27,7 +27,7 @@ import {
   AttachmentUpdateData,
   CardID,
   CardType
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import {
   AddAttachmentsOperation,
   CreateMessageEvent,
@@ -44,7 +44,7 @@ import {
   AttachmentPatchEvent,
   BlobPatchEvent,
   ThreadPatchEvent
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 
 import { withTotal } from './utils'
 

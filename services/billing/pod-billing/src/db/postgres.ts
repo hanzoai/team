@@ -26,7 +26,7 @@ import {
   LiveKitUsageData
 } from '../types'
 import postgres, { type Row, Sql } from 'postgres'
-import { MeasureContext, type WorkspaceUuid } from '@hcengineering/core'
+import { MeasureContext, type WorkspaceUuid } from '@hanzo/core'
 import { LoggedDB } from './logged'
 import { RetryDB } from './retry'
 import { getMigrations } from './migrations'

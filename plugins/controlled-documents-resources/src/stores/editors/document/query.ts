@@ -20,11 +20,11 @@ import {
   type DocumentTraining,
   type Project,
   type DocumentTemplate
-} from '@hcengineering/controlled-documents'
-import attachment from '@hcengineering/attachment'
-import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hcengineering/core'
-import { createQuery } from '@hcengineering/presentation'
-import { RequestStatus } from '@hcengineering/request'
+} from '@hanzo/controlled-documents'
+import attachment from '@hanzo/attachment'
+import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hanzo/core'
+import { createQuery } from '@hanzo/presentation'
+import { RequestStatus } from '@hanzo/request'
 
 import documents from '../../../plugin'
 import {

@@ -15,7 +15,7 @@
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
   import core, {
     Data,
     DocumentUpdate,
@@ -36,7 +36,7 @@
   import documents, { DocumentSpace, DocumentSpaceType } from '@hanzo/controlled-documents'
 
   import documentsRes from '../../plugin'
-  import view from '@hcengineering/view'
+  import view from '@hanzo/view'
 
   export let docSpace: DocumentSpace | undefined = undefined
   export let clazz: Ref<Class<DocumentSpace>> = documents.class.OrgSpace

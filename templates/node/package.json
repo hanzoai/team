@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/node-package",
+  "name": "@hanzo/node-package",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",

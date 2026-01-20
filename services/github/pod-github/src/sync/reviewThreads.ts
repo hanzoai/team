@@ -10,7 +10,7 @@ import core, {
   Ref,
   TxOperations,
   withContext
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,

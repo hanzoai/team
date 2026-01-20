@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import calendar, { AccessLevel, Calendar, Event, getPrimaryCalendar } from '@hcengineering/calendar'
-import contactPlugin, { Employee, Person } from '@hcengineering/contact'
+import calendar, { AccessLevel, Calendar, Event, getPrimaryCalendar } from '@hanzo/calendar'
+import contactPlugin, { Employee, Person } from '@hanzo/contact'
 import core, {
   AccountUuid,
   Class,
@@ -36,13 +36,13 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hcengineering/core'
-import { getMetadata, getResource } from '@hcengineering/platform'
-import serverCalendar from '@hcengineering/server-calendar'
-import { getAccountBySocialId, getPerson, getSocialIds, getSocialStrings } from '@hcengineering/server-contact'
-import { QueueTopic, TriggerControl } from '@hcengineering/server-core'
-import { getHTMLPresenter, getTextPresenter } from '@hcengineering/server-notification-resources'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { getMetadata, getResource } from '@hanzo/platform'
+import serverCalendar from '@hanzo/server-calendar'
+import { getAccountBySocialId, getPerson, getSocialIds, getSocialStrings } from '@hanzo/server-contact'
+import { QueueTopic, TriggerControl } from '@hanzo/server-core'
+import { getHTMLPresenter, getTextPresenter } from '@hanzo/server-notification-resources'
+import { generateToken } from '@hanzo/server-token'
 
 /**
  * @public

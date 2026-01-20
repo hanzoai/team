@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { Model, UX, type Builder } from '@hcengineering/model'
-import core, { TDoc } from '@hcengineering/model-core'
-import { type IntlString } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import billing, { type Tier } from '@hcengineering/billing'
-import { AccountRole, DOMAIN_MODEL } from '@hcengineering/core'
-import presentation from '@hcengineering/model-presentation'
-import workbench from '@hcengineering/workbench'
+import { Model, UX, type Builder } from '@hanzo/model'
+import core, { TDoc } from '@hanzo/model-core'
+import { type IntlString } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import billing, { type Tier } from '@hanzo/billing'
+import { AccountRole, DOMAIN_MODEL } from '@hanzo/core'
+import presentation from '@hanzo/model-presentation'
+import workbench from '@hanzo/workbench'
 
-export { billingId } from '@hcengineering/billing'
+export { billingId } from '@hanzo/billing'
 export { billing as default }
 
 @Model(billing.class.Tier, core.class.Doc, DOMAIN_MODEL)

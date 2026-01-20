@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { KeyedAttribute } from '@hcengineering/presentation'
-  import textEditor, { CollaborationUser, RefAction } from '@hcengineering/text-editor'
-  import { AnySvelteComponent, registerFocus } from '@hcengineering/ui'
+  import { Doc } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { KeyedAttribute } from '@hanzo/presentation'
+  import textEditor, { CollaborationUser, RefAction } from '@hanzo/text-editor'
+  import { AnySvelteComponent, registerFocus } from '@hanzo/ui'
 
   import CollaborativeTextEditor from './CollaborativeTextEditor.svelte'
   import { type FileAttachFunction } from './extension/types'

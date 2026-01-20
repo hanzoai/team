@@ -27,12 +27,12 @@ import {
   Tx,
   TxCUD,
   Blob
-} from '@hcengineering/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import type { AnyComponent, ComponentExtensionId } from '@hcengineering/ui'
-import type { Action } from '@hcengineering/view'
+} from '@hanzo/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
+import type { Action } from '@hanzo/view'
 
 /**
  * @public

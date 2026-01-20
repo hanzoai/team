@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hcengineering/card'
-  import { TypeSelector } from '@hcengineering/card-resources'
-  import core, { AnyAttribute, Class, Ref } from '@hcengineering/core'
-  import { translateCB } from '@hcengineering/platform'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { Process, Step } from '@hcengineering/process'
-  import { Button, eventToHTMLElement, Label, SelectPopup, showPopup, tooltip } from '@hcengineering/ui'
+  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
+  import { TypeSelector } from '@hanzo/card-resources'
+  import core, { AnyAttribute, Class, Ref } from '@hanzo/core'
+  import { translateCB } from '@hanzo/platform'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { Process, Step } from '@hanzo/process'
+  import { Button, eventToHTMLElement, Label, SelectPopup, showPopup, tooltip } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import ParamsEditor from './ParamsEditor.svelte'
 

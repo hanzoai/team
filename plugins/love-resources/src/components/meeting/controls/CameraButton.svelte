@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { eventToHTMLElement, IconUpOutline, showPopup, SplitButton } from '@hcengineering/ui'
+  import { eventToHTMLElement, IconUpOutline, showPopup, SplitButton } from '@hanzo/ui'
   import CamSettingPopup from '../CamSettingPopup.svelte'
-  import { RoomType } from '@hcengineering/love'
+  import { RoomType } from '@hanzo/love'
   import { currentRoom } from '../../../stores'
   import love from '../../../plugin'
-  import { state, toggleCamState } from '@hcengineering/media-resources'
-  import view from '@hcengineering/view'
-  import { getClient } from '@hcengineering/presentation'
+  import { state, toggleCamState } from '@hanzo/media-resources'
+  import view from '@hanzo/view'
+  import { getClient } from '@hanzo/presentation'
 
   export let size: 'large' | 'medium' | 'small' | 'extra-small' | 'min' = 'large'
 

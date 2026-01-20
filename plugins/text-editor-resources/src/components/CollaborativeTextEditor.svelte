@@ -27,8 +27,8 @@
     hasAccountRole,
     makeDocCollabId,
     type Ref
-  } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
   import {
     DrawingCmd,
     getAttribute,
@@ -37,8 +37,8 @@
     getImageSize,
     imageSizeToRatio,
     KeyedAttribute
-  } from '@hcengineering/presentation'
-  import { markupToJSON } from '@hcengineering/text'
+  } from '@hanzo/presentation'
+  import { markupToJSON } from '@hanzo/text'
   import {
     AnySvelteComponent,
     Button,
@@ -50,8 +50,8 @@
     PopupAlignment,
     themeStore,
     ThrottledCaller
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { Editor, FocusPosition, mergeAttributes } from '@tiptap/core'
   import { isChangeOrigin } from '@tiptap/extension-collaboration'
   import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'

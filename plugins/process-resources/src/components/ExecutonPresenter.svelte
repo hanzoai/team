@@ -18,7 +18,7 @@
   import { Execution } from '@hanzo/process'
   import ErrorPresenter from './ErrorPresenter.svelte'
   import { continueExecution } from '../utils'
-  import { showPopup } from '@hcengineering/ui'
+  import { showPopup } from '@hanzo/ui'
   import ExecutionDetails from './ExecutionDetails.svelte'
 
   export let value: WithLookup<Execution>

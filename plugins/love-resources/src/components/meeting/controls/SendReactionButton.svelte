@@ -1,6 +1,6 @@
 <script lang="ts">
-  import emojiPlugin from '@hcengineering/emoji'
-  import { ModernButton, showPopup } from '@hcengineering/ui'
+  import emojiPlugin from '@hanzo/emoji'
+  import { ModernButton, showPopup } from '@hanzo/ui'
   import { lk } from '../../../utils'
 
   export let size: 'large' | 'medium' | 'small' | 'extra-small' | 'min' = 'large'

@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import type { Ref } from '@hcengineering/core'
-import type { MasterTag } from '@hcengineering/card'
-import type { LabelID } from '@hcengineering/communication-types'
-import { type Heading } from '@hcengineering/text-editor'
+import type { Ref } from '@hanzo/core'
+import type { MasterTag } from '@hanzo/card'
+import type { LabelID } from '@hanzo/communication-types'
+import { type Heading } from '@hanzo/text-editor'
 
 interface BaseNavigatorConfig {
   types: Array<Ref<MasterTag>>

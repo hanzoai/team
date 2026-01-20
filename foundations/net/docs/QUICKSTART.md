@@ -56,9 +56,9 @@ docker run -d \
 ### Option 3: NPM Packages (Coming Soon)
 
 ```bash
-npm install @hcengineering/network-core \
-            @hcengineering/network-client \
-            @hcengineering/network-server
+npm install @hanzo/network-core \
+            @hanzo/network-client \
+            @hanzo/network-server
 ```
 
 ## Your First Network Application
@@ -68,7 +68,7 @@ npm install @hcengineering/network-core \
 Create a file `my-container.ts`:
 
 ```typescript
-import type { Container, ContainerUuid, ClientUuid } from '@hcengineering/network-core'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
 
 export class HelloWorldContainer implements Container {
   constructor(readonly uuid: ContainerUuid) {
@@ -104,8 +104,8 @@ export class HelloWorldContainer implements Container {
 Create a file `server.ts`:
 
 ```typescript
-import { NetworkImpl, TickManagerImpl } from '@hcengineering/network-core'
-import { NetworkServer } from '@hcengineering/network-server'
+import { NetworkImpl, TickManagerImpl } from '@hanzo/network-core'
+import { NetworkServer } from '@hanzo/network-server'
 
 const tickManager = new TickManagerImpl(1000)
 tickManager.start()
@@ -129,9 +129,9 @@ process.on('SIGINT', async () => {
 Create a file `agent.ts`:
 
 ```typescript
-import { createNetworkClient } from '@hcengineering/network-client'
+import { createNetworkClient } from '@hanzo/network-client'
 import { HelloWorldContainer } from './my-container'
-import type { GetOptions, ContainerUuid } from '@hcengineering/network-core'
+import type { GetOptions, ContainerUuid } from '@hanzo/network-core'
 
 // Create client and serve agent with container factory
 const client = createNetworkClient('localhost:3737')
@@ -164,7 +164,7 @@ process.on('SIGINT', async () => {
 Create a file `client.ts`:
 
 ```typescript
-import { createNetworkClient } from '@hcengineering/network-client'
+import { createNetworkClient } from '@hanzo/network-client'
 
 async function main() {
   // Connect to network
@@ -232,10 +232,10 @@ Status: { status: 'running', uuid: 'hello-1234567890' }
 For a single-file demo, create `demo.ts`:
 
 ```typescript
-import { NetworkImpl, TickManagerImpl } from '@hcengineering/network-core'
-import { NetworkServer } from '@hcengineering/network-server'
-import { createNetworkClient } from '@hcengineering/network-client'
-import type { Container, ContainerUuid, ClientUuid, GetOptions } from '@hcengineering/network-core'
+import { NetworkImpl, TickManagerImpl } from '@hanzo/network-core'
+import { NetworkServer } from '@hanzo/network-server'
+import { createNetworkClient } from '@hanzo/network-client'
+import type { Container, ContainerUuid, ClientUuid, GetOptions } from '@hanzo/network-core'
 
 class DemoContainer implements Container {
   constructor(readonly uuid: ContainerUuid) {}

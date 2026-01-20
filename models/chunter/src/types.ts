@@ -24,8 +24,8 @@ import {
   TypeString,
   UX,
   Hidden
-} from '@hcengineering/model'
-import core, { TClass, TDoc, TSpace } from '@hcengineering/model-core'
+} from '@hanzo/model'
+import core, { TClass, TDoc, TSpace } from '@hanzo/model-core'
 import type {
   Channel,
   ChatMessage,

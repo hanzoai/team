@@ -15,23 +15,23 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import attachment, { Attachment } from '@hcengineering/attachment'
-  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hcengineering/core'
-  import { Document, DocumentEvents, Teamspace } from '@hcengineering/document'
-  import notification from '@hcengineering/notification'
-  import { Panel } from '@hcengineering/panel'
-  import { getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  import { Analytics } from '@hanzo/analytics'
+  import attachment, { Attachment } from '@hanzo/attachment'
+  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hanzo/core'
+  import { Document, DocumentEvents, Teamspace } from '@hanzo/document'
+  import notification from '@hanzo/notification'
+  import { Panel } from '@hanzo/panel'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
   import {
     ComponentExtensions,
     IconWithEmoji,
     copyTextToClipboard,
     createQuery,
     getClient
-  } from '@hcengineering/presentation'
-  import tags from '@hcengineering/tags'
-  import { Heading } from '@hcengineering/text-editor'
-  import { TableOfContents } from '@hcengineering/text-editor-resources'
+  } from '@hanzo/presentation'
+  import tags from '@hanzo/tags'
+  import { Heading } from '@hanzo/text-editor'
+  import { TableOfContents } from '@hanzo/text-editor-resources'
   import TeamspacePresenter from './teamspace/TeamspacePresenter.svelte'
 
   import {

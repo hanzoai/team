@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import client, { clientId } from '@hcengineering/client'
-import { type Client, type LoadModelResponse, type Tx } from '@hcengineering/core'
-import { addLocation, getMetadata, getResource, setMetadata } from '@hcengineering/platform'
+import client, { clientId } from '@hanzo/client'
+import { type Client, type LoadModelResponse, type Tx } from '@hanzo/core'
+import { addLocation, getMetadata, getResource, setMetadata } from '@hanzo/platform'
 import crypto from 'node:crypto'
 import plugin from './plugin'
 

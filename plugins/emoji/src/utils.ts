@@ -28,7 +28,7 @@ import {
   type ShortcodesDataset
 } from 'emojibase'
 import emojiPlugin from './plugin'
-import { getResource, getResourceP } from '@hcengineering/platform'
+import { getResource, getResourceP } from '@hanzo/platform'
 import { ParsedTextWithEmojis } from './types'
 
 export const emojiRegex = new RegExp(`(?:^|\\s)(${EMOJI_REGEX.source})$`)

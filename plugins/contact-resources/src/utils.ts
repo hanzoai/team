@@ -74,12 +74,12 @@ import core, {
   type TypedSpace,
   type UserStatus,
   type WithLookup
-} from '@hcengineering/core'
-import login from '@hcengineering/login'
-import notification, { type DocNotifyContext, type InboxNotification } from '@hcengineering/notification'
-import { getMetadata, getResource, type IntlString, translate } from '@hcengineering/platform'
-import presentation, { addTxListener, createQuery, getClient, onClient } from '@hcengineering/presentation'
-import { type TemplateDataProvider } from '@hcengineering/templates'
+} from '@hanzo/core'
+import login from '@hanzo/login'
+import notification, { type DocNotifyContext, type InboxNotification } from '@hanzo/notification'
+import { getMetadata, getResource, type IntlString, translate } from '@hanzo/platform'
+import presentation, { addTxListener, createQuery, getClient, onClient } from '@hanzo/presentation'
+import { type TemplateDataProvider } from '@hanzo/templates'
 import {
   getCurrentResolvedLocation,
   getPanelURI,

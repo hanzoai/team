@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hcengineering/attachment'
-  import { createQuery, getClient, uploadFile } from '@hcengineering/presentation'
-  import { ActionIcon, IconAdd, Label, Loading } from '@hcengineering/ui'
+  import { Attachment } from '@hanzo/attachment'
+  import { createQuery, getClient, uploadFile } from '@hanzo/presentation'
+  import { ActionIcon, IconAdd, Label, Loading } from '@hanzo/ui'
 
   import core, { Doc, Ref, Space, WithLookup } from '@hanzo/core'
 

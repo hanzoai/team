@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hcengineering/core'
-import platform, { PlatformError } from '@hcengineering/platform'
-import { TokenError, decodeToken } from '@hcengineering/server-token'
-import { StorageAdapter } from '@hcengineering/storage'
+import { Analytics } from '@hanzo/analytics'
+import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hanzo/core'
+import platform, { PlatformError } from '@hanzo/platform'
+import { TokenError, decodeToken } from '@hanzo/server-token'
+import { StorageAdapter } from '@hanzo/storage'
 import bp from 'body-parser'
 import cors from 'cors'
 import express, { Request, Response } from 'express'

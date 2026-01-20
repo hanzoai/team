@@ -1,10 +1,10 @@
-import { createNetworkClient } from '@hcengineering/network-client'
+import { createNetworkClient } from '@hanzo/network-client'
 import {
   type NetworkEvent,
   type ContainerKind,
   type ContainerUuid,
   NetworkEventKind
-} from '@hcengineering/network-core'
+} from '@hanzo/network-core'
 import { program } from 'commander'
 import { addShutdownHandler, tickManager } from './utils'
 

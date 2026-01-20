@@ -17,7 +17,7 @@ The api client package provides two main client variants: a WebSocket client and
 ### WebSocket Client
 
 ```ts
-import { connect } from '@hcengineering/api-client'
+import { connect } from '@hanzo/api-client'
 
 // Connect to Huly
 const client = await connect('https://huly.app', {
@@ -36,7 +36,7 @@ await client.close()
 ### REST Client
 
 ```ts
-import { connectRest } from '@hcengineering/api-client'
+import { connectRest } from '@hanzo/api-client'
 
 // Connect to Huly
 const client = await connectRest('https://huly.app', {
@@ -69,7 +69,7 @@ Parameters:
 ### Using Email and Password
 
 ```ts
-import { connect } from '@hcengineering/api-client'
+import { connect } from '@hanzo/api-client'
 
 const client = await connect('https://huly.app', {
   email: 'johndoe@example.com',
@@ -85,7 +85,7 @@ await client.close()
 ### Using Token
 
 ```ts
-import { connect } from '@hcengineering/api-client'
+import { connect } from '@hanzo/api-client'
 
 const client = await connect('https://huly.app', {
   token: '...',

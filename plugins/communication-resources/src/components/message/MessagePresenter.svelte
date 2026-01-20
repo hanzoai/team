@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { employeeByPersonIdStore, getPersonByPersonId } from '@hcengineering/contact-resources'
-  import { Card } from '@hcengineering/card'
-  import { getEventPositionElement, showPopup, Action, Menu } from '@hcengineering/ui'
-  import type { SocialID } from '@hcengineering/communication-types'
-  import { Message, MessageType } from '@hcengineering/communication-types'
-  import { getResource } from '@hcengineering/platform'
-  import { MessageAction } from '@hcengineering/communication'
-  import { Ref } from '@hcengineering/core'
+  import { Person } from '@hanzo/contact'
+  import { employeeByPersonIdStore, getPersonByPersonId } from '@hanzo/contact-resources'
+  import { Card } from '@hanzo/card'
+  import { getEventPositionElement, showPopup, Action, Menu } from '@hanzo/ui'
+  import type { SocialID } from '@hanzo/communication-types'
+  import { Message, MessageType } from '@hanzo/communication-types'
+  import { getResource } from '@hanzo/platform'
+  import { MessageAction } from '@hanzo/communication'
+  import { Ref } from '@hanzo/core'
 
   import MessageActionsPanel from './MessageActionsPanel.svelte'
   import MessageBody from './MessageBody.svelte'

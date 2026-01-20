@@ -22,8 +22,8 @@ import {
   type ActionCategory,
   type ViewAction,
   type ViewActionAvailabilityFunction
-} from '@hcengineering/view'
-import { type NotificationGroup } from '@hcengineering/notification'
+} from '@hanzo/view'
+import { type NotificationGroup } from '@hanzo/notification'
 
 export default mergeIds(activityId, activity, {
   string: {

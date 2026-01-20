@@ -12,13 +12,13 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Label, ListView, Loading, Scroller } from '@hcengineering/ui'
-  import { Doc, Ref } from '@hcengineering/core'
+  import { Label, ListView, Loading, Scroller } from '@hanzo/ui'
+  import { Doc, Ref } from '@hanzo/core'
   import { createEventDispatcher } from 'svelte'
-  import notification, { ActivityNotificationViewlet, DocNotifyContext } from '@hcengineering/notification'
-  import { getClient } from '@hcengineering/presentation'
-  import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import view from '@hcengineering/view'
+  import notification, { ActivityNotificationViewlet, DocNotifyContext } from '@hanzo/notification'
+  import { getClient } from '@hanzo/presentation'
+  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import view from '@hanzo/view'
 
   import inbox from '../plugin'
   import { NavigationItem } from '../type'

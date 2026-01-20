@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Integration } from '@hcengineering/account-client'
-  import { IntlString } from '@hcengineering/platform'
-  import setting from '@hcengineering/setting'
-  import { Label } from '@hcengineering/ui'
-  import { isDisabled } from '@hcengineering/integration-client'
+  import { type Integration } from '@hanzo/account-client'
+  import { IntlString } from '@hanzo/platform'
+  import setting from '@hanzo/setting'
+  import { Label } from '@hanzo/ui'
+  import { isDisabled } from '@hanzo/integration-client'
 
   export let integration: Integration | undefined
 

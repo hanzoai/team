@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { Room as TypeRoom } from '@hcengineering/love'
-  import { Scroller } from '@hcengineering/ui'
+  import { Ref } from '@hanzo/core'
+  import { Room as TypeRoom } from '@hanzo/love'
+  import { Scroller } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   import ParticipantsListView from './meeting/ParticipantsListView.svelte'

@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hcengineering/activity'
-  import { Analytics } from '@hcengineering/analytics'
-  import { AttachmentRefInput } from '@hcengineering/attachment-resources'
-  import chunter, { ChatMessage, ChunterEvents, ThreadMessage } from '@hcengineering/chunter'
-  import { Class, Doc, generateId, getCurrentAccount, Ref, type CommitResult } from '@hcengineering/core'
-  import { createQuery, DraftController, draftsStore, getClient } from '@hcengineering/presentation'
-  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
+  import activity, { ActivityMessage } from '@hanzo/activity'
+  import { Analytics } from '@hanzo/analytics'
+  import { AttachmentRefInput } from '@hanzo/attachment-resources'
+  import chunter, { ChatMessage, ChunterEvents, ThreadMessage } from '@hanzo/chunter'
+  import { Class, Doc, generateId, getCurrentAccount, Ref, type CommitResult } from '@hanzo/core'
+  import { createQuery, DraftController, draftsStore, getClient } from '@hanzo/presentation'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
   import { createEventDispatcher } from 'svelte'
-  import { getObjectId } from '@hcengineering/view-resources'
-  import { ThrottledCaller } from '@hcengineering/ui'
-  import { getSpace, editingMessageStore } from '@hcengineering/activity-resources'
+  import { getObjectId } from '@hanzo/view-resources'
+  import { ThrottledCaller } from '@hanzo/ui'
+  import { getSpace, editingMessageStore } from '@hanzo/activity-resources'
 
   import { getChannelSpace } from '../../utils'
   import ChannelTypingInfo from '../ChannelTypingInfo.svelte'
@@ -39,7 +39,7 @@
   export let withTypingInfo = false
   export let onKeyDown: ((e: KeyboardEvent) => void) | undefined = undefined
 
-  import { setTyping, clearTyping } from '@hcengineering/presence-resources'
+  import { setTyping, clearTyping } from '@hanzo/presence-resources'
 
   type MessageDraft = Pick<ChatMessage, '_id' | 'message' | 'attachments'>
 

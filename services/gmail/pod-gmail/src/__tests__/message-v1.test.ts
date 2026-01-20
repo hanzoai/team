@@ -1,7 +1,7 @@
-import { type MeasureContext, PersonId, TxOperations, AttachedData } from '@hcengineering/core'
+import { type MeasureContext, PersonId, TxOperations, AttachedData } from '@hanzo/core'
 import { type GaxiosResponse } from 'gaxios'
 import { gmail_v1 } from 'googleapis'
-import { type Message } from '@hcengineering/gmail'
+import { type Message } from '@hanzo/gmail'
 
 import { type Channel } from '../types'
 import { AttachmentHandler } from '../message/attachments'

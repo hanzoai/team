@@ -50,7 +50,7 @@ import core, {
   type Tx,
   type TxCUD,
   AccountRole
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,

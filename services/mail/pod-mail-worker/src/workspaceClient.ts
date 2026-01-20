@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { getClient as getAccountClient } from '@hcengineering/account-client'
-import { createRestTxOperations } from '@hcengineering/api-client'
-import core, { MeasureContext, PersonId, systemAccountUuid, TxOperations, WorkspaceUuid } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+import { getClient as getAccountClient } from '@hanzo/account-client'
+import { createRestTxOperations } from '@hanzo/api-client'
+import core, { MeasureContext, PersonId, systemAccountUuid, TxOperations, WorkspaceUuid } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import config from './config'
 
 export const SERVICE_NAME = 'mail-worker'

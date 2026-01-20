@@ -21,17 +21,17 @@ import core, {
   PersonId,
   SocialIdType,
   MeasureContext
-} from '@hcengineering/core'
-import { CreateMessageEvent, MessageEventType } from '@hcengineering/communication-sdk-types'
-import chat from '@hcengineering/chat'
+} from '@hanzo/core'
+import { CreateMessageEvent, MessageEventType } from '@hanzo/communication-sdk-types'
+import chat from '@hanzo/chat'
 
-import { MessageType } from '@hcengineering/communication-types'
-import { Card } from '@hcengineering/card'
-import mail from '@hcengineering/mail'
+import { MessageType } from '@hanzo/communication-types'
+import { Card } from '@hanzo/card'
+import mail from '@hanzo/mail'
 
 import { normalizeEmail } from './utils'
 import { COMMUNICATION_DOMAIN, MailRecipients } from './types'
-import { AccountClient } from '@hcengineering/account-client'
+import { AccountClient } from '@hanzo/account-client'
 
 export function toMessageEvent (tx: Tx): CreateMessageEvent | undefined {
   if (tx._class !== core.class.TxDomainEvent) {

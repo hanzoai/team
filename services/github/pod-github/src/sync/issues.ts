@@ -23,7 +23,7 @@ import core, {
   makeDocCollabId,
   withContext,
   type MeasureContext
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,

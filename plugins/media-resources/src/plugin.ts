@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hcengineering/platform'
-import media, { mediaId } from '@hcengineering/media'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+import { type IntlString, mergeIds } from '@hanzo/platform'
+import media, { mediaId } from '@hanzo/media'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 
 export default mergeIds(mediaId, media, {
   component: {

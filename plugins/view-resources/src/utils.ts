@@ -57,10 +57,10 @@ import core, {
   type TypeAny,
   type TypedSpace,
   type WithLookup
-} from '@hcengineering/core'
-import { type Restrictions } from '@hcengineering/guest'
-import type { Asset, IntlString } from '@hcengineering/platform'
-import { getEmbeddedLabel, getMetadata, getResource, translate } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { type Restrictions } from '@hanzo/guest'
+import type { Asset, IntlString } from '@hanzo/platform'
+import { getEmbeddedLabel, getMetadata, getResource, translate } from '@hanzo/platform'
 import presentation, {
   createQuery,
   getAttributePresenterClass,

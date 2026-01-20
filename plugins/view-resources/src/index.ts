@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
-import { getEventPopupPositionElement, type PopupAlignment } from '@hcengineering/ui'
-import { canCopyLink } from '@hcengineering/view'
+import { type Resources } from '@hanzo/platform'
+import { getEventPopupPositionElement, type PopupAlignment } from '@hanzo/ui'
+import { canCopyLink } from '@hanzo/view'
 import { actionImpl } from './actionImpl'
 import ActionsPopup from './components/ActionsPopup.svelte'
 import ArrayEditor from './components/ArrayEditor.svelte'
@@ -233,7 +233,7 @@ export {
   buildMarkdownTableFromDocs,
   buildMarkdownTableFromMetadata
 } from './copyAsMarkdownTable'
-export type { BuildMarkdownTableMetadata } from '@hcengineering/view'
+export type { BuildMarkdownTableMetadata } from '@hanzo/view'
 export {
   ArrayEditor,
   BooleanEditor,

@@ -23,8 +23,8 @@ import type {
   FindCollaboratorsParams,
   Collaborator,
   FindPeersParams, Peer, CardID, FindMessagesMetaParams, MessageMeta, MessagesGroup, FindMessagesGroupParams
-} from '@hcengineering/communication-types'
-import type { Account, MeasureContext } from '@hcengineering/core'
+} from '@hanzo/communication-types'
+import type { Account, MeasureContext } from '@hanzo/core'
 
 import type { EventResult, Event } from './events/event'
 

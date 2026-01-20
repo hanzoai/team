@@ -1,4 +1,4 @@
-import { type PermissionsStore } from '@hcengineering/contact'
+import { type PermissionsStore } from '@hanzo/contact'
 import core, {
   type AnyAttribute,
   type Class,
@@ -7,9 +7,9 @@ import core, {
   type Ref,
   type Space,
   type TypedSpace
-} from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
 
 export function canChangeAttribute (
   attr: AnyAttribute,

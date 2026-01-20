@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hcengineering/contact'
-  import { UsersPopup } from '@hcengineering/contact-resources'
-  import type { Ref } from '@hcengineering/core'
-  import { type Department } from '@hcengineering/hr'
-  import { getClient } from '@hcengineering/presentation'
-  import { Button, IconAdd, Label, Section, showPopup, Scroller } from '@hcengineering/ui'
-  import { Viewlet, ViewletPreference } from '@hcengineering/view'
-  import { Table, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
+  import contact, { Employee } from '@hanzo/contact'
+  import { UsersPopup } from '@hanzo/contact-resources'
+  import type { Ref } from '@hanzo/core'
+  import { type Department } from '@hanzo/hr'
+  import { getClient } from '@hanzo/presentation'
+  import { Button, IconAdd, Label, Section, showPopup, Scroller } from '@hanzo/ui'
+  import { Viewlet, ViewletPreference } from '@hanzo/view'
+  import { Table, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
   import hr from '../plugin'
 
   export let department: Department

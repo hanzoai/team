@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { addLocation } from '@hcengineering/platform'
-import { serverProcessId } from '@hcengineering/server-process'
+import { addLocation } from '@hanzo/platform'
+import { serverProcessId } from '@hanzo/server-process'
 
 export function prepare (): void {
-  addLocation(serverProcessId, () => import('@hcengineering/server-process-resources'))
+  addLocation(serverProcessId, () => import('@hanzo/server-process-resources'))
 }

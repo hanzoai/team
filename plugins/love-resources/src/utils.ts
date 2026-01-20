@@ -1,9 +1,9 @@
-import aiBot from '@hcengineering/ai-bot'
-import { connectMeeting, disconnectMeeting } from '@hcengineering/ai-bot-resources'
-import { Analytics } from '@hcengineering/analytics'
-import calendar, { type Event, type Schedule } from '@hcengineering/calendar'
-import chunter from '@hcengineering/chunter'
-import { getName } from '@hcengineering/contact'
+import aiBot from '@hanzo/ai-bot'
+import { connectMeeting, disconnectMeeting } from '@hanzo/ai-bot-resources'
+import { Analytics } from '@hanzo/analytics'
+import calendar, { type Event, type Schedule } from '@hanzo/calendar'
+import chunter from '@hanzo/chunter'
+import { getName } from '@hanzo/contact'
 import core, {
   AccountRole,
   type Client,
@@ -30,19 +30,19 @@ import {
   type RoomMetadata,
   TranscriptionStatus,
   MeetingStatus
-} from '@hcengineering/love'
-import { getEmbeddedLabel, getMetadata, getResource, type IntlString } from '@hcengineering/platform'
+} from '@hanzo/love'
+import { getEmbeddedLabel, getMetadata, getResource, type IntlString } from '@hanzo/platform'
 import presentation, {
   copyTextToClipboard,
   type DocCreatePhase,
   getClient,
   type ObjectSearchResult
-} from '@hcengineering/presentation'
-import { closePanel, getCurrentLocation, navigate, panelstore, showPopup } from '@hcengineering/ui'
-import view from '@hcengineering/view'
-import { getObjectLinkFragment } from '@hcengineering/view-resources'
-import { type Widget, type WidgetTab } from '@hcengineering/workbench'
-import { openWidget, openWidgetTab, sidebarStore, updateWidgetState } from '@hcengineering/workbench-resources'
+} from '@hanzo/presentation'
+import { closePanel, getCurrentLocation, navigate, panelstore, showPopup } from '@hanzo/ui'
+import view from '@hanzo/view'
+import { getObjectLinkFragment } from '@hanzo/view-resources'
+import { type Widget, type WidgetTab } from '@hanzo/workbench'
+import { openWidget, openWidgetTab, sidebarStore, updateWidgetState } from '@hanzo/workbench-resources'
 import { isKrispNoiseFilterSupported, KrispNoiseFilter } from '@livekit/krisp-noise-filter'
 import { BackgroundBlur, type BackgroundOptions, type ProcessorWrapper } from '@livekit/track-processors'
 import {
@@ -56,14 +56,14 @@ import {
 } from 'livekit-client'
 import { get, writable } from 'svelte/store'
 
-import { getPersonByPersonRef } from '@hcengineering/contact-resources'
+import { getPersonByPersonRef } from '@hanzo/contact-resources'
 import MeetingMinutesSearchItem from './components/MeetingMinutesSearchItem.svelte'
 import RoomSettingsPopup from './components/RoomSettingsPopup.svelte'
 import love from './plugin'
 import { $myPreferences, currentMeetingMinutes, currentRoom } from './stores'
 import { getLiveKitClient } from './liveKitClient'
 import { getLoveClient } from './loveClient'
-import { getClient as getAccountClientRaw } from '@hcengineering/account-client'
+import { getClient as getAccountClientRaw } from '@hanzo/account-client'
 
 export const liveKitClient = getLiveKitClient()
 export const lk: LKRoom = liveKitClient.liveKitRoom

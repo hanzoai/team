@@ -20,11 +20,11 @@ import {
   type MigrationDocumentQuery,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hcengineering/model'
-import { DOMAIN_PREFERENCE } from '@hcengineering/preference'
-import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hcengineering/view'
-import { getSocialIdFromOldAccount, getSocialKeyByOldAccount, getUniqueAccounts } from '@hcengineering/model-core'
-import core, { type AccountUuid, type PersonId } from '@hcengineering/core'
+} from '@hanzo/model'
+import { DOMAIN_PREFERENCE } from '@hanzo/preference'
+import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hanzo/view'
+import { getSocialIdFromOldAccount, getSocialKeyByOldAccount, getUniqueAccounts } from '@hanzo/model-core'
+import core, { type AccountUuid, type PersonId } from '@hanzo/core'
 
 import { DOMAIN_VIEW } from '.'
 

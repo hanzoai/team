@@ -24,7 +24,7 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   WithLookup
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
 import contact, { Person, SocialIdentity, SocialIdentityRef } from '.'
 

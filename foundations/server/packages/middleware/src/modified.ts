@@ -18,13 +18,13 @@ import core, {
   systemAccountUuid,
   type SessionData,
   type TxApplyIf
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   BaseMiddleware,
   type Middleware,
   type TxMiddlewareResult,
   type PipelineContext
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 
 /**
  * @public

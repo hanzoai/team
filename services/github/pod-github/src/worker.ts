@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { AccountClient } from '@hcengineering/account-client'
-import { Analytics } from '@hcengineering/analytics'
-import chunter from '@hcengineering/chunter'
-import { CollaboratorClient } from '@hcengineering/collaborator-client'
+import type { AccountClient } from '@hanzo/account-client'
+import { Analytics } from '@hanzo/analytics'
+import chunter from '@hanzo/chunter'
+import { CollaboratorClient } from '@hanzo/collaborator-client'
 import contact, {
   AvatarType,
   Person,
   type Employee,
   type SocialIdentity,
   type SocialIdentityRef
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import core, {
   AttachedDoc,
   Branding,
@@ -50,7 +50,7 @@ import core, {
   type PersonUuid,
   type TimeRateLimiter,
   type WorkspaceIds
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubAuthentication,
@@ -60,16 +60,16 @@ import github, {
   GithubProject,
   githubId,
   type GithubUserInfo
-} from '@hcengineering/github'
-import { LiveQuery } from '@hcengineering/query'
-import { getAccountClient } from '@hcengineering/server-client'
-import { StorageAdapter } from '@hcengineering/server-core'
-import { getPublicLinkUrl } from '@hcengineering/server-guest-resources'
-import { generateToken } from '@hcengineering/server-token'
-import task, { ProjectType, TaskType } from '@hcengineering/task'
-import { MarkupNode, MarkupNodeType, jsonToMarkup } from '@hcengineering/text'
-import { isMarkdownsEquals } from '@hcengineering/text-markdown'
-import tracker from '@hcengineering/tracker'
+} from '@hanzo/github'
+import { LiveQuery } from '@hanzo/query'
+import { getAccountClient } from '@hanzo/server-client'
+import { StorageAdapter } from '@hanzo/server-core'
+import { getPublicLinkUrl } from '@hanzo/server-guest-resources'
+import { generateToken } from '@hanzo/server-token'
+import task, { ProjectType, TaskType } from '@hanzo/task'
+import { MarkupNode, MarkupNodeType, jsonToMarkup } from '@hanzo/text'
+import { isMarkdownsEquals } from '@hanzo/text-markdown'
+import tracker from '@hanzo/tracker'
 import { User } from '@octokit/webhooks-types'
 import { App, Octokit } from 'octokit'
 import { createPlatformClient } from './client'

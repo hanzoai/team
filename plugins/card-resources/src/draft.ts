@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Ref, type Markup } from '@hcengineering/core'
-import { type CardSpace, type MasterTag } from '@hcengineering/card'
-import { EmptyMarkup } from '@hcengineering/text'
-import { getCurrentLocation, type Location } from '@hcengineering/ui'
+import { type Ref, type Markup } from '@hanzo/core'
+import { type CardSpace, type MasterTag } from '@hanzo/card'
+import { EmptyMarkup } from '@hanzo/text'
+import { getCurrentLocation, type Location } from '@hanzo/ui'
 
 /**
  * Card draft interface for DraftController

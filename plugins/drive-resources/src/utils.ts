@@ -23,18 +23,18 @@ import drive, {
   createFile,
   createFolder,
   DriveEvents
-} from '@hcengineering/drive'
-import { type Asset, setPlatformStatus, unknownError } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import { type AnySvelteComponent, showPopup } from '@hcengineering/ui'
+} from '@hanzo/drive'
+import { type Asset, setPlatformStatus, unknownError } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import { type AnySvelteComponent, showPopup } from '@hanzo/ui'
 import {
   type FileUploadCallback,
   type FileUploadOptions,
   getDataTransferFiles,
   showFilesUploadPopup,
   uploadFiles
-} from '@hcengineering/uploader'
-import { openDoc } from '@hcengineering/view-resources'
+} from '@hanzo/uploader'
+import { openDoc } from '@hanzo/view-resources'
 
 import CreateDrive from './components/CreateDrive.svelte'
 import CreateFolder from './components/CreateFolder.svelte'

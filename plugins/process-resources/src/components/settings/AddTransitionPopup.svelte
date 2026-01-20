@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Ref, SortingOrder } from '@hcengineering/core'
-  import { Card, createQuery, getClient } from '@hcengineering/presentation'
-  import { Process, State, Transition, Trigger } from '@hcengineering/process'
-  import { Component, Dropdown, DropdownIntlItem, DropdownLabelsIntl, Label, ListItem } from '@hcengineering/ui'
+  import core, { Ref, SortingOrder } from '@hanzo/core'
+  import { Card, createQuery, getClient } from '@hanzo/presentation'
+  import { Process, State, Transition, Trigger } from '@hanzo/process'
+  import { Component, Dropdown, DropdownIntlItem, DropdownLabelsIntl, Label, ListItem } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
-  import { makeRank } from '@hcengineering/rank'
+  import { makeRank } from '@hanzo/rank'
 
   export let process: Process
 

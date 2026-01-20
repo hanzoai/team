@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { NewMessage, SharedMessage } from '@hcengineering/gmail'
-  import { Button, IconArrowLeft, Label, Scroller, tooltip } from '@hcengineering/ui'
+  import { NewMessage, SharedMessage } from '@hanzo/gmail'
+  import { Button, IconArrowLeft, Label, Scroller, tooltip } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import gmail from '../plugin'
   import FullMessageContent from './FullMessageContent.svelte'

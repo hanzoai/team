@@ -16,15 +16,15 @@ import {
   fetchLinkPreviewDetails,
   getClient,
   getCommunicationClient
-} from '@hcengineering/presentation'
-import { type Card } from '@hcengineering/card'
-import { AccountRole, type Data, getCurrentAccount, type Ref, type Space, type Markup } from '@hcengineering/core'
-import { getMetadata, translate } from '@hcengineering/platform'
-import { addNotification, languageStore, NotificationSeverity, showPopup } from '@hcengineering/ui'
-import { type Emoji, type LinkPreviewParams, type Message } from '@hcengineering/communication-types'
-import emoji from '@hcengineering/emoji'
-import { markdownToMarkup, markupToMarkdown } from '@hcengineering/text-markdown'
-import { jsonToMarkup, markupToJSON } from '@hcengineering/text'
+} from '@hanzo/presentation'
+import { type Card } from '@hanzo/card'
+import { AccountRole, type Data, getCurrentAccount, type Ref, type Space, type Markup } from '@hanzo/core'
+import { getMetadata, translate } from '@hanzo/platform'
+import { addNotification, languageStore, NotificationSeverity, showPopup } from '@hanzo/ui'
+import { type Emoji, type LinkPreviewParams, type Message } from '@hanzo/communication-types'
+import emoji from '@hanzo/emoji'
+import { markdownToMarkup, markupToMarkdown } from '@hanzo/text-markdown'
+import { jsonToMarkup, markupToJSON } from '@hanzo/text'
 
 import { isCardSubscribed, guestCommunicationAllowedCards } from './stores'
 import IconAt from './components/icons/At.svelte'
@@ -32,9 +32,9 @@ import IconAt from './components/icons/At.svelte'
 import communication from './plugin'
 import { type TextInputAction } from './types'
 import { get } from 'svelte/store'
-import view from '@hcengineering/view'
-import { type Direct } from '@hcengineering/communication'
-import { type Employee } from '@hcengineering/contact'
+import view from '@hanzo/view'
+import { type Direct } from '@hanzo/communication'
+import { type Employee } from '@hanzo/contact'
 
 export async function unsubscribe (card: Card): Promise<void> {
   const client = getCommunicationClient()

@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref } from '@hcengineering/core'
-  import { getAttributePresenterClass, getClient } from '@hcengineering/presentation'
-  import { Process } from '@hcengineering/process'
-  import { Component, Label, tooltip } from '@hcengineering/ui'
+  import { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
+  import { getAttributePresenterClass, getClient } from '@hanzo/presentation'
+  import { Process } from '@hanzo/process'
+  import { Component, Label, tooltip } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { getCriteriaEditor, getContext } from '../../utils'
 

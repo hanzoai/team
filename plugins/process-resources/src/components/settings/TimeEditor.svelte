@@ -14,17 +14,17 @@
 -->
 
 <script lang="ts">
-  import core, { AnyAttribute, generateId } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Process } from '@hcengineering/process'
-  import { AnySvelteComponent } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import core, { AnyAttribute, generateId } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Process } from '@hanzo/process'
+  import { AnySvelteComponent } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import plugin from '../../plugin'
   import { getContext, getMockAttribute } from '../../utils'
   import ProcessAttribute from '../ProcessAttribute.svelte'
   import { createEventDispatcher } from 'svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let readonly: boolean
   export let process: Process

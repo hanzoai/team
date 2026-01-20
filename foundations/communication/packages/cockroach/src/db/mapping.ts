@@ -29,8 +29,8 @@ import {
   MessageMeta,
   ThreadMeta,
   BlobID
-} from '@hcengineering/communication-types'
-import { Domain } from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-types'
+import { Domain } from '@hanzo/communication-sdk-types'
 
 import { DbModel } from '../schema'
 

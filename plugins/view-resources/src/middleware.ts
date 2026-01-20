@@ -19,15 +19,15 @@ import core, {
   type TxCUD,
   TxProcessor,
   type TxResult
-} from '@hcengineering/core'
-import platform, { getResource, PlatformError, translate } from '@hcengineering/platform'
-import { BasePresentationMiddleware, type PresentationMiddleware } from '@hcengineering/presentation'
-import view, { type IAggregationManager } from '@hcengineering/view'
-import notification from '@hcengineering/notification'
-import { addNotification, NotificationSeverity } from '@hcengineering/ui'
+} from '@hanzo/core'
+import platform, { getResource, PlatformError, translate } from '@hanzo/platform'
+import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzo/presentation'
+import view, { type IAggregationManager } from '@hanzo/view'
+import notification from '@hanzo/notification'
+import { addNotification, NotificationSeverity } from '@hanzo/ui'
 import ReadOnlyNotification from './components/ReadOnlyNotification.svelte'
 import ForbiddenNotification from './components/ForbiddenNotification.svelte'
-import { getCurrentLanguage } from '@hcengineering/theme'
+import { getCurrentLanguage } from '@hanzo/theme'
 
 /**
  * @public

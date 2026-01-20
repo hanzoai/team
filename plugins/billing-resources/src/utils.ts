@@ -14,26 +14,26 @@
 //
 import { get } from 'svelte/store'
 
-import login from '@hcengineering/login'
-import { getMetadata } from '@hcengineering/platform'
-import presentation, { getClient } from '@hcengineering/presentation'
-import billing from '@hcengineering/billing'
+import login from '@hanzo/login'
+import { getMetadata } from '@hanzo/platform'
+import presentation, { getClient } from '@hanzo/presentation'
+import billing from '@hanzo/billing'
 import {
   getClient as getAccountClientRaw,
   type AccountClient,
   type SubscriptionData
-} from '@hcengineering/account-client'
-import { getClient as getBillingClientRaw, type BillingClient } from '@hcengineering/billing-client'
-import { getClient as getPaymentClientRaw, type PaymentClient } from '@hcengineering/payment-client'
+} from '@hanzo/account-client'
+import { getClient as getBillingClientRaw, type BillingClient } from '@hanzo/billing-client'
+import { getClient as getPaymentClientRaw, type PaymentClient } from '@hanzo/payment-client'
 import {
   type UsageStatus,
   type WorkspaceInfoWithStatus,
   AccountRole,
   getCurrentAccount,
   hasAccountRole
-} from '@hcengineering/core'
-import { showPopup } from '@hcengineering/ui'
-import { type Tier } from '@hcengineering/billing'
+} from '@hanzo/core'
+import { showPopup } from '@hanzo/ui'
+import { type Tier } from '@hanzo/billing'
 
 import { setSubscriptionState, updateLimitExceeded, subscriptionStore } from './stores/subscription'
 import SubscriptionsModal from './components/SubscriptionsModal.svelte'

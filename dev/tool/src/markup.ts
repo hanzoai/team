@@ -19,8 +19,8 @@ import {
   saveCollabYdoc,
   yDocCopyXmlField,
   yDocFromBuffer
-} from '@hcengineering/collaboration'
-import documents from '@hcengineering/controlled-documents'
+} from '@hanzo/collaboration'
+import documents from '@hanzo/controlled-documents'
 import core, {
   type AnyAttribute,
   type Blob,
@@ -47,17 +47,17 @@ import core, {
   makeCollabYdocId,
   makeDocCollabId,
   systemAccountUuid
-} from '@hcengineering/core'
-import document, { type Document } from '@hcengineering/document'
-import { DOMAIN_DOCUMENTS } from '@hcengineering/model-controlled-documents'
-import { DOMAIN_DOCUMENT } from '@hcengineering/model-document'
-import { getDBClient } from '@hcengineering/postgres'
-import { withRetry } from '@hcengineering/retry'
-import { getAccountClient } from '@hcengineering/server-client'
-import { type PipelineFactory, type StorageAdapter, createDummyStorageAdapter } from '@hcengineering/server-core'
-import { createBackupPipeline, createEmptyBroadcastOps } from '@hcengineering/server-pipeline'
-import { generateToken } from '@hcengineering/server-token'
-import { isEmptyMarkup } from '@hcengineering/text-core'
+} from '@hanzo/core'
+import document, { type Document } from '@hanzo/document'
+import { DOMAIN_DOCUMENTS } from '@hanzo/model-controlled-documents'
+import { DOMAIN_DOCUMENT } from '@hanzo/model-document'
+import { getDBClient } from '@hanzo/postgres'
+import { withRetry } from '@hanzo/retry'
+import { getAccountClient } from '@hanzo/server-client'
+import { type PipelineFactory, type StorageAdapter, createDummyStorageAdapter } from '@hanzo/server-core'
+import { createBackupPipeline, createEmptyBroadcastOps } from '@hanzo/server-pipeline'
+import { generateToken } from '@hanzo/server-token'
+import { isEmptyMarkup } from '@hanzo/text-core'
 
 import { type Db } from 'mongodb'
 import { type Sql } from 'postgres'

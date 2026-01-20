@@ -15,7 +15,7 @@
 
 import type { Request, Response } from 'express'
 import Stripe from 'stripe'
-import { type MeasureContext } from '@hcengineering/core'
+import { type MeasureContext } from '@hanzo/core'
 
 import { getAccountClient } from '../../utils'
 import { transformStripeSubscriptionToData } from './utils'

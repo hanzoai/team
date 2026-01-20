@@ -15,10 +15,10 @@
 //
 
 import { createMessages } from '../message'
-import { WorkspaceLoginInfo } from '@hcengineering/account-client'
-import { PersonSpace } from '@hcengineering/contact'
-import { MeasureContext, PersonId, PersonUuid, Ref, TxOperations } from '@hcengineering/core'
-import { KeyValueClient } from '@hcengineering/kvs-client'
+import { WorkspaceLoginInfo } from '@hanzo/account-client'
+import { PersonSpace } from '@hanzo/contact'
+import { MeasureContext, PersonId, PersonUuid, Ref, TxOperations } from '@hanzo/core'
+import { KeyValueClient } from '@hanzo/kvs-client'
 import { Producer } from 'kafkajs'
 import { Attachment, BaseConfig, EmailContact, EmailMessage, MailRecipient } from '../types'
 import { PersonCacheFactory } from '../person'

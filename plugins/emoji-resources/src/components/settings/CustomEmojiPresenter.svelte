@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Ref, Blob } from '@hcengineering/core'
+  import { Ref, Blob } from '@hanzo/core'
 
-  import { getBlobRef } from '@hcengineering/presentation'
+  import { getBlobRef } from '@hanzo/presentation'
 
   export let value: Ref<Blob> | undefined
 </script>

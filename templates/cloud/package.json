@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/cloud-package",
+  "name": "@hanzo/cloud-package",
   "version": "0.7.0",
   "main": "lib/index.js",
   "types": "types/index.d.ts",

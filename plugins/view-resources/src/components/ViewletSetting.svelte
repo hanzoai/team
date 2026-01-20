@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Association, AssociationQuery, Class, Client, Doc, Ref, Type } from '@hcengineering/core'
-  import { Asset, getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import { createQuery, getAttributePresenterClass, getClient, hasResource } from '@hcengineering/presentation'
-  import { DropdownLabelsIntl, Loading, resizeObserver } from '@hcengineering/ui'
-  import { BuildModelKey, Viewlet, ViewletPreference } from '@hcengineering/view'
+  import core, { AnyAttribute, Association, AssociationQuery, Class, Client, Doc, Ref, Type } from '@hanzo/core'
+  import { Asset, getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import { createQuery, getAttributePresenterClass, getClient, hasResource } from '@hanzo/presentation'
+  import { DropdownLabelsIntl, Loading, resizeObserver } from '@hanzo/ui'
+  import { BuildModelKey, Viewlet, ViewletPreference } from '@hanzo/view'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'

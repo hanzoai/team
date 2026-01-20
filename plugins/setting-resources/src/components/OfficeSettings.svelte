@@ -12,10 +12,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { type OfficeSettings } from '@hcengineering/setting'
-  import { Breadcrumb, Header, Label, Scroller, Toggle } from '@hcengineering/ui'
+  import core from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import setting, { type OfficeSettings } from '@hanzo/setting'
+  import { Breadcrumb, Header, Label, Scroller, Toggle } from '@hanzo/ui'
   import settingsRes from '../plugin'
 
   let loading = true

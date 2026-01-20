@@ -24,9 +24,9 @@
     Label,
     getPlatformColorDef,
     themeStore
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import IconWithEmoji from './IconWithEmoji.svelte'
-  import view, { IconProps } from '@hcengineering/view'
+  import view, { IconProps } from '@hanzo/view'
 
   import presentation from '..'
   import { ComponentType } from 'svelte'

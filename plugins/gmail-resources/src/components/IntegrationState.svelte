@@ -15,15 +15,15 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
 
-  import type { Integration } from '@hcengineering/account-client'
-  import { IntegrationEventData, onIntegrationEvent } from '@hcengineering/integration-client'
-  import { type GmailSyncState } from '@hcengineering/gmail'
-  import { BaseIntegrationState, IntegrationStateRow } from '@hcengineering/setting-resources'
+  import type { Integration } from '@hanzo/account-client'
+  import { IntegrationEventData, onIntegrationEvent } from '@hanzo/integration-client'
+  import { type GmailSyncState } from '@hanzo/gmail'
+  import { BaseIntegrationState, IntegrationStateRow } from '@hanzo/setting-resources'
 
   import gmail from '../plugin'
   import { getState } from '../api'
-  import platform, { IntlString, OK, ERROR, Status, Severity } from '@hcengineering/platform'
-  import { Analytics } from '@hcengineering/analytics'
+  import platform, { IntlString, OK, ERROR, Status, Severity } from '@hanzo/platform'
+  import { Analytics } from '@hanzo/analytics'
 
   export let integration: Integration
 

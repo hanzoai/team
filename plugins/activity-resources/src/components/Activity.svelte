@@ -19,10 +19,10 @@
     ActivityReference,
     DisplayActivityMessage,
     WithReferences
-  } from '@hcengineering/activity'
-  import { Class, Doc, getCurrentAccount, Ref, SortingOrder } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Grid, Lazy, location, Section, Spinner } from '@hcengineering/ui'
+  } from '@hanzo/activity'
+  import { Class, Doc, getCurrentAccount, Ref, SortingOrder } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Grid, Lazy, location, Section, Spinner } from '@hanzo/ui'
   import { onDestroy, onMount } from 'svelte'
 
   import { editingMessageStore, messageInFocus } from '../activity'
@@ -31,7 +31,7 @@
   import ActivityMessagePresenter from './activity-message/ActivityMessagePresenter.svelte'
   import ActivityExtensionComponent from './ActivityExtension.svelte'
   import ActivityFilter from './ActivityFilter.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let object: WithReferences<Doc>
   export let showCommenInput: boolean = true

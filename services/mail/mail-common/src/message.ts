@@ -14,10 +14,10 @@
 //
 import { Producer } from 'kafkajs'
 
-import { WorkspaceLoginInfo } from '@hcengineering/account-client'
-import { type Card } from '@hcengineering/card'
-import { MessageID, MessageType } from '@hcengineering/communication-types'
-import chat from '@hcengineering/chat'
+import { WorkspaceLoginInfo } from '@hanzo/account-client'
+import { type Card } from '@hanzo/card'
+import { MessageID, MessageType } from '@hanzo/communication-types'
+import chat from '@hanzo/chat'
 import core, {
   type Blob,
   type MeasureContext,
@@ -29,10 +29,10 @@ import core, {
   generateId,
   RateLimiter,
   Space
-} from '@hcengineering/core'
-import { type KeyValueClient } from '@hcengineering/kvs-client'
+} from '@hanzo/core'
+import { type KeyValueClient } from '@hanzo/kvs-client'
 
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
 import {
   AddCollaboratorsEvent,
   BlobPatchEvent,
@@ -40,8 +40,8 @@ import {
   MessageEventType,
   NotificationEventType,
   ThreadPatchEvent
-} from '@hcengineering/communication-sdk-types'
-import { generateMessageId } from '@hcengineering/communication-shared'
+} from '@hanzo/communication-sdk-types'
+import { generateMessageId } from '@hanzo/communication-shared'
 
 import { BaseConfig, SyncOptions, type Attachment } from './types'
 import { COMMUNICATION_DOMAIN, EmailMessage, MailRecipient, MessageData } from './types'

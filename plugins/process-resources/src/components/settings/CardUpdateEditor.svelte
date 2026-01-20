@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import core, { AnyAttribute, Class, Ref } from '@hcengineering/core'
-  import presentation, { getAttributePresenterClass, getClient } from '@hcengineering/presentation'
-  import { Process } from '@hcengineering/process'
-  import { Button, eventToHTMLElement, SelectPopup, showPopup } from '@hcengineering/ui'
+  import { MasterTag } from '@hanzo/card'
+  import core, { AnyAttribute, Class, Ref } from '@hanzo/core'
+  import presentation, { getAttributePresenterClass, getClient } from '@hanzo/presentation'
+  import { Process } from '@hanzo/process'
+  import { Button, eventToHTMLElement, SelectPopup, showPopup } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { getCriteriaEditor } from '../../utils'
   import CriteriasEditor from '../criterias/CriteriasEditor.svelte'

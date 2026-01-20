@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Transition } from '@hcengineering/process'
+  import { Transition } from '@hanzo/process'
   import TransitionPresenter from './TransitionPresenter.svelte'
-  import { getClient } from '@hcengineering/presentation'
-  import { Ref } from '@hcengineering/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Ref } from '@hanzo/core'
 
   export let value: Ref<Transition>
 

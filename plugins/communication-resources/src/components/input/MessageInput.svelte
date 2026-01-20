@@ -14,16 +14,16 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { isAppletAttachment, isBlobAttachment } from '@hcengineering/communication-shared'
-  import { BlobParams, LinkPreviewParams, Message, MessageID, BlobID } from '@hcengineering/communication-types'
-  import { generateId, getCurrentAccount, Markup, RateLimiter, Ref } from '@hcengineering/core'
-  import { getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
-  import { clearTyping, setTyping } from '@hcengineering/presence-resources'
-  import { deleteFile, getClient, isLinkPreviewEnabled, uploadFile } from '@hcengineering/presentation'
-  import { areEqualMarkups, isEmptyMarkup } from '@hcengineering/text'
-  import { showPopup, ThrottledCaller } from '@hcengineering/ui'
-  import { FileUploadCallbackParams, getUploadHandlers, UploadHandlerDefinition } from '@hcengineering/uploader'
+  import { Card } from '@hanzo/card'
+  import { isAppletAttachment, isBlobAttachment } from '@hanzo/communication-shared'
+  import { BlobParams, LinkPreviewParams, Message, MessageID, BlobID } from '@hanzo/communication-types'
+  import { generateId, getCurrentAccount, Markup, RateLimiter, Ref } from '@hanzo/core'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  import { clearTyping, setTyping } from '@hanzo/presence-resources'
+  import { deleteFile, getClient, isLinkPreviewEnabled, uploadFile } from '@hanzo/presentation'
+  import { areEqualMarkups, isEmptyMarkup } from '@hanzo/text'
+  import { showPopup, ThrottledCaller } from '@hanzo/ui'
+  import { FileUploadCallbackParams, getUploadHandlers, UploadHandlerDefinition } from '@hanzo/uploader'
   import { createEventDispatcher, tick } from 'svelte'
 
   import { getDraft, getEmptyDraft, messageToDraft, removeDraft, saveDraft } from '../../draft'

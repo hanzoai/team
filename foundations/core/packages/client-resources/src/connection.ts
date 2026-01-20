@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import client, {
   type ClientFactoryOptions,
   ClientSocket,
   ClientSocketReadyState,
   pingConst,
   pongConst
-} from '@hcengineering/client'
+} from '@hanzo/client'
 import core, {
   Account,
   Class,
@@ -54,9 +54,9 @@ import core, {
   TxHandler,
   TxResult,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import platform, { getMetadata, PlatformError, Severity, Status } from '@hcengineering/platform'
-import { HelloRequest, HelloResponse, type RateLimitInfo, ReqId, type Response, RPCHandler } from '@hcengineering/rpc'
+} from '@hanzo/core'
+import platform, { getMetadata, PlatformError, Severity, Status } from '@hanzo/platform'
+import { HelloRequest, HelloResponse, type RateLimitInfo, ReqId, type Response, RPCHandler } from '@hanzo/rpc'
 import { uncompress } from 'snappyjs'
 
 const SECOND = 1000

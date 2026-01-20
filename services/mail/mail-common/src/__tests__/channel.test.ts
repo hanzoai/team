@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { PersonId, Ref, WorkspaceUuid, MeasureContext, TxOperations, Doc } from '@hcengineering/core'
-import { PersonSpace } from '@hcengineering/contact'
-import chat from '@hcengineering/chat'
-import mail from '@hcengineering/mail'
+import { PersonId, Ref, WorkspaceUuid, MeasureContext, TxOperations, Doc } from '@hanzo/core'
+import { PersonSpace } from '@hanzo/contact'
+import chat from '@hanzo/chat'
+import mail from '@hanzo/mail'
 import { ChannelCache, ChannelCacheFactory } from '../channel'
 
 /* eslint-disable @typescript-eslint/unbound-method */

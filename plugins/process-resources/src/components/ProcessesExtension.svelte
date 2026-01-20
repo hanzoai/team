@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import core, { Doc, FindOptions, Ref, SortingOrder, TypedSpace } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Execution } from '@hcengineering/process'
+  import { Card } from '@hanzo/card'
+  import core, { Doc, FindOptions, Ref, SortingOrder, TypedSpace } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Execution } from '@hanzo/process'
   import {
     Button,
     eventToHTMLElement,
@@ -26,20 +26,20 @@
     resizeObserver,
     Section,
     showPopup
-  } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     List,
     ListSelectionProvider,
     noCategory,
     SelectDirection,
     ViewletsSettingButton
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import process from '../plugin'
   import RunProcessPopup from './RunProcessPopup.svelte'
   import { createEventDispatcher } from 'svelte'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
-  import { PermissionsStore } from '@hcengineering/contact'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  import { PermissionsStore } from '@hanzo/contact'
 
   export let card: Card
   export let readonly: boolean = false

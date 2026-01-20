@@ -10,12 +10,12 @@
 //
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import { type Class, type Doc, type DocumentQuery, type Ref } from '@hcengineering/core'
-import presentation from '@hcengineering/presentation'
-import { addNotification, NotificationSeverity } from '@hcengineering/ui'
-import { getMetadata, translate } from '@hcengineering/platform'
-import { type RelationDefinition } from '@hcengineering/export'
-import { getCurrentLanguage } from '@hcengineering/theme'
+import { type Class, type Doc, type DocumentQuery, type Ref } from '@hanzo/core'
+import presentation from '@hanzo/presentation'
+import { addNotification, NotificationSeverity } from '@hanzo/ui'
+import { getMetadata, translate } from '@hanzo/platform'
+import { type RelationDefinition } from '@hanzo/export'
+import { getCurrentLanguage } from '@hanzo/theme'
 import ExportNotification from './components/ExportNotification.svelte'
 import plugin from './plugin'
 

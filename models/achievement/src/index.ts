@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import core from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
-import contact from '@hcengineering/contact'
-import presentation from '@hcengineering/model-presentation'
+import core from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
+import contact from '@hanzo/contact'
+import presentation from '@hanzo/model-presentation'
 
 import achievement from './plugin'
 
 export { default } from './plugin'
-export { achievementId } from '@hcengineering/achievement'
+export { achievementId } from '@hanzo/achievement'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type CamState } from '@hcengineering/media'
-  import { Icon, tooltip } from '@hcengineering/ui'
+  import { type CamState } from '@hanzo/media'
+  import { Icon, tooltip } from '@hanzo/ui'
 
   import media from '../plugin'
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Type } from '@hcengineering/core'
-  import { Process } from '@hcengineering/process'
-  import { DropdownIntlItem, DropdownLabelsIntl, Label } from '@hcengineering/ui'
+  import { Type } from '@hanzo/core'
+  import { Process } from '@hanzo/process'
+  import { DropdownIntlItem, DropdownLabelsIntl, Label } from '@hanzo/ui'
   import plugin from '../../plugin'
   import ResultFieldTypeEditor from './ResultFieldTypeEditor.svelte'
   import ResultTypeEditor from './ResultTypeEditor.svelte'

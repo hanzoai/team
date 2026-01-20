@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hcengineering/card'
-  import { Ref } from '@hcengineering/core'
-  import { SubscriptionLabelID } from '@hcengineering/communication-types'
-  import chat, { chatId } from '@hcengineering/chat'
-  import { Navigator } from '@hcengineering/card-resources'
-  import communication from '@hcengineering/communication'
-  import { NavGroup } from '@hcengineering/ui'
+  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
+  import { Ref } from '@hanzo/core'
+  import { SubscriptionLabelID } from '@hanzo/communication-types'
+  import chat, { chatId } from '@hanzo/chat'
+  import { Navigator } from '@hanzo/card-resources'
+  import communication from '@hanzo/communication'
+  import { NavGroup } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let card: Card | undefined = undefined

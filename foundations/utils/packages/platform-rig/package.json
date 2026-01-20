@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/platform-rig",
+  "name": "@hanzo/platform-rig",
   "version": "0.7.20",
   "scripts": {
     "build": "echo 'Not required'",

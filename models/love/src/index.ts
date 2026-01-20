@@ -27,7 +27,7 @@ import {
   IndexKind,
   type ClassCollaborators,
   type AccountUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   type DevicesPreference,
   type Floor,
@@ -61,21 +61,21 @@ import {
   UX,
   TypeBoolean,
   Hidden
-} from '@hcengineering/model'
-import calendar, { TEvent, TSchedule } from '@hcengineering/model-calendar'
-import core, { TAttachedDoc, TDoc } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import presentation from '@hcengineering/model-presentation'
-import view, { createAction, createAttributePresenter } from '@hcengineering/model-view'
-import media from '@hcengineering/media'
-import notification from '@hcengineering/notification'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import workbench, { WidgetType } from '@hcengineering/workbench'
-import activity from '@hcengineering/activity'
-import chunter from '@hcengineering/chunter'
-import attachment from '@hcengineering/attachment'
-import time, { type ToDo, type Todoable } from '@hcengineering/time'
+} from '@hanzo/model'
+import calendar, { TEvent, TSchedule } from '@hanzo/model-calendar'
+import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import presentation from '@hanzo/model-presentation'
+import view, { createAction, createAttributePresenter } from '@hanzo/model-view'
+import media from '@hanzo/media'
+import notification from '@hanzo/notification'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import workbench, { WidgetType } from '@hanzo/workbench'
+import activity from '@hanzo/activity'
+import chunter from '@hanzo/chunter'
+import attachment from '@hanzo/attachment'
+import time, { type ToDo, type Todoable } from '@hanzo/time'
 
 import love from './plugin'
 

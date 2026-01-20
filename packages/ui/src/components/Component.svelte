@@ -21,7 +21,7 @@
   import Loading from './Loading.svelte'
   import AppLoading from './AppLoading.svelte'
   import ErrorBoundary from './internal/ErrorBoundary'
-  import { clone } from '@hcengineering/core'
+  import { clone } from '@hanzo/core'
 
   // Reference to rendered component instance
   export let innerRef: SvelteComponent | undefined = undefined

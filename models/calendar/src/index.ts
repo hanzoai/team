@@ -41,7 +41,7 @@ import {
   type PersonId,
   type ClassCollaborators,
   AccountRole
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,
@@ -58,18 +58,18 @@ import {
   TypeTimestamp,
   UX,
   type Builder
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import contact from '@hcengineering/model-contact'
-import core, { TAttachedDoc, TClass, TDoc } from '@hcengineering/model-core'
-import view, { createAction } from '@hcengineering/model-view'
-import notification from '@hcengineering/notification'
-import setting from '@hcengineering/setting'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import workbench from '@hcengineering/model-workbench'
-import { WidgetType } from '@hcengineering/workbench'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import { calendarIntegrationKind } from '@hcengineering/calendar'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import contact from '@hanzo/model-contact'
+import core, { TAttachedDoc, TClass, TDoc } from '@hanzo/model-core'
+import view, { createAction } from '@hanzo/model-view'
+import notification from '@hanzo/notification'
+import setting from '@hanzo/setting'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import workbench from '@hanzo/model-workbench'
+import { WidgetType } from '@hanzo/workbench'
+import preference, { TPreference } from '@hanzo/model-preference'
+import { calendarIntegrationKind } from '@hanzo/calendar'
 
 import calendar from './plugin'
 

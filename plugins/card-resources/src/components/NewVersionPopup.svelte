@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { cardId, Card as CardType } from '@hcengineering/card'
-  import core from '@hcengineering/core'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { getCurrentLocation, Label, navigate, Toggle } from '@hcengineering/ui'
+  import { cardId, Card as CardType } from '@hanzo/card'
+  import core from '@hanzo/core'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { getCurrentLocation, Label, navigate, Toggle } from '@hanzo/ui'
   import plugin from '../plugin'
   import { createNewVersion } from '../utils'
 

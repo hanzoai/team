@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccessLevel, Calendar, Event, generateEventId, getAllEvents } from '@hcengineering/calendar'
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { AccessLevel, Calendar, Event, generateEventId, getAllEvents } from '@hanzo/calendar'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import {
     Class,
     Doc,

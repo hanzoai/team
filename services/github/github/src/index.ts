@@ -16,14 +16,14 @@ import {
   PersonId,
   Ref,
   Timestamp
-} from '@hcengineering/core'
-import { Asset, IntlString, Metadata, Plugin, plugin } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import task, { ProjectTypeDescriptor, TaskStatusFactory, TaskTypeDescriptor } from '@hcengineering/task'
-import { ToDo } from '@hcengineering/time'
-import { Component, Issue, Project } from '@hcengineering/tracker'
-import { AnyComponent } from '@hcengineering/ui'
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
+} from '@hanzo/core'
+import { Asset, IntlString, Metadata, Plugin, plugin } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import task, { ProjectTypeDescriptor, TaskStatusFactory, TaskTypeDescriptor } from '@hanzo/task'
+import { ToDo } from '@hanzo/time'
+import { Component, Issue, Project } from '@hanzo/tracker'
+import { AnyComponent } from '@hanzo/ui'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
 
 /**
  * @public

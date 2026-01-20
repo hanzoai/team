@@ -15,7 +15,7 @@
 <script lang="ts">
   import { ThreadMessage } from '@hanzo/chunter'
   import ThreadMessagePreview from '../threads/ThreadMessagePreview.svelte'
-  import { ActivityMessagePreviewType } from '@hcengineering/activity'
+  import { ActivityMessagePreviewType } from '@hanzo/activity'
 
   export let message: ThreadMessage
   export let type: ActivityMessagePreviewType = 'full'

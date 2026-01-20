@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { AccountRole, getCurrentAccount, type Ref } from '@hcengineering/core'
-import { getCurrentEmployee, type Person } from '@hcengineering/contact'
-import { type PopupResult, showPopup } from '@hcengineering/ui'
-import { type UnsubscribeCallback } from '@hcengineering/hulypulse-client'
-import presentation, { createPulseClient } from '@hcengineering/presentation'
-import { getMetadata } from '@hcengineering/platform'
-import { type Room } from '@hcengineering/love'
+import { AccountRole, getCurrentAccount, type Ref } from '@hanzo/core'
+import { getCurrentEmployee, type Person } from '@hanzo/contact'
+import { type PopupResult, showPopup } from '@hanzo/ui'
+import { type UnsubscribeCallback } from '@hanzo/hulypulse-client'
+import presentation, { createPulseClient } from '@hanzo/presentation'
+import { getMetadata } from '@hanzo/platform'
+import { type Room } from '@hanzo/love'
 import { joinOrCreateMeetingByInvite } from './meetings'
 import JoinRequestPopup from './components/meeting/invites/JoinRequestPopup.svelte'
 import JoinResponsePopup from './components/meeting/invites/JoinResponsePopup.svelte'

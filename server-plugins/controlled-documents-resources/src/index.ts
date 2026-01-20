@@ -18,10 +18,10 @@ import core, {
   type Timestamp,
   type TxCUD,
   concatLink
-} from '@hcengineering/core'
-import { NotificationType } from '@hcengineering/notification'
-import { getEmployees, getSocialIds } from '@hcengineering/server-contact'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { NotificationType } from '@hanzo/notification'
+import { getEmployees, getSocialIds } from '@hanzo/server-contact'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
 
 import documents, {
   ControlledDocument,
@@ -33,11 +33,11 @@ import documents, {
   getEffectiveDocUpdates,
   type DocumentRequest,
   type DocumentTraining
-} from '@hcengineering/controlled-documents'
-import { RequestStatus } from '@hcengineering/request'
-import training, { TrainingState, type TrainingRequest } from '@hcengineering/training'
-import { getMetadata } from '@hcengineering/platform'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/controlled-documents'
+import { RequestStatus } from '@hanzo/request'
+import training, { TrainingState, type TrainingRequest } from '@hanzo/training'
+import { getMetadata } from '@hanzo/platform'
+import { workbenchId } from '@hanzo/workbench'
 import slugify from 'slugify'
 
 async function getDocs (

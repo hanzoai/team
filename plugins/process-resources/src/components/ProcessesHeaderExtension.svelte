@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { EventButton, Execution, ExecutionStatus, ProcessToDo } from '@hcengineering/process'
-  import { Button } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { EventButton, Execution, ExecutionStatus, ProcessToDo } from '@hanzo/process'
+  import { Button } from '@hanzo/ui'
   import process from '../plugin'
 
   export let card: Card

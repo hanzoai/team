@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { createQuery, onClient } from '@hcengineering/presentation'
-import { getCurrentEmployee, type Translation } from '@hcengineering/contact'
+import { createQuery, onClient } from '@hanzo/presentation'
+import { getCurrentEmployee, type Translation } from '@hanzo/contact'
 import { writable } from 'svelte/store'
 
 import contact from './plugin'

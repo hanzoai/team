@@ -6,14 +6,14 @@
   import { WithLookup } from '@hanzo/core'
   import { GithubPullRequestReviewState, GithubReview } from '@hanzo/github'
 
-  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hcengineering/activity-resources'
-  import { getPersonByPersonIdCb } from '@hcengineering/contact-resources'
-  import { IntlString } from '@hcengineering/platform'
-  import { MessageViewer } from '@hcengineering/presentation'
-  import { isEmptyMarkup } from '@hcengineering/text'
-  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hcengineering/ui'
+  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hanzo/activity-resources'
+  import { getPersonByPersonIdCb } from '@hanzo/contact-resources'
+  import { IntlString } from '@hanzo/platform'
+  import { MessageViewer } from '@hanzo/presentation'
+  import { isEmptyMarkup } from '@hanzo/text'
+  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzo/ui'
   import github from '../../plugin'
-  import { Person } from '@hcengineering/contact'
+  import { Person } from '@hanzo/contact'
 
   export let value: WithLookup<GithubReview>
   export let showNotify: boolean = false

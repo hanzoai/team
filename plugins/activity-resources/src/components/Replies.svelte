@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { Avatar, getPersonByPersonRefStore } from '@hcengineering/contact-resources'
-  import { Doc, IdMap, notEmpty, Ref, WithLookup } from '@hcengineering/core'
-  import { Label, TimeSince } from '@hcengineering/ui'
-  import activity, { ActivityMessage } from '@hcengineering/activity'
+  import { Person } from '@hanzo/contact'
+  import { Avatar, getPersonByPersonRefStore } from '@hanzo/contact-resources'
+  import { Doc, IdMap, notEmpty, Ref, WithLookup } from '@hanzo/core'
+  import { Label, TimeSince } from '@hanzo/ui'
+  import activity, { ActivityMessage } from '@hanzo/activity'
   import notification, {
     ActivityInboxNotification,
     DocNotifyContext,

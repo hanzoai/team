@@ -21,14 +21,14 @@ import { SvelteRenderer } from '../node-view'
 import { ReferenceNode, type ReferenceNodeProps, type ReferenceOptions } from '@hanzo/text'
 import Suggestion, { type SuggestionKeyDownProps, type SuggestionOptions, type SuggestionProps } from './suggestion'
 
-import { type Blob, type Class, type Doc, type Ref } from '@hcengineering/core'
-import { getMetadata, getResource, translate } from '@hcengineering/platform'
-import presentation, { createQuery, getBlobRef, getClient, MessageBox } from '@hcengineering/presentation'
-import view from '@hcengineering/view'
+import { type Blob, type Class, type Doc, type Ref } from '@hanzo/core'
+import { getMetadata, getResource, translate } from '@hanzo/platform'
+import presentation, { createQuery, getBlobRef, getClient, MessageBox } from '@hanzo/presentation'
+import view from '@hanzo/view'
 
-import contact from '@hcengineering/contact'
-import { parseLocation, showPopup, tooltip, type LabelAndProps, type Location, fromCodePoint } from '@hcengineering/ui'
-import workbench, { type Application } from '@hcengineering/workbench'
+import contact from '@hanzo/contact'
+import { parseLocation, showPopup, tooltip, type LabelAndProps, type Location, fromCodePoint } from '@hanzo/ui'
+import workbench, { type Application } from '@hanzo/workbench'
 
 export interface ReferenceExtensionOptions extends ReferenceOptions {
   suggestion: Omit<SuggestionOptions, 'editor'>

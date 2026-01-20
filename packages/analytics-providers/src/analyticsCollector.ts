@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type AnalyticProvider } from '@hcengineering/analytics'
-import { AnalyticEventType } from '@hcengineering/analytics-collector'
-import { getMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
+import { type AnalyticProvider } from '@hanzo/analytics'
+import { AnalyticEventType } from '@hanzo/analytics-collector'
+import { getMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
 import { type QueuedEvent } from './types'
 import { collectEventMetadata, triggerUrlChange } from './utils'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Event, EventResult, SessionData } from '@hcengineering/communication-sdk-types'
-import type { MeasureContext } from '@hcengineering/core'
+import type { Event, EventResult, SessionData } from '@hanzo/communication-sdk-types'
+import type { MeasureContext } from '@hanzo/core'
 
 import type { CommunicationCallbacks, Enriched, Middleware, MiddlewareContext, TriggerCtx } from '../types'
 import { BaseMiddleware } from './base'

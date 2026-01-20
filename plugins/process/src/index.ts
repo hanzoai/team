@@ -11,12 +11,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Card, ExportFunc, MasterTag, Tag } from '@hcengineering/card'
-import { Association, Class, Client, Doc, DocumentUpdate, ObjQueryType, Rank, Ref, Tx, Type } from '@hcengineering/core'
-import { Asset, IntlString, Plugin, plugin, Resource } from '@hcengineering/platform'
-import { ToDo } from '@hcengineering/time'
-import { AnyComponent } from '@hcengineering/ui'
-import { AttributeCategory } from '@hcengineering/view'
+import { Card, ExportFunc, MasterTag, Tag } from '@hanzo/card'
+import { Association, Class, Client, Doc, DocumentUpdate, ObjQueryType, Rank, Ref, Tx, Type } from '@hanzo/core'
+import { Asset, IntlString, Plugin, plugin, Resource } from '@hanzo/platform'
+import { ToDo } from '@hanzo/time'
+import { AnyComponent } from '@hanzo/ui'
+import { AttributeCategory } from '@hanzo/view'
 import { SelectedExecutionContext } from './types'
 
 /**

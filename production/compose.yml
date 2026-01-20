@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   rekoni:
-    image: hardcoreeng/rekoni-service:${HANZO_VERSION}
+    image: hanzoai/rekoni-service:${HANZO_VERSION}
     environment:
       - SECRET=${SECRET}
     deploy:
@@ -56,7 +56,7 @@ services:
     restart: unless-stopped
 
   transactor:
-    image: hardcoreeng/transactor:${HANZO_VERSION}
+    image: hanzoai/transactor:${HANZO_VERSION}
     environment:
       - SERVER_PORT=3333
       - SERVER_SECRET=${SECRET}
@@ -72,7 +72,7 @@ services:
     restart: unless-stopped
 
   collaborator:
-    image: hardcoreeng/collaborator:${HANZO_VERSION}
+    image: hanzoai/collaborator:${HANZO_VERSION}
     environment:
       - COLLABORATOR_PORT=3078
       - SECRET=${SECRET}
@@ -83,7 +83,7 @@ services:
     restart: unless-stopped
 
   account:
-    image: hardcoreeng/account:${HANZO_VERSION}
+    image: hanzoai/account:${HANZO_VERSION}
     environment:
       - SERVER_PORT=3000
       - SERVER_SECRET=${SECRET}
@@ -99,7 +99,7 @@ services:
     restart: unless-stopped
 
   workspace:
-    image: hardcoreeng/workspace:${HANZO_VERSION}
+    image: hanzoai/workspace:${HANZO_VERSION}
     environment:
       - SERVER_SECRET=${SECRET}
       - DB_URL=mongodb://mongodb:27017
@@ -112,7 +112,7 @@ services:
     restart: unless-stopped
 
   front:
-    image: hardcoreeng/front:${HANZO_VERSION}
+    image: hanzoai/front:${HANZO_VERSION}
     environment:
       - SERVER_PORT=8080
       - SERVER_SECRET=${SECRET}
@@ -129,14 +129,14 @@ services:
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - DB_URL=mongodb://mongodb:27017
       - MONGO_URL=mongodb://mongodb:27017
-      - TITLE=${TITLE:-Huly Self Host}
+      - TITLE=${TITLE:-Hanzo Team}
       - DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
       - LAST_NAME_FIRST=${LAST_NAME_FIRST:-true}
       - DESKTOP_UPDATES_CHANNEL=selfhost
     restart: unless-stopped
 
   fulltext:
-    image: hardcoreeng/fulltext:${HANZO_VERSION}
+    image: hanzoai/fulltext:${HANZO_VERSION}
     environment:
       - SERVER_SECRET=${SECRET}
       - DB_URL=mongodb://mongodb:27017
@@ -149,7 +149,7 @@ services:
     restart: unless-stopped
 
   stats:
-    image: hardcoreeng/stats:${HANZO_VERSION}
+    image: hanzoai/stats:${HANZO_VERSION}
     environment:
       - PORT=4900
       - SERVER_SECRET=${SECRET}

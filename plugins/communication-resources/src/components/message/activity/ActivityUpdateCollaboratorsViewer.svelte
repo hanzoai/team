@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityCollaboratorsUpdate } from '@hcengineering/communication-types'
-  import { Card } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
-  import contact, { Person } from '@hcengineering/contact'
-  import { Icon, Label } from '@hcengineering/ui'
+  import { ActivityCollaboratorsUpdate } from '@hanzo/communication-types'
+  import { Card } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
+  import contact, { Person } from '@hanzo/contact'
+  import { Icon, Label } from '@hanzo/ui'
 
   import communication from '../../../plugin'
   import CollaboratorPresenter from '../../CollaboratorPresenter.svelte'

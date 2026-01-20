@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 import { getContext, setContext } from 'svelte'
-import type { TextEditorHandler } from '@hcengineering/text-editor'
+import type { TextEditorHandler } from '@hanzo/text-editor'
 
 const EDITOR_HANDLER_CONTEXT = Symbol('editor-handler')
 

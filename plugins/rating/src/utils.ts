@@ -1,4 +1,4 @@
-import type { PluginConfiguration } from '@hcengineering/core'
+import type { PluginConfiguration } from '@hanzo/core'
 import type { PersonRating } from '.'
 
 export interface LevelInfo {

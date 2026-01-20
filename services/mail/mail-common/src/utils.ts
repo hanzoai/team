@@ -16,7 +16,7 @@ import TurndownService from 'turndown'
 import sanitizeHtml from 'sanitize-html'
 import { imageSize } from 'image-size'
 
-import { BlobMetadata, MeasureContext } from '@hcengineering/core'
+import { BlobMetadata, MeasureContext } from '@hanzo/core'
 import {
   Attachment,
   EmailContact,
@@ -26,9 +26,9 @@ import {
   HulyMessageTypeHeader,
   MailHeader
 } from './types'
-import { MessageExtra, MessageID } from '@hcengineering/communication-types'
-import { CreateMessageEvent } from '@hcengineering/communication-sdk-types'
-import { generateMessageId } from '@hcengineering/communication-shared'
+import { MessageExtra, MessageID } from '@hanzo/communication-types'
+import { CreateMessageEvent } from '@hanzo/communication-sdk-types'
+import { generateMessageId } from '@hanzo/communication-shared'
 
 const NAME_EMAIL_PATTERN = /^(?:"?([^"<]+)"?\s*)?<([^>]+)>$/
 const NAME_SEGMENT_REGEX = /[\s,;]+/

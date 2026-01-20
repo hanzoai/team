@@ -3,7 +3,7 @@ import {
   type Middleware,
   type PipelineContext,
   type TxMiddlewareResult
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import core, {
   AccountRole,
   type Doc,
@@ -17,8 +17,8 @@ import core, {
   type TxCUD,
   TxProcessor,
   type TxUpdateDoc
-} from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
+} from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
 
 export class GuestPermissionsMiddleware extends BaseMiddleware implements Middleware {
   static async create (

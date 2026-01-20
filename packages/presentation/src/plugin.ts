@@ -35,11 +35,11 @@ import {
   type WithLookup,
   type WorkspaceDataId,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { type FileStorage } from '@hcengineering/storage-client'
-import { type ComponentExtensionId } from '@hcengineering/ui/src/types'
+} from '@hanzo/core'
+import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { type FileStorage } from '@hanzo/storage-client'
+import { type ComponentExtensionId } from '@hanzo/ui/src/types'
 import { type PresentationMiddlewareFactory } from './pipeline'
 import {
   type ComponentPointExtension,
@@ -50,7 +50,7 @@ import {
   type ObjectSearchCategory
 } from './types'
 
-export type { FileStorage } from '@hcengineering/storage-client'
+export type { FileStorage } from '@hanzo/storage-client'
 
 /**
  * @public

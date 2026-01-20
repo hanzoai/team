@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type DocUpdateMessageViewlet } from '@hcengineering/activity'
-import { calendarId } from '@hcengineering/calendar'
-import calendar from '@hcengineering/calendar-resources/src/plugin'
-import { type Doc, type Ref } from '@hcengineering/core'
-import { type NotificationGroup } from '@hcengineering/notification'
-import type { IntlString } from '@hcengineering/platform'
-import { mergeIds } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
+import { type DocUpdateMessageViewlet } from '@hanzo/activity'
+import { calendarId } from '@hanzo/calendar'
+import calendar from '@hanzo/calendar-resources/src/plugin'
+import { type Doc, type Ref } from '@hanzo/core'
+import { type NotificationGroup } from '@hanzo/notification'
+import type { IntlString } from '@hanzo/platform'
+import { mergeIds } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui/src/types'
 import {
   type Action,
   type ActionCategory,

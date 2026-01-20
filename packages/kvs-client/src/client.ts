@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { concatLink } from '@hcengineering/core'
-import { PlatformError } from '@hcengineering/platform'
+import { concatLink } from '@hanzo/core'
+import { PlatformError } from '@hanzo/platform'
 import { KeyValueClient, ListResult } from './types'
 
 /**

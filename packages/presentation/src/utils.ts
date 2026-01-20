@@ -56,11 +56,11 @@ import core, {
   type TypeAny,
   type WithLookup,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { getMetadata, getResource } from '@hcengineering/platform'
-import { LiveQuery as LQ } from '@hcengineering/query'
-import { type AnyComponent, type AnySvelteComponent, getRawCurrentLocation, workspaceId } from '@hcengineering/ui'
-import view, { type AttributeCategory, type AttributeEditor } from '@hcengineering/view'
+} from '@hanzo/core'
+import { getMetadata, getResource } from '@hanzo/platform'
+import { LiveQuery as LQ } from '@hanzo/query'
+import { type AnyComponent, type AnySvelteComponent, getRawCurrentLocation, workspaceId } from '@hanzo/ui'
+import view, { type AttributeCategory, type AttributeEditor } from '@hanzo/view'
 import { deepEqual } from 'fast-equals'
 import { onDestroy } from 'svelte'
 import { get, writable } from 'svelte/store'

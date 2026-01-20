@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import core from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
+import core from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
 import process from './plugin'
 
 export function defineTriggers (builder: Builder): void {

@@ -25,47 +25,47 @@
   "variants": [],
   "projects": [
     {
-      "packageName": "@hcengineering/scripts",
+      "packageName": "@hanzo/scripts",
       "projectFolder": "common/scripts",
       "shouldPublish": false
     },
     {
-      "packageName": "@hcengineering/communication-types",
+      "packageName": "@hanzo/communication-types",
       "projectFolder": "packages/types",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/communication-sdk-types",
+      "packageName": "@hanzo/communication-sdk-types",
       "projectFolder": "packages/sdk-types",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/communication-shared",
+      "packageName": "@hanzo/communication-shared",
       "projectFolder": "packages/shared",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/communication-rest-client",
+      "packageName": "@hanzo/communication-rest-client",
       "projectFolder": "packages/rest-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/communication-cockroach",
+      "packageName": "@hanzo/communication-cockroach",
       "projectFolder": "packages/cockroach",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/communication-server",
+      "packageName": "@hanzo/communication-server",
       "projectFolder": "packages/server",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/communication-query",
+      "packageName": "@hanzo/communication-query",
       "projectFolder": "packages/query",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/communication-client-query",
+      "packageName": "@hanzo/communication-client-query",
       "projectFolder": "packages/client-query",
       "shouldPublish": true
     }

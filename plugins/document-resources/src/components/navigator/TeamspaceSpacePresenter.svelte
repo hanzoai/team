@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Ref, SortingOrder, Space, generateId } from '@hcengineering/core'
-  import { Document, DocumentEvents, Teamspace } from '@hcengineering/document'
-  import { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
+  import { Analytics } from '@hanzo/analytics'
+  import { Ref, SortingOrder, Space, generateId } from '@hanzo/core'
+  import { Document, DocumentEvents, Teamspace } from '@hanzo/document'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
   import {
     IconEdit,
     getPlatformColorDef,

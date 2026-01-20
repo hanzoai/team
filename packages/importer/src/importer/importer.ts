@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import attachment, { type Attachment, type Drawing } from '@hcengineering/attachment'
-import chunter, { type ChatMessage } from '@hcengineering/chunter'
-import { type Employee, type Person } from '@hcengineering/contact'
+import attachment, { type Attachment, type Drawing } from '@hanzo/attachment'
+import chunter, { type ChatMessage } from '@hanzo/chunter'
+import { type Employee, type Person } from '@hanzo/contact'
 import documents, {
   type ChangeControl,
   type ControlledDocument,
@@ -68,8 +68,8 @@ import tracker, {
   type IssueStatus,
   type Project,
   TimeReportDayType
-} from '@hcengineering/tracker'
-import view from '@hcengineering/view'
+} from '@hanzo/tracker'
+import view from '@hanzo/view'
 import { type Props, type UnifiedUpdate, type UnifiedDoc, type UnifiedFile, type UnifiedMixin } from '../types'
 import { type Logger } from './logger'
 import { type MarkdownPreprocessor, NoopMarkdownPreprocessor } from './preprocessor'

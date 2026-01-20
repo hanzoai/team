@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { State } from '@hcengineering/process'
-  import { ButtonIcon, EditBox, IconDelete } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { getClient } from '@hanzo/presentation'
+  import { State } from '@hanzo/process'
+  import { ButtonIcon, EditBox, IconDelete } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   export let value: State
   const client = getClient()

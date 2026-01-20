@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Space } from '@hcengineering/core'
-  import presentation, { Card, getClient } from '@hcengineering/presentation'
-  import { ExecutionContext, Process, SelectedUserRequest, Transition } from '@hcengineering/process'
-  import { Label } from '@hcengineering/ui'
+  import { Ref, Space } from '@hanzo/core'
+  import presentation, { Card, getClient } from '@hanzo/presentation'
+  import { ExecutionContext, Process, SelectedUserRequest, Transition } from '@hanzo/process'
+  import { Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import TransitionPresenter from '../settings/TransitionPresenter.svelte'

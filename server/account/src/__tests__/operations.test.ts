@@ -23,9 +23,9 @@ import {
   type WorkspaceUuid,
   type AccountUuid,
   systemAccountUuid
-} from '@hcengineering/core'
-import platform, { PlatformError, Status, Severity, getMetadata } from '@hcengineering/platform'
-import { decodeToken, decodeTokenVerbose } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import platform, { PlatformError, Status, Severity, getMetadata } from '@hanzo/platform'
+import { decodeToken, decodeTokenVerbose } from '@hanzo/server-token'
 
 import * as utils from '../utils'
 import { type AccountDB, type SocialId } from '../types'

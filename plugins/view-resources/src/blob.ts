@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type Blob, type BlobMetadata, type Ref } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import presentation, { getImageSize, getPreviewMetadata } from '@hcengineering/presentation'
+import { type Blob, type BlobMetadata, type Ref } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import presentation, { getImageSize, getPreviewMetadata } from '@hanzo/presentation'
 
 export async function blobPreviewMetadata (blob: Ref<Blob>): Promise<BlobMetadata | undefined> {
   const workspace = getMetadata(presentation.metadata.WorkspaceUuid) ?? ''

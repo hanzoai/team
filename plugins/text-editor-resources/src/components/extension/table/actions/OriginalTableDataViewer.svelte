@@ -14,11 +14,11 @@
 //
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, Ref } from '@hcengineering/core'
-  import presentation, { Card } from '@hcengineering/presentation'
-  import textEditor from '@hcengineering/text-editor'
-  import { Component, Loading } from '@hcengineering/ui'
-  import type { BuildModelKey, Viewlet } from '@hcengineering/view'
+  import type { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
+  import presentation, { Card } from '@hanzo/presentation'
+  import textEditor from '@hanzo/text-editor'
+  import { Component, Loading } from '@hanzo/ui'
+  import type { BuildModelKey, Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
 
   export let _class: Ref<Class<Doc>>

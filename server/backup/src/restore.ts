@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   Doc,
   Domain,
@@ -28,9 +28,9 @@ import core, {
   type LowLevelStorage,
   type TxCUD,
   type WorkspaceIds
-} from '@hcengineering/core'
-import { BlobClient } from '@hcengineering/server-client'
-import { BackupClientOps, createDummyStorageAdapter, type Pipeline } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { BlobClient } from '@hanzo/server-client'
+import { BackupClientOps, createDummyStorageAdapter, type Pipeline } from '@hanzo/server-core'
 import { deepEqual } from 'fast-equals'
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { extract } from 'tar-stream'

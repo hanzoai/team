@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { WorkspaceUuid, type Client } from '@hcengineering/core'
-import { createClient, getTransactorEndpoint } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
-import { systemAccountUuid } from '@hcengineering/core'
+import { WorkspaceUuid, type Client } from '@hanzo/core'
+import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
+import { systemAccountUuid } from '@hanzo/core'
 import {
   createRestClient as createCommunicationRestClient,
   RestClient as CommunicationRestClient
-} from '@hcengineering/communication-rest-client'
+} from '@hanzo/communication-rest-client'
 
 export async function getClient (token: string): Promise<Client> {
   const endpoint = await getTransactorEndpoint(token)

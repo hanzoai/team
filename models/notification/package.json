@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/model-notification",
+  "name": "@hanzo/model-notification",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -18,7 +18,7 @@
     "test": "jest --passWithNoTests --silent --forceExit"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "workspace:^0.7.19",
+    "@hanzo/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.54.0",
@@ -34,23 +34,23 @@
     "ts-jest": "^29.1.1"
   },
   "dependencies": {
-    "@hcengineering/activity": "workspace:^0.7.0",
-    "@hcengineering/chunter": "workspace:^0.7.0",
-    "@hcengineering/contact": "workspace:^0.7.0",
-    "@hcengineering/core": "workspace:^0.7.24",
-    "@hcengineering/model": "workspace:^0.7.17",
-    "@hcengineering/model-activity": "workspace:^0.7.0",
-    "@hcengineering/model-attachment": "workspace:^0.7.0",
-    "@hcengineering/model-core": "workspace:^0.7.0",
-    "@hcengineering/model-preference": "workspace:^0.7.0",
-    "@hcengineering/model-view": "workspace:^0.7.0",
-    "@hcengineering/model-workbench": "workspace:^0.7.0",
-    "@hcengineering/notification": "workspace:^0.7.0",
-    "@hcengineering/platform": "workspace:^0.7.19",
-    "@hcengineering/preference": "workspace:^0.7.0",
-    "@hcengineering/setting": "workspace:^0.7.0",
-    "@hcengineering/ui": "workspace:^0.7.0",
-    "@hcengineering/view": "workspace:^0.7.0",
-    "@hcengineering/workbench": "workspace:^0.7.0"
+    "@hanzo/activity": "workspace:^0.7.0",
+    "@hanzo/chunter": "workspace:^0.7.0",
+    "@hanzo/contact": "workspace:^0.7.0",
+    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/model": "workspace:^0.7.17",
+    "@hanzo/model-activity": "workspace:^0.7.0",
+    "@hanzo/model-attachment": "workspace:^0.7.0",
+    "@hanzo/model-core": "workspace:^0.7.0",
+    "@hanzo/model-preference": "workspace:^0.7.0",
+    "@hanzo/model-view": "workspace:^0.7.0",
+    "@hanzo/model-workbench": "workspace:^0.7.0",
+    "@hanzo/notification": "workspace:^0.7.0",
+    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzo/preference": "workspace:^0.7.0",
+    "@hanzo/setting": "workspace:^0.7.0",
+    "@hanzo/ui": "workspace:^0.7.0",
+    "@hanzo/view": "workspace:^0.7.0",
+    "@hanzo/workbench": "workspace:^0.7.0"
   }
 }

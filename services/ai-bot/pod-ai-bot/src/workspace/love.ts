@@ -30,7 +30,7 @@ import core, {
   WorkspaceUuid,
   pickPrimarySocialId,
   AccountUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import love, {
   getFreeRoomPlace,
   MeetingMinutes,

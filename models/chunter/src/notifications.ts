@@ -19,8 +19,8 @@ import core from '@hanzo/model-core'
 import activity from '@hanzo/activity'
 
 import chunter from './plugin'
-import { type ClassCollaborators } from '@hcengineering/core'
-import { type Channel, type DirectMessage } from '@hcengineering/chunter'
+import { type ClassCollaborators } from '@hanzo/core'
+import { type Channel, type DirectMessage } from '@hanzo/chunter'
 
 export function defineNotifications (builder: Builder): void {
   builder.createDoc<ClassCollaborators<DirectMessage>>(core.class.ClassCollaborators, core.space.Model, {

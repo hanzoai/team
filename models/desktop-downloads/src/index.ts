@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import presentation from '@hcengineering/model-presentation'
-import workbench from '@hcengineering/model-workbench'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import presentation from '@hanzo/model-presentation'
+import workbench from '@hanzo/model-workbench'
 
 import desktopDownloads from './plugin'
 
-export { desktopDownloadsId } from '@hcengineering/desktop-downloads'
+export { desktopDownloadsId } from '@hanzo/desktop-downloads'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { Card, getAttrEditor, getClient } from '@hcengineering/presentation'
-  import { ContextId, ExecutionContext, UserResult } from '@hcengineering/process'
-  import { Component, tooltip } from '@hcengineering/ui'
+  import presentation, { Card, getAttrEditor, getClient } from '@hanzo/presentation'
+  import { ContextId, ExecutionContext, UserResult } from '@hanzo/process'
+  import { Component, tooltip } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
 

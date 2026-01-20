@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Notification } from '@hcengineering/communication-types'
-  import { Card } from '@hcengineering/card'
+  import { Notification } from '@hanzo/communication-types'
+  import { Card } from '@hanzo/card'
 
   import NotificationPreview from './preview/NotificationPreview.svelte'
 

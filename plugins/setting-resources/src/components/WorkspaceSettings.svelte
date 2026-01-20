@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { createQuery, isAdminUser, isDisabled } from '@hcengineering/presentation'
-  import setting, { SettingsCategory } from '@hcengineering/setting'
+  import { getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { createQuery, isAdminUser, isDisabled } from '@hanzo/presentation'
+  import setting, { SettingsCategory } from '@hanzo/setting'
   import {
     Component,
     Location,

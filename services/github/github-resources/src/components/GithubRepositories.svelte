@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { AttachedDoc, Ref, WithLookup } from '@hcengineering/core'
-  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hcengineering/github'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { NavLink, getClient, isAdminUser, MessageBox } from '@hcengineering/presentation'
-  import tracker, { Project } from '@hcengineering/tracker'
+  import { AttachedDoc, Ref, WithLookup } from '@hanzo/core'
+  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { NavLink, getClient, isAdminUser, MessageBox } from '@hanzo/presentation'
+  import tracker, { Project } from '@hanzo/tracker'
   import ui, {
     Action,
     Button,

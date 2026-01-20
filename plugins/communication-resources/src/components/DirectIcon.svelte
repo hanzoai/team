@@ -12,13 +12,13 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Direct } from '@hcengineering/communication'
-  import { Icon, IconSize } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
-  import contact, { Employee, getCurrentEmployee, Person } from '@hcengineering/contact'
-  import { classIcon } from '@hcengineering/view-resources'
-  import { Ref } from '@hcengineering/core'
-  import { Avatar, employeeByIdStore, getPersonByPersonRef } from '@hcengineering/contact-resources'
+  import { Direct } from '@hanzo/communication'
+  import { Icon, IconSize } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
+  import contact, { Employee, getCurrentEmployee, Person } from '@hanzo/contact'
+  import { classIcon } from '@hanzo/view-resources'
+  import { Ref } from '@hanzo/core'
+  import { Avatar, employeeByIdStore, getPersonByPersonRef } from '@hanzo/contact-resources'
 
   import communication from '../plugin'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Blob, type MeasureContext, type WorkspaceUuid, RateLimiter, withContext } from '@hcengineering/core'
-import { type StorageAdapter } from '@hcengineering/server-core'
+import { type Blob, type MeasureContext, type WorkspaceUuid, RateLimiter, withContext } from '@hanzo/core'
+import { type StorageAdapter } from '@hanzo/server-core'
 
 import { type Cache, withCache } from './cache'
 import { BadRequestError, NotFoundError } from './error'

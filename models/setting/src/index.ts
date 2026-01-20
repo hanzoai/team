@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import contact from '@hcengineering/contact'
+import activity from '@hanzo/activity'
+import contact from '@hanzo/contact'
 import {
   AccountRole,
   DOMAIN_MODEL,
@@ -23,13 +23,13 @@ import {
   type ClassCollaborators,
   type Ref,
   type IntegrationKind
-} from '@hcengineering/core'
-import exportPlugin from '@hcengineering/export'
-import { Mixin, Model, UX, type Builder } from '@hcengineering/model'
-import core, { TClass, TConfiguration, TDoc } from '@hcengineering/model-core'
-import view, { createAction } from '@hcengineering/model-view'
-import notification from '@hcengineering/notification'
-import type { Asset, IntlString } from '@hcengineering/platform'
+} from '@hanzo/core'
+import exportPlugin from '@hanzo/export'
+import { Mixin, Model, UX, type Builder } from '@hanzo/model'
+import core, { TClass, TConfiguration, TDoc } from '@hanzo/model-core'
+import view, { createAction } from '@hanzo/model-view'
+import notification from '@hanzo/notification'
+import type { Asset, IntlString } from '@hanzo/platform'
 import {
   DOMAIN_SETTING,
   settingId,
@@ -45,8 +45,8 @@ import {
   type SpaceTypeEditorSection,
   type UserMixin,
   type WorkspaceSetting
-} from '@hcengineering/setting'
-import templates from '@hcengineering/templates'
+} from '@hanzo/setting'
+import templates from '@hanzo/templates'
 import setting from './plugin'
 
 import workbench, { WidgetType } from '@hanzo/model-workbench'

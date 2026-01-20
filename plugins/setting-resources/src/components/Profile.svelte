@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { combineName, getFirstName, getLastName } from '@hcengineering/contact'
-  import { ChannelsEditor, EditableAvatar, myEmployeeStore } from '@hcengineering/contact-resources'
-  import { getCurrentAccount, SocialIdType } from '@hcengineering/core'
-  import login, { loginId } from '@hcengineering/login'
-  import { getResource } from '@hcengineering/platform'
-  import { AttributeEditor, createQuery, getClient, hasResource, MessageBox } from '@hcengineering/presentation'
+  import contact, { combineName, getFirstName, getLastName } from '@hanzo/contact'
+  import { ChannelsEditor, EditableAvatar, myEmployeeStore } from '@hanzo/contact-resources'
+  import { getCurrentAccount, SocialIdType } from '@hanzo/core'
+  import login, { loginId } from '@hanzo/login'
+  import { getResource } from '@hanzo/platform'
+  import { AttributeEditor, createQuery, getClient, hasResource, MessageBox } from '@hanzo/presentation'
   import {
     Breadcrumb,
     Button,
@@ -30,10 +30,10 @@
     navigate,
     Scroller,
     showPopup
-  } from '@hcengineering/ui'
-  import { logIn, logOut } from '@hcengineering/workbench-resources'
+  } from '@hanzo/ui'
+  import { logIn, logOut } from '@hanzo/workbench-resources'
 
-  import rating, { type PersonRating } from '@hcengineering/rating'
+  import rating, { type PersonRating } from '@hanzo/rating'
   import setting from '../plugin'
   import SocialIdsEditor from './socialIds/SocialIdsEditor.svelte'
 

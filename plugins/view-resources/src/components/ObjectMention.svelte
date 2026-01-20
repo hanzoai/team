@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { getResource, translateCB } from '@hcengineering/platform'
-  import { createQuery, getClient, IconWithEmoji } from '@hcengineering/presentation'
-  import { AnyComponent, Icon, LabelAndProps, themeStore, tooltip } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { getResource, translateCB } from '@hanzo/platform'
+  import { createQuery, getClient, IconWithEmoji } from '@hanzo/presentation'
+  import { AnyComponent, Icon, LabelAndProps, themeStore, tooltip } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
   import { getReferenceLabel } from '@hanzo/text-editor-resources/src/components/extension/reference'
   import { classIcon } from '../utils'

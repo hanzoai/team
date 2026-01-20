@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import core from '@hcengineering/core'
-  import { TypeNumber } from '@hcengineering/model'
-  import { getEmbeddedLabel, translateCB } from '@hcengineering/platform'
-  import { getClient, IconDownload, IconWithEmoji, MessageBox } from '@hcengineering/presentation'
-  import setting from '@hcengineering/setting'
+  import { MasterTag } from '@hanzo/card'
+  import core from '@hanzo/core'
+  import { TypeNumber } from '@hanzo/model'
+  import { getEmbeddedLabel, translateCB } from '@hanzo/platform'
+  import { getClient, IconDownload, IconWithEmoji, MessageBox } from '@hanzo/presentation'
+  import setting from '@hanzo/setting'
   import {
     ButtonIcon,
     type ColorDefinition,
@@ -31,9 +31,9 @@
     showPopup,
     themeStore,
     ToggleWithLabel
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { ColorsPopup, IconPicker } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { ColorsPopup, IconPicker } from '@hanzo/view-resources'
   import { exportModule } from '../../exporter'
   import card from '../../plugin'
   import { deleteMasterTag } from '../../utils'

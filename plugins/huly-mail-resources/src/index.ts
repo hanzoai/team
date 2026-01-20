@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
-import type { Integration } from '@hcengineering/account-client'
+import { type Resources } from '@hanzo/platform'
+import type { Integration } from '@hanzo/account-client'
 
 import Configure from './components/Configure.svelte'
 import IntegrationState from './components/IntegrationState.svelte'

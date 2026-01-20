@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card from '@hcengineering/card'
-  import { AnyAttribute, Class, Doc, Ref, Role } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { DropdownLabels, Label, Toggle } from '@hcengineering/ui'
+  import card from '@hanzo/card'
+  import { AnyAttribute, Class, Doc, Ref, Role } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { DropdownLabels, Label, Toggle } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
 

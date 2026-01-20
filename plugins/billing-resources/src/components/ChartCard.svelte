@@ -1,7 +1,7 @@
 <script lang="ts">
   import LineChart from './Chart/LineChart.svelte'
-  import { Label } from '@hcengineering/ui'
-  import type { IntlString } from '@hcengineering/platform'
+  import { Label } from '@hanzo/ui'
+  import type { IntlString } from '@hanzo/platform'
 
   export let label: IntlString
   export let valueFormatter: (value: number) => Promise<string> = (value) => Promise.resolve(value.toString())

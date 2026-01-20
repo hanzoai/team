@@ -14,8 +14,8 @@
 //
 
 import { derived, get, type Readable, writable } from 'svelte/store'
-import { type PersonId, type Ref } from '@hcengineering/core'
-import { contactCache, type ContactCacheChange, type Person } from '@hcengineering/contact'
+import { type PersonId, type Ref } from '@hanzo/core'
+import { contactCache, type ContactCacheChange, type Person } from '@hanzo/contact'
 
 import { getPersonRefsByPersonIds, getPersonsByPersonIds, getPersonsByPersonRefs } from './utils'
 

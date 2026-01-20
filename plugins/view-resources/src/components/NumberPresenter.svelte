@@ -16,7 +16,7 @@
 <script lang="ts">
   import { IntlString } from '@hanzo/platform'
   import NumberEditor from './NumberEditor.svelte'
-  import { AnyAttribute } from '@hcengineering/core'
+  import { AnyAttribute } from '@hanzo/core'
 
   export let value: number | undefined
   export let label: IntlString

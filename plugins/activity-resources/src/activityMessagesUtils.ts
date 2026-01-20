@@ -32,10 +32,10 @@ import {
   getAttributePresenter,
   getDocLinkTitle,
   hasAttributePresenter
-} from '@hcengineering/view-resources'
-import contact, { type Person } from '@hcengineering/contact'
-import { type IntlString } from '@hcengineering/platform'
-import { type AnyComponent } from '@hcengineering/ui'
+} from '@hanzo/view-resources'
+import contact, { type Person } from '@hanzo/contact'
+import { type IntlString } from '@hanzo/platform'
+import { type AnyComponent } from '@hanzo/ui'
 import activity, {
   type ActivityMessage,
   type DisplayActivityMessage,

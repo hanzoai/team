@@ -55,8 +55,8 @@ import tags from '@hanzo/tags'
 import { compareDocumentVersions } from '@hanzo/controlled-documents/src'
 import { makeRank } from '@hanzo/rank'
 import documents, { DOMAIN_DOCUMENTS } from './index'
-import { DOMAIN_REQUEST } from '@hcengineering/model-request'
-import { RequestStatus } from '@hcengineering/request'
+import { DOMAIN_REQUEST } from '@hanzo/model-request'
+import { RequestStatus } from '@hanzo/request'
 
 async function createTemplatesSpace (tx: TxOperations): Promise<void> {
   const existingSpace = await tx.findOne(documents.class.DocumentSpace, {

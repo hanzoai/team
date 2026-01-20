@@ -12,15 +12,15 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { Component, Label, tooltip } from '@hcengineering/ui'
-  import notification from '@hcengineering/notification'
-  import { getDocIdentifier, getDocTitle } from '@hcengineering/view-resources'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { Doc } from '@hcengineering/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Component, Label, tooltip } from '@hanzo/ui'
+  import notification from '@hanzo/notification'
+  import { getDocIdentifier, getDocTitle } from '@hanzo/view-resources'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Doc } from '@hanzo/core'
 
   import { NavigationItem } from '../type'
-  import cardPlugin, { Card } from '@hcengineering/card'
+  import cardPlugin, { Card } from '@hanzo/card'
 
   export let doc: Doc | undefined
   export let navItem: NavigationItem

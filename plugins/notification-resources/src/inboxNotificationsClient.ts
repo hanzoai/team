@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity from '@hcengineering/activity'
+import activity from '@hanzo/activity'
 import core, {
   type Account,
   AccountRole,

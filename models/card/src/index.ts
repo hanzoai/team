@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import activity from '@hcengineering/activity'
-import communication from '@hcengineering/communication'
+import activity from '@hanzo/activity'
+import communication from '@hanzo/communication'
 import {
   type CanCreateCardResource,
   type Card,
@@ -50,7 +50,7 @@ import core, {
   type Rank,
   type Ref,
   SortingOrder
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   type Builder,
@@ -66,20 +66,20 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import { TRole as TBaseRole, TClass, TDoc, TMixin, TTypedSpace } from '@hcengineering/model-core'
-import { createPublicLinkAction } from '@hcengineering/model-guest'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import presentation from '@hcengineering/model-presentation'
-import setting from '@hcengineering/model-setting'
-import view, { type Viewlet } from '@hcengineering/model-view'
-import workbench, { WidgetType } from '@hcengineering/model-workbench'
-import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hcengineering/platform'
-import time, { type ToDo } from '@hcengineering/time'
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
-import { type AnyComponent } from '@hcengineering/ui/src/types'
-import { type BuildModelKey } from '@hcengineering/view'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import { TRole as TBaseRole, TClass, TDoc, TMixin, TTypedSpace } from '@hanzo/model-core'
+import { createPublicLinkAction } from '@hanzo/model-guest'
+import preference, { TPreference } from '@hanzo/model-preference'
+import presentation from '@hanzo/model-presentation'
+import setting from '@hanzo/model-setting'
+import view, { type Viewlet } from '@hanzo/model-view'
+import workbench, { WidgetType } from '@hanzo/model-workbench'
+import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hanzo/platform'
+import time, { type ToDo } from '@hanzo/time'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
+import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type BuildModelKey } from '@hanzo/view'
 import { createActions } from './actions'
 import { definePermissions } from './permissions'
 import card from './plugin'

@@ -16,18 +16,18 @@
   import { createEventDispatcher, onMount } from 'svelte'
   import { fade } from 'svelte/transition'
 
-  import presentation, { Card, getClient, getCurrentWorkspaceUuid, SpaceSelector } from '@hcengineering/presentation'
-  import { Icon, Label, Loading } from '@hcengineering/ui'
-  import type { Integration } from '@hcengineering/account-client'
-  import { isWorkspaceIntegration, getIntegrationConfig } from '@hcengineering/integration-client'
-  import card from '@hcengineering/card'
-  import contact from '@hcengineering/contact'
+  import presentation, { Card, getClient, getCurrentWorkspaceUuid, SpaceSelector } from '@hanzo/presentation'
+  import { Icon, Label, Loading } from '@hanzo/ui'
+  import type { Integration } from '@hanzo/account-client'
+  import { isWorkspaceIntegration, getIntegrationConfig } from '@hanzo/integration-client'
+  import card from '@hanzo/card'
+  import contact from '@hanzo/contact'
 
   import { getIntegrationClient, startSync } from '../api'
   import gmail from '../plugin'
-  import core, { getCurrentAccount, Ref, Space } from '@hcengineering/core'
+  import core, { getCurrentAccount, Ref, Space } from '@hanzo/core'
   import GmailColor from './icons/GmailColor.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let integration: Integration
 

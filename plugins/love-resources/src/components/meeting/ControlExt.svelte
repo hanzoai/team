@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IdMap, Ref, toIdMap } from '@hcengineering/core'
-  import { isOffice, ParticipantInfo, Room } from '@hcengineering/love'
-  import { getClient } from '@hcengineering/presentation'
-  import { closePopup, eventToHTMLElement, Location, location, showPopup, closeTooltip } from '@hcengineering/ui'
+  import { IdMap, Ref, toIdMap } from '@hanzo/core'
+  import { isOffice, ParticipantInfo, Room } from '@hanzo/love'
+  import { getClient } from '@hanzo/presentation'
+  import { closePopup, eventToHTMLElement, Location, location, showPopup, closeTooltip } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
-  import workbench from '@hcengineering/workbench'
-  import { closeWidget, sidebarStore } from '@hcengineering/workbench-resources'
+  import workbench from '@hanzo/workbench'
+  import { closeWidget, sidebarStore } from '@hanzo/workbench-resources'
 
   import love from '../../plugin'
   import { currentRoom, infos, myInfo, rooms } from '../../stores'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute } from '@hcengineering/core'
-  import { Card, findAttributeEditor, getClient } from '@hcengineering/presentation'
-  import { Component } from '@hcengineering/ui'
+  import { AnyAttribute } from '@hanzo/core'
+  import { Card, findAttributeEditor, getClient } from '@hanzo/presentation'
+  import { Component } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let attribute: AnyAttribute

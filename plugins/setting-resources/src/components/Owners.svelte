@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, formatName } from '@hcengineering/contact'
-  import { EmployeePresenter } from '@hcengineering/contact-resources'
-  import { Account, AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Breadcrumb, DropdownIntlItem, DropdownLabelsIntl, Header, Scroller, SearchInput } from '@hcengineering/ui'
+  import contact, { Employee, formatName } from '@hanzo/contact'
+  import { EmployeePresenter } from '@hanzo/contact-resources'
+  import { Account, AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { Breadcrumb, DropdownIntlItem, DropdownLabelsIntl, Header, Scroller, SearchInput } from '@hanzo/ui'
   import { onMount } from 'svelte'
 
   import setting from '../plugin'
   import { getAccountClient } from '../utils'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   const query = createQuery()
   const currentAccount = getCurrentAccount()

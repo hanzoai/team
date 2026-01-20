@@ -37,7 +37,7 @@ import {
   TObjectChatPanel,
   TThreadMessage
 } from './types'
-import { AccountRole } from '@hcengineering/core'
+import { AccountRole } from '@hanzo/core'
 
 export { chunterId } from '@hanzo/chunter'
 export { chunterOperation } from './migration'

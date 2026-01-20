@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, Label } from '@hcengineering/ui'
+  import { Button, Label } from '@hanzo/ui'
   import love from '../../../plugin'
   import { rooms } from '../../../stores'
   import { getRoomLabel } from '../../../utils'

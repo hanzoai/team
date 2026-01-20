@@ -16,9 +16,9 @@ import communication, {
   type MessageAction,
   type MessageActionFunction,
   type MessageActionVisibilityTester
-} from '@hcengineering/communication'
-import { languageStore, showPopup } from '@hcengineering/ui'
-import emojiPlugin from '@hcengineering/emoji'
+} from '@hanzo/communication'
+import { languageStore, showPopup } from '@hanzo/ui'
+import emojiPlugin from '@hanzo/emoji'
 import {
   type AppletParams,
   type AttachmentID,
@@ -30,9 +30,9 @@ import {
   type MessageID,
   MessageType,
   SortingOrder
-} from '@hcengineering/communication-types'
-import cardPlugin, { type Card, type MasterTag } from '@hcengineering/card'
-import { addRefreshListener, deleteFile, getClient, getCommunicationClient } from '@hcengineering/presentation'
+} from '@hanzo/communication-types'
+import cardPlugin, { type Card, type MasterTag } from '@hanzo/card'
+import { addRefreshListener, deleteFile, getClient, getCommunicationClient } from '@hanzo/presentation'
 import {
   AccountRole,
   fillDefaults,
@@ -41,19 +41,19 @@ import {
   hasAccountRole,
   type MarkupBlobRef,
   type Ref
-} from '@hcengineering/core'
-import { getMetadata, getResource } from '@hcengineering/platform'
-import { employeeByPersonIdStore } from '@hcengineering/contact-resources'
-import { getEmployeeBySocialId } from '@hcengineering/contact'
-import { makeRank } from '@hcengineering/rank'
-import chat from '@hcengineering/chat'
-import { markupToText } from '@hcengineering/text'
+} from '@hanzo/core'
+import { getMetadata, getResource } from '@hanzo/platform'
+import { employeeByPersonIdStore } from '@hanzo/contact-resources'
+import { getEmployeeBySocialId } from '@hanzo/contact'
+import { makeRank } from '@hanzo/rank'
+import chat from '@hanzo/chat'
+import { markupToText } from '@hanzo/text'
 import { get } from 'svelte/store'
-import { translate as aiTranslate } from '@hcengineering/ai-bot-resources'
-import aiBot from '@hcengineering/ai-bot'
+import { translate as aiTranslate } from '@hanzo/ai-bot-resources'
+import aiBot from '@hanzo/ai-bot'
 import CreateCardFromMessagePopup from './components/CreateCardFromMessagePopup.svelte'
-import { Analytics } from '@hcengineering/analytics'
-import { isAppletAttachment, isBlobAttachment, isLinkPreviewAttachment } from '@hcengineering/communication-shared'
+import { Analytics } from '@hanzo/analytics'
+import { isAppletAttachment, isBlobAttachment, isLinkPreviewAttachment } from '@hanzo/communication-shared'
 
 import { isCardAllowedForCommunications, loadLinkPreviewParams, showForbidden, toggleReaction, toMarkup } from './utils'
 import {

@@ -61,7 +61,7 @@ import {
   type TypeAny,
   type Version,
   type VersionableClass
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   Hidden,
   Index,

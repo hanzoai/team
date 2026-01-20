@@ -13,10 +13,10 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
-  import { Component, getPlatformColorDef, themeStore, tooltip } from '@hcengineering/ui'
-  import communication from '@hcengineering/communication'
+  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
+  import { Component, getPlatformColorDef, themeStore, tooltip } from '@hanzo/ui'
+  import communication from '@hanzo/communication'
 
   import NotifyMarker from './NotifyMarker.svelte'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hcengineering/core'
-import { StorageConfig } from '@hcengineering/server-core'
+import { MeasureContext } from '@hanzo/core'
+import { StorageConfig } from '@hanzo/server-core'
 
 import {
   handleListLiveKitSessions,

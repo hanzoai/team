@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { themeStore } from '@hcengineering/theme'
+  import { themeStore } from '@hanzo/theme'
   import { ColorMetaNameOrHex } from '../drawingUtils'
   import { DrawingBoardColoringSetup, metaColorNameToHex } from '../drawingColors'
 

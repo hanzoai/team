@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Card, CardEvents } from '@hcengineering/card'
-  import { Ref } from '@hcengineering/core'
+  import { Analytics } from '@hanzo/analytics'
+  import { Card, CardEvents } from '@hanzo/card'
+  import { Ref } from '@hanzo/core'
   import { onMount } from 'svelte'
 
   import EditCardNew from './EditCardNew.svelte'

@@ -48,8 +48,8 @@ import core, {
   withContext,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import drivePlugin, { type FileVersion } from '@hcengineering/drive'
+} from '@hanzo/core'
+import drivePlugin, { type FileVersion } from '@hanzo/drive'
 import type {
   ConsumerControl,
   ContentTextAdapter,
@@ -58,10 +58,10 @@ import type {
   FulltextListener,
   IndexedDoc,
   StorageAdapter
-} from '@hcengineering/server-core'
-import { RateLimiter, SessionDataImpl } from '@hcengineering/server-core'
-import { jsonToText, markupToJSON, markupToText } from '@hcengineering/text'
-import card, { type Card } from '@hcengineering/card'
+} from '@hanzo/server-core'
+import { RateLimiter, SessionDataImpl } from '@hanzo/server-core'
+import { jsonToText, markupToJSON, markupToText } from '@hanzo/text'
+import card, { type Card } from '@hanzo/card'
 import { findSearchPresenter, updateDocWithPresenter } from '../mapper'
 import { type FullTextPipeline } from './types'
 import { blobPseudoClass, createIndexedDoc, createIndexedDocFromMessage, getContent, messagePseudoClass } from './utils'
@@ -78,7 +78,7 @@ import {
   type SessionData as CommunicationSession,
   type UpdateCardTypeEvent,
   type UpdatePatchEvent
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import {
   type AttachmentID,
   type BlobAttachment,
@@ -86,16 +86,16 @@ import {
   type CardID,
   type Message,
   type MessageID
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import {
   isBlobAttachment,
   isBlobAttachmentType,
   isLinkPreviewAttachment,
   loadMessages,
   loadMessagesGroups
-} from '@hcengineering/communication-shared'
-import { markdownToMarkup } from '@hcengineering/text-markdown'
-import { type HulylakeWorkspaceClient } from '@hcengineering/hulylake-client'
+} from '@hanzo/communication-shared'
+import { markdownToMarkup } from '@hanzo/text-markdown'
+import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
 
 export * from './types'
 export * from './utils'

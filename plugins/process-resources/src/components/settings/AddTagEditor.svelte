@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import cardPlugin, { Tag } from '@hcengineering/card'
-  import { Process, Step } from '@hcengineering/process'
+  import cardPlugin, { Tag } from '@hanzo/card'
+  import { Process, Step } from '@hanzo/process'
   import ParamsEditor from './ParamsEditor.svelte'
-  import { Ref } from '@hcengineering/core'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { Button, eventToHTMLElement, Label, SelectPopup, showPopup, tooltip } from '@hcengineering/ui'
+  import { Ref } from '@hanzo/core'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { Button, eventToHTMLElement, Label, SelectPopup, showPopup, tooltip } from '@hanzo/ui'
   import TagSelector from './TagSelector.svelte'
   import { createEventDispatcher } from 'svelte'
 

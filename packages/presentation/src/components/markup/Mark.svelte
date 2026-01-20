@@ -18,7 +18,7 @@
   import uiPlugin, { navigate, parseLocation } from '@hanzo/ui'
 
   import presentation from '../../plugin'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let mark: MarkupMark
 

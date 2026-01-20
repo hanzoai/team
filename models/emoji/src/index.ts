@@ -13,21 +13,21 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
 
-import presentation from '@hcengineering/model-presentation'
-import workbench from '@hcengineering/model-workbench'
-import setting from '@hcengineering/setting'
-import view from '@hcengineering/view'
-import print from '@hcengineering/model-print'
-import tracker from '@hcengineering/model-tracker'
+import presentation from '@hanzo/model-presentation'
+import workbench from '@hanzo/model-workbench'
+import setting from '@hanzo/setting'
+import view from '@hanzo/view'
+import print from '@hanzo/model-print'
+import tracker from '@hanzo/model-tracker'
 
 import { DOMAIN_EMOJI, TCustomEmoji } from './models'
 import emojiPlugin from './plugin'
-import { AccountRole } from '@hcengineering/core'
+import { AccountRole } from '@hanzo/core'
 
-export { emojiId } from '@hcengineering/emoji'
+export { emojiId } from '@hanzo/emoji'
 export { emojiPlugin as default }
 
 export function createModel (builder: Builder): void {

@@ -13,20 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { EmployeeBox, getPersonRefByPersonIdCb } from '@hcengineering/contact-resources'
-  import core, { Class, ClassifierKind, Doc, Mixin, Ref } from '@hcengineering/core'
-  import { AttributeBarEditor, createQuery, getClient, KeyedAttribute } from '@hcengineering/presentation'
-  import { Person } from '@hcengineering/contact'
-  import tags from '@hcengineering/tags'
-  import type { Issue } from '@hcengineering/tracker'
-  import { Component, Label } from '@hcengineering/ui'
+  import { EmployeeBox, getPersonRefByPersonIdCb } from '@hanzo/contact-resources'
+  import core, { Class, ClassifierKind, Doc, Mixin, Ref } from '@hanzo/core'
+  import { AttributeBarEditor, createQuery, getClient, KeyedAttribute } from '@hanzo/presentation'
+  import { Person } from '@hanzo/contact'
+  import tags from '@hanzo/tags'
+  import type { Issue } from '@hanzo/tracker'
+  import { Component, Label } from '@hanzo/ui'
   import {
     getDocMixins,
     getFiltredKeys,
     isCollectionAttr,
     ObjectBox,
     restrictionStore
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
 
   import tracker from '../../../plugin'
   import ComponentEditor from '../../components/ComponentEditor.svelte'
@@ -36,7 +36,7 @@
   import PriorityEditor from '../PriorityEditor.svelte'
   import RelationEditor from '../RelationEditor.svelte'
   import StatusEditor from '../StatusEditor.svelte'
-  import notification from '@hcengineering/notification'
+  import notification from '@hanzo/notification'
 
   export let issue: Issue
   export let showAllMixins: boolean = false

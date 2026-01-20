@@ -18,7 +18,7 @@
   import { IntlString, translateCB } from '@hanzo/platform'
   import { registerFocus, themeStore } from '@hanzo/ui'
   import { onMount } from 'svelte'
-  import { AccountRole, getCurrentAccount } from '@hcengineering/core'
+  import { AccountRole, getCurrentAccount } from '@hanzo/core'
 
   export let value: string | undefined = undefined
   export let placeholder: IntlString | undefined

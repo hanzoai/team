@@ -4,11 +4,11 @@
 
 import { getWorkspaceToken } from '../utils'
 import { loadServerConfig } from '../config'
-import { getClient as getAccountClient } from '@hcengineering/account-client'
+import { getClient as getAccountClient } from '@hanzo/account-client'
 
 // Mock dependencies
 jest.mock('../config')
-jest.mock('@hcengineering/account-client')
+jest.mock('@hanzo/account-client')
 
 describe('getWorkspaceToken', () => {
   const mockConfig = {

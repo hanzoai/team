@@ -1,4 +1,4 @@
-import { CreateMessageEvent } from '@hcengineering/communication-sdk-types'
+import { CreateMessageEvent } from '@hanzo/communication-sdk-types'
 import { gmail_v1 } from 'googleapis'
 import {
   markdownToHtml,
@@ -7,10 +7,10 @@ import {
   getMailHeaders,
   MailHeader,
   getEmailMessageIdFromHulyId
-} from '@hcengineering/mail-common'
-import { Card } from '@hcengineering/card'
-import { MeasureContext, PersonId } from '@hcengineering/core'
-import { AccountClient } from '@hcengineering/account-client'
+} from '@hanzo/mail-common'
+import { Card } from '@hanzo/card'
+import { MeasureContext, PersonId } from '@hanzo/core'
+import { AccountClient } from '@hanzo/account-client'
 
 import { encode64 } from '../../base64'
 import { addFooter } from '../../utils'

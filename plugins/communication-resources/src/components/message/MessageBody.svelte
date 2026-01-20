@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { PersonPreviewProvider, Avatar } from '@hcengineering/contact-resources'
-  import { formatName, Person } from '@hcengineering/contact'
-  import { Message } from '@hcengineering/communication-types'
-  import { Card } from '@hcengineering/card'
-  import { Label } from '@hcengineering/ui'
+  import { PersonPreviewProvider, Avatar } from '@hanzo/contact-resources'
+  import { formatName, Person } from '@hanzo/contact'
+  import { Message } from '@hanzo/communication-types'
+  import { Card } from '@hanzo/card'
+  import { Label } from '@hanzo/ui'
 
   import communication from '../../plugin'
   import MessageInput from '../input/MessageInput.svelte'

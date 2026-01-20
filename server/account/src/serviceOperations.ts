@@ -29,9 +29,9 @@ import {
   type AccountUuid,
   type UsageStatus,
   readOnlyGuestAccountUuid
-} from '@hcengineering/core'
-import platform, { getMetadata, PlatformError, Severity, Status, unknownError } from '@hcengineering/platform'
-import { decodeTokenVerbose } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import platform, { getMetadata, PlatformError, Severity, Status, unknownError } from '@hanzo/platform'
+import { decodeTokenVerbose } from '@hanzo/server-token'
 
 import { accountPlugin } from './plugin'
 import type {

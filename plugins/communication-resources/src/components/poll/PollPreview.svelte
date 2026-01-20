@@ -12,10 +12,10 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Applet } from '@hcengineering/communication'
+  import { Applet } from '@hanzo/communication'
   import { createEventDispatcher } from 'svelte'
-  import { Label } from '@hcengineering/ui'
-  import presentation from '@hcengineering/presentation'
+  import { Label } from '@hanzo/ui'
+  import presentation from '@hanzo/presentation'
 
   import { PollConfig } from '../../poll'
 

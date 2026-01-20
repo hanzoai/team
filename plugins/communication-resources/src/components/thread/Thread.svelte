@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Thread } from '@hcengineering/communication-types'
-  import { Card } from '@hcengineering/card'
+  import { Thread } from '@hanzo/communication-types'
+  import { Card } from '@hanzo/card'
   import { createEventDispatcher } from 'svelte'
 
   import ThreadCollaborators from './ThreadCollaborators.svelte'

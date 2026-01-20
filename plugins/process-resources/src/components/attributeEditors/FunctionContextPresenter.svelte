@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import { Context, Process, SelectedContextFunc } from '@hcengineering/process'
-  import { Component, Label } from '@hcengineering/ui'
+  import { getClient } from '@hanzo/presentation'
+  import { Context, Process, SelectedContextFunc } from '@hanzo/process'
+  import { Component, Label } from '@hanzo/ui'
 
   export let process: Process
   export let contextValue: SelectedContextFunc

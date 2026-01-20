@@ -6,7 +6,7 @@
   import view from '../plugin'
   import { buildConfigLookup, getKeyLabel } from '../utils'
   import { isDropdownType, isToggleType, noCategory } from '../viewOptions'
-  import { SortingOrder } from '@hcengineering/core'
+  import { SortingOrder } from '@hanzo/core'
 
   export let viewlet: Viewlet
   export let config: ViewOptionsModel

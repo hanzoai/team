@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, Person } from '@hcengineering/contact'
-  import { AccountUuid, Class, Doc, Ref } from '@hcengineering/core'
-  import { ComponentExtensions, createQuery, getClient, hasResource } from '@hcengineering/presentation'
-  import { ButtonIcon, Component, navigate } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { getObjectLinkFragment } from '@hcengineering/view-resources'
+  import { Employee, Person } from '@hanzo/contact'
+  import { AccountUuid, Class, Doc, Ref } from '@hanzo/core'
+  import { ComponentExtensions, createQuery, getClient, hasResource } from '@hanzo/presentation'
+  import { ButtonIcon, Component, navigate } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { getObjectLinkFragment } from '@hanzo/view-resources'
 
-  import rating, { type PersonRating } from '@hcengineering/rating'
+  import rating, { type PersonRating } from '@hanzo/rating'
   import { EmployeePresenter, getPersonByPersonRefStore } from '../../index'
   import contact from '../../plugin'
   import { employeeByIdStore } from '../../utils'

@@ -12,13 +12,13 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import cardPlugin from '@hcengineering/card'
-  import { Component, IconSize, Icon } from '@hcengineering/ui'
-  import { getClient } from '@hcengineering/presentation'
-  import communication from '@hcengineering/communication'
-  import { Class, Doc, Ref } from '@hcengineering/core'
-  import { ObjectIcon } from '@hcengineering/view-resources'
-  import view from '@hcengineering/view'
+  import cardPlugin from '@hanzo/card'
+  import { Component, IconSize, Icon } from '@hanzo/ui'
+  import { getClient } from '@hanzo/presentation'
+  import communication from '@hanzo/communication'
+  import { Class, Doc, Ref } from '@hanzo/core'
+  import { ObjectIcon } from '@hanzo/view-resources'
+  import view from '@hanzo/view'
 
   import NotifyMarker from './NotifyMarker.svelte'
 

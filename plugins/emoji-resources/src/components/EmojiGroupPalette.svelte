@@ -15,8 +15,8 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Ref, Blob } from '@hcengineering/core'
-  import { isCustomEmoji, type ExtendedEmoji } from '@hcengineering/emoji'
+  import { Ref, Blob } from '@hanzo/core'
+  import { isCustomEmoji, type ExtendedEmoji } from '@hanzo/emoji'
 
   import EmojiButton from './EmojiButton.svelte'
 

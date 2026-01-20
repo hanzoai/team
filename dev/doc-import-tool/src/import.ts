@@ -1,5 +1,5 @@
-import attachment, { type Attachment } from '@hcengineering/attachment'
-import { getClient as getCollaboratorClient } from '@hcengineering/collaborator-client'
+import attachment, { type Attachment } from '@hanzo/attachment'
+import { getClient as getCollaboratorClient } from '@hanzo/collaborator-client'
 import documents, {
   type ChangeControl,
   type ControlledDocument,

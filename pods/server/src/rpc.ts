@@ -1,11 +1,11 @@
-import { getClient as getAccountClientRaw, type AccountClient } from '@hcengineering/account-client'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
 import contact, {
   AvatarType,
   combineName,
   type Person,
   type SocialIdentity,
   type SocialIdentityRef
-} from '@hcengineering/contact'
+} from '@hanzo/contact'
 import core, {
   buildSocialIdString,
   generateId,
@@ -24,10 +24,10 @@ import core, {
   type SearchQuery,
   type TxCUD,
   type TxDomainEvent
-} from '@hcengineering/core'
-import { rpcJSONReplacer, type RateLimitInfo } from '@hcengineering/rpc'
-import type { ClientSessionCtx, ConnectionSocket, Session, SessionManager } from '@hcengineering/server-core'
-import { decodeToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { rpcJSONReplacer, type RateLimitInfo } from '@hanzo/rpc'
+import type { ClientSessionCtx, ConnectionSocket, Session, SessionManager } from '@hanzo/server-core'
+import { decodeToken } from '@hanzo/server-token'
 
 import { createHash } from 'crypto'
 import { type Express, type Response as ExpressResponse, type Request } from 'express'
@@ -37,7 +37,7 @@ import { promisify } from 'util'
 import { gzip } from 'zlib'
 import { retrieveJson } from './utils'
 
-import { unknownError } from '@hcengineering/platform'
+import { unknownError } from '@hanzo/platform'
 
 export const COMMUNICATION_DOMAIN = 'communication' as OperationDomain
 interface RPCClientInfo {

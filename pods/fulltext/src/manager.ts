@@ -10,9 +10,9 @@ import type {
   Version,
   WorkspaceInfoWithStatus,
   WorkspaceUuid
-} from '@hcengineering/core'
-import core, { Hierarchy, systemAccountUuid, TxProcessor, versionToString } from '@hcengineering/core'
-import { getAccountClient, getTransactorEndpoint } from '@hcengineering/server-client'
+} from '@hanzo/core'
+import core, { Hierarchy, systemAccountUuid, TxProcessor, versionToString } from '@hanzo/core'
+import { getAccountClient, getTransactorEndpoint } from '@hanzo/server-client'
 import {
   createContentAdapter,
   QueueTopic,
@@ -30,11 +30,11 @@ import {
   type QueueWorkspaceMessage,
   type QueueWorkspaceReindexMessage,
   type StorageAdapter
-} from '@hcengineering/server-core'
-import { type QueueSourced, type FulltextDBConfiguration } from '@hcengineering/server-indexer'
-import { generateToken } from '@hcengineering/server-token'
-import { type Event } from '@hcengineering/communication-sdk-types'
-import { getWorkspaceClient as getHulylakeClient } from '@hcengineering/hulylake-client'
+} from '@hanzo/server-core'
+import { type QueueSourced, type FulltextDBConfiguration } from '@hanzo/server-indexer'
+import { generateToken } from '@hanzo/server-token'
+import { type Event } from '@hanzo/communication-sdk-types'
+import { getWorkspaceClient as getHulylakeClient } from '@hanzo/hulylake-client'
 
 import { WorkspaceIndexer } from './workspace'
 

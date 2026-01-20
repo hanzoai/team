@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import cardPlugin, { Card, MasterTag, Tag } from '@hcengineering/card'
+import cardPlugin, { Card, MasterTag, Tag } from '@hanzo/card'
 import core, {
   Association,
   checkMixinKey,
@@ -32,7 +32,7 @@ import core, {
   TxProcessor,
   Type,
   TypeNumber
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import process, {
   Execution,
   ExecutionContext,
@@ -42,9 +42,9 @@ import process, {
   processError,
   ProcessToDo,
   UserResult
-} from '@hcengineering/process'
-import { ExecuteResult, ProcessControl, SuccessExecutionContext } from '@hcengineering/server-process'
-import time, { ToDoPriority } from '@hcengineering/time'
+} from '@hanzo/process'
+import { ExecuteResult, ProcessControl, SuccessExecutionContext } from '@hanzo/server-process'
+import time, { ToDoPriority } from '@hanzo/time'
 
 function checkResult (execution: Execution, results: Record<string, any> | undefined): boolean {
   if (results === undefined) return true

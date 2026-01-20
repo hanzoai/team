@@ -1,9 +1,9 @@
-import notification from '@hcengineering/notification'
-import core, { type ClassCollaborators } from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
+import notification from '@hanzo/notification'
+import core, { type ClassCollaborators } from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
 
 import activity from './plugin'
-import { type ActivityMessage, type DocUpdateMessage } from '@hcengineering/activity'
+import { type ActivityMessage, type DocUpdateMessage } from '@hanzo/activity'
 
 export function buildNotifications (builder: Builder): void {
   builder.createDoc(

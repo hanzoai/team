@@ -14,8 +14,8 @@
 
 import { type Editor } from '@tiptap/core'
 import { Node } from '@tiptap/pm/model'
-import { markdownToMarkup } from '@hcengineering/text-markdown'
-import { getClient } from '@hcengineering/presentation'
+import { markdownToMarkup } from '@hanzo/text-markdown'
+import { getClient } from '@hanzo/presentation'
 import { buildMarkdownTableFromDocs } from '../refreshTable'
 import { findTable } from '../utils'
 import { getTableMetadata } from '../tableMetadata'

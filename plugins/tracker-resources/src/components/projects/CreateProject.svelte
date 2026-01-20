@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Employee } from '@hcengineering/contact'
-  import { AccountArrayEditor, AssigneeBox, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { Analytics } from '@hanzo/analytics'
+  import { Employee } from '@hanzo/contact'
+  import { AccountArrayEditor, AssigneeBox, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
   import core, {
     Data,
     DocumentUpdate,
@@ -28,12 +28,12 @@
     getCurrentAccount,
     notEmpty,
     AccountUuid
-  } from '@hcengineering/core'
-  import { Asset } from '@hcengineering/platform'
-  import presentation, { IconWithEmoji, Card, createQuery, getClient } from '@hcengineering/presentation'
-  import task, { ProjectType, TaskType } from '@hcengineering/task'
-  import { taskTypeStore, typeStore } from '@hcengineering/task-resources'
-  import { IssueStatus, Project, TimeReportDayType, TrackerEvents } from '@hcengineering/tracker'
+  } from '@hanzo/core'
+  import { Asset } from '@hanzo/platform'
+  import presentation, { IconWithEmoji, Card, createQuery, getClient } from '@hanzo/presentation'
+  import task, { ProjectType, TaskType } from '@hanzo/task'
+  import { taskTypeStore, typeStore } from '@hanzo/task-resources'
+  import { IssueStatus, Project, TimeReportDayType, TrackerEvents } from '@hanzo/tracker'
   import {
     Button,
     Component,

@@ -125,8 +125,8 @@ module.exports = [
   // ------ UI Part --------------------------
   {
     entry: {
-      bundle: ['@hcengineering/theme/styles/global.scss', ...['./src/ui/index.ts']],
-      'recorder-worker': '@hcengineering/recorder-resources/src/recorder-worker.ts'
+      bundle: ['@hanzo/theme/styles/global.scss', ...['./src/ui/index.ts']],
+      'recorder-worker': '@hanzo/recorder-resources/src/recorder-worker.ts'
     },
     ignoreWarnings: [
       {

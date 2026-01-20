@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hcengineering/communication-sdk-types",
+      "packageName": "@hanzo/communication-sdk-types",
       "comment": "update deps",
       "type": "patch"
     }
   ],
-  "packageName": "@hcengineering/communication-sdk-types"
+  "packageName": "@hanzo/communication-sdk-types"
 }

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getClient as getAccountClient } from '@hcengineering/account-client'
-import client, { clientId } from '@hcengineering/client'
+import { getClient as getAccountClient } from '@hanzo/account-client'
+import client, { clientId } from '@hanzo/client'
 import {
   type Account,
   type Class,

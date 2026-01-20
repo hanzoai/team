@@ -21,7 +21,7 @@ import {
   type ConsumerMessage,
   type PlatformQueue,
   type PlatformQueueProducer
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import { Kafka, Partitioners, type Consumer, type Producer, CompressionTypes } from 'kafkajs'
 import type * as tls from 'tls'
 

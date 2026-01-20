@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { TreeNode } from '@hcengineering/view-resources'
-  import cardPlugin, { MasterTag, CardSpace, Card } from '@hcengineering/card'
-  import { Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
+  import { TreeNode } from '@hanzo/view-resources'
+  import cardPlugin, { MasterTag, CardSpace, Card } from '@hanzo/card'
+  import { Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
 
   import NavigatorVariant from './NavigatorVariant.svelte'
   import type { NavigatorConfig } from '../../types'

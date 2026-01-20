@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityTypeUpdate } from '@hcengineering/communication-types'
-  import cardPlugin, { MasterTag } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
-  import { IconEdit, Icon, Label, Component } from '@hcengineering/ui'
+  import { ActivityTypeUpdate } from '@hanzo/communication-types'
+  import cardPlugin, { MasterTag } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
+  import { IconEdit, Icon, Label, Component } from '@hanzo/ui'
 
   import communication from '../../../plugin'
 

@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { Heading } from '@hcengineering/text-editor'
+  import { Card } from '@hanzo/card'
+  import { Heading } from '@hanzo/text-editor'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import Content from '../Content.svelte'
   import { CardSectionAction } from '../../types'
-  import { permissionsStore } from '@hcengineering/contact-resources'
-  import { canChangeDoc } from '@hcengineering/view-resources'
+  import { permissionsStore } from '@hanzo/contact-resources'
+  import { canChangeDoc } from '@hanzo/view-resources'
 
   export let readonly: boolean = false
   export let doc: Card

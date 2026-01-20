@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { cardId } from '@hcengineering/card'
-  import { processId, Process } from '@hcengineering/process'
-  import { deviceOptionsStore as deviceInfo, NavItem, Scroller } from '@hcengineering/ui'
-  import { NavLink } from '@hcengineering/view-resources'
-  import { NavFooter, NavHeader, SavedView } from '@hcengineering/workbench-resources'
+  import { cardId } from '@hanzo/card'
+  import { processId, Process } from '@hanzo/process'
+  import { deviceOptionsStore as deviceInfo, NavItem, Scroller } from '@hanzo/ui'
+  import { NavLink } from '@hanzo/view-resources'
+  import { NavFooter, NavHeader, SavedView } from '@hanzo/workbench-resources'
   import plugin from '../plugin'
   import { Special } from '../types'
 

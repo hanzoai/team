@@ -23,7 +23,7 @@
 
   import { getChannelName, getObjectIcon } from '../utils'
   import chunter from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let object: Doc
   export let readonly = false

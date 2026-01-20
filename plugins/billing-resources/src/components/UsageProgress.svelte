@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hcengineering/platform'
-  import { Label, PaletteColorIndexes, Progress, humanReadableFileSize } from '@hcengineering/ui'
+  import { IntlString } from '@hanzo/platform'
+  import { Label, PaletteColorIndexes, Progress, humanReadableFileSize } from '@hanzo/ui'
   import plugin from '../plugin'
 
   export let label: IntlString

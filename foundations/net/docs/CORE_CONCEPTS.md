@@ -107,8 +107,8 @@ The network server listens on a TCP port (default: 3737) and:
 **Example: Starting a Network Server**
 
 ```typescript
-import { NetworkImpl, TickManagerImpl } from '@hcengineering/network-core'
-import { NetworkServer } from '@hcengineering/network-server'
+import { NetworkImpl, TickManagerImpl } from '@hanzo/network-core'
+import { NetworkServer } from '@hanzo/network-server'
 
 const tickManager = new TickManagerImpl(1000) // 1000 ticks/sec
 tickManager.start()
@@ -159,7 +159,7 @@ const agent = new AgentImpl('my-agent' as AgentUuid, {
 Agents register with the network to announce availability:
 
 ```typescript
-import { NetworkAgentServer } from '@hcengineering/network-client'
+import { NetworkAgentServer } from '@hanzo/network-client'
 
 const agentServer = new NetworkAgentServer(
   tickManager,
@@ -287,7 +287,7 @@ Multiple agents can register the same stateless container UUID. The network acce
 ### Container Example
 
 ```typescript
-import type { Container, ContainerUuid, ClientUuid } from '@hcengineering/network-core'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
 
 class DataStoreContainer implements Container {
   private data = new Map<string, any>()
@@ -345,7 +345,7 @@ class DataStoreContainer implements Container {
 ### Client Connection
 
 ```typescript
-import { createNetworkClient } from '@hcengineering/network-client'
+import { createNetworkClient } from '@hanzo/network-client'
 
 const client = createNetworkClient(
   'localhost:3737', // Network address
@@ -574,7 +574,7 @@ type ContainerEndpointRef = string & { _containerEndpointRef: true }
 ### Parsing Endpoints
 
 ```typescript
-import { parseEndpointRef, EndpointKind } from '@hcengineering/network-core'
+import { parseEndpointRef, EndpointKind } from '@hanzo/network-core'
 
 const parsed = parseEndpointRef(endpoint)
 console.log(parsed.kind) // EndpointKind.direct | routed | noconnect

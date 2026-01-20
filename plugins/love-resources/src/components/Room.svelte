@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActionContext } from '@hcengineering/presentation'
-  import { Room as TypeRoom } from '@hcengineering/love'
-  import { getMetadata } from '@hcengineering/platform'
-  import { Label, Loading, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
+  import { ActionContext } from '@hanzo/presentation'
+  import { Room as TypeRoom } from '@hanzo/love'
+  import { getMetadata } from '@hanzo/platform'
+  import { Label, Loading, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
   import { onDestroy, onMount } from 'svelte'
 
   import love from '../plugin'

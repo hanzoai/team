@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
   import core, {
     Data,
     DocumentUpdate,
@@ -27,10 +27,10 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hcengineering/core'
-  import document, { Teamspace, DocumentEvents } from '@hcengineering/document'
-  import { Asset } from '@hcengineering/platform'
-  import presentation, { IconWithEmoji, Card, getClient, reduceCalls } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import document, { Teamspace, DocumentEvents } from '@hanzo/document'
+  import { Asset } from '@hanzo/platform'
+  import presentation, { IconWithEmoji, Card, getClient, reduceCalls } from '@hanzo/presentation'
   import {
     Button,
     EditBox,

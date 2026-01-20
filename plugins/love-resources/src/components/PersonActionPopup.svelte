@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { Ref } from '@hcengineering/core'
-  import { isOffice, Room, RoomAccess } from '@hcengineering/love'
-  import { ActionIcon } from '@hcengineering/ui'
+  import { Person } from '@hanzo/contact'
+  import { Ref } from '@hanzo/core'
+  import { isOffice, Room, RoomAccess } from '@hanzo/love'
+  import { ActionIcon } from '@hanzo/ui'
   import love from '../plugin'
   import { myInfo } from '../stores'
   import { joinMeeting, kick } from '../meetings'

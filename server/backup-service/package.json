@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/backup-service",
+  "name": "@hanzo/backup-service",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/node-package",
+  "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -19,7 +19,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "workspace:^0.7.19",
+    "@hanzo/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -36,19 +36,19 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hcengineering/platform": "workspace:^0.7.19",
-    "@hcengineering/core": "workspace:^0.7.24",
-    "@hcengineering/contact": "workspace:^0.7.0",
-    "@hcengineering/client-resources": "workspace:^0.7.18",
-    "@hcengineering/client": "workspace:^0.7.18",
-    "@hcengineering/model": "workspace:^0.7.17",
+    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/contact": "workspace:^0.7.0",
+    "@hanzo/client-resources": "workspace:^0.7.18",
+    "@hanzo/client": "workspace:^0.7.18",
+    "@hanzo/model": "workspace:^0.7.17",
     "tar-stream": "^3.1.7",
-    "@hcengineering/server-tool": "workspace:^0.7.0",
-    "@hcengineering/server-core": "workspace:^0.7.18",
-    "@hcengineering/server-storage": "workspace:^0.7.16",
-    "@hcengineering/server-backup": "workspace:^0.7.0",
-    "@hcengineering/minio": "workspace:^0.7.17",
-    "@hcengineering/server-token": "workspace:^0.7.17",
-    "@hcengineering/server-client": "workspace:^0.7.16"
+    "@hanzo/server-tool": "workspace:^0.7.0",
+    "@hanzo/server-core": "workspace:^0.7.18",
+    "@hanzo/server-storage": "workspace:^0.7.16",
+    "@hanzo/server-backup": "workspace:^0.7.0",
+    "@hanzo/minio": "workspace:^0.7.17",
+    "@hanzo/server-token": "workspace:^0.7.17",
+    "@hanzo/server-client": "workspace:^0.7.16"
   }
 }

@@ -11,14 +11,14 @@ import core, {
   Ref,
   TxOperations,
   withContext
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubProject,
   GithubReviewComment
-} from '@hcengineering/github'
-import { LiveQuery } from '@hcengineering/query'
+} from '@hanzo/github'
+import { LiveQuery } from '@hanzo/query'
 import {
   ContainerFocus,
   DocSyncManager,

@@ -24,11 +24,11 @@ import {
   type PlatformQueueProducer,
   type QueueWorkspaceMessage,
   type StorageAdapter
-} from '@hcengineering/server-core'
-import { getServerPipeline, getTxAdapterFactory } from '@hcengineering/server-pipeline'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import { generateToken } from '@hcengineering/server-token'
-import { initializeWorkspace, initModel, prepareTools, updateModel, upgradeModel } from '@hcengineering/server-tool'
+} from '@hanzo/server-core'
+import { getServerPipeline, getTxAdapterFactory } from '@hanzo/server-pipeline'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import { generateToken } from '@hanzo/server-token'
+import { initializeWorkspace, initModel, prepareTools, updateModel, upgradeModel } from '@hanzo/server-tool'
 
 /**
  * @public

@@ -2,9 +2,9 @@ import activity, {
   type ActivityMessageControl,
   type DocAttributeUpdates,
   type DocUpdateAction
-} from '@hcengineering/activity'
-import cardPlugin, { type Card, type Tag } from '@hcengineering/card'
-import { type ActivityUpdate, ActivityUpdateType } from '@hcengineering/communication-types'
+} from '@hanzo/activity'
+import cardPlugin, { type Card, type Tag } from '@hanzo/card'
+import { type ActivityUpdate, ActivityUpdateType } from '@hanzo/communication-types'
 import core, {
   type ArrOf,
   type AttachedDoc,
@@ -23,10 +23,10 @@ import core, {
   type TxMixin,
   TxProcessor,
   type TxUpdateDoc
-} from '@hcengineering/core'
-import { translate } from '@hcengineering/platform'
-import { type ActivityControl, type DocObjectCache, getAllObjectTransactions } from '@hcengineering/server-activity'
-import { type TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { translate } from '@hanzo/platform'
+import { type ActivityControl, type DocObjectCache, getAllObjectTransactions } from '@hanzo/server-activity'
+import { type TriggerControl } from '@hanzo/server-core'
 
 // Use 100 KB limit for attribute updates
 const valueSizeLimit = 100 * 1024 // 100 KB

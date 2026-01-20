@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { DOMAIN_MODEL } from '@hcengineering/core'
-import { Model, type Builder } from '@hcengineering/model'
-import core, { TDoc } from '@hcengineering/model-core'
-import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hcengineering/platform'
+import { DOMAIN_MODEL } from '@hanzo/core'
+import { Model, type Builder } from '@hanzo/model'
+import core, { TDoc } from '@hanzo/model-core'
+import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hanzo/platform'
 import {
   type ActiveDescriptor,
   type ExtensionCreator,
@@ -28,12 +28,12 @@ import {
   type TextEditorAction,
   type TextEditorExtensionFactory,
   type TogglerDescriptor
-} from '@hcengineering/text-editor'
-import view from '@hcengineering/view'
+} from '@hanzo/text-editor'
+import view from '@hanzo/view'
 import textEditor from './plugin'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { EditorKitOptions } from '@hcengineering/text-editor-resources/src/kits/editor-kit'
-export { textEditorId } from '@hcengineering/text-editor'
+import type { EditorKitOptions } from '@hanzo/text-editor-resources/src/kits/editor-kit'
+export { textEditorId } from '@hanzo/text-editor'
 export { textEditorOperation } from './migration'
 export { default } from './plugin'
 export type { RefInputAction, RefInputActionItem }

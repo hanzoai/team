@@ -14,8 +14,8 @@
 //
 -->
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { WithLookup } from '@hcengineering/core'
+  import { Card } from '@hanzo/card'
+  import { WithLookup } from '@hanzo/core'
   import CardIcon from './CardIcon.svelte'
 
   export let value: WithLookup<Card>

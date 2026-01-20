@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hcengineering/platform'
-import { aiAssistantId } from '@hcengineering/ai-assistant'
-import aiAssistant from '@hcengineering/ai-assistant-resources/src/plugin'
+import { type IntlString, mergeIds } from '@hanzo/platform'
+import { aiAssistantId } from '@hanzo/ai-assistant'
+import aiAssistant from '@hanzo/ai-assistant-resources/src/plugin'
 
 export default mergeIds(aiAssistantId, aiAssistant, {
   string: {

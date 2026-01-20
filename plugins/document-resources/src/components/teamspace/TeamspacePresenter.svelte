@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Teamspace } from '@hcengineering/document'
-  import { IconWithEmoji } from '@hcengineering/presentation'
-  import { Icon, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Teamspace } from '@hanzo/document'
+  import { IconWithEmoji } from '@hanzo/presentation'
+  import { Icon, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import document from '../../plugin'
 
   export let value: Teamspace | undefined

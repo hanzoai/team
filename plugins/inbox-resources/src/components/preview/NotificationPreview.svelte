@@ -12,9 +12,9 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { Message, SocialID } from '@hcengineering/communication-types'
-  import { ExtendedMessagePreview } from '@hcengineering/communication-resources'
+  import { Card } from '@hanzo/card'
+  import { Message, SocialID } from '@hanzo/communication-types'
+  import { ExtendedMessagePreview } from '@hanzo/communication-resources'
   import { isViewSettingEnabled, hideUserNamesSettingId, viewSettingsStore } from '../../settings'
 
   export let card: Card

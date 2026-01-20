@@ -35,7 +35,7 @@ import core, {
   type TxOperations,
   type WithLookup,
   getClassCollaborators
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   type ActivityInboxNotification,
   type DisplayInboxNotification,
@@ -48,9 +48,9 @@ import notification, {
   type NotificationType,
   type NotificationTypeSetting,
   type ReactionInboxNotification
-} from '@hcengineering/notification'
-import { getMetadata, getResource } from '@hcengineering/platform'
-import { createQuery, getClient, MessageBox } from '@hcengineering/presentation'
+} from '@hanzo/notification'
+import { getMetadata, getResource } from '@hanzo/platform'
+import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
 import {
   getCurrentLocation,
   getLocation,
@@ -60,10 +60,10 @@ import {
   parseLocation,
   type ResolvedLocation,
   showPopup
-} from '@hcengineering/ui'
-import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hcengineering/view'
-import { getObjectLinkId, parseLinkId } from '@hcengineering/view-resources'
-import type { LocationData } from '@hcengineering/workbench'
+} from '@hanzo/ui'
+import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hanzo/view'
+import { getObjectLinkId, parseLinkId } from '@hanzo/view-resources'
+import type { LocationData } from '@hanzo/workbench'
 import { get, writable } from 'svelte/store'
 
 import { InboxNotificationsClientImpl } from './inboxNotificationsClient'

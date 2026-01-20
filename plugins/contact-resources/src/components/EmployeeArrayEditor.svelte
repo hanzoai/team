@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Employee } from '@hcengineering/contact'
-  import core, { AccountUuid, AnyAttribute, DocumentQuery, notEmpty, Ref, Space } from '@hcengineering/core'
-  import type { ButtonKind, ButtonSize } from '@hcengineering/ui'
-  import { IntlString } from '@hcengineering/platform'
+  import { Employee } from '@hanzo/contact'
+  import core, { AccountUuid, AnyAttribute, DocumentQuery, notEmpty, Ref, Space } from '@hanzo/core'
+  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { IntlString } from '@hanzo/platform'
   import UserBoxList from './UserBoxList.svelte'
   import { employeeRefByAccountUuidStore } from '..'
-  import { getClient } from '@hcengineering/presentation'
+  import { getClient } from '@hanzo/presentation'
 
   export let label: IntlString
   export let value: Ref<Employee>[]

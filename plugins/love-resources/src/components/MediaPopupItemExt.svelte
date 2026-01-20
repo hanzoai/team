@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Avatar, getPersonByPersonRefStore } from '@hcengineering/contact-resources'
-  import { Button } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Avatar, getPersonByPersonRefStore } from '@hanzo/contact-resources'
+  import { Button } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import love from '../plugin'
   import { currentRoom, infos, myInfo, myOffice } from '../stores'

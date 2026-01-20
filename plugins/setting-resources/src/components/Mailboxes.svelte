@@ -30,7 +30,7 @@
   import { onMount } from 'svelte'
   import { MailboxInfo, MailboxOptions } from '@hanzo/account-client'
   import MailboxItem from './MailboxItem.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   let boxesLoading = true
   let optionsLoading = true

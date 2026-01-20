@@ -546,7 +546,7 @@ logger.error('Container failed', {
 
 ```typescript
 // healthcheck.js
-import { createNetworkClient } from '@hcengineering/network-client'
+import { createNetworkClient } from '@hanzo/network-client'
 
 async function healthCheck() {
   try {

@@ -22,13 +22,13 @@
     ButtonIcon,
     showPopup,
     DateTimePresenter
-  } from '@hcengineering/ui'
-  import { Applet } from '@hcengineering/communication'
-  import presentation from '@hcengineering/presentation'
+  } from '@hanzo/ui'
+  import { Applet } from '@hanzo/communication'
+  import presentation from '@hanzo/presentation'
   import { createEventDispatcher } from 'svelte'
-  import { IntlString } from '@hcengineering/platform'
-  import { generateId } from '@hcengineering/core'
-  import emoji from '@hcengineering/emoji'
+  import { IntlString } from '@hanzo/platform'
+  import { generateId } from '@hanzo/core'
+  import emoji from '@hanzo/emoji'
 
   import communication from '../../plugin'
 

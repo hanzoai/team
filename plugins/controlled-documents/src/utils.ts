@@ -27,7 +27,7 @@ import {
   Timestamp,
   toIdMap,
   TxOperations
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { LexoDecimal, LexoNumeralSystem36, LexoRank } from 'lexorank'
 import LexoRankBucket from 'lexorank/lib/lexoRank/lexoRankBucket'
 

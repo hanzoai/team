@@ -24,11 +24,11 @@ import core, {
   type Ref,
   type Space,
   type VersionableDoc
-} from '@hcengineering/core'
-import { type IndexedDoc } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { type IndexedDoc } from '@hanzo/server-core'
 import { type FullTextPipeline } from './types'
-import { type Message } from '@hcengineering/communication-types'
-import cardPlugin, { type Card } from '@hcengineering/card'
+import { type Message } from '@hanzo/communication-types'
+import cardPlugin, { type Card } from '@hanzo/card'
 
 export { docKey, isFullTextAttribute } from '@hanzo/core'
 

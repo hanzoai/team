@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { textEditorId } from '@hcengineering/text-editor'
-import { type IntlString, plugin } from '@hcengineering/platform'
+import { textEditorId } from '@hanzo/text-editor'
+import { type IntlString, plugin } from '@hanzo/platform'
 
 export default plugin(textEditorId, {
   string: {

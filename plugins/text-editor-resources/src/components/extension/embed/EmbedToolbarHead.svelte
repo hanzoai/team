@@ -15,7 +15,7 @@
 //
 -->
 <script lang="ts">
-  import { ObjectNode } from '@hcengineering/presentation'
+  import { ObjectNode } from '@hanzo/presentation'
   import { NodeViewProps } from '../../node-view'
   import { parseReferenceUrl } from '../reference'
   import { EmbedCursor, shouldShowLink } from './embed'

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type WorkspaceLoginInfo, getClient as getAccountClient } from '@hcengineering/account-client'
-import { WorkspaceUuid } from '@hcengineering/core'
+import { type WorkspaceLoginInfo, getClient as getAccountClient } from '@hanzo/account-client'
+import { WorkspaceUuid } from '@hanzo/core'
 import { AuthOptions } from './types'
 import { loadServerConfig, ServerConfig } from './config'
 

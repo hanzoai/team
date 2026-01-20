@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import clientPlugin from '@hcengineering/client'
-import type { ClientFactoryOptions } from '@hcengineering/client/src'
+import clientPlugin from '@hanzo/client'
+import type { ClientFactoryOptions } from '@hanzo/client/src'
 import core, {
   Client,
   LoadModelResponse,
@@ -38,8 +38,8 @@ import core, {
   type TxCUD,
   platformNow,
   ClientConnectEvent
-} from '@hcengineering/core'
-import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hcengineering/platform'
+} from '@hanzo/core'
+import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hanzo/platform'
 import { connect } from './connection'
 
 export { connect }

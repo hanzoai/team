@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hcengineering/core'
-  import { TypeRef } from '@hcengineering/model'
-  import { getClient } from '@hcengineering/presentation'
-  import { Component, DropdownLabelsIntl, Label } from '@hcengineering/ui'
-  import view from '@hcengineering/view-resources/src/plugin'
-  import card from '@hcengineering/card'
+  import core, { AnyAttribute, Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hanzo/core'
+  import { TypeRef } from '@hanzo/model'
+  import { getClient } from '@hanzo/presentation'
+  import { Component, DropdownLabelsIntl, Label } from '@hanzo/ui'
+  import view from '@hanzo/view-resources/src/plugin'
+  import card from '@hanzo/card'
   import { createEventDispatcher } from 'svelte'
   import type { ButtonKind, ButtonSize, DropdownIntlItem } from '@hanzo/ui'
   import contactPlugin from '@hanzo/contact'

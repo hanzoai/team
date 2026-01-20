@@ -12,22 +12,22 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import card, { Card, CardSpace, MasterTag } from '@hcengineering/card'
-  import presentation, { getClient, getCommunicationClient, SpaceSelector } from '@hcengineering/presentation'
+  import card, { Card, CardSpace, MasterTag } from '@hanzo/card'
+  import presentation, { getClient, getCommunicationClient, SpaceSelector } from '@hanzo/presentation'
   import { createEventDispatcher } from 'svelte'
-  import core, { Data, generateId, Ref, Markup, notEmpty } from '@hcengineering/core'
-  import { getResource, translate, getEmbeddedLabel } from '@hcengineering/platform'
-  import { Label, Modal, ModernEditbox, languageStore, showPopup, Component } from '@hcengineering/ui'
-  import { AttachmentStyledBox } from '@hcengineering/attachment-resources'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import { Employee, getCurrentEmployee } from '@hcengineering/contact'
-  import { SelectUsersPopup, employeeByIdStore, permissionsStore } from '@hcengineering/contact-resources'
-  import view from '@hcengineering/view'
+  import core, { Data, generateId, Ref, Markup, notEmpty } from '@hanzo/core'
+  import { getResource, translate, getEmbeddedLabel } from '@hanzo/platform'
+  import { Label, Modal, ModernEditbox, languageStore, showPopup, Component } from '@hanzo/ui'
+  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
+  import { EmptyMarkup } from '@hanzo/text'
+  import { Employee, getCurrentEmployee } from '@hanzo/contact'
+  import { SelectUsersPopup, employeeByIdStore, permissionsStore } from '@hanzo/contact-resources'
+  import view from '@hanzo/view'
 
   import { createCard } from '../utils'
   import CardCollaborators from './CardCollaborators.svelte'
   import { TypeSelector } from '../index'
-  import { canCreateObject } from '@hcengineering/view-resources'
+  import { canCreateObject } from '@hanzo/view-resources'
 
   export let title: string = ''
   export let type: Ref<MasterTag> = card.types.Document

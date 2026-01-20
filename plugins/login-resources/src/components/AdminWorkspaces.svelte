@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { RegionInfo, AccountAggregatedInfo } from '@hcengineering/account-client'
+  import { RegionInfo, AccountAggregatedInfo } from '@hanzo/account-client'
   import {
     AccountUuid,
     groupByArray,
@@ -13,15 +13,15 @@
     systemAccountUuid,
     versionToString,
     type WorkspaceInfoWithStatus
-  } from '@hcengineering/core'
-  import { getEmbeddedLabel, getMetadata } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { getEmbeddedLabel, getMetadata } from '@hanzo/platform'
   import presentation, {
     copyTextToClipboard,
     isAdminUser,
     MessageBox,
     type OverviewStatistics,
     type WorkspaceStatistics
-  } from '@hcengineering/presentation'
+  } from '@hanzo/presentation'
   import {
     Button,
     ButtonMenu,
@@ -39,8 +39,8 @@
     SearchEdit,
     showPopup,
     ticker
-  } from '@hcengineering/ui'
-  import { workbenchId } from '@hcengineering/workbench'
+  } from '@hanzo/ui'
+  import { workbenchId } from '@hanzo/workbench'
   import { getAccountClient, getAllWorkspaces, getRegionInfo, performWorkspaceOperation } from '../utils'
 
   $: now = $ticker

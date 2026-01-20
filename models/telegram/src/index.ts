@@ -28,20 +28,20 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hcengineering/model'
-import attachment from '@hcengineering/model-attachment'
-import contact from '@hcengineering/model-contact'
-import core, { TAttachedDoc } from '@hcengineering/model-core'
-import setting from '@hcengineering/setting'
+} from '@hanzo/model'
+import attachment from '@hanzo/model-attachment'
+import contact from '@hanzo/model-contact'
+import core, { TAttachedDoc } from '@hanzo/model-core'
+import setting from '@hanzo/setting'
 import {
   type NewTelegramMessage,
   type SharedTelegramMessage,
   type SharedTelegramMessages,
   type TelegramMessage,
   telegramIntegrationKind
-} from '@hcengineering/telegram'
-import templates from '@hcengineering/templates'
-import view from '@hcengineering/view'
+} from '@hanzo/telegram'
+import templates from '@hanzo/templates'
+import view from '@hanzo/view'
 
 import telegram from './plugin'
 import { defineNotifications } from './notification'

@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { ArrOf, type Builder, Model, TypeAny, TypeNumber, TypeRef } from '@hcengineering/model'
-import core, { TAttachedDoc, TConfiguration, TDoc } from '@hcengineering/model-core'
-import { type Class, type Domain, DOMAIN_MODEL, type Ref } from '@hcengineering/core'
-import { type Asset, type IntlString } from '@hcengineering/platform'
+import { ArrOf, type Builder, Model, TypeAny, TypeNumber, TypeRef } from '@hanzo/model'
+import core, { TAttachedDoc, TConfiguration, TDoc } from '@hanzo/model-core'
+import { type Class, type Domain, DOMAIN_MODEL, type Ref } from '@hanzo/core'
+import { type Asset, type IntlString } from '@hanzo/platform'
 import {
   type Applet,
   type MessageAction,
@@ -26,15 +26,15 @@ import {
   type CustomActivityPresenter,
   type GuestCommunicationSettings,
   type AppletGetTitleFnResource
-} from '@hcengineering/communication'
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
-import { type AppletType } from '@hcengineering/communication-types'
-import card, { createSystemType } from '@hcengineering/model-card'
-import type { AnyComponent } from '@hcengineering/ui'
-import contact, { type PersonSpace } from '@hcengineering/contact'
-import { type Card, type MasterTag } from '@hcengineering/card'
-import { DOMAIN_SETTING } from '@hcengineering/setting'
-import view from '@hcengineering/model-view'
+} from '@hanzo/communication'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
+import { type AppletType } from '@hanzo/communication-types'
+import card, { createSystemType } from '@hanzo/model-card'
+import type { AnyComponent } from '@hanzo/ui'
+import contact, { type PersonSpace } from '@hanzo/contact'
+import { type Card, type MasterTag } from '@hanzo/card'
+import { DOMAIN_SETTING } from '@hanzo/setting'
+import view from '@hanzo/model-view'
 
 import communication from './plugin'
 

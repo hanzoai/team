@@ -22,10 +22,10 @@ import core, {
   SocialIdType,
   TxOperations,
   WorkspaceUuid
-} from '@hcengineering/core'
-import gmail, { gmailIntegrationKind, type NewMessage } from '@hcengineering/gmail'
-import { type StorageAdapter } from '@hcengineering/server-core'
-import setting from '@hcengineering/setting'
+} from '@hanzo/core'
+import gmail, { gmailIntegrationKind, type NewMessage } from '@hanzo/gmail'
+import { type StorageAdapter } from '@hanzo/server-core'
+import setting from '@hanzo/setting'
 import type { Credentials, OAuth2Client } from 'google-auth-library'
 import { gmail_v1, google } from 'googleapis'
 import {
@@ -34,15 +34,15 @@ import {
   WorkspaceLoginInfo,
   isWorkspaceLoginInfo,
   AccountClient
-} from '@hcengineering/account-client'
+} from '@hanzo/account-client'
 import {
   MailRecipient,
   type SyncOptions,
   getChannel,
   getMailHeaders,
   isSyncedMessage
-} from '@hcengineering/mail-common'
-import chat from '@hcengineering/chat'
+} from '@hanzo/mail-common'
+import chat from '@hanzo/chat'
 
 import { encode64 } from './base64'
 import config from './config'
@@ -59,8 +59,8 @@ import { createMessageManager } from './message/adapter'
 import { SyncManager } from './message/sync'
 import { getEmail } from './gmail/utils'
 import { IMessageManager } from './message/types'
-import { CreateMessageEvent } from '@hcengineering/communication-sdk-types'
-import { Card } from '@hcengineering/card'
+import { CreateMessageEvent } from '@hanzo/communication-sdk-types'
+import { Card } from '@hanzo/card'
 import { makeHTMLBodyV2 } from './message/v2/send'
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.modify']

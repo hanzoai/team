@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Ref, WorkspaceUuid } from '@hcengineering/core'
-import type { Execution } from '@hcengineering/process'
+import type { Ref, WorkspaceUuid } from '@hanzo/core'
+import type { Execution } from '@hanzo/process'
 import { defineSignal, proxyActivities, setHandler, sleep } from '@temporalio/workflow'
 import activities from './activities'
 

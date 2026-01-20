@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import activity, { ActivityMessage, ActivityReference } from '@hcengineering/activity'
-import chunter, { Channel, ChatMessage, chunterId, ChunterSpace, ThreadMessage } from '@hcengineering/chunter'
-import contact, { Employee, Person } from '@hcengineering/contact'
+import activity, { ActivityMessage, ActivityReference } from '@hanzo/activity'
+import chunter, { Channel, ChatMessage, chunterId, ChunterSpace, ThreadMessage } from '@hanzo/chunter'
+import contact, { Employee, Person } from '@hanzo/contact'
 import core, {
   AccountUuid,
   Class,
@@ -38,19 +38,19 @@ import core, {
   UserStatus,
   getClassCollaborators,
   type MeasureContext
-} from '@hcengineering/core'
-import notification, { DocNotifyContext, NotificationContent } from '@hcengineering/notification'
-import { getMetadata, IntlString, translate } from '@hcengineering/platform'
-import { getAccountBySocialId, getPerson } from '@hcengineering/server-contact'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import notification, { DocNotifyContext, NotificationContent } from '@hanzo/notification'
+import { getMetadata, IntlString, translate } from '@hanzo/platform'
+import { getAccountBySocialId, getPerson } from '@hanzo/server-contact'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
 import {
   createCollaboratorNotifications,
   getAddCollaboratTxes,
   getDocCollaborators
-} from '@hcengineering/server-notification-resources'
-import { jsonToHTML, markupToJSON } from '@hcengineering/text'
-import { extractReferences, markupToText, stripTags } from '@hcengineering/text-core'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/server-notification-resources'
+import { jsonToHTML, markupToJSON } from '@hanzo/text'
+import { extractReferences, markupToText, stripTags } from '@hanzo/text-core'
+import { workbenchId } from '@hanzo/workbench'
 
 import { NOTIFICATION_BODY_SIZE } from '@hanzo/server-notification'
 import { encodeObjectURI } from '@hanzo/view'

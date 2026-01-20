@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { AccountClient, IntegrationSecretKey } from '@hcengineering/account-client'
-import { Event, RecurringRule, calendarIntegrationKind } from '@hcengineering/calendar'
+import { AccountClient, IntegrationSecretKey } from '@hanzo/account-client'
+import { Event, RecurringRule, calendarIntegrationKind } from '@hanzo/calendar'
 import {
   Doc,
   Hierarchy,
@@ -24,8 +24,8 @@ import {
   systemAccountUuid,
   Timestamp,
   WorkspaceUuid
-} from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import { Credentials, OAuth2Client } from 'google-auth-library'
 import { calendar_v3, google } from 'googleapis'
 import config from './config'

@@ -12,13 +12,13 @@
     getEventPopupPositionElement,
     showPopup,
     DropdownLabelsPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import {
     GithubIntegration,
     GithubIntegrationRepository,
     githubPullRequestStates,
     type GithubProject
-  } from '@hcengineering/github'
+  } from '@hanzo/github'
   import github from '../plugin'
 
   export let integration: WithLookup<GithubIntegration>

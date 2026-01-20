@@ -15,8 +15,8 @@
 
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte'
-  import { HulypulseClient } from '@hcengineering/hulypulse-client'
-  import { createPulseClient } from '@hcengineering/presentation'
+  import { HulypulseClient } from '@hanzo/hulypulse-client'
+  import { createPulseClient } from '@hanzo/presentation'
 
   let parentElement: HTMLDivElement
 

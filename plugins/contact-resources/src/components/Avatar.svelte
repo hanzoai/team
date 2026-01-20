@@ -34,7 +34,7 @@
     IconSize,
     themeStore,
     tooltip
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onMount } from 'svelte'
   import { AccountUuid, type Data, PersonUuid, Ref, type WithLookup } from '@hanzo/core'
 

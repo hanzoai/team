@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hcengineering/card'
-  import { getClient } from '@hcengineering/presentation'
+  import { Card, MasterTag } from '@hanzo/card'
+  import { getClient } from '@hanzo/presentation'
 
   import CardTagColored from './CardTagColored.svelte'
 

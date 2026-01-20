@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref, updateAttribute } from '@hcengineering/core'
+  import { Class, Doc, Ref, updateAttribute } from '@hanzo/core'
 
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getAttribute, getClient, KeyedAttribute } from '@hcengineering/presentation'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getAttribute, getClient, KeyedAttribute } from '@hanzo/presentation'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import AttachmentStyledBox from './AttachmentStyledBox.svelte'
-  import { EditorKitOptions } from '@hcengineering/text-editor-resources'
+  import { EditorKitOptions } from '@hanzo/text-editor-resources'
 
   export let object: Doc
   export let key: KeyedAttribute

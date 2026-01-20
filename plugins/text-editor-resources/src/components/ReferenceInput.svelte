@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Blob, Class, Doc, Markup, Ref } from '@hcengineering/core'
-  import { Asset, IntlString } from '@hcengineering/platform'
-  import { EmptyMarkup, isEmptyMarkup, mergeKitOptions } from '@hcengineering/text'
-  import textEditor, { RefAction, TextEditorHandler } from '@hcengineering/text-editor'
+  import { Blob, Class, Doc, Markup, Ref } from '@hanzo/core'
+  import { Asset, IntlString } from '@hanzo/platform'
+  import { EmptyMarkup, isEmptyMarkup, mergeKitOptions } from '@hanzo/text'
+  import textEditor, { RefAction, TextEditorHandler } from '@hanzo/text-editor'
   import {
     AnySvelteComponent,
     Button,

@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { Ref, type Class, type Doc } from '@hcengineering/core'
-  import { createQuery } from '@hcengineering/presentation'
-  import { FixedColumn, ObjectPresenter } from '@hcengineering/view-resources'
+  import { Ref, type Class, type Doc } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { FixedColumn, ObjectPresenter } from '@hanzo/view-resources'
   import RatingEditor from './RatingEditor.svelte'
-  import type { DocReaction } from '@hcengineering/rating'
+  import type { DocReaction } from '@hanzo/rating'
 
   export let _class: Class<Doc>
   export let docs: { _id: Ref<Doc>, reactions: DocReaction[] }[] = []

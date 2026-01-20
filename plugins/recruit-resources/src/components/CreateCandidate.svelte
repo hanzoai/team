@@ -38,8 +38,8 @@
     WithLookup,
     type Blob,
     type PersonId
-  } from '@hcengineering/core'
-  import { getMetadata, getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { getMetadata, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
   import presentation, {
     Card,
     createQuery,

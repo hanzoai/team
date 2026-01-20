@@ -331,47 +331,47 @@
    */
   "projects": [
     {
-      "packageName": "@hcengineering/network-core",
+      "packageName": "@hanzo/network-core",
       "projectFolder": "packages/core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/network-backrpc",
+      "packageName": "@hanzo/network-backrpc",
       "projectFolder": "packages/backrpc",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/network-client",
+      "packageName": "@hanzo/network-client",
       "projectFolder": "packages/client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/network-server",
+      "packageName": "@hanzo/network-server",
       "projectFolder": "packages/server",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/network-pod",
+      "packageName": "@hanzo/network-pod",
       "projectFolder": "pods/network-pod",
       "shouldPublish": false
     },
     {
-      "packageName": "@hcengineering/network-tool",
+      "packageName": "@hanzo/network-tool",
       "projectFolder": "pods/network-tool",
       "shouldPublish": false
     },
     {
-      "packageName": "@hcengineering/scripts",
+      "packageName": "@hanzo/scripts",
       "projectFolder": "common/scripts",
       "shouldPublish": false
     },
     {
-      "packageName": "@hcengineering/network-tests",
+      "packageName": "@hanzo/network-tests",
       "projectFolder": "tests",
       "shouldPublish": false
     },
     {
-      "packageName": "@hcengineering/network-examples",
+      "packageName": "@hanzo/network-examples",
       "projectFolder": "examples",
       "shouldPublish": false
     }

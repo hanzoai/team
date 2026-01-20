@@ -14,11 +14,11 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Document } from '@hcengineering/controlled-documents'
-  import { WithLookup } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { tooltip } from '@hcengineering/ui'
-  import { DocNavLink } from '@hcengineering/view-resources'
+  import { Document } from '@hanzo/controlled-documents'
+  import { WithLookup } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { tooltip } from '@hanzo/ui'
+  import { DocNavLink } from '@hanzo/view-resources'
 
   import DocumentIcon from '../../icons/DocumentIcon.svelte'
   import documents from '../../../plugin'

@@ -14,16 +14,16 @@
 // limitations under the License.
 //
 
-import { type BrandingMap, type MeasureContext, type Tx, type WorkspaceIds } from '@hcengineering/core'
-import { buildStorageFromConfig } from '@hcengineering/server-storage'
+import { type BrandingMap, type MeasureContext, type Tx, type WorkspaceIds } from '@hanzo/core'
+import { buildStorageFromConfig } from '@hanzo/server-storage'
 
-import { startSessionManager } from '@hcengineering/server'
+import { startSessionManager } from '@hanzo/server'
 import {
   type CommunicationCallbacks,
   type PlatformQueue,
   type SessionManager,
   type StorageConfiguration
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 
 import { Api as CommunicationApi } from '@hanzo/communication-server'
 import {
@@ -35,7 +35,7 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hcengineering/server-pipeline'
+} from '@hanzo/server-pipeline'
 
 import {
   createMongoAdapter,
@@ -52,7 +52,7 @@ import {
 } from '@hanzo/postgres'
 import { readFileSync } from 'node:fs'
 import { startHttpServer } from './server_http'
-import type { ServerApi } from '@hcengineering/communication-sdk-types'
+import type { ServerApi } from '@hanzo/communication-sdk-types'
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]
 
 registerStringLoaders()

@@ -14,11 +14,11 @@
 //
 
 import { UAParser } from 'ua-parser-js'
-import { getMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
-import { desktopPlatform, getCurrentLocation } from '@hcengineering/ui'
-import { generateId } from '@hcengineering/core'
-import { Analytics } from '@hcengineering/analytics'
+import { getMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
+import { desktopPlatform, getCurrentLocation } from '@hanzo/ui'
+import { generateId } from '@hanzo/core'
+import { Analytics } from '@hanzo/analytics'
 
 let _isSignUp: boolean = false
 export const signupStore = {

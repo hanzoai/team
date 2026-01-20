@@ -1,7 +1,7 @@
-import { Card } from '@hcengineering/card'
-import { Doc, MeasureContext, PersonId, Ref, Timestamp, Tx, TxOperations, WorkspaceUuid } from '@hcengineering/core'
-import { Execution, ExecutionError, MethodParams, Trigger, UserResult } from '@hcengineering/process'
-import { CollaboratorClient } from '@hcengineering/collaborator-client'
+import { Card } from '@hanzo/card'
+import { Doc, MeasureContext, PersonId, Ref, Timestamp, Tx, TxOperations, WorkspaceUuid } from '@hanzo/core'
+import { Execution, ExecutionError, MethodParams, Trigger, UserResult } from '@hanzo/process'
+import { CollaboratorClient } from '@hanzo/collaborator-client'
 
 export type ExecuteFunc = (
   params: MethodParams<Doc>,

@@ -331,137 +331,137 @@
    */
   "projects": [
     {
-      "packageName": "@hcengineering/scripts",
+      "packageName": "@hanzo/scripts",
       "projectFolder": "common/scripts",
       "shouldPublish": false
     },
     {
-      "packageName": "@hcengineering/account-client",
+      "packageName": "@hanzo/account-client",
       "projectFolder": "packages/account-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/analytics",
+      "packageName": "@hanzo/analytics",
       "projectFolder": "packages/analytics",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/analytics-service",
+      "packageName": "@hanzo/analytics-service",
       "projectFolder": "packages/analytics-service",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/api-client",
+      "packageName": "@hanzo/api-client",
       "projectFolder": "packages/api-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/collaborator-client",
+      "packageName": "@hanzo/collaborator-client",
       "projectFolder": "packages/collaborator-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/core",
+      "packageName": "@hanzo/core",
       "projectFolder": "packages/core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/model",
+      "packageName": "@hanzo/model",
       "projectFolder": "packages/model",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/platform",
+      "packageName": "@hanzo/platform",
       "projectFolder": "packages/platform",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/query",
+      "packageName": "@hanzo/query",
       "projectFolder": "packages/query",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/rank",
+      "packageName": "@hanzo/rank",
       "projectFolder": "packages/rank",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/retry",
+      "packageName": "@hanzo/retry",
       "projectFolder": "packages/retry",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/storage",
+      "packageName": "@hanzo/storage",
       "projectFolder": "packages/storage",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/text",
+      "packageName": "@hanzo/text",
       "projectFolder": "packages/text",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/text-core",
+      "packageName": "@hanzo/text-core",
       "projectFolder": "packages/text-core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/text-html",
+      "packageName": "@hanzo/text-html",
       "projectFolder": "packages/text-html",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/text-markdown",
+      "packageName": "@hanzo/text-markdown",
       "projectFolder": "packages/text-markdown",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/text-ydoc",
+      "packageName": "@hanzo/text-ydoc",
       "projectFolder": "packages/text-ydoc",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/client",
+      "packageName": "@hanzo/client",
       "projectFolder": "packages/client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/client-resources",
+      "packageName": "@hanzo/client-resources",
       "projectFolder": "packages/client-resources",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/rpc",
+      "packageName": "@hanzo/rpc",
       "projectFolder": "packages/rpc",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/server-token",
+      "packageName": "@hanzo/server-token",
       "projectFolder": "packages/token",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/hulylake-client",
+      "packageName": "@hanzo/hulylake-client",
       "projectFolder": "packages/hulylake-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/storage-client",
+      "packageName": "@hanzo/storage-client",
       "projectFolder": "packages/storage-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/measurements",
+      "packageName": "@hanzo/measurements",
       "projectFolder": "packages/measurements",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/measurements-otlp",
+      "packageName": "@hanzo/measurements-otlp",
       "projectFolder": "packages/measurements-otlp",
       "shouldPublish": true
     },
     {
-      "packageName": "@hcengineering/postgres-base",
+      "packageName": "@hanzo/postgres-base",
       "projectFolder": "packages/postgres-base",
       "shouldPublish": true
     }

@@ -1,5 +1,5 @@
-import { NetworkImpl, TickManagerImpl } from '@hcengineering/network-core'
-import { NetworkServer } from '@hcengineering/network-server'
+import { NetworkImpl, TickManagerImpl } from '@hanzo/network-core'
+import { NetworkServer } from '@hanzo/network-server'
 
 /**
  * Main entry point for the network pod

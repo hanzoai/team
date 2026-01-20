@@ -40,10 +40,10 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hcengineering/core'
-import { TriggerControl } from '@hcengineering/server-core'
-import setting from '@hcengineering/setting'
-import view from '@hcengineering/view'
+} from '@hanzo/core'
+import { TriggerControl } from '@hanzo/server-core'
+import setting from '@hanzo/setting'
+import view from '@hanzo/view'
 import {
   AddCollaboratorsEvent,
   CardEventType,
@@ -54,11 +54,11 @@ import {
   CreatePeerEvent,
   ThreadPatchEvent,
   MessageEventType
-} from '@hcengineering/communication-sdk-types'
-import { getEmployee, getPersonSpaces } from '@hcengineering/server-contact'
-import contact, { Employee, formatName, Person } from '@hcengineering/contact'
-import communication, { Direct } from '@hcengineering/communication'
-import { CardPeer } from '@hcengineering/communication-types'
+} from '@hanzo/communication-sdk-types'
+import { getEmployee, getPersonSpaces } from '@hanzo/server-contact'
+import contact, { Employee, formatName, Person } from '@hanzo/contact'
+import communication, { Direct } from '@hanzo/communication'
+import { CardPeer } from '@hanzo/communication-types'
 
 async function OnAttribute (ctx: TxCreateDoc<AnyAttribute>[], control: TriggerControl): Promise<Tx[]> {
   const attr = TxProcessor.createDoc2Doc(ctx[0])

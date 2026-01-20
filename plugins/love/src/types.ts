@@ -1,7 +1,7 @@
-import { Event, Schedule } from '@hcengineering/calendar'
-import { Person } from '@hcengineering/contact'
-import { AccountUuid, AttachedDoc, Doc, MarkupBlobRef, Ref, Timestamp } from '@hcengineering/core'
-import { Preference } from '@hcengineering/preference'
+import { Event, Schedule } from '@hanzo/calendar'
+import { Person } from '@hanzo/contact'
+import { AccountUuid, AttachedDoc, Doc, MarkupBlobRef, Ref, Timestamp } from '@hanzo/core'
+import { Preference } from '@hanzo/preference'
 
 export enum RoomAccess {
   Open,

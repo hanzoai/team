@@ -15,11 +15,11 @@
 <script lang="ts">
   import { DocumentCategory } from '@hanzo/controlled-documents'
 
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Icon, tooltip } from '@hcengineering/ui'
-  import { DocNavLink } from '@hcengineering/view-resources'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Icon, tooltip } from '@hanzo/ui'
+  import { DocNavLink } from '@hanzo/view-resources'
 
   import documents from '../../../plugin'
 

@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import { Process, Step } from '@hcengineering/process'
-  import { Label, Scroller } from '@hcengineering/ui'
+  import { Doc } from '@hanzo/core'
+  import { Process, Step } from '@hanzo/process'
+  import { Label, Scroller } from '@hanzo/ui'
   import processPlugin from '../../plugin'
   import ProcessContextPresenter from '../contextEditors/ProcessContextPresenter.svelte'
   import { ProcessContextView } from '../../types'

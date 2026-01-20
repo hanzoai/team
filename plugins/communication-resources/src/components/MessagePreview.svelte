@@ -12,16 +12,16 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { LiteMessageViewer } from '@hcengineering/presentation'
-  import { Card } from '@hcengineering/card'
-  import { type WithLookup } from '@hcengineering/core'
-  import { Message, SocialID } from '@hcengineering/communication-types'
-  import { Person } from '@hcengineering/contact'
-  import { getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import { employeeByPersonIdStore, getPersonByPersonId } from '@hcengineering/contact-resources'
-  import { markdownToMarkup } from '@hcengineering/text-markdown'
-  import { jsonToMarkup, markupToText } from '@hcengineering/text'
-  import { tooltip } from '@hcengineering/ui'
+  import { LiteMessageViewer } from '@hanzo/presentation'
+  import { Card } from '@hanzo/card'
+  import { type WithLookup } from '@hanzo/core'
+  import { Message, SocialID } from '@hanzo/communication-types'
+  import { Person } from '@hanzo/contact'
+  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import { employeeByPersonIdStore, getPersonByPersonId } from '@hanzo/contact-resources'
+  import { markdownToMarkup } from '@hanzo/text-markdown'
+  import { jsonToMarkup, markupToText } from '@hanzo/text'
+  import { tooltip } from '@hanzo/ui'
 
   import { isActivityMessage } from '../activity'
   import ActivityMessageViewer from './message/ActivityMessageViewer.svelte'

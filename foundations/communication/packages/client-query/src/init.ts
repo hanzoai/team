@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { LiveQueries } from '@hcengineering/communication-query'
-import type { FindClient } from '@hcengineering/communication-sdk-types'
-import { type HulylakeWorkspaceClient } from '@hcengineering/hulylake-client'
+import { LiveQueries } from '@hanzo/communication-query'
+import type { FindClient } from '@hanzo/communication-sdk-types'
+import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
 
-export type { MessageQueryParams } from '@hcengineering/communication-query'
+export type { MessageQueryParams } from '@hanzo/communication-query'
 
 let lq: LiveQueries
 let onDestroy: (fn: () => void) => void = () => {}

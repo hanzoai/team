@@ -60,7 +60,7 @@ function getPublishablePackages(includePattern) {
         return false
       }
 
-      return shouldPublish && project.name.startsWith('@hcengineering')
+      return shouldPublish && project.name.startsWith('@hanzo')
     })
   } catch (err) {
     console.error('Error getting package list:', err.message)

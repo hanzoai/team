@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TaskType } from '@hcengineering/task'
-  import { IconWithEmoji } from '@hcengineering/presentation'
+  import { TaskType } from '@hanzo/task'
+  import { IconWithEmoji } from '@hanzo/presentation'
   import {
     ColorDefinition,
     Icon,

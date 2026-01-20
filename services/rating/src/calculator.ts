@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Api as CommunicationApi } from '@hcengineering/communication-server'
-import contact, { type Person, type SocialIdentity } from '@hcengineering/contact'
+import { Api as CommunicationApi } from '@hanzo/communication-server'
+import contact, { type Person, type SocialIdentity } from '@hanzo/contact'
 import core, {
   type AccountUuid,
   type Class,
@@ -30,7 +30,7 @@ import core, {
   type TxRemoveDoc,
   type TxUpdateDoc,
   type WorkspaceIds
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ContextNameMiddleware,
   DBAdapterInitMiddleware,
@@ -39,8 +39,8 @@ import {
   DomainTxMiddleware,
   LowLevelMiddleware,
   ModelMiddleware
-} from '@hcengineering/middleware'
-import { _parseId, type Id, PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/middleware'
+import { _parseId, type Id, PlatformError, unknownError } from '@hanzo/platform'
 import {
   type ConsumerControl,
   createDummyStorageAdapter,
@@ -48,10 +48,10 @@ import {
   type MiddlewareCreator,
   type Pipeline,
   type PipelineContext
-} from '@hcengineering/server-core'
-import { getConfig } from '@hcengineering/server-pipeline'
+} from '@hanzo/server-core'
+import { getConfig } from '@hanzo/server-pipeline'
 
-import { type AccountClient } from '@hcengineering/account-client'
+import { type AccountClient } from '@hanzo/account-client'
 import rating, {
   type DocReaction,
   DOMAIN_PERSON_RATING,
@@ -59,9 +59,9 @@ import rating, {
   type PersonRating,
   ratingId,
   ReactionKind
-} from '@hcengineering/rating'
-import { getAccountClient } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/rating'
+import { getAccountClient } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
 import { LRUCache } from 'lru-cache'
 import { calculatePersonRating, fulltextModelFilter, getRatingDomains } from './utils'
 

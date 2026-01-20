@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ExecutionLog, ExecutionLogAction } from '@hcengineering/process'
-  import { addNotification, NotificationSeverity, themeStore } from '@hcengineering/ui'
-  import { translate } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { ExecutionLog, ExecutionLogAction } from '@hanzo/process'
+  import { addNotification, NotificationSeverity, themeStore } from '@hanzo/ui'
+  import { translate } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import process from '../plugin'
-  import { Ref } from '@hcengineering/core'
+  import { Ref } from '@hanzo/core'
   import ExecutionNotification from './ExecutionNotification.svelte'
 
   const processed = new Set<Ref<ExecutionLog>>()

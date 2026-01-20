@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hcengineering/core'
-  import { Image } from '@hcengineering/ui'
-  import { getMetadata } from '@hcengineering/platform'
+  import { Doc, Ref } from '@hanzo/core'
+  import { Image } from '@hanzo/ui'
+  import { getMetadata } from '@hanzo/platform'
 
   import AchievementsHeader from './AchievementsHeader.svelte'
   import { getPersonAchievements } from '../utils'

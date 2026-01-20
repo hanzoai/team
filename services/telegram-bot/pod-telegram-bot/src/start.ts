@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
-import { newMetrics } from '@hcengineering/core'
-import { getPlatformQueue } from '@hcengineering/kafka'
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import { initStatisticsContext, QueueTopic } from '@hcengineering/server-core'
-import { TelegramQueueMessage, TelegramQueueMessageType } from '@hcengineering/server-telegram'
-import serverToken from '@hcengineering/server-token'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { newMetrics } from '@hanzo/core'
+import { getPlatformQueue } from '@hanzo/kafka'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import { initStatisticsContext, QueueTopic } from '@hanzo/server-core'
+import { TelegramQueueMessage, TelegramQueueMessageType } from '@hanzo/server-telegram'
+import serverToken from '@hanzo/server-token'
 import { join } from 'path'
 
 import config from './config'

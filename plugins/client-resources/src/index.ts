@@ -38,8 +38,8 @@ import core, {
   type TxCUD,
   platformNow,
   ClientConnectEvent
-} from '@hcengineering/core'
-import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hcengineering/platform'
+} from '@hanzo/core'
+import platform, { Severity, Status, getMetadata, getPlugins, setPlatformStatus } from '@hanzo/platform'
 import { connect } from './connection'
 
 export { connect }

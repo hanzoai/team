@@ -16,17 +16,17 @@
 -->
 
 <script lang="ts">
-  import { AttachmentStyleBoxEditor } from '@hcengineering/attachment-resources'
-  import core, { type Class, type Doc, type Ref, getCurrentAccount } from '@hcengineering/core'
-  import { checkMyPermission, permissionsStore } from '@hcengineering/contact-resources'
-  import notification from '@hcengineering/notification'
-  import { Panel } from '@hcengineering/panel'
-  import { getResource } from '@hcengineering/platform'
-  import { ActionContext, MessageViewer, IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
-  import { Button, EditBox, IconMixin, IconMoreH, getPlatformColorDef, showPopup, themeStore } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { DocAttributeBar, IconPicker, getDocMixins, showMenu } from '@hcengineering/view-resources'
-  import type { Product } from '@hcengineering/products'
+  import { AttachmentStyleBoxEditor } from '@hanzo/attachment-resources'
+  import core, { type Class, type Doc, type Ref, getCurrentAccount } from '@hanzo/core'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  import notification from '@hanzo/notification'
+  import { Panel } from '@hanzo/panel'
+  import { getResource } from '@hanzo/platform'
+  import { ActionContext, MessageViewer, IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
+  import { Button, EditBox, IconMixin, IconMoreH, getPlatformColorDef, showPopup, themeStore } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { DocAttributeBar, IconPicker, getDocMixins, showMenu } from '@hanzo/view-resources'
+  import type { Product } from '@hanzo/products'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import products from '../../plugin'

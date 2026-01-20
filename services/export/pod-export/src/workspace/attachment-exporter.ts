@@ -24,8 +24,8 @@ import {
   type Ref,
   type TxOperations,
   type WorkspaceIds
-} from '@hcengineering/core'
-import { type StorageAdapter } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { type StorageAdapter } from '@hanzo/server-core'
 import { Buffer } from 'buffer'
 
 /**

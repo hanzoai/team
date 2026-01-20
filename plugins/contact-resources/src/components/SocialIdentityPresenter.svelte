@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Icon, Label, tooltip } from '@hcengineering/ui'
-  import contact, { SocialIdentity, SocialIdentityProvider } from '@hcengineering/contact'
-  import { getClient } from '@hcengineering/presentation'
+  import { Icon, Label, tooltip } from '@hanzo/ui'
+  import contact, { SocialIdentity, SocialIdentityProvider } from '@hanzo/contact'
+  import { getClient } from '@hanzo/presentation'
 
   export let value: SocialIdentity
   export let socialIdProvider: SocialIdentityProvider | undefined = undefined

@@ -16,29 +16,29 @@ This repository includes the following server packages:
 
 ### Server Core
 
-- [@hcengineering/server-core](packages/core) - Core server infrastructure, adapters, storage management, and server-side utilities
-- [@hcengineering/server](packages/server) - Main server implementation and runtime
-- [@hcengineering/server-client](packages/client) - Server-side client implementation for inter-service communication
-- [@hcengineering/middleware](packages/middleware) - Server middleware components and request processing
+- [@hanzo/server-core](packages/core) - Core server infrastructure, adapters, storage management, and server-side utilities
+- [@hanzo/server](packages/server) - Main server implementation and runtime
+- [@hanzo/server-client](packages/client) - Server-side client implementation for inter-service communication
+- [@hanzo/middleware](packages/middleware) - Server middleware components and request processing
 
 ### Database Adapters
 
-- [@hcengineering/mongo](packages/mongo) - MongoDB adapter for document storage
-- [@hcengineering/postgres](packages/postgres) - PostgreSQL adapter for relational data
-- [@hcengineering/elastic](packages/elastic) - Elasticsearch adapter for full-text search and analytics
+- [@hanzo/mongo](packages/mongo) - MongoDB adapter for document storage
+- [@hanzo/postgres](packages/postgres) - PostgreSQL adapter for relational data
+- [@hanzo/elastic](packages/elastic) - Elasticsearch adapter for full-text search and analytics
 
 ### Storage Providers
 
-- [@hcengineering/server-storage](packages/server-storage) - Storage abstraction layer and implementations
-- [@hcengineering/minio](packages/minio) - MinIO storage provider for object storage
-- [@hcengineering/s3](packages/s3) - AWS S3 compatible storage provider
-- [@hcengineering/datalake](packages/datalake) - Data lake storage and management
-- [@hcengineering/hulylake](packages/hulylake) - Huly lake storage and management
+- [@hanzo/server-storage](packages/server-storage) - Storage abstraction layer and implementations
+- [@hanzo/minio](packages/minio) - MinIO storage provider for object storage
+- [@hanzo/s3](packages/s3) - AWS S3 compatible storage provider
+- [@hanzo/datalake](packages/datalake) - Data lake storage and management
+- [@hanzo/hulylake](packages/hulylake) - Huly lake storage and management
 
 ### Infrastructure
 
-- [@hcengineering/kafka](packages/kafka) - Apache Kafka integration for event streaming and messaging
-- [@hcengineering/collaboration](packages/collaboration) - Real-time collaborative editing infrastructure
+- [@hanzo/kafka](packages/kafka) - Apache Kafka integration for event streaming and messaging
+- [@hanzo/collaboration](packages/collaboration) - Real-time collaborative editing infrastructure
 
 ## Pre-requisites
 

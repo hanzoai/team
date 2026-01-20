@@ -13,24 +13,24 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage, ActivityMessageViewType, DisplayActivityMessage } from '@hcengineering/activity'
+  import activity, { ActivityMessage, ActivityMessageViewType, DisplayActivityMessage } from '@hanzo/activity'
   import {
     ActivityDocLink,
     ActivityMessageTemplate,
     MessageInlineAction,
     editingMessageStore
-  } from '@hcengineering/activity-resources'
-  import { Attachment } from '@hcengineering/attachment'
-  import { AttachmentDocList, AttachmentImageSize } from '@hcengineering/attachment-resources'
-  import chunter, { ChatMessage, ChatMessageViewlet } from '@hcengineering/chunter'
-  import contact, { getCurrentEmployee, Person, SocialIdentity } from '@hcengineering/contact'
-  import { getPersonByPersonIdCb, getSocialIdByPersonIdCb } from '@hcengineering/contact-resources'
-  import { Class, Doc, Markup, Ref, Space, WithLookup } from '@hcengineering/core'
-  import { getClient, MessageViewer, pendingCreatedDocs } from '@hcengineering/presentation'
-  import { EmptyMarkup } from '@hcengineering/text'
-  import { Action, Button, IconEdit, ShowMore } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { getDocLinkTitle } from '@hcengineering/view-resources'
+  } from '@hanzo/activity-resources'
+  import { Attachment } from '@hanzo/attachment'
+  import { AttachmentDocList, AttachmentImageSize } from '@hanzo/attachment-resources'
+  import chunter, { ChatMessage, ChatMessageViewlet } from '@hanzo/chunter'
+  import contact, { getCurrentEmployee, Person, SocialIdentity } from '@hanzo/contact'
+  import { getPersonByPersonIdCb, getSocialIdByPersonIdCb } from '@hanzo/contact-resources'
+  import { Class, Doc, Markup, Ref, Space, WithLookup } from '@hanzo/core'
+  import { getClient, MessageViewer, pendingCreatedDocs } from '@hanzo/presentation'
+  import { EmptyMarkup } from '@hanzo/text'
+  import { Action, Button, IconEdit, ShowMore } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { getDocLinkTitle } from '@hanzo/view-resources'
 
   import { shownTranslatedMessagesStore, translatedMessagesStore, translatingMessagesStore } from '../../stores'
   import ChatMessageHeader from './ChatMessageHeader.svelte'

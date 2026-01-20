@@ -9,11 +9,11 @@ import {
   type Permission,
   Role,
   Sequence
-} from '@hcengineering/core'
-import type { Asset, Plugin, Resource } from '@hcengineering/platform'
-import { IntlString, plugin } from '@hcengineering/platform'
-import type { AnyComponent, ResolvedLocation, Location } from '@hcengineering/ui/src/types'
-import { Action, Viewlet } from '@hcengineering/view'
+} from '@hanzo/core'
+import type { Asset, Plugin, Resource } from '@hanzo/platform'
+import { IntlString, plugin } from '@hanzo/platform'
+import type { AnyComponent, ResolvedLocation, Location } from '@hanzo/ui/src/types'
+import { Action, Viewlet } from '@hanzo/view'
 
 import type {
   ChangeControl,

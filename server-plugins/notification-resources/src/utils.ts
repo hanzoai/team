@@ -53,21 +53,21 @@ import notification, {
   type NotificationProviderSetting,
   NotificationType,
   type NotificationTypeSetting
-} from '@hcengineering/notification'
-import { getMetadata, getResource, IntlString, translate } from '@hcengineering/platform'
-import { getPersonSpaces } from '@hcengineering/server-contact'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/notification'
+import { getMetadata, getResource, IntlString, translate } from '@hanzo/platform'
+import { getPersonSpaces } from '@hanzo/server-contact'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
 import serverNotification, {
   HTMLPresenter,
   NotificationPresenter,
   ReceiverInfo,
   SenderInfo,
   TextPresenter
-} from '@hcengineering/server-notification'
-import serverView from '@hcengineering/server-view'
-import { extractReferences, markupToJSON, Reference } from '@hcengineering/text-core'
-import { encodeObjectURI } from '@hcengineering/view'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/server-notification'
+import serverView from '@hanzo/server-view'
+import { extractReferences, markupToJSON, Reference } from '@hanzo/text-core'
+import { encodeObjectURI } from '@hanzo/view'
+import { workbenchId } from '@hanzo/workbench'
 
 import { NotifyResult } from './types'
 

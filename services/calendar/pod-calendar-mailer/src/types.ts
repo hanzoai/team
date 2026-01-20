@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Event } from '@hcengineering/calendar'
-import { Data, PersonId } from '@hcengineering/core'
-import { Meeting } from '@hcengineering/love'
+import { Event } from '@hanzo/calendar'
+import { Data, PersonId } from '@hanzo/core'
+import { Meeting } from '@hanzo/love'
 
 export interface EventCUDMessage {
   action: 'create' | 'update' | 'delete' | 'mixin'

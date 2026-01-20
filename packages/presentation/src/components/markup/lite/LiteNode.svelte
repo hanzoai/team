@@ -17,7 +17,7 @@
 
   import LiteNodeContent from './LiteNodeContent.svelte'
   import NodeMarks from '../NodeMarks.svelte'
-  import { ParsedTextWithEmojis } from '@hcengineering/emoji'
+  import { ParsedTextWithEmojis } from '@hanzo/emoji'
 
   export let node: MarkupNode
   export let colorInherit: boolean = false

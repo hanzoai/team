@@ -8,7 +8,7 @@
   import WithTeamData from '../WithTeamData.svelte'
   import { toSlots } from '../utils'
   import DayPlan from './DayPlan.svelte'
-  import { employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
 
   export let space: Ref<Project>
   export let currentDate: Date

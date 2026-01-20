@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { MeasureContext, WorkspaceUuid } from '@hcengineering/core'
-import { StorageAdapter } from '@hcengineering/server-core'
-import * as serverClient from '@hcengineering/server-client'
+import { MeasureContext, WorkspaceUuid } from '@hanzo/core'
+import { StorageAdapter } from '@hanzo/server-core'
+import * as serverClient from '@hanzo/server-client'
 
 import { GmailController } from '../gmailController'
 import { GmailClient } from '../gmail'
@@ -28,7 +28,7 @@ jest.mock('../workspaceClient')
 jest.mock('../gmail')
 jest.mock('../integrations')
 jest.mock('../tokens')
-jest.mock('@hcengineering/server-client')
+jest.mock('@hanzo/server-client')
 jest.mock('../utils')
 jest.mock('../config')
 

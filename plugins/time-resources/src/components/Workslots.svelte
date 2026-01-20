@@ -23,9 +23,9 @@
     Scroller,
     formatDuration,
     Label
-  } from '@hcengineering/ui'
-  import { EventTimeEditor } from '@hcengineering/calendar-resources'
-  import { WorkSlot } from '@hcengineering/time'
+  } from '@hanzo/ui'
+  import { EventTimeEditor } from '@hanzo/calendar-resources'
+  import { WorkSlot } from '@hanzo/time'
   import { createEventDispatcher } from 'svelte'
   import time from '../plugin'
   import { calculateEventsDuration } from '../utils'

@@ -21,14 +21,14 @@ import core, {
   type TxCreateDoc,
   TxFactory,
   type TypeIdentifier
-} from '@hcengineering/core'
-import { type TxMixin } from '@hcengineering/core/src'
+} from '@hanzo/core'
+import { type TxMixin } from '@hanzo/core/src'
 import {
   BaseMiddleware,
   type Middleware,
   type PipelineContext,
   type TxMiddlewareResult
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 
 /**
  * @public

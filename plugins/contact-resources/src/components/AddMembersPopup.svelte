@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { Employee, Person, getName } from '@hcengineering/contact'
-  import { Ref, Space, notEmpty } from '@hcengineering/core'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { ActionIcon, Button, IconClose, Label } from '@hcengineering/ui'
+  import { Employee, Person, getName } from '@hanzo/contact'
+  import { Ref, Space, notEmpty } from '@hanzo/core'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { ActionIcon, Button, IconClose, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import contact from '../plugin'
   import UsersPopup from './UsersPopup.svelte'
   import { employeeByIdStore, employeeRefByAccountUuidStore } from '../utils'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let value: Space
   const dispatch = createEventDispatcher()

@@ -19,7 +19,7 @@
   import { getFileUrl } from '../file'
   import Download from './icons/Download.svelte'
   import presentation from '../plugin'
-  import { IntlString } from '@hcengineering/platform'
+  import { IntlString } from '@hanzo/platform'
 
   export let file: Ref<Blob> | undefined
   export let name: string

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext, WorkspaceUuid, Doc, TxCUD, Tx } from '@hcengineering/core'
+import { MeasureContext, WorkspaceUuid, Doc, TxCUD, Tx } from '@hanzo/core'
 import {
   toMessageEvent,
   isNewChannelTx,
@@ -23,16 +23,16 @@ import {
   markdownToText,
   isSyncedMessage,
   getMailHeadersRecord
-} from '@hcengineering/mail-common'
-import { ConsumerHandle, PlatformQueue, QueueTopic } from '@hcengineering/server-core'
-import { getPlatformQueue } from '@hcengineering/kafka'
-import { CreateMessageEvent } from '@hcengineering/communication-sdk-types'
-import chat from '@hcengineering/chat'
-import { Card } from '@hcengineering/card'
+} from '@hanzo/mail-common'
+import { ConsumerHandle, PlatformQueue, QueueTopic } from '@hanzo/server-core'
+import { getPlatformQueue } from '@hanzo/kafka'
+import { CreateMessageEvent } from '@hanzo/communication-sdk-types'
+import chat from '@hanzo/chat'
+import { Card } from '@hanzo/card'
 import { LRUCache } from 'lru-cache'
 
 import config from './config'
-import { AccountClient, MailboxOptions } from '@hcengineering/account-client'
+import { AccountClient, MailboxOptions } from '@hanzo/account-client'
 import { getAccountClient } from './client'
 import { getClient as getWorkspaceClient, releaseClient } from './workspaceClient'
 import { sendEmail } from './send'

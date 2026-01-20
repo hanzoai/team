@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttributeModel } from '@hcengineering/view'
-  import { ActivityAttributeUpdate } from '@hcengineering/communication-types'
-  import { Icon, IconEdit, Label } from '@hcengineering/ui'
+  import { AttributeModel } from '@hanzo/view'
+  import { ActivityAttributeUpdate } from '@hanzo/communication-types'
+  import { Icon, IconEdit, Label } from '@hanzo/ui'
 
   import ActivityAttributeValue from './ActivityAttributeValue.svelte'
   import communication from '../../../plugin'

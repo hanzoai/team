@@ -18,7 +18,7 @@ import {
   NotificationEventType,
   type Event,
   MessageEventType
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import {
   type AccountUuid,
   BlobID,
@@ -32,10 +32,10 @@ import {
   type ReactionNotificationContent,
   type SocialID,
   SortingOrder
-} from '@hcengineering/communication-types'
-import { markdownToMarkup } from '@hcengineering/text-markdown'
-import { jsonToMarkup, markupToText } from '@hcengineering/text-core'
-import { readOnlyGuestAccountUuid } from '@hcengineering/core'
+} from '@hanzo/communication-types'
+import { markdownToMarkup } from '@hanzo/text-markdown'
+import { jsonToMarkup, markupToText } from '@hanzo/text-core'
+import { readOnlyGuestAccountUuid } from '@hanzo/core'
 
 import type { Enriched, TriggerCtx } from '../types'
 import { getNameBySocialID } from '../triggers/utils'

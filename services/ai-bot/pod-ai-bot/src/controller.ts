@@ -36,12 +36,12 @@ import core, {
   toIdMap,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { Room } from '@hcengineering/love'
-import { WorkspaceInfoRecord } from '@hcengineering/server-ai-bot'
-import { getAccountClient } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
-import { htmlToMarkup, jsonToHTML, jsonToMarkup, markupToJSON } from '@hcengineering/text'
+} from '@hanzo/core'
+import { Room } from '@hanzo/love'
+import { WorkspaceInfoRecord } from '@hanzo/server-ai-bot'
+import { getAccountClient } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
+import { htmlToMarkup, jsonToHTML, jsonToMarkup, markupToJSON } from '@hanzo/text'
 import { encodingForModel, getEncoding } from 'js-tiktoken'
 import OpenAI from 'openai'
 

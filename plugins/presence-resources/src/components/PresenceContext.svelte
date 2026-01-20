@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { type Doc } from '@hcengineering/core'
-  import { getCurrentEmployee } from '@hcengineering/contact'
+  import { type Doc } from '@hanzo/core'
+  import { getCurrentEmployee } from '@hanzo/contact'
   import { onMount } from 'svelte'
 
   import { updatePresence, deletePresence } from '../presence'

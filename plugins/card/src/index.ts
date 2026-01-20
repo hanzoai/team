@@ -27,11 +27,11 @@ import {
   SpaceType,
   TypedSpace,
   VersionableDoc
-} from '@hcengineering/core'
-import { Asset, IntlString, plugin, Plugin, Resource } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
-import type { AnyComponent, ComponentExtensionId } from '@hcengineering/ui'
-import { IconProps } from '@hcengineering/view'
+} from '@hanzo/core'
+import { Asset, IntlString, plugin, Plugin, Resource } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
+import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
+import { IconProps } from '@hanzo/view'
 
 export * from './analytics'
 

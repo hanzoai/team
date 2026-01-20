@@ -15,8 +15,8 @@
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
-  import { Asset } from '@hcengineering/platform'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { Asset } from '@hanzo/platform'
   import core, {
     Data,
     DocumentUpdate,
@@ -29,10 +29,10 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hcengineering/core'
-  import view from '@hcengineering/view'
-  import testManagement, { TestProject } from '@hcengineering/test-management'
-  import presentation, { Card, IconWithEmoji, getClient, reduceCalls } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import view from '@hanzo/view'
+  import testManagement, { TestProject } from '@hanzo/test-management'
+  import presentation, { Card, IconWithEmoji, getClient, reduceCalls } from '@hanzo/presentation'
   import {
     Button,
     EditBox,

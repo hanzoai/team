@@ -18,7 +18,7 @@
   import type { ButtonKind, ButtonSize } from '@hanzo/ui'
   import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzo/ui'
   import EditBoxPopup from './EditBoxPopup.svelte'
-  import { AnyAttribute, TypeNumber } from '@hcengineering/core'
+  import { AnyAttribute, TypeNumber } from '@hanzo/core'
 
   export let label: IntlString
   export let value: number | undefined

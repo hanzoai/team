@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { ButtonMenu, DropdownIntlItem, IconMoreV } from '@hcengineering/ui'
-  import { Action } from '@hcengineering/view'
-  import { getResource } from '@hcengineering/platform'
+  import { ButtonMenu, DropdownIntlItem, IconMoreV } from '@hanzo/ui'
+  import { Action } from '@hanzo/view'
+  import { getResource } from '@hanzo/platform'
   import { lkSessionConnected } from '../../../liveKitClient'
-  import { getActions } from '@hcengineering/view-resources'
+  import { getActions } from '@hanzo/view-resources'
   import love from '../../../plugin'
-  import { Room } from '@hcengineering/love'
-  import { getClient } from '@hcengineering/presentation'
+  import { Room } from '@hanzo/love'
+  import { getClient } from '@hanzo/presentation'
 
   export let room: Room
   export let kind: 'primary' | 'secondary' | 'tertiary' | 'negative' = 'secondary'

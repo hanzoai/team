@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import communication from '@hcengineering/communication'
-  import { NotificationContext } from '@hcengineering/communication-types'
-  import { Ref } from '@hcengineering/core'
-  import { resizeObserver } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import communication from '@hanzo/communication'
+  import { NotificationContext } from '@hanzo/communication-types'
+  import { Ref } from '@hanzo/core'
+  import { resizeObserver } from '@hanzo/ui'
 
-  import { MessageInput } from '@hcengineering/communication-resources'
-  import { getMetadata } from '@hcengineering/platform'
+  import { MessageInput } from '@hanzo/communication-resources'
+  import { getMetadata } from '@hanzo/platform'
   import EditCardTableOfContents from './EditCardTableOfContents.svelte'
 
   export let _id: Ref<Card>

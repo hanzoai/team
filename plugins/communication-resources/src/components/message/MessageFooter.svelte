@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import { createQuery, getClient, getCommunicationClient } from '@hcengineering/presentation'
-  import cardPlugin, { Card } from '@hcengineering/card'
-  import { getCurrentAccount, Ref } from '@hcengineering/core'
-  import { AttachmentPreview, LinkPreview } from '@hcengineering/attachment-resources'
-  import { AttachmentID, Emoji, Message, MessageType } from '@hcengineering/communication-types'
-  import { getResource } from '@hcengineering/platform'
-  import { isAppletAttachment, isBlobAttachment, isLinkPreviewAttachment } from '@hcengineering/communication-shared'
-  import { Component } from '@hcengineering/ui'
+  import { createQuery, getClient, getCommunicationClient } from '@hanzo/presentation'
+  import cardPlugin, { Card } from '@hanzo/card'
+  import { getCurrentAccount, Ref } from '@hanzo/core'
+  import { AttachmentPreview, LinkPreview } from '@hanzo/attachment-resources'
+  import { AttachmentID, Emoji, Message, MessageType } from '@hanzo/communication-types'
+  import { getResource } from '@hanzo/platform'
+  import { isAppletAttachment, isBlobAttachment, isLinkPreviewAttachment } from '@hanzo/communication-shared'
+  import { Component } from '@hanzo/ui'
 
   import ReactionsList from '../ReactionsList.svelte'
   import MessageThread from '../thread/Thread.svelte'

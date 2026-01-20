@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { systemAccountUuid } from '@hcengineering/core'
-import { extractToken } from '@hcengineering/server-client'
-import { Token } from '@hcengineering/server-token'
+import { systemAccountUuid } from '@hanzo/core'
+import { extractToken } from '@hanzo/server-client'
+import { Token } from '@hanzo/server-token'
 import { type Response, type Request, type NextFunction, RequestHandler } from 'express'
 import { validate } from 'uuid'
 import { ApiError } from './error'

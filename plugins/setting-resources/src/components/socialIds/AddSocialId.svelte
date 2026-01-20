@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { SocialIdentityProvider } from '@hcengineering/contact'
-  import { ModernDialog } from '@hcengineering/ui'
-  import { getCurrentLanguage } from '@hcengineering/theme'
-  import { IntlString, translate } from '@hcengineering/platform'
+  import { SocialIdentityProvider } from '@hanzo/contact'
+  import { ModernDialog } from '@hanzo/ui'
+  import { getCurrentLanguage } from '@hanzo/theme'
+  import { IntlString, translate } from '@hanzo/platform'
 
   import setting from '../../plugin'
 

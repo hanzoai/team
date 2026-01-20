@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Tag } from '@hcengineering/card'
-  import { AnyAttribute, Class, Doc, Ref } from '@hcengineering/core'
-  import { Context, createContext, parseContext, Process, SelectedContext } from '@hcengineering/process'
+  import { MasterTag, Tag } from '@hanzo/card'
+  import { AnyAttribute, Class, Doc, Ref } from '@hanzo/core'
+  import { Context, createContext, parseContext, Process, SelectedContext } from '@hanzo/process'
   import {
     AnySvelteComponent,
     Button,

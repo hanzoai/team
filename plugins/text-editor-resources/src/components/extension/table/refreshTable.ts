@@ -12,9 +12,9 @@
 // limitations under the License.
 //
 
-import type { Client, Doc } from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
-import view, { type BuildMarkdownTableMetadata } from '@hcengineering/view'
+import type { Client, Doc } from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
+import view, { type BuildMarkdownTableMetadata } from '@hanzo/view'
 import type { TableMetadata } from './tableMetadata'
 
 /**

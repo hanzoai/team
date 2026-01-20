@@ -12,8 +12,8 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Doc } from '@hcengineering/core'
-  import { ActivityNotificationViewlet, DisplayInboxNotification } from '@hcengineering/notification'
+  import { Doc } from '@hanzo/core'
+  import { ActivityNotificationViewlet, DisplayInboxNotification } from '@hanzo/notification'
   import { createEventDispatcher } from 'svelte'
 
   import NotificationTemplate from '../NotificationTemplate.svelte'

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
+import type { Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
 import { type DownloadItem } from './types'
 
 /** @public */

@@ -15,11 +15,11 @@
 
 import { type Builder } from '@hanzo/model'
 
-import core from '@hcengineering/core'
-import lead from '@hcengineering/model-lead'
-import notification from '@hcengineering/notification'
-import serverLead from '@hcengineering/server-lead'
-import serverNotification from '@hcengineering/server-notification'
+import core from '@hanzo/core'
+import lead from '@hanzo/model-lead'
+import notification from '@hanzo/notification'
+import serverLead from '@hanzo/server-lead'
+import serverNotification from '@hanzo/server-notification'
 
 export { serverLeadId } from '@hanzo/server-lead'
 

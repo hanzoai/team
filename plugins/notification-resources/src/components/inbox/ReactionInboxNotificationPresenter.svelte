@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityMessagePreview, BasePreview } from '@hcengineering/activity-resources'
-  import { ReactionInboxNotification } from '@hcengineering/notification'
-  import { createQuery } from '@hcengineering/presentation'
-  import { ActivityMessage } from '@hcengineering/activity'
-  import { Doc } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
-  import { EmojiPresenter } from '@hcengineering/emoji-resources'
+  import { ActivityMessagePreview, BasePreview } from '@hanzo/activity-resources'
+  import { ReactionInboxNotification } from '@hanzo/notification'
+  import { createQuery } from '@hanzo/presentation'
+  import { ActivityMessage } from '@hanzo/activity'
+  import { Doc } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { EmojiPresenter } from '@hanzo/emoji-resources'
 
   export let object: Doc | undefined
   export let value: ReactionInboxNotification

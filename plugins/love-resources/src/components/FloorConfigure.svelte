@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact } from '@hcengineering/contact'
-  import { DocumentUpdate, Ref } from '@hcengineering/core'
-  import { Floor, GRID_WIDTH, Room, getFreeSpace } from '@hcengineering/love'
-  import { getClient } from '@hcengineering/presentation'
+  import { Contact } from '@hanzo/contact'
+  import { DocumentUpdate, Ref } from '@hanzo/core'
+  import { Floor, GRID_WIDTH, Room, getFreeSpace } from '@hanzo/love'
+  import { getClient } from '@hanzo/presentation'
   import {
     ButtonIcon,
     DropdownLabels,
@@ -26,7 +26,7 @@
     Scroller,
     eventToHTMLElement,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import lovePlg from '../plugin'
   import { floors, lockedRoom, selectedFloor } from '../stores'

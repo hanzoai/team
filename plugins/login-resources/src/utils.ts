@@ -11,9 +11,9 @@ import type {
   LoginInfoRequest,
   LoginInfoByToken,
   LoginInfoRequestData
-} from '@hcengineering/account-client'
-import { getClient as getAccountClientRaw } from '@hcengineering/account-client'
-import { Analytics } from '@hcengineering/analytics'
+} from '@hanzo/account-client'
+import { getClient as getAccountClientRaw } from '@hanzo/account-client'
+import { Analytics } from '@hanzo/analytics'
 import {
   AccountRole,
   concatLink,
@@ -23,8 +23,8 @@ import {
   type WorkspaceUuid,
   type WorkspaceInfoWithStatus,
   type WorkspaceUserOperation
-} from '@hcengineering/core'
-import { loginId } from '@hcengineering/login'
+} from '@hanzo/core'
+import { loginId } from '@hanzo/login'
 import platform, {
     OK,
     PlatformError,
@@ -35,8 +35,8 @@ import platform, {
     translate,
     unknownError,
     unknownStatus
-} from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
+} from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
 import {
     getCurrentLocation,
     isSameSegments,
@@ -45,10 +45,10 @@ import {
     navigate,
     setMetadataLocalStorage,
     type Location
-} from '@hcengineering/ui'
-import { logIn, workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/ui'
+import { logIn, workbenchId } from '@hanzo/workbench'
 
-  import { decodeTokenPayload } from '@hcengineering/presentation'
+  import { decodeTokenPayload } from '@hanzo/presentation'
 import { LoginEvents } from './analytics'
 import { RETRY_ON_SSO_LOGIN, SSO_TOKEN, USER_INFO } from './const'
 import { type Pages } from './index'

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { Card, MasterTag } from '@hcengineering/card'
-  import core, { Ref } from '@hcengineering/core'
-  import { getClient, IconWithEmoji } from '@hcengineering/presentation'
-  import { MethodParams, parseContext, Process, Step } from '@hcengineering/process'
-  import { Icon, Label, tooltip } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import card, { Card, MasterTag } from '@hanzo/card'
+  import core, { Ref } from '@hanzo/core'
+  import { getClient, IconWithEmoji } from '@hanzo/presentation'
+  import { MethodParams, parseContext, Process, Step } from '@hanzo/process'
+  import { Icon, Label, tooltip } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import plugin from '../../plugin'
   import { getContext } from '../../utils'
   import ContextValuePresenter from '../attributeEditors/ContextValuePresenter.svelte'

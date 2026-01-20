@@ -14,13 +14,13 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Ref, generateId } from '@hcengineering/core'
-  import { Document } from '@hcengineering/document'
-  import { getResource } from '@hcengineering/platform'
-  import { IconWithEmoji, getClient } from '@hcengineering/presentation'
-  import { Action, IconAdd, IconEdit, getPlatformColorDef, themeStore } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { getActions as getContributedActions, openDoc } from '@hcengineering/view-resources'
+  import { Ref, generateId } from '@hanzo/core'
+  import { Document } from '@hanzo/document'
+  import { getResource } from '@hanzo/platform'
+  import { IconWithEmoji, getClient } from '@hanzo/presentation'
+  import { Action, IconAdd, IconEdit, getPlatformColorDef, themeStore } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { getActions as getContributedActions, openDoc } from '@hanzo/view-resources'
 
   import document from '../../plugin'
   import { createEmptyDocument } from '../../utils'

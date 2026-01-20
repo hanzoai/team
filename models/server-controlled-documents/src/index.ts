@@ -1,14 +1,14 @@
 //
 // Copyright © 2023 Hardcore Engineering Inc.
 //
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/core'
-import serverCore from '@hcengineering/server-core'
-import { RequestStatus } from '@hcengineering/request'
-import documents, { DocumentState } from '@hcengineering/controlled-documents'
-import serverDocuments from '@hcengineering/server-controlled-documents'
-import serverNotification from '@hcengineering/server-notification'
-import notification from '@hcengineering/notification'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/core'
+import serverCore from '@hanzo/server-core'
+import { RequestStatus } from '@hanzo/request'
+import documents, { DocumentState } from '@hanzo/controlled-documents'
+import serverDocuments from '@hanzo/server-controlled-documents'
+import serverNotification from '@hanzo/server-notification'
+import notification from '@hanzo/notification'
 
 export { serverDocumentsId } from '@hanzo/server-controlled-documents/src/index'
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import cardPlugin, { Card } from '@hcengineering/card'
+import cardPlugin, { Card } from '@hanzo/card'
 import core, {
   ArrOf,
   Doc,
@@ -25,7 +25,7 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import process, {
   ContextId,
   Execution,
@@ -40,9 +40,9 @@ import process, {
   Transition,
   isUpdateTx,
   ProcessCustomEvent
-} from '@hcengineering/process'
-import { QueueTopic, TriggerControl } from '@hcengineering/server-core'
-import { ProcessMessage } from '@hcengineering/server-process'
+} from '@hanzo/process'
+import { QueueTopic, TriggerControl } from '@hanzo/server-core'
+import { ProcessMessage } from '@hanzo/server-process'
 import {
   Absolute,
   Add,

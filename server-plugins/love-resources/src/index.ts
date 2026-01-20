@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import contact, { Employee, getName, Person } from '@hcengineering/contact'
+import contact, { Employee, getName, Person } from '@hanzo/contact'
 import core, {
   type AccountUuid,
   combineAttributes,
@@ -29,7 +29,7 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   UserStatus
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import love, {
   isOffice,
   loveId,
@@ -40,11 +40,11 @@ import love, {
   Room,
   RoomAccess,
   RoomInfo
-} from '@hcengineering/love'
-import { getMetadata } from '@hcengineering/platform'
-import serverCore, { TriggerControl } from '@hcengineering/server-core'
-import view from '@hcengineering/view'
-import { workbenchId } from '@hcengineering/workbench'
+} from '@hanzo/love'
+import { getMetadata } from '@hanzo/platform'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
+import view from '@hanzo/view'
+import { workbenchId } from '@hanzo/workbench'
 
 export async function OnEmployee (txes: Tx[], control: TriggerControl): Promise<Tx[]> {
   const result: Tx[] = []

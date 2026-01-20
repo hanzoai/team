@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hcengineering/card'
-  import { Ref } from '@hcengineering/core'
-  import { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
-  import { clearSettingsStore } from '@hcengineering/setting-resources'
+  import { MasterTag } from '@hanzo/card'
+  import { Ref } from '@hanzo/core'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
+  import { clearSettingsStore } from '@hanzo/setting-resources'
   import {
     Icon,
     IconOpenedArrow,

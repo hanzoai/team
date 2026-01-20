@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { getMetadata, translate } from '@hcengineering/platform'
-  import { Button, Html, IconClose, Label, themeStore, IconError } from '@hcengineering/ui'
+  import { Analytics } from '@hanzo/analytics'
+  import { getMetadata, translate } from '@hanzo/platform'
+  import { Button, Html, IconClose, Label, themeStore, IconError } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import gmail from '../plugin'
   import { concatLink } from '@hanzo/core'

@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Workspace } from '@hcengineering/account'
-import { type JsonPatch, type HulylakeWorkspaceClient } from '@hcengineering/hulylake-client'
+import { type Workspace } from '@hanzo/account'
+import { type JsonPatch, type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
 import type postgres from 'postgres'
 import {
   type AccountUuid,
@@ -37,7 +37,7 @@ import {
   type WithLookup,
   RateLimiter,
   type Doc
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   type AttachmentDoc,
   type AttachmentID,
@@ -53,26 +53,26 @@ import {
   type ThreadDoc,
   type CardPeer,
   type Peer
-} from '@hcengineering/communication-types'
-import { type AccountClient } from '@hcengineering/account-client'
+} from '@hanzo/communication-types'
+import { type AccountClient } from '@hanzo/account-client'
 import chunter, {
   type Channel,
   type ChunterSpace,
   type ThreadMessage,
   type DirectMessage
-} from '@hcengineering/chunter'
-import cardPlugin, { type Card, type CardSpace, DOMAIN_CARD } from '@hcengineering/card'
-import { makeRank } from '@hcengineering/rank'
-import chat from '@hcengineering/chat'
-import { DOMAIN_ACTIVITY } from '@hcengineering/model-activity'
-import { DOMAIN_CONTACT } from '@hcengineering/model-contact'
-import { markupToMarkdown } from '@hcengineering/text-markdown'
-import { markupToJSON, markupToText } from '@hcengineering/text'
-import activity, { type ActivityMessage } from '@hcengineering/activity'
-import communication, { type Direct } from '@hcengineering/communication'
-import { type Employee, formatName, type Person, type PersonSpace } from '@hcengineering/contact'
-import { withRetry, DEFAULT_RETRY_OPTIONS } from '@hcengineering/retry'
-import attachment from '@hcengineering/attachment'
+} from '@hanzo/chunter'
+import cardPlugin, { type Card, type CardSpace, DOMAIN_CARD } from '@hanzo/card'
+import { makeRank } from '@hanzo/rank'
+import chat from '@hanzo/chat'
+import { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
+import { DOMAIN_CONTACT } from '@hanzo/model-contact'
+import { markupToMarkdown } from '@hanzo/text-markdown'
+import { markupToJSON, markupToText } from '@hanzo/text'
+import activity, { type ActivityMessage } from '@hanzo/activity'
+import communication, { type Direct } from '@hanzo/communication'
+import { type Employee, formatName, type Person, type PersonSpace } from '@hanzo/contact'
+import { withRetry, DEFAULT_RETRY_OPTIONS } from '@hanzo/retry'
+import attachment from '@hanzo/attachment'
 
 const MAX_MESSAGES_BATCH = 200
 const MAX_MESSAGES_SIZE = 95 * 1024

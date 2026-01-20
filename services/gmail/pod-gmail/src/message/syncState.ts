@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { PersonId } from '@hcengineering/core'
-import { type KeyValueClient } from '@hcengineering/kvs-client'
+import { PersonId } from '@hanzo/core'
+import { type KeyValueClient } from '@hanzo/kvs-client'
 import { type History } from './types'
 import { IntegrationVersion } from '../types'
 

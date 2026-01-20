@@ -3,7 +3,7 @@
   "entries": [
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/login_v0.6.1",
+      "tag": "@hanzo/login_v0.6.1",
       "date": "Sun, 08 Aug 2021 21:05:26 GMT",
       "comments": {
         "patch": [
@@ -15,7 +15,7 @@
     },
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/login_v0.6.0",
+      "tag": "@hanzo/login_v0.6.0",
       "date": "Sun, 08 Aug 2021 10:14:57 GMT",
       "comments": {
         "dependency": [

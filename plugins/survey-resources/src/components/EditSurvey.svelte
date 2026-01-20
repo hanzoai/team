@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { MessageBox } from '@hcengineering/presentation'
-  import { Question, QuestionKind, Survey } from '@hcengineering/survey'
-  import { createFocusManager, EditBox, FocusHandler, showPopup, Section } from '@hcengineering/ui'
+  import { MessageBox } from '@hanzo/presentation'
+  import { Question, QuestionKind, Survey } from '@hanzo/survey'
+  import { createFocusManager, EditBox, FocusHandler, showPopup, Section } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import survey from '../plugin'
   import EditQuestion from './EditQuestion.svelte'

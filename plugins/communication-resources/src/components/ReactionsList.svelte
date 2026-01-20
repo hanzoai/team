@@ -13,10 +13,10 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { showPopup } from '@hcengineering/ui'
-  import { getCurrentAccount } from '@hcengineering/core'
-  import { Emoji, EmojiData } from '@hcengineering/communication-types'
-  import emojiPlugin from '@hcengineering/emoji'
+  import { showPopup } from '@hanzo/ui'
+  import { getCurrentAccount } from '@hanzo/core'
+  import { Emoji, EmojiData } from '@hanzo/communication-types'
+  import emojiPlugin from '@hanzo/emoji'
 
   import ReactionPresenter from './ReactionPresenter.svelte'
 

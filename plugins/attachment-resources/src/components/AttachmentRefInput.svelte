@@ -27,8 +27,8 @@
     Space,
     generateId,
     toIdMap
-  } from '@hcengineering/core'
-  import { Asset, IntlString, getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import { Asset, IntlString, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
   import {
     DraftController,
     canDisplayLinkPreview,
@@ -40,16 +40,16 @@
     isLinkPreviewEnabled,
     uploadFile,
     LinkPreviewAttachmentMetadata
-  } from '@hcengineering/presentation'
-  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
-  import textEditor, { type RefAction } from '@hcengineering/text-editor'
-  import { AttachIcon, ReferenceInput } from '@hcengineering/text-editor-resources'
-  import { Loading, type AnySvelteComponent } from '@hcengineering/ui'
+  } from '@hanzo/presentation'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+  import textEditor, { type RefAction } from '@hanzo/text-editor'
+  import { AttachIcon, ReferenceInput } from '@hanzo/text-editor-resources'
+  import { Loading, type AnySvelteComponent } from '@hanzo/ui'
   import {
     type FileUploadCallbackParams,
     type UploadHandlerDefinition,
     getUploadHandlers
-  } from '@hcengineering/uploader'
+  } from '@hanzo/uploader'
   import { createEventDispatcher, onDestroy, tick } from 'svelte'
   import attachment from '../plugin'
   import AttachmentPresenter from './AttachmentPresenter.svelte'

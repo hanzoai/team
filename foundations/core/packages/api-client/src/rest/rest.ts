@@ -39,8 +39,8 @@ import {
   type Tx,
   type TxResult,
   type WithLookup
-} from '@hcengineering/core'
-import { PlatformError, type Status, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, type Status, unknownError } from '@hanzo/platform'
 
 import { AuthOptions } from '../types'
 import { getWorkspaceToken } from '../utils'

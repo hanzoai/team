@@ -13,7 +13,7 @@
 //
 
 import type { Node } from '@tiptap/pm/model'
-import type { BuildMarkdownTableMetadata } from '@hcengineering/view'
+import type { BuildMarkdownTableMetadata } from '@hanzo/view'
 
 // Extended TableMetadata for text editor storage (includes additional fields for persistence)
 export interface TableMetadata extends BuildMarkdownTableMetadata {

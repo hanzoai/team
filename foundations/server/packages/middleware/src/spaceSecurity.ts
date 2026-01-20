@@ -49,14 +49,14 @@ import core, {
   type TxUpdateDoc,
   type TxWorkspaceEvent,
   WorkspaceEvent
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   BaseMiddleware,
   type Middleware,
   type PipelineContext,
   type ServerFindOptions,
   type TxMiddlewareResult
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 import { isOwner, isSystem } from './utils'
 
 type SpaceWithMembers = Pick<Space, '_id' | 'members' | 'private' | '_class' | 'archived'>

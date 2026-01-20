@@ -15,12 +15,12 @@
 
 <script lang="ts">
   import { createEventDispatcher, afterUpdate, onDestroy } from 'svelte'
-  import calendar, { AccessLevel, Calendar, generateEventId, getPrimaryCalendar } from '@hcengineering/calendar'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { Ref, getCurrentAccount } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { TagElement } from '@hcengineering/tags'
-  import { Separator, defineSeparators, deviceOptionsStore as deviceInfo } from '@hcengineering/ui'
+  import calendar, { AccessLevel, Calendar, generateEventId, getPrimaryCalendar } from '@hanzo/calendar'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { Ref, getCurrentAccount } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { TagElement } from '@hanzo/tags'
+  import { Separator, defineSeparators, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
   import { ToDosMode } from '..'
   import PlanningCalendar from './PlanningCalendar.svelte'
   import ToDosNavigator from './ToDosNavigator.svelte'

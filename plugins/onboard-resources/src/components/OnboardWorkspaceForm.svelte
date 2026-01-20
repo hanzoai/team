@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { LoginInfo, RegionInfo } from '@hcengineering/login'
-  import { createWorkspace, getAccountDisplayName, getRegionInfo, setLoginInfo } from '@hcengineering/login-resources'
-  import { Status, Severity, OK, getEmbeddedLabel } from '@hcengineering/platform'
+  import { LoginInfo, RegionInfo } from '@hanzo/login'
+  import { createWorkspace, getAccountDisplayName, getRegionInfo, setLoginInfo } from '@hanzo/login-resources'
+  import { Status, Severity, OK, getEmbeddedLabel } from '@hanzo/platform'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { ButtonMenu } from '@hcengineering/ui'
+  import { ButtonMenu } from '@hanzo/ui'
 
   import Form from './Form.svelte'
   import onboard from '../plugin'

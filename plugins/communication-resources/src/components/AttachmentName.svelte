@@ -12,12 +12,12 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Attachment } from '@hcengineering/communication-types'
-  import { Label } from '@hcengineering/ui'
-  import { isAppletAttachment, isBlobAttachment } from '@hcengineering/communication-shared'
-  import { getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import communication from '@hcengineering/communication'
+  import { Attachment } from '@hanzo/communication-types'
+  import { Label } from '@hanzo/ui'
+  import { isAppletAttachment, isBlobAttachment } from '@hanzo/communication-shared'
+  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import communication from '@hanzo/communication'
 
   export let attachment: Attachment
   export let lower: boolean = false

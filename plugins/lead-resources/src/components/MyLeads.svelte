@@ -35,7 +35,7 @@
     TableBrowser,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import lead from '../plugin'
 

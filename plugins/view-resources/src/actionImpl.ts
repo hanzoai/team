@@ -1,4 +1,4 @@
-import contact from '@hcengineering/contact'
+import contact from '@hanzo/contact'
 import core, {
   type Blob,
   type Class,
@@ -10,8 +10,8 @@ import core, {
   type TxResult,
   getCurrentAccount,
   makeDocCollabId
-} from '@hcengineering/core'
-import { type Asset, type IntlString, type Resource, getResource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { type Asset, type IntlString, type Resource, getResource } from '@hanzo/platform'
 import {
   type ContextStore,
   MessageBox,
@@ -21,9 +21,9 @@ import {
   getMarkup,
   hasResource,
   updateAttribute
-} from '@hcengineering/presentation'
-import { markupToJSON } from '@hcengineering/text'
-import { markupToMarkdown } from '@hcengineering/text-markdown'
+} from '@hanzo/presentation'
+import { markupToJSON } from '@hanzo/text'
+import { markupToMarkdown } from '@hanzo/text-markdown'
 import {
   type AnyComponent,
   type AnySvelteComponent,
@@ -35,7 +35,7 @@ import {
   navigate,
   showPanel,
   showPopup
-} from '@hcengineering/ui'
+} from '@hanzo/ui'
 import { get } from 'svelte/store'
 import MoveView from './components/Move.svelte'
 import view from './plugin'
@@ -49,7 +49,7 @@ import {
   selectionStore
 } from './selection'
 import { deleteObjects, getObjectId, getObjectLinkFragment, restrictionStore } from './utils'
-import workbenchPlugin from '@hcengineering/workbench'
+import workbenchPlugin from '@hanzo/workbench'
 import { CopyAsMarkdownTable } from './copyAsMarkdownTable'
 import { viewletContextStore } from './viewletContextStore'
 

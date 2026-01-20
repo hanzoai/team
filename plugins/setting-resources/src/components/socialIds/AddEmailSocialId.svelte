@@ -14,17 +14,17 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import contact, { getCurrentEmployee, SocialIdentityProvider, SocialIdentityRef } from '@hcengineering/contact'
-  import { EditBox, Label, Button, CodeForm, TimeLeft, Status as StatusControl } from '@hcengineering/ui'
-  import { OtpInfo } from '@hcengineering/account-client'
-  import { buildSocialIdString, getCurrentAccount, setCurrentAccount, SocialId, Timestamp } from '@hcengineering/core'
-  import { OK, PlatformError, Severity, Status, unknownError } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
+  import contact, { getCurrentEmployee, SocialIdentityProvider, SocialIdentityRef } from '@hanzo/contact'
+  import { EditBox, Label, Button, CodeForm, TimeLeft, Status as StatusControl } from '@hanzo/ui'
+  import { OtpInfo } from '@hanzo/account-client'
+  import { buildSocialIdString, getCurrentAccount, setCurrentAccount, SocialId, Timestamp } from '@hanzo/core'
+  import { OK, PlatformError, Severity, Status, unknownError } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
 
   import AddSocialId from './AddSocialId.svelte'
   import setting from '../../plugin'
   import { getAccountClient } from '../../utils'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let provider: SocialIdentityProvider
   export let onAdded: (socialId: SocialId) => void | Promise<void>

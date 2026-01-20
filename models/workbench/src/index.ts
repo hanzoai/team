@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { AccountRole, type AccountUuid, type Class, DOMAIN_MODEL, type Ref, type Space } from '@hcengineering/core'
-import { type Builder, Mixin, Model, Prop, TypeRef, UX } from '@hcengineering/model'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import { createAction } from '@hcengineering/model-view'
-import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hcengineering/platform'
-import view, { type KeyBinding } from '@hcengineering/view'
+import { AccountRole, type AccountUuid, type Class, DOMAIN_MODEL, type Ref, type Space } from '@hanzo/core'
+import { type Builder, Mixin, Model, Prop, TypeRef, UX } from '@hanzo/model'
+import preference, { TPreference } from '@hanzo/model-preference'
+import { createAction } from '@hanzo/model-view'
+import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hanzo/platform'
+import view, { type KeyBinding } from '@hanzo/view'
 import type {
   Application,
   ApplicationNavModel,

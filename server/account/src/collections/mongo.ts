@@ -23,7 +23,7 @@ import {
   buildSocialIdString,
   type SocialKey,
   type PersonUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import type {
   Collection,
   CreateIndexesOptions,

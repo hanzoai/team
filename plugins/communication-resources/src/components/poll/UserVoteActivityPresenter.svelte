@@ -11,9 +11,9 @@
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
 <script lang="ts">
-  import { ActivityAttributeUpdate } from '@hcengineering/communication-types'
-  import communication, { UserVote } from '@hcengineering/communication'
-  import { Icon, Label } from '@hcengineering/ui'
+  import { ActivityAttributeUpdate } from '@hanzo/communication-types'
+  import communication, { UserVote } from '@hanzo/communication'
+  import { Icon, Label } from '@hanzo/ui'
 
   export let update: ActivityAttributeUpdate
 

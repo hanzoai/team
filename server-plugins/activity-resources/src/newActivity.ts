@@ -7,12 +7,12 @@ import core, {
   type TxCreateDoc,
   type TxCUD,
   TxProcessor
-} from '@hcengineering/core'
-import { type Card } from '@hcengineering/card'
-import { type TriggerControl } from '@hcengineering/server-core'
-import activity from '@hcengineering/activity'
-import { type ActivityControl } from '@hcengineering/server-activity'
-import { MessageEventType, type CreateMessageEvent } from '@hcengineering/communication-sdk-types'
+} from '@hanzo/core'
+import { type Card } from '@hanzo/card'
+import { type TriggerControl } from '@hanzo/server-core'
+import activity from '@hanzo/activity'
+import { type ActivityControl } from '@hanzo/server-activity'
+import { MessageEventType, type CreateMessageEvent } from '@hanzo/communication-sdk-types'
 import {
   type ActivityAttributeUpdate,
   type ActivityMessageExtra,

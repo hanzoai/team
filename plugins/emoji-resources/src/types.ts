@@ -1,6 +1,6 @@
-import type { Asset, IntlString } from '@hcengineering/platform'
-import { type EmojiWithGroup } from '@hcengineering/emoji'
-import emojiPlugin from '@hcengineering/emoji'
+import type { Asset, IntlString } from '@hanzo/platform'
+import { type EmojiWithGroup } from '@hanzo/emoji'
+import emojiPlugin from '@hanzo/emoji'
 
 export interface EmojiCategory {
   id: string

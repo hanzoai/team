@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/analytics-providers",
+  "name": "@hanzo/analytics-providers",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hcengineering/platform-rig": "workspace:^0.7.19",
+    "@hanzo/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -40,13 +40,13 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hcengineering/platform": "workspace:^0.7.19",
-    "@hcengineering/analytics": "workspace:^0.7.17",
-    "@hcengineering/analytics-collector": "workspace:^0.7.0",
-    "@hcengineering/presentation": "workspace:^0.7.0",
-    "@hcengineering/core": "workspace:^0.7.24",
+    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzo/analytics": "workspace:^0.7.17",
+    "@hanzo/analytics-collector": "workspace:^0.7.0",
+    "@hanzo/presentation": "workspace:^0.7.0",
+    "@hanzo/core": "workspace:^0.7.24",
     "ua-parser-js": "^2.0.4",
-    "@hcengineering/ui": "workspace:^0.7.0"
+    "@hanzo/ui": "workspace:^0.7.0"
   },
   "repository": "https://github.com/hanzoai/team-manager",
   "publishConfig": {

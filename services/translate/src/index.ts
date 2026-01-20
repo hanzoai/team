@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
-import { newMetrics, Tx } from '@hcengineering/core'
-import { getPlatformQueue } from '@hcengineering/kafka'
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import { initStatisticsContext, QueueTopic } from '@hcengineering/server-core'
-import serverToken from '@hcengineering/server-token'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { newMetrics, Tx } from '@hanzo/core'
+import { getPlatformQueue } from '@hanzo/kafka'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import { initStatisticsContext, QueueTopic } from '@hanzo/server-core'
+import serverToken from '@hanzo/server-token'
 import OpenAI from 'openai'
 import { join } from 'path'
 

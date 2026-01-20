@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import core from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { parseContext, Process } from '@hcengineering/process'
-  import { Component } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import core from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { parseContext, Process } from '@hanzo/process'
+  import { Component } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { getContext } from '../../utils'
   import ContextValuePresenter from '../attributeEditors/ContextValuePresenter.svelte'
 

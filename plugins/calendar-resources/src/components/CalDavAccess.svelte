@@ -1,19 +1,19 @@
 <script lang="ts">
-  import { Integration } from '@hcengineering/account-client'
+  import { Integration } from '@hanzo/account-client'
   import presentation, {
     copyTextToClipboard,
     getCurrentWorkspaceUrl,
     getCurrentWorkspaceUuid
-  } from '@hcengineering/presentation'
-  import { Label, Modal, CheckBox, Spinner, Button, IconCopy, EditBox } from '@hcengineering/ui'
-  import calendar, { caldavIntegrationKind } from '@hcengineering/calendar'
+  } from '@hanzo/presentation'
+  import { Label, Modal, CheckBox, Spinner, Button, IconCopy, EditBox } from '@hanzo/ui'
+  import calendar, { caldavIntegrationKind } from '@hanzo/calendar'
   import { createEventDispatcher, onMount } from 'svelte'
   import { slide } from 'svelte/transition'
   import { quintOut } from 'svelte/easing'
-  import { getMetadata } from '@hcengineering/platform'
-  import { getCurrentAccount, pickPrimarySocialId, SocialId, SocialIdType } from '@hcengineering/core'
+  import { getMetadata } from '@hanzo/platform'
+  import { getCurrentAccount, pickPrimarySocialId, SocialId, SocialIdType } from '@hanzo/core'
   import { getAccountClient } from '../utils'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   const workspaceUuid = getCurrentWorkspaceUuid()
 

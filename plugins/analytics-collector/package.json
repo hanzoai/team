@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/analytics-collector",
+  "name": "@hanzo/analytics-collector",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "workspace:^0.7.19",
+    "@hanzo/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -38,9 +38,9 @@
     "prettier-plugin-svelte": "^3.4.0"
   },
   "dependencies": {
-    "@hcengineering/platform": "workspace:^0.7.19",
-    "@hcengineering/core": "workspace:^0.7.24",
-    "@hcengineering/ui": "workspace:^0.7.0",
-    "@hcengineering/chunter": "workspace:^0.7.0"
+    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/ui": "workspace:^0.7.0",
+    "@hanzo/chunter": "workspace:^0.7.0"
   }
 }

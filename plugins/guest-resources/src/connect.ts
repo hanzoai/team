@@ -11,9 +11,9 @@ import core, {
   type PersonId,
   type Ref,
   type Version
-} from '@hcengineering/core'
-import login, { type WorkspaceLoginInfo } from '@hcengineering/login'
-import { getMetadata, getResource, setMetadata } from '@hcengineering/platform'
+} from '@hanzo/core'
+import login, { type WorkspaceLoginInfo } from '@hanzo/login'
+import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
 import presentation, {
   loadServerConfig,
   refreshClient,

@@ -11,14 +11,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { AccountRole, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hcengineering/core'
+import { AccountRole, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
 import {
   Event,
   MessageEventType,
   NotificationEventType,
   PeerEventType,
   SessionData
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import {
   AccountUuid,
   CardID,
@@ -27,7 +27,7 @@ import {
   MessageID,
   MessageType, NotificationID,
   SocialID
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 
 import { PermissionsMiddleware } from '../../middleware/permissions'
 import { Enriched, Middleware, MiddlewareContext } from '../../types'

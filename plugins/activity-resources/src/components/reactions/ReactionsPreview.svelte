@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import activity, { ActivityMessage, Reaction } from '@hcengineering/activity'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { showPopup } from '@hcengineering/ui'
-  import { SortingOrder } from '@hcengineering/core'
-  import emojiPlugin from '@hcengineering/emoji'
+  import activity, { ActivityMessage, Reaction } from '@hanzo/activity'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { showPopup } from '@hanzo/ui'
+  import { SortingOrder } from '@hanzo/core'
+  import emojiPlugin from '@hanzo/emoji'
 
   import { updateDocReactions } from '../../utils'
 

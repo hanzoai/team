@@ -42,7 +42,7 @@ import {
   type Timestamp
 } from '@hanzo/core'
 
-import { type Person } from '@hcengineering/contact'
+import { type Person } from '@hanzo/contact'
 import {
   type DocSyncInfo,
   type GithubAuthentication,
@@ -69,16 +69,16 @@ import {
   type MinimizeReason,
   type PullRequestMergeable,
   githubIntegrationKind
-} from '@hcengineering/github'
-import contact, { TPerson } from '@hcengineering/model-contact'
-import presentation from '@hcengineering/model-presentation'
-import tracker, { TComponent, TIssue, TProject, issuesOptions } from '@hcengineering/model-tracker'
-import view, { classPresenter } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import setting from '@hcengineering/setting'
-import tags from '@hcengineering/tags'
-import task from '@hcengineering/task'
+} from '@hanzo/github'
+import contact, { TPerson } from '@hanzo/model-contact'
+import presentation from '@hanzo/model-presentation'
+import tracker, { TComponent, TIssue, TProject, issuesOptions } from '@hanzo/model-tracker'
+import view, { classPresenter } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import setting from '@hanzo/setting'
+import tags from '@hanzo/tags'
+import task from '@hanzo/task'
 
 import { generateClassNotificationTypes } from '@hanzo/model-notification'
 

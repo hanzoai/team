@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Card, CardEvents, MasterTag } from '@hcengineering/card'
-  import { AnyAttribute, fillDefaults, Ref } from '@hcengineering/core'
-  import { Card as CardModal, getClient } from '@hcengineering/presentation'
-  import ui, { Label } from '@hcengineering/ui'
+  import { Analytics } from '@hanzo/analytics'
+  import { Card, CardEvents, MasterTag } from '@hanzo/card'
+  import { AnyAttribute, fillDefaults, Ref } from '@hanzo/core'
+  import { Card as CardModal, getClient } from '@hanzo/presentation'
+  import ui, { Label } from '@hanzo/ui'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'

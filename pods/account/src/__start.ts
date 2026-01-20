@@ -1,11 +1,11 @@
 //
 // Copyright © 2023 Hardcore Engineering Inc.
 //
-import { serveAccount } from '@hcengineering/account-service'
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
-import { newMetrics } from '@hcengineering/core'
-import { initStatisticsContext, loadBrandingMap } from '@hcengineering/server-core'
+import { serveAccount } from '@hanzo/account-service'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { newMetrics } from '@hanzo/core'
+import { initStatisticsContext, loadBrandingMap } from '@hanzo/server-core'
 import { join } from 'path'
 
 configureAnalytics('account', process.env.VERSION ?? '0.7.0')

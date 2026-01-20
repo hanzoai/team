@@ -1,6 +1,6 @@
-import type { Builder } from '@hcengineering/model'
-import core from '@hcengineering/core'
-import tracker from '@hcengineering/tracker'
+import type { Builder } from '@hanzo/model'
+import core from '@hanzo/core'
+import tracker from '@hanzo/tracker'
 
 export function definePermissions (builder: Builder): void {
   builder.createDoc(

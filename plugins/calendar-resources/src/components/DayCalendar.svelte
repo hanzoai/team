@@ -34,8 +34,8 @@
     isWeekend,
     resizeObserver,
     ticker
-  } from '@hcengineering/ui'
-  import { showMenu } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { showMenu } from '@hanzo/view-resources'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import type {
     CalendarADGrid,

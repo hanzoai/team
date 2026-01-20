@@ -38,10 +38,10 @@
     ModernEditbox,
     showPopup,
     Toggle
-  } from '@hcengineering/ui'
-  import { DropdownIntlItem } from '@hcengineering/ui/src/types'
-  import view from '@hcengineering/view'
-  import { IconPicker } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { DropdownIntlItem } from '@hanzo/ui/src/types'
+  import view from '@hanzo/view'
+  import { IconPicker } from '@hanzo/view-resources'
   import setting from '../plugin'
   import { clearSettingsStore } from '../store'
   import { debug } from 'console'

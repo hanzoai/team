@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { themeStore, formatDuration } from '@hcengineering/ui'
+  import { themeStore, formatDuration } from '@hanzo/ui'
 
   export let value: number
 

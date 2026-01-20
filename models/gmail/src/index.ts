@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import { type Channel } from '@hcengineering/contact'
-import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hcengineering/core'
+import activity from '@hanzo/activity'
+import { type Channel } from '@hanzo/contact'
+import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hanzo/core'
 import {
   type Message,
   type NewMessage,
   type SharedMessage,
   type SharedMessages,
   gmailIntegrationKind
-} from '@hcengineering/gmail'
+} from '@hanzo/gmail'
 import {
   ArrOf,
   type Builder,

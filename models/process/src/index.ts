@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import card, { type Card, type MasterTag, type Tag } from '@hcengineering/card'
+import card, { type Card, type MasterTag, type Tag } from '@hanzo/card'
 import core, {
   AccountRole,
   type Class,
@@ -37,14 +37,14 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hcengineering/model'
-import { TDoc } from '@hcengineering/model-core'
-import presentation from '@hcengineering/model-presentation'
-import { TToDo } from '@hcengineering/model-time'
-import view, { createAction } from '@hcengineering/model-view'
-import workbench from '@hcengineering/model-workbench'
-import notification from '@hcengineering/notification'
-import { type Asset, type IntlString, type Resource } from '@hcengineering/platform'
+} from '@hanzo/model'
+import { TDoc } from '@hanzo/model-core'
+import presentation from '@hanzo/model-presentation'
+import { TToDo } from '@hanzo/model-time'
+import view, { createAction } from '@hanzo/model-view'
+import workbench from '@hanzo/model-workbench'
+import notification from '@hanzo/notification'
+import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
 import {
   type CheckFunc,
   type ContextId,
@@ -69,10 +69,10 @@ import {
   type Trigger,
   type UpdateCriteriaComponent,
   processId
-} from '@hcengineering/process'
-import time from '@hcengineering/time'
-import { type AnyComponent } from '@hcengineering/ui'
-import { type AttributeCategory } from '@hcengineering/view'
+} from '@hanzo/process'
+import time from '@hanzo/time'
+import { type AnyComponent } from '@hanzo/ui'
+import { type AttributeCategory } from '@hanzo/view'
 import { defineMethods } from './actions'
 import { defineFunctions } from './functions'
 import { definePermissions } from './permission'

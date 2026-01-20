@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, Class, Doc, Ref } from '@hcengineering/core'
-  import { Context, Process, SelectedContext } from '@hcengineering/process'
-  import { Button, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { AttributeCategory } from '@hcengineering/view'
+  import { AnyAttribute, Class, Doc, Ref } from '@hanzo/core'
+  import { Context, Process, SelectedContext } from '@hanzo/process'
+  import { Button, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { AttributeCategory } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import ConfigurePopup from './ConfigurePopup.svelte'
   import ContextValuePresenter from './ContextValuePresenter.svelte'

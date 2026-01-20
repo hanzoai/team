@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import workbench from '@hcengineering/model-workbench'
-import { chatId } from '@hcengineering/chat'
-import { createSystemType } from '@hcengineering/model-card'
-import communication from '@hcengineering/communication'
-import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import workbench from '@hanzo/model-workbench'
+import { chatId } from '@hanzo/chat'
+import { createSystemType } from '@hanzo/model-card'
+import communication from '@hanzo/communication'
+import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
 
 import chat from './plugin'
-import { AccountRole } from '@hcengineering/core'
+import { AccountRole } from '@hanzo/core'
 
 export { chatId } from '@hanzo/chat'
 export { chatOperation } from './migration'

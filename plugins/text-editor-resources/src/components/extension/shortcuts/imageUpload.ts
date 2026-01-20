@@ -19,7 +19,7 @@ import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { type EditorView } from '@tiptap/pm/view'
 
 import { type FileAttachFunction } from '../types'
-import type { Blob, Ref } from '@hcengineering/core'
+import type { Blob, Ref } from '@hanzo/core'
 
 /**
  * @public

@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
+  import contact from '@hanzo/contact'
   import core, {
     AnyAttribute,
     AttributePermission,
@@ -23,8 +23,8 @@
     notEmpty,
     Permission,
     Ref
-  } from '@hcengineering/core'
-  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hcengineering/presentation'
+  } from '@hanzo/core'
+  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hanzo/presentation'
   import {
     ButtonIcon,
     Icon,
@@ -37,15 +37,15 @@
     getCurrentResolvedLocation,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
-  import { ObjectBoxPopup } from '@hcengineering/view-resources'
+  } from '@hanzo/ui'
+  import { ObjectBoxPopup } from '@hanzo/view-resources'
 
-  import { MasterTag, Role } from '@hcengineering/card'
-  import { clearSettingsStore } from '@hcengineering/setting-resources'
-  import settingRes from '@hcengineering/setting-resources/src/plugin'
+  import { MasterTag, Role } from '@hanzo/card'
+  import { clearSettingsStore } from '@hanzo/setting-resources'
+  import settingRes from '@hanzo/setting-resources/src/plugin'
   import { createEventDispatcher } from 'svelte'
   import cardPlugin from '../../plugin'
-  import { IntlString } from '@hcengineering/platform'
+  import { IntlString } from '@hanzo/platform'
 
   export let _id: Ref<Role>
   export let readonly: boolean = false

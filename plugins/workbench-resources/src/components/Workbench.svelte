@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import contact from '@hcengineering/contact'
-  import { myEmployeeStore } from '@hcengineering/contact-resources'
+  import { Analytics } from '@hanzo/analytics'
+  import contact from '@hanzo/contact'
+  import { myEmployeeStore } from '@hanzo/contact-resources'
   import core, {
     AccountRole,
     Class,
@@ -25,12 +25,12 @@
     Ref,
     SortingOrder,
     Space
-  } from '@hcengineering/core'
-  import login, { loginId } from '@hcengineering/login'
-  import notification, { DocNotifyContext, InboxNotification, notificationId } from '@hcengineering/notification'
-  import { BrowserNotificatator, InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-  import inbox, { inboxId } from '@hcengineering/inbox'
-  import { broadcastEvent, getMetadata, getResource, IntlString, translate } from '@hcengineering/platform'
+  } from '@hanzo/core'
+  import login, { loginId } from '@hanzo/login'
+  import notification, { DocNotifyContext, InboxNotification, notificationId } from '@hanzo/notification'
+  import { BrowserNotificatator, InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  import inbox, { inboxId } from '@hanzo/inbox'
+  import { broadcastEvent, getMetadata, getResource, IntlString, translate } from '@hanzo/platform'
   import {
     ActionContext,
     ComponentExtensions,
@@ -39,9 +39,9 @@
     getClient,
     isAdminUser,
     reduceCalls
-  } from '@hcengineering/presentation'
-  import setting from '@hcengineering/setting'
-  import support, { supportLink, SupportStatus } from '@hcengineering/support'
+  } from '@hanzo/presentation'
+  import setting from '@hanzo/setting'
+  import support, { supportLink, SupportStatus } from '@hanzo/support'
   import {
     AnyComponent,
     areLocationsEqual,
@@ -82,8 +82,8 @@
     showPopup,
     TooltipInstance,
     workbenchSeparators
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import {
     accessDeniedStore,
     ActionHandler,
@@ -92,15 +92,15 @@
     NavLink,
     parseLinkId,
     updateFocus
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import type {
     Application,
     NavigatorModel,
     SpecialNavModel,
     ViewConfiguration,
     WorkbenchTab
-  } from '@hcengineering/workbench'
-  import communication from '@hcengineering/communication'
+  } from '@hanzo/workbench'
+  import communication from '@hanzo/communication'
   import { getContext, onDestroy, onMount, tick } from 'svelte'
   import { subscribeMobile } from '../mobile'
   import workbench from '../plugin'

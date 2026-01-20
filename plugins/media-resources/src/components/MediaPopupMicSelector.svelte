@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MediaInfo, updateSelectedMicId } from '@hcengineering/media'
-  import { Label } from '@hcengineering/ui'
+  import { MediaInfo, updateSelectedMicId } from '@hanzo/media'
+  import { Label } from '@hanzo/ui'
 
   import media from '../plugin'
   import { micAccess, state, sessions } from '../stores'

@@ -14,11 +14,11 @@
 //
 
 import type { Request, Response } from 'express'
-import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hcengineering/core'
+import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
 import { LiveKitSessionData, BillingDB, LiveKitEgressData, AiUsageData, AiTranscriptData, AiTokensData } from './types'
-import { generateToken } from '@hcengineering/server-token'
-import { StorageConfig } from '@hcengineering/server-core'
-import { createDatalakeClient, DatalakeConfig, WorkspaceStats } from '@hcengineering/datalake'
+import { generateToken } from '@hanzo/server-token'
+import { StorageConfig } from '@hanzo/server-core'
+import { createDatalakeClient, DatalakeConfig, WorkspaceStats } from '@hanzo/datalake'
 import { validate as uuidValidate } from 'uuid'
 
 export async function handleListLiveKitSessions (

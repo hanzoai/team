@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { generateId, Markup } from '@hcengineering/core'
-import { jsonToMarkup, MarkupMarkType, MarkupNodeType, markupToJSON, type MarkupNode } from '@hcengineering/text'
-import { hashAttrs, stripHash } from '@hcengineering/text-core'
+import { generateId, Markup } from '@hanzo/core'
+import { jsonToMarkup, MarkupMarkType, MarkupNodeType, markupToJSON, type MarkupNode } from '@hanzo/text'
+import { hashAttrs, stripHash } from '@hanzo/text-core'
 import { Doc as YDoc, XmlElement as YXmlElement, XmlFragment as YXmlFragment, XmlText as YXmlText } from 'yjs'
 
 /**

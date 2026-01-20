@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { Card } from '@hcengineering/card'
-  import { getClient, FilePreview } from '@hcengineering/presentation'
+  import card, { Card } from '@hanzo/card'
+  import { getClient, FilePreview } from '@hanzo/presentation'
   import Description from './Description.svelte'
   import FilePlaceholder from './FilePlaceholder.svelte'
 

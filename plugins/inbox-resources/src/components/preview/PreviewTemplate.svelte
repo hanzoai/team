@@ -12,10 +12,10 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { IntlString } from '@hcengineering/platform'
-  import { PreviewTemplate } from '@hcengineering/communication-resources'
-  import { SocialID } from '@hcengineering/communication-types'
+  import { Person } from '@hanzo/contact'
+  import { IntlString } from '@hanzo/platform'
+  import { PreviewTemplate } from '@hanzo/communication-resources'
+  import { SocialID } from '@hanzo/communication-types'
 
   import { isViewSettingEnabled, hideUserNamesSettingId, viewSettingsStore } from '../../settings'
 

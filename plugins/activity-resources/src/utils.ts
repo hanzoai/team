@@ -1,15 +1,15 @@
-import type { ActivityMessage, Reaction } from '@hcengineering/activity'
-import core, { getCurrentAccount, isOtherHour, type Doc, type Ref, type Space, type Blob } from '@hcengineering/core'
-import { getClient, isSpace } from '@hcengineering/presentation'
+import type { ActivityMessage, Reaction } from '@hanzo/activity'
+import core, { getCurrentAccount, isOtherHour, type Doc, type Ref, type Space, type Blob } from '@hanzo/core'
+import { getClient, isSpace } from '@hanzo/presentation'
 import {
   closePopup,
   getCurrentResolvedLocation,
   getEventPositionElement,
   showPopup,
   type Location
-} from '@hcengineering/ui'
-import { type AttributeModel } from '@hcengineering/view'
-import emojiPlugin from '@hcengineering/emoji'
+} from '@hanzo/ui'
+import { type AttributeModel } from '@hanzo/view'
+import emojiPlugin from '@hanzo/emoji'
 import { get } from 'svelte/store'
 
 import { savedMessagesStore } from './activity'

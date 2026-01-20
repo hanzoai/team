@@ -25,7 +25,7 @@
     fetchMetadataLocalStorage,
     location,
     setMetadataLocalStorage
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { connect, disconnect, error, errorActions } from '../connect'
 
   import workbench, { workbenchId } from '@hanzo/workbench'

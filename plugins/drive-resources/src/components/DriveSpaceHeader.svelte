@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, getCurrentAccount } from '@hcengineering/core'
-  import { type Drive } from '@hcengineering/drive'
-  import { getResource } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { HeaderButton, HeaderButtonAction } from '@hcengineering/ui'
-  import { getUploadHandlers } from '@hcengineering/uploader'
+  import { AccountRole, Ref, getCurrentAccount } from '@hanzo/core'
+  import { type Drive } from '@hanzo/drive'
+  import { getResource } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { HeaderButton, HeaderButtonAction } from '@hanzo/ui'
+  import { getUploadHandlers } from '@hanzo/uploader'
   import drive from '../plugin'
   import { getFolderIdFromFragment } from '../navigation'
   import { showCreateDrivePopup, showCreateFolderPopup, getUploadOptionsByFragment } from '../utils'

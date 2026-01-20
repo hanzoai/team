@@ -38,8 +38,8 @@
     Loading,
     Label,
     Scroller
-  } from '@hcengineering/ui'
-  import { AttributeModel, BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { AttributeModel, BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import { fade } from 'svelte/transition'
   import { showMenu } from '../../actions'

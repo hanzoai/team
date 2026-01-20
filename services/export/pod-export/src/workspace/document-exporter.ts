@@ -26,8 +26,8 @@ import {
   type Ref,
   type Space,
   type TxOperations
-} from '@hcengineering/core'
-import core from '@hcengineering/model-core'
+} from '@hanzo/core'
+import core from '@hanzo/model-core'
 import { type AttachmentExporter } from './attachment-exporter'
 import { type DataMapper } from './data-mapper'
 import { type RelationExporter } from './relation-exporter'

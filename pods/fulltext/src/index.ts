@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
-import { newMetrics, type Tx } from '@hcengineering/core'
-import { initStatisticsContext, type StorageConfiguration } from '@hcengineering/server-core'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { newMetrics, type Tx } from '@hanzo/core'
+import { initStatisticsContext, type StorageConfiguration } from '@hanzo/server-core'
 import { join } from 'path'
 
-import { createElasticAdapter } from '@hcengineering/elastic'
-import { getPlatformQueue } from '@hcengineering/kafka'
-import { setMetadata } from '@hcengineering/platform'
-import { createRekoniAdapter, type FulltextDBConfiguration } from '@hcengineering/server-indexer'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
-import serverToken from '@hcengineering/server-token'
+import { createElasticAdapter } from '@hanzo/elastic'
+import { getPlatformQueue } from '@hanzo/kafka'
+import { setMetadata } from '@hanzo/platform'
+import { createRekoniAdapter, type FulltextDBConfiguration } from '@hanzo/server-indexer'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import serverToken from '@hanzo/server-token'
 import { readFileSync } from 'fs'
 import { startIndexer } from './server'
 

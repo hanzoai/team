@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { Component } from '@hcengineering/ui'
-  import activity from '@hcengineering/activity'
-  import { Card } from '@hcengineering/card'
+  import { Component } from '@hanzo/ui'
+  import activity from '@hanzo/activity'
+  import { Card } from '@hanzo/card'
 
   export let doc: Card
   export let readonly: boolean = false

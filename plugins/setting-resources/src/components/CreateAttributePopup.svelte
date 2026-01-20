@@ -35,8 +35,8 @@
     showPopup,
     ButtonIcon,
     Toggle
-  } from '@hcengineering/ui'
-  import { DropdownIntlItem } from '@hcengineering/ui/src/types'
+  } from '@hanzo/ui'
+  import { DropdownIntlItem } from '@hanzo/ui/src/types'
   import setting from '../plugin'
   import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'

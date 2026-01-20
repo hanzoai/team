@@ -35,7 +35,7 @@ import {
   type Tx,
   type TxAccessLevel,
   type TypedSpace
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   ArrOf,
   Collection,

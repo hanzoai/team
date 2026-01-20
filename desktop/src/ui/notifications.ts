@@ -13,24 +13,24 @@
 // limitations under the License.
 //
 
-import { formatName, getPersonByPersonId } from '@hcengineering/contact'
-import { Ref, SortingOrder, TxOperations } from '@hcengineering/core'
+import { formatName, getPersonByPersonId } from '@hanzo/contact'
+import { Ref, SortingOrder, TxOperations } from '@hanzo/core'
 import notification, {
   notificationId,
   ActivityInboxNotification,
   CommonInboxNotification,
   DocNotifyContext,
   InboxNotification
-} from '@hcengineering/notification'
-import { addEventListener, getMetadata, IntlString, translate } from '@hcengineering/platform'
-import { createNotificationsQuery, getClient } from '@hcengineering/presentation'
-import { location } from '@hcengineering/ui'
-import workbench, { workbenchId } from '@hcengineering/workbench'
-import desktopPreferences, { defaultNotificationPreference } from '@hcengineering/desktop-preferences'
-import { activePreferences } from '@hcengineering/desktop-preferences-resources'
-import { getDisplayInboxData, InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
-import { inboxId } from '@hcengineering/inbox'
-import communication from '@hcengineering/communication'
+} from '@hanzo/notification'
+import { addEventListener, getMetadata, IntlString, translate } from '@hanzo/platform'
+import { createNotificationsQuery, getClient } from '@hanzo/presentation'
+import { location } from '@hanzo/ui'
+import workbench, { workbenchId } from '@hanzo/workbench'
+import desktopPreferences, { defaultNotificationPreference } from '@hanzo/desktop-preferences'
+import { activePreferences } from '@hanzo/desktop-preferences-resources'
+import { getDisplayInboxData, InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+import { inboxId } from '@hanzo/inbox'
+import communication from '@hanzo/communication'
 import { ipcMainExposed } from './typesUtils'
 
 let client: TxOperations

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import cardPlugin, { cardId, DOMAIN_CARD, type Card, type Role } from '@hcengineering/card'
+import cardPlugin, { cardId, DOMAIN_CARD, type Card, type Role } from '@hanzo/card'
 import core, {
   DOMAIN_MODEL,
   TxOperations,
@@ -24,7 +24,7 @@ import core, {
   type Doc,
   type DocumentUpdate,
   type Ref
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   createOrUpdate,
   tryMigrate,
@@ -33,9 +33,9 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hcengineering/model'
-import tags from '@hcengineering/tags'
-import view, { type Viewlet } from '@hcengineering/view'
+} from '@hanzo/model'
+import tags from '@hanzo/tags'
+import view, { type Viewlet } from '@hanzo/view'
 import card from '.'
 
 export const cardOperation: MigrateOperation = {

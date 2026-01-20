@@ -11,7 +11,7 @@ import core, {
   TxOperations,
   TxWorkspaceEvent,
   WorkspaceEvent
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { LiveQuery } from '..'
 import { connect } from './connection'
 import { test } from './minmodel'

@@ -40,9 +40,9 @@ import {
   UXObject,
   AccountUuid,
   Blob
-} from '@hcengineering/core'
-import { Asset, IntlString, Resource, Status } from '@hcengineering/platform'
-import { Preference } from '@hcengineering/preference'
+} from '@hanzo/core'
+import { Asset, IntlString, Resource, Status } from '@hanzo/platform'
+import { Preference } from '@hanzo/preference'
 import {
   AnyComponent,
   AnySvelteComponent,

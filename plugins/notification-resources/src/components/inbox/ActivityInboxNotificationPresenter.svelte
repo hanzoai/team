@@ -24,11 +24,11 @@
     ActivityMessagePreview,
     combineActivityMessages,
     sortActivityMessages
-  } from '@hcengineering/activity-resources'
-  import activity, { ActivityMessage, DisplayActivityMessage, DocUpdateMessage } from '@hcengineering/activity'
-  import { Action, Component } from '@hcengineering/ui'
-  import { getActions } from '@hcengineering/view-resources'
-  import { getResource } from '@hcengineering/platform'
+  } from '@hanzo/activity-resources'
+  import activity, { ActivityMessage, DisplayActivityMessage, DocUpdateMessage } from '@hanzo/activity'
+  import { Action, Component } from '@hanzo/ui'
+  import { getActions } from '@hanzo/view-resources'
+  import { getResource } from '@hanzo/platform'
 
   export let object: Doc | undefined
   export let value: DisplayActivityInboxNotification

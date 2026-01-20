@@ -13,7 +13,7 @@ import type {
   AttachmentUpdateData,
   Emoji,
   PersonUuid
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 
 import type { BaseEvent } from './common'
 

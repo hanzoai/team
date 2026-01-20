@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
-import { startCollaborator } from '@hcengineering/collaborator'
-import { newMetrics } from '@hcengineering/core'
-import { initStatisticsContext } from '@hcengineering/server-core'
+import { Analytics } from '@hanzo/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { startCollaborator } from '@hanzo/collaborator'
+import { newMetrics } from '@hanzo/core'
+import { initStatisticsContext } from '@hanzo/server-core'
 import { join } from 'path'
 
 configureAnalytics('collaborator', process.env.VERSION ?? '0.7.0')

@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type AccountClient, getClient as getAccountClientRaw } from '@hcengineering/account-client'
-import { Analytics } from '@hcengineering/analytics'
-import communication from '@hcengineering/communication'
-import { type Card, CardEvents, cardId, type CardSpace, type MasterTag, type Tag } from '@hcengineering/card'
+import { type AccountClient, getClient as getAccountClientRaw } from '@hanzo/account-client'
+import { Analytics } from '@hanzo/analytics'
+import communication from '@hanzo/communication'
+import { type Card, CardEvents, cardId, type CardSpace, type MasterTag, type Tag } from '@hanzo/card'
 import core, {
   AccountRole,
   type Class,
@@ -39,9 +39,9 @@ import core, {
   toRank,
   type TxOperations,
   type WithLookup
-} from '@hcengineering/core'
-import login from '@hcengineering/login'
-import { getMetadata, translate } from '@hcengineering/platform'
+} from '@hanzo/core'
+import login from '@hanzo/login'
+import { getMetadata, translate } from '@hanzo/platform'
 import presentation, {
   createMarkup,
   getClient,
@@ -49,9 +49,9 @@ import presentation, {
   IconWithEmoji,
   MessageBox,
   type ObjectSearchResult
-} from '@hcengineering/presentation'
-import { makeRank } from '@hcengineering/rank'
-import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
+} from '@hanzo/presentation'
+import { makeRank } from '@hanzo/rank'
+import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
 import {
   getCurrentLocation,
   getCurrentResolvedLocation,
@@ -62,13 +62,13 @@ import {
   navigate,
   type ResolvedLocation,
   showPopup
-} from '@hcengineering/ui'
-import view, { canCopyLink, encodeObjectURI } from '@hcengineering/view'
-import { accessDeniedStore } from '@hcengineering/view-resources'
-import workbench, { type LocationData, type Widget, type WidgetTab } from '@hcengineering/workbench'
-import { createWidgetTab } from '@hcengineering/workbench-resources'
+} from '@hanzo/ui'
+import view, { canCopyLink, encodeObjectURI } from '@hanzo/view'
+import { accessDeniedStore } from '@hanzo/view-resources'
+import workbench, { type LocationData, type Widget, type WidgetTab } from '@hanzo/workbench'
+import { createWidgetTab } from '@hanzo/workbench-resources'
 
-import attachment from '@hcengineering/attachment'
+import attachment from '@hanzo/attachment'
 import CardSearchItem from './components/CardSearchItem.svelte'
 import CreateSpace from './components/navigator/CreateSpace.svelte'
 import card from './plugin'

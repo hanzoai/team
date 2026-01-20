@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MeasureContext, PersonId, PersonUuid, SocialIdType } from '@hcengineering/core'
-import { RestClient } from '@hcengineering/api-client'
+import { MeasureContext, PersonId, PersonUuid, SocialIdType } from '@hanzo/core'
+import { RestClient } from '@hanzo/api-client'
 import { PersonCache, CachedPerson } from '../person'
 import { EmailContact } from '../types'
 

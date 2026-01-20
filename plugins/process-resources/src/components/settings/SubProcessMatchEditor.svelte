@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Process, State } from '@hcengineering/process'
-  import { DropdownLabels, Label } from '@hcengineering/ui'
+  import { Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Process, State } from '@hanzo/process'
+  import { DropdownLabels, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import { ModeId, Modes } from '../../query'

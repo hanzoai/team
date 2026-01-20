@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, WithLookup } from '@hcengineering/core'
-  import presentation, { ActionContext, createQuery } from '@hcengineering/presentation'
-  import { Execution } from '@hcengineering/process'
-  import { Modal, registerFocus } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  import { Doc, WithLookup } from '@hanzo/core'
+  import presentation, { ActionContext, createQuery } from '@hanzo/presentation'
+  import { Execution } from '@hanzo/process'
+  import { Modal, registerFocus } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     List,
     ListSelectionProvider,
     noCategory,
     SelectDirection,
     ViewletsSettingButton
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import NextTriggers from './NextTriggers.svelte'
   import process from '../plugin'

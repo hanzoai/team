@@ -34,9 +34,9 @@ import {
   type WorkspaceMemberInfo,
   type WorkspaceUuid,
   type IntegrationKind
-} from '@hcengineering/core'
-import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hcengineering/platform'
-import { decodeToken, decodeTokenVerbose, generateToken, type PermissionsGrant } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzo/platform'
+import { decodeToken, decodeTokenVerbose, generateToken, type PermissionsGrant } from '@hanzo/server-token'
 
 import { isAdminEmail } from './admin'
 import { accountPlugin } from './plugin'

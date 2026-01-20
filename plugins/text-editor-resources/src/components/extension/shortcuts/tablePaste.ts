@@ -12,12 +12,12 @@
 // limitations under the License.
 //
 
-import { markdownToMarkup } from '@hcengineering/text-markdown'
+import { markdownToMarkup } from '@hanzo/text-markdown'
 import { Extension } from '@tiptap/core'
 import { Fragment, Node } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'
 
-// TableMetadata type - matches the definition in @hcengineering/view-resources
+// TableMetadata type - matches the definition in @hanzo/view-resources
 // Defined here to avoid circular dependency (view-resources depends on text-editor-resources)
 interface TableMetadata {
   version: string

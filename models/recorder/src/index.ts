@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hcengineering/model'
-import core from '@hcengineering/model-core'
-import presentation from '@hcengineering/model-presentation'
-import uploader from '@hcengineering/uploader'
-import workbench from '@hcengineering/workbench'
+import { type Builder } from '@hanzo/model'
+import core from '@hanzo/model-core'
+import presentation from '@hanzo/model-presentation'
+import uploader from '@hanzo/uploader'
+import workbench from '@hanzo/workbench'
 
 import recorder from './plugin'
 
-export { recorderId } from '@hcengineering/recorder'
+export { recorderId } from '@hanzo/recorder'
 export { recorder as default }
 export * from './migration'
 

@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { communicationId, type Poll } from '@hcengineering/communication'
-import communication from '@hcengineering/communication-resources/src/plugin'
-import { type Attribute, type Ref } from '@hcengineering/core'
-import {} from '@hcengineering/ui'
-import { mergeIds, type Resource } from '@hcengineering/platform'
-import { type ViewAction } from '@hcengineering/model-view'
-import { type Card } from '@hcengineering/card'
+import { communicationId, type Poll } from '@hanzo/communication'
+import communication from '@hanzo/communication-resources/src/plugin'
+import { type Attribute, type Ref } from '@hanzo/core'
+import {} from '@hanzo/ui'
+import { mergeIds, type Resource } from '@hanzo/platform'
+import { type ViewAction } from '@hanzo/model-view'
+import { type Card } from '@hanzo/card'
 
 export default mergeIds(communicationId, communication, {
   action: {

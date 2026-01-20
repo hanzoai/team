@@ -48,11 +48,11 @@
     MessageBox,
     MultipleDraftController,
     SpaceSelector
-  } from '@hcengineering/presentation'
-  import tags, { type TagElement, TagReference } from '@hcengineering/tags'
-  import { makeRank, TaskType } from '@hcengineering/task'
-  import { TaskKindSelector } from '@hcengineering/task-resources'
-  import { EmptyMarkup, isEmptyMarkup } from '@hcengineering/text'
+  } from '@hanzo/presentation'
+  import tags, { type TagElement, TagReference } from '@hanzo/tags'
+  import { makeRank, TaskType } from '@hanzo/task'
+  import { TaskKindSelector } from '@hanzo/task-resources'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
   import {
     Component as ComponentType,
     Issue,

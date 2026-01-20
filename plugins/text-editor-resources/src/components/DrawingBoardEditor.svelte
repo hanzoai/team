@@ -26,10 +26,10 @@
     ThemeAwareColor,
     ColorsList,
     ColorMetaNameOrHex
-  } from '@hcengineering/presentation'
-  import presence from '@hcengineering/presence'
-  import { getResource } from '@hcengineering/platform'
-  import { Loading, Component, themeStore } from '@hcengineering/ui'
+  } from '@hanzo/presentation'
+  import presence from '@hanzo/presence'
+  import { getResource } from '@hanzo/platform'
+  import { Loading, Component, themeStore } from '@hanzo/ui'
   import { onMount, onDestroy } from 'svelte'
   import { Array as YArray, Map as YMap, Doc as YDoc } from 'yjs'
 

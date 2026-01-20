@@ -91,11 +91,11 @@ The service integrates with:
 ## Dependencies
 
 ### Core Dependencies
-- @hcengineering/core
-- @hcengineering/server-core
-- @hcengineering/server-client
-- @hcengineering/server-token
-- @hcengineering/gmail
+- @hanzo/core
+- @hanzo/server-core
+- @hanzo/server-client
+- @hanzo/server-token
+- @hanzo/gmail
 
 ### External Dependencies
 - googleapis

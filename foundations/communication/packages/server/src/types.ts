@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import type { Account, MeasureContext } from '@hcengineering/core'
+import type { Account, MeasureContext } from '@hanzo/core'
 import type {
   EventResult,
   Event,
   SessionData, EventType
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import type {
   CardID,
   Collaborator,
@@ -32,7 +32,7 @@ import type {
   NotificationContext,
   Peer,
   WorkspaceUuid
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 
 import { LowLevelClient } from './client'
 

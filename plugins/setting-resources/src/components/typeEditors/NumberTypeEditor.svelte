@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { TypeNumber as TypeNumberType } from '@hcengineering/core'
-  import core from '@hcengineering/core'
-  import { TypeNumber } from '@hcengineering/model'
-  import { Label, NumberInput, Toggle } from '@hcengineering/ui'
+  import type { TypeNumber as TypeNumberType } from '@hanzo/core'
+  import core from '@hanzo/core'
+  import { TypeNumber } from '@hanzo/model'
+  import { Label, NumberInput, Toggle } from '@hanzo/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import setting from '../../plugin'
 

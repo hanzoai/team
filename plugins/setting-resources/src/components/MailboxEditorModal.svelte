@@ -19,10 +19,10 @@
   import setting from '@hanzo/setting'
   import { createEventDispatcher } from 'svelte'
   import { getAccountClient } from '../utils'
-  import { IntlString, translateCB } from '@hcengineering/platform'
-  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hcengineering/contact'
-  import { buildSocialIdString, SocialIdType } from '@hcengineering/core'
-  import { Analytics } from '@hcengineering/analytics'
+  import { IntlString, translateCB } from '@hanzo/platform'
+  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hanzo/contact'
+  import { buildSocialIdString, SocialIdType } from '@hanzo/core'
+  import { Analytics } from '@hanzo/analytics'
 
   export let mailboxOptions: MailboxOptions
 

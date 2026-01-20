@@ -28,13 +28,13 @@ import {
   type Domain,
   type Ref,
   type Space
-} from '@hcengineering/core'
-import { type Builder, Mixin, Model, UX } from '@hcengineering/model'
-import core, { TClass, TDoc } from '@hcengineering/model-core'
-import preference, { TPreference } from '@hcengineering/model-preference'
-import presentation from '@hcengineering/model-presentation'
-import { type Asset, type IntlString, type Resource, type Status } from '@hcengineering/platform'
-import { type AnyComponent, type LabelAndProps, type Location } from '@hcengineering/ui/src/types'
+} from '@hanzo/core'
+import { type Builder, Mixin, Model, UX } from '@hanzo/model'
+import core, { TClass, TDoc } from '@hanzo/model-core'
+import preference, { TPreference } from '@hanzo/model-preference'
+import presentation from '@hanzo/model-presentation'
+import { type Asset, type IntlString, type Resource, type Status } from '@hanzo/platform'
+import { type AnyComponent, type LabelAndProps, type Location } from '@hanzo/ui/src/types'
 import {
   type TypeEditor,
   type Action,
@@ -100,7 +100,7 @@ import {
   type Viewlet,
   type ViewletDescriptor,
   type ViewletPreference
-} from '@hcengineering/view'
+} from '@hanzo/view'
 
 import view from './plugin'
 import { classPresenter, createAction } from './utils'

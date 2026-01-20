@@ -16,37 +16,37 @@ This repository includes the following core packages:
 
 ### Core Packages
 
-- **[@hcengineering/core](packages/core)** - Core data models, types, and fundamental platform abstractions
-- **[@hcengineering/platform](packages/platform)** - Platform runtime, plugin system, and dependency injection
-- **[@hcengineering/model](packages/model)** - Data model definitions and schema management
+- **[@hanzo/core](packages/core)** - Core data models, types, and fundamental platform abstractions
+- **[@hanzo/platform](packages/platform)** - Platform runtime, plugin system, and dependency injection
+- **[@hanzo/model](packages/model)** - Data model definitions and schema management
 
 ### Client Libraries
 
-- **[@hcengineering/client](packages/client)** - Client-side data access and synchronization layer
-- **[@hcengineering/client-resources](packages/client-resources)** - Shared client resources and utilities
-- **[@hcengineering/api-client](packages/api-client)** - API client for programmatic access to Huly Platform (WebSocket and REST)
-- **[@hcengineering/account-client](packages/account-client)** - Account management client
-- **[@hcengineering/collaborator-client](packages/collaborator-client)** - Real-time collaboration client
-- **[@hcengineering/hulylake-client](packages/hulylake-client)** - HulyLake data warehouse client
-- **[@hcengineering/analytics](packages/analytics)** - Analytics and tracking
-- **[@hcengineering/analytics-service](packages/analytics-service)** - Analytics service implementation
+- **[@hanzo/client](packages/client)** - Client-side data access and synchronization layer
+- **[@hanzo/client-resources](packages/client-resources)** - Shared client resources and utilities
+- **[@hanzo/api-client](packages/api-client)** - API client for programmatic access to Huly Platform (WebSocket and REST)
+- **[@hanzo/account-client](packages/account-client)** - Account management client
+- **[@hanzo/collaborator-client](packages/collaborator-client)** - Real-time collaboration client
+- **[@hanzo/hulylake-client](packages/hulylake-client)** - HulyLake data warehouse client
+- **[@hanzo/analytics](packages/analytics)** - Analytics and tracking
+- **[@hanzo/analytics-service](packages/analytics-service)** - Analytics service implementation
 
 ### Text Processing
 
-- **[@hcengineering/text](packages/text)** - High-level text processing utilities
-- **[@hcengineering/text-core](packages/text-core)** - Core text processing engine
-- **[@hcengineering/text-html](packages/text-html)** - HTML text rendering and parsing
-- **[@hcengineering/text-markdown](packages/text-markdown)** - Markdown support
-- **[@hcengineering/text-ydoc](packages/text-ydoc)** - Yjs document integration for collaborative editing
+- **[@hanzo/text](packages/text)** - High-level text processing utilities
+- **[@hanzo/text-core](packages/text-core)** - Core text processing engine
+- **[@hanzo/text-html](packages/text-html)** - HTML text rendering and parsing
+- **[@hanzo/text-markdown](packages/text-markdown)** - Markdown support
+- **[@hanzo/text-ydoc](packages/text-ydoc)** - Yjs document integration for collaborative editing
 
 ### Utilities
 
-- **[@hcengineering/query](packages/query)** - Query language and execution engine
-- **[@hcengineering/storage](packages/storage)** - Storage abstractions and implementations
-- **[@hcengineering/rank](packages/rank)** - Ranking and ordering utilities
-- **[@hcengineering/retry](packages/retry)** - Retry logic and resilience patterns
-- **[@hcengineering/rpc](packages/rpc)** - RPC communication layer
-- **[@hcengineering/token](packages/token)** - Token management and authentication utilities
+- **[@hanzo/query](packages/query)** - Query language and execution engine
+- **[@hanzo/storage](packages/storage)** - Storage abstractions and implementations
+- **[@hanzo/rank](packages/rank)** - Ranking and ordering utilities
+- **[@hanzo/retry](packages/retry)** - Retry logic and resilience patterns
+- **[@hanzo/rpc](packages/rpc)** - RPC communication layer
+- **[@hanzo/token](packages/token)** - Token management and authentication utilities
 
 ## Pre-requisites
 

@@ -17,7 +17,7 @@
 
   import NodeMarks from './NodeMarks.svelte'
   import NodeContent from './NodeContent.svelte'
-  import { ParsedTextWithEmojis } from '@hcengineering/emoji'
+  import { ParsedTextWithEmojis } from '@hanzo/emoji'
 
   export let node: MarkupNode
   export let singleTextNode = false

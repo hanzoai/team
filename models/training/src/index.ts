@@ -38,8 +38,8 @@ import {
   type FindOptions,
   type Permission,
   type Ref
-} from '@hcengineering/core'
-import { Prop, type Builder } from '@hcengineering/model'
+} from '@hanzo/core'
+import { Prop, type Builder } from '@hanzo/model'
 
 import contacts from '@hanzo/model-contact'
 import core from '@hanzo/model-core'

@@ -15,9 +15,9 @@
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
   import { type Editor } from '@tiptap/core'
-  import { type TextEditorAction, type ActionContext } from '@hcengineering/text-editor'
-  import { getResource } from '@hcengineering/platform'
-  import { Icon, IconSize, tooltip, type LabelAndProps } from '@hcengineering/ui'
+  import { type TextEditorAction, type ActionContext } from '@hanzo/text-editor'
+  import { getResource } from '@hanzo/platform'
+  import { Icon, IconSize, tooltip, type LabelAndProps } from '@hanzo/ui'
   import { Transaction } from '@tiptap/pm/state'
 
   export let action: TextEditorAction

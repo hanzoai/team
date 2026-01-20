@@ -22,14 +22,14 @@ import {
   type TxCUD,
   TxProcessor,
   type SessionData
-} from '@hcengineering/core'
-import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
+} from '@hanzo/core'
+import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
 import {
   BaseMiddleware,
   type Middleware,
   type TxMiddlewareResult,
   type PipelineContext
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 
 export const configurationAccountEmail = '#configurator@hc.engineering'
 /**

@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
-import { MeasureContext, newMetrics } from '@hcengineering/core'
-import { closeQueue, initQueue } from '@hcengineering/mail-common'
-import { setMetadata } from '@hcengineering/platform'
-import { initStatisticsContext } from '@hcengineering/server-core'
-import serverToken from '@hcengineering/server-token'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { MeasureContext, newMetrics } from '@hanzo/core'
+import { closeQueue, initQueue } from '@hanzo/mail-common'
+import { setMetadata } from '@hanzo/platform'
+import { initStatisticsContext } from '@hanzo/server-core'
+import serverToken from '@hanzo/server-token'
 import cors from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 import { join } from 'path'

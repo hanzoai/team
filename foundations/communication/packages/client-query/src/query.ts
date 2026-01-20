@@ -19,8 +19,8 @@ import {
   NotificationQueryParams,
   MessageQueryOptions,
   QueryOptions
-} from '@hcengineering/communication-query'
-import type { PagedQueryCallback, QueryCallback } from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-query'
+import type { PagedQueryCallback, QueryCallback } from '@hanzo/communication-sdk-types'
 import {
   type FindLabelsParams,
   type FindNotificationContextParams,
@@ -30,7 +30,7 @@ import {
   type Notification,
   FindCollaboratorsParams,
   Collaborator
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import { deepEqual } from 'fast-equals'
 import { getLiveQueries, getOnDestroy } from './init'
 

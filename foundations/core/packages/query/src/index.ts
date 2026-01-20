@@ -64,8 +64,8 @@ import core, {
   type DomainRequestOptions,
   type DomainResult,
   type OperationDomain
-} from '@hcengineering/core'
-import { PlatformError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError } from '@hanzo/platform'
 import { deepEqual } from 'fast-equals'
 import { Refs } from './refs'
 import { ResultArray } from './results'

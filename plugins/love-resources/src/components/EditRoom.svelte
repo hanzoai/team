@@ -16,7 +16,7 @@
   import { EditBox, ModernButton } from '@hanzo/ui'
   import { Room, isOffice, type ParticipantInfo } from '@hanzo/love'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { IntlString } from '@hcengineering/platform'
+  import { IntlString } from '@hanzo/platform'
 
   import love from '../plugin'
   import { getRoomName } from '../utils'

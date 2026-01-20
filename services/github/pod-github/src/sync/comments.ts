@@ -11,9 +11,9 @@ import core, {
   Ref,
   TxOperations,
   withContext
-} from '@hcengineering/core'
-import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hcengineering/github'
-import { LiveQuery } from '@hcengineering/query'
+} from '@hanzo/core'
+import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
+import { LiveQuery } from '@hanzo/query'
 import { deepEqual } from 'fast-equals'
 import {
   ContainerFocus,

@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import {} from '@hcengineering/core'
-import { mergeIds } from '@hcengineering/platform'
-import rating, { ratingId } from '@hcengineering/rating'
-import type { AnyComponent } from '@hcengineering/ui/src/types'
+import {} from '@hanzo/core'
+import { mergeIds } from '@hanzo/platform'
+import rating, { ratingId } from '@hanzo/rating'
+import type { AnyComponent } from '@hanzo/ui/src/types'
 
 export default mergeIds(ratingId, rating, {
   component: {

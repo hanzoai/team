@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hcengineering/card'
-  import { Class, ClassifierKind, Doc, Ref } from '@hcengineering/core'
-  import presentation, { getClient } from '@hcengineering/presentation'
-  import { DropdownIntlItem, Label, Modal, ModernEditbox, NestedDropdown } from '@hcengineering/ui'
+  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
+  import { Class, ClassifierKind, Doc, Ref } from '@hanzo/core'
+  import presentation, { getClient } from '@hanzo/presentation'
+  import { DropdownIntlItem, Label, Modal, ModernEditbox, NestedDropdown } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
-  import { Message } from '@hcengineering/communication-types'
-  import { markupToText } from '@hcengineering/text'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { Message } from '@hanzo/communication-types'
+  import { markupToText } from '@hanzo/text'
+  import { getEmbeddedLabel } from '@hanzo/platform'
 
   import { toMarkup } from '../utils'
   import { attachCardToMessage } from '../actions'

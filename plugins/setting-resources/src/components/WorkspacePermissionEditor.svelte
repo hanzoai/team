@@ -12,11 +12,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor, getAccountClient } from '@hcengineering/contact-resources'
-  import { AccountUuid } from '@hcengineering/core'
-  import { Analytics } from '@hcengineering/analytics'
-  import { IntlString } from '@hcengineering/platform'
-  import { Label, Loading } from '@hcengineering/ui'
+  import { AccountArrayEditor, getAccountClient } from '@hanzo/contact-resources'
+  import { AccountUuid } from '@hanzo/core'
+  import { Analytics } from '@hanzo/analytics'
+  import { IntlString } from '@hanzo/platform'
+  import { Label, Loading } from '@hanzo/ui'
   import { onMount } from 'svelte'
 
   import settingsRes from '../plugin'

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { mergeIds } from '@hcengineering/platform'
-import { achievementId } from '@hcengineering/achievement'
-import achievement from '@hcengineering/achievement-resources/src/plugin'
-import { type Ref } from '@hcengineering/core'
-import { type ComponentPointExtension } from '@hcengineering/presentation'
+import { mergeIds } from '@hanzo/platform'
+import { achievementId } from '@hanzo/achievement'
+import achievement from '@hanzo/achievement-resources/src/plugin'
+import { type Ref } from '@hanzo/core'
+import { type ComponentPointExtension } from '@hanzo/presentation'
 
 export default mergeIds(achievementId, achievement, {
   extensions: {

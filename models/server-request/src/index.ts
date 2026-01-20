@@ -15,12 +15,12 @@
 
 import { type Builder } from '@hanzo/model'
 
-import core from '@hcengineering/core'
-import serverCore from '@hcengineering/server-core'
-import serverRequest from '@hcengineering/server-request'
-import serverNotification from '@hcengineering/server-notification'
-import request from '@hcengineering/model-request'
-import notification from '@hcengineering/notification'
+import core from '@hanzo/core'
+import serverCore from '@hanzo/server-core'
+import serverRequest from '@hanzo/server-request'
+import serverNotification from '@hanzo/server-notification'
+import request from '@hanzo/model-request'
+import notification from '@hanzo/notification'
 
 export { serverRequestId } from '@hanzo/server-request'
 

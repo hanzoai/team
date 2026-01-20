@@ -1,15 +1,15 @@
-import { type AccountClient } from '@hcengineering/account-client'
-import { calendarIntegrationKind } from '@hcengineering/calendar'
+import { type AccountClient } from '@hanzo/account-client'
+import { calendarIntegrationKind } from '@hanzo/calendar'
 import {
   type PersonId,
   type WorkspaceInfoWithStatus,
   type WorkspaceUuid,
   isActiveMode,
   systemAccountUuid
-} from '@hcengineering/core'
-import { getClient as getKvsClient } from '@hcengineering/kvs-client'
-import { getAccountClient } from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { getClient as getKvsClient } from '@hanzo/kvs-client'
+import { getAccountClient } from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
 import type { Db } from 'mongodb'
 
 interface Credentials {

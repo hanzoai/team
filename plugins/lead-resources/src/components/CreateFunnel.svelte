@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
   import core, {
     getCurrentAccount,
     Ref,
@@ -33,8 +33,8 @@
   import { createEventDispatcher } from 'svelte'
 
   import leadRes from '../plugin'
-  import { Analytics } from '@hcengineering/analytics'
-  import view from '@hcengineering/view'
+  import { Analytics } from '@hanzo/analytics'
+  import view from '@hanzo/view'
 
   export let funnel: Funnel | undefined = undefined
   const dispatch = createEventDispatcher()

@@ -19,17 +19,17 @@
     showPopup,
     type FilterCategory,
     type ActiveFilter
-  } from '@hcengineering/ui'
-  import { getCurrentWorkspaceUuid, getClient, SpaceSelector } from '@hcengineering/presentation'
-  import { isWorkspaceIntegration } from '@hcengineering/integration-client'
-  import type { Integration } from '@hcengineering/account-client'
-  import contact from '@hcengineering/contact'
-  import card from '@hcengineering/card'
+  } from '@hanzo/ui'
+  import { getCurrentWorkspaceUuid, getClient, SpaceSelector } from '@hanzo/presentation'
+  import { isWorkspaceIntegration } from '@hanzo/integration-client'
+  import type { Integration } from '@hanzo/account-client'
+  import contact from '@hanzo/contact'
+  import card from '@hanzo/card'
 
   import TelegramIcon from './icons/TelegramColor.svelte'
   import telegram from '../plugin'
   import { type TelegramChannelConfig, getIntegrationClient, listChannels, restart } from '../api'
-  import core, { getCurrentAccount, Space } from '@hcengineering/core'
+  import core, { getCurrentAccount, Space } from '@hanzo/core'
 
   export let readonly: boolean = false
 

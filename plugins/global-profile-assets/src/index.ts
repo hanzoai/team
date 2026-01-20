@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { addStringsLoader, loadMetadata } from '@hcengineering/platform'
-import globalProfile, { globalProfileId } from '@hcengineering/global-profile'
+import { addStringsLoader, loadMetadata } from '@hanzo/platform'
+import globalProfile, { globalProfileId } from '@hanzo/global-profile'
 
 addStringsLoader(globalProfileId, async (lang: string) => await import(`../lang/${lang}.json`))
 

@@ -39,9 +39,9 @@ import {
   type Tx,
   type TxResult,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { startSessionManager, type SessionManagerOptions } from '@hcengineering/server'
-import { createDummyQueue, createDummyStorageAdapter } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { startSessionManager, type SessionManagerOptions } from '@hanzo/server'
+import { createDummyQueue, createDummyStorageAdapter } from '@hanzo/server-core'
 import { startHttpServer } from '../server_http'
 import { genMinModel } from './minmodel'
 

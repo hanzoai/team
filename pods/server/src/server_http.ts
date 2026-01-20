@@ -27,9 +27,9 @@ import {
   type Tx,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { Status, UNAUTHORIZED, unknownStatus } from '@hcengineering/platform'
-import { RPCHandler, type Response } from '@hcengineering/rpc'
+} from '@hanzo/core'
+import { Status, UNAUTHORIZED, unknownStatus } from '@hanzo/platform'
+import { RPCHandler, type Response } from '@hanzo/rpc'
 import {
   doSessionOp,
   getFile,

@@ -23,12 +23,12 @@
     type Ref,
     type Space,
     type Class
-  } from '@hcengineering/core'
-  import { Card, getCurrentWorkspaceUuid } from '@hcengineering/presentation'
-  import { DropdownLabels, Label } from '@hcengineering/ui'
-  import { getResource } from '@hcengineering/platform'
-  import login from '@hcengineering/login'
-  import { type RelationDefinition } from '@hcengineering/export'
+  } from '@hanzo/core'
+  import { Card, getCurrentWorkspaceUuid } from '@hanzo/presentation'
+  import { DropdownLabels, Label } from '@hanzo/ui'
+  import { getResource } from '@hanzo/platform'
+  import login from '@hanzo/login'
+  import { type RelationDefinition } from '@hanzo/export'
 
   import { createEventDispatcher } from 'svelte'
 

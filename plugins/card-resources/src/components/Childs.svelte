@@ -13,22 +13,22 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { Card, CardEvents, cardId } from '@hcengineering/card'
-  import { chatId } from '@hcengineering/chat'
-  import { Data, Doc, fillDefaults, MarkupBlobRef, SortingOrder, WithLookup } from '@hcengineering/core'
-  import { translate } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { makeRank } from '@hcengineering/rank'
-  import { ButtonIcon, getCurrentLocation, IconAdd, Label, navigate, resizeObserver, Section } from '@hcengineering/ui'
-  import view, { encodeObjectURI, Viewlet, ViewletPreference, ViewOptions } from '@hcengineering/view'
+  import { Analytics } from '@hanzo/analytics'
+  import { Card, CardEvents, cardId } from '@hanzo/card'
+  import { chatId } from '@hanzo/chat'
+  import { Data, Doc, fillDefaults, MarkupBlobRef, SortingOrder, WithLookup } from '@hanzo/core'
+  import { translate } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { makeRank } from '@hanzo/rank'
+  import { ButtonIcon, getCurrentLocation, IconAdd, Label, navigate, resizeObserver, Section } from '@hanzo/ui'
+  import view, { encodeObjectURI, Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     List,
     ListSelectionProvider,
     restrictionStore,
     SelectDirection,
     ViewletsSettingButton
-  } from '@hcengineering/view-resources'
+  } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
 

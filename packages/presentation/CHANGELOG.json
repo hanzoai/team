@@ -3,7 +3,7 @@
   "entries": [
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/presentation_v0.6.2",
+      "tag": "@hanzo/presentation_v0.6.2",
       "date": "Tue, 09 Nov 2021 17:01:22 GMT",
       "comments": {
         "patch": [
@@ -20,7 +20,7 @@
     },
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/presentation_v0.6.1",
+      "tag": "@hanzo/presentation_v0.6.1",
       "date": "Sun, 08 Aug 2021 21:05:26 GMT",
       "comments": {
         "patch": [
@@ -40,7 +40,7 @@
     },
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/presentation_v0.6.0",
+      "tag": "@hanzo/presentation_v0.6.0",
       "date": "Sun, 08 Aug 2021 10:14:57 GMT",
       "comments": {
         "dependency": [

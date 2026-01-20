@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-import { translate, type Resources } from '@hcengineering/platform'
-import { getCurrentLanguage } from '@hcengineering/theme'
-import { type FileUploadOptions } from '@hcengineering/uploader'
-import { addNotification, NotificationSeverity } from '@hcengineering/ui'
-import view from '@hcengineering/view'
+import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+import { translate, type Resources } from '@hanzo/platform'
+import { getCurrentLanguage } from '@hanzo/theme'
+import { type FileUploadOptions } from '@hanzo/uploader'
+import { addNotification, NotificationSeverity } from '@hanzo/ui'
+import view from '@hanzo/view'
 
 import { record } from './recording'
 import RecorderExt from './components/RecorderExt.svelte'

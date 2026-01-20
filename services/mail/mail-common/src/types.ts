@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Card } from '@hcengineering/card'
-import { MessageExtra } from '@hcengineering/communication-types'
-import { OperationDomain, PersonId, PersonUuid, Ref, Space, WorkspaceUuid } from '@hcengineering/core'
+import { Card } from '@hanzo/card'
+import { MessageExtra } from '@hanzo/communication-types'
+import { OperationDomain, PersonId, PersonUuid, Ref, Space, WorkspaceUuid } from '@hanzo/core'
 
 //
 export interface Attachment {

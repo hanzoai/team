@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { OK, Severity, Status } from '@hcengineering/platform'
-  import { Location, getCurrentLocation, navigate } from '@hcengineering/ui'
+  import { OK, Severity, Status } from '@hanzo/platform'
+  import { Location, getCurrentLocation, navigate } from '@hanzo/ui'
 
   import { checkJoined, join, setLoginInfo, signUpJoin } from '../utils'
   import Form from './Form.svelte'
 
-  import { Analytics } from '@hcengineering/analytics'
-  import { signupStore } from '@hcengineering/analytics-providers'
-  import { logIn, workbenchId } from '@hcengineering/workbench'
+  import { Analytics } from '@hanzo/analytics'
+  import { signupStore } from '@hanzo/analytics-providers'
+  import { logIn, workbenchId } from '@hanzo/workbench'
   import { onMount } from 'svelte'
   import { loginAction, recoveryAction } from '../actions'
   import login from '../plugin'

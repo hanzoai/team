@@ -14,16 +14,16 @@
 -->
 
 <script lang="ts">
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import type { DocumentQuery, IdMap, Ref, WithLookup } from '@hcengineering/core'
-  import { SortingOrder, toIdMap } from '@hcengineering/core'
-  import type { IntlString } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import type { TagElement } from '@hcengineering/tags'
-  import tags from '@hcengineering/tags'
-  import type { ToDo, WorkSlot } from '@hcengineering/time'
-  import type { Project } from '@hcengineering/tracker'
-  import tracker from '@hcengineering/tracker'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import type { DocumentQuery, IdMap, Ref, WithLookup } from '@hanzo/core'
+  import { SortingOrder, toIdMap } from '@hanzo/core'
+  import type { IntlString } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import type { TagElement } from '@hanzo/tags'
+  import tags from '@hanzo/tags'
+  import type { ToDo, WorkSlot } from '@hanzo/time'
+  import type { Project } from '@hanzo/tracker'
+  import tracker from '@hanzo/tracker'
   import {
     ButtonIcon,
     Header,
@@ -35,8 +35,8 @@
     defaultSP,
     deviceOptionsStore as deviceInfo,
     todosSP
-  } from '@hcengineering/ui'
-  import view from '@hcengineering/view-resources/src/plugin'
+  } from '@hanzo/ui'
+  import view from '@hanzo/view-resources/src/plugin'
   import type { ToDosMode } from '..'
   import time from '../plugin'
   import { getNearest } from '../utils'

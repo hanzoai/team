@@ -20,7 +20,7 @@
   import chunter from '../plugin'
   import { createDirect } from '../utils'
   import { openChannelInSidebar } from '../navigation'
-  import { Asset } from '@hcengineering/platform'
+  import { Asset } from '@hanzo/platform'
 
   export let employee: Employee
   export let kind: 'primary' | 'secondary' | 'tertiary' | 'negative' = 'secondary'

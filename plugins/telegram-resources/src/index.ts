@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hcengineering/platform'
-import { type Integration } from '@hcengineering/account-client'
+import { type Resources } from '@hanzo/platform'
+import { type Integration } from '@hanzo/account-client'
 
 import Chat from './components/Chat.svelte'
 import Connect from './components/Connect.svelte'

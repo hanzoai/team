@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type Hierarchy, type Ref, type PersonId } from '@hcengineering/core'
-import trackerPlugin, { type Component, type IssueStatus, type Milestone, type Project } from '@hcengineering/tracker'
-import { type AttributeModel } from '@hcengineering/view'
-import { getClient } from '@hcengineering/presentation'
-import { registerValueFormatterForClass } from '@hcengineering/view-resources'
-import { getName, getPersonByPersonId } from '@hcengineering/contact'
+import { type Class, type Doc, type Hierarchy, type Ref, type PersonId } from '@hanzo/core'
+import trackerPlugin, { type Component, type IssueStatus, type Milestone, type Project } from '@hanzo/tracker'
+import { type AttributeModel } from '@hanzo/view'
+import { getClient } from '@hanzo/presentation'
+import { registerValueFormatterForClass } from '@hanzo/view-resources'
+import { getName, getPersonByPersonId } from '@hanzo/contact'
 
 /**
  * Cache for IssueStatus ID -> name mappings to reduce database calls

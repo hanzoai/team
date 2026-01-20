@@ -25,11 +25,11 @@ import type {
   Space,
   TxOperations,
   WorkspaceInfoWithStatus
-} from '@hcengineering/core'
-import core, { hasAccountRole } from '@hcengineering/core'
-import login from '@hcengineering/login'
-import { getMetadata, getResource, setMetadata } from '@hcengineering/platform'
-import presentation, { closeClient, getClient, setPresentationCookie } from '@hcengineering/presentation'
+} from '@hanzo/core'
+import core, { hasAccountRole } from '@hanzo/core'
+import login from '@hanzo/login'
+import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
+import presentation, { closeClient, getClient, setPresentationCookie } from '@hanzo/presentation'
 import {
     closePanel,
     getCurrentLocation,

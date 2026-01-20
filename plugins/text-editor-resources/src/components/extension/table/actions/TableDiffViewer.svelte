@@ -14,9 +14,9 @@
 //
 -->
 <script lang="ts">
-  import { markdownToMarkup } from '@hcengineering/text-markdown'
-  import presentation, { Card } from '@hcengineering/presentation'
-  import textEditor from '@hcengineering/text-editor'
+  import { markdownToMarkup } from '@hanzo/text-markdown'
+  import presentation, { Card } from '@hanzo/presentation'
+  import textEditor from '@hanzo/text-editor'
   import { createEventDispatcher } from 'svelte'
 
   import MarkupDiffViewer from '../../../MarkupDiffViewer.svelte'

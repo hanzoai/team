@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Timestamp } from '@hcengineering/core'
-  import presentation, { copyTextToClipboard } from '@hcengineering/presentation'
-  import view from '@hcengineering/view'
-  import { Button, Label, ticker } from '@hcengineering/ui'
+  import { Timestamp } from '@hanzo/core'
+  import presentation, { copyTextToClipboard } from '@hanzo/presentation'
+  import view from '@hanzo/view'
+  import { Button, Label, ticker } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   import settings from '../plugin'

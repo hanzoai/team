@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { MasterTag, Role, Tag } from '@hcengineering/card'
-  import { AnyAttribute, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { ProcessFunction, SelectedContext } from '@hcengineering/process'
-  import { resizeObserver, Scroller } from '@hcengineering/ui'
+  import card, { MasterTag, Role, Tag } from '@hanzo/card'
+  import { AnyAttribute, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { ProcessFunction, SelectedContext } from '@hanzo/process'
+  import { resizeObserver, Scroller } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import { getContextFunctionReduce } from '../../utils'
 

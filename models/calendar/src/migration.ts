@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type IntegrationSecret } from '@hcengineering/account-client'
+import { type IntegrationSecret } from '@hanzo/account-client'
 import {
   AccessLevel,
   type Calendar,
@@ -21,8 +21,8 @@ import {
   type Event,
   type ExternalCalendar,
   type ReccuringEvent
-} from '@hcengineering/calendar'
-import contact, { type SocialIdentity, type SocialIdentityRef } from '@hcengineering/contact'
+} from '@hanzo/calendar'
+import contact, { type SocialIdentity, type SocialIdentityRef } from '@hanzo/contact'
 import core, {
   type AccountUuid,
   buildSocialIdString,
@@ -36,7 +36,7 @@ import core, {
   type Space,
   toIdMap,
   type TxUpdateDoc
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   createDefaultSpace,
   type MigrateOperation,
@@ -46,14 +46,14 @@ import {
   type MigrationUpgradeClient,
   tryMigrate,
   tryUpgrade
-} from '@hcengineering/model'
+} from '@hanzo/model'
 import {
   DOMAIN_SPACE,
   getAccountUuidBySocialKey,
   getSocialIdFromOldAccount,
   getSocialKeyByOldAccount
-} from '@hcengineering/model-core'
-import setting, { DOMAIN_SETTING, type Integration } from '@hcengineering/setting'
+} from '@hanzo/model-core'
+import setting, { DOMAIN_SETTING, type Integration } from '@hanzo/setting'
 import { DOMAIN_CALENDAR, DOMAIN_EVENT } from '.'
 import calendar from './plugin'
 

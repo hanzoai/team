@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { Integration, type AccountClient } from '@hcengineering/account-client'
-import { AccountUuid, MeasureContext, PersonId, TxOperations, WorkspaceUuid } from '@hcengineering/core'
-import gmail, { gmailIntegrationKind } from '@hcengineering/gmail'
-import { getAccountClient } from '@hcengineering/server-client'
-import setting from '@hcengineering/setting'
-import { IntegrationClient, IntegrationClientImpl } from '@hcengineering/integration-client'
+import { Integration, type AccountClient } from '@hanzo/account-client'
+import { AccountUuid, MeasureContext, PersonId, TxOperations, WorkspaceUuid } from '@hanzo/core'
+import gmail, { gmailIntegrationKind } from '@hanzo/gmail'
+import { getAccountClient } from '@hanzo/server-client'
+import setting from '@hanzo/setting'
+import { IntegrationClient, IntegrationClientImpl } from '@hanzo/integration-client'
 
 import { serviceToken } from './utils'
 import { getAccountSocialIds } from './accounts'

@@ -1,5 +1,5 @@
 {
-  "name": "@hcengineering/inventory-resources",
+  "name": "@hanzo/inventory-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
   "author": "Hanzo <dev@hanzo.ai>",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "workspace:^0.7.19",
+    "@hanzo/platform-rig": "workspace:^0.7.19",
     "svelte-loader": "^3.2.0",
     "sass": "^1.80.0",
     "svelte-preprocess": "^5.1.4",
@@ -38,16 +38,16 @@
     "svelte-eslint-parser": "^0.33.1"
   },
   "dependencies": {
-    "@hcengineering/platform": "workspace:^0.7.19",
+    "@hanzo/platform": "workspace:^0.7.19",
     "svelte": "^4.2.20",
-    "@hcengineering/inventory": "workspace:^0.7.0",
-    "@hcengineering/ui": "workspace:^0.7.0",
-    "@hcengineering/panel": "workspace:^0.7.0",
-    "@hcengineering/presentation": "workspace:^0.7.0",
-    "@hcengineering/view": "workspace:^0.7.0",
-    "@hcengineering/view-resources": "workspace:^0.7.0",
-    "@hcengineering/core": "workspace:^0.7.24",
-    "@hcengineering/login": "workspace:^0.7.0",
-    "@hcengineering/workbench": "workspace:^0.7.0"
+    "@hanzo/inventory": "workspace:^0.7.0",
+    "@hanzo/ui": "workspace:^0.7.0",
+    "@hanzo/panel": "workspace:^0.7.0",
+    "@hanzo/presentation": "workspace:^0.7.0",
+    "@hanzo/view": "workspace:^0.7.0",
+    "@hanzo/view-resources": "workspace:^0.7.0",
+    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/login": "workspace:^0.7.0",
+    "@hanzo/workbench": "workspace:^0.7.0"
   }
 }

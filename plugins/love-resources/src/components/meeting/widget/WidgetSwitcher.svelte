@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { AnySvelteComponent } from '@hcengineering/ui'
-  import { AppItem } from '@hcengineering/workbench-resources'
-  import { RoomType } from '@hcengineering/love'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { AnySvelteComponent } from '@hanzo/ui'
+  import { AppItem } from '@hanzo/workbench-resources'
+  import { RoomType } from '@hanzo/love'
   import { currentRoom } from '../../../stores'
-  import { state } from '@hcengineering/media-resources'
+  import { state } from '@hanzo/media-resources'
   import love from '../../../plugin'
   import { lkSessionConnected, ScreenSharingState, screenSharingState } from '../../../liveKitClient'
 

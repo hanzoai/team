@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Analytics } from '@hcengineering/analytics'
-import contact, { Employee, Person } from '@hcengineering/contact'
+import { Analytics } from '@hanzo/analytics'
+import contact, { Employee, Person } from '@hanzo/contact'
 import core, {
   AttachedData,
   Doc,
@@ -20,7 +20,7 @@ import core, {
   makeDocCollabId,
   withContext,
   type MeasureContext
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,

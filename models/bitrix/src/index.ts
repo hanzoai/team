@@ -36,7 +36,7 @@ import {
   type BitrixSyncDoc,
   type Fields,
   bitrixIntegrationKind
-} from '@hcengineering/bitrix'
+} from '@hanzo/bitrix'
 import {
   type AnyAttribute,
   type Class,

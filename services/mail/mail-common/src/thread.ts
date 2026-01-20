@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { MeasureContext, Ref, Space } from '@hcengineering/core'
-import { type KeyValueClient } from '@hcengineering/kvs-client'
-import { Card } from '@hcengineering/card'
+import { MeasureContext, Ref, Space } from '@hanzo/core'
+import { type KeyValueClient } from '@hanzo/kvs-client'
+import { Card } from '@hanzo/card'
 
 export interface ThreadInfo {
   threadId: Ref<Card>

@@ -15,11 +15,11 @@
 <script lang="ts">
   import { fade } from 'svelte/transition'
 
-  import { Label, Loading, StatusBadge } from '@hcengineering/ui'
-  import type { Integration } from '@hcengineering/account-client'
-  import setting from '@hcengineering/setting'
+  import { Label, Loading, StatusBadge } from '@hanzo/ui'
+  import type { Integration } from '@hanzo/account-client'
+  import setting from '@hanzo/setting'
 
-  import { IntlString, Status, ERROR } from '@hcengineering/platform'
+  import { IntlString, Status, ERROR } from '@hanzo/platform'
 
   export let integration: Integration
   export let value: string | undefined

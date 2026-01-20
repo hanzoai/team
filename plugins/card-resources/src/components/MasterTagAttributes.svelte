@@ -25,9 +25,9 @@
     Label,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import CardAttributes from './CardAttributes.svelte'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
   import CardIcon from './CardIcon.svelte'
 
   export let value: Card

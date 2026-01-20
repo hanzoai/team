@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { Doc, Mixin } from '@hcengineering/core'
-  import { getDocMixins } from '@hcengineering/view-resources'
+  import { Card } from '@hanzo/card'
+  import { Doc, Mixin } from '@hanzo/core'
+  import { getDocMixins } from '@hanzo/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import CardAttributeEditor from '../CardAttributeEditor.svelte'

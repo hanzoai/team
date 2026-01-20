@@ -1,10 +1,10 @@
-import { Class, Mixin, Ref } from '@hcengineering/core'
-import { Drive } from '@hcengineering/drive'
-import { NotificationType } from '@hcengineering/notification'
-import { Asset, IntlString, Metadata, Plugin, plugin } from '@hcengineering/platform'
-import { AnyComponent } from '@hcengineering/ui/src/types'
-import { Action, Viewlet, ViewletDescriptor } from '@hcengineering/view'
-import { Widget } from '@hcengineering/workbench'
+import { Class, Mixin, Ref } from '@hanzo/core'
+import { Drive } from '@hanzo/drive'
+import { NotificationType } from '@hanzo/notification'
+import { Asset, IntlString, Metadata, Plugin, plugin } from '@hanzo/platform'
+import { AnyComponent } from '@hanzo/ui/src/types'
+import { Action, Viewlet, ViewletDescriptor } from '@hanzo/view'
+import { Widget } from '@hanzo/workbench'
 import {
   DevicesPreference,
   Floor,

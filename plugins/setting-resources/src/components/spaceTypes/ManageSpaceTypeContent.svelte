@@ -35,11 +35,11 @@
     navigate,
     getCurrentResolvedLocation,
     deviceOptionsStore as deviceInfo
-  } from '@hcengineering/ui'
-  import { IconWithEmoji, createQuery, getClient } from '@hcengineering/presentation'
-  import setting, { SpaceTypeEditor } from '@hcengineering/setting'
-  import { Asset, getResource } from '@hcengineering/platform'
-  import view from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
+  import setting, { SpaceTypeEditor } from '@hanzo/setting'
+  import { Asset, getResource } from '@hanzo/platform'
+  import view from '@hanzo/view'
 
   import SpaceTypeEditorComponent from './editor/SpaceTypeEditor.svelte'
   import { clearSettingsStore } from '../../store'

@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hcengineering/analytics'
-import { type Branding, type MeasureContext, type WorkspaceIds } from '@hcengineering/core'
-import type { ConnectionSocket, Pipeline, Session } from '@hcengineering/server-core'
+import { Analytics } from '@hanzo/analytics'
+import { type Branding, type MeasureContext, type WorkspaceIds } from '@hanzo/core'
+import type { ConnectionSocket, Pipeline, Session } from '@hanzo/server-core'
 
 interface TickHandler {
   ticks: number

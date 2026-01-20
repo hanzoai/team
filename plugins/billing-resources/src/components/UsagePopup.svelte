@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Tier } from '@hcengineering/billing'
-  import { UsageStatus } from '@hcengineering/core'
+  import { Tier } from '@hanzo/billing'
+  import { UsageStatus } from '@hanzo/core'
   import UsageSection from './UsageSection.svelte'
 
   export let usage: UsageStatus

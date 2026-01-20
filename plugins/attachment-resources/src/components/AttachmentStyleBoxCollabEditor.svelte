@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import attachment, { Attachment, AttachmentsEvents } from '@hcengineering/attachment'
-  import contact from '@hcengineering/contact'
-  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hcengineering/core'
-  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hcengineering/platform'
-  import { FileOrBlob, KeyedAttribute, createQuery, getClient, uploadFile } from '@hcengineering/presentation'
-  import textEditor, { type RefAction, type TextEditorHandler } from '@hcengineering/text-editor'
+  import { Analytics } from '@hanzo/analytics'
+  import attachment, { Attachment, AttachmentsEvents } from '@hanzo/attachment'
+  import contact from '@hanzo/contact'
+  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hanzo/core'
+  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  import { FileOrBlob, KeyedAttribute, createQuery, getClient, uploadFile } from '@hanzo/presentation'
+  import textEditor, { type RefAction, type TextEditorHandler } from '@hanzo/text-editor'
   import {
     AttachIcon,
     CollaborativeAttributeBox,
@@ -27,15 +27,15 @@
     addTableHandler,
     defaultRefActions,
     getModelRefActions
-  } from '@hcengineering/text-editor-resources'
-  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement } from '@hcengineering/ui'
+  } from '@hanzo/text-editor-resources'
+  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement } from '@hanzo/ui'
   import {
     getUploadHandlers,
     uploadFiles,
     UploadHandlerDefinition,
     type FileUploadCallbackParams
-  } from '@hcengineering/uploader'
-  import { getCollaborationUser, getObjectId } from '@hcengineering/view-resources'
+  } from '@hanzo/uploader'
+  import { getCollaborationUser, getObjectId } from '@hanzo/view-resources'
 
   import AttachmentsGrid from './AttachmentsGrid.svelte'
 

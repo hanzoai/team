@@ -36,8 +36,8 @@ import {
   TranslatedMessage,
   TranslatedMessagesDoc,
   WithTotal
-} from '@hcengineering/communication-types'
-import { type HulylakeWorkspaceClient } from '@hcengineering/hulylake-client'
+} from '@hanzo/communication-types'
+import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
 
 const COUNTER_BITS = 10n
 const RANDOM_BITS = 10n

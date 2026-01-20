@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityProcess, Markdown } from '@hcengineering/communication-types'
-  import { getClient } from '@hcengineering/presentation'
-  import { Icon, IconAdd, IconArrowRight, IconCheck, IconStart, Label } from '@hcengineering/ui'
-  import processPlugin from '@hcengineering/process'
+  import { ActivityProcess, Markdown } from '@hanzo/communication-types'
+  import { getClient } from '@hanzo/presentation'
+  import { Icon, IconAdd, IconArrowRight, IconCheck, IconStart, Label } from '@hanzo/ui'
+  import processPlugin from '@hanzo/process'
 
   export let update: ActivityProcess
   export let content: Markdown

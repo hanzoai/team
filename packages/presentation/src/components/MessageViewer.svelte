@@ -16,7 +16,7 @@
 <script lang="ts">
   import { isEmptyMarkup, markupToJSON } from '@hanzo/text'
   import Node from './markup/Node.svelte'
-  import { loadParseEmojisFunction, ParsedTextWithEmojis, getParseEmojisFunction } from '@hcengineering/emoji'
+  import { loadParseEmojisFunction, ParsedTextWithEmojis, getParseEmojisFunction } from '@hanzo/emoji'
   import { onMount } from 'svelte'
 
   export let message: string

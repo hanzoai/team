@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type SubscriptionData, SubscriptionType } from '@hcengineering/account-client'
-  import { type SubscribeRequest, type CheckoutStatus } from '@hcengineering/payment-client'
-  import { Tier } from '@hcengineering/billing'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { getClient, MessageBox } from '@hcengineering/presentation'
-  import { type Ref, SortingOrder, UsageStatus } from '@hcengineering/core'
+  import { type SubscriptionData, SubscriptionType } from '@hanzo/account-client'
+  import { type SubscribeRequest, type CheckoutStatus } from '@hanzo/payment-client'
+  import { Tier } from '@hanzo/billing'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { getClient, MessageBox } from '@hanzo/presentation'
+  import { type Ref, SortingOrder, UsageStatus } from '@hanzo/core'
   import {
     IconCheckmark,
     Label,
@@ -30,7 +30,7 @@
     getLocation,
     navigate,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onMount, onDestroy } from 'svelte'
 
   import plugin from '../plugin'

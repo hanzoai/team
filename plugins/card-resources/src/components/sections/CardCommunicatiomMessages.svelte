@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { MessagesSection } from '@hcengineering/communication-resources'
-  import { NotificationContext } from '@hcengineering/communication-types'
+  import { Card } from '@hanzo/card'
+  import { MessagesSection } from '@hanzo/communication-resources'
+  import { NotificationContext } from '@hanzo/communication-types'
 
   export let doc: Card
   export let readonly: boolean = false

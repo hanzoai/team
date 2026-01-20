@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { DocNavLink } from '@hcengineering/view-resources'
-  import love, { MeetingMinutes, MeetingStatus, Room } from '@hcengineering/love'
+  import { DocNavLink } from '@hanzo/view-resources'
+  import love, { MeetingMinutes, MeetingStatus, Room } from '@hanzo/love'
   import { onMount } from 'svelte'
-  import { getClient } from '@hcengineering/presentation'
-  import { SortingOrder } from '@hcengineering/core'
+  import { getClient } from '@hanzo/presentation'
+  import { SortingOrder } from '@hanzo/core'
 
   export let room: Room
 

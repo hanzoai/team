@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, Status, StatusCategory } from '@hcengineering/core'
-  import { Asset } from '@hcengineering/platform'
-  import { IconWithEmoji, getClient, reduceCalls } from '@hcengineering/presentation'
-  import task, { Project, ProjectType, TaskType } from '@hcengineering/task'
+  import core, { IdMap, Ref, Status, StatusCategory } from '@hanzo/core'
+  import { Asset } from '@hanzo/platform'
+  import { IconWithEmoji, getClient, reduceCalls } from '@hanzo/presentation'
+  import task, { Project, ProjectType, TaskType } from '@hanzo/task'
   import {
     ColorDefinition,
     Icon,

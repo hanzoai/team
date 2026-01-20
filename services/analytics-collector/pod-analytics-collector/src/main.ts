@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { setMetadata } from '@hcengineering/platform'
-import serverClient from '@hcengineering/server-client'
-import serverToken from '@hcengineering/server-token'
+import { setMetadata } from '@hanzo/platform'
+import serverClient from '@hanzo/server-client'
+import serverToken from '@hanzo/server-token'
 
-import { Analytics } from '@hcengineering/analytics'
-import { SplitLogger, configureAnalytics, createOpenTelemetryMetricsContext } from '@hcengineering/analytics-service'
-import { newMetrics } from '@hcengineering/core'
+import { Analytics } from '@hanzo/analytics'
+import { SplitLogger, configureAnalytics, createOpenTelemetryMetricsContext } from '@hanzo/analytics-service'
+import { newMetrics } from '@hanzo/core'
 import { join } from 'path'
 
-import { initStatisticsContext } from '@hcengineering/server-core'
+import { initStatisticsContext } from '@hanzo/server-core'
 import config from './config'
 import { createServer, listen } from './server'
 import { setGeoipLogContext } from './geoip'

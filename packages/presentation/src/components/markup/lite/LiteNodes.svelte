@@ -16,7 +16,7 @@
   import { MarkupNode } from '@hanzo/text'
 
   import LiteNode from './LiteNode.svelte'
-  import { ParsedTextWithEmojis } from '@hcengineering/emoji'
+  import { ParsedTextWithEmojis } from '@hanzo/emoji'
 
   export let nodes: MarkupNode[]
   export let colorInherit: boolean = false

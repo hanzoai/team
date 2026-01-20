@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset } from '@hcengineering/platform'
-  import { AnySvelteComponent, Icon, IconSize, getPlatformColorDef, themeStore } from '@hcengineering/ui'
-  import { IconWithEmoji } from '@hcengineering/presentation'
-  import view, { IconProps } from '@hcengineering/view'
-  import document from '@hcengineering/document'
+  import { Asset } from '@hanzo/platform'
+  import { AnySvelteComponent, Icon, IconSize, getPlatformColorDef, themeStore } from '@hanzo/ui'
+  import { IconWithEmoji } from '@hanzo/presentation'
+  import view, { IconProps } from '@hanzo/view'
+  import document from '@hanzo/document'
 
   import { ComponentType } from 'svelte'
 

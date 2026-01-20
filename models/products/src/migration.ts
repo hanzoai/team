@@ -18,9 +18,9 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hcengineering/model'
-import { DOMAIN_DOCUMENTS } from '@hcengineering/model-controlled-documents'
-import products, { productsId } from '@hcengineering/products'
+} from '@hanzo/model'
+import { DOMAIN_DOCUMENTS } from '@hanzo/model-controlled-documents'
+import products, { productsId } from '@hanzo/products'
 
 async function migratePatchVersion (client: MigrationClient): Promise<void> {
   await client.update(

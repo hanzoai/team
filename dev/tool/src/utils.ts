@@ -9,7 +9,7 @@ import {
   type Space,
   type TxOperations,
   type WorkspaceUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 
 export async function findOrUpdateAttached<T extends AttachedDoc> (
   client: TxOperations,
@@ -58,4 +58,4 @@ export async function getWorkspace (db: AccountDB, workspace: string): Promise<W
   return wsObj
 }
 
-export { getToolToken, getWorkspaceTransactorEndpoint } from '@hcengineering/server-tool'
+export { getToolToken, getWorkspaceTransactorEndpoint } from '@hanzo/server-tool'

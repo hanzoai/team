@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
-import login from '@hcengineering/login'
-import { aiAssistantIntegrationKind } from '@hcengineering/ai-assistant'
+import { getMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
+import login from '@hanzo/login'
+import { aiAssistantIntegrationKind } from '@hanzo/ai-assistant'
 import {
   getIntegrationClient as getIntegrationClientRaw,
   type IntegrationClient
-} from '@hcengineering/integration-client'
-import { getClient as getAccountClientRaw, type AccountClient } from '@hcengineering/account-client'
+} from '@hanzo/integration-client'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
 
 export async function getIntegrationClient (): Promise<IntegrationClient> {
   const accountsUrl = getMetadata(login.metadata.AccountsUrl)

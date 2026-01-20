@@ -16,12 +16,12 @@
 // import { WebSocket } from 'ws'; // для Node <20 обязательно
 
 // Unknown:
-// import { type Ref, concatLink } from '@hcengineering/core'
-// import { getMetadata } from '@hcengineering/platform'
+// import { type Ref, concatLink } from '@hanzo/core'
+// import { getMetadata } from '@hanzo/platform'
 
-// import { getCurrentEmployee, type Person } from '@hcengineering/contact'
-// import presence from '@hcengineering/presence'
-// import presentation from '@hcengineering/presentation'
+// import { getCurrentEmployee, type Person } from '@hanzo/contact'
+// import presence from '@hanzo/presence'
+// import presentation from '@hanzo/presentation'
 // import { type Unsubscriber, get } from 'svelte/store'
 
 // import { myPresence, myData, isAnybodyInMyRoom, onPersonUpdate, onPersonLeave, onPersonData } from './store'

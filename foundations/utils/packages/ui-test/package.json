@@ -1,8 +1,8 @@
 {
-  "name": "@hcengineering/ui-test",
+  "name": "@hanzo/ui-test",
   "version": "0.7.13",
   "author": "Copyright © Hardcore Engineering Inc.",
-  "template": "@hcengineering/node-package",
+  "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -32,7 +32,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "workspace:^0.7.19",
+    "@hanzo/platform-rig": "workspace:^0.7.19",
     "svelte-loader": "^3.2.0",
     "sass": "^1.80.0",
     "svelte-preprocess": "^5.1.4",

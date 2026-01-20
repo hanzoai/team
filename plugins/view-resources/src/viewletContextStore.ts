@@ -1,5 +1,5 @@
-import { type Class, type Doc, type DocumentQuery, type Ref } from '@hcengineering/core'
-import { type BuildModelKey, type Viewlet, type ViewOptions } from '@hcengineering/view'
+import { type Class, type Doc, type DocumentQuery, type Ref } from '@hanzo/core'
+import { type BuildModelKey, type Viewlet, type ViewOptions } from '@hanzo/view'
 import { writable } from 'svelte/store'
 
 /**

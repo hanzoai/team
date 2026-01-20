@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { type Event } from '@hcengineering/communication-sdk-types'
+import { type Event } from '@hanzo/communication-sdk-types'
 import type {
   Class,
   Doc,
@@ -14,9 +14,9 @@ import type {
   Version,
   WorkspaceInfoWithStatus,
   WorkspaceUuid
-} from '@hcengineering/core'
-import core, { Hierarchy, ModelDb, systemAccountUuid, TxProcessor, versionToString } from '@hcengineering/core'
-import { getAccountClient, getTransactorEndpoint } from '@hcengineering/server-client'
+} from '@hanzo/core'
+import core, { Hierarchy, ModelDb, systemAccountUuid, TxProcessor, versionToString } from '@hanzo/core'
+import { getAccountClient, getTransactorEndpoint } from '@hanzo/server-client'
 import {
   QueueTopic,
   QueueWorkspaceEvent,
@@ -26,8 +26,8 @@ import {
   type PlatformQueue,
   type PlatformQueueProducer,
   type QueueWorkspaceMessage
-} from '@hcengineering/server-core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { generateToken } from '@hanzo/server-token'
 
 import { RatingCalculator } from './calculator'
 import { QueueRatingEvent, ratingEvents, type QueueCalculateMessage, type QueueRatingMessage } from './types'

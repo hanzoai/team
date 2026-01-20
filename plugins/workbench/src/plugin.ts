@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Mixin, Ref, Space } from '@hcengineering/core'
-import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import { AnyComponent, ComponentExtensionId, Location } from '@hcengineering/ui'
-import { Action, ViewAction } from '@hcengineering/view'
+import type { Class, Doc, Mixin, Ref, Space } from '@hanzo/core'
+import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import { AnyComponent, ComponentExtensionId, Location } from '@hanzo/ui'
+import { Action, ViewAction } from '@hanzo/view'
 
 import type {
   Application,

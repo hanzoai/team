@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getClient as getAccountClientRaw, type AccountClient } from '@hcengineering/account-client'
-import contact, { getFirstName, getLastName } from '@hcengineering/contact'
-import { employeeByPersonIdStore } from '@hcengineering/contact-resources'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
+import contact, { getFirstName, getLastName } from '@hanzo/contact'
+import { employeeByPersonIdStore } from '@hanzo/contact-resources'
 import {
   type Class,
   type Doc,
@@ -9,17 +9,17 @@ import {
   type IntegrationKind,
   type PluginConfiguration,
   type Ref
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   getIntegrationClient as getIntegrationClientRaw,
   type IntegrationClient
-} from '@hcengineering/integration-client'
-import login from '@hcengineering/login'
-import { getMetadata } from '@hcengineering/platform'
-import presentation, { getClient } from '@hcengineering/presentation'
-import type { PersonRating } from '@hcengineering/rating'
-import setting from '@hcengineering/setting'
-import { type TemplateDataProvider } from '@hcengineering/templates'
+} from '@hanzo/integration-client'
+import login from '@hanzo/login'
+import { getMetadata } from '@hanzo/platform'
+import presentation, { getClient } from '@hanzo/presentation'
+import type { PersonRating } from '@hanzo/rating'
+import setting from '@hanzo/setting'
+import { type TemplateDataProvider } from '@hanzo/templates'
 import { get } from 'svelte/store'
 
 function isEditable (hierarchy: Hierarchy, p: Class<Doc>): boolean {

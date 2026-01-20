@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { aiBotSocialIdentityStore } from '@hcengineering/ai-bot-resources'
+  import { aiBotSocialIdentityStore } from '@hanzo/ai-bot-resources'
   import ParticipantView from './ParticipantView.svelte'
   import { Participant, RemoteParticipant, RoomEvent } from 'livekit-client'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import { liveKitClient, lk } from '../../utils'
   import { infos } from '../../stores'
-  import { Ref } from '@hcengineering/core'
-  import { Person } from '@hcengineering/contact'
-  import { getPersonRefByPersonIdCb } from '@hcengineering/contact-resources'
-  import { Room as TypeRoom } from '@hcengineering/love'
+  import { Ref } from '@hanzo/core'
+  import { Person } from '@hanzo/contact'
+  import { getPersonRefByPersonIdCb } from '@hanzo/contact-resources'
+  import { Room as TypeRoom } from '@hanzo/love'
 
   export let room: Ref<TypeRoom>
 

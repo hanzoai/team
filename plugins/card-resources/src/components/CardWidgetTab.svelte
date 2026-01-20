@@ -12,14 +12,14 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Action, Menu, ModernTab, showPopup } from '@hcengineering/ui'
-  import { Widget, WidgetTab } from '@hcengineering/workbench'
-  import { createNotificationsQuery, createQuery, getClient, IconWithEmoji } from '@hcengineering/presentation'
-  import { Card, MasterTag } from '@hcengineering/card'
-  import { Ref, SortingOrder } from '@hcengineering/core'
-  import { closeWidgetTab } from '@hcengineering/workbench-resources'
-  import view from '@hcengineering/view'
-  import { NotificationType } from '@hcengineering/communication-types'
+  import { Action, Menu, ModernTab, showPopup } from '@hanzo/ui'
+  import { Widget, WidgetTab } from '@hanzo/workbench'
+  import { createNotificationsQuery, createQuery, getClient, IconWithEmoji } from '@hanzo/presentation'
+  import { Card, MasterTag } from '@hanzo/card'
+  import { Ref, SortingOrder } from '@hanzo/core'
+  import { closeWidgetTab } from '@hanzo/workbench-resources'
+  import view from '@hanzo/view'
+  import { NotificationType } from '@hanzo/communication-types'
 
   import cardPlugin from '../plugin'
 

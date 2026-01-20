@@ -1,4 +1,4 @@
-import { concatLink, WorkspaceUuid } from '@hcengineering/core'
+import { concatLink, WorkspaceUuid } from '@hanzo/core'
 import { BillingError, NetworkError } from './error'
 import {
   AiTokensData,

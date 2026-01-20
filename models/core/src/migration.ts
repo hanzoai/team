@@ -51,7 +51,7 @@ import core, {
   type TxMixin,
   type TxUpdateDoc,
   type TypedSpace
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   createDefaultSpace,
   tryMigrate,

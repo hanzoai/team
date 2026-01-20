@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, type Tx, WorkspaceUuid } from '@hcengineering/core'
-import { PlatformQueueProducer } from '@hcengineering/server-core'
+import { type MeasureContext, type Tx, WorkspaceUuid } from '@hanzo/core'
+import { PlatformQueueProducer } from '@hanzo/server-core'
 import { Readable } from 'stream'
 
 import { type Cache, type CacheEntry, createCache, streamToBuffer } from './cache'

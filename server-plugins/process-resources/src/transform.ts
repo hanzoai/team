@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import contact, { Employee, Person } from '@hcengineering/contact'
-import core, { Doc, matchQuery, Ref, Timestamp } from '@hcengineering/core'
-import { Execution, parseContext } from '@hcengineering/process'
-import { ProcessControl } from '@hcengineering/server-process'
+import contact, { Employee, Person } from '@hanzo/contact'
+import core, { Doc, matchQuery, Ref, Timestamp } from '@hanzo/core'
+import { Execution, parseContext } from '@hanzo/process'
+import { ProcessControl } from '@hanzo/server-process'
 import { getContextValue } from './utils'
-import cardPlugin from '@hcengineering/card'
+import cardPlugin from '@hanzo/card'
 
 // #region ArrayReduce
 

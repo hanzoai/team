@@ -21,9 +21,9 @@ import {
   type PersonUuid,
   SocialIdType,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import platform, { PlatformError, Status, Severity } from '@hcengineering/platform'
-import { decodeTokenVerbose } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import platform, { PlatformError, Status, Severity } from '@hanzo/platform'
+import { decodeTokenVerbose } from '@hanzo/server-token'
 
 import {
   type AccountDB,

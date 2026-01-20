@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import core from '@hcengineering/core'
+import core from '@hanzo/core'
 import process from '.'
-import { type Builder } from '@hcengineering/model'
-import { ExecutionStatus } from '@hcengineering/process'
+import { type Builder } from '@hanzo/model'
+import { ExecutionStatus } from '@hanzo/process'
 
 export function definePermissions (builder: Builder): void {
   builder.createDoc(

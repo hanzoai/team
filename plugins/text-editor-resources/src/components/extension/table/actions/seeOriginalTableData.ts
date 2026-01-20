@@ -13,10 +13,10 @@
 //
 
 import { type Editor } from '@tiptap/core'
-import type { Class, Doc, Ref } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
-import { showPopup } from '@hcengineering/ui'
-import view, { type Viewlet } from '@hcengineering/view'
+import type { Class, Doc, Ref } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
+import { showPopup } from '@hanzo/ui'
+import view, { type Viewlet } from '@hanzo/view'
 import { findTable } from '../utils'
 import { getTableMetadata } from '../tableMetadata'
 import OriginalTableDataViewer from './OriginalTableDataViewer.svelte'

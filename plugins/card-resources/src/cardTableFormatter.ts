@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type Hierarchy, type Ref } from '@hcengineering/core'
-import { translate, type IntlString } from '@hcengineering/platform'
-import cardPlugin, { type CardSpace } from '@hcengineering/card'
-import { type AttributeModel } from '@hcengineering/view'
-import { getClient } from '@hcengineering/presentation'
-import { registerValueFormatterForClass, isIntlString } from '@hcengineering/view-resources'
+import { type Class, type Doc, type Hierarchy, type Ref } from '@hanzo/core'
+import { translate, type IntlString } from '@hanzo/platform'
+import cardPlugin, { type CardSpace } from '@hanzo/card'
+import { type AttributeModel } from '@hanzo/view'
+import { getClient } from '@hanzo/presentation'
+import { registerValueFormatterForClass, isIntlString } from '@hanzo/view-resources'
 
 /**
  * Cache for MasterTag ID -> label mappings to reduce database calls

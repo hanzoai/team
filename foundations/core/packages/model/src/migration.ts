@@ -1,5 +1,5 @@
-import { type AccountClient } from '@hcengineering/account-client'
-import { Analytics } from '@hcengineering/analytics'
+import { type AccountClient } from '@hanzo/account-client'
+import { Analytics } from '@hanzo/analytics'
 import core, {
   type Class,
   type Client,
@@ -23,9 +23,9 @@ import core, {
   type UnsetOptions,
   type WorkspaceIds,
   generateId
-} from '@hcengineering/core'
-import { makeRank } from '@hcengineering/rank'
-import { type StorageAdapter } from '@hcengineering/storage'
+} from '@hanzo/core'
+import { makeRank } from '@hanzo/rank'
+import { type StorageAdapter } from '@hanzo/storage'
 import { type ModelLogger } from './utils'
 
 /**

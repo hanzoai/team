@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref } from '@hcengineering/core'
-  import { Process } from '@hcengineering/process'
+  import { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
+  import { Process } from '@hanzo/process'
   import { createEventDispatcher } from 'svelte'
   import AttributeCriteria from './AttributeCriteria.svelte'
 

@@ -20,14 +20,14 @@
     DisplayDocUpdateMessage,
     DocUpdateMessage,
     DocUpdateMessageViewlet
-  } from '@hcengineering/activity'
-  import { getPersonByPersonIdCb } from '@hcengineering/contact-resources'
-  import { AttachedDoc, Class, Collection, Doc, Ref, Space } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Action, Component, ShowMore } from '@hcengineering/ui'
-  import { AttributeModel } from '@hcengineering/view'
-  import { buildRemovedDoc, checkIsObjectRemoved } from '@hcengineering/view-resources'
+  } from '@hanzo/activity'
+  import { getPersonByPersonIdCb } from '@hanzo/contact-resources'
+  import { AttachedDoc, Class, Collection, Doc, Ref, Space } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Action, Component, ShowMore } from '@hanzo/ui'
+  import { AttributeModel } from '@hanzo/view'
+  import { buildRemovedDoc, checkIsObjectRemoved } from '@hanzo/view-resources'
 
   import ActivityMessageTemplate from '../activity-message/ActivityMessageTemplate.svelte'
   import DocUpdateMessageAttributes from './DocUpdateMessageAttributes.svelte'
@@ -36,7 +36,7 @@
 
   import { getAttributeModel, getCollectionAttribute } from '../../activityMessagesUtils'
   import { getIsTextType } from '../../utils'
-  import { Person } from '@hcengineering/contact'
+  import { Person } from '@hanzo/contact'
 
   export let value: DisplayDocUpdateMessage
   export let doc: Doc | undefined = undefined

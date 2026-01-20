@@ -20,12 +20,12 @@ import {
   type Ref,
   SortingOrder,
   type Timestamp
-} from '@hcengineering/core'
-import { type Poll, type PollAnswer } from '@hcengineering/communication'
-import { getClient, getCommunicationClient } from '@hcengineering/presentation'
-import card, { type Card } from '@hcengineering/card'
-import { makeRank } from '@hcengineering/rank'
-import { type AppletAttachment, type MessageID } from '@hcengineering/communication-types'
+} from '@hanzo/core'
+import { type Poll, type PollAnswer } from '@hanzo/communication'
+import { getClient, getCommunicationClient } from '@hanzo/presentation'
+import card, { type Card } from '@hanzo/card'
+import { makeRank } from '@hanzo/rank'
+import { type AppletAttachment, type MessageID } from '@hanzo/communication-types'
 
 import communication from './plugin'
 

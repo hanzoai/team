@@ -27,9 +27,9 @@
   import { MailboxInfo } from '@hanzo/account-client'
   import { getClient, MessageBox } from '@hanzo/presentation'
   import { getAccountClient } from '../utils'
-  import contact, { getCurrentEmployee } from '@hcengineering/contact'
-  import { buildSocialIdString, SocialIdType } from '@hcengineering/core'
-  import { Analytics } from '@hcengineering/analytics'
+  import contact, { getCurrentEmployee } from '@hanzo/contact'
+  import { buildSocialIdString, SocialIdType } from '@hanzo/core'
+  import { Analytics } from '@hanzo/analytics'
 
   export let mailbox: MailboxInfo
   export let mailboxIdx: number

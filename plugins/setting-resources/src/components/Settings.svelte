@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import login, { loginId } from '@hcengineering/login'
-  import { getClient, createQuery, isDisabled } from '@hcengineering/presentation'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import login, { loginId } from '@hanzo/login'
+  import { getClient, createQuery, isDisabled } from '@hanzo/presentation'
   import settingPlg from '../plugin'
   import setting, { SettingsCategory, SettingsEvents } from '@hanzo/setting'
   import {

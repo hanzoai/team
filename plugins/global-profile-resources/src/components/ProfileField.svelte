@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hcengineering/platform'
-  import { EditBox, Label } from '@hcengineering/ui'
-  import globalProfile from '@hcengineering/global-profile'
+  import type { IntlString } from '@hanzo/platform'
+  import { EditBox, Label } from '@hanzo/ui'
+  import globalProfile from '@hanzo/global-profile'
 
   export let value: string
   export let label: IntlString

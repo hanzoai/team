@@ -15,15 +15,15 @@ import {
   type Timestamp,
   getCurrentAccount,
   toIdMap
-} from '@hcengineering/core'
-import presentation, { createQuery, getClient, onClient } from '@hcengineering/presentation'
-import { closePopup, DAY, showPopup } from '@hcengineering/ui'
+} from '@hanzo/core'
+import presentation, { createQuery, getClient, onClient } from '@hanzo/presentation'
+import { closePopup, DAY, showPopup } from '@hanzo/ui'
 import { writable } from 'svelte/store'
 import UpdateRecInstancePopup from './components/UpdateRecInstancePopup.svelte'
 import calendar from './plugin'
-import { getMetadata } from '@hcengineering/platform'
-import login from '@hcengineering/login'
-import { getClient as getAccountClientRaw, type AccountClient } from '@hcengineering/account-client'
+import { getMetadata } from '@hanzo/platform'
+import login from '@hanzo/login'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
 import CalDavAccess from './components/CalDavAccess.svelte'
 
 export function saveUTC (date: Timestamp): Timestamp {

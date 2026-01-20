@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, ArrOf, Class, Doc, Ref, Type } from '@hcengineering/core'
-  import { ArrOf as createArrOf } from '@hcengineering/model'
-  import { getClient } from '@hcengineering/presentation'
-  import { AnyComponent, Component, DropdownLabelsIntl, Label } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import core, { AnyAttribute, ArrOf, Class, Doc, Ref, Type } from '@hanzo/core'
+  import { ArrOf as createArrOf } from '@hanzo/model'
+  import { getClient } from '@hanzo/presentation'
+  import { AnyComponent, Component, DropdownLabelsIntl, Label } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
   import type { ButtonKind, ButtonSize } from '@hanzo/ui'

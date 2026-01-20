@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { tooltip } from '@hcengineering/ui'
-  import { getDisplayTime, Timestamp } from '@hcengineering/core'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { tooltip } from '@hanzo/ui'
+  import { getDisplayTime, Timestamp } from '@hanzo/core'
+  import { getEmbeddedLabel } from '@hanzo/platform'
 
   export let date: Timestamp
   export let shortTime = false

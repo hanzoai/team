@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { Card } from '@hcengineering/presentation'
-  import { ProcessFunction } from '@hcengineering/process'
-  import { StringEditor } from '@hcengineering/view-resources'
+  import presentation, { Card } from '@hanzo/presentation'
+  import { ProcessFunction } from '@hanzo/process'
+  import { StringEditor } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import process from '../../plugin'
-  import { Label } from '@hcengineering/ui'
+  import { Label } from '@hanzo/ui'
 
   export let func: ProcessFunction
   export let props: Record<string, any> = {}

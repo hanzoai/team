@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type WorkspaceUuid, type MeasureContext } from '@hcengineering/core'
+import { type WorkspaceUuid, type MeasureContext } from '@hanzo/core'
 
 import type {
   AddSessionActive,

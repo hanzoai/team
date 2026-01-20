@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Process, Step } from '@hcengineering/process'
-  import { Label } from '@hcengineering/ui'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Process, Step } from '@hanzo/process'
+  import { Label } from '@hanzo/ui'
   import process from '../../plugin'
   import { Ref } from '@hanzo/core'
 

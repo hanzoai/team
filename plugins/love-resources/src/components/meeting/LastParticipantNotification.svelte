@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Button, Notification, NotificationToast } from '@hcengineering/ui'
+  import { Button, Notification, NotificationToast } from '@hanzo/ui'
   import love from '../../plugin'
   import { onMount } from 'svelte'
-  import { playSound } from '@hcengineering/presentation'
+  import { playSound } from '@hanzo/presentation'
   import { leaveMeeting } from '../../meetings'
 
   export let onRemove: () => void

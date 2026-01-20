@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
-import { type Employee, type Person } from '@hcengineering/contact'
-import { type UnsubscribeCallback, type Callback } from '@hcengineering/hulypulse-client'
-import { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { getMetadata } from '@hcengineering/platform'
-import presentation, { createPulseClient } from '@hcengineering/presentation'
+import { type Employee, type Person } from '@hanzo/contact'
+import { type UnsubscribeCallback, type Callback } from '@hanzo/hulypulse-client'
+import { type Class, type Doc, type Ref } from '@hanzo/core'
+import { getMetadata } from '@hanzo/platform'
+import presentation, { createPulseClient } from '@hanzo/presentation'
 
 export interface PresenceInfo {
   personId: Ref<Person>

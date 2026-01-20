@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import activity, { DisplayDocUpdateMessage } from '@hcengineering/activity'
-  import { employeeRefByAccountUuidStore, PersonRefPresenter } from '@hcengineering/contact-resources'
-  import { Collaborator } from '@hcengineering/core'
-  import notification from '@hcengineering/notification'
-  import { Icon, Label } from '@hcengineering/ui'
+  import activity, { DisplayDocUpdateMessage } from '@hanzo/activity'
+  import { employeeRefByAccountUuidStore, PersonRefPresenter } from '@hanzo/contact-resources'
+  import { Collaborator } from '@hanzo/core'
+  import notification from '@hanzo/notification'
+  import { Icon, Label } from '@hanzo/ui'
 
   export let message: DisplayDocUpdateMessage
   export let value: Collaborator | undefined

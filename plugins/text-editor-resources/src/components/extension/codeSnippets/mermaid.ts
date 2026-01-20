@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { codeBlockOptions } from '@hcengineering/text'
-import { getCurrentTheme, isThemeDark, themeStore } from '@hcengineering/theme'
+import { codeBlockOptions } from '@hanzo/text'
+import { getCurrentTheme, isThemeDark, themeStore } from '@hanzo/theme'
 import { CodeBlockLowlight, type CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight'
 import { type Node as ProseMirrorNode } from '@tiptap/pm/model'
 import { NodeSelection, Plugin, PluginKey, TextSelection, type Transaction } from '@tiptap/pm/state'

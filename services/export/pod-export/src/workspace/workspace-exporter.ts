@@ -21,9 +21,9 @@ import {
   type Space,
   type TxOperations,
   type WorkspaceIds
-} from '@hcengineering/core'
-import contact, { type Employee } from '@hcengineering/contact'
-import { type StorageAdapter } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import contact, { type Employee } from '@hanzo/contact'
+import { type StorageAdapter } from '@hanzo/server-core'
 import { AttachmentExporter } from './attachment-exporter'
 import { DataMapper } from './data-mapper'
 import { DocumentExporter } from './document-exporter'

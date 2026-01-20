@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar from '@hcengineering/calendar'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { getCurrentAccount } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { ToDo } from '@hcengineering/time'
-  import { CheckBox, Label } from '@hcengineering/ui'
+  import calendar from '@hanzo/calendar'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { getCurrentAccount } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { ToDo } from '@hanzo/time'
+  import { CheckBox, Label } from '@hanzo/ui'
   import time from '../plugin'
   import WorkItemPresenter from './WorkItemPresenter.svelte'
 

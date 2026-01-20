@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hcengineering/core'
-  import { ButtonBaseSize, ModernButton } from '@hcengineering/ui'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { ButtonBaseSize, ModernButton } from '@hanzo/ui'
   import { isRecording, isRecordingAvailable, loveClient } from '../../../utils'
   import love from '../../../plugin'
   import { lkSessionConnected } from '../../../liveKitClient'
-  import { Room } from '@hcengineering/love'
+  import { Room } from '@hanzo/love'
 
   export let room: Room
   export let size: ButtonBaseSize = 'large'

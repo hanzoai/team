@@ -28,7 +28,7 @@ import core, {
   type Collaborator,
   generateId,
   DOMAIN_TRANSIENT
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   migrateSpace,
   type MigrateUpdate,
@@ -45,8 +45,8 @@ import notification, {
   type DocNotifyContext,
   type InboxNotification,
   type OldCollaborators
-} from '@hcengineering/notification'
-import { DOMAIN_PREFERENCE } from '@hcengineering/preference'
+} from '@hanzo/notification'
+import { DOMAIN_PREFERENCE } from '@hanzo/preference'
 
 import {
   DOMAIN_SPACE,

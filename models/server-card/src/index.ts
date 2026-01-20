@@ -15,11 +15,11 @@
 
 import { type Builder } from '@hanzo/model'
 
-import core from '@hcengineering/core'
-import serverCore from '@hcengineering/server-core'
-import serverCard from '@hcengineering/server-card'
-import card from '@hcengineering/card'
-import communication from '@hcengineering/communication'
+import core from '@hanzo/core'
+import serverCore from '@hanzo/server-core'
+import serverCard from '@hanzo/server-card'
+import card from '@hanzo/card'
+import communication from '@hanzo/communication'
 
 export { serverCardId } from '@hanzo/server-card'
 

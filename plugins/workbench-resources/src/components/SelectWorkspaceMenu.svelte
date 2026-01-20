@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { isArchivingMode, systemAccountUuid, WorkspaceInfoWithStatus } from '@hcengineering/core'
-  import login from '@hcengineering/login'
-  import { getMetadata, getResource } from '@hcengineering/platform'
-  import presentation, { createQuery, decodeTokenPayload, hasResource, isAdminUser } from '@hcengineering/presentation'
+  import contact from '@hanzo/contact'
+  import { isArchivingMode, systemAccountUuid, WorkspaceInfoWithStatus } from '@hanzo/core'
+  import login from '@hanzo/login'
+  import { getMetadata, getResource } from '@hanzo/platform'
+  import presentation, { createQuery, decodeTokenPayload, hasResource, isAdminUser } from '@hanzo/presentation'
   import {
     closePopup,
     Component,
@@ -39,9 +39,9 @@
   import { workbenchId } from '@hanzo/workbench'
   import { onDestroy, onMount } from 'svelte'
 
-  import { Analytics } from '@hcengineering/analytics'
-  import type { PersonRating } from '@hcengineering/rating'
-  import ratingPlugin from '@hcengineering/rating'
+  import { Analytics } from '@hanzo/analytics'
+  import type { PersonRating } from '@hanzo/rating'
+  import ratingPlugin from '@hanzo/rating'
   import { workspacesStore } from '../utils'
   // import Drag from './icons/Drag.svelte'
 

@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { FavoriteType, MasterTag } from '@hcengineering/card'
-  import core, { Class, Doc, getCurrentAccount, Ref, Space } from '@hcengineering/core'
-  import preference from '@hcengineering/preference'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { Action, getCurrentLocation, location as locationStore, navigate } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { setFilters, TreeNode } from '@hcengineering/view-resources'
-  import { GroupsNavModel } from '@hcengineering/workbench'
+  import { FavoriteType, MasterTag } from '@hanzo/card'
+  import core, { Class, Doc, getCurrentAccount, Ref, Space } from '@hanzo/core'
+  import preference from '@hanzo/preference'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Action, getCurrentLocation, location as locationStore, navigate } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { setFilters, TreeNode } from '@hanzo/view-resources'
+  import { GroupsNavModel } from '@hanzo/workbench'
   import card from '../../plugin'
   import TagHierarchy from './TagHierarchy.svelte'
 

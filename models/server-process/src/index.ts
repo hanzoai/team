@@ -11,13 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import cardPlugin from '@hcengineering/card'
-import core, { type Doc } from '@hcengineering/core'
-import { Mixin, type Builder } from '@hcengineering/model'
-import { TMethod, TProcessFunction, TTrigger } from '@hcengineering/model-process'
-import type { Resource } from '@hcengineering/platform'
-import process, { ExecutionStatus } from '@hcengineering/process'
-import serverCore from '@hcengineering/server-core'
+import cardPlugin from '@hanzo/card'
+import core, { type Doc } from '@hanzo/core'
+import { Mixin, type Builder } from '@hanzo/model'
+import { TMethod, TProcessFunction, TTrigger } from '@hanzo/model-process'
+import type { Resource } from '@hanzo/platform'
+import process, { ExecutionStatus } from '@hanzo/process'
+import serverCore from '@hanzo/server-core'
 import serverProcess, {
   type RollbackFunc,
   type ExecuteFunc,
@@ -26,7 +26,7 @@ import serverProcess, {
   type TransformFunc,
   type TriggerImpl,
   type CheckFunc
-} from '@hcengineering/server-process'
+} from '@hanzo/server-process'
 
 export { serverProcessId } from '@hanzo/server-process'
 

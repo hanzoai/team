@@ -24,7 +24,7 @@ import {
   SocialIdType,
   systemAccountUuid,
   type WorkspaceUuid
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   generateWorkspaceUrl,
   cleanEmail,

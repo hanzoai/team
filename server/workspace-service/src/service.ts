@@ -35,9 +35,9 @@ import {
   getTransactorEndpoint,
   withRetryConnUntilSuccess,
   withRetryConnUntilTimeout
-} from '@hcengineering/server-client'
-import { generateToken } from '@hcengineering/server-token'
-import { FileModelLogger, prepareTools } from '@hcengineering/server-tool'
+} from '@hanzo/server-client'
+import { generateToken } from '@hanzo/server-token'
+import { FileModelLogger, prepareTools } from '@hanzo/server-tool'
 import { randomUUID } from 'crypto'
 import path from 'path'
 
@@ -73,8 +73,8 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hcengineering/server-pipeline'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+} from '@hanzo/server-pipeline'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
 import { createWorkspace, upgradeWorkspace } from './ws-operations'
 
 export interface WorkspaceOptions {

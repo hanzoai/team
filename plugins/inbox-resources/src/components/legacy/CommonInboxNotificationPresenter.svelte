@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, Markup } from '@hcengineering/core'
-  import { CommonInboxNotification } from '@hcengineering/notification'
-  import { getEmbeddedLabel, IntlString, translateCB } from '@hcengineering/platform'
-  import { Icon, Label, themeStore, tooltip } from '@hcengineering/ui'
-  import { Person } from '@hcengineering/contact'
-  import { getClient, LiteMessageViewer } from '@hcengineering/presentation'
-  import { classIcon, DocNavLink } from '@hcengineering/view-resources'
+  import core, { Doc, Markup } from '@hanzo/core'
+  import { CommonInboxNotification } from '@hanzo/notification'
+  import { getEmbeddedLabel, IntlString, translateCB } from '@hanzo/platform'
+  import { Icon, Label, themeStore, tooltip } from '@hanzo/ui'
+  import { Person } from '@hanzo/contact'
+  import { getClient, LiteMessageViewer } from '@hanzo/presentation'
+  import { classIcon, DocNavLink } from '@hanzo/view-resources'
 
   import PreviewTemplate from '../preview/PreviewTemplate.svelte'
 

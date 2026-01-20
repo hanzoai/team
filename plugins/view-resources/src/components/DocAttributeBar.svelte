@@ -18,7 +18,7 @@
   import setting from '@hanzo/setting'
 
   import ClassAttributeBar from './ClassAttributeBar.svelte'
-  import notification from '@hcengineering/notification'
+  import notification from '@hanzo/notification'
 
   export let object: Doc
   export let mixins: Array<Mixin<Doc>> = []

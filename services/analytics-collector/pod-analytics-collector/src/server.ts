@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { AnalyticEvent, AnalyticEventType } from '@hcengineering/analytics-collector'
-import { reportOTEL, reportOTELError } from '@hcengineering/analytics-service'
-import type { MeasureContext } from '@hcengineering/core'
-import { extractToken } from '@hcengineering/server-client'
-import { Token } from '@hcengineering/server-token'
+import { AnalyticEvent, AnalyticEventType } from '@hanzo/analytics-collector'
+import { reportOTEL, reportOTELError } from '@hanzo/analytics-service'
+import type { MeasureContext } from '@hanzo/core'
+import { extractToken } from '@hanzo/server-client'
+import { Token } from '@hanzo/server-token'
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
 import { type Server } from 'http'

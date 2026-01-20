@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { getEmbeddedLabel } from '@hanzo/platform'
   import {
     Button,
     type ButtonKind,
@@ -9,7 +9,7 @@
     eventToHTMLElement,
     Label,
     showPopup
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   import LanguagePresenter from './LanguagePresenter.svelte'

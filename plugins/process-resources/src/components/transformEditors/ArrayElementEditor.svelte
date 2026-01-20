@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Tag } from '@hcengineering/card'
-  import { AnyAttribute, Ref } from '@hcengineering/core'
-  import presentation, { Card, getAttributePresenterClass, getClient } from '@hcengineering/presentation'
-  import { Process, ProcessFunction } from '@hcengineering/process'
+  import { MasterTag, Tag } from '@hanzo/card'
+  import { AnyAttribute, Ref } from '@hanzo/core'
+  import presentation, { Card, getAttributePresenterClass, getClient } from '@hanzo/presentation'
+  import { Process, ProcessFunction } from '@hanzo/process'
   import { createEventDispatcher } from 'svelte'
   import { getContext } from '../../utils'
   import ProcessAttribute from '../ProcessAttribute.svelte'

@@ -18,12 +18,12 @@ import activity, {
   type DisplayActivityMessage,
   type DisplayDocUpdateMessage,
   type DocUpdateMessage
-} from '@hcengineering/activity'
-import aiBot from '@hcengineering/ai-bot'
-import { summarizeMessages as aiSummarizeMessages, translate as aiTranslate } from '@hcengineering/ai-bot-resources'
-import { type Channel, type ChatMessage, type DirectMessage, type ThreadMessage } from '@hcengineering/chunter'
-import contact, { type Employee, getCurrentEmployee, getName, type Person } from '@hcengineering/contact'
-import { employeeByAccountStore, employeeByIdStore, PersonIcon } from '@hcengineering/contact-resources'
+} from '@hanzo/activity'
+import aiBot from '@hanzo/ai-bot'
+import { summarizeMessages as aiSummarizeMessages, translate as aiTranslate } from '@hanzo/ai-bot-resources'
+import { type Channel, type ChatMessage, type DirectMessage, type ThreadMessage } from '@hanzo/chunter'
+import contact, { type Employee, getCurrentEmployee, getName, type Person } from '@hanzo/contact'
+import { employeeByAccountStore, employeeByIdStore, PersonIcon } from '@hanzo/contact-resources'
 import core, {
   AccountRole,
   type AccountUuid,
@@ -43,11 +43,11 @@ import {
   isActivityNotification,
   isMentionNotification,
   isReactionNotification
-} from '@hcengineering/notification-resources'
-import { type Asset, getMetadata, translate } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import { type AnySvelteComponent, languageStore } from '@hcengineering/ui'
-import { classIcon, getDocLinkTitle, getDocTitle } from '@hcengineering/view-resources'
+} from '@hanzo/notification-resources'
+import { type Asset, getMetadata, translate } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import { type AnySvelteComponent, languageStore } from '@hanzo/ui'
+import { classIcon, getDocLinkTitle, getDocTitle } from '@hanzo/view-resources'
 import { get, type Unsubscriber, writable } from 'svelte/store'
 
 import ChannelIcon from './components/ChannelIcon.svelte'

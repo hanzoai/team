@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { systemAccountUuid, WorkspaceUuid } from '@hcengineering/core'
-import { BaseConfig } from '@hcengineering/mail-common'
-import { generateToken } from '@hcengineering/server-token'
-import { getClient } from '@hcengineering/kvs-client'
-import { AccountClient, getClient as getAccountClientRaw } from '@hcengineering/account-client'
+import { systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
+import { BaseConfig } from '@hanzo/mail-common'
+import { generateToken } from '@hanzo/server-token'
+import { getClient } from '@hanzo/kvs-client'
+import { AccountClient, getClient as getAccountClientRaw } from '@hanzo/account-client'
 
 import config from './config'
 

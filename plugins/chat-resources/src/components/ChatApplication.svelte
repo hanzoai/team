@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Card, MasterTag } from '@hcengineering/card'
+  import { Card, MasterTag } from '@hanzo/card'
   import {
     defineSeparators,
     Separator,
@@ -24,15 +24,15 @@
     restoreLocation,
     closePanel,
     Component
-  } from '@hcengineering/ui'
+  } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
-  import { getClient } from '@hcengineering/presentation'
-  import chat, { chatId } from '@hcengineering/chat'
-  import { Ref } from '@hcengineering/core'
-  import view from '@hcengineering/view'
-  import { Favorites } from '@hcengineering/card-resources'
-  import workbench from '@hcengineering/workbench'
-  import cardPlugin from '@hcengineering/card-resources/src/plugin'
+  import { getClient } from '@hanzo/presentation'
+  import chat, { chatId } from '@hanzo/chat'
+  import { Ref } from '@hanzo/core'
+  import view from '@hanzo/view'
+  import { Favorites } from '@hanzo/card-resources'
+  import workbench from '@hanzo/workbench'
+  import cardPlugin from '@hanzo/card-resources/src/plugin'
 
   import ChatNavigation from './ChatNavigation.svelte'
   import {

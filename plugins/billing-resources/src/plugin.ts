@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import billing, { billingId } from '@hcengineering/billing'
-import { type IntlString, mergeIds } from '@hcengineering/platform'
+import billing, { billingId } from '@hanzo/billing'
+import { type IntlString, mergeIds } from '@hanzo/platform'
 
 export default mergeIds(billingId, billing, {
   string: {

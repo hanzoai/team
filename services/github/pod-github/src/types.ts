@@ -14,17 +14,17 @@ import {
   WorkspaceUuid,
   type Blob,
   type MeasureContext
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   DocSyncInfo,
   GithubIntegration,
   GithubIntegrationRepository,
   GithubProject,
   GithubUserInfo
-} from '@hcengineering/github'
-import { LiveQuery } from '@hcengineering/query'
-import { ProjectType, TaskType } from '@hcengineering/task'
-import { MarkupNode } from '@hcengineering/text'
+} from '@hanzo/github'
+import { LiveQuery } from '@hanzo/query'
+import { ProjectType, TaskType } from '@hanzo/task'
+import { MarkupNode } from '@hanzo/text'
 import { User } from '@octokit/webhooks-types'
 import { Octokit } from 'octokit'
 

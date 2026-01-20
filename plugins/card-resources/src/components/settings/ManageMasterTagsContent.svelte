@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { MasterTag } from '@hcengineering/card'
-  import core, { Doc, Ref } from '@hcengineering/core'
-  import { getResource } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { Analytics } from '@hanzo/analytics'
+  import { MasterTag } from '@hanzo/card'
+  import core, { Doc, Ref } from '@hanzo/core'
+  import { getResource } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import {
     AnyComponent,
     AnySvelteComponent,

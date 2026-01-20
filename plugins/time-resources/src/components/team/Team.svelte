@@ -34,11 +34,11 @@
   import TeamNavigator from './TeamNavigator.svelte'
   import Agenda from './agenda/Agenda.svelte'
   import Calendar from './calendar/Calendar.svelte'
-  import { IconWithEmoji, getClient } from '@hcengineering/presentation'
-  import view from '@hcengineering/view'
-  import { Analytics } from '@hcengineering/analytics'
-  import tracker, { Project as Proj } from '@hcengineering/tracker'
-  import { TimeEvents } from '@hcengineering/time'
+  import { IconWithEmoji, getClient } from '@hanzo/presentation'
+  import view from '@hanzo/view'
+  import { Analytics } from '@hanzo/analytics'
+  import tracker, { Project as Proj } from '@hanzo/tracker'
+  import { TimeEvents } from '@hanzo/time'
 
   const client = getClient()
 

@@ -12,10 +12,10 @@ import core, {
   type Ref,
   type RefTo,
   type TypeIdentifier
-} from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import view from '@hcengineering/view'
+} from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import view from '@hanzo/view'
 import card from './plugin'
 
 export async function importModule (json: string): Promise<void> {

@@ -16,16 +16,16 @@
 // Mock platform plugin function first (before any imports)
 // Import after mocks are set up
 import { CopyAsMarkdownTable, isIntlString } from '../copyAsMarkdownTable'
-import core, { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { type IntlString } from '@hcengineering/platform'
-import { getClient } from '@hcengineering/presentation'
-import { getCurrentLanguage } from '@hcengineering/theme'
+import core, { type Class, type Doc, type Ref } from '@hanzo/core'
+import { type IntlString } from '@hanzo/platform'
+import { getClient } from '@hanzo/presentation'
+import { getCurrentLanguage } from '@hanzo/theme'
 import { copyMarkdown } from '../actionImpl'
-import { addNotification } from '@hcengineering/ui'
+import { addNotification } from '@hanzo/ui'
 import { buildModel } from '../utils'
 
-jest.mock('@hcengineering/platform', () => {
-  const actual = jest.requireActual('@hcengineering/platform')
+jest.mock('@hanzo/platform', () => {
+  const actual = jest.requireActual('@hanzo/platform')
   return {
     ...actual,
     plugin: jest.fn((id: string, def: any) => def),
@@ -39,11 +39,11 @@ jest.mock('@hcengineering/platform', () => {
   }
 })
 
-jest.mock('@hcengineering/presentation', () => ({
+jest.mock('@hanzo/presentation', () => ({
   getClient: jest.fn()
 }))
 
-jest.mock('@hcengineering/theme', () => ({
+jest.mock('@hanzo/theme', () => ({
   getCurrentLanguage: jest.fn(() => 'en')
 }))
 
@@ -52,7 +52,7 @@ jest.mock('../actionImpl', () => ({
   copyMarkdown: jest.fn()
 }))
 
-jest.mock('@hcengineering/ui', () => ({
+jest.mock('@hanzo/ui', () => ({
   addNotification: jest.fn(),
   NotificationSeverity: {
     Success: 'success'
@@ -341,7 +341,7 @@ describe('copyAsMarkdownTable', () => {
 
       mockGetObjectLinkFragment.mockResolvedValue(mockLocation)
 
-      const uiModule = await import('@hcengineering/ui')
+      const uiModule = await import('@hanzo/ui')
       const mockLocationToUrl = uiModule.locationToUrl as jest.Mock
       mockLocationToUrl.mockReturnValue('workbench/w3/card/test-doc-id')
 

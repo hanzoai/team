@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Doc, type Hierarchy, type Ref, type Space, getObjectValue } from '@hcengineering/core'
-import { translate, type IntlString } from '@hcengineering/platform'
-import documentsPlugin from '@hcengineering/controlled-documents'
-import { type AttributeModel } from '@hcengineering/view'
-import { getClient } from '@hcengineering/presentation'
-import { registerValueFormatterForClass, isIntlString } from '@hcengineering/view-resources'
+import core, { type Class, type Doc, type Hierarchy, type Ref, type Space, getObjectValue } from '@hanzo/core'
+import { translate, type IntlString } from '@hanzo/platform'
+import documentsPlugin from '@hanzo/controlled-documents'
+import { type AttributeModel } from '@hanzo/view'
+import { getClient } from '@hanzo/presentation'
+import { registerValueFormatterForClass, isIntlString } from '@hanzo/view-resources'
 
 /**
  * Format version number from major and minor

@@ -23,16 +23,16 @@ import core, {
   type TxCUD,
   type TxRemoveDoc,
   type TxUpdateDoc
-} from '@hcengineering/core'
-import type { Plugin } from '@hcengineering/platform'
-import { plugin } from '@hcengineering/platform'
-import rating, { ReactionKind, type DocReaction } from '@hcengineering/rating'
+} from '@hanzo/core'
+import type { Plugin } from '@hanzo/platform'
+import { plugin } from '@hanzo/platform'
+import rating, { ReactionKind, type DocReaction } from '@hanzo/rating'
 import {
   BaseMiddleware,
   type Middleware,
   type PipelineContext,
   type TxMiddlewareResult
-} from '@hcengineering/server-core'
+} from '@hanzo/server-core'
 
 /**
  * @public

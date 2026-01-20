@@ -1,4 +1,4 @@
-import { TickManagerImpl } from '@hcengineering/network-core'
+import { TickManagerImpl } from '@hanzo/network-core'
 
 // Create tick manager
 export const tickManager = new TickManagerImpl(2)

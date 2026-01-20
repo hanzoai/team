@@ -44,7 +44,7 @@ import core, {
   type DomainResult,
   type OperationDomain,
   type TxHandler
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { genMinModel } from './minmodel'
 
 export async function connect (handler: (tx: Tx) => void): Promise<

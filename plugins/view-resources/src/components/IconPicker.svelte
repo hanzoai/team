@@ -23,8 +23,8 @@
     themeStore,
     Label,
     Component
-  } from '@hcengineering/ui'
-  import emojiPlugin from '@hcengineering/emoji'
+  } from '@hanzo/ui'
+  import emojiPlugin from '@hanzo/emoji'
   import { createEventDispatcher } from 'svelte'
   import { iconsLibrary } from '../icons'
   import view from '../plugin'

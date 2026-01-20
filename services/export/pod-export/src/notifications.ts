@@ -12,7 +12,7 @@
 // limitations under the License.
 //
 
-import { getClient } from '@hcengineering/account-client'
+import { getClient } from '@hanzo/account-client'
 import {
   AccountRole,
   concatLink,
@@ -22,8 +22,8 @@ import {
   systemAccountUuid,
   WorkspaceIds,
   WorkspaceUuid
-} from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import envConfig from './config'
 
 export async function sendExportCompletionEmail (

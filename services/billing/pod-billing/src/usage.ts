@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type AccountClient, type Subscription, getClient } from '@hcengineering/account-client'
+import { type AccountClient, type Subscription, getClient } from '@hanzo/account-client'
 import {
   type MeasureContext,
   type UsageStatus,
@@ -22,9 +22,9 @@ import {
   isArchivingMode,
   isDeletingMode,
   systemAccountUuid
-} from '@hcengineering/core'
-import { type StorageConfig } from '@hcengineering/server-core'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { type StorageConfig } from '@hanzo/server-core'
+import { generateToken } from '@hanzo/server-token'
 
 import { collectDatalakeStats } from './billing'
 import { type Config } from './config'

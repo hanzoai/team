@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getCurrentAccount, groupByArray, SortingOrder, type Class, type Doc, type Ref } from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import rating, { ReactionKind, type DocReaction } from '@hcengineering/rating'
-  import { NavGroup, Label, ScrollBox } from '@hcengineering/ui'
+  import { getCurrentAccount, groupByArray, SortingOrder, type Class, type Doc, type Ref } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import rating, { ReactionKind, type DocReaction } from '@hanzo/rating'
+  import { NavGroup, Label, ScrollBox } from '@hanzo/ui'
   import NavigatorRating from './NavigatorRating.svelte'
 
   const current = getCurrentAccount()

@@ -23,7 +23,7 @@ import {
   MessagesDoc,
   type NotificationContext,
   SortingOrder
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import {
   CardEventType,
   CreateMessageEvent,
@@ -40,13 +40,13 @@ import {
   RemoveNotificationsEvent,
   UpdateNotificationContextEvent,
   UpdateNotificationEvent
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import {
   MessageProcessor,
   NotificationContextProcessor,
   NotificationProcessor
-} from '@hcengineering/communication-shared'
-import { type HulylakeWorkspaceClient } from '@hcengineering/hulylake-client'
+} from '@hanzo/communication-shared'
+import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
 
 import { defaultQueryParams, NotificationContextQueryOptions, type PagedQuery, type QueryId } from '../types'
 import { QueryResult } from '../result'

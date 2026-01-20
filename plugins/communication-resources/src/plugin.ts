@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type IntlString, mergeIds } from '@hcengineering/platform'
+import { type IntlString, mergeIds } from '@hanzo/platform'
 import communication, {
   communicationId,
   type MessageAction,
@@ -19,10 +19,10 @@ import communication, {
   type MessageActionVisibilityTesterResource,
   type AppletCreateFnResource,
   type AppletGetTitleFnResource
-} from '@hcengineering/communication'
-import { type AnyComponent } from '@hcengineering/ui'
-import { type Ref } from '@hcengineering/core'
-import { type CanCreateCardResource } from '@hcengineering/card'
+} from '@hanzo/communication'
+import { type AnyComponent } from '@hanzo/ui'
+import { type Ref } from '@hanzo/core'
+import { type CanCreateCardResource } from '@hanzo/card'
 
 export default mergeIds(communicationId, communication, {
   component: {

@@ -34,8 +34,8 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hcengineering/server-pipeline'
-import serverToken, { decodeToken } from '@hcengineering/server-token'
+} from '@hanzo/server-pipeline'
+import serverToken, { decodeToken } from '@hanzo/server-token'
 import cors from '@koa/cors'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'

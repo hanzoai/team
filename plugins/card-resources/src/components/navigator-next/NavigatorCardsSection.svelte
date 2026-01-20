@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { Card, CardSpace, FavoriteCard, MasterTag } from '@hcengineering/card'
-  import { Ref, SortingOrder, Timestamp } from '@hcengineering/core'
-  import { createNotificationContextsQuery, createQuery } from '@hcengineering/presentation'
-  import { Label, NotificationContext, NotificationType } from '@hcengineering/communication-types'
-  import ui, { ModernButton } from '@hcengineering/ui'
+  import { Card, CardSpace, FavoriteCard, MasterTag } from '@hanzo/card'
+  import { Ref, SortingOrder, Timestamp } from '@hanzo/core'
+  import { createNotificationContextsQuery, createQuery } from '@hanzo/presentation'
+  import { Label, NotificationContext, NotificationType } from '@hanzo/communication-types'
+  import ui, { ModernButton } from '@hanzo/ui'
 
   import type { CardsNavigatorConfig } from '../../types'
   import NavigatorType from './NavigatorType.svelte'

@@ -3,7 +3,7 @@
   import plugin from '../../plugin'
   import { ComponentPointExtension } from '../../types'
   import { getClient } from '../../utils'
-  import { getCurrentAccount, hasAccountRole } from '@hcengineering/core'
+  import { getCurrentAccount, hasAccountRole } from '@hanzo/core'
 
   export let extension: ComponentExtensionId
   export let props: Record<string, any> = {}

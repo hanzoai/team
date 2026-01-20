@@ -13,10 +13,10 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { Data, notEmpty, Ref } from '@hcengineering/core'
-  import { Employee, formatName, getCurrentEmployee, getCurrentEmployeeSpace } from '@hcengineering/contact'
-  import { Direct } from '@hcengineering/communication'
-  import { employeeByIdStore } from '@hcengineering/contact-resources'
+  import { Data, notEmpty, Ref } from '@hanzo/core'
+  import { Employee, formatName, getCurrentEmployee, getCurrentEmployeeSpace } from '@hanzo/contact'
+  import { Direct } from '@hanzo/communication'
+  import { employeeByIdStore } from '@hanzo/contact-resources'
 
   export let collaborators: Ref<Employee>[] = []
   export let data: Partial<Data<Direct>>

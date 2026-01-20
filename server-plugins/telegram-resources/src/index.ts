@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity, { ActivityMessage } from '@hcengineering/activity'
-import chunter, { ChatMessage } from '@hcengineering/chunter'
-import contact, { Channel, Person } from '@hcengineering/contact'
+import activity, { ActivityMessage } from '@hanzo/activity'
+import chunter, { ChatMessage } from '@hanzo/chunter'
+import contact, { Channel, Person } from '@hanzo/contact'
 import core, {
   PersonId,
   Class,

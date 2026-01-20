@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { getCurrentAccount, loginSocialTypes, notEmpty, SocialIdType } from '@hcengineering/core'
-  import { getClient, hasResource } from '@hcengineering/presentation'
-  import { Action, Button, createFocusManager, FocusHandler, Label, Menu, Scroller, showPopup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import contact from '@hanzo/contact'
+  import { getCurrentAccount, loginSocialTypes, notEmpty, SocialIdType } from '@hanzo/core'
+  import { getClient, hasResource } from '@hanzo/presentation'
+  import { Action, Button, createFocusManager, FocusHandler, Label, Menu, Scroller, showPopup } from '@hanzo/ui'
+  import view from '@hanzo/view'
 
-  import type { PersonRating } from '@hcengineering/rating'
-  import ratingPlugin from '@hcengineering/rating'
+  import type { PersonRating } from '@hanzo/rating'
+  import ratingPlugin from '@hanzo/rating'
   import setting from '../../plugin'
   import SocialIdRow from './SocialIdRow.svelte'
 

@@ -21,9 +21,9 @@ import core, {
   type WorkspaceIds,
   systemAccountUuid,
   withContext
-} from '@hcengineering/core'
-import { type HulylakeClient, type PutOptions, getClient } from '@hcengineering/hulylake-client'
-import { getMetadata } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { type HulylakeClient, type PutOptions, getClient } from '@hanzo/hulylake-client'
+import { getMetadata } from '@hanzo/platform'
 import {
   type BlobStorageIterator,
   type BucketInfo,
@@ -31,8 +31,8 @@ import {
   type StorageConfig,
   type StorageConfiguration,
   type UploadedObjectInfo
-} from '@hcengineering/server-core'
-import serverToken, { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import serverToken, { generateToken } from '@hanzo/server-token'
 import { Readable } from 'stream'
 import { NotFoundError } from './error'
 

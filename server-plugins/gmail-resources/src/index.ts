@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import contact, { Channel, formatName, Person, SocialIdentity } from '@hcengineering/contact'
+import contact, { Channel, formatName, Person, SocialIdentity } from '@hanzo/contact'
 import core, {
   PersonId,
   Class,
@@ -31,24 +31,24 @@ import core, {
   groupByArray,
   SocialIdType,
   Domain
-} from '@hcengineering/core'
-import gmail, { Message } from '@hcengineering/gmail'
-import { TriggerControl } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import gmail, { Message } from '@hanzo/gmail'
+import { TriggerControl } from '@hanzo/server-core'
 import notification, {
   NotificationType,
   InboxNotification,
   ActivityInboxNotification,
   MentionInboxNotification
-} from '@hcengineering/notification'
-import serverNotification from '@hcengineering/server-notification'
+} from '@hanzo/notification'
+import serverNotification from '@hanzo/server-notification'
 import {
   AvailableProvidersCache,
   AvailableProvidersCacheKey,
   getContentByTemplate
-} from '@hcengineering/server-notification-resources'
-import { getMetadata } from '@hcengineering/platform'
-import activity, { ActivityMessage } from '@hcengineering/activity'
-import { getEmployeeByAcc, getPerson } from '@hcengineering/server-contact'
+} from '@hanzo/server-notification-resources'
+import { getMetadata } from '@hanzo/platform'
+import activity, { ActivityMessage } from '@hanzo/activity'
+import { getEmployeeByAcc, getPerson } from '@hanzo/server-contact'
 
 /**
  * @public

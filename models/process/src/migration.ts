@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import core, { type Client, type Doc, type Rank, TxOperations } from '@hcengineering/core'
+import core, { type Client, type Doc, type Rank, TxOperations } from '@hanzo/core'
 import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient,
   tryMigrate,
   tryUpgrade
-} from '@hcengineering/model'
-import process, { type State, type Step } from '@hcengineering/process'
-import { makeRank } from '@hcengineering/rank'
+} from '@hanzo/model'
+import process, { type State, type Step } from '@hanzo/process'
+import { makeRank } from '@hanzo/rank'
 import { DOMAIN_PROCESS, processId } from '.'
 
 export const processOperation: MigrateOperation = {

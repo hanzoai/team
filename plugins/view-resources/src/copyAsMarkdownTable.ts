@@ -24,18 +24,18 @@ import core, {
   concatLink,
   getDisplayTime,
   getObjectValue
-} from '@hcengineering/core'
-import { translate, type IntlString, getMetadata } from '@hcengineering/platform'
-import { addNotification, NotificationSeverity, locationToUrl } from '@hcengineering/ui'
-import { getCurrentLanguage } from '@hcengineering/theme'
+} from '@hanzo/core'
+import { translate, type IntlString, getMetadata } from '@hanzo/platform'
+import { addNotification, NotificationSeverity, locationToUrl } from '@hanzo/ui'
+import { getCurrentLanguage } from '@hanzo/theme'
 import viewPlugin, {
   type Viewlet,
   type AttributeModel,
   type BuildModelKey,
   type BuildMarkdownTableMetadata
-} from '@hcengineering/view'
-import presentation, { getClient } from '@hcengineering/presentation'
-import { getName, getPersonByPersonId } from '@hcengineering/contact'
+} from '@hanzo/view'
+import presentation, { getClient } from '@hanzo/presentation'
+import { getName, getPersonByPersonId } from '@hanzo/contact'
 import { buildModel, buildConfigLookup, getAttributeValue, getObjectLinkFragment } from './utils'
 import view from './plugin'
 import SimpleNotification from './components/SimpleNotification.svelte'

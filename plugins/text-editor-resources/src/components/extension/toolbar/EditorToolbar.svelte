@@ -15,13 +15,13 @@
 //
 -->
 <script lang="ts">
-  import { getResource } from '@hcengineering/platform'
-  import { createQuery } from '@hcengineering/presentation'
-  import textEditor, { ActionContext, TextEditorAction } from '@hcengineering/text-editor'
+  import { getResource } from '@hanzo/platform'
+  import { createQuery } from '@hanzo/presentation'
+  import textEditor, { ActionContext, TextEditorAction } from '@hanzo/text-editor'
   import { NodeViewProps } from '../../node-view'
   import TextActionButton from '../../TextActionButton.svelte'
   import { type ToolbarCursor } from './toolbar'
-  import { Component } from '@hcengineering/ui'
+  import { Component } from '@hanzo/ui'
 
   export let editor: NodeViewProps['editor']
   export let cursor: ToolbarCursor<any> | null = null

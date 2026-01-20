@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Person } from '@hcengineering/contact'
-  import { Ref, WithLookup } from '@hcengineering/core'
-  import { tooltip } from '@hcengineering/ui'
+  import { Person } from '@hanzo/contact'
+  import { Ref, WithLookup } from '@hanzo/core'
+  import { tooltip } from '@hanzo/ui'
 
   import { getPersonByPersonRefStore } from '../..'
   import { getPreviewPopup } from './utils'

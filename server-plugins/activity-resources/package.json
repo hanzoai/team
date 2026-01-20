@@ -1,11 +1,11 @@
 {
-  "name": "@hcengineering/server-activity-resources",
+  "name": "@hanzo/server-activity-resources",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Anticrm Platform Contributors",
-  "template": "@hcengineering/node-package",
+  "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hcengineering/platform-rig": "workspace:^0.7.19",
+    "@hanzo/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -34,19 +34,19 @@
     "@types/node": "^22.18.1"
   },
   "dependencies": {
-    "@hcengineering/activity": "workspace:^0.7.0",
-    "@hcengineering/card": "workspace:^0.7.0",
-    "@hcengineering/contact": "workspace:^0.7.0",
-    "@hcengineering/core": "workspace:^0.7.24",
-    "@hcengineering/notification": "workspace:^0.7.0",
-    "@hcengineering/platform": "workspace:^0.7.19",
-    "@hcengineering/server-activity": "workspace:^0.7.0",
-    "@hcengineering/server-contact": "workspace:^0.7.0",
-    "@hcengineering/server-core": "workspace:^0.7.18",
-    "@hcengineering/server-notification-resources": "workspace:^0.7.0",
-    "@hcengineering/text-core": "workspace:^0.7.18",
-    "@hcengineering/communication-sdk-types": "workspace:^0.7.12",
-    "@hcengineering/communication-types": "workspace:^0.7.12",
-    "@hcengineering/server-card": "workspace:^0.7.0"
+    "@hanzo/activity": "workspace:^0.7.0",
+    "@hanzo/card": "workspace:^0.7.0",
+    "@hanzo/contact": "workspace:^0.7.0",
+    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/notification": "workspace:^0.7.0",
+    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzo/server-activity": "workspace:^0.7.0",
+    "@hanzo/server-contact": "workspace:^0.7.0",
+    "@hanzo/server-core": "workspace:^0.7.18",
+    "@hanzo/server-notification-resources": "workspace:^0.7.0",
+    "@hanzo/text-core": "workspace:^0.7.18",
+    "@hanzo/communication-sdk-types": "workspace:^0.7.12",
+    "@hanzo/communication-types": "workspace:^0.7.12",
+    "@hanzo/server-card": "workspace:^0.7.0"
   }
 }

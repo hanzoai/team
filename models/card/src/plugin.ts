@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { type Card, cardId } from '@hcengineering/card'
-import card from '@hcengineering/card-resources/src/plugin'
-import type { Client, Doc, Ref } from '@hcengineering/core'
-import {} from '@hcengineering/core'
-import { mergeIds, type Resource } from '@hcengineering/platform'
-import { type TagCategory } from '@hcengineering/tags'
-import { type Location, type ResolvedLocation } from '@hcengineering/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction } from '@hcengineering/view'
-import { type LocationData } from '@hcengineering/workbench'
+import { type Card, cardId } from '@hanzo/card'
+import card from '@hanzo/card-resources/src/plugin'
+import type { Client, Doc, Ref } from '@hanzo/core'
+import {} from '@hanzo/core'
+import { mergeIds, type Resource } from '@hanzo/platform'
+import { type TagCategory } from '@hanzo/tags'
+import { type Location, type ResolvedLocation } from '@hanzo/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction } from '@hanzo/view'
+import { type LocationData } from '@hanzo/workbench'
 
 export default mergeIds(cardId, card, {
   app: {

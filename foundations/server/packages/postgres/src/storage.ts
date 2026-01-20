@@ -72,7 +72,7 @@ import {
   type DBResult,
   doFetchTypes,
   getDBClient
-} from '@hcengineering/postgres-base'
+} from '@hanzo/postgres-base'
 import {
   calcHashHash,
   type DbAdapter,

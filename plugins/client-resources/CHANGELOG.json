@@ -3,7 +3,7 @@
   "entries": [
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/client-resources_v0.6.4",
+      "tag": "@hanzo/client-resources_v0.6.4",
       "date": "Tue, 09 Nov 2021 11:00:07 GMT",
       "comments": {
         "patch": [
@@ -15,7 +15,7 @@
     },
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/client-resources_v0.6.3",
+      "tag": "@hanzo/client-resources_v0.6.3",
       "date": "Sat, 14 Aug 2021 09:12:06 GMT",
       "comments": {
         "patch": [
@@ -27,7 +27,7 @@
     },
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/client-resources_v0.6.2",
+      "tag": "@hanzo/client-resources_v0.6.2",
       "date": "Wed, 11 Aug 2021 10:08:19 GMT",
       "comments": {
         "patch": [
@@ -39,7 +39,7 @@
     },
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/client-resources_v0.6.1",
+      "tag": "@hanzo/client-resources_v0.6.1",
       "date": "Sun, 08 Aug 2021 21:05:26 GMT",
       "comments": {
         "patch": [
@@ -59,7 +59,7 @@
     },
     {
       "version": "0.7.0",
-      "tag": "@hcengineering/client-resources_v0.6.0",
+      "tag": "@hanzo/client-resources_v0.6.0",
       "date": "Sun, 08 Aug 2021 10:14:57 GMT",
       "comments": {
         "dependency": [

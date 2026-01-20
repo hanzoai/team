@@ -51,9 +51,9 @@
   import IconUpDown from './icons/UpDown.svelte'
   import { getResultOptions, getResultQuery } from '../viewOptions'
   import { canEditSpace } from '../visibilityTester'
-  import contact, { PermissionsStore } from '@hcengineering/contact'
+  import contact, { PermissionsStore } from '@hanzo/contact'
   import { Readable } from 'svelte/store'
-  import { getResource } from '@hcengineering/platform'
+  import { getResource } from '@hanzo/platform'
   import { canChangeAttribute } from '../permissions'
 
   export let _class: Ref<Class<Doc>>

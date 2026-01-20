@@ -24,12 +24,12 @@ import type {
   AccountUuid,
   Domain,
   IntegrationKind
-} from '@hcengineering/core'
-import type { Metadata, Plugin } from '@hcengineering/platform'
-import { Asset, IntlString, Resource, plugin } from '@hcengineering/platform'
-import { TemplateField, TemplateFieldCategory } from '@hcengineering/templates'
-import { Action, AnyComponent } from '@hcengineering/ui'
-import { type Integration as AccountIntegration } from '@hcengineering/account-client'
+} from '@hanzo/core'
+import type { Metadata, Plugin } from '@hanzo/platform'
+import { Asset, IntlString, Resource, plugin } from '@hanzo/platform'
+import { TemplateField, TemplateFieldCategory } from '@hanzo/templates'
+import { Action, AnyComponent } from '@hanzo/ui'
+import { type Integration as AccountIntegration } from '@hanzo/account-client'
 
 import { SpaceTypeCreator, SpaceTypeEditor } from './spaceTypeEditor'
 

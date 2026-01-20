@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { LoginInfoWithWorkspaces } from '@hcengineering/account-client'
+import type { LoginInfoWithWorkspaces } from '@hanzo/account-client'
 import {
   generateId,
   TxProcessor,
@@ -45,8 +45,8 @@ import {
   type TxResult,
   type WorkspaceDataId,
   type WorkspaceIds
-} from '@hcengineering/core'
-import { PlatformError, unknownError } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { PlatformError, unknownError } from '@hanzo/platform'
 import {
   BackupClientOps,
   createBroadcastEvent,
@@ -59,8 +59,8 @@ import {
   type Session,
   type SessionRequest,
   type StatisticsElement
-} from '@hcengineering/server-core'
-import { type Token } from '@hcengineering/server-token'
+} from '@hanzo/server-core'
+import { type Token } from '@hanzo/server-token'
 
 const useReserveContext = (process.env.USE_RESERVE_CTX ?? 'true') === 'true'
 

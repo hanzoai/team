@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hcengineering/presentation'
+  import { createQuery, getClient } from '@hanzo/presentation'
   import plugin from '../plugin'
-  import { Execution, ProcessToDo } from '@hcengineering/process'
-  import { getCurrentEmployee } from '@hcengineering/contact'
-  import { Button, Component } from '@hcengineering/ui'
-  import time from '@hcengineering/time'
-  import { getEmbeddedLabel } from '@hcengineering/platform'
+  import { Execution, ProcessToDo } from '@hanzo/process'
+  import { getCurrentEmployee } from '@hanzo/contact'
+  import { Button, Component } from '@hanzo/ui'
+  import time from '@hanzo/time'
+  import { getEmbeddedLabel } from '@hanzo/platform'
 
   export let value: Execution
 

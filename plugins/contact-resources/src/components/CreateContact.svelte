@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Doc, Ref } from '@hcengineering/core'
-  import { Asset, getResource } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { Action, closePopup, Menu, showPopup } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
+  import { Doc, Ref } from '@hanzo/core'
+  import { Asset, getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { Action, closePopup, Menu, showPopup } from '@hanzo/ui'
+  import view from '@hanzo/view'
   import contact from '../plugin'
 
   const client = getClient()

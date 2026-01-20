@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, getMetadata, IntlString } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import setting, { settingId } from '@hcengineering/setting'
-  import support from '@hcengineering/support'
+  import { Asset, getMetadata, IntlString } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import setting, { settingId } from '@hanzo/setting'
+  import support from '@hanzo/support'
   import {
     AnySvelteComponent,
     Button,

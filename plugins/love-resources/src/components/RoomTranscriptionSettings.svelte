@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label, ModernToggle } from '@hcengineering/ui'
-  import love, { Room } from '@hcengineering/love'
-  import { getClient } from '@hcengineering/presentation'
+  import { Label, ModernToggle } from '@hanzo/ui'
+  import love, { Room } from '@hanzo/love'
+  import { getClient } from '@hanzo/presentation'
 
   export let room: Room
 

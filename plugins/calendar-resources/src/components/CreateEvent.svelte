@@ -21,9 +21,9 @@
     RecurringRule,
     Visibility,
     generateEventId
-  } from '@hcengineering/calendar'
-  import { getCurrentEmployee, Person } from '@hcengineering/contact'
-  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hcengineering/core'
+  } from '@hanzo/calendar'
+  import { getCurrentEmployee, Person } from '@hanzo/contact'
+  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hanzo/core'
   import presentation, {
     createQuery,
     DocCreateExtComponent,

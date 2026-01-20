@@ -21,11 +21,11 @@ import {
   PatchEvent,
   RemovePatchEvent,
   ThreadPatchEvent
-} from '@hcengineering/communication-sdk-types'
-import { CardPeer, MessageType, Peer } from '@hcengineering/communication-types'
-import { type AccountUuid, generateId } from '@hcengineering/core'
-import { extractReferences } from '@hcengineering/text-core'
-import { markdownToMarkup } from '@hcengineering/text-markdown'
+} from '@hanzo/communication-sdk-types'
+import { CardPeer, MessageType, Peer } from '@hanzo/communication-types'
+import { type AccountUuid, generateId } from '@hanzo/core'
+import { extractReferences } from '@hanzo/text-core'
+import { markdownToMarkup } from '@hanzo/text-markdown'
 
 import type { Enriched, TriggerCtx, TriggerFn, Triggers } from '../types'
 import { generateMessageId } from '../messageId'

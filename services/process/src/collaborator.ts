@@ -3,9 +3,9 @@
 //
 //
 
-import { CollaboratorClient, getClient as getCollaboratorClient } from '@hcengineering/collaborator-client'
-import { systemAccountUuid, WorkspaceUuid } from '@hcengineering/core'
-import { generateToken } from '@hcengineering/server-token'
+import { CollaboratorClient, getClient as getCollaboratorClient } from '@hanzo/collaborator-client'
+import { systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
+import { generateToken } from '@hanzo/server-token'
 import config from './config'
 
 /**

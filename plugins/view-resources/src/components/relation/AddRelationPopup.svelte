@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association, Class, Data, Doc, Ref, Relation, SortingOrder } from '@hcengineering/core'
-  import { Card, getClient } from '@hcengineering/presentation'
-  import { Dropdown, ListItem } from '@hcengineering/ui'
+  import core, { Association, Class, Data, Doc, Ref, Relation, SortingOrder } from '@hanzo/core'
+  import { Card, getClient } from '@hanzo/presentation'
+  import { Dropdown, ListItem } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import ObjectBox from '../ObjectBox.svelte'
 

@@ -11,21 +11,21 @@ import {
   type Ref,
   type WorkspaceIds,
   type Class
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import {
   type MigrateUpdate,
   type MigrationClient,
   type MigrationIterator,
   type ModelLogger
-} from '@hcengineering/model'
+} from '@hanzo/model'
 import {
   type Pipeline,
   type StorageAdapter,
   workspaceEvents,
   type PlatformQueueProducer,
   type QueueWorkspaceMessage
-} from '@hcengineering/server-core'
-import { type AccountClient } from '@hcengineering/account-client'
+} from '@hanzo/server-core'
+import { type AccountClient } from '@hanzo/account-client'
 
 /**
  * Upgrade client implementation.

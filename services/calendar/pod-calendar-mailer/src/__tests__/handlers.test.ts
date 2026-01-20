@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Event } from '@hcengineering/calendar'
-import { MeasureContext, PersonId, Ref, WorkspaceUuid } from '@hcengineering/core'
-import { Meeting, Room } from '@hcengineering/love'
+import { Event } from '@hanzo/calendar'
+import { MeasureContext, PersonId, Ref, WorkspaceUuid } from '@hanzo/core'
+import { Meeting, Room } from '@hanzo/love'
 import { MeetingNotificationType } from '../notification'
 import { eventCreated, eventUpdated, eventDeleted, eventMixin } from '../handlers'
 import * as notification from '../notification'

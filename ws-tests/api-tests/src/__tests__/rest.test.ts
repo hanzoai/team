@@ -35,11 +35,11 @@ import core, {
   type Space,
   type TxCreateDoc,
   type TxOperations
-} from '@hcengineering/core'
-import { type AccountClient, getClient as getAccountClient } from '@hcengineering/account-client'
-import chunter from '@hcengineering/chunter'
-import contact, { ensureEmployee, type SocialIdentityRef, type Person } from '@hcengineering/contact'
-import { generateToken } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import { type AccountClient, getClient as getAccountClient } from '@hanzo/account-client'
+import chunter from '@hanzo/chunter'
+import contact, { ensureEmployee, type SocialIdentityRef, type Person } from '@hanzo/contact'
+import { generateToken } from '@hanzo/server-token'
 
 describe('rest-api-server', () => {
   const testCtx = new MeasureMetricsContext('test', {})

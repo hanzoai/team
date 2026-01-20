@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import activity, { ActivityMessage, DocUpdateMessage } from '@hcengineering/activity'
-import { Analytics } from '@hcengineering/analytics'
-import chunter, { ChatMessage } from '@hcengineering/chunter'
-import contact, { Employee, type Person } from '@hcengineering/contact'
+import activity, { ActivityMessage, DocUpdateMessage } from '@hanzo/activity'
+import { Analytics } from '@hanzo/analytics'
+import chunter, { ChatMessage } from '@hanzo/chunter'
+import contact, { Employee, type Person } from '@hanzo/contact'
 import core, {
   AccountUuid,
   AnyAttribute,
@@ -49,7 +49,7 @@ import core, {
   TxRemoveDoc,
   TxUpdateDoc,
   getClassCollaborators
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import notification, {
   ActivityInboxNotification,
   CommonInboxNotification,
@@ -57,12 +57,12 @@ import notification, {
   InboxNotification,
   MentionInboxNotification,
   NotificationType
-} from '@hcengineering/notification'
-import { getResource, translate } from '@hcengineering/platform'
-import { getAccountBySocialId, getEmployeesBySocialIds } from '@hcengineering/server-contact'
-import { type TriggerControl } from '@hcengineering/server-core'
-import { NOTIFICATION_BODY_SIZE, ReceiverInfo, SenderInfo } from '@hcengineering/server-notification'
-import { markupToText, stripTags } from '@hcengineering/text-core'
+} from '@hanzo/notification'
+import { getResource, translate } from '@hanzo/platform'
+import { getAccountBySocialId, getEmployeesBySocialIds } from '@hanzo/server-contact'
+import { type TriggerControl } from '@hanzo/server-core'
+import { NOTIFICATION_BODY_SIZE, ReceiverInfo, SenderInfo } from '@hanzo/server-notification'
+import { markupToText, stripTags } from '@hanzo/text-core'
 
 import { PushNotificationsHandler } from './push'
 import {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { DropdownLabelsIntl, DropdownIntlItem, Label } from '@hcengineering/ui'
+  import { DropdownLabelsIntl, DropdownIntlItem, Label } from '@hanzo/ui'
   import plugin from '../plugin'
   import { setCameraPosition, setCameraSize, recordingCameraPosition, recordingCameraSize } from '../recording'
 

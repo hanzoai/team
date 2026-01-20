@@ -1,12 +1,12 @@
 import { Kafka, Producer } from 'kafkajs'
-import { parseQueueConfig } from '@hcengineering/kafka'
-import { MeasureContext } from '@hcengineering/core'
+import { parseQueueConfig } from '@hanzo/kafka'
+import { MeasureContext } from '@hanzo/core'
 import { initQueue, closeQueue, getProducer, KafkaQueueRegistry } from '../queue'
 import { BaseConfig } from '../types'
 
 // Mock dependencies
 jest.mock('kafkajs')
-jest.mock('@hcengineering/kafka')
+jest.mock('@hanzo/kafka')
 
 /* eslint-disable @typescript-eslint/unbound-method */
 describe('Kafka Queue Management', () => {

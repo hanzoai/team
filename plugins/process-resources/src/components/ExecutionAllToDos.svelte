@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hcengineering/contact'
-  import { createQuery } from '@hcengineering/presentation'
-  import { Execution, ProcessToDo } from '@hcengineering/process'
-  import time from '@hcengineering/time'
-  import { Component } from '@hcengineering/ui'
+  import contact from '@hanzo/contact'
+  import { createQuery } from '@hanzo/presentation'
+  import { Execution, ProcessToDo } from '@hanzo/process'
+  import time from '@hanzo/time'
+  import { Component } from '@hanzo/ui'
   import plugin from '../plugin'
 
   export let value: Execution

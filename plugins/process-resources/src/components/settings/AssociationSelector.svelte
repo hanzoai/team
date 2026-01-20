@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association, Ref } from '@hcengineering/core'
-  import { getClient } from '@hcengineering/presentation'
-  import { Process } from '@hcengineering/process'
-  import { Button, eventToHTMLElement, Label, SelectPopup, SelectPopupValueType, showPopup } from '@hcengineering/ui'
+  import core, { Association, Ref } from '@hanzo/core'
+  import { getClient } from '@hanzo/presentation'
+  import { Process } from '@hanzo/process'
+  import { Button, eventToHTMLElement, Label, SelectPopup, SelectPopupValueType, showPopup } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let process: Process

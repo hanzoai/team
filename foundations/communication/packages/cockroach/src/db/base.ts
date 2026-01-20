@@ -14,8 +14,8 @@
 //
 
 import postgres, { type ParameterOrJSON } from 'postgres'
-import { SortingOrder, WorkspaceUuid } from '@hcengineering/communication-types'
-import { Domain } from '@hcengineering/communication-sdk-types'
+import { SortingOrder, WorkspaceUuid } from '@hanzo/communication-types'
+import { Domain } from '@hanzo/communication-sdk-types'
 
 import { SqlRow, type Logger, type Options, type SqlResult } from '../types'
 import { SqlClient } from '../client'

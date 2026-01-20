@@ -3,7 +3,7 @@
 # 🌐 Huly Virtual Network
 
 [![License: EPL 2.0](https://img.shields.io/badge/License-EPL%202.0-blue.svg)](https://opensource.org/licenses/EPL-2.0)
-[![npm version](https://img.shields.io/npm/v/@hcengineering/network-core.svg)](https://www.npmjs.com/package/@hcengineering/network-core)
+[![npm version](https://img.shields.io/npm/v/@hanzo/network-core.svg)](https://www.npmjs.com/package/@hanzo/network-core)
 [![CI](https://github.com/hcengineering/huly.net/workflows/CI/badge.svg)](https://github.com/hcengineering/huly.net/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-3178c6.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-22+-339933.svg)](https://nodejs.org/)
@@ -141,14 +141,14 @@ This monorepo contains four main packages and deployment pods:
 
 ### Packages
 
-- **`@hcengineering/network-core`**: Core network implementation, agent management, and container orchestration
-- **`@hcengineering/network-backrpc`**: ZeroMQ-based RPC communication layer with bidirectional messaging
-- **`@hcengineering/network-client`**: Client libraries for connecting to the network and managing containers
-- **`@hcengineering/network-server`**: Network server implementation with multi-client support
+- **`@hanzo/network-core`**: Core network implementation, agent management, and container orchestration
+- **`@hanzo/network-backrpc`**: ZeroMQ-based RPC communication layer with bidirectional messaging
+- **`@hanzo/network-client`**: Client libraries for connecting to the network and managing containers
+- **`@hanzo/network-server`**: Network server implementation with multi-client support
 
 ### Deployment Pods
 
-- **`@hcengineering/network-pod`**: Dockerized network server for production deployment
+- **`@hanzo/network-pod`**: Dockerized network server for production deployment
 
 ## ⚠️ Important Limitations
 
@@ -285,10 +285,10 @@ docker run -p 3737:3737 hardcoreeng/network-pod
 Here's a complete end-to-end example to get you started:
 
 ```typescript
-import { NetworkImpl, TickManagerImpl } from '@hcengineering/network-core'
-import { NetworkServer } from '@hcengineering/network-server'
-import { createNetworkClient } from '@hcengineering/network-client'
-import type { Container, ContainerUuid, ClientUuid } from '@hcengineering/network-core'
+import { NetworkImpl, TickManagerImpl } from '@hanzo/network-core'
+import { NetworkServer } from '@hanzo/network-server'
+import { createNetworkClient } from '@hanzo/network-client'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
 
 // 1. Create a simple container implementation
 class MyServiceContainer implements Container {
@@ -397,7 +397,7 @@ See the [Examples README](examples/README.md) for detailed explanations and usag
 This example shows a simple container that handles requests and maintains state:
 
 ```typescript
-import type { Container, ContainerUuid, ClientUuid } from '@hcengineering/network-core'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
 
 class DataProcessorContainer implements Container {
   private data: Map<string, any> = new Map()
@@ -461,7 +461,7 @@ await containerRef.close()
 This example demonstrates real-time event broadcasting to multiple connected clients:
 
 ```typescript
-import type { Container, ContainerUuid, ClientUuid } from '@hcengineering/network-core'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
 
 class ChatRoomContainer implements Container {
   private clients = new Map<ClientUuid, (data: any) => Promise<void>>()
@@ -550,9 +550,9 @@ await chatRef.close()
 This example shows how to implement automatic failover for critical services:
 
 ```typescript
-import { TickManagerImpl, AgentImpl } from '@hcengineering/network-core'
-import { createNetworkClient, NetworkAgentServer } from '@hcengineering/network-client'
-import type { Container, ContainerUuid, ClientUuid, ContainerKind } from '@hcengineering/network-core'
+import { TickManagerImpl, AgentImpl } from '@hanzo/network-core'
+import { createNetworkClient, NetworkAgentServer } from '@hanzo/network-client'
+import type { Container, ContainerUuid, ClientUuid, ContainerKind } from '@hanzo/network-core'
 
 class LeaderServiceContainer implements Container {
   private isActive = false
@@ -690,7 +690,7 @@ runHAExample().catch(console.error)
 This example demonstrates managing per-tenant containers with labels:
 
 ```typescript
-import type { Container, ContainerUuid, ClientUuid, GetOptions } from '@hcengineering/network-core'
+import type { Container, ContainerUuid, ClientUuid, GetOptions } from '@hanzo/network-core'
 
 class TenantWorkspaceContainer implements Container {
   private users = new Set<string>()
@@ -800,7 +800,7 @@ await tenant2Workspace.close()
 This example shows how to configure timeouts for development vs production:
 
 ```typescript
-import { createNetworkClient } from '@hcengineering/network-client'
+import { createNetworkClient } from '@hanzo/network-client'
 
 // Development: Long timeout for debugging (1 hour)
 const devClient = createNetworkClient('localhost:3737', 3600)
@@ -854,8 +854,8 @@ const client = createClientForEnvironment('localhost:3737')
 This example shows using direct connections vs routed connections:
 
 ```typescript
-import type { Container, ContainerUuid, ClientUuid } from '@hcengineering/network-core'
-import { NetworkServer } from '@hcengineering/network-server'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
+import { NetworkServer } from '@hanzo/network-server'
 
 class DirectAccessContainer implements Container {
   constructor(readonly uuid: ContainerUuid) {}
@@ -894,7 +894,7 @@ await containerRef.close()
 This example demonstrates monitoring container lifecycle and network events:
 
 ```typescript
-import type { NetworkEvent, NetworkEventKind } from '@hcengineering/network-core'
+import type { NetworkEvent, NetworkEventKind } from '@hanzo/network-core'
 
 // Monitor all network events
 const unsubscribe = client.onUpdate(async (event: NetworkEvent) => {
@@ -993,9 +993,9 @@ try {
 This example shows a complete production-ready setup:
 
 ```typescript
-import { NetworkImpl, TickManagerImpl, AgentImpl } from '@hcengineering/network-core'
-import { NetworkServer } from '@hcengineering/network-server'
-import { createNetworkClient, NetworkAgentServer } from '@hcengineering/network-client'
+import { NetworkImpl, TickManagerImpl, AgentImpl } from '@hanzo/network-core'
+import { NetworkServer } from '@hanzo/network-server'
+import { createNetworkClient, NetworkAgentServer } from '@hanzo/network-client'
 
 // Production container with proper lifecycle management
 class ProductionContainer implements Container {
@@ -1193,8 +1193,8 @@ serveAgent(
 **Basic Usage Example:**
 
 ```typescript
-import { createNetworkClient, containerOnAgentEndpointRef } from '@hcengineering/network-client'
-import type { Container, ContainerUuid, ClientUuid } from '@hcengineering/network-core'
+import { createNetworkClient, containerOnAgentEndpointRef } from '@hanzo/network-client'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
 
 // 1. Create a container implementation
 class MyServiceContainer implements Container {
@@ -1235,8 +1235,8 @@ await containerRef.close()
 **High Availability Example with Stateless Containers:**
 
 ```typescript
-import { createNetworkClient, containerOnAgentEndpointRef } from '@hcengineering/network-client'
-import type { Container, ContainerUuid, ContainerKind } from '@hcengineering/network-core'
+import { createNetworkClient, containerOnAgentEndpointRef } from '@hanzo/network-client'
+import type { Container, ContainerUuid, ContainerKind } from '@hanzo/network-core'
 
 class LeaderServiceContainer implements Container {
   constructor(readonly uuid: ContainerUuid, readonly instanceName: string) {}
@@ -1444,7 +1444,7 @@ The network includes built-in health monitoring with configurable timeouts:
 - **Container Reference Tracking**: Automatic lifecycle management based on client references
 
 ```typescript
-import { timeouts } from '@hcengineering/network-core'
+import { timeouts } from '@hanzo/network-core'
 
 console.log('Alive timeout:', timeouts.aliveTimeout, 'seconds') // 3
 console.log('Ping interval:', timeouts.pingInterval, 'seconds') // 1

@@ -23,7 +23,7 @@
   import { groupTeamData, toSlots } from '../utils'
   import EventElement from './EventElement.svelte'
   import PersonCalendar from './PersonCalendar.svelte'
-  import { employeeRefByAccountUuidStore } from '@hcengineering/contact-resources'
+  import { employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
 
   export let space: Ref<Project>
   export let currentDate: Date

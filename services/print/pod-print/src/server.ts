@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import { generateId, newMetrics, type WorkspaceIds } from '@hcengineering/core'
-import { StorageConfiguration, initStatisticsContext } from '@hcengineering/server-core'
-import { buildStorageFromConfig } from '@hcengineering/server-storage'
-import { getClient as getAccountClientRaw, AccountClient, isWorkspaceLoginInfo } from '@hcengineering/account-client'
-import { createOpenTelemetryMetricsContext, SplitLogger } from '@hcengineering/analytics-service'
+import { generateId, newMetrics, type WorkspaceIds } from '@hanzo/core'
+import { StorageConfiguration, initStatisticsContext } from '@hanzo/server-core'
+import { buildStorageFromConfig } from '@hanzo/server-storage'
+import { getClient as getAccountClientRaw, AccountClient, isWorkspaceLoginInfo } from '@hanzo/account-client'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
 import { IncomingHttpHeaders, type Server } from 'http'

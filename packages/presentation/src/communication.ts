@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { closeLiveQueries, initLiveQueries, refreshLiveQueries } from '@hcengineering/communication-client-query'
+import { closeLiveQueries, initLiveQueries, refreshLiveQueries } from '@hanzo/communication-client-query'
 import {
   type AddAttachmentsOperation,
   type AddCollaboratorsEvent,
@@ -35,7 +35,7 @@ import {
   type UpdateNotificationEvent,
   type NotificationQuery,
   type UpdatePatchEvent
-} from '@hcengineering/communication-sdk-types'
+} from '@hanzo/communication-sdk-types'
 import {
   type AccountUuid,
   type CardID,
@@ -65,7 +65,7 @@ import {
   type MessageMeta,
   type FindMessagesGroupParams,
   type MessagesGroup
-} from '@hcengineering/communication-types'
+} from '@hanzo/communication-types'
 import core, {
   generateId,
   getCurrentAccount,
@@ -75,13 +75,13 @@ import core, {
   type Tx,
   type TxDomainEvent,
   AccountRole
-} from '@hcengineering/core'
+} from '@hanzo/core'
 import { onDestroy } from 'svelte'
-import { addNotification, NotificationSeverity, languageStore } from '@hcengineering/ui'
-import { getMetadata, translate } from '@hcengineering/platform'
-import view from '@hcengineering/view'
+import { addNotification, NotificationSeverity, languageStore } from '@hanzo/ui'
+import { getMetadata, translate } from '@hanzo/platform'
+import view from '@hanzo/view'
 import { get } from 'svelte/store'
-import { getWorkspaceClient as getHulylakeClient } from '@hcengineering/hulylake-client'
+import { getWorkspaceClient as getHulylakeClient } from '@hanzo/hulylake-client'
 import { v4 as uuid } from 'uuid'
 
 import { getCurrentWorkspaceUuid } from './file'
@@ -96,7 +96,7 @@ export {
   createNotificationsQuery,
   initLiveQueries,
   type MessageQueryParams
-} from '@hcengineering/communication-client-query'
+} from '@hanzo/communication-client-query'
 
 let client: CommunicationClient
 

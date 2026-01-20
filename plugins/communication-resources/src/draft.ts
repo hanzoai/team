@@ -11,15 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { getCurrentAccount, type Ref, generateId } from '@hcengineering/core'
+import { getCurrentAccount, type Ref, generateId } from '@hanzo/core'
 import { derived, get } from 'svelte/store'
-import { type Location, location } from '@hcengineering/ui'
-import { type Card } from '@hcengineering/card'
-import { EmptyMarkup } from '@hcengineering/text'
-import { getClient } from '@hcengineering/presentation'
-import { type Applet } from '@hcengineering/communication'
-import { type Message } from '@hcengineering/communication-types'
-import { isBlobAttachment, isLinkPreviewAttachment, isAppletAttachment } from '@hcengineering/communication-shared'
+import { type Location, location } from '@hanzo/ui'
+import { type Card } from '@hanzo/card'
+import { EmptyMarkup } from '@hanzo/text'
+import { getClient } from '@hanzo/presentation'
+import { type Applet } from '@hanzo/communication'
+import { type Message } from '@hanzo/communication-types'
+import { isBlobAttachment, isLinkPreviewAttachment, isAppletAttachment } from '@hanzo/communication-shared'
 
 import communication from './plugin'
 import { type MessageDraft } from './types'

@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { DownloadItem } from '@hcengineering/desktop-downloads'
-import { ScreenSource } from '@hcengineering/love'
-import { Plugin } from '@hcengineering/platform'
-import { Ref, Class, Doc } from '@hcengineering/core'
+import { DownloadItem } from '@hanzo/desktop-downloads'
+import { ScreenSource } from '@hanzo/love'
+import { Plugin } from '@hanzo/platform'
+import { Ref, Class, Doc } from '@hanzo/core'
 import { IpcRendererEvent } from 'electron'
 
 export interface Config {

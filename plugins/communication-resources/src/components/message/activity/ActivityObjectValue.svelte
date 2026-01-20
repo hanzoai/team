@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hcengineering/presentation'
-  import cardPlugin, { type Card } from '@hcengineering/card'
-  import { type ActivityMessage } from '@hcengineering/communication-types'
-  import view from '@hcengineering/view'
-  import { DocNavLink, ObjectIcon } from '@hcengineering/view-resources'
-  import { Icon, Label } from '@hcengineering/ui'
+  import { getClient } from '@hanzo/presentation'
+  import cardPlugin, { type Card } from '@hanzo/card'
+  import { type ActivityMessage } from '@hanzo/communication-types'
+  import view from '@hanzo/view'
+  import { DocNavLink, ObjectIcon } from '@hanzo/view-resources'
+  import { Icon, Label } from '@hanzo/ui'
 
   import communication from './../../../plugin'
 

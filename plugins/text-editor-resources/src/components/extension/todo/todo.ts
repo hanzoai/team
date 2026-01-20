@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
-import { type ActionContext } from '@hcengineering/text-editor'
+import core, { type Class, type Doc, type Ref } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
+import { type ActionContext } from '@hanzo/text-editor'
 import { type Editor, findParentNode, getNodeType, InputRule, isList, type RawCommands } from '@tiptap/core'
 import TaskItem, { type TaskItemOptions } from '@tiptap/extension-task-item'
 import TaskList from '@tiptap/extension-task-list'

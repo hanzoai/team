@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import core, { ClassifierKind } from '@hcengineering/core'
-import { type Builder } from '@hcengineering/model'
-import chat from '@hcengineering/chat'
+import core, { ClassifierKind } from '@hanzo/core'
+import { type Builder } from '@hanzo/model'
+import chat from '@hanzo/chat'
 
-import card from '@hcengineering/card'
-import mail from '@hcengineering/mail'
+import card from '@hanzo/card'
+import mail from '@hanzo/mail'
 
-export { mailId } from '@hcengineering/mail'
+export { mailId } from '@hanzo/mail'
 
 export function createModel (builder: Builder): void {
   // Create mail tags for Thread and Channel master tags

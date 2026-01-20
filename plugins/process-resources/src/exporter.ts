@@ -1,6 +1,6 @@
-import { type MasterTag } from '@hcengineering/card'
-import { type Class, type Doc, type Ref } from '@hcengineering/core'
-import { getClient } from '@hcengineering/presentation'
+import { type MasterTag } from '@hanzo/card'
+import { type Class, type Doc, type Ref } from '@hanzo/core'
+import { getClient } from '@hanzo/presentation'
 import process from './plugin'
 
 export function exportProcess (_id: Ref<MasterTag>): {

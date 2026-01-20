@@ -12,11 +12,11 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Label, Modal, Scroller } from '@hcengineering/ui'
-  import { employeeByAccountStore, UserDetails } from '@hcengineering/contact-resources'
-  import { Poll } from '@hcengineering/communication'
-  import { AccountUuid, notEmpty } from '@hcengineering/core'
-  import { Employee } from '@hcengineering/contact'
+  import { Label, Modal, Scroller } from '@hanzo/ui'
+  import { employeeByAccountStore, UserDetails } from '@hanzo/contact-resources'
+  import { Poll } from '@hanzo/communication'
+  import { AccountUuid, notEmpty } from '@hanzo/core'
+  import { Employee } from '@hanzo/contact'
 
   import { PollConfig } from '../../poll'
   import communication from '../../plugin'

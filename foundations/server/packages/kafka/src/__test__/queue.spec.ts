@@ -1,4 +1,4 @@
-import { generateId, MeasureMetricsContext, type WorkspaceUuid } from '@hcengineering/core'
+import { generateId, MeasureMetricsContext, type WorkspaceUuid } from '@hanzo/core'
 import { createPlatformQueue, parseQueueConfig } from '..'
 
 jest.setTimeout(30000) // Reduced from 120000

@@ -11,12 +11,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { AppletAttachment, AppletParams, AppletType, Message, MessageID } from '@hcengineering/communication-types'
-import { AttachedDoc, Configuration, Doc, Ref, AccountUuid } from '@hcengineering/core'
-import { Asset, IntlString, Resource } from '@hcengineering/platform'
-import { Card, MasterTag } from '@hcengineering/card'
-import { AnyComponent } from '@hcengineering/ui'
-import { PersonSpace } from '@hcengineering/contact'
+import { AppletAttachment, AppletParams, AppletType, Message, MessageID } from '@hanzo/communication-types'
+import { AttachedDoc, Configuration, Doc, Ref, AccountUuid } from '@hanzo/core'
+import { Asset, IntlString, Resource } from '@hanzo/platform'
+import { Card, MasterTag } from '@hanzo/card'
+import { AnyComponent } from '@hanzo/ui'
+import { PersonSpace } from '@hanzo/contact'
 
 export * from './poll'
 export * from './direct'

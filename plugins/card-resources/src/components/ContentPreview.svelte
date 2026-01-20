@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { WithLookup } from '@hcengineering/core'
-  import { ShowMore } from '@hcengineering/ui'
+  import { Card } from '@hanzo/card'
+  import { WithLookup } from '@hanzo/core'
+  import { ShowMore } from '@hanzo/ui'
 
   import ContentEditor from './ContentEditor.svelte'
 

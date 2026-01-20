@@ -4,12 +4,12 @@
 -->
 
 <script lang="ts">
-  import { Analytics } from '@hcengineering/analytics'
-  import { type Blob, type BlobMetadata, type Ref } from '@hcengineering/core'
-  import { getMetadata } from '@hcengineering/platform'
-  import presentation, { getFileUrl } from '@hcengineering/presentation'
-  import { convertToHTML } from '@hcengineering/print'
-  import { EmbeddedPDF, Spinner, themeStore } from '@hcengineering/ui'
+  import { Analytics } from '@hanzo/analytics'
+  import { type Blob, type BlobMetadata, type Ref } from '@hanzo/core'
+  import { getMetadata } from '@hanzo/platform'
+  import presentation, { getFileUrl } from '@hanzo/presentation'
+  import { convertToHTML } from '@hanzo/print'
+  import { EmbeddedPDF, Spinner, themeStore } from '@hanzo/ui'
 
   export let value: Ref<Blob>
   export let name: string

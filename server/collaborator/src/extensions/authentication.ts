@@ -17,7 +17,7 @@ import { decodeDocumentId } from '@hanzo/collaborator-client'
 import { MeasureContext } from '@hanzo/core'
 import { decodeToken } from '@hanzo/server-token'
 import { Extension, onAuthenticatePayload } from '@hocuspocus/server'
-import { isReadOnlyOrGuest } from '@hcengineering/account'
+import { isReadOnlyOrGuest } from '@hanzo/account'
 
 import { Context, buildContext } from '../context'
 import { getWorkspaceIds } from '../utils'

@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { MeasureContext, TxOperations } from '@hcengineering/core'
-import { type KeyValueClient } from '@hcengineering/kvs-client'
-import { AccountClient } from '@hcengineering/account-client'
-import { type MailRecipient } from '@hcengineering/mail-common'
+import { MeasureContext, TxOperations } from '@hanzo/core'
+import { type KeyValueClient } from '@hanzo/kvs-client'
+import { AccountClient } from '@hanzo/account-client'
+import { type MailRecipient } from '@hanzo/mail-common'
 
 import config from '../config'
 import { AttachmentHandler } from './attachments'

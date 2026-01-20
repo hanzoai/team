@@ -25,7 +25,7 @@
     SelectUsersPopup,
     employeeByIdStore,
     getPersonRefByPersonIdCb
-  } from '@hcengineering/contact-resources'
+  } from '@hanzo/contact-resources'
 
   import ChannelMembers from '../ChannelMembers.svelte'
   import DocAside from './DocAside.svelte'

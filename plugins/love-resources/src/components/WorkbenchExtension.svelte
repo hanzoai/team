@@ -6,9 +6,9 @@
   import { liveKitClient, lk } from '../utils'
   import { lkSessionConnected } from '../liveKitClient'
   import { subscribeInviteRequests, unsubscribeInviteRequests } from '../invites'
-  import { Room } from '@hcengineering/love'
+  import { Room } from '@hanzo/love'
   import { subscribeJoinRequests, unsubscribeJoinRequests } from '../joinRequests'
-  import { Ref } from '@hcengineering/core'
+  import { Ref } from '@hanzo/core'
   import { myInfo } from '../stores'
 
   let parentElement: HTMLDivElement

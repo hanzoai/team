@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { Asset, type IntlString, plugin, type Plugin, Resource } from '@hcengineering/platform'
-import { AnyComponent } from '@hcengineering/ui'
-import type { Class, Ref, Doc } from '@hcengineering/core'
+import { Asset, type IntlString, plugin, type Plugin, Resource } from '@hanzo/platform'
+import { AnyComponent } from '@hanzo/ui'
+import type { Class, Ref, Doc } from '@hanzo/core'
 import { CustomEmoji, ExtendedEmoji, ParsedTextWithEmojis } from './types'
 
 /** @public */

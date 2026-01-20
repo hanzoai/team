@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Role, Tag } from '@hcengineering/card'
-  import contact from '@hcengineering/contact'
-  import core from '@hcengineering/core'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import { clearSettingsStore } from '@hcengineering/setting-resources'
-  import { ButtonIcon, getCurrentResolvedLocation, Icon, IconAdd, Label, navigate, showPopup } from '@hcengineering/ui'
+  import { MasterTag, Role, Tag } from '@hanzo/card'
+  import contact from '@hanzo/contact'
+  import core from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { clearSettingsStore } from '@hanzo/setting-resources'
+  import { ButtonIcon, getCurrentResolvedLocation, Icon, IconAdd, Label, navigate, showPopup } from '@hanzo/ui'
   import card from '../../plugin'
   import RolesPopup from './RolesPopup.svelte'
 

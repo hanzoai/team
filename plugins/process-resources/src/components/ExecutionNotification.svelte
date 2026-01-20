@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ExecutionLog } from '@hcengineering/process'
-  import { Notification, NotificationToast } from '@hcengineering/ui'
+  import { ExecutionLog } from '@hanzo/process'
+  import { Notification, NotificationToast } from '@hanzo/ui'
   import LogActionPresenter from './LogActionPresenter.svelte'
   import TransitionRefPresenter from './settings/TransitionRefPresenter.svelte'
-  import { CardPresenter } from '@hcengineering/card-resources'
+  import { CardPresenter } from '@hanzo/card-resources'
 
   export let notification: Notification
   export let onRemove: () => void

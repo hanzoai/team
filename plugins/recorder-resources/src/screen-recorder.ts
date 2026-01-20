@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { getMetadata } from '@hcengineering/platform'
-import presentation from '@hcengineering/presentation'
+import { getMetadata } from '@hanzo/platform'
+import presentation from '@hanzo/presentation'
 
 import { DefaultAudioBps, DefaultChunkIntervalMs, DefaultVideoBps } from './const'
 import { Recorder } from './recorder'

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { notEmpty } from '@hcengineering/core'
-import { getEmbeddedLabel } from '@hcengineering/platform'
-import { FilePreviewPopup, getBlobRef, getFileUrl } from '@hcengineering/presentation'
-import { ImageNode, type ImageOptions } from '@hcengineering/text'
-import textEditor from '@hcengineering/text-editor'
-import { getEventPositionElement, SelectPopup, showPopup } from '@hcengineering/ui'
+import { notEmpty } from '@hanzo/core'
+import { getEmbeddedLabel } from '@hanzo/platform'
+import { FilePreviewPopup, getBlobRef, getFileUrl } from '@hanzo/presentation'
+import { ImageNode, type ImageOptions } from '@hanzo/text'
+import textEditor from '@hanzo/text-editor'
+import { getEventPositionElement, SelectPopup, showPopup } from '@hanzo/ui'
 import { type Editor, mergeAttributes, nodeInputRule } from '@tiptap/core'
 import { type Node, type ResolvedPos } from '@tiptap/pm/model'
 import { type EditorState, Plugin, PluginKey } from '@tiptap/pm/state'

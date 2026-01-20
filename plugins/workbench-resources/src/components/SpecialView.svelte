@@ -29,8 +29,8 @@
     ModeSelector,
     SearchInput,
     showPopup
-  } from '@hcengineering/ui'
-  import view, { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions, BuildModelKey } from '@hcengineering/view'
+  } from '@hanzo/ui'
+  import view, { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions, BuildModelKey } from '@hanzo/view'
   import {
     FilterBar,
     FilterButton,

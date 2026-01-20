@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hcengineering/core'
-  import type { Asset, IntlString } from '@hcengineering/platform'
-  import type { Action, IconSize } from '@hcengineering/ui'
+  import type { Doc, Ref } from '@hanzo/core'
+  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Action, IconSize } from '@hanzo/ui'
   import TreeElement from './TreeElement.svelte'
   import { AnySvelteComponent } from '@hanzo/ui'
 

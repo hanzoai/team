@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Api as CommunicationApi } from '@hcengineering/communication-server'
+import { Api as CommunicationApi } from '@hanzo/communication-server'
 import core, {
   type Class,
   type Doc,
@@ -15,8 +15,8 @@ import core, {
   type TxWorkspaceEvent,
   WorkspaceEvent,
   type WorkspaceIds
-} from '@hcengineering/core'
-import { type HulylakeWorkspaceClient } from '@hcengineering/hulylake-client'
+} from '@hanzo/core'
+import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
 import {
   ContextNameMiddleware,
   DBAdapterInitMiddleware,

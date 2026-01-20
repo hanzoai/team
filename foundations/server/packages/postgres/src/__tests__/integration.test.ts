@@ -30,9 +30,9 @@ import core, {
   type Space,
   TxOperations,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import { type DbAdapter, wrapAdapterToClient } from '@hcengineering/server-core'
-import { runSharedIntegrationTests } from '@hcengineering/server-core/src/__tests__/shared-integration'
+} from '@hanzo/core'
+import { type DbAdapter, wrapAdapterToClient } from '@hanzo/server-core'
+import { runSharedIntegrationTests } from '@hanzo/server-core/src/__tests__/shared-integration'
 import {
   createPostgresAdapter,
   createPostgresTxAdapter,

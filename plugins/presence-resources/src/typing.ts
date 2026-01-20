@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
-import { type UnsubscribeCallback, type Callback } from '@hcengineering/hulypulse-client'
-import { type IntlString, getMetadata } from '@hcengineering/platform'
-import presentation, { createPulseClient } from '@hcengineering/presentation'
-import { type PersonId } from '@hcengineering/core'
+import { type UnsubscribeCallback, type Callback } from '@hanzo/hulypulse-client'
+import { type IntlString, getMetadata } from '@hanzo/platform'
+import presentation, { createPulseClient } from '@hanzo/presentation'
+import { type PersonId } from '@hanzo/core'
 
 const typingDelaySeconds = 2
 

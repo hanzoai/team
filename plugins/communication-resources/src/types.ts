@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type IntlString } from '@hcengineering/platform'
-import { type TextEditorHandler } from '@hcengineering/text-editor'
-import { type LinkPreviewParams, type BlobParams, type AppletType } from '@hcengineering/communication-types'
-import type { Markup, Ref } from '@hcengineering/core'
-import type { IconComponent } from '@hcengineering/ui'
-import { type Applet } from '@hcengineering/communication'
+import { type IntlString } from '@hanzo/platform'
+import { type TextEditorHandler } from '@hanzo/text-editor'
+import { type LinkPreviewParams, type BlobParams, type AppletType } from '@hanzo/communication-types'
+import type { Markup, Ref } from '@hanzo/core'
+import type { IconComponent } from '@hanzo/ui'
+import { type Applet } from '@hanzo/communication'
 
 export type TextInputActionFn = (element: HTMLElement, editor: TextEditorHandler, event?: MouseEvent) => void
 

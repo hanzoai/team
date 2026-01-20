@@ -1,6 +1,6 @@
-import core, { AccountRole, getCurrentAccount, type Ref } from '@hcengineering/core'
-import love, { getFreeRoomPlace, MeetingStatus, type Room, RoomType, isOffice, RoomAccess } from '@hcengineering/love'
-import presentation, { getClient } from '@hcengineering/presentation'
+import core, { AccountRole, getCurrentAccount, type Ref } from '@hanzo/core'
+import love, { getFreeRoomPlace, MeetingStatus, type Room, RoomType, isOffice, RoomAccess } from '@hanzo/love'
+import presentation, { getClient } from '@hanzo/presentation'
 import {
   closeMeetingMinutes,
   getLiveKitEndpoint,
@@ -12,9 +12,9 @@ import {
 } from './utils'
 import { get } from 'svelte/store'
 import { infos, myInfo, myOffice, rooms } from './stores'
-import { getCurrentEmployee, type Person } from '@hcengineering/contact'
-import { getPersonByPersonRef } from '@hcengineering/contact-resources'
-import { getMetadata } from '@hcengineering/platform'
+import { getCurrentEmployee, type Person } from '@hanzo/contact'
+import { getPersonByPersonRef } from '@hanzo/contact-resources'
+import { getMetadata } from '@hanzo/platform'
 import { sendJoinRequest, unsubscribeJoinRequests } from './joinRequests'
 
 export let currentMeetingRoom: Ref<Room> | undefined

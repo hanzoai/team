@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { concatLink } from '@hcengineering/core'
-import platform, { PlatformError, Status, Severity } from '@hcengineering/platform'
+import { concatLink } from '@hanzo/core'
+import platform, { PlatformError, Status, Severity } from '@hanzo/platform'
 
 /**
  * Options for making HTTP requests to integration service APIs.

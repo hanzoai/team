@@ -23,8 +23,8 @@ import {
   type Ref,
   clone,
   toFindResult
-} from '@hcengineering/core'
-import { BaseMiddleware, type Middleware, type PipelineContext } from '@hcengineering/server-core'
+} from '@hanzo/core'
+import { BaseMiddleware, type Middleware, type PipelineContext } from '@hanzo/server-core'
 /**
  * @public
  */

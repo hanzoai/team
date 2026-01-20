@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { IntlString } from '@hcengineering/platform'
+import { IntlString } from '@hanzo/platform'
 import { ExecutionError, Transition } from '.'
-import { Ref } from '@hcengineering/core'
+import { Ref } from '@hanzo/core'
 
 export class ProcessError extends Error {
   constructor (

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { IconWithEmoji, isAdminUser } from '@hcengineering/presentation'
-  import { Project } from '@hcengineering/tracker'
-  import { Icon, Label, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hcengineering/ui'
-  import view from '@hcengineering/view'
-  import { NavLink } from '@hcengineering/view-resources'
+  import presentation, { IconWithEmoji, isAdminUser } from '@hanzo/presentation'
+  import { Project } from '@hanzo/tracker'
+  import { Icon, Label, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hanzo/ui'
+  import view from '@hanzo/view'
+  import { NavLink } from '@hanzo/view-resources'
   import tracker from '../../plugin'
   import { getCurrentAccount } from '@hanzo/core'
 

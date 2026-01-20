@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import cardPlugin, { Card } from '@hcengineering/card'
+import cardPlugin, { Card } from '@hanzo/card'
 import core, {
   Doc,
   generateId,
@@ -29,8 +29,8 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   WorkspaceUuid
-} from '@hcengineering/core'
-import { getResource } from '@hcengineering/platform'
+} from '@hanzo/core'
+import { getResource } from '@hanzo/platform'
 import process, {
   Execution,
   ExecutionError,
@@ -48,22 +48,22 @@ import process, {
   Transition,
   Trigger,
   UserResult
-} from '@hcengineering/process'
+} from '@hanzo/process'
 import serverProcess, {
   ExecuteResult,
   MethodImpl,
   ProcessControl,
   ProcessMessage,
   TriggerImpl
-} from '@hcengineering/server-process'
-import { getContextValue } from '@hcengineering/server-process-resources'
+} from '@hanzo/server-process'
+import { getContextValue } from '@hanzo/server-process-resources'
 import { Client as TemporalClient } from '@temporalio/client'
 import config from './config'
 import { isError } from './errors'
 import { getTemporalClient } from './temporal'
 import { getClient, releaseClient } from './utils'
-import { CreateMessageEvent, MessageEventType } from '@hcengineering/communication-sdk-types'
-import { ActivityUpdateType, ActivityProcess, MessageType } from '@hcengineering/communication-types'
+import { CreateMessageEvent, MessageEventType } from '@hanzo/communication-sdk-types'
+import { ActivityUpdateType, ActivityProcess, MessageType } from '@hanzo/communication-types'
 import { createCollaboratorClient } from './collaborator'
 
 const activeExecutions = new Set<Ref<Execution>>()

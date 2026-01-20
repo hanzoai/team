@@ -48,11 +48,11 @@ import {
   type UserStatus,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hcengineering/core'
-import type { Asset, Resource } from '@hcengineering/platform'
-import type { LiveQuery } from '@hcengineering/query'
-import type { RateLimitInfo, ReqId, Request, Response } from '@hcengineering/rpc'
-import type { Token } from '@hcengineering/server-token'
+} from '@hanzo/core'
+import type { Asset, Resource } from '@hanzo/platform'
+import type { LiveQuery } from '@hanzo/query'
+import type { RateLimitInfo, ReqId, Request, Response } from '@hanzo/rpc'
+import type { Token } from '@hanzo/server-token'
 
 import type { DbAdapter, DomainHelper } from './adapter'
 import { type PlatformQueue, type PlatformQueueProducer, type QueueTopic } from './queue'

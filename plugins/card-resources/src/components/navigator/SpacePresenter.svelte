@@ -22,7 +22,7 @@
   import { CardSpace, MasterTag } from '@hanzo/card'
   import card from '../../plugin'
   import { onDestroy } from 'svelte'
-  import { Action, location } from '@hcengineering/ui'
+  import { Action, location } from '@hanzo/ui'
 
   export let space: CardSpace
   export let model: SpacesNavModel

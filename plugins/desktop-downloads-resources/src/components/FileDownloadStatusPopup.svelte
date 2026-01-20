@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import { getEmbeddedLabel, IntlString } from '@hcengineering/platform'
-  import { humanReadableFileSize, Label, ProgressCircle, Scroller, tooltip } from '@hcengineering/ui'
+  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import { humanReadableFileSize, Label, ProgressCircle, Scroller, tooltip } from '@hanzo/ui'
 
   import IconCompleted from './icons/Completed.svelte'
 
   import plugin from '../plugin'
   import { downloads } from '../store'
-  import { DownloadItemState } from '@hcengineering/desktop-downloads'
+  import { DownloadItemState } from '@hanzo/desktop-downloads'
 
   const labels: Record<DownloadItemState, IntlString> = {
     completed: plugin.string.Completed,

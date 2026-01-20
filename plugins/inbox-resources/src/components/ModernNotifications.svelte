@@ -12,8 +12,8 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Card } from '@hcengineering/card'
-  import { NotificationContext } from '@hcengineering/communication-types'
+  import { Card } from '@hanzo/card'
+  import { NotificationContext } from '@hanzo/communication-types'
   import { createEventDispatcher } from 'svelte'
 
   import InboxNotification from './InboxNotification.svelte'

@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { AttachmentPresenter } from '@hcengineering/attachment-resources'
+  import { AttachmentPresenter } from '@hanzo/attachment-resources'
 
   import { BlobDraft } from '../../types'
 

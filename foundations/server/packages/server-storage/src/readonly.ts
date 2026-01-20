@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { WorkspaceIds, Blob, MeasureContext } from '@hcengineering/core'
-import type { BlobStorageIterator, BucketInfo, StorageAdapter, UploadedObjectInfo } from '@hcengineering/storage'
+import type { WorkspaceIds, Blob, MeasureContext } from '@hanzo/core'
+import type { BlobStorageIterator, BucketInfo, StorageAdapter, UploadedObjectInfo } from '@hanzo/storage'
 import { type Readable } from 'stream'
 
 class ReadonlyError extends Error {

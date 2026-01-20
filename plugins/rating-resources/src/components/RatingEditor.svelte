@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Class, Doc, Ref } from '@hcengineering/core'
-  import core, { getCurrentAccount, groupByArray } from '@hcengineering/core'
-  import emojiPlugin from '@hcengineering/emoji'
-  import { translateCB, getEmbeddedLabel } from '@hcengineering/platform'
-  import { createQuery, getClient } from '@hcengineering/presentation'
-  import type { DocReaction } from '@hcengineering/rating'
-  import ratingPlugin, { ReactionKind } from '@hcengineering/rating'
-  import { Button, showPopup } from '@hcengineering/ui'
+  import type { Class, Doc, Ref } from '@hanzo/core'
+  import core, { getCurrentAccount, groupByArray } from '@hanzo/core'
+  import emojiPlugin from '@hanzo/emoji'
+  import { translateCB, getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import type { DocReaction } from '@hanzo/rating'
+  import ratingPlugin, { ReactionKind } from '@hanzo/rating'
+  import { Button, showPopup } from '@hanzo/ui'
   import ReactionPresenter from './ReactionPresenter.svelte'
 
   export let _id: Ref<Doc>

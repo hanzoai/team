@@ -1,8 +1,8 @@
-import core, { MeasureMetricsContext, type Ref, type WorkspaceUuid } from '@hcengineering/core'
-import { getPlatformQueue } from '@hcengineering/kafka'
-import process, { type Execution } from '@hcengineering/process'
-import { QueueTopic } from '@hcengineering/server-core'
-import type { ProcessMessage } from '@hcengineering/server-process'
+import core, { MeasureMetricsContext, type Ref, type WorkspaceUuid } from '@hanzo/core'
+import { getPlatformQueue } from '@hanzo/kafka'
+import process, { type Execution } from '@hanzo/process'
+import { QueueTopic } from '@hanzo/server-core'
+import type { ProcessMessage } from '@hanzo/server-process'
 
 export async function SendTimeEvent (ws: WorkspaceUuid, _execution: Ref<Execution>): Promise<void> {
   const SERVICE_NAME = 'worker'

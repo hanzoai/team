@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hcengineering/contact'
-  import { notEmpty, PersonId, Ref } from '@hcengineering/core'
-  import { IntlString } from '@hcengineering/platform'
-  import { getClient } from '@hcengineering/presentation'
-  import { ButtonKind, ButtonSize } from '@hcengineering/ui'
+  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hanzo/contact'
+  import { notEmpty, PersonId, Ref } from '@hanzo/core'
+  import { IntlString } from '@hanzo/platform'
+  import { getClient } from '@hanzo/presentation'
+  import { ButtonKind, ButtonSize } from '@hanzo/ui'
   import { onDestroy } from 'svelte'
   import contact from '../plugin'
   import { employeeByPersonIdStore, primarySocialIdByEmployeeRefStore } from '../utils'
   import UserBoxList from './UserBoxList.svelte'
-  import { Analytics } from '@hcengineering/analytics'
+  import { Analytics } from '@hanzo/analytics'
 
   export let label: IntlString
   export let value: PersonId[]

@@ -1,6 +1,6 @@
-import { WorkspaceUuid } from '@hcengineering/core'
-import { KeyValueClient, getClient as getKeyValueClient } from '@hcengineering/kvs-client'
-import { calendarIntegrationKind } from '@hcengineering/calendar'
+import { WorkspaceUuid } from '@hanzo/core'
+import { KeyValueClient, getClient as getKeyValueClient } from '@hanzo/kvs-client'
+import { calendarIntegrationKind } from '@hanzo/calendar'
 
 import config from './config'
 import { GoogleEmail, User } from './types'

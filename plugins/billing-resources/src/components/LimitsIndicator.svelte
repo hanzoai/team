@@ -16,9 +16,9 @@
   import { onDestroy, onMount } from 'svelte'
   import { checkWorkspaceLimits, upgradePlan, calculateLimits } from '../utils'
   import { subscriptionStore, resetSubscriptionStore } from '../stores/subscription'
-  import { location, PaletteColorIndexes, Progress, tooltip } from '@hcengineering/ui'
-  import { addEventListener, removeEventListener } from '@hcengineering/platform'
-  import workbench from '@hcengineering/workbench'
+  import { location, PaletteColorIndexes, Progress, tooltip } from '@hanzo/ui'
+  import { addEventListener, removeEventListener } from '@hanzo/platform'
+  import workbench from '@hanzo/workbench'
   import UsagePopup from './UsagePopup.svelte'
 
   let pollInterval: number | undefined

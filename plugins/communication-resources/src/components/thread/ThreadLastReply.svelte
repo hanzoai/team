@@ -12,8 +12,8 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Label, TimeSince } from '@hcengineering/ui'
-  import { Timestamp } from '@hcengineering/core'
+  import { Label, TimeSince } from '@hanzo/ui'
+  import { Timestamp } from '@hanzo/core'
 
   import communication from '../../plugin'
 

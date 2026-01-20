@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import activity from '@hcengineering/activity'
-import type { Person } from '@hcengineering/contact'
-import contact from '@hcengineering/contact'
-import { type Timestamp, type Domain, type Ref, type Tx, type ClassCollaborators } from '@hcengineering/core'
+import activity from '@hanzo/activity'
+import type { Person } from '@hanzo/contact'
+import contact from '@hanzo/contact'
+import { type Timestamp, type Domain, type Ref, type Tx, type ClassCollaborators } from '@hanzo/core'
 import {
   ArrOf,
   type Builder,
