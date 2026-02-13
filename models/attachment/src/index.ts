@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -22,7 +22,7 @@ import type {
   Photo,
   SavedAttachments
 } from '@hanzo/attachment'
-import { IndexKind, type Blob, type Class, type Doc, type Domain, type Ref } from '@hanzo/core'
+import { AccountRole, IndexKind, type Blob, type Class, type Doc, type Domain, type Ref } from '@hanzo/core'
 import {
   Hidden,
   Index,
@@ -122,6 +122,10 @@ export function createModel (builder: Builder): void {
 
   builder.mixin(attachment.class.Attachment, core.class.Class, view.mixin.CollectionEditor, {
     editor: attachment.component.Attachments
+  })
+
+  builder.mixin(attachment.class.Attachment, core.class.Class, core.mixin.TxAccessLevel, {
+    createAccessLevel: AccountRole.Guest
   })
 
   builder.mixin(attachment.class.Photo, core.class.Class, view.mixin.CollectionEditor, {

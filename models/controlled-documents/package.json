@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "template": "@hanzo/model-package",
   "license": "EPL-2.0",
   "scripts": {
@@ -49,6 +49,7 @@
     "@hanzo/model": "workspace:^0.7.17",
     "@hanzo/setting": "workspace:^0.7.0",
     "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/converter": "workspace:^0.7.0",
     "@hanzo/ui": "workspace:^0.7.0",
     "@hanzo/platform": "workspace:^0.7.19",
     "@hanzo/view": "workspace:^0.7.0",

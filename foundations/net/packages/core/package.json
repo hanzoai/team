@@ -48,7 +48,7 @@
   "dependencies": {
     "uuid": "^8.3.2"
   },
-  "repository": "https://github.com/hcengineering/huly.net",
+  "repository": "https://github.com/hanzoai/huly.net",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",

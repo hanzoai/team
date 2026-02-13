@@ -252,7 +252,7 @@ async function main() {
 Rush @hanzo Dependencies Updater
 
 Usage:
-  update-hcengineering-deps [options]
+  update-hanzoai-deps [options]
 
 Options:
   --dry-run, -n    Check for updates without modifying files
@@ -266,10 +266,10 @@ Description:
 
 Examples:
   # Check for updates (dry run)
-  update-hcengineering-deps --dry-run
+  update-hanzoai-deps --dry-run
 
   # Apply updates
-  update-hcengineering-deps
+  update-hanzoai-deps
 
 After updating:
   1. Run 'rush update' to update lockfiles

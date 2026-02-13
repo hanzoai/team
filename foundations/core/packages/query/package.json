@@ -45,7 +45,7 @@
     "@hanzo/analytics": "workspace:^0.7.17",
     "fast-equals": "^5.2.2"
   },
-  "repository": "https://github.com/hcengineering/huly.core",
+  "repository": "https://github.com/hanzoai/huly.core",
   "publishConfig": {
     "access": "public"
   },

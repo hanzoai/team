@@ -8,6 +8,7 @@ import { chunterId } from '@hanzo/chunter'
 import { contactId } from '@hanzo/contact'
 import { documentsId } from '@hanzo/controlled-documents'
 import { documentId } from '@hanzo/document'
+import { exportId } from '@hanzo/export'
 import { driveId } from '@hanzo/drive'
 import { githubId } from '@hanzo/github'
 import { gmailId } from '@hanzo/gmail'
@@ -50,6 +51,7 @@ import chunterEn from '@hanzo/chunter-assets/lang/en.json'
 import contactEn from '@hanzo/contact-assets/lang/en.json'
 import documentsEn from '@hanzo/controlled-documents-assets/lang/en.json'
 import documentEn from '@hanzo/document-assets/lang/en.json'
+import exportEn from '@hanzo/export-assets/lang/en.json'
 import driveEn from '@hanzo/drive-assets/lang/en.json'
 import githubEn from '@hanzo/github-assets/lang/en.json'
 import gmailEn from '@hanzo/gmail-assets/lang/en.json'
@@ -109,6 +111,7 @@ export function registerStringLoaders (): void {
   addStringsLoader(preferenceId, async (lang: string) => preferenceEn)
   addStringsLoader(hrId, async (lang: string) => hrEn)
   addStringsLoader(documentId, async (lang: string) => documentEn)
+  addStringsLoader(exportId, async (lang: string) => exportEn)
   addStringsLoader(requestId, async (lang: string) => requestEn)
   addStringsLoader(loveId, async (lang: string) => loveEn)
   addStringsLoader(driveId, async (lang: string) => driveEn)

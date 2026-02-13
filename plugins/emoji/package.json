@@ -44,7 +44,7 @@
     "emojibase-data": "^16.0.0",
     "emojibase-regex": "^16.0.0"
   },
-  "repository": "https://github.com/hcengineering/platform",
+  "repository": "https://github.com/hanzoai/platform",
   "publishConfig": {
     "access": "public"
   }

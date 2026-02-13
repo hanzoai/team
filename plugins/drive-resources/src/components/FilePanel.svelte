@@ -14,13 +14,14 @@
 -->
 <script lang="ts">
   import { type Ref, type WithLookup } from '@hanzo/core'
+  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
   import { createFileVersion, type File as DriveFile, type FileVersion } from '@hanzo/drive'
   import { Panel } from '@hanzo/panel'
   import { createQuery, getClient, getFileUrl } from '@hanzo/presentation'
   import { Button, IconMoreH } from '@hanzo/ui'
   import { FileUploadCallbackParams, showFilesUploadPopup } from '@hanzo/uploader'
   import view from '@hanzo/view'
-  import { showMenu } from '@hanzo/view-resources'
+  import { canChangeDoc, showMenu } from '@hanzo/view-resources'
 
   import EditFile from './EditFile.svelte'
   import FileAside from './FileAside.svelte'
@@ -58,6 +59,7 @@
       }
     }
   )
+  $: canUploadVersion = object !== undefined && canChangeDoc(drive.class.File, object.space, $permissionsStore)
 
   function handleDownloadFile (): void {
     if (object != null && download != null) {
@@ -66,7 +68,7 @@
   }
 
   function handleUploadFile (): void {
-    if (object != null) {
+    if (object != null && canUploadVersion) {
       const target = { objectId: object._id, objectClass: object._class }
       void showFilesUploadPopup(
         {
@@ -123,13 +125,15 @@
           on:click={handleDownloadFile}
         />
       </a>
-      <Button
-        icon={IconUpload}
-        iconProps={{ size: 'medium' }}
-        kind={'icon'}
-        showTooltip={{ label: drive.string.Upload }}
-        on:click={handleUploadFile}
-      />
+      {#if canUploadVersion}
+        <Button
+          icon={IconUpload}
+          iconProps={{ size: 'medium' }}
+          kind={'icon'}
+          showTooltip={{ label: drive.string.Upload }}
+          on:click={handleUploadFile}
+        />
+      {/if}
       <Button
         icon={IconMoreH}
         iconProps={{ size: 'medium' }}

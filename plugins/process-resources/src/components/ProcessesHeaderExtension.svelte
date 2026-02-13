@@ -17,9 +17,10 @@
   import { getCurrentEmployee } from '@hanzo/contact'
   import { getEmbeddedLabel } from '@hanzo/platform'
   import { createQuery, getClient } from '@hanzo/presentation'
-  import { EventButton, Execution, ExecutionStatus, ProcessToDo } from '@hanzo/process'
+  import { ApproveRequest, EventButton, Execution, ExecutionStatus, ProcessToDo } from '@hanzo/process'
   import { Button } from '@hanzo/ui'
   import process from '../plugin'
+  import ApproveRequestButtons from './ApproveRequestButtons.svelte'
 
   export let card: Card
 
@@ -98,10 +99,18 @@
   }
 
   $: rollbacks = docs.filter((d) => d.rollback.length > 0)
+
+  function isRequest (todo: ProcessToDo): todo is ApproveRequest {
+    return todo._class === process.class.ApproveRequest
+  }
 </script>
 
 {#each todos as todo (todo._id)}
-  <Button kind={'primary'} label={getEmbeddedLabel(todo.title)} on:click={() => checkTodo(todo)} />
+  {#if isRequest(todo)}
+    <ApproveRequestButtons {todo} card={card._id} />
+  {:else}
+    <Button kind={'primary'} label={getEmbeddedLabel(todo.title)} on:click={() => checkTodo(todo)} />
+  {/if}
 {/each}
 {#each actions as action (action._id)}
   <Button kind={'primary'} label={getEmbeddedLabel(action.title)} on:click={() => performAction(action)} />

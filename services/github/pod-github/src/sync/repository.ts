@@ -383,7 +383,7 @@ export class RepositorySyncMapper implements DocSyncManager {
 
     /**
      Variants:
-     "https://api.github.com/repos/hcengineering/anticrm/issues/comments/1679316918"
+     "https://api.github.com/repos/hanzoai/anticrm/issues/comments/1679316918"
      "https://github.com/hanzoai/uberflow/pull/195"
      * */
     ctx.info('handle repository rename', { repo, workspace: this.provider.getWorkspaceId() })

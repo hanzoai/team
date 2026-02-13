@@ -18,8 +18,10 @@
   import presentation, { Card } from '@hanzo/presentation'
   import textEditor from '@hanzo/text-editor'
   import { Component, Loading } from '@hanzo/ui'
-  import type { BuildModelKey, Viewlet } from '@hanzo/view'
+  import type { BuildModelKey, TableMetadata, Viewlet } from '@hanzo/view'
   import { createEventDispatcher } from 'svelte'
+
+  import TableSourceInfo from './TableSourceInfo.svelte'
 
   export let _class: Ref<Class<Doc>>
   export let config: Array<string | BuildModelKey> | undefined = undefined
@@ -27,6 +29,7 @@
   export let query: DocumentQuery<Doc> | undefined = undefined
   export let viewlet: Viewlet | undefined = undefined
   export let viewletWithLookup: any | undefined = undefined
+  export let metadata: TableMetadata | undefined = undefined
 
   const dispatch = createEventDispatcher()
 
@@ -34,15 +37,13 @@
   let tableQuery: DocumentQuery<Doc>
   $: tableQuery = documentIds.length > 0 ? { _id: { $in: documentIds as any[] } } : (query ?? {})
 
-  // Use config from viewlet if available, otherwise use metadata config
-  // RelationshipTable doesn't use viewlets, so config comes directly from metadata
-  // Ensure config is never empty - use default empty string key for default presenter
+  // Use metadata config, otherwise use viewlet config
   $: viewletConfig = viewlet?.config
   $: tableConfig =
-    viewletConfig !== undefined && viewletConfig.length > 0
-      ? viewletConfig
-      : config !== undefined && config.length > 0
-        ? config
+    config !== undefined && config.length > 0
+      ? config
+      : viewletConfig !== undefined && viewletConfig.length > 0
+        ? viewletConfig
         : ['']
 
   // Get component from viewlet descriptor lookup
@@ -64,30 +65,52 @@
 >
   <div class="original-table-container">
     {#if viewletComponent}
-      <Component
-        is={viewletComponent}
-        props={{
-          _class,
-          config: tableConfig,
-          query: tableQuery,
-          totalQuery: tableQuery,
-          options: viewlet?.options,
-          readonly: true,
-          viewlet,
-          viewOptions: viewlet?.viewOptions,
-          viewOptionsConfig: viewlet?.viewOptions?.other
-        }}
-      />
+      <div class="table-wrapper">
+        <Component
+          is={viewletComponent}
+          props={{
+            _class,
+            config: tableConfig,
+            query: tableQuery,
+            totalQuery: tableQuery,
+            options: viewlet?.options,
+            readonly: true,
+            viewlet,
+            viewOptions: viewlet?.viewOptions,
+            viewOptionsConfig: viewlet?.viewOptions?.other
+          }}
+        />
+      </div>
     {:else}
       <Loading />
     {/if}
   </div>
+  {#if metadata}
+    <TableSourceInfo {metadata} />
+  {/if}
 </Card>
 
 <style lang="scss">
   .original-table-container {
-    padding: 1rem;
-    overflow: auto;
-    max-height: 80vh;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 </style>

@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "scripts": {
@@ -127,6 +127,8 @@
     "@hanzo/hr-assets": "workspace:^0.7.0",
     "@hanzo/request-assets": "workspace:^0.7.0",
     "@hanzo/document-assets": "workspace:^0.7.0",
+    "@hanzo/export": "workspace:^0.7.0",
+    "@hanzo/export-assets": "workspace:^0.7.0",
     "@hanzo/controlled-documents-assets": "workspace:^0.7.0",
     "@hanzo/products-assets": "workspace:^0.7.0",
     "@hanzo/training-assets": "workspace:^0.7.0",

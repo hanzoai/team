@@ -25,6 +25,7 @@ import { cardId } from '@hanzo/card'
 import { chunterId } from '@hanzo/chunter'
 import client, { clientId } from '@hanzo/client'
 import contactPlugin, { contactId } from '@hanzo/contact'
+import { converterId } from '@hanzo/converter'
 import { documentsId } from '@hanzo/controlled-documents'
 import { desktopPreferencesId } from '@hanzo/desktop-preferences'
 import { diffviewId } from '@hanzo/diffview'
@@ -233,7 +234,7 @@ export type BrandingMap = Record<string, Branding>
 const clientType = process.env.CLIENT_TYPE
 const configs: Record<string, string> = {
   'dev-production': '/config-dev.json',
-  'dev-hanzoai': '/config-hanzoai.json',
+  'dev-huly': '/config-huly.json',
   'dev-bold': '/config.json',
   'dev-server': '/config.json',
   'dev-server-test': '/config-test.json',
@@ -437,7 +438,7 @@ export async function configurePlatform() {
   console.log('loading configuration', config)
   console.log('loaded branding', myBranding)
 
-  const title = myBranding.title ?? 'Hanzo Team'
+  const title = myBranding.title ?? 'Platform'
 
   // apply branding
   window.document.title = title
@@ -466,7 +467,7 @@ export async function configurePlatform() {
   }
 
   configureAnalytics(config)
-  // tryOpenInDesktopApp(config.APP_PROTOCOL ?? 'hanzoai://')
+  // tryOpenInDesktopApp(config.APP_PROTOCOL ?? 'huly://')
 
   setMetadata(login.metadata.AccountsUrl, config.ACCOUNTS_URL)
   setMetadata(login.metadata.DisableSignUp, config.DISABLE_SIGNUP === 'true')
@@ -505,7 +506,7 @@ export async function configurePlatform() {
     setMetadata(presentation.metadata.FrontVersion, config.VERSION)
   }
   setMetadata(telegram.metadata.TelegramURL, config.TELEGRAM_URL ?? 'http://localhost:8086')
-  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://hanzoai.local:4020')
+  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://huly.local:4020')
   setMetadata(gmail.metadata.GmailURL, config.GMAIL_URL ?? 'http://localhost:8087')
   setMetadata(calendar.metadata.CalendarServiceURL, config.CALENDAR_URL ?? 'http://localhost:8095')
   setMetadata(calendar.metadata.PublicScheduleURL, config.PUBLIC_SCHEDULE_URL)
@@ -542,7 +543,7 @@ export async function configurePlatform() {
 
   const languages = myBranding.languages
     ? myBranding.languages.split(',').map((l) => l.trim())
-    : ['en', 'ru', 'es', 'pt', 'zh', 'fr', 'cs', 'it', 'de', 'ja', 'tr']
+    : ['en', 'ru', 'es', 'pt', 'pt-br', 'zh', 'fr', 'cs', 'it', 'de', 'ja', 'tr']
 
   setMetadata(uiPlugin.metadata.Languages, languages)
 
@@ -570,6 +571,7 @@ export async function configurePlatform() {
     async () => await import(/* webpackChunkName: "workbench" */ '@hanzo/workbench-resources')
   )
   addLocation(viewId, async () => await import(/* webpackChunkName: "view" */ '@hanzo/view-resources'))
+  addLocation(converterId, async () => await import(/* webpackChunkName: "converter" */ '@hanzo/converter-resources'))
   addLocation(taskId, async () => await import(/* webpackChunkName: "task" */ '@hanzo/task-resources'))
   addLocation(contactId, async () => await import(/* webpackChunkName: "contact" */ '@hanzo/contact-resources'))
   addLocation(chunterId, async () => await import(/* webpackChunkName: "chunter" */ '@hanzo/chunter-resources'))

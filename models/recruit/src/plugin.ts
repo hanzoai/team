@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -29,7 +29,8 @@ import type {
   ViewAction,
   ViewActionAvailabilityFunction,
   ViewQueryAction,
-  Viewlet
+  Viewlet,
+  ViewletViewAction
 } from '@hanzo/view'
 
 export default mergeIds(recruitId, recruit, {
@@ -131,6 +132,9 @@ export default mergeIds(recruitId, recruit, {
   },
   template: {
     DefaultVacancy: '' as Ref<ProjectType>
+  },
+  specialViewAction: {
+    TableCandidate: '' as Ref<ViewletViewAction>
   },
   viewlet: {
     TableCandidate: '' as Ref<Viewlet>,

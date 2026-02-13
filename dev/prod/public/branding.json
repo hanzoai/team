@@ -88,7 +88,7 @@
   },
   "huly.local:8080": {
     "title": "Huly",
-    "languages": "en,ru,pt,es,zh,fr,de,ja",
+    "languages": "en,ru,pt,pt-br,es,zh,fr,de,ja,tr",
     "defaultLanguage": "en",
     "defaultApplication": "tracker",
     "defaultSpace": "tracker:project:DefaultProject",
@@ -117,7 +117,7 @@
   },
   "huly.local:8087": {
     "title": "Huly",
-    "languages": "en,ru,pt,es,zh,fr,de,ja",
+    "languages": "en,ru,pt,pt-br,es,zh,fr,de,ja,tr",
     "defaultLanguage": "en",
     "defaultApplication": "tracker",
     "defaultSpace": "tracker:project:DefaultProject",

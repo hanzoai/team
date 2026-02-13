@@ -42,7 +42,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hcengineering/communication.git"
+    "url": "git+https://github.com/hanzoai/communication.git"
   },
   "publishConfig": {
     "access": "public"

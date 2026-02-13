@@ -66,7 +66,7 @@ export function serveAccount (measureCtx: MeasureContext, brandings: BrandingMap
 
         ➡️ Recommended Action:
         Migrate to CockroachDB before upgrading to v7. See migration instructions at:
-        https://github.com/hcengineering/huly-selfhost
+        https://github.com/hanzoai/huly-selfhost
 
         To proceed with MongoDB (despite these limitations):
         Set environment variable PROCEED_V7_MONGO=true.

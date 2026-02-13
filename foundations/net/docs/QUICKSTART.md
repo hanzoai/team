@@ -27,7 +27,7 @@ For production, use process monitoring (systemd, PM2, Kubernetes) to ensure quic
 
 ```bash
 # Clone the repository
-git clone https://github.com/hcengineering/huly.net.git
+git clone https://github.com/hanzoai/huly.net.git
 cd huly.net
 
 # Install dependencies
@@ -384,7 +384,7 @@ For more help, see the [Troubleshooting Guide](TROUBLESHOOTING.md).
 - [Examples Directory](../examples/) - Complete working examples
 - [Core Concepts](CORE_CONCEPTS.md) - Architecture deep dive
 - [API Reference](API_CORE.md) - Detailed API documentation
-- [GitHub Repository](https://github.com/hcengineering/huly.net)
+- [GitHub Repository](https://github.com/hanzoai/huly.net)
 
 ---
 

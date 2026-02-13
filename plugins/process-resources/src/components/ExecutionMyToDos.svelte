@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import plugin from '../plugin'
-  import { Execution, ProcessToDo } from '@hanzo/process'
   import { getCurrentEmployee } from '@hanzo/contact'
-  import { Button, Component } from '@hanzo/ui'
-  import time from '@hanzo/time'
   import { getEmbeddedLabel } from '@hanzo/platform'
+  import { createQuery, getClient } from '@hanzo/presentation'
+  import { ApproveRequest, Execution, ProcessToDo } from '@hanzo/process'
+  import { Button } from '@hanzo/ui'
+  import plugin from '../plugin'
+  import ApproveRequestButtons from './ApproveRequestButtons.svelte'
 
   export let value: Execution
 
@@ -47,8 +47,16 @@
       doneOn: new Date().getTime()
     })
   }
+
+  function isRequest (todo: ProcessToDo): todo is ApproveRequest {
+    return todo._class === plugin.class.ApproveRequest
+  }
 </script>
 
 {#each todos as todo (todo._id)}
-  <Button label={getEmbeddedLabel(todo.title)} on:click={() => checkTodo(todo)} />
+  {#if isRequest(todo)}
+    <ApproveRequestButtons {todo} card={value.card} />
+  {:else}
+    <Button label={getEmbeddedLabel(todo.title)} on:click={() => checkTodo(todo)} />
+  {/if}
 {/each}

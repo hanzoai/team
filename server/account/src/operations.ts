@@ -350,7 +350,7 @@ export async function signUpOtp (
     const existingAccount = await db.account.findOne({ uuid: emailSocialId.personUuid as AccountUuid })
 
     if (existingAccount !== null) {
-      ctx.error('An account with the provided email already exists', { email })
+      ctx.warn('An account with the provided email already exists', { email })
       throw new PlatformError(new Status(Severity.ERROR, platform.status.AccountAlreadyExists, {}))
     }
 
@@ -460,7 +460,7 @@ export async function validateOtp (
           await db.socialId.update({ _id: emailSocialId._id }, { verifiedOn: Date.now() })
         } else {
           // Normally, it should not be the case
-          ctx.error("Verifying new social id belonging to person w/o account but it's already verified", {
+          ctx.warn("Verifying new social id belonging to person w/o account but it's already verified", {
             emailSocialId,
             callerAccountUuid
           })
@@ -1042,12 +1042,12 @@ export async function checkJoin (
   }
 }
 
-export async function checkAutoJoin(
-    ctx: MeasureContext,
-    db: AccountDB,
-    branding: Branding | null,
-    token: string,
-    params: { inviteId: string, firstName?: string, lastName?: string }
+export async function checkAutoJoin (
+  ctx: MeasureContext,
+  db: AccountDB,
+  branding: Branding | null,
+  token: string,
+  params: { inviteId: string, firstName?: string, lastName?: string }
 ): Promise<WorkspaceLoginInfo | WorkspaceInviteInfo> {
   const { inviteId, firstName, lastName } = params
 
@@ -1060,91 +1060,99 @@ export async function checkAutoJoin(
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }
 
-    if (invite == null) {
-        ctx.logger.error("invite id not found")
-        throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
-    }
+  if (invite.autoJoin !== true) {
+    ctx.warn('Not an auto-join invite', invite)
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
 
-    const normalizedEmail = invite.email != null ? cleanEmail(invite.email) : extra?.email
-    const workspaceUuid = invite.workspaceUuid
-    const workspace = await getWorkspaceById(db, workspaceUuid)
+  if (invite.role !== AccountRole.Guest) {
+    ctx.warn('Auto-join not for guest role is forbidden', invite)
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
 
-    if (workspace === null) {
-        ctx.error('Workspace not found in auto-joining workflow', { workspaceUuid, email: normalizedEmail, inviteId })
-        throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
-    }
+  const normalizedEmail = invite.email != null ? cleanEmail(invite.email) : ''
+  const workspaceUuid = invite.workspaceUuid
+  const workspace = await getWorkspaceById(db, workspaceUuid)
 
-    if (normalizedEmail == null || normalizedEmail === '') {
-        ctx.error('Malformed auto-join invite', invite)
-        throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
-    }
+  if (workspace === null) {
+    ctx.warn('Workspace not found in auto-joining workflow', { workspaceUuid, email: normalizedEmail, inviteId })
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
+  }
 
-    const emailSocialId = await db.socialId.findOne({
-        type: SocialIdType.EMAIL,
-        value: normalizedEmail
-    })
+  if (normalizedEmail == null || normalizedEmail === '') {
+    ctx.error('Malformed auto-join invite', invite)
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
 
-    // If it's an existing account we should check for saved token or ask for login to prevent accidental access through shared link
-    if (emailSocialId != null) {
-        const targetAccount = await getAccount(db, emailSocialId.personUuid as AccountUuid)
-        if (targetAccount != null) {
-            if (targetAccount.automatic == null || !targetAccount.automatic) {
-                if (token == null) {
-                    // Login required
-                    const person = await db.person.findOne({ uuid: targetAccount.uuid })
+  const emailSocialId = await db.socialId.findOne({
+    type: SocialIdType.EMAIL,
+    value: normalizedEmail
+  })
 
-                    return {
-                        workspace: workspace.uuid,
-                        name: person == null ? '' : getPersonName(person),
-                        email: normalizedEmail
-                    }
-                }
+  // If it's an existing account we should check for saved token or ask for login to prevent accidental access through shared link
+  if (emailSocialId != null) {
+    const targetAccount = await getAccount(db, emailSocialId.personUuid as AccountUuid)
+    if (targetAccount != null) {
+      if (targetAccount.automatic == null || !targetAccount.automatic) {
+        if (token == null) {
+          // Login required
+          const person = await db.person.findOne({ uuid: targetAccount.uuid })
 
-                const { account: callerAccount } = decodeTokenVerbose(ctx, token)
-
-                if (callerAccount !== targetAccount.uuid) {
-                    // Login with target email required
-                    const person = await db.person.findOne({ uuid: targetAccount.uuid })
-
-                    return {
-                        workspace: workspace.uuid,
-                        name: person == null ? '' : getPersonName(person),
-                        email: normalizedEmail
-                    }
-                }
-            }
-
-            const targetRole = await getWorkspaceRole(db, targetAccount.uuid, workspace.uuid)
-
-            if (targetRole == null) {
-                await db.assignWorkspace(targetAccount.uuid, workspace.uuid, invite.role)
-            } else if (getRolePower(targetRole) < getRolePower(invite.role)) {
-                await db.updateWorkspaceRole(targetAccount.uuid, workspace.uuid, invite.role)
-            }
-
-            if (token === undefined || token === null) {
-                token = generateToken(targetAccount.uuid)
-            }
-            return await selectWorkspace(ctx, db, branding, token, { workspaceUrl: workspace.url, kind: 'external' })
+          return {
+            workspace: workspace.uuid,
+            name: person == null ? '' : getPersonName(person),
+            email: normalizedEmail
+          }
         }
+
+        const { account: callerAccount } = decodeTokenVerbose(ctx, token)
+
+        if (callerAccount !== targetAccount.uuid) {
+          // Login with target email required
+          const person = await db.person.findOne({ uuid: targetAccount.uuid })
+
+          return {
+            workspace: workspace.uuid,
+            name: person == null ? '' : getPersonName(person),
+            email: normalizedEmail
+          }
+        }
+      }
+
+      const targetRole = await getWorkspaceRole(db, targetAccount.uuid, workspace.uuid)
+
+      if (targetRole == null) {
+        await db.assignWorkspace(targetAccount.uuid, workspace.uuid, invite.role)
+      } else if (getRolePower(targetRole) < getRolePower(invite.role)) {
+        await db.updateWorkspaceRole(targetAccount.uuid, workspace.uuid, invite.role)
+      }
+
+      if (token === undefined || token === null) {
+        token = generateToken(targetAccount.uuid)
+      }
+      return await selectWorkspace(ctx, db, branding, token, { workspaceUrl: workspace.url, kind: 'external' })
     }
+  }
 
-    // No account yet, create a new one automatically
+  // No account yet, create a new one automatically
+  if (firstName == null || firstName === '') {
+    ctx.error('First name is required for auto-join', { firstName })
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
+  }
 
+  const { account } = await signUpByEmail(
+    ctx,
+    db,
+    branding,
+    normalizedEmail,
+    null,
+    firstName,
+    lastName ?? '',
+    true,
+    true
+  )
 
-    const { account } = await signUpByEmail(
-        ctx,
-        db,
-        branding,
-        normalizedEmail,
-        null,
-        firstName ?? "",
-        lastName ?? '',
-        true,
-        true
-    )
-
-    return await doJoinByInvite(ctx, db, branding, generateToken(account, workspaceUuid), account, workspace, invite)
+  return await doJoinByInvite(ctx, db, branding, generateToken(account, workspaceUuid), account, workspace, invite)
 }
 
 /**
@@ -1210,7 +1218,7 @@ export async function confirm (
 
   const socialId = await confirmEmail(ctx, db, account, email)
 
-  await confirmhanzoaiIds(ctx, db, account)
+  await confirmHulyIds(ctx, db, account)
 
   const person = await db.person.findOne({ uuid: account })
   if (person == null) {
@@ -1606,7 +1614,7 @@ export async function getWorkspaceInfo (
     }
 
     if (role == null) {
-      ctx.error('Not a member of the workspace', { workspaceUuid, account })
+      ctx.warn('Not a member of the workspace', { workspaceUuid, account })
       throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
     }
   }
@@ -1615,12 +1623,12 @@ export async function getWorkspaceInfo (
 
   // TODO: what should we return for archived?
   if (workspace == null) {
-    ctx.error('Workspace not found', { workspaceUuid, account })
+    ctx.warn('Workspace not found', { workspaceUuid, account })
     throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
   }
 
   if (workspace.status.isDisabled && isActiveMode(workspace.status.mode)) {
-    ctx.error('Workspace is disabled', { workspaceUuid, account })
+    ctx.warn('Workspace is disabled', { workspaceUuid, account })
     throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
   }
 
@@ -1658,8 +1666,11 @@ export async function getLoginInfoByToken (
     }
     accountUuid = sub ?? account
   } catch (err: any) {
-    Analytics.handleError(err)
-    ctx.error('Invalid token', { token, errMsg: err.message })
+    if (token !== undefined) {
+      // do not spam errors as this is expected when we issue request with no token
+      Analytics.handleError(err)
+      ctx.error('Invalid token', { token, errMsg: err.message })
+    }
     switch (err.message) {
       case 'Token not yet active': {
         const { nbf } = decodeToken(token, false)
@@ -1683,7 +1694,7 @@ export async function getLoginInfoByToken (
   // Check if token has grants and create automatic account if needed
   if (grant != null) {
     if (workspaceUuid != null) {
-      ctx.error('Grants are not allowed in workspace-specific tokens', { workspaceUuid, grant })
+      ctx.warn('Grants are not allowed in workspace-specific tokens', { workspaceUuid, grant })
       throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
     }
 
@@ -1697,7 +1708,7 @@ export async function getLoginInfoByToken (
     const grantWorkspace = await getWorkspaceById(db, workspaceUuid)
 
     if (grantWorkspace == null) {
-      ctx.error('Workspace not found in token grant workflow', { grant })
+      ctx.warn('Workspace not found in token grant workflow', { grant })
       throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
     }
 
@@ -1786,7 +1797,7 @@ export async function getLoginInfoByToken (
     const workspace = await getWorkspaceById(db, workspaceUuid)
 
     if (workspace == null) {
-      ctx.error('Workspace not found', { workspaceUuid, account: accountUuid })
+      ctx.warn('Workspace not found', { workspaceUuid, account: accountUuid })
       throw new PlatformError(new Status(Severity.ERROR, platform.status.WorkspaceNotFound, { workspaceUuid }))
     }
 

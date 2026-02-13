@@ -1,6 +1,6 @@
 {
   "name": "@hanzo/prod",
-  "version": "1.0.5",
+  "version": "1.0.1",
   "template": "@hanzo/webpack-package",
   "license": "EPL-2.0",
   "scripts": {
@@ -16,7 +16,7 @@
     "dev-server-cache": "cross-env USE_CACHE=true CLIENT_TYPE=dev-server webpack serve",
     "tunnel-qms": "socat tcp-listen:8081,reuseaddr,fork,bind=localhost tcp:localhost:8080",
     "dev-production": "cross-env CLIENT_TYPE=dev-production webpack serve",
-    "dev-hanzoai": "cross-env CLIENT_TYPE=dev-hanzoai webpack serve",
+    "dev-huly": "cross-env CLIENT_TYPE=dev-huly webpack serve",
     "dev-bold": "cross-env CLIENT_TYPE=dev-bold webpack serve",
     "start": "cross-env NODE_ENV=production webpack serve",
     "deploy": "cp -p public/* dist && aws s3 sync dist s3://anticrm-platform --delete --acl public-read",
@@ -265,6 +265,8 @@
     "@hanzo/view": "workspace:^0.7.0",
     "@hanzo/view-assets": "workspace:^0.7.0",
     "@hanzo/view-resources": "workspace:^0.7.0",
+    "@hanzo/converter": "workspace:^0.7.0",
+    "@hanzo/converter-resources": "workspace:^0.7.0",
     "@hanzo/workbench": "workspace:^0.7.0",
     "@hanzo/workbench-assets": "workspace:^0.7.0",
     "@hanzo/workbench-resources": "workspace:^0.7.0",

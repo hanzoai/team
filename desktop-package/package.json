@@ -42,7 +42,7 @@
   "description": "hanzoai Desktop experience",
   "build": {
     "productName": "hanzoai",
-    "appId": "hc.hcengineering.hanzoai",
+    "appId": "ai.hanzo.team",
     "directories": {
       "output": "deploy"
     },

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
 // Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -22,7 +22,7 @@ import { type ProjectType } from '@hanzo/task'
 import { trackerId } from '@hanzo/tracker'
 import tracker from '@hanzo/tracker-resources/src/plugin'
 import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ViewAction, type Viewlet } from '@hanzo/view'
+import { type Action, type ViewAction, type Viewlet, type ViewletViewAction } from '@hanzo/view'
 import { type Application } from '@hanzo/workbench'
 
 export default mergeIds(trackerId, tracker, {
@@ -62,6 +62,9 @@ export default mergeIds(trackerId, tracker, {
   },
   app: {
     Tracker: '' as Ref<Application>
+  },
+  specialViewAction: {
+    IssueList: '' as Ref<ViewletViewAction>
   },
   viewlet: {
     IssueList: '' as Ref<Viewlet>,

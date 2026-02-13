@@ -16,6 +16,7 @@
 import type { Metadata, Plugin, Resource } from '@hanzo/platform'
 import { plugin } from '@hanzo/platform'
 import type { TriggerFunc } from '@hanzo/server-core'
+import { type Presenter } from '@hanzo/server-notification'
 
 /**
  * @public
@@ -28,6 +29,9 @@ export const serverCardId = 'server-card' as Plugin
 export default plugin(serverCardId, {
   metadata: {
     CommunicationEnabled: '' as Metadata<boolean>
+  },
+  function: {
+    CardTextPresenter: '' as Resource<Presenter>
   },
   trigger: {
     OnAttribute: '' as Resource<TriggerFunc>,

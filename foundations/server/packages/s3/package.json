@@ -44,7 +44,7 @@
     "@aws-sdk/lib-storage": "^3.738.0",
     "@smithy/node-http-handler": "^4.0.2"
   },
-  "repository": "https://github.com/hcengineering/huly.server",
+  "repository": "https://github.com/hanzoai/huly.server",
   "publishConfig": {
     "access": "public"
   },

@@ -18,7 +18,7 @@ import { translate, type IntlString } from '@hanzo/platform'
 import documentsPlugin from '@hanzo/controlled-documents'
 import { type AttributeModel } from '@hanzo/view'
 import { getClient } from '@hanzo/presentation'
-import { registerValueFormatterForClass, isIntlString } from '@hanzo/view-resources'
+import { isIntlString } from '@hanzo/converter-resources'
 
 /**
  * Format version number from major and minor
@@ -78,7 +78,7 @@ async function loadSpaceName (spaceRef: Ref<Space>): Promise<string> {
  * Value formatter for controlled document fields
  * Handles special cases where empty keys use custom presenters
  */
-async function formatControlledDocumentValue (
+export async function formatControlledDocumentValue (
   attr: AttributeModel,
   card: Doc,
   hierarchy: Hierarchy,
@@ -255,6 +255,3 @@ async function formatControlledDocumentValue (
 
   return undefined
 }
-
-// Register the formatter for Document class and all derived classes
-registerValueFormatterForClass(documentsPlugin.class.Document, formatControlledDocumentValue)

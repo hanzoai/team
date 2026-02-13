@@ -45,7 +45,7 @@
   "dependencies": {
     "postgres": "^3.4.7"
   },
-  "repository": "https://github.com/hcengineering/huly.utils",
+  "repository": "https://github.com/hanzoai/huly.utils",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",

@@ -23,6 +23,7 @@ import presentation from '@hanzo/model-presentation'
 import task from '@hanzo/model-task'
 import view from '@hanzo/model-view'
 import workbench from '@hanzo/model-workbench'
+import converter from '@hanzo/converter'
 import notification from '@hanzo/notification'
 import setting from '@hanzo/setting'
 import pluginState, { type Issue, trackerId } from '@hanzo/tracker'
@@ -82,6 +83,10 @@ export const classicIssueTaskStatuses: TaskStatusFactory[] = [
 ]
 
 function defineSortAndGrouping (builder: Builder): void {
+  builder.mixin(tracker.class.Issue, core.class.Class, converter.mixin.MarkdownValueFormatter, {
+    formatter: tracker.function.FormatIssueMarkdownValue
+  })
+
   builder.mixin(tracker.class.IssueStatus, core.class.Class, view.mixin.SortFuncs, {
     func: tracker.function.IssueStatusSort
   })
@@ -481,6 +486,17 @@ export function createModel (builder: Builder): void {
   })
 
   defineViewlets(builder)
+
+  builder.createDoc(
+    view.class.ViewletViewAction,
+    core.space.Model,
+    {
+      descriptor: view.viewlet.List,
+      extension: converter.extensions.CopyAsMarkdownAction,
+      applicableToClass: tracker.class.Issue
+    },
+    tracker.specialViewAction.IssueList
+  )
 
   const issuesId = 'issues'
   const componentsId = 'components'

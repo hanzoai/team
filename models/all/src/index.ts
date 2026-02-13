@@ -82,6 +82,7 @@ import tracker, { trackerId, createModel as trackerModel } from '@hanzo/model-tr
 import { uploaderId, createModel as uploaderModel } from '@hanzo/model-uploader'
 import view, { viewId, createModel as viewModel } from '@hanzo/model-view'
 import workbench, { workbenchId, createModel as workbenchModel } from '@hanzo/model-workbench'
+import { converterId, createModel as converterModel } from '@hanzo/model-converter'
 
 import document, { documentId, createModel as documentModel } from '@hanzo/model-document'
 import { serverDocumentId, createModel as serverDocumentModel } from '@hanzo/model-server-document'
@@ -524,6 +525,7 @@ export default function buildModel (): Builder {
         classFilter: defaultFilter
       }
     ],
+    [converterModel, converterId],
 
     [serverCoreModel, serverCoreId],
     [serverAttachmentModel, serverAttachmentId],

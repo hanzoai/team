@@ -7,7 +7,7 @@ Tue, 14 Oct 2025 03:02:36 GMT
 
 ### Patches
 
-- use fixed versions when upgrading hcengineering deps
+- use fixed versions when upgrading hanzoai deps
 - Revert update-deps script and fix svelte format logic
 
 ## 0.7.18

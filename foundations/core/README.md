@@ -1,12 +1,12 @@
 # Huly Core
 
-[![GitHub License](https://img.shields.io/github/license/hcengineering/huly.core?style=for-the-badge)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/hanzoai/huly.core?style=for-the-badge)](LICENSE)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
 ## About
 
-Huly Core is a collection of core packages extracted from the [Huly Platform](https://github.com/hcengineering/platform). This repository contains fundamental building blocks and libraries that power the Huly ecosystem, including core data models, client libraries, text processing engines, and platform utilities.
+Huly Core is a collection of core packages extracted from the [Huly Platform](https://github.com/hanzoai/platform). This repository contains fundamental building blocks and libraries that power the Huly ecosystem, including core data models, client libraries, text processing engines, and platform utilities.
 
 These packages are designed to be reusable, modular, and framework-agnostic, making them suitable for building custom applications on top of the Huly Platform or integrating Huly functionality into existing projects.
 
@@ -140,13 +140,13 @@ node ./common/scripts/bump.js -p projectName
 
 If you want to interact with Huly programmatically, check out the [API Client](packages/api-client/README.md) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
 
-You can find API usage examples in the [Huly examples](https://github.com/hcengineering/huly-examples) repository.
+You can find API usage examples in the [Huly examples](https://github.com/hanzoai/huly-examples) repository.
 
 ## Related Projects
 
-- **[Huly Platform](https://github.com/hcengineering/platform)** - The main Huly Platform repository
-- **[Huly Self-Host](https://github.com/hcengineering/huly-selfhost)** - Self-hosting solution for Huly
-- **[Huly Examples](https://github.com/hcengineering/huly-examples)** - API usage examples
+- **[Huly Platform](https://github.com/hanzoai/platform)** - The main Huly Platform repository
+- **[Huly Self-Host](https://github.com/hanzoai/huly-selfhost)** - Self-hosting solution for Huly
+- **[Huly Examples](https://github.com/hanzoai/huly-examples)** - API usage examples
 
 ## Contributing
 
@@ -160,7 +160,7 @@ Licensed under the [EPL-2.0](LICENSE) license.
 
 - [Huly Website](https://huly.io/)
 - [Documentation](https://docs.huly.io/)
-- [Community](https://github.com/hcengineering/platform/discussions)
+- [Community](https://github.com/hanzoai/platform/discussions)
 
 ---
 

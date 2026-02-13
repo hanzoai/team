@@ -19,6 +19,7 @@ import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
 import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/presentation'
 import { type AnyComponent } from '@hanzo/ui/src/types'
 import type { ViewletDescriptor, Viewlet } from '@hanzo/view'
+import type { ValueFormatter } from '@hanzo/converter'
 
 export default mergeIds(cardId, card, {
   component: {
@@ -57,7 +58,8 @@ export default mergeIds(cardId, card, {
     CreateRolePopup: '' as AnyComponent
   },
   function: {
-    CardFactory: '' as Resource<(props?: Record<string, any>) => Promise<Ref<Doc> | undefined>>
+    CardFactory: '' as Resource<(props?: Record<string, any>) => Promise<Ref<Doc> | undefined>>,
+    FormatCardMarkdownValue: '' as Resource<ValueFormatter>
   },
   permission: {
     CreateCard: '' as Ref<Permission>,
@@ -157,6 +159,7 @@ export default mergeIds(cardId, card, {
     ForbidUpdateCard: '' as IntlString,
     ForbidCreateCardPermission: '' as IntlString,
     ForbidAddTagPermission: '' as IntlString,
-    ForbidRemoveTag: '' as IntlString
+    ForbidRemoveTag: '' as IntlString,
+    CardUpdated: '' as IntlString
   }
 })

@@ -48,6 +48,8 @@
     "@hanzo/notification-resources": "workspace:^0.7.0",
     "@hanzo/panel": "workspace:^0.7.0",
     "@hanzo/view-resources": "workspace:^0.7.0",
+    "@hanzo/converter": "workspace:^0.7.0",
+    "@hanzo/converter-resources": "workspace:^0.7.0",
     "@hanzo/attachment": "workspace:^0.7.0",
     "@hanzo/notification": "workspace:^0.7.0",
     "@hanzo/account-client": "workspace:^0.7.21",

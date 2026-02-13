@@ -2,7 +2,9 @@
   import { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
   import { IModeSelector, ModeSelector, SearchInput, Header, Breadcrumb, HeaderAdaptive } from '@hanzo/ui'
   import type { Asset } from '@hanzo/platform'
-  import { Viewlet } from '@hanzo/view'
+  import { ComponentExtensions, getClient } from '@hanzo/presentation'
+  import view, { Viewlet, type ViewletViewAction } from '@hanzo/view'
+  import { getViewletSpecialActions } from '../viewletUtils'
   import ViewletSelector from './ViewletSelector.svelte'
   import FilterButton from './filter/FilterButton.svelte'
 
@@ -17,8 +19,11 @@
   export let showLabelSelector = false
   export let modeSelectorProps: IModeSelector | undefined = undefined
   export let adaptive: HeaderAdaptive = 'doubleRow'
+  export let resultQuery: DocumentQuery<Doc> = {}
 
   let scroller: HTMLElement
+
+  $: viewletActions = viewlet != null ? getViewletSpecialActions(getClient(), viewlet) : []
 </script>
 
 <Header
@@ -48,6 +53,16 @@
     <FilterButton {_class} {space} />
   </svelte:fragment>
   <svelte:fragment slot="actions">
+    {#each viewletActions as action (action._id)}
+      <ComponentExtensions
+        extension={action.extension}
+        props={{
+          _class,
+          query: resultQuery,
+          config: action.config ?? {}
+        }}
+      />
+    {/each}
     <slot name="actions" />
   </svelte:fragment>
   <svelte:fragment slot="extra">

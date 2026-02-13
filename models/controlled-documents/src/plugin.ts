@@ -20,7 +20,7 @@ import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/mode
 import { mergeIds, type Resource } from '@hanzo/platform'
 import { type TagCategory } from '@hanzo/tags'
 import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type ActionCategory, type ViewAction } from '@hanzo/view'
+import type { ActionCategory, ViewAction, Viewlet, ViewletViewAction } from '@hanzo/view'
 import { type NotificationType, type NotificationGroup } from '@hanzo/notification'
 import { type TextActionVisibleFunction, type TextActionFunction } from '@hanzo/text-editor'
 
@@ -78,11 +78,14 @@ export default mergeIds(documentsId, documents, {
     TransferDocument: '' as ViewAction,
     EditDocSpace: '' as ViewAction
   },
+  specialViewAction: {
+    TableDocument: '' as Ref<ViewletViewAction>
+  },
   viewlet: {
-    TableDocument: '' as Ref<Doc>,
-    ListDocument: '' as Ref<Doc>,
-    TableDocumentTemplate: '' as Ref<Doc>,
-    TableDocumentDomain: '' as Ref<Doc>
+    TableDocument: '' as Ref<Viewlet>,
+    ListDocument: '' as Ref<Viewlet>,
+    TableDocumentTemplate: '' as Ref<Viewlet>,
+    TableDocumentDomain: '' as Ref<Viewlet>
   },
   notification: {
     DocumentsNotificationGroup: '' as Ref<NotificationGroup>,

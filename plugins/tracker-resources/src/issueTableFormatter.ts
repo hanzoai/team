@@ -17,7 +17,6 @@ import { type Class, type Doc, type Hierarchy, type Ref, type PersonId } from '@
 import trackerPlugin, { type Component, type IssueStatus, type Milestone, type Project } from '@hanzo/tracker'
 import { type AttributeModel } from '@hanzo/view'
 import { getClient } from '@hanzo/presentation'
-import { registerValueFormatterForClass } from '@hanzo/view-resources'
 import { getName, getPersonByPersonId } from '@hanzo/contact'
 
 /**
@@ -184,7 +183,7 @@ async function loadPersonName (personId: PersonId): Promise<string> {
  * Value formatter for issue fields
  * Handles special cases for status, assignee, component, space (project), and milestone fields
  */
-async function formatIssueValue (
+export async function formatIssueValue (
   attr: AttributeModel,
   card: Doc,
   hierarchy: Hierarchy,
@@ -312,5 +311,4 @@ async function formatIssueValue (
   return undefined
 }
 
-// Register the formatter for Issue class
-registerValueFormatterForClass(trackerPlugin.class.Issue, formatIssueValue)
+// Formatter is registered via MarkdownValueFormatter mixin in models/tracker

@@ -52,7 +52,7 @@
   "dependencies": {
     "svelte": "^4.2.20"
   },
-  "repository": "https://github.com/hcengineering/huly.utils",
+  "repository": "https://github.com/hanzoai/huly.utils",
   "publishConfig": {
     "access": "public"
   }

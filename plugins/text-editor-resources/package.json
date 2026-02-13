@@ -45,6 +45,7 @@
     "@hanzo/analytics": "workspace:^0.7.17",
     "@hanzo/presentation": "workspace:^0.7.0",
     "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/converter": "workspace:^0.7.0",
     "@hanzo/highlight": "workspace:^0.7.0",
     "@hanzo/view": "workspace:^0.7.0",
     "@hanzo/text": "workspace:^0.7.18",

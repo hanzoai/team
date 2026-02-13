@@ -2,7 +2,7 @@
   "name": "@hanzo/tracker-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -70,6 +70,8 @@
     "@hanzo/ui": "workspace:^0.7.0",
     "@hanzo/view": "workspace:^0.7.0",
     "@hanzo/view-resources": "workspace:^0.7.0",
+    "@hanzo/converter": "workspace:^0.7.0",
+    "@hanzo/converter-resources": "workspace:^0.7.0",
     "@hanzo/workbench": "workspace:^0.7.0",
     "@hanzo/workbench-resources": "workspace:^0.7.0",
     "fast-equals": "^5.2.2",

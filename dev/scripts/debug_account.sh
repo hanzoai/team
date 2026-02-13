@@ -23,6 +23,6 @@ export MINIO_SECRET_KEY="minioadmin"
 export MINIO_ENDPOINT="localhost"
 export ADMIN_EMAILS=admin
 # DISABLE_SIGNUP=true,
-# INIT_SCRIPT_URL=https://raw.githubusercontent.com/hcengineering/init/main/script.yaml,
+# INIT_SCRIPT_URL=https://raw.githubusercontent.com/hanzoai/init/main/script.yaml,
 # INIT_WORKSPACE=onboarding,
 node --inspect bundle/bundle.js

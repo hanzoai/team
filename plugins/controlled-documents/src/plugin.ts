@@ -134,7 +134,8 @@ export const documentsPlugin = plugin(documentsId, {
   },
   function: {
     CanChangeDocumentOwner: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
-    CanDeleteDocumentCategory: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>
+    CanDeleteDocumentCategory: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
+    FormatDocumentMarkdownValue: '' as Resource<import('@hanzo/converter').ValueFormatter>
   },
   icon: {
     Approvals: '' as Asset,

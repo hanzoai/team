@@ -58,6 +58,8 @@
     "@hanzo/rank": "workspace:^0.7.17",
     "@hanzo/platform": "workspace:^0.7.19",
     "@hanzo/process": "workspace:^0.7.0",
+    "@hanzo/login": "workspace:^0.7.0",
+    "@hanzo/account-client": "workspace:^0.7.21",
     "svelte": "^4.2.20",
     "fast-equals": "^5.2.2"
   }

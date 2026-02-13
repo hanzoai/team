@@ -8,7 +8,7 @@
       "comments": {
         "patch": [
           {
-            "comment": "use fixed versions when upgrading hcengineering deps"
+            "comment": "use fixed versions when upgrading hanzoai deps"
           },
           {
             "comment": "Revert update-deps script and fix svelte format logic"

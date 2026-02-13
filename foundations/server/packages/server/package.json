@@ -45,7 +45,7 @@
     "@hanzo/server-token": "workspace:^0.7.17",
     "utf-8-validate": "^6.0.4"
   },
-  "repository": "https://github.com/hcengineering/huly.server",
+  "repository": "https://github.com/hanzoai/huly.server",
   "publishConfig": {
     "access": "public"
   },

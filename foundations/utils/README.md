@@ -31,7 +31,7 @@ packages/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/hcengineering/huly.utils.git
+   git clone https://github.com/hanzoai/huly.utils.git
    cd huly.utils
    ```
 

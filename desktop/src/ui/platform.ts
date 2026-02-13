@@ -33,6 +33,7 @@ import { cardId } from '@hanzo/card'
 import { chunterId } from '@hanzo/chunter'
 import client, { clientId } from '@hanzo/client'
 import contactPlugin, { contactId } from '@hanzo/contact'
+import { converterId } from '@hanzo/converter'
 import { documentsId } from '@hanzo/controlled-documents'
 import { desktopPreferencesId } from '@hanzo/desktop-preferences'
 import { desktopDownloadsId } from '@hanzo/desktop-downloads'
@@ -335,7 +336,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
   console.log('loading configuration', config)
   console.log('loaded branding', myBranding)
 
-  const title = myBranding.title ?? 'hanzoai Desktop'
+  const title = myBranding.title ?? 'Huly Desktop'
   ipcMain.setTitle(title)
 
   configureAnalyticsProviders(config)
@@ -380,7 +381,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
     setMetadata(presentation.metadata.FrontVersion, config.VERSION)
   }
   setMetadata(telegram.metadata.TelegramURL, config.TELEGRAM_URL ?? 'http://localhost:8086')
-  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://hanzoai.local:4020')
+  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://huly.local:4020')
   setMetadata(gmail.metadata.GmailURL, config.GMAIL_URL ?? 'http://localhost:8087')
   setMetadata(calendar.metadata.CalendarServiceURL, config.CALENDAR_URL ?? 'http://localhost:8095')
   setMetadata(calendar.metadata.PublicScheduleURL, config.PUBLIC_SCHEDULE_URL)
@@ -411,7 +412,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
   const languages =
     myBranding.languages !== undefined && myBranding.languages !== ''
       ? myBranding.languages.split(',').map((l) => l.trim())
-      : ['en', 'ru', 'es', 'pt', 'zh', 'fr', 'cs', 'it', 'de', 'ja', 'tr']
+      : ['en', 'ru', 'es', 'pt', 'pt-br', 'zh', 'fr', 'cs', 'it', 'de', 'ja', 'tr']
 
   setMetadata(uiPlugin.metadata.Languages, languages)
 
@@ -435,6 +436,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
   addLocation(onboardId, async () => await import('@hanzo/onboard-resources'))
   addLocation(workbenchId, async () => await import('@hanzo/workbench-resources'))
   addLocation(viewId, async () => await import('@hanzo/view-resources'))
+  addLocation(converterId, async () => await import('@hanzo/converter-resources'))
   addLocation(taskId, async () => await import('@hanzo/task-resources'))
   addLocation(contactId, async () => await import('@hanzo/contact-resources'))
   addLocation(chunterId, async () => await import('@hanzo/chunter-resources'))

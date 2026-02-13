@@ -46,7 +46,7 @@
     "@hanzo/core": "workspace:^0.7.24",
     "@hanzo/platform": "workspace:^0.7.19"
   },
-  "repository": "https://github.com/hcengineering/huly.core",
+  "repository": "https://github.com/hanzoai/huly.core",
   "publishConfig": {
     "access": "public"
   },

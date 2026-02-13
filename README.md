@@ -1,7 +1,7 @@
 # hanzoai Platform
 
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hanzoai_io?style=for-the-badge)](https://x.com/hanzoai_io)
-![GitHub License](https://img.shields.io/github/license/hcengineering/platform?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/hanzoai/platform?style=for-the-badge)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
@@ -24,7 +24,7 @@ This project offers a convenient method to host hanzoai using `docker`, designed
 
 ## API Client
 
-If you want to interact with Huly programmatically, check out our [API Client](https://github.com/hcengineering/huly.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
+If you want to interact with Huly programmatically, check out our [API Client](https://github.com/hanzoai/huly.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
 
 You can find API usage examples in the [hanzoai examples](https://github.com/hanzoai/hanzoai-examples) repository.
 
@@ -40,7 +40,7 @@ The Huly Platform uses two types of version tags to distinguish between producti
   - Example: `v0.7.310`, `v0.7.307`, `v0.6.501`
   - These versions are recommended for production deployments
   - Suitable for self-hosted installations
-  - Published with release notes on [GitHub Releases](https://github.com/hcengineering/platform/releases)
+  - Published with release notes on [GitHub Releases](https://github.com/hanzoai/platform/releases)
 
 - **Development Versions (`s*`)** - Pre-release builds for developers
   - Example: `s0.7.313`, `s0.7.292`, `s0.7.288`
@@ -204,7 +204,10 @@ sh ./scripts/build.sh
 
 By default, Docker volumes named dev_db, dev_elastic, and dev_files will be created for the MongoDB, Elasticsearch, and MinIO instances.
 
-Add the following line to your /etc/hosts file
+Add the following lines to your hosts file:
+
+- **macOS / Linux:** `/etc/hosts`
+- **Windows:** `C:\Windows\System32\drivers\etc\hosts`
 
 ```plain
 127.0.0.1 hanzoai.local

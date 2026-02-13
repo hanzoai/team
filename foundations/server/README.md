@@ -1,12 +1,12 @@
 # Huly Server
 
-[![GitHub License](https://img.shields.io/github/license/hcengineering/huly.server?style=for-the-badge)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/hanzoai/huly.server?style=for-the-badge)](LICENSE)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
 ## About
 
-Huly Server is a collection of server-side packages extracted from the [Huly Platform](https://github.com/hcengineering/platform). This repository contains backend infrastructure components, storage adapters, and server-side utilities that power the Huly ecosystem.
+Huly Server is a collection of server-side packages extracted from the [Huly Platform](https://github.com/hanzoai/platform). This repository contains backend infrastructure components, storage adapters, and server-side utilities that power the Huly ecosystem.
 
 These packages provide essential server-side functionality including database adapters (MongoDB, PostgreSQL, Elasticsearch), storage providers (MinIO, S3), messaging infrastructure (Kafka), and collaborative editing capabilities. They are designed to be modular, scalable, and production-ready for building robust backend services.
 
@@ -211,10 +211,10 @@ KAFKA_BROKERS=localhost:9092
 
 ## Related Projects
 
-- [Huly Platform](https://github.com/hcengineering/platform) - The main Huly Platform repository
-- [Huly Core](https://github.com/hcengineering/huly.core) - Core packages and client libraries
-- [Huly Self-Host](https://github.com/hcengineering/huly-selfhost) - Self-hosting solution for Huly
-- [Huly Examples](https://github.com/hcengineering/huly-examples) - API usage examples
+- [Huly Platform](https://github.com/hanzoai/platform) - The main Huly Platform repository
+- [Huly Core](https://github.com/hanzoai/huly.core) - Core packages and client libraries
+- [Huly Self-Host](https://github.com/hanzoai/huly-selfhost) - Self-hosting solution for Huly
+- [Huly Examples](https://github.com/hanzoai/huly-examples) - API usage examples
 
 ## Contributing
 
@@ -228,6 +228,6 @@ Licensed under the [EPL-2.0](LICENSE) license.
 
 - [Huly Website](https://huly.io/)
 - [Documentation](https://docs.huly.io/)
-- [Community](https://github.com/hcengineering/platform/discussions)
+- [Community](https://github.com/hanzoai/platform/discussions)
 
 © 2025 [Hardcore Engineering Inc](https://hardcoreeng.com/).

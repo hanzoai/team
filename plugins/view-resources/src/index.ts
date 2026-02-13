@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -145,7 +145,6 @@ import {
 
 import ForbiddenNotification from './components/ForbiddenNotification.svelte'
 import { AggregationMiddleware, AnalyticsMiddleware, ReadOnlyAccessMiddleware } from './middleware'
-import { buildMarkdownTableFromMetadata } from './copyAsMarkdownTable'
 import { getLink, openDocFromRef } from './utils'
 import { hideArchived, showEmptyGroups } from './viewOptions'
 import {
@@ -218,21 +217,9 @@ export {
 } from './utils'
 export * from './viewOptions'
 export * from './viewletContextStore'
-export {
-  CopyAsMarkdownTable,
-  type CopyAsMarkdownTableProps,
-  CopyRelationshipTableAsMarkdown,
-  type CopyRelationshipTableAsMarkdownProps,
-  type RelationshipCellModel,
-  type RelationshipRowModel,
-  type TableMetadata,
-  type ValueFormatter,
-  registerValueFormatterForClass,
-  registerValueFormatter,
-  isIntlString,
-  buildMarkdownTableFromDocs,
-  buildMarkdownTableFromMetadata
-} from './copyAsMarkdownTable'
+export { getViewletSpecialActions } from './viewletUtils'
+export { copyMarkdown } from './actionImpl'
+export { default as SimpleNotification } from './components/SimpleNotification.svelte'
 export type { BuildMarkdownTableMetadata } from '@hanzo/view'
 export {
   ArrayEditor,
@@ -406,7 +393,6 @@ export default async (): Promise<Resources> => ({
     BlobVideoMetadata: blobVideoMetadata,
     OpenDocument: openDocFromRef,
     CanCopyLink: canCopyLink,
-    GetLink: getLink,
-    BuildMarkdownTableFromDocs: buildMarkdownTableFromMetadata
+    GetLink: getLink
   }
 })

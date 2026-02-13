@@ -16,19 +16,7 @@ import { markdownToMarkup } from '@hanzo/text-markdown'
 import { Extension } from '@tiptap/core'
 import { Fragment, Node } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'
-
-// TableMetadata type - matches the definition in @hanzo/view-resources
-// Defined here to avoid circular dependency (view-resources depends on text-editor-resources)
-interface TableMetadata {
-  version: string
-  cardClass: string
-  viewletId?: string
-  config?: Array<string | Record<string, any>>
-  query?: Record<string, any>
-  documentIds: string[]
-  timestamp: number
-  workspace?: string
-}
+import type { TableMetadata } from '@hanzo/view'
 
 export const TableMetadataPasteExtension = Extension.create({
   name: 'tableMetadataPaste',

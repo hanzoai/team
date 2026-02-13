@@ -45,7 +45,7 @@
   "dependencies": {
     "@hanzo/core": "workspace:^0.7.24"
   },
-  "repository": "https://github.com/hcengineering/huly.core",
+  "repository": "https://github.com/hanzoai/huly.core",
   "publishConfig": {
     "access": "public"
   },

@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+import type { ViewletViewAction, Action, ActionCategory, ViewAction } from '@hanzo/view'
 import { type Card, cardId } from '@hanzo/card'
 import card from '@hanzo/card-resources/src/plugin'
 import type { Client, Doc, Ref } from '@hanzo/core'
@@ -20,8 +21,8 @@ import {} from '@hanzo/core'
 import { mergeIds, type Resource } from '@hanzo/platform'
 import { type TagCategory } from '@hanzo/tags'
 import { type Location, type ResolvedLocation } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction } from '@hanzo/view'
 import { type LocationData } from '@hanzo/workbench'
+import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
 
 export default mergeIds(cardId, card, {
   app: {
@@ -43,10 +44,19 @@ export default mergeIds(cardId, card, {
     Card: '' as Ref<ActionCategory>,
     Labels: '' as Ref<TagCategory>
   },
+  specialViewAction: {
+    CardRelationshipTable: '' as Ref<ViewletViewAction>,
+    CardTable: '' as Ref<ViewletViewAction>,
+    CopyAsMarkdownTable: '' as Ref<ViewletViewAction>,
+    CopyAsMarkdownRelationshipTable: '' as Ref<ViewletViewAction>
+  },
   ids: {
     MasterTags: '' as Ref<Doc>,
     ManageMasterTags: '' as Ref<Doc>,
-    TagRelations: '' as Ref<Doc>
+    TagRelations: '' as Ref<Doc>,
+    CardNotificationGroup: '' as Ref<NotificationGroup>,
+    CardNotification: '' as Ref<NotificationType>,
+    CardMessageNotification: '' as Ref<NotificationType>
   },
   resolver: {
     Location: '' as Resource<(loc: Location) => Promise<ResolvedLocation | undefined>>,

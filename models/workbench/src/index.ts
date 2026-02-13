@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -17,6 +17,7 @@ import { AccountRole, type AccountUuid, type Class, DOMAIN_MODEL, type Ref, type
 import { type Builder, Mixin, Model, Prop, TypeRef, UX } from '@hanzo/model'
 import preference, { TPreference } from '@hanzo/model-preference'
 import { createAction } from '@hanzo/model-view'
+import core, { TClass, TDoc } from '@hanzo/model-core'
 import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hanzo/platform'
 import view, { type KeyBinding } from '@hanzo/view'
 import type {
@@ -32,7 +33,6 @@ import type {
   WorkbenchTab
 } from '@hanzo/workbench'
 import { type AnyComponent } from '@hanzo/ui/src/types'
-import core, { TClass, TDoc } from '@hanzo/model-core'
 import presentation from '@hanzo/model-presentation'
 
 import workbench from './plugin'

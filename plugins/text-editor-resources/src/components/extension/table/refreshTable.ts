@@ -14,12 +14,12 @@
 
 import type { Client, Doc } from '@hanzo/core'
 import { getResource } from '@hanzo/platform'
-import view, { type BuildMarkdownTableMetadata } from '@hanzo/view'
-import type { TableMetadata } from './tableMetadata'
+import converter from '@hanzo/converter'
+import { type BuildMarkdownTableMetadata, type TableMetadata } from '@hanzo/view'
 
 /**
  * Build markdown table string from documents and metadata
- * Uses the extension point function from view-resources via view plugin
+ * Uses the extension point function from converter-resources via converter plugin
  */
 export async function buildMarkdownTableFromDocs (
   docs: Doc[],
@@ -27,18 +27,19 @@ export async function buildMarkdownTableFromDocs (
   client: Client
 ): Promise<string> {
   try {
-    const buildFunction = await getResource(view.function.BuildMarkdownTableFromDocs)
+    const buildFunction = await getResource(converter.function.BuildMarkdownTableFromMetadata)
     // Extract only the BuildMarkdownTableMetadata fields from TableMetadata
     const buildMetadata: BuildMarkdownTableMetadata = {
       cardClass: metadata.cardClass,
       viewletId: metadata.viewletId,
       config: metadata.config,
-      query: metadata.query
+      query: metadata.query,
+      originalUrl: metadata.originalUrl
     }
     return await buildFunction(docs, buildMetadata, client)
   } catch (error) {
-    // Function not available (view-resources not loaded)
-    console.warn('BuildMarkdownTableFromDocs function not available:', error)
+    // Function not available (converter-resources not loaded)
+    console.warn('BuildMarkdownTableFromMetadata function not available:', error)
     return ''
   }
 }

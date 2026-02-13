@@ -2,7 +2,7 @@
   "name": "@hanzo/view-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -47,6 +47,7 @@
     "@hanzo/panel": "workspace:^0.7.0",
     "@hanzo/guest": "workspace:^0.7.0",
     "@hanzo/core": "workspace:^0.7.24",
+    "@hanzo/converter": "workspace:^0.7.0",
     "@hanzo/view": "workspace:^0.7.0",
     "@hanzo/ui": "workspace:^0.7.0",
     "@hanzo/task": "workspace:^0.7.0",
@@ -66,8 +67,5 @@
     "@hanzo/workbench": "workspace:^0.7.0",
     "@hanzo/hls": "workspace:^0.7.0",
     "fast-equals": "^5.2.2"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }

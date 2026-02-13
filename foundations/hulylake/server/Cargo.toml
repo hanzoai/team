@@ -25,7 +25,7 @@ md5 = "0.8.0"
 size = { version = "0.5.0", features = ["serde"] }
 uuid = { version = "1.18", features = ["v4", "serde"] }
 serde_json = "1.0"
-hulyrs = { git = "https://github.com/hcengineering/hulyrs.git", features = ["actix", "otel"] }
+hulyrs = { git = "https://github.com/hanzoai/hulyrs.git", features = ["actix", "otel"] }
 secrecy = "0.10.3"
 tracing-actix-web = "0.7.19"
 aws-config = { version = "1.8.5" }

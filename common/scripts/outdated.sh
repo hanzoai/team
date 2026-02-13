@@ -32,7 +32,7 @@ while IFS= read -r package_file; do
     mv "$COMBINED_PACKAGE.tmp" "$COMBINED_PACKAGE"
 done < "$DEPS_DIR/package_list.txt"
 
-# Create filtered external package.json excluding @hcengineering packages
+# Create filtered external package.json excluding @hanzo packages
 jq '{"name": "external-dependencies", "dependencies": (.dependencies | with_entries(select(.key | startswith("@hanzo/") | not)))}' "$COMBINED_PACKAGE" > "$EXTERNAL_PACKAGE"
 
 # Create a temporary directory for checking outdated packages

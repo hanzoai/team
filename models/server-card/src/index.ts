@@ -20,6 +20,7 @@ import serverCore from '@hanzo/server-core'
 import serverCard from '@hanzo/server-card'
 import card from '@hanzo/card'
 import communication from '@hanzo/communication'
+import serverNotification from '@hanzo/server-notification'
 
 export { serverCardId } from '@hanzo/server-card'
 
@@ -128,5 +129,9 @@ export function createModel (builder: Builder): void {
       fields: [['_id']]
     },
     title: [['title']]
+  })
+
+  builder.mixin(card.class.Card, core.class.Class, serverNotification.mixin.TextPresenter, {
+    presenter: serverCard.function.CardTextPresenter
   })
 }

@@ -24,7 +24,9 @@ export async function exportToWorkspace (
   query: DocumentQuery<Doc> | undefined,
   selectedDocs: Doc[],
   targetWorkspace: string | undefined,
-  relations: RelationDefinition[] | undefined
+  relations: RelationDefinition[] | undefined,
+  skipDeletedObsolete?: boolean,
+  exportOnlyEffective?: boolean
 ): Promise<void> {
   const lang = getCurrentLanguage()
 
@@ -52,8 +54,8 @@ export async function exportToWorkspace (
         minor: 0,
         reviewers: [],
         controlledState: '',
-        seqNumber: '$ensureUnique',
-        code: '$ensureUnique'
+        seqNumber: '$generateSeqNumber',
+        code: '$generateCode'
       },
       'documents:class:DocumentMeta': {
         author: '$currentUser',
@@ -65,7 +67,9 @@ export async function exportToWorkspace (
       targetWorkspace,
       _class,
       relations,
-      fieldMappers
+      fieldMappers,
+      skipDeletedObsolete,
+      exportOnlyEffective
     }
 
     body.query =

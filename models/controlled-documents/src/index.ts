@@ -21,6 +21,7 @@ import documentsPlugin, {
   DocumentState,
   type Document,
   type DocumentSpace,
+  type DocumentTemplate,
   type ProjectDocument,
   type ChangeControl,
   type DocumentRequest
@@ -36,13 +37,14 @@ import request from '@hanzo/model-request'
 import tracker from '@hanzo/model-tracker'
 import view, { classPresenter, createAction } from '@hanzo/model-view'
 import workbench from '@hanzo/model-workbench'
+import converter from '@hanzo/converter'
 import notification from '@hanzo/notification'
 import contacts from '@hanzo/model-contact'
 import setting from '@hanzo/setting'
 import tags from '@hanzo/tags'
 import textEditor from '@hanzo/text-editor'
 
-import { AccountRole, type ClassCollaborators, type Class, type Doc, type Ref } from '@hanzo/core'
+import { AccountRole, type ClassCollaborators, type Class, type Doc, type Lookup, type Ref } from '@hanzo/core'
 import { type Action } from '@hanzo/view'
 import { definePermissions } from './permissions'
 import documents from './plugin'
@@ -109,6 +111,10 @@ export function createModel (builder: Builder): void {
 
   builder.mixin(documents.class.ControlledDocument, core.class.Class, view.mixin.ObjectTitle, {
     titleProvider: documents.function.ControlledDocumentTitleProvider
+  })
+
+  builder.mixin(documents.class.Document, core.class.Class, converter.mixin.MarkdownValueFormatter, {
+    formatter: documents.function.FormatDocumentMarkdownValue
   })
 
   builder.mixin(documents.class.DocumentApprovalRequest, core.class.Class, view.mixin.ObjectPresenter, {
@@ -250,6 +256,11 @@ export function createModel (builder: Builder): void {
   )
 
   // Workflow
+  const documentTableLookup: Lookup<Document> = {
+    owner: contact.mixin.Employee,
+    category: documents.class.DocumentCategory,
+    template: documents.mixin.DocumentTemplate
+  }
   builder.createDoc(
     view.class.Viewlet,
     core.space.Model,
@@ -303,16 +314,27 @@ export function createModel (builder: Builder): void {
         'modifiedOn'
       ],
       options: {
-        lookup: {
-          owner: contact.mixin.Employee,
-          category: documents.class.DocumentCategory,
-          template: documents.mixin.DocumentTemplate
-        }
+        lookup: documentTableLookup
       }
     },
     documents.viewlet.TableDocument
   )
 
+  builder.createDoc(
+    view.class.ViewletViewAction,
+    core.space.Model,
+    {
+      descriptor: view.viewlet.Table,
+      extension: converter.extensions.CopyAsMarkdownAction,
+      applicableToClass: documents.class.Document
+    },
+    documents.specialViewAction.TableDocument
+  )
+
+  const documentTemplateTableLookup: Lookup<DocumentTemplate> = {
+    owner: contact.mixin.Employee,
+    category: documents.class.DocumentCategory
+  }
   builder.createDoc(
     view.class.Viewlet,
     core.space.Model,
@@ -352,7 +374,8 @@ export function createModel (builder: Builder): void {
           presenter: documents.component.OwnerPresenter,
           props: { shouldShowLabel: true, isEditable: false },
           sortingKey: '$lookup.owner.name'
-        }
+        },
+        { key: 'space', sortingKey: 'space' }
       ],
       baseQuery: {
         hidden: { $ne: true }
@@ -361,10 +384,7 @@ export function createModel (builder: Builder): void {
         hiddenKeys: ['attachedTo']
       },
       options: {
-        lookup: {
-          owner: contact.mixin.Employee,
-          category: documents.class.DocumentCategory
-        }
+        lookup: documentTemplateTableLookup
       }
     },
     documents.viewlet.TableDocumentTemplate
@@ -687,7 +707,7 @@ export function createModel (builder: Builder): void {
   })
 
   builder.mixin(documents.mixin.DocumentTemplate, core.class.Class, view.mixin.ClassFilters, {
-    filters: ['prefix', 'title', 'modifiedOn', 'category']
+    filters: ['prefix', 'title', 'modifiedOn', 'category', 'space']
   })
 
   builder.mixin(documents.class.Document, core.class.Class, setting.mixin.Editable, {
@@ -1040,7 +1060,7 @@ export function createModel (builder: Builder): void {
         label: print.string.PrintToPDF,
         icon: print.icon.Print,
         category: view.category.General,
-        input: 'focus', // NOTE: should only work for one doc for now, not bulk
+        input: 'any',
         target,
         context: { mode: ['context', 'browser'], group: 'tools' },
         visibilityTester: documents.function.CanPrintDocument,
@@ -1062,6 +1082,11 @@ export function createModel (builder: Builder): void {
 
 export function defineNotifications (builder: Builder): void {
   builder.mixin(documents.class.ControlledDocument, core.class.Class, activity.mixin.ActivityDoc, {})
+
+  builder.createDoc(activity.class.ActivityExtension, core.space.Model, {
+    ofClass: documents.class.ControlledDocument,
+    components: { input: { component: chunter.component.ChatMessageInput } }
+  })
 
   builder.createDoc(activity.class.ActivityExtension, core.space.Model, {
     ofClass: documents.class.DocumentComment,

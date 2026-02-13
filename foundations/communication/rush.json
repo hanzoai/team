@@ -10,7 +10,7 @@
   "projectFolderMaxDepth": 2,
   "gitPolicy": {},
   "repository": {
-    "url": "https://github.com/hcengineering/communication",
+    "url": "https://github.com/hanzoai/communication",
     "defaultBranch": "main",
     "defaultRemote": "origin"
   },

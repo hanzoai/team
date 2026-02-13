@@ -205,7 +205,7 @@
      * your PR branch, and in this situation "rush change" will also automatically invoke "git fetch"
      * to retrieve the latest activity for the remote master branch.
      */
-    "url": "https://github.com/hcengineering/anticrm",
+    "url": "https://github.com/hanzoai/anticrm",
 
     /**
      * The default branch name. This tells "rush change" which remote branch to compare against.
@@ -1607,6 +1607,11 @@
       "shouldPublish": false
     },
     {
+      "packageName": "@hanzo/pod-link-preview",
+      "projectFolder": "pods/link-preview",
+      "shouldPublish": false
+    },
+    {
       "packageName": "@hanzo/hr",
       "projectFolder": "plugins/hr",
       "shouldPublish": true
@@ -1939,6 +1944,21 @@
     {
       "packageName": "@hanzo/controlled-documents-resources",
       "projectFolder": "plugins/controlled-documents-resources",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@hanzo/converter",
+      "projectFolder": "plugins/converter",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@hanzo/converter-resources",
+      "projectFolder": "plugins/converter-resources",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@hanzo/model-converter",
+      "projectFolder": "models/converter",
       "shouldPublish": false
     },
     {

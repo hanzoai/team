@@ -42,7 +42,11 @@
     "@hanzo/workbench": "workspace:^0.7.0",
     "@hanzo/presentation": "workspace:^0.7.0",
     "@hanzo/model-presentation": "workspace:^0.7.0",
+    "@hanzo/model-view": "workspace:^0.7.0",
+    "@hanzo/model-notification": "workspace:^0.7.0",
     "@hanzo/export-resources": "workspace:^0.7.0",
-    "@hanzo/export": "workspace:^0.7.0"
+    "@hanzo/export": "workspace:^0.7.0",
+    "@hanzo/view": "workspace:^0.7.0",
+    "@hanzo/notification": "workspace:^0.7.0"
   }
 }

@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 //
 // Copyright © 2025 Hardcore Engineering Inc.
 //
@@ -29,12 +29,17 @@ import {
   type Ref,
   type Space
 } from '@hanzo/core'
-import { type Builder, Mixin, Model, UX } from '@hanzo/model'
+import { type Builder, Mixin, Model, Prop, TypeRecord, TypeRef, TypeString, UX } from '@hanzo/model'
 import core, { TClass, TDoc } from '@hanzo/model-core'
 import preference, { TPreference } from '@hanzo/model-preference'
 import presentation from '@hanzo/model-presentation'
-import { type Asset, type IntlString, type Resource, type Status } from '@hanzo/platform'
-import { type AnyComponent, type LabelAndProps, type Location } from '@hanzo/ui/src/types'
+import { type Asset, getEmbeddedLabel, type IntlString, type Resource, type Status } from '@hanzo/platform'
+import {
+  type AnyComponent,
+  type ComponentExtensionId,
+  type LabelAndProps,
+  type Location
+} from '@hanzo/ui/src/types'
 import {
   type TypeEditor,
   type Action,
@@ -99,7 +104,8 @@ import {
   type ViewOptionsModel,
   type Viewlet,
   type ViewletDescriptor,
-  type ViewletPreference
+  type ViewletPreference,
+  type ViewletViewAction
 } from '@hanzo/view'
 
 import view from './plugin'
@@ -318,6 +324,28 @@ export class TViewletDescriptor extends TDoc implements ViewletDescriptor {
   label!: IntlString
 }
 
+@Model(view.class.ViewletViewAction, core.class.Doc, DOMAIN_MODEL)
+@UX(view.string.ViewletViewAction)
+export class TViewletViewAction extends TDoc implements ViewletViewAction {
+  @Prop(TypeRef(view.class.Viewlet), getEmbeddedLabel('Viewlet'))
+  declare viewlet?: Ref<Viewlet>
+
+  @Prop(TypeRef(view.class.ViewletDescriptor), getEmbeddedLabel('Descriptor'))
+  declare descriptor?: Ref<ViewletDescriptor>
+
+  @Prop(TypeString(), getEmbeddedLabel('Extension'))
+  declare extension: ComponentExtensionId
+
+  @Prop(TypeRecord(), getEmbeddedLabel('Config'))
+  declare config?: Record<string, any>
+
+  @Prop(TypeRef(core.class.Class), getEmbeddedLabel('ApplicableToClass'))
+  declare applicableToClass?: Ref<Class<Doc>>
+
+  @Prop(TypeRef(core.class.Class), getEmbeddedLabel('DisabledForClass'))
+  declare disabledForClass?: Ref<Class<Doc>>
+}
+
 @Model(view.class.Viewlet, core.class.Doc, DOMAIN_MODEL)
 export class TViewlet extends TDoc implements Viewlet {
   attachTo!: Ref<Class<Doc>>
@@ -472,6 +500,7 @@ export function createModel (builder: Builder): void {
     TViewletPreference,
     TViewletDescriptor,
     TViewlet,
+    TViewletViewAction,
     TAction,
     TActionCategory,
     TObjectValidator,
