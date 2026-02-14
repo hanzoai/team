@@ -1546,10 +1546,10 @@ describe('account utils', () => {
 
       await signUpByEmail(mockCtx, mockDb, mockBranding, email, password, firstName, lastName)
 
-      // Verify hanzoai social id creation
+      // Verify hanzo social id creation
       expect(mockDb.socialId.insertOne).toHaveBeenCalledWith(
         expect.objectContaining({
-          type: SocialIdType.HANZOAI,
+          type: SocialIdType.HANZO,
           value: personUuid,
           personUuid
         })

@@ -1080,7 +1080,7 @@ interface SSOLoginData {
 const IAM_SERVER = 'https://iam.hanzo.ai'
 
 export async function exchangeCodeForToken (code: string): Promise<SSOTokenInfo> {
-  const iamServer = getMetadata(presentation.metadata.IamServer as any) ?? IAM_SERVER
+  const iamServer = IAM_SERVER
   const response = await fetch(`${iamServer}/api/login/oauth/access_token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

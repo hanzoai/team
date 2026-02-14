@@ -612,7 +612,7 @@ export async function generateEmployee (client: TxOperations): Promise<AccountUu
     active: true
   })
 
-  const socialString = buildSocialIdString({ type: SocialIdType.HANZOAI, value: personUuid })
+  const socialString = buildSocialIdString({ type: SocialIdType.HANZO, value: personUuid })
 
   await client.addCollection(
     contact.class.SocialIdentity,
@@ -621,7 +621,7 @@ export async function generateEmployee (client: TxOperations): Promise<AccountUu
     contact.class.Person,
     'socialIds',
     {
-      type: SocialIdType.HANZOAI,
+      type: SocialIdType.HANZO,
       value: personUuid,
       key: socialString,
       verifiedOn: Date.now()
@@ -658,7 +658,7 @@ async function generateVacancy (client: TxOperations, members: AccountUuid[]): P
       avatarType: AvatarType.COLOR,
       personUuid
     })
-    const socialString = buildSocialIdString({ type: SocialIdType.HANZOAI, value: personUuid })
+    const socialString = buildSocialIdString({ type: SocialIdType.HANZO, value: personUuid })
     await client.addCollection(
       contact.class.SocialIdentity,
       contact.space.Contacts,
@@ -666,7 +666,7 @@ async function generateVacancy (client: TxOperations, members: AccountUuid[]): P
       contact.class.Person,
       'socialIds',
       {
-        type: SocialIdType.HANZOAI,
+        type: SocialIdType.HANZO,
         value: personUuid,
         key: socialString,
         verifiedOn: Date.now()
