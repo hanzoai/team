@@ -1,9 +1,9 @@
 {
   "string": {
     "IntegrationLabel": "Hanzo Mail",
-    "IntegrationDescription": "Verbinden Sie Ihr Huly-Postfach zum Senden, Empfangen und Verwalten von E-Mails",
+    "IntegrationDescription": "Verbinden Sie Ihr Hanzo-Postfach zum Senden, Empfangen und Verwalten von E-Mails",
     "Connect": "Verbinden",
-    "ConnectHulyMail": "Huly-Postfach verbinden",
+    "ConnectHanzoMail": "Hanzo-Postfach verbinden",
     "Cancel": "Abbrechen",
     "Email": "E-Mail",
     "Status": "Status",

@@ -4,7 +4,7 @@
 
 [![License: EPL 2.0](https://img.shields.io/badge/License-EPL%202.0-blue.svg)](https://opensource.org/licenses/EPL-2.0)
 [![npm version](https://img.shields.io/npm/v/@hanzo/network-core.svg)](https://www.npmjs.com/package/@hanzo/network-core)
-[![CI](https://github.com/hcengineering/huly.net/workflows/CI/badge.svg)](https://github.com/hcengineering/huly.net/actions)
+[![CI](https://github.com/hcengineering/hanzo.net/workflows/CI/badge.svg)](https://github.com/hcengineering/hanzo.net/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-3178c6.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-22+-339933.svg)](https://nodejs.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -13,7 +13,7 @@
 
 Build enterprise-grade distributed systems with automatic service discovery, high availability, and zero-configuration deployment.
 
-[Features](#-why-build-your-product-on-huly-network) • [Quick Start](#-getting-started) • [Documentation](#-documentation) • [Examples](#-examples) • [API Reference](#-api-reference) • [Contributing](#-contributing)
+[Features](#-why-build-your-product-on-hanzo-network) • [Quick Start](#-getting-started) • [Documentation](#-documentation) • [Examples](#-examples) • [API Reference](#-api-reference) • [Contributing](#-contributing)
 
 ```mermaid
 flowchart TD
@@ -48,7 +48,7 @@ flowchart TD
 
 ## 📋 Table of Contents
 
-- [Why Hanzo Network?](#-why-build-your-product-on-huly-network)
+- [Why Hanzo Network?](#-why-build-your-product-on-hanzo-network)
 - [Overview](#-overview)
 - [Architecture](#-architecture)
 - [Packages](#-packages)
@@ -259,8 +259,8 @@ flowchart TB
 
 ```bash
 # Clone the repository
-git clone https://github.com/hcengineering/huly.net.git
-cd huly.net
+git clone https://github.com/hcengineering/hanzo.net.git
+cd hanzo.net
 
 # Install dependencies and build
 node common/scripts/install-run-rush.js install
@@ -1478,11 +1478,11 @@ node common/scripts/install-run-rush.js build:watch
 
 We love contributions! Hanzo Virtual Network is open source and we welcome contributions of all kinds:
 
-- 🐛 **Bug Reports**: Found a bug? [Open an issue](https://github.com/hcengineering/huly.net/issues/new?template=bug_report.md)
-- ✨ **Feature Requests**: Have an idea? [Request a feature](https://github.com/hcengineering/huly.net/issues/new?template=feature_request.md)
+- 🐛 **Bug Reports**: Found a bug? [Open an issue](https://github.com/hcengineering/hanzo.net/issues/new?template=bug_report.md)
+- ✨ **Feature Requests**: Have an idea? [Request a feature](https://github.com/hcengineering/hanzo.net/issues/new?template=feature_request.md)
 - 📖 **Documentation**: Improve our docs, add examples, or fix typos
 - 💻 **Code**: Submit pull requests with bug fixes or new features
-- ❓ **Questions**: [Ask questions](https://github.com/hcengineering/huly.net/issues/new?template=question.md) to help improve our documentation
+- ❓ **Questions**: [Ask questions](https://github.com/hcengineering/hanzo.net/issues/new?template=question.md) to help improve our documentation
 
 Please read our [Contributing Guide](CONTRIBUTING.md) for details on our development process, coding standards, and how to submit pull requests.
 
@@ -1561,7 +1561,7 @@ We are considering adding optional security features in future releases:
 - Authorization controls for container access
 - Audit logging for security monitoring
 
-If you have specific security requirements or concerns, please [open an issue](https://github.com/hcengineering/huly.net/issues) to discuss your use case.
+If you have specific security requirements or concerns, please [open an issue](https://github.com/hcengineering/hanzo.net/issues) to discuss your use case.
 
 ## 🙏 Acknowledgments
 
@@ -1571,9 +1571,9 @@ If you have specific security requirements or concerns, please [open an issue](h
 
 ## 📬 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/hcengineering/huly.net/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/hcengineering/huly.net/discussions)
-- **Website**: [huly.io](https://huly.io)
+- **Issues**: [GitHub Issues](https://github.com/hcengineering/hanzo.net/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/hcengineering/hanzo.net/discussions)
+- **Website**: [hanzo.team](https://hanzo.team)
 
 ## 📊 Project Status
 
@@ -1583,11 +1583,11 @@ This project is actively maintained and used in production by the Hanzo Team. We
 
 If you find this project useful, please consider giving it a star! It helps others discover the project.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=hcengineering/huly.net&type=Date)](https://star-history.com/#hcengineering/huly.net&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=hcengineering/hanzo.net&type=Date)](https://star-history.com/#hcengineering/hanzo.net&Date)
 
 ## 🔗 Related Projects
 
-- **[Hanzo Team](https://github.com/hcengineering/platform)** - The main Huly platform that uses this network
+- **[Hanzo Team](https://github.com/hcengineering/platform)** - The main Hanzo platform that uses this network
 - **[ZeroMQ](https://zeromq.org/)** - High-performance asynchronous messaging library
 - **[Rush.js](https://rushjs.io/)** - Scalable monorepo build orchestrator
 
@@ -1597,6 +1597,6 @@ If you find this project useful, please consider giving it a star! It helps othe
 
 **Built with ❤️ by the Hanzo Team team**
 
-[⬆ back to top](#-huly-virtual-network)
+[⬆ back to top](#-hanzo-virtual-network)
 
 </div>

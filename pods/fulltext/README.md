@@ -17,7 +17,7 @@ Fulltext indexing service for the Platform. Provides full-text search capabiliti
 
 - **`PORT`** - Service port (default: `4700`)
 - **`MODEL_JSON`** - Path to model JSON file (default: `model.json`)
-- **`HANZOLAKE_URL`** - Hanzo Teamlake service URL for communication indexing (default: empty string)
+- **`HANZOLAKE_URL`** - Hanzolake service URL for communication indexing (default: empty string)
   - Required only if `COMMUNICATION_API_ENABLED=true`
 - **`COMMUNICATION_API_ENABLED`** - Enable communication API for indexing messages (default: disabled)
   - Set to `'true'` to enable indexing of communication messages from cards
@@ -91,8 +91,8 @@ curl -X PUT http://localhost:4700/api/v1/reindex \
 
 When `COMMUNICATION_API_ENABLED=true`, the service will:
 - Index communication messages from cards
-- Use Hanzo Teamlake service to fetch message groups and messages
+- Use Hanzolake service to fetch message groups and messages
 - Require `HANZOLAKE_URL` to be set
 
-When disabled (default), communication indexing is skipped, preventing errors if Hanzo Teamlake is not available.
+When disabled (default), communication indexing is skipped, preventing errors if Hanzolake is not available.
 

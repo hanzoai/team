@@ -1,11 +1,11 @@
 services:
   stream:
-    image: 'hanzoai/stream'
+    image: 'hardcoreeng/stream'
     pull_policy: always
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     environment:
-      - STREAM_ENDPOINT_URL=datalake://hanzoai.local:4031
+      - STREAM_ENDPOINT_URL=datalake://hanzo.local:4031
       - STREAM_INSECURE=true
       - STREAM_SERVER_SECRET=secret
     ports:
@@ -103,7 +103,7 @@ services:
       interval: 5s
       retries: 10
   datalake:
-    image: hanzoai/datalake
+    image: hardcoreeng/datalake
     depends_on:
       minio:
         condition: service_healthy
@@ -143,10 +143,10 @@ services:
       retries: 10
       test: curl -s http://hanzoai.local:9200/_cluster/health | grep -vq '"status":"red"'
   account:
-    image: hanzoai/account
+    image: hardcoreeng/account
     pull_policy: never
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     depends_on:
       cockroach:
         condition: service_started
@@ -170,7 +170,7 @@ services:
       - REGION_INFO=|America;europe|Europe
       - TRANSACTOR_URL=ws://hanzoai.local:3334;ws://hanzoai.local:3334,ws://hanzoai.local:3335;ws://hanzoai.local:3335;europe
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - FRONT_URL=http://hanzoai.local:8083
+      - FRONT_URL=http://hanzo.local:8083
       # - LAST_NAME_FIRST=true
       # - WS_LIVENESS_DAYS=1
       - ACCOUNTS_URL=http://hanzoai.local:3003
@@ -178,7 +178,7 @@ services:
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   stats:
-    image: hanzoai/stats
+    image: hardcoreeng/stats
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     ports:
@@ -188,7 +188,7 @@ services:
       - SERVER_SECRET=secret
     restart: unless-stopped
   workspace:
-    image: hanzoai/workspace
+    image: hardcoreeng/workspace
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -205,7 +205,7 @@ services:
       - STATS_URL=http://hanzoai.local:4901
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - REGION=
-      - ACCOUNTS_URL=http://hanzoai.local:3003
+      - ACCOUNTS_URL=http://hanzo.local:3003
       - ACCOUNTS_DB_URL=${DB_EU_URL}
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
@@ -213,7 +213,7 @@ services:
       # - INIT_WORKSPACE=hanzoai
     restart: unless-stopped
   workspace_europe:
-    image: hanzoai/workspace
+    image: hardcoreeng/workspace
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -230,7 +230,7 @@ services:
       - DB_URL=${DB_EU_URL}
       - STATS_URL=http://hanzoai.local:4901
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - ACCOUNTS_URL=http://hanzoai.local:3003
+      - ACCOUNTS_URL=http://hanzo.local:3003
       - ACCOUNTS_DB_URL=${DB_EU_URL}
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
@@ -238,7 +238,7 @@ services:
       # - INIT_WORKSPACE=hanzoai
     restart: unless-stopped
   collaborator:
-    image: hanzoai/collaborator
+    image: hardcoreeng/collaborator
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -256,7 +256,7 @@ services:
       - STATS_URL=http://hanzoai.local:4901
     restart: unless-stopped
   front:
-    image: hanzoai/front
+    image: hardcoreeng/front
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -293,7 +293,7 @@ services:
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   transactor:
-    image: hanzoai/transactor
+    image: hardcoreeng/transactor
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -321,11 +321,11 @@ services:
       - ACCOUNTS_URL=http://hanzoai.local:3003
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://hanzoai.local:4011
+      - AI_BOT_URL=http://hanzo.local:4011
       - RATE_LIMIT_MAX=25000
       - RATE_LIMIT_WINDOW=1000
   transactor-europe:
-    image: hanzoai/transactor
+    image: hardcoreeng/transactor
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     pull_policy: never
@@ -354,12 +354,12 @@ services:
       - ACCOUNTS_URL=http://hanzoai.local:3003
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://hanzoai.local:4011
+      - AI_BOT_URL=http://hanzo.local:4011
       - RATE_LIMIT_MAX=25000
       - RATE_LIMIT_WINDOW=1000
     restart: unless-stopped
   rekoni:
-    image: hanzoai/rekoni-service
+    image: hardcoreeng/rekoni-service
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -368,7 +368,7 @@ services:
     environment:
       - STATS_URL=http://hanzoai.local:4901
   fulltext:
-    image: hanzoai/fulltext
+    image: hardcoreeng/fulltext
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -390,7 +390,7 @@ services:
       - REKONI_URL=http://hanzoai.local:4007
       - ACCOUNTS_URL=http://hanzoai.local:3003
   fulltext-europe:
-    image: hanzoai/fulltext
+    image: hardcoreeng/fulltext
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -408,12 +408,12 @@ services:
       - FULLTEXT_DB_URL=http://hanzoai.local:9201
       - ELASTIC_INDEX_NAME=local_eu_storage_index # Use different one to be able to check migration is working
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://hanzoai.local:4901
-      - REKONI_URL=http://hanzoai.local:4007
-      - ACCOUNTS_URL=http://hanzoai.local:3003
+      - STATS_URL=http://hanzo.local:4901
+      - REKONI_URL=http://hanzo.local:4007
+      - ACCOUNTS_URL=http://hanzo.local:3003
     restart: unless-stopped
   aiBot:
-    image: hanzoai/ai-bot
+    image: hardcoreeng/ai-bot
     ports:
       - 4011:4010
     extra_hosts:
@@ -430,4 +430,4 @@ services:
       - PASSWORD=password
       - AVATAR_PATH=./avatar.png
       - AVATAR_CONTENT_TYPE=.png
-      - STATS_URL=http://hanzoai.local:4901
+      - STATS_URL=http://hanzo.local:4901

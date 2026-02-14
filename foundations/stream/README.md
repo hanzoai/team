@@ -1,7 +1,7 @@
 # Stream
 
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hanzo_io?style=for-the-badge)](https://x.com/hanzo_io)
-![GitHub License](https://img.shields.io/github/license/hanzoai/platform?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/hcengineering/platform?style=for-the-badge)
 
 ## About
 
@@ -60,7 +60,7 @@ go mod tidy
 2. Build the service:
 
 ```bash
-docker build . -t hanzoai/stream:latest
+docker build . -t hcengineering/stream:latest
 ```
 
 ---

@@ -57,7 +57,7 @@
     "@opentelemetry/api-logs": "^0.203.0",
     "@opentelemetry/sdk-metrics": "^2.0.1"
   },
-  "repository": "https://github.com/hanzoai/hanzo.utils",
+  "repository": "https://github.com/hcengineering/hanzo.utils",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",

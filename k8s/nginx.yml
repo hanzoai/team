@@ -19,7 +19,7 @@ data:
         location /hanzoai/ {
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
-            rewrite ^/hanzoai/(.*)$ /huly/$1 break;
+            rewrite ^/hanzoai/(.*)$ /hanzo/$1 break;
             proxy_pass http://front:8080;
         }
 

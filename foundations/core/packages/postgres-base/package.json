@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Copyright © Hanzo AI Inc.",
+  "author": "Copyright © Hardcore Engineering Inc.",
   "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "files": [
@@ -45,7 +45,7 @@
   "dependencies": {
     "postgres": "^3.4.7"
   },
-  "repository": "https://github.com/hanzoai/hanzo.utils",
+  "repository": "https://github.com/hcengineering/hanzo.utils",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",

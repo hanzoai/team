@@ -69,7 +69,7 @@ Welcome to the Hanzo Virtual Network documentation! This directory contains comp
 
 ## 🔗 External Resources
 
-- [Main Repository](https://github.com/hcengineering/huly.net)
+- [Main Repository](https://github.com/hcengineering/hanzo.net)
 - [Examples Directory](../examples/)
 - [ZeroMQ Documentation](https://zeromq.org/documentation/)
 - [Hanzo Team](https://github.com/hcengineering/platform)

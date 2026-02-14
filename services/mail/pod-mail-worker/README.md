@@ -1,13 +1,13 @@
 # Pod Mail Worker
 
-Pod Mail Worker is a service that provides bidirectional synchronization between Huly messages and email servers.
+Pod Mail Worker is a service that provides bidirectional synchronization between Hanzo messages and email servers.
 
 ## Purpose
 
-This service acts as a bridge between Huly's internal messaging system and external email infrastructure, enabling:
+This service acts as a bridge between Hanzo's internal messaging system and external email infrastructure, enabling:
 
 - **Incoming Email Processing**: Receives emails via MTA hooks and converts them into Hanzo Team messages
-- **Outgoing Email Synchronization**: Processes Huly messages and sends them as emails
+- **Outgoing Email Synchronization**: Processes Hanzo messages and sends them as emails
 - **Queue Processing**: Handles asynchronous message processing via Kafka queues
 
 ## Key Components
@@ -28,8 +28,8 @@ This service acts as a bridge between Huly's internal messaging system and exter
 Key environment variables:
 
 - `PORT`: Service port (default: 4050)
-- `WORKSPACE_URL`: Target Huly workspace URL
-- `ACCOUNTS_URL`: Huly accounts service URL
+- `WORKSPACE_URL`: Target Hanzo workspace URL
+- `ACCOUNTS_URL`: Hanzo accounts service URL
 - `KVS_URL`: Key-value store URL for thread mapping
 - `QUEUE_CONFIG`: Kafka queue configuration
 - `HOOK_TOKEN`: Authentication token for MTA hooks
@@ -52,7 +52,7 @@ Receives incoming emails from mail transfer agents.
 
 - **Kafka**: Message queue for asynchronous processing
 - **KVS**: Key-value store for thread mapping persistence
-- **Workspace API**: Huly workspace integration
+- **Workspace API**: Hanzo workspace integration
 - **Account Client**: User and workspace management
 
 ## Development

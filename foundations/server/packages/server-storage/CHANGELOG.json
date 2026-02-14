@@ -25,7 +25,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `^0.7.16` to `0.7.17`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `^0.7.16` to `0.7.17`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `^0.7.16` to `0.7.17`"
           }
         ]
       }
@@ -54,7 +54,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `^0.7.15` to `0.7.16`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `^0.7.15` to `0.7.16`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `^0.7.15` to `0.7.16`"
           }
         ]
       }
@@ -83,7 +83,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `^0.7.14` to `0.7.15`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `^0.7.14` to `0.7.15`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `^0.7.14` to `0.7.15`"
           }
         ]
       }
@@ -112,7 +112,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.7` to `0.7.8`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.8` to `0.7.9`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.8` to `0.7.9`"
           }
         ]
       }
@@ -141,7 +141,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.6` to `0.7.7`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.7` to `0.7.8`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.7` to `0.7.8`"
           }
         ]
       }
@@ -165,7 +165,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.6` to `0.7.7`"
           }
         ]
       }
@@ -189,7 +189,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.5` to `0.7.6`"
           }
         ]
       }
@@ -218,7 +218,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.4` to `0.7.5`"
           }
         ]
       }
@@ -247,7 +247,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.2` to `0.7.3`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.3` to `0.7.4`"
           }
         ]
       }
@@ -276,7 +276,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.1` to `0.7.2`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.2` to `0.7.3`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.2` to `0.7.3`"
           }
         ]
       }
@@ -308,7 +308,7 @@
             "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.0` to `0.7.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.1` to `0.7.2`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.1` to `0.7.2`"
           }
         ]
       }
@@ -320,12 +320,12 @@
       "comments": {
         "patch": [
           {
-            "comment": "add hulylake storage adapter"
+            "comment": "add hanzolake storage adapter"
           }
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/hulylake\" from `0.7.0` to `0.7.1`"
+            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.0` to `0.7.1`"
           }
         ]
       }

@@ -1,9 +1,9 @@
 {
   "string": {
     "IntegrationLabel": "Hanzo Mail",
-    "IntegrationDescription": "E-posta göndermek, almak ve yönetmek için Huly posta kutunuzu bağlayın",
+    "IntegrationDescription": "E-posta göndermek, almak ve yönetmek için Hanzo posta kutunuzu bağlayın",
     "Connect": "Bağlan",
-    "ConnectHulyMail": "Huly posta kutusunu bağla",
+    "ConnectHanzoMail": "Hanzo posta kutusunu bağla",
     "Cancel": "İptal",
     "Email": "E-posta",
     "Status": "Durum",

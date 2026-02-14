@@ -1,4 +1,4 @@
-# Change Log - @hanzo/hulylake-client
+# Change Log - @hanzo/hanzolake-client
 
 This log was last generated on Mon, 27 Oct 2025 13:27:12 GMT and should not be manually modified.
 
@@ -26,7 +26,7 @@ Thu, 09 Oct 2025 16:57:55 GMT
 
 ### Patches
 
-- refactoring hulylake client to extract multi-workspace client
+- refactoring hanzolake client to extract multi-workspace client
 
 ## 0.7.3
 Wed, 08 Oct 2025 03:40:53 GMT

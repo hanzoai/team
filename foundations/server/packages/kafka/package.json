@@ -41,7 +41,7 @@
     "@hanzo/storage": "workspace:^0.7.17",
     "kafkajs": "^2.2.4"
   },
-  "repository": "https://github.com/hanzoai/hanzo.server",
+  "repository": "https://github.com/hcengineering/hanzo.server",
   "publishConfig": {
     "access": "public"
   },

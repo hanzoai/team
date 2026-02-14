@@ -1,4 +1,4 @@
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -40,7 +40,7 @@ describe('metadata', () => {
       expect(metadata).toEqual({
         accountsUrl: '',
         secret: 'secret',
-        hanzolakeUrl: 'http://hanzoai.local:8096',
+        hanzolakeUrl: 'http://hanzo.local:8096',
         messagesPerBlob: 200
       })
     })

@@ -27,8 +27,8 @@ For production, use process monitoring (systemd, PM2, Kubernetes) to ensure quic
 
 ```bash
 # Clone the repository
-git clone https://github.com/hcengineering/huly.net.git
-cd huly.net
+git clone https://github.com/hcengineering/hanzo.net.git
+cd hanzo.net
 
 # Install dependencies
 node common/scripts/install-run-rush.js install
@@ -48,7 +48,7 @@ docker pull hardcoreeng/network-pod:latest
 
 # Run the network server
 docker run -d \
-  --name huly-network \
+  --name hanzo-network \
   -p 3737:3737 \
   hardcoreeng/network-pod:latest
 ```
@@ -384,7 +384,7 @@ For more help, see the [Troubleshooting Guide](TROUBLESHOOTING.md).
 - [Examples Directory](../examples/) - Complete working examples
 - [Core Concepts](CORE_CONCEPTS.md) - Architecture deep dive
 - [API Reference](API_CORE.md) - Detailed API documentation
-- [GitHub Repository](https://github.com/hcengineering/huly.net)
+- [GitHub Repository](https://github.com/hcengineering/hanzo.net)
 
 ---
 

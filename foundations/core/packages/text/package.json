@@ -82,7 +82,7 @@
     "@tiptap/extension-text-align": "~2.11.0",
     "@tiptap/extension-text-style": "~2.11.0"
   },
-  "repository": "https://github.com/hanzoai/hanzo.core",
+  "repository": "https://github.com/hcengineering/hanzo.core",
   "publishConfig": {
     "access": "public"
   },

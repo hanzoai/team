@@ -46,7 +46,7 @@
     "fast-equals": "^5.2.2",
     "hash-it": "^6.0.0"
   },
-  "repository": "https://github.com/hanzoai/hanzo.core",
+  "repository": "https://github.com/hcengineering/hanzo.core",
   "publishConfig": {
     "access": "public"
   },

@@ -1,7 +1,7 @@
 {
   "name": "@hanzo/ui-test",
   "version": "0.7.13",
-  "author": "Copyright © Hanzo AI Inc.",
+  "author": "Copyright © Hardcore Engineering Inc.",
   "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "main": "./lib/index.js",
@@ -52,7 +52,7 @@
   "dependencies": {
     "svelte": "^4.2.20"
   },
-  "repository": "https://github.com/hanzoai/hanzo.utils",
+  "repository": "https://github.com/hcengineering/hanzo.utils",
   "publishConfig": {
     "access": "public"
   }

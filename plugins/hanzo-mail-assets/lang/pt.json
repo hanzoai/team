@@ -1,13 +1,13 @@
 {
   "string": {
     "IntegrationLabel": "Hanzo Mail",
-    "IntegrationDescription": "Conecte sua caixa de correio Huly para enviar, receber e gerenciar e-mails",
+    "IntegrationDescription": "Conecte sua caixa de correio Hanzo para enviar, receber e gerenciar e-mails",
     "Connect": "Conectar",
-    "ConnectHulyMail": "Conectar caixa de correio Huly",
+    "ConnectHanzoMail": "Conectar caixa de correio Hanzo",
     "Cancel": "Cancelar",
     "Email": "E-mail",
     "Status": "Status",
-    "FailedToConnect": "O serviço de e-mail Huly não está disponível",
+    "FailedToConnect": "O serviço de e-mail Hanzo não está disponível",
     "TotalMessages": "Total de mensagens:",
     "Configure": "Configurar Hanzo Mail",
     "ChannelSpace": "Espaço para canal de mensagens",

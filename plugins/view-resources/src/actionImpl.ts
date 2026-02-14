@@ -50,7 +50,7 @@ import {
 } from './selection'
 import { deleteObjects, getObjectId, getObjectLinkFragment, restrictionStore } from './utils'
 import workbenchPlugin from '@hanzo/workbench'
-import converter from '@hanzo/converter'
+import { CopyAsMarkdownTable } from './copyAsMarkdownTable'
 import { viewletContextStore } from './viewletContextStore'
 
 /**
@@ -128,7 +128,12 @@ export async function copyMarkdown (markdown: string, metadata?: Record<string, 
   if (metadata !== undefined) {
     try {
       const metadataComment = `<!-- hanzo-table-metadata:${JSON.stringify(metadata)} -->`
-      markdownToCopy = markdown + '\n' + metadataComment
+      // Insert comment before first table (or at start if no table)
+      const tableIndex = markdown.indexOf('|')
+      markdownToCopy =
+        tableIndex !== -1
+          ? markdown.slice(0, tableIndex) + metadataComment + '\n' + markdown.slice(tableIndex)
+          : metadataComment + '\n' + markdown
     } catch (e) {
       console.error('Failed to embed metadata in markdown:', e)
       // Continue with original markdown if embedding fails
@@ -737,15 +742,14 @@ async function CopyAsMarkdownTableAction (
 
   // Merge store context with props (props take precedence)
   const mergedProps = {
-    cardClass: viewletContext?._class ?? props.cardClass,
+    cardClass: props.cardClass,
     viewlet: props.viewlet ?? viewletContext?.viewlet,
     config: props.config ?? viewletContext?.config,
     query: props.query ?? viewletContext?.query,
     viewOptions: props.viewOptions ?? viewletContext?.viewOptions
   }
 
-  const copyFn = await getResource(converter.actionImpl.CopyAsMarkdownTable)
-  await copyFn(doc, evt, mergedProps)
+  await CopyAsMarkdownTable(doc, evt, mergedProps)
 }
 
 /**

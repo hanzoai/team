@@ -47,7 +47,7 @@
     "jwt-simple": "^0.5.6",
     "uuid": "^8.3.2"
   },
-  "repository": "https://github.com/hanzoai/hanzo.core",
+  "repository": "https://github.com/hcengineering/hanzo.core",
   "publishConfig": {
     "access": "public"
   },

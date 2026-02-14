@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -230,7 +230,7 @@ export async function createServer (ctx: MeasureContext, config: Config): Promis
   app.get('/', (_req, res) => {
     res.send(`
       Hanzo&reg; Preview&trade; <a href="https://hanzo.team">https://hanzo.team</a>
-      © 2025 <a href="https://hanzolabs.com">Hanzo Labs</a>
+      © 2025 <a href="https://hanzo.ai">Hanzo Labs</a>
     `)
   })
 

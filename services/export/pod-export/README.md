@@ -7,7 +7,7 @@ The Export Service provides asynchronous data export functionality for Hanzo Tea
 The Export Service is a standalone microservice that:
 - Exports workspace data asynchronously via REST API
 - Exports documents from one workspace to another workspace
-- Converts Huly documents to standardized formats
+- Converts Hanzo documents to standardized formats
 - Handles complex document relationships (references, collections, attachments)
 - Packages exports as ZIP archives and saves them to the workspace Drive
 - Sends notifications upon completion or failure
@@ -199,7 +199,7 @@ Exports documents from the current workspace to another workspace. This endpoint
 
 ## Document Conversion
 
-The converter transforms Huly documents into a unified format that:
+The converter transforms Hanzo documents into a unified format that:
 
 ### Handles Special Types
 - **References** (`RefTo`): Resolved to readable format (e.g., person names)
@@ -284,7 +284,7 @@ rush build --to @hanzo/pod-export
 
 ```bash
 cd services/export/pod-export
-ACCOUNTS_URL="http://127.0.0.1:3000" SECRET="secret" DB_URL=postgresql://root@huly.local:26257/defaultdb?sslmode=disable SERVICE_ID="export" STORAGE_CONFIG="datalake|http://huly.local:4030" rushx run-local
+ACCOUNTS_URL="http://127.0.0.1:3000" SECRET="secret" DB_URL=postgresql://root@hanzo.local:26257/defaultdb?sslmode=disable SERVICE_ID="export" STORAGE_CONFIG="datalake|http://hanzo.local:4030" rushx run-local
 ```
 
 ### Testing

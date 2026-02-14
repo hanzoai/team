@@ -16,14 +16,16 @@
     "Tier": "Plan",
     "StorageLimit": "{limit} {unit} depolama",
     "TrafficLimit": "{limit} {unit} video/ses trafiği",
-    "Pro": "Pro",
-    "ProDescription": "Profesyoneller ve içerik üreticileri için. $5 kredi dahil.",
-    "Team": "Team",
-    "TeamDescription": "Büyüyen ekipler ve organizasyonlar için.",
-    "Max": "Max",
-    "MaxDescription": "Zorlu iş yükleri için maksimum güç.",
+    "Common": "Common",
+    "CommonDescription": "Hanzo ile başlayan bireyler ve ekipler için.",
+    "Rare": "Rare",
+    "RareDescription": "Bireysel yaratıcılar, serbest çalışanlar ve mikro ajanslar için.",
+    "Epic": "Epic",
+    "EpicDescription": "Profesyonel yaratıcı şirketler ve küçük işletmeler için.",
+    "Legendary": "Legendary",
+    "LegendaryDescription": "Maksimum yeteneklere ihtiyaç duyan büyük ekipler için en iyisi.",
     "UnlimitedUsers": "Sınırsız kullanıcı",
-    "UnlimitedObjects": "Sınırsız Hanzo Team nesneleri",
+    "UnlimitedObjects": "Sınırsız Hanzo nesneleri",
     "ChangePlan": "Plan değiştir",
     "Subscribe": "Abone ol",
     "Monthly": "Aylık",
@@ -54,8 +56,6 @@
     "Of": "/",
     "UpgradePlan": "Planı Yükselt",
     "LimitReached": "Çalışma alanı limiti aşıldı, bazı işlevler devre dışı bırakılabilir. Tam erişimi geri yüklemek için yükseltin.",
-    "RestrictedPlans": "Abonelik planını yalnızca çalışma alanı sahibi veya faturalama yöneticisi değiştirebilir.",
-    "SubscriptionOperationFailed": "Abonelik işlemi başarısız oldu",
-    "SubscriptionErrorMessage": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin veya destek ile iletişime geçin."
+    "RestrictedPlans": "Abonelik planını yalnızca çalışma alanı sahibi veya faturalama yöneticisi değiştirebilir."
   }
 }

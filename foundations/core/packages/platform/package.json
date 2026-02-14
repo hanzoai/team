@@ -43,7 +43,7 @@
   "dependencies": {
     "intl-messageformat": "^10.7.14"
   },
-  "repository": "https://github.com/hanzoai/hanzo.core",
+  "repository": "https://github.com/hcengineering/hanzo.core",
   "publishConfig": {
     "access": "public"
   },

@@ -10,7 +10,7 @@
 
 - **Core**: core, server, client, middleware
 - **Database**: mongo, postgres, elastic
-- **Storage**: server-storage, minio, s3, datalake, hulylake
+- **Storage**: server-storage, minio, s3, datalake, hanzolake
 - **Infrastructure**: kafka, collaboration
 
 Standard structure: `src/` → `lib/` (compiled), `tsconfig.json`, `jest.config.js`, `package.json` with `@hanzo/` scope

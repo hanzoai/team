@@ -939,7 +939,7 @@ export async function migrateMergedAccounts (
     const personsAccounts = await pgClient`
       SELECT workspace_id, person_ref, array_agg(new_social_key) as social_keys
       FROM temp_data.account_socialkey_mapping
-      WHERE new_social_key != 'email:hanzo.ai.bot@hanzo.team'
+      WHERE new_social_key != 'email:hanzo.ai.bot@hc.engineering'
       GROUP BY workspace_id, person_ref
       HAVING count(*) > 1 
     `

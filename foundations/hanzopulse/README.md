@@ -1,6 +1,6 @@
-# Hanzo Teampulse
+# Hanzopulse
 
-Hanzo Teampulse is a service that enables clients to share information on a “whiteboard”. Clients connected to the same “whiteboard” see data provided by other clients to the whiteboard.
+Hanzopulse is a service that enables clients to share information on a “whiteboard”. Clients connected to the same “whiteboard” see data provided by other clients to the whiteboard.
 
 The service is exposed as REST and WebSocket API.
 
@@ -58,8 +58,8 @@ Size of data is limited to some reasonable size
     - Content-Type: application/json
     - Content-Length: optional
     - Headers: TTL or absolute expiration time
-	- `HULY-TTL` — autodelete in N seconds
-	- or `HULY-EXPIRE-AT` — autodelete in UnixTime
+	- `HANZO-TTL` — autodelete in N seconds
+	- or `HANZO-EXPIRE-AT` — autodelete in UnixTime
 	- default max_ttl = 3600 (settings in config/default.toml)
     - Conditional Headers:
 	- `If-Match: *` — update only if the key exists
@@ -203,37 +203,37 @@ Size of data is limited to some reasonable size
 
 ## Running
 
-Pre-build docker images is available at: hanzoai/service_hanzopulse:{tag}.
+Pre-build docker images is available at: hardcoreeng/service_hanzopulse:{tag}.
 
 You can use the following command to run the image locally:
 ```bash
-docker run -p 8095:8095 -it --rm hanzoai/service_hanzopulse:{tag}"
+docker run -p 8095:8095 -it --rm hardcoreeng/service_hanzopulse:{tag}"
 ```
 
 If you want to run the service as a part of local hanzo development environment use the following command:
 ```bash
- export HULY_REDIS_URLS="redis://hanzo.local:6379"
- docker run --rm -it --network dev_default -p 8095:8095 hanzoai/service_hanzopulse:{tag}
+ export HANZO_REDIS_URLS="redis://hanzo.local:6379"
+ docker run --rm -it --network dev_default -p 8095:8095 hardcoreeng/service_hanzopulse:{tag}
 ```
-This will run Hanzo Teampulse in the same network as the rest of hanzo services, and set the redis connection string to the one matching the local dev redis instance.
+This will run Hanzopulse in the same network as the rest of hanzo services, and set the redis connection string to the one matching the local dev redis instance.
 
 You can then access hanzopulse at http://localhost:8095.
 
 
 ## Authetication
-Hanzo Teampulse uses bearer JWT token authetication. At the moment, it will accept any token signed by the hanzopulse secret. The secret is set in the environment variable HULY_TOKEN_SECRET variable. 
+Hanzopulse uses bearer JWT token authetication. At the moment, it will accept any token signed by the hanzopulse secret. The secret is set in the environment variable HANZO_TOKEN_SECRET variable. 
 
 ## Configuration
 The following environment variables are used to configure hanzopulse:
-   - ```HULY_BIND_HOST```: host to bind the server to (default: 0.0.0.0)
-   - ```HULY_BIND_PORT```: port to bind the server to (default: 8094)
-   - ```HULY_TOKEN_SECRET```: secret used to sign JWT tokens (default: secret)
-   - ```HULY_REDIS_URLS```: redis connection string (default: redis://hanzo.local:6379)
-   - ```HULY_REDIS_PASSWORD```: redis password (default: "&lt;invalid&gt;")
-   - ```HULY_REDIS_MODE```: redis mode "direct" or "sentinel" (default: "direct")
-   - ```HULY_REDIS_SERVICE```: redis service (default: "mymaster")
-   - ```HULY_MAX_TTL```: maximum storage time (default: 3600)
-   - TODO: ```HULY_PAYLOAD_SIZE_LIMIT```: maximum size of the payload (default: 2Mb)
+   - ```HANZO_BIND_HOST```: host to bind the server to (default: 0.0.0.0)
+   - ```HANZO_BIND_PORT```: port to bind the server to (default: 8094)
+   - ```HANZO_TOKEN_SECRET```: secret used to sign JWT tokens (default: secret)
+   - ```HANZO_REDIS_URLS```: redis connection string (default: redis://hanzo.local:6379)
+   - ```HANZO_REDIS_PASSWORD```: redis password (default: "&lt;invalid&gt;")
+   - ```HANZO_REDIS_MODE```: redis mode "direct" or "sentinel" (default: "direct")
+   - ```HANZO_REDIS_SERVICE```: redis service (default: "mymaster")
+   - ```HANZO_MAX_TTL```: maximum storage time (default: 3600)
+   - TODO: ```HANZO_PAYLOAD_SIZE_LIMIT```: maximum size of the payload (default: 2Mb)
 
 ## Todo (in no particular order)
 - [ ] Optional value encryption

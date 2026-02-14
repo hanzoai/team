@@ -55,7 +55,7 @@
       "import": "./lib/index.js"
     }
   },
-  "repository": "https://github.com/hanzoai/hanzo.core",
+  "repository": "https://github.com/hcengineering/hanzo.core",
   "publishConfig": {
     "access": "public"
   }

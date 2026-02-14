@@ -18,6 +18,6 @@ Tue, 14 Oct 2025 10:12:38 GMT
 ### Patches
 
 - Fix update patch event apply
-- update hulylake client
+- update hanzolake client
 - update deps
 

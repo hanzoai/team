@@ -3,7 +3,7 @@
     "IntegrationLabel": "Hanzo Mail",
     "IntegrationDescription": "Connect your Hanzo mailbox to send, receive, and manage emails",
     "Connect": "Connect",
-    "ConnectHulyMail": "Connect Hanzo mailbox",
+    "ConnectHanzoMail": "Connect Hanzo mailbox",
     "Cancel": "Cancel",
     "Email": "Email",
     "Status": "Status",

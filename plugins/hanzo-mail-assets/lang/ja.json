@@ -1,13 +1,13 @@
 {
   "string": {
     "IntegrationLabel": "Hanzo Mail",
-    "IntegrationDescription": "Hulyメールボックスに接続して、メールの送信、受信、管理を行います",
+    "IntegrationDescription": "Hanzoメールボックスに接続して、メールの送信、受信、管理を行います",
     "Connect": "接続",
-    "ConnectHulyMail": "Hulyメールボックスに接続",
+    "ConnectHanzoMail": "Hanzoメールボックスに接続",
     "Cancel": "キャンセル",
     "Email": "メール",
     "Status": "ステータス",
-    "FailedToConnect": "Hulyメールサービスは利用できません",
+    "FailedToConnect": "Hanzoメールサービスは利用できません",
     "TotalMessages": "総メッセージ数:",
     "Configure": "Hanzo Mail設定",
     "ChannelSpace": "メッセージチャンネルのスペース",

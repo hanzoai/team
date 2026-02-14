@@ -26,6 +26,6 @@ Tue, 14 Oct 2025 10:12:38 GMT
 
 - fix language store
 - Do not update message.modified date if content is not changed 
-- update hulylake client
+- update hanzolake client
 - update deps
 

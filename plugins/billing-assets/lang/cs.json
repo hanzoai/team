@@ -16,14 +16,16 @@
     "Tier": "Tarif",
     "StorageLimit": "{limit}GB úložiště",
     "TrafficLimit": "{limit}GB video/audio provozu",
-    "Pro": "Pro",
-    "ProDescription": "Pro profesionály a tvůrce. Zahrnuje kredit $5.",
-    "Team": "Team",
-    "TeamDescription": "Pro rostoucí týmy a organizace.",
-    "Max": "Max",
-    "MaxDescription": "Maximální výkon pro náročné úlohy.",
+    "Common": "Common",
+    "CommonDescription": "Pro jednotlivce a týmy začínající s Hanzo.",
+    "Rare": "Rare",
+    "RareDescription": "Pro jednotlivé kreativce, freelancery a mikro-agentury.",
+    "Epic": "Epic",
+    "EpicDescription": "Pro profesionální kreativní společnosti a malé firmy.",
+    "Legendary": "Legendary",
+    "LegendaryDescription": "Nejlepší pro velké týmy, které potřebují maximální možnosti.",
     "UnlimitedUsers": "Neomezení uživatelé",
-    "UnlimitedObjects": "Neomezené Hanzo Team objekty",
+    "UnlimitedObjects": "Neomezené Hanzo objekty",
     "Upgrade": "Upgradovat",
     "Subscribe": "Přihlásit se",
     "Monthly": "Měsíčně",
@@ -54,8 +56,6 @@
     "Of": "z",
     "UpgradePlan": "Upgradovat plán",
     "LimitReached": "Dosažen limit pracovního prostoru, některé funkce mohou být zakázány. Upgradujte pro obnovení plného přístupu.",
-    "RestrictedPlans": "Pouze vlastník pracovního prostoru nebo správce fakturace může změnit plán předplatného.",
-    "SubscriptionOperationFailed": "Operace s předplatným se nezdařila",
-    "SubscriptionErrorMessage": "Něco se pokazilo. Zkuste to znovu nebo kontaktujte podporu."
+    "RestrictedPlans": "Pouze vlastník pracovního prostoru nebo správce fakturace může změnit plán předplatného."
   }
 }

@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2023 Hanzo AI Inc.
+// Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -325,8 +325,7 @@ export function createModel (builder: Builder): void {
   })
 
   builder.mixin(contact.class.Person, core.class.Class, core.mixin.TxAccessLevel, {
-    createAccessLevel: AccountRole.Guest,
-    isIdentity: true
+    createAccessLevel: AccountRole.Guest
   })
 
   builder.mixin(contact.class.SocialIdentity, core.class.Class, core.mixin.TxAccessLevel, {
@@ -879,7 +878,7 @@ export function createModel (builder: Builder): void {
     contact.class.SocialIdentityProvider,
     core.space.Model,
     {
-      label: getEmbeddedLabel('Hanzo Team'),
+      label: getEmbeddedLabel('Hanzo'),
       icon: contact.icon.Hanzo,
       type: SocialIdType.HANZO
     },

@@ -16,14 +16,16 @@
     "Tier": "Plano",
     "StorageLimit": "{limit} {unit} de armazenamento",
     "TrafficLimit": "{limit} {unit} de tráfego de vídeo/áudio",
-    "Pro": "Pro",
-    "ProDescription": "Para profissionais e criadores. Crédito de $5 incluído.",
-    "Team": "Team",
-    "TeamDescription": "Para equipes e organizações em crescimento.",
-    "Max": "Max",
-    "MaxDescription": "Potência máxima para cargas de trabalho exigentes.",
+    "Common": "Common",
+    "CommonDescription": "Para indivíduos e equipes começando com Hanzo.",
+    "Rare": "Rare",
+    "RareDescription": "Para criativos individuais, freelancers e micro-agências.",
+    "Epic": "Epic",
+    "EpicDescription": "Para empresas criativas profissionais e pequenas empresas.",
+    "Legendary": "Legendary",
+    "LegendaryDescription": "Melhor para grandes equipes que precisam de capacidades máximas.",
     "UnlimitedUsers": "Usuários ilimitados",
-    "UnlimitedObjects": "Objetos Hanzo Team ilimitados",
+    "UnlimitedObjects": "Objetos Hanzo ilimitados",
     "ChangePlan": "Alterar plano",
     "Subscribe": "Assinar",
     "Monthly": "Mensal",
@@ -54,8 +56,6 @@
     "Of": "de",
     "UpgradePlan": "Atualizar Plano",
     "LimitReached": "Limite do workspace atingido, algumas funcionalidades podem estar desabilitadas. Atualize para restaurar acesso completo.",
-    "RestrictedPlans": "Apenas o proprietário do workspace ou o administrador de faturamento podem alterar o plano de assinatura.",
-    "SubscriptionOperationFailed": "Falha na operação de assinatura",
-    "SubscriptionErrorMessage": "Algo deu errado. Tente novamente ou entre em contato com o suporte."
+    "RestrictedPlans": "Apenas o proprietário do workspace ou o administrador de faturamento podem alterar o plano de assinatura."
   }
 }

@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
-  "author": "Hanzo AI Inc.",
+  "author": "Hardcore Engineering Inc.",
   "template": "@hanzo/node-package",
   "license": "EPL-2.0",
   "scripts": {
@@ -42,7 +42,7 @@
     "base64-js": "^1.5.1",
     "yjs": "^13.6.27"
   },
-  "repository": "https://github.com/hanzoai/hanzo.server",
+  "repository": "https://github.com/hcengineering/hanzo.server",
   "publishConfig": {
     "access": "public"
   },

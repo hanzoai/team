@@ -81,7 +81,7 @@ Fri, 10 Oct 2025 05:24:50 GMT
 
 ### Patches
 
-- add hulylake storage adapter
+- add hanzolake storage adapter
 
 ## 0.7.0
 Thu, 09 Oct 2025 16:41:02 GMT

@@ -1,6 +1,6 @@
 # Hanzo Team Core
 
-[![GitHub License](https://img.shields.io/github/license/hcengineering/huly.core?style=for-the-badge)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/hcengineering/hanzo.core?style=for-the-badge)](LICENSE)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
@@ -8,7 +8,7 @@
 
 Hanzo Team Core is a collection of core packages extracted from the [Hanzo Team](https://github.com/hcengineering/platform). This repository contains fundamental building blocks and libraries that power the Hanzo Team ecosystem, including core data models, client libraries, text processing engines, and platform utilities.
 
-These packages are designed to be reusable, modular, and framework-agnostic, making them suitable for building custom applications on top of the Hanzo Team or integrating Huly functionality into existing projects.
+These packages are designed to be reusable, modular, and framework-agnostic, making them suitable for building custom applications on top of the Hanzo Team or integrating Hanzo functionality into existing projects.
 
 ## Packages
 
@@ -27,7 +27,7 @@ This repository includes the following core packages:
 - **[@hanzo/api-client](packages/api-client)** - API client for programmatic access to Hanzo Team (WebSocket and REST)
 - **[@hanzo/account-client](packages/account-client)** - Account management client
 - **[@hanzo/collaborator-client](packages/collaborator-client)** - Real-time collaboration client
-- **[@hanzo/hulylake-client](packages/hulylake-client)** - HulyLake data warehouse client
+- **[@hanzo/hanzolake-client](packages/hanzolake-client)** - HanzoLake data warehouse client
 - **[@hanzo/analytics](packages/analytics)** - Analytics and tracking
 - **[@hanzo/analytics-service](packages/analytics-service)** - Analytics service implementation
 
@@ -138,15 +138,15 @@ node ./common/scripts/bump.js -p projectName
 
 ## API Client Usage
 
-If you want to interact with Hanzo Team programmatically, check out the [API Client](packages/api-client/README.md) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
+If you want to interact with Hanzo Team programmatically, check out the [API Client](packages/api-client/README.md) documentation. The API client provides a typed interface for all Hanzo operations and can be used to build integrations and custom applications.
 
-You can find API usage examples in the [Huly examples](https://github.com/hcengineering/huly-examples) repository.
+You can find API usage examples in the [Hanzo examples](https://github.com/hcengineering/hanzo-examples) repository.
 
 ## Related Projects
 
 - **[Hanzo Team](https://github.com/hcengineering/platform)** - The main Hanzo Team repository
-- **[Huly Self-Host](https://github.com/hcengineering/huly-selfhost)** - Self-hosting solution for Hanzo Team
-- **[Huly Examples](https://github.com/hcengineering/huly-examples)** - API usage examples
+- **[Hanzo Self-Host](https://github.com/hcengineering/hanzo-selfhost)** - Self-hosting solution for Hanzo Team
+- **[Hanzo Examples](https://github.com/hcengineering/hanzo-examples)** - API usage examples
 
 ## Contributing
 
@@ -158,8 +158,8 @@ Licensed under the [EPL-2.0](LICENSE) license.
 
 ## Additional Links
 
-- [Huly Website](https://huly.io/)
-- [Documentation](https://docs.huly.io/)
+- [Hanzo Website](https://hanzo.team/)
+- [Documentation](https://docs.hanzo.team/)
 - [Community](https://github.com/hcengineering/platform/discussions)
 
 ---

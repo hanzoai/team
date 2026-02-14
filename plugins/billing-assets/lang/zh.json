@@ -16,14 +16,16 @@
     "Tier": "计划",
     "StorageLimit": "{limit} {unit} 存储空间",
     "TrafficLimit": "{limit} {unit} 视频/音频流量",
-    "Pro": "Pro",
-    "ProDescription": "适合专业人士和创作者。包含$5赠金。",
-    "Team": "Team",
-    "TeamDescription": "适合成长中的团队和组织。",
-    "Max": "Max",
-    "MaxDescription": "为高要求工作负载提供最大算力。",
+    "Common": "Common",
+    "CommonDescription": "适合刚开始使用Hanzo的个人和团队。",
+    "Rare": "Rare",
+    "RareDescription": "适合个人创作者、自由职业者和微型机构。",
+    "Epic": "Epic",
+    "EpicDescription": "适合专业创意公司和小型企业。",
+    "Legendary": "Legendary",
+    "LegendaryDescription": "最适合需要最大功能的大型团队。",
     "UnlimitedUsers": "无限用户",
-    "UnlimitedObjects": "无限Hanzo Team对象",
+    "UnlimitedObjects": "无限Hanzo对象",
     "ChangePlan": "更改计划",
     "Subscribe": "订阅",
     "Monthly": "每月",
@@ -54,8 +56,6 @@
     "Of": "/",
     "UpgradePlan": "升级计划",
     "LimitReached": "已达到工作空间限制，某些功能可能被禁用。请升级以恢复完全访问权限。",
-    "RestrictedPlans": "只有工作空间所有者或计费管理员才能更改订阅计划。",
-    "SubscriptionOperationFailed": "订阅操作失败",
-    "SubscriptionErrorMessage": "出了点问题。请重试或联系支持。"
+    "RestrictedPlans": "只有工作空间所有者或计费管理员才能更改订阅计划。"
   }
 }

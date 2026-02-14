@@ -3,7 +3,7 @@ services:
   cockroach:
     image: cockroachdb/cockroach:v24.1.2
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     ports:
       - '26258:26257'
       - '18089:8080'
@@ -86,9 +86,9 @@ services:
       retries: 10
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
   account:
-    image: hanzoai/account
+    image: hardcoreeng/account
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     pull_policy: never
     links:
       - cockroach
@@ -103,13 +103,13 @@ services:
       - SERVER_SECRET=secret
       - WORKSPACE_LIMIT_PER_USER=100
       - DB_URL=${DB_PG_URL}
-      - TRANSACTOR_URL=ws://transactor:3334;ws://hanzoai.local:3334
+      - TRANSACTOR_URL=ws://transactor:3334;ws://hanzo.local:3334
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - BRANDING_PATH=/var/cfg/branding-test.json
   workspace:
-    image: hanzoai/workspace
+    image: hardcoreeng/workspace
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     links:
       - cockroach
       - minio
@@ -119,16 +119,16 @@ services:
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - SERVER_SECRET=secret
       - DB_URL=${DB_PG_URL}
-      - TRANSACTOR_URL=ws://transactor:3334;ws://hanzoai.local:3334
+      - TRANSACTOR_URL=ws://transactor:3334;ws://hanzo.local:3334
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - ACCOUNTS_URL=http://account:3003
       - ACCOUNTS_DB_URL=${DB_PG_URL}
       - BRANDING_PATH=/var/cfg/branding.json
     restart: unless-stopped
   front:
-    image: hanzoai/front
+    image: hardcoreeng/front
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     pull_policy: never
     links:
       - account
@@ -144,7 +144,7 @@ services:
     environment:
       - SERVER_PORT=8083
       - SERVER_SECRET=secret
-      - ACCOUNTS_URL=http://hanzoai.local:3003
+      - ACCOUNTS_URL=http://hanzo.local:3003
       - UPLOAD_URL=/files
       - GMAIL_URL=http://hanzoai.local:8088
       - CALENDAR_URL=http://hanzoai.local:8095
@@ -156,9 +156,9 @@ services:
       - PRINT_URL=http://hanzoai.local:4003
       - SIGN_URL=http://hanzoai.local:4008
   transactor:
-    image: hanzoai/transactor
+    image: hardcoreeng/transactor
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     pull_policy: never
     links:
       - cockroach
@@ -187,9 +187,9 @@ services:
       - RATE_LIMIT_MAX=25000
       - RATE_LIMIT_WINDOW=1000
   collaborator:
-    image: hanzoai/collaborator
+    image: hardcoreeng/collaborator
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     links:
       - cockroach
       - minio
@@ -204,14 +204,14 @@ services:
       - STORAGE_CONFIG=${STORAGE_CONFIG}
     restart: unless-stopped
   rekoni:
-    image: hanzoai/rekoni-service
+    image: hardcoreeng/rekoni-service
     restart: on-failure
     ports:
       - 4007:4004
   print:
-    image: hanzoai/print
+    image: hardcoreeng/print
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     restart: unless-stopped
     ports:
       - 4003:4005
@@ -224,9 +224,9 @@ services:
         limits:
           memory: 300M
   sign:
-    image: hanzoai/sign
+    image: hardcoreeng/sign
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     restart: unless-stopped
     ports:
       - 4008:4006
@@ -247,7 +247,7 @@ services:
         limits:
           memory: 300M
   fulltext:
-    image: hanzoai/fulltext
+    image: hardcoreeng/fulltext
     restart: unless-stopped
     depends_on:
       redpanda:

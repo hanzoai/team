@@ -1,4 +1,4 @@
-# Change Log - @hanzo/hulylake
+# Change Log - @hanzo/hanzolake
 
 This log was last generated on Wed, 26 Nov 2025 16:04:43 GMT and should not be manually modified.
 
@@ -80,5 +80,5 @@ Fri, 10 Oct 2025 05:24:50 GMT
 
 ### Patches
 
-- add hulylake storage adapter
+- add hanzolake storage adapter
 

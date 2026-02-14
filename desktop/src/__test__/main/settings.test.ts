@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -50,7 +50,7 @@ describe('Settings', () => {
 
       const actualUrl = systemUnderTest.readServerUrl()
 
-      expect(actualUrl).toBe('http://hanzoai.local:8087')
+      expect(actualUrl).toBe('http://hanzo.local:8087')
     })
 
     test('isDev is true and FRONT_URL is set', () => {
@@ -101,7 +101,7 @@ describe('Settings', () => {
 
       const result = systemUnderTest.readServerUrl()
 
-      expect(result).toBe('https://hanzo.team')
+      expect(result).toBe('https://hanzo.app')
     })
 
     test('all (store, packed config, environment) options are available', () => {

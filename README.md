@@ -9,7 +9,7 @@
 
 Hanzo Team is a robust platform for project management, CRM, HR, and team collaboration.
 This repository includes several applications, such as Chat, Project Management, CRM, HRM, and ATS.
-Built on the Huly open-source platform by [Hanzo AI](https://hanzo.ai).
+Built on the Hanzo open-source platform by [Hanzo AI](https://hanzo.ai).
 
 ![hanzoai](https://repository-images.githubusercontent.com/392073243/6d27d5cc-38cd-4d88-affe-bb88b393180c)
 
@@ -24,7 +24,7 @@ This project offers a convenient method to host hanzoai using `docker`, designed
 
 ## API Client
 
-If you want to interact with Hanzo Team programmatically, check out our [API Client](https://github.com/hcengineering/huly.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Hanzo Team operations and can be used to build integrations and custom applications.
+If you want to interact with Hanzo Team programmatically, check out our [API Client](https://github.com/hcengineering/hanzo.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Hanzo Team operations and can be used to build integrations and custom applications.
 
 You can find API usage examples in the [hanzoai examples](https://github.com/hanzoai/hanzoai-examples) repository.
 

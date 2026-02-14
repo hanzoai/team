@@ -1,6 +1,6 @@
-# Hanzo TeampulseClient
+# HanzopulseClient
 
-A TypeScript/Node.js client for the Hanzo Teampulse WebSocket server.
+A TypeScript/Node.js client for the Hanzopulse WebSocket server.
 Supports automatic reconnection, request–response correlation, `get` / `put` / `delete`, and subscriptions.
 
 ---
@@ -109,11 +109,11 @@ or, if needed internally:
 ## Usage Example
 
 ```ts
-import { Hanzo TeampulseClient } from "./hanzopulse_client.js"
+import { HanzopulseClient } from "./hanzopulse_client.js"
 
 async function main() {
   // connect
-  const client = await Hanzo TeampulseClient.connect("wss://hanzopulse_mem.lleo.me/ws")
+  const client = await HanzopulseClient.connect("wss://hanzopulse_mem.lleo.me/ws")
 
   // subscribe to updates
   const cb = (msg, key, index) => {

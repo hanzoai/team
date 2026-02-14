@@ -61,8 +61,8 @@ We actively welcome your pull requests:
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/huly.net.git
-cd huly.net
+git clone https://github.com/YOUR_USERNAME/hanzo.net.git
+cd hanzo.net
 
 # Install dependencies
 node common/scripts/install-run-rush.js install
@@ -74,7 +74,7 @@ node common/scripts/install-run-rush.js build
 ### Project Structure
 
 ```
-huly.net/
+hanzo.net/
 ├── packages/
 │   ├── core/          # Core network implementation
 │   ├── backrpc/       # ZeroMQ RPC layer

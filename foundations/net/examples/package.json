@@ -14,7 +14,7 @@
     "run:ha": "ts-node ha-stateless-container-example.ts"
   },
   "keywords": [
-    "huly",
+    "hanzo",
     "network",
     "examples"
   ],

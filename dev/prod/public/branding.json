@@ -86,7 +86,7 @@
       }
     ]
   },
-  "huly.local:8080": {
+  "hanzo.local:8080": {
     "title": "Hanzo Team",
     "languages": "en,ru,pt,es,zh,fr,de,ja",
     "defaultLanguage": "en",
@@ -115,7 +115,7 @@
       }
     ]
   },
-  "huly.local:8087": {
+  "hanzo.local:8087": {
     "title": "Hanzo Team",
     "languages": "en,ru,pt,es,zh,fr,de,ja",
     "defaultLanguage": "en",
@@ -144,7 +144,7 @@
       }
     ]
   },
-  "huly.local:8081": {
+  "hanzo.local:8081": {
     "title": "Hanzo Team",
     "languages": "en",
     "defaultLanguage": "en",
@@ -170,7 +170,7 @@
       }
     ]
   },
-  "huly.local:8088": {
+  "hanzo.local:8088": {
     "title": "Hanzo Team",
     "languages": "en",
     "defaultLanguage": "en",

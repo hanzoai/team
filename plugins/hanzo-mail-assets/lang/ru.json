@@ -1,13 +1,13 @@
 {
   "string": {
     "IntegrationLabel": "Hanzo Mail",
-    "IntegrationDescription": "Подключите свой почтовый ящик Huly для отправки, получения и управления электронной почтой",
+    "IntegrationDescription": "Подключите свой почтовый ящик Hanzo для отправки, получения и управления электронной почтой",
     "Connect": "Подключить",
-    "ConnectHulyMail": "Подключить почтовый ящик Huly",
+    "ConnectHanzoMail": "Подключить почтовый ящик Hanzo",
     "Cancel": "Отмена",
     "Email": "Электронная почта",
     "Status": "Статус",
-    "FailedToConnect": "Служба почты Huly недоступна",
+    "FailedToConnect": "Служба почты Hanzo недоступна",
     "TotalMessages": "Всего сообщений:",
     "Configure": "Настроить Hanzo Mail",
     "ChannelSpace": "Пространство для канала сообщений",

@@ -79,7 +79,7 @@ services:
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
     restart: unless-stopped
   account:
-    image: hanzoai/account
+    image: hardcoreeng/account
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -114,7 +114,7 @@ services:
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   stats:
-    image: hanzoai/stats
+    image: hardcoreeng/stats
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     ports:
@@ -124,23 +124,23 @@ services:
       - SERVER_SECRET=secret
     restart: unless-stopped
   payment:
-    image: hanzoai/payment
+    image: hardcoreeng/payment
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     ports:
       - 3040:3040
     environment:
       - SECRET=secret
       - PORT=3040
-      - ACCOUNTS_URL=http://hanzoai.local:3000
-      - FRONT_URL=http://hanzoai.local:8087
+      - ACCOUNTS_URL=http://hanzo.local:3000
+      - FRONT_URL=http://hanzo.local:8087
       - USE_SANDBOX=true
       - POLAR_ACCESS_TOKEN=${POLAR_ACCESS_TOKEN}
       - POLAR_WEBHOOK_SECRET=${POLAR_WEBHOOK_SECRET}
       - POLAR_SUBSCRIPTION_PLANS=${POLAR_SUBSCRIPTION_PLANS}
     restart: unless-stopped
   workspace_cockroach:
-    image: hanzoai/workspace
+    image: hardcoreeng/workspace
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -158,7 +158,7 @@ services:
       - STATS_URL=http://hanzoai.local:4900
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - MODEL_ENABLED=*
-      - ACCOUNTS_URL=http://hanzoai.local:3000
+      - ACCOUNTS_URL=http://hanzo.local:3000
       - ACCOUNTS_DB_URL=${DB_CR_URL}
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
@@ -167,7 +167,7 @@ services:
       - INIT_WORKSPACE=staging-dev
     restart: unless-stopped
   collaborator:
-    image: hanzoai/collaborator
+    image: hardcoreeng/collaborator
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -185,7 +185,7 @@ services:
       - STATS_URL=http://hanzoai.local:4900
     restart: unless-stopped
   front:
-    image: hanzoai/front
+    image: hardcoreeng/front
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -210,20 +210,20 @@ services:
       - REKONI_URL=http://hanzoai.local:4004
       - COLLABORATOR_URL=ws://hanzoai.local:3078
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - GITHUB_URL=http://hanzoai.local:3500
-      - PRINT_URL=http://hanzoai.local:4005
-      - SIGN_URL=http://hanzoai.local:4006
-#      - ANALYTICS_COLLECTOR_URL=http://hanzoai.local:4017
+      - GITHUB_URL=http://hanzo.local:3500
+      - PRINT_URL=http://hanzo.local:4005
+      - SIGN_URL=http://hanzo.local:4006
+#      - ANALYTICS_COLLECTOR_URL=http://hanzo.local:4017
       - DESKTOP_UPDATES_URL=https://dist.hanzo.team
       - DESKTOP_UPDATES_CHANNEL=dev
       - DESKTOP_UPDATES_CHANNELS=dev;tracex:dev-tracex
-      - BRANDING_URL=http://hanzoai.local:8087/branding.json
-      - STREAM_URL=http://hanzoai.local:1080/recording
-      - PAYMENT_URL=http://hanzoai.local:3040
+      - BRANDING_URL=http://hanzo.local:8087/branding.json
+      - STREAM_URL=http://hanzo.local:1080/recording
+      - PAYMENT_URL=http://hanzo.local:3040
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   transactor_cockroach:
-    image: hanzoai/transactor
+    image: hardcoreeng/transactor
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -252,11 +252,11 @@ services:
       - ACCOUNTS_URL=http://hanzoai.local:3000
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://hanzoai.local:4010
+      - AI_BOT_URL=http://hanzo.local:4010
       - COMMUNICATION_TIME_LOGGING_ENABLED=true
     restart: unless-stopped
   fulltext_cockroach:
-    image: hanzoai/fulltext
+    image: hardcoreeng/fulltext
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -274,13 +274,13 @@ services:
       - FULLTEXT_DB_URL=http://hanzoai.local:9200
       - ELASTIC_INDEX_NAME=local_storage_index # Same index for simplicity
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://hanzoai.local:4900
-      - REKONI_URL=http://hanzoai.local:4004
-      - ACCOUNTS_URL=http://hanzoai.local:3000
+      - STATS_URL=http://hanzo.local:4900
+      - REKONI_URL=http://hanzo.local:4004
+      - ACCOUNTS_URL=http://hanzo.local:3000
   datalake:
-    image: hanzoai/datalake
+    image: hardcoreeng/datalake
     extra_hosts:
-      - 'hanzoai.local:host-gateway'
+      - 'hanzo.local:host-gateway'
     depends_on:
       minio:
         condition: service_healthy
@@ -295,9 +295,9 @@ services:
     environment:
       - PORT=4030
       - SECRET=secret
-      - ACCOUNTS_URL=http://hanzoai.local:3000
-      - STATS_URL=http://hanzoai.local:4900
-      - STREAM_URL=http://hanzoai.local:1080/recording
+      - ACCOUNTS_URL=http://hanzo.local:3000
+      - STATS_URL=http://hanzo.local:4900
+      - STREAM_URL=http://hanzo.local:1080/recording
       - DB_URL=${DB_CR_URL}
       - BUCKETS=blobs,eu|http://minio:9000?accessKey=minioadmin&secretKey=minioadmin
     restart: unless-stopped
@@ -307,15 +307,15 @@ services:
       - 6379:6379
     restart: unless-stopped
   hanzopulse:
-    image: hanzoai/hanzopulse
+    image: hardcoreeng/hanzopulse
     depends_on:
       redis:
         condition: service_started
     ports:
       - 8099:8099
     environment:
-      - TEAM_REDIS_URLS=redis://redis:6379
-      - TEAM_BIND_PORT=8099
+      - HANZO_REDIS_URLS=redis://redis:6379
+      - HANZO_BIND_PORT=8099
     restart: unless-stopped
 volumes:
   db:

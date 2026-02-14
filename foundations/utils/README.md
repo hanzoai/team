@@ -31,8 +31,8 @@ packages/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/hcengineering/huly.utils.git
-   cd huly.utils
+   git clone https://github.com/hcengineering/hanzo.utils.git
+   cd hanzo.utils
    ```
 
 2. Install dependencies using Rush:

@@ -1,6 +1,6 @@
 # Hanzo Team Server
 
-[![GitHub License](https://img.shields.io/github/license/hcengineering/huly.server?style=for-the-badge)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/hcengineering/hanzo.server?style=for-the-badge)](LICENSE)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
@@ -33,7 +33,7 @@ This repository includes the following server packages:
 - [@hanzo/minio](packages/minio) - MinIO storage provider for object storage
 - [@hanzo/s3](packages/s3) - AWS S3 compatible storage provider
 - [@hanzo/datalake](packages/datalake) - Data lake storage and management
-- [@hanzo/hulylake](packages/hulylake) - Huly lake storage and management
+- [@hanzo/hanzolake](packages/hanzolake) - Hanzo lake storage and management
 
 ### Infrastructure
 
@@ -202,7 +202,7 @@ Create a `.env` file in the `tests` directory with the following variables:
 
 ```env
 MONGO_URL=mongodb://localhost:27017
-POSTGRES_URL=postgresql://localhost:5432/huly
+POSTGRES_URL=postgresql://localhost:5432/hanzo
 ELASTIC_URL=http://localhost:9200
 MINIO_ENDPOINT=localhost
 MINIO_PORT=9000
@@ -212,9 +212,9 @@ KAFKA_BROKERS=localhost:9092
 ## Related Projects
 
 - [Hanzo Team](https://github.com/hcengineering/platform) - The main Hanzo Team repository
-- [Hanzo Team Core](https://github.com/hcengineering/huly.core) - Core packages and client libraries
-- [Huly Self-Host](https://github.com/hcengineering/huly-selfhost) - Self-hosting solution for Hanzo Team
-- [Huly Examples](https://github.com/hcengineering/huly-examples) - API usage examples
+- [Hanzo Team Core](https://github.com/hcengineering/hanzo.core) - Core packages and client libraries
+- [Hanzo Self-Host](https://github.com/hcengineering/hanzo-selfhost) - Self-hosting solution for Hanzo Team
+- [Hanzo Examples](https://github.com/hcengineering/hanzo-examples) - API usage examples
 
 ## Contributing
 
@@ -226,8 +226,8 @@ Licensed under the [EPL-2.0](LICENSE) license.
 
 ## Additional Links
 
-- [Huly Website](https://huly.io/)
-- [Documentation](https://docs.huly.io/)
+- [Hanzo Website](https://hanzo.team/)
+- [Documentation](https://docs.hanzo.team/)
 - [Community](https://github.com/hcengineering/platform/discussions)
 
 © 2025 [Hardcore Engineering Inc](https://hardcoreeng.com/).

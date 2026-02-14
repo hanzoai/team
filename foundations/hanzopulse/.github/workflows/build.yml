@@ -1,4 +1,4 @@
-name: Hanzo Teampulse
+name: Hanzopulse
 
 on:
   workflow_dispatch:
