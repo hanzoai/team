@@ -1,5 +1,6 @@
 {
   "ACCOUNTS_URL": "https://hanzo.team/_accounts",
+  "AI_URL": "https://ai.hanzo.ai",
   "UPLOAD_URL": "/files",
   "FILES_URL": "/files/:workspace/:filename?file=:blobId&workspace=:workspace",
   "REKONI_URL": "https://hanzo.team/_rekoni",

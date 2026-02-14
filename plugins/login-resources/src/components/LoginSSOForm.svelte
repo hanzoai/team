@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { OK, Severity, Status, getMetadata } from '@hanzo/platform'
-    import presentation from '@hanzo/presentation'
+    import { OK, Severity, Status } from '@hanzo/platform'
     import { Button } from '@hanzo/ui'
     import login from '../plugin'
 
@@ -13,7 +12,7 @@
     let status = OK
 
     function buildSSOUrl (): string {
-      const iamServer = (getMetadata(presentation.metadata.IamServer as any) as string) ?? IAM_SERVER
+      const iamServer = IAM_SERVER
       const redirectUri = `${window.location.origin}/login/authCallback`
       const params = new URLSearchParams({
         client_id: IAM_CLIENT_ID,
