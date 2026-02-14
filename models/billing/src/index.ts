@@ -56,59 +56,45 @@ export function createModel (builder: Builder): void {
     billing.class.Tier,
     core.space.Model,
     {
-      label: billing.string.Common,
-      description: billing.string.CommonDescription,
-      storageLimitGB: 10,
-      trafficLimitGB: 10,
-      priceMonthly: 0,
-      index: 0
-    },
-    billing.tier.Common
-  )
-
-  builder.createDoc(
-    billing.class.Tier,
-    core.space.Model,
-    {
-      label: billing.string.Rare,
-      description: billing.string.RareDescription,
+      label: billing.string.Pro,
+      description: billing.string.ProDescription,
       storageLimitGB: 100,
       trafficLimitGB: 100,
-      priceMonthly: 19.99,
-      index: 1,
+      priceMonthly: 20,
+      index: 0,
       color: 'Sky'
     },
-    billing.tier.Rare
+    billing.tier.Pro
   )
 
   builder.createDoc(
     billing.class.Tier,
     core.space.Model,
     {
-      label: billing.string.Epic,
-      description: billing.string.EpicDescription,
+      label: billing.string.Team,
+      description: billing.string.TeamDescription,
       storageLimitGB: 1000,
-      trafficLimitGB: 500,
-      priceMonthly: 99.99,
-      index: 2,
+      trafficLimitGB: 1000,
+      priceMonthly: 200,
+      index: 1,
       color: 'Orchid'
     },
-    billing.tier.Epic
+    billing.tier.Team
   )
 
   builder.createDoc(
     billing.class.Tier,
     core.space.Model,
     {
-      label: billing.string.Legendary,
-      description: billing.string.LegendaryDescription,
+      label: billing.string.Max,
+      description: billing.string.MaxDescription,
       storageLimitGB: 10000,
-      trafficLimitGB: 2000,
-      priceMonthly: 399.99,
-      index: 3,
+      trafficLimitGB: 10000,
+      priceMonthly: 500,
+      index: 2,
       color: 'Orange'
     },
-    billing.tier.Legendary
+    billing.tier.Max
   )
 
   builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {
