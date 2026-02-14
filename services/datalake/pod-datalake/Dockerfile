@@ -1,4 +1,4 @@
-FROM hanzoai/base-slim:v20250916
+FROM hardcoreeng/base-slim:v20250916
 WORKDIR /app
 
 # Install dependencies (sharp@0.32.6 already exists in package.json)

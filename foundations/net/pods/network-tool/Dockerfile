@@ -1,4 +1,4 @@
-FROM hanzoai/base-slim:v20250915
+FROM hardcoreeng/base-slim:v20250915
 
 WORKDIR /usr/src/app
 

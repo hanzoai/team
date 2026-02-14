@@ -1,4 +1,4 @@
-FROM hanzoai/base:v20250916
+FROM hardcoreeng/base:v20250916
 WORKDIR /usr/src/app
 
 COPY bundle/model.json ./
