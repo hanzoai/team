@@ -1,5 +1,5 @@
 import { CONFIG_KIND as DATALAKE_CONFIG_KIND, DatalakeService, type DatalakeConfig } from '@hanzo/datalake'
-import { CONFIG_KIND as HULYLAKE_CONFIG_KIND, HulylakeService, type HulylakeConfig } from '@hanzo/hulylake'
+import { CONFIG_KIND as HANZOLAKE_CONFIG_KIND, HanzolakeService, type HanzolakeConfig } from '@hanzo/hanzolake'
 import { CONFIG_KIND as MINIO_CONFIG_KIND, MinioConfig, MinioService, addMinioFallback } from '@hanzo/minio'
 import { CONFIG_KIND as S3_CONFIG_KIND, S3Service, type S3Config } from '@hanzo/s3'
 import { StorageAdapter, StorageConfiguration, type StorageConfig } from '@hanzo/server-core'
@@ -98,12 +98,12 @@ export function createStorageFromConfig (config: StorageConfig): StorageAdapter 
       throw new Error('Endpoint value is not specified')
     }
     adapter = new DatalakeService(c)
-  } else if (kind === HULYLAKE_CONFIG_KIND) {
-    const c = config as HulylakeConfig
+  } else if (kind === HANZOLAKE_CONFIG_KIND) {
+    const c = config as HanzolakeConfig
     if (c.endpoint == null) {
       throw new Error('Endpoint value is not specified')
     }
-    adapter = new HulylakeService(c)
+    adapter = new HanzolakeService(c)
   } else {
     throw new Error('Unsupported storage kind:' + kind)
   }

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -81,7 +81,7 @@ import { addNotification, NotificationSeverity, languageStore } from '@hanzo/ui'
 import { getMetadata, translate } from '@hanzo/platform'
 import view from '@hanzo/view'
 import { get } from 'svelte/store'
-import { getWorkspaceClient as getHulylakeClient } from '@hanzo/hulylake-client'
+import { getWorkspaceClient as getHanzolakeClient } from '@hanzo/hanzolake-client'
 import { v4 as uuid } from 'uuid'
 
 import { getCurrentWorkspaceUuid } from './file'
@@ -114,10 +114,10 @@ export async function setCommunicationClient (platformClient: PlatformClient): P
   const _client = new Client(platformClient)
 
   const token = getMetadata(presentation.metadata.Token) ?? ''
-  const hulylakeUrl = getMetadata(presentation.metadata.HulylakeUrl) ?? ''
-  const hulylake = getHulylakeClient(hulylakeUrl, getCurrentWorkspaceUuid(), token)
+  const hanzolakeUrl = getMetadata(presentation.metadata.HanzolakeUrl) ?? ''
+  const hanzolake = getHanzolakeClient(hanzolakeUrl, getCurrentWorkspaceUuid(), token)
 
-  initLiveQueries(_client, hulylake, onDestroy)
+  initLiveQueries(_client, hanzolake, onDestroy)
   client = _client
   onClientListeners.forEach((fn) => {
     fn()
@@ -453,8 +453,8 @@ class Client {
 
   private getSocialId (): SocialID {
     const me = getCurrentAccount()
-    const hulySocialId = me.fullSocialIds.find((it) => it.type === SocialIdType.HULY && it.verifiedOn !== undefined)
-    const id = hulySocialId?._id ?? me.primarySocialId
+    const hanzoSocialId = me.fullSocialIds.find((it) => it.type === SocialIdType.HANZO && it.verifiedOn !== undefined)
+    const id = hanzoSocialId?._id ?? me.primarySocialId
     if (id == null || id === '') {
       throw new Error('Social id not found')
     }

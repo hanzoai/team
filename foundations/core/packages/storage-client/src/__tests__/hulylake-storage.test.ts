@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { HulylakeStorage } from '../client/hulylake'
+import { HanzolakeStorage } from '../client/hanzolake'
 import * as upload from '../upload'
 
 // Mock the upload module
@@ -24,12 +24,12 @@ const mockUploadXhr = jest.mocked(upload.uploadXhr)
 const mockFetch = jest.fn()
 global.fetch = mockFetch as any
 
-describe('HulylakeStorage', () => {
-  let storage: HulylakeStorage
-  const baseUrl = 'https://hulylake.example.com'
+describe('HanzolakeStorage', () => {
+  let storage: HanzolakeStorage
+  const baseUrl = 'https://hanzolake.example.com'
 
   beforeEach(() => {
-    storage = new HulylakeStorage(baseUrl)
+    storage = new HanzolakeStorage(baseUrl)
     jest.clearAllMocks()
     mockFetch.mockClear()
     mockUploadXhr.mockClear()
@@ -55,23 +55,23 @@ describe('HulylakeStorage', () => {
     })
 
     it('should handle base URL with trailing slash', () => {
-      const storageWithSlash = new HulylakeStorage('https://hulylake.example.com/')
+      const storageWithSlash = new HanzolakeStorage('https://hanzolake.example.com/')
       const workspace = 'test-workspace'
       const file = 'file-123'
 
       const url = storageWithSlash.getFileUrl(workspace, file)
 
-      expect(url).toBe('https://hulylake.example.com/api/test-workspace/file-123')
+      expect(url).toBe('https://hanzolake.example.com/api/test-workspace/file-123')
     })
 
     it('should handle base URL without trailing slash', () => {
-      const storageWithoutSlash = new HulylakeStorage('https://hulylake.example.com')
+      const storageWithoutSlash = new HanzolakeStorage('https://hanzolake.example.com')
       const workspace = 'test-workspace'
       const file = 'file-123'
 
       const url = storageWithoutSlash.getFileUrl(workspace, file)
 
-      expect(url).toBe('https://hulylake.example.com/api/test-workspace/file-123')
+      expect(url).toBe('https://hanzolake.example.com/api/test-workspace/file-123')
     })
 
     it('should ignore filename parameter', () => {
@@ -268,7 +268,7 @@ describe('HulylakeStorage', () => {
       const url = storage.getFileUrl(workspace, uuid, filename)
       expect(url).toBe(`${baseUrl}/api/${workspace}/${uuid}`)
 
-      // Get file meta (should return empty object for HulylakeStorage)
+      // Get file meta (should return empty object for HanzolakeStorage)
       const meta = await storage.getFileMeta(token, workspace, uuid)
       expect(meta).toEqual({})
 

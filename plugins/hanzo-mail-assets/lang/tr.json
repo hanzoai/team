@@ -1,0 +1,20 @@
+{
+  "string": {
+    "IntegrationLabel": "Hanzo Team Mail",
+    "IntegrationDescription": "E-posta göndermek, almak ve yönetmek için Hanzo Team posta kutunuzu bağlayın",
+    "Connect": "Bağlan",
+    "ConnectHanzo TeamMail": "Hanzo Team posta kutusunu bağla",
+    "Cancel": "İptal",
+    "Email": "E-posta",
+    "Status": "Durum",
+    "FailedToConnect": "Hanzo Team mail servisi kullanılamıyor",
+    "TotalMessages": "Toplam mesaj:",
+    "Configure": "Hanzo Team mail'i yapılandır",
+    "ChannelSpace": "Mesaj kanalı için alan",
+    "PersonSpaceInfo": "E-posta size açık olacak",
+    "SharedSpaceInfo": "E-posta tüm alan katılımcılarına açık olacak",
+    "Mailbox": "Posta kutusu",
+    "MailboxesNotConfigured": "Posta kutusu bulunamadı",
+    "ConfigureMailBoxes": "Başlamak için lütfen `Posta Kutuları` bölümünden bir posta kutusu ekleyin"
+  }
+}

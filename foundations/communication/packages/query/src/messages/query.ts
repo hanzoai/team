@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -37,7 +37,7 @@ import {
 } from '@hanzo/communication-sdk-types'
 import { MessageProcessor } from '@hanzo/communication-shared'
 import { v4 as uuid } from 'uuid'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 import { QueryResult } from '../result'
 import {
@@ -84,7 +84,7 @@ export class MessagesQuery implements PagedQuery<Message, MessageQueryParams> {
 
   constructor (
     private readonly client: FindClient,
-    private readonly hulylake: HulylakeWorkspaceClient,
+    private readonly hanzolake: HanzolakeWorkspaceClient,
     public readonly id: QueryId,
     public readonly params: MessageQueryParams,
     public readonly options: MessageQueryOptions | undefined,
@@ -151,7 +151,7 @@ export class MessagesQuery implements PagedQuery<Message, MessageQueryParams> {
 
     const promise = (async (): Promise<MessagesGroup[]> => {
       try {
-        const res = await this.hulylake.getJson<MessagesGroupsDoc>(`${this.params.cardId}/messages/groups`, {
+        const res = await this.hanzolake.getJson<MessagesGroupsDoc>(`${this.params.cardId}/messages/groups`, {
           maxRetries: 3,
           isRetryable: () => true,
           delayStrategy: {
@@ -398,7 +398,7 @@ export class MessagesQuery implements PagedQuery<Message, MessageQueryParams> {
     const promise = async (): Promise<void> => {
       while (this.translateBlobs.length > 0) {
         const [blob] = this.translateBlobs.splice(0, 1)
-        const translates = await loadTranslatedMessages(this.hulylake, this.params.cardId, blob, lang)
+        const translates = await loadTranslatedMessages(this.hanzolake, this.params.cardId, blob, lang)
         if (translates.length === 0) continue
         if (this.result instanceof Promise) this.result = await this.result
         for (const translate of translates) {
@@ -652,7 +652,7 @@ export class MessagesQuery implements PagedQuery<Message, MessageQueryParams> {
     const params: FindMessagesParams = this.isOneMessageQuery(this.params)
       ? { cardId: this.params.cardId, id: this.params.id, order: SortingOrder.Ascending }
       : { cardId: this.params.cardId, order: SortingOrder.Ascending }
-    return await loadMessages(this.hulylake, this.params.cardId, blobId, params, this.options)
+    return await loadMessages(this.hanzolake, this.params.cardId, blobId, params, this.options)
   }
 
   private isOneMessageQuery (params: MessageQueryParams): params is OneMessageQueryParams {

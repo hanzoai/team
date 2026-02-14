@@ -1,6 +1,6 @@
 // Deep lookup and association tests
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 
 import core, { createClient, Ref, TxOperations } from '@hanzo/core'

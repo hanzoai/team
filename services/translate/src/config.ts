@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -26,7 +26,7 @@ export interface Config {
   QueueRegion: string
   Secret: string
   ServiceId: string
-  HulylakeUrl: string
+  HanzolakeUrl: string
   BillingUrl: string
 }
 
@@ -36,7 +36,7 @@ const config: Config = (() => {
     QueueConfig: process.env.QUEUE_CONFIG ?? '',
     QueueRegion: process.env.QUEUE_REGION ?? '',
     AccountsUrl: process.env.ACCOUNTS_URL ?? '',
-    HulylakeUrl: process.env.HULYLAKE_URL ?? '',
+    HanzolakeUrl: process.env.HANZOLAKE_URL ?? '',
     ServiceId: process.env.SERVICE_ID ?? 'translate',
     OpenAIKey: process.env.OPENAI_API_KEY,
     OpenAIModel: (process.env.OPENAI_MODEL ?? 'gpt-4o-mini') as OpenAI.ChatModel,

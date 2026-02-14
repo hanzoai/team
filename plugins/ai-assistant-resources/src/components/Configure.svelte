@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -25,7 +25,7 @@
   import { getIntegrationClient, getAccountClient } from '../utils'
   import aiAssistant from '../plugin'
   import { buildSocialIdString, getCurrentAccount, SocialIdType, type PersonId } from '@hanzo/core'
-  import HulyAssistant from './icons/HulyAssistant.svelte'
+  import HanzoAssistant from './icons/HanzoAssistant.svelte'
 
   export let integration: Integration | undefined = undefined
 
@@ -38,13 +38,13 @@
     try {
       let socialId = await getSocialId()
       if (socialId == null) {
-        socialId = await accountClient.addHulyAssistantSocialId()
+        socialId = await accountClient.addHanzoAssistantSocialId()
       }
 
       const integrationClient = await getIntegrationClient()
       if (integration === undefined) {
         integration = await integrationClient.connect(socialId)
-        await accountClient.refreshHulyAssistantToken()
+        await accountClient.refreshHanzoAssistantToken()
       }
 
       integration = isWorkspaceIntegration(integration)
@@ -55,14 +55,14 @@
       dispatch('close')
     } catch (err: any) {
       isLoading = false
-      console.error('Failed to find/create huly assistant social id/integration:', err)
+      console.error('Failed to find/create hanzo assistant social id/integration:', err)
       Analytics.handleError(err)
     }
   })
 
   async function getSocialId (): Promise<PersonId | undefined> {
     const socialKey = buildSocialIdString({
-      type: SocialIdType.HULY_ASSISTANT,
+      type: SocialIdType.HANZO_ASSISTANT,
       value: account.uuid
     })
     return await accountClient.findSocialIdBySocialKey(socialKey)
@@ -84,7 +84,7 @@
 >
   <svelte:fragment slot="title">
     <div class="flex-row-center gap-2">
-      <HulyAssistant size="medium" />
+      <HanzoAssistant size="medium" />
       <span class="text-normal">
         <Label label={aiAssistant.string.Configure} />
       </span>

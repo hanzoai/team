@@ -21,8 +21,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hcengineering/stream/internal/pkg/executor"
-	"github.com/hcengineering/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/executor"
+	"github.com/hanzoai/stream/internal/pkg/log"
 	"github.com/stretchr/testify/assert"
 )
 

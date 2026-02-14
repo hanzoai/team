@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -26,7 +26,7 @@ import { systemAccountUuid, generateUuid, type Ref, type Blob } from '@hanzo/cor
 import { generateToken } from '@hanzo/server-token'
 
 describe('storage-api-server', () => {
-  const frontUrl = 'http://huly.local:8083'
+  const frontUrl = 'http://hanzoai.local:8083'
   const wsName = 'api-tests'
   let config: ServerConfig
   let apiWorkspace1: WorkspaceToken
@@ -35,7 +35,7 @@ describe('storage-api-server', () => {
     config = await loadServerConfig(frontUrl)
 
     apiWorkspace1 = await getWorkspaceToken(
-      'http://huly.local:8083',
+      'http://hanzoai.local:8083',
       {
         email: 'user1',
         password: '1234',

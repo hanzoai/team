@@ -841,7 +841,7 @@
       width: var(--spacing-2);
       height: var(--spacing-2);
     }
-    .hulySplitButton-main {
+    .hanzoSplitButton-main {
       padding: 0 var(--spacing-0_5) 0 var(--spacing-1);
     }
     .hanzoaiSplitButton-second {
@@ -1014,7 +1014,7 @@
     &.primary .hanzoaiSplitButton-second::after {
       background-color: var(--primary-button-color);
     }
-    &:not(.no-focus):focus-within .hulySplitButton-second::after {
+    &:not(.no-focus):focus-within .hanzoSplitButton-second::after {
       content: none;
     }
   }

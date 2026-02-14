@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 
 import account, {
@@ -66,7 +66,7 @@ export function serveAccount (measureCtx: MeasureContext, brandings: BrandingMap
 
         ➡️ Recommended Action:
         Migrate to CockroachDB before upgrading to v7. See migration instructions at:
-        https://github.com/hanzoai/huly-selfhost
+        https://github.com/hanzoai/hanzo-selfhost
 
         To proceed with MongoDB (despite these limitations):
         Set environment variable PROCEED_V7_MONGO=true.

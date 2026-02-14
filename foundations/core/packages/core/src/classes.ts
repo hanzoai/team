@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Anticrm Platform Contributors.
-// Copyright © 2021, 2025 Hardcore Engineering Inc.
+// Copyright © 2021, 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -915,9 +915,9 @@ export enum SocialIdType {
   GOOGLE = 'google',
   PHONE = 'phone',
   OIDC = 'oidc',
-  HULY = 'huly',
+  HANZO = 'hanzo',
   TELEGRAM = 'telegram',
-  HULY_ASSISTANT = 'huly-assistant'
+  HANZO_ASSISTANT = 'hanzo-assistant'
 }
 
 export interface SocialId {

@@ -1,5 +1,5 @@
 //
-// Copyright © 2023, 2025 Hardcore Engineering Inc.
+// Copyright © 2023, 2025 Hanzo AI Inc.
 //
 
 import { Analytics } from '@hanzo/analytics'

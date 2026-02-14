@@ -1,6 +1,6 @@
 // Coverage improvement tests for LiveQuery functionality
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 
 import core, { createClient, TxOperations } from '@hanzo/core'

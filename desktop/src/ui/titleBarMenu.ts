@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -90,7 +90,7 @@ export class MenuBar {
   }
 }
 
-export function buildHulyApplicationMenu (minimizeToTrayEnabled: boolean, autoLaunchEnabled: boolean): HTMLElement {
+export function buildHanzoApplicationMenu (minimizeToTrayEnabled: boolean, autoLaunchEnabled: boolean): HTMLElement {
   const menuBuilder = new MenuBuilder()
 
   const MenuFileIndex = 0
@@ -334,7 +334,7 @@ class MenuBarManager {
       }
     )
 
-    this.view = buildHulyApplicationMenu(minimizeToTrayEnabled, autoLaunchEnabled)
+    this.view = buildHanzoApplicationMenu(minimizeToTrayEnabled, autoLaunchEnabled)
   }
 
   public getView (): HTMLElement {

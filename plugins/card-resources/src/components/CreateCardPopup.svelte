@@ -1,4 +1,4 @@
-<!-- Copyright © 2025 Hardcore Engineering Inc. -->
+<!-- Copyright © 2025 Hanzo AI Inc. -->
 <!-- -->
 <!-- Licensed under the Eclipse Public License, Version 2.0 (the "License"); -->
 <!-- you may not use this file except in compliance with the License. You may -->
@@ -157,7 +157,7 @@
   maxWidth="90vw"
   on:close
 >
-  <div class="hulyModal-content__titleGroup" style="padding: 0">
+  <div class="hanzoModal-content__titleGroup" style="padding: 0">
     <ModernEditbox
       bind:value={data.title}
       label={view.string.Title}
@@ -182,15 +182,15 @@
     />
   </div>
 
-  <div class="hulyModal-content__settingsSet">
+  <div class="hanzoModal-content__settingsSet">
     {#if changeType}
-      <div class="hulyModal-content__settingsSet-line">
+      <div class="hanzoModal-content__settingsSet-line">
         <span class="label"><Label label={card.string.MasterTag} /></span>
         <TypeSelector bind:value={type} />
       </div>
     {/if}
     {#if (space == null || allowChangeSpace) && !(extension?.hideSpace ?? false)}
-      <div class="hulyModal-content__settingsSet-line">
+      <div class="hanzoModal-content__settingsSet-line">
         <span class="label"><Label label={core.string.Space} /></span>
         <SpaceSelector
           _class={card.class.CardSpace}

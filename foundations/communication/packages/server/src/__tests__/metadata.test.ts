@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -32,7 +32,7 @@ describe('metadata', () => {
     it('should return default values when environment variables are not set', () => {
       delete process.env.ACCOUNTS_URL
       delete process.env.SERVER_SECRET
-      delete process.env.HULYLAKE_URL
+      delete process.env.HANZOLAKE_URL
       delete process.env.MESSAGES_PER_BLOB
 
       const metadata = getMetadata()
@@ -40,7 +40,7 @@ describe('metadata', () => {
       expect(metadata).toEqual({
         accountsUrl: '',
         secret: 'secret',
-        hulylakeUrl: 'http://huly.local:8096',
+        hanzolakeUrl: 'http://hanzoai.local:8096',
         messagesPerBlob: 200
       })
     })
@@ -61,12 +61,12 @@ describe('metadata', () => {
       expect(metadata.secret).toBe('custom-secret-key')
     })
 
-    it('should use HULYLAKE_URL from environment', () => {
-      process.env.HULYLAKE_URL = 'http://custom-hulylake:9000'
+    it('should use HANZOLAKE_URL from environment', () => {
+      process.env.HANZOLAKE_URL = 'http://custom-hanzolake:9000'
 
       const metadata = getMetadata()
 
-      expect(metadata.hulylakeUrl).toBe('http://custom-hulylake:9000')
+      expect(metadata.hanzolakeUrl).toBe('http://custom-hanzolake:9000')
     })
 
     it('should use MESSAGES_PER_BLOB from environment', () => {
@@ -80,7 +80,7 @@ describe('metadata', () => {
     it('should use all custom environment variables', () => {
       process.env.ACCOUNTS_URL = 'http://accounts'
       process.env.SERVER_SECRET = 'my-secret'
-      process.env.HULYLAKE_URL = 'http://hulylake:8080'
+      process.env.HANZOLAKE_URL = 'http://hanzolake:8080'
       process.env.MESSAGES_PER_BLOB = '1000'
 
       const metadata = getMetadata()
@@ -88,7 +88,7 @@ describe('metadata', () => {
       expect(metadata).toEqual({
         accountsUrl: 'http://accounts',
         secret: 'my-secret',
-        hulylakeUrl: 'http://hulylake:8080',
+        hanzolakeUrl: 'http://hanzolake:8080',
         messagesPerBlob: 1000
       })
     })
@@ -131,12 +131,12 @@ describe('metadata', () => {
 
       expect(metadata).toHaveProperty('accountsUrl')
       expect(metadata).toHaveProperty('secret')
-      expect(metadata).toHaveProperty('hulylakeUrl')
+      expect(metadata).toHaveProperty('hanzolakeUrl')
       expect(metadata).toHaveProperty('messagesPerBlob')
 
       expect(typeof metadata.accountsUrl).toBe('string')
       expect(typeof metadata.secret).toBe('string')
-      expect(typeof metadata.hulylakeUrl).toBe('string')
+      expect(typeof metadata.hanzolakeUrl).toBe('string')
       expect(typeof metadata.messagesPerBlob).toBe('number')
     })
 
@@ -166,22 +166,22 @@ describe('metadata', () => {
 
     it('should handle URLs with different protocols', () => {
       process.env.ACCOUNTS_URL = 'https://secure-accounts.com'
-      process.env.HULYLAKE_URL = 'wss://hulylake.example.com'
+      process.env.HANZOLAKE_URL = 'wss://hanzolake.example.com'
 
       const metadata = getMetadata()
 
       expect(metadata.accountsUrl).toBe('https://secure-accounts.com')
-      expect(metadata.hulylakeUrl).toBe('wss://hulylake.example.com')
+      expect(metadata.hanzolakeUrl).toBe('wss://hanzolake.example.com')
     })
 
     it('should handle URLs with ports', () => {
       process.env.ACCOUNTS_URL = 'http://localhost:3000'
-      process.env.HULYLAKE_URL = 'http://localhost:8096'
+      process.env.HANZOLAKE_URL = 'http://localhost:8096'
 
       const metadata = getMetadata()
 
       expect(metadata.accountsUrl).toBe('http://localhost:3000')
-      expect(metadata.hulylakeUrl).toBe('http://localhost:8096')
+      expect(metadata.hanzolakeUrl).toBe('http://localhost:8096')
     })
   })
 })

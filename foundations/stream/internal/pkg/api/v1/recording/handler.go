@@ -22,9 +22,9 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/hcengineering/stream/internal/pkg/config"
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/mediaconvert"
+	"github.com/hanzoai/stream/internal/pkg/config"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/mediaconvert"
 	"go.uber.org/zap"
 
 	tusd "github.com/tus/tusd/v2/pkg/handler"

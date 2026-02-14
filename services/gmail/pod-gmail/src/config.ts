@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2021 Hardcore Engineering Inc.
+// Copyright © 2021 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -73,14 +73,14 @@ const config: Config = (() => {
     Credentials: process.env[envMap.Credentials],
     WATCH_TOPIC_NAME: process.env[envMap.WATCH_TOPIC_NAME],
     InitLimit: parseNumber(process.env[envMap.InitLimit]) ?? 50,
-    FooterMessage: process.env[envMap.FooterMessage] ?? '<br><br><p>Sent via <a href="https://huly.io">Huly</a></p>',
+    FooterMessage: process.env[envMap.FooterMessage] ?? '<br><br><p>Sent via <a href="https://hanzo.team">Hanzo Team</a></p>',
     OutgoingSyncStartDate: new Date(process.env[envMap.OutgoingSyncStartDate] ?? '2025-08-20T00:00:00.000Z'),
     KvsUrl: process.env[envMap.KvsUrl],
     StorageConfig: process.env[envMap.StorageConfig],
     Version: version,
     QueueConfig: process.env[envMap.QueueConfig] ?? '',
     QueueRegion: process.env[envMap.QueueRegion] ?? '',
-    CommunicationTopic: process.env[envMap.CommunicationTopic] ?? 'hulygun',
+    CommunicationTopic: process.env[envMap.CommunicationTopic] ?? 'hanzogun',
     WorkspaceInactivityInterval: parseNumber(process.env[envMap.WorkspaceInactivityInterval] ?? '3') // In days
   }
 

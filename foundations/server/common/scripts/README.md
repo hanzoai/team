@@ -1,6 +1,6 @@
 # Coverage Scripts Documentation
 
-This directory contains Node.js scripts for managing code coverage in the huly.server monorepo.
+This directory contains Node.js scripts for managing code coverage in the hanzo.server monorepo.
 
 ## Scripts Overview
 

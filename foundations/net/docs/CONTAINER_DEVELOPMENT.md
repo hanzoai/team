@@ -1,6 +1,6 @@
 # Container Development Guide
 
-Learn how to build robust containers for Huly Virtual Network.
+Learn how to build robust containers for Hanzo Team Virtual Network.
 
 ## Table of Contents
 
@@ -17,7 +17,7 @@ Learn how to build robust containers for Huly Virtual Network.
 
 ## Introduction
 
-Containers are the core building blocks of Huly Network applications. They encapsulate business logic, manage state, and handle client requests. This guide will teach you how to build production-ready containers.
+Containers are the core building blocks of Hanzo Team Network applications. They encapsulate business logic, manage state, and handle client requests. This guide will teach you how to build production-ready containers.
 
 ## Container Basics
 

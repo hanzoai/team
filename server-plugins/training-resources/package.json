@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Hardcore Engineering Inc",
+  "author": "Hanzo AI Inc",
   "scripts": {
     "build": "compile",
     "build:watch": "compile",

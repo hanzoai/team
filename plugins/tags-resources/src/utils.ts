@@ -1,4 +1,4 @@
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 
 import { Analytics } from '@hanzo/analytics'
 import core, {

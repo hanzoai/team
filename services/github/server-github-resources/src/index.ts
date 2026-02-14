@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import chunter from '@hanzo/chunter'

@@ -1,6 +1,6 @@
-# Huly Network Documentation
+# Hanzo Team Network Documentation
 
-Welcome to the Huly Virtual Network documentation! This directory contains comprehensive guides for building distributed systems with Huly Network.
+Welcome to the Hanzo Team Virtual Network documentation! This directory contains comprehensive guides for building distributed systems with Hanzo Team Network.
 
 ## 📚 Documentation Index
 
@@ -69,10 +69,10 @@ Welcome to the Huly Virtual Network documentation! This directory contains compr
 
 ## 🔗 External Resources
 
-- [Main Repository](https://github.com/hanzoai/huly.net)
+- [Main Repository](https://github.com/hanzoai/hanzo.net)
 - [Examples Directory](../examples/)
 - [ZeroMQ Documentation](https://zeromq.org/documentation/)
-- [Huly Platform](https://github.com/hanzoai/platform)
+- [Hanzo Team Platform](https://github.com/hanzoai/platform)
 
 ## 🤝 Contributing to Documentation
 

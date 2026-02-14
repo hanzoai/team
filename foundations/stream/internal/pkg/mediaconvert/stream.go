@@ -23,9 +23,9 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/hcengineering/stream/internal/pkg/sharedpipe"
-	"github.com/hcengineering/stream/internal/pkg/storage"
-	"github.com/hcengineering/stream/internal/pkg/tracing"
+	"github.com/hanzoai/stream/internal/pkg/sharedpipe"
+	"github.com/hanzoai/stream/internal/pkg/storage"
+	"github.com/hanzoai/stream/internal/pkg/tracing"
 	"github.com/tus/tusd/v2/pkg/handler"
 	"go.uber.org/zap"
 )

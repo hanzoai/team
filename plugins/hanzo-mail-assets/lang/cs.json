@@ -1,0 +1,20 @@
+{
+  "string": {
+    "IntegrationLabel": "Hanzo Team Mail",
+    "IntegrationDescription": "Připojte svou Hanzo Team schránku pro odesílání, přijímání a správu e-mailů",
+    "Connect": "Připojit",
+    "ConnectHanzo TeamMail": "Připojit Hanzo Team schránku",
+    "Cancel": "Zrušit",
+    "Email": "E-mail",
+    "Status": "Stav",
+    "FailedToConnect": "Služba Hanzo Team mail není dostupná",
+    "TotalMessages": "Celkem zpráv:",
+    "Configure": "Konfigurovat Hanzo Team mail",
+    "ChannelSpace": "Prostor pro kanál zpráv",
+    "PersonSpaceInfo": "Pošta bude dostupná pouze vám",
+    "SharedSpaceInfo": "Pošta bude dostupná všem účastníkům prostoru",
+    "Mailbox": "Poštovní schránka",
+    "MailboxesNotConfigured": "Žádné poštovní schránky nenalezeny",
+    "ConfigureMailBoxes": "Přidejte prosím poštovní schránku v sekci Poštovní schránky, abyste mohli začít"
+  }
+}

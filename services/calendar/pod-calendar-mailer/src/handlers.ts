@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -42,7 +42,7 @@ export async function eventCreated (
 ): Promise<string | undefined> {
   const { event, modifiedBy } = message
 
-  // TODO: move emailing logic from huly-schedule here
+  // TODO: move emailing logic from hanzo-schedule here
 
   if (event.date <= Date.now()) {
     return 'Event is in the past'
@@ -70,7 +70,7 @@ export async function eventUpdated (
 ): Promise<string | undefined> {
   const { event, modifiedBy } = message
 
-  // TODO: if the event was created via huly-schedule, we need to send an email
+  // TODO: if the event was created via hanzo-schedule, we need to send an email
 
   if (event.date <= Date.now()) {
     return 'Event is in the past'
@@ -97,7 +97,7 @@ export async function eventDeleted (
 ): Promise<string | undefined> {
   const { event, modifiedBy } = message
 
-  // TODO: if the event was created via huly-schedule, we need to send an email
+  // TODO: if the event was created via hanzo-schedule, we need to send an email
 
   if (event.date <= Date.now()) {
     return 'Event is in the past'
@@ -119,7 +119,7 @@ export async function eventMixin (
 ): Promise<string | undefined> {
   const { event, modifiedBy } = message
 
-  // TODO: move emailing logic from huly-schedule here
+  // TODO: move emailing logic from hanzo-schedule here
 
   if (modifiedBy === event.user) {
     return 'Event modified by the user'

@@ -1,6 +1,6 @@
 // Workspace event handling tests
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 
 import core, {

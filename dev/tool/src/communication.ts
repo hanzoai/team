@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import { type Workspace } from '@hanzo/account'
-import { type JsonPatch, type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type JsonPatch, type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 import type postgres from 'postgres'
 import {
   type AccountUuid,
@@ -89,12 +89,12 @@ export async function migrateWorkspaceChat (
   db: postgres.Sql,
   client: LowLevelStorage,
   hierarchy: Hierarchy,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   accountClient: AccountClient,
   personUuidBySocialId: Map<PersonId, PersonUuid>
 ): Promise<void> {
-  await migrateChannels(ctx, ws, db, client, hierarchy, hulylake, accountClient, personUuidBySocialId)
-  await migrateDirects(ctx, ws, db, client, hierarchy, hulylake, accountClient, personUuidBySocialId)
+  await migrateChannels(ctx, ws, db, client, hierarchy, hanzolake, accountClient, personUuidBySocialId)
+  await migrateDirects(ctx, ws, db, client, hierarchy, hanzolake, accountClient, personUuidBySocialId)
 }
 
 async function migrateChannels (
@@ -103,7 +103,7 @@ async function migrateChannels (
   db: postgres.Sql,
   client: LowLevelStorage,
   hierarchy: Hierarchy,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   accountClient: AccountClient,
   personUuidBySocialId: Map<PersonId, PersonUuid>
 ): Promise<void> {
@@ -123,7 +123,7 @@ async function migrateChannels (
     await limiter.add(async () => {
       try {
         ctx.info('migrate channel', { index: i, _id: doc._id })
-        await migrateChannel(ctx, ws, db, client, hierarchy, hulylake, accountClient, personUuidBySocialId, doc)
+        await migrateChannel(ctx, ws, db, client, hierarchy, hanzolake, accountClient, personUuidBySocialId, doc)
       } catch (e) {
         ctx.error('Failed to migrate channel', { _id: doc._id })
         ctx.error('Error', { error: e })
@@ -140,7 +140,7 @@ async function migrateChannel (
   db: postgres.Sql,
   client: LowLevelStorage,
   hierarchy: Hierarchy,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   accountClient: AccountClient,
   personUuidBySocialId: Map<PersonId, PersonUuid>,
   doc: Channel
@@ -217,7 +217,7 @@ async function migrateChannel (
     doc.__migratedUntil = undefined
   }
 
-  await migrateMessages(ctx, ws, db, client, hierarchy, hulylake, accountClient, personUuidBySocialId, doc, [card])
+  await migrateMessages(ctx, ws, db, client, hierarchy, hanzolake, accountClient, personUuidBySocialId, doc, [card])
 }
 
 async function migrateDirects (
@@ -226,7 +226,7 @@ async function migrateDirects (
   db: postgres.Sql,
   client: LowLevelStorage,
   hierarchy: Hierarchy,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   accountClient: AccountClient,
   personUuidBySocialId: Map<PersonId, PersonUuid>
 ): Promise<void> {
@@ -244,7 +244,7 @@ async function migrateDirects (
     await limiter.add(async () => {
       try {
         ctx.info('Start migrate direct', { _id: doc._id })
-        await migrateDirect(ctx, ws, db, client, hierarchy, hulylake, accountClient, personUuidBySocialId, doc)
+        await migrateDirect(ctx, ws, db, client, hierarchy, hanzolake, accountClient, personUuidBySocialId, doc)
       } catch (e) {
         ctx.error('Failed to migrate direct', { _id: doc._id })
         ctx.error('Error', { error: e })
@@ -261,7 +261,7 @@ async function migrateDirect (
   db: postgres.Sql,
   client: LowLevelStorage,
   hierarchy: Hierarchy,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   accountClient: AccountClient,
   personUuidBySocialId: Map<PersonId, PersonUuid>,
   doc: DirectMessage
@@ -385,7 +385,7 @@ async function migrateDirect (
     db,
     client,
     hierarchy,
-    hulylake,
+    hanzolake,
     accountClient,
     personUuidBySocialId,
     doc,
@@ -738,7 +738,7 @@ async function migrateMessages (
   db: postgres.Sql,
   client: LowLevelStorage,
   hierarchy: Hierarchy,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   accountClient: AccountClient,
   personUuidBySocialId: Map<PersonId, PersonUuid>,
   doc: ChunterSpace,
@@ -749,7 +749,7 @@ async function migrateMessages (
 
   if (doc.__migratedUntil == null) {
     for (const card of cards) {
-      await createGroupsBlob(hulylake, card._id)
+      await createGroupsBlob(hanzolake, card._id)
     }
   }
   const iterator = await getActivityCursor(db, ws.uuid, doc._id, chunter.class.ChatMessage, 400, doc.__migratedUntil)
@@ -794,7 +794,7 @@ async function migrateMessages (
               ctx,
               db,
               ws.uuid,
-              hulylake,
+              hanzolake,
               client,
               converted.message,
               converted.thread,
@@ -806,7 +806,7 @@ async function migrateMessages (
           }
           convertedMessages.push(converted.message)
         }
-        await insertMessages(ctx, db, ws.uuid, hulylake, card, convertedMessages)
+        await insertMessages(ctx, db, ws.uuid, hanzolake, card, convertedMessages)
       }
     }
     prev = messages
@@ -839,7 +839,7 @@ async function migrateMessages (
             ctx,
             db,
             ws.uuid,
-            hulylake,
+            hanzolake,
             client,
             converted.message,
             converted.thread,
@@ -852,7 +852,7 @@ async function migrateMessages (
         convertedMessages.push(converted.message)
       }
 
-      await insertMessages(ctx, db, ws.uuid, hulylake, card, convertedMessages)
+      await insertMessages(ctx, db, ws.uuid, hanzolake, card, convertedMessages)
     }
   }
 
@@ -865,7 +865,7 @@ async function createThread (
   ctx: MeasureContext,
   db: postgres.Sql,
   ws: WorkspaceUuid,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   client: LowLevelStorage,
   parentMessage: MessageDoc,
   thread: Card,
@@ -877,7 +877,7 @@ async function createThread (
   try {
     await client.upload(ctx, DOMAIN_CARD, [{ ...thread, __migratedFromChunter: true, __migratedFromDoc: docId } as any])
     await addCollaboratorsToDb(db, ws, thread._id, thread._class, collaborators)
-    await createGroupsBlob(hulylake, thread._id)
+    await createGroupsBlob(hanzolake, thread._id)
     const parent = {
       ...parentMessage,
       cardId: thread._id,
@@ -885,7 +885,7 @@ async function createThread (
       reactions: {},
       threads: {}
     }
-    await insertMessages(ctx, db, ws, hulylake, thread, [parent, ...messages])
+    await insertMessages(ctx, db, ws, hanzolake, thread, [parent, ...messages])
 
     if (peers.length > 0 && thread.peerId != null) {
       await addPeersToDb(db, ws, thread.peerId, [{ cardId: thread._id, space: thread.space as Ref<PersonSpace> }])
@@ -949,7 +949,7 @@ async function insertMessages (
   ctx: MeasureContext,
   db: postgres.Sql,
   ws: WorkspaceUuid,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   card: Card,
   messages: MessageDoc[]
 ): Promise<void> {
@@ -985,8 +985,8 @@ async function insertMessages (
 
     await insertMessageIndex(db, ws, blobId, Object.values(newMessagesDoc.messages))
     await insertThreadIndex(db, ws, Object.values(newMessagesDoc.messages))
-    await hulylake.patchJson(`${card._id}/messages/groups`, jsonPatches, undefined, DEFAULT_RETRY_OPTIONS)
-    await hulylake.putJson(`${card._id}/messages/${blobId}`, newMessagesDoc, undefined, DEFAULT_RETRY_OPTIONS)
+    await hanzolake.patchJson(`${card._id}/messages/groups`, jsonPatches, undefined, DEFAULT_RETRY_OPTIONS)
+    await hanzolake.putJson(`${card._id}/messages/${blobId}`, newMessagesDoc, undefined, DEFAULT_RETRY_OPTIONS)
   }
 }
 
@@ -998,8 +998,8 @@ function toMessageID (_id: Ref<ActivityMessage>): MessageID {
   return buf.toString('base64url') as MessageID
 }
 
-async function createGroupsBlob (hulylake: HulylakeWorkspaceClient, cardId: CardID): Promise<void> {
-  await hulylake.putJson(`${cardId}/messages/groups`, {}, undefined, DEFAULT_RETRY_OPTIONS)
+async function createGroupsBlob (hanzolake: HanzolakeWorkspaceClient, cardId: CardID): Promise<void> {
+  await hanzolake.putJson(`${cardId}/messages/groups`, {}, undefined, DEFAULT_RETRY_OPTIONS)
 }
 
 function chunkMessagesBySize (

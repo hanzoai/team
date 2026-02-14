@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -164,7 +164,7 @@
   $: blobs = (backupInfo?.extraBlobs ?? []).sort((a, b) => b.size - a.size).slice(0, 100)
 </script>
 
-<div class="hulyComponent flex-no-shrink">
+<div class="hanzoComponent flex-no-shrink">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Setting} label={setting.string.Backup} size={'large'} isCurrent />
   </Header>

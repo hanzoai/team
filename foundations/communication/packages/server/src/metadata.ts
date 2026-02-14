@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -19,7 +19,7 @@ export function getMetadata (): Metadata {
   return {
     accountsUrl: process.env.ACCOUNTS_URL ?? '',
     secret: process.env.SERVER_SECRET ?? 'secret',
-    hulylakeUrl: process.env.HULYLAKE_URL ?? 'http://huly.local:8096',
+    hanzolakeUrl: process.env.HANZOLAKE_URL ?? 'http://hanzoai.local:8096',
     messagesPerBlob: Number(process.env.MESSAGES_PER_BLOB ?? '200')
   }
 }

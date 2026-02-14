@@ -17,8 +17,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hcengineering/stream/internal/pkg/mediaconvert"
-	"github.com/hcengineering/stream/internal/pkg/profile"
+	"github.com/hanzoai/stream/internal/pkg/mediaconvert"
+	"github.com/hanzoai/stream/internal/pkg/profile"
 	"github.com/stretchr/testify/require"
 )
 

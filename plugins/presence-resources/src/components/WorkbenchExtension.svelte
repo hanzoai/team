@@ -15,12 +15,12 @@
 
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte'
-  import { HulypulseClient } from '@hanzo/hulypulse-client'
+  import { HanzopulseClient } from '@hanzo/hanzopulse-client'
   import { createPulseClient } from '@hanzo/presentation'
 
   let parentElement: HTMLDivElement
 
-  let pulseclient: HulypulseClient | undefined
+  let pulseclient: HanzopulseClient | undefined
 
   onMount(async () => {
     pulseclient = await createPulseClient()

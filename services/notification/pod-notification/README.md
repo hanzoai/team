@@ -31,7 +31,7 @@ The service is configured via environment variables:
 | `AUTH_TOKEN` | No | - | Bearer token for API authentication |
 | `PUSH_PUBLIC_KEY` | No | - | VAPID public key for web push |
 | `PUSH_PRIVATE_KEY` | No | - | VAPID private key for web push |
-| `PUSH_SUBJECT` | No | `mailto:hey@huly.io` | VAPID subject (email or URL) |
+| `PUSH_SUBJECT` | No | `mailto:hey@hanzo.team` | VAPID subject (email or URL) |
 
 ### VAPID Keys
 

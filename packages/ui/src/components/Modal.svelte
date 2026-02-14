@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -71,7 +71,7 @@
 <svelte:window on:keydown={onKeyDown} />
 
 <div
-  class="hulyModal-container {type} {width ?? ''}"
+  class="hanzoModal-container {type} {width ?? ''}"
   class:hidden
   class:noTopIndent
   style={maxWidth ? `max-width: ${maxWidth};` : ''}
@@ -94,7 +94,7 @@
     </svelte:fragment>
   </Header>
   <slot name="beforeContent" />
-  <div class="hulyModal-content">
+  <div class="hanzoModal-content">
     {#if scrollableContent}
       <Scroller
         padding={padding ?? typePadding}

@@ -213,7 +213,7 @@
      * your PR branch, and in this situation "rush change" will also automatically invoke "git fetch"
      * to retrieve the latest activity for the remote main branch.
      */
-    "url": "https://github.com/hanzoai/huly.server",
+    "url": "https://github.com/hanzoai/hanzo.server",
     /**
      * The default branch name. This tells "rush change" which remote branch to compare against.
      * The default value is "main"
@@ -339,7 +339,7 @@
     { "packageName": "@hanzo/collaboration", "projectFolder": "packages/collaboration", "shouldPublish": true },
     { "packageName": "@hanzo/server-core", "projectFolder": "packages/core", "shouldPublish": true },
     { "packageName": "@hanzo/datalake", "projectFolder": "packages/datalake", "shouldPublish": true },
-    { "packageName": "@hanzo/hulylake", "projectFolder": "packages/hulylake", "shouldPublish": true },
+    { "packageName": "@hanzo/hanzolake", "projectFolder": "packages/hanzolake", "shouldPublish": true },
     { "packageName": "@hanzo/elastic", "projectFolder": "packages/elastic", "shouldPublish": true },
     { "packageName": "@hanzo/kafka", "projectFolder": "packages/kafka", "shouldPublish": true },
     { "packageName": "@hanzo/middleware", "projectFolder": "packages/middleware", "shouldPublish": true },

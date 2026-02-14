@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -1615,7 +1615,7 @@ describe('account operations', () => {
           socialId: mockSocialId._id
         })
         jest.spyOn(utils, 'confirmEmail').mockResolvedValue(mockSocialId._id)
-        jest.spyOn(utils, 'confirmHulyIds').mockResolvedValue()
+        jest.spyOn(utils, 'confirmHanzoIds').mockResolvedValue()
         ;(mockDb.person.findOne as jest.Mock).mockResolvedValue(mockPerson)
         ;(getMetadata as jest.Mock).mockReturnValue('') // No mail service configured
 
@@ -1643,7 +1643,7 @@ describe('account operations', () => {
           mockLastName
         )
         expect(utils.confirmEmail).toHaveBeenCalledWith(mockCtx, mockDb, mockAccountId, mockEmail)
-        expect(utils.confirmHulyIds).toHaveBeenCalledWith(mockCtx, mockDb, mockAccountId)
+        expect(utils.confirmHanzoIds).toHaveBeenCalledWith(mockCtx, mockDb, mockAccountId)
         expect(mockCtx.warn).toHaveBeenCalled()
       })
 
@@ -1734,7 +1734,7 @@ describe('account operations', () => {
         })
 
         jest.spyOn(utils, 'confirmEmail').mockResolvedValue(mockSocialId._id)
-        jest.spyOn(utils, 'confirmHulyIds').mockResolvedValue()
+        jest.spyOn(utils, 'confirmHanzoIds').mockResolvedValue()
         ;(mockDb.person.findOne as jest.Mock).mockResolvedValue(mockPerson)
 
         const result = await confirm(mockCtx, mockDb, mockBranding, mockToken)
@@ -1747,7 +1747,7 @@ describe('account operations', () => {
         })
 
         expect(utils.confirmEmail).toHaveBeenCalledWith(mockCtx, mockDb, mockAccountId, mockEmail)
-        expect(utils.confirmHulyIds).toHaveBeenCalledWith(mockCtx, mockDb, mockAccountId)
+        expect(utils.confirmHanzoIds).toHaveBeenCalledWith(mockCtx, mockDb, mockAccountId)
       })
 
       test('should fail if confirmation email not in token', async () => {
@@ -1768,7 +1768,7 @@ describe('account operations', () => {
         })
 
         jest.spyOn(utils, 'confirmEmail').mockResolvedValue('social-id' as PersonId)
-        jest.spyOn(utils, 'confirmHulyIds').mockResolvedValue()
+        jest.spyOn(utils, 'confirmHanzoIds').mockResolvedValue()
         ;(mockDb.person.findOne as jest.Mock).mockResolvedValue(null)
 
         await expect(confirm(mockCtx, mockDb, mockBranding, mockToken)).rejects.toThrow(
@@ -1938,7 +1938,7 @@ describe('account operations', () => {
 
         jest.spyOn(utils, 'getEmailSocialId').mockResolvedValue(mockSocialId)
         jest.spyOn(utils, 'isOtpValid').mockResolvedValue(true)
-        jest.spyOn(utils, 'confirmHulyIds').mockResolvedValue()
+        jest.spyOn(utils, 'confirmHanzoIds').mockResolvedValue()
         ;(mockDb.person.findOne as jest.Mock).mockResolvedValue(mockPerson)
         ;(mockDb.account.findOne as jest.Mock).mockResolvedValue(mockAccount)
 

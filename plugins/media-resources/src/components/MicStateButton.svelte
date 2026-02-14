@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -27,7 +27,7 @@
 
 {#if state != null}
   <button
-    class="hulyStatusBarButton mini positive {state.enabled ? 'positiveContent' : 'negativeContent'}"
+    class="hanzoStatusBarButton mini positive {state.enabled ? 'positiveContent' : 'negativeContent'}"
     use:tooltip={{ label: state.enabled ? media.string.TurnOffMic : media.string.TurnOnMic, direction: 'bottom' }}
     on:click={toggleMicState}
   >

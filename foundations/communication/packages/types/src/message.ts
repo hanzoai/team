@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -128,7 +128,7 @@ export interface ActivityAttributeUpdate {
 }
 
 // LinkPreview
-export const linkPreviewType = 'application/vnd.huly.link-preview' as const
+export const linkPreviewType = 'application/vnd.hanzo.link-preview' as const
 
 export interface LinkPreviewParams {
   url: string
@@ -173,7 +173,7 @@ export interface LinkPreviewAttachment extends BaseAttachment<LinkPreviewParams>
 export interface BlobAttachment extends BaseAttachment<BlobParams> {}
 
 export type AppletParams = Record<string, any>
-export type AppletType = `application/vnd.huly.applet.${string}`
+export type AppletType = `application/vnd.hanzo.applet.${string}`
 
 export interface AppletAttachment<T extends AppletParams = AppletParams> extends BaseAttachment<T> {
   mimeType: AppletType

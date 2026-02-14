@@ -28,8 +28,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/tracing"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/tracing"
 	"github.com/pkg/errors"
 	"github.com/valyala/fasthttp"
 	"go.opentelemetry.io/otel"

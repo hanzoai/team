@@ -1,6 +1,6 @@
-# Huly Network Examples
+# Hanzo Team Network Examples
 
-This directory contains comprehensive examples demonstrating various aspects of the Huly Virtual Network.
+This directory contains comprehensive examples demonstrating various aspects of the Hanzo Team Virtual Network.
 
 ## 🆕 Updated to Use Typed Proxies
 

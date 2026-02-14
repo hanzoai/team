@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -224,13 +224,13 @@
   const bottomPadding = getMetadata(communication.metadata.Enabled) === true ? 'var(--spacing-3)' : undefined
 </script>
 
-<div class="hulyComponent-content__container columns relative">
+<div class="hanzoComponent-content__container columns relative">
   {#if showOverlay}
     <div class="overlay">
       <Loading />
     </div>
   {/if}
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoComponent-content__column content">
     <div class="toc-container" class:hidden={showOverlay}>
       <div class="toc">
         <TableOfContents
@@ -252,7 +252,7 @@
       bind:divScroll={scrollDiv}
       onScroll={handleScroll}
     >
-      <div class="hulyComponent-content withoutMaxWidth" class:gap={renderTopSections}>
+      <div class="hanzoComponent-content withoutMaxWidth" class:gap={renderTopSections}>
         {#each sections as section (section._id)}
           <div id={section._id} bind:this={sectionElement[section._id]} class="section">
             <Component

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -28,7 +28,7 @@ import {
   type PipelineContext
 } from '@hanzo/server-core'
 
-export const aiBotAccountEmail = 'huly.ai.bot@hc.engineering'
+export const aiBotAccountEmail = 'hanzo.ai.bot@hanzo.team'
 
 /**
  * @public

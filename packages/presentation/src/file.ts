@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -36,8 +36,8 @@ export function generateFileId (): string {
 }
 
 /** @public */
-export function createFileStorage (uploadUrl: string, datalakeUrl?: string, hulylakeUrl?: string): FileStorage {
-  return createStorageClient({ uploadUrl, datalakeUrl, hulylakeUrl })
+export function createFileStorage (uploadUrl: string, datalakeUrl?: string, hanzolakeUrl?: string): FileStorage {
+  return createStorageClient({ uploadUrl, datalakeUrl, hanzolakeUrl })
 }
 
 /** @public */

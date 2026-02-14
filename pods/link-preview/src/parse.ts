@@ -1,5 +1,5 @@
 //
-// Copyright © 2026 Hardcore Engineering Inc.
+// Copyright © 2026 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -87,7 +87,7 @@ interface ImageDimensions {
 
 const DEFAULT_TIMEOUT_MS = 10_000
 const DEFAULT_MAX_IMAGE_BYTES = 10 * 1024 * 1024 // 10MB
-const OEMBED_SERVICE_NAME = 'Huly Link Preview Service/1.0'
+const OEMBED_SERVICE_NAME = 'Hanzo Link Preview Service/1.0'
 
 // Private IP ranges to block for SSRF protection
 const BLOCKED_IP_PATTERNS = [

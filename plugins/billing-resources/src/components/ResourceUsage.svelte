@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -73,7 +73,7 @@
   <Loading />
 {:then _}
   <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-    <div class="hulyComponent-content gapV-8">
+    <div class="hanzoComponent-content gapV-8">
       <Category icon={drivePlugin.icon.DriveApplication} label={drivePlugin.string.Drive}>
         <div class="row">
           <StatsCard label={billingPlugin.string.DriveSize} text={filesize(totalDatalakeSize, { spacer: ' ' })} />

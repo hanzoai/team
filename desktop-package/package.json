@@ -2,7 +2,7 @@
   "name": "desktop",
   "version": "0.7.0",
   "main": "dist/main/electron.js",
-  "author": "Hardcore Engineering <hey@hanzoai.io>",
+  "author": "Hanzo AI <hey@hanzoai.io>",
   "template": "@hanzo/default-package",
   "scripts": {
     "_phase:package": "rushx package",

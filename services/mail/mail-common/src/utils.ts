@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the 'License');
 // you may not use this file except in compliance with the License. You may
@@ -21,9 +21,9 @@ import {
   Attachment,
   EmailContact,
   EmailMessage,
-  HulyMailHeader,
-  HulyMessageIdHeader,
-  HulyMessageTypeHeader,
+  HanzoMailHeader,
+  HanzoMessageIdHeader,
+  HanzoMessageTypeHeader,
   MailHeader
 } from './types'
 import { MessageExtra, MessageID } from '@hanzo/communication-types'
@@ -205,9 +205,9 @@ export function getReplySubject (threadName: string | undefined): string | undef
 }
 
 export function getMailHeaders (messageType: string, messageId?: string | undefined): string[] {
-  const headers = [`${HulyMailHeader}: true\n`, `${HulyMessageTypeHeader}: ${messageType}\n`]
+  const headers = [`${HanzoMailHeader}: true\n`, `${HanzoMessageTypeHeader}: ${messageType}\n`]
   if (messageId !== undefined) {
-    headers.push(`${HulyMessageIdHeader}: ${messageId}\n`)
+    headers.push(`${HanzoMessageIdHeader}: ${messageId}\n`)
   }
   return headers
 }
@@ -218,22 +218,22 @@ export function getMailHeadersRecord (
   email: string
 ): Record<string, string> {
   const headers: Record<string, string> = {
-    [HulyMailHeader]: 'true',
-    [HulyMessageTypeHeader]: messageType,
-    [MailHeader.Id]: getEmailMessageIdFromHulyId(messageId, email)
+    [HanzoMailHeader]: 'true',
+    [HanzoMessageTypeHeader]: messageType,
+    [MailHeader.Id]: getEmailMessageIdFromHanzoId(messageId, email)
   }
   if (messageId !== undefined) {
-    headers[HulyMessageIdHeader] = messageId
+    headers[HanzoMessageIdHeader] = messageId
   }
   return headers
 }
 
-export function isHulyMessage (headers: string[]): boolean {
+export function isHanzoMessage (headers: string[]): boolean {
   return headers.some(
     (header) =>
-      header.startsWith(HulyMailHeader) ||
-      header.startsWith(HulyMessageIdHeader) ||
-      header.startsWith(HulyMessageTypeHeader)
+      header.startsWith(HanzoMailHeader) ||
+      header.startsWith(HanzoMessageIdHeader) ||
+      header.startsWith(HanzoMessageTypeHeader)
   )
 }
 
@@ -245,13 +245,13 @@ export function getDomainFromEmail (email: string): string {
   return email.substring(atIndex + 1)
 }
 
-export function getEmailMessageIdFromHulyId (hulyId: string | undefined, email: string): string {
+export function getEmailMessageIdFromHanzoId (hanzoId: string | undefined, email: string): string {
   const domain = getDomainFromEmail(email)
-  const id = hulyId ?? generateMessageId()
+  const id = hanzoId ?? generateMessageId()
   return `<${id}@${domain}>`
 }
 
-export function getHulyIdFromEmailMessageId (messageId: string, email: string): MessageID | undefined {
+export function getHanzoIdFromEmailMessageId (messageId: string, email: string): MessageID | undefined {
   const domain = getDomainFromEmail(email)
 
   const cleanMessageId = messageId.replace(/^<|>$/g, '')
@@ -265,9 +265,9 @@ export function getHulyIdFromEmailMessageId (messageId: string, email: string): 
 }
 
 export function generateNewEmailId (email: string): string {
-  return getEmailMessageIdFromHulyId(generateMessageId(), email)
+  return getEmailMessageIdFromHanzoId(generateMessageId(), email)
 }
 
-export function isHulyEmailMessageId (messageId: string, email: string): boolean {
-  return getHulyIdFromEmailMessageId(messageId, email) !== undefined
+export function isHanzoEmailMessageId (messageId: string, email: string): boolean {
+  return getHanzoIdFromEmailMessageId(messageId, email) !== undefined
 }

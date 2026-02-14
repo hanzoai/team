@@ -22,7 +22,7 @@ const PACKAGES_TO_UPDATE = [
   'client-resources',
   'collaborator-client',
   'core',
-  'hulylake-client',
+  'hanzolake-client',
   'model',
   'platform',
   'query',

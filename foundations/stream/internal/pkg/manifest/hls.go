@@ -19,7 +19,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/hcengineering/stream/internal/pkg/profile"
+	"github.com/hanzoai/stream/internal/pkg/profile"
 )
 
 // GenerateHLSPlaylist generates master file for master files for resolution levels

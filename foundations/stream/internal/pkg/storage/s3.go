@@ -26,7 +26,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
-	"github.com/hcengineering/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/log"
 	"go.uber.org/zap"
 )
 

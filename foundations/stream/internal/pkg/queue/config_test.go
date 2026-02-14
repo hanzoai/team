@@ -17,7 +17,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/hcengineering/stream/internal/pkg/queue"
+	"github.com/hanzoai/stream/internal/pkg/queue"
 )
 
 func Test_ParseConfig(t *testing.T) {

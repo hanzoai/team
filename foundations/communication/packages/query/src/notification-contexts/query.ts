@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -46,7 +46,7 @@ import {
   NotificationContextProcessor,
   NotificationProcessor
 } from '@hanzo/communication-shared'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 import { defaultQueryParams, NotificationContextQueryOptions, type PagedQuery, type QueryId } from '../types'
 import { QueryResult } from '../result'
@@ -65,7 +65,7 @@ export class NotificationContextsQuery implements PagedQuery<NotificationContext
 
   constructor (
     private readonly client: FindClient,
-    private readonly hulylake: HulylakeWorkspaceClient,
+    private readonly hanzolake: HanzolakeWorkspaceClient,
     public readonly id: QueryId,
     public readonly params: FindNotificationContextParams,
     public readonly options: NotificationContextQueryOptions | undefined,
@@ -280,7 +280,7 @@ export class NotificationContextsQuery implements PagedQuery<NotificationContext
       return fromBuffer
     }
 
-    return (await loadMessages(this.hulylake, cardId, blobId, { cardId, id: messageId }, { attachments: true }))[0]
+    return (await loadMessages(this.hanzolake, cardId, blobId, { cardId, id: messageId }, { attachments: true }))[0]
   }
 
   async loadMessages (contexts: NotificationContext[]): Promise<NotificationContext[]> {
@@ -293,7 +293,7 @@ export class NotificationContextsQuery implements PagedQuery<NotificationContext
           notifications.map(async (notification) => {
             const message = (
               await loadMessages(
-                this.hulylake,
+                this.hanzolake,
                 context.cardId,
                 notification.blobId,
                 { cardId: context.cardId, id: notification.messageId },

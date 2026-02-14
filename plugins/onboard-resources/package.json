@@ -2,7 +2,7 @@
   "name": "@hanzo/onboard-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hardcore Engineering Inc.",
+  "author": "Hanzo AI Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",

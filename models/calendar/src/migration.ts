@@ -1,5 +1,5 @@
 //
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -707,7 +707,7 @@ async function fillCalendarUserAndAccess (client: MigrationClient): Promise<void
         access: getCalendarAccess(_calendar)
       }
       if (_calendar._class === calendar.class.Calendar) {
-        update.name = 'HULY'
+        update.name = 'HANZO'
       }
 
       await client.update(DOMAIN_CALENDAR, { _id: _calendar._id }, update)

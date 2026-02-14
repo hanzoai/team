@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -45,7 +45,7 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="hulyTableAttr-container flex-col-center box">
+<div class="hanzoTableAttr-container flex-col-center box">
   <div class="header w-full p-4">
     <Label label={plugin.string.States} />
   </div>

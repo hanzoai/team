@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -81,7 +81,7 @@ import { inboxId } from '@hanzo/inbox'
 import { achievementId } from '@hanzo/achievement'
 import communication, { communicationId } from '@hanzo/communication'
 import { emojiId } from '@hanzo/emoji'
-import { hulyMailId } from '@hanzo/huly-mail'
+import { hanzoMailId } from '@hanzo/hanzo-mail'
 import { aiAssistantId } from '@hanzo/ai-assistant'
 import { ratingId } from '@hanzo/rating'
 import billingPlugin, { billingId } from '@hanzo/billing'
@@ -142,7 +142,7 @@ import '@hanzo/emoji-assets'
 import '@hanzo/media-assets'
 import '@hanzo/communication-assets'
 import '@hanzo/billing-assets'
-import '@hanzo/huly-mail-assets'
+import '@hanzo/hanzo-mail-assets'
 import '@hanzo/ai-assistant-assets'
 import '@hanzo/rating-assets'
 
@@ -300,8 +300,8 @@ function configureI18n (): void {
   addStringsLoader(emojiId, async (lang: string) => await import(`@hanzo/emoji-assets/lang/${lang}.json`))
   addStringsLoader(billingId, async (lang: string) => await import(`@hanzo/billing-assets/lang/${lang}.json`))
   addStringsLoader(
-    hulyMailId,
-    async (lang: string) => await import(`@hanzo/huly-mail-assets/lang/${lang}.json`)
+    hanzoMailId,
+    async (lang: string) => await import(`@hanzo/hanzo-mail-assets/lang/${lang}.json`)
   )
   addStringsLoader(
     aiAssistantId,
@@ -336,7 +336,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
   console.log('loading configuration', config)
   console.log('loaded branding', myBranding)
 
-  const title = myBranding.title ?? 'Huly Desktop'
+  const title = myBranding.title ?? 'Hanzo Desktop'
   ipcMain.setTitle(title)
 
   configureAnalyticsProviders(config)
@@ -349,7 +349,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
   setMetadata(presentation.metadata.DatalakeUrl, config.DATALAKE_URL ?? '')
   setMetadata(
     presentation.metadata.FileStorage,
-    createFileStorage(config.UPLOAD_URL, config.DATALAKE_URL, config.HULYLAKE_URL)
+    createFileStorage(config.UPLOAD_URL, config.DATALAKE_URL, config.HANZOLAKE_URL)
   )
   setMetadata(presentation.metadata.CollaboratorUrl, config.COLLABORATOR_URL)
   setMetadata(presentation.metadata.PreviewUrl, config.PREVIEW_URL)
@@ -358,7 +358,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
   setMetadata(presentation.metadata.MailUrl, config.MAIL_URL)
   setMetadata(recorder.metadata.StreamUrl, config.STREAM_URL ?? '')
   setMetadata(presentation.metadata.StatsUrl, config.STATS_URL)
-  setMetadata(presentation.metadata.HulylakeUrl, config.HULYLAKE_URL ?? '')
+  setMetadata(presentation.metadata.HanzolakeUrl, config.HANZOLAKE_URL ?? '')
   setMetadata(presentation.metadata.PulseUrl, config.PULSE_URL ?? '')
 
   const disabledFeatures = (config.DISABLED_FEATURES ?? '').split(',').map(it => it.trim()).filter(it => it.length > 0)
@@ -381,7 +381,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
     setMetadata(presentation.metadata.FrontVersion, config.VERSION)
   }
   setMetadata(telegram.metadata.TelegramURL, config.TELEGRAM_URL ?? 'http://localhost:8086')
-  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://huly.local:4020')
+  setMetadata(telegram.metadata.BotUrl, config.TELEGRAM_BOT_URL ?? 'http://hanzoai.local:4020')
   setMetadata(gmail.metadata.GmailURL, config.GMAIL_URL ?? 'http://localhost:8087')
   setMetadata(calendar.metadata.CalendarServiceURL, config.CALENDAR_URL ?? 'http://localhost:8095')
   setMetadata(calendar.metadata.PublicScheduleURL, config.PUBLIC_SCHEDULE_URL)
@@ -402,7 +402,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
 
   setMetadata(billingPlugin.metadata.BillingURL, config.BILLING_URL ?? '')
   setMetadata(presentation.metadata.PaymentUrl, config.PAYMENT_URL ?? '')
-  setMetadata(presentation.metadata.SignupUrl, config.SIGNUP_URL ?? 'https://huly.io/signup')
+  setMetadata(presentation.metadata.SignupUrl, config.SIGNUP_URL ?? 'https://hanzo.team/signup')
 
   setMetadata(support.metadata.SupportLink, myBranding.support?.supportLink ?? supportLink)
   setMetadata(support.metadata.ReportBugLink, myBranding.support?.reportBugLink ?? reportBugLink)
@@ -511,7 +511,7 @@ export async function configurePlatform (onWorkbenchConnect?: () => Promise<void
   if ((config.BILLING_URL ?? '') !== '') {
     addLocation(billingId, () => import(/* webpackChunkName: "billing" */ '@hanzo/billing-resources'))
   }
-  addLocation(hulyMailId, () => import(/* webpackChunkName: "huly-mail" */ '@hanzo/huly-mail-resources'))
+  addLocation(hanzoMailId, () => import(/* webpackChunkName: "hanzo-mail" */ '@hanzo/hanzo-mail-resources'))
   addLocation(
     aiAssistantId,
     () => import(/* webpackChunkName: "ai-assistant" */ '@hanzo/ai-assistant-resources')

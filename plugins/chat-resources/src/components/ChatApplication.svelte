@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -173,7 +173,7 @@
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
 </script>
 
-<div class="hulyPanels-container chat">
+<div class="hanzoPanels-container chat">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -205,7 +205,7 @@
       short
     />
   {/if}
-  <div bind:this={replacedPanelElement} class="hulyComponent chat__panel">
+  <div bind:this={replacedPanelElement} class="hanzoComponent chat__panel">
     {#if selection?.type === 'favorites'}
       {#key selection.type}
         <Favorites application={chatId} />

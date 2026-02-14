@@ -1,12 +1,12 @@
-# Huly Server
+# Hanzo Team Server
 
-[![GitHub License](https://img.shields.io/github/license/hanzoai/huly.server?style=for-the-badge)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/hanzoai/hanzo.server?style=for-the-badge)](LICENSE)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
 ## About
 
-Huly Server is a collection of server-side packages extracted from the [Huly Platform](https://github.com/hanzoai/platform). This repository contains backend infrastructure components, storage adapters, and server-side utilities that power the Huly ecosystem.
+Hanzo Team Server is a collection of server-side packages extracted from the [Hanzo Team Platform](https://github.com/hanzoai/platform). This repository contains backend infrastructure components, storage adapters, and server-side utilities that power the Hanzo Team ecosystem.
 
 These packages provide essential server-side functionality including database adapters (MongoDB, PostgreSQL, Elasticsearch), storage providers (MinIO, S3), messaging infrastructure (Kafka), and collaborative editing capabilities. They are designed to be modular, scalable, and production-ready for building robust backend services.
 
@@ -33,7 +33,7 @@ This repository includes the following server packages:
 - [@hanzo/minio](packages/minio) - MinIO storage provider for object storage
 - [@hanzo/s3](packages/s3) - AWS S3 compatible storage provider
 - [@hanzo/datalake](packages/datalake) - Data lake storage and management
-- [@hanzo/hulylake](packages/hulylake) - Huly lake storage and management
+- [@hanzo/hanzolake](packages/hanzolake) - Hanzo Team lake storage and management
 
 ### Infrastructure
 
@@ -202,7 +202,7 @@ Create a `.env` file in the `tests` directory with the following variables:
 
 ```env
 MONGO_URL=mongodb://localhost:27017
-POSTGRES_URL=postgresql://localhost:5432/huly
+POSTGRES_URL=postgresql://localhost:5432/hanzo
 ELASTIC_URL=http://localhost:9200
 MINIO_ENDPOINT=localhost
 MINIO_PORT=9000
@@ -211,10 +211,10 @@ KAFKA_BROKERS=localhost:9092
 
 ## Related Projects
 
-- [Huly Platform](https://github.com/hanzoai/platform) - The main Huly Platform repository
-- [Huly Core](https://github.com/hanzoai/huly.core) - Core packages and client libraries
-- [Huly Self-Host](https://github.com/hanzoai/huly-selfhost) - Self-hosting solution for Huly
-- [Huly Examples](https://github.com/hanzoai/huly-examples) - API usage examples
+- [Hanzo Team Platform](https://github.com/hanzoai/platform) - The main Hanzo Team Platform repository
+- [Hanzo Team Core](https://github.com/hanzoai/hanzo.core) - Core packages and client libraries
+- [Hanzo Team Self-Host](https://github.com/hanzoai/hanzo-selfhost) - Self-hosting solution for Hanzo Team
+- [Hanzo Team Examples](https://github.com/hanzoai/hanzo-examples) - API usage examples
 
 ## Contributing
 
@@ -226,8 +226,8 @@ Licensed under the [EPL-2.0](LICENSE) license.
 
 ## Additional Links
 
-- [Huly Website](https://huly.io/)
-- [Documentation](https://docs.huly.io/)
+- [Hanzo Team Website](https://hanzo.team/)
+- [Documentation](https://docs.hanzo.team/)
 - [Community](https://github.com/hanzoai/platform/discussions)
 
-© 2025 [Hardcore Engineering Inc](https://hardcoreeng.com/).
+© 2025 [Hardcore Engineering Inc](https://hanzoai.com/).

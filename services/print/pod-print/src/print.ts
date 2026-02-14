@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 import { MeasureContext } from '@hanzo/core'
 import puppeteer, { Page, Viewport } from 'puppeteer'

@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Anticrm Platform Contributors.
-// Copyright © 2021 Hardcore Engineering Inc.
+// Copyright © 2021 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -37,7 +37,7 @@ export { pages, type Pages }
 /*!
  * Anticrm Platform™ Login Plugin
  * © 2020, 2021 Anticrm Platform Contributors.
- * © 2021 Hardcore Engineering Inc. All Rights Reserved.
+ * © 2021 Hanzo AI Inc. All Rights Reserved.
  * Licensed under the Eclipse Public License, Version 2.0
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

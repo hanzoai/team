@@ -1,5 +1,5 @@
 //
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -95,7 +95,7 @@ import {
   loadMessagesGroups
 } from '@hanzo/communication-shared'
 import { markdownToMarkup } from '@hanzo/text-markdown'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 export * from './types'
 export * from './utils'
@@ -238,7 +238,7 @@ export class FullTextIndexPipeline implements FullTextPipeline {
     readonly storageAdapter: StorageAdapter,
     readonly contentAdapter: ContentTextAdapter,
     readonly broadcastUpdate: (ctx: MeasureContext, classes: Ref<Class<Doc>>[]) => void,
-    readonly hulylake: HulylakeWorkspaceClient,
+    readonly hanzolake: HanzolakeWorkspaceClient,
     readonly communicationApi?: CommunicationApi,
     readonly listener?: FulltextListener
   ) {
@@ -581,7 +581,7 @@ export class FullTextIndexPipeline implements FullTextPipeline {
     let lastPrint = platformNow()
     let messagesGroups = []
     try {
-      messagesGroups = await loadMessagesGroups(this.hulylake, card._id)
+      messagesGroups = await loadMessagesGroups(this.hanzolake, card._id)
     } catch (err: any) {
       ctx.error('Failed to get message groups', {
         cardId: card._id,
@@ -599,7 +599,7 @@ export class FullTextIndexPipeline implements FullTextPipeline {
       }
       try {
         const messages = await loadMessages(
-          this.hulylake,
+          this.hanzolake,
           groupInfo.blobId,
           { cardId: card._id },
           { attachments: true }
@@ -749,7 +749,7 @@ export class FullTextIndexPipeline implements FullTextPipeline {
       }
       return (
         await loadMessages(
-          this.hulylake,
+          this.hanzolake,
           meta.blobId,
           {
             cardId,

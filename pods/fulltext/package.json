@@ -78,6 +78,6 @@
     "@hanzo/kafka": "workspace:^0.7.18",
     "@hanzo/communication-server": "workspace:^0.7.12",
     "@hanzo/communication-sdk-types": "workspace:^0.7.12",
-    "@hanzo/hulylake-client": "workspace:^0.7.17"
+    "@hanzo/hanzolake-client": "workspace:^0.7.17"
   }
 }

@@ -24,8 +24,8 @@ import (
 	"os/exec"
 	"sync"
 
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/tracing"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/tracing"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"

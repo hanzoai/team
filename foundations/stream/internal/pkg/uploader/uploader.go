@@ -25,8 +25,8 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/storage"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/storage"
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel"
 	"go.uber.org/zap"

@@ -14,8 +14,8 @@ export class ChannelPage extends CommonPage {
   readonly buttonSendMessage = (): Locator => this.page.locator('g#Send')
   readonly textMessage = (messageText: string, strict = false): Locator =>
     strict
-      ? this.page.locator('.hulyComponent .activityMessage div[data-delivered]', { hasText: messageText })
-      : this.page.locator('.hulyComponent .activityMessage', { hasText: messageText })
+      ? this.page.locator('.hanzoComponent .activityMessage div[data-delivered]', { hasText: messageText })
+      : this.page.locator('.hanzoComponent .activityMessage', { hasText: messageText })
 
   readonly textMessageInSidebar = (messageText: string, strict = false): Locator =>
     strict

@@ -1,6 +1,6 @@
 # Core Concepts
 
-Understanding the fundamental concepts of Huly Virtual Network is essential for building robust distributed systems.
+Understanding the fundamental concepts of Hanzo Team Virtual Network is essential for building robust distributed systems.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Understanding the fundamental concepts of Huly Virtual Network is essential for 
 
 ## Architecture Overview
 
-Huly Network uses a hub-and-spoke architecture with three main components:
+Hanzo Team Network uses a hub-and-spoke architecture with three main components:
 
 ```mermaid
 graph TB
@@ -405,7 +405,7 @@ interface NetworkClient {
 
 ## Communication Patterns
 
-Huly Network supports multiple communication patterns:
+Hanzo Team Network supports multiple communication patterns:
 
 ### 1. Request/Response (Synchronous)
 
@@ -653,7 +653,7 @@ Key concepts to remember:
 7. **Kind** = Container type/category
 8. **Labels** = Fine-grained selection criteria
 
-These concepts form the foundation for building scalable, fault-tolerant distributed systems with Huly Network.
+These concepts form the foundation for building scalable, fault-tolerant distributed systems with Hanzo Team Network.
 
 ## Next Steps
 

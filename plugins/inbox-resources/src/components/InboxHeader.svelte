@@ -1,4 +1,4 @@
-<!-- Copyright © 2025 Hardcore Engineering Inc. -->
+<!-- Copyright © 2025 Hanzo AI Inc. -->
 <!-- -->
 <!-- Licensed under the Eclipse Public License, Version 2.0 (the "License"); -->
 <!-- you may not use this file except in compliance with the License. You may -->
@@ -86,7 +86,7 @@
   }
 </script>
 
-<div class="hulyNavPanel-header withButton small inbox-header">
+<div class="hanzoNavPanel-header withButton small inbox-header">
   <span class="overflow-label"><Label label={inbox.string.Inbox} /></span>
   <div class="flex-row-center flex-gap-2">
     {#if clearing}

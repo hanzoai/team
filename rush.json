@@ -450,8 +450,8 @@
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/hulylake-client",
-      "projectFolder": "foundations/core/packages/hulylake-client",
+      "packageName": "@hanzo/hanzolake-client",
+      "projectFolder": "foundations/core/packages/hanzolake-client",
       "shouldPublish": true
     },
     {
@@ -538,8 +538,8 @@
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/hulylake",
-      "projectFolder": "foundations/server/packages/hulylake",
+      "packageName": "@hanzo/hanzolake",
+      "projectFolder": "foundations/server/packages/hanzolake",
       "shouldPublish": true
     },
     {
@@ -2572,8 +2572,8 @@
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hulypulse-client",
-      "projectFolder": "packages/hulypulse-client",
+      "packageName": "@hanzo/hanzopulse-client",
+      "projectFolder": "packages/hanzopulse-client",
       "shouldPublish": false
     },
     {
@@ -2657,23 +2657,23 @@
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-huly-mail",
-      "projectFolder": "models/huly-mail",
+      "packageName": "@hanzo/model-hanzo-mail",
+      "projectFolder": "models/hanzo-mail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/huly-mail",
-      "projectFolder": "plugins/huly-mail",
+      "packageName": "@hanzo/hanzo-mail",
+      "projectFolder": "plugins/hanzo-mail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/huly-mail-assets",
-      "projectFolder": "plugins/huly-mail-assets",
+      "packageName": "@hanzo/hanzo-mail-assets",
+      "projectFolder": "plugins/hanzo-mail-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/huly-mail-resources",
-      "projectFolder": "plugins/huly-mail-resources",
+      "packageName": "@hanzo/hanzo-mail-resources",
+      "projectFolder": "plugins/hanzo-mail-resources",
       "shouldPublish": false
     },
     {

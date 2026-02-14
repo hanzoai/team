@@ -2,7 +2,7 @@
   "name": "@hanzo/love-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hardcore Engineering Inc.",
+  "author": "Hanzo AI Inc.",
   "scripts": {
     "build": "compile ui",
     "build:docs": "api-extractor run --local",
@@ -66,7 +66,7 @@
     "@hanzo/emoji-resources": "workspace:^0.7.0",
     "@hanzo/theme": "workspace:^0.7.0",
     "@hanzo/account-client": "workspace:^0.7.21",
-    "@hanzo/hulypulse-client": "workspace:^0.7.0",
+    "@hanzo/hanzopulse-client": "workspace:^0.7.0",
     "@livekit/krisp-noise-filter": "^0.3.0",
     "@livekit/track-processors": "^0.5.6",
     "livekit-client": "^2.15.6",

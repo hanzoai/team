@@ -199,56 +199,56 @@
    * PNPM documentation: https://pnpm.io/package_json#pnpmoverrides
    */
   "globalOverrides": {
-    // DEV: Uncomment the lines below to use local huly.core, huly.server, and huly.utils packages
+    // DEV: Uncomment the lines below to use local hanzo.core, hanzo.server, and hanzo.utils packages
     // Then "rush update --full" to update the dependencies.
-    // NOTE:  It's configured to work if huly.core, huly.server, and huly.utils are placed adjacent to the platform. If you have them in a different location, you need to change the paths below.
-    // huly.core packages:
-    // "@hanzo/account-client": "file:../../../huly.core/packages/account-client",
-    // "@hanzo/analytics": "file:../../../huly.core/packages/analytics",
-    // "@hanzo/analytics-service": "file:../../../huly.core/packages/analytics-service",
-    // "@hanzo/api-client": "file:../../../huly.core/packages/api-client",
-    // "@hanzo/client": "file:../../../huly.core/packages/client",
-    // "@hanzo/client-resources": "file:../../../huly.core/packages/client-resources",
-    // "@hanzo/collaborator-client": "file:../../../huly.core/packages/collaborator-client",
-    // "@hanzo/core": "file:../../../huly.core/packages/core",
-    // "@hanzo/hulylake-client": "file:../../../huly.core/packages/hulylake-client",
-    // "@hanzo/model": "file:../../../huly.core/packages/model",
-    // "@hanzo/platform": "file:../../../huly.core/packages/platform",
-    // "@hanzo/query": "file:../../../huly.core/packages/query",
-    // "@hanzo/rank": "file:../../../huly.core/packages/rank",
-    // "@hanzo/retry": "file:../../../huly.core/packages/retry",
-    // "@hanzo/rpc": "file:../../../huly.core/packages/rpc",
-    // "@hanzo/storage": "file:../../../huly.core/packages/storage",
-    // "@hanzo/text": "file:../../../huly.core/packages/text",
-    // "@hanzo/text-core": "file:../../../huly.core/packages/text-core",
-    // "@hanzo/text-html": "file:../../../huly.core/packages/text-html",
-    // "@hanzo/text-markdown": "file:../../../huly.core/packages/text-markdown",
-    // "@hanzo/text-ydoc": "file:../../../huly.core/packages/text-ydoc",
-    // "@hanzo/token": "file:../../../huly.core/packages/token",
-    // "@hanzo/measurements": "file:../../../huly.core/packages/measurements",
-    // "@hanzo/measurements-otlp": "file:../../../huly.core/packages/measurements-otlp",
-    // "@hanzo/postgres-base": "file:../../../huly.core/packages/postgres-base",
-    // huly.server packages:
-    // "@hanzo/collaboration": "file:../../../huly.server/packages/collaboration",
-    // "@hanzo/datalake": "file:../../../huly.server/packages/datalake",
-    // "@hanzo/elastic": "file:../../../huly.server/packages/elastic",
-    // "@hanzo/hulylake": "file:../../../huly.server/packages/hulylake",
-    // "@hanzo/kafka": "file:../../../huly.server/packages/kafka",
-    // "@hanzo/middleware": "file:../../../huly.server/packages/middleware",
-    // "@hanzo/minio": "file:../../../huly.server/packages/minio",
-    // "@hanzo/mongo": "file:../../../huly.server/packages/mongo",
-    // "@hanzo/postgres": "file:../../../huly.server/packages/postgres",
-    // "@hanzo/s3": "file:../../../huly.server/packages/s3",
-    // "@hanzo/server": "file:../../../huly.server/packages/server",
-    // "@hanzo/server-client": "file:../../../huly.server/packages/client",
-    // "@hanzo/server-core": "file:../../../huly.server/packages/core",
-    // "@hanzo/server-storage": "file:../../../huly.server/packages/server-storage"
+    // NOTE:  It's configured to work if hanzo.core, hanzo.server, and hanzo.utils are placed adjacent to the platform. If you have them in a different location, you need to change the paths below.
+    // hanzo.core packages:
+    // "@hanzo/account-client": "file:../../../hanzo.core/packages/account-client",
+    // "@hanzo/analytics": "file:../../../hanzo.core/packages/analytics",
+    // "@hanzo/analytics-service": "file:../../../hanzo.core/packages/analytics-service",
+    // "@hanzo/api-client": "file:../../../hanzo.core/packages/api-client",
+    // "@hanzo/client": "file:../../../hanzo.core/packages/client",
+    // "@hanzo/client-resources": "file:../../../hanzo.core/packages/client-resources",
+    // "@hanzo/collaborator-client": "file:../../../hanzo.core/packages/collaborator-client",
+    // "@hanzo/core": "file:../../../hanzo.core/packages/core",
+    // "@hanzo/hanzolake-client": "file:../../../hanzo.core/packages/hanzolake-client",
+    // "@hanzo/model": "file:../../../hanzo.core/packages/model",
+    // "@hanzo/platform": "file:../../../hanzo.core/packages/platform",
+    // "@hanzo/query": "file:../../../hanzo.core/packages/query",
+    // "@hanzo/rank": "file:../../../hanzo.core/packages/rank",
+    // "@hanzo/retry": "file:../../../hanzo.core/packages/retry",
+    // "@hanzo/rpc": "file:../../../hanzo.core/packages/rpc",
+    // "@hanzo/storage": "file:../../../hanzo.core/packages/storage",
+    // "@hanzo/text": "file:../../../hanzo.core/packages/text",
+    // "@hanzo/text-core": "file:../../../hanzo.core/packages/text-core",
+    // "@hanzo/text-html": "file:../../../hanzo.core/packages/text-html",
+    // "@hanzo/text-markdown": "file:../../../hanzo.core/packages/text-markdown",
+    // "@hanzo/text-ydoc": "file:../../../hanzo.core/packages/text-ydoc",
+    // "@hanzo/token": "file:../../../hanzo.core/packages/token",
+    // "@hanzo/measurements": "file:../../../hanzo.core/packages/measurements",
+    // "@hanzo/measurements-otlp": "file:../../../hanzo.core/packages/measurements-otlp",
+    // "@hanzo/postgres-base": "file:../../../hanzo.core/packages/postgres-base",
+    // hanzo.server packages:
+    // "@hanzo/collaboration": "file:../../../hanzo.server/packages/collaboration",
+    // "@hanzo/datalake": "file:../../../hanzo.server/packages/datalake",
+    // "@hanzo/elastic": "file:../../../hanzo.server/packages/elastic",
+    // "@hanzo/hanzolake": "file:../../../hanzo.server/packages/hanzolake",
+    // "@hanzo/kafka": "file:../../../hanzo.server/packages/kafka",
+    // "@hanzo/middleware": "file:../../../hanzo.server/packages/middleware",
+    // "@hanzo/minio": "file:../../../hanzo.server/packages/minio",
+    // "@hanzo/mongo": "file:../../../hanzo.server/packages/mongo",
+    // "@hanzo/postgres": "file:../../../hanzo.server/packages/postgres",
+    // "@hanzo/s3": "file:../../../hanzo.server/packages/s3",
+    // "@hanzo/server": "file:../../../hanzo.server/packages/server",
+    // "@hanzo/server-client": "file:../../../hanzo.server/packages/client",
+    // "@hanzo/server-core": "file:../../../hanzo.server/packages/core",
+    // "@hanzo/server-storage": "file:../../../hanzo.server/packages/server-storage"
 
-    // huly.utils packages:
-    // "@hanzo/platform-rig": "file:../../../huly.utils/packages/platform-rig",
-    // "@hanzo/ui-test": "file:../../../huly.utils/packages/ui-test"
+    // hanzo.utils packages:
+    // "@hanzo/platform-rig": "file:../../../hanzo.utils/packages/platform-rig",
+    // "@hanzo/ui-test": "file:../../../hanzo.utils/packages/ui-test"
 
-    // huly.communication packages
+    // hanzo.communication packages
     // "@hanzo/communication-types": "file:../../../communication/packages/types",
     // "@hanzo/communication-sdk-types": "file:../../../communication/packages/sdk-types",
     // "@hanzo/communication-shared": "file:../../../communication/packages/shared",

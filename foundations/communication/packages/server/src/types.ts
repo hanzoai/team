@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -38,7 +38,7 @@ import { LowLevelClient } from './client'
 
 export interface Metadata {
   accountsUrl: string
-  hulylakeUrl: string
+  hanzolakeUrl: string
   secret: string
   messagesPerBlob: number
 }

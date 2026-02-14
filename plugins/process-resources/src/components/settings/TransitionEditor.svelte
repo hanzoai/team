@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -144,12 +144,12 @@
   }
 </script>
 
-<div class="hulyComponent-content__container columns">
+<div class="hanzoComponent-content__container columns">
   <Navigator {visibleSecondNav} {states} {transitions} />
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoComponent-content__column content">
     {#if value && process}
       <Scroller align="center" padding="var(--spacing-3)" bottomPadding="var(--spacing-3)">
-        <div class="hulyComponent-content gap">
+        <div class="hanzoComponent-content gap">
           <div class="header flex-between">
             <TransitionPresenter transition={value} />
             <ButtonIcon
@@ -160,8 +160,8 @@
               on:click={handleDelete}
             />
           </div>
-          <div class="hulyComponent-content flex-col-center flex-gap-4">
-            <div class="hulyTableAttr-container flex-col-center box">
+          <div class="hanzoComponent-content flex-col-center flex-gap-4">
+            <div class="hanzoTableAttr-container flex-col-center box">
               <div class="label w-full p-4">
                 <Label label={plugin.string.Trigger} />
               </div>
@@ -171,7 +171,7 @@
                 </svelte:fragment>
               </Button>
             </div>
-            <div class="hulyTableAttr-container flex-col-center box">
+            <div class="hanzoTableAttr-container flex-col-center box">
               <div class="label w-full p-4">
                 <Label label={plugin.string.Actions} />
               </div>

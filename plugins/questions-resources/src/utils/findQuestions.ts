@@ -1,5 +1,5 @@
 //
-// Copyright @ 2024 Hardcore Engineering Inc.
+// Copyright @ 2024 Hanzo AI Inc.
 //
 
 import questions, { type Question } from '@hanzo/questions'

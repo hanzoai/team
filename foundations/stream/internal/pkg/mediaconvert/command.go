@@ -26,9 +26,9 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/manifest"
-	"github.com/hcengineering/stream/internal/pkg/profile"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/manifest"
+	"github.com/hanzoai/stream/internal/pkg/profile"
 	"go.uber.org/zap"
 )
 

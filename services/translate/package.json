@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Hardcore Engineering Inc.",
+  "author": "Hanzo AI Inc.",
   "scripts": {
     "build": "compile",
     "build:watch": "compile",
@@ -63,7 +63,7 @@
     "@hanzo/communication-types": "workspace:^0.7.12",
     "@hanzo/contact": "workspace:^0.7.0",
     "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/hulylake-client": "workspace:^0.7.17",
+    "@hanzo/hanzolake-client": "workspace:^0.7.17",
     "@hanzo/kafka": "workspace:^0.7.18",
     "@hanzo/platform": "workspace:^0.7.19",
     "@hanzo/retry": "workspace:^0.7.17",

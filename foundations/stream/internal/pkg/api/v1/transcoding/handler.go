@@ -21,9 +21,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/hcengineering/stream/internal/pkg/config"
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/mediaconvert"
+	"github.com/hanzoai/stream/internal/pkg/config"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/mediaconvert"
 	"go.uber.org/zap"
 )
 

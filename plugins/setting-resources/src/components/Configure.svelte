@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -52,7 +52,7 @@
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Setting} label={setting.string.Configuration} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoComponent-content__column content">
     <div class="flex-row-center flex-wrap m-4 px-4">
       <Label label={setting.string.BetaWarning} />
     </div>

@@ -1,0 +1,20 @@
+{
+  "string": {
+    "IntegrationLabel": "Hanzo Team Mail",
+    "IntegrationDescription": "Connect your Hanzo Team mailbox to send, receive, and manage emails",
+    "Connect": "Connect",
+    "ConnectHanzo TeamMail": "Connect Hanzo Team mailbox",
+    "Cancel": "Cancel",
+    "Email": "Email",
+    "Status": "Status",
+    "FailedToConnect": "Hanzo Team mail service is not available",
+    "TotalMessages": "Total messages:",
+    "Configure": "Configure Hanzo Team mail",
+    "ChannelSpace": "Space for message channel",
+    "PersonSpaceInfo": "Mail will be available to you",
+    "SharedSpaceInfo": "Mail will be available to all space participants",
+    "Mailbox": "Mailbox",
+    "MailboxesNotConfigured": "No mailboxes found",
+    "ConfigureMailBoxes": "Please add a mailbox in the `Mailboxes` section to get started"
+  }
+}

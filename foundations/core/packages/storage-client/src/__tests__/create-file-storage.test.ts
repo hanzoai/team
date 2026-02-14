@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -16,7 +16,7 @@
 import { createFileStorage, FileStorageConfig } from '../client'
 import { DatalakeStorage } from '../client/datalake'
 import { FrontStorage } from '../client/front'
-import { HulylakeStorage } from '../client/hulylake'
+import { HanzolakeStorage } from '../client/hanzolake'
 
 describe('createFileStorage factory', () => {
   beforeEach(() => {
@@ -35,11 +35,11 @@ describe('createFileStorage factory', () => {
       expect(storage).toBeInstanceOf(DatalakeStorage)
     })
 
-    it('should create DatalakeStorage when both datalakeUrl and hulylakeUrl are provided (datalake takes precedence)', () => {
+    it('should create DatalakeStorage when both datalakeUrl and hanzolakeUrl are provided (datalake takes precedence)', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
         datalakeUrl: 'https://datalake.example.com',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
@@ -83,63 +83,63 @@ describe('createFileStorage factory', () => {
     })
   })
 
-  describe('HulylakeStorage creation', () => {
-    it('should create HulylakeStorage when hulylakeUrl is provided and datalakeUrl is not', () => {
+  describe('HanzolakeStorage creation', () => {
+    it('should create HanzolakeStorage when hanzolakeUrl is provided and datalakeUrl is not', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).toBeInstanceOf(HulylakeStorage)
+      expect(storage).toBeInstanceOf(HanzolakeStorage)
     })
 
-    it('should create HulylakeStorage when hulylakeUrl is provided and datalakeUrl is empty', () => {
+    it('should create HanzolakeStorage when hanzolakeUrl is provided and datalakeUrl is empty', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
         datalakeUrl: '',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).toBeInstanceOf(HulylakeStorage)
+      expect(storage).toBeInstanceOf(HanzolakeStorage)
     })
 
-    it('should create HulylakeStorage when hulylakeUrl is provided and datalakeUrl is undefined', () => {
+    it('should create HanzolakeStorage when hanzolakeUrl is provided and datalakeUrl is undefined', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
         datalakeUrl: undefined,
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).toBeInstanceOf(HulylakeStorage)
+      expect(storage).toBeInstanceOf(HanzolakeStorage)
     })
 
-    it('should not create HulylakeStorage when hulylakeUrl is empty string', () => {
+    it('should not create HanzolakeStorage when hanzolakeUrl is empty string', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
-        hulylakeUrl: ''
+        hanzolakeUrl: ''
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).not.toBeInstanceOf(HulylakeStorage)
+      expect(storage).not.toBeInstanceOf(HanzolakeStorage)
       expect(storage).toBeInstanceOf(FrontStorage)
     })
 
-    it('should not create HulylakeStorage when hulylakeUrl is undefined', () => {
+    it('should not create HanzolakeStorage when hanzolakeUrl is undefined', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
-        hulylakeUrl: undefined
+        hanzolakeUrl: undefined
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).not.toBeInstanceOf(HulylakeStorage)
+      expect(storage).not.toBeInstanceOf(HanzolakeStorage)
       expect(storage).toBeInstanceOf(FrontStorage)
     })
   })
@@ -159,7 +159,7 @@ describe('createFileStorage factory', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
         datalakeUrl: '',
-        hulylakeUrl: ''
+        hanzolakeUrl: ''
       }
 
       const storage = createFileStorage(config)
@@ -171,7 +171,7 @@ describe('createFileStorage factory', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
         datalakeUrl: undefined,
-        hulylakeUrl: undefined
+        hanzolakeUrl: undefined
       }
 
       const storage = createFileStorage(config)
@@ -191,28 +191,28 @@ describe('createFileStorage factory', () => {
   })
 
   describe('priority and precedence', () => {
-    it('should prioritize DatalakeStorage over HulylakeStorage', () => {
+    it('should prioritize DatalakeStorage over HanzolakeStorage', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
         datalakeUrl: 'https://datalake.example.com',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
 
       expect(storage).toBeInstanceOf(DatalakeStorage)
-      expect(storage).not.toBeInstanceOf(HulylakeStorage)
+      expect(storage).not.toBeInstanceOf(HanzolakeStorage)
     })
 
-    it('should prioritize HulylakeStorage over FrontStorage', () => {
+    it('should prioritize HanzolakeStorage over FrontStorage', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).toBeInstanceOf(HulylakeStorage)
+      expect(storage).toBeInstanceOf(HanzolakeStorage)
       expect(storage).not.toBeInstanceOf(FrontStorage)
     })
 
@@ -225,7 +225,7 @@ describe('createFileStorage factory', () => {
 
       expect(storage).toBeInstanceOf(FrontStorage)
       expect(storage).not.toBeInstanceOf(DatalakeStorage)
-      expect(storage).not.toBeInstanceOf(HulylakeStorage)
+      expect(storage).not.toBeInstanceOf(HanzolakeStorage)
     })
   })
 
@@ -244,18 +244,18 @@ describe('createFileStorage factory', () => {
       expect(fileUrl).toContain(datalakeUrl)
     })
 
-    it('should pass correct URL to HulylakeStorage', () => {
-      const hulylakeUrl = 'https://hulylake.example.com'
+    it('should pass correct URL to HanzolakeStorage', () => {
+      const hanzolakeUrl = 'https://hanzolake.example.com'
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
-        hulylakeUrl
+        hanzolakeUrl
       }
 
-      const storage = createFileStorage(config) as HulylakeStorage
+      const storage = createFileStorage(config) as HanzolakeStorage
 
       // Test that the URL was passed correctly by checking the generated file URL
       const fileUrl = storage.getFileUrl('test-workspace', 'test-file', 'test.txt')
-      expect(fileUrl).toContain(hulylakeUrl)
+      expect(fileUrl).toContain(hanzolakeUrl)
     })
 
     it('should pass correct URL to FrontStorage', () => {
@@ -299,12 +299,12 @@ describe('createFileStorage factory', () => {
     it('should handle URLs without trailing slashes', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).toBeInstanceOf(HulylakeStorage)
+      expect(storage).toBeInstanceOf(HanzolakeStorage)
     })
 
     it('should handle URLs with different protocols', () => {
@@ -321,12 +321,12 @@ describe('createFileStorage factory', () => {
     it('should handle URLs with ports', () => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com:8080',
-        hulylakeUrl: 'https://hulylake.example.com:9090'
+        hanzolakeUrl: 'https://hanzolake.example.com:9090'
       }
 
       const storage = createFileStorage(config)
 
-      expect(storage).toBeInstanceOf(HulylakeStorage)
+      expect(storage).toBeInstanceOf(HanzolakeStorage)
     })
 
     it('should handle localhost URLs', () => {

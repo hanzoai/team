@@ -1,5 +1,5 @@
 //
-// Copyright © 2022-2023 Hardcore Engineering Inc.
+// Copyright © 2022-2023 Hanzo AI Inc.
 //
 import { Attachment } from '@hanzo/attachment'
 import { ChatMessage } from '@hanzo/chunter'

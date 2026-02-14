@@ -1,5 +1,5 @@
 //
-// Copyright © 2026 Hardcore Engineering Inc.
+// Copyright © 2026 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -32,7 +32,7 @@ const config: Config = (() => {
     Port: parseInt(process.env.PORT ?? '4041'),
     Secret: process.env.SECRET,
     ServiceID: process.env.SERVICE_ID ?? 'link-preview',
-    UserAgent: process.env.USER_AGENT ?? 'Huly Link Preview Service/1.0',
+    UserAgent: process.env.USER_AGENT ?? 'Hanzo Link Preview Service/1.0',
     DescriptionMaxSentences: parseInt(process.env.DESCRIPTION_MAX_SENTENCES ?? '3'),
     DescriptionMaxLength: parseInt(process.env.DESCRIPTION_MAX_LENGTH ?? '200'),
     TimeoutMs: parseInt(process.env.TIMEOUT ?? '5') * 1000

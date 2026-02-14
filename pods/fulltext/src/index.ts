@@ -1,5 +1,5 @@
 //
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -104,7 +104,7 @@ if (accountsUrl === undefined) {
   process.exit(1)
 }
 
-const hulylakeUrl = process.env.HULYLAKE_URL ?? ''
+const hanzolakeUrl = process.env.HANZOLAKE_URL ?? ''
 
 const storageConfig: StorageConfiguration = storageConfigFromEnv()
 const externalStorage = buildStorageFromConfig(storageConfig)
@@ -118,7 +118,7 @@ const onClose = startIndexer(metricsContext, {
   externalStorage,
   elasticIndexName,
   dbURL,
-  hulylakeUrl,
+  hanzolakeUrl,
   port: servicePort,
   serverSecret,
   accountsUrl

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,7 +15,7 @@
 
 import { LiveQueries } from '@hanzo/communication-query'
 import type { FindClient } from '@hanzo/communication-sdk-types'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 export type { MessageQueryParams } from '@hanzo/communication-query'
 
@@ -32,7 +32,7 @@ export function getOnDestroy (): (fn: () => void) => void {
 
 export function initLiveQueries (
   client: FindClient,
-  hulylake: HulylakeWorkspaceClient,
+  hanzolake: HanzolakeWorkspaceClient,
   destroyFn?: (fn: () => void) => void
 ): void {
   if (lq != null) {
@@ -43,7 +43,7 @@ export function initLiveQueries (
     onDestroy = destroyFn
   }
 
-  lq = new LiveQueries(client, hulylake)
+  lq = new LiveQueries(client, hanzolake)
 }
 
 export async function refreshLiveQueries (): Promise<void> {

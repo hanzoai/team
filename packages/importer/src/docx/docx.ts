@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -18,7 +18,7 @@ import { markupToMarkdown } from '@hanzo/text-markdown'
 import { mkdir, readdir, readFile, writeFile } from 'fs/promises'
 import * as yaml from 'js-yaml'
 import { basename, dirname, extname, join, relative } from 'path'
-import { type HulyControlledDocumentHeader, type HulyDocumentTemplateHeader } from '../huly/huly'
+import { type HanzoControlledDocumentHeader, type HanzoDocumentTemplateHeader } from '../hanzo/hanzo'
 
 export interface DocumentConverterOptions {
   outputPath: string

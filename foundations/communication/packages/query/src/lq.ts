@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -32,7 +32,7 @@ import type {
   PagedQueryCallback,
   FindClient
 } from '@hanzo/communication-sdk-types'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 import type { FindParams, QueryId, AnyQuery, MessageQueryParams, QueryOptions, MessageQueryOptions, NotificationContextQueryOptions } from './types'
 import { MessagesQuery } from './messages/query'
@@ -55,7 +55,7 @@ export class LiveQueries {
 
   constructor (
     private readonly client: FindClient,
-    private readonly hulylake: HulylakeWorkspaceClient
+    private readonly hanzolake: HanzolakeWorkspaceClient
   ) {
     this.client.onEvent = (event) => {
       this.eventQueue = this.eventQueue
@@ -156,11 +156,11 @@ export class LiveQueries {
       } else {
         const result = exists.copyResult()
 
-        return new QueryClass(this.client, this.hulylake, id, params, options, callback, result)
+        return new QueryClass(this.client, this.hanzolake, id, params, options, callback, result)
       }
     }
 
-    return new QueryClass(this.client, this.hulylake, id, params, options, callback, undefined)
+    return new QueryClass(this.client, this.hanzolake, id, params, options, callback, undefined)
   }
 
   private findQuery<T extends AnyQuery>(params: FindParams, QueryClass: new (...args: any[]) => T, options?: QueryOptions): T | undefined {

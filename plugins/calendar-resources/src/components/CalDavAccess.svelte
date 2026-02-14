@@ -23,7 +23,7 @@
   let loading = true
   let error: string | undefined
   let selectedSocialId: SocialId | undefined
-  let hulySocialId = ''
+  let hanzoSocialId = ''
   let accessEnabled = false
   let serverUrl = getMetadata(calendar.metadata.CalDavServerURL)
   let password = ''
@@ -62,14 +62,14 @@
       password = generateRandomPassword()
 
       const socialId = pickPrimarySocialId(getCurrentAccount().fullSocialIds)
-      if (socialId.type !== SocialIdType.HULY) {
+      if (socialId.type !== SocialIdType.HANZO) {
         // Thid should not happen, no need to translate
         error = 'Appropriate account not found'
         return
       }
 
       const wsId = getCurrentWorkspaceUuid()
-      hulySocialId = socialId.value
+      hanzoSocialId = socialId.value
       const accountClient = getAccountClient()
       const integrations = await accountClient.listIntegrations({
         socialId: socialId._id,
@@ -236,7 +236,7 @@
     <div class="flex-col-stretch flex-gap-1-5" class:accessDisabled={!accessEnabled}>
       <Label label={calendar.string.CalDavAccessAccount} />
       <div class="flex-row-center flex-gap-1">
-        <EditBox bind:value={hulySocialId} kind="ghost" fullSize focusable disabled={true} />
+        <EditBox bind:value={hanzoSocialId} kind="ghost" fullSize focusable disabled={true} />
         <Button
           icon={IconCopy}
           size="small"

@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Copyright © Hardcore Engineering Inc.",
+  "author": "Copyright © Hanzo AI Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",

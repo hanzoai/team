@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2021, 2025 Hardcore Engineering Inc.
+// Copyright © 2021, 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -278,7 +278,7 @@ export function start (
     billingUrl?: string
     paymentUrl?: string
     pulseUrl?: string
-    hulylakeUrl?: string
+    hanzolakeUrl?: string
     datalakeUrl?: string
   },
   port: number,
@@ -357,7 +357,7 @@ export function start (
       BILLING_URL: config.billingUrl,
       PAYMENT_URL: config.paymentUrl,
       PULSE_URL: config.pulseUrl,
-      HULYLAKE_URL: config.hulylakeUrl,
+      HANZOLAKE_URL: config.hanzolakeUrl,
       DATALAKE_URL: config.datalakeUrl,
       ...(extraConfig ?? {})
     }

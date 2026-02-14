@@ -1,0 +1,23 @@
+{
+  "ACCOUNTS_URL": "https://account.hanzoai.app/",
+  "UPLOAD_URL": "/files",
+  "FILES_URL": "/files/:workspace/:filename?file=:blobId&workspace=:workspace",
+  "REKONI_URL": "https://rekoni.hanzo.team",
+  "TELEGRAM_URL": "https://telegram.hanzo.team",
+  "GMAIL_URL": "https://gmail.hanzo.team/",
+  "CALENDAR_URL": "https://calendar.hanzo.team/",
+  "COLLABORATOR_URL": "wss://collaborator.hanzo.team",
+  "BRANDING_URL": "https://hanzo.team/hanzo-branding_v2.json",
+  "GITHUB_APP": "hanzo-for-github",
+  "GITHUB_CLIENTID": "Iv1.e263a087de0910e0",
+  "INTERCOM_APP_ID": "",
+  "INTERCOM_API_URL": "",
+  "GITHUB_URL": "https://github.hanzoai.app",
+  "LIVEKIT_WS": "",
+  "LOVE_ENDPOINT": "https://love.hanzoai.app/",
+  "SIGN_URL": "https://sign.hanzoai.app",
+  "PRINT_URL": "https://print.hanzoai.app",
+  "DESKTOP_UPDATES_CHANNEL": "hanzoai",
+  "TELEGRAM_BOT_URL": "https://telegram-bot.hanzoai.app",
+  "STATS_URL": "https://stats.hanzoai.app"
+}

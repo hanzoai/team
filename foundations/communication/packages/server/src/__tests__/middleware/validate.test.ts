@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -68,7 +68,7 @@ describe('ValidateMiddleware', () => {
       workspace,
       metadata: {
         accountsUrl: 'http://accounts',
-        hulylakeUrl: 'http://hulylake',
+        hanzolakeUrl: 'http://hanzolake',
         secret: 'secret',
         messagesPerBlob: 100
       },
@@ -411,7 +411,7 @@ describe('ValidateMiddleware', () => {
             attachments: [
               {
                 id: '550e8400-e29b-41d4-a716-446655440000',
-                mimeType: 'application/vnd.huly.link-preview',
+                mimeType: 'application/vnd.hanzo.link-preview',
                 params: {
                   url: 'https://example.com',
                   host: 'example.com'

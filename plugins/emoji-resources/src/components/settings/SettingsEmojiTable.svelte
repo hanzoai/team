@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -27,7 +27,7 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={emojiPlugin.icon.Emoji} label={emojiPlugin.string.CustomEmojis} size={'large'} isCurrent />
     <svelte:fragment slot="search"></svelte:fragment>
@@ -36,7 +36,7 @@
       <Button icon={IconAdd} label={emojiPlugin.string.Create} kind={'primary'} on:click={showCreateDialog} />
     </svelte:fragment>
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoComponent-content__column content">
     <TableBrowser
       _class={emojiPlugin.class.CustomEmoji}
       config={[

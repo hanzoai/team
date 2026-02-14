@@ -1,6 +1,6 @@
 <!--
 //
-// Copyright @ 2022 Hardcore Engineering Inc
+// Copyright @ 2022 Hanzo AI Inc
 //
 -->
 <script lang="ts">

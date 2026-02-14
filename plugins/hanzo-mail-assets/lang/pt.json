@@ -1,0 +1,20 @@
+{
+  "string": {
+    "IntegrationLabel": "Hanzo Team Mail",
+    "IntegrationDescription": "Conecte sua caixa de correio Hanzo Team para enviar, receber e gerenciar e-mails",
+    "Connect": "Conectar",
+    "ConnectHanzo TeamMail": "Conectar caixa de correio Hanzo Team",
+    "Cancel": "Cancelar",
+    "Email": "E-mail",
+    "Status": "Status",
+    "FailedToConnect": "O serviço de e-mail Hanzo Team não está disponível",
+    "TotalMessages": "Total de mensagens:",
+    "Configure": "Configurar Hanzo Team Mail",
+    "ChannelSpace": "Espaço para canal de mensagens",
+    "PersonSpaceInfo": "O e-mail estará disponível apenas para você",
+    "SharedSpaceInfo": "O e-mail estará disponível para todos os participantes do espaço",
+    "Mailbox": "Caixa de correio",
+    "MailboxesNotConfigured": "Nenhuma caixa de correio encontrada",
+    "ConfigureMailBoxes": "Por favor, adicione uma caixa de correio na seção de Caixas de correio para começar"
+  }
+}

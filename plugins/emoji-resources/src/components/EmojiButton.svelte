@@ -1,6 +1,6 @@
 <script lang="ts">
   //
-  // © 2025 Hardcore Engineering, Inc. All Rights Reserved.
+  // © 2025 Hanzo AI, Inc. All Rights Reserved.
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
   import { createEventDispatcher } from 'svelte'
@@ -35,7 +35,7 @@
           : capitalizeFirstLetter(displayedEmoji?.label ?? '')
       )
     }}
-    class="hulyPopupEmoji-button"
+    class="hanzoPopupEmoji-button"
     class:preview
     class:selected
     class:skins={skins !== undefined}

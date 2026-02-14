@@ -24,7 +24,7 @@ This project offers a convenient method to host hanzoai using `docker`, designed
 
 ## API Client
 
-If you want to interact with Huly programmatically, check out our [API Client](https://github.com/hanzoai/huly.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
+If you want to interact with Hanzo Team programmatically, check out our [API Client](https://github.com/hanzoai/hanzo.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Hanzo Team operations and can be used to build integrations and custom applications.
 
 You can find API usage examples in the [hanzoai examples](https://github.com/hanzoai/hanzoai-examples) repository.
 
@@ -34,7 +34,7 @@ For detailed information about changes, improvements, and bug fixes in each vers
 
 ## Versions
 
-The Huly Platform uses two types of version tags to distinguish between production-ready and development releases:
+The Hanzo Team Platform uses two types of version tags to distinguish between production-ready and development releases:
 
 - **Production Versions (`v*`)** - Stable releases for end users
   - Example: `v0.7.310`, `v0.7.307`, `v0.6.501`
@@ -376,4 +376,4 @@ When starting the application (`rush docker:up`), some network ports in Windows 
 1. Find what's using that port
 2. Update the new address in the corresponding service configuration
 
-<sub><sup>&copy; 2025 <a href="https://hardcoreeng.com">Hardcore Engineering Inc</a>.</sup></sub>
+<sub><sup>&copy; 2025 <a href="https://hanzoai.com">Hardcore Engineering Inc</a>.</sup></sub>

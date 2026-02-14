@@ -2,7 +2,7 @@
   "name": "@hanzo/communication-assets",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Copyright © Hardcore Engineering Inc.",
+  "author": "Copyright © Hanzo AI Inc.",
   "template": "@hanzo/assets-package",
   "license": "EPL-2.0",
   "scripts": {

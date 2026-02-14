@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -68,7 +68,7 @@ export interface Config {
   PULSE_URL?: string
   PASSWORD_STRICTNESS?: 'very_strict' | 'strict' | 'normal' | 'none'
   EXCLUDED_APPLICATIONS_FOR_ANONYMOUS?: string
-  HULYLAKE_URL?: string
+  HANZOLAKE_URL?: string
   DISABLED_FEATURES?: string
   SIGNUP_URL?: string
 }

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -59,7 +59,7 @@
   ]
   let mode: 'all' | 'connected' | 'available' = 'all'
 
-  typeQuery.query(setting.class.IntegrationType, { kind: { $ne: 'huly-mail' as IntegrationKind } }, (res) => {
+  typeQuery.query(setting.class.IntegrationType, { kind: { $ne: 'hanzo-mail' as IntegrationKind } }, (res) => {
     integrationTypes = res
   })
 
@@ -247,7 +247,7 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Integrations} label={setting.string.Integrations} size={'large'} isCurrent />
     <svelte:fragment slot="extra">

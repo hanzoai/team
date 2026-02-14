@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -36,7 +36,7 @@ import { AccountClient, MailboxOptions } from '@hanzo/account-client'
 import { getAccountClient } from './client'
 import { getClient as getWorkspaceClient, releaseClient } from './workspaceClient'
 import { sendEmail } from './send'
-import { HulyMessageType, MailMessage } from './types'
+import { HanzoMessageType, MailMessage } from './types'
 
 export class MailWorker {
   private queue: PlatformQueue | undefined
@@ -197,7 +197,7 @@ export class MailWorker {
         this.ctx.info('Message already sent, skipping', {
           workspaceUuid,
           messageId: message.messageId,
-          hulyMessageId: message._id
+          hanzoMessageId: message._id
         })
         return
       }
@@ -214,7 +214,7 @@ export class MailWorker {
           return
         }
         const channel = await workspaceClient.findOne<Card>(chat.masterTag.Thread, { _id: thread.parent })
-        if (channel === undefined || !this.isHulyMailChannel(channel)) {
+        if (channel === undefined || !this.isHanzoMailChannel(channel)) {
           return
         }
 
@@ -283,7 +283,7 @@ export class MailWorker {
         subject,
         html,
         text,
-        headers: getMailHeadersRecord(HulyMessageType, message._id, email)
+        headers: getMailHeadersRecord(HanzoMessageType, message._id, email)
       }
 
       await sendEmail(this.ctx, mailMessage, secret)
@@ -310,7 +310,7 @@ export class MailWorker {
     this.ctx.info('Mail worker closed')
   }
 
-  isHulyMailChannel (channel: Card): boolean {
+  isHanzoMailChannel (channel: Card): boolean {
     const title = channel.title.toLowerCase()
     const domains = this.mailboxOptions?.availableDomains
     if (domains === undefined || domains.length === 0) {

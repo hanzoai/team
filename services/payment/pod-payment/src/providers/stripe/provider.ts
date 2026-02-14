@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -55,7 +55,7 @@ export class StripeProvider implements PaymentProvider {
   readonly providerName = 'stripe'
   private readonly stripe: StripeClient
   private readonly webhookSecret: string
-  // Map: plan@type (Huly) -> priceId (Stripe)
+  // Map: plan@type (Hanzo) -> priceId (Stripe)
   private readonly subscriptionPlans: Record<string, string>
   private readonly frontUrl: string
   private readonly accountClient: AccountClient

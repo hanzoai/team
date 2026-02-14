@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import { MeasureContext, WorkspaceUuid, PersonUuid, Account } from '@hanzo/core'
-import { HulylakeWorkspaceClient, getWorkspaceClient } from '@hanzo/hulylake-client'
+import { HanzolakeWorkspaceClient, getWorkspaceClient } from '@hanzo/hanzolake-client'
 import { getClient as getAccountClient } from '@hanzo/account-client'
 import { loadMessages } from '@hanzo/communication-shared'
 import {
@@ -30,7 +30,7 @@ import { Blob } from '../blob'
 import { Metadata } from '../types'
 
 // Mock dependencies
-jest.mock('@hanzo/hulylake-client')
+jest.mock('@hanzo/hanzolake-client')
 jest.mock('@hanzo/account-client')
 jest.mock('@hanzo/communication-shared')
 jest.mock('@hanzo/server-token', () => ({
@@ -42,7 +42,7 @@ describe('LowLevelClient', () => {
   let mockDbAdapter: jest.Mocked<DbAdapter>
   let mockBlob: jest.Mocked<Blob>
   let mockMetadata: Metadata
-  let mockLakeClient: jest.Mocked<HulylakeWorkspaceClient>
+  let mockLakeClient: jest.Mocked<HanzolakeWorkspaceClient>
   let mockAccountClient: any
   let mockCtx: jest.Mocked<MeasureContext>
   let mockAccount: Account
@@ -70,12 +70,12 @@ describe('LowLevelClient', () => {
     // Mock Metadata
     mockMetadata = {
       accountsUrl: 'http://accounts-url',
-      hulylakeUrl: 'http://hulylake-url',
+      hanzolakeUrl: 'http://hanzolake-url',
       secret: 'test-secret',
       messagesPerBlob: 100
     }
 
-    // Mock HulylakeWorkspaceClient
+    // Mock HanzolakeWorkspaceClient
     mockLakeClient = {
       find: jest.fn(),
       update: jest.fn()
@@ -114,7 +114,7 @@ describe('LowLevelClient', () => {
     it('should initialize LowLevelClient with correct parameters', () => {
       expect(client.db).toBe(mockDbAdapter)
       expect(client.blob).toBe(mockBlob)
-      expect(getWorkspaceClient).toHaveBeenCalledWith(mockMetadata.hulylakeUrl, workspace, 'mock-token')
+      expect(getWorkspaceClient).toHaveBeenCalledWith(mockMetadata.hanzolakeUrl, workspace, 'mock-token')
     })
   })
 

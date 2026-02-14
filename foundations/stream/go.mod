@@ -1,4 +1,4 @@
-module github.com/hcengineering/stream
+module github.com/hanzoai/stream
 
 go 1.24.1
 

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -16,7 +16,7 @@
 import { AccountRole, getCurrentAccount, type Ref } from '@hanzo/core'
 import { getCurrentEmployee, type Person } from '@hanzo/contact'
 import { type PopupResult, showPopup } from '@hanzo/ui'
-import { type UnsubscribeCallback } from '@hanzo/hulypulse-client'
+import { type UnsubscribeCallback } from '@hanzo/hanzopulse-client'
 import presentation, { createPulseClient } from '@hanzo/presentation'
 import { getMetadata } from '@hanzo/platform'
 import { get } from 'svelte/store'

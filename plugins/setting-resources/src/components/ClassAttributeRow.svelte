@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -48,17 +48,17 @@
   }
 </script>
 
-<button class="hulyTableAttr-content__row w-full" class:hovered class:selected on:contextmenu on:click>
-  <button class="hulyTableAttr-content__row-dragMenu">
+<button class="hanzoTableAttr-content__row w-full" class:hovered class:selected on:contextmenu on:click>
+  <button class="hanzoTableAttr-content__row-dragMenu">
     <IconMoreV2 size={'small'} />
   </button>
   {#if attribute.automationOnly === true}
-    <div class="hulyTableAttr-content__row-icon" use:tooltip={{ label: view.string.AutomationOnly }}>
+    <div class="hanzoTableAttr-content__row-icon" use:tooltip={{ label: view.string.AutomationOnly }}>
       <Icon icon={view.icon.Setting} size={'small'} />
     </div>
   {/if}
   {#if attribute.icon !== undefined && attribute.icon !== null}
-    <div class="hulyTableAttr-content__row-icon">
+    <div class="hanzoTableAttr-content__row-icon">
       <Icon icon={attribute.icon} size={'small'} />
     </div>
   {/if}

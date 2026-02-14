@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -26,7 +26,7 @@ import {
   RemoveLabelEvent,
   UpdateCardTypeEvent
 } from '@hanzo/communication-sdk-types'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 import { QueryResult } from '../result'
 import { type Query, type QueryId, QueryOptions } from '../types'
@@ -41,7 +41,7 @@ export class LabelsQuery implements Query<Label, FindLabelsParams> {
 
   constructor (
     private readonly client: FindClient,
-    private readonly hulylake: HulylakeWorkspaceClient,
+    private readonly hanzolake: HanzolakeWorkspaceClient,
     public readonly id: QueryId,
     public readonly params: FindLabelsParams,
     public readonly options: QueryOptions | undefined,

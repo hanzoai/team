@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 
 import core, { DOMAIN_TX, toIdMap, type AnyAttribute, type Ref, type Status } from '@hanzo/core'

@@ -1,6 +1,6 @@
 // Advanced tests for complex LiveQuery scenarios
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 
 import core, { createClient, Ref, SortingOrder, TxOperations } from '@hanzo/core'

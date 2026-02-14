@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -413,7 +413,7 @@
 
 {#if tiers.length > 0}
   <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-    <div class="hulyComponent-content gapV-8">
+    <div class="hanzoComponent-content gapV-8">
       <div class="flex-col flex-gap-4">
         <div class="section-title">
           <Label label={plugin.string.ActivePlan} />

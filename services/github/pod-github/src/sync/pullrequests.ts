@@ -943,7 +943,7 @@ export class PullRequestSyncManager extends IssueSyncManagerBase implements DocS
     if (container?.container === undefined) {
       return { needSync: githubSyncVersion }
     }
-    const needCreateConnectedAtHuly = info.addHulyLink === true
+    const needCreateConnectedAtHanzo = info.addHanzoLink === true
 
     if (info.repository == null) {
       return { needSync: githubSyncVersion }

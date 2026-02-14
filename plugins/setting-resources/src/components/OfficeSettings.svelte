@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -76,18 +76,18 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb label={settingsRes.string.OfficeSettings} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoComponent-content__column content">
     {#if loading}
       <div class="w-full h-full flex-col-center justify-center">
         <!-- Loading... -->
       </div>
     {:else}
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content flex-col flex-gap-4">
+        <div class="hanzoComponent-content flex-col flex-gap-4">
           <div class="title"><Label label={settingsRes.string.OfficeDefaultSettings} /></div>
 
           <div class="flex-col flex-gap-4 mt-6">

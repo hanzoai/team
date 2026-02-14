@@ -116,7 +116,7 @@
     </button>
   {/if}
   {#if visibleIcon || (type === 'type-tag' && color)}
-    <div class="hulyNavItem-icon relative" class:withBackground class:w-auto={iconSize === 'x-small'}>
+    <div class="hanzoNavItem-icon relative" class:withBackground class:w-auto={iconSize === 'x-small'}>
       {#if $$slots.icon}
         <slot name="icon" />
       {:else if type !== 'type-tag' && visibleIcon}

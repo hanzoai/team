@@ -1,0 +1,20 @@
+{
+  "string": {
+    "IntegrationLabel": "Hanzo Team Mail",
+    "IntegrationDescription": "Подключите свой почтовый ящик Hanzo Team для отправки, получения и управления электронной почтой",
+    "Connect": "Подключить",
+    "ConnectHanzo TeamMail": "Подключить почтовый ящик Hanzo Team",
+    "Cancel": "Отмена",
+    "Email": "Электронная почта",
+    "Status": "Статус",
+    "FailedToConnect": "Служба почты Hanzo Team недоступна",
+    "TotalMessages": "Всего сообщений:",
+    "Configure": "Настроить Hanzo Team Mail",
+    "ChannelSpace": "Пространство для канала сообщений",
+    "PersonSpaceInfo": "Почта будет доступна только вам",
+    "SharedSpaceInfo": "Почта будет доступна всем участникам пространства",
+    "Mailbox": "Почтовый ящик",
+    "MailboxesNotConfigured": "Не найдено почтовых ящиков",
+    "ConfigureMailBoxes": "Пожалуйста, добавьте почтовый ящик в разделе `Почтовые ящики`, чтобы начать"
+  }
+}

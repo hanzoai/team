@@ -29,7 +29,7 @@
   )
 
   $: categories = groupByArray(calendars, (c) => {
-    return (c as ExternalCalendar).externalUser ?? 'HULY'
+    return (c as ExternalCalendar).externalUser ?? 'HANZO'
   })
 
   async function changeHidden (calendar: Calendar, value: boolean): Promise<void> {
@@ -79,13 +79,13 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={calendar.icon.Calendar} label={setting.string.Settings} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoComponent-content__column content">
     <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-      <div class="hulyComponent-content">
+      <div class="hanzoComponent-content">
         <div class="flex-col-center">
           <div class="flex-row-center flex-gap-2 mb-8 fs-title">
             <Label label={calendar.string.PrimaryCalendar} />

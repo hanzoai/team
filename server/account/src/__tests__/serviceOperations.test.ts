@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -217,7 +217,7 @@ describe('integration methods', () => {
   const mockBranding = null
   const mockToken = 'test-token'
 
-  const integrationServices = ['github', 'telegram-bot', 'hulygram', 'mailbox']
+  const integrationServices = ['github', 'telegram-bot', 'hanzogram', 'mailbox']
 
   beforeEach(() => {
     jest.clearAllMocks()

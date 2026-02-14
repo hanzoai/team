@@ -83,7 +83,7 @@ class TestQueue {
       elasticIndexName,
       serverSecret: 'secret',
       dbURL: dbUrl,
-      hulylakeUrl: 'http://localhost:8096',
+      hanzolakeUrl: 'http://localhost:8096',
       config: dbConfig,
       externalStorage: createDummyStorageAdapter(),
       listener: {

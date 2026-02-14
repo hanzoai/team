@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -145,7 +145,7 @@
         {clipPath}
       />
       <div
-        class="hulyAvatar-statusMarker {statusSize ?? size} {style}"
+        class="hanzoAvatar-statusMarker {statusSize ?? size} {style}"
         class:online={isOnline}
         class:offline={!isOnline}
       />

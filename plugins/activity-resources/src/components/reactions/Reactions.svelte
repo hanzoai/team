@@ -66,12 +66,12 @@
   }
 </script>
 
-<div class="hulyReactions-container">
+<div class="hanzoReactions-container">
   {#each [...reactionsPersons] as [emoji, emojiInfo]}
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
-      class="hulyReactions-button"
+      class="hanzoReactions-button"
       class:highlight={includesAny(emojiInfo.persons, me.socialIds)}
       class:cursor-pointer={!readonly}
       use:tooltip={{ component: ReactionsTooltip, props: { socialIds: emojiInfo.persons } }}

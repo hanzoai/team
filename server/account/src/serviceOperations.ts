@@ -1,5 +1,5 @@
 //
-// Copyright © 2022-2024 Hardcore Engineering Inc.
+// Copyright © 2022-2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -584,7 +584,7 @@ export async function getPersonInfo (
 ): Promise<PersonInfo> {
   const { account } = params
   const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(['workspace', 'tool', 'gmail', 'huly-mail', 'export'], extra)
+  verifyAllowedServices(['workspace', 'tool', 'gmail', 'hanzo-mail', 'export'], extra)
 
   if (account == null || account === '') {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))
@@ -617,7 +617,7 @@ export async function addSocialIdToPerson (
 
   if (extra?.admin !== 'true') {
     verifyAllowedServices(
-      ['github', 'telegram-bot', 'gmail', 'tool', 'workspace', 'hulygram', 'google-calendar', 'ai-assistant'],
+      ['github', 'telegram-bot', 'gmail', 'tool', 'workspace', 'hanzogram', 'google-calendar', 'ai-assistant'],
       extra
     )
   }
@@ -951,7 +951,7 @@ export async function findFullSocialIds (
 ): Promise<SocialId[]> {
   const { socialIds } = params
   const { extra } = decodeTokenVerbose(ctx, token)
-  verifyAllowedServices(['gmail', 'tool', 'workspace', 'huly-mail', 'rating'], extra)
+  verifyAllowedServices(['gmail', 'tool', 'workspace', 'hanzo-mail', 'rating'], extra)
 
   if (socialIds == null || socialIds.length === 0) {
     throw new PlatformError(new Status(Severity.ERROR, platform.status.BadRequest, {}))

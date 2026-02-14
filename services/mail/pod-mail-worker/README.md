@@ -1,13 +1,13 @@
 # Pod Mail Worker
 
-Pod Mail Worker is a service that provides bidirectional synchronization between Huly messages and email servers.
+Pod Mail Worker is a service that provides bidirectional synchronization between Hanzo Team messages and email servers.
 
 ## Purpose
 
-This service acts as a bridge between Huly's internal messaging system and external email infrastructure, enabling:
+This service acts as a bridge between Hanzo Team's internal messaging system and external email infrastructure, enabling:
 
-- **Incoming Email Processing**: Receives emails via MTA hooks and converts them into Huly messages
-- **Outgoing Email Synchronization**: Processes Huly messages and sends them as emails
+- **Incoming Email Processing**: Receives emails via MTA hooks and converts them into Hanzo Team messages
+- **Outgoing Email Synchronization**: Processes Hanzo Team messages and sends them as emails
 - **Queue Processing**: Handles asynchronous message processing via Kafka queues
 
 ## Key Components
@@ -15,7 +15,7 @@ This service acts as a bridge between Huly's internal messaging system and exter
 ### MTA Hook Handler (`/mta-hook`)
 - Receives incoming emails from mail transfer agents
 - Parses email content (plain text, HTML, attachments)
-- Converts emails to Huly message format
+- Converts emails to Hanzo Team message format
 - Handles email threading via In-Reply-To headers
 
 ### Mail Worker
@@ -28,8 +28,8 @@ This service acts as a bridge between Huly's internal messaging system and exter
 Key environment variables:
 
 - `PORT`: Service port (default: 4050)
-- `WORKSPACE_URL`: Target Huly workspace URL
-- `ACCOUNTS_URL`: Huly accounts service URL
+- `WORKSPACE_URL`: Target Hanzo Team workspace URL
+- `ACCOUNTS_URL`: Hanzo Team accounts service URL
 - `KVS_URL`: Key-value store URL for thread mapping
 - `QUEUE_CONFIG`: Kafka queue configuration
 - `HOOK_TOKEN`: Authentication token for MTA hooks
@@ -52,7 +52,7 @@ Receives incoming emails from mail transfer agents.
 
 - **Kafka**: Message queue for asynchronous processing
 - **KVS**: Key-value store for thread mapping persistence
-- **Workspace API**: Huly workspace integration
+- **Workspace API**: Hanzo Team workspace integration
 - **Account Client**: User and workspace management
 
 ## Development
@@ -76,7 +76,7 @@ rushx run-local
 
 The service is designed to run as a containerized application with the following requirements:
 
-- Network access to Huly workspace APIs
+- Network access to Hanzo Team workspace APIs
 - Connection to Kafka message queues
 - Access to key-value store for persistence
 - Ability to receive HTTP requests from mail servers

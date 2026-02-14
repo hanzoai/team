@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -17,14 +17,14 @@ import { type Resources } from '@hanzo/platform'
 import type { Integration } from '@hanzo/account-client'
 
 import Configure from './components/Configure.svelte'
-import IconHulyAssistant from './components/icons/HulyAssistant.svelte'
+import IconHanzoAssistant from './components/icons/HanzoAssistant.svelte'
 import { getIntegrationClient } from './utils'
 
 export default async (): Promise<Resources> => ({
   component: {
     Connect: Configure,
     Configure,
-    IconHulyAssistant
+    IconHanzoAssistant
   },
   handler: {
     DisconnectHandler: async (integration: Integration): Promise<void> => {

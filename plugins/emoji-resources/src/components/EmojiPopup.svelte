@@ -1,6 +1,6 @@
 <script lang="ts">
   //
-  // © 2025 Hardcore Engineering, Inc. All Rights Reserved.
+  // © 2025 Hanzo AI, Inc. All Rights Reserved.
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'

@@ -1,6 +1,6 @@
-# Multi-Tenant Architectures with Huly Network
+# Multi-Tenant Architectures with Hanzo Team Network
 
-Building secure, scalable multi-tenant applications using Huly Virtual Network.
+Building secure, scalable multi-tenant applications using Hanzo Team Virtual Network.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Building secure, scalable multi-tenant applications using Huly Virtual Network.
 
 ## Introduction
 
-Multi-tenancy allows multiple customers (tenants) to share the same infrastructure while maintaining complete data and security isolation. Huly Network provides natural multi-tenancy through container kinds, labels, and reference management.
+Multi-tenancy allows multiple customers (tenants) to share the same infrastructure while maintaining complete data and security isolation. Hanzo Team Network provides natural multi-tenancy through container kinds, labels, and reference management.
 
 ### Benefits of Multi-Tenant Architecture
 

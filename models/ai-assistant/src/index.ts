@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -30,7 +30,7 @@ export function createModel (builder: Builder): void {
     {
       label: aiAssistant.string.IntegrationLabel,
       description: aiAssistant.string.IntegrationDescription,
-      icon: aiAssistant.component.IconHulyAssistant,
+      icon: aiAssistant.component.IconHanzoAssistant,
       allowMultiple: false,
       createComponent: aiAssistant.component.Connect,
       configureComponent: aiAssistant.component.Connect,

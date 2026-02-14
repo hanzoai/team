@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -185,7 +185,7 @@
         </div>
       {/if}
       {#if $$slots.actions && !hideActions && !(adaptive === 'freezeActions' || adaptive === 'doubleRow' || adaptive === 'autoExtra')}
-        <div class="hulyHeader-buttonsGroup actions flex-shrink">
+        <div class="hanzoHeader-buttonsGroup actions flex-shrink">
           <slot name="actions" {doubleRow} />
         </div>
       {/if}

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the 'License');
 // you may not use this file except in compliance with the License. You may
@@ -45,7 +45,7 @@ import { generateMessageId } from '@hanzo/communication-shared'
 
 import { BaseConfig, SyncOptions, type Attachment } from './types'
 import { COMMUNICATION_DOMAIN, EmailMessage, MailRecipient, MessageData } from './types'
-import { getBlobMetadata, getHulyIdFromEmailMessageId, getMdContent, MessageTimeShift } from './utils'
+import { getBlobMetadata, getHanzoIdFromEmailMessageId, getMdContent, MessageTimeShift } from './utils'
 import { PersonCacheFactory } from './person'
 import { PersonSpacesCacheFactory } from './personSpaces'
 import { ChannelCache, ChannelCacheFactory } from './channel'
@@ -319,7 +319,7 @@ async function createMailMessage (
   threadId: Ref<Card>,
   options?: SyncOptions
 ): Promise<MessageID> {
-  const messageId = getHulyIdFromEmailMessageId(data.mailId, data.from) ?? generateMessageId()
+  const messageId = getHanzoIdFromEmailMessageId(data.mailId, data.from) ?? generateMessageId()
   const createMessageEvent: CreateMessageEvent = {
     type: MessageEventType.CreateMessage,
     messageType: MessageType.Text,

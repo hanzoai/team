@@ -20,7 +20,7 @@ import core, {
 } from '@hanzo/core'
 import { type ModelLogger } from '@hanzo/model'
 import { makeRank } from '@hanzo/rank'
-import { HulyFormatImporter, StorageFileUploader } from '@hanzo/importer'
+import { HanzoFormatImporter, StorageFileUploader } from '@hanzo/importer'
 import type { StorageAdapter } from '@hanzo/server-core'
 import { jsonToMarkup } from '@hanzo/text'
 import { markdownToMarkup } from '@hanzo/text-markdown'
@@ -205,7 +205,7 @@ export class WorkspaceInitializer {
     try {
       const uploader = new StorageFileUploader(this.ctx, this.storageAdapter, this.wsIds)
       const initPath = path.resolve(this.initRepoDir, step.path)
-      const importer = new HulyFormatImporter(this.client, uploader, logger, vars)
+      const importer = new HanzoFormatImporter(this.client, uploader, logger, vars)
       await importer.importFolder(initPath)
     } catch (error) {
       logger.error('Import failed', error)

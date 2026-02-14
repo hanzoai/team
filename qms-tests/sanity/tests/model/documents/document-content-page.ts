@@ -117,7 +117,7 @@ export class DocumentContentPage extends DocumentCommonPage {
     this.textCreator = page.locator('div.flex:has(div.label:text("Creator")) div.field')
     this.buttonSelectNewAuthor = page.locator('div.popup button.small')
     this.buttonSelectNewAuthorChange = page.locator('div.popup button.dangerous')
-    this.buttonSendForReview = page.locator('div.hulyHeader-buttonsGroup.extra button[type="button"] > span', {
+    this.buttonSendForReview = page.locator('div.hanzoHeader-buttonsGroup.extra button[type="button"] > span', {
       hasText: 'Send for review'
     })
     this.buttonSendForApproval = page.locator('div.hanzoaiHeader-buttonsGroup.extra button[type="button"] > span', {
@@ -151,7 +151,7 @@ export class DocumentContentPage extends DocumentCommonPage {
     })
     this.buttonDocumentInformation = page.locator('button[id$="info"]')
     this.buttonDocumentApprovals = page.locator('button[id$="approvals"]')
-    this.textPageHeader = page.locator('div.hulyNavPanel-header')
+    this.textPageHeader = page.locator('div.hanzoNavPanel-header')
     this.buttonSelectNewAuthorChangeByQaraManager = page.locator('div.popup button[type="submit"]')
     this.textId = page.locator('div.flex:has(div.label:text("ID")) div.field')
     this.contentLocator = page.locator('div.textInput div.tiptap')

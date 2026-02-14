@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -70,20 +70,20 @@
   }
 </script>
 
-<div class="hulyTableAttr-header font-medium-12">
+<div class="hanzoTableAttr-header font-medium-12">
   <Icon icon={contact.icon.User} size="small" />
   <span><Label label={core.string.Roles} /></span>
   <ButtonIcon kind="primary" icon={IconAdd} size="small" dataId={'btnAdd'} on:click={addRole} />
 </div>
-<div class="hulyTableAttr-content task">
+<div class="hanzoTableAttr-content task">
   {#each roles as role}
     <button
-      class="hulyTableAttr-content__row justify-start"
+      class="hanzoTableAttr-content__row justify-start"
       on:click|stopPropagation={() => {
         handleSelect(role)
       }}
     >
-      <div class="hulyTableAttr-content__row-label font-medium-14 cursor-pointer">
+      <div class="hanzoTableAttr-content__row-label font-medium-14 cursor-pointer">
         {role.name}
       </div>
     </button>

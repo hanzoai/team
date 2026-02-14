@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -46,10 +46,10 @@ describe('Config', () => {
     expect(config.Port).toBe(8087)
     expect(config.ServiceID).toBe('gmail-service')
     expect(config.InitLimit).toBe(50)
-    expect(config.FooterMessage).toContain('Sent via <a href="https://huly.io">Huly</a>')
+    expect(config.FooterMessage).toContain('Sent via <a href="https://hanzo.team">Hanzo Team</a>')
     expect(config.Version).toBe(IntegrationVersion.V1)
     expect(config.QueueRegion).toBe('')
-    expect(config.CommunicationTopic).toBe('hulygun')
+    expect(config.CommunicationTopic).toBe('hanzogun')
   })
 
   it('should override defaults with environment variables', () => {

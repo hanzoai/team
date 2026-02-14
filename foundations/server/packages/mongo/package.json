@@ -41,7 +41,7 @@
     "mongodb": "^6.16.0",
     "bson": "^6.10.3"
   },
-  "repository": "https://github.com/hanzoai/huly.server",
+  "repository": "https://github.com/hanzoai/hanzo.server",
   "publishConfig": {
     "access": "public"
   },

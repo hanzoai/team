@@ -16,7 +16,7 @@ import core, {
   WorkspaceEvent,
   type WorkspaceIds
 } from '@hanzo/core'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 import {
   ContextNameMiddleware,
   DBAdapterInitMiddleware,
@@ -62,7 +62,7 @@ export class WorkspaceIndexer {
     externalStorage: StorageAdapter,
     ftadapter: FullTextAdapter,
     contentAdapter: ContentTextAdapter,
-    hulylake: HulylakeWorkspaceClient,
+    hanzolake: HanzolakeWorkspaceClient,
     endpointProvider: (token: string) => Promise<string | undefined>,
     listener?: FulltextListener
   ): Promise<WorkspaceIndexer> {
@@ -149,7 +149,7 @@ export class WorkspaceIndexer {
           })
         }
       },
-      hulylake,
+      hanzolake,
       communicationApi,
       listener
     )

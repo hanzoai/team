@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -34,7 +34,7 @@ export class Settings {
 
   readServerUrl (): string {
     const url = this.extractUrl()
-    // Motivation: fix existing Huly installations (saved on disk URLs).
+    // Motivation: fix existing Hanzo Team installations (saved on disk URLs).
     return Settings.sanitizeUrl(url)
   }
 
@@ -69,13 +69,13 @@ export class Settings {
 
   private extractUrl (): string {
     if (this.isDev) {
-      return process.env.FRONT_URL ?? 'http://huly.local:8087'
+      return process.env.FRONT_URL ?? 'http://hanzoai.local:8087'
     }
     return (
       (this.store as any).get(Settings.SETTINGS_KEY_SERVER) as string ??
       this.packedConfig?.server ??
       process.env.FRONT_URL ??
-      'https://huly.app'
+      'https://hanzo.team'
     )
   }
 

@@ -1,5 +1,5 @@
 //
-// Copyright @ 2024 Hardcore Engineering Inc.
+// Copyright @ 2024 Hanzo AI Inc.
 //
 import { get } from 'svelte/store'
 import { type Employee } from '@hanzo/contact'

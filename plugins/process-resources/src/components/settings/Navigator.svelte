@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -32,7 +32,7 @@
 </script>
 
 {#if visibleSecondNav}
-  <div class="hulyComponent-content__column pt-4">
+  <div class="hanzoComponent-content__column pt-4">
     {#each states as state (state._id)}
       <div class="state">
         {state.title}

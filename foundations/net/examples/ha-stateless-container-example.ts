@@ -9,7 +9,7 @@
  * to re-register their instance, providing automatic failover.
  * 
  * @example
- * // Start the Huly Network server first:
+ * // Start the Hanzo Network server first:
  * // cd pods/network-pod && rushx dev
  * 
  * // Then run this example:

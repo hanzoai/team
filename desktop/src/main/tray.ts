@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -98,7 +98,7 @@ export class TrayController {
   }
 }
 
-const BASE_TITLE = 'Huly'
+const BASE_TITLE = 'Hanzo Team'
 
 function createTray (activateWindow: WindowAction, quitApplication: WindowAction, icon: NativeImage): Tray {
   const tray = new Tray(icon)

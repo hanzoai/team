@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import { MeasureContext, SortingOrder, WorkspaceUuid, PersonUuid } from '@hanzo/core'
-import { HulylakeWorkspaceClient, getWorkspaceClient } from '@hanzo/hulylake-client'
+import { HanzolakeWorkspaceClient, getWorkspaceClient } from '@hanzo/hanzolake-client'
 import {
   CardID,
   BlobID,
@@ -33,7 +33,7 @@ import { Blob } from '../blob'
 import { Metadata } from '../types'
 
 // Mock dependencies
-jest.mock('@hanzo/hulylake-client')
+jest.mock('@hanzo/hanzolake-client')
 jest.mock('@hanzo/server-token', () => ({
   generateToken: jest.fn(() => 'mock-token')
 }))
@@ -43,7 +43,7 @@ jest.mock('uuid', () => ({
 
 describe('Blob', () => {
   let blob: Blob
-  let mockClient: jest.Mocked<HulylakeWorkspaceClient>
+  let mockClient: jest.Mocked<HanzolakeWorkspaceClient>
   let mockCtx: jest.Mocked<MeasureContext>
   let mockMetadata: Metadata
 
@@ -63,7 +63,7 @@ describe('Blob', () => {
     // Setup mock metadata
     mockMetadata = {
       accountsUrl: 'http://accounts.test',
-      hulylakeUrl: 'http://hulylake.test',
+      hanzolakeUrl: 'http://hanzolake.test',
       secret: 'test-secret',
       messagesPerBlob: 100
     }

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -31,7 +31,7 @@ export const aiAssistantId = 'ai-assistant' as Plugin
 export default plugin(aiAssistantId, {
   component: {
     Connect: '' as AnyComponent,
-    IconHulyAssistant: '' as AnyComponent,
+    IconHanzoAssistant: '' as AnyComponent,
     Configure: '' as AnyComponent
   },
   integrationType: {

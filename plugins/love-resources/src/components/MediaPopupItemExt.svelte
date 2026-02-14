@@ -48,10 +48,10 @@
       <div class="flex-between items-start flex-gap-2 mt-2">
         <!-- Avatars -->
         {#if overLimit}
-          <div class="hulyCombineAvatars-container">
+          <div class="hanzoCombineAvatars-container">
             {#each participants.slice(0, limit) as participant, i (participant._id)}
               <div
-                class="hulyCombineAvatar x-small"
+                class="hanzoCombineAvatar x-small"
                 data-over={i === limit - 1 && overLimit ? `+${participants.length - limit + 1}` : undefined}
               >
                 <Avatar

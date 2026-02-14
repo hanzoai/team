@@ -10,7 +10,7 @@
     "assets",
     "lang"
   ],
-  "author": "Hardcore Engineering Inc",
+  "author": "Hanzo AI Inc",
   "template": "@hanzo/assets-package",
   "scripts": {
     "build": "compile",

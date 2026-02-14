@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -116,7 +116,7 @@
     on:drop
   >
     {#if isFold && !empty}
-      <button class="hulyNavGroup-header__chevron" class:collapsed={!isOpen} on:click={toggle}>
+      <button class="hanzoNavGroup-header__chevron" class:collapsed={!isOpen} on:click={toggle}>
         <IconDown size={'small'} />
       </button>
     {/if}
@@ -156,7 +156,7 @@
       </div>
     {/if}
     {#if $$slots.actions}
-      <div class="hulyNavGroup-header__actions">
+      <div class="hanzoNavGroup-header__actions">
         <slot name="actions" />
       </div>
     {/if}

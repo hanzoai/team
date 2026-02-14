@@ -1,0 +1,2 @@
+image platform='linux/amd64':
+    cd server && docker buildx build --tag=hardcoreeng/hanzolake:latest --platform={{platform}} --load .

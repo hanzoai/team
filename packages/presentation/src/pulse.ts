@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -11,15 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
-import { HulypulseClient } from '@hanzo/hulypulse-client'
+import { HanzopulseClient } from '@hanzo/hanzopulse-client'
 import { getMetadata } from '@hanzo/platform'
 import presentation from './plugin'
 
 let currentWorkspaceUuid: string | undefined
 let currentToken: string | undefined
-let promise: Promise<HulypulseClient | undefined> | undefined
+let promise: Promise<HanzopulseClient | undefined> | undefined
 
-export async function createPulseClient (): Promise<HulypulseClient | undefined> {
+export async function createPulseClient (): Promise<HanzopulseClient | undefined> {
   const pulseUrl = getMetadata(presentation.metadata.PulseUrl) ?? ''
   const token = getMetadata(presentation.metadata.Token) ?? ''
   const workspaceUuid = getMetadata(presentation.metadata.WorkspaceUuid) ?? ''
@@ -39,7 +39,7 @@ export async function createPulseClient (): Promise<HulypulseClient | undefined>
   }
 
   promise = new Promise((resolve) => {
-    HulypulseClient.connect(`${pulseUrl}?token=${token}`)
+    HanzopulseClient.connect(`${pulseUrl}?token=${token}`)
       .then(resolve)
       .catch(() => {
         resolve(undefined)

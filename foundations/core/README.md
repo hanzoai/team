@@ -1,14 +1,14 @@
-# Huly Core
+# Hanzo Team Core
 
-[![GitHub License](https://img.shields.io/github/license/hanzoai/huly.core?style=for-the-badge)](LICENSE)
+[![GitHub License](https://img.shields.io/github/license/hanzoai/hanzo.core?style=for-the-badge)](LICENSE)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
 ## About
 
-Huly Core is a collection of core packages extracted from the [Huly Platform](https://github.com/hanzoai/platform). This repository contains fundamental building blocks and libraries that power the Huly ecosystem, including core data models, client libraries, text processing engines, and platform utilities.
+Hanzo Team Core is a collection of core packages extracted from the [Hanzo Team Platform](https://github.com/hanzoai/platform). This repository contains fundamental building blocks and libraries that power the Hanzo Team ecosystem, including core data models, client libraries, text processing engines, and platform utilities.
 
-These packages are designed to be reusable, modular, and framework-agnostic, making them suitable for building custom applications on top of the Huly Platform or integrating Huly functionality into existing projects.
+These packages are designed to be reusable, modular, and framework-agnostic, making them suitable for building custom applications on top of the Hanzo Team Platform or integrating Hanzo Team functionality into existing projects.
 
 ## Packages
 
@@ -24,10 +24,10 @@ This repository includes the following core packages:
 
 - **[@hanzo/client](packages/client)** - Client-side data access and synchronization layer
 - **[@hanzo/client-resources](packages/client-resources)** - Shared client resources and utilities
-- **[@hanzo/api-client](packages/api-client)** - API client for programmatic access to Huly Platform (WebSocket and REST)
+- **[@hanzo/api-client](packages/api-client)** - API client for programmatic access to Hanzo Team Platform (WebSocket and REST)
 - **[@hanzo/account-client](packages/account-client)** - Account management client
 - **[@hanzo/collaborator-client](packages/collaborator-client)** - Real-time collaboration client
-- **[@hanzo/hulylake-client](packages/hulylake-client)** - HulyLake data warehouse client
+- **[@hanzo/hanzolake-client](packages/hanzolake-client)** - Hanzo TeamLake data warehouse client
 - **[@hanzo/analytics](packages/analytics)** - Analytics and tracking
 - **[@hanzo/analytics-service](packages/analytics-service)** - Analytics service implementation
 
@@ -138,15 +138,15 @@ node ./common/scripts/bump.js -p projectName
 
 ## API Client Usage
 
-If you want to interact with Huly programmatically, check out the [API Client](packages/api-client/README.md) documentation. The API client provides a typed interface for all Huly operations and can be used to build integrations and custom applications.
+If you want to interact with Hanzo Team programmatically, check out the [API Client](packages/api-client/README.md) documentation. The API client provides a typed interface for all Hanzo Team operations and can be used to build integrations and custom applications.
 
-You can find API usage examples in the [Huly examples](https://github.com/hanzoai/huly-examples) repository.
+You can find API usage examples in the [Hanzo Team examples](https://github.com/hanzoai/hanzo-examples) repository.
 
 ## Related Projects
 
-- **[Huly Platform](https://github.com/hanzoai/platform)** - The main Huly Platform repository
-- **[Huly Self-Host](https://github.com/hanzoai/huly-selfhost)** - Self-hosting solution for Huly
-- **[Huly Examples](https://github.com/hanzoai/huly-examples)** - API usage examples
+- **[Hanzo Team Platform](https://github.com/hanzoai/platform)** - The main Hanzo Team Platform repository
+- **[Hanzo Team Self-Host](https://github.com/hanzoai/hanzo-selfhost)** - Self-hosting solution for Hanzo Team
+- **[Hanzo Team Examples](https://github.com/hanzoai/hanzo-examples)** - API usage examples
 
 ## Contributing
 
@@ -158,10 +158,10 @@ Licensed under the [EPL-2.0](LICENSE) license.
 
 ## Additional Links
 
-- [Huly Website](https://huly.io/)
-- [Documentation](https://docs.huly.io/)
+- [Hanzo Team Website](https://hanzo.team/)
+- [Documentation](https://docs.hanzo.team/)
 - [Community](https://github.com/hanzoai/platform/discussions)
 
 ---
 
-© 2025 [Hardcore Engineering Inc](https://hardcoreeng.com/).
+© 2025 [Hardcore Engineering Inc](https://hanzoai.com/).

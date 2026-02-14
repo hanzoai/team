@@ -1,6 +1,6 @@
-# Contributing to Huly Virtual Network
+# Contributing to Hanzo Team Virtual Network
 
-First off, thank you for considering contributing to Huly Virtual Network! It's people like you that make this project such a great tool.
+First off, thank you for considering contributing to Hanzo Team Virtual Network! It's people like you that make this project such a great tool.
 
 ## Table of Contents
 
@@ -61,8 +61,8 @@ We actively welcome your pull requests:
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/huly.net.git
-cd huly.net
+git clone https://github.com/YOUR_USERNAME/hanzo.net.git
+cd hanzo.net
 
 # Install dependencies
 node common/scripts/install-run-rush.js install
@@ -74,7 +74,7 @@ node common/scripts/install-run-rush.js build
 ### Project Structure
 
 ```
-huly.net/
+hanzo.net/
 ├── packages/
 │   ├── core/          # Core network implementation
 │   ├── backrpc/       # ZeroMQ RPC layer
@@ -322,4 +322,4 @@ By contributing, you agree that your contributions will be licensed under the Ec
 
 ---
 
-Thank you for contributing to Huly Virtual Network! 🚀
+Thank you for contributing to Hanzo Team Virtual Network! 🚀

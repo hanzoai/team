@@ -1,5 +1,5 @@
 //
-// Copyright @ 2022 Hardcore Engineering Inc.
+// Copyright @ 2022 Hanzo AI Inc.
 //
 import { type Builder } from '@hanzo/model'
 

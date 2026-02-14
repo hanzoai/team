@@ -1,0 +1,20 @@
+{
+  "string": {
+    "IntegrationLabel": "Hanzo Team Mail",
+    "IntegrationDescription": "Verbinden Sie Ihr Hanzo Team-Postfach zum Senden, Empfangen und Verwalten von E-Mails",
+    "Connect": "Verbinden",
+    "ConnectHanzo TeamMail": "Hanzo Team-Postfach verbinden",
+    "Cancel": "Abbrechen",
+    "Email": "E-Mail",
+    "Status": "Status",
+    "FailedToConnect": "Hanzo Team Mail-Service ist nicht verfügbar",
+    "TotalMessages": "Nachrichten insgesamt:",
+    "Configure": "Hanzo Team Mail konfigurieren",
+    "ChannelSpace": "Bereich für Nachrichtenkanal",
+    "PersonSpaceInfo": "E-Mails sind nur für Sie verfügbar",
+    "SharedSpaceInfo": "E-Mails sind für alle Bereichsteilnehmer verfügbar",
+    "Mailbox": "Postfach",
+    "MailboxesNotConfigured": "Keine Postfächer gefunden",
+    "ConfigureMailBoxes": "Bitte fügen Sie ein Postfach im Abschnitt Postfächer hinzu, um zu beginnen"
+  }
+}

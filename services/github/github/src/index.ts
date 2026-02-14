@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 import { ActivityMessage, ActivityMessageViewlet } from '@hanzo/activity'
 import { Attachment } from '@hanzo/attachment'

@@ -34,7 +34,7 @@ import {
 import { type QueueSourced, type FulltextDBConfiguration } from '@hanzo/server-indexer'
 import { generateToken } from '@hanzo/server-token'
 import { type Event } from '@hanzo/communication-sdk-types'
-import { getWorkspaceClient as getHulylakeClient } from '@hanzo/hulylake-client'
+import { getWorkspaceClient as getHanzolakeClient } from '@hanzo/hanzolake-client'
 
 import { WorkspaceIndexer } from './workspace'
 
@@ -58,7 +58,7 @@ export class WorkspaceManager {
     private readonly opt: {
       queue: PlatformQueue
       dbURL: string
-      hulylakeUrl: string
+      hanzolakeUrl: string
       config: FulltextDBConfiguration
       externalStorage: StorageAdapter
       elasticIndexName: string
@@ -350,7 +350,7 @@ export class WorkspaceManager {
         this.opt.externalStorage,
         this.fulltextAdapter,
         this.contentAdapter,
-        getHulylakeClient(this.opt.hulylakeUrl, workspace, token ?? ''),
+        getHanzolakeClient(this.opt.hanzolakeUrl, workspace, token ?? ''),
         (token) => this.getTransactorAPIEndpoint(token),
         this.opt.listener
       )

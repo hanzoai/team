@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -28,12 +28,12 @@ import { loadMessages } from '@hanzo/communication-shared'
 
 import { Blob } from './blob'
 import type { Metadata } from './types'
-import { getWorkspaceClient, HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { getWorkspaceClient, HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 export class LowLevelClient {
   private readonly messageMetaCache = new Map<string, MessageMeta>()
   private readonly personUuidBySocialIdCache = new Map<SocialID, PersonUuid>()
-  private readonly lake: HulylakeWorkspaceClient
+  private readonly lake: HanzolakeWorkspaceClient
 
   constructor (
     readonly db: DbAdapter,
@@ -41,7 +41,7 @@ export class LowLevelClient {
     private readonly metadata: Metadata,
     private readonly workspace: WorkspaceUuid
   ) {
-    this.lake = getWorkspaceClient(metadata.hulylakeUrl, workspace, generateToken(systemAccountUuid, workspace, undefined, metadata.secret))
+    this.lake = getWorkspaceClient(metadata.hanzolakeUrl, workspace, generateToken(systemAccountUuid, workspace, undefined, metadata.secret))
   }
 
   async findMessage (cardId: CardID, messageId: MessageID, options?: FindMessagesOptions): Promise<Message | undefined> {

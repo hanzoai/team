@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -32,7 +32,7 @@ export interface AttachmentMetadata {
   spaceId?: Ref<Space>
 }
 
-export class HulyMarkdownPreprocessor extends BaseMarkdownPreprocessor {
+export class HanzoMarkdownPreprocessor extends BaseMarkdownPreprocessor {
   constructor (
     private readonly urlProvider: (id: string) => string,
     private readonly logger: Logger,

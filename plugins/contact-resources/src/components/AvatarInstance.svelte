@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -73,7 +73,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     bind:this={element}
-    class="hulyAvatar-container hulyAvatarSize-{size} {variant} {style}"
+    class="hanzoAvatar-container hanzoAvatarSize-{size} {variant} {style}"
     class:no-img={!hasImg && color}
     class:bordered={!hasImg && color === undefined}
     class:border={bColor !== undefined}
@@ -98,7 +98,7 @@
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     bind:this={element}
-    class="hulyAvatar-container hulyAvatarSize-{size} {variant} {style}"
+    class="hanzoAvatar-container hanzoAvatarSize-{size} {variant} {style}"
     class:no-img={!hasImg && color}
     class:bordered={!hasImg && color === undefined}
     class:border={bColor !== undefined}
@@ -110,7 +110,7 @@
   >
     {#if url && !imgError}
       <img
-        class="hulyAvatarSize-{size} ava-image {disabled ? 'disabled' : ''} {style}"
+        class="hanzoAvatarSize-{size} ava-image {disabled ? 'disabled' : ''} {style}"
         src={url}
         {srcset}
         alt={''}

@@ -12,15 +12,15 @@ npm install @hanzo/api-client
 
 ## WebSocket Client vs REST Client
 
-The api client package provides two main client variants: a WebSocket client and a REST client. The WebSocket client holds persistent connection to the Huly Platform API. The REST client uses standard HTTP requests to perform operations.
+The api client package provides two main client variants: a WebSocket client and a REST client. The WebSocket client holds persistent connection to the Hanzo Team Platform API. The REST client uses standard HTTP requests to perform operations.
 
 ### WebSocket Client
 
 ```ts
 import { connect } from '@hanzo/api-client'
 
-// Connect to Huly
-const client = await connect('https://huly.app', {
+// Connect to Hanzo Team
+const client = await connect('https://hanzo.team', {
   email: 'johndoe@example.com',
   password: 'password',
   workspace: 'my-workspace',
@@ -38,8 +38,8 @@ await client.close()
 ```ts
 import { connectRest } from '@hanzo/api-client'
 
-// Connect to Huly
-const client = await connectRest('https://huly.app', {
+// Connect to Hanzo Team
+const client = await connectRest('https://hanzo.team', {
   email: 'johndoe@example.com',
   password: 'password',
   workspace: 'my-workspace'
@@ -59,9 +59,9 @@ When authenticated, the client will have access to the same resources as the use
 
 Parameters:
 
-- `url`: URL of the Huly instance, for Huly Cloud use `https://huly.app`
+- `url`: URL of the Hanzo Team instance, for Hanzo Team Cloud use `https://hanzo.team`
 - `options`: Connection options
-  - `workspace`: Name of the workspace to connect to, the workspace name can be found in the URL of the workspace: `https://huly.app/workbench/<workspace-name>`
+  - `workspace`: Name of the workspace to connect to, the workspace name can be found in the URL of the workspace: `https://hanzo.team/workbench/<workspace-name>`
   - `token`: Optional authentication token
   - `email`: Optional user email
   - `password`: Optional user password
@@ -71,7 +71,7 @@ Parameters:
 ```ts
 import { connect } from '@hanzo/api-client'
 
-const client = await connect('https://huly.app', {
+const client = await connect('https://hanzo.team', {
   email: 'johndoe@example.com',
   password: 'password',
   workspace: 'my-workspace'
@@ -87,7 +87,7 @@ await client.close()
 ```ts
 import { connect } from '@hanzo/api-client'
 
-const client = await connect('https://huly.app', {
+const client = await connect('https://hanzo.team', {
   token: '...',
   workspace: 'my-workspace'
 })
@@ -99,7 +99,7 @@ await client.close()
 
 ## Client API
 
-The client provides a set of methods for interacting with the Huly Platform API. This section describes the main methods available in the client.
+The client provides a set of methods for interacting with the Hanzo Team Platform API. This section describes the main methods available in the client.
 
 ### Fetch API
 

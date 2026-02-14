@@ -1,8 +1,8 @@
-# Huly Platform Architecture Overview
+# Hanzo Team Platform Architecture Overview
 
 ## Service Overview
 
-The Huly platform consists of **30+ microservices** working together in a distributed architecture. Services are organized into functional layers for core business logic, data storage, real-time communication, media processing, and supporting features.
+The Hanzo Team platform consists of **30+ microservices** working together in a distributed architecture. Services are organized into functional layers for core business logic, data storage, real-time communication, media processing, and supporting features.
 
 ### Core Backend Services
 
@@ -18,8 +18,8 @@ The Huly platform consists of **30+ microservices** working together in a distri
 | Service | Port | Description |
 |---------|------|-------------|
 | **datalake** | 4030 | Blob storage management with metadata. Handles file uploads, permissions, and coordinates with MinIO for object storage. |
-| **hulylake** | 8096 | Storage adapter API. Provides S3-compatible interface for accessing stored objects. |
-| **hulykvs** | 8094 | Key-value store service. Fast storage for configuration, preferences, and cached data. |
+| **hanzolake** | 8096 | Storage adapter API. Provides S3-compatible interface for accessing stored objects. |
+| **hanzokvs** | 8094 | Key-value store service. Fast storage for configuration, preferences, and cached data. |
 
 ### Search & Indexing
 
@@ -33,8 +33,8 @@ The Huly platform consists of **30+ microservices** working together in a distri
 | Service | Port | Description |
 |---------|------|-------------|
 | **collaborator** | 3078 | Real-time document collaboration using Y.js CRDT. Enables simultaneous editing with conflict resolution. |
-| **hulypulse** | 8099 | WebSocket notification server. Handles real-time push notifications to connected clients. |
-| **hulygun** | - | Event processor. Consumes and processes events from Redpanda for real-time updates. |
+| **hanzopulse** | 8099 | WebSocket notification server. Handles real-time push notifications to connected clients. |
+| **hanzogun** | - | Event processor. Consumes and processes events from Redpanda for real-time updates. |
 
 ### Media Services
 
@@ -67,7 +67,7 @@ The Huly platform consists of **30+ microservices** working together in a distri
 
 | Service | Port | Description |
 |---------|------|-------------|
-| **front** | 8087/8088 | Web application server. Serves the Huly UI, handles static assets and client-side routing. |
+| **front** | 8087/8088 | Web application server. Serves the Hanzo Team UI, handles static assets and client-side routing. |
 
 ### Infrastructure (Databases & Message Queues)
 
@@ -77,7 +77,7 @@ The Huly platform consists of **30+ microservices** working together in a distri
 | **elastic** | 9200 | Elasticsearch search engine. Stores full-text search indexes managed by fulltext service. |
 | **minio** | 9000, 9001 | S3-compatible object storage. Stores binary files, attachments, images, and blobs in buckets (blobs, eu, backups). |
 | **redpanda** | 9092, 19092 | Kafka-compatible event streaming. Provides reliable async messaging between services. |
-| **redis** | 6379 | In-memory cache and pub/sub. Used by HulyPulse for real-time notifications. |
+| **redis** | 6379 | In-memory cache and pub/sub. Used by Hanzo TeamPulse for real-time notifications. |
 
 ### Monitoring & Observability
 
@@ -93,7 +93,7 @@ The Huly platform consists of **30+ microservices** working together in a distri
 - **Primary Database**: All services → CockroachDB (main application data)
 - **Search Index**: Fulltext → Elasticsearch
 - **Object Storage**: Services → MinIO (S3 API)
-- **Cache/Pub-Sub**: HulyPulse → Redis
+- **Cache/Pub-Sub**: Hanzo TeamPulse → Redis
 - **Real-time Updates**: Client ↔ Transactor (WebSocket), Client ↔ Collaborator (WebSocket)
 
 ---
@@ -120,8 +120,8 @@ graph TB
     
     subgraph "Storage Services"
         Datalake[Datalake<br/>:4030<br/>Blob Storage]
-        Hulylake[Hulylake<br/>:8096<br/>Storage API]
-        HulyKVS[HulyKVS<br/>:8094<br/>Key-Value]
+        Hanzo Teamlake[Hanzo Teamlake<br/>:8096<br/>Storage API]
+        Hanzo TeamKVS[Hanzo TeamKVS<br/>:8094<br/>Key-Value]
     end
     
     subgraph "Search & Indexing"
@@ -131,8 +131,8 @@ graph TB
     
     subgraph "Real-time"
         Collaborator[Collaborator<br/>:3078<br/>Doc Sync]
-        Pulse[HulyPulse<br/>:8099<br/>WebSocket]
-        Gun[HulyGun<br/>Events]
+        Pulse[Hanzo TeamPulse<br/>:8099<br/>WebSocket]
+        Gun[Hanzo TeamGun<br/>Events]
     end
     
     subgraph "Media Services"
@@ -184,9 +184,9 @@ graph TB
     
     Datalake --> CockroachDB
     Datalake --> Minio
-    Hulylake --> CockroachDB
-    Hulylake --> Minio
-    HulyKVS --> CockroachDB
+    Hanzo Teamlake --> CockroachDB
+    Hanzo Teamlake --> Minio
+    Hanzo TeamKVS --> CockroachDB
     
     Fulltext --> Elasticsearch
     Fulltext --> CockroachDB
@@ -229,7 +229,7 @@ graph LR
         Fulltext[Fulltext<br/>Search Indexing]
         Media[Media<br/>Processing]
         Process[Process<br/>Automation]
-        Gun[HulyGun<br/>Event Processor]
+        Gun[Hanzo TeamGun<br/>Event Processor]
         BackupSvc2[Backup<br/>Archival]
     end
     
@@ -271,7 +271,7 @@ graph TB
     
     subgraph "Storage APIs"
         Datalake[Datalake :4030<br/>Blob Management]
-        Hulylake[Hulylake :8096<br/>Storage Adapter]
+        Hanzo Teamlake[Hanzo Teamlake :8096<br/>Storage Adapter]
     end
     
     subgraph "Primary Database"
@@ -290,15 +290,15 @@ graph TB
     end
     
     Client -->|Upload| Datalake
-    Client -->|Read| Hulylake
+    Client -->|Read| Hanzo Teamlake
     Client -->|Stream Video| Stream
     Client -->|Get Preview| Preview
     
     Datalake -->|Metadata| CockroachDB
     Datalake -->|Store Blobs| Minio
     
-    Hulylake -->|Metadata| CockroachDB
-    Hulylake -->|Access Blobs| Minio
+    Hanzo Teamlake -->|Metadata| CockroachDB
+    Hanzo Teamlake -->|Access Blobs| Minio
     
     Minio --> Buckets
     
@@ -361,38 +361,38 @@ sequenceDiagram
 | Service | Container | Port | Purpose | Dependencies |
 |---------|-----------|------|---------|--------------|
 | **Frontend** | | | | |
-| front | hardcoreeng/front | 8087/8088 | Web application server | account, transactor, collaborator, datalake |
+| front | hanzoai/front | 8087/8088 | Web application server | account, transactor, collaborator, datalake |
 | **Core** | | | | |
-| account | hardcoreeng/account | 3000 | Authentication & user management | cockroach, redpanda, stats |
-| transactor | hardcoreeng/transactor | 3332 | Transaction processing (WebSocket) | cockroach, redpanda, fulltext, account |
-| workspace | hardcoreeng/workspace | - | Workspace management | cockroach, redpanda, minio, account |
-| stats | hardcoreeng/stats | 4900 | Metrics collection | - |
+| account | hanzoai/account | 3000 | Authentication & user management | cockroach, redpanda, stats |
+| transactor | hanzoai/transactor | 3332 | Transaction processing (WebSocket) | cockroach, redpanda, fulltext, account |
+| workspace | hanzoai/workspace | - | Workspace management | cockroach, redpanda, minio, account |
+| stats | hanzoai/stats | 4900 | Metrics collection | - |
 | **Storage** | | | | |
-| datalake | hardcoreeng/datalake | 4030 | Blob storage & metadata | cockroach, minio, account |
-| hulylake | hardcoreeng/hulylake | 8096 | Storage adapter API | cockroach, minio |
-| hulykvs | hardcoreeng/hulykvs | 8094 | Key-value store | cockroach |
+| datalake | hanzoai/datalake | 4030 | Blob storage & metadata | cockroach, minio, account |
+| hanzolake | hanzoai/hanzolake | 8096 | Storage adapter API | cockroach, minio |
+| hanzokvs | hanzoai/hanzokvs | 8094 | Key-value store | cockroach |
 | **Search** | | | | |
-| fulltext | hardcoreeng/fulltext | 4702 | Full-text search indexing | elasticsearch, cockroach, rekoni, redpanda |
-| rekoni | hardcoreeng/rekoni-service | 4004 | Document intelligence | stats |
+| fulltext | hanzoai/fulltext | 4702 | Full-text search indexing | elasticsearch, cockroach, rekoni, redpanda |
+| rekoni | hanzoai/rekoni-service | 4004 | Document intelligence | stats |
 | **Real-time** | | | | |
-| collaborator | hardcoreeng/collaborator | 3078 | Real-time document collaboration | account, datalake, transactor |
-| hulypulse | hardcoreeng/hulypulse | 8099 | WebSocket notifications | redis |
-| hulygun | hardcoreeng/hulygun | - | Event processor | redpanda, account |
+| collaborator | hanzoai/collaborator | 3078 | Real-time document collaboration | account, datalake, transactor |
+| hanzopulse | hanzoai/hanzopulse | 8099 | WebSocket notifications | redis |
+| hanzogun | hanzoai/hanzogun | - | Event processor | redpanda, account |
 | **Media** | | | | |
-| stream | hardcoreeng/stream | 1080 | Video streaming | datalake, redpanda |
-| media | hardcoreeng/media | - | Media processing | redpanda, account |
-| preview | hardcoreeng/preview | 4040 | Thumbnail generation | datalake |
+| stream | hanzoai/stream | 1080 | Video streaming | datalake, redpanda |
+| media | hanzoai/media | - | Media processing | redpanda, account |
+| preview | hanzoai/preview | 4040 | Thumbnail generation | datalake |
 | **Features** | | | | |
-| print | hardcoreeng/print | 4005 | PDF generation | cockroach, minio, account |
-| sign | hardcoreeng/sign | 4006 | Digital signatures | cockroach, minio, account |
-| payment | hardcoreeng/payment | 3040 | Payment processing | account |
-| export | hardcoreeng/export | 4009 | Data export | cockroach, minio, account |
-| analytics | hardcoreeng/analytics-collector | 4017 | Analytics collection | account, stats |
-| process | hardcoreeng/process | - | Workflow automation | redpanda, account |
-| rating | hardcoreeng/rating | - | Content rating | cockroach, redpanda, account |
+| print | hanzoai/print | 4005 | PDF generation | cockroach, minio, account |
+| sign | hanzoai/sign | 4006 | Digital signatures | cockroach, minio, account |
+| payment | hanzoai/payment | 3040 | Payment processing | account |
+| export | hanzoai/export | 4009 | Data export | cockroach, minio, account |
+| analytics | hanzoai/analytics-collector | 4017 | Analytics collection | account, stats |
+| process | hanzoai/process | - | Workflow automation | redpanda, account |
+| rating | hanzoai/rating | - | Content rating | cockroach, redpanda, account |
 | **Backup** | | | | |
-| backup | hardcoreeng/backup | - | Automated backup | cockroach, minio, account |
-| backup-api | hardcoreeng/backup-api | 4039 | Backup REST API | minio, account |
+| backup | hanzoai/backup | - | Automated backup | cockroach, minio, account |
+| backup-api | hanzoai/backup-api | 4039 | Backup REST API | minio, account |
 | **Primary Database** | | | | |
 | cockroach | cockroachdb/cockroach:latest-v24.3 | 26257, 8089 | **Main application database** - stores users, workspaces, documents, transactions, metadata, permissions | - |
 | **Supporting Infrastructure** | | | | |
@@ -411,16 +411,16 @@ sequenceDiagram
 ### Common Configuration (Shared by Most Services)
 - `SERVER_SECRET` / `SECRET`: `secret` - Shared authentication secret
 - `REGION`: `cockroach` - Deployment region identifier
-- `ACCOUNTS_URL`: `http://huly.local:3000` - Account service URL
-- `STATS_URL`: `http://huly.local:4900` - Metrics collection URL
+- `ACCOUNTS_URL`: `http://hanzo.local:3000` - Account service URL
+- `STATS_URL`: `http://hanzo.local:4900` - Metrics collection URL
 - `OTEL_EXPORTER_OTLP_ENDPOINT`: `http://jaeger:4318/v1/traces` - Tracing endpoint
 - `STORAGE_CONFIG`: `${STORAGE_CONFIG}` - MinIO connection string
 - `QUEUE_CONFIG`: `${QUEUE_CONFIG}` - Redpanda/Kafka configuration
 
 ### Database Configuration
 - `DB_URL` / `DB_CR_URL`: CockroachDB connection string
-- `FULLTEXT_DB_URL`: `http://huly.local:9200` - Elasticsearch URL
-- `HULY_DB_CONNECTION`: CockroachDB connection for Huly* services
+- `FULLTEXT_DB_URL`: `http://hanzo.local:9200` - Elasticsearch URL
+- `HULY_DB_CONNECTION`: CockroachDB connection for Hanzo Team* services
 
 ### Storage Configuration
 - `STORAGE_CONFIG`: MinIO configuration (format: `minio|minio?accessKey=minioadmin&secretKey=minioadmin`)
@@ -434,30 +434,30 @@ sequenceDiagram
 - `HULY_KAFKA_BOOTSTRAP`: `redpanda:9092` - Kafka bootstrap servers
 
 ### Service URLs (Internal)
-- `ACCOUNTS_URL`: `http://huly.local:3000`
-- `TRANSACTOR_URL`: `ws://huly.local:3332`
-- `FULLTEXT_URL`: `http://huly.local:4702`
-- `REKONI_URL`: `http://huly.local:4004`
-- `COLLABORATOR_URL`: `ws://huly.local:3078`
-- `DATALAKE_URL`: `http://huly.local:4030`
-- `HULYLAKE_URL`: `http://huly.local:8096`
-- `PULSE_URL`: `ws://huly.local:8099/ws`
-- `PREVIEW_URL`: `http://huly.local:4040`
-- `STREAM_URL`: `http://huly.local:1080/recording`
-- `PAYMENT_URL`: `http://huly.local:3040`
-- `PRINT_URL`: `http://huly.local:4005`
-- `SIGN_URL`: `http://huly.local:4006`
-- `BACKUP_URL`: `http://huly.local:4039/api/backup`
-- `AI_BOT_URL`: `http://huly.local:4010`
+- `ACCOUNTS_URL`: `http://hanzo.local:3000`
+- `TRANSACTOR_URL`: `ws://hanzo.local:3332`
+- `FULLTEXT_URL`: `http://hanzo.local:4702`
+- `REKONI_URL`: `http://hanzo.local:4004`
+- `COLLABORATOR_URL`: `ws://hanzo.local:3078`
+- `DATALAKE_URL`: `http://hanzo.local:4030`
+- `HANZOLAKE_URL`: `http://hanzo.local:8096`
+- `PULSE_URL`: `ws://hanzo.local:8099/ws`
+- `PREVIEW_URL`: `http://hanzo.local:4040`
+- `STREAM_URL`: `http://hanzo.local:1080/recording`
+- `PAYMENT_URL`: `http://hanzo.local:3040`
+- `PRINT_URL`: `http://hanzo.local:4005`
+- `SIGN_URL`: `http://hanzo.local:4006`
+- `BACKUP_URL`: `http://hanzo.local:4039/api/backup`
+- `AI_BOT_URL`: `http://hanzo.local:4010`
 
 ### Frontend Configuration
-- `FILES_URL`: `http://huly.local:4030/blob/:workspace/:blobId/:filename` - File download URL pattern
-- `FRONT_URL`: `http://huly.local:8087` - Frontend base URL
-- `BRANDING_URL`: `http://huly.local:8087/branding.json`
-- `DESKTOP_UPDATES_URL`: `https://dist.huly.io`
+- `FILES_URL`: `http://hanzo.local:4030/blob/:workspace/:blobId/:filename` - File download URL pattern
+- `FRONT_URL`: `http://hanzo.local:8087` - Frontend base URL
+- `BRANDING_URL`: `http://hanzo.local:8087/branding.json`
+- `DESKTOP_UPDATES_URL`: `https://dist.hanzo.team`
 
 ### Authentication & Security
-- `HULY_TOKEN_SECRET`: `secret` - Token signing for Huly services
+- `HULY_TOKEN_SECRET`: `secret` - Token signing for Hanzo Team services
 - `SERVER_SECRET`: `secret` - Service-to-service auth
 - `ADMIN_EMAILS`: Admin user emails
 - `LAST_NAME_FIRST`: `true` - Name formatting preference
@@ -481,12 +481,12 @@ sequenceDiagram
 - `BACKUP_STORAGE`: `${BACKUP_STORAGE_CONFIG}`
 - `INTERVAL`: `60` - Backup interval in seconds
 
-### Redis Configuration (HulyPulse)
+### Redis Configuration (Hanzo TeamPulse)
 - `HULY_REDIS_URLS`: `redis://redis:6379`
 - `HULY_BIND_PORT`: `8099`
 
 ### Stream Service
-- `STREAM_ENDPOINT_URL`: `datalake://huly.local:4030`
+- `STREAM_ENDPOINT_URL`: `datalake://hanzo.local:4030`
 - `STREAM_INSECURE`: `true`
 - `STREAM_MAX_PARALLEL_SCALING_COUNT`: `6`
 

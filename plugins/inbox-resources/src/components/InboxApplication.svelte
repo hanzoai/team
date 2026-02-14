@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -213,7 +213,7 @@
   onDestroy(() => ($deviceInfo.replacedPanel = undefined))
 </script>
 
-<div class="hulyPanels-container inbox">
+<div class="hanzoPanels-container inbox">
   {#if $deviceInfo.navigator.visible}
     <div
       class="antiPanel-navigator {$deviceInfo.navigator.direction === 'horizontal'
@@ -221,9 +221,9 @@
         : 'landscape'} border-left inbox__navigator"
       class:fly={$deviceInfo.navigator.float}
     >
-      <div class="antiPanel-wrap__content hulyNavPanel-container">
+      <div class="antiPanel-wrap__content hanzoNavPanel-container">
         <InboxHeader />
-        <div class="antiPanel-wrap__content hulyNavPanel-container">
+        <div class="antiPanel-wrap__content hanzoNavPanel-container">
           <InboxNavigation {doc} {legacyContext} on:select={select} />
         </div>
       </div>
@@ -241,7 +241,7 @@
     />
   {/if}
 
-  <div bind:this={replacedPanelElement} class="hulyComponent inbox__panel">
+  <div bind:this={replacedPanelElement} class="hanzoComponent inbox__panel">
     {#if doc}
       {@const panel = client.getHierarchy().classHierarchyMixin(doc._class, view.mixin.ObjectPanel)}
       <Component

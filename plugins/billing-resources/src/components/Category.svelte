@@ -7,7 +7,7 @@
   export let label: IntlString
 </script>
 
-<div class="hulyComponent-content flex-col flex-gap-4">
+<div class="hanzoComponent-content flex-col flex-gap-4">
   <div class="flex-row-center">
     <span class="mr-2">
       <Icon {icon} size={'medium'} />

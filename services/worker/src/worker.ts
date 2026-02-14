@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -25,7 +25,7 @@ export async function runWorker (): Promise<void> {
       connection,
       workflowsPath: require.resolve('./workflows'),
       activities,
-      namespace: process.env.TEMPORAL_NAMESPACE ?? 'huly',
+      namespace: process.env.TEMPORAL_NAMESPACE ?? 'hanzo',
       taskQueue: 'process'
     })
 

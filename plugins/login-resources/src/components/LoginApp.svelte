@@ -1,6 +1,6 @@
 <!--
 // Copyright © 2020, 2021 Anticrm Platform Contributors.
-// Copyright © 2021, 2022 Hardcore Engineering Inc.
+// Copyright © 2021, 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -145,7 +145,7 @@
       <div
         style:position="fixed"
         style:left={$deviceInfo.docWidth <= 480 ? '.75rem' : '1.75rem'}
-        style:top={'calc(3rem + var(--huly-top-indent, 0rem))'}
+        style:top={'calc(3rem + var(--hanzo-top-indent, 0rem))'}
         class="flex-row-center"
       >
       <img

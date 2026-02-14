@@ -126,14 +126,14 @@ services:
   payment:
     image: hanzoai/payment
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     ports:
       - 3040:3040
     environment:
       - SECRET=secret
       - PORT=3040
-      - ACCOUNTS_URL=http://huly.local:3000
-      - FRONT_URL=http://huly.local:8087
+      - ACCOUNTS_URL=http://hanzoai.local:3000
+      - FRONT_URL=http://hanzoai.local:8087
       - USE_SANDBOX=true
       - POLAR_ACCESS_TOKEN=${POLAR_ACCESS_TOKEN}
       - POLAR_WEBHOOK_SECRET=${POLAR_WEBHOOK_SECRET}
@@ -158,7 +158,7 @@ services:
       - STATS_URL=http://hanzoai.local:4900
       - STORAGE_CONFIG=${STORAGE_CONFIG}
       - MODEL_ENABLED=*
-      - ACCOUNTS_URL=http://huly.local:3000
+      - ACCOUNTS_URL=http://hanzoai.local:3000
       - ACCOUNTS_DB_URL=${DB_CR_URL}
       - BRANDING_PATH=/var/cfg/branding.json
       - BACKUP_STORAGE=${BACKUP_STORAGE_CONFIG}
@@ -210,16 +210,16 @@ services:
       - REKONI_URL=http://hanzoai.local:4004
       - COLLABORATOR_URL=ws://hanzoai.local:3078
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - GITHUB_URL=http://huly.local:3500
-      - PRINT_URL=http://huly.local:4005
-      - SIGN_URL=http://huly.local:4006
-#      - ANALYTICS_COLLECTOR_URL=http://huly.local:4017
-      - DESKTOP_UPDATES_URL=https://dist.huly.io
+      - GITHUB_URL=http://hanzoai.local:3500
+      - PRINT_URL=http://hanzoai.local:4005
+      - SIGN_URL=http://hanzoai.local:4006
+#      - ANALYTICS_COLLECTOR_URL=http://hanzoai.local:4017
+      - DESKTOP_UPDATES_URL=https://dist.hanzo.team
       - DESKTOP_UPDATES_CHANNEL=dev
       - DESKTOP_UPDATES_CHANNELS=dev;tracex:dev-tracex
-      - BRANDING_URL=http://huly.local:8087/branding.json
-      - STREAM_URL=http://huly.local:1080/recording
-      - PAYMENT_URL=http://huly.local:3040
+      - BRANDING_URL=http://hanzoai.local:8087/branding.json
+      - STREAM_URL=http://hanzoai.local:1080/recording
+      - PAYMENT_URL=http://hanzoai.local:3040
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   transactor_cockroach:
@@ -252,7 +252,7 @@ services:
       - ACCOUNTS_URL=http://hanzoai.local:3000
       - LAST_NAME_FIRST=true
       - BRANDING_PATH=/var/cfg/branding.json
-      - AI_BOT_URL=http://huly.local:4010
+      - AI_BOT_URL=http://hanzoai.local:4010
       - COMMUNICATION_TIME_LOGGING_ENABLED=true
     restart: unless-stopped
   fulltext_cockroach:
@@ -274,13 +274,13 @@ services:
       - FULLTEXT_DB_URL=http://hanzoai.local:9200
       - ELASTIC_INDEX_NAME=local_storage_index # Same index for simplicity
       - STORAGE_CONFIG=${STORAGE_CONFIG}
-      - STATS_URL=http://huly.local:4900
-      - REKONI_URL=http://huly.local:4004
-      - ACCOUNTS_URL=http://huly.local:3000
+      - STATS_URL=http://hanzoai.local:4900
+      - REKONI_URL=http://hanzoai.local:4004
+      - ACCOUNTS_URL=http://hanzoai.local:3000
   datalake:
     image: hanzoai/datalake
     extra_hosts:
-      - 'huly.local:host-gateway'
+      - 'hanzoai.local:host-gateway'
     depends_on:
       minio:
         condition: service_healthy
@@ -295,9 +295,9 @@ services:
     environment:
       - PORT=4030
       - SECRET=secret
-      - ACCOUNTS_URL=http://huly.local:3000
-      - STATS_URL=http://huly.local:4900
-      - STREAM_URL=http://huly.local:1080/recording
+      - ACCOUNTS_URL=http://hanzoai.local:3000
+      - STATS_URL=http://hanzoai.local:4900
+      - STREAM_URL=http://hanzoai.local:1080/recording
       - DB_URL=${DB_CR_URL}
       - BUCKETS=blobs,eu|http://minio:9000?accessKey=minioadmin&secretKey=minioadmin
     restart: unless-stopped
@@ -306,16 +306,16 @@ services:
     ports:
       - 6379:6379
     restart: unless-stopped
-  hulypulse:
-    image: hanzoai/hulypulse
+  hanzopulse:
+    image: hanzoai/hanzopulse
     depends_on:
       redis:
         condition: service_started
     ports:
       - 8099:8099
     environment:
-      - HULY_REDIS_URLS=redis://redis:6379
-      - HULY_BIND_PORT=8099
+      - TEAM_REDIS_URLS=redis://redis:6379
+      - TEAM_BIND_PORT=8099
     restart: unless-stopped
 volumes:
   db:

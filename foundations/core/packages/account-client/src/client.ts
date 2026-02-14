@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -230,8 +230,8 @@ export interface AccountClient {
   mergeSpecifiedPersons: (primaryPerson: PersonUuid, secondaryPerson: PersonUuid) => Promise<void>
   mergeSpecifiedAccounts: (primaryAccount: AccountUuid, secondaryAccount: AccountUuid) => Promise<void>
   addEmailSocialId: (email: string) => Promise<OtpInfo>
-  addHulyAssistantSocialId: () => Promise<PersonId>
-  refreshHulyAssistantToken: () => Promise<void>
+  addHanzoAssistantSocialId: () => Promise<PersonId>
+  refreshHanzoAssistantToken: () => Promise<void>
   updatePasswordAgingRule: (days: number) => Promise<void>
   checkPasswordAging: () => Promise<boolean>
 
@@ -1159,18 +1159,18 @@ class AccountClientImpl implements AccountClient {
     return await this.rpc(request)
   }
 
-  async addHulyAssistantSocialId (): Promise<PersonId> {
+  async addHanzoAssistantSocialId (): Promise<PersonId> {
     const request = {
-      method: 'addHulyAssistantSocialId' as const,
+      method: 'addHanzoAssistantSocialId' as const,
       params: {}
     }
 
     return await this.rpc(request)
   }
 
-  async refreshHulyAssistantToken (): Promise<void> {
+  async refreshHanzoAssistantToken (): Promise<void> {
     const request = {
-      method: 'refreshHulyAssistantToken' as const,
+      method: 'refreshHanzoAssistantToken' as const,
       params: {}
     }
 

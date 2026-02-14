@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2021 Hardcore Engineering Inc.
+// Copyright © 2021 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -186,7 +186,7 @@ export default plugin(presentationId, {
     DisabledFeatures: '' as Metadata<Set<string>>,
     PreviewUrl: '' as Metadata<string>,
     PulseUrl: '' as Metadata<string>,
-    HulylakeUrl: '' as Metadata<string>,
+    HanzolakeUrl: '' as Metadata<string>,
     PaymentUrl: '' as Metadata<string>,
     SignupUrl: '' as Metadata<string>
   },

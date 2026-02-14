@@ -296,7 +296,7 @@ async function migrateMergedAccounts (client: MigrationClient): Promise<void> {
 
     // exclude empty emails
     // also exclude Hulia account
-    if (account.email === '' || account.email === 'huly.ai.bot@hc.engineering') {
+    if (account.email === '' || account.email === 'hanzo.ai.bot@hanzo.team') {
       continue
     }
     accountsByPerson.get(account.person)?.push(account)

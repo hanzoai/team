@@ -2,7 +2,7 @@
   "name": "@hanzo/presence-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hardcore Engineering Inc.",
+  "author": "Hanzo AI Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -48,7 +48,7 @@
     "@hanzo/contact": "workspace:^0.7.0",
     "@hanzo/contact-resources": "workspace:^0.7.0",
     "@hanzo/presence": "workspace:^0.7.0",
-    "@hanzo/hulypulse-client": "workspace:^0.7.0",
+    "@hanzo/hanzopulse-client": "workspace:^0.7.0",
     "svelte": "^4.2.20",
     "fast-equals": "^5.2.2"
   },

@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -58,9 +58,9 @@ import { type Logger } from '../importer/logger'
 import { type FileUploader } from '../importer/uploader'
 import { CardsProcessor } from './cards'
 import { UnifiedFormatParser } from './parser'
-import { HulyMarkdownPreprocessor, type AttachmentMetadata } from './preprocessor'
+import { HanzoMarkdownPreprocessor, type AttachmentMetadata } from './preprocessor'
 import { MetadataRegistry } from './registry'
-export interface HulyComment {
+export interface HanzoComment {
   author: string
   text: string
   attachments?: string[]
@@ -161,7 +161,7 @@ export interface hanzoaiOrgSpaceSettings extends hanzoaiSpaceSettings {
   qara?: string
 }
 
-export class HulyFormatImporter {
+export class HanzoFormatImporter {
   private readonly personsByName = new Map<string, Ref<Person>>()
   private employeesByName = new Map<string, Ref<Employee>>()
   private readonly accountsByName = new Map<string, AccountUuid>()
@@ -316,7 +316,7 @@ export class HulyFormatImporter {
 
       try {
         this.logger.log(`Processing ${spaceName}...`)
-        const spaceConfig = this.parser.readYaml(yamlPath) as HulySpaceSettings
+        const spaceConfig = this.parser.readYaml(yamlPath) as HanzoSpaceSettings
 
         if (spaceConfig?.class === undefined) {
           this.logger.error(`Skipping ${spaceName}: not a space - no class specified`)
@@ -391,7 +391,7 @@ export class HulyFormatImporter {
 
     for (const issueFile of issueFiles) {
       const issuePath = path.join(currentPath, issueFile)
-      const issueHeader = this.parser.readYamlHeader(issuePath) as HulyIssueHeader
+      const issueHeader = this.parser.readYamlHeader(issuePath) as HanzoIssueHeader
 
       if (issueHeader.class === undefined) {
         this.logger.error(`Skipping ${issueFile}: not an issue`)
@@ -490,7 +490,7 @@ export class HulyFormatImporter {
 
     for (const docFile of docFiles) {
       const docPath = path.join(currentPath, docFile)
-      const docHeader = this.parser.readYamlHeader(docPath) as HulyDocumentHeader
+      const docHeader = this.parser.readYamlHeader(docPath) as HanzoDocumentHeader
 
       if (docHeader.class === undefined) {
         this.logger.error(`Skipping ${docFile}: not a document`)
@@ -531,7 +531,7 @@ export class HulyFormatImporter {
 
     for (const docFile of docFiles) {
       const docPath = path.join(currentPath, docFile)
-      const docHeader = this.parser.readYamlHeader(docPath) as HulyControlledDocumentHeader | HulyDocumentTemplateHeader
+      const docHeader = this.parser.readYamlHeader(docPath) as HanzoControlledDocumentHeader | HanzoDocumentTemplateHeader
 
       if (docHeader.class === undefined) {
         this.logger.error(`Skipping ${docFile}: not a document`)
@@ -612,7 +612,7 @@ export class HulyFormatImporter {
     )
   }
 
-  private async processProject (data: HulyProjectSettings): Promise<ImportProject> {
+  private async processProject (data: HanzoProjectSettings): Promise<ImportProject> {
     return {
       class: tracker.class.Project,
       id: data.id as Ref<Project>,
@@ -630,7 +630,7 @@ export class HulyFormatImporter {
     }
   }
 
-  private async processTeamspace (data: HulyTeamspaceSettings): Promise<ImportTeamspace> {
+  private async processTeamspace (data: HanzoTeamspaceSettings): Promise<ImportTeamspace> {
     return {
       class: document.class.Teamspace,
       title: data.title,
@@ -645,7 +645,7 @@ export class HulyFormatImporter {
     }
   }
 
-  private async processOrgSpace (data: HulyOrgSpaceSettings): Promise<ImportOrgSpace> {
+  private async processOrgSpace (data: HanzoOrgSpaceSettings): Promise<ImportOrgSpace> {
     return {
       class: documents.class.OrgSpace,
       title: data.title,

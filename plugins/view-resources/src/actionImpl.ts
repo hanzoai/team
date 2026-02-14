@@ -127,7 +127,7 @@ export async function copyMarkdown (markdown: string, metadata?: Record<string, 
   let markdownToCopy = markdown
   if (metadata !== undefined) {
     try {
-      const metadataComment = `<!-- huly-table-metadata:${JSON.stringify(metadata)} -->`
+      const metadataComment = `<!-- hanzo-table-metadata:${JSON.stringify(metadata)} -->`
       markdownToCopy = markdown + '\n' + metadataComment
     } catch (e) {
       console.error('Failed to embed metadata in markdown:', e)
@@ -144,7 +144,7 @@ export async function copyMarkdown (markdown: string, metadata?: Record<string, 
       // Add custom MIME type for fast parsing in modern browsers
       if (metadata !== undefined) {
         try {
-          clipboardData['application/x-huly-table-metadata'] = Promise.resolve(JSON.stringify(metadata))
+          clipboardData['application/x-hanzo-table-metadata'] = Promise.resolve(JSON.stringify(metadata))
         } catch (e) {
           console.error('Failed to stringify metadata for custom MIME type:', e)
         }

@@ -16,7 +16,7 @@ package resconv_test
 import (
 	"testing"
 
-	"github.com/hcengineering/stream/internal/pkg/resconv"
+	"github.com/hanzoai/stream/internal/pkg/resconv"
 	"github.com/stretchr/testify/require"
 )
 

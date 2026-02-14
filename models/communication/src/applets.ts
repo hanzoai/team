@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -21,7 +21,7 @@ export function buildApplets (builder: Builder): void {
     communication.class.Applet,
     core.space.Model,
     {
-      type: 'application/vnd.huly.applet.poll',
+      type: 'application/vnd.hanzo.applet.poll',
       label: communication.string.Poll,
       icon: communication.icon.Poll,
       component: communication.poll.PollPresenter,

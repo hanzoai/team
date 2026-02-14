@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 
 import { Branding, generateUuid, PersonUuid, TxOperations, WorkspaceIds, WorkspaceUuid } from '@hanzo/core'

@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2021-2025 Hardcore Engineering Inc.
+// Copyright © 2021-2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -121,7 +121,7 @@ export function startFront (ctx: MeasureContext, extraConfig?: Record<string, st
 
   const paymentUrl = process.env.PAYMENT_URL
 
-  const hulylakeUrl = process.env.HULYLAKE_URL
+  const hanzolakeUrl = process.env.HANZOLAKE_URL
 
   const datalakeUrl = process.env.DATALAKE_URL
 
@@ -156,7 +156,7 @@ export function startFront (ctx: MeasureContext, extraConfig?: Record<string, st
     billingUrl,
     paymentUrl,
     pulseUrl,
-    hulylakeUrl,
+    hanzolakeUrl,
     datalakeUrl
   }
   console.log('Starting Front service with', config)

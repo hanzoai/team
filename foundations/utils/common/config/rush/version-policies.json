@@ -77,7 +77,7 @@
      */
     "definitionName": "individualVersion",
 
-    "policyName": "huly.utils",
+    "policyName": "hanzo.utils",
 
     /**
      * (Optional) This can be used to enforce that all packages in the set must share a common

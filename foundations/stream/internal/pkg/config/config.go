@@ -23,7 +23,7 @@ import (
 	"github.com/kelseyhightower/envconfig"
 )
 
-// Config represents configuration for the huly-stream application.
+// Config represents configuration for the hanzo-stream application.
 type Config struct {
 	LogLevel                    string   `split_words:"true" default:"debug" desc:"sets log level for the application"`
 	ServerSecret                string   `split_words:"true" default:"" desc:"server secret required to generate and verify tokens"`

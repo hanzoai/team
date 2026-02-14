@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
-import { type HulylakeWorkspaceClient, type JsonPatch, getWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient, type JsonPatch, getWorkspaceClient } from '@hanzo/hanzolake-client'
 import { generateToken } from '@hanzo/server-token'
 import {
   BlobID,
@@ -39,9 +39,9 @@ export class Storage {
 
   constructor (private readonly ctx: MeasureContext) {}
 
-  private getClient (ws: WorkspaceUuid): HulylakeWorkspaceClient {
+  private getClient (ws: WorkspaceUuid): HanzolakeWorkspaceClient {
     const token = generateToken(systemAccountUuid, ws, undefined, config.Secret)
-    return getWorkspaceClient(config.HulylakeUrl, ws, token)
+    return getWorkspaceClient(config.HanzolakeUrl, ws, token)
   }
 
   private async createMessageGroup (ws: WorkspaceUuid, cardId: CardID, blobId: BlobID, lang: string): Promise<void> {

@@ -1,6 +1,6 @@
 ## Automatic updates
 
-All builds are published to R2 storage bucket available at https://dist.huly.io
+All builds are published to R2 storage bucket available at https://dist.hanzo.team
 
 To check the latest auto-updatable distributions see
 

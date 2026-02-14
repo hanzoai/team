@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2021 Hardcore Engineering, Inc.
+// Copyright © 2021 Hanzo AI, Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -22,7 +22,7 @@ configurePlatform().then(() => {
   if (
     process.env.CLIENT_TYPE === 'dev-server' ||
     process.env.CLIENT_TYPE === 'dev-production' ||
-    process.env.CLIENT_TYPE === 'dev-huly' ||
+    process.env.CLIENT_TYPE === 'dev-hanzo' ||
     process.env.CLIENT_TYPE === 'dev-bold' ||
     process.env.CLIENT_TYPE === 'dev-server-test'
   ) {

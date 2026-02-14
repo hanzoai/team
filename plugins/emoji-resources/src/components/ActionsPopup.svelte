@@ -1,6 +1,6 @@
 <script lang="ts">
   //
-  // © 2025 Hardcore Engineering, Inc. All Rights Reserved.
+  // © 2025 Hanzo AI, Inc. All Rights Reserved.
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
   import { createEventDispatcher } from 'svelte'
@@ -92,7 +92,7 @@
         {/each}
       </div>
     {:else}
-      <div class="hulyPopup-row disabled skins-row">
+      <div class="hanzoPopup-row disabled skins-row">
         {#each new Array((skins?.length ?? 5) + 1) as _, skin}
           <EmojiButton {emoji} skinTone={skin} preview on:select={(result) => dispatch('close', result.detail)} />
         {/each}
@@ -100,11 +100,11 @@
     {/if}
   {/if}
   {#if remove}
-    {#if haveSkins}<div class="hulyPopup-divider" />{/if}
-    <div class="hulyPopup-group">
-      <button class="hulyPopup-row" on:click={clickRemove}>
-        <div class="hulyPopup-row__icon red-color"><IconDelete size={'small'} /></div>
-        <span class="hulyPopup-row__label red-color"><Label label={emojiPlugin.string.Remove} /></span>
+    {#if haveSkins}<div class="hanzoPopup-divider" />{/if}
+    <div class="hanzoPopup-group">
+      <button class="hanzoPopup-row" on:click={clickRemove}>
+        <div class="hanzoPopup-row__icon red-color"><IconDelete size={'small'} /></div>
+        <span class="hanzoPopup-row__label red-color"><Label label={emojiPlugin.string.Remove} /></span>
       </button>
     </div>
   {/if}

@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -879,11 +879,11 @@ export function createModel (builder: Builder): void {
     contact.class.SocialIdentityProvider,
     core.space.Model,
     {
-      label: getEmbeddedLabel('Huly'),
-      icon: contact.icon.Huly,
-      type: SocialIdType.HULY
+      label: getEmbeddedLabel('Hanzo Team'),
+      icon: contact.icon.Hanzo,
+      type: SocialIdType.HANZO
     },
-    contact.socialIdentityProvider.Huly
+    contact.socialIdentityProvider.Hanzo
   )
 
   builder.createDoc(

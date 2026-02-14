@@ -1,5 +1,5 @@
 //
-// Copyright @ 2024 Hardcore Engineering Inc.
+// Copyright @ 2024 Hanzo AI Inc.
 //
 
 export function moveItem<T> (items: [T, ...T[]], from: number, to: number): [T, ...T[]] {

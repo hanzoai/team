@@ -1,4 +1,4 @@
-<!-- Copyright © 2025 Hardcore Engineering Inc. -->
+<!-- Copyright © 2025 Hanzo AI Inc. -->
 <!-- -->
 <!-- Licensed under the Eclipse Public License, Version 2.0 (the "License"); -->
 <!-- you may not use this file except in compliance with the License. You may -->
@@ -51,7 +51,7 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={view.icon.Translate} label={contact.string.AutoTranslation} size={'large'} isCurrent />
   </Header>

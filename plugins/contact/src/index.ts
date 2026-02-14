@@ -1,6 +1,6 @@
 //
 // Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2023 Hardcore Engineering Inc.
+// Copyright © 2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -281,7 +281,7 @@ export const contactPlugin = plugin(contactId, {
     Viber: '' as Ref<ChannelProvider>
   },
   socialIdentityProvider: {
-    Huly: '' as Ref<SocialIdentityProvider>,
+    Hanzo: '' as Ref<SocialIdentityProvider>,
     Email: '' as Ref<SocialIdentityProvider>,
     Phone: '' as Ref<SocialIdentityProvider>,
     Google: '' as Ref<SocialIdentityProvider>,
@@ -303,7 +303,7 @@ export const contactPlugin = plugin(contactId, {
     ContactApplication: '' as Asset,
     Phone: '' as Asset,
     Email: '' as Asset,
-    Huly: '' as Asset,
+    Hanzo: '' as Asset,
     Discord: '' as Asset,
     Facebook: '' as Asset,
     Instagram: '' as Asset,

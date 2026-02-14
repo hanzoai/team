@@ -1,6 +1,6 @@
 # Stream
 
-[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/huly_io?style=for-the-badge)](https://x.com/huly_io)
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hanzo_io?style=for-the-badge)](https://x.com/hanzo_io)
 ![GitHub License](https://img.shields.io/github/license/hanzoai/platform?style=for-the-badge)
 
 ## About
@@ -89,7 +89,7 @@ STREAM_SENTRY_DSN                    String           ""                        
 
 **resolution:** if passed, set the resolution for the output, for example, 'resolution: 1920:1080'.
 
-**token:** must be provided to be authorized in the Huly's datalake service.
+**token:** must be provided to be authorized in the Hanzo Team's datalake service.
 
 **workspace:** required for uploading content to the datalake storage.
 

@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -71,7 +71,7 @@ describe('Middlewares', () => {
 
     metadata = {
       accountsUrl: 'http://accounts.test',
-      hulylakeUrl: 'http://hulylake.test',
+      hanzolakeUrl: 'http://hanzolake.test',
       secret: 'test-secret',
       messagesPerBlob: 100
     }

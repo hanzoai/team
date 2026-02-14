@@ -2,7 +2,7 @@
   "name": "@hanzo/desktop-preferences-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Copyright © Hardcore Engineering Inc.",
+  "author": "Copyright © Hanzo AI Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the 'License');
 // you may not use this file except in compliance with the License. You may
@@ -90,9 +90,9 @@ export interface MailRecipients {
 
 export const COMMUNICATION_DOMAIN = 'communication' as OperationDomain
 
-export const HulyMailHeader = 'Huly-Sent'
-export const HulyMessageIdHeader = 'Huly-Message-Id'
-export const HulyMessageTypeHeader = 'Huly-Message-Type'
+export const HanzoMailHeader = 'Hanzo-Sent'
+export const HanzoMessageIdHeader = 'Hanzo-Message-Id'
+export const HanzoMessageTypeHeader = 'Hanzo-Message-Type'
 
 export enum MailHeader {
   Id = 'Message-ID',
@@ -100,6 +100,6 @@ export enum MailHeader {
   Subject = 'Subject',
   From = 'From',
   To = 'To',
-  HulySent = 'Huly-Sent',
-  HulyMessageType = 'Huly-Message-Type'
+  HanzoSent = 'Hanzo-Sent',
+  HanzoMessageType = 'Hanzo-Message-Type'
 }

@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -56,7 +56,7 @@ const config: Config = (() => {
     FirstName: process.env.FIRST_NAME,
     LastName: process.env.LAST_NAME,
     AvatarPath: process.env.AVATAR_PATH ?? './assets/avatar.png',
-    AvatarName: process.env.AVATAR_NAME ?? 'huly_ai_bot_avatar',
+    AvatarName: process.env.AVATAR_NAME ?? 'hanzo_ai_bot_avatar',
     AvatarContentType: process.env.AVATAR_CONTENT_TYPE ?? 'image/png',
     Password: process.env.PASSWORD ?? 'password',
     OpenAIKey: process.env.OPENAI_API_KEY ?? '',

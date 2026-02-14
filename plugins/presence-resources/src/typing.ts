@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
-import { type UnsubscribeCallback, type Callback } from '@hanzo/hulypulse-client'
+import { type UnsubscribeCallback, type Callback } from '@hanzo/hanzopulse-client'
 import { type IntlString, getMetadata } from '@hanzo/platform'
 import presentation, { createPulseClient } from '@hanzo/presentation'
 import { type PersonId } from '@hanzo/core'

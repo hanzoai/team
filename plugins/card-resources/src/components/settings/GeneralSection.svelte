@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -147,8 +147,8 @@
   $: versioningEnabled = h.classHierarchyMixin(masterTag._id, core.mixin.VersionableClass)?.enabled
 </script>
 
-<div class="hulyComponent-content__column-group">
-  <div class="hulyComponent-content__header items-center">
+<div class="hanzoComponent-content__column-group">
+  <div class="hanzoComponent-content__header items-center">
     <div class="flex items-center flex-grow">
       <ButtonIcon
         icon={masterTag.icon === view.ids.IconWithEmoji ? IconWithEmoji : (masterTag.icon ?? card.icon.MasterTag)}

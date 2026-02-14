@@ -2,7 +2,7 @@
   "name": "qms-desktop",
   "version": "0.7.326",
   "main": "dist/main/electron.js",
-  "author": "Hardcore Engineering <hey@huly.io>",
+  "author": "Hanzo AI <hey@hanzo.team>",
   "template": "@hanzo/default-package",
   "scripts": {
     "_phase:package": "rushx package",
@@ -42,7 +42,7 @@
   "description": "TraceX Desktop experience",
   "build": {
     "productName": "TraceX",
-    "appId": "app.huly.TraceX",
+    "appId": "app.hanzo.TraceX",
     "directories": {
       "output": "deploy"
     },
@@ -69,7 +69,7 @@
       "notarize": false,
       "publish": {
         "provider": "generic",
-        "url": "https://dist.huly.io",
+        "url": "https://dist.hanzo.team",
         "channel": "qms-latest"
       }
     },
@@ -83,7 +83,7 @@
       "icon": "./src/AppIcon.ico",
       "publish": {
         "provider": "generic",
-        "url": "https://dist.huly.io",
+        "url": "https://dist.hanzo.team",
         "channel": "qms-latest"
       },
       "extraResources": [
@@ -112,7 +112,7 @@
       "category": "Utility",
       "publish": {
         "provider": "generic",
-        "url": "https://dist.huly.io",
+        "url": "https://dist.hanzo.team",
         "channel": "qms-latest"
       }
     }

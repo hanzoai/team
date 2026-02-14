@@ -18,7 +18,7 @@ package profile_test
 import (
 	"testing"
 
-	"github.com/hcengineering/stream/internal/pkg/profile"
+	"github.com/hanzoai/stream/internal/pkg/profile"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -24,7 +24,7 @@ export interface AgentRecord {
 export type AgentRecordInfo = Omit<AgentRecord, 'containers'> & { containers: number }
 
 /**
- * Interface to Huly Agent on agent.
+ * Interface to Hanzo Agent on agent.
  */
 export interface NetworkAgent {
   // Agent uniq identigier, should be same on agent restarts.

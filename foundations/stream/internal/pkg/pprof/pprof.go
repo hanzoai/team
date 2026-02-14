@@ -20,7 +20,7 @@ import (
 	"net/http/pprof"
 	"time"
 
-	"github.com/hcengineering/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/log"
 	"go.uber.org/zap"
 )
 

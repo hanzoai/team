@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -82,12 +82,12 @@
   defineSeparators('billingSettings', twoPanelsSeparators)
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={plugin.icon.Billing} label={plugin.string.Billing} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__container columns">
-    <div class="hulyComponent-content__column navigation py-2">
+  <div class="hanzoComponent-content__container columns">
+    <div class="hanzoComponent-content__column navigation py-2">
       <Scroller shrink>
         {#each groups as group}
           <NavItem
@@ -110,7 +110,7 @@
     <Separator name="billingSettings" index={0} color={'var(--theme-divider-color)'} />
 
     {#if currentGroup != null}
-      <div class="hulyComponent-content__column content">
+      <div class="hanzoComponent-content__column content">
         <Component is={currentGroup.component} />
       </div>
     {/if}

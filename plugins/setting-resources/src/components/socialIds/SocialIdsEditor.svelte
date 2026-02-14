@@ -57,7 +57,7 @@
     showPopup(Menu, { actions: addActions }, ev.target as HTMLElement)
   }
 
-  $: onlyHuly = socialIds.filter((it) => it.type === SocialIdType.HULY).length === 1
+  $: onlyHanzo = socialIds.filter((it) => it.type === SocialIdType.HANZO).length === 1
   $: onlyLogin = socialIds.filter((it) => loginSocialTypes.includes(it.type)).length === 1
 
   function handleAccountUpdated (): void {
@@ -81,12 +81,12 @@
       {#each socialIds as socialId}
         {@const socialIdProvider = socialIdProviders.get(socialId.type)}
         {@const canRelease =
-          socialId.type === SocialIdType.HULY
-            ? !onlyHuly
+          socialId.type === SocialIdType.HANZO
+            ? !onlyHanzo
             : loginSocialTypes.includes(socialId.type)
               ? !onlyLogin
               : true}
-        {#if socialIdProvider != null && socialId.type !== SocialIdType.HULY}
+        {#if socialIdProvider != null && socialId.type !== SocialIdType.HANZO}
           {@const socialIdRating =
             rating != null && hasResource(ratingPlugin.component.RatingRing)
               ? rating.socialIds?.[socialId?._id]

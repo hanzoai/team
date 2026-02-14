@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,7 +15,7 @@
 
 import { DatalakeStorage } from './datalake'
 import { FrontStorage } from './front'
-import { HulylakeStorage } from './hulylake'
+import { HanzolakeStorage } from './hanzolake'
 
 import { FileStorage } from '../types'
 
@@ -23,21 +23,21 @@ import { FileStorage } from '../types'
 export interface FileStorageConfig {
   uploadUrl: string
   datalakeUrl?: string
-  hulylakeUrl?: string
+  hanzolakeUrl?: string
 }
 
 /** @public */
 export function createFileStorage (config: FileStorageConfig): FileStorage {
-  const { uploadUrl, datalakeUrl, hulylakeUrl } = config
+  const { uploadUrl, datalakeUrl, hanzolakeUrl } = config
 
   if (datalakeUrl !== undefined && datalakeUrl !== '') {
     console.debug('Using Datalake storage')
     return new DatalakeStorage(datalakeUrl)
   }
 
-  if (hulylakeUrl !== undefined && hulylakeUrl !== '') {
-    console.debug('Using Hulylake storage')
-    return new HulylakeStorage(hulylakeUrl)
+  if (hanzolakeUrl !== undefined && hanzolakeUrl !== '') {
+    console.debug('Using Hanzolake storage')
+    return new HanzolakeStorage(hanzolakeUrl)
   }
 
   console.debug('Using Front storage')

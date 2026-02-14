@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,195 +13,195 @@
 // limitations under the License.
 //
 
-import { getEmailMessageIdFromHulyId, getHulyIdFromEmailMessageId, isHulyEmailMessageId } from '../utils'
+import { getEmailMessageIdFromHanzoId, getHanzoIdFromEmailMessageId, isHanzoEmailMessageId } from '../utils'
 
 describe('Email Message ID Conversion', () => {
-  describe('getEmailMessageIdFromHulyId', () => {
-    it('should convert Huly ID to email Message-ID format', () => {
-      const hulyId = 'msg_123456789abcdef'
+  describe('getEmailMessageIdFromHanzoId', () => {
+    it('should convert Hanzo ID to email Message-ID format', () => {
+      const hanzoId = 'msg_123456789abcdef'
       const email = 'user@example.com'
-      const result = getEmailMessageIdFromHulyId(hulyId, email)
+      const result = getEmailMessageIdFromHanzoId(hanzoId, email)
       expect(result).toBe('<msg_123456789abcdef@example.com>')
     })
 
     it('should handle different domains', () => {
-      const hulyId = 'huly_message_001'
+      const hanzoId = 'hanzo_message_001'
       const email = 'admin@company.org'
-      const result = getEmailMessageIdFromHulyId(hulyId, email)
-      expect(result).toBe('<huly_message_001@company.org>')
+      const result = getEmailMessageIdFromHanzoId(hanzoId, email)
+      expect(result).toBe('<hanzo_message_001@company.org>')
     })
 
     it('should handle subdomain emails', () => {
-      const hulyId = 'test_msg'
+      const hanzoId = 'test_msg'
       const email = 'support@mail.example.com'
-      const result = getEmailMessageIdFromHulyId(hulyId, email)
+      const result = getEmailMessageIdFromHanzoId(hanzoId, email)
       expect(result).toBe('<test_msg@mail.example.com>')
     })
 
-    it('should handle complex Huly IDs', () => {
-      const hulyId = 'channel_123_thread_456_msg_789'
+    it('should handle complex Hanzo IDs', () => {
+      const hanzoId = 'channel_123_thread_456_msg_789'
       const email = 'team@startup.io'
-      const result = getEmailMessageIdFromHulyId(hulyId, email)
+      const result = getEmailMessageIdFromHanzoId(hanzoId, email)
       expect(result).toBe('<channel_123_thread_456_msg_789@startup.io>')
     })
 
     it('should throw error for invalid email', () => {
-      const hulyId = 'msg_123'
+      const hanzoId = 'msg_123'
       const invalidEmail = 'not-an-email'
-      expect(() => getEmailMessageIdFromHulyId(hulyId, invalidEmail)).toThrow('Invalid email address')
+      expect(() => getEmailMessageIdFromHanzoId(hanzoId, invalidEmail)).toThrow('Invalid email address')
     })
   })
 
-  describe('getHulyIdFromEmailMessageId', () => {
-    it('should extract Huly ID from email Message-ID', () => {
+  describe('getHanzoIdFromEmailMessageId', () => {
+    it('should extract Hanzo ID from email Message-ID', () => {
       const messageId = '<msg_123456789abcdef@example.com>'
       const email = 'user@example.com'
-      const result = getHulyIdFromEmailMessageId(messageId, email)
+      const result = getHanzoIdFromEmailMessageId(messageId, email)
       expect(result).toBe('msg_123456789abcdef')
     })
 
     it('should handle Message-ID without angle brackets', () => {
       const messageId = 'msg_123456789abcdef@example.com'
       const email = 'user@example.com'
-      const result = getHulyIdFromEmailMessageId(messageId, email)
+      const result = getHanzoIdFromEmailMessageId(messageId, email)
       expect(result).toBe('msg_123456789abcdef')
     })
 
     it('should return undefined for non-matching domain', () => {
       const messageId = '<msg_123@example.com>'
       const email = 'user@different.com'
-      const result = getHulyIdFromEmailMessageId(messageId, email)
+      const result = getHanzoIdFromEmailMessageId(messageId, email)
       expect(result).toBeUndefined()
     })
 
     it('should handle complex domains', () => {
       const messageId = '<channel_123_thread_456@mail.company.org>'
       const email = 'admin@mail.company.org'
-      const result = getHulyIdFromEmailMessageId(messageId, email)
+      const result = getHanzoIdFromEmailMessageId(messageId, email)
       expect(result).toBe('channel_123_thread_456')
     })
 
-    it('should handle empty Huly ID part', () => {
+    it('should handle empty Hanzo ID part', () => {
       const messageId = '<@example.com>'
       const email = 'user@example.com'
-      const result = getHulyIdFromEmailMessageId(messageId, email)
+      const result = getHanzoIdFromEmailMessageId(messageId, email)
       expect(result).toBe('')
     })
 
     it('should return undefined for standard email Message-IDs', () => {
       const messageId = '<CABc1234567890abcdef@mail.gmail.com>'
       const email = 'user@example.com'
-      const result = getHulyIdFromEmailMessageId(messageId, email)
+      const result = getHanzoIdFromEmailMessageId(messageId, email)
       expect(result).toBeUndefined()
     })
 
     it('should handle multiple @ symbols in Message-ID', () => {
       const messageId = '<msg@test@example.com>'
       const email = 'user@example.com'
-      const result = getHulyIdFromEmailMessageId(messageId, email)
+      const result = getHanzoIdFromEmailMessageId(messageId, email)
       expect(result).toBe('msg@test')
     })
 
     it('should throw error for invalid email', () => {
       const messageId = '<msg_123@example.com>'
       const invalidEmail = 'not-an-email'
-      expect(() => getHulyIdFromEmailMessageId(messageId, invalidEmail)).toThrow('Invalid email address')
+      expect(() => getHanzoIdFromEmailMessageId(messageId, invalidEmail)).toThrow('Invalid email address')
     })
   })
 
-  describe('isHulyEmailMessageId', () => {
-    it('should return true for valid Huly Message-ID', () => {
+  describe('isHanzoEmailMessageId', () => {
+    it('should return true for valid Hanzo Message-ID', () => {
       const messageId = '<msg_123456789abcdef@example.com>'
       const email = 'user@example.com'
-      const result = isHulyEmailMessageId(messageId, email)
+      const result = isHanzoEmailMessageId(messageId, email)
       expect(result).toBe(true)
     })
 
     it('should return false for non-matching domain', () => {
       const messageId = '<msg_123@example.com>'
       const email = 'user@different.com'
-      const result = isHulyEmailMessageId(messageId, email)
+      const result = isHanzoEmailMessageId(messageId, email)
       expect(result).toBe(false)
     })
 
     it('should return false for standard email Message-IDs', () => {
       const messageId = '<CABc1234567890abcdef@mail.gmail.com>'
       const email = 'user@example.com'
-      const result = isHulyEmailMessageId(messageId, email)
+      const result = isHanzoEmailMessageId(messageId, email)
       expect(result).toBe(false)
     })
 
     it('should return true for Message-ID without angle brackets', () => {
       const messageId = 'msg_123456789abcdef@example.com'
       const email = 'user@example.com'
-      const result = isHulyEmailMessageId(messageId, email)
+      const result = isHanzoEmailMessageId(messageId, email)
       expect(result).toBe(true)
     })
   })
 
   describe('Round-trip conversion', () => {
-    it('should preserve Huly ID through round-trip conversion', () => {
-      const originalHulyId = 'msg_123456789abcdef'
+    it('should preserve Hanzo ID through round-trip conversion', () => {
+      const originalHanzoId = 'msg_123456789abcdef'
       const email = 'user@example.com'
 
-      const messageId = getEmailMessageIdFromHulyId(originalHulyId, email)
-      const extractedHulyId = getHulyIdFromEmailMessageId(messageId, email)
+      const messageId = getEmailMessageIdFromHanzoId(originalHanzoId, email)
+      const extractedHanzoId = getHanzoIdFromEmailMessageId(messageId, email)
 
-      expect(extractedHulyId).toBe(originalHulyId)
+      expect(extractedHanzoId).toBe(originalHanzoId)
     })
 
-    it('should work with complex Huly IDs', () => {
-      const originalHulyId = 'channel_abc123_thread_def456_msg_789xyz'
+    it('should work with complex Hanzo IDs', () => {
+      const originalHanzoId = 'channel_abc123_thread_def456_msg_789xyz'
       const email = 'team@company.com'
 
-      const messageId = getEmailMessageIdFromHulyId(originalHulyId, email)
-      const extractedHulyId = getHulyIdFromEmailMessageId(messageId, email)
+      const messageId = getEmailMessageIdFromHanzoId(originalHanzoId, email)
+      const extractedHanzoId = getHanzoIdFromEmailMessageId(messageId, email)
 
-      expect(extractedHulyId).toBe(originalHulyId)
+      expect(extractedHanzoId).toBe(originalHanzoId)
     })
 
     it('should work with subdomain emails', () => {
-      const originalHulyId = 'notification_001'
+      const originalHanzoId = 'notification_001'
       const email = 'alerts@mail.platform.io'
 
-      const messageId = getEmailMessageIdFromHulyId(originalHulyId, email)
-      const extractedHulyId = getHulyIdFromEmailMessageId(messageId, email)
+      const messageId = getEmailMessageIdFromHanzoId(originalHanzoId, email)
+      const extractedHanzoId = getHanzoIdFromEmailMessageId(messageId, email)
 
-      expect(extractedHulyId).toBe(originalHulyId)
+      expect(extractedHanzoId).toBe(originalHanzoId)
     })
   })
 
   describe('Edge cases', () => {
-    it('should handle Huly ID with special characters', () => {
-      const hulyId = 'msg-123_test.001'
+    it('should handle Hanzo ID with special characters', () => {
+      const hanzoId = 'msg-123_test.001'
       const email = 'user@example.com'
 
-      const messageId = getEmailMessageIdFromHulyId(hulyId, email)
+      const messageId = getEmailMessageIdFromHanzoId(hanzoId, email)
       expect(messageId).toBe('<msg-123_test.001@example.com>')
 
-      const extractedHulyId = getHulyIdFromEmailMessageId(messageId, email)
-      expect(extractedHulyId).toBe(hulyId)
+      const extractedHanzoId = getHanzoIdFromEmailMessageId(messageId, email)
+      expect(extractedHanzoId).toBe(hanzoId)
     })
 
-    it('should handle very long Huly IDs', () => {
-      const hulyId = 'very_long_huly_id_with_many_segments_and_characters_123456789abcdef'
+    it('should handle very long Hanzo IDs', () => {
+      const hanzoId = 'very_long_hanzo_id_with_many_segments_and_characters_123456789abcdef'
       const email = 'user@example.com'
 
-      const messageId = getEmailMessageIdFromHulyId(hulyId, email)
-      const extractedHulyId = getHulyIdFromEmailMessageId(messageId, email)
+      const messageId = getEmailMessageIdFromHanzoId(hanzoId, email)
+      const extractedHanzoId = getHanzoIdFromEmailMessageId(messageId, email)
 
-      expect(extractedHulyId).toBe(hulyId)
+      expect(extractedHanzoId).toBe(hanzoId)
     })
 
-    it('should handle empty Huly ID', () => {
-      const hulyId = ''
+    it('should handle empty Hanzo ID', () => {
+      const hanzoId = ''
       const email = 'user@example.com'
 
-      const messageId = getEmailMessageIdFromHulyId(hulyId, email)
+      const messageId = getEmailMessageIdFromHanzoId(hanzoId, email)
       expect(messageId).toBe('<@example.com>')
 
-      const extractedHulyId = getHulyIdFromEmailMessageId(messageId, email)
-      expect(extractedHulyId).toBe('')
+      const extractedHanzoId = getHanzoIdFromEmailMessageId(messageId, email)
+      expect(extractedHanzoId).toBe('')
     })
   })
 })

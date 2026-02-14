@@ -16,7 +16,7 @@ package token_test
 import (
 	"testing"
 
-	"github.com/hcengineering/stream/internal/pkg/token"
+	"github.com/hanzoai/stream/internal/pkg/token"
 	"github.com/stretchr/testify/require"
 )
 

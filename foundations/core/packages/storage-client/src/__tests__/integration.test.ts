@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -288,23 +288,23 @@ describe('Storage Client Integration Tests', () => {
     })
   })
 
-  describe('Hulylake Storage Integration', () => {
+  describe('Hanzolake Storage Integration', () => {
     let storage: FileStorage
 
     beforeEach(() => {
       const config: FileStorageConfig = {
         uploadUrl: 'https://files.example.com',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
       storage = createFileStorage(config)
     })
 
-    it('should complete full file lifecycle with Hulylake storage', async () => {
+    it('should complete full file lifecycle with Hanzolake storage', async () => {
       const token = 'test-token'
-      const workspace = 'hulylake-workspace'
-      const uuid = 'hulylake-file-uuid'
-      const filename = 'hulylake-test.txt'
-      const file = new File(['Hulylake test content'], filename, { type: 'text/plain' })
+      const workspace = 'hanzolake-workspace'
+      const uuid = 'hanzolake-file-uuid'
+      const filename = 'hanzolake-test.txt'
+      const file = new File(['Hanzolake test content'], filename, { type: 'text/plain' })
 
       // Mock successful upload
       mockUploadXhr.mockResolvedValueOnce({ status: 200, responseText: '' })
@@ -314,7 +314,7 @@ describe('Storage Client Integration Tests', () => {
 
       expect(mockUploadXhr).toHaveBeenCalledWith(
         {
-          url: `https://hulylake.example.com/api/${workspace}/${uuid}`,
+          url: `https://hanzolake.example.com/api/${workspace}/${uuid}`,
           method: 'PUT',
           headers: {
             Authorization: 'Bearer test-token',
@@ -328,9 +328,9 @@ describe('Storage Client Integration Tests', () => {
 
       // Generate file URL
       const fileUrl = storage.getFileUrl(workspace, uuid, filename)
-      expect(fileUrl).toBe(`https://hulylake.example.com/api/${workspace}/${uuid}`)
+      expect(fileUrl).toBe(`https://hanzolake.example.com/api/${workspace}/${uuid}`)
 
-      // Get file metadata (should return empty object for Hulylake storage)
+      // Get file metadata (should return empty object for Hanzolake storage)
       const meta = await storage.getFileMeta(token, workspace, uuid)
       expect(meta).toEqual({})
 
@@ -356,8 +356,8 @@ describe('Storage Client Integration Tests', () => {
           config: { uploadUrl: 'https://front.example.com', datalakeUrl: 'https://datalake.example.com' }
         },
         {
-          name: 'Hulylake',
-          config: { uploadUrl: 'https://front.example.com', hulylakeUrl: 'https://hulylake.example.com' }
+          name: 'Hanzolake',
+          config: { uploadUrl: 'https://front.example.com', hanzolakeUrl: 'https://hanzolake.example.com' }
         }
       ]
 
@@ -390,8 +390,8 @@ describe('Storage Client Integration Tests', () => {
           config: { uploadUrl: 'https://front.example.com', datalakeUrl: 'https://datalake.example.com' }
         },
         {
-          name: 'Hulylake',
-          config: { uploadUrl: 'https://front.example.com', hulylakeUrl: 'https://hulylake.example.com' }
+          name: 'Hanzolake',
+          config: { uploadUrl: 'https://front.example.com', hanzolakeUrl: 'https://hanzolake.example.com' }
         }
       ]
 
@@ -418,11 +418,11 @@ describe('Storage Client Integration Tests', () => {
 
   describe('Configuration Priority Integration', () => {
     it('should respect storage priority in real usage scenarios', async () => {
-      // Test that Datalake takes priority over Hulylake
+      // Test that Datalake takes priority over Hanzolake
       const config: FileStorageConfig = {
         uploadUrl: 'https://upload.example.com',
         datalakeUrl: 'https://datalake.example.com',
-        hulylakeUrl: 'https://hulylake.example.com'
+        hanzolakeUrl: 'https://hanzolake.example.com'
       }
 
       const storage = createFileStorage(config)
@@ -436,11 +436,11 @@ describe('Storage Client Integration Tests', () => {
 
       await storage.uploadFile(token, workspace, uuid, file)
 
-      // Should use Datalake form-data endpoint, not Hulylake PUT endpoint
+      // Should use Datalake form-data endpoint, not Hanzolake PUT endpoint
       expect(mockUploadXhr).toHaveBeenCalledWith(
         expect.objectContaining({
           url: `https://datalake.example.com/upload/form-data/${encodeURIComponent(workspace)}`,
-          method: 'POST' // Datalake uses POST for form-data, Hulylake uses PUT
+          method: 'POST' // Datalake uses POST for form-data, Hanzolake uses PUT
         }),
         undefined
       )
@@ -463,8 +463,8 @@ describe('Storage Client Integration Tests', () => {
           config: { uploadUrl: 'https://front.example.com', datalakeUrl: 'https://datalake.example.com' }
         },
         {
-          name: 'Hulylake',
-          config: { uploadUrl: 'https://front.example.com', hulylakeUrl: 'https://hulylake.example.com' }
+          name: 'Hanzolake',
+          config: { uploadUrl: 'https://front.example.com', hanzolakeUrl: 'https://hanzolake.example.com' }
         }
       ]
 

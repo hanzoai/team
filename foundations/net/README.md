@@ -1,10 +1,10 @@
 <div align="center">
 
-# 🌐 Huly Virtual Network
+# 🌐 Hanzo Team Virtual Network
 
 [![License: EPL 2.0](https://img.shields.io/badge/License-EPL%202.0-blue.svg)](https://opensource.org/licenses/EPL-2.0)
 [![npm version](https://img.shields.io/npm/v/@hanzo/network-core.svg)](https://www.npmjs.com/package/@hanzo/network-core)
-[![CI](https://github.com/hanzoai/huly.net/workflows/CI/badge.svg)](https://github.com/hanzoai/huly.net/actions)
+[![CI](https://github.com/hanzoai/hanzo.net/workflows/CI/badge.svg)](https://github.com/hanzoai/hanzo.net/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-3178c6.svg)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-22+-339933.svg)](https://nodejs.org/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -13,7 +13,7 @@
 
 Build enterprise-grade distributed systems with automatic service discovery, high availability, and zero-configuration deployment.
 
-[Features](#-why-build-your-product-on-huly-network) • [Quick Start](#-getting-started) • [Documentation](#-documentation) • [Examples](#-examples) • [API Reference](#-api-reference) • [Contributing](#-contributing)
+[Features](#-why-build-your-product-on-hanzo-network) • [Quick Start](#-getting-started) • [Documentation](#-documentation) • [Examples](#-examples) • [API Reference](#-api-reference) • [Contributing](#-contributing)
 
 ```mermaid
 flowchart TD
@@ -48,7 +48,7 @@ flowchart TD
 
 ## 📋 Table of Contents
 
-- [Why Huly Network?](#-why-build-your-product-on-huly-network)
+- [Why Hanzo Team Network?](#-why-build-your-product-on-hanzo-network)
 - [Overview](#-overview)
 - [Architecture](#-architecture)
 - [Packages](#-packages)
@@ -60,7 +60,7 @@ flowchart TD
 - [Contributing](#-contributing)
 - [License](#-license)
 
-## 🌟 Why Build Your Product on Huly Network?
+## 🌟 Why Build Your Product on Hanzo Team Network?
 
 ### Core Benefits
 
@@ -127,7 +127,7 @@ flowchart TD
 
 ## 🚀 Overview
 
-The Huly Virtual Network is a sophisticated distributed system designed to handle enterprise-scale workloads with the following key capabilities:
+The Hanzo Team Virtual Network is a sophisticated distributed system designed to handle enterprise-scale workloads with the following key capabilities:
 
 - **Distributed Load Balancing**: Intelligent routing and round-robin distribution across multiple physical nodes
 - **Multi-Tenant Architecture**: Secure isolation of containers for user sessions, query engines, and transaction processors
@@ -173,7 +173,7 @@ Agents and containers will automatically reconnect when the network service rest
 
 ### Core Concepts
 
-The Huly Virtual Network operates on three main concepts:
+The Hanzo Team Virtual Network operates on three main concepts:
 
 1. **Network**: Central coordinator that manages agents and routes container requests
 2. **Agents**: Worker nodes that host and manage containers of specific kinds
@@ -206,7 +206,7 @@ The network maintains references to containers. Referenced containers stay activ
 
 ```mermaid
 flowchart TB
-  subgraph Network["Huly Network"]
+  subgraph Network["Hanzo Team Network"]
     NetworkCore["Network Core"]
     Router["Message Router"]
     Registry["Container Registry"]
@@ -259,8 +259,8 @@ flowchart TB
 
 ```bash
 # Clone the repository
-git clone https://github.com/hanzoai/huly.net.git
-cd huly.net
+git clone https://github.com/hanzoai/hanzo.net.git
+cd hanzo.net
 
 # Install dependencies and build
 node common/scripts/install-run-rush.js install
@@ -277,7 +277,7 @@ cd pods/network-pod
 npm run docker:build
 
 # Run the container
-docker run -p 3737:3737 hardcoreeng/network-pod
+docker run -p 3737:3737 hanzoai/network-pod
 ```
 
 ### Quick Start Example
@@ -1153,7 +1153,7 @@ process.on('SIGINT', async () => {
 
 ### NetworkClient Interface
 
-The `NetworkClient` interface is the main entry point for interacting with the Huly Virtual Network:
+The `NetworkClient` interface is the main entry point for interacting with the Hanzo Team Virtual Network:
 
 - `register(agent)`: Register a NetworkAgent to be processed by the network
 - `agents()`: Get all registered agents with their information
@@ -1476,13 +1476,13 @@ node common/scripts/install-run-rush.js build:watch
 
 ## 🤝 Contributing
 
-We love contributions! Huly Virtual Network is open source and we welcome contributions of all kinds:
+We love contributions! Hanzo Team Virtual Network is open source and we welcome contributions of all kinds:
 
-- 🐛 **Bug Reports**: Found a bug? [Open an issue](https://github.com/hanzoai/huly.net/issues/new?template=bug_report.md)
-- ✨ **Feature Requests**: Have an idea? [Request a feature](https://github.com/hanzoai/huly.net/issues/new?template=feature_request.md)
+- 🐛 **Bug Reports**: Found a bug? [Open an issue](https://github.com/hanzoai/hanzo.net/issues/new?template=bug_report.md)
+- ✨ **Feature Requests**: Have an idea? [Request a feature](https://github.com/hanzoai/hanzo.net/issues/new?template=feature_request.md)
 - 📖 **Documentation**: Improve our docs, add examples, or fix typos
 - 💻 **Code**: Submit pull requests with bug fixes or new features
-- ❓ **Questions**: [Ask questions](https://github.com/hanzoai/huly.net/issues/new?template=question.md) to help improve our documentation
+- ❓ **Questions**: [Ask questions](https://github.com/hanzoai/hanzo.net/issues/new?template=question.md) to help improve our documentation
 
 Please read our [Contributing Guide](CONTRIBUTING.md) for details on our development process, coding standards, and how to submit pull requests.
 
@@ -1534,7 +1534,7 @@ Learn more about [EPL-2.0](https://www.eclipse.org/legal/epl-2.0/).
 
 ## 🔒 Security
 
-**Important Security Notice**: Huly Network is currently suited for **private cloud installations** within trusted network environments.
+**Important Security Notice**: Hanzo Team Network is currently suited for **private cloud installations** within trusted network environments.
 
 ### Current Security Model
 
@@ -1550,7 +1550,7 @@ For production deployments, we strongly recommend:
 1. **Network Isolation**: Deploy within a private network or VPC
 2. **Firewall Rules**: Restrict access to network ports (default: 3737) using firewall rules
 3. **VPN/Private Network**: Use VPN or private network infrastructure for remote access
-4. **Network Segmentation**: Isolate the Huly Network from public-facing services
+4. **Network Segmentation**: Isolate the Hanzo Team Network from public-facing services
 
 ### Future Security Enhancements
 
@@ -1561,33 +1561,33 @@ We are considering adding optional security features in future releases:
 - Authorization controls for container access
 - Audit logging for security monitoring
 
-If you have specific security requirements or concerns, please [open an issue](https://github.com/hanzoai/huly.net/issues) to discuss your use case.
+If you have specific security requirements or concerns, please [open an issue](https://github.com/hanzoai/hanzo.net/issues) to discuss your use case.
 
 ## 🙏 Acknowledgments
 
 - Built with [ZeroMQ](https://zeromq.org/) for high-performance messaging
 - Managed with [Rush.js](https://rushjs.io/) for monorepo orchestration
-- Part of the [Huly Platform](https://github.com/hanzoai/platform) ecosystem
+- Part of the [Hanzo Team Platform](https://github.com/hanzoai/platform) ecosystem
 
 ## 📬 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/hanzoai/huly.net/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/hanzoai/huly.net/discussions)
-- **Website**: [huly.io](https://huly.io)
+- **Issues**: [GitHub Issues](https://github.com/hanzoai/hanzo.net/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/hanzoai/hanzo.net/discussions)
+- **Website**: [hanzo.team](https://hanzo.team)
 
 ## 📊 Project Status
 
-This project is actively maintained and used in production by the Huly Platform. We welcome contributions and feedback!
+This project is actively maintained and used in production by the Hanzo Team Platform. We welcome contributions and feedback!
 
 ## ⭐ Star History
 
 If you find this project useful, please consider giving it a star! It helps others discover the project.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=hanzoai/huly.net&type=Date)](https://star-history.com/#hanzoai/huly.net&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=hanzoai/hanzo.net&type=Date)](https://star-history.com/#hanzoai/hanzo.net&Date)
 
 ## 🔗 Related Projects
 
-- **[Huly Platform](https://github.com/hanzoai/platform)** - The main Huly platform that uses this network
+- **[Hanzo Team Platform](https://github.com/hanzoai/platform)** - The main Hanzo Team platform that uses this network
 - **[ZeroMQ](https://zeromq.org/)** - High-performance asynchronous messaging library
 - **[Rush.js](https://rushjs.io/)** - Scalable monorepo build orchestrator
 
@@ -1595,8 +1595,8 @@ If you find this project useful, please consider giving it a star! It helps othe
 
 <div align="center">
 
-**Built with ❤️ by the Huly Platform team**
+**Built with ❤️ by the Hanzo Team Platform team**
 
-[⬆ back to top](#-huly-virtual-network)
+[⬆ back to top](#-hanzo-virtual-network)
 
 </div>

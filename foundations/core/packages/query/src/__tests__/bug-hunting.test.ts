@@ -1,6 +1,6 @@
 // Bug hunting tests - targeting specific edge cases and potential issues
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 
 import core, { createClient, Ref, SortingOrder, TxOperations } from '@hanzo/core'

@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -54,7 +54,7 @@ export class PolarProvider implements PaymentProvider {
   readonly providerName = 'polar'
   private readonly polar: PolarClient
   private readonly webhookSecret: string
-  // Map: plan@type (Huly) -> productIds (Polar)
+  // Map: plan@type (Hanzo) -> productIds (Polar)
   private readonly subscriptionPlans: Record<string, string[]>
   private readonly frontUrl: string
   private readonly accountClient: AccountClient

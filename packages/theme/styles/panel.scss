@@ -15,8 +15,8 @@
 
 @use './_print.scss' as *;
 
-/* Huly Panels */
-.hulyPanels-container {
+/* Hanzo Panels */
+.hanzoPanels-container {
   display: flex;
   width: 100%;
   height: 100%;
@@ -158,7 +158,7 @@
     }
 
     &:hover {
-      .hulyNavGroup-header__actions { display: flex; }
+      .hanzoNavGroup-header__actions { display: flex; }
     }
 
     &.showMenu,
@@ -175,26 +175,26 @@
       &:not(:has(.nested)) { margin-bottom: var(--spacing-1_5); }
     }
   }
-  &.nested .hulyNavGroup-header,
-  &.selectableHeader .hulyNavGroup-header {
-    .hulyNavGroup-header__icon { margin: 0 var(--spacing-0_25) 0 0; }
-    .hulyNavGroup-header__label { padding: 0 var(--spacing-0_75) 0 0; }
-    &.isOpen .hulyNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
+  &.nested .hanzoNavGroup-header,
+  &.selectableHeader .hanzoNavGroup-header {
+    .hanzoNavGroup-header__icon { margin: 0 var(--spacing-0_25) 0 0; }
+    .hanzoNavGroup-header__label { padding: 0 var(--spacing-0_75) 0 0; }
+    &.isOpen .hanzoNavGroup-header__label { background-color: var(--global-ui-BackgroundColor); }
   }
 
   &.selectableHeader.noIcon {
-    .hulyNavGroup-header__label {     padding: var(--spacing-0_25) var(--spacing-0_5); }
+    .hanzoNavGroup-header__label {     padding: var(--spacing-0_25) var(--spacing-0_5); }
   }
 
-  .hulyNavGroup-header:hover,
-  &.nested .hulyNavGroup-header:hover {
-    .hulyNavGroup-header__chevron { background-color: var(--global-ui-BackgroundColor); }
-    .hulyNavGroup-header__label { background-color: var(--global-ui-hover-BackgroundColor); }
-    .hulyNavGroup-header__chevron { color: var(--button-subtle-IconColor); }
-    .hulyNavGroup-header__label { color: var(--global-primary-TextColor); }
+  .hanzoNavGroup-header:hover,
+  &.nested .hanzoNavGroup-header:hover {
+    .hanzoNavGroup-header__chevron { background-color: var(--global-ui-BackgroundColor); }
+    .hanzoNavGroup-header__label { background-color: var(--global-ui-hover-BackgroundColor); }
+    .hanzoNavGroup-header__chevron { color: var(--button-subtle-IconColor); }
+    .hanzoNavGroup-header__label { color: var(--global-primary-TextColor); }
   }
-  &.nested.selectable .hulyNavGroup-header,
-  &.selectableHeader .hulyNavGroup-header {
+  &.nested.selectable .hanzoNavGroup-header,
+  &.selectableHeader .hanzoNavGroup-header {
     margin: 0 var(--spacing-1_5) var(--spacing-1_5);
     padding: var(--spacing-0_5) var(--spacing-0_75) var(--spacing-0_5) var(--spacing-0_5);
     min-height: var(--global-small-Size);

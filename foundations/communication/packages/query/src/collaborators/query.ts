@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -25,7 +25,7 @@ import {
   RemoveCardEvent,
   RemoveCollaboratorsEvent
 } from '@hanzo/communication-sdk-types'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 import { QueryResult } from '../result'
 import { QueryOptions, type Query, type QueryId } from '../types'
@@ -36,7 +36,7 @@ export class CollaboratorsQuery implements Query<Collaborator, FindCollaborators
 
   constructor (
     private readonly client: FindClient,
-    private readonly hulylake: HulylakeWorkspaceClient,
+    private readonly hanzolake: HanzolakeWorkspaceClient,
     public readonly id: QueryId,
     public readonly params: FindCollaboratorsParams,
     public readonly options: QueryOptions | undefined,

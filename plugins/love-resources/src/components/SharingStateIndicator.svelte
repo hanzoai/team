@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -40,7 +40,7 @@
 {#if $lkSessionConnected}
   {#if $screenSharingState === ScreenSharingState.Local}
     <button
-      class="hulyStatusBarButton mini positive positiveContent"
+      class="hanzoStatusBarButton mini positive positiveContent"
       class:pressed
       use:tooltip={{ label: love.string.Sharing, direction: 'bottom' }}
       on:click={handleShowPopup}
@@ -49,7 +49,7 @@
     </button>
   {:else}
     <button
-      class="hulyStatusBarButton mini disabled"
+      class="hanzoStatusBarButton mini disabled"
       class:pressed
       use:tooltip={{ label: love.string.Share, direction: 'bottom' }}
       on:click={handleShare}

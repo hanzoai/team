@@ -1,6 +1,6 @@
 # High Availability (HA) Stateless Container Support
 
-This feature enables Huly Network to support stateless containers with automatic failover capabilities, allowing you to build highly available services that must ensure only one instance is active at any given time.
+This feature enables Hanzo Team Network to support stateless containers with automatic failover capabilities, allowing you to build highly available services that must ensure only one instance is active at any given time.
 
 ## ⚠️ Important: Network Service Limitation
 
@@ -303,7 +303,7 @@ npx ts-node examples/ha-stateless-container-example.ts
 1. **No split-brain protection**: The network itself doesn't prevent split-brain scenarios if network partitions occur
 2. **Eventually consistent**: There may be brief periods during failover where no instance is active
 3. **No state transfer**: Stateless containers don't automatically transfer state between instances
-4. **Single network dependency**: All agents must connect to the same Huly Network instance
+4. **Single network dependency**: All agents must connect to the same Hanzo Team Network instance
 
 ## Best Practices
 

@@ -1,5 +1,5 @@
 //
-// Copyright © 2023-2024 Hardcore Engineering Inc.
+// Copyright © 2023-2024 Hanzo AI Inc.
 //
 import { Person, type Employee } from '@hanzo/contact'
 import core, {

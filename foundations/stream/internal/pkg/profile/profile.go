@@ -19,7 +19,7 @@ package profile
 import (
 	"fmt"
 
-	"github.com/hcengineering/stream/internal/pkg/resconv"
+	"github.com/hanzoai/stream/internal/pkg/resconv"
 )
 
 // VideoProfile represents a video profile

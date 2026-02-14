@@ -28,12 +28,12 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/google/uuid"
-	"github.com/hcengineering/stream/internal/pkg/config"
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/manifest"
-	"github.com/hcengineering/stream/internal/pkg/sharedpipe"
-	"github.com/hcengineering/stream/internal/pkg/storage"
-	"github.com/hcengineering/stream/internal/pkg/uploader"
+	"github.com/hanzoai/stream/internal/pkg/config"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/manifest"
+	"github.com/hanzoai/stream/internal/pkg/sharedpipe"
+	"github.com/hanzoai/stream/internal/pkg/storage"
+	"github.com/hanzoai/stream/internal/pkg/uploader"
 	"github.com/tus/tusd/v2/pkg/handler"
 	"go.uber.org/zap"
 )

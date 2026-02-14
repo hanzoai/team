@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -61,7 +61,7 @@ function runTheApp (): void {
   const isWindows = process.platform === 'win32'
   const isDev = process.env.NODE_ENV === 'development'
 
-  const sessionPartition = !isDev ? 'persist:huly' : 'persist:huly_dev'
+  const sessionPartition = !isDev ? 'persist:hanzo' : 'persist:hanzo_dev'
   const iconKey = getFileInPublicBundledFolder(isWindows ? 'AppIcon.ico' : 'AppIcon.png')
   const preloadScriptPath = path.join(app.getAppPath(), 'dist', 'main', 'preload.js')
 
@@ -100,7 +100,7 @@ function runTheApp (): void {
     quitApplication()
   }
 
-  console.log('Running Huly', process.env.MODEL_VERSION, process.env.VERSION, isMac, isDev, process.env.NODE_ENV)
+  console.log('Running Hanzo Team', process.env.MODEL_VERSION, process.env.VERSION, isMac, isDev, process.env.NODE_ENV)
 
   // Fix screen-sharing thumbnails being missing sometimes
   // See https://github.com/electron/electron/issues/44504
@@ -420,9 +420,9 @@ function runTheApp (): void {
 
     setupCookieHandler(config)
 
-    const updatesUrl = process.env.DESKTOP_UPDATES_URL ?? config.DESKTOP_UPDATES_URL ?? 'https://dist.huly.io'
+    const updatesUrl = process.env.DESKTOP_UPDATES_URL ?? config.DESKTOP_UPDATES_URL ?? 'https://dist.hanzo.team'
     // NOTE: env format is: default_value;key1:value1;key2:value2...
-    const updatesChannels = (process.env.DESKTOP_UPDATES_CHANNEL ?? config.DESKTOP_UPDATES_CHANNELS ?? config.DESKTOP_UPDATES_CHANNEL ?? 'huly').split(';').map(c => c.trim().split(':'))
+    const updatesChannels = (process.env.DESKTOP_UPDATES_CHANNEL ?? config.DESKTOP_UPDATES_CHANNELS ?? config.DESKTOP_UPDATES_CHANNEL ?? 'hanzo').split(';').map(c => c.trim().split(':'))
     const updateChannelsMap: Record<string, string> = {}
     for (const channelInfo of updatesChannels) {
       if (channelInfo.length === 1) {
@@ -434,7 +434,7 @@ function runTheApp (): void {
     }
 
     const updatesChannelKey = packedConfig?.updatesChannelKey ?? 'default'
-    const updatesChannel = updateChannelsMap[updatesChannelKey] ?? updateChannelsMap.default ?? 'huly'
+    const updatesChannel = updateChannelsMap[updatesChannelKey] ?? updateChannelsMap.default ?? 'hanzo'
 
     log.info('updates channels', updatesChannels)
     log.info('updates channel', updatesChannelKey, updatesChannel)

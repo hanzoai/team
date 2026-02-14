@@ -1,6 +1,6 @@
 <script lang="ts">
   //
-  // © 2025 Hardcore Engineering, Inc. All Rights Reserved.
+  // © 2025 Hanzo AI, Inc. All Rights Reserved.
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
   import { createEventDispatcher } from 'svelte'
@@ -33,8 +33,8 @@
         }}
       >
         <span style:font-size={'1.5rem'} class="emoji">{skin.emoji}</span>
-        {#if label}<span class="hulyPopup-row__label"><Label {label} /></span>{/if}
-        {#if disabled}<span class="hulyPopup-row__keys"><ModernCheckbox checked disabled /></span>{/if}
+        {#if label}<span class="hanzoPopup-row__label"><Label {label} /></span>{/if}
+        {#if disabled}<span class="hanzoPopup-row__keys"><ModernCheckbox checked disabled /></span>{/if}
       </button>
     {/each}
   </div>

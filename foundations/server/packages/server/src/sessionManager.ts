@@ -1,5 +1,5 @@
 //
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -1078,7 +1078,7 @@ export class TSessionManager implements SessionManager {
       ctx.info('bye happen', {
         workspaceId: workspace?.wsId.uuid,
         userId: sessionRef.session.getUser(),
-        user: sessionRef.session.getSocialIds().find((it) => it.type !== SocialIdType.HULY)?.value,
+        user: sessionRef.session.getSocialIds().find((it) => it.type !== SocialIdType.HANZO)?.value,
         binary: sessionRef.session.binaryMode,
         compression: sessionRef.session.useCompression,
         totalTime: this.now - sessionRef.session.createTime,
@@ -1618,7 +1618,7 @@ export class TSessionManager implements SessionManager {
           workspace: workspace.wsId.url,
           workspaceId: workspace.wsId.uuid,
           userId: service.getUser(),
-          user: service.getSocialIds().find((it) => it.type !== SocialIdType.HULY)?.value,
+          user: service.getSocialIds().find((it) => it.type !== SocialIdType.HANZO)?.value,
           binary: service.binaryMode,
           compression: service.useCompression,
           timeToHello: Date.now() - service.createTime,

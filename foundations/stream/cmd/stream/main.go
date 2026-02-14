@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package main provides huly-stream entry point function
+// Package main provides hanzo-stream entry point function
 package main
 
 import (
@@ -26,11 +26,11 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/hcengineering/stream/internal/pkg/api/v1/recording"
-	"github.com/hcengineering/stream/internal/pkg/api/v1/transcoding"
-	"github.com/hcengineering/stream/internal/pkg/config"
-	"github.com/hcengineering/stream/internal/pkg/log"
-	"github.com/hcengineering/stream/internal/pkg/queue"
+	"github.com/hanzoai/stream/internal/pkg/api/v1/recording"
+	"github.com/hanzoai/stream/internal/pkg/api/v1/transcoding"
+	"github.com/hanzoai/stream/internal/pkg/config"
+	"github.com/hanzoai/stream/internal/pkg/log"
+	"github.com/hanzoai/stream/internal/pkg/queue"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 

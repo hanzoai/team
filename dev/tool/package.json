@@ -21,7 +21,7 @@
     "docker:staging": "../../common/scripts/docker_tag.sh hanzoai/tool staging",
     "docker:push": "../../common/scripts/docker_tag.sh hanzoai/tool",
     "run-local-mongo": "rush bundle --to @hanzo/tool >/dev/null && cross-env SERVER_SECRET=secret FULLTEXT_URL=http://localhost:4700 ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3333 MINIO_ACCESS_KEY=minioadmin MINIO_SECRET_KEY=minioadmin MINIO_ENDPOINT=localhost ACCOUNT_DB_URL=mongodb://localhost:27017 DB_URL=mongodb://localhost:27017 TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) QUEUE_CONFIG='localhost:19092' node --expose-gc --max-old-space-size=18000 ./bundle/bundle.js",
-    "run-local": "(rush bundle --to @hanzo/tool >/dev/null || true) && cross-env SERVER_SECRET=secret FULLTEXT_URL=http://localhost:4702 ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3332 STORAGE_CONFIG='datalake|http://huly.local:4030' HULYLAKE_URL=http://huly.local:8096  ACCOUNT_DB_URL=postgresql://root@huly.local:26257/defaultdb?sslmode=disable DB_URL=postgresql://root@huly.local:26257/defaultdb?sslmode=disable TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 REGION_INFO='cockroach|CockroachDB' MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) QUEUE_CONFIG='localhost:19092' node --expose-gc --max-old-space-size=18000 $TOOL_OPT ./bundle/bundle.js",
+    "run-local": "(rush bundle --to @hanzo/tool >/dev/null || true) && cross-env SERVER_SECRET=secret FULLTEXT_URL=http://localhost:4702 ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3332 STORAGE_CONFIG='datalake|http://hanzoai.local:4030' HANZOLAKE_URL=http://hanzoai.local:8096  ACCOUNT_DB_URL=postgresql://root@hanzoai.local:26257/defaultdb?sslmode=disable DB_URL=postgresql://root@hanzoai.local:26257/defaultdb?sslmode=disable TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 REGION_INFO='cockroach|CockroachDB' MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) QUEUE_CONFIG='localhost:19092' node --expose-gc --max-old-space-size=18000 $TOOL_OPT ./bundle/bundle.js",
     "run-local-brk": "rush bundle --to @hanzo/tool >/dev/null && cross-env SERVER_SECRET=secret ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3333 MINIO_ACCESS_KEY=minioadmin MINIO_SECRET_KEY=minioadmin MINIO_ENDPOINT=localhost ACCOUNT_DB_URL=mongodb://localhost:27017 DB_URL=mongodb://localhost:27017 TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) node --inspect-brk --enable-source-maps --max-old-space-size=18000 ./bundle/bundle.js",
     "run": "(rush bundle --to @hanzo/tool >/dev/null || true ) && cross-env node --max-old-space-size=8000 ./bundle/bundle.js",
     "upgrade-mongo": "rushx run-local-mongo upgrade-workspace -- $1",
@@ -187,7 +187,7 @@
     "@hanzo/kafka": "workspace:^0.7.18",
     "@hanzo/api-client": "workspace:^0.7.18",
     "@faker-js/faker": "^8.4.1",
-    "@hanzo/hulylake-client": "workspace:^0.7.17",
+    "@hanzo/hanzolake-client": "workspace:^0.7.17",
     "@hanzo/communication-types": "workspace:^0.7.12",
     "@hanzo/pod-rating": "workspace:^0.7.0"
   }

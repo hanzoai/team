@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hardcore Engineering Inc.
+// Copyright © 2024 Hanzo AI Inc.
 //
 import { pdflibAddPlaceholder } from '@signpdf/placeholder-pdf-lib'
 import { P12Signer } from '@signpdf/signer-p12'

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -121,12 +121,12 @@
   onCancel={() => dispatch('close')}
   on:close
 >
-  <div class="hulyModal-content__titleGroup" style="padding: 0">
+  <div class="hanzoModal-content__titleGroup" style="padding: 0">
     <ModernEditbox bind:value={title} label={getEmbeddedLabel('Title')} size="large" kind="ghost" />
   </div>
 
-  <div class="hulyModal-content__settingsSet">
-    <div class="hulyModal-content__settingsSet-line">
+  <div class="hanzoModal-content__settingsSet">
+    <div class="hanzoModal-content__settingsSet-line">
       <span class="label"><Label label={cardPlugin.string.MasterTag} /></span>
       <NestedDropdown
         items={classes}

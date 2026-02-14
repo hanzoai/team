@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022, 2023 Hardcore Engineering Inc.
+// Copyright © 2022, 2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -1146,7 +1146,7 @@
               : 'landscape'} border-left"
             class:fly={$deviceInfo.navigator.float}
           >
-            <div class="antiPanel-wrap__content hulyNavPanel-container">
+            <div class="antiPanel-wrap__content hanzoNavPanel-container">
               {#if currentApplication}
                 <NavHeader label={currentApplication.label}>
                   {#if currentApplication.navHeaderActions != null}
@@ -1205,7 +1205,7 @@
           {/if}
           <div
             bind:this={contentPanel}
-            class={navigatorModel === undefined ? 'hulyPanels-container' : 'hulyComponent overflow-hidden'}
+            class={navigatorModel === undefined ? 'hanzoPanels-container' : 'hanzoComponent overflow-hidden'}
             class:straighteningCorners={$sidebarStore.float &&
               $sidebarStore.variant === SidebarVariant.EXPANDED &&
               !(mobileAdaptive && $deviceInfo.isPortrait)}

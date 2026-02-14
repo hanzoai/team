@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -339,7 +339,7 @@
   </div>
 
   <svelte:fragment slot="afterContent">
-    <div class="hulyModal-footer px-2">
+    <div class="hanzoModal-footer px-2">
       {#if state.state === 'ready'}
         <!-- Recording not started -->
         <ModernButton

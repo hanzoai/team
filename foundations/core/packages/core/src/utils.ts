@@ -974,9 +974,9 @@ export function pickPrimarySocialId (socialIds: SocialId[]): SocialId {
   if (activeSocialIds.length === 0) {
     throw new Error('No active social ids provided')
   }
-  const hulySocialIds = activeSocialIds.filter((si) => si.type === SocialIdType.HULY)
+  const hanzoSocialIds = activeSocialIds.filter((si) => si.type === SocialIdType.HANZO)
 
-  return hulySocialIds[0] ?? activeSocialIds[0]
+  return hanzoSocialIds[0] ?? activeSocialIds[0]
 }
 
 export const loginSocialTypes = [SocialIdType.EMAIL, SocialIdType.GOOGLE, SocialIdType.GITHUB, SocialIdType.OIDC]

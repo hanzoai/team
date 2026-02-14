@@ -1,5 +1,5 @@
 //
-// Copyright © 2022 Hardcore Engineering Inc.
+// Copyright © 2022 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -100,7 +100,7 @@ import { serverTimeId, createModel as serverTimeModel } from '@hanzo/model-serve
 
 import aiAssistant, { aiAssistantId, createModel as aiAssistantModel } from '@hanzo/model-ai-assistant'
 import documents, { documentsId, createModel as documentsModel } from '@hanzo/model-controlled-documents'
-import { hulyMailId, createModel as hulyMailModel } from '@hanzo/model-huly-mail'
+import { hanzoMailId, createModel as hanzoMailModel } from '@hanzo/model-hanzo-mail'
 import { mailId, createModel as mailModel } from '@hanzo/model-mail'
 import products, { productsId, createModel as productsModel } from '@hanzo/model-products'
 import { questionsId, createModel as questionsModel } from '@hanzo/model-questions'
@@ -499,7 +499,7 @@ export default function buildModel (): Builder {
         enabled: true
       }
     ],
-    [hulyMailModel, hulyMailId],
+    [hanzoMailModel, hanzoMailId],
     [
       aiAssistantModel,
       aiAssistantId,

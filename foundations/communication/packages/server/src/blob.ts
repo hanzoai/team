@@ -1,4 +1,4 @@
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -18,7 +18,7 @@ import {
   systemAccountUuid,
   WorkspaceUuid
 } from '@hanzo/core'
-import { getWorkspaceClient, type HulylakeWorkspaceClient, type JsonPatch } from '@hanzo/hulylake-client'
+import { getWorkspaceClient, type HanzolakeWorkspaceClient, type JsonPatch } from '@hanzo/hanzolake-client'
 import { generateToken } from '@hanzo/server-token'
 import {
   Attachment,
@@ -47,7 +47,7 @@ import { Metadata } from './types'
 const LOG_CARD_ID = '67ecc702f182d88819f0a726' as CardID
 
 export class Blob {
-  private readonly client: HulylakeWorkspaceClient
+  private readonly client: HanzolakeWorkspaceClient
   // Groups sored by fromDate
   private readonly messageGroupsByCardId = new Map<CardID, MessagesGroup[]>()
   private readonly messageGroupsPromises = new Map<CardID, Promise<MessagesGroup[]>>()
@@ -63,7 +63,7 @@ export class Blob {
   } as const
 
   constructor (private readonly ctx: MeasureContext, private readonly workspace: WorkspaceUuid, private readonly metadata: Metadata) {
-    this.client = getWorkspaceClient(metadata.hulylakeUrl, workspace, generateToken(systemAccountUuid, workspace, undefined, metadata.secret))
+    this.client = getWorkspaceClient(metadata.hanzolakeUrl, workspace, generateToken(systemAccountUuid, workspace, undefined, metadata.secret))
   }
 
   public async findMessagesGroups (params: FindMessagesGroupParams): Promise<MessagesGroup[]> {

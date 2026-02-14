@@ -17,7 +17,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/hcengineering/stream/internal/pkg/config"
+	"github.com/hanzoai/stream/internal/pkg/config"
 	"github.com/pkg/errors"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp"

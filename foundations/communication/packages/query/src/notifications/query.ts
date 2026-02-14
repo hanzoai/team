@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // You may not use this file except in compliance with the License. You may
@@ -30,7 +30,7 @@ import {
   UpdateNotificationEvent
 } from '@hanzo/communication-sdk-types'
 import { NotificationProcessor } from '@hanzo/communication-shared'
-import { type HulylakeWorkspaceClient } from '@hanzo/hulylake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
 
 import { defaultQueryParams, NotificationQueryParams, type PagedQuery, type QueryId, QueryOptions } from '../types'
 import { QueryResult } from '../result'
@@ -45,7 +45,7 @@ export class NotificationQuery implements PagedQuery<Notification, NotificationQ
 
   constructor (
     private readonly client: FindClient,
-    private readonly hulylake: HulylakeWorkspaceClient,
+    private readonly hanzolake: HanzolakeWorkspaceClient,
     public readonly id: QueryId,
     public readonly params: NotificationQueryParams,
     public readonly options: QueryOptions | undefined,

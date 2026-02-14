@@ -133,7 +133,7 @@
     "@hanzo/model-communication": "workspace:^0.7.0",
     "@hanzo/model-emoji": "workspace:^0.7.0",
     "@hanzo/model-billing": "workspace:^0.7.0",
-    "@hanzo/model-huly-mail": "workspace:^0.7.0",
+    "@hanzo/model-hanzo-mail": "workspace:^0.7.0",
     "@hanzo/model-ai-assistant": "workspace:^0.7.0",
     "@hanzo/model-inbox": "workspace:^0.7.0",
     "@hanzo/model-rating": "workspace:^0.7.0"

@@ -62,7 +62,7 @@
   {:else}
     <button
       use:tooltip={showTooltip}
-      class="hulySplitButton-main"
+      class="hanzoSplitButton-main"
       class:no-focus={noFocus}
       class:accent
       class:pressed

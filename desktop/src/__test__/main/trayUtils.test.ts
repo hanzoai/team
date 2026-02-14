@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -16,7 +16,7 @@
 import { getBadgeIconInfo } from '../../main/trayUtils'
 
 describe('getBadgeIconInfo', () => {
-  const baseTitle = 'Huly'
+  const baseTitle = 'Hanzo Team'
 
   it('count of 0', () => {
     const result = getBadgeIconInfo(0, baseTitle)

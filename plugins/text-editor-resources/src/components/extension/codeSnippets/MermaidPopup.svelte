@@ -1,6 +1,6 @@
 <!--
 //
-// Copyright © 2026 Hardcore Engineering Inc.
+// Copyright © 2026 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -35,7 +35,7 @@
         dispatch('close')
       }}
     />
-    <div class="hulyHeader-divider short no-line no-print" />
+    <div class="hanzoHeader-divider short no-line no-print" />
     <ButtonIcon
       icon={!fullSize ? IconMaximize : IconMinimize}
       kind={'tertiary'}
@@ -46,7 +46,7 @@
         dispatch('fullsize', fullSize)
       }}
     />
-    <div class="hulyHeader-divider short no-print" />
+    <div class="hanzoHeader-divider short no-print" />
   </svelte:fragment>
 
   <div class="mermaid-scroll">

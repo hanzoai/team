@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hardcore Engineering Inc.
+// Copyright © 2025 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -32,7 +32,7 @@ const config: Config = {
   QueueRegion: process.env.QUEUE_REGION ?? '',
   AccountsUrl: process.env.ACCOUNTS_URL ?? '',
   TemporalAddress: process.env.TEMPORAL_ADDRESS ?? 'localhost:7233',
-  TemporalNamespace: process.env.TEMPORAL_NAMESPACE ?? 'huly',
+  TemporalNamespace: process.env.TEMPORAL_NAMESPACE ?? 'hanzo',
   CollaboratorURL: process.env.COLLABORATOR_URL ?? ''
 }
 

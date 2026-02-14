@@ -18,8 +18,8 @@ package mediaconvert
 import (
 	"fmt"
 
-	"github.com/hcengineering/stream/internal/pkg/profile"
-	"github.com/hcengineering/stream/internal/pkg/resconv"
+	"github.com/hanzoai/stream/internal/pkg/profile"
+	"github.com/hanzoai/stream/internal/pkg/resconv"
 )
 
 // VideoMeta contains information about the video
