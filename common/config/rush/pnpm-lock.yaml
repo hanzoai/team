@@ -273,6 +273,15 @@ importers:
       '@hanzo/guest-resources':
         specifier: workspace:^0.7.0
         version: link:../plugins/guest-resources
+      '@hanzo/hanzo-mail':
+        specifier: workspace:^0.7.0
+        version: link:../plugins/hanzo-mail
+      '@hanzo/hanzo-mail-assets':
+        specifier: workspace:^0.7.0
+        version: link:../plugins/hanzo-mail-assets
+      '@hanzo/hanzo-mail-resources':
+        specifier: workspace:^0.7.0
+        version: link:../plugins/hanzo-mail-resources
       '@hanzo/hr':
         specifier: workspace:^0.7.0
         version: link:../plugins/hr
@@ -282,15 +291,6 @@ importers:
       '@hanzo/hr-resources':
         specifier: workspace:^0.7.0
         version: link:../plugins/hr-resources
-      '@hanzo/huly-mail':
-        specifier: workspace:^0.7.0
-        version: link:../plugins/huly-mail
-      '@hanzo/huly-mail-assets':
-        specifier: workspace:^0.7.0
-        version: link:../plugins/huly-mail-assets
-      '@hanzo/huly-mail-resources':
-        specifier: workspace:^0.7.0
-        version: link:../plugins/huly-mail-resources
       '@hanzo/image-cropper':
         specifier: workspace:^0.7.0
         version: link:../plugins/image-cropper
@@ -1327,6 +1327,15 @@ importers:
       '@hanzo/guest-resources':
         specifier: workspace:^0.7.0
         version: link:../../plugins/guest-resources
+      '@hanzo/hanzo-mail':
+        specifier: workspace:^0.7.0
+        version: link:../../plugins/hanzo-mail
+      '@hanzo/hanzo-mail-assets':
+        specifier: workspace:^0.7.0
+        version: link:../../plugins/hanzo-mail-assets
+      '@hanzo/hanzo-mail-resources':
+        specifier: workspace:^0.7.0
+        version: link:../../plugins/hanzo-mail-resources
       '@hanzo/hr':
         specifier: workspace:^0.7.0
         version: link:../../plugins/hr
@@ -1336,15 +1345,6 @@ importers:
       '@hanzo/hr-resources':
         specifier: workspace:^0.7.0
         version: link:../../plugins/hr-resources
-      '@hanzo/huly-mail':
-        specifier: workspace:^0.7.0
-        version: link:../../plugins/huly-mail
-      '@hanzo/huly-mail-assets':
-        specifier: workspace:^0.7.0
-        version: link:../../plugins/huly-mail-assets
-      '@hanzo/huly-mail-resources':
-        specifier: workspace:^0.7.0
-        version: link:../../plugins/huly-mail-resources
       '@hanzo/image-cropper':
         specifier: workspace:^0.7.0
         version: link:../../plugins/image-cropper
@@ -1958,9 +1958,9 @@ importers:
       '@hanzo/elastic':
         specifier: workspace:^0.7.16
         version: link:../../foundations/server/packages/elastic
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../foundations/core/packages/hulylake-client
+        version: link:../../foundations/core/packages/hanzolake-client
       '@hanzo/kafka':
         specifier: workspace:^0.7.18
         version: link:../../foundations/server/packages/kafka
@@ -2358,9 +2358,9 @@ importers:
       '@hanzo/communication-types':
         specifier: workspace:^0.7.12
         version: link:../types
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../../core/packages/hulylake-client
+        version: link:../../../core/packages/hanzolake-client
       fast-equals:
         specifier: ^5.2.2
         version: 5.3.2
@@ -2486,9 +2486,9 @@ importers:
       '@hanzo/communication-types':
         specifier: workspace:^0.7.12
         version: link:../types
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../../core/packages/hulylake-client
+        version: link:../../../core/packages/hanzolake-client
       fast-equals:
         specifier: ^5.2.2
         version: 5.3.2
@@ -2678,9 +2678,9 @@ importers:
       '@hanzo/core':
         specifier: workspace:^0.7.24
         version: link:../../../core/packages/core
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../../core/packages/hulylake-client
+        version: link:../../../core/packages/hanzolake-client
       '@hanzo/server-token':
         specifier: workspace:^0.7.17
         version: link:../../../core/packages/token
@@ -2757,9 +2757,9 @@ importers:
       '@hanzo/communication-types':
         specifier: workspace:^0.7.12
         version: link:../types
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../../core/packages/hulylake-client
+        version: link:../../../core/packages/hanzolake-client
     devDependencies:
       '@hanzo/platform-rig':
         specifier: workspace:^0.7.19
@@ -3366,7 +3366,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  ../../foundations/core/packages/hulylake-client:
+  ../../foundations/core/packages/hanzolake-client:
     dependencies:
       '@hanzo/core':
         specifier: workspace:^0.7.24
@@ -4881,14 +4881,14 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  ../../foundations/server/packages/hulylake:
+  ../../foundations/server/packages/hanzolake:
     dependencies:
       '@hanzo/core':
         specifier: workspace:^0.7.24
         version: link:../../../core/packages/core
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../../core/packages/hulylake-client
+        version: link:../../../core/packages/hanzolake-client
       '@hanzo/platform':
         specifier: workspace:^0.7.19
         version: link:../../../core/packages/platform
@@ -5431,9 +5431,9 @@ importers:
       '@hanzo/datalake':
         specifier: workspace:^0.7.17
         version: link:../datalake
-      '@hanzo/hulylake':
+      '@hanzo/hanzolake':
         specifier: workspace:^0.7.17
-        version: link:../hulylake
+        version: link:../hanzolake
       '@hanzo/minio':
         specifier: workspace:^0.7.17
         version: link:../minio
@@ -6007,12 +6007,12 @@ importers:
       '@hanzo/model-guest':
         specifier: workspace:^0.7.0
         version: link:../guest
+      '@hanzo/model-hanzo-mail':
+        specifier: workspace:^0.7.0
+        version: link:../hanzo-mail
       '@hanzo/model-hr':
         specifier: workspace:^0.7.0
         version: link:../hr
-      '@hanzo/model-huly-mail':
-        specifier: workspace:^0.7.0
-        version: link:../huly-mail
       '@hanzo/model-inbox':
         specifier: workspace:^0.7.0
         version: link:../inbox
@@ -8317,6 +8317,76 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  ../../models/hanzo-mail:
+    dependencies:
+      '@hanzo/core':
+        specifier: workspace:^0.7.24
+        version: link:../../foundations/core/packages/core
+      '@hanzo/hanzo-mail':
+        specifier: workspace:^0.7.0
+        version: link:../../plugins/hanzo-mail
+      '@hanzo/hanzo-mail-resources':
+        specifier: workspace:^0.7.0
+        version: link:../../plugins/hanzo-mail-resources
+      '@hanzo/model':
+        specifier: workspace:^0.7.17
+        version: link:../../foundations/core/packages/model
+      '@hanzo/model-core':
+        specifier: workspace:^0.7.0
+        version: link:../core
+      '@hanzo/platform':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/core/packages/platform
+      '@hanzo/setting':
+        specifier: workspace:^0.7.0
+        version: link:../../plugins/setting
+      '@hanzo/ui':
+        specifier: workspace:^0.7.0
+        version: link:../../packages/ui
+    devDependencies:
+      '@hanzo/platform-rig':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/utils/packages/platform-rig
+      '@types/jest':
+        specifier: ^29.5.5
+        version: 29.5.14
+      '@types/node':
+        specifier: ^22.18.1
+        version: 22.19.0
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.21.0
+        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
+      eslint:
+        specifier: ^8.54.0
+        version: 8.57.1
+      eslint-config-standard-with-typescript:
+        specifier: ^40.0.0
+        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
+      eslint-plugin-import:
+        specifier: ^2.26.0
+        version: 2.32.0(eslint@8.57.1)
+      eslint-plugin-n:
+        specifier: ^15.4.0
+        version: 15.7.0(eslint@8.57.1)
+      eslint-plugin-promise:
+        specifier: ^6.1.1
+        version: 6.6.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      ts-jest:
+        specifier: ^29.1.1
+        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0))(typescript@5.9.3)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   ../../models/hr:
     dependencies:
       '@hanzo/contact':
@@ -8367,76 +8437,6 @@ importers:
       '@hanzo/view':
         specifier: workspace:^0.7.0
         version: link:../../plugins/view
-    devDependencies:
-      '@hanzo/platform-rig':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/utils/packages/platform-rig
-      '@types/jest':
-        specifier: ^29.5.5
-        version: 29.5.14
-      '@types/node':
-        specifier: ^22.18.1
-        version: 22.19.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.21.0
-        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/parser':
-        specifier: ^6.21.0
-        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
-      eslint:
-        specifier: ^8.54.0
-        version: 8.57.1
-      eslint-config-standard-with-typescript:
-        specifier: ^40.0.0
-        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
-      eslint-plugin-import:
-        specifier: ^2.26.0
-        version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-n:
-        specifier: ^15.4.0
-        version: 15.7.0(eslint@8.57.1)
-      eslint-plugin-promise:
-        specifier: ^6.1.1
-        version: 6.6.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
-      ts-jest:
-        specifier: ^29.1.1
-        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0))(typescript@5.9.3)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../../models/huly-mail:
-    dependencies:
-      '@hanzo/core':
-        specifier: workspace:^0.7.24
-        version: link:../../foundations/core/packages/core
-      '@hanzo/huly-mail':
-        specifier: workspace:^0.7.0
-        version: link:../../plugins/huly-mail
-      '@hanzo/huly-mail-resources':
-        specifier: workspace:^0.7.0
-        version: link:../../plugins/huly-mail-resources
-      '@hanzo/model':
-        specifier: workspace:^0.7.17
-        version: link:../../foundations/core/packages/model
-      '@hanzo/model-core':
-        specifier: workspace:^0.7.0
-        version: link:../core
-      '@hanzo/platform':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/core/packages/platform
-      '@hanzo/setting':
-        specifier: workspace:^0.7.0
-        version: link:../../plugins/setting
-      '@hanzo/ui':
-        specifier: workspace:^0.7.0
-        version: link:../../packages/ui
     devDependencies:
       '@hanzo/platform-rig':
         specifier: workspace:^0.7.19
@@ -13948,6 +13948,67 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  ../../packages/hanzopulse-client:
+    dependencies:
+      '@hanzo/core':
+        specifier: workspace:^0.7.24
+        version: link:../../foundations/core/packages/core
+      '@hanzo/platform':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/core/packages/platform
+    devDependencies:
+      '@hanzo/platform-rig':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/utils/packages/platform-rig
+      '@types/jest':
+        specifier: ^29.5.5
+        version: 29.5.14
+      '@types/node':
+        specifier: ^22.18.1
+        version: 22.19.0
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.21.0
+        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
+      cross-env:
+        specifier: ~7.0.3
+        version: 7.0.3
+      esbuild:
+        specifier: ^0.25.10
+        version: 0.25.12
+      eslint:
+        specifier: ^8.54.0
+        version: 8.57.1
+      eslint-config-standard-with-typescript:
+        specifier: ^40.0.0
+        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
+      eslint-plugin-import:
+        specifier: ^2.26.0
+        version: 2.32.0(eslint@8.57.1)
+      eslint-plugin-n:
+        specifier: ^15.4.0
+        version: 15.7.0(eslint@8.57.1)
+      eslint-plugin-promise:
+        specifier: ^6.1.1
+        version: 6.6.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
+      jest-fetch-mock:
+        specifier: ^3.0.3
+        version: 3.0.3(encoding@0.1.13)
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      ts-jest:
+        specifier: ^29.1.1
+        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0))(typescript@5.9.3)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   ../../packages/highlight:
     dependencies:
       '@hanzo/ui':
@@ -14105,67 +14166,6 @@ importers:
       ts-jest:
         specifier: ^29.1.1
         version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3)))(typescript@5.9.3)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../../packages/hulypulse-client:
-    dependencies:
-      '@hanzo/core':
-        specifier: workspace:^0.7.24
-        version: link:../../foundations/core/packages/core
-      '@hanzo/platform':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/core/packages/platform
-    devDependencies:
-      '@hanzo/platform-rig':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/utils/packages/platform-rig
-      '@types/jest':
-        specifier: ^29.5.5
-        version: 29.5.14
-      '@types/node':
-        specifier: ^22.18.1
-        version: 22.19.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.21.0
-        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/parser':
-        specifier: ^6.21.0
-        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
-      cross-env:
-        specifier: ~7.0.3
-        version: 7.0.3
-      esbuild:
-        specifier: ^0.25.10
-        version: 0.25.12
-      eslint:
-        specifier: ^8.54.0
-        version: 8.57.1
-      eslint-config-standard-with-typescript:
-        specifier: ^40.0.0
-        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
-      eslint-plugin-import:
-        specifier: ^2.26.0
-        version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-n:
-        specifier: ^15.4.0
-        version: 15.7.0(eslint@8.57.1)
-      eslint-plugin-promise:
-        specifier: ^6.1.1
-        version: 6.6.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
-      jest-fetch-mock:
-        specifier: ^3.0.3
-        version: 3.0.3(encoding@0.1.13)
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
-      ts-jest:
-        specifier: ^29.1.1
-        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0))(typescript@5.9.3)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -14703,12 +14703,12 @@ importers:
       '@hanzo/emoji':
         specifier: workspace:^0.7.0
         version: link:../../plugins/emoji
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../foundations/core/packages/hulylake-client
-      '@hanzo/hulypulse-client':
+        version: link:../../foundations/core/packages/hanzolake-client
+      '@hanzo/hanzopulse-client':
         specifier: workspace:^0.7.0
-        version: link:../hulypulse-client
+        version: link:../hanzopulse-client
       '@hanzo/notification':
         specifier: workspace:^0.7.0
         version: link:../../plugins/notification
@@ -16330,6 +16330,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.5
         version: 29.5.14
+      '@types/jsonwebtoken':
+        specifier: ~9.0.9
+        version: 9.0.10
       '@typescript-eslint/eslint-plugin':
         specifier: ^6.21.0
         version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
@@ -21494,6 +21497,228 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
+  ../../plugins/hanzo-mail:
+    dependencies:
+      '@hanzo/core':
+        specifier: workspace:^0.7.24
+        version: link:../../foundations/core/packages/core
+      '@hanzo/platform':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/core/packages/platform
+      '@hanzo/setting':
+        specifier: workspace:^0.7.0
+        version: link:../setting
+      '@hanzo/ui':
+        specifier: workspace:^0.7.0
+        version: link:../../packages/ui
+    devDependencies:
+      '@hanzo/platform-rig':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/utils/packages/platform-rig
+      '@types/jest':
+        specifier: ^29.5.5
+        version: 29.5.14
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.21.0
+        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
+      eslint:
+        specifier: ^8.54.0
+        version: 8.57.1
+      eslint-config-standard-with-typescript:
+        specifier: ^40.0.0
+        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
+      eslint-plugin-import:
+        specifier: ^2.26.0
+        version: 2.32.0(eslint@8.57.1)
+      eslint-plugin-n:
+        specifier: ^15.4.0
+        version: 15.7.0(eslint@8.57.1)
+      eslint-plugin-promise:
+        specifier: ^6.1.1
+        version: 6.6.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      ts-jest:
+        specifier: ^29.1.1
+        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@29.7.0)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  ../../plugins/hanzo-mail-assets:
+    dependencies:
+      '@hanzo/hanzo-mail':
+        specifier: workspace:^0.7.0
+        version: link:../hanzo-mail
+      '@hanzo/platform':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/core/packages/platform
+    devDependencies:
+      '@hanzo/platform-rig':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/utils/packages/platform-rig
+      '@types/jest':
+        specifier: ^29.5.5
+        version: 29.5.14
+      '@types/node':
+        specifier: ^22.18.1
+        version: 22.19.0
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.21.0
+        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
+      eslint:
+        specifier: ^8.54.0
+        version: 8.57.1
+      eslint-config-standard-with-typescript:
+        specifier: ^40.0.0
+        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
+      eslint-plugin-import:
+        specifier: ^2.26.0
+        version: 2.32.0(eslint@8.57.1)
+      eslint-plugin-n:
+        specifier: ^15.4.0
+        version: 15.7.0(eslint@8.57.1)
+      eslint-plugin-promise:
+        specifier: ^6.1.1
+        version: 6.6.0(eslint@8.57.1)
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      ts-jest:
+        specifier: ^29.1.1
+        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0))(typescript@5.9.3)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
+  ../../plugins/hanzo-mail-resources:
+    dependencies:
+      '@hanzo/account-client':
+        specifier: workspace:^0.7.21
+        version: link:../../foundations/core/packages/account-client
+      '@hanzo/analytics':
+        specifier: workspace:^0.7.17
+        version: link:../../foundations/core/packages/analytics
+      '@hanzo/card':
+        specifier: workspace:^0.7.0
+        version: link:../card
+      '@hanzo/card-resources':
+        specifier: workspace:^0.7.0
+        version: link:../card-resources
+      '@hanzo/contact':
+        specifier: workspace:^0.7.0
+        version: link:../contact
+      '@hanzo/core':
+        specifier: workspace:^0.7.24
+        version: link:../../foundations/core/packages/core
+      '@hanzo/hanzo-mail':
+        specifier: workspace:^0.7.0
+        version: link:../hanzo-mail
+      '@hanzo/integration-client':
+        specifier: workspace:^0.7.0
+        version: link:../../packages/integration-client
+      '@hanzo/login':
+        specifier: workspace:^0.7.0
+        version: link:../login
+      '@hanzo/panel':
+        specifier: workspace:^0.7.0
+        version: link:../../packages/panel
+      '@hanzo/platform':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/core/packages/platform
+      '@hanzo/presentation':
+        specifier: workspace:^0.7.0
+        version: link:../../packages/presentation
+      '@hanzo/setting':
+        specifier: workspace:^0.7.0
+        version: link:../setting
+      '@hanzo/setting-resources':
+        specifier: workspace:^0.7.0
+        version: link:../setting-resources
+      '@hanzo/ui':
+        specifier: workspace:^0.7.0
+        version: link:../../packages/ui
+      '@hanzo/view-resources':
+        specifier: workspace:^0.7.0
+        version: link:../view-resources
+      svelte:
+        specifier: ^4.2.20
+        version: 4.2.20
+    devDependencies:
+      '@hanzo/platform-rig':
+        specifier: workspace:^0.7.19
+        version: link:../../foundations/utils/packages/platform-rig
+      '@types/jest':
+        specifier: ^29.5.5
+        version: 29.5.14
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.21.0
+        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^6.21.0
+        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
+      eslint:
+        specifier: ^8.54.0
+        version: 8.57.1
+      eslint-config-standard-with-typescript:
+        specifier: ^40.0.0
+        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
+      eslint-plugin-import:
+        specifier: ^2.26.0
+        version: 2.32.0(eslint@8.57.1)
+      eslint-plugin-n:
+        specifier: ^15.4.0
+        version: 15.7.0(eslint@8.57.1)
+      eslint-plugin-promise:
+        specifier: ^6.1.1
+        version: 6.6.0(eslint@8.57.1)
+      eslint-plugin-svelte:
+        specifier: ^2.35.1
+        version: 2.46.1(eslint@8.57.1)(svelte@4.2.20)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
+      jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
+      prettier-plugin-svelte:
+        specifier: ^3.4.0
+        version: 3.4.0(prettier@3.6.2)(svelte@4.2.20)
+      sass:
+        specifier: ^1.80.0
+        version: 1.93.3
+      svelte-check:
+        specifier: ^3.6.9
+        version: 3.8.6(@babel/core@7.28.5)(postcss-load-config@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3)))(postcss@8.5.6)(sass@1.93.3)(svelte@4.2.20)
+      svelte-eslint-parser:
+        specifier: ^0.33.1
+        version: 0.33.1(svelte@4.2.20)
+      svelte-loader:
+        specifier: ^3.2.0
+        version: 3.2.4(svelte@4.2.20)
+      svelte-preprocess:
+        specifier: ^5.1.4
+        version: 5.1.4(@babel/core@7.28.5)(postcss-load-config@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3)))(postcss@8.5.6)(sass@1.93.3)(svelte@4.2.20)(typescript@5.9.3)
+      ts-jest:
+        specifier: ^29.1.1
+        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3)))(typescript@5.9.3)
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+
   ../../plugins/hr:
     dependencies:
       '@hanzo/contact':
@@ -21666,228 +21891,6 @@ importers:
       '@hanzo/workbench-resources':
         specifier: workspace:^0.7.0
         version: link:../workbench-resources
-      svelte:
-        specifier: ^4.2.20
-        version: 4.2.20
-    devDependencies:
-      '@hanzo/platform-rig':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/utils/packages/platform-rig
-      '@types/jest':
-        specifier: ^29.5.5
-        version: 29.5.14
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.21.0
-        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/parser':
-        specifier: ^6.21.0
-        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
-      eslint:
-        specifier: ^8.54.0
-        version: 8.57.1
-      eslint-config-standard-with-typescript:
-        specifier: ^40.0.0
-        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
-      eslint-plugin-import:
-        specifier: ^2.26.0
-        version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-n:
-        specifier: ^15.4.0
-        version: 15.7.0(eslint@8.57.1)
-      eslint-plugin-promise:
-        specifier: ^6.1.1
-        version: 6.6.0(eslint@8.57.1)
-      eslint-plugin-svelte:
-        specifier: ^2.35.1
-        version: 2.46.1(eslint@8.57.1)(svelte@4.2.20)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
-      prettier-plugin-svelte:
-        specifier: ^3.4.0
-        version: 3.4.0(prettier@3.6.2)(svelte@4.2.20)
-      sass:
-        specifier: ^1.80.0
-        version: 1.93.3
-      svelte-check:
-        specifier: ^3.6.9
-        version: 3.8.6(@babel/core@7.28.5)(postcss-load-config@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3)))(postcss@8.5.6)(sass@1.93.3)(svelte@4.2.20)
-      svelte-eslint-parser:
-        specifier: ^0.33.1
-        version: 0.33.1(svelte@4.2.20)
-      svelte-loader:
-        specifier: ^3.2.0
-        version: 3.2.4(svelte@4.2.20)
-      svelte-preprocess:
-        specifier: ^5.1.4
-        version: 5.1.4(@babel/core@7.28.5)(postcss-load-config@4.0.2(postcss@8.5.6)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3)))(postcss@8.5.6)(sass@1.93.3)(svelte@4.2.20)(typescript@5.9.3)
-      ts-jest:
-        specifier: ^29.1.1
-        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3)))(typescript@5.9.3)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../../plugins/huly-mail:
-    dependencies:
-      '@hanzo/core':
-        specifier: workspace:^0.7.24
-        version: link:../../foundations/core/packages/core
-      '@hanzo/platform':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/core/packages/platform
-      '@hanzo/setting':
-        specifier: workspace:^0.7.0
-        version: link:../setting
-      '@hanzo/ui':
-        specifier: workspace:^0.7.0
-        version: link:../../packages/ui
-    devDependencies:
-      '@hanzo/platform-rig':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/utils/packages/platform-rig
-      '@types/jest':
-        specifier: ^29.5.5
-        version: 29.5.14
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.21.0
-        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/parser':
-        specifier: ^6.21.0
-        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
-      eslint:
-        specifier: ^8.54.0
-        version: 8.57.1
-      eslint-config-standard-with-typescript:
-        specifier: ^40.0.0
-        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
-      eslint-plugin-import:
-        specifier: ^2.26.0
-        version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-n:
-        specifier: ^15.4.0
-        version: 15.7.0(eslint@8.57.1)
-      eslint-plugin-promise:
-        specifier: ^6.1.1
-        version: 6.6.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
-      ts-jest:
-        specifier: ^29.1.1
-        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@29.7.0)(typescript@5.9.3)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../../plugins/huly-mail-assets:
-    dependencies:
-      '@hanzo/huly-mail':
-        specifier: workspace:^0.7.0
-        version: link:../huly-mail
-      '@hanzo/platform':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/core/packages/platform
-    devDependencies:
-      '@hanzo/platform-rig':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/utils/packages/platform-rig
-      '@types/jest':
-        specifier: ^29.5.5
-        version: 29.5.14
-      '@types/node':
-        specifier: ^22.18.1
-        version: 22.19.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^6.21.0
-        version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
-      '@typescript-eslint/parser':
-        specifier: ^6.21.0
-        version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
-      eslint:
-        specifier: ^8.54.0
-        version: 8.57.1
-      eslint-config-standard-with-typescript:
-        specifier: ^40.0.0
-        version: 40.0.0(@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3))(eslint-plugin-import@2.32.0(eslint@8.57.1))(eslint-plugin-n@15.7.0(eslint@8.57.1))(eslint-plugin-promise@6.6.0(eslint@8.57.1))(eslint@8.57.1)(typescript@5.9.3)
-      eslint-plugin-import:
-        specifier: ^2.26.0
-        version: 2.32.0(eslint@8.57.1)
-      eslint-plugin-n:
-        specifier: ^15.4.0
-        version: 15.7.0(eslint@8.57.1)
-      eslint-plugin-promise:
-        specifier: ^6.1.1
-        version: 6.6.0(eslint@8.57.1)
-      jest:
-        specifier: ^29.7.0
-        version: 29.7.0(@types/node@22.19.0)(ts-node@10.9.2(@swc/core@1.15.1)(@types/node@22.19.0)(typescript@5.9.3))
-      prettier:
-        specifier: ^3.6.2
-        version: 3.6.2
-      ts-jest:
-        specifier: ^29.1.1
-        version: 29.4.5(@babel/core@7.28.5)(@jest/transform@29.7.0)(@jest/types@30.2.0)(babel-jest@29.7.0(@babel/core@7.28.5))(esbuild@0.25.12)(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.0))(typescript@5.9.3)
-      typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
-
-  ../../plugins/huly-mail-resources:
-    dependencies:
-      '@hanzo/account-client':
-        specifier: workspace:^0.7.21
-        version: link:../../foundations/core/packages/account-client
-      '@hanzo/analytics':
-        specifier: workspace:^0.7.17
-        version: link:../../foundations/core/packages/analytics
-      '@hanzo/card':
-        specifier: workspace:^0.7.0
-        version: link:../card
-      '@hanzo/card-resources':
-        specifier: workspace:^0.7.0
-        version: link:../card-resources
-      '@hanzo/contact':
-        specifier: workspace:^0.7.0
-        version: link:../contact
-      '@hanzo/core':
-        specifier: workspace:^0.7.24
-        version: link:../../foundations/core/packages/core
-      '@hanzo/huly-mail':
-        specifier: workspace:^0.7.0
-        version: link:../huly-mail
-      '@hanzo/integration-client':
-        specifier: workspace:^0.7.0
-        version: link:../../packages/integration-client
-      '@hanzo/login':
-        specifier: workspace:^0.7.0
-        version: link:../login
-      '@hanzo/panel':
-        specifier: workspace:^0.7.0
-        version: link:../../packages/panel
-      '@hanzo/platform':
-        specifier: workspace:^0.7.19
-        version: link:../../foundations/core/packages/platform
-      '@hanzo/presentation':
-        specifier: workspace:^0.7.0
-        version: link:../../packages/presentation
-      '@hanzo/setting':
-        specifier: workspace:^0.7.0
-        version: link:../setting
-      '@hanzo/setting-resources':
-        specifier: workspace:^0.7.0
-        version: link:../setting-resources
-      '@hanzo/ui':
-        specifier: workspace:^0.7.0
-        version: link:../../packages/ui
-      '@hanzo/view-resources':
-        specifier: workspace:^0.7.0
-        version: link:../view-resources
       svelte:
         specifier: ^4.2.20
         version: 4.2.20
@@ -23150,9 +23153,9 @@ importers:
       '@hanzo/emoji-resources':
         specifier: workspace:^0.7.0
         version: link:../emoji-resources
-      '@hanzo/hulypulse-client':
+      '@hanzo/hanzopulse-client':
         specifier: workspace:^0.7.0
-        version: link:../../packages/hulypulse-client
+        version: link:../../packages/hanzopulse-client
       '@hanzo/login':
         specifier: workspace:^0.7.0
         version: link:../login
@@ -24282,9 +24285,9 @@ importers:
       '@hanzo/core':
         specifier: workspace:^0.7.24
         version: link:../../foundations/core/packages/core
-      '@hanzo/hulypulse-client':
+      '@hanzo/hanzopulse-client':
         specifier: workspace:^0.7.0
-        version: link:../../packages/hulypulse-client
+        version: link:../../packages/hanzopulse-client
       '@hanzo/platform':
         specifier: workspace:^0.7.19
         version: link:../../foundations/core/packages/platform
@@ -30631,9 +30634,9 @@ importers:
       '@hanzo/elastic':
         specifier: workspace:^0.7.16
         version: link:../../foundations/server/packages/elastic
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../foundations/core/packages/hulylake-client
+        version: link:../../foundations/core/packages/hanzolake-client
       '@hanzo/kafka':
         specifier: workspace:^0.7.18
         version: link:../../foundations/server/packages/kafka
@@ -36421,9 +36424,9 @@ importers:
       '@hanzo/drive':
         specifier: workspace:^0.7.0
         version: link:../../plugins/drive
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../foundations/core/packages/hulylake-client
+        version: link:../../foundations/core/packages/hanzolake-client
       '@hanzo/platform':
         specifier: workspace:^0.7.19
         version: link:../../foundations/core/packages/platform
@@ -41360,9 +41363,9 @@ importers:
       '@hanzo/core':
         specifier: workspace:^0.7.24
         version: link:../../foundations/core/packages/core
-      '@hanzo/hulylake-client':
+      '@hanzo/hanzolake-client':
         specifier: workspace:^0.7.17
-        version: link:../../foundations/core/packages/hulylake-client
+        version: link:../../foundations/core/packages/hanzolake-client
       '@hanzo/kafka':
         specifier: workspace:^0.7.18
         version: link:../../foundations/server/packages/kafka
