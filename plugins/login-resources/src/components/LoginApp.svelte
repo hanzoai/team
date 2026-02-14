@@ -187,6 +187,8 @@
               <ConfirmationSend />
             {:else if page === 'auth'}
               <Auth />
+            {:else if page === 'authCallback' || page === 'callback'}
+              <AuthCallback />
             {:else if page === 'changePassword'}
               <ChangePassword />
             {/if}

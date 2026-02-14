@@ -62,6 +62,7 @@ import {
 import { logIn, workbenchId } from '@hanzo/workbench'
 
 import { LoginEvents } from './analytics'
+import { SSO_TOKEN, USER_INFO, RETRY_ON_SSO_LOGIN } from './const'
 import { type Pages } from './index'
 import login from './plugin'
 
@@ -1053,4 +1054,87 @@ export function getAccountDisplayName (loginInfo: LoginInfo | null | undefined):
   }
 
   return loginInfo.account
+}
+
+// SSO utility functions
+
+interface SSOUser {
+  email: string
+  firstName?: string
+  lastName?: string
+  name: string
+  owner: string
+}
+
+interface SSOTokenInfo {
+  user: SSOUser
+  token: string
+}
+
+interface SSOLoginData {
+  retryOn: number
+  user: SSOUser
+  token: string
+}
+
+const IAM_SERVER = 'https://iam.hanzo.ai'
+
+export async function exchangeCodeForToken (code: string): Promise<SSOTokenInfo> {
+  const iamServer = getMetadata(presentation.metadata.IamServer as any) ?? IAM_SERVER
+  const response = await fetch(`${iamServer}/api/login/oauth/access_token`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code, grant_type: 'authorization_code' })
+  })
+
+  if (!response.ok) {
+    throw new Error(`IAM token exchange failed: ${response.status}`)
+  }
+
+  const data = await response.json()
+  return {
+    user: {
+      email: data.email ?? data.user?.email ?? '',
+      firstName: data.firstName ?? data.user?.firstName,
+      lastName: data.lastName ?? data.user?.lastName,
+      name: data.name ?? data.user?.name ?? '',
+      owner: data.owner ?? data.user?.owner ?? ''
+    },
+    token: data.access_token ?? data.token ?? ''
+  }
+}
+
+export function getSSOLogin (): SSOLoginData | null {
+  try {
+    const token = localStorage.getItem(SSO_TOKEN)
+    const userInfo = localStorage.getItem(USER_INFO)
+    const retryOn = localStorage.getItem(RETRY_ON_SSO_LOGIN)
+
+    if (token == null || userInfo == null) {
+      return null
+    }
+
+    return {
+      token,
+      user: JSON.parse(userInfo),
+      retryOn: retryOn != null ? parseInt(retryOn) : 0
+    }
+  } catch {
+    return null
+  }
+}
+
+export function clearSSOLogin (clearInviteId?: boolean): void {
+  localStorage.removeItem(SSO_TOKEN)
+  localStorage.removeItem(USER_INFO)
+  localStorage.removeItem(RETRY_ON_SSO_LOGIN)
+  if (clearInviteId === true) {
+    localStorage.removeItem('inviteId')
+  }
+}
+
+export function saveSSOLoginToLocalStorage (data: SSOLoginData): void {
+  localStorage.setItem(SSO_TOKEN, data.token)
+  localStorage.setItem(USER_INFO, JSON.stringify(data.user))
+  localStorage.setItem(RETRY_ON_SSO_LOGIN, String(data.retryOn))
 }

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
   import { navigate } from '@hanzo/ui'
   import { onMount } from 'svelte'
   import { StepAuthenticationSSO } from '../const'
@@ -16,9 +14,6 @@
     signUpOtp
   } from '../utils'
   import OtpForm from './OtpForm.svelte'
-
-  // meda data
-  const iam_server = getMetadata(presentation.metadata.IamServer) || 'https://iam.hanzo.ai'
 
   let step: StepAuthenticationSSO = 'authenticating'
   let email: string = ''
@@ -117,9 +112,9 @@
       const token = event?.token
 
       if (invitedId) {
-        const [checkStatus, autoJoinResult] = await checkAutoJoin(invitedId, '', '', token)
+        const [checkStatus, autoJoinResult] = await checkAutoJoin(invitedId)
 
-        if (autoJoinResult && autoJoinResult.workspaceUrl) {
+        if (autoJoinResult != null && 'workspaceUrl' in autoJoinResult) {
           clearSSOLogin()
           localStorage.removeItem('inviteId')
         }

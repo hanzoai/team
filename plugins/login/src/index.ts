@@ -39,6 +39,8 @@ export const pages = [
   'confirm',
   'confirmationSend',
   'auth',
+  'authCallback',
+  'callback',
   'login-password',
   'changePassword'
 ] as const

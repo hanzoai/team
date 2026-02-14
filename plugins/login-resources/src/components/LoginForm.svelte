@@ -43,13 +43,10 @@
     method = event.detail
   }
 
-  onMount(() => {
-    const pathname = window.location.pathname;
-    if (pathname ==='/login/login' || pathname === "/login") {
-    sessionStorage.clear();
-      setTimeout(() => {
-        loginWithSSO();
-      }, 2000);
+  const loginWithPasswordAction: BottomAction = {
+    i18n: login.string.LoginWithPassword,
+    func: () => {
+      method = LoginMethods.Password
     }
   }
 

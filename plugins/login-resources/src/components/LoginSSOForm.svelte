@@ -1,26 +1,40 @@
 <script lang="ts">
-    import { OK, Severity, Status } from '@hanzo/platform'
+    import { OK, Severity, Status, getMetadata } from '@hanzo/platform'
+    import presentation from '@hanzo/presentation'
     import { Button } from '@hanzo/ui'
     import login from '../plugin'
 
-    export let subtitle: string = "Login with SSO";
-    export let redirectUrl: string = "https://iam.hanzo.ai/login/oauth/authorize?client_id=53c6bc50e68466764b58&scope=openid%20email%20profile&response_type=code&redirect_uri=http://localhost:8081/login/authCallback";
-    export let onLoginStart: (() => void) | undefined = undefined;
+    const IAM_SERVER = 'https://iam.hanzo.ai'
+    const IAM_CLIENT_ID = '53c6bc50e68466764b58'
 
-    let status = OK;
+    export let subtitle: string = 'Login with SSO'
+    export let onLoginStart: (() => void) | undefined = undefined
+
+    let status = OK
+
+    function buildSSOUrl (): string {
+      const iamServer = (getMetadata(presentation.metadata.IamServer as any) as string) ?? IAM_SERVER
+      const redirectUri = `${window.location.origin}/login/authCallback`
+      const params = new URLSearchParams({
+        client_id: IAM_CLIENT_ID,
+        scope: 'openid email profile',
+        response_type: 'code',
+        redirect_uri: redirectUri
+      })
+      return `${iamServer}/login/oauth/authorize?${params.toString()}`
+    }
 
     const handleSSOLogin = () => {
-      status = new Status(Severity.INFO, login.status.ConnectingToServer, {});
-      if (onLoginStart) onLoginStart();
+      status = new Status(Severity.INFO, login.status.ConnectingToServer, {})
+      if (onLoginStart) onLoginStart()
 
-      // Redirect to SSO
-      window.location.href = redirectUrl;
-    };
+      window.location.href = buildSSOUrl()
+    }
   </script>
 
   <div class="login-sso-container">
     {#if subtitle}
-      <p class="subtitle">Login With SSO</p>
+      <p class="subtitle">{subtitle}</p>
     {/if}
     <Button on:click={handleSSOLogin}>
       Login with SSO
