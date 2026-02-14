@@ -1,6 +1,6 @@
 services:
   stream:
-    image: 'hardcoreeng/stream'
+    image: 'hanzoai/stream'
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     container_name: stream
@@ -18,7 +18,7 @@ services:
       - 1080:1080
     restart: unless-stopped
   media:
-    image: 'hardcoreeng/media'
+    image: 'hanzoai/media'
     extra_hosts:
       - 'huly.local:host-gateway'
     container_name: media
@@ -29,7 +29,7 @@ services:
       - QUEUE_CONFIG=${QUEUE_CONFIG}
     restart: unless-stopped
   preview:
-    image: 'hardcoreeng/preview'
+    image: 'hanzoai/preview'
     extra_hosts:
       - 'huly.local:host-gateway'
     container_name: preview
@@ -41,7 +41,7 @@ services:
       - 4040:4040
     restart: unless-stopped
   link-preview:
-    image: 'hardcoreeng/link-preview'
+    image: 'hanzoai/link-preview'
     extra_hosts:
       - 'huly.local:host-gateway'
     container_name: link-preview
@@ -166,7 +166,7 @@ services:
     restart: unless-stopped
 
   account:
-    image: hardcoreeng/account
+    image: hanzoai/account
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -200,7 +200,7 @@ services:
       - MAILBOX_MAX_COUNT_PER_ACCOUNT=2
     restart: unless-stopped
   stats:
-    image: hardcoreeng/stats
+    image: hanzoai/stats
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     ports:
@@ -211,7 +211,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   payment:
-    image: hardcoreeng/payment
+    image: hanzoai/payment
     extra_hosts:
       - 'huly.local:host-gateway'
     ports:
@@ -228,7 +228,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   workspace_cockroach:
-    image: hardcoreeng/workspace
+    image: hanzoai/workspace
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -258,7 +258,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   collaborator:
-    image: hardcoreeng/collaborator
+    image: hanzoai/collaborator
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -276,7 +276,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   front:
-    image: hardcoreeng/front
+    image: hanzoai/front
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -320,7 +320,7 @@ services:
       - LINK_PREVIEW_URL=http://huly.local:4041
     restart: unless-stopped
   transactor_cockroach:
-    image: hardcoreeng/transactor
+    image: hanzoai/transactor
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -362,7 +362,7 @@ services:
       - HYLYLAKE_URL=http://huly.local:8096
     restart: unless-stopped
   rekoni:
-    image: hardcoreeng/rekoni-service
+    image: hanzoai/rekoni-service
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -372,7 +372,7 @@ services:
       - STATS_URL=http://huly.local:4901
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
   fulltext_cockroach:
-    image: hardcoreeng/fulltext
+    image: hanzoai/fulltext
     extra_hosts:
       - 'huly.local:host-gateway'
     depends_on:
@@ -401,7 +401,7 @@ services:
       - HULYLAKE_URL=http://huly.local:8096
       - COMMUNICATION_API_ENABLED=true
   print:
-    image: hardcoreeng/print
+    image: hanzoai/print
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -416,7 +416,7 @@ services:
       - ACCOUNTS_URL=http://huly.local:3000
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
   sign:
-    image: hardcoreeng/sign
+    image: hanzoai/sign
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -438,7 +438,7 @@ services:
       - STATS_URL=http://huly.local:4900
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
   # aiBot:
-  #   image: hardcoreeng/ai-bot
+  #   image: hanzoai/ai-bot
   #   ports:
   #     - 4010:4010
   #   extra_hosts:
@@ -459,7 +459,7 @@ services:
   # #      - LOVE_ENDPOINT=http://huly.local:8096
   # #      - OPENAI_API_KEY=token
   analytics:
-    image: hardcoreeng/analytics-collector
+    image: hanzoai/analytics-collector
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -476,7 +476,7 @@ services:
       # - POSTHOG_API_KEY=${POSTHOG_API_KEY}
       # - MAX_PAYLOAD_SIZE=10mb
   export:
-    image: hardcoreeng/export
+    image: hanzoai/export
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -495,7 +495,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   datalake:
-    image: hardcoreeng/datalake
+    image: hanzoai/datalake
     extra_hosts:
       - 'huly.local:host-gateway'
     depends_on:
@@ -522,7 +522,7 @@ services:
       - SECURE=true
     restart: unless-stopped
   hulylake:
-    image: hardcoreeng/hulylake
+    image: hanzoai/hulylake
     extra_hosts:
       - 'huly.local:host-gateway'
     depends_on:
@@ -541,7 +541,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=minioadmin
     restart: unless-stopped
   hulykvs:
-    image: hardcoreeng/hulykvs
+    image: hanzoai/hulykvs
     depends_on:
       cockroach:
         condition: service_started
@@ -554,7 +554,7 @@ services:
       - HULY_TOKEN_SECRET=secret
     restart: unless-stopped
   hulygun:
-    image: hardcoreeng/hulygun
+    image: hanzoai/hulygun
     depends_on:
       redpanda:
         condition: service_started
@@ -569,7 +569,7 @@ services:
       - HULY_ACCOUNT_SERVICE=http://huly.local:3000
     restart: unless-stopped
   hulypulse:
-    image: hardcoreeng/hulypulse
+    image: hanzoai/hulypulse
     depends_on:
       redis:
         condition: service_started
@@ -581,7 +581,7 @@ services:
     restart: unless-stopped
 
   process-service:
-    image: hardcoreeng/process
+    image: hanzoai/process
     extra_hosts:
       - 'huly.local:host-gateway'
     depends_on:
@@ -596,7 +596,7 @@ services:
       - QUEUE_REGION=cockroach
     restart: unless-stopped
   #  translate:
-  #    image: hardcoreeng/translate
+  #    image: hanzoai/translate
   #    extra_hosts:
   #      - 'huly.local:host-gateway'
   #    depends_on:
@@ -613,7 +613,7 @@ services:
   #      - OPENAI_API_KEY=
   #    restart: unless-stopped
   backup-cockroach:
-    image: hardcoreeng/backup
+    image: hanzoai/backup
     extra_hosts:
       - 'huly.local:host-gateway'
     depends_on:
@@ -641,7 +641,7 @@ services:
       - TEMPORAL_ADDRESS=localhost:7233
     restart: unless-stopped
   backup-api:
-    image: hardcoreeng/backup-api
+    image: hanzoai/backup-api
     extra_hosts:
       - 'huly.local:host-gateway'
     depends_on:
@@ -664,7 +664,7 @@ services:
     restart: unless-stopped
 
   rating_cockroach:
-    image: hardcoreeng/rating
+    image: hanzoai/rating
     extra_hosts:
       - 'huly.local:host-gateway'
     links:

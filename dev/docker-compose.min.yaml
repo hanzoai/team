@@ -79,7 +79,7 @@ services:
       test: curl -s http://localhost:9200/_cluster/health | grep -vq '"status":"red"'
     restart: unless-stopped
   account:
-    image: hardcoreeng/account
+    image: hanzoai/account
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -114,7 +114,7 @@ services:
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   stats:
-    image: hardcoreeng/stats
+    image: hanzoai/stats
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     ports:
@@ -124,7 +124,7 @@ services:
       - SERVER_SECRET=secret
     restart: unless-stopped
   payment:
-    image: hardcoreeng/payment
+    image: hanzoai/payment
     extra_hosts:
       - 'huly.local:host-gateway'
     ports:
@@ -140,7 +140,7 @@ services:
       - POLAR_SUBSCRIPTION_PLANS=${POLAR_SUBSCRIPTION_PLANS}
     restart: unless-stopped
   workspace_cockroach:
-    image: hardcoreeng/workspace
+    image: hanzoai/workspace
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -167,7 +167,7 @@ services:
       - INIT_WORKSPACE=staging-dev
     restart: unless-stopped
   collaborator:
-    image: hardcoreeng/collaborator
+    image: hanzoai/collaborator
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -185,7 +185,7 @@ services:
       - STATS_URL=http://hanzoai.local:4900
     restart: unless-stopped
   front:
-    image: hardcoreeng/front
+    image: hanzoai/front
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -223,7 +223,7 @@ services:
       # - DISABLE_SIGNUP=true
     restart: unless-stopped
   transactor_cockroach:
-    image: hardcoreeng/transactor
+    image: hanzoai/transactor
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -256,7 +256,7 @@ services:
       - COMMUNICATION_TIME_LOGGING_ENABLED=true
     restart: unless-stopped
   fulltext_cockroach:
-    image: hardcoreeng/fulltext
+    image: hanzoai/fulltext
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -278,7 +278,7 @@ services:
       - REKONI_URL=http://huly.local:4004
       - ACCOUNTS_URL=http://huly.local:3000
   datalake:
-    image: hardcoreeng/datalake
+    image: hanzoai/datalake
     extra_hosts:
       - 'huly.local:host-gateway'
     depends_on:
@@ -307,7 +307,7 @@ services:
       - 6379:6379
     restart: unless-stopped
   hulypulse:
-    image: hardcoreeng/hulypulse
+    image: hanzoai/hulypulse
     depends_on:
       redis:
         condition: service_started

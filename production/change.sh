@@ -13,7 +13,7 @@ images=(
 )
 
 # Gốc prefix cũ và mới
-old_prefix="hardcoreeng"
+old_prefix="hanzoai"
 new_prefix="hanzoai"
 
 # Loop đổi tên và tag

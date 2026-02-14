@@ -1,6 +1,6 @@
 set -e
 
-registry=hardcoreeng
+registry=hanzoai
 tag=latest
 
 # Create temp directory for tracking built images

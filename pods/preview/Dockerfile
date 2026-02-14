@@ -1,4 +1,4 @@
-FROM hardcoreeng/preview-base:v20250916
+FROM hanzoai/preview-base:v20250916
 
 WORKDIR /app
 
