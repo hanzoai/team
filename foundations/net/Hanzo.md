@@ -1,8 +1,8 @@
 # Hanzo Team on Network example
 
-## Building Hanzo Team on top of Hanzo Team Network
+## Building Huly on top of Hanzo Network
 
-Hanzo Team could be managed by following set of container kinds, `session`, `query`, `transactor`.
+Huly could be managed by following set of container kinds, `session`, `query`, `transactor`.
 
 - session -> a map/reduce/find executor for queries and transactions from client.
 - query -> a DB query engine, execute `find` requests from session and pass them to DB, allow to search for all data per region. Should have access to tables of account -> workspace mapping for security.
@@ -13,7 +13,7 @@ flowchart
   Endpoint -.->|
   connect
   session/user1
-              |Hanzo TeamNetwork[Hanzo Team Network]
+              |HulyNetwork[Hanzo Network]
 
   Endpoint <-->|find,tx| parsonal-ws:user1
 
@@ -29,10 +29,10 @@ flowchart
 
   parsonal-ws:user1 -..->|tx| transactor:ws1
 
-  transactor:ws1 -..->|event's| Hanzo TeamPulse
+  transactor:ws1 -..->|event's| HulyPulse
   transactor:ws1 -..->|event's| parsonal-ws:user1
 
-  Hanzo TeamPulse <--> Client
+  HulyPulse <--> Client
 
   Client <--> Endpoint
 
@@ -46,7 +46,7 @@ flowchart
 
   Indexer -..-> QueryDB
 
-  Indexer -..->|indexed tx| Hanzo TeamPulse
+  Indexer -..->|indexed tx| HulyPulse
 
   Indexer -..->|indexed tx| parsonal-ws:user1
 

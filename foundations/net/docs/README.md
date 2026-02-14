@@ -1,6 +1,6 @@
 # Hanzo Team Network Documentation
 
-Welcome to the Hanzo Team Virtual Network documentation! This directory contains comprehensive guides for building distributed systems with Hanzo Team Network.
+Welcome to the Hanzo Virtual Network documentation! This directory contains comprehensive guides for building distributed systems with Hanzo Network.
 
 ## 📚 Documentation Index
 
@@ -69,10 +69,10 @@ Welcome to the Hanzo Team Virtual Network documentation! This directory contains
 
 ## 🔗 External Resources
 
-- [Main Repository](https://github.com/hanzoai/hanzo.net)
+- [Main Repository](https://github.com/hcengineering/huly.net)
 - [Examples Directory](../examples/)
 - [ZeroMQ Documentation](https://zeromq.org/documentation/)
-- [Hanzo Team Platform](https://github.com/hanzoai/platform)
+- [Hanzo Team](https://github.com/hcengineering/platform)
 
 ## 🤝 Contributing to Documentation
 

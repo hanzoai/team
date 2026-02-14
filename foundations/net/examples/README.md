@@ -1,6 +1,6 @@
 # Hanzo Team Network Examples
 
-This directory contains comprehensive examples demonstrating various aspects of the Hanzo Team Virtual Network.
+This directory contains comprehensive examples demonstrating various aspects of the Hanzo Virtual Network.
 
 ## 🆕 Updated to Use Typed Proxies
 

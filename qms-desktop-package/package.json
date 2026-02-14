@@ -2,7 +2,7 @@
   "name": "qms-desktop",
   "version": "0.7.326",
   "main": "dist/main/electron.js",
-  "author": "Hanzo AI <hey@hanzo.team>",
+  "author": "Hanzo AI <dev@hanzo.ai>",
   "template": "@hanzo/default-package",
   "scripts": {
     "_phase:package": "rushx package",
@@ -42,7 +42,7 @@
   "description": "TraceX Desktop experience",
   "build": {
     "productName": "TraceX",
-    "appId": "app.hanzo.TraceX",
+    "appId": "ai.hanzo.team",
     "directories": {
       "output": "deploy"
     },

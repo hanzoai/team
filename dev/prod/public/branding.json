@@ -86,9 +86,9 @@
       }
     ]
   },
-  "hanzoai.local:8080": {
+  "huly.local:8080": {
     "title": "Hanzo Team",
-    "languages": "en,ru,pt,pt-br,es,zh,fr,de,ja,tr",
+    "languages": "en,ru,pt,es,zh,fr,de,ja",
     "defaultLanguage": "en",
     "defaultApplication": "tracker",
     "defaultSpace": "tracker:project:DefaultProject",
@@ -115,9 +115,9 @@
       }
     ]
   },
-  "hanzoai.local:8087": {
+  "huly.local:8087": {
     "title": "Hanzo Team",
-    "languages": "en,ru,pt,pt-br,es,zh,fr,de,ja,tr",
+    "languages": "en,ru,pt,es,zh,fr,de,ja",
     "defaultLanguage": "en",
     "defaultApplication": "tracker",
     "defaultSpace": "tracker:project:DefaultProject",
@@ -144,8 +144,8 @@
       }
     ]
   },
-  "hanzoai.local:8081": {
-    "title": "TraceX",
+  "huly.local:8081": {
+    "title": "Hanzo Team",
     "languages": "en",
     "defaultLanguage": "en",
     "defaultApplication": "documents",
@@ -156,36 +156,22 @@
       {
         "rel": "shortcut icon",
         "type": "image/x-icon",
-        "href": "/tracex/favicon.ico"
+        "href": "/hanzoai/favicon.ico"
       },
       {
         "rel": "icon",
         "type": "image/svg+xml",
         "sizes": "any",
-        "href": "/tracex/favicon.svg"
+        "href": "/hanzoai/favicon.svg"
       },
       {
-        "rel": "icon",
-        "type": "image/png",
-        "sizes": "16x16",
-        "href": "/tracex/favicon_16.png"
-      },
-      {
-        "rel": "icon",
-        "type": "image/png",
-        "sizes": "32x32",
-        "href": "/tracex/favicon_32.png"
-      },
-      {
-        "rel": "icon",
-        "type": "image/png",
-        "sizes": "192x192",
-        "href": "/tracex/favicon_192.png"
+        "rel": "apple-touch-icon",
+        "href": "/hanzoai/apple-touch-icon.png"
       }
     ]
   },
-  "hanzoai.local:8088": {
-    "title": "TraceX",
+  "huly.local:8088": {
+    "title": "Hanzo Team",
     "languages": "en",
     "defaultLanguage": "en",
     "defaultApplication": "documents",
@@ -195,31 +181,17 @@
       {
         "rel": "shortcut icon",
         "type": "image/x-icon",
-        "href": "/tracex/favicon.ico"
+        "href": "/hanzoai/favicon.ico"
       },
       {
         "rel": "icon",
         "type": "image/svg+xml",
         "sizes": "any",
-        "href": "/tracex/favicon.svg"
+        "href": "/hanzoai/favicon.svg"
       },
       {
-        "rel": "icon",
-        "type": "image/png",
-        "sizes": "16x16",
-        "href": "/tracex/favicon_16.png"
-      },
-      {
-        "rel": "icon",
-        "type": "image/png",
-        "sizes": "32x32",
-        "href": "/tracex/favicon_32.png"
-      },
-      {
-        "rel": "icon",
-        "type": "image/png",
-        "sizes": "192x192",
-        "href": "/tracex/favicon_192.png"
+        "rel": "apple-touch-icon",
+        "href": "/hanzoai/apple-touch-icon.png"
       }
     ]
   }

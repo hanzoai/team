@@ -1,15 +1,15 @@
-# hanzoai Platform
+# Hanzo Team
 
-[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hanzoai_io?style=for-the-badge)](https://x.com/hanzoai_io)
-![GitHub License](https://img.shields.io/github/license/hanzoai/platform?style=for-the-badge)
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hanloai?style=for-the-badge)](https://x.com/hanzoai)
+![GitHub License](https://img.shields.io/github/license/hanzoai/team?style=for-the-badge)
 
 ⭐️ Your star shines on us. Star us on GitHub!
 
 ## About
 
-The hanzoai Platform is a robust framework designed to accelerate the development of business applications, such as CRM systems.
+Hanzo Team is a robust platform for project management, CRM, HR, and team collaboration.
 This repository includes several applications, such as Chat, Project Management, CRM, HRM, and ATS.
-Various teams are building products on top of the Platform, including [hanzoai](https://hanzoai.io) and [TraceX](https://tracex.co).
+Built on the Huly open-source platform by [Hanzo AI](https://hanzo.ai).
 
 ![hanzoai](https://repository-images.githubusercontent.com/392073243/6d27d5cc-38cd-4d88-affe-bb88b393180c)
 
@@ -24,7 +24,7 @@ This project offers a convenient method to host hanzoai using `docker`, designed
 
 ## API Client
 
-If you want to interact with Hanzo Team programmatically, check out our [API Client](https://github.com/hanzoai/hanzo.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Hanzo Team operations and can be used to build integrations and custom applications.
+If you want to interact with Hanzo Team programmatically, check out our [API Client](https://github.com/hcengineering/huly.core/tree/main/packages/api-client) documentation. The API client provides a typed interface for all Hanzo Team operations and can be used to build integrations and custom applications.
 
 You can find API usage examples in the [hanzoai examples](https://github.com/hanzoai/hanzoai-examples) repository.
 
@@ -34,13 +34,13 @@ For detailed information about changes, improvements, and bug fixes in each vers
 
 ## Versions
 
-The Hanzo Team Platform uses two types of version tags to distinguish between production-ready and development releases:
+Hanzo Team uses two types of version tags to distinguish between production-ready and development releases:
 
 - **Production Versions (`v*`)** - Stable releases for end users
   - Example: `v0.7.310`, `v0.7.307`, `v0.6.501`
   - These versions are recommended for production deployments
   - Suitable for self-hosted installations
-  - Published with release notes on [GitHub Releases](https://github.com/hanzoai/platform/releases)
+  - Published with release notes on [GitHub Releases](https://github.com/hcengineering/platform/releases)
 
 - **Development Versions (`s*`)** - Pre-release builds for developers
   - Example: `s0.7.313`, `s0.7.292`, `s0.7.288`
@@ -54,7 +54,7 @@ For detailed information about the platform architecture, services, and their in
 
 ## Table of Contents
 
-- [hanzoai Platform](#hanzoai-platform)
+- [Hanzo Team](#hanzo-team)
   - [About](#about)
   - [Self-Hosting](#self-hosting)
   - [Activity](#activity)
@@ -204,10 +204,7 @@ sh ./scripts/build.sh
 
 By default, Docker volumes named dev_db, dev_elastic, and dev_files will be created for the MongoDB, Elasticsearch, and MinIO instances.
 
-Add the following lines to your hosts file:
-
-- **macOS / Linux:** `/etc/hosts`
-- **Windows:** `C:\Windows\System32\drivers\etc\hosts`
+Add the following line to your /etc/hosts file
 
 ```plain
 127.0.0.1 hanzoai.local
@@ -376,4 +373,4 @@ When starting the application (`rush docker:up`), some network ports in Windows 
 1. Find what's using that port
 2. Update the new address in the corresponding service configuration
 
-<sub><sup>&copy; 2025 <a href="https://hanzoai.com">Hardcore Engineering Inc</a>.</sup></sub>
+<sub><sup>&copy; 2025 <a href="https://hardcoreeng.com">Hardcore Engineering Inc</a>.</sup></sub>

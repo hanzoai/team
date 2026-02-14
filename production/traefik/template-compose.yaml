@@ -232,7 +232,7 @@ services:
       UPLOAD_URL: /files
       ELASTIC_URL: http://elastic:9200
       COLLABORATOR_URL: wss://${SERVER_ADDRESS}/ws/collaborator
-      TITLE: Hanzo Team Self Host
+      TITLE: Hanzo Team
       DEFAULT_LANGUAGE: en
       LAST_NAME_FIRST: true
       DESKTOP_UPDATES_CHANNEL: selfhost

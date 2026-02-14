@@ -7,7 +7,7 @@ The Export Service provides asynchronous data export functionality for Hanzo Tea
 The Export Service is a standalone microservice that:
 - Exports workspace data asynchronously via REST API
 - Exports documents from one workspace to another workspace
-- Converts Hanzo Team documents to standardized formats
+- Converts Huly documents to standardized formats
 - Handles complex document relationships (references, collections, attachments)
 - Packages exports as ZIP archives and saves them to the workspace Drive
 - Sends notifications upon completion or failure
@@ -199,7 +199,7 @@ Exports documents from the current workspace to another workspace. This endpoint
 
 ## Document Conversion
 
-The converter transforms Hanzo Team documents into a unified format that:
+The converter transforms Huly documents into a unified format that:
 
 ### Handles Special Types
 - **References** (`RefTo`): Resolved to readable format (e.g., person names)
@@ -262,14 +262,14 @@ Storage configuration (via `storageConfigFromEnv`):
 ### Docker Deployment
 
 ```bash
-docker build -t hanzoai/export .
+docker build -t hardcoreeng/export .
 docker run -p 4006:4006 \
   -e SECRET=your-secret \
   -e ACCOUNTS_URL=http://accounts:3000 \
   -e SERVICE_ID=export-service \
   -e STORAGE_PROVIDER=minio \
   -e STORAGE_ENDPOINT=http://minio:9000 \
-  hanzoai/export
+  hardcoreeng/export
 ```
 
 ## Development
@@ -284,7 +284,7 @@ rush build --to @hanzo/pod-export
 
 ```bash
 cd services/export/pod-export
-ACCOUNTS_URL="http://127.0.0.1:3000" SECRET="secret" DB_URL=postgresql://root@hanzo.local:26257/defaultdb?sslmode=disable SERVICE_ID="export" STORAGE_CONFIG="datalake|http://hanzo.local:4030" rushx run-local
+ACCOUNTS_URL="http://127.0.0.1:3000" SECRET="secret" DB_URL=postgresql://root@huly.local:26257/defaultdb?sslmode=disable SERVICE_ID="export" STORAGE_CONFIG="datalake|http://huly.local:4030" rushx run-local
 ```
 
 ### Testing
@@ -383,4 +383,4 @@ Eclipse Public License 2.0
 
 ## Support
 
-For issues and questions, see the main Hanzo Team Platform repository.
+For issues and questions, see the main Hanzo Team repository.

@@ -1,6 +1,6 @@
 # Hanzo Team Utils
 
-Hanzo Team Utils is a monorepo managed by [Rush](https://rushjs.io/) that contains build tools to Hanzo Team platform.
+Hanzo Utils is a monorepo managed by [Rush](https://rushjs.io/) that contains build tools to Hanzo Team platform.
 This repository is structured to support scalable development and efficient collaboration.
 
 ## Repository Structure
@@ -31,8 +31,8 @@ packages/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/hanzoai/hanzo.utils.git
-   cd hanzo.utils
+   git clone https://github.com/hcengineering/huly.utils.git
+   cd huly.utils
    ```
 
 2. Install dependencies using Rush:

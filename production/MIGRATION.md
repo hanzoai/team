@@ -99,14 +99,14 @@ Configuration:
 
 ```yaml
   fulltext:
-    image: hanzoai/fulltext:${HULY_VERSION}
+    image: hardcoreeng/fulltext:${HULY_VERSION}
     ports:
       - 4700:4700
     environment:
       - SERVER_SECRET=${HULY_SECRET}
       - DB_URL=mongodb://mongodb:27017
       - FULLTEXT_DB_URL=http://elastic:9200
-      - ELASTIC_INDEX_NAME=hanzo_storage_index
+      - ELASTIC_INDEX_NAME=huly_storage_index
       - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
       - REKONI_URL=http://rekoni:4004
       - ACCOUNTS_URL=http://account:3000
@@ -124,7 +124,7 @@ Update the `transactor` service to use the new `fulltext` service:
       - FULLTEXT_URL=http://fulltext:4700
       # Remove the following lines
       # - ELASTIC_URL=http://elastic:9200
-      # - ELASTIC_INDEX_NAME=hanzo_storage_index
+      # - ELASTIC_INDEX_NAME=huly_storage_index
       # - REKONI_URL=http://rekoni:4004
 ```
 
@@ -136,7 +136,7 @@ Configuration:
 
 ```yaml
   stats:
-    image: hanzoai/stats:${HULY_VERSION}
+    image: hardcoreeng/stats:${HULY_VERSION}
     ports:
       - 4900:4900
     environment:
@@ -145,7 +145,7 @@ Configuration:
     restart: unless-stopped
 ```
 
-Other Hanzo Team services have been updated to use the new statistics service:
+Other services have been updated to use the new statistics service:
 
 ```yaml
   ...

@@ -189,7 +189,7 @@ jobs:
         continue-on-error: true
         uses: docker/login-action@v3
         with:
-          username: hanzoai
+          username: hardcoreeng
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
       - name: Prepare server
@@ -239,7 +239,7 @@ jobs:
         continue-on-error: true
         uses: docker/login-action@v3
         with:
-          username: hanzoai
+          username: hardcoreeng
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
@@ -371,7 +371,7 @@ jobs:
         continue-on-error: true
         uses: docker/login-action@v3
         with:
-          username: hanzoai
+          username: hardcoreeng
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
@@ -468,7 +468,7 @@ jobs:
         continue-on-error: true
         uses: docker/login-action@v3
         with:
-          username: hanzoai
+          username: hardcoreeng
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
@@ -552,7 +552,7 @@ jobs:
         continue-on-error: true
         uses: docker/login-action@v3
         with:
-          username: hanzoai
+          username: hardcoreeng
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
@@ -667,7 +667,7 @@ jobs:
         continue-on-error: true
         uses: docker/login-action@v3
         with:
-          username: hanzoai
+          username: hardcoreeng
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
       - name: Docker build
@@ -692,7 +692,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/s') }}
         uses: docker/login-action@v3
         with:
-          username: hanzoai
+          username: hardcoreeng
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       # - name: Docker push staging
       #   if: ${{ github.ref == 'refs/heads/main' }}
@@ -808,8 +808,8 @@ jobs:
       - name: Upload Linux
         uses: actions/upload-artifact@v6
         with:
-          name: Hanzo Team-Linux
-          path: ./desktop-package/deploy/Hanzo Team-linux-*.zip
+          name: HanzoTeam-Linux
+          path: ./desktop-package/deploy/HanzoTeam-linux-*.zip
 
   qms-dist-build:
     # if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/s') }}

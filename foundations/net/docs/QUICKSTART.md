@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-Get started with Hanzo Team Virtual Network in under 10 minutes!
+Get started with Hanzo Virtual Network in under 10 minutes!
 
 ## ⚠️ Important Limitations
 
@@ -27,8 +27,8 @@ For production, use process monitoring (systemd, PM2, Kubernetes) to ensure quic
 
 ```bash
 # Clone the repository
-git clone https://github.com/hanzoai/hanzo.net.git
-cd hanzo.net
+git clone https://github.com/hcengineering/huly.net.git
+cd huly.net
 
 # Install dependencies
 node common/scripts/install-run-rush.js install
@@ -44,13 +44,13 @@ node common/scripts/install-run-rush.js test
 
 ```bash
 # Pull the network server image
-docker pull hanzoai/network-pod:latest
+docker pull hardcoreeng/network-pod:latest
 
 # Run the network server
 docker run -d \
-  --name hanzo-network \
+  --name huly-network \
   -p 3737:3737 \
-  hanzoai/network-pod:latest
+  hardcoreeng/network-pod:latest
 ```
 
 ### Option 3: NPM Packages (Coming Soon)
@@ -384,7 +384,7 @@ For more help, see the [Troubleshooting Guide](TROUBLESHOOTING.md).
 - [Examples Directory](../examples/) - Complete working examples
 - [Core Concepts](CORE_CONCEPTS.md) - Architecture deep dive
 - [API Reference](API_CORE.md) - Detailed API documentation
-- [GitHub Repository](https://github.com/hanzoai/hanzo.net)
+- [GitHub Repository](https://github.com/hcengineering/huly.net)
 
 ---
 

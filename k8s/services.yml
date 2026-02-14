@@ -1,0 +1,574 @@
+# Cross-namespace service references
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: team
+spec:
+  type: ExternalName
+  externalName: mongodb.hanzo.svc.cluster.local
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: minio
+  namespace: team
+spec:
+  type: ExternalName
+  externalName: minio.hanzo.svc.cluster.local
+---
+# Rekoni - Document intelligence / OCR
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rekoni
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rekoni
+  template:
+    metadata:
+      labels:
+        app: rekoni
+    spec:
+      containers:
+        - name: rekoni
+          image: hanzoai/rekoni-service:5.1.1
+          env:
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 500Mi
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rekoni
+  namespace: team
+spec:
+  selector:
+    app: rekoni
+  ports:
+    - port: 4004
+      targetPort: 4004
+---
+# Stats
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stats
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stats
+  template:
+    metadata:
+      labels:
+        app: stats
+    spec:
+      containers:
+        - name: stats
+          image: hanzoai/stats:5.1.1
+          env:
+            - name: PORT
+              value: "4900"
+            - name: SERVER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 25m
+            limits:
+              memory: 256Mi
+              cpu: 250m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stats
+  namespace: team
+spec:
+  selector:
+    app: stats
+  ports:
+    - port: 4900
+      targetPort: 4900
+---
+# Fulltext search
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fulltext
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fulltext
+  template:
+    metadata:
+      labels:
+        app: fulltext
+    spec:
+      containers:
+        - name: fulltext
+          image: hanzoai/fulltext:5.1.1
+          env:
+            - name: SERVER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: FULLTEXT_DB_URL
+              value: "http://elastic:9200"
+            - name: ELASTIC_INDEX_NAME
+              value: "hanzo_team_index"
+            - name: STORAGE_CONFIG
+              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+            - name: REKONI_URL
+              value: "http://rekoni:4004"
+            - name: ACCOUNTS_URL
+              value: "http://account:3000"
+            - name: STATS_URL
+              value: "http://stats:4900"
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fulltext
+  namespace: team
+spec:
+  selector:
+    app: fulltext
+  ports:
+    - port: 4700
+      targetPort: 4700
+---
+# Account service
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account
+  template:
+    metadata:
+      labels:
+        app: account
+    spec:
+      containers:
+        - name: account
+          image: hanzoai/account:5.1.1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: SERVER_PORT
+              value: "3000"
+            - name: SERVER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: TRANSACTOR_URL
+              value: "ws://transactor:3333;ws://team-nginx:80/_transactor"
+            - name: STORAGE_CONFIG
+              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+            - name: FRONT_URL
+              value: "https://hanzo.team"
+            - name: STATS_URL
+              value: "http://stats:4900"
+            - name: MODEL_ENABLED
+              value: "*"
+            - name: ACCOUNTS_URL
+              value: "https://hanzo.team/_accounts"
+            - name: ACCOUNT_PORT
+              value: "3000"
+            - name: BRANDING_PATH
+              value: "/var/cfg/branding.json"
+            - name: OPENID_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: openid-client-id
+            - name: OPENID_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: openid-client-secret
+            - name: OPENID_ISSUER
+              value: "https://hanzo.id"
+            - name: OPENID_DISPLAY_NAME
+              value: "Hanzo"
+          volumeMounts:
+            - name: branding
+              mountPath: /var/cfg/branding.json
+              subPath: branding.json
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+      volumes:
+        - name: branding
+          configMap:
+            name: team-branding
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account
+  namespace: team
+spec:
+  selector:
+    app: account
+  ports:
+    - port: 3000
+      targetPort: 3000
+---
+# Transactor
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transactor
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transactor
+  template:
+    metadata:
+      labels:
+        app: transactor
+    spec:
+      containers:
+        - name: transactor
+          image: hanzoai/transactor:5.1.1
+          ports:
+            - containerPort: 3333
+          env:
+            - name: SERVER_PORT
+              value: "3333"
+            - name: SERVER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+            - name: SERVER_CURSOR_MAXTIMEMS
+              value: "30000"
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: STORAGE_CONFIG
+              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+            - name: FRONT_URL
+              value: "https://hanzo.team"
+            - name: ACCOUNTS_URL
+              value: "http://account:3000"
+            - name: FULLTEXT_URL
+              value: "http://fulltext:4700"
+            - name: STATS_URL
+              value: "http://stats:4900"
+            - name: LAST_NAME_FIRST
+              value: "true"
+            - name: BRANDING_PATH
+              value: "/var/cfg/branding.json"
+          volumeMounts:
+            - name: branding
+              mountPath: /var/cfg/branding.json
+              subPath: branding.json
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 100m
+            limits:
+              memory: 1Gi
+              cpu: "1"
+      volumes:
+        - name: branding
+          configMap:
+            name: team-branding
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transactor
+  namespace: team
+spec:
+  selector:
+    app: transactor
+  ports:
+    - port: 3333
+      targetPort: 3333
+---
+# Collaborator
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collaborator
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: collaborator
+  template:
+    metadata:
+      labels:
+        app: collaborator
+    spec:
+      containers:
+        - name: collaborator
+          image: hanzoai/collaborator:5.1.1
+          ports:
+            - containerPort: 3078
+          env:
+            - name: COLLABORATOR_PORT
+              value: "3078"
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+            - name: ACCOUNTS_URL
+              value: "http://account:3000"
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: STATS_URL
+              value: "http://stats:4900"
+            - name: STORAGE_CONFIG
+              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: collaborator
+  namespace: team
+spec:
+  selector:
+    app: collaborator
+  ports:
+    - port: 3078
+      targetPort: 3078
+---
+# Workspace
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workspace
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workspace
+  template:
+    metadata:
+      labels:
+        app: workspace
+    spec:
+      containers:
+        - name: workspace
+          image: hanzoai/workspace:5.1.1
+          env:
+            - name: SERVER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: TRANSACTOR_URL
+              value: "ws://transactor:3333;ws://team-nginx:80/_transactor"
+            - name: STORAGE_CONFIG
+              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+            - name: MODEL_ENABLED
+              value: "*"
+            - name: ACCOUNTS_URL
+              value: "http://account:3000"
+            - name: STATS_URL
+              value: "http://stats:4900"
+            - name: BRANDING_PATH
+              value: "/var/cfg/branding.json"
+          volumeMounts:
+            - name: branding
+              mountPath: /var/cfg/branding.json
+              subPath: branding.json
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+      volumes:
+        - name: branding
+          configMap:
+            name: team-branding
+---
+# Front (Web UI)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front
+  namespace: team
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: front
+  template:
+    metadata:
+      labels:
+        app: front
+    spec:
+      containers:
+        - name: front
+          image: hanzoai/front:5.1.1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+            - name: SERVER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+            - name: ACCOUNTS_URL
+              value: "https://hanzo.team/_accounts"
+            - name: REKONI_URL
+              value: "https://hanzo.team/_rekoni"
+            - name: STATS_URL
+              value: "https://hanzo.team/_stats"
+            - name: GMAIL_URL
+              value: "http://localhost:8088"
+            - name: TELEGRAM_URL
+              value: "http://localhost:8086"
+            - name: LOVE_ENDPOINT
+              value: "http://localhost:8096"
+            - name: CALENDAR_URL
+              value: "http://localhost:8095"
+            - name: UPLOAD_URL
+              value: "/files"
+            - name: ELASTIC_URL
+              value: "http://elastic:9200"
+            - name: COLLABORATOR_URL
+              value: "wss://hanzo.team/_collaborator"
+            - name: STORAGE_CONFIG
+              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: TITLE
+              value: "Hanzo Team"
+            - name: DEFAULT_LANGUAGE
+              value: "en"
+            - name: LAST_NAME_FIRST
+              value: "true"
+            - name: BRANDING_URL
+              value: "/branding.json"
+          volumeMounts:
+            - name: index-patch
+              mountPath: /app/dist/index.html
+              subPath: index.html
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+      imagePullSecrets:
+        - name: ghcr-secret
+      volumes:
+        - name: index-patch
+          configMap:
+            name: front-index-patch
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: front
+  namespace: team
+spec:
+  selector:
+    app: front
+  ports:
+    - port: 8080
+      targetPort: 8080

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: front-index-patch
+  namespace: team
+data:
+  index.html: |
+    <!doctype html><html><head><meta charset="utf8"><title>Hanzo Team</title><link rel="shortcut icon" href="/hanzoai/favicon.ico" sizes="any" id="default-favicon"><meta name="viewport" content="width=device-width,initial-scale=1"><script defer="defer" src="/1073.35baaf3b4edfc6471d58.js"></script><script defer="defer" src="/bundle.075357e4a9bf55405507.js"></script></head><body style="margin: 0; overflow: hidden;"></body></html>

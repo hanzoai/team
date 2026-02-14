@@ -1,0 +1,14 @@
+FROM hanzoai/front:5.1.1
+
+# Fix HTML title: Huly → Hanzo Team
+RUN sed -i 's/<title>Huly<\/title>/<title>Hanzo Team<\/title>/g' /app/dist/index.html && \
+    sed -i 's/<title>hanzoai<\/title>/<title>Hanzo Team<\/title>/g' /app/dist/index.html && \
+    # Fix favicon paths: /huly/ → /hanzoai/ in index.html
+    sed -i 's|/huly/favicon|/hanzoai/favicon|g' /app/dist/index.html && \
+    sed -i 's|/huly/site.webmanifest|/hanzoai/site.webmanifest|g' /app/dist/index.html && \
+    sed -i 's|/huly/apple-touch-icon|/hanzoai/apple-touch-icon|g' /app/dist/index.html && \
+    # Copy huly assets as hanzoai assets (symlink)
+    cp -r /app/dist/huly /app/dist/hanzoai 2>/dev/null || true && \
+    # Update site.webmanifest name
+    sed -i 's/"Huly"/"Hanzo Team"/g; s/"huly"/"Hanzo Team"/g' /app/dist/hanzoai/site.webmanifest 2>/dev/null || true && \
+    sed -i 's/"Huly"/"Hanzo Team"/g; s/"huly"/"Hanzo Team"/g' /app/dist/huly/site.webmanifest 2>/dev/null || true

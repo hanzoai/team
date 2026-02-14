@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Monorepo**: Rush-managed backend infrastructure for Hanzo Team Platform  
+**Monorepo**: Rush-managed backend infrastructure for Hanzo Team  
 **Stack**: TypeScript, Node.js v20.11.0+, pnpm 10.15.1, Rush 5.158.1, Jest  
 **License**: Eclipse Public License 2.0 (Hardcore Engineering Inc.)
 
@@ -10,7 +10,7 @@
 
 - **Core**: core, server, client, middleware
 - **Database**: mongo, postgres, elastic
-- **Storage**: server-storage, minio, s3, datalake, hanzolake
+- **Storage**: server-storage, minio, s3, datalake, hulylake
 - **Infrastructure**: kafka, collaboration
 
 Standard structure: `src/` → `lib/` (compiled), `tsconfig.json`, `jest.config.js`, `package.json` with `@hanzo/` scope

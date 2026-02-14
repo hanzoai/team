@@ -16,14 +16,16 @@
     "Tier": "Tier",
     "StorageLimit": "{limit} {unit} storage",
     "TrafficLimit": "{limit} {unit} video/audio traffic",
-    "Pro": "Pro",
-    "ProDescription": "For professionals and creators. $5 credit included.",
-    "Team": "Team",
-    "TeamDescription": "For growing teams and organizations.",
-    "Max": "Max",
-    "MaxDescription": "Maximum power for demanding workloads.",
+    "Common": "Common",
+    "CommonDescription": "For individuals and teams getting started with Hanzo Team.",
+    "Rare": "Rare",
+    "RareDescription": "For individual creatives, freelancers, and micro-agencies.",
+    "Epic": "Epic",
+    "EpicDescription": "For professional creative companies and small businesses.",
+    "Legendary": "Legendary",
+    "LegendaryDescription": "Best for large multiple teams that need maximum capabilities.",
     "UnlimitedUsers": "Unlimited users",
-    "UnlimitedObjects": "Unlimited Hanzo Team objects",
+    "UnlimitedObjects": "Unlimited Hanzo objects",
     "ChangePlan": "Change plan",
     "Subscribe": "Subscribe",
     "Monthly": "Monthly",
@@ -54,8 +56,6 @@
     "Of": "of",
     "UpgradePlan": "Upgrade Plan",
     "LimitReached": "Workspace limit reached, some functionality may be disabled. Upgrade to restore full access.",
-    "RestrictedPlans": "Only the workspace owner or billing manager can change the subscription plan",
-    "SubscriptionOperationFailed": "Subscription operation failed",
-    "SubscriptionErrorMessage": "Something went wrong. Please try again or contact support."
+    "RestrictedPlans": "Only the workspace owner or billing manager can change the subscription plan"
   }
 }

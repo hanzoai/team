@@ -1,6 +1,6 @@
 # Production Deployment Guide
 
-Complete guide for deploying Hanzo Team Virtual Network to production environments.
+Complete guide for deploying Hanzo Virtual Network to production environments.
 
 ## ⚠️ Critical Limitation: Network Service
 
@@ -116,8 +116,8 @@ version: '3.8'
 
 services:
   network-server:
-    image: hanzoai/network-pod:latest
-    container_name: hanzo-network
+    image: hardcoreeng/network-pod:latest
+    container_name: huly-network
     restart: unless-stopped
     ports:
       - '3737:3737'
@@ -134,12 +134,12 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - hanzo-network
+      - huly-network
 
   # Agent 1
   agent-1:
     build: ./agents
-    container_name: hanzo-agent-1
+    container_name: huly-agent-1
     restart: unless-stopped
     environment:
       - AGENT_ID=agent-1
@@ -152,12 +152,12 @@ services:
     depends_on:
       - network-server
     networks:
-      - hanzo-network
+      - huly-network
 
   # Agent 2
   agent-2:
     build: ./agents
-    container_name: hanzo-agent-2
+    container_name: huly-agent-2
     restart: unless-stopped
     environment:
       - AGENT_ID=agent-2
@@ -170,10 +170,10 @@ services:
     depends_on:
       - network-server
     networks:
-      - hanzo-network
+      - huly-network
 
 networks:
-  hanzo-network:
+  huly-network:
     driver: bridge
 
 volumes:
@@ -234,22 +234,22 @@ Create `k8s/network-deployment.yaml`:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hanzo-network
+  name: huly-network
   labels:
-    app: hanzo-network
+    app: huly-network
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: hanzo-network
+      app: huly-network
   template:
     metadata:
       labels:
-        app: hanzo-network
+        app: huly-network
     spec:
       containers:
         - name: network
-          image: hanzoai/network-pod:latest
+          image: hardcoreeng/network-pod:latest
           ports:
             - containerPort: 3737
               name: network
@@ -279,10 +279,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hanzo-network-service
+  name: huly-network-service
 spec:
   selector:
-    app: hanzo-network
+    app: huly-network
   ports:
     - protocol: TCP
       port: 3737
@@ -298,25 +298,25 @@ Create `k8s/agent-deployment.yaml`:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hanzo-agents
+  name: huly-agents
   labels:
-    app: hanzo-agent
+    app: huly-agent
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: hanzo-agent
+      app: huly-agent
   template:
     metadata:
       labels:
-        app: hanzo-agent
+        app: huly-agent
     spec:
       containers:
         - name: agent
-          image: your-registry/hanzo-agent:latest
+          image: your-registry/huly-agent:latest
           env:
             - name: NETWORK_HOST
-              value: 'hanzo-network-service'
+              value: 'huly-network-service'
             - name: NETWORK_PORT
               value: '3737'
             - name: AGENT_ID
@@ -343,12 +343,12 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: hanzo-agent-hpa
+  name: huly-agent-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: hanzo-agents
+    name: huly-agents
   minReplicas: 4
   maxReplicas: 20
   metrics:
@@ -370,22 +370,22 @@ spec:
 
 ```bash
 # Create namespace
-kubectl create namespace hanzo-network
+kubectl create namespace huly-network
 
 # Apply configurations
-kubectl apply -f k8s/network-deployment.yaml -n hanzo-network
-kubectl apply -f k8s/agent-deployment.yaml -n hanzo-network
+kubectl apply -f k8s/network-deployment.yaml -n huly-network
+kubectl apply -f k8s/agent-deployment.yaml -n huly-network
 
 # Check status
-kubectl get pods -n hanzo-network
-kubectl get services -n hanzo-network
+kubectl get pods -n huly-network
+kubectl get services -n huly-network
 
 # View logs
-kubectl logs -f deployment/hanzo-network -n hanzo-network
-kubectl logs -f deployment/hanzo-agents -n hanzo-network
+kubectl logs -f deployment/huly-network -n huly-network
+kubectl logs -f deployment/huly-agents -n huly-network
 
 # Scale manually
-kubectl scale deployment hanzo-agents --replicas=10 -n hanzo-network
+kubectl scale deployment huly-agents --replicas=10 -n huly-network
 ```
 
 ## Configuration
@@ -410,7 +410,7 @@ TICK_RATE=1000
 
 # Logging
 LOG_LEVEL=info
-LOG_FILE=/var/log/hanzo/network.log
+LOG_FILE=/var/log/huly/network.log
 ```
 
 **Agents:**
@@ -478,19 +478,19 @@ const app = express()
 
 // Metrics
 const requestCounter = new Counter({
-  name: 'hanzo_requests_total',
+  name: 'huly_requests_total',
   help: 'Total number of requests',
   labelNames: ['operation', 'status']
 })
 
 const requestDuration = new Histogram({
-  name: 'hanzo_request_duration_seconds',
+  name: 'huly_request_duration_seconds',
   help: 'Request duration in seconds',
   labelNames: ['operation']
 })
 
 const activeContainers = new Gauge({
-  name: 'hanzo_active_containers',
+  name: 'huly_active_containers',
   help: 'Number of active containers',
   labelNames: ['kind']
 })
@@ -519,17 +519,17 @@ const logger = winston.createLogger({
     winston.format.json()
   ),
   defaultMeta: {
-    service: 'hanzo-network',
+    service: 'huly-network',
     environment: process.env.NODE_ENV
   },
   transports: [
     new winston.transports.Console(),
     new winston.transports.File({
-      filename: '/var/log/hanzo/error.log',
+      filename: '/var/log/huly/error.log',
       level: 'error'
     }),
     new winston.transports.File({
-      filename: '/var/log/hanzo/combined.log'
+      filename: '/var/log/huly/combined.log'
     })
   ]
 })
@@ -726,7 +726,7 @@ async function recover(uuid: ContainerUuid) {
 lsof -i :3737
 
 # Check logs
-tail -f /var/log/hanzo/error.log
+tail -f /var/log/huly/error.log
 
 # Verify configuration
 cat config/production.json
@@ -739,7 +739,7 @@ cat config/production.json
 telnet network-server 3737
 
 # Check agent logs
-docker logs hanzo-agent-1
+docker logs huly-agent-1
 
 # Verify DNS resolution
 nslookup network-server
@@ -749,10 +749,10 @@ nslookup network-server
 
 ```bash
 # Check container count
-kubectl top pods -n hanzo-network
+kubectl top pods -n huly-network
 
 # Scale down if needed
-kubectl scale deployment hanzo-agents --replicas=5
+kubectl scale deployment huly-agents --replicas=5
 ```
 
 ### Debugging Tools
@@ -762,7 +762,7 @@ kubectl scale deployment hanzo-agents --replicas=5
 netstat -an | grep 3737
 
 # Process monitoring
-top -p $(pgrep -f hanzo)
+top -p $(pgrep -f huly)
 
 # Memory profiling
 node --inspect agent.js
@@ -774,9 +774,9 @@ node --inspect agent.js
 
 ```bash
 # Kubernetes rolling update
-kubectl set image deployment/hanzo-network \
-  network=hanzoai/network-pod:v2.0.0 \
-  --record -n hanzo-network
+kubectl set image deployment/huly-network \
+  network=hardcoreeng/network-pod:v2.0.0 \
+  --record -n huly-network
 
 # Docker Compose
 docker-compose pull

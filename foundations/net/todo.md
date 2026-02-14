@@ -1,6 +1,6 @@
 # Hanzo Team Network - TODO & Roadmap
 
-This document outlines the planned improvements and future development goals for Hanzo Team Network.
+This document outlines the planned improvements and future development goals for Hanzo Network.
 
 ## Completed ✓
 
@@ -76,7 +76,7 @@ Add high availability capabilities to ensure network coordinator resilience and 
 
 ### 4. Comprehensive Performance Testing Suite
 
-Develop a robust performance testing framework to evaluate Hanzo Team Network under various load scenarios and identify bottlenecks.
+Develop a robust performance testing framework to evaluate Hanzo Network under various load scenarios and identify bottlenecks.
 
 **Test Scenarios**:
 
@@ -111,7 +111,7 @@ Introduce streaming capabilities to enable efficient partial data transfer from 
 
 ### 6. Security and External Client/Agent Support
 
-Enable secure external access to the Hanzo Team Network Server Hub, allowing trusted clients and agents outside the private installation to consume services safely.
+Enable secure external access to the Hanzo Network Server Hub, allowing trusted clients and agents outside the private installation to consume services safely.
 
 **Key Features**:
 
@@ -139,7 +139,7 @@ Enable secure external access to the Hanzo Team Network Server Hub, allowing tru
 
 **Benefits**:
 
-- Secure extension of Hanzo Team Network beyond internal networks
+- Secure extension of Hanzo Network beyond internal networks
 - Controlled exposure of services to external consumers
 - Enhanced flexibility for hybrid deployment scenarios
 - Support for distributed teams and remote workers

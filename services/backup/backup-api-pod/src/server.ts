@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -362,7 +362,7 @@ export async function createServer (ctx: MeasureContext, config: Config): Promis
 
   app.get('/', (req, res) => {
     res.send(`Hanzo&reg; Backup&trade; <a href="https://hanzo.team">https://hanzo.team</a>
-      &copy; 2024 <a href="https://hanzolabs.com">Hanzo Labs</a>`)
+      &copy; 2025 <a href="https://hanzo.ai">Hanzo AI</a>`)
   })
 
   const sendErrorToAnalytics = (err: any): boolean => {
@@ -423,7 +423,7 @@ export async function createServer (ctx: MeasureContext, config: Config): Promis
   app.get('/', (_req, res) => {
     res.send(`
       Hanzo® Datalake™ <a href="https://hanzo.team">https://hanzo.team</a>
-      © 2025 <a href="https://hanzolabs.com">Hanzo Labs</a>
+      © 2025 <a href="https://hanzo.ai">Hanzo AI</a>
     `)
   })
 
