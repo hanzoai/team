@@ -729,33 +729,6 @@ function findConfigFile(dir: string): string | undefined {
     return undefined;
 }
 
-/**
- * Find the git repository root by walking up until a directory contains a .git entry.
- * Returns undefined if no git root is found before reaching the filesystem root.
- */
-function findGitRoot(startDir: string): string | undefined {
-    let currentDir = startDir;
-    // Guard: if startDir doesn't exist (edge case), bail out
-    if (!fs.existsSync(currentDir)) {
-        return undefined;
-    }
-    // Walk up to filesystem root
-    // Stop when .git exists (file or directory)
-    // If not found, return undefined
-
-    while (true) {
-        const gitPath = path.join(currentDir, '.git');
-        if (fs.existsSync(gitPath)) {
-            return currentDir;
-        }
-        const parentDir = path.dirname(currentDir);
-        if (parentDir === currentDir) {
-            return undefined;
-        }
-        currentDir = parentDir;
-    }
-}
-
 export interface DiscoverConfigOptions {
     /**
      * Explicit path to config file. If provided, skips auto-discovery.
@@ -776,8 +749,12 @@ export interface DiscoverConfigOptions {
  * If configFile is provided, loads that specific file.
  * Otherwise, searches for a config file in the following locations (in order):
  * 1. Path provided via TC_CONFIG environment variable
- * 2. Current working directory
- * 3. Parent directories up to the repository root (detected via .git), otherwise up to filesystem root
+ * 2. Current working directory (or searchDir if provided)
+ *
+ * Only the single directory is checked — no parent directory traversal is
+ * performed. This prevents loading untrusted config files from shared ancestor
+ * directories (e.g., /tmp). The .mjs format uses dynamic import() which
+ * executes arbitrary code, so the search scope must be tightly bounded.
  *
  * If no config file is found, returns resolved default configuration.
  *
@@ -810,28 +787,11 @@ export async function discoverAndLoadConfig(options?: DiscoverConfigOptions): Pr
         const timestamp = new Date().toISOString();
         process.stderr.write(`[${timestamp}] [tc] Using config from TC_CONFIG: ${configPath}\n`);
     } else {
-        // Auto-discover config file
-        const startDir = options?.searchDir || process.cwd();
-        let currentDir = startDir;
-        const gitRoot = findGitRoot(startDir);
-
-        // Search current and parent directories, stopping at git root (if found) or filesystem root
-
-        while (true) {
-            configPath = findConfigFile(currentDir);
-            if (configPath) {
-                break;
-            }
-            // Stop at git root boundary if detected
-            if (gitRoot && currentDir === gitRoot) {
-                break;
-            }
-            const parentDir = path.dirname(currentDir);
-            if (parentDir === currentDir) {
-                break; // Reached root
-            }
-            currentDir = parentDir;
-        }
+        // Search only the current working directory (or searchDir) for config files.
+        // No parent directory traversal — prevents loading untrusted config files
+        // from shared ancestor directories (e.g., /tmp on shared systems).
+        const searchDir = options?.searchDir || process.cwd();
+        configPath = findConfigFile(searchDir);
     }
 
     let userConfig: TestcontainersConfig | undefined;

@@ -482,6 +482,23 @@ describe('discoverAndLoadConfig — auto-discovery (Usability #9)', () => {
         const config = await discoverAndLoadConfig();
         assert.equal(config.server.tag, 'from-env');
     });
+
+    it('does not search parent directories', async () => {
+        // Create parent/child directories
+        const parentDir = path.join(tmpDir, 'parent');
+        const childDir = path.join(parentDir, 'child');
+        fs.mkdirSync(childDir, {recursive: true});
+
+        // Place a config in the parent directory
+        fs.writeFileSync(
+            path.join(parentDir, 'mattermost-testcontainers.config.jsonc'),
+            JSON.stringify({server: {tag: 'should-not-load'}}),
+        );
+
+        // Search from the child directory — should NOT find the parent's config
+        const config = await discoverAndLoadConfig({searchDir: childDir});
+        assert.equal(config.server.tag, 'master', 'Should use defaults, not parent config');
+    });
 });
 
 // =========================================================================

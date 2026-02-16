@@ -4,7 +4,7 @@
 import {describe, it} from 'node:test';
 import assert from 'node:assert/strict';
 
-import {findConfigDiffs, buildPingUrl} from './container_utils';
+import {findConfigDiffs, buildPingUrl, validateLocalUrl} from './container_utils';
 
 describe('findConfigDiffs', () => {
     it('returns empty array for identical objects', () => {
@@ -51,6 +51,45 @@ describe('findConfigDiffs', () => {
     });
 });
 
+describe('validateLocalUrl', () => {
+    it('accepts http://localhost URLs', () => {
+        const parsed = validateLocalUrl('http://localhost:8065');
+        assert.equal(parsed.hostname, 'localhost');
+        assert.equal(parsed.port, '8065');
+    });
+
+    it('accepts http://127.0.0.1 URLs', () => {
+        const parsed = validateLocalUrl('http://127.0.0.1:8065');
+        assert.equal(parsed.hostname, '127.0.0.1');
+    });
+
+    it('accepts localhost with subpath', () => {
+        const parsed = validateLocalUrl('http://localhost:8065/mattermost1');
+        assert.equal(parsed.hostname, 'localhost');
+        assert.equal(parsed.pathname, '/mattermost1');
+    });
+
+    it('rejects https protocol', () => {
+        assert.throws(() => validateLocalUrl('https://localhost:8065'), /Only http: protocol is allowed/);
+    });
+
+    it('rejects non-localhost hostnames', () => {
+        assert.throws(() => validateLocalUrl('http://example.com:8065'), /Only localhost URLs are allowed/);
+    });
+
+    it('rejects internal network hostnames', () => {
+        assert.throws(() => validateLocalUrl('http://192.168.1.1:8065'), /Only localhost URLs are allowed/);
+    });
+
+    it('rejects file protocol', () => {
+        assert.throws(() => validateLocalUrl('file:///etc/passwd'), /Only http: protocol is allowed/);
+    });
+
+    it('rejects invalid URLs', () => {
+        assert.throws(() => validateLocalUrl('not-a-url'), /Invalid URL/);
+    });
+});
+
 describe('buildPingUrl', () => {
     it('appends /api/v4/system/ping to root URL', () => {
         assert.equal(buildPingUrl('http://localhost:8065'), 'http://localhost:8065/api/v4/system/ping');
@@ -65,5 +104,9 @@ describe('buildPingUrl', () => {
 
     it('handles trailing slash', () => {
         assert.equal(buildPingUrl('http://localhost:8065/'), 'http://localhost:8065/api/v4/system/ping');
+    });
+
+    it('rejects non-localhost URLs', () => {
+        assert.throws(() => buildPingUrl('http://non-localhost.com:8065'), /Only localhost URLs are allowed/);
     });
 });

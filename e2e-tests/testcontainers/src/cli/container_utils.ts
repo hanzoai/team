@@ -126,12 +126,45 @@ export async function upgradeContainer(
 }
 
 /**
+ * Allowed hostnames for container health checks.
+ * All testcontainers bind to localhost; requests to other hosts are never valid.
+ */
+const ALLOWED_HOSTS = new Set(['localhost', '127.0.0.1']);
+
+/**
+ * Validate that a URL points to a local container endpoint.
+ * Rejects non-http protocols and non-localhost hostnames to prevent SSRF.
+ * @throws {Error} if the URL is not a valid localhost HTTP URL
+ */
+export function validateLocalUrl(url: string): URL {
+    let parsed: URL;
+    try {
+        parsed = new URL(url);
+    } catch {
+        throw new Error(`Invalid URL: ${url}`);
+    }
+
+    if (parsed.protocol !== 'http:') {
+        throw new Error(`Only http: protocol is allowed for container health checks, got ${parsed.protocol}`);
+    }
+
+    if (!ALLOWED_HOSTS.has(parsed.hostname)) {
+        throw new Error(
+            `Only localhost URLs are allowed for container health checks, got hostname "${parsed.hostname}"`,
+        );
+    }
+
+    return parsed;
+}
+
+/**
  * Build the ping URL for a container. Handles subpath URLs correctly.
  * If the URL has a pathname (e.g., http://localhost:8065/mattermost1),
  * the ping path is appended after it.
+ * @throws {Error} if the URL is not a valid localhost HTTP URL
  */
 export function buildPingUrl(baseUrl: string): string {
-    const parsed = new URL(baseUrl);
+    const parsed = validateLocalUrl(baseUrl);
     // Remove trailing slash for consistent joining
     const basePath = parsed.pathname.replace(/\/$/, '');
     parsed.pathname = `${basePath}/api/v4/system/ping`;
