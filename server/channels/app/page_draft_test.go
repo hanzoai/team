@@ -366,7 +366,7 @@ func TestCheckPageDraftExists(t *testing.T) {
 		require.Nil(t, appErr)
 		require.NotNil(t, draft)
 
-		exists, updateAt, appErr := th.App.CheckPageDraftExists(pageId, th.BasicUser.Id)
+		exists, updateAt, appErr := th.App.CheckPageDraftExists(pageId, th.BasicUser.Id, createdWiki.Id)
 		require.Nil(t, appErr)
 		require.True(t, exists)
 		require.Greater(t, updateAt, int64(0))
@@ -374,7 +374,7 @@ func TestCheckPageDraftExists(t *testing.T) {
 
 	t.Run("returns false for non-existent draft", func(t *testing.T) {
 		nonExistentPageId := model.NewId()
-		exists, updateAt, appErr := th.App.CheckPageDraftExists(nonExistentPageId, th.BasicUser.Id)
+		exists, updateAt, appErr := th.App.CheckPageDraftExists(nonExistentPageId, th.BasicUser.Id, createdWiki.Id)
 		require.Nil(t, appErr)
 		require.False(t, exists)
 		require.Equal(t, int64(0), updateAt)
@@ -388,7 +388,7 @@ func TestCheckPageDraftExists(t *testing.T) {
 		require.NotNil(t, draft)
 
 		otherUser := th.CreateUser(t)
-		exists, _, appErr := th.App.CheckPageDraftExists(pageId, otherUser.Id)
+		exists, _, appErr := th.App.CheckPageDraftExists(pageId, otherUser.Id, createdWiki.Id)
 		require.Nil(t, appErr)
 		require.False(t, exists)
 	})
@@ -449,7 +449,7 @@ func TestUpsertPageDraft(t *testing.T) {
 		require.Equal(t, parentPage.Id, draft.Props[model.DraftPropsPageParentID])
 	})
 
-	t.Run("title-only save skips PageContents write", func(t *testing.T) {
+	t.Run("title-only save with empty content", func(t *testing.T) {
 		pageId := model.NewId()
 
 		// Save with title only (empty content)
@@ -457,14 +457,17 @@ func TestUpsertPageDraft(t *testing.T) {
 		require.Nil(t, appErr)
 		require.NotNil(t, draft)
 		require.Equal(t, "Title Only Draft", draft.Title)
-		require.Empty(t, draft.Content)
+		// Content is zero-value TipTapDocument when Message is empty
+		require.Empty(t, draft.Content.Type)
+		require.Empty(t, draft.Content.Content)
 
-		// GetPageDraft requires PageContents to exist, so title-only draft returns not_found for content
-		_, appErr = th.App.GetPageDraft(rctx, th.BasicUser.Id, createdWiki.Id, pageId, true)
-		require.NotNil(t, appErr)
-		require.Equal(t, "app.draft.get_page_draft.not_found", appErr.Id)
+		// Title-only draft is retrievable via GetPageDraft (stored in Drafts table)
+		fetched, appErr := th.App.GetPageDraft(rctx, th.BasicUser.Id, createdWiki.Id, pageId, true)
+		require.Nil(t, appErr)
+		require.NotNil(t, fetched)
+		require.Equal(t, "Title Only Draft", fetched.Title)
 
-		// But the Drafts metadata row should exist
+		// Verify the underlying Drafts row has the title in Props
 		draftMeta, err := th.App.Srv().Store().Draft().Get(th.BasicUser.Id, createdWiki.Id, pageId, false)
 		require.NoError(t, err)
 		require.NotNil(t, draftMeta)

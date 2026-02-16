@@ -63,9 +63,3 @@ func HasRelaxedEditHistoryPermissions(post *model.Post) bool {
 func RequiresPageModifyPermission(post *model.Post) bool {
 	return IsPagePost(post)
 }
-
-// NeedsContentLoading returns true if this post type stores content separately
-// and needs content loaded from PageContent table.
-func NeedsContentLoading(post *model.Post) bool {
-	return IsPagePost(post)
-}

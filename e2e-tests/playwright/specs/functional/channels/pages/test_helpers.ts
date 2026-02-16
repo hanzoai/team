@@ -418,6 +418,127 @@ export async function setupWikiInChannel(
     return {page, channelsPage, channel, wiki};
 }
 
+// ============================================================================
+// API-Based Setup Helpers (faster than UI-based helpers)
+// ============================================================================
+
+/**
+ * Creates a wiki via the API (much faster than UI-based creation)
+ * @param client - Client4 instance
+ * @param channelId - Channel ID to create the wiki in
+ * @param title - Title for the wiki
+ * @returns Object with wiki id and title
+ */
+export async function createWikiViaAPI(
+    client: Client4,
+    channelId: string,
+    title: string,
+): Promise<{id: string; title: string}> {
+    const wiki = await client.createWiki({channel_id: channelId, title});
+    return {id: wiki.id, title: wiki.title};
+}
+
+/**
+ * Creates a page via the API by creating a draft, optionally saving content, and publishing
+ * @param client - Client4 instance
+ * @param wikiId - Wiki ID to create the page in
+ * @param title - Title for the page
+ * @param content - Optional TipTap JSON content string
+ * @param pageParentId - Optional parent page ID for creating child pages
+ * @returns Object with page id and title
+ */
+export async function createPageViaAPI(
+    client: Client4,
+    wikiId: string,
+    title: string,
+    content?: string,
+    pageParentId?: string,
+): Promise<{id: string; title: string}> {
+    const draft = await client.createPageDraft(wikiId, title, pageParentId);
+
+    if (content) {
+        await client.savePageDraft(wikiId, draft.page_id, content, title);
+    }
+
+    const publishedPost = await client.publishPageDraft(
+        wikiId,
+        draft.page_id,
+        pageParentId || '',
+        title,
+        undefined,
+        content,
+    );
+
+    return {id: publishedPost.id, title};
+}
+
+/**
+ * Common test setup via API: creates a channel and wiki, logs in, and navigates to the wiki.
+ * Much faster than setupWikiInChannel which uses UI interactions.
+ *
+ * @param pw - Playwright test context
+ * @param sharedPagesSetup - The fixture providing team, user, and adminClient
+ * @param wikiNamePrefix - Prefix for wiki name (will be made unique with timestamp)
+ * @param channelNamePrefix - Prefix for channel name (will be made unique internally)
+ * @returns Object with page, channelsPage, channel, and wiki
+ */
+export async function setupWikiInChannelViaAPI(
+    pw: {testBrowser: {login: (user: UserProfile) => Promise<{page: Page; channelsPage: any}>}},
+    sharedPagesSetup: {team: Team; user: UserProfile; adminClient: Client4},
+    wikiNamePrefix: string = 'Test Wiki',
+    channelNamePrefix: string = 'Test Channel',
+): Promise<{page: Page; channelsPage: any; channel: Channel; wiki: {id: string; title: string}}> {
+    const {team, user, adminClient} = sharedPagesSetup;
+
+    const channel = await createTestChannel(adminClient, team.id, channelNamePrefix);
+    const wikiTitle = uniqueName(wikiNamePrefix);
+    const wiki = await createWikiViaAPI(adminClient, channel.id, wikiTitle);
+
+    const {page, channelsPage} = await pw.testBrowser.login(user);
+    await page.goto(`/${team.name}/wiki/${channel.id}/${wiki.id}`);
+    await page.waitForLoadState('networkidle');
+    await waitForWikiViewLoad(page);
+    await ensurePanelOpen(page);
+
+    return {page, channelsPage, channel, wiki};
+}
+
+/**
+ * Common test setup via API: creates a channel, wiki, and page, logs in, and navigates to the page.
+ * Much faster than creating everything through UI interactions.
+ *
+ * @param pw - Playwright test context
+ * @param sharedPagesSetup - The fixture providing team, user, and adminClient
+ * @param wikiNamePrefix - Prefix for wiki name (will be made unique with timestamp)
+ * @param pageTitle - Title for the page
+ * @param pageContent - Optional TipTap JSON content string for the page
+ * @param channelNamePrefix - Prefix for channel name (will be made unique internally)
+ * @returns Object with page, channelsPage, channel, wiki, and wikiPage
+ */
+export async function setupWikiWithPageViaAPI(
+    pw: {testBrowser: {login: (user: UserProfile) => Promise<{page: Page; channelsPage: any}>}},
+    sharedPagesSetup: {team: Team; user: UserProfile; adminClient: Client4},
+    wikiNamePrefix: string = 'Test Wiki',
+    pageTitle: string = 'Test Page',
+    pageContent?: string,
+    channelNamePrefix: string = 'Test Channel',
+): Promise<{page: Page; channelsPage: any; channel: Channel; wiki: {id: string; title: string}; wikiPage: {id: string; title: string}}> {
+    const {team, user, adminClient} = sharedPagesSetup;
+
+    const channel = await createTestChannel(adminClient, team.id, channelNamePrefix);
+    const wikiTitle = uniqueName(wikiNamePrefix);
+    const wiki = await createWikiViaAPI(adminClient, channel.id, wikiTitle);
+    const wikiPage = await createPageViaAPI(adminClient, wiki.id, pageTitle, pageContent);
+
+    const {page, channelsPage} = await pw.testBrowser.login(user);
+    await page.goto(`/${team.name}/wiki/${channel.id}/${wiki.id}/${wikiPage.id}`);
+    await page.waitForLoadState('networkidle');
+    await waitForWikiViewLoad(page);
+    await ensurePanelOpen(page);
+
+    return {page, channelsPage, channel, wiki, wikiPage};
+}
+
 /**
  * Gets the new page button locator scoped to the pages hierarchy panel
  * This avoids strict mode violations when there are multiple buttons with the same testid

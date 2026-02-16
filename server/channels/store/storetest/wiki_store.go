@@ -55,7 +55,6 @@ func TestWikiStore(t *testing.T, rctx request.CTX, ss store.Store, s SqlStore) {
 	t.Cleanup(func() {
 		typesSQL := pagePostTypesSQL()
 		_, _ = s.GetMaster().Exec(fmt.Sprintf("DELETE FROM PropertyValues WHERE TargetType = 'post' AND TargetID IN (SELECT Id FROM Posts WHERE Type IN (%s))", typesSQL))
-		_, _ = s.GetMaster().Exec("DELETE FROM PageContents")
 		_, _ = s.GetMaster().Exec(fmt.Sprintf("DELETE FROM Posts WHERE Type IN (%s)", typesSQL))
 		// Clean up wikis and channels created by wiki tests
 		_, _ = s.GetMaster().Exec("TRUNCATE Wikis CASCADE")
@@ -953,9 +952,7 @@ func testCreateWikiWithDefaultPage(t *testing.T, rctx request.CTX, ss store.Stor
 		require.NoError(t, err)
 		require.Len(t, pageDrafts, 1)
 		assert.Equal(t, user.Id, pageDrafts[0].UserId)
-		contentJSON, err := pageDrafts[0].GetDocumentJSON()
-		require.NoError(t, err)
-		assert.JSONEq(t, `{"type":"doc","content":[]}`, contentJSON)
+		assert.JSONEq(t, `{"type":"doc","content":[]}`, pageDrafts[0].Message)
 	})
 
 	t.Run("create wiki with invalid data fails", func(t *testing.T) {
@@ -1062,39 +1059,28 @@ func testDeleteAllPagesForWiki(t *testing.T, rctx request.CTX, ss store.Store) {
 	_, err = ss.PropertyValue().Create(page2Prop)
 	require.NoError(t, err)
 
-	page1Content := &model.PageContent{
-		PageId: page1.Id,
-		Content: model.TipTapDocument{
-			Type:    "doc",
-			Content: []map[string]any{},
-		},
-		SearchText: "Test page 1 content",
-	}
-	_, err = ss.Page().SavePageContent(page1Content)
+	_, err = ss.Page().UpdatePageWithContent(rctx, page1.Id, "",
+		`{"type":"doc","content":[]}`)
 	require.NoError(t, err)
 
-	page2Content := &model.PageContent{
-		PageId: page2.Id,
-		Content: model.TipTapDocument{
-			Type:    "doc",
-			Content: []map[string]any{},
-		},
-		SearchText: "Test page 2 content",
-	}
-	_, err = ss.Page().SavePageContent(page2Content)
+	_, err = ss.Page().UpdatePageWithContent(rctx, page2.Id, "",
+		`{"type":"doc","content":[]}`)
 	require.NoError(t, err)
 
-	pageDraft := &model.PageContent{
-		PageId:   model.NewId(),
-		UserId:   user.Id,
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
+	// Create a page draft via UpsertPageDraftContent
+	draftPost := &model.Post{
+		ChannelId: channel.Id,
+		UserId:    user.Id,
+		Message:   "",
+		Type:      model.PostTypePage,
+		Props: model.StringInterface{
+			"wiki_id": wiki.Id,
+		},
 	}
-	err = pageDraft.SetDocumentJSON(`{"type":"doc","content":[]}`)
-	if err != nil {
-		require.NoError(t, err)
-	}
-	_, err = ss.Draft().CreatePageDraft(pageDraft)
+	draftPost, err = ss.Post().Save(rctx, draftPost)
+	require.NoError(t, err)
+	_, err = ss.Draft().UpsertPageDraftContent(draftPost.Id, user.Id, wiki.Id,
+		`{"type":"doc","content":[]}`, 0)
 	require.NoError(t, err)
 
 	t.Run("delete all pages and drafts for wiki", func(t *testing.T) {
@@ -1128,24 +1114,6 @@ func testDeleteAllPagesForWiki(t *testing.T, rctx request.CTX, ss store.Store) {
 		})
 		require.NoError(t, err)
 		assert.Len(t, page2Props, 0)
-
-		page1ContentDeleted, err := ss.Page().GetPageContent(page1.Id)
-		assert.Nil(t, page1ContentDeleted)
-		assert.Error(t, err)
-
-		page2ContentDeleted, err := ss.Page().GetPageContent(page2.Id)
-		assert.Nil(t, page2ContentDeleted)
-		assert.Error(t, err)
-
-		page1ContentWithDeleted, err := ss.Page().GetPageContentWithDeleted(page1.Id)
-		require.NoError(t, err)
-		assert.NotNil(t, page1ContentWithDeleted)
-		assert.NotEqual(t, int64(0), page1ContentWithDeleted.DeleteAt)
-
-		page2ContentWithDeleted, err := ss.Page().GetPageContentWithDeleted(page2.Id)
-		require.NoError(t, err)
-		assert.NotNil(t, page2ContentWithDeleted)
-		assert.NotEqual(t, int64(0), page2ContentWithDeleted.DeleteAt)
 
 		pageDrafts, err := ss.Draft().GetPageDraftsForUser(user.Id, wiki.Id, 0, 200)
 		require.NoError(t, err)
@@ -1386,14 +1354,19 @@ func testMoveWikiToChannel(t *testing.T, rctx request.CTX, ss store.Store) {
 	inlineComment, err = ss.Post().Save(rctx, inlineComment)
 	require.NoError(t, err)
 
-	draft := &model.PageContent{
-		PageId:   model.NewId(),
-		UserId:   user.Id,
-		Content:  model.TipTapDocument{Type: "doc"},
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
+	draftPagePost := &model.Post{
+		ChannelId: sourceChannel.Id,
+		UserId:    user.Id,
+		Message:   "",
+		Type:      model.PostTypePage,
+		Props: model.StringInterface{
+			"wiki_id": wiki.Id,
+		},
 	}
-	_, err = ss.Draft().CreatePageDraft(draft)
+	draftPagePost, err = ss.Post().Save(rctx, draftPagePost)
+	require.NoError(t, err)
+	_, err = ss.Draft().UpsertPageDraftContent(draftPagePost.Id, user.Id, wiki.Id,
+		`{"type":"doc","content":[]}`, 0)
 	require.NoError(t, err)
 
 	t.Run("successfully move wiki with nested pages to new channel", func(t *testing.T) {

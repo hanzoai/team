@@ -19,14 +19,6 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/store"
 )
 
-// PublishedPageContentUserId is the UserId value for published page content.
-// Published content has empty UserId; draft content has non-empty UserId (the author's ID).
-const PublishedPageContentUserId = ""
-
-// MaxPageContentBatchSize is the maximum number of page IDs to query at once
-// in GetManyPageContents to prevent unbounded IN clauses.
-const MaxPageContentBatchSize = 100
-
 // MaxChannelPagesLimit is a safety limit for GetChannelPages to prevent
 // unbounded memory allocation. Channels with more pages need pagination.
 const MaxChannelPagesLimit = 10000
@@ -35,68 +27,23 @@ const MaxChannelPagesLimit = 10000
 // from GetPageDescendants to prevent unbounded recursion.
 const MaxPageDescendantsLimit = 5000
 
-// pageContentInsertColumns returns the columns for inserting page content.
-func pageContentInsertColumns() []string {
-	return []string{"PageId", "UserId", "Content", "SearchText", "CreateAt", "UpdateAt", "DeleteAt"}
-}
-
-// pageContentSelectColumns returns the columns for selecting page content (excludes UserId).
-// BaseUpdateAt is nullable in the schema, so COALESCE is used to prevent scan errors.
-func pageContentSelectColumns() []string {
-	return []string{"PageId", "Content", "SearchText", "COALESCE(BaseUpdateAt, 0) AS BaseUpdateAt", "CreateAt", "UpdateAt", "DeleteAt"}
-}
-
 type SqlPageStore struct {
 	*SqlStore
-	pageContentQuery sq.SelectBuilder
 }
 
 func newSqlPageStore(sqlStore *SqlStore) store.PageStore {
-	s := &SqlPageStore{
+	return &SqlPageStore{
 		SqlStore: sqlStore,
 	}
-
-	s.pageContentQuery = s.getQueryBuilder().
-		Select(pageContentSelectColumns()...).
-		From("PageContents")
-
-	return s
 }
 
-// pagePostExists checks if a Post with Type='page' exists for the given pageID.
-// This is used by standalone PageContent methods to ensure referential integrity.
-func (s *SqlPageStore) pagePostExists(pageID string) (bool, error) {
-	query := s.getQueryBuilder().
-		Select("1").
-		From("Posts").
-		Where(sq.And{
-			sq.Eq{"Id": pageID},
-			sq.Eq{"Type": model.PostTypePage},
-		}).
-		Limit(1)
-
-	queryString, args, err := query.ToSql()
-	if err != nil {
-		return false, errors.Wrap(err, "page_post_exists_tosql")
-	}
-
-	var exists int
-	// Use GetMaster() for read-after-write consistency in HA mode.
-	// This method is called during page creation/update flows where the post was just written.
-	if err := s.GetMaster().QueryRow(queryString, args...).Scan(&exists); err != nil {
-		if err == sql.ErrNoRows {
-			return false, nil
-		}
-		return false, errors.Wrap(err, "failed to check page post existence")
-	}
-
-	return true, nil
-}
-
-func (s *SqlPageStore) CreatePage(rctx request.CTX, post *model.Post, content, searchText string) (*model.Post, error) {
+func (s *SqlPageStore) CreatePage(rctx request.CTX, post *model.Post, content string) (*model.Post, error) {
 	if post.Type != model.PostTypePage {
 		return nil, store.NewErrInvalidInput("Post", "Type", post.Type)
 	}
+
+	// Store content in Post.Message
+	post.Message = content
 
 	post.PreSave()
 	if err := post.IsValid(model.PostMessageMaxRunesV2); err != nil {
@@ -104,64 +51,21 @@ func (s *SqlPageStore) CreatePage(rctx request.CTX, post *model.Post, content, s
 	}
 	post.ValidateProps(rctx.Logger())
 
-	var createdPost *model.Post
-	err := s.ExecuteInTransaction(func(transaction *sqlxTxWrapper) error {
-		insertQuery := s.getQueryBuilder().
-			Insert("Posts").
-			Columns(postSliceColumns()...).
-			Values(postToSlice(post)...)
+	insertQuery := s.getQueryBuilder().
+		Insert("Posts").
+		Columns(postSliceColumns()...).
+		Values(postToSlice(post)...)
 
-		query, args, buildErr := insertQuery.ToSql()
-		if buildErr != nil {
-			return errors.Wrap(buildErr, "failed to build insert post query")
-		}
-
-		if _, execErr := transaction.Exec(query, args...); execErr != nil {
-			return errors.Wrap(execErr, "failed to save Post")
-		}
-
-		pageContent := &model.PageContent{
-			PageId: post.Id,
-		}
-		if setErr := pageContent.SetDocumentJSON(content); setErr != nil {
-			return errors.Wrap(setErr, "invalid_content")
-		}
-
-		if searchText != "" {
-			pageContent.SearchText = searchText
-		} else {
-			pageContent.PreSave()
-		}
-
-		contentJSON, jsonErr := pageContent.GetDocumentJSON()
-		if jsonErr != nil {
-			return errors.Wrap(jsonErr, "failed to serialize content")
-		}
-
-		now := model.GetMillis()
-		contentInsertQuery := s.getQueryBuilder().
-			Insert("PageContents").
-			Columns(pageContentInsertColumns()...).
-			Values(post.Id, PublishedPageContentUserId, contentJSON, pageContent.SearchText, now, now, 0)
-
-		contentQuery, contentArgs, buildErr := contentInsertQuery.ToSql()
-		if buildErr != nil {
-			return errors.Wrap(buildErr, "failed to build insert content query")
-		}
-
-		if _, execErr := transaction.Exec(contentQuery, contentArgs...); execErr != nil {
-			return errors.Wrap(execErr, "failed to save PageContent")
-		}
-
-		createdPost = post
-		return nil
-	})
-
-	if err != nil {
-		return nil, err
+	query, args, buildErr := insertQuery.ToSql()
+	if buildErr != nil {
+		return nil, errors.Wrap(buildErr, "failed to build insert post query")
 	}
 
-	return createdPost, nil
+	if _, execErr := s.GetMaster().Exec(query, args...); execErr != nil {
+		return nil, errors.Wrap(execErr, "failed to save Post")
+	}
+
+	return post, nil
 }
 
 func (s *SqlPageStore) GetPage(rctx request.CTX, pageID string, includeDeleted bool) (*model.Post, error) {
@@ -274,7 +178,7 @@ func (s *SqlPageStore) SoftDeletePagePost(pageID, deleteByID string) error {
 	return nil
 }
 
-// DeletePage soft-deletes a page and all its associated data (content, comments, and drafts).
+// DeletePage soft-deletes a page and all its associated data (comments and drafts).
 // It also atomically reparents any child pages to newParentID (or makes them root pages if empty).
 // All operations are performed in a single transaction to ensure data consistency and prevent
 // race conditions where a new child could be added between reparenting and deletion.
@@ -287,10 +191,6 @@ func (s *SqlPageStore) DeletePage(pageID string, deleteByID string, newParentID 
 		now := model.GetMillis()
 
 		// FIRST: Reparent children INSIDE the transaction to prevent race conditions.
-		// This must happen before deleting the page to ensure no orphaned children.
-		// If a concurrent request tries to add a child, it will either:
-		// - See the page as deleted (if it checks after our delete) and fail
-		// - Get its child reparented (if it succeeds before our reparent runs)
 		reparentQuery := s.getQueryBuilder().
 			Update("Posts").
 			Set("PageParentId", newParentID).
@@ -304,34 +204,12 @@ func (s *SqlPageStore) DeletePage(pageID string, deleteByID string, newParentID 
 			return errors.Wrap(err, "failed to reparent children")
 		}
 
-		// Soft-delete published content only (UserId=''), preserving for potential page restore
-		softDeletePublishedQuery := s.getQueryBuilder().
-			Update("PageContents").
-			Set("DeleteAt", now).
-			Set("UpdateAt", now).
-			Where(sq.Eq{"PageId": pageID, "UserId": "", "DeleteAt": 0})
-		if _, err := transaction.ExecBuilder(softDeletePublishedQuery); err != nil {
-			return errors.Wrap(err, "failed to soft-delete published PageContent")
-		}
-
-		// Hard-delete draft content (UserId!='') - drafts are orphaned when page is deleted
-		// and serve no purpose (matches Confluence behavior)
-		hardDeleteDraftsQuery := s.getQueryBuilder().
-			Delete("PageContents").
-			Where(sq.And{
-				sq.Eq{"PageId": pageID},
-				sq.NotEq{"UserId": ""},
-			})
-		if _, err := transaction.ExecBuilder(hardDeleteDraftsQuery); err != nil {
-			return errors.Wrap(err, "failed to hard-delete draft PageContents")
-		}
-
-		// Delete drafts metadata from Drafts table (page drafts store pageId in RootId)
-		deleteDraftsMetadataQuery := s.getQueryBuilder().
+		// Delete drafts from Drafts table (page drafts store pageId in RootId)
+		deleteDraftsQuery := s.getQueryBuilder().
 			Delete("Drafts").
 			Where(sq.Eq{"RootId": pageID})
-		if _, err := transaction.ExecBuilder(deleteDraftsMetadataQuery); err != nil {
-			return errors.Wrap(err, "failed to delete page drafts metadata")
+		if _, err := transaction.ExecBuilder(deleteDraftsQuery); err != nil {
+			return errors.Wrap(err, "failed to delete page drafts")
 		}
 
 		// Get all page comment IDs for thread cleanup (before soft-deleting them)
@@ -404,48 +282,38 @@ func (s *SqlPageStore) DeletePage(pageID string, deleteByID string, newParentID 
 	})
 }
 
-// RestorePage restores a soft-deleted page and its content in a single transaction.
-// Content restore is optional (may not exist), but page post restore is required.
+// RestorePage restores a soft-deleted page post.
 func (s *SqlPageStore) RestorePage(pageID string) error {
 	if pageID == "" {
 		return store.NewErrInvalidInput("Post", "pageID", pageID)
 	}
 
-	return s.ExecuteInTransaction(func(transaction *sqlxTxWrapper) error {
-		now := model.GetMillis()
+	now := model.GetMillis()
 
-		// Restore content first (may not exist, which is OK)
-		restoreContentQuery := s.buildRestoreQuery("PageContents", "PageId", pageID)
-		if _, err := transaction.ExecBuilder(restoreContentQuery); err != nil {
-			return errors.Wrap(err, "failed to restore PageContent")
-		}
+	restorePostQuery := s.getQueryBuilder().
+		Update("Posts").
+		Set("DeleteAt", 0).
+		Set("UpdateAt", now).
+		Where(sq.And{
+			sq.Eq{"Id": pageID},
+			sq.Eq{"Type": model.PostTypePage},
+			sq.NotEq{"DeleteAt": 0},
+		})
 
-		// Restore the page post itself
-		restorePostQuery := s.getQueryBuilder().
-			Update("Posts").
-			Set("DeleteAt", 0).
-			Set("UpdateAt", now).
-			Where(sq.And{
-				sq.Eq{"Id": pageID},
-				sq.Eq{"Type": model.PostTypePage},
-				sq.NotEq{"DeleteAt": 0},
-			})
+	result, err := s.GetMaster().ExecBuilder(restorePostQuery)
+	if err != nil {
+		return errors.Wrap(err, "failed to restore Post")
+	}
 
-		result, err := transaction.ExecBuilder(restorePostQuery)
-		if err != nil {
-			return errors.Wrap(err, "failed to restore Post")
-		}
+	rowsAffected, rowsErr := result.RowsAffected()
+	if rowsErr != nil {
+		return errors.Wrap(rowsErr, "failed to get rows affected")
+	}
+	if rowsAffected == 0 {
+		return store.NewErrNotFound("Post", pageID)
+	}
 
-		rowsAffected, rowsErr := result.RowsAffected()
-		if rowsErr != nil {
-			return errors.Wrap(rowsErr, "failed to get rows affected")
-		}
-		if rowsAffected == 0 {
-			return store.NewErrNotFound("Post", pageID)
-		}
-
-		return nil
-	})
+	return nil
 }
 
 // Update updates a page with optimistic locking using EditAt for compare-and-swap.
@@ -464,13 +332,7 @@ func (s *SqlPageStore) Update(rctx request.CTX, page *model.Post) (*model.Post, 
 	err := s.ExecuteInTransaction(func(transaction *sqlxTxWrapper) error {
 		// Fetch current post before update (for version history)
 		selectQuery := s.getQueryBuilder().
-			Select(
-				"Id", "CreateAt", "UpdateAt", "EditAt", "DeleteAt",
-				"IsPinned", "UserId", "ChannelId", "RootId", "OriginalId",
-				"PageParentId", "Message", "Type", "Props",
-				"Hashtags", "Filenames", "FileIds",
-				"HasReactions", "RemoteId",
-			).
+			Select(postSliceColumns()...).
 			From("Posts").
 			Where(sq.Eq{"Id": page.Id, "Type": model.PostTypePage})
 
@@ -491,29 +353,7 @@ func (s *SqlPageStore) Update(rctx request.CTX, page *model.Post) (*model.Post, 
 			return store.NewErrNotFound("Post", page.Id)
 		}
 
-		// Fetch current PageContent before update (for version history)
-		// UserId = '' means published content (drafts have non-empty UserId)
-		var currentContent model.PageContent
-		selectContentQuery := s.getQueryBuilder().
-			Select("PageId", "Content", "SearchText", "CreateAt", "UpdateAt", "DeleteAt").
-			From("PageContents").
-			Where(sq.Eq{"PageId": page.Id, "UserId": PublishedPageContentUserId})
-
-		selectContentSQL, selectContentArgs, buildErr := selectContentQuery.ToSql()
-		if buildErr != nil {
-			return errors.Wrap(buildErr, "failed to build select content query")
-		}
-
-		getContentErr := transaction.Get(&currentContent, selectContentSQL, selectContentArgs...)
-		hasContent := (getContentErr == nil)
-		var oldContent *model.PageContent
-		if hasContent {
-			oldContent = &currentContent
-		}
-
 		// Update the Post with optimistic locking via EditAt.
-		// The WHERE clause includes EditAt to ensure no concurrent modification occurred
-		// between when the caller read the page and now (compare-and-swap pattern).
 		now := model.GetMillis()
 		updateQuery := s.getQueryBuilder().
 			Update("Posts").
@@ -524,7 +364,7 @@ func (s *SqlPageStore) Update(rctx request.CTX, page *model.Post) (*model.Post, 
 			Where(sq.And{
 				sq.Eq{"Id": page.Id},
 				sq.Eq{"DeleteAt": 0},
-				sq.Eq{"EditAt": page.EditAt}, // Optimistic lock: fail if EditAt changed
+				sq.Eq{"EditAt": page.EditAt},
 			})
 
 		updateSQL, updateArgs, buildErr := updateQuery.ToSql()
@@ -545,35 +385,9 @@ func (s *SqlPageStore) Update(rctx request.CTX, page *model.Post) (*model.Post, 
 			return store.NewErrNotFound("Post", page.Id)
 		}
 
-		// Update PageContents only if there's new content to save.
-		// When doing a metadata-only update (e.g., rename), page.Message is empty
-		// and we should NOT overwrite the existing content.
-		// UserId = '' means published content (drafts have non-empty UserId)
-		if hasContent && page.Message != "" {
-			contentUpdateQuery := s.getQueryBuilder().
-				Update("PageContents").
-				Set("Content", page.Message).
-				Set("UpdateAt", now).
-				Where(sq.And{
-					sq.Eq{"PageId": page.Id},
-					sq.Eq{"UserId": PublishedPageContentUserId},
-					sq.Eq{"DeleteAt": 0},
-				})
-
-			contentUpdateSQL, contentUpdateArgs, contentBuildErr := contentUpdateQuery.ToSql()
-			if contentBuildErr != nil {
-				return errors.Wrap(contentBuildErr, "failed to build content update query")
-			}
-
-			_, contentErr := transaction.Exec(contentUpdateSQL, contentUpdateArgs...)
-			if contentErr != nil {
-				return errors.Wrap(contentErr, "failed to update page content")
-			}
-		}
-
-		// Create version history using the helper
+		// Create version history
 		oldPost := currentPost.Clone()
-		if historyErr := s.createPageVersionHistory(rctx, transaction, oldPost, oldContent, now, page.Id); historyErr != nil {
+		if historyErr := s.createPageVersionHistory(rctx, transaction, oldPost, now, page.Id); historyErr != nil {
 			return historyErr
 		}
 
@@ -1130,7 +944,7 @@ func (s *SqlPageStore) ReparentChildren(pageID string, newParentID string) error
 	return nil
 }
 
-func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, content, searchText string) (post *model.Post, err error) {
+func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, content string) (post *model.Post, err error) {
 	if pageID == "" {
 		return nil, store.NewErrInvalidInput("Post", "pageID", pageID)
 	}
@@ -1139,13 +953,7 @@ func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, co
 	err = s.ExecuteInTransaction(func(transaction *sqlxTxWrapper) error {
 		// FOR UPDATE locks the row to prevent concurrent modifications within this transaction.
 		query := s.getQueryBuilder().
-			Select(
-				"Id", "CreateAt", "UpdateAt", "EditAt", "DeleteAt",
-				"IsPinned", "UserId", "ChannelId", "RootId", "OriginalId",
-				"PageParentId", "Message", "Type", "Props",
-				"Hashtags", "Filenames", "FileIds",
-				"HasReactions", "RemoteId",
-			).
+			Select(postSliceColumns()...).
 			From("Posts").
 			Where(sq.And{
 				sq.Eq{"Id": pageID},
@@ -1168,13 +976,11 @@ func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, co
 		// Clone the old post for history before making changes
 		oldPost := currentPost.Clone()
 		needsHistory := false
-		var oldContent *model.PageContent // Store old content for history
 
 		if title != "" {
 			if currentPost.Props == nil {
 				currentPost.Props = make(model.StringInterface)
 			} else {
-				// Deep copy Props to avoid modifying oldPost.Props
 				newProps := make(model.StringInterface, len(currentPost.Props))
 				maps.Copy(newProps, currentPost.Props)
 				currentPost.Props = newProps
@@ -1184,88 +990,11 @@ func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, co
 		}
 
 		if content != "" {
-			pageContent := &model.PageContent{PageId: pageID}
-			if setErr := pageContent.SetDocumentJSON(content); setErr != nil {
-				return errors.Wrap(setErr, "invalid_content")
+			if err := model.ValidateTipTapDocument(content); err != nil {
+				return errors.Wrap(err, "invalid_content")
 			}
-
-			if searchText != "" {
-				pageContent.SearchText = searchText
-			} else {
-				// Extract SearchText from content if not provided
-				pageContent.PreSave()
-			}
-
-			contentJSON, jsonErr := pageContent.GetDocumentJSON()
-			if jsonErr != nil {
-				return errors.Wrap(jsonErr, "failed to serialize content")
-			}
-
-			now := model.GetMillis()
-
-			// First, fetch current PageContents to save as history
-			// UserId = '' means published content (drafts have non-empty UserId)
-			var currentContent model.PageContent
-			selectQuery := s.getQueryBuilder().
-				Select("PageId", "Content", "SearchText", "CreateAt", "UpdateAt", "DeleteAt").
-				From("PageContents").
-				Where(sq.Eq{"PageId": pageID, "UserId": PublishedPageContentUserId})
-
-			selectSQL, selectArgs, buildErr := selectQuery.ToSql()
-			if buildErr != nil {
-				return errors.Wrap(buildErr, "failed to build get current content query")
-			}
-
-			getErr := transaction.Get(&currentContent, selectSQL, selectArgs...)
-
-			if getErr != nil && getErr != sql.ErrNoRows {
-				return errors.Wrap(getErr, "failed to get current content")
-			}
-
-			// If PageContents exists, save it for history (will insert after creating oldPost)
-			if getErr != sql.ErrNoRows {
-				oldContent = &currentContent
-				needsHistory = true
-			}
-
-			// Two-step upsert to handle concurrent updates safely
-			// Step 1: Try to insert, ignore if row already exists (handles both constraints)
-			insertQuery := s.getQueryBuilder().
-				Insert("PageContents").
-				Columns("PageId", "UserId", "Content", "SearchText", "CreateAt", "UpdateAt", "DeleteAt").
-				Values(pageID, PublishedPageContentUserId, contentJSON, pageContent.SearchText, now, now, 0).
-				Suffix("ON CONFLICT DO NOTHING")
-
-			insertSQL, insertArgs, buildErr := insertQuery.ToSql()
-			if buildErr != nil {
-				return errors.Wrap(buildErr, "failed to build insert content query")
-			}
-
-			_, execErr := transaction.Exec(insertSQL, insertArgs...)
-			if execErr != nil {
-				return errors.Wrap(execErr, "failed to insert content")
-			}
-
-			// Step 2: Update the row (either just inserted or already existed)
-			updateQuery := s.getQueryBuilder().
-				Update("PageContents").
-				Set("Content", contentJSON).
-				Set("SearchText", pageContent.SearchText).
-				Set("UpdateAt", now).
-				Where(sq.And{
-					sq.Eq{"PageId": pageID},
-					sq.Eq{"UserId": PublishedPageContentUserId},
-				})
-
-			updateSQL, updateArgs, buildErr := updateQuery.ToSql()
-			if buildErr != nil {
-				return errors.Wrap(buildErr, "failed to build update content query")
-			}
-
-			_, execErr = transaction.Exec(updateSQL, updateArgs...)
-			if execErr != nil {
-				return errors.Wrap(execErr, "failed to update content")
-			}
+			currentPost.Message = content
+			needsHistory = true
 		}
 
 		if needsHistory {
@@ -1275,6 +1004,7 @@ func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, co
 
 			updateQuery := s.getQueryBuilder().
 				Update("Posts").
+				Set("Message", currentPost.Message).
 				Set("EditAt", currentPost.EditAt).
 				Set("UpdateAt", currentPost.UpdateAt).
 				Set("Props", model.StringInterfaceToJSON(currentPost.Props)).
@@ -1289,11 +1019,10 @@ func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, co
 			}
 
 			if _, execErr := transaction.Exec(updateSQL, updateArgs...); execErr != nil {
-				return errors.Wrap(execErr, "failed to update post with EditAt")
+				return errors.Wrap(execErr, "failed to update post")
 			}
 
-			// Use the helper to create version history
-			if historyErr := s.createPageVersionHistory(rctx, transaction, oldPost, oldContent, now, pageID); historyErr != nil {
+			if historyErr := s.createPageVersionHistory(rctx, transaction, oldPost, now, pageID); historyErr != nil {
 				return historyErr
 			}
 		}
@@ -1307,17 +1036,16 @@ func (s *SqlPageStore) UpdatePageWithContent(rctx request.CTX, pageID, title, co
 	return &currentPost, nil
 }
 
-// createPageVersionHistory creates a historical snapshot of a page and its content
-// Must be called within a transaction
+// createPageVersionHistory creates a historical snapshot of a page post.
+// The old post (with Message containing content) is cloned as a history entry.
+// Must be called within a transaction.
 func (s *SqlPageStore) createPageVersionHistory(
 	rctx request.CTX,
 	transaction *sqlxTxWrapper,
 	oldPost *model.Post,
-	oldContent *model.PageContent,
 	now int64,
 	pageID string,
 ) error {
-	// Create historical Post
 	oldPost.DeleteAt = now
 	oldPost.UpdateAt = now
 	oldPost.OriginalId = oldPost.Id
@@ -1337,87 +1065,35 @@ func (s *SqlPageStore) createPageVersionHistory(
 		return errors.Wrap(execErr, "failed to insert history entry")
 	}
 
-	// Create historical PageContent if it exists
-	if oldContent != nil {
-		oldContentJSON, jsonErr := oldContent.GetDocumentJSON()
-		if jsonErr != nil {
-			return errors.Wrap(jsonErr, "failed to serialize old content")
-		}
+	// Prune old version history entries
+	oldVersionsSubquery := `
+		SELECT p.Id
+		FROM Posts p
+		WHERE p.Id IN (
+			SELECT ranked.Id
+			FROM (
+				SELECT p2.Id, p2.UpdateAt,
+					   ROW_NUMBER() OVER (ORDER BY p2.UpdateAt DESC) as rn
+				FROM Posts p2
+				WHERE p2.OriginalId = ? AND p2.DeleteAt > 0
+			) ranked
+			WHERE ranked.rn > ?
+		)`
 
-		historyContentInsertQuery := s.getQueryBuilder().
-			Insert("PageContents").
-			Columns("PageId", "Content", "SearchText", "CreateAt", "UpdateAt", "DeleteAt").
-			Values(
-				oldPost.Id,
-				oldContentJSON,
-				oldContent.SearchText,
-				oldContent.CreateAt,
-				now,
-				now,
-			)
+	prunePostsQuery := s.getQueryBuilder().
+		Delete("Posts").
+		Where(sq.Expr(`Id IN (`+oldVersionsSubquery+`)`, pageID, model.PostEditHistoryLimit))
 
-		historyContentSQL, historyContentArgs, buildErr := historyContentInsertQuery.ToSql()
-		if buildErr != nil {
-			return errors.Wrap(buildErr, "failed to build content history insert query")
-		}
-
-		_, execErr := transaction.Exec(historyContentSQL, historyContentArgs...)
-		if execErr != nil {
-			return errors.Wrap(execErr, "failed to insert content history")
-		}
-
-		// Prune old versions - first identify old version IDs, then delete from both tables
-		// Raw SQL is used here because Squirrel doesn't support ROW_NUMBER() window functions
-		oldVersionsSubquery := `
-			SELECT p.Id
-			FROM Posts p
-			WHERE p.Id IN (
-				SELECT ranked.Id
-				FROM (
-					SELECT p2.Id, p2.UpdateAt,
-						   ROW_NUMBER() OVER (ORDER BY p2.UpdateAt DESC) as rn
-					FROM Posts p2
-					WHERE p2.OriginalId = ? AND p2.DeleteAt > 0
-				) ranked
-				WHERE ranked.rn > ?
-			)`
-
-		// Prune old PageContents
-		pruneContentQuery := s.getQueryBuilder().
-			Delete("PageContents").
-			Where(sq.Expr(`PageId IN (`+oldVersionsSubquery+`)`, pageID, model.PostEditHistoryLimit))
-
-		pruneContentSQL, pruneContentArgs, buildErr := pruneContentQuery.ToSql()
-		if buildErr != nil {
-			rctx.Logger().Warn("Failed to build prune old page content versions query",
+	prunePostsSQL, prunePostsArgs, buildErr := prunePostsQuery.ToSql()
+	if buildErr != nil {
+		rctx.Logger().Warn("Failed to build prune old page version posts query",
+			mlog.String("page_id", pageID),
+			mlog.Err(buildErr))
+	} else {
+		if _, execErr := transaction.Exec(prunePostsSQL, prunePostsArgs...); execErr != nil {
+			rctx.Logger().Warn("Failed to prune old page version posts",
 				mlog.String("page_id", pageID),
-				mlog.Err(buildErr))
-		} else {
-			_, execErr = transaction.Exec(pruneContentSQL, pruneContentArgs...)
-			if execErr != nil {
-				rctx.Logger().Warn("Failed to prune old page content versions",
-					mlog.String("page_id", pageID),
-					mlog.Err(execErr))
-			}
-		}
-
-		// Prune old Posts (version history entries)
-		prunePostsQuery := s.getQueryBuilder().
-			Delete("Posts").
-			Where(sq.Expr(`Id IN (`+oldVersionsSubquery+`)`, pageID, model.PostEditHistoryLimit))
-
-		prunePostsSQL, prunePostsArgs, buildErr := prunePostsQuery.ToSql()
-		if buildErr != nil {
-			rctx.Logger().Warn("Failed to build prune old page version posts query",
-				mlog.String("page_id", pageID),
-				mlog.Err(buildErr))
-		} else {
-			_, execErr = transaction.Exec(prunePostsSQL, prunePostsArgs...)
-			if execErr != nil {
-				rctx.Logger().Warn("Failed to prune old page version posts",
-					mlog.String("page_id", pageID),
-					mlog.Err(execErr))
-			}
+				mlog.Err(execErr))
 		}
 	}
 
@@ -1511,314 +1187,6 @@ func (s *SqlPageStore) GetCommentsForPage(pageID string, includeDeleted bool, of
 	}
 
 	return pl, nil
-}
-
-// PageContent operations
-// PageStore owns both Posts (Type='page') and PageContents tables for transactional atomicity
-
-func (s *SqlPageStore) SavePageContent(pageContent *model.PageContent) (*model.PageContent, error) {
-	pageContent.PreSave()
-
-	if err := pageContent.IsValid(); err != nil {
-		return nil, err
-	}
-
-	exists, err := s.pagePostExists(pageContent.PageId)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to verify page post exists")
-	}
-	if !exists {
-		return nil, store.NewErrNotFound("Post", pageContent.PageId)
-	}
-
-	contentJSON, jsonErr := pageContent.GetDocumentJSON()
-	if jsonErr != nil {
-		return nil, errors.Wrap(jsonErr, "failed to serialize PageContent document")
-	}
-
-	query := s.getQueryBuilder().
-		Insert("PageContents").
-		Columns("PageId", "UserId", "Content", "SearchText", "BaseUpdateAt", "CreateAt", "UpdateAt", "DeleteAt").
-		Values(pageContent.PageId, pageContent.UserId, contentJSON, pageContent.SearchText, pageContent.BaseUpdateAt, pageContent.CreateAt, pageContent.UpdateAt, pageContent.DeleteAt)
-
-	queryString, args, err := query.ToSql()
-	if err != nil {
-		return nil, errors.Wrap(err, "page_content_insert_tosql")
-	}
-
-	if _, err := s.GetMaster().Exec(queryString, args...); err != nil {
-		return nil, errors.Wrapf(err, "failed to save PageContent with pageId=%s", pageContent.PageId)
-	}
-
-	return pageContent, nil
-}
-
-func (s *SqlPageStore) GetPageContent(pageID string) (*model.PageContent, error) {
-	query := s.pageContentQuery.Where(sq.Eq{"PageId": pageID, "UserId": PublishedPageContentUserId, "DeleteAt": 0})
-
-	queryString, args, err := query.ToSql()
-	if err != nil {
-		return nil, errors.Wrap(err, "page_content_tosql")
-	}
-
-	var pageContent model.PageContent
-	var contentJSON string
-
-	// Use GetMaster() for read-after-write consistency in HA mode.
-	// This method is called in flows where content was just written (page creation,
-	// content update, draft publish) and must return the current state immediately.
-	// Replica lag could cause stale data to be returned to the user.
-	if err := s.GetMaster().QueryRow(queryString, args...).Scan(
-		&pageContent.PageId,
-		&contentJSON,
-		&pageContent.SearchText,
-		&pageContent.BaseUpdateAt,
-		&pageContent.CreateAt,
-		&pageContent.UpdateAt,
-		&pageContent.DeleteAt,
-	); err != nil {
-		if err == sql.ErrNoRows {
-			return nil, store.NewErrNotFound("PageContent", pageID)
-		}
-		return nil, errors.Wrapf(err, "failed to get PageContent with pageId=%s", pageID)
-	}
-
-	if err := pageContent.SetDocumentJSON(contentJSON); err != nil {
-		return nil, errors.Wrap(err, "failed to parse PageContent document")
-	}
-
-	return &pageContent, nil
-}
-
-// GetManyPageContents fetches multiple page contents by IDs.
-// Uses GetReplica() as this is a batch/export operation where slight replication
-// lag is acceptable - callers are fetching existing content for export or bulk display.
-// Automatically batches queries to enforce MaxPageContentBatchSize.
-func (s *SqlPageStore) GetManyPageContents(pageIDs []string) ([]*model.PageContent, error) {
-	if len(pageIDs) == 0 {
-		return []*model.PageContent{}, nil
-	}
-
-	allResults := make([]*model.PageContent, 0, len(pageIDs))
-	for i := 0; i < len(pageIDs); i += MaxPageContentBatchSize {
-		end := min(i+MaxPageContentBatchSize, len(pageIDs))
-		batch := pageIDs[i:end]
-
-		batchResults, err := s.getManyPageContentsBatch(batch, false)
-		if err != nil {
-			return nil, err
-		}
-		allResults = append(allResults, batchResults...)
-	}
-
-	return allResults, nil
-}
-
-// GetPageContentWithDeleted fetches page content including soft-deleted content.
-// Used for version history retrieval and restore operations.
-// Uses GetReplica() as this reads historical data that was written well before
-// the current request - no read-after-write consistency concerns.
-func (s *SqlPageStore) GetPageContentWithDeleted(pageID string) (*model.PageContent, error) {
-	// UserId = '' means published content (drafts have non-empty UserId)
-	query := s.pageContentQuery.Where(sq.Eq{"PageId": pageID, "UserId": PublishedPageContentUserId})
-
-	queryString, args, err := query.ToSql()
-	if err != nil {
-		return nil, errors.Wrap(err, "page_content_tosql")
-	}
-
-	var pageContent model.PageContent
-	var contentJSON string
-
-	if err := s.GetReplica().QueryRow(queryString, args...).Scan(
-		&pageContent.PageId,
-		&contentJSON,
-		&pageContent.SearchText,
-		&pageContent.BaseUpdateAt,
-		&pageContent.CreateAt,
-		&pageContent.UpdateAt,
-		&pageContent.DeleteAt,
-	); err != nil {
-		if err == sql.ErrNoRows {
-			return nil, store.NewErrNotFound("PageContent", pageID)
-		}
-		return nil, errors.Wrapf(err, "failed to get PageContent with pageId=%s", pageID)
-	}
-
-	if err := pageContent.SetDocumentJSON(contentJSON); err != nil {
-		return nil, errors.Wrap(err, "failed to parse PageContent document")
-	}
-
-	return &pageContent, nil
-}
-
-// GetManyPageContentsWithDeleted fetches multiple page contents by IDs, including soft-deleted.
-// Automatically batches queries to enforce MaxPageContentBatchSize.
-func (s *SqlPageStore) GetManyPageContentsWithDeleted(pageIDs []string) ([]*model.PageContent, error) {
-	if len(pageIDs) == 0 {
-		return []*model.PageContent{}, nil
-	}
-
-	allResults := make([]*model.PageContent, 0, len(pageIDs))
-	for i := 0; i < len(pageIDs); i += MaxPageContentBatchSize {
-		end := min(i+MaxPageContentBatchSize, len(pageIDs))
-		batch := pageIDs[i:end]
-
-		batchResults, err := s.getManyPageContentsBatch(batch, true)
-		if err != nil {
-			return nil, err
-		}
-		allResults = append(allResults, batchResults...)
-	}
-
-	return allResults, nil
-}
-
-// getManyPageContentsBatch fetches a single batch of page contents.
-// If includeDeleted is false, only non-deleted content is returned.
-func (s *SqlPageStore) getManyPageContentsBatch(pageIDs []string, includeDeleted bool) ([]*model.PageContent, error) {
-	where := sq.Eq{"PageId": pageIDs, "UserId": PublishedPageContentUserId}
-	if !includeDeleted {
-		where["DeleteAt"] = 0
-	}
-	query := s.pageContentQuery.Where(where)
-
-	queryString, args, err := query.ToSql()
-	if err != nil {
-		return nil, errors.Wrap(err, "page_content_getmany_tosql")
-	}
-
-	rows, err := s.GetReplica().Query(queryString, args...)
-	if err != nil {
-		return nil, errors.Wrapf(err, "failed to get PageContents with pageIds=%v", pageIDs)
-	}
-	defer rows.Close()
-
-	var pageContents []*model.PageContent
-	for rows.Next() {
-		var pageContent model.PageContent
-		var contentJSON string
-
-		if err := rows.Scan(
-			&pageContent.PageId,
-			&contentJSON,
-			&pageContent.SearchText,
-			&pageContent.BaseUpdateAt,
-			&pageContent.CreateAt,
-			&pageContent.UpdateAt,
-			&pageContent.DeleteAt,
-		); err != nil {
-			return nil, errors.Wrap(err, "failed to scan PageContent row")
-		}
-
-		if err := pageContent.SetDocumentJSON(contentJSON); err != nil {
-			return nil, errors.Wrapf(err, "failed to parse PageContent document for pageId=%s", pageContent.PageId)
-		}
-
-		pageContents = append(pageContents, &pageContent)
-	}
-
-	if err := rows.Err(); err != nil {
-		return nil, errors.Wrap(err, "error iterating PageContent rows")
-	}
-
-	return pageContents, nil
-}
-
-func (s *SqlPageStore) UpdatePageContent(pageContent *model.PageContent) (*model.PageContent, error) {
-	pageContent.PreSave()
-
-	if err := pageContent.IsValid(); err != nil {
-		return nil, err
-	}
-
-	exists, err := s.pagePostExists(pageContent.PageId)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to verify page post exists")
-	}
-	if !exists {
-		return nil, store.NewErrNotFound("Post", pageContent.PageId)
-	}
-
-	contentJSON, jsonErr := pageContent.GetDocumentJSON()
-	if jsonErr != nil {
-		return nil, errors.Wrap(jsonErr, "failed to serialize PageContent document")
-	}
-
-	query := s.getQueryBuilder().
-		Update("PageContents").
-		Set("Content", contentJSON).
-		Set("SearchText", pageContent.SearchText).
-		Set("UpdateAt", pageContent.UpdateAt).
-		Where(sq.And{
-			sq.Eq{"PageId": pageContent.PageId},
-			sq.Eq{"UserId": pageContent.UserId},
-			sq.Eq{"DeleteAt": 0},
-		})
-
-	result, err := s.GetMaster().ExecBuilder(query)
-	if err != nil {
-		return nil, errors.Wrapf(err, "failed to update PageContent with pageId=%s", pageContent.PageId)
-	}
-
-	if err := s.checkRowsAffected(result, "PageContent", pageContent.PageId); err != nil {
-		return nil, err
-	}
-
-	return pageContent, nil
-}
-
-func (s *SqlPageStore) DeletePageContent(pageID, userID string) error {
-	now := model.GetMillis()
-	query := s.getQueryBuilder().
-		Update("PageContents").
-		Set("DeleteAt", now).
-		Set("UpdateAt", now).
-		Where(sq.Eq{"PageId": pageID, "UserId": userID, "DeleteAt": 0})
-
-	result, err := s.GetMaster().ExecBuilder(query)
-	if err != nil {
-		return errors.Wrapf(err, "failed to soft-delete PageContent with pageId=%s userId=%s", pageID, userID)
-	}
-
-	return s.checkRowsAffected(result, "PageContent", pageID)
-}
-
-func (s *SqlPageStore) PermanentDeletePageContent(pageID string) error {
-	query := s.getQueryBuilder().
-		Delete("PageContents").
-		Where(sq.Eq{"PageId": pageID})
-
-	queryString, args, err := query.ToSql()
-	if err != nil {
-		return errors.Wrap(err, "page_content_permanent_delete_tosql")
-	}
-
-	_, err = s.GetMaster().Exec(queryString, args...)
-	if err != nil {
-		return errors.Wrapf(err, "failed to permanently delete PageContent with pageId=%s", pageID)
-	}
-
-	return nil
-}
-
-func (s *SqlPageStore) RestorePageContent(pageID string) error {
-	exists, err := s.pagePostExists(pageID)
-	if err != nil {
-		return errors.Wrap(err, "failed to verify page post exists")
-	}
-	if !exists {
-		return store.NewErrNotFound("Post", pageID)
-	}
-
-	query := s.buildRestoreQuery("PageContents", "PageId", pageID)
-
-	result, err := s.GetMaster().ExecBuilder(query)
-	if err != nil {
-		return errors.Wrapf(err, "failed to restore PageContent with pageId=%s", pageID)
-	}
-
-	return s.checkRowsAffected(result, "PageContent", pageID)
 }
 
 // AtomicUpdatePageNotification atomically finds and updates an existing page update notification.

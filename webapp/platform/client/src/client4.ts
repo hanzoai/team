@@ -2158,6 +2158,20 @@ export default class Client4 {
         );
     };
 
+    createPage = (wikiId: string, title: string, pageParentId?: string, content?: string) => {
+        const body: {title: string; page_parent_id?: string; content?: string} = {title};
+        if (pageParentId) {
+            body.page_parent_id = pageParentId;
+        }
+        if (content) {
+            body.content = content;
+        }
+        return this.doFetch<Post>(
+            `${this.getWikiPagesRoute(wikiId)}`,
+            {method: 'post', body: JSON.stringify(body)},
+        );
+    };
+
     getPage = (wikiId: string, pageId: string) => {
         return this.doFetch<Post>(
             `${this.getWikiPageRoute(wikiId, pageId)}`,
@@ -2218,6 +2232,13 @@ export default class Client4 {
         return this.doFetch<StatusOK>(
             `${this.getWikiPageRoute(wikiId, pageId)}`,
             {method: 'delete'},
+        );
+    };
+
+    restorePage = (wikiId: string, pageId: string) => {
+        return this.doFetch<StatusOK>(
+            `${this.getWikiPageRoute(wikiId, pageId)}/restore`,
+            {method: 'PATCH'},
         );
     };
 

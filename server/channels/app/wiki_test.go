@@ -565,13 +565,11 @@ func TestDuplicatePage(t *testing.T) {
 		require.Equal(t, th.BasicChannel.Id, duplicatedPage.ChannelId, "Should be in same channel")
 		require.Empty(t, duplicatedPage.PageParentId, "Should be root level")
 
-		duplicatedContent, contentErr := th.App.Srv().Store().Page().GetPageContent(duplicatedPage.Id)
+		duplicatedPagePost, contentErr := th.App.Srv().Store().Page().GetPage(th.Context, duplicatedPage.Id, false)
 		require.NoError(t, contentErr)
-		duplicatedContentJSON, jsonErr := duplicatedContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.NotEmpty(t, duplicatedContentJSON, "Content should exist")
-		require.Contains(t, duplicatedContentJSON, "Original content", "Content should contain original text")
-		require.Contains(t, duplicatedContentJSON, "\"type\":\"doc\"", "Content should be TipTap document")
+		require.NotEmpty(t, duplicatedPagePost.Message, "Content should exist")
+		require.Contains(t, duplicatedPagePost.Message, "Original content", "Content should contain original text")
+		require.Contains(t, duplicatedPagePost.Message, "\"type\":\"doc\"", "Content should be TipTap document")
 
 		targetWikiId, wikiErr := th.App.GetWikiIdForPage(th.Context, duplicatedPage.Id)
 		require.Nil(t, wikiErr)

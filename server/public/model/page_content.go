@@ -6,7 +6,6 @@ package model
 import (
 	"database/sql/driver"
 	"encoding/json"
-	"net/http"
 	"regexp"
 	"strings"
 
@@ -20,20 +19,6 @@ const (
 	TipTapDocType   = "doc"
 	EmptyTipTapJSON = `{"type":"doc","content":[]}`
 )
-
-type PageContent struct {
-	PageId       string         `json:"page_id"`
-	UserId       string         `json:"user_id"`                 // Empty string for published, user_id for drafts
-	Content      TipTapDocument `json:"content"`                 // TipTap document
-	SearchText   string         `json:"search_text,omitempty"`   // Extracted text for search
-	BaseUpdateAt int64          `json:"base_updateat,omitempty"` // For conflict detection when editing published pages
-	CreateAt     int64          `json:"create_at"`
-	UpdateAt     int64          `json:"update_at"`
-	DeleteAt     int64          `json:"delete_at"`
-
-	// Computed field - indicates whether a published version exists for this page (not stored in DB)
-	HasPublishedVersion bool `json:"has_published_version,omitempty"`
-}
 
 type TipTapDocument struct {
 	Type    string           `json:"type"`
@@ -69,90 +54,27 @@ func (td TipTapDocument) Value() (driver.Value, error) {
 	return j, nil
 }
 
-func (pc *PageContent) IsValid() *AppError {
-	if !IsValidId(pc.PageId) {
-		return NewAppError("PageContent.IsValid", "model.page_content.is_valid.page_id.app_error", nil, "", http.StatusBadRequest)
-	}
-
-	// UserId can be empty string (for published) or valid ID (for draft)
-	// Status is derived from UserId: non-empty = draft, empty = published
-	if pc.UserId != "" && !IsValidId(pc.UserId) {
-		return NewAppError("PageContent.IsValid", "model.page_content.is_valid.user_id.app_error", nil, "", http.StatusBadRequest)
-	}
-
-	if pc.CreateAt == 0 {
-		return NewAppError("PageContent.IsValid", "model.page_content.is_valid.create_at.app_error", nil, "", http.StatusBadRequest)
-	}
-
-	if pc.UpdateAt == 0 {
-		return NewAppError("PageContent.IsValid", "model.page_content.is_valid.update_at.app_error", nil, "", http.StatusBadRequest)
-	}
-
-	contentJSON, err := json.Marshal(pc.Content)
-	if err != nil {
-		return NewAppError("PageContent.IsValid", "model.page_content.is_valid.content_invalid.app_error", nil, err.Error(), http.StatusBadRequest)
-	}
-
-	if len(contentJSON) > PageContentMaxSize {
-		return NewAppError("PageContent.IsValid", "model.page_content.is_valid.content_too_large.app_error",
-			map[string]any{"Size": len(contentJSON), "MaxSize": PageContentMaxSize}, "", http.StatusBadRequest)
-	}
-
-	return nil
+// BuildSearchText extracts searchable plain text from a TipTap document.
+func BuildSearchText(doc TipTapDocument) string {
+	return extractSimpleText(doc)
 }
 
-// IsDraft returns true if this is a draft (has a user owner).
-// Status is derived from UserId: non-empty UserId = draft, empty UserId = published.
-func (pc *PageContent) IsDraft() bool {
-	return pc.UserId != ""
-}
-
-// IsPublished returns true if this is published content (no user owner).
-// Status is derived from UserId: non-empty UserId = draft, empty UserId = published.
-func (pc *PageContent) IsPublished() bool {
-	return pc.UserId == ""
-}
-
-func (pc *PageContent) PreSave() {
-	if pc.CreateAt == 0 {
-		pc.CreateAt = GetMillis()
-		pc.UpdateAt = pc.CreateAt
-	} else {
-		pc.UpdateAt = GetMillis()
-	}
-
-	pc.SearchText = pc.buildSearchText()
-}
-
-func (pc *PageContent) buildSearchText() string {
-	return extractSimpleText(pc.Content)
-}
-
-func (pc *PageContent) SetDocumentJSON(contentJSON string) error {
+// ParseTipTapDocument parses and sanitizes a TipTap JSON string into a TipTapDocument.
+func ParseTipTapDocument(contentJSON string) (TipTapDocument, error) {
 	if contentJSON == "" {
-		pc.Content = TipTapDocument{
+		return TipTapDocument{
 			Type:    TipTapDocType,
 			Content: []map[string]any{},
-		}
-		return nil
+		}, nil
 	}
 
 	var doc TipTapDocument
 	if err := json.Unmarshal([]byte(contentJSON), &doc); err != nil {
-		return err
+		return TipTapDocument{}, err
 	}
 
 	sanitizeTipTapDocument(&doc)
-	pc.Content = doc
-	return nil
-}
-
-func (pc *PageContent) GetDocumentJSON() (string, error) {
-	contentJSON, err := json.Marshal(pc.Content)
-	if err != nil {
-		return "", err
-	}
-	return string(contentJSON), nil
+	return doc, nil
 }
 
 func extractSimpleText(doc TipTapDocument) string {

@@ -118,22 +118,11 @@ func (s *SqlWikiStore) CreateWikiWithDefaultPage(wiki *model.Wiki, userId string
 
 		contentJSON := model.EmptyTipTapJSON
 
-		// Insert into PageContents table with UserId set (non-empty UserId = draft)
-		contentBuilder := s.getQueryBuilder().
-			Insert("PageContents").
-			Columns("PageId", "UserId", "Content", "SearchText", "BaseUpdateAt", "CreateAt", "UpdateAt", "DeleteAt").
-			Values(pageId, userId, contentJSON, "", 0, now, now, 0)
-
-		if _, execErr := transaction.ExecBuilder(contentBuilder); execErr != nil {
-			return errors.Wrap(execErr, "create_default_draft_content")
-		}
-
-		// Insert into Drafts table for metadata storage (FileIds, Props)
-		// This ensures the draft can store file attachments before being published
+		// Create draft with content stored in Draft.Message
 		draftBuilder := s.getQueryBuilder().
 			Insert("Drafts").
 			Columns("CreateAt", "UpdateAt", "DeleteAt", "Message", "RootId", "ChannelId", "UserId", "FileIds", "Props", "Priority", "Type").
-			Values(now, now, 0, "", pageId, savedWiki.Id, userId, "[]", `{"title":"Untitled page"}`, "{}", "")
+			Values(now, now, 0, contentJSON, pageId, savedWiki.Id, userId, "[]", `{"title":"Untitled page","page_id":"`+pageId+`"}`, "{}", "")
 
 		if _, execErr := transaction.ExecBuilder(draftBuilder); execErr != nil {
 			return errors.Wrap(execErr, "create_default_draft_metadata")
@@ -462,26 +451,13 @@ func (s *SqlWikiStore) DeleteAllPagesForWiki(wikiId string) error {
 				return errors.Wrap(execErr, "failed to soft delete property values for wiki")
 			}
 
-			// Soft delete page contents
-			pageContentsUpdateQuery := s.getQueryBuilder().
-				Update("PageContents").
-				Set("DeleteAt", deleteAt).
-				Where(sq.Eq{
-					"PageId":   postIDs,
-					"DeleteAt": 0,
-				})
-
-			if _, execErr := transaction.ExecBuilder(pageContentsUpdateQuery); execErr != nil {
-				return errors.Wrap(execErr, "failed to soft delete page contents for wiki")
-			}
 		}
 
-		// Delete all drafts from PageContents table for this wiki (hard delete since drafts are user-specific)
-		// UserId != '' indicates a draft. WikiId is stored in Drafts.ChannelId for page drafts.
+		// Delete all page drafts for this wiki (WikiId is stored in Drafts.ChannelId for page drafts)
 		pageDraftsDeleteQuery := s.getQueryBuilder().
-			Delete("PageContents").
-			Where(sq.Expr("PageId IN (SELECT RootId FROM Drafts WHERE ChannelId = ?)", wikiId)).
-			Where(sq.NotEq{"UserId": ""})
+			Delete("Drafts").
+			Where(sq.Eq{"ChannelId": wikiId}).
+			Where(sq.Expr("jsonb_exists(Props::jsonb, 'page_id')"))
 
 		if _, execErr := transaction.ExecBuilder(pageDraftsDeleteQuery); execErr != nil {
 			return errors.Wrap(execErr, "failed to delete page drafts for wiki")
@@ -913,12 +889,12 @@ func (s *SqlWikiStore) GetPagesForExport(wikiId string, limit int, afterId strin
 
 	// Extract wiki_id, page_parent_id, title, and parent's import_source_id from Props JSON in SQL
 	// Note: Page title is stored in Props->>'title', not in Message column
-	// Note: pc.Content is JSONB, so we cast to text and use empty string as fallback
+	// Note: Content is stored in Post.Message (TipTap JSON)
 	// Note: pp is the parent post, used to get parent's import_source_id for hierarchy export
 	query := s.getQueryBuilder().
 		Select(
 			"p.Id", `t.Name AS "TeamName"`, `c.Name AS "ChannelName"`, `u.Username AS "Username"`,
-			`COALESCE(p.Props->>'title', '') AS "Title"`, `COALESCE(pc.Content::text, '') AS "Content"`, "p.Props",
+			`COALESCE(p.Props->>'title', '') AS "Title"`, `COALESCE(p.Message, '') AS "Content"`, "p.Props",
 			`p.Props->>'wiki_id' AS "WikiId"`,
 			`COALESCE(p.Props->>'page_parent_id', '') AS "PageParentId"`,
 			// For parent's import_source_id: use the parent's import_source_id if it was imported, otherwise use its page ID
@@ -929,7 +905,6 @@ func (s *SqlWikiStore) GetPagesForExport(wikiId string, limit int, afterId strin
 		Join("Channels c ON p.ChannelId = c.Id").
 		Join("Teams t ON c.TeamId = t.Id").
 		Join("Users u ON p.UserId = u.Id").
-		LeftJoin("PageContents pc ON p.Id = pc.PageId AND pc.UserId = ''").
 		LeftJoin("Posts pp ON p.Props->>'page_parent_id' = pp.Id").
 		Where(sq.Eq{"p.Type": model.PostTypePage}).
 		Where(sq.Eq{"p.DeleteAt": 0}).

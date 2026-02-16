@@ -1107,13 +1107,15 @@ func TestImportPageWithAttachments(t *testing.T) {
 		fileId := fileInfos[0].Id
 
 		// Verify placeholder was resolved in page content
-		pageContentObj, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
+		pagePost, contentErr := th.App.Srv().Store().Page().GetPage(th.Context, page.Id, false)
 		require.NoError(t, contentErr)
-		require.NotNil(t, pageContentObj)
+		require.NotNil(t, pagePost)
 
 		// The content should now have the file URL instead of the placeholder
 		// Check that the placeholder has been replaced with the actual file URL
-		contentNodes := pageContentObj.Content.Content
+		var contentDoc model.TipTapDocument
+		require.NoError(t, json.Unmarshal([]byte(pagePost.Message), &contentDoc))
+		contentNodes := contentDoc.Content
 		require.NotEmpty(t, contentNodes, "Page content should have nodes")
 
 		// Find the image node and verify its src attribute
@@ -1182,14 +1184,12 @@ func TestImportPageWithAttachments(t *testing.T) {
 		require.Len(t, fileInfos, 2, "Should have exactly two attachments")
 
 		// Verify placeholders were resolved in page content
-		pageContentObj, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
+		pagePost2, contentErr := th.App.Srv().Store().Page().GetPage(th.Context, page.Id, false)
 		require.NoError(t, contentErr)
-		require.NotNil(t, pageContentObj)
+		require.NotNil(t, pagePost2)
 
 		// Serialize to check for placeholder remnants
-		contentBytes, jsonErr := json.Marshal(pageContentObj.Content)
-		require.NoError(t, jsonErr)
-		contentStr := string(contentBytes)
+		contentStr := pagePost2.Message
 
 		// Verify no placeholders remain
 		assert.NotContains(t, contentStr, "{{CONF_FILE:", "All placeholders should be resolved")
@@ -1245,13 +1245,11 @@ func TestImportPageWithAttachments(t *testing.T) {
 		require.Len(t, fileInfos, 1)
 
 		// Verify page content
-		pageContentObj, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
+		pagePost3, contentErr := th.App.Srv().Store().Page().GetPage(th.Context, page.Id, false)
 		require.NoError(t, contentErr)
-		require.NotNil(t, pageContentObj)
+		require.NotNil(t, pagePost3)
 
-		contentBytes, jsonErr := json.Marshal(pageContentObj.Content)
-		require.NoError(t, jsonErr)
-		contentStr := string(contentBytes)
+		contentStr := pagePost3.Message
 
 		// Known file should be resolved
 		expectedURL := "/api/v4/files/" + fileInfos[0].Id
@@ -1483,11 +1481,10 @@ func TestResolvePageTitlePlaceholders(t *testing.T) {
 		require.NoError(t, err)
 		require.Len(t, sourcePages, 1)
 
-		pageContent, err := th.App.Srv().Store().Page().GetPageContent(sourcePages[0].Id)
+		pagePost, err := th.App.Srv().Store().Page().GetPage(th.Context, sourcePages[0].Id, false)
 		require.NoError(t, err)
 
-		contentJSON, _ := json.Marshal(pageContent.Content)
-		contentStr := string(contentJSON)
+		contentStr := pagePost.Message
 
 		// Placeholder should be replaced with URL
 		assert.NotContains(t, contentStr, "{{CONF_PAGE_TITLE:")
@@ -1590,11 +1587,10 @@ func TestResolvePageIDPlaceholders(t *testing.T) {
 		require.NoError(t, err)
 		require.Len(t, sourcePages, 1)
 
-		pageContent, err := th.App.Srv().Store().Page().GetPageContent(sourcePages[0].Id)
+		pagePost, err := th.App.Srv().Store().Page().GetPage(th.Context, sourcePages[0].Id, false)
 		require.NoError(t, err)
 
-		contentJSON, _ := json.Marshal(pageContent.Content)
-		contentStr := string(contentJSON)
+		contentStr := pagePost.Message
 
 		assert.NotContains(t, contentStr, "{{CONF_PAGE_ID:")
 		assert.Contains(t, contentStr, "/wiki/")
@@ -1645,11 +1641,10 @@ func TestCleanupUnresolvedPlaceholders(t *testing.T) {
 		require.NoError(t, err)
 		require.Len(t, pages, 1)
 
-		pageContent, err := th.App.Srv().Store().Page().GetPageContent(pages[0].Id)
+		pagePost, err := th.App.Srv().Store().Page().GetPage(th.Context, pages[0].Id, false)
 		require.NoError(t, err)
 
-		contentJSON, _ := json.Marshal(pageContent.Content)
-		contentStr := string(contentJSON)
+		contentStr := pagePost.Message
 
 		// Placeholders should be replaced with broken link indicators
 		assert.NotContains(t, contentStr, "{{CONF_PAGE_TITLE:")

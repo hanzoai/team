@@ -61,7 +61,6 @@ func TestPageStore(t *testing.T, rctx request.CTX, ss store.Store, s SqlStore) {
 	t.Cleanup(func() {
 		typesSQL := pagePostTypesSQL()
 		_, _ = s.GetMaster().Exec(fmt.Sprintf("DELETE FROM PropertyValues WHERE TargetType = 'post' AND TargetID IN (SELECT Id FROM Posts WHERE Type IN (%s))", typesSQL))
-		_, _ = s.GetMaster().Exec("DELETE FROM PageContents")
 		_, _ = s.GetMaster().Exec(fmt.Sprintf("DELETE FROM Posts WHERE Type IN (%s)", typesSQL))
 		// Clean up wikis that have no remaining pages (orphaned by page deletion above)
 		_, _ = s.GetMaster().Exec("DELETE FROM Wikis WHERE Id NOT IN (SELECT DISTINCT (Props->>'wiki_id')::text FROM Posts WHERE Props->>'wiki_id' IS NOT NULL AND Type = 'page' AND DeleteAt = 0)")
@@ -766,7 +765,7 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 
 		originalUpdateAt := page.UpdateAt
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "New Title", "", "")
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "New Title", "")
 		require.NoError(t, updateErr)
 		require.NotNil(t, updatedPost)
 
@@ -788,20 +787,12 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 		require.NoError(t, err)
 
 		contentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Test content"}]}]}`
-		searchText := "Test content"
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", contentJSON, searchText)
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", contentJSON)
 		require.NoError(t, updateErr)
 		require.NotNil(t, updatedPost)
 
-		pageContent, contentErr := ss.Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-		require.NotNil(t, pageContent)
-
-		actualContentJSON, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.JSONEq(t, contentJSON, actualContentJSON)
-		require.Equal(t, searchText, pageContent.SearchText)
+		require.JSONEq(t, contentJSON, updatedPost.Message)
 	})
 
 	t.Run("updates both title and content", func(t *testing.T) {
@@ -818,27 +809,19 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 		require.NoError(t, err)
 
 		contentJSON := `{"type":"doc","content":[{"type":"heading","attrs":{"level":1},"content":[{"type":"text","text":"New Heading"}]}]}`
-		searchText := "New Heading"
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "Updated Title", contentJSON, searchText)
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "Updated Title", contentJSON)
 		require.NoError(t, updateErr)
 		require.NotNil(t, updatedPost)
 
 		require.Equal(t, "Updated Title", updatedPost.Props["title"])
-
-		pageContent, contentErr := ss.Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-
-		actualContentJSON, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.JSONEq(t, contentJSON, actualContentJSON)
-		require.Equal(t, searchText, pageContent.SearchText)
+		require.JSONEq(t, contentJSON, updatedPost.Message)
 	})
 
 	t.Run("fails for non-existent pageID", func(t *testing.T) {
 		nonExistentPageID := model.NewId()
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, nonExistentPageID, "Title", "", "")
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, nonExistentPageID, "Title", "")
 		require.Error(t, updateErr)
 		require.Nil(t, updatedPost)
 	})
@@ -858,17 +841,17 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 
 		invalidJSON := `{"type":"doc","content":["invalid structure`
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", invalidJSON, "")
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", invalidJSON)
 		require.Error(t, updateErr)
 		require.Nil(t, updatedPost)
 	})
 
-	t.Run("inserts PageContent if it doesn't exist (upsert INSERT path)", func(t *testing.T) {
+	t.Run("sets content in Post.Message when page had no content", func(t *testing.T) {
 		page := &model.Post{
 			ChannelId: channel.Id,
 			UserId:    userID,
 			Type:      model.PostTypePage,
-			Message:   "Page without content",
+			Message:   "",
 			Props: model.StringInterface{
 				"title": "Empty Page",
 			},
@@ -876,31 +859,22 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 		page, err = ss.Post().Save(rctx, page)
 		require.NoError(t, err)
 
-		_, contentErr := ss.Page().GetPageContent(page.Id)
-		require.Error(t, contentErr, "should not have content initially")
-
 		contentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"First content"}]}]}`
-		searchText := "First content"
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", contentJSON, searchText)
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", contentJSON)
 		require.NoError(t, updateErr)
 		require.NotNil(t, updatedPost)
 
-		pageContent, getErr := ss.Page().GetPageContent(page.Id)
-		require.NoError(t, getErr, "content should now exist")
-
-		actualContentJSON, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.JSONEq(t, contentJSON, actualContentJSON)
-		require.Equal(t, searchText, pageContent.SearchText)
+		require.JSONEq(t, contentJSON, updatedPost.Message)
 	})
 
-	t.Run("updates existing PageContent (upsert UPDATE path)", func(t *testing.T) {
+	t.Run("overwrites existing content in Post.Message", func(t *testing.T) {
+		initialContentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Initial content"}]}]}`
 		page := &model.Post{
 			ChannelId: channel.Id,
 			UserId:    userID,
 			Type:      model.PostTypePage,
-			Message:   "Page with existing content",
+			Message:   initialContentJSON,
 			Props: model.StringInterface{
 				"title": "Page Title",
 			},
@@ -908,32 +882,13 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 		page, err = ss.Post().Save(rctx, page)
 		require.NoError(t, err)
 
-		initialContentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Initial content"}]}]}`
-		initialSearchText := "Initial content"
-		initialContent := &model.PageContent{
-			PageId:     page.Id,
-			SearchText: initialSearchText,
-		}
-		err = initialContent.SetDocumentJSON(initialContentJSON)
-		require.NoError(t, err)
-
-		_, err = ss.Page().SavePageContent(initialContent)
-		require.NoError(t, err)
-
 		updatedContentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Updated content"}]}]}`
-		updatedSearchText := "Updated content"
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", updatedContentJSON, updatedSearchText)
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "", updatedContentJSON)
 		require.NoError(t, updateErr)
 		require.NotNil(t, updatedPost)
 
-		pageContent, getErr := ss.Page().GetPageContent(page.Id)
-		require.NoError(t, getErr)
-
-		actualContentJSON, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.JSONEq(t, updatedContentJSON, actualContentJSON)
-		require.Equal(t, updatedSearchText, pageContent.SearchText)
+		require.JSONEq(t, updatedContentJSON, updatedPost.Message)
 	})
 
 	t.Run("verifies UpdateAt is incremented", func(t *testing.T) {
@@ -953,7 +908,7 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 
 		contentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"New content"}]}]}`
 
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "New Title", contentJSON, "New content")
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, "New Title", contentJSON)
 		require.NoError(t, updateErr)
 		require.NotNil(t, updatedPost)
 
@@ -965,7 +920,7 @@ func testUpdatePageWithContent(t *testing.T, rctx request.CTX, ss store.Store) {
 	})
 
 	t.Run("fails with empty pageID", func(t *testing.T) {
-		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, "", "Title", "", "")
+		updatedPost, updateErr := ss.Page().UpdatePageWithContent(rctx, "", "Title", "")
 		require.Error(t, updateErr)
 		require.Nil(t, updatedPost)
 	})
@@ -1659,9 +1614,8 @@ func testConcurrentOperations(t *testing.T, rctx request.CTX, ss store.Store) {
 			go func(idx int) {
 				title := fmt.Sprintf("Updated Title %d", idx)
 				contentJSON := fmt.Sprintf(`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Content %d"}]}]}`, idx)
-				searchText := fmt.Sprintf("Content %d", idx)
 
-				_, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, title, contentJSON, searchText)
+				_, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, title, contentJSON)
 				errChan <- updateErr
 			}(i)
 		}
@@ -1701,7 +1655,7 @@ func testDeletePage(t *testing.T, rctx request.CTX, ss store.Store) {
 			Props: model.StringInterface{
 				"title": "Page With Drafts",
 			},
-		}, `{"type":"doc","content":[]}`, "")
+		}, `{"type":"doc","content":[]}`)
 		require.NoError(t, err)
 
 		draft1 := &model.Draft{
@@ -1743,7 +1697,7 @@ func testDeletePage(t *testing.T, rctx request.CTX, ss store.Store) {
 		assert.True(t, errors.As(err, &notFoundErr), "expected ErrNotFound for second user's draft after page deletion")
 	})
 
-	t.Run("deletes page content drafts from PageContents table", func(t *testing.T) {
+	t.Run("deletes page drafts when page is deleted", func(t *testing.T) {
 		page, err := ss.Page().CreatePage(rctx, &model.Post{
 			ChannelId: channel.Id,
 			UserId:    userID,
@@ -1752,32 +1706,29 @@ func testDeletePage(t *testing.T, rctx request.CTX, ss store.Store) {
 			Props: model.StringInterface{
 				"title": "Page With Content Drafts",
 			},
-		}, `{"type":"doc","content":[]}`, "")
+		}, `{"type":"doc","content":[]}`)
 		require.NoError(t, err)
 
-		draftContent := &model.PageContent{
-			PageId:   page.Id,
-			UserId:   userID,
-			CreateAt: model.GetMillis(),
-			UpdateAt: model.GetMillis(),
+		draft := &model.Draft{
+			UserId:    userID,
+			ChannelId: wikiID,
+			RootId:    page.Id,
+			Message:   `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Draft content"}]}]}`,
 		}
-		err = draftContent.SetDocumentJSON(`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Draft content"}]}]}`)
+		_, err = ss.Draft().UpsertPageDraft(draft)
 		require.NoError(t, err)
 
-		_, err = ss.Draft().CreatePageDraft(draftContent)
-		require.NoError(t, err)
-
-		getDraft, err := ss.Draft().GetPageDraft(page.Id, userID)
+		getDraft, err := ss.Draft().Get(userID, wikiID, page.Id, false)
 		require.NoError(t, err)
 		require.NotNil(t, getDraft)
 
 		err = ss.Page().DeletePage(page.Id, userID, "")
 		require.NoError(t, err)
 
-		_, err = ss.Draft().GetPageDraft(page.Id, userID)
+		_, err = ss.Draft().Get(userID, wikiID, page.Id, false)
 		require.Error(t, err)
 		var notFoundErr *store.ErrNotFound
-		assert.True(t, errors.As(err, &notFoundErr), "expected ErrNotFound for content draft after page deletion")
+		assert.True(t, errors.As(err, &notFoundErr), "expected ErrNotFound for draft after page deletion")
 	})
 
 	t.Run("does not affect drafts for other pages", func(t *testing.T) {
@@ -1789,7 +1740,7 @@ func testDeletePage(t *testing.T, rctx request.CTX, ss store.Store) {
 			Props: model.StringInterface{
 				"title": "Page 1",
 			},
-		}, `{"type":"doc","content":[]}`, "")
+		}, `{"type":"doc","content":[]}`)
 		require.NoError(t, err)
 
 		page2, err := ss.Page().CreatePage(rctx, &model.Post{
@@ -1800,7 +1751,7 @@ func testDeletePage(t *testing.T, rctx request.CTX, ss store.Store) {
 			Props: model.StringInterface{
 				"title": "Page 2",
 			},
-		}, `{"type":"doc","content":[]}`, "")
+		}, `{"type":"doc","content":[]}`)
 		require.NoError(t, err)
 
 		draft1 := &model.Draft{
@@ -1853,7 +1804,7 @@ func testVersionHistoryPruning(t *testing.T, rctx request.CTX, ss store.Store, s
 			UserId:    userID,
 			Type:      model.PostTypePage,
 			Props:     model.StringInterface{"title": "Pruning Test"},
-		}, initialContent, "Initial")
+		}, initialContent)
 		require.NoError(t, createErr)
 		require.NotNil(t, page)
 
@@ -1861,8 +1812,7 @@ func testVersionHistoryPruning(t *testing.T, rctx request.CTX, ss store.Store, s
 		// Each edit should create a version history entry
 		for i := 1; i <= 14; i++ {
 			content := fmt.Sprintf(`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Edit %d"}]}]}`, i)
-			searchText := fmt.Sprintf("Edit %d", i)
-			_, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, fmt.Sprintf("Title %d", i), content, searchText)
+			_, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, fmt.Sprintf("Title %d", i), content)
 			require.NoError(t, updateErr, "Edit %d should succeed", i)
 		}
 
@@ -1881,17 +1831,6 @@ func testVersionHistoryPruning(t *testing.T, rctx request.CTX, ss store.Store, s
 		require.LessOrEqual(t, postsCount, model.PostEditHistoryLimit,
 			"Posts table should have at most %d historical entries, got %d",
 			model.PostEditHistoryLimit, postsCount)
-
-		// Verify via direct DB query: PageContents table should have at most 10 historical entries
-		var contentsCount int
-		err = s.GetMaster().Get(&contentsCount,
-			`SELECT COUNT(*) FROM PageContents WHERE PageId IN (
-				SELECT Id FROM Posts WHERE OriginalId = $1 AND DeleteAt > 0
-			)`, page.Id)
-		require.NoError(t, err)
-		require.LessOrEqual(t, contentsCount, model.PostEditHistoryLimit,
-			"PageContents table should have at most %d historical entries, got %d",
-			model.PostEditHistoryLimit, contentsCount)
 	})
 
 	t.Run("keeps most recent versions when pruning", func(t *testing.T) {
@@ -1902,13 +1841,13 @@ func testVersionHistoryPruning(t *testing.T, rctx request.CTX, ss store.Store, s
 			UserId:    userID,
 			Type:      model.PostTypePage,
 			Props:     model.StringInterface{"title": "Order Test"},
-		}, initialContent, "Start")
+		}, initialContent)
 		require.NoError(t, createErr)
 
 		// Make 12 edits
 		for i := 1; i <= 12; i++ {
 			content := fmt.Sprintf(`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Version %d"}]}]}`, i)
-			_, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, fmt.Sprintf("Title %d", i), content, fmt.Sprintf("Version %d", i))
+			_, updateErr := ss.Page().UpdatePageWithContent(rctx, page.Id, fmt.Sprintf("Title %d", i), content)
 			require.NoError(t, updateErr)
 		}
 
@@ -1927,11 +1866,8 @@ func testVersionHistoryPruning(t *testing.T, rctx request.CTX, ss store.Store, s
 		// The oldest versions (edits 1, 2) should have been pruned
 		// Remaining should be edits 3-12 (or similar recent ones)
 		for _, entry := range history {
-			pageContent, contentErr := ss.Page().GetPageContentWithDeleted(entry.Id)
-			require.NoError(t, contentErr)
-			contentJSON, _ := pageContent.GetDocumentJSON()
-			// Should not contain "Version 1" or "Version 2" (oldest pruned)
-			require.NotContains(t, contentJSON, `"Version 1"`,
+			// Content is now stored in Post.Message
+			require.NotContains(t, entry.Message, `"Version 1"`,
 				"Oldest version should have been pruned")
 		}
 	})

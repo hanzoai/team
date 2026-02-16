@@ -1328,11 +1328,6 @@ func (a *App) GetPostThread(rctx request.CTX, postID string, opts model.GetPosts
 		return nil, appErr
 	}
 
-	// Load page content for any pages in the thread
-	if appErr := a.LoadPageContent(rctx, posts, PageContentLoadOptions{}); appErr != nil {
-		return nil, appErr
-	}
-
 	a.applyPostsWillBeConsumedHook(posts.Posts)
 
 	return posts, nil
@@ -2037,12 +2032,6 @@ func (a *App) SearchPostsForUser(rctx request.CTX, terms string, userID string, 
 		default:
 			return nil, false, model.NewAppError("SearchPostsForUser", "app.post.search.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
 		}
-	}
-
-	// Enrich pages with search_text for display in search results
-	if appErr := a.LoadPageContent(rctx, postSearchResults.PostList, PageContentLoadOptions{SearchTextOnly: true}); appErr != nil {
-		rctx.Logger().Warn("Failed to enrich pages with search text", mlog.Err(appErr))
-		// Non-fatal - continue with results even if enrichment fails
 	}
 
 	if appErr := a.filterInaccessiblePosts(postSearchResults.PostList, filterPostOptions{assumeSortedCreatedAt: true}); appErr != nil {

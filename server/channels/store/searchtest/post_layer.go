@@ -2069,31 +2069,11 @@ func testSearchWikiPages(t *testing.T, th *SearchTestHelper) {
 	wikiPage, err := th.createPost(th.User.Id, th.ChannelBasic.Id, "Wiki page title", "", model.PostTypePage, 0, false)
 	require.NoError(t, err)
 
-	pageContent := &model.PageContent{
-		PageId: wikiPage.Id,
-		Content: model.TipTapDocument{
-			Type: "doc",
-			Content: []map[string]any{
-				{
-					"type": "paragraph",
-					"content": []map[string]any{
-						{
-							"type": "text",
-							"text": "This is searchable wiki page content with unique keyword wikisearchtest",
-						},
-					},
-				},
-			},
-		},
-		SearchText: "This is searchable wiki page content with unique keyword wikisearchtest",
-		CreateAt:   model.GetMillis(),
-		UpdateAt:   model.GetMillis(),
-	}
-
-	_, err = th.Store.Page().SavePageContent(pageContent)
+	_, err = th.Store.Page().UpdatePageWithContent(th.Context, wikiPage.Id, "",
+		`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"This is searchable wiki page content with unique keyword wikisearchtest"}]}]}`)
 	require.NoError(t, err)
 
-	t.Run("Should find wiki page by content in PageContents table", func(t *testing.T) {
+	t.Run("Should find wiki page by content in Post.Message", func(t *testing.T) {
 		params := &model.SearchParams{Terms: "wikisearchtest"}
 		results, err := th.Store.Post().SearchPostsForUser(th.Context, []*model.SearchParams{params}, th.User.Id, th.Team.Id, 0, 20)
 		require.NoError(t, err)
@@ -2215,30 +2195,11 @@ func testSearchWikiPagesByTitle(t *testing.T, th *SearchTestHelper) {
 	defer th.deleteUserPosts(th.User.Id)
 
 	// Create page content with searchable text
-	// SearchText is derived from Content via PreSave() - this is what makes pages searchable
-	pageContent := &model.PageContent{
-		PageId: wikiPage.Id,
-		Content: model.TipTapDocument{
-			Type: "doc",
-			Content: []map[string]any{
-				{
-					"type": "paragraph",
-					"content": []map[string]any{
-						{
-							"type": "text",
-							"text": "UniqueWikiPageTitleSearchTest",
-						},
-					},
-				},
-			},
-		},
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
-	}
-	_, err = th.Store.Page().SavePageContent(pageContent)
+	_, err = th.Store.Page().UpdatePageWithContent(th.Context, wikiPage.Id, "",
+		`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"UniqueWikiPageTitleSearchTest"}]}]}`)
 	require.NoError(t, err)
 
-	t.Run("Should find wiki page by SearchText in PageContents", func(t *testing.T) {
+	t.Run("Should find wiki page by content in Post.Message", func(t *testing.T) {
 		params := &model.SearchParams{Terms: "UniqueWikiPageTitleSearchTest"}
 		results, err := th.Store.Post().SearchPostsForUser(th.Context, []*model.SearchParams{params}, th.User.Id, th.Team.Id, 0, 20)
 		require.NoError(t, err)
@@ -2299,51 +2260,15 @@ func testSearchPagesWithChannelModifiers(t *testing.T, th *SearchTestHelper) {
 	wikiPage1, err := th.createPost(th.User.Id, channel1.Id, "", "", model.PostTypePage, 0, false)
 	require.NoError(t, err)
 
-	pageContent1 := &model.PageContent{
-		PageId: wikiPage1.Id,
-		Content: model.TipTapDocument{
-			Type: "doc",
-			Content: []map[string]any{
-				{
-					"type": "paragraph",
-					"content": []map[string]any{
-						{
-							"type": "text",
-							"text": "testing page in wiki channel",
-						},
-					},
-				},
-			},
-		},
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
-	}
-	_, err = th.Store.Page().SavePageContent(pageContent1)
+	_, err = th.Store.Page().UpdatePageWithContent(th.Context, wikiPage1.Id, "",
+		`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"testing page in wiki channel"}]}]}`)
 	require.NoError(t, err)
 
 	wikiPage2, err := th.createPost(th.User.Id, channel2.Id, "", "", model.PostTypePage, 0, false)
 	require.NoError(t, err)
 
-	pageContent2 := &model.PageContent{
-		PageId: wikiPage2.Id,
-		Content: model.TipTapDocument{
-			Type: "doc",
-			Content: []map[string]any{
-				{
-					"type": "paragraph",
-					"content": []map[string]any{
-						{
-							"type": "text",
-							"text": "testing page in other channel",
-						},
-					},
-				},
-			},
-		},
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
-	}
-	_, err = th.Store.Page().SavePageContent(pageContent2)
+	_, err = th.Store.Page().UpdatePageWithContent(th.Context, wikiPage2.Id, "",
+		`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"testing page in other channel"}]}]}`)
 	require.NoError(t, err)
 
 	defer th.deleteUserPosts(th.User.Id)
@@ -2414,26 +2339,8 @@ func testSearchTypeModifier(t *testing.T, th *SearchTestHelper) {
 	wikiPage, err := th.createPost(th.User.Id, th.ChannelBasic.Id, "", "", model.PostTypePage, 0, false)
 	require.NoError(t, err)
 
-	pageContent := &model.PageContent{
-		PageId: wikiPage.Id,
-		Content: model.TipTapDocument{
-			Type: "doc",
-			Content: []map[string]any{
-				{
-					"type": "paragraph",
-					"content": []map[string]any{
-						{
-							"type": "text",
-							"text": "TypeModifierTestContent wiki page",
-						},
-					},
-				},
-			},
-		},
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
-	}
-	_, err = th.Store.Page().SavePageContent(pageContent)
+	_, err = th.Store.Page().UpdatePageWithContent(th.Context, wikiPage.Id, "",
+		`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"TypeModifierTestContent wiki page"}]}]}`)
 	require.NoError(t, err)
 
 	t.Run("type:page returns only pages", func(t *testing.T) {
@@ -2568,26 +2475,8 @@ func testSearchWikiModifier(t *testing.T, th *SearchTestHelper) {
 	err = th.Store.Wiki().SetWikiIdInPostProps(page1.Id, wiki1.Id)
 	require.NoError(t, err)
 
-	pageContent1 := &model.PageContent{
-		PageId: page1.Id,
-		Content: model.TipTapDocument{
-			Type: "doc",
-			Content: []map[string]any{
-				{
-					"type": "paragraph",
-					"content": []map[string]any{
-						{
-							"type": "text",
-							"text": "WikiModifierTestContent in product docs",
-						},
-					},
-				},
-			},
-		},
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
-	}
-	_, err = th.Store.Page().SavePageContent(pageContent1)
+	_, err = th.Store.Page().UpdatePageWithContent(th.Context, page1.Id, "",
+		`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"WikiModifierTestContent in product docs"}]}]}`)
 	require.NoError(t, err)
 
 	// Create a page in wiki2
@@ -2598,26 +2487,8 @@ func testSearchWikiModifier(t *testing.T, th *SearchTestHelper) {
 	err = th.Store.Wiki().SetWikiIdInPostProps(page2.Id, wiki2.Id)
 	require.NoError(t, err)
 
-	pageContent2 := &model.PageContent{
-		PageId: page2.Id,
-		Content: model.TipTapDocument{
-			Type: "doc",
-			Content: []map[string]any{
-				{
-					"type": "paragraph",
-					"content": []map[string]any{
-						{
-							"type": "text",
-							"text": "WikiModifierTestContent in engineering notes",
-						},
-					},
-				},
-			},
-		},
-		CreateAt: model.GetMillis(),
-		UpdateAt: model.GetMillis(),
-	}
-	_, err = th.Store.Page().SavePageContent(pageContent2)
+	_, err = th.Store.Page().UpdatePageWithContent(th.Context, page2.Id, "",
+		`{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"WikiModifierTestContent in engineering notes"}]}]}`)
 	require.NoError(t, err)
 
 	t.Run("wiki: modifier filters by wiki name", func(t *testing.T) {

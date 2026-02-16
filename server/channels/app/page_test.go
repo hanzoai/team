@@ -25,11 +25,6 @@ func TestCreatePageWithContent(t *testing.T) {
 		require.Equal(t, th.BasicChannel.Id, page.ChannelId)
 		require.Equal(t, "Test Page", page.Props["title"])
 		require.NotEmpty(t, page.Id)
-
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-		require.NotNil(t, pageContent)
-		require.Equal(t, page.Id, pageContent.PageId)
 	})
 
 	t.Run("creates page with JSON content", func(t *testing.T) {
@@ -38,13 +33,7 @@ func TestCreatePageWithContent(t *testing.T) {
 		require.Nil(t, err)
 		require.NotNil(t, page)
 
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-		require.NotNil(t, pageContent)
-
-		jsonContent, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.Contains(t, jsonContent, "Test content")
+		require.Contains(t, page.Message, "Test content")
 	})
 
 	t.Run("creates child page with parent", func(t *testing.T) {
@@ -169,16 +158,9 @@ func TestCreatePageWithContent(t *testing.T) {
 		require.Nil(t, err)
 		require.NotNil(t, page)
 
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-		require.NotNil(t, pageContent)
-
-		jsonContent, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-
 		// Parse the JSON to verify structure
 		var doc map[string]any
-		parseErr := json.Unmarshal([]byte(jsonContent), &doc)
+		parseErr := json.Unmarshal([]byte(page.Message), &doc)
 		require.NoError(t, parseErr)
 		require.Equal(t, "doc", doc["type"])
 
@@ -197,14 +179,8 @@ func TestCreatePageWithContent(t *testing.T) {
 		require.Nil(t, err)
 		require.NotNil(t, page)
 
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-
-		jsonContent, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-
 		var doc map[string]any
-		parseErr := json.Unmarshal([]byte(jsonContent), &doc)
+		parseErr := json.Unmarshal([]byte(page.Message), &doc)
 		require.NoError(t, parseErr)
 
 		content := doc["content"].([]any)
@@ -228,14 +204,8 @@ func TestCreatePageWithContent(t *testing.T) {
 		require.Nil(t, err)
 		require.NotNil(t, page)
 
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-
-		jsonContent, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-
 		var doc map[string]any
-		parseErr := json.Unmarshal([]byte(jsonContent), &doc)
+		parseErr := json.Unmarshal([]byte(page.Message), &doc)
 		require.NoError(t, parseErr)
 
 		content := doc["content"].([]any)
@@ -255,14 +225,8 @@ func TestCreatePageWithContent(t *testing.T) {
 		require.Nil(t, err)
 		require.NotNil(t, page)
 
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-
-		jsonContent, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-
 		var doc map[string]any
-		parseErr := json.Unmarshal([]byte(jsonContent), &doc)
+		parseErr := json.Unmarshal([]byte(page.Message), &doc)
 		require.NoError(t, parseErr)
 
 		content := doc["content"].([]any)
@@ -331,12 +295,7 @@ func TestUpdatePage(t *testing.T) {
 		require.Nil(t, err)
 		require.NotNil(t, updatedPage)
 		require.Equal(t, "Updated Title", updatedPage.Props["title"])
-
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(updatedPage.Id)
-		require.NoError(t, contentErr)
-		jsonContent, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.Contains(t, jsonContent, "Updated content")
+		require.Contains(t, updatedPage.Message, "Updated content")
 	})
 
 	t.Run("fails with invalid JSON content", func(t *testing.T) {
@@ -385,10 +344,6 @@ func TestDeletePage(t *testing.T) {
 		createdPage, err := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Test Page", "", `{"type":"doc","content":[{"type":"paragraph"}]}`, th.BasicUser.Id, "", "")
 		require.Nil(t, err)
 
-		pageContent, getErr := th.App.Srv().Store().Page().GetPageContent(createdPage.Id)
-		require.NoError(t, getErr)
-		require.NotNil(t, pageContent, "PageContent should exist before deletion")
-
 		page, err := th.App.GetPage(sessionCtx, createdPage.Id)
 		require.Nil(t, err)
 
@@ -399,11 +354,6 @@ func TestDeletePage(t *testing.T) {
 		require.NoError(t, getErr)
 		require.NotNil(t, deletedPage)
 		require.NotEqual(t, int64(0), deletedPage.DeleteAt, "Post should be soft-deleted")
-
-		_, getContentErr := th.App.Srv().Store().Page().GetPageContent(createdPage.Id)
-		require.Error(t, getContentErr, "PageContent should be deleted")
-		var nfErr *store.ErrNotFound
-		require.ErrorAs(t, getContentErr, &nfErr, "Should return NotFound error for deleted PageContent")
 	})
 
 	t.Run("fails for non-existent page", func(t *testing.T) {
@@ -544,13 +494,9 @@ func TestRestorePage(t *testing.T) {
 	sessionCtx := th.CreateSessionContext()
 
 	t.Run("successfully restores deleted page with content", func(t *testing.T) {
-		pageContent := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Test content that should be preserved"}]}]}`
-		createdPage, err := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Test Page", "", pageContent, th.BasicUser.Id, "searchable text", "")
+		contentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Test content that should be preserved"}]}]}`
+		createdPage, err := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Test Page", "", contentJSON, th.BasicUser.Id, "searchable text", "")
 		require.Nil(t, err)
-
-		originalContent, getErr := th.App.Srv().Store().Page().GetPageContent(createdPage.Id)
-		require.NoError(t, getErr)
-		require.NotNil(t, originalContent)
 
 		page, err := th.App.GetPage(sessionCtx, createdPage.Id)
 		require.Nil(t, err)
@@ -561,14 +507,6 @@ func TestRestorePage(t *testing.T) {
 		require.NoError(t, getErr)
 		require.NotEqual(t, int64(0), deletedPage.DeleteAt, "Post should be soft-deleted")
 
-		_, getContentErr := th.App.Srv().Store().Page().GetPageContent(createdPage.Id)
-		require.Error(t, getContentErr, "Get() should not return soft-deleted PageContent")
-
-		deletedContent, getErr := th.App.Srv().Store().Page().GetPageContentWithDeleted(createdPage.Id)
-		require.NoError(t, getErr, "GetWithDeleted() should return soft-deleted PageContent")
-		require.NotNil(t, deletedContent)
-		require.NotEqual(t, int64(0), deletedContent.DeleteAt, "PageContent should have DeleteAt set")
-
 		deletedPageWrapper, err := th.App.GetPageWithDeleted(sessionCtx, createdPage.Id)
 		require.Nil(t, err)
 		err = th.App.RestorePage(sessionCtx, deletedPageWrapper)
@@ -578,16 +516,7 @@ func TestRestorePage(t *testing.T) {
 		require.NoError(t, getErr, "Direct store GetSingle should not return an error after restoration")
 		require.NotNil(t, restoredPost, "restoredPost should not be nil")
 		require.Equal(t, int64(0), restoredPost.DeleteAt, "Post should be restored (DeleteAt = 0)")
-
-		restoredContent, getErr := th.App.Srv().Store().Page().GetPageContent(createdPage.Id)
-		require.NoError(t, getErr, "PageContent should be accessible after restoration")
-		require.NotNil(t, restoredContent)
-		require.Equal(t, int64(0), restoredContent.DeleteAt, "PageContent DeleteAt should be cleared")
-
-		restoredJSON, jsonErr := restoredContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.JSONEq(t, pageContent, restoredJSON, "Page content should be preserved after restoration")
-		require.NotEmpty(t, restoredContent.SearchText, "SearchText should be populated after restoration")
+		require.JSONEq(t, contentJSON, restoredPost.Message, "Page content should be preserved after restoration")
 	})
 
 	t.Run("cannot get non-existent page for restoration", func(t *testing.T) {
@@ -615,8 +544,8 @@ func TestPermanentDeletePage(t *testing.T) {
 	sessionCtx := th.CreateSessionContext()
 
 	t.Run("permanently deletes page and content", func(t *testing.T) {
-		pageContent := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Content to be permanently deleted"}]}]}`
-		createdPage, err := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Page to Purge", "", pageContent, th.BasicUser.Id, "", "")
+		contentJSON := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Content to be permanently deleted"}]}]}`
+		createdPage, err := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Page to Purge", "", contentJSON, th.BasicUser.Id, "", "")
 		require.Nil(t, err)
 
 		page, err := th.App.GetPage(sessionCtx, createdPage.Id)
@@ -624,20 +553,13 @@ func TestPermanentDeletePage(t *testing.T) {
 		err = th.App.DeletePage(sessionCtx, page, "")
 		require.Nil(t, err)
 
-		deletedContent, getErr := th.App.Srv().Store().Page().GetPageContentWithDeleted(createdPage.Id)
-		require.NoError(t, getErr, "Content should still exist after soft delete")
-		require.NotNil(t, deletedContent)
-
 		deletedPage, err := th.App.GetPageWithDeleted(sessionCtx, createdPage.Id)
 		require.Nil(t, err)
 		err = th.App.PermanentDeletePage(sessionCtx, deletedPage)
 		require.Nil(t, err)
 
-		_, getErr = th.App.Srv().Store().Post().GetSingle(th.Context, createdPage.Id, true)
+		_, getErr := th.App.Srv().Store().Post().GetSingle(th.Context, createdPage.Id, true)
 		require.Error(t, getErr, "Post should be permanently deleted")
-
-		_, getErr = th.App.Srv().Store().Page().GetPageContentWithDeleted(createdPage.Id)
-		require.Error(t, getErr, "PageContent should be permanently deleted")
 	})
 
 	t.Run("cannot get non-existent page for permanent deletion", func(t *testing.T) {
@@ -2137,7 +2059,7 @@ func TestPageVersionHistory(t *testing.T) {
 
 	sessionCtx := th.CreateSessionContext()
 
-	t.Run("PageContents versioned on edit", func(t *testing.T) {
+	t.Run("content versioned on edit", func(t *testing.T) {
 		// Create page
 		createdPage, err := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Version Test", "", `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Version 1"}]}]}`, th.BasicUser.Id, "", "")
 		require.Nil(t, err)
@@ -2165,15 +2087,8 @@ func TestPageVersionHistory(t *testing.T) {
 		}
 		require.NotNil(t, historicalPost, "Historical post should exist")
 
-		// Verify historical PageContents exists
-		historicalContent, contentErr := th.App.Srv().Store().Page().GetPageContentWithDeleted(historicalPost.Id)
-		require.NoError(t, contentErr, "Historical PageContents should exist")
-		require.NotNil(t, historicalContent)
-		require.Greater(t, historicalContent.DeleteAt, int64(0), "Historical content should be marked as deleted")
-
-		// Verify historical content is correct
-		contentJSON, _ := historicalContent.GetDocumentJSON()
-		require.Contains(t, contentJSON, "Version 1", "Historical content should contain original text")
+		// Verify historical content is stored in Post.Message
+		require.Contains(t, historicalPost.Message, "Version 1", "Historical post Message should contain original text")
 	})
 
 	t.Run("Non-author can view page history", func(t *testing.T) {
@@ -2224,11 +2139,10 @@ func TestPageVersionHistory(t *testing.T) {
 		// Verify title restored
 		require.Equal(t, "Original Title", restoredPost.Props["title"], "Title should be restored")
 
-		// Verify content restored
-		restoredContent, contentErr := th.App.Srv().Store().Page().GetPageContent(createdPage.Id)
-		require.NoError(t, contentErr)
-		contentJSON, _ := restoredContent.GetDocumentJSON()
-		require.Contains(t, contentJSON, "Original Content", "Content should be restored")
+		// Verify content restored in Post.Message
+		restoredPage, getErr := th.App.Srv().Store().Post().GetSingle(th.Context, createdPage.Id, false)
+		require.NoError(t, getErr)
+		require.Contains(t, restoredPage.Message, "Original Content", "Content should be restored")
 	})
 }
 
@@ -2256,11 +2170,7 @@ func TestUpdatePageWithOptimisticLocking_Success(t *testing.T) {
 	require.JSONEq(t, newContent, updatedPage.Message)
 	require.Greater(t, updatedPage.EditAt, baseEditAt)
 
-	pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(updatedPage.Id)
-	require.NoError(t, contentErr)
-	jsonContent, jsonErr := pageContent.GetDocumentJSON()
-	require.NoError(t, jsonErr)
-	require.Contains(t, jsonContent, "Updated content")
+	require.Contains(t, updatedPage.Message, "Updated content")
 }
 
 func TestUpdatePageWithOptimisticLocking_Conflict(t *testing.T) {
@@ -2475,13 +2385,7 @@ func TestCreatePageContentValidation(t *testing.T) {
 		require.Nil(t, err)
 		require.NotNil(t, page)
 
-		pageContent, contentErr := th.App.Srv().Store().Page().GetPageContent(page.Id)
-		require.NoError(t, contentErr)
-		require.NotNil(t, pageContent)
-
-		jsonContent, jsonErr := pageContent.GetDocumentJSON()
-		require.NoError(t, jsonErr)
-		require.NoError(t, model.ValidateTipTapDocument(jsonContent), "auto-converted content should be valid TipTap JSON")
+		require.NoError(t, model.ValidateTipTapDocument(page.Message), "auto-converted content should be valid TipTap JSON")
 	})
 }
 

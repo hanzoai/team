@@ -315,5 +315,7 @@ channels/db/migrations/postgres/000158_add_channel_pages_index.down.sql
 channels/db/migrations/postgres/000158_add_channel_pages_index.up.sql
 channels/db/migrations/postgres/000159_create_wikis.down.sql
 channels/db/migrations/postgres/000159_create_wikis.up.sql
-channels/db/migrations/postgres/000160_create_page_contents.down.sql
-channels/db/migrations/postgres/000160_create_page_contents.up.sql
+channels/db/migrations/postgres/000160_expand_post_message.down.sql
+channels/db/migrations/postgres/000160_expand_post_message.up.sql
+channels/db/migrations/postgres/000161_expand_drafts_message.down.sql
+channels/db/migrations/postgres/000161_expand_drafts_message.up.sql

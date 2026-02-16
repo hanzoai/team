@@ -45,7 +45,7 @@ func (a *App) RestorePostVersion(rctx request.CTX, userID, postID, restoreVersio
 		return nil, false, model.NewAppError("RestorePostVersion", "app.post.restore_post_version.not_valid_post_history_item.app_error", nil, "", http.StatusBadRequest)
 	}
 
-	// Check if this is a page - pages require special handling for PageContents
+	// Check if this is a page - pages require special handling for version restore
 	if IsPagePost(toRestorePostVersion) {
 		restoredPost, err := a.RestorePageVersion(rctx, userID, postID, restoreVersionID, toRestorePostVersion)
 		return restoredPost, false, err

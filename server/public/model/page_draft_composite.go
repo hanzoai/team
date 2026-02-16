@@ -9,13 +9,13 @@ import (
 	"strings"
 )
 
-// PageDraft is a composite model combining metadata from Drafts table
-// and content from PageContents table (status='draft').
+// PageDraft is a composite model for page drafts.
+// All data is stored in the Drafts table: metadata in Props, content in Message (TipTap JSON).
 // With the unified page ID model, PageId is server-generated and remains
 // the same throughout the draft -> publish lifecycle.
 // Used for API responses and app layer operations.
 type PageDraft struct {
-	// From Drafts table (metadata)
+	// From Drafts table
 	UserId    string          `json:"user_id"`
 	WikiId    string          `json:"wiki_id"`
 	ChannelId string          `json:"channel_id"`
@@ -27,8 +27,8 @@ type PageDraft struct {
 
 	// Title comes from Draft.Props["title"]
 	Title        string         `json:"title"`
-	Content      TipTapDocument `json:"content"`
-	BaseUpdateAt int64          `json:"base_updateat,omitempty"` // For conflict detection when editing published pages
+	Content      TipTapDocument `json:"content"`                 // Parsed from Draft.Message
+	BaseUpdateAt int64          `json:"base_updateat,omitempty"` // Read from Draft.Props["base_update_at"]
 
 	// Computed field - indicates whether a published version exists for this page
 	HasPublishedVersion bool `json:"has_published_version"`
@@ -125,6 +125,85 @@ func (pd *PageDraft) Auditable() map[string]any {
 		"create_at":  pd.CreateAt,
 		"update_at":  pd.UpdateAt,
 	}
+}
+
+// ValidateContent validates the Draft.Message as valid TipTap JSON content.
+func (pd *PageDraft) ValidateContent(message string) *AppError {
+	if message == "" {
+		return nil
+	}
+
+	if len(message) > PageContentMaxSize {
+		return NewAppError("PageDraft.ValidateContent", "model.page_draft.validate_content.too_large.app_error",
+			map[string]any{"Size": len(message), "MaxSize": PageContentMaxSize}, "", http.StatusBadRequest)
+	}
+
+	if err := ValidateTipTapDocument(message); err != nil {
+		return NewAppError("PageDraft.ValidateContent", "model.page_draft.validate_content.invalid.app_error",
+			nil, err.Error(), http.StatusBadRequest)
+	}
+
+	return nil
+}
+
+// PageDraftFromDraft builds a PageDraft from a Draft.
+// Content is parsed from Draft.Message (TipTap JSON).
+// BaseUpdateAt is read from Draft.Props["base_update_at"].
+func PageDraftFromDraft(draft *Draft) (*PageDraft, error) {
+	props := draft.GetProps()
+
+	var title string
+	if t, ok := props["title"].(string); ok {
+		title = t
+	}
+
+	var content TipTapDocument
+	if draft.Message != "" {
+		var err error
+		content, err = ParseTipTapDocument(draft.Message)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	var baseUpdateAt int64
+	if v, ok := props["base_update_at"]; ok {
+		switch val := v.(type) {
+		case float64:
+			baseUpdateAt = int64(val)
+		case int64:
+			baseUpdateAt = val
+		case json.Number:
+			if i, err := val.Int64(); err == nil {
+				baseUpdateAt = i
+			}
+		}
+	}
+
+	pd := &PageDraft{
+		UserId:       draft.UserId,
+		WikiId:       draft.ChannelId,
+		ChannelId:    draft.ChannelId,
+		PageId:       draft.RootId,
+		FileIds:      draft.FileIds,
+		Props:        props,
+		CreateAt:     draft.CreateAt,
+		UpdateAt:     draft.UpdateAt,
+		Title:        title,
+		Content:      content,
+		BaseUpdateAt: baseUpdateAt,
+	}
+
+	if v, ok := props["has_published_version"]; ok {
+		switch val := v.(type) {
+		case bool:
+			pd.HasPublishedVersion = val
+		case string:
+			pd.HasPublishedVersion = val == "true"
+		}
+	}
+
+	return pd, nil
 }
 
 // IsValid validates the PageDraft composite struct.

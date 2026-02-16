@@ -75,8 +75,8 @@ func (a *App) UpsertDraft(rctx request.CTX, draft *model.Draft, connectionID str
 	}
 
 	// If the draft is empty, just delete it.
-	// Page drafts intentionally have empty Message (content is in PageContents table),
-	// so skip this deletion for page drafts to avoid orphaning PageContents entries.
+	// Page drafts may have empty Message when only metadata (title, parent) is saved,
+	// so skip this deletion for page drafts.
 	if draft.Message == "" && !draft.IsPageDraft() {
 		deleteErr := a.Srv().Store().Draft().Delete(draft.UserId, draft.ChannelId, draft.RootId)
 		if deleteErr != nil {

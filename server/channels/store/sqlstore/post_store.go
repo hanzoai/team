@@ -2345,25 +2345,12 @@ func (s *SqlPostStore) search(teamId string, userId string, params *model.Search
 		}
 
 		if includePages {
-			// UserId = '' means published content (drafts have non-empty UserId)
-			pageSearchSubquery := s.getSubQueryBuilder().
-				Select("PageId").
-				From("PageContents").
-				Where("UserId = ''").
-				Where("DeleteAt = 0").
-				Where(fmt.Sprintf("to_tsvector('%s', SearchText) @@ to_tsquery('%s', ?)", textSearchCfg, textSearchCfg), tsQueryClause)
-
-			var pageSearchClause string
-			var pageSearchArgs []any
-			pageSearchClause, pageSearchArgs, err = pageSearchSubquery.ToSql()
-			if err != nil {
-				return nil, errors.Wrap(err, "failed to build page search subquery")
-			}
-
-			// Build pages clause with optional wiki filter
+			// Page content is stored in Post.Message as TipTap JSON — search it directly
 			var wikiFilterClauses []string
+			var pageSearchArgs []any
 			wikiFilterClauses = append(wikiFilterClauses, isPageTypeClause("q2"))
-			wikiFilterClauses = append(wikiFilterClauses, fmt.Sprintf("q2.Id IN (%s)", pageSearchClause))
+			wikiFilterClauses = append(wikiFilterClauses, fmt.Sprintf("to_tsvector('%s', COALESCE(q2.Props->>'title', '') || ' ' || q2.Message) @@ to_tsquery('%s', ?)", textSearchCfg, textSearchCfg))
+			pageSearchArgs = append(pageSearchArgs, tsQueryClause)
 
 			// Apply wiki ID filter if specified
 			if len(wikiIDs) > 0 {

@@ -28,14 +28,12 @@ type Draft struct {
 }
 
 func (o *Draft) IsValid(maxDraftSize int) *AppError {
-	// Page drafts store content in PageContents table (status='draft'), so Message should be empty
 	if o.IsPageDraft() {
-		if o.Message != "" {
-			return NewAppError("Drafts.IsValid", "model.draft.is_valid.page_draft_message.app_error",
-				nil, "page drafts should not have Message content", http.StatusBadRequest)
+		if len(o.Message) > PageContentMaxSize {
+			return NewAppError("Drafts.IsValid", "model.draft.is_valid.page_draft_message_too_large.app_error",
+				map[string]any{"Size": len(o.Message), "MaxSize": PageContentMaxSize}, "channelid="+o.ChannelId, http.StatusBadRequest)
 		}
 	} else {
-		// Channel drafts store content in Message field
 		if utf8.RuneCountInString(o.Message) > maxDraftSize {
 			return NewAppError("Drafts.IsValid", "model.draft.is_valid.message_length.app_error",
 				map[string]any{"Length": utf8.RuneCountInString(o.Message), "MaxLength": maxDraftSize}, "channelid="+o.ChannelId, http.StatusBadRequest)

@@ -295,7 +295,7 @@ func TestRestorePageVersion(t *testing.T) {
 		_, appErr = th.App.UpdatePage(rctx, page, "Updated", "", "", nil)
 		require.Nil(t, appErr)
 
-		// Create a fake post version that doesn't exist in PageContents
+		// Create a fake post version that doesn't exist
 		fakeVersion := &model.Post{
 			Id:    model.NewId(),
 			Props: model.StringInterface{"title": "Fake Title"},
@@ -339,84 +339,6 @@ func TestRestorePageVersion(t *testing.T) {
 	})
 }
 
-func TestLoadPageContent(t *testing.T) {
-	mainHelper.Parallel(t)
-	th := Setup(t).InitBasic(t)
-	th.SetupPagePermissions()
-
-	rctx := th.CreateSessionContext()
-
-	t.Run("loads content for pages in post list", func(t *testing.T) {
-		content1 := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Page 1 content"}]}]}`
-		content2 := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Page 2 content"}]}]}`
-
-		page1, appErr := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Page 1", "", content1, th.BasicUser.Id, "", "")
-		require.Nil(t, appErr)
-
-		page2, appErr := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Page 2", "", content2, th.BasicUser.Id, "", "")
-		require.Nil(t, appErr)
-
-		// Clear messages to simulate pages without content loaded
-		page1Copy := page1.Clone()
-		page2Copy := page2.Clone()
-		page1Copy.Message = ""
-		page2Copy.Message = ""
-
-		postList := &model.PostList{
-			Posts: map[string]*model.Post{
-				page1Copy.Id: page1Copy,
-				page2Copy.Id: page2Copy,
-			},
-			Order: []string{page1Copy.Id, page2Copy.Id},
-		}
-
-		appErr = th.App.LoadPageContent(rctx, postList, PageContentLoadOptions{})
-		require.Nil(t, appErr)
-
-		require.Contains(t, postList.Posts[page1Copy.Id].Message, "Page 1 content")
-		require.Contains(t, postList.Posts[page2Copy.Id].Message, "Page 2 content")
-	})
-
-	t.Run("handles empty post list", func(t *testing.T) {
-		postList := &model.PostList{
-			Posts: map[string]*model.Post{},
-			Order: []string{},
-		}
-
-		appErr := th.App.LoadPageContent(rctx, postList, PageContentLoadOptions{})
-		require.Nil(t, appErr)
-	})
-
-	t.Run("handles nil post list", func(t *testing.T) {
-		appErr := th.App.LoadPageContent(rctx, nil, PageContentLoadOptions{})
-		require.Nil(t, appErr)
-	})
-
-	t.Run("loads search text only when option set", func(t *testing.T) {
-		content := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Searchable content"}]}]}`
-		page, appErr := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Search Test", "", content, th.BasicUser.Id, "searchable content", "")
-		require.Nil(t, appErr)
-
-		pageCopy := page.Clone()
-		pageCopy.Message = ""
-
-		postList := &model.PostList{
-			Posts: map[string]*model.Post{
-				pageCopy.Id: pageCopy,
-			},
-			Order: []string{pageCopy.Id},
-		}
-
-		appErr = th.App.LoadPageContent(rctx, postList, PageContentLoadOptions{SearchTextOnly: true})
-		require.Nil(t, appErr)
-
-		// Message should not be loaded, but search_text should be in props
-		require.Empty(t, postList.Posts[pageCopy.Id].Message)
-		searchText, _ := postList.Posts[pageCopy.Id].Props["search_text"].(string)
-		require.Contains(t, searchText, "searchable")
-	})
-}
-
 func TestGetPageActiveEditors(t *testing.T) {
 	mainHelper.Parallel(t)
 	th := Setup(t).InitBasic(t)
@@ -440,16 +362,16 @@ func TestGetPageActiveEditors(t *testing.T) {
 			ChannelId: th.BasicChannel.Id,
 			Title:     "Test Wiki for Editors",
 		}
-		_, wikiErr := th.App.CreateWiki(th.Context, wiki, th.BasicUser.Id)
+		createdWiki, wikiErr := th.App.CreateWiki(th.Context, wiki, th.BasicUser.Id)
 		require.Nil(t, wikiErr)
 
 		page, appErr := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Active Editors Page", "", "", th.BasicUser.Id, "", "")
 		require.Nil(t, appErr)
 
 		// Create a page draft entry using UpsertPageDraftContent
-		// This simulates an active editing session - PageContents with UserId != ""
+		// This simulates an active editing session
 		content := `{"type":"doc","content":[]}`
-		_, err := th.App.Srv().Store().Draft().UpsertPageDraftContent(page.Id, th.BasicUser.Id, content, 0)
+		_, err := th.App.Srv().Store().Draft().UpsertPageDraftContent(page.Id, th.BasicUser.Id, createdWiki.Id, content, 0)
 		require.NoError(t, err)
 
 		editors, appErr := th.App.GetPageActiveEditors(rctx, page.Id)

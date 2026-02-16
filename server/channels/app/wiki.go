@@ -132,6 +132,9 @@ func (a *App) DeleteWiki(rctx request.CTX, wikiId, userId string, wiki *model.Wi
 	// Invalidate cache so other nodes see the deletion
 	a.invalidateCacheForChannelPosts(wiki.ChannelId)
 
+	// Broadcast wiki deletion to all clients in the channel
+	a.BroadcastWikiDeleted(wiki)
+
 	channel, chanErr := a.GetChannel(rctx, wiki.ChannelId)
 	if chanErr == nil {
 		a.sendWikiDeletedNotification(rctx, wiki, channel, userId)
@@ -595,11 +598,6 @@ func (a *App) DuplicatePage(rctx request.CTX, sourcePage *model.Post, targetWiki
 	sourcePageId := sourcePage.Id
 	sourcePost := sourcePage
 
-	sourceContent, contentErr := a.Srv().Store().Page().GetPageContent(sourcePageId)
-	if contentErr != nil {
-		return nil, model.NewAppError("DuplicatePage", "app.page.duplicate.content_not_found", nil, "", http.StatusInternalServerError).Wrap(contentErr)
-	}
-
 	if targetWiki == nil {
 		var err *model.AppError
 		targetWiki, err = a.GetWiki(rctx, targetWikiId)
@@ -642,11 +640,7 @@ func (a *App) DuplicatePage(rctx request.CTX, sourcePage *model.Post, targetWiki
 		parentId = sourcePage.PageParentId
 	}
 
-	contentJSON, jsonErr := sourceContent.GetDocumentJSON()
-	if jsonErr != nil {
-		return nil, model.NewAppError("DuplicatePage", "app.page.duplicate.serialize_content_failed", nil, "", http.StatusInternalServerError).Wrap(jsonErr)
-	}
-	duplicatedPage, createErr := a.CreatePage(rctx, targetWiki.ChannelId, duplicateTitle, parentId, contentJSON, userId, sourceContent.SearchText, "")
+	duplicatedPage, createErr := a.CreatePage(rctx, targetWiki.ChannelId, duplicateTitle, parentId, sourcePage.Message, userId, "", "")
 	if createErr != nil {
 		return nil, createErr
 	}

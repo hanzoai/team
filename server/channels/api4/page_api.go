@@ -340,10 +340,11 @@ func getChannelPages(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if includeContent {
-		if contentErr := c.App.LoadPageContent(c.AppContext, postList, app.PageContentLoadOptions{}); contentErr != nil {
-			c.Err = contentErr
-			return
+	if !includeContent {
+		for _, post := range postList.Posts {
+			if post.Type == model.PostTypePage {
+				post.Message = ""
+			}
 		}
 	}
 

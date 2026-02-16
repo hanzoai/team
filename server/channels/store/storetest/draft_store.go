@@ -36,8 +36,6 @@ func TestDraftStore(t *testing.T, rctx request.CTX, ss store.Store, s SqlStore) 
 	t.Run("GetPageDraftsForUser", func(t *testing.T) { testGetPageDraftsForUser(t, rctx, ss) })
 	t.Run("UpsertPageDraftContent", func(t *testing.T) { testUpsertPageDraftContent(t, rctx, ss) })
 	t.Run("DeletePageDraft", func(t *testing.T) { testDeletePageDraft(t, rctx, ss) })
-	t.Run("DeletePageDraftAtomic", func(t *testing.T) { testDeletePageDraftAtomic(t, rctx, ss) })
-	t.Run("PageDraftExists", func(t *testing.T) { testPageDraftExists(t, rctx, ss) })
 }
 
 func testSaveDraft(t *testing.T, rctx request.CTX, ss store.Store) {
@@ -550,9 +548,7 @@ func testGetDraftsForUser(t *testing.T, rctx request.CTX, ss store.Store) {
 func clearDrafts(t *testing.T, rctx request.CTX, ss store.Store) {
 	t.Helper()
 
-	_, err := ss.GetInternalMasterDB().Exec("DELETE FROM PageContents WHERE UserId != ''")
-	require.NoError(t, err)
-	_, err = ss.GetInternalMasterDB().Exec("DELETE FROM Drafts")
+	_, err := ss.GetInternalMasterDB().Exec("DELETE FROM Drafts")
 	require.NoError(t, err)
 }
 
@@ -1520,21 +1516,22 @@ func testUpdateDraftParent(t *testing.T, rctx request.CTX, ss store.Store) {
 func testGetPageDraft(t *testing.T, rctx request.CTX, ss store.Store) {
 	userId := model.NewId()
 	pageId := model.NewId()
+	wikiId := model.NewId()
 
 	t.Run("gets existing page draft", func(t *testing.T) {
 		content := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Test content"}]}]}`
 
-		_, err := ss.Draft().UpsertPageDraftContent(pageId, userId, content, 0)
+		_, err := ss.Draft().UpsertPageDraftContent(pageId, userId, wikiId, content, 0)
 		require.NoError(t, err)
 
-		retrieved, err := ss.Draft().GetPageDraft(pageId, userId)
+		retrieved, err := ss.Draft().GetPageDraft(pageId, userId, wikiId)
 		require.NoError(t, err)
-		assert.Equal(t, pageId, retrieved.PageId)
+		assert.Equal(t, pageId, retrieved.RootId)
 		assert.Equal(t, userId, retrieved.UserId)
 	})
 
 	t.Run("returns error for non-existent draft", func(t *testing.T) {
-		_, err := ss.Draft().GetPageDraft(model.NewId(), model.NewId())
+		_, err := ss.Draft().GetPageDraft(model.NewId(), model.NewId(), model.NewId())
 		require.Error(t, err)
 	})
 }
@@ -1550,7 +1547,7 @@ func testGetPageDraftsForUser(t *testing.T, rctx request.CTX, ss store.Store) {
 			pageId := model.NewId()
 
 			// Create PageContent draft
-			_, err := ss.Draft().UpsertPageDraftContent(pageId, userId, content, 0)
+			_, err := ss.Draft().UpsertPageDraftContent(pageId, userId, wikiId, content, 0)
 			require.NoError(t, err)
 
 			// Create corresponding Draft row (links page draft to wiki channel)
@@ -1584,13 +1581,14 @@ func testGetPageDraftsForUser(t *testing.T, rctx request.CTX, ss store.Store) {
 func testUpsertPageDraftContent(t *testing.T, rctx request.CTX, ss store.Store) {
 	userId := model.NewId()
 	pageId := model.NewId()
+	wikiId := model.NewId()
 
 	t.Run("creates new page draft", func(t *testing.T) {
 		content := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"New draft"}]}]}`
 
-		created, err := ss.Draft().UpsertPageDraftContent(pageId, userId, content, 0)
+		created, err := ss.Draft().UpsertPageDraftContent(pageId, userId, wikiId, content, 0)
 		require.NoError(t, err)
-		assert.Equal(t, pageId, created.PageId)
+		assert.Equal(t, pageId, created.RootId)
 		assert.Equal(t, userId, created.UserId)
 	})
 
@@ -1598,7 +1596,7 @@ func testUpsertPageDraftContent(t *testing.T, rctx request.CTX, ss store.Store) 
 		existingPageId := model.NewId()
 		content1 := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Version 1"}]}]}`
 
-		created, err := ss.Draft().UpsertPageDraftContent(existingPageId, userId, content1, 0)
+		created, err := ss.Draft().UpsertPageDraftContent(existingPageId, userId, wikiId, content1, 0)
 		require.NoError(t, err)
 
 		// Wait to ensure different timestamp
@@ -1606,170 +1604,32 @@ func testUpsertPageDraftContent(t *testing.T, rctx request.CTX, ss store.Store) 
 
 		content2 := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Version 2"}]}]}`
 
-		updated, err := ss.Draft().UpsertPageDraftContent(existingPageId, userId, content2, created.UpdateAt)
+		updated, err := ss.Draft().UpsertPageDraftContent(existingPageId, userId, wikiId, content2, created.UpdateAt)
 		require.NoError(t, err)
 		assert.Greater(t, updated.UpdateAt, created.UpdateAt)
-	})
-
-	t.Run("HasPublishedVersion is false for new page draft", func(t *testing.T) {
-		newPageId := model.NewId()
-		content := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"New page"}]}]}`
-
-		created, err := ss.Draft().UpsertPageDraftContent(newPageId, userId, content, 0)
-		require.NoError(t, err)
-		assert.False(t, created.HasPublishedVersion, "HasPublishedVersion should be false for draft of new page")
-	})
-
-	t.Run("HasPublishedVersion is true when published page exists", func(t *testing.T) {
-		publishedPageId := model.NewId()
-
-		// First create a published page (UserId = "" means published)
-		publishedContent := &model.PageContent{
-			PageId: publishedPageId,
-			UserId: "", // Empty UserId = published page
-		}
-		err := publishedContent.SetDocumentJSON(`{"type":"doc","content":[]}`)
-		require.NoError(t, err)
-		_, err = ss.Draft().CreatePageDraft(publishedContent)
-		require.NoError(t, err)
-
-		// Now create a draft for that published page
-		draftContent := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Editing published page"}]}]}`
-		draft, err := ss.Draft().UpsertPageDraftContent(publishedPageId, userId, draftContent, 0)
-		require.NoError(t, err)
-		assert.True(t, draft.HasPublishedVersion, "HasPublishedVersion should be true when editing existing published page")
 	})
 }
 
 func testDeletePageDraft(t *testing.T, rctx request.CTX, ss store.Store) {
 	userId := model.NewId()
 	pageId := model.NewId()
+	wikiId := model.NewId()
 
 	t.Run("deletes existing page draft", func(t *testing.T) {
 		content := `{"type":"doc","content":[]}`
-		_, err := ss.Draft().UpsertPageDraftContent(pageId, userId, content, 0)
+		_, err := ss.Draft().UpsertPageDraftContent(pageId, userId, wikiId, content, 0)
 		require.NoError(t, err)
 
-		err = ss.Draft().DeletePageDraft(pageId, userId)
+		err = ss.Draft().DeletePageDraft(pageId, userId, wikiId)
 		require.NoError(t, err)
 
 		// Verify it's deleted
-		_, err = ss.Draft().GetPageDraft(pageId, userId)
+		_, err = ss.Draft().GetPageDraft(pageId, userId, wikiId)
 		require.Error(t, err)
 	})
 
 	t.Run("returns error when draft does not exist", func(t *testing.T) {
-		err := ss.Draft().DeletePageDraft(model.NewId(), model.NewId())
+		err := ss.Draft().DeletePageDraft(model.NewId(), model.NewId(), model.NewId())
 		require.Error(t, err)
-	})
-}
-
-func testDeletePageDraftAtomic(t *testing.T, rctx request.CTX, ss store.Store) {
-	userId := model.NewId()
-	wikiId := model.NewId()
-
-	t.Run("deletes both PageContents and Drafts atomically", func(t *testing.T) {
-		pageId := model.NewId()
-		content := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Test content"}]}]}`
-
-		// Create content in PageContents
-		_, err := ss.Draft().UpsertPageDraftContent(pageId, userId, content, 0)
-		require.NoError(t, err)
-
-		// Create metadata in Drafts (page drafts use wikiId as ChannelId)
-		draft := &model.Draft{
-			UserId:    userId,
-			ChannelId: wikiId,
-			RootId:    pageId,
-			Message:   "",
-		}
-		_, err = ss.Draft().UpsertPageDraft(draft)
-		require.NoError(t, err)
-
-		// Verify both exist before deletion
-		_, err = ss.Draft().GetPageDraft(pageId, userId)
-		require.NoError(t, err)
-		_, err = ss.Draft().Get(userId, wikiId, pageId, false)
-		require.NoError(t, err)
-
-		// Atomically delete
-		err = ss.Draft().DeletePageDraftAtomic(pageId, userId, wikiId)
-		require.NoError(t, err)
-
-		// Verify both are gone
-		_, err = ss.Draft().GetPageDraft(pageId, userId)
-		require.Error(t, err)
-		assert.IsType(t, &store.ErrNotFound{}, err)
-
-		_, err = ss.Draft().Get(userId, wikiId, pageId, false)
-		require.Error(t, err)
-		assert.IsType(t, &store.ErrNotFound{}, err)
-	})
-
-	t.Run("returns ErrNotFound when content does not exist", func(t *testing.T) {
-		nonExistentPageId := model.NewId()
-		err := ss.Draft().DeletePageDraftAtomic(nonExistentPageId, userId, wikiId)
-		require.Error(t, err)
-		assert.IsType(t, &store.ErrNotFound{}, err)
-	})
-
-	t.Run("does not affect other users' drafts", func(t *testing.T) {
-		pageId := model.NewId()
-		user1 := model.NewId()
-		user2 := model.NewId()
-		content := `{"type":"doc","content":[]}`
-
-		// Create content for both users
-		_, err := ss.Draft().UpsertPageDraftContent(pageId, user1, content, 0)
-		require.NoError(t, err)
-		_, err = ss.Draft().UpsertPageDraftContent(pageId, user2, content, 0)
-		require.NoError(t, err)
-
-		// Create draft metadata for both users
-		_, err = ss.Draft().UpsertPageDraft(&model.Draft{
-			UserId:    user1,
-			ChannelId: wikiId,
-			RootId:    pageId,
-		})
-		require.NoError(t, err)
-		_, err = ss.Draft().UpsertPageDraft(&model.Draft{
-			UserId:    user2,
-			ChannelId: wikiId,
-			RootId:    pageId,
-		})
-		require.NoError(t, err)
-
-		// Delete user1's draft atomically
-		err = ss.Draft().DeletePageDraftAtomic(pageId, user1, wikiId)
-		require.NoError(t, err)
-
-		// Verify user2's draft is unaffected
-		_, err = ss.Draft().GetPageDraft(pageId, user2)
-		require.NoError(t, err, "user2's content should still exist")
-		_, err = ss.Draft().Get(user2, wikiId, pageId, false)
-		require.NoError(t, err, "user2's metadata should still exist")
-	})
-}
-
-func testPageDraftExists(t *testing.T, rctx request.CTX, ss store.Store) {
-	userId := model.NewId()
-	pageId := model.NewId()
-
-	t.Run("returns true for existing draft", func(t *testing.T) {
-		content := `{"type":"doc","content":[]}`
-		created, err := ss.Draft().UpsertPageDraftContent(pageId, userId, content, 0)
-		require.NoError(t, err)
-
-		exists, updateAt, err := ss.Draft().PageDraftExists(pageId, userId)
-		require.NoError(t, err)
-		assert.True(t, exists)
-		assert.Equal(t, created.UpdateAt, updateAt)
-	})
-
-	t.Run("returns false for non-existent draft", func(t *testing.T) {
-		exists, updateAt, err := ss.Draft().PageDraftExists(model.NewId(), model.NewId())
-		require.NoError(t, err)
-		assert.False(t, exists)
-		assert.Equal(t, int64(0), updateAt)
 	})
 }

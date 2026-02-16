@@ -18,7 +18,7 @@ type WikiImportData struct {
 }
 
 // PageImportData represents a page to be imported.
-// Pages are stored as Posts with Type="page" and content in PageContents table.
+// Pages are stored as Posts with Type="page" and content in Post.Message.
 type PageImportData struct {
 	Team    *string `json:"team"`    // Team name (required)
 	Channel *string `json:"channel"` // Channel name (required)

@@ -532,7 +532,12 @@ func (o *Post) IsValid(maxPostSize int) *AppError {
 		}
 	}
 
-	if utf8.RuneCountInString(o.Message) > maxPostSize {
+	if o.Type == PostTypePage {
+		if len(o.Message) > PageContentMaxSize {
+			return NewAppError("Post.IsValid", "model.post.is_valid.page_message_too_large.app_error",
+				map[string]any{"Size": len(o.Message), "MaxSize": PageContentMaxSize}, "id="+o.Id, http.StatusBadRequest)
+		}
+	} else if utf8.RuneCountInString(o.Message) > maxPostSize {
 		return NewAppError("Post.IsValid", "model.post.is_valid.message_length.app_error",
 			map[string]any{"Length": utf8.RuneCountInString(o.Message), "MaxLength": maxPostSize}, "id="+o.Id, http.StatusBadRequest)
 	}

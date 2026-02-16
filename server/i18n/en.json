@@ -5959,16 +5959,16 @@
     "translation": "Page draft not found."
   },
   {
+    "id": "app.draft.get_page_draft.parse_error",
+    "translation": "Failed to parse page draft."
+  },
+  {
     "id": "app.draft.get_page_draft.wiki_not_found.app_error",
     "translation": "Wiki not found for page draft."
   },
   {
-    "id": "app.draft.get_page_draft_metadata.app_error",
-    "translation": "Unable to get page draft metadata."
-  },
-  {
-    "id": "app.draft.get_page_draft_metadata.not_found",
-    "translation": "Page draft metadata not found."
+    "id": "app.draft.get_wiki_drafts.app_error",
+    "translation": "Failed to get wiki drafts."
   },
   {
     "id": "app.draft.get_wiki_drafts.channel_not_found.app_error",
@@ -5981,14 +5981,6 @@
   {
     "id": "app.draft.get_wiki_drafts.wiki_not_found.app_error",
     "translation": "Wiki not found."
-  },
-  {
-    "id": "app.draft.get_wiki_drafts_content.app_error",
-    "translation": "Unable to get wiki page draft contents."
-  },
-  {
-    "id": "app.draft.get_wiki_drafts_metadata.app_error",
-    "translation": "Unable to get wiki page draft metadata."
   },
   {
     "id": "app.draft.move_page.app_error",
@@ -6031,10 +6023,6 @@
     "translation": "Unable to save the Draft."
   },
   {
-    "id": "app.draft.save_page.app_error",
-    "translation": "Unable to save page draft."
-  },
-  {
     "id": "app.draft.save_page.channel_not_found.app_error",
     "translation": "Channel not found for page draft."
   },
@@ -6055,8 +6043,8 @@
     "translation": "Failed to save page draft metadata."
   },
   {
-    "id": "app.draft.save_page.version_conflict",
-    "translation": "Page draft version conflict. The page has been modified."
+    "id": "app.draft.save_page.parse_error",
+    "translation": "Failed to parse page draft content."
   },
   {
     "id": "app.draft.save_page.wiki_not_found.app_error",
@@ -6599,16 +6587,8 @@
     "translation": "Error resolving page title placeholders. Team not found."
   },
   {
-    "id": "app.import.resolve_placeholders.deserialize_content.error",
-    "translation": "Error resolving placeholders. Failed to deserialize page content."
-  },
-  {
     "id": "app.import.resolve_placeholders.get_content.error",
     "translation": "Error resolving placeholders. Failed to get page content."
-  },
-  {
-    "id": "app.import.resolve_placeholders.serialize_content.error",
-    "translation": "Error resolving placeholders. Failed to serialize page content."
   },
   {
     "id": "app.import.resolve_placeholders.update_content.error",
@@ -7483,16 +7463,8 @@
     "translation": "Cannot duplicate page to archived channel."
   },
   {
-    "id": "app.page.duplicate.content_not_found",
-    "translation": "Page content not found for duplication."
-  },
-  {
     "id": "app.page.duplicate.cross_channel_not_supported",
     "translation": "Cross-channel page duplication is not supported."
-  },
-  {
-    "id": "app.page.duplicate.serialize_content_failed",
-    "translation": "Unable to serialize page content."
   },
   {
     "id": "app.page.duplicate.target_wiki_not_found",
@@ -7555,20 +7527,12 @@
     "translation": "Failed to upload fetched image."
   },
   {
-    "id": "app.page.get.content.app_error",
-    "translation": "Unable to get page content."
-  },
-  {
     "id": "app.page.get.not_a_page.app_error",
     "translation": "Post is not a page."
   },
   {
     "id": "app.page.get.not_found.app_error",
     "translation": "Page not found."
-  },
-  {
-    "id": "app.page.get.serialize_content.app_error",
-    "translation": "Unable to serialize page content."
   },
   {
     "id": "app.page.get_active_editors.get_drafts.app_error",
@@ -7629,10 +7593,6 @@
   {
     "id": "app.page.get_version_history.not_found.app_error",
     "translation": "Page not found."
-  },
-  {
-    "id": "app.page.load_content.app_error",
-    "translation": "Unable to load page content."
   },
   {
     "id": "app.page.move.app_error",
@@ -7727,16 +7687,8 @@
     "translation": "Cannot publish page: parent page not found."
   },
   {
-    "id": "app.page.restore.get_content.app_error",
-    "translation": "Unable to get page content for restore."
-  },
-  {
     "id": "app.page.restore.not_deleted.app_error",
     "translation": "Page is not deleted."
-  },
-  {
-    "id": "app.page.restore.serialize_content.app_error",
-    "translation": "Unable to serialize page content for restore."
   },
   {
     "id": "app.page.restore.store_error.app_error",
@@ -7749,14 +7701,6 @@
   {
     "id": "app.page.restore.update_fileids.app_error",
     "translation": "Unable to update page file IDs during restore."
-  },
-  {
-    "id": "app.page.restore.update_title.app_error",
-    "translation": "Unable to update page title during restore."
-  },
-  {
-    "id": "app.page.serialize_content.app_error",
-    "translation": "Unable to serialize page content."
   },
   {
     "id": "app.page.set_status.app_error",
@@ -11733,8 +11677,8 @@
     "translation": "Draft Message property is longer than the maximum permitted length."
   },
   {
-    "id": "model.draft.is_valid.page_draft_message.app_error",
-    "translation": "Invalid page draft message."
+    "id": "model.draft.is_valid.page_draft_message_too_large.app_error",
+    "translation": "Page draft content is too large."
   },
   {
     "id": "model.draft.is_valid.priority.app_error",
@@ -12153,30 +12097,6 @@
     "translation": "Update at must be a valid time."
   },
   {
-    "id": "model.page_content.is_valid.content_invalid.app_error",
-    "translation": "Invalid page content."
-  },
-  {
-    "id": "model.page_content.is_valid.content_too_large.app_error",
-    "translation": "Page content exceeds maximum size."
-  },
-  {
-    "id": "model.page_content.is_valid.create_at.app_error",
-    "translation": "Invalid page content create time."
-  },
-  {
-    "id": "model.page_content.is_valid.page_id.app_error",
-    "translation": "Invalid page ID in page content."
-  },
-  {
-    "id": "model.page_content.is_valid.update_at.app_error",
-    "translation": "Invalid page content update time."
-  },
-  {
-    "id": "model.page_content.is_valid.user_id.app_error",
-    "translation": "Invalid user ID in page content."
-  },
-  {
     "id": "model.page_draft.is_valid.channel_id.app_error",
     "translation": "Invalid channel ID in page draft."
   },
@@ -12219,6 +12139,14 @@
   {
     "id": "model.page_draft.publish_options.wiki_id.app_error",
     "translation": "Invalid wiki ID in publish options."
+  },
+  {
+    "id": "model.page_draft.validate_content.invalid.app_error",
+    "translation": "Page draft content is invalid."
+  },
+  {
+    "id": "model.page_draft.validate_content.too_large.app_error",
+    "translation": "Page draft content exceeds the maximum allowed size."
   },
   {
     "id": "model.plugin_command.error.app_error",
@@ -12307,6 +12235,10 @@
   {
     "id": "model.post.is_valid.original_id.app_error",
     "translation": "Invalid original id."
+  },
+  {
+    "id": "model.post.is_valid.page_message_too_large.app_error",
+    "translation": "Page content exceeds the maximum allowed size."
   },
   {
     "id": "model.post.is_valid.page_parent_id.app_error",

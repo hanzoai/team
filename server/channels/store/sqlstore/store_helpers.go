@@ -46,18 +46,6 @@ func (ss *SqlStore) buildSoftDeleteQuery(table, idColumn string, idValue any, up
 	return query
 }
 
-// buildRestoreQuery creates an UPDATE query to restore a soft-deleted entity
-func (ss *SqlStore) buildRestoreQuery(table, idColumn string, idValue any) sq.UpdateBuilder {
-	return ss.getQueryBuilder().
-		Update(table).
-		Set("DeleteAt", 0).
-		Set("UpdateAt", model.GetMillis()).
-		Where(sq.And{
-			sq.Eq{idColumn: idValue},
-			sq.NotEq{"DeleteAt": 0},
-		})
-}
-
 // ExecuteInTransaction wraps multiple operations in a database transaction
 // The function fn receives the transaction and should perform all operations within it
 // The transaction is automatically committed on success or rolled back on error

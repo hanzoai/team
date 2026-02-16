@@ -58,6 +58,29 @@ func TestGetChannelPages(t *testing.T) {
 		require.Error(t, err)
 		CheckNotFoundStatus(t, resp)
 	})
+
+	t.Run("include_content=true returns page content in Message", func(t *testing.T) {
+		content := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Test content for include"}]}]}`
+		page, appErr := th.App.CreatePage(th.Context, th.BasicChannel.Id, "Content Page", "", content, th.BasicUser.Id, "", "")
+		require.Nil(t, appErr)
+
+		postList, resp, err := th.Client.GetChannelPagesWithContent(context.Background(), th.BasicChannel.Id, true)
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		require.NotNil(t, postList.Posts[page.Id])
+		require.Contains(t, postList.Posts[page.Id].Message, "Test content for include")
+	})
+
+	t.Run("include_content=false strips Message from pages", func(t *testing.T) {
+		postList, resp, err := th.Client.GetChannelPagesWithContent(context.Background(), th.BasicChannel.Id, false)
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		for _, post := range postList.Posts {
+			if post.Type == model.PostTypePage {
+				require.Empty(t, post.Message)
+			}
+		}
+	})
 }
 
 func TestCreatePage(t *testing.T) {

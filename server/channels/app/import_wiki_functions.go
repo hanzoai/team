@@ -4,7 +4,6 @@
 package app
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
 	"net/url"
@@ -665,15 +664,6 @@ func (a *App) updatePostPropsFromImport(rctx request.CTX, post *model.Post, prop
 		return nil
 	}
 
-	// For pages, Message may have been populated by loadPageContentForPost after creation.
-	// Clear it before Update since page content is stored in PageContents table, not Post.Message.
-	// Post.Update() validates Message against maxPostSize, which would fail for large pages.
-	// NOTE: Only clear for PostTypePage, NOT PostTypePageComment - comments store content in Message.
-	if post.Type == model.PostTypePage {
-		post.Message = ""
-		oldPost.Message = ""
-	}
-
 	if _, err := a.Srv().Store().Post().Update(rctx, post, oldPost); err != nil {
 		return model.NewAppError("updatePostPropsFromImport", "app.import.update_post_props.app_error",
 			map[string]any{"PostId": post.Id}, "", http.StatusInternalServerError).Wrap(err)
@@ -742,25 +732,18 @@ func (a *App) uploadWikiAttachments(rctx request.CTX, attachments *[]imports.Att
 // resolveFilePlaceholders replaces {{CONF_FILE:source_id}} placeholders in page content
 // with actual Mattermost file URLs.
 func (a *App) resolveFilePlaceholders(rctx request.CTX, pageId string, sourceIDMappings map[string]string) *model.AppError {
-	// Get current page content
-	pageContent, err := a.Srv().Store().Page().GetPageContent(pageId)
+	// Get current page - content is in Post.Message
+	page, err := a.GetPage(rctx, pageId)
 	if err != nil {
 		return model.NewAppError("resolveFilePlaceholders", "app.import.resolve_placeholders.get_content.error",
 			map[string]any{"PageId": pageId}, "", http.StatusInternalServerError).Wrap(err)
 	}
 
-	if pageContent == nil || len(pageContent.Content.Content) == 0 {
+	if page.Message == "" {
 		return nil
 	}
 
-	// Serialize TipTapDocument to JSON string for placeholder replacement
-	contentJSON, jsonErr := json.Marshal(pageContent.Content)
-	if jsonErr != nil {
-		return model.NewAppError("resolveFilePlaceholders", "app.import.resolve_placeholders.serialize_content.error",
-			map[string]any{"PageId": pageId}, "", http.StatusInternalServerError).Wrap(jsonErr)
-	}
-
-	originalContentStr := string(contentJSON)
+	originalContentStr := page.Message
 	resolvedContentStr := originalContentStr
 
 	// Find all placeholders and replace them
@@ -801,18 +784,10 @@ func (a *App) resolveFilePlaceholders(rctx request.CTX, pageId string, sourceIDM
 		return nil
 	}
 
-	// Deserialize back to TipTapDocument
-	var resolvedContent model.TipTapDocument
-	if jsonErr := json.Unmarshal([]byte(resolvedContentStr), &resolvedContent); jsonErr != nil {
-		return model.NewAppError("resolveFilePlaceholders", "app.import.resolve_placeholders.deserialize_content.error",
-			map[string]any{"PageId": pageId}, "", http.StatusInternalServerError).Wrap(jsonErr)
-	}
-
-	// Update page content with resolved placeholders
-	pageContent.Content = resolvedContent
-	if _, err := a.Srv().Store().Page().UpdatePageContent(pageContent); err != nil {
+	// Update page content via UpdatePageWithContent
+	if _, storeErr := a.Srv().Store().Page().UpdatePageWithContent(rctx, pageId, "", resolvedContentStr); storeErr != nil {
 		return model.NewAppError("resolveFilePlaceholders", "app.import.resolve_placeholders.update_content.error",
-			map[string]any{"PageId": pageId}, "", http.StatusInternalServerError).Wrap(err)
+			map[string]any{"PageId": pageId}, "", http.StatusInternalServerError).Wrap(storeErr)
 	}
 
 	rctx.Logger().Info("Resolved file placeholders in page content",
@@ -879,47 +854,14 @@ func (a *App) ResolvePageTitlePlaceholders(rctx request.CTX, channelId string) *
 		mlog.Int("page_count", len(titleToPageID)),
 	)
 
-	// Batch fetch all page contents to avoid N+1 queries
-	pageIDs := make([]string, len(pages))
-	for i, page := range pages {
-		pageIDs[i] = page.Id
-	}
-	pageContents, batchErr := a.Srv().Store().Page().GetManyPageContents(pageIDs)
-	if batchErr != nil {
-		rctx.Logger().Warn("Failed to batch fetch page contents for placeholder resolution",
-			mlog.String("channel_id", channelId),
-			mlog.Err(batchErr),
-		)
-		return nil
-	}
-
-	// Build pageId -> pageContent map
-	contentMap := make(map[string]*model.PageContent, len(pageContents))
-	for _, pc := range pageContents {
-		if pc != nil {
-			contentMap[pc.PageId] = pc
-		}
-	}
-
-	// Process each page using the pre-fetched content
+	// Process each page - content is in Post.Message
 	totalResolved := 0
 	for _, page := range pages {
-		pageContent, ok := contentMap[page.Id]
-		if !ok || pageContent == nil || len(pageContent.Content.Content) == 0 {
+		if page.Message == "" {
 			continue
 		}
 
-		// Serialize TipTapDocument to JSON string for placeholder replacement
-		contentJSON, jsonErr := json.Marshal(pageContent.Content)
-		if jsonErr != nil {
-			rctx.Logger().Warn("Failed to serialize page content",
-				mlog.String("page_id", page.Id),
-				mlog.Err(jsonErr),
-			)
-			continue
-		}
-
-		originalContentStr := string(contentJSON)
+		originalContentStr := page.Message
 		resolvedContentStr := originalContentStr
 
 		// Find all CONF_PAGE_TITLE placeholders and replace them
@@ -966,22 +908,11 @@ func (a *App) ResolvePageTitlePlaceholders(rctx request.CTX, channelId string) *
 			continue
 		}
 
-		// Deserialize back to TipTapDocument
-		var resolvedContent model.TipTapDocument
-		if jsonErr := json.Unmarshal([]byte(resolvedContentStr), &resolvedContent); jsonErr != nil {
-			rctx.Logger().Warn("Failed to deserialize resolved page content",
-				mlog.String("page_id", page.Id),
-				mlog.Err(jsonErr),
-			)
-			continue
-		}
-
-		// Update page content with resolved placeholders
-		pageContent.Content = resolvedContent
-		if _, err := a.Srv().Store().Page().UpdatePageContent(pageContent); err != nil {
+		// Update page content via UpdatePageWithContent
+		if _, storeErr := a.Srv().Store().Page().UpdatePageWithContent(rctx, page.Id, "", resolvedContentStr); storeErr != nil {
 			rctx.Logger().Warn("Failed to update page content with resolved placeholders",
 				mlog.String("page_id", page.Id),
-				mlog.Err(err),
+				mlog.Err(storeErr),
 			)
 			continue
 		}
@@ -1050,41 +981,14 @@ func (a *App) ResolvePageIDPlaceholders(rctx request.CTX, channelId string) *mod
 		mlog.Int("mapping_count", len(sourceIDToPageID)),
 	)
 
-	// Batch fetch all page contents to avoid N+1 queries
-	pageIDs := make([]string, len(pages))
-	for i, page := range pages {
-		pageIDs[i] = page.Id
-	}
-	pageContents, batchErr := a.Srv().Store().Page().GetManyPageContents(pageIDs)
-	if batchErr != nil {
-		rctx.Logger().Warn("Failed to batch fetch page contents for CONF_PAGE_ID resolution",
-			mlog.String("channel_id", channelId),
-			mlog.Err(batchErr),
-		)
-		return nil
-	}
-
-	// Build pageId -> pageContent map
-	contentMap := make(map[string]*model.PageContent, len(pageContents))
-	for _, pc := range pageContents {
-		if pc != nil {
-			contentMap[pc.PageId] = pc
-		}
-	}
-
+	// Process each page - content is in Post.Message
 	totalResolved := 0
 	for _, page := range pages {
-		pageContent, ok := contentMap[page.Id]
-		if !ok || pageContent == nil || len(pageContent.Content.Content) == 0 {
+		if page.Message == "" {
 			continue
 		}
 
-		contentJSON, jsonErr := json.Marshal(pageContent.Content)
-		if jsonErr != nil {
-			continue
-		}
-
-		originalContentStr := string(contentJSON)
+		originalContentStr := page.Message
 		resolvedContentStr := originalContentStr
 
 		matches := confPageIDPlaceholderRegex.FindAllStringSubmatch(resolvedContentStr, -1)
@@ -1125,20 +1029,11 @@ func (a *App) ResolvePageIDPlaceholders(rctx request.CTX, channelId string) *mod
 			continue
 		}
 
-		var resolvedContent model.TipTapDocument
-		if jsonErr := json.Unmarshal([]byte(resolvedContentStr), &resolvedContent); jsonErr != nil {
-			rctx.Logger().Warn("Failed to parse resolved content",
-				mlog.String("page_id", page.Id),
-				mlog.Err(jsonErr),
-			)
-			continue
-		}
-
-		pageContent.Content = resolvedContent
-		if _, err := a.Srv().Store().Page().UpdatePageContent(pageContent); err != nil {
+		// Update page content via UpdatePageWithContent
+		if _, storeErr := a.Srv().Store().Page().UpdatePageWithContent(rctx, page.Id, "", resolvedContentStr); storeErr != nil {
 			rctx.Logger().Warn("Failed to update page content",
 				mlog.String("page_id", page.Id),
-				mlog.Err(err),
+				mlog.Err(storeErr),
 			)
 			continue
 		}
@@ -1179,41 +1074,14 @@ func (a *App) CleanupUnresolvedPlaceholders(rctx request.CTX, channelId string) 
 		return nil
 	}
 
-	// Batch fetch all page contents to avoid N+1 queries
-	pageIDs := make([]string, len(pages))
-	for i, page := range pages {
-		pageIDs[i] = page.Id
-	}
-	pageContents, batchErr := a.Srv().Store().Page().GetManyPageContents(pageIDs)
-	if batchErr != nil {
-		rctx.Logger().Warn("Failed to batch fetch page contents for placeholder cleanup",
-			mlog.String("channel_id", channelId),
-			mlog.Err(batchErr),
-		)
-		return nil
-	}
-
-	// Build pageId -> pageContent map
-	contentMap := make(map[string]*model.PageContent, len(pageContents))
-	for _, pc := range pageContents {
-		if pc != nil {
-			contentMap[pc.PageId] = pc
-		}
-	}
-
+	// Process each page - content is in Post.Message
 	totalCleaned := 0
 	for _, page := range pages {
-		pageContent, ok := contentMap[page.Id]
-		if !ok || pageContent == nil || len(pageContent.Content.Content) == 0 {
+		if page.Message == "" {
 			continue
 		}
 
-		contentJSON, jsonErr := json.Marshal(pageContent.Content)
-		if jsonErr != nil {
-			continue
-		}
-
-		originalContentStr := string(contentJSON)
+		originalContentStr := page.Message
 		cleanedContentStr := originalContentStr
 		replacementsCount := 0
 
@@ -1269,20 +1137,11 @@ func (a *App) CleanupUnresolvedPlaceholders(rctx request.CTX, channelId string) 
 			continue
 		}
 
-		var cleanedContent model.TipTapDocument
-		if jsonErr := json.Unmarshal([]byte(cleanedContentStr), &cleanedContent); jsonErr != nil {
-			rctx.Logger().Warn("Failed to parse cleaned content",
-				mlog.String("page_id", page.Id),
-				mlog.Err(jsonErr),
-			)
-			continue
-		}
-
-		pageContent.Content = cleanedContent
-		if _, err := a.Srv().Store().Page().UpdatePageContent(pageContent); err != nil {
+		// Update page content via UpdatePageWithContent
+		if _, storeErr := a.Srv().Store().Page().UpdatePageWithContent(rctx, page.Id, "", cleanedContentStr); storeErr != nil {
 			rctx.Logger().Warn("Failed to update page content after cleanup",
 				mlog.String("page_id", page.Id),
-				mlog.Err(err),
+				mlog.Err(storeErr),
 			)
 			continue
 		}

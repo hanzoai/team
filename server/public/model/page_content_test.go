@@ -12,289 +12,113 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestPageContentIsValid(t *testing.T) {
-	t.Run("valid page content", func(t *testing.T) {
-		pc := &PageContent{
-			PageId:   NewId(),
-			CreateAt: GetMillis(),
-			UpdateAt: GetMillis(),
-			Content: TipTapDocument{
-				Type: "doc",
-				Content: []map[string]any{
-					{
-						"type": "paragraph",
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": "Hello world",
-							},
-						},
-					},
-				},
-			},
-		}
-
-		err := pc.IsValid()
-		require.Nil(t, err)
-	})
-
-	t.Run("invalid PageId", func(t *testing.T) {
-		pc := &PageContent{
-			PageId:   "invalid",
-			CreateAt: GetMillis(),
-			UpdateAt: GetMillis(),
-			Content: TipTapDocument{
-				Type:    "doc",
-				Content: []map[string]any{},
-			},
-		}
-
-		err := pc.IsValid()
-		require.NotNil(t, err)
-		require.Equal(t, "model.page_content.is_valid.page_id.app_error", err.Id)
-	})
-
-	t.Run("missing CreateAt", func(t *testing.T) {
-		pc := &PageContent{
-			PageId:   NewId(),
-			CreateAt: 0,
-			UpdateAt: GetMillis(),
-			Content: TipTapDocument{
-				Type:    "doc",
-				Content: []map[string]any{},
-			},
-		}
-
-		err := pc.IsValid()
-		require.NotNil(t, err)
-		require.Equal(t, "model.page_content.is_valid.create_at.app_error", err.Id)
-	})
-
-	t.Run("missing UpdateAt", func(t *testing.T) {
-		pc := &PageContent{
-			PageId:   NewId(),
-			CreateAt: GetMillis(),
-			UpdateAt: 0,
-			Content: TipTapDocument{
-				Type:    "doc",
-				Content: []map[string]any{},
-			},
-		}
-
-		err := pc.IsValid()
-		require.NotNil(t, err)
-		require.Equal(t, "model.page_content.is_valid.update_at.app_error", err.Id)
-	})
-
-	t.Run("content exceeds max size", func(t *testing.T) {
-		largeText := strings.Repeat("a", PageContentMaxSize+1)
-		pc := &PageContent{
-			PageId:   NewId(),
-			CreateAt: GetMillis(),
-			UpdateAt: GetMillis(),
-			Content: TipTapDocument{
-				Type: "doc",
-				Content: []map[string]any{
-					{
-						"type": "paragraph",
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": largeText,
-							},
-						},
-					},
-				},
-			},
-		}
-
-		err := pc.IsValid()
-		require.NotNil(t, err)
-		require.Equal(t, "model.page_content.is_valid.content_too_large.app_error", err.Id)
-	})
-}
-
-func TestPageContentPreSave(t *testing.T) {
-	t.Run("sets CreateAt and UpdateAt on new content", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-			Content: TipTapDocument{
-				Type: "doc",
-				Content: []map[string]any{
-					{
-						"type": "paragraph",
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": "Test content",
-							},
-						},
-					},
-				},
-			},
-		}
-
-		pc.PreSave()
-
-		require.Greater(t, pc.CreateAt, int64(0))
-		require.Equal(t, pc.CreateAt, pc.UpdateAt)
-		require.NotEmpty(t, pc.SearchText)
-		require.Contains(t, pc.SearchText, "Test content")
-	})
-
-	t.Run("updates UpdateAt on existing content", func(t *testing.T) {
-		originalCreateAt := GetMillis()
-		pc := &PageContent{
-			PageId:   NewId(),
-			CreateAt: originalCreateAt,
-			UpdateAt: originalCreateAt,
-			Content: TipTapDocument{
-				Type: "doc",
-				Content: []map[string]any{
-					{
-						"type": "paragraph",
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": "Updated content",
-							},
-						},
-					},
-				},
-			},
-		}
-
-		pc.PreSave()
-
-		require.Equal(t, originalCreateAt, pc.CreateAt)
-		require.GreaterOrEqual(t, pc.UpdateAt, originalCreateAt)
-	})
-
+func TestBuildSearchText(t *testing.T) {
 	t.Run("extracts search text from content", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-			Content: TipTapDocument{
-				Type: "doc",
-				Content: []map[string]any{
-					{
-						"type": "heading",
-						"attrs": map[string]any{
-							"level": 1,
-						},
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": "My Heading",
-							},
+		doc := TipTapDocument{
+			Type: "doc",
+			Content: []map[string]any{
+				{
+					"type": "heading",
+					"attrs": map[string]any{
+						"level": 1,
+					},
+					"content": []any{
+						map[string]any{
+							"type": "text",
+							"text": "My Heading",
 						},
 					},
-					{
-						"type": "paragraph",
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": "First paragraph with ",
-							},
-							map[string]any{
-								"type": "text",
-								"text": "bold text",
-								"marks": []any{
-									map[string]any{
-										"type": "bold",
-									},
+				},
+				{
+					"type": "paragraph",
+					"content": []any{
+						map[string]any{
+							"type": "text",
+							"text": "First paragraph with ",
+						},
+						map[string]any{
+							"type": "text",
+							"text": "bold text",
+							"marks": []any{
+								map[string]any{
+									"type": "bold",
 								},
 							},
 						},
 					},
-					{
-						"type": "paragraph",
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": "Second paragraph",
-							},
+				},
+				{
+					"type": "paragraph",
+					"content": []any{
+						map[string]any{
+							"type": "text",
+							"text": "Second paragraph",
 						},
 					},
 				},
 			},
 		}
 
-		pc.PreSave()
-
-		require.NotEmpty(t, pc.SearchText)
-		require.Contains(t, pc.SearchText, "My Heading")
-		require.Contains(t, pc.SearchText, "First paragraph")
-		require.Contains(t, pc.SearchText, "bold text")
-		require.Contains(t, pc.SearchText, "Second paragraph")
+		text := BuildSearchText(doc)
+		require.NotEmpty(t, text)
+		require.Contains(t, text, "My Heading")
+		require.Contains(t, text, "First paragraph")
+		require.Contains(t, text, "bold text")
+		require.Contains(t, text, "Second paragraph")
 	})
 
 	t.Run("handles content-only pages", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-			Content: TipTapDocument{
-				Type: "doc",
-				Content: []map[string]any{
-					{
-						"type": "paragraph",
-						"content": []any{
-							map[string]any{
-								"type": "text",
-								"text": "Page content without title",
-							},
+		doc := TipTapDocument{
+			Type: "doc",
+			Content: []map[string]any{
+				{
+					"type": "paragraph",
+					"content": []any{
+						map[string]any{
+							"type": "text",
+							"text": "Page content without title",
 						},
 					},
 				},
 			},
 		}
 
-		pc.PreSave()
-
-		require.Equal(t, "Page content without title", pc.SearchText, "Content-only pages should work")
+		text := BuildSearchText(doc)
+		require.Equal(t, "Page content without title", text)
 	})
 }
 
-func TestPageContentSetGetDocumentJSON(t *testing.T) {
-	t.Run("sets and gets valid JSON", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
+func TestParseTipTapDocument(t *testing.T) {
+	t.Run("parses valid JSON", func(t *testing.T) {
 		jsonStr := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Hello"}]}]}`
-		err := pc.SetDocumentJSON(jsonStr)
-		require.NoError(t, err)
-
-		require.Equal(t, "doc", pc.Content.Type)
-		require.Len(t, pc.Content.Content, 1)
-
-		retrievedJSON, err := pc.GetDocumentJSON()
-		require.NoError(t, err)
-		require.NotEmpty(t, retrievedJSON)
-
-		var doc TipTapDocument
-		err = json.Unmarshal([]byte(retrievedJSON), &doc)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 		require.Equal(t, "doc", doc.Type)
+		require.Len(t, doc.Content, 1)
 	})
 
 	t.Run("handles empty JSON string", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
-		err := pc.SetDocumentJSON("")
+		doc, err := ParseTipTapDocument("")
 		require.NoError(t, err)
-
-		require.Equal(t, "doc", pc.Content.Type)
-		require.Empty(t, pc.Content.Content)
+		require.Equal(t, "doc", doc.Type)
+		require.Empty(t, doc.Content)
 	})
 
 	t.Run("returns error for invalid JSON", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
-		err := pc.SetDocumentJSON("invalid json")
+		_, err := ParseTipTapDocument("invalid json")
 		require.Error(t, err)
+	})
+
+	t.Run("sanitizes javascript URLs", func(t *testing.T) {
+		jsonStr := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Click me","marks":[{"type":"link","attrs":{"href":"javascript:alert('xss')"}}]}]}]}`
+		doc, err := ParseTipTapDocument(jsonStr)
+		require.NoError(t, err)
+
+		textNode := doc.Content[0]["content"].([]any)[0].(map[string]any)
+		marks := textNode["marks"].([]any)
+		mark := marks[0].(map[string]any)
+		attrs := mark["attrs"].(map[string]any)
+		require.Empty(t, attrs["href"])
 	})
 }
 
@@ -676,29 +500,21 @@ func TestExtractSimpleTextWithMentions(t *testing.T) {
 
 func TestSanitizeTipTapDocument(t *testing.T) {
 	t.Run("preserves text content without HTML escaping", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
 		jsonStr := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Test & verify <tags>"}]}]}`
-		err := pc.SetDocumentJSON(jsonStr)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 
-		textNode := pc.Content.Content[0]["content"].([]any)[0].(map[string]any)
+		textNode := doc.Content[0]["content"].([]any)[0].(map[string]any)
 		text := textNode["text"].(string)
 		require.Equal(t, "Test & verify <tags>", text)
 	})
 
 	t.Run("removes javascript URLs from href attributes", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
 		jsonStr := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Click me","marks":[{"type":"link","attrs":{"href":"javascript:alert('xss')"}}]}]}]}`
-		err := pc.SetDocumentJSON(jsonStr)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 
-		textNode := pc.Content.Content[0]["content"].([]any)[0].(map[string]any)
+		textNode := doc.Content[0]["content"].([]any)[0].(map[string]any)
 		marks := textNode["marks"].([]any)
 		mark := marks[0].(map[string]any)
 		attrs := mark["attrs"].(map[string]any)
@@ -706,29 +522,21 @@ func TestSanitizeTipTapDocument(t *testing.T) {
 	})
 
 	t.Run("removes data URLs from src attributes", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
 		jsonStr := `{"type":"doc","content":[{"type":"image","attrs":{"src":"data:text/html,<script>alert('xss')</script>"}}]}`
-		err := pc.SetDocumentJSON(jsonStr)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 
-		imageNode := pc.Content.Content[0]
+		imageNode := doc.Content[0]
 		attrs := imageNode["attrs"].(map[string]any)
 		require.Empty(t, attrs["src"])
 	})
 
 	t.Run("allows safe URLs", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
 		jsonStr := `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Click me","marks":[{"type":"link","attrs":{"href":"https://example.com"}}]}]}]}`
-		err := pc.SetDocumentJSON(jsonStr)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 
-		textNode := pc.Content.Content[0]["content"].([]any)[0].(map[string]any)
+		textNode := doc.Content[0]["content"].([]any)[0].(map[string]any)
 		marks := textNode["marks"].([]any)
 		mark := marks[0].(map[string]any)
 		attrs := mark["attrs"].(map[string]any)
@@ -736,15 +544,11 @@ func TestSanitizeTipTapDocument(t *testing.T) {
 	})
 
 	t.Run("preserves text in nested content", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
 		jsonStr := `{"type":"doc","content":[{"type":"bulletList","content":[{"type":"listItem","content":[{"type":"paragraph","content":[{"type":"text","text":"Item with & symbol"}]}]}]}]}`
-		err := pc.SetDocumentJSON(jsonStr)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 
-		listNode := pc.Content.Content[0]
+		listNode := doc.Content[0]
 		listItemNode := listNode["content"].([]any)[0].(map[string]any)
 		paragraphNode := listItemNode["content"].([]any)[0].(map[string]any)
 		textNode := paragraphNode["content"].([]any)[0].(map[string]any)
@@ -753,33 +557,78 @@ func TestSanitizeTipTapDocument(t *testing.T) {
 	})
 
 	t.Run("blocks SVG data URIs to prevent XSS", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
-		// SVG can contain embedded JavaScript via <script> tags or event handlers
 		jsonStr := `{"type":"doc","content":[{"type":"image","attrs":{"src":"data:image/svg+xml,<svg onload='alert(1)'></svg>"}}]}`
-		err := pc.SetDocumentJSON(jsonStr)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 
-		imageNode := pc.Content.Content[0]
+		imageNode := doc.Content[0]
 		attrs := imageNode["attrs"].(map[string]any)
 		require.Empty(t, attrs["src"], "SVG data URIs should be blocked")
 	})
 
 	t.Run("allows safe raster image data URIs", func(t *testing.T) {
-		pc := &PageContent{
-			PageId: NewId(),
-		}
-
-		// Small valid PNG data URI (1x1 transparent pixel)
 		pngDataURI := "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
 		jsonStr := `{"type":"doc","content":[{"type":"image","attrs":{"src":"` + pngDataURI + `"}}]}`
-		err := pc.SetDocumentJSON(jsonStr)
+		doc, err := ParseTipTapDocument(jsonStr)
 		require.NoError(t, err)
 
-		imageNode := pc.Content.Content[0]
+		imageNode := doc.Content[0]
 		attrs := imageNode["attrs"].(map[string]any)
 		require.Equal(t, pngDataURI, attrs["src"], "PNG data URIs should be allowed")
+	})
+}
+
+func TestValidateTipTapDocument(t *testing.T) {
+	t.Run("valid document", func(t *testing.T) {
+		err := ValidateTipTapDocument(`{"type":"doc","content":[]}`)
+		require.NoError(t, err)
+	})
+
+	t.Run("empty string is valid", func(t *testing.T) {
+		err := ValidateTipTapDocument("")
+		require.NoError(t, err)
+	})
+
+	t.Run("invalid JSON", func(t *testing.T) {
+		err := ValidateTipTapDocument("not json")
+		require.Error(t, err)
+	})
+
+	t.Run("wrong type field", func(t *testing.T) {
+		err := ValidateTipTapDocument(`{"type":"paragraph","content":[]}`)
+		require.Error(t, err)
+	})
+}
+
+func TestTipTapDocumentScanValue(t *testing.T) {
+	t.Run("scan from bytes", func(t *testing.T) {
+		var doc TipTapDocument
+		jsonBytes := []byte(`{"type":"doc","content":[{"type":"paragraph"}]}`)
+		err := doc.Scan(jsonBytes)
+		require.NoError(t, err)
+		require.Equal(t, "doc", doc.Type)
+		require.Len(t, doc.Content, 1)
+	})
+
+	t.Run("scan from nil", func(t *testing.T) {
+		var doc TipTapDocument
+		err := doc.Scan(nil)
+		require.NoError(t, err)
+		require.Equal(t, TipTapDocType, doc.Type)
+		require.Empty(t, doc.Content)
+	})
+
+	t.Run("value roundtrip", func(t *testing.T) {
+		doc := TipTapDocument{
+			Type:    "doc",
+			Content: []map[string]any{{"type": "paragraph"}},
+		}
+		val, err := doc.Value()
+		require.NoError(t, err)
+
+		var doc2 TipTapDocument
+		err = json.Unmarshal(val.([]byte), &doc2)
+		require.NoError(t, err)
+		require.Equal(t, doc.Type, doc2.Type)
 	})
 }

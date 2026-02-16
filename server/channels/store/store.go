@@ -1082,24 +1082,15 @@ type DraftStore interface {
 	UpdateDraftParent(userId, wikiId, draftId, newParentId string) error
 	BatchUpdateDraftParentId(userId, wikiId, oldParentId, newParentId string) ([]*model.Draft, error)
 
-	// Page draft content methods (PageContents table with status='draft')
-	// With unified page ID model, drafts are stored in PageContents table
-	CreatePageDraft(content *model.PageContent) (*model.PageContent, error)
-	CreateDraftForExistingPage(pageId, userId, content string, baseUpdateAt int64) (*model.PageContent, error)
-	PageDraftExists(pageId, userId string) (bool, int64, error)
-	UpdatePageDraftContent(pageId, userId, content string, expectedUpdateAt int64) (int64, error)
-	UpsertPageDraftContent(pageId, userId, content string, lastUpdateAt int64) (*model.PageContent, error)
-	GetPageDraft(pageId, userId string) (*model.PageContent, error)
-	DeletePageDraft(pageId, userId string) error
-	DeletePageDraftAtomic(pageId, userId, wikiId string) error
-	GetPageDraftsForUser(userId, wikiId string, offset, limit int) ([]*model.PageContent, error)
-	GetActiveEditorsForPage(pageId string, minUpdateAt int64) ([]*model.PageContent, error)
+	// Page draft content methods (stored in Drafts.Message as TipTap JSON)
+	UpsertPageDraftContent(pageId, userId, wikiId, content string, lastUpdateAt int64) (*model.Draft, error)
+	GetPageDraft(pageId, userId, wikiId string) (*model.Draft, error)
+	DeletePageDraft(pageId, userId, wikiId string) error
+	GetPageDraftsForUser(userId, wikiId string, offset, limit int) ([]*model.Draft, error)
+	GetActiveEditorsForPage(pageId string, minUpdateAt int64) ([]*model.Draft, error)
 
-	// Publish operations (atomic state transition)
-	PublishPageDraft(pageId, userId string) (*model.PageContent, error)
-
-	// Cleanup operations
-	PermanentDeletePageDraftsByUser(userId string) error
+	// Publish operations
+	PublishPageDraft(pageId, userId, wikiId string) (*model.Draft, error)
 }
 
 type PostAcknowledgementStore interface {
@@ -1279,17 +1270,17 @@ type WikiStore interface {
 // operations are isolated in this store for better separation of concerns.
 type PageStore interface {
 	// CreatePage creates a page and its content in a single transaction
-	CreatePage(rctx request.CTX, post *model.Post, content, searchText string) (*model.Post, error)
+	CreatePage(rctx request.CTX, post *model.Post, content string) (*model.Post, error)
 
 	// GetPage fetches a page by ID.
 	// Uses DBXFromContext to respect master flag for read-after-write consistency.
 	GetPage(rctx request.CTX, pageID string, includeDeleted bool) (*model.Post, error)
 
-	// DeletePage soft-deletes a page and all its associated data (content and comments).
+	// DeletePage soft-deletes a page and all its associated data (comments and drafts).
 	// It also atomically reparents any child pages to newParentID (or makes them root pages if empty).
 	DeletePage(pageID string, deleteByID string, newParentID string) error
 
-	// RestorePage restores a soft-deleted page and its content in a single transaction
+	// RestorePage restores a soft-deleted page post
 	RestorePage(pageID string) error
 
 	// SoftDeletePageComments soft-deletes all comments for a page
@@ -1341,7 +1332,7 @@ type PageStore interface {
 	ReparentChildren(pageID string, newParentID string) error
 
 	// UpdatePageWithContent updates a page's title and/or content and creates edit history
-	UpdatePageWithContent(rctx request.CTX, pageID, title, content, searchText string) (*model.Post, error)
+	UpdatePageWithContent(rctx request.CTX, pageID, title, content string) (*model.Post, error)
 
 	// Update updates a page (following MM pattern - no business logic, just UPDATE)
 	// Returns ErrNotFound if page doesn't exist or was deleted
@@ -1352,18 +1343,6 @@ type PageStore interface {
 
 	// GetCommentsForPage fetches comments and replies for a page with pagination
 	GetCommentsForPage(pageID string, includeDeleted bool, offset, limit int) (*model.PostList, error)
-
-	// PageContent operations (PageContents table)
-	// PageStore owns both Posts (Type='page') and PageContents tables for transactional atomicity
-	SavePageContent(pageContent *model.PageContent) (*model.PageContent, error)
-	GetPageContent(pageID string) (*model.PageContent, error)
-	GetManyPageContents(pageIDs []string) ([]*model.PageContent, error)
-	GetPageContentWithDeleted(pageID string) (*model.PageContent, error)
-	GetManyPageContentsWithDeleted(pageIDs []string) ([]*model.PageContent, error)
-	UpdatePageContent(pageContent *model.PageContent) (*model.PageContent, error)
-	DeletePageContent(pageID, userID string) error
-	PermanentDeletePageContent(pageID string) error
-	RestorePageContent(pageID string) error
 
 	// AtomicUpdatePageNotification atomically finds and updates an existing page update
 	// notification post within a transaction using SELECT FOR UPDATE to prevent lost updates
