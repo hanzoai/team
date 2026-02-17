@@ -7,6 +7,7 @@ import {defineMessage, useIntl} from 'react-intl';
 import type {Channel} from '@mattermost/types/channels';
 
 import {getMyChannels, getMyChannelMemberships} from 'mattermost-redux/selectors/entities/channels';
+import {getConfig} from 'mattermost-redux/selectors/entities/general';
 import type {ActionResult} from 'mattermost-redux/types/actions.js';
 import {sortChannelsByTypeAndDisplayName} from 'mattermost-redux/utils/channel_utils';
 
@@ -16,6 +17,8 @@ import usePrefixedIds from 'components/common/hooks/usePrefixedIds';
 
 import {getArchiveIconClassName} from 'utils/channel_utils';
 import {Constants} from 'utils/constants';
+import {hasObfuscatedSlug} from 'utils/channel_mention_utils';
+import {cleanUpUrlable} from 'utils/url';
 
 import Provider from './provider';
 import type {ResultsCallback} from './provider';
@@ -105,6 +108,13 @@ export const ChannelMentionSuggestion = React.forwardRef<HTMLLIElement, Suggesti
 });
 ChannelMentionSuggestion.displayName = 'ChannelMentionSuggestion';
 
+function getChannelMentionTerm(channel: Channel, useSecureURLs: boolean): string {
+    if (useSecureURLs && hasObfuscatedSlug(channel)) {
+        return '~' + cleanUpUrlable(channel.display_name);
+    }
+    return '~' + channel?.name;
+}
+
 export default class ChannelMentionProvider extends Provider {
     private lastPrefixTrimmed: string;
     private lastPrefixWithNoResults: string;
@@ -172,6 +182,10 @@ export default class ChannelMentionProvider extends Provider {
 
         this.startNewRequest(prefix);
 
+        const state = store.getState();
+        // const useSecureURLs = getConfig(state).UseSecureChannelURLs === 'true';
+        const useSecureURLs = true;
+
         const words = prefix.toLowerCase().split(/\s+/);
         const myChannelIds: Record<string, boolean> = {};
         let myChannels: Channel[] = [];
@@ -211,8 +225,8 @@ export default class ChannelMentionProvider extends Provider {
         });
         resultCallback({
             groups: [
-                myChannelsGroup(myChannels),
-                moreChannelsGroup([], true),
+                myChannelsGroup(myChannels, useSecureURLs),
+                moreChannelsGroup([], true, useSecureURLs),
             ],
             matchedPretext: captured[1],
         });
@@ -265,8 +279,8 @@ export default class ChannelMentionProvider extends Provider {
             resultCallback({
                 matchedPretext: captured[1],
                 groups: [
-                    myChannelsGroup(myChannels),
-                    moreChannelsGroup(moreChannels, false),
+                    myChannelsGroup(myChannels, useSecureURLs),
+                    moreChannelsGroup(moreChannels, false, useSecureURLs),
                 ],
             });
         };
@@ -286,8 +300,8 @@ export default class ChannelMentionProvider extends Provider {
     }
 }
 
-export function myChannelsGroup(items: Channel[]) {
-    const terms = items.map((channel) => '~' + channel?.name);
+export function myChannelsGroup(items: Channel[], useSecureURLs = false) {
+    const terms = items.map((channel) => getChannelMentionTerm(channel, useSecureURLs));
 
     return {
         key: 'myChannels',
@@ -298,7 +312,7 @@ export function myChannelsGroup(items: Channel[]) {
     };
 }
 
-export function moreChannelsGroup(items: Channel[], loading: boolean) {
+export function moreChannelsGroup(items: Channel[], loading: boolean, useSecureURLs = false) {
     const label = defineMessage({id: 'suggestion.mention.morechannels', defaultMessage: 'Other Channels'});
 
     if (loading) {
@@ -313,7 +327,7 @@ export function moreChannelsGroup(items: Channel[], loading: boolean) {
         };
     }
 
-    const terms = items.map((channel) => '~' + channel?.name);
+    const terms = items.map((channel) => getChannelMentionTerm(channel, useSecureURLs));
 
     return {
         key: 'moreChannels',

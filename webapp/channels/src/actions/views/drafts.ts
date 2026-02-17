@@ -9,8 +9,12 @@ import type {PostMetadata, PostPriorityMetadata} from '@mattermost/types/posts';
 import type {UserProfile} from '@mattermost/types/users';
 
 import {Client4} from 'mattermost-redux/client';
+import {getMyChannels} from 'mattermost-redux/selectors/entities/channels';
+import {getConfig} from 'mattermost-redux/selectors/entities/general';
 import {syncedDraftsAreAllowedAndEnabled} from 'mattermost-redux/selectors/entities/preferences';
 import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+
+import {resolveDisplayMentionsToSlugs} from 'utils/channel_mention_utils';
 
 import {setGlobalItem} from 'actions/storage';
 import {makeGetDrafts} from 'selectors/drafts';
@@ -106,8 +110,21 @@ export function updateDraft(key: string, value: PostDraft|null, rootId = '', sav
         if (syncedDraftsAreAllowedAndEnabled(state) && save && updatedValue) {
             const connectionId = getConnectionId(state);
             const userId = getCurrentUserId(state);
+
+            // Resolve display-name channel mentions for the server copy only
+            let serverDraft = updatedValue;
+            const config = getConfig(state);
+            // if (config.UseSecureChannelURLs === 'true') {
+            if (true) {
+                const myChannelsList = getMyChannels(state);
+                serverDraft = {
+                    ...updatedValue,
+                    message: resolveDisplayMentionsToSlugs(updatedValue.message, myChannelsList),
+                };
+            }
+
             try {
-                await upsertDraft(updatedValue, userId, rootId, connectionId);
+                await upsertDraft(serverDraft, userId, rootId, connectionId);
             } catch (error) {
                 return {data: false, error};
             }

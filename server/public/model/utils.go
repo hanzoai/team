@@ -796,7 +796,7 @@ func RemoveDuplicateStrings(in []string) []string {
 }
 
 // RemoveDuplicateStringsNonSort does a removal of duplicate
-// strings using a map.
+// strings using a map.z
 func RemoveDuplicateStringsNonSort(in []string) []string {
 	allKeys := make(map[string]bool)
 	list := []string{}
