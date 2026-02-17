@@ -11,7 +11,7 @@ import ChevronDownIcon from '@mattermost/compass-icons/components/chevron-down';
 import type {UserProfile} from '@mattermost/types/users';
 
 import {
-    getChannelAutotranslation,
+    isChannelAutotranslated as isChannelAutotranslatedSelector,
     getCurrentChannel,
     isCurrentChannelDefault,
     isCurrentChannelFavorite,
@@ -59,7 +59,7 @@ export default function ChannelHeaderMenu({dmUser, gmMembers, isMobile, archived
     const isLicensedForLDAPGroups = useSelector(getLicense).LDAPGroups === 'true';
     const pluginMenuItems = useSelector(getChannelHeaderMenuPluginComponents);
     const pluginItemsVisible = usePluginVisibilityInSharedChannel(channel?.id);
-    const isChannelAutotranslated = useSelector((state: GlobalState) => (channel?.id ? getChannelAutotranslation(state, channel.id) : false));
+    const isChannelAutotranslated = useSelector((state: GlobalState) => (channel?.id ? isChannelAutotranslatedSelector(state, channel.id) : false));
     const isChannelBookmarksEnabled = useSelector(getIsChannelBookmarksEnabled);
 
     const isReadonly = false;
@@ -156,6 +156,8 @@ export default function ChannelHeaderMenu({dmUser, gmMembers, isMobile, archived
                     pluginItems={pluginItems}
                     isFavorite={isFavorite}
                     isMobile={isMobile || false}
+                    isChannelBookmarksEnabled={isChannelBookmarksEnabled}
+                    isChannelAutotranslated={isChannelAutotranslated}
                 />
             )}
             {isGroup && (
@@ -166,6 +168,8 @@ export default function ChannelHeaderMenu({dmUser, gmMembers, isMobile, archived
                     pluginItems={pluginItems}
                     isFavorite={isFavorite}
                     isMobile={isMobile || false}
+                    isChannelBookmarksEnabled={isChannelBookmarksEnabled}
+                    isChannelAutotranslated={isChannelAutotranslated}
                 />
             )}
             {(!isDirect && !isGroup) && (
