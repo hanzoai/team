@@ -14,7 +14,7 @@ import {getMyChannelMember} from 'mattermost-redux/actions/channels';
 import * as PostActions from 'mattermost-redux/actions/posts';
 import {createSchedulePost} from 'mattermost-redux/actions/scheduled_posts';
 import * as ThreadActions from 'mattermost-redux/actions/threads';
-import {getChannel, getMyChannelMember as getMyChannelMemberSelector} from 'mattermost-redux/selectors/entities/channels';
+import {getChannel, getMyChannels, getMyChannelMember as getMyChannelMemberSelector} from 'mattermost-redux/selectors/entities/channels';
 import {makeGetFilesForPost} from 'mattermost-redux/selectors/entities/files';
 import {getConfig} from 'mattermost-redux/selectors/entities/general';
 import * as PostSelectors from 'mattermost-redux/selectors/entities/posts';
@@ -45,6 +45,7 @@ import {
     RHSStates,
     StoragePrefixes,
 } from 'utils/constants';
+import {convertSlugsToDisplayMentions} from 'utils/channel_mention_utils';
 import {matchEmoticons} from 'utils/emoticons';
 import {makeGetIsReactionAlreadyAddedToPost, makeGetUniqueEmojiNameReactionsForPost} from 'utils/post_utils';
 
@@ -370,7 +371,17 @@ export function setEditingPost(postId = '', refocusId = '', isRHS = false): Acti
                     editDraftInStore?.uploadsInProgress?.length === 0
                 )
         ) {
-            actions.push(setGlobalItem(storageKey, post));
+            // Convert real channel name mentions to display slugs for readable editing
+            let editablePost = post;
+            // if (config.UseSecureChannelURLs === 'true') {
+            if (true) {
+                const myChannelsList = getMyChannels(state);
+                editablePost = {
+                    ...post,
+                    message: convertSlugsToDisplayMentions(post.message, myChannelsList),
+                };
+            }
+            actions.push(setGlobalItem(storageKey, editablePost));
         }
 
         dispatch(batchActions(actions));

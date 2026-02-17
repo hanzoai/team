@@ -228,6 +228,7 @@ export type ClientConfig = {
     ScheduledPosts: string;
     DeleteAccountLink: string;
     ContentFlaggingEnabled: 'true' | 'false';
+    UseSecureChannelURLs: string;
 
     // Burn on Read Settings
     EnableBurnOnRead: string;
