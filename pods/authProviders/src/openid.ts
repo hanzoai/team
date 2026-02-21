@@ -50,6 +50,20 @@ export function registerOpenid (
         redirect_uris: [concatLink(accountsUrl, redirectURL)],
         response_types: ['code']
       })
+
+      // Monkey-patch callbackParams to handle koa-passport mock request objects.
+      // koa-passport wraps ctx into a mock req that passes openid-client's
+      // "lookalike" check (has .method and .url) but whose getter-based .method
+      // property doesn't survive the switch/case comparison reliably.
+      // Fix: extract the raw Node.js IncomingMessage from the Koa context.
+      const origCallbackParams = client.callbackParams.bind(client)
+      client.callbackParams = function (input: any) {
+        if (input?.ctx?.req) {
+          return origCallbackParams(input.ctx.req)
+        }
+        return origCallbackParams(input)
+      }
+
       measureCtx.info('Created OIDC client')
 
       passport.use(
