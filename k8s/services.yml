@@ -144,7 +144,10 @@ spec:
             - name: ELASTIC_INDEX_NAME
               value: "hanzo_team_index"
             - name: STORAGE_CONFIG
-              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+              valueFrom:
+                  secretKeyRef:
+                    name: team-secret
+                    key: minio-connection-string
             - name: REKONI_URL
               value: "http://rekoni:4004"
             - name: ACCOUNTS_URL
@@ -213,7 +216,10 @@ spec:
             - name: TRANSACTOR_URL
               value: "ws://transactor:3333;ws://team-nginx:80/_transactor"
             - name: STORAGE_CONFIG
-              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+              valueFrom:
+                  secretKeyRef:
+                    name: team-secret
+                    key: minio-connection-string
             - name: FRONT_URL
               value: "https://hanzo.team"
             - name: STATS_URL
@@ -310,7 +316,10 @@ spec:
                   name: team-secret
                   key: mongodb-url
             - name: STORAGE_CONFIG
-              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+              valueFrom:
+                  secretKeyRef:
+                    name: team-secret
+                    key: minio-connection-string
             - name: FRONT_URL
               value: "https://hanzo.team"
             - name: ACCOUNTS_URL
@@ -390,7 +399,10 @@ spec:
             - name: STATS_URL
               value: "http://stats:4900"
             - name: STORAGE_CONFIG
-              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+              valueFrom:
+                  secretKeyRef:
+                    name: team-secret
+                    key: minio-connection-string
           resources:
             requests:
               memory: 128Mi
@@ -449,7 +461,10 @@ spec:
             - name: TRANSACTOR_URL
               value: "ws://transactor:3333;ws://team-nginx:80/_transactor"
             - name: STORAGE_CONFIG
-              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+              valueFrom:
+                  secretKeyRef:
+                    name: team-secret
+                    key: minio-connection-string
             - name: MODEL_ENABLED
               value: "*"
             - name: ACCOUNTS_URL
@@ -524,7 +539,10 @@ spec:
             - name: COLLABORATOR_URL
               value: "wss://hanzo.team/_collaborator"
             - name: STORAGE_CONFIG
-              value: "minio|minio?accessKey=hanzo&secretKey=hanzo-minio-secret"
+              valueFrom:
+                  secretKeyRef:
+                    name: team-secret
+                    key: minio-connection-string
             - name: DB_URL
               valueFrom:
                 secretKeyRef:
