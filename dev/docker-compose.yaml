@@ -52,7 +52,7 @@ services:
       - cockroach_db:/cockroach/cockroach-data
     restart: unless-stopped
   redpanda:
-    image: docker.redpanda.com/redpandadata/redpanda:v24.3.6
+    image: ghcr.io/hanzoai/kafka:latest
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     command:
@@ -83,31 +83,8 @@ services:
       timeout: 5s
       retries: 10
     restart: unless-stopped
-  redpanda_console:
-    image: docker.redpanda.com/redpandadata/console:v2.8.3
-    extra_hosts:
-      - 'hanzoai.local:host-gateway'
-    entrypoint: /bin/sh
-    command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
-    environment:
-      CONFIG_FILEPATH: /tmp/config.yml
-      CONSOLE_CONFIG_FILE: |
-        kafka:
-          brokers: ["redpanda:9092"]
-          schemaRegistry:
-            enabled: true
-            urls: ["http://redpanda:8081"]
-        redpanda:
-          adminApi:
-            enabled: true
-            urls: ["http://redpanda:9644"]
-    ports:
-      - 8000:8080
-    depends_on:
-      - redpanda
-    restart: unless-stopped
   minio:
-    image: 'minio/minio'
+    image: 'ghcr.io/hanzoai/storage:latest'
     command: server /data --address ":9000" --console-address ":9001"
     extra_hosts:
       - 'hanzoai.local:host-gateway'
@@ -125,7 +102,7 @@ services:
       retries: 10
     restart: unless-stopped
   elastic:
-    image: 'elasticsearch:7.14.2'
+    image: 'ghcr.io/hanzoai/search:latest'
     expose:
       - 9200
     extra_hosts:
@@ -148,8 +125,8 @@ services:
       resources:
         limits:
           memory: 1024m
-  redis:
-    image: redis:8.0.2-alpine3.21
+  kv:
+    image: ghcr.io/hanzoai/kv:latest
     ports:
       - 6379:6379
     restart: unless-stopped
@@ -558,12 +535,12 @@ services:
   hanzopulse:
     image: hardcoreeng/hanzopulse
     depends_on:
-      redis:
+      kv:
         condition: service_started
     ports:
       - 8099:8099
     environment:
-      - HANZO_REDIS_URLS=redis://redis:6379
+      - HANZO_REDIS_URLS=redis://kv:6379
       - HANZO_BIND_PORT=8099
     restart: unless-stopped
 

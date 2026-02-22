@@ -1,6 +1,6 @@
 services:
   minio:
-    image: 'minio/minio'
+    image: 'ghcr.io/hanzoai/storage:latest'
     command: server /data --address ":9000" --console-address ":9001"
     ports:
       - 9000:9000
@@ -9,7 +9,7 @@ services:
       - files:/data
     restart: unless-stopped
   elastic:
-    image: 'elasticsearch:7.14.2'
+    image: 'ghcr.io/hanzoai/search:latest'
     command: |
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment || yes | ./bin/elasticsearch-plugin install --silent ingest-attachment;
       /usr/local/bin/docker-entrypoint.sh eswrapper"

@@ -12,7 +12,7 @@ services:
       - 1081:1080
     restart: unless-stopped
   mongodb:
-    image: 'mongo:7-jammy'
+    image: 'ghcr.io/hanzoai/documentdb:latest'
     command: mongod --port 27018
     extra_hosts:
       - 'hanzoai.local:host-gateway'
@@ -39,7 +39,7 @@ services:
     command: start-single-node --insecure
     restart: unless-stopped
   redpanda:
-    image: docker.redpanda.com/redpandadata/redpanda:v24.3.6
+    image: ghcr.io/hanzoai/kafka:latest
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     command:
@@ -65,30 +65,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
-  redpanda_console:
-    image: docker.redpanda.com/redpandadata/console:v2.8.3
-    extra_hosts:
-      - 'hanzoai.local:host-gateway'
-    entrypoint: /bin/sh
-    command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml; /app/console'
-    environment:
-      CONFIG_FILEPATH: /tmp/config.yml
-      CONSOLE_CONFIG_FILE: |
-        kafka:
-          brokers: ["redpanda:9093"]
-          schemaRegistry:
-            enabled: true
-            urls: ["http://redpanda:8083"]
-        redpanda:
-          adminApi:
-            enabled: true
-            urls: ["http://redpanda:9644"]
-    ports:
-      - 8001:8080
-    depends_on:
-      - redpanda
   minio:
-    image: 'minio/minio'
+    image: 'ghcr.io/hanzoai/storage:latest'
     command: server /data --address ":9000" --console-address ":9001"
     extra_hosts:
       - 'hanzoai.local:host-gateway'
@@ -126,7 +104,7 @@ services:
       - QUEUE_CONFIG=${QUEUE_CONFIG}
     restart: unless-stopped
   elastic:
-    image: 'elasticsearch:7.14.2'
+    image: 'ghcr.io/hanzoai/search:latest'
     expose:
       - 9201
     extra_hosts:

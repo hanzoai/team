@@ -9,7 +9,7 @@ x-common-env: &common-env
 
 services:
   mongodb:
-    image: mongo:7-jammy
+    image: ghcr.io/hanzoai/documentdb:latest
     container_name: mongodb
     restart: unless-stopped
     environment:
@@ -22,7 +22,7 @@ services:
       - hanzo-network
 
   minio:
-    image: minio/minio
+    image: ghcr.io/hanzoai/storage:latest
     restart: unless-stopped
     command: server /data --address ":9000" --console-address ":9001"
     volumes:
@@ -32,7 +32,7 @@ services:
       - hanzo-network
 
   elastic:
-    image: elasticsearch:7.14.2
+    image: ghcr.io/hanzoai/search:latest
     restart: unless-stopped
     command: |
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment || yes | ./bin/elasticsearch-plugin install --silent ingest-attachment;
