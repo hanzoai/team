@@ -54,12 +54,14 @@ spec:
                   key: openai-api-key
             - name: OPENAI_BASE_URL
               value: "https://llm.hanzo.ai/v1"
+            # Use gpt-4o-mini as model name for tiktoken compatibility;
+            # llm.hanzo.ai gateway routes to the actual backend model
             - name: OPENAI_MODEL
-              value: "zen4"
+              value: "gpt-4o-mini"
             - name: OPENAI_TRANSLATE_MODEL
-              value: "zen4"
+              value: "gpt-4o-mini"
             - name: OPENAI_SUMMARY_MODEL
-              value: "zen4"
+              value: "gpt-4o-mini"
             - name: FIRST_NAME
               value: "Hanzo"
             - name: LAST_NAME
