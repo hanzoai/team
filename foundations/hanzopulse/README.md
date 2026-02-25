@@ -1,28 +1,28 @@
 # Hanzopulse
 
-Hanzopulse is a service that enables clients to share information on a “whiteboard”. Clients connected to the same “whiteboard” see data provided by other clients to the whiteboard.
+Hanzopulse is a service that enables clients to share information on a "whiteboard". Clients connected to the same "whiteboard" see data provided by other clients to the whiteboard.
 
 The service is exposed as REST and WebSocket API.
 
 **Usage scenarios:**
 
 - user presence in a document
-- user is “typing” event
+- user is "typing" event
 - user cursor position in editor or drawing board
 - service posts a process status
 
 ## Key
 
-Key is a string that consists of one or multiple segments separated by ‘/’. Example: foo/bar/baz.
-Key may not end with ‘/’
-Segment may not contain special characters (‘*’, ‘?’, ‘[’, ‘]’,‘\’,‘\x00..\xF1’,‘\x7F’,‘"’,‘'’)
+Key is a string that consists of one or multiple segments separated by '/'. Example: foo/bar/baz.
+Key may not end with '/'
+Segment may not contain special characters ('*', '?', '[', ']','\','\x00..\xF1','\x7F','"',''')
 Segment may not be empty
-Key segment may be private (prefixed with ‘$’)
+Key segment may be private (prefixed with '$')
 
     Query
 
-May not contain special characters (‘*’, ‘?’, ‘[’, ‘]’,‘\’,‘\x00..\xF1’,‘\x7F’,‘"’,‘'’)
-It is possible to use prefix, for listings / subscriptions  (prefix ends with segment separator ‘/’)
+May not contain special characters ('*', '?', '[', ']','\','\x00..\xF1','\x7F','"',''')
+It is possible to use prefix, for listings / subscriptions  (prefix ends with segment separator '/')
 
 - GET/SUBSCRIBE/..   a/b → single key
 - GET/SUBSCRIBE/..   a/b/c/ → multiple
@@ -43,7 +43,7 @@ skip keys, containing private segments to the right from the prefix
 
 
 ## Data
-“Data” is an arbitrary JSON document.
+"Data" is an arbitrary JSON document.
 Size of data is limited to some reasonable size
 
 ## HTTP API
@@ -105,8 +105,8 @@ Size of data is limited to some reasonable size
     - type: "put"
     - correlation id (optional)
     - key:
-	- “workspace/foo/bar“ - shared key
-	- “workspace/foo/bar/$/secret“ - secret key
+	- "workspace/foo/bar" - shared key
+	- "workspace/foo/bar/$/secret" - secret key
     - data
     ** time control (optional) **
 	- `TTL` — autodelete in N seconds
@@ -124,8 +124,8 @@ Size of data is limited to some reasonable size
     - type: "get"
     - correlation id (optional)
     - key:
-	- “workspace/foo/bar“ - one shared key
-	- “workspace/foo/bar/$/secret“ - one secret key
+	- "workspace/foo/bar" - one shared key
+	- "workspace/foo/bar/$/secret" - one secret key
 
 - Answer: `{"action":"get","result":{"data":"hello","etag":"5d41402abc4b2a76b9719d911017c592","ttl":3599,"key":"00000000-0000-0000-0000-000000000001/foo/bar"}}`
 
@@ -134,8 +134,8 @@ Size of data is limited to some reasonable size
     - type: "list"
     - correlation id (optional)
     - key:
-	- “workspace/foo/bar/“ - keys from public space
-	- “workspace/foo/bar/$/secret/“ - keys from secret space
+	- "workspace/foo/bar/" - keys from public space
+	- "workspace/foo/bar/$/secret/" - keys from secret space
 
 - Answer: `{"action":"list","result":[{"data":"hello 1","etag":"df0649bc4f1be901c85b6183091c1d83","ttl":3570,"key":"00000000-0000-0000-0000-000000000001/foo/bar1"},{"data":"hello 2","etag":"bb21ec8394b75795622f61613a777a8b","ttl":3555,"key":"00000000-0000-0000-0000-000000000001/foo/bar2"}]}`
 
@@ -143,7 +143,7 @@ Size of data is limited to some reasonable size
 ```DELETE```
     - type: "delete"
     - correlation id (optional)
-    - key: “workspace/foo/bar“
+    - key: "workspace/foo/bar"
     ** Conditional (optional) **
 	- `ifMatch: <md5>` — delete only if current value's MD5 matches
 	- `ifMatch: *` — return error if key does not exist
@@ -154,10 +154,10 @@ Size of data is limited to some reasonable size
 ```SUBSCRIBE```
     type: "sub"
     key:
-	- “workspace/foo/bar“ - subscribe one shared key
-	- “workspace/foo/bar/“ - subscribe all keys started with
-	- “workspace/foo/bar/$/my_secret“ - subscribe one secret key
-	- “workspace/foo/bar/$/my_secret/“ - subscribe all keys started with secret
+	- "workspace/foo/bar" - subscribe one shared key
+	- "workspace/foo/bar/" - subscribe all keys started with
+	- "workspace/foo/bar/$/my_secret" - subscribe one secret key
+	- "workspace/foo/bar/$/my_secret/" - subscribe all keys started with secret
 
 - Answer: `{"action":"sub","result":"OK"}`
 
@@ -165,8 +165,8 @@ Size of data is limited to some reasonable size
 ```UNSUBSCRIBE```
     - type: "unsub"
     - key:
-	- “workspace/foo/bar“ - unsubscribe subscribed key
-	- “*“ - unsubscribe all
+	- "workspace/foo/bar" - unsubscribe subscribed key
+	- "*" - unsubscribe all
 
 - Answer: `{"action":"unsub","result":"OK"}`
 
@@ -190,15 +190,14 @@ Size of data is limited to some reasonable size
     - `{"message":"Del","key":"00000000-0000-0000-0000-000000000001/foo/bar"}`
 
 ## Special options in config/default.toml
-    - ```memory_mode = true``` Use native memory storage instead Redis
+    - ```backend = "memory"``` Use native memory storage instead Redis
     - ```max_size = 100``` Max value size in bytes
 
 ## Special cargo build options
-    - "db-redis" (default) - use Redis (Memory instead)
     - "auth" (default) - use hanzo-authorization
-    Disable both:
+    Disable auth:
         cargo build --no-default-features
-    Enable one:
+    Enable auth:
         cargo build --no-default-features --features "auth"
 
 ## Running
@@ -207,7 +206,17 @@ Pre-build docker images is available at: hardcoreeng/service_hanzopulse:{tag}.
 
 You can use the following command to run the image locally:
 ```bash
-docker run -p 8095:8095 -it --rm hardcoreeng/service_hanzopulse:{tag}"
+docker run -p 8095:8095 -it --rm hardcoreeng/service_hanzopulse:{tag}
+```
+
+Run from source using Redis:
+```bash
+HANZO_REDIS_URLS=redis://hanzo.local:6379 cargo run
+```
+
+Run from source in in-memory mode:
+```bash
+HANZO_BACKEND=memory cargo run
 ```
 
 If you want to run the service as a part of local hanzo development environment use the following command:
@@ -221,13 +230,14 @@ You can then access hanzopulse at http://localhost:8095.
 
 
 ## Authetication
-Hanzopulse uses bearer JWT token authetication. At the moment, it will accept any token signed by the hanzopulse secret. The secret is set in the environment variable HANZO_TOKEN_SECRET variable. 
+Hanzopulse uses bearer JWT token authetication. At the moment, it will accept any token signed by the hanzopulse secret. The secret is set in the environment variable HANZO_TOKEN_SECRET variable.
 
 ## Configuration
 The following environment variables are used to configure hanzopulse:
    - ```HANZO_BIND_HOST```: host to bind the server to (default: 0.0.0.0)
    - ```HANZO_BIND_PORT```: port to bind the server to (default: 8094)
    - ```HANZO_TOKEN_SECRET```: secret used to sign JWT tokens (default: secret)
+   - ```HANZO_BACKEND```: storage backend "redis" or "memory" (default: "redis")
    - ```HANZO_REDIS_URLS```: redis connection string (default: redis://hanzo.local:6379)
    - ```HANZO_REDIS_PASSWORD```: redis password (default: "&lt;invalid&gt;")
    - ```HANZO_REDIS_MODE```: redis mode "direct" or "sentinel" (default: "direct")

@@ -16,7 +16,7 @@
   import { getCurrentEmployee } from '@hanzo/contact'
   import { getEmbeddedLabel } from '@hanzo/platform'
   import { createQuery, getClient } from '@hanzo/presentation'
-  import { ApproveRequest, Execution, ProcessToDo } from '@hanzo/process'
+  import { ApproveRequest, Execution, ExecutionStatus, ProcessToDo } from '@hanzo/process'
   import { Button } from '@hanzo/ui'
   import plugin from '../plugin'
   import ApproveRequestButtons from './ApproveRequestButtons.svelte'
@@ -30,17 +30,22 @@
   const emp = getCurrentEmployee()
 
   const query = createQuery()
-  query.query(
-    plugin.class.ProcessToDo,
-    {
-      execution: value._id,
-      user: emp,
-      doneOn: null
-    },
-    (res) => {
-      todos = res
-    }
-  )
+  $: if (value.status === ExecutionStatus.Active) {
+    query.query(
+      plugin.class.ProcessToDo,
+      {
+        execution: value._id,
+        user: emp,
+        doneOn: null
+      },
+      (res) => {
+        todos = res
+      }
+    )
+  } else {
+    query.unsubscribe()
+    todos = []
+  }
 
   async function checkTodo (todo: ProcessToDo) {
     await client.update(todo, {

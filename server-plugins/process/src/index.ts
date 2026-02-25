@@ -48,6 +48,7 @@ export default plugin(serverProcessId, {
   },
   func: {
     RunSubProcess: '' as Resource<ExecuteFunc>,
+    CancelSubProcess: '' as Resource<ExecuteFunc>,
     CreateToDo: '' as Resource<ExecuteFunc>,
     UpdateCard: '' as Resource<ExecuteFunc>,
     CreateCard: '' as Resource<ExecuteFunc>,
@@ -68,7 +69,8 @@ export default plugin(serverProcessId, {
     CheckTime: '' as Resource<CheckFunc>,
     EventCheck: '' as Resource<CheckFunc>,
     ApproveRequestApproved: '' as Resource<CheckFunc>,
-    ApproveRequestRejected: '' as Resource<CheckFunc>
+    ApproveRequestRejected: '' as Resource<CheckFunc>,
+    CancelToDo: '' as Resource<ExecuteFunc>
   },
   transform: {
     FirstValue: '' as Resource<TransformFunc>,

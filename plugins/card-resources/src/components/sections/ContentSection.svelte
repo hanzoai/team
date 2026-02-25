@@ -22,6 +22,7 @@
   import { CardSectionAction } from '../../types'
   import { permissionsStore } from '@hanzo/contact-resources'
   import { canChangeDoc } from '@hanzo/view-resources'
+  import { getClient } from '@hanzo/presentation'
 
   export let readonly: boolean = false
   export let doc: Card
@@ -45,6 +46,9 @@
     dispatch('action', { id: 'toc', toc: [] })
   })
 
+  const client = getClient()
+  const h = client.getHierarchy()
+
   $: updatePermissionForbidden = doc && !canChangeDoc(doc?._class, doc?.space, $permissionsStore)
 </script>
 
@@ -52,7 +56,9 @@
   <div class="content" class:hidden>
     <Content
       {doc}
-      readonly={readonly || updatePermissionForbidden || doc.readonlySections?.includes(doc._class)}
+      readonly={readonly ||
+        updatePermissionForbidden ||
+        h.getAncestors(doc._class).some((p) => doc.readonlySections?.includes(p))}
       content={contentDiv}
       showToc={false}
       on:loaded

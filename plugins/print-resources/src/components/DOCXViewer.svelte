@@ -9,7 +9,7 @@
   import { getMetadata } from '@hanzo/platform'
   import presentation, { getFileUrl } from '@hanzo/presentation'
   import { convertToHTML } from '@hanzo/print'
-  import { EmbeddedPDF, Spinner, themeStore } from '@hanzo/ui'
+  import { EmbeddedHTML, Spinner, themeStore } from '@hanzo/ui'
 
   export let value: Ref<Blob>
   export let name: string
@@ -270,7 +270,7 @@
       <Spinner size="medium" />
     </div>
   {:else}
-    <EmbeddedPDF {src} {name} {css} />
+    <EmbeddedHTML {src} {name} {css} />
   {/if}
 {/if}
 

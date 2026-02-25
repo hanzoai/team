@@ -43,7 +43,7 @@ import presentation from '@hanzo/model-presentation'
 import { TToDo } from '@hanzo/model-time'
 import view, { createAction } from '@hanzo/model-view'
 import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
+import notification, { type NotificationGroup } from '@hanzo/notification'
 import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
 import {
   type ApproveRequest,
@@ -102,6 +102,9 @@ export class TProcess extends TDoc implements Process {
 
   @Prop(TypeBoolean(), process.string.StartAutomatically)
     autoStart: boolean | undefined
+
+  @Prop(TypeBoolean(), process.string.AutomationOnly)
+    automationOnly: boolean | undefined
 
   context!: Record<ContextId, ProcessContext>
 }
@@ -725,6 +728,25 @@ export function createModel (builder: Builder): void {
     id: 'processes',
     label: process.string.Processes,
     component: process.component.ProcessesSettingSection
+  })
+
+  builder.createDoc(notification.class.NotificationType, core.space.Model, {
+    hidden: false,
+    generated: false,
+    allowedForAuthor: true,
+    label: process.string.NewProcessToDo,
+    group: time.ids.TimeNotificationGroup as Ref<NotificationGroup>,
+    txClasses: [core.class.TxCreateDoc],
+    objectClass: process.class.ProcessToDo,
+    txMatch: {
+      objectClass: process.class.ProcessToDo
+    },
+    defaultEnabled: true,
+    templates: {
+      textTemplate: '{body}',
+      htmlTemplate: '<p>{body}</p>',
+      subjectTemplate: '{title}'
+    }
   })
 
   // builder.createDoc(presentation.class.ComponentPointExtension, core.space.Model, {

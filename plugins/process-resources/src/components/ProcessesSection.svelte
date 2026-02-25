@@ -18,9 +18,10 @@
   import { translate } from '@hanzo/platform'
   import { createQuery, getClient } from '@hanzo/presentation'
   import { Process, State } from '@hanzo/process'
-  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, Label, navigate } from '@hanzo/ui'
+  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, IconFile, IconOpen, Label, navigate } from '@hanzo/ui'
   import process from '../plugin'
   import { makeRank } from '@hanzo/rank'
+  import { importProcess } from '../exporter'
 
   export let masterTag: MasterTag
 
@@ -76,12 +77,35 @@
     loc.path[6] = id
     navigate(loc, true)
   }
+
+  function handleImport (): void {
+    const input = document.createElement('input')
+    input.type = 'file'
+    input.accept = '.json'
+    input.onchange = async (evt) => {
+      const file = (evt.target as HTMLInputElement).files?.[0]
+      if (file != null) {
+        const text = await file.text()
+        await importProcess(masterTag._id, text)
+      }
+    }
+    input.click()
+  }
 </script>
 
 <div class="hanzoaiTableAttr-header font-medium-12">
   <Icon icon={process.icon.Process} size="small" />
   <span><Label label={process.string.Processes} /></span>
-  <ButtonIcon kind="primary" icon={IconAdd} size="small" dataId={'btnAdd'} on:click={add} />
+  <div class="flex-row-center flex-gap-1">
+    <ButtonIcon
+      kind="primary"
+      icon={IconFile}
+      size="small"
+      tooltip={{ label: process.string.Import, direction: 'bottom' }}
+      on:click={handleImport}
+    />
+    <ButtonIcon kind="primary" icon={IconAdd} size="small" dataId={'btnAdd'} on:click={add} />
+  </div>
 </div>
 {#if processes.length}
   <div class="hanzoaiTableAttr-content task">

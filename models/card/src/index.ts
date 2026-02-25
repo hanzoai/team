@@ -465,11 +465,36 @@ export function createModel (builder: Builder): void {
     {
       hidden: false,
       generated: false,
+      label: card.string.CardCreated,
+      group: card.ids.CardNotificationGroup,
+      txClasses: [core.class.TxCreateDoc],
+      objectClass: card.class.Card,
+      defaultEnabled: true,
+      templates: {
+        textTemplate: '{body}',
+        htmlTemplate: '<p>{body}</p><p>{link}</p>',
+        subjectTemplate: '{title} created'
+      }
+    },
+    card.ids.CardCreateNotification
+  )
+
+  builder.createDoc(
+    notification.class.NotificationType,
+    core.space.Model,
+    {
+      hidden: false,
+      generated: false,
       label: card.string.CardUpdated,
       group: card.ids.CardNotificationGroup,
       txClasses: [core.class.TxUpdateDoc, core.class.TxMixin],
       objectClass: card.class.Card,
-      defaultEnabled: false
+      defaultEnabled: false,
+      templates: {
+        textTemplate: '{body}',
+        htmlTemplate: '<p>{body}</p><p>{link}</p>',
+        subjectTemplate: '{title} updated'
+      }
     },
     card.ids.CardNotification
   )
@@ -485,7 +510,12 @@ export function createModel (builder: Builder): void {
       txClasses: [core.class.TxCreateDoc],
       objectClass: chunter.class.ChatMessage,
       attachedToClass: card.class.Card,
-      defaultEnabled: true
+      defaultEnabled: true,
+      templates: {
+        textTemplate: 'New message in {title} ({link}) from {senderName}: {message}',
+        htmlTemplate: '<p>New message in <b>{title}</b> <b>from {senderName}</b>: {message}<p>{link}</p>',
+        subjectTemplate: 'New message from {senderName} in {title}'
+      }
     },
     card.ids.CardMessageNotification
   )

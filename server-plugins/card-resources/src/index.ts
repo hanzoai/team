@@ -13,12 +13,13 @@
 // limitations under the License.
 //
 
-import card, { Card, MasterTag, Tag } from '@hanzo/card'
+import card, { Card, cardId, MasterTag, Tag } from '@hanzo/card'
 import core, {
   AccountUuid,
   AnyAttribute,
   ArrOf,
   Class,
+  concatLink,
   Data,
   Doc,
   DocumentUpdate,
@@ -41,8 +42,9 @@ import core, {
   TxRemoveDoc,
   TxUpdateDoc
 } from '@hanzo/core'
-import { TriggerControl } from '@hanzo/server-core'
+import serverCore, { TriggerControl } from '@hanzo/server-core'
 import setting from '@hanzo/setting'
+import { workbenchId } from '@hanzo/workbench'
 import view from '@hanzo/view'
 import {
   AddCollaboratorsEvent,
@@ -59,6 +61,7 @@ import { getEmployee, getPersonSpaces } from '@hanzo/server-contact'
 import contact, { Employee, formatName, Person } from '@hanzo/contact'
 import communication, { Direct } from '@hanzo/communication'
 import { CardPeer } from '@hanzo/communication-types'
+import { getMetadata } from '@hanzo/platform'
 
 async function OnAttribute (ctx: TxCreateDoc<AnyAttribute>[], control: TriggerControl): Promise<Tx[]> {
   const attr = TxProcessor.createDoc2Doc(ctx[0])
@@ -882,10 +885,22 @@ export async function CardTextPresenter (doc: Doc): Promise<string> {
   return card.title
 }
 
+export async function CardHTMLPresenter (doc: Doc, control: TriggerControl): Promise<string> {
+  const card = doc as Card
+
+  const front = control.branding?.front ?? getMetadata(serverCore.metadata.FrontUrl) ?? ''
+
+  const path = `${workbenchId}/${control.workspace.url}/${cardId}/${card._id}`
+
+  const link = concatLink(front, path)
+  return `<a href='${link}'>${card.title}</a>`
+}
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export default async () => ({
   function: {
-    CardTextPresenter
+    CardTextPresenter,
+    CardHTMLPresenter
   },
   trigger: {
     OnAttribute,

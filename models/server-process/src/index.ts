@@ -107,6 +107,10 @@ export function createModel (builder: Builder): void {
     func: serverProcess.func.RunSubProcess
   })
 
+  builder.mixin(process.method.CancelSubProcess, process.class.Method, serverProcess.mixin.MethodImpl, {
+    func: serverProcess.func.CancelSubProcess
+  })
+
   builder.mixin(process.method.CreateToDo, process.class.Method, serverProcess.mixin.MethodImpl, {
     func: serverProcess.func.CreateToDo
   })
@@ -129,6 +133,10 @@ export function createModel (builder: Builder): void {
 
   builder.mixin(process.method.RequestApproval, process.class.Method, serverProcess.mixin.MethodImpl, {
     func: serverProcess.func.RequestApproval
+  })
+
+  builder.mixin(process.method.CancelToDo, process.class.Method, serverProcess.mixin.MethodImpl, {
+    func: serverProcess.func.CancelToDo
   })
 
   builder.mixin(process.method.LockCard, process.class.Method, serverProcess.mixin.MethodImpl, {

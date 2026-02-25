@@ -31,6 +31,7 @@ export interface Process extends Doc {
   description: string
   parallelExecutionForbidden?: boolean
   autoStart?: boolean
+  automationOnly?: boolean
   context: Record<ContextId, ProcessContext>
   resultType?: Type<any>
 }
@@ -237,6 +238,7 @@ export default plugin(processId, {
   },
   method: {
     RunSubProcess: '' as Ref<Method<Process>>,
+    CancelSubProcess: '' as Ref<Method<Process>>,
     CreateAction: '' as Ref<Method<EventButton>>,
     CancellAction: '' as Ref<Method<EventButton>>,
     CreateToDo: '' as Ref<Method<ProcessToDo>>,
@@ -246,6 +248,7 @@ export default plugin(processId, {
     AddRelation: '' as Ref<Method<Association>>,
     AddTag: '' as Ref<Method<Tag>>,
     RequestApproval: '' as Ref<Method<ApproveRequest>>,
+    CancelToDo: '' as Ref<Method<ProcessToDo>>,
     LockCard: '' as Ref<Method<Card>>,
     LockSection: '' as Ref<Method<Card>>,
     UnlockCard: '' as Ref<Method<Card>>,
@@ -304,7 +307,8 @@ export default plugin(processId, {
     EmptyFunctionResult: '' as IntlString,
     ContextValueNotProvided: '' as IntlString,
     RequiredParamsNotProvided: '' as IntlString,
-    TooDeepTransitionRecursion: '' as IntlString
+    TooDeepTransitionRecursion: '' as IntlString,
+    ToDoAlreadyCompleted: '' as IntlString
   },
   icon: {
     Process: '' as Asset,

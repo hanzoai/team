@@ -41,6 +41,7 @@
   } from '@hanzo/ui'
   import view from '@hanzo/view'
   import { DocNavLink, ParentsNavigator, showMenu, RelationsEditor } from '@hanzo/view-resources'
+  import ProjectPresenter from '../../projects/ProjectPresenter.svelte'
   import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
   import { Analytics } from '@hanzo/analytics'
 
@@ -212,6 +213,10 @@
     on:select
   >
     <svelte:fragment slot="title">
+      {#if !embedded && issue.space}
+        <ProjectPresenter value={issue.space} openIssues={true} />
+        <span class="breadcrumb-separator">›</span>
+      {/if}
       {#if !embedded && issue.attachedTo !== tracker.ids.NoParent}
         <ParentsNavigator element={issue} />
       {/if}
@@ -359,3 +364,10 @@
     </svelte:fragment>
   </Panel>
 {/if}
+
+<style>
+  .breadcrumb-separator {
+    margin: 0 0.5rem;
+    color: var(--theme-caption-color);
+  }
+</style>

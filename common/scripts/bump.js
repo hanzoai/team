@@ -1,36 +1,51 @@
 const fs = require('fs')
-const execSync = require('child_process').execSync
 const path = require('path')
+const execSync = require('child_process').execSync
 const repo = '@hanzo'
 
 const packages = {}
+const pathes = {}
 const jsons = {}
+const repoRoot = execSync('git rev-parse --show-toplevel', { encoding: 'utf-8' }).trim()
 
-/**
- * Populate packages and jsons from rush.json configuration
- */
-function fillPackages() {
-  const rushJson = path.resolve(__dirname, '..', '..', 'rush.json')
-  const config = JSON.parse(fs.readFileSync(rushJson, 'utf-8'))
-  for (const pkg of config.projects) {
-    const name = pkg.packageName
-    const projectFolder = pkg.projectFolder
-    // Track publishable flag
-    packages[name] = { path: projectFolder, shouldPublish: pkg.shouldPublish === true }
-    // Load package.json
-    const pkgPath = path.resolve(__dirname, '..', '..', projectFolder, 'package.json')
-    jsons[name] = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+function fillPackages (config) {
+  for (const project of config.projects) {
+    const packageName = project.name ?? project.packageName
+    if (typeof packageName !== 'string' || !packageName.startsWith(repo)) continue
+    const projectPath = project.path ?? project.projectFolder ?? path.relative(repoRoot, project.fullPath ?? '')
+    if (typeof projectPath !== 'string' || projectPath.length === 0) continue
+    const fullProjectPath = path.resolve(repoRoot, projectPath)
+
+    packages[packageName] = {
+      version: project.version,
+      path: fullProjectPath
+    }
+    pathes[fullProjectPath] = packageName
+
+    const file = path.join(fullProjectPath, 'package.json')
+    if (!fs.existsSync(file)) {
+      console.log('skip, package.json not found:', file)
+      continue
+    }
+
+    const raw = fs.readFileSync(file)
+    jsons[packageName] = JSON.parse(raw)
   }
 }
 
 function bumpPackage (name, newVersion) {
   const json = jsons[name]
 
+  if (json === undefined) return
   json.version = newVersion
-  if (typeof json.dependencies === 'object') {
-    for (const [dependency] of Object.entries(json.dependencies)) {
+  const depTypes = ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies']
+  for (const depType of depTypes) {
+    if (typeof json[depType] !== 'object') continue
+    for (const [dependency, currentVersion] of Object.entries(json[depType])) {
       if (packages[dependency] !== undefined) {
-        json.dependencies[dependency] = `^${newVersion}`
+        json[depType][dependency] = String(currentVersion).startsWith('workspace:')
+          ? `workspace:^${newVersion}`
+          : `^${newVersion}`
       }
     }
   }
@@ -47,7 +62,7 @@ function publish (name) {
   const package = packages[name]
   try {
     console.log('publishing', name)
-    execSync(`cd ${package.path} && npm publish && cd ../..`, { encoding: 'utf-8' })
+    execSync('npm publish', { encoding: 'utf-8', cwd: package.path })
   } catch (err) {
     console.log(err)
   }
@@ -57,7 +72,7 @@ function fix (name) {
   const package = packages[name]
   try {
     console.log('fixing', name)
-    execSync(`cd ${package.path} && npm pkg fix && cd ../..`, { encoding: 'utf-8' })
+    execSync('npm pkg fix', { encoding: 'utf-8', cwd: package.path })
   } catch (err) {
     console.log(err)
   }
@@ -81,7 +96,20 @@ function main () {
 
   console.log('bump version ...', version)
 
-  const config = JSON.parse(execSync('rush list -p --json', { encoding: 'utf-8' }))
+  const output = execSync('node common/scripts/install-run-rush.js list -p --json', { encoding: 'utf-8', cwd: repoRoot })
+  const lines = output.split('\n')
+  let jsonStart = -1
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim().startsWith('{')) {
+      jsonStart = i
+      break
+    }
+  }
+  if (jsonStart === -1) {
+    console.error('Could not find JSON output from rush list')
+    process.exit(1)
+  }
+  const config = JSON.parse(lines.slice(jsonStart).join('\n'))
 
   fillPackages(config)
 
@@ -92,7 +120,8 @@ function main () {
 
   for (const packageName of packageNames) {
     const package = packages[packageName]
-    const file = package.path + '/package.json'
+    if (jsons[packageName] === undefined) continue
+    const file = path.join(package.path, 'package.json')
     const res = JSON.stringify(jsons[packageName], undefined, 2)
     fs.writeFileSync(file, res + '\n')
   }

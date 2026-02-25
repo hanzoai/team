@@ -45,6 +45,7 @@
     "Required": "Erforderlich",
     "ParallelExecutionForbidden": "Parallele Ausführung verboten",
     "StartAutomatically": "Automatisch starten",
+    "AutomationOnly": "Nur Automatisierung",
     "Error": "Fehler",
     "Continue": "Fortsetzen",
     "RequestFromUser": "Anfrage von Benutzer",
@@ -140,7 +141,11 @@
     "LockSection": "Abschnitt sperren",
     "Approvers": "Genehmiger",
     "UnlockCard": "Karte entsperren",
-    "UnlockSection": "Abschnitt entsperren"
+    "UnlockSection": "Abschnitt entsperren",
+    "CancelToDo": "Action Item abbrechen",
+    "Export": "Exportieren",
+    "Import": "Importieren",
+    "CancelProcess": "Prozess abbrechen"
   },
   "error": {
     "MethodNotFound": "Methode nicht gefunden: {methodId}",
@@ -156,6 +161,7 @@
     "EmptyFunctionResult": "Leerer Funktionsresultat {func}",
     "ContextValueNotProvided": "Kontextwert nicht bereitgestellt: {name}",
     "RequiredParamsNotProvided": "Erforderliche Parameter nicht bereitgestellt: {params}",
-    "TooDeepTransitionRecursion": "Zu tiefe Übergangsrekursion"
+    "TooDeepTransitionRecursion": "Zu tiefe Übergangsrekursion",
+    "ToDoAlreadyCompleted": "Action Item bereits abgeschlossen"
   }
 }

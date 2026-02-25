@@ -15,13 +15,11 @@
 <script lang="ts">
   import { Ref } from '@hanzo/core'
   import { getClient } from '@hanzo/presentation'
-  import { Process, State } from '@hanzo/process'
+  import { Process } from '@hanzo/process'
   import { DropdownLabels, Label } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
-  import { ModeId, Modes } from '../../query'
-  import { getContext } from '../../utils'
-  import BaseCriteria from '../criterias/BaseCriteria.svelte'
+  import { ModeId } from '../../query'
   import SubProcessStateCriteria from '../criterias/SubProcessStateCriteria.svelte'
 
   export let readonly: boolean

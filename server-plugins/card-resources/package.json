@@ -43,6 +43,7 @@
     "@hanzo/core": "workspace:^0.7.24",
     "@hanzo/platform": "workspace:^0.7.19",
     "@hanzo/server-core": "workspace:^0.7.18",
+    "@hanzo/workbench": "workspace:^0.7.0",
     "@hanzo/communication-types": "workspace:^0.7.12",
     "@hanzo/communication-sdk-types": "workspace:^0.7.12",
     "@hanzo/communication": "workspace:^0.7.0",

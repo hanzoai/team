@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+import { AccountRole } from '@hanzo/core'
 import { Model, type Builder } from '@hanzo/model'
 import core from '@hanzo/model-core'
 import preference, { TPreference } from '@hanzo/model-preference'
@@ -32,6 +33,12 @@ export class TDesktopNotificationPreference extends TPreference implements Deskt
 
 export function createModel (builder: Builder): void {
   builder.createModel(TDesktopNotificationPreference)
+
+  builder.mixin(desktopPreferences.class.DesktopNotificationPreference, core.class.Class, core.mixin.TxAccessLevel, {
+    createAccessLevel: AccountRole.Guest,
+    updateAccessLevel: AccountRole.Guest,
+    removeAccessLevel: AccountRole.Guest
+  })
 
   builder.createDoc(
     notification.class.NotificationPreferencesGroup,
