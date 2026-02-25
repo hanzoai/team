@@ -1,10 +1,13 @@
+# hanzo.team → team-landing (Next.js landing page)
+# app.hanzo.team → team-nginx → front (Svelte collaboration app)
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: team-ingress
   namespace: team
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    # Using Cloudflare origin cert (*.hanzo.team) — no cert-manager needed
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
@@ -14,9 +17,20 @@ spec:
   tls:
     - hosts:
         - hanzo.team
+        - app.hanzo.team
       secretName: hanzo-team-tls
   rules:
     - host: hanzo.team
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: team-landing
+                port:
+                  number: 3000
+    - host: app.hanzo.team
       http:
         paths:
           - path: /

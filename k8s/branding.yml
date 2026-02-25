@@ -34,5 +34,34 @@ data:
             "href": "/hanzoai/apple-touch-icon.png"
           }
         ]
+      },
+      "app.hanzo.team": {
+        "title": "Hanzo Team",
+        "languages": "en,ru,pt,es,zh,fr,de,ja",
+        "defaultLanguage": "en",
+        "defaultApplication": "tracker",
+        "defaultSpace": "tracker:project:DefaultProject",
+        "lastNameFirst": "false",
+        "defaultSpecial": "issues",
+        "links": [
+          {
+            "rel": "manifest",
+            "href": "/hanzoai/site.webmanifest"
+          },
+          {
+            "rel": "icon",
+            "href": "/hanzoai/favicon.svg",
+            "type": "image/svg+xml"
+          },
+          {
+            "rel": "shortcut icon",
+            "href": "/hanzoai/favicon.ico",
+            "sizes": "any"
+          },
+          {
+            "rel": "apple-touch-icon",
+            "href": "/hanzoai/apple-touch-icon.png"
+          }
+        ]
       }
     }
