@@ -209,7 +209,7 @@ module.exports = [
   {
     mode: dev ? 'development' : mode,
     entry: {
-      serviceWorker: '@hcengineering/notification/src/serviceWorker.ts'
+      serviceWorker: '@hanzo/notification/src/serviceWorker.ts'
     },
     module: {
       rules: [
@@ -249,7 +249,7 @@ module.exports = [
         }
       : undefined,
     entry: {
-      bundle: ['@hcengineering/theme/styles/global.scss', ...(dev ? ['./src/main-dev.ts'] : ['./src/main.ts'])]
+      bundle: ['@hanzo/theme/styles/global.scss', ...(dev ? ['./src/main-dev.ts'] : ['./src/main.ts'])]
     },
     ignoreWarnings: [
       {
