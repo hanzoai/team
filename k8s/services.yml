@@ -332,6 +332,8 @@ spec:
               value: "true"
             - name: BRANDING_PATH
               value: "/var/cfg/branding.json"
+            - name: AI_BOT_URL
+              value: "http://ai-bot:4010"
           volumeMounts:
             - name: branding
               mountPath: /var/cfg/branding.json
@@ -553,6 +555,8 @@ spec:
                 secretKeyRef:
                   name: team-secret
                   key: mongodb-url
+            - name: AI_URL
+              value: "http://ai-bot:4010"
             - name: TITLE
               value: "Hanzo Team"
             - name: DEFAULT_LANGUAGE

@@ -1,0 +1,90 @@
+# AI Bot Service — connects to Hanzo LLM Gateway (OpenAI-compatible)
+# Secret 'ai-bot-secret' with key 'openai-api-key' must be created separately
+# via: kubectl create secret generic ai-bot-secret -n team --from-literal=openai-api-key=<key>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-bot
+  namespace: team
+  labels:
+    app: ai-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-bot
+  template:
+    metadata:
+      labels:
+        app: ai-bot
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: ai-bot
+          image: hardcoreeng/ai-bot:latest
+          ports:
+            - containerPort: 4010
+          env:
+            - name: PORT
+              value: "4010"
+            - name: ACCOUNTS_URL
+              value: "http://account:3000"
+            - name: SERVER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: server-secret
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: mongodb-url
+            - name: STORAGE_CONFIG
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: minio-connection-string
+            # Hanzo LLM Gateway — OpenAI-compatible endpoint
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ai-bot-secret
+                  key: openai-api-key
+            - name: OPENAI_BASE_URL
+              value: "https://llm.hanzo.ai/v1"
+            - name: OPENAI_MODEL
+              value: "zen4"
+            - name: OPENAI_TRANSLATE_MODEL
+              value: "zen4"
+            - name: OPENAI_SUMMARY_MODEL
+              value: "zen4"
+            - name: FIRST_NAME
+              value: "Hanzo"
+            - name: LAST_NAME
+              value: "AI"
+            - name: STATS_URL
+              value: "http://stats:4900"
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 50m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-bot
+  namespace: team
+  labels:
+    app: ai-bot
+spec:
+  selector:
+    app: ai-bot
+  ports:
+    - port: 4010
+      targetPort: 4010
+      protocol: TCP
