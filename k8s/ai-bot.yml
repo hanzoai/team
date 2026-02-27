@@ -1,4 +1,4 @@
-# AI Bot Service — connects to Hanzo LLM Gateway (OpenAI-compatible)
+# AI Bot Service — connects to Hanzo Cloud API (OpenAI-compatible /api/chat/completions)
 # Secret 'ai-bot-secret' with key 'openai-api-key' must be created separately
 # via: kubectl create secret generic ai-bot-secret -n team --from-literal=openai-api-key=<key>
 ---
@@ -46,16 +46,15 @@ spec:
                 secretKeyRef:
                   name: team-secret
                   key: minio-connection-string
-            # Hanzo LLM Gateway — OpenAI-compatible endpoint
+            # Hanzo Cloud API — OpenAI-compatible chat completions
             - name: OPENAI_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: ai-bot-secret
                   key: openai-api-key
             - name: OPENAI_BASE_URL
-              value: "https://llm.hanzo.ai/v1"
-            # Use gpt-4o-mini as model name for tiktoken compatibility;
-            # llm.hanzo.ai gateway routes to the actual backend model
+              value: "http://cloud-api.hanzo.svc:8000/api"
+            # Use gpt-4o-mini as model name for tiktoken compatibility
             - name: OPENAI_MODEL
               value: "gpt-4o-mini"
             - name: OPENAI_TRANSLATE_MODEL
