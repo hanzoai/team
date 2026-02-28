@@ -112,7 +112,9 @@ import {
   LockCard,
   LockSection,
   UnlockCard,
-  UnlockSection
+  UnlockSection,
+  LockField,
+  UnlockField
 } from './functions'
 import { FieldChangedRollback, ToDoCancellRollback, ToDoCloseRollback } from './rollback'
 
@@ -599,7 +601,9 @@ export default async () => ({
     LockCard,
     LockSection,
     UnlockCard,
-    UnlockSection
+    UnlockSection,
+    LockField,
+    UnlockField
   },
   transform: {
     CurrentDate,

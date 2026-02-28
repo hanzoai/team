@@ -61,6 +61,8 @@ export default plugin(serverProcessId, {
     LockSection: '' as Resource<ExecuteFunc>,
     UnlockCard: '' as Resource<ExecuteFunc>,
     UnlockSection: '' as Resource<ExecuteFunc>,
+    LockField: '' as Resource<ExecuteFunc>,
+    UnlockField: '' as Resource<ExecuteFunc>,
     CheckToDoDone: '' as Resource<CheckFunc>,
     CheckToDoCancelled: '' as Resource<CheckFunc>,
     MatchCardCheck: '' as Resource<CheckFunc>,
