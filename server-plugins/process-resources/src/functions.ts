@@ -408,9 +408,6 @@ export async function RunSubProcess (
   const res: Tx[] = []
   const resultContext: SuccessExecutionContext[] = []
   const rollback: Tx[] = []
-  const initTransition = control.client
-    .getModel()
-    .findAllSync(process.class.Transition, { process: target._id, from: null })[0]
   for (const _card of Array.isArray(card) ? card : [card]) {
     if (target.parallelExecutionForbidden === true) {
       const currentExecution = await control.client.findAll(process.class.Execution, {
@@ -432,7 +429,7 @@ export async function RunSubProcess (
       execution.space,
       {
         process: processId,
-        currentState: initTransition.to,
+        currentState: null as any,
         card: _card,
         context,
         status: ExecutionStatus.Active,
@@ -802,7 +799,7 @@ async function createExecution (
     execution.space,
     {
       process: proc,
-      currentState: initTransition.to,
+      currentState: null as any,
       card: _id,
       rollback: [],
       context: {},
