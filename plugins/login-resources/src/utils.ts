@@ -1101,7 +1101,7 @@ const IAM_SERVER = 'https://iam.hanzo.ai'
 
 export async function exchangeCodeForToken (code: string): Promise<SSOTokenInfo> {
   const iamServer = IAM_SERVER
-  const response = await fetch(`${iamServer}/api/login/oauth/access_token`, {
+  const response = await fetch(`${iamServer}/oauth/token`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ code, grant_type: 'authorization_code' })
