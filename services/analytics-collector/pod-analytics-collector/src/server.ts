@@ -113,7 +113,7 @@ function getRecordsByType (event: AnalyticEvent): Record<string, any> {
   }
 }
 
-async function preparePostHogEvent (event: AnalyticEvent, req: Request): Promise<Record<string, any>> {
+async function prepareInsightsEvent (event: AnalyticEvent, req: Request): Promise<Record<string, any>> {
   let errorMessage = 'Unknown error'
   let errorType = 'Error'
 
@@ -214,17 +214,17 @@ async function preparePostHogEvent (event: AnalyticEvent, req: Request): Promise
 
   const eventName = recordsByType.event ?? event.event ?? 'unknown_event'
 
-  const regularEventForPostHog: Record<string, any> = {
+  const regularEventForInsights: Record<string, any> = {
     event: eventName,
     distinct_id: event.distinct_id,
     properties: { ...baseEvent },
     timestamp: new Date(event.timestamp).toISOString()
   }
-  regularEventForPostHog.properties.$original_timestamp = event.timestamp
+  regularEventForInsights.properties.$original_timestamp = event.timestamp
 
-  if ('event' in regularEventForPostHog.properties) {
-    regularEventForPostHog.properties.$original_event_type = regularEventForPostHog.properties.event
-    delete regularEventForPostHog.properties.event
+  if ('event' in regularEventForInsights.properties) {
+    regularEventForInsights.properties.$original_event_type = regularEventForInsights.properties.event
+    delete regularEventForInsights.properties.event
   }
 
   if (
@@ -232,10 +232,10 @@ async function preparePostHogEvent (event: AnalyticEvent, req: Request): Promise
     event.properties.$anonymous_id !== event.distinct_id &&
     event.distinct_id !== event.properties.$anonymous_id
   ) {
-    regularEventForPostHog.properties.$anon_distinct_id = event.properties.$anonymous_id
+    regularEventForInsights.properties.$anon_distinct_id = event.properties.$anonymous_id
   }
 
-  return regularEventForPostHog
+  return regularEventForInsights
 }
 
 export function createServer (ctx: MeasureContext): Express {
@@ -261,9 +261,9 @@ export function createServer (ctx: MeasureContext): Express {
       res.status(200)
       res.json({})
 
-      if (config.PostHogHost !== undefined) {
-        void sendEventsToPosthog(events, req).catch((err) => {
-          console.error('Error sending events to PostHog:', err)
+      if (config.InsightsHost !== undefined) {
+        void sendEventsToInsights(events, req).catch((err) => {
+          console.error('Error sending events to Insights:', err)
         })
       }
 
@@ -292,22 +292,22 @@ export function createServer (ctx: MeasureContext): Express {
   return app
 }
 
-async function sendEventsToPosthog (events: AnalyticEvent[], req: Request): Promise<void> {
-  const posthogEvents: Record<string, any>[] = []
+async function sendEventsToInsights (events: AnalyticEvent[], req: Request): Promise<void> {
+  const insightsEvents: Record<string, any>[] = []
   for (const evt of events) {
-    posthogEvents.push(await preparePostHogEvent(evt, req))
+    insightsEvents.push(await prepareInsightsEvent(evt, req))
   }
 
   const payload = {
-    api_key: config.PostHogAPI,
-    batch: posthogEvents.reverse()
+    api_key: config.InsightsAPI,
+    batch: insightsEvents.reverse()
   }
 
-  const posthogPayloadSize = JSON.stringify(payload).length
-  console.log(`Sending to PostHog: ${posthogEvents.length} events, ${posthogPayloadSize} bytes`)
+  const insightsPayloadSize = JSON.stringify(payload).length
+  console.log(`Sending to Insights: ${insightsEvents.length} events, ${insightsPayloadSize} bytes`)
 
   try {
-    const response = await fetch(`${config.PostHogHost}/batch/`, {
+    const response = await fetch(`${config.InsightsHost}/batch/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -318,12 +318,12 @@ async function sendEventsToPosthog (events: AnalyticEvent[], req: Request): Prom
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error(`PostHog API error: ${response.status} ${response.statusText}`, errorText)
+      console.error(`Insights API error: ${response.status} ${response.statusText}`, errorText)
     } else {
-      console.log(`Successfully sent ${posthogEvents.length} events to PostHog`)
+      console.log(`Successfully sent ${insightsEvents.length} events to Insights`)
     }
   } catch (error) {
-    console.error('Failed to send events to PostHog:', error)
+    console.error('Failed to send events to Insights:', error)
   }
 }
 

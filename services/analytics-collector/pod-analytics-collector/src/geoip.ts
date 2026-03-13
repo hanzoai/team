@@ -62,7 +62,7 @@ export interface GeoLocationData {
   longitude: number | null
   timezone_geoip: string | null
 
-  // Additional PostHog data
+  // Additional Insights data
   continent_code: string | null
   continent_name: string | null
   subdivision_1_code: string | null

@@ -19,10 +19,10 @@ export interface Config {
   ServiceID: string
   AccountsUrl: string
 
-  // Optional PostHog configuration
-  // If posthog is not configured, will use OTLP for send events as measurements and errors as errors
-  PostHogHost?: string
-  PostHogAPI?: string
+  // Optional Insights configuration
+  // If Insights is not configured, will use OTLP for send events as measurements and errors as errors
+  InsightsHost?: string
+  InsightsAPI?: string
 
   MaxPayloadSize?: string
 }
@@ -35,8 +35,8 @@ const config: Config = (() => {
     Secret: process.env.SECRET,
     ServiceID: process.env.SERVICE_ID ?? 'analytics-collector-service',
     AccountsUrl: process.env.ACCOUNTS_URL,
-    PostHogHost: process.env.POSTHOG_HOST,
-    PostHogAPI: process.env.POSTHOG_API_KEY,
+    InsightsHost: process.env.INSIGHTS_HOST,
+    InsightsAPI: process.env.INSIGHTS_API_KEY,
     MaxPayloadSize: process.env.MAX_PAYLOAD_SIZE ?? '10mb'
   }
 
