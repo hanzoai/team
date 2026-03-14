@@ -251,7 +251,7 @@ export function collectEventMetadata (properties: Record<string, any> = {}): Rec
     referrer,
     $referring_domain: referringDomain,
     $search_engine: searchEngine,
-    // Session and activity fields (PostHog-compatible)
+    // Session and activity fields (Insights-compatible)
     ...sessionData,
     // URL tracking parameters (UTM, etc.)
     ...urlTracking,

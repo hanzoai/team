@@ -437,8 +437,8 @@ services:
       - ACCOUNTS_URL=http://hanzo.local:3000
       - STATS_URL=http://hanzo.local:4900
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
-      # - POSTHOG_HOST=${POSTHOG_HOST}
-      # - POSTHOG_API_KEY=${POSTHOG_API_KEY}
+      # - INSIGHTS_HOST=${INSIGHTS_HOST}
+      # - INSIGHTS_API_KEY=${INSIGHTS_API_KEY}
       # - MAX_PAYLOAD_SIZE=10mb
   export:
     image: hardcoreeng/export

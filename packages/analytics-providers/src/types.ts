@@ -17,8 +17,8 @@ import { type AnalyticEvent } from '@hanzo/analytics-collector'
 
 export interface AnalyticsConfig {
   ANALYTICS_COLLECTOR_URL?: string
-  POSTHOG_API?: string
-  POSTHOG_HOST?: string
+  INSIGHTS_API?: string
+  INSIGHTS_HOST?: string
   [key: string]: any
 }
 
