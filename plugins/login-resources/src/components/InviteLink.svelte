@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Hanzo AI Inc.
+// Copyright © 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the 'License');
 // you may not use this file except in compliance with the License. You may
@@ -15,15 +15,17 @@
 <script lang="ts">
   import { AccountRole, getCurrentAccount, hasAccountRole, Timestamp } from '@hanzo/core'
   import { copyTextToClipboard, createQuery } from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
-  import { Button, EditBox, Grid, Label, Loading, MiniToggle, ticker } from '@hanzo/ui'
+  import setting, { RoleCapability } from '@hanzo/setting'
+  import { getDefaultInviteRole, resolveInviteSettings } from '@hanzo/setting-resources'
+  import { getResource } from '@hanzo/platform'
+  import { AnySvelteComponent, Button, EditBox, Grid, Label, Loading, MiniToggle, ticker } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
 
   import login from '../plugin'
   import { getInviteLink } from '../utils'
   import InviteWorkspace from './icons/InviteWorkspace.svelte'
 
-  export let role: AccountRole = AccountRole.User
+  export let role: AccountRole | undefined = undefined
   export let ignoreSettings: boolean = false
 
   const dispatch = createEventDispatcher()
@@ -37,18 +39,18 @@
     limit: number | undefined
   }
 
+  const defaultInviteRole: AccountRole = getDefaultInviteRole()
+
   $: !ignoreSettings &&
     query.query(setting.class.InviteSettings, {}, (set) => {
-      if (set !== undefined && set.length > 0) {
-        expHours = set[0].expirationTime
-        emailMask = set[0].emailMask
-        limit = set[0].limit
-      } else {
-        expHours = 48
-        limit = -1
+      const state = resolveInviteSettings(set?.[0])
+      expHours = state.expirationTime
+      emailMask = state.emailMask
+      limit = state.limit
+      if (role == null) {
+        role = state.defaultInviteRole
       }
-
-      if (limit === -1) noLimit = true
+      if (state.noLimit) noLimit = true
 
       defaultValues = {
         expirationTime: expHours,
@@ -90,7 +92,22 @@
   let limit: number | undefined = undefined
   let useDefault: boolean | undefined = true
   let noLimit: boolean = false
-  const isOwnerOrMaintainer: boolean = hasAccountRole(getCurrentAccount(), AccountRole.Maintainer)
+  const currentAccount = getCurrentAccount()
+  const isOwnerOrMaintainer: boolean = hasAccountRole(currentAccount, AccountRole.Maintainer)
+  let userRoleSelectComponent: AnySvelteComponent | undefined
+  void getResource(setting.component.UserRoleSelect).then((component) => {
+    userRoleSelectComponent = component
+  })
+  let canGenerateInviteLinks = false
+
+  // Use shared HasRoleCapability function resource from setting package instead of setting-resources
+  void getResource(setting.function.HasRoleCapability).then((checkCapability) => {
+    if (checkCapability != null) {
+      void checkCapability(RoleCapability.GenerateInviteLink).then((value: boolean) => {
+        canGenerateInviteLinks = value
+      })
+    }
+  })
   let defaultValues: InviteParams = {
     expirationTime: 48,
     emailMask: '',
@@ -99,6 +116,11 @@
 
   let link: string | undefined
   let loading = false
+
+  function handleInviteRoleSelected (e: CustomEvent<AccountRole>): void {
+    role = e.detail
+    link = undefined
+  }
 </script>
 
 <div class="antiPopup popup" class:secure={isSecureContext}>
@@ -133,6 +155,13 @@
             disabled={useDefault || !isOwnerOrMaintainer}
           />
         {/if}
+        {#if userRoleSelectComponent}
+          <svelte:component
+            this={userRoleSelectComponent}
+            selected={role ?? defaultInviteRole}
+            on:selected={handleInviteRoleSelected}
+          />
+        {/if}
       {/if}
     </Grid>
   {/if}
@@ -162,8 +191,13 @@
         label={login.string.GetLink}
         size={'medium'}
         kind={'primary'}
+        disabled={!canGenerateInviteLinks}
         on:click={() => {
-          ;((limit !== undefined && limit > 0) || noLimit) && getLink(expHours, emailMask, limit, role)
+          if (!canGenerateInviteLinks) return
+          const effectiveLimit = limit ?? 0
+          if (effectiveLimit > 0 || noLimit) {
+            void getLink(expHours, emailMask, limit, role ?? defaultInviteRole)
+          }
         }}
       />
     </div>

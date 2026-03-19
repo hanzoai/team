@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hanzo AI Inc.
+// Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -44,7 +44,8 @@ import {
   TypeString,
   UX,
   type Builder,
-  TypeMarkup
+  TypeMarkup,
+  TypeRank
 } from '@hanzo/model'
 import { TEvent } from '@hanzo/model-calendar'
 import core, { TAttachedDoc, TClass, TDoc, TType } from '@hanzo/model-core'
@@ -131,6 +132,7 @@ export class TToDo extends TAttachedDoc implements ToDo {
   @Prop(Collection(tags.class.TagReference, tags.string.TagLabel), tags.string.Tags)
     labels?: number | undefined
 
+  @Prop(TypeRank(), core.string.Rank)
   @Index(IndexKind.Indexed)
   @Hidden()
     rank!: Rank

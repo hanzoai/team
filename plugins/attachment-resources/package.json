@@ -2,7 +2,7 @@
   "name": "@hanzo/attachment-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -60,7 +60,10 @@
     "filesize": "^8.0.3",
     "svelte": "^4.2.20"
   },
-  "repository": "https://github.com/hanzoai/team-manager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

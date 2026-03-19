@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,15 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Card, CardEvents, cardId } from '@hanzo/card'
-  import { chatId } from '@hanzo/chat'
-  import { Data, Doc, fillDefaults, MarkupBlobRef, SortingOrder, WithLookup } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { makeRank } from '@hanzo/rank'
-  import { ButtonIcon, getCurrentLocation, IconAdd, Label, navigate, resizeObserver, Section } from '@hanzo/ui'
-  import view, { encodeObjectURI, Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { Card } from '@hanzo/card'
+  import { Doc, WithLookup } from '@hanzo/core'
+  import { createQuery } from '@hanzo/presentation'
+  import { ButtonIcon, IconAdd, Label, resizeObserver, Section } from '@hanzo/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
   import {
     List,
     ListSelectionProvider,
@@ -31,6 +27,7 @@
   } from '@hanzo/view-resources'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
+  import { createChildCard } from '../utils'
 
   export let object: Card
   export let readonly: boolean = false
@@ -46,7 +43,7 @@
 
   const viewletId = card.viewlet.CardChildList
 
-  let list: List
+  let list: any
   const listProvider = new ListSelectionProvider(
     (offset: 1 | -1 | 0, of?: Doc, dir?: SelectDirection, noScroll?: boolean) => {
       if (dir === 'vertical') {
@@ -99,42 +96,7 @@
   let listWidth: number
 
   async function createCard (): Promise<void> {
-    const client = getClient()
-    const hierarchy = client.getHierarchy()
-    const lastOne = await client.findOne(card.class.Card, {}, { sort: { rank: SortingOrder.Descending } })
-    const title = await translate(card.string.Card, {})
-
-    const data: Data<Card> = {
-      parent: object._id,
-      title,
-      rank: makeRank(lastOne?.rank, undefined),
-      content: '' as MarkupBlobRef,
-      blobs: {},
-      parentInfo: [
-        ...(object.parentInfo ?? []),
-        {
-          _id: object._id,
-          _class: object._class,
-          title: object.title
-        }
-      ]
-    }
-
-    const filledData = fillDefaults(hierarchy, data, object._class)
-
-    const _id = await client.createDoc(object._class, object.space, filledData)
-
-    Analytics.handleEvent(CardEvents.CardCreated)
-
-    const loc = getCurrentLocation()
-    if (loc.path[2] === chatId) {
-      loc.path[3] = encodeObjectURI(_id, card.class.Card)
-    } else {
-      loc.path[2] = cardId
-      loc.path[3] = _id
-    }
-    loc.path.length = 4
-    navigate(loc)
+    await createChildCard(object)
   }
 
   const selection = listProvider.selection

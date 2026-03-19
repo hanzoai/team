@@ -1,4 +1,4 @@
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -28,8 +28,7 @@ import {
   linkPreviewType,
   type Message,
   type MessageID,
-  MessageType,
-  SortingOrder
+  MessageType
 } from '@hanzo/communication-types'
 import cardPlugin, { type Card, type MasterTag } from '@hanzo/card'
 import { addRefreshListener, deleteFile, getClient, getCommunicationClient } from '@hanzo/presentation'
@@ -45,7 +44,6 @@ import {
 import { getMetadata, getResource } from '@hanzo/platform'
 import { employeeByPersonIdStore } from '@hanzo/contact-resources'
 import { getEmployeeBySocialId } from '@hanzo/contact'
-import { makeRank } from '@hanzo/rank'
 import chat from '@hanzo/chat'
 import { markupToText } from '@hanzo/text'
 import { get } from 'svelte/store'
@@ -130,12 +128,11 @@ export async function attachCardToMessage (
 
   const author =
     get(employeeByPersonIdStore).get(message.creator) ?? (await getEmployeeBySocialId(client, message.creator))
-  const lastOne = await client.findOne(cardPlugin.class.Card, {}, { sort: { rank: SortingOrder.Descending } })
   const data = fillDefaults<Card>(
     hierarchy,
     {
       title,
-      rank: makeRank(lastOne?.rank, undefined),
+      rank: '',
       content: '' as MarkupBlobRef,
       blobs: {},
       parentInfo: [

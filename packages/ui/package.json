@@ -2,7 +2,7 @@
   "name": "@hanzo/ui",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -54,7 +54,10 @@
     "plyr": "3.7.8",
     "blurhash": "^2.0.5"
   },
-  "repository": "https://github.com/hanzoai/team-manager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

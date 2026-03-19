@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Hanzo AI Inc.",
+  "author": "Hardcore Engineering Inc.",
   "scripts": {
     "build": "compile",
     "build:watch": "compile",
@@ -68,7 +68,6 @@
     "@hanzo/account-client": "workspace:^0.7.21",
     "@hanzo/communication-types": "workspace:^0.7.12",
     "@hanzo/communication-sdk-types": "workspace:^0.7.12",
-    "@temporalio/client": "1.12.3",
     "dotenv": "^16.4.5"
   }
 }

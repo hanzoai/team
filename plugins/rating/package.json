@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Copyright © Hanzo AI Inc.",
+  "author": "Copyright © Hardcore Engineering Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -41,7 +41,10 @@
     "@hanzo/platform": "workspace:^0.7.19",
     "@hanzo/ui": "workspace:^0.7.0"
   },
-  "repository": "https://github.com/hanzoai/platform",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

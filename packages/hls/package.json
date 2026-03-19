@@ -2,7 +2,7 @@
   "name": "@hanzo/hls",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hanzo AI Inc.",
+  "author": "Hardcore Engineering Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -46,7 +46,10 @@
     "plyr": "3.7.8",
     "svelte": "^4.2.20"
   },
-  "repository": "https://github.com/hanzoai/platform",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

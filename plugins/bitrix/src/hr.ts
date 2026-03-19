@@ -1,17 +1,7 @@
 import { Organization } from '@hanzo/contact'
-import core, {
-  PersonId,
-  Client,
-  Data,
-  Doc,
-  Ref,
-  SortingOrder,
-  Status,
-  TxOperations,
-  generateId
-} from '@hanzo/core'
+import core, { PersonId, Client, Data, Doc, Ref, Status, TxOperations, generateId } from '@hanzo/core'
 import recruit, { Applicant, Vacancy } from '@hanzo/recruit'
-import task, { ProjectType, makeRank } from '@hanzo/task'
+import task, { ProjectType } from '@hanzo/task'
 
 export async function createVacancy (
   rawClient: Client,
@@ -71,13 +61,12 @@ export async function createApplication (
     throw new Error('sequence object not found')
   }
 
-  const lastOne = await client.findOne(recruit.class.Applicant, {}, { sort: { rank: SortingOrder.Descending } })
   const incResult = await client.update(sequence, { $inc: { sequence: 1 } }, true)
 
   await client.addCollection(recruit.class.Applicant, _space, doc._id, recruit.mixin.Candidate, 'applications', {
     ...data,
     status: selectedState._id,
     number: (incResult as any).object.sequence,
-    rank: makeRank(lastOne?.rank, undefined)
+    rank: ''
   })
 }

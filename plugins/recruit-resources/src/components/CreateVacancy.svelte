@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -40,7 +40,7 @@
   } from '@hanzo/presentation'
   import { RecruitEvents, Vacancy, Vacancy as VacancyClass } from '@hanzo/recruit'
   import tags from '@hanzo/tags'
-  import task, { ProjectType, makeRank } from '@hanzo/task'
+  import task, { ProjectType } from '@hanzo/task'
   import { selectedTypeStore, typeStore } from '@hanzo/task-resources'
   import tracker, { Issue, IssueStatus, IssueTemplate, IssueTemplateData, Project } from '@hanzo/tracker'
   import {
@@ -160,11 +160,6 @@
     template: IssueTemplateData,
     parent: Ref<Issue> = tracker.ids.NoParent
   ): Promise<Ref<Issue> | undefined> {
-    const lastOne = await client.findOne<Issue>(
-      tracker.class.Issue,
-      { space },
-      { sort: { rank: SortingOrder.Descending } }
-    )
     const incResult = await client.updateDoc(
       tracker.class.Project,
       core.space.Space,
@@ -175,7 +170,6 @@
       true
     )
     const project = await client.findOne(tracker.class.Project, { _id: space })
-    const rank = makeRank(lastOne?.rank, undefined)
     const taskType = await client.findOne(task.class.TaskType, { ofClass: tracker.class.Issue })
     if (taskType === undefined) {
       return
@@ -193,7 +187,7 @@
       number,
       status: project?.defaultIssueStatus as Ref<IssueStatus>,
       priority: template.priority,
-      rank,
+      rank: '',
       comments: 0,
       subIssues: 0,
       dueDate: null,

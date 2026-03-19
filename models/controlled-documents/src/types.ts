@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hanzo AI Inc.
+// Copyright © 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -75,7 +75,8 @@ import {
   UX,
   TypeCollaborativeDoc,
   TypeMarkup,
-  ReadOnly
+  ReadOnly,
+  TypeRank
 } from '@hanzo/model'
 import attachment from '@hanzo/model-attachment'
 import chunter, { TChatMessage } from '@hanzo/model-chunter'
@@ -181,6 +182,7 @@ export class TProjectMeta extends TDoc implements ProjectMeta {
   @Prop(Collection(documents.class.ProjectDocument), documents.string.Documents)
     documents!: CollectionSize<ProjectDocument>
 
+  @Prop(TypeRank(), core.string.Rank)
   @Index(IndexKind.Indexed)
   @Hidden()
     rank!: Rank

@@ -1,7 +1,7 @@
 import { Card } from '@hanzo/card'
+import { CollaboratorClient } from '@hanzo/collaborator-client'
 import { Doc, MeasureContext, PersonId, Ref, Timestamp, Tx, TxOperations, WorkspaceUuid } from '@hanzo/core'
 import { Execution, ExecutionError, MethodParams, Trigger, UserResult } from '@hanzo/process'
-import { CollaboratorClient } from '@hanzo/collaborator-client'
 
 export type ExecuteFunc = (
   params: MethodParams<Doc>,
@@ -31,6 +31,7 @@ export type TransformFunc = (
 ) => Promise<any>
 
 export interface ProcessMessage {
+  _id?: string
   account: PersonId
   createdOn: Timestamp
   event: Ref<Trigger>[]
@@ -51,3 +52,11 @@ export interface ProcessControl {
 }
 
 export type RollbackFunc = (context: Record<string, any>, control: ProcessControl) => Tx
+
+export interface TimeMachineMessage {
+  type: 'schedule' | 'cancel'
+  id: string
+  targetDate?: Timestamp
+  topic?: string
+  data?: any
+}

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,12 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
+  import { Label, Loading } from '@hanzo/ui'
 
   import communication from '../../plugin'
 </script>
 
-<div class="loader">
+<div class="loader" role="status" aria-live="polite" aria-busy="true">
+  <Loading size="small" />
   <Label label={communication.string.Loading} />
 </div>
 
@@ -28,6 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     color: var(--global-secondary-TextColor);
     font-weight: 500;
     height: 5rem;

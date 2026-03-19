@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -43,7 +43,10 @@
     "@hanzo/view": "workspace:^0.7.0",
     "@hanzo/notification": "workspace:^0.7.0"
   },
-  "repository": "https://github.com/hanzoai/team-manager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

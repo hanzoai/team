@@ -62,7 +62,10 @@
     "image-size": "^1.1.1",
     "uuid": "^8.3.2"
   },
-  "repository": "https://github.com/hanzoai/team-manager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

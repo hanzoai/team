@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hanzo AI Inc.
+// Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -26,7 +26,7 @@ import documentsPlugin, {
   type ChangeControl,
   type DocumentRequest
 } from '@hanzo/controlled-documents'
-import exportPlugin, { type RelationDefinition } from '@hanzo/export'
+import exportPlugin from '@hanzo/export'
 import { type Builder } from '@hanzo/model'
 import chunter from '@hanzo/model-chunter'
 import core from '@hanzo/model-core'
@@ -79,6 +79,31 @@ import {
 export { documentsId } from '@hanzo/controlled-documents/src/index'
 export * from './types'
 
+function defineRelationMetadata (builder: Builder): void {
+  const rel = (
+    ref: Ref<Class<Doc>>,
+    field: string,
+    targetClass: Ref<Class<Doc>>,
+    direction: 'forward' | 'inverse' = 'forward'
+  ): void => {
+    builder.createDoc(core.class.RelationMetadata, core.space.Model, {
+      sourceClass: ref,
+      field,
+      targetClass,
+      direction
+    })
+  }
+
+  rel(documents.class.Document, 'category', documents.class.DocumentCategory, 'forward')
+  rel(documents.class.Document, 'template', documents.class.Document, 'forward')
+  rel(documents.class.Document, 'meta', documents.class.ProjectMeta, 'inverse')
+  rel(documents.class.Document, 'document', documents.class.ProjectDocument, 'inverse')
+  rel(documents.class.HierarchyDocument, 'attachedTo', documents.class.DocumentMeta, 'forward')
+  rel(documents.class.ControlledDocument, 'changeControl', documents.class.ChangeControl, 'forward')
+  rel(documents.class.ProjectMeta, 'meta', documents.class.ProjectMeta, 'inverse')
+  rel(documents.class.ProjectMeta, 'document', documents.class.ProjectDocument, 'inverse')
+}
+
 export function createModel (builder: Builder): void {
   builder.createModel(
     TDocumentSpace,
@@ -108,6 +133,8 @@ export function createModel (builder: Builder): void {
 
     TDocumentComment
   )
+
+  defineRelationMetadata(builder)
 
   builder.mixin(documents.class.ControlledDocument, core.class.Class, view.mixin.ObjectTitle, {
     titleProvider: documents.function.ControlledDocumentTitleProvider
@@ -847,19 +874,6 @@ export function createModel (builder: Builder): void {
     documents.action.TransferDocument
   )
 
-  const relations: RelationDefinition[] = [
-    // Forward relations - migrate referenced documents first
-    { field: 'attachedTo', class: documents.class.DocumentMeta },
-    { field: 'changeControl', class: documents.class.ChangeControl },
-    { field: 'category', class: documents.class.DocumentCategory },
-    { field: 'template', class: documents.class.Document },
-    // Inverse relations - find documents that reference this one
-    // ProjectMeta references DocumentMeta via 'meta' field - must be migrated before ProjectDocument
-    { field: 'meta', class: documents.class.ProjectMeta, direction: 'inverse' },
-    // ProjectDocument references ControlledDocument via 'document' field
-    { field: 'document', class: documents.class.ProjectDocument, direction: 'inverse' }
-  ]
-
   createAction(
     builder,
     {
@@ -868,9 +882,6 @@ export function createModel (builder: Builder): void {
         component: exportPlugin.component.ExportToWorkspaceModal,
         fillProps: {
           _objects: 'value'
-        },
-        props: {
-          relations
         }
       },
       label: exportPlugin.string.ExportToWorkspace,
@@ -893,10 +904,36 @@ export function createModel (builder: Builder): void {
       actionProps: {
         component: exportPlugin.component.ExportToWorkspaceModal,
         fillProps: {
+          _objects: 'value'
+        },
+        props: {
+          projectDocExport: true,
+          docClass: documents.class.ControlledDocument
+        }
+      },
+      label: exportPlugin.string.ExportToWorkspace,
+      icon: exportPlugin.icon.Export,
+      input: 'any',
+      category: view.category.General,
+      target: documents.class.ProjectDocument,
+      context: {
+        mode: ['context', 'browser'],
+        group: 'copy'
+      }
+    },
+    documents.action.ExportProjectDocuments
+  )
+
+  createAction(
+    builder,
+    {
+      action: view.actionImpl.ShowPopup,
+      actionProps: {
+        component: exportPlugin.component.ExportToWorkspaceModal,
+        fillProps: {
           _object: 'value'
         },
         props: {
-          relations,
           spaceExport: true,
           docClass: documents.class.ControlledDocument
         }
@@ -1187,6 +1224,28 @@ export function defineNotifications (builder: Builder): void {
     {
       hidden: false,
       generated: false,
+      allowedForAuthor: true,
+      label: documents.string.Review,
+      group: documents.notification.DocumentsNotificationGroup,
+      field: 'controlledState',
+      txClasses: [core.class.TxUpdateDoc],
+      objectClass: documents.class.ControlledDocument,
+      defaultEnabled: true,
+      templates: {
+        textTemplate: '{sender} marked {doc} as reviewed',
+        htmlTemplate: '<p>{sender} marked {doc} as reviewed</p>',
+        subjectTemplate: '{doc} reviewed'
+      }
+    },
+    documents.notification.ReviewNotification
+  )
+
+  builder.createDoc(
+    notification.class.NotificationType,
+    core.space.Model,
+    {
+      hidden: false,
+      generated: false,
       allowedForAuthor: false,
       label: documents.string.CoAuthors,
       group: documents.notification.DocumentsNotificationGroup,
@@ -1206,7 +1265,11 @@ export function defineNotifications (builder: Builder): void {
   builder.createDoc(notification.class.NotificationProviderDefaults, core.space.Model, {
     provider: notification.providers.InboxNotificationProvider,
     ignoredTypes: [],
-    enabledTypes: [documents.notification.StateNotification, documents.notification.ContentNotification]
+    enabledTypes: [
+      documents.notification.StateNotification,
+      documents.notification.ContentNotification,
+      documents.notification.ReviewNotification
+    ]
   })
 
   generateClassNotificationTypes(

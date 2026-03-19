@@ -66,7 +66,7 @@ export function serveAccount (measureCtx: MeasureContext, brandings: BrandingMap
 
         ➡️ Recommended Action:
         Migrate to CockroachDB before upgrading to v7. See migration instructions at:
-        https://github.com/hcengineering/hanzo-selfhost
+        https://github.com/hanzoai/hanzo-selfhost
 
         To proceed with MongoDB (despite these limitations):
         Set environment variable PROCEED_V7_MONGO=true.
@@ -306,11 +306,8 @@ export function serveAccount (measureCtx: MeasureContext, brandings: BrandingMap
   router.put('/cookie', async (ctx) => {
     const token = extractToken(ctx.request.headers)
     if (token === undefined) {
-      ctx.body = JSON.stringify({
-        error: new Status(Severity.ERROR, platform.status.Unauthorized, {})
-      })
-      ctx.res.writeHead(401)
-      ctx.res.end()
+      ctx.res.writeHead(401, KEEP_ALIVE_HEADERS)
+      ctx.res.end(JSON.stringify({ error: new Status(Severity.ERROR, platform.status.Unauthorized, {}) }))
       return
     }
 

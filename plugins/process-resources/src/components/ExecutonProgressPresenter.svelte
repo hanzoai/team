@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,7 +15,9 @@
 <script lang="ts">
   import { Ref } from '@hanzo/core'
   import { getClient } from '@hanzo/presentation'
+  import { Label } from '@hanzo/ui'
   import { State } from '@hanzo/process'
+  import plugin from '../plugin'
 
   export let value: Ref<State>
 
@@ -26,4 +28,6 @@
 
 {#if currentState}
   {currentState.title}
+{:else if value === null}
+  <span class="opacity-50"><Label label={plugin.string.Started} /></span>
 {/if}

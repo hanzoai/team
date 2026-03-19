@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,9 +15,9 @@
 <script lang="ts">
   import contact, { combineName, getFirstName, getLastName } from '@hanzo/contact'
   import { ChannelsEditor, EditableAvatar, myEmployeeStore } from '@hanzo/contact-resources'
-  import { getCurrentAccount, SocialIdType } from '@hanzo/core'
+  import { AccountRole, getCurrentAccount, SocialIdType } from '@hanzo/core'
   import login, { loginId } from '@hanzo/login'
-  import { getResource } from '@hanzo/platform'
+  import platform, { getResource, PlatformError } from '@hanzo/platform'
   import { AttributeEditor, createQuery, getClient, hasResource, MessageBox } from '@hanzo/presentation'
   import {
     Breadcrumb,
@@ -64,7 +64,7 @@
   }
 
   let avatarEditor: EditableAvatar
-  async function onAvatarDone (e: any): Promise<void> {
+  async function onAvatarDone (): Promise<void> {
     if ($myEmployeeStore === undefined) return
 
     if ($myEmployeeStore.avatar != null) {
@@ -82,14 +82,30 @@
       message: setting.string.LeaveDescr,
       action: async () => {
         const leaveWorkspace = await getResource(login.function.LeaveWorkspace)
-        const loginInfo = await leaveWorkspace(account.uuid)
+        try {
+          const loginInfo = await leaveWorkspace(account.uuid)
 
-        if (loginInfo?.token != null) {
-          await logIn(loginInfo)
-          navigate({ path: [loginId, 'selectWorkspace'] })
-        } else {
-          await logOut()
-          navigate({ path: [loginId] })
+          if (loginInfo?.token != null) {
+            await logIn(loginInfo)
+            navigate({ path: [loginId, 'selectWorkspace'] })
+          } else {
+            await logOut()
+            navigate({ path: [loginId] })
+          }
+        } catch (err: any) {
+          if (
+            err instanceof PlatformError &&
+            err.status?.code === platform.status.Forbidden &&
+            account.role === AccountRole.Owner
+          ) {
+            showPopup(MessageBox, {
+              label: setting.string.LastOwnerLeaveTitle,
+              message: setting.string.LastOwnerLeaveMessage,
+              canSubmit: false
+            })
+          } else {
+            throw err
+          }
         }
       }
     })
@@ -106,7 +122,7 @@
 
 <FocusHandler {manager} />
 
-<div class="hanzoaiComponent">
+<div class="hulyComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.AccountSettings} label={setting.string.AccountSettings} size={'large'} isCurrent />
   </Header>

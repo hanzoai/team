@@ -1,5 +1,5 @@
 <!--
- // Copyright © 2022 Hanzo AI Inc.
+ // Copyright © 2022 Hardcore Engineering Inc.
  //
  // Licensed under the Eclipse Public License, Version 2.0 (the "License");
  // you may not use this file except in compliance with the License. You may
@@ -14,10 +14,9 @@
  -->
 <script lang="ts">
   import attachment, { Attachment } from '@hanzo/attachment'
-  import core, { AttachedData, Doc, makeCollabId, Ref, SortingOrder } from '@hanzo/core'
+  import core, { AttachedData, Doc, makeCollabId, Ref } from '@hanzo/core'
   import { DraftController, draftsStore, getClient, deleteFile, createMarkup } from '@hanzo/presentation'
   import tags from '@hanzo/tags'
-  import { makeRank } from '@hanzo/task'
   import { isEmptyMarkup } from '@hanzo/text'
   import { Component, Issue, IssueDraft, IssueParentInfo, Milestone, Project } from '@hanzo/tracker'
   import { Button, ExpandCollapse, Scroller } from '@hanzo/ui'
@@ -26,6 +25,10 @@
   import Collapsed from './icons/Collapsed.svelte'
   import Expanded from './icons/Expanded.svelte'
   import DraftIssueChildList from './templates/DraftIssueChildList.svelte'
+  import { taskTypeStore } from '@hanzo/task-resources'
+  import { getTaskTypeStates } from '@hanzo/task'
+  import { statusStore } from '@hanzo/view-resources'
+
   export let projectId: Ref<Project>
   export let project: Project | undefined
   export let milestone: Ref<Milestone> | null = null
@@ -43,6 +46,7 @@
     }
   }
   $: onProjectChange(project)
+
   function onProjectChange (project: Project | undefined) {
     if (lastProject?._id === project?._id) return
     lastProject = project
@@ -57,8 +61,8 @@
   export async function save (parents: IssueParentInfo[], _id: Ref<Doc>) {
     if (project === undefined) return
     saved = true
+    const statuses = subIssues.length > 0 ? getTaskTypeStates(subIssues[0].kind, $taskTypeStore, $statusStore.byId) : []
     for (const subIssue of subIssues) {
-      const lastOne = await client.findOne<Issue>(tracker.class.Issue, {}, { sort: { rank: SortingOrder.Descending } })
       const incResult = await client.updateDoc(
         tracker.class.Project,
         core.space.Space,
@@ -77,9 +81,9 @@
         component: subIssue.component,
         milestone: subIssue.milestone,
         number,
-        status: subIssue.status ?? project.defaultIssueStatus,
+        status: subIssue.status ?? project.defaultIssueStatus ?? statuses[0]?._id,
         priority: subIssue.priority,
-        rank: makeRank(lastOne?.rank, undefined),
+        rank: '',
         comments: 0,
         subIssues: 0,
         dueDate: null,

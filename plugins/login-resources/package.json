@@ -2,7 +2,7 @@
   "name": "@hanzo/login-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -47,6 +47,7 @@
     "@hanzo/core": "workspace:^0.7.24",
     "@hanzo/presentation": "workspace:^0.7.0",
     "@hanzo/setting": "workspace:^0.7.0",
+    "@hanzo/setting-resources": "workspace:^0.7.0",
     "@hanzo/theme": "workspace:^0.7.0",
     "@hanzo/analytics": "workspace:^0.7.17",
     "@hanzo/account-client": "workspace:^0.7.21",

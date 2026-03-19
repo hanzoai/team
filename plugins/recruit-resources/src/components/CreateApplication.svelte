@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -25,8 +25,8 @@
     Doc,
     FindOptions,
     Markup,
+    PersonId,
     Ref,
-    SortingOrder,
     Space,
     Status as TaskStatus,
     fillDefaults,
@@ -43,7 +43,7 @@
     getClient
   } from '@hanzo/presentation'
   import { recruitId, type Applicant, type Candidate, type Vacancy, RecruitEvents } from '@hanzo/recruit'
-  import task, { TaskType, getStates, makeRank } from '@hanzo/task'
+  import { TaskType, getStates } from '@hanzo/task'
   import { TaskKindSelector, selectedTypeStore, typeStore } from '@hanzo/task-resources'
   import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
   import ui, {
@@ -98,7 +98,7 @@
     _id: generateId(),
     collection: 'applications',
     modifiedOn: Date.now(),
-    modifiedBy: '',
+    modifiedBy: '' as PersonId,
     startDate: null,
     dueDate: null,
     kind: '' as Ref<TaskType>,
@@ -126,7 +126,6 @@
       throw new Error('kind is not specified')
     }
 
-    const lastOne = await client.findOne(recruit.class.Applicant, {}, { sort: { rank: SortingOrder.Descending } })
     const incResult = await client.update(sequence, { $inc: { sequence: 1 } }, true)
 
     const candidateInstance = await client.findOne(contact.class.Person, { _id: _candidate })
@@ -159,7 +158,7 @@
         status: selectedState._id,
         number,
         identifier: `APP-${number}`,
-        rank: makeRank(lastOne?.rank, undefined),
+        rank: '',
         kind
       },
       doc._id

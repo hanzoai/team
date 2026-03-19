@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Hanzo AI Inc.",
+  "author": "Hardcore Engineering Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -48,7 +48,10 @@
     "@hanzo/kvs-client": "workspace:^0.7.0",
     "uuid": "^8.3.2"
   },
-  "repository": "https://github.com/hanzoai/platform",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   },

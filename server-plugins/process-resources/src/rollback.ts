@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,8 @@
 // limitations under the License.
 //
 
-import { Tx } from '@hanzo/core'
+import { Card } from '@hanzo/card'
+import { DocumentUpdate, Tx } from '@hanzo/core'
 import { ProcessToDo } from '@hanzo/process'
 import { ProcessControl } from '@hanzo/server-process'
 
@@ -36,4 +37,71 @@ export function ToDoCancellRollback (context: Record<string, any>, control: Proc
     todo.modifiedOn,
     todo.modifiedBy
   )
+}
+
+export function FieldChangedRollback (context: Record<string, any>, control: ProcessControl): Tx | undefined {
+  const card = context.card as Card
+  const ops = context.operations as DocumentUpdate<Card>
+  if (card === undefined || ops === undefined) return
+  const antiOps: DocumentUpdate<any> = invertUpdate(ops)
+  return control.client.txFactory.createTxUpdateDoc(card._class, card.space, card._id, antiOps)
+}
+
+function invertUpdate (ops: Record<string, any>): Record<string, any> {
+  const antiOps: Record<string, any> = {}
+  for (const [key, value] of Object.entries(ops)) {
+    if (key.startsWith('$')) {
+      const inverted = invertOperator(key, value)
+      if (inverted !== undefined) {
+        for (const [antiKey, antiValue] of Object.entries(inverted)) {
+          antiOps[antiKey] = { ...(antiOps[antiKey] ?? {}), ...antiValue }
+        }
+      }
+    } else {
+      antiOps.$unset = { ...(antiOps.$unset ?? {}), [key]: true }
+    }
+  }
+  return antiOps
+}
+
+function invertOperator (name: string, op: any): Record<string, any> | undefined {
+  switch (name) {
+    case '$inc': {
+      const result: Record<string, number> = {}
+      for (const [key, val] of Object.entries(op)) {
+        result[key] = -(val as number)
+      }
+      return { $inc: result }
+    }
+    case '$push': {
+      const result: Record<string, any> = {}
+      for (const [key, val] of Object.entries(op)) {
+        if (typeof val === 'object' && val !== null && '$each' in val) {
+          result[key] = { $in: (val as any).$each }
+        } else {
+          result[key] = val
+        }
+      }
+      return { $pull: result }
+    }
+    case '$pull': {
+      const result: Record<string, any> = {}
+      for (const [key, val] of Object.entries(op)) {
+        if (typeof val === 'object' && val !== null && '$in' in val) {
+          result[key] = { $each: (val as any).$in }
+        } else {
+          result[key] = { $each: [val] }
+        }
+      }
+      return { $push: result }
+    }
+    case '$rename': {
+      const result: Record<string, string> = {}
+      for (const [key, val] of Object.entries(op)) {
+        result[val as string] = key
+      }
+      return { $rename: result }
+    }
+  }
+  return undefined
 }

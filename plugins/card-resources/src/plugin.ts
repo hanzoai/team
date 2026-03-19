@@ -1,5 +1,5 @@
 //
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import card, { cardId } from '@hanzo/card'
+import card, { type Card, cardId } from '@hanzo/card'
 import { type Permission, type Doc, type Ref } from '@hanzo/core'
 import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
 import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/presentation'
@@ -55,11 +55,13 @@ export default mergeIds(cardId, card, {
     CardWidgetTab: '' as AnyComponent,
     CreateCard: '' as AnyComponent,
     CardHeaderButton: '' as AnyComponent,
-    CreateRolePopup: '' as AnyComponent
+    CreateRolePopup: '' as AnyComponent,
+    MyCards: '' as AnyComponent
   },
   function: {
     CardFactory: '' as Resource<(props?: Record<string, any>) => Promise<Ref<Doc> | undefined>>,
-    FormatCardMarkdownValue: '' as Resource<ValueFormatter>
+    FormatCardMarkdownValue: '' as Resource<ValueFormatter>,
+    CheckChildrenSectionVisibility: '' as Resource<(doc: Card) => Promise<boolean>>
   },
   permission: {
     CreateCard: '' as Ref<Permission>,
@@ -161,6 +163,8 @@ export default mergeIds(cardId, card, {
     ForbidAddTagPermission: '' as IntlString,
     ForbidRemoveTag: '' as IntlString,
     CardUpdated: '' as IntlString,
-    CardCreated: '' as IntlString
+    CardCreated: '' as IntlString,
+    MyCards: '' as IntlString,
+    GotoMyCards: '' as IntlString
   }
 })

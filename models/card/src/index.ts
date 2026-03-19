@@ -63,6 +63,7 @@ import {
   ReadOnly,
   TypeCollaborativeDoc,
   TypeNumber,
+  TypeRank,
   TypeRef,
   TypeString,
   UX
@@ -127,7 +128,9 @@ export class TCard extends TDoc implements Card {
   @Prop(Collection(attachment.class.Attachment), attachment.string.Attachments, { shortLabel: attachment.string.Files })
     attachments?: number
 
-  rank!: Rank
+  @Prop(TypeRank(), core.string.Rank)
+  @Hidden()
+    rank!: Rank
 
   @Prop(Collection(time.class.ToDo), getEmbeddedLabel('Action Items'))
     todos?: CollectionSize<ToDo>
@@ -565,6 +568,21 @@ export function createModel (builder: Builder): void {
       locationDataResolver: card.resolver.LocationData,
       navigatorModel: {
         specials: [
+          {
+            id: 'my-cards',
+            label: card.string.MyCards,
+            icon: card.icon.Card,
+            component: card.component.MyCards,
+            componentProps: {
+              icon: card.icon.Card,
+              config: [
+                ['assigned', view.string.Assigned, {}],
+                ['created', view.string.Created, {}],
+                ['subscribed', view.string.Subscribed, {}]
+              ]
+            },
+            position: 'top'
+          },
           {
             id: 'all',
             label: card.string.AllCards,
@@ -1035,7 +1053,8 @@ function defineTabs (builder: Builder): void {
       label: card.string.Children,
       component: card.sectionComponent.ChildrenSection,
       order: 400,
-      navigation: []
+      navigation: [],
+      checkVisibility: card.function.CheckChildrenSectionVisibility
     },
     card.section.Children
   )

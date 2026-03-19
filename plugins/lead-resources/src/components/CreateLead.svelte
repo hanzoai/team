@@ -1,6 +1,6 @@
 <!--
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2021 Hanzo AI Inc.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -24,13 +24,12 @@
     getCurrentAccount,
     hasAccountRole,
     Ref,
-    SortingOrder,
     Status as TaskStatus
   } from '@hanzo/core'
   import { Customer, Funnel, Lead, LeadEvents } from '@hanzo/lead'
   import { OK, Status } from '@hanzo/platform'
   import { Card, createQuery, getClient, InlineAttributeBar, SpaceSelector } from '@hanzo/presentation'
-  import task, { getStates, makeRank, TaskType } from '@hanzo/task'
+  import task, { getStates, TaskType } from '@hanzo/task'
   import { TaskKindSelector, typeStore } from '@hanzo/task-resources'
   import { Button, createFocusManager, EditBox, FocusHandler, Label, Status as StatusControl } from '@hanzo/ui'
   import { statusStore } from '@hanzo/view-resources'
@@ -93,7 +92,6 @@
       throw new Error('kind is not specified')
     }
 
-    const lastOne = await client.findOne(lead.class.Lead, {}, { sort: { rank: SortingOrder.Descending } })
     const incResult = await client.update(sequence, { $inc: { sequence: 1 } }, true)
     const number = (incResult as any).object.sequence
 
@@ -103,7 +101,7 @@
       identifier: `LEAD-${number}`,
       title,
       kind,
-      rank: makeRank(lastOne?.rank, undefined),
+      rank: '',
       assignee: null,
       startDate: null,
       dueDate: null,

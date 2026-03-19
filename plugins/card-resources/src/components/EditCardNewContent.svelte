@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -17,7 +17,7 @@
   import { Card } from '@hanzo/card'
   import communication from '@hanzo/communication'
   import { NotificationContext } from '@hanzo/communication-types'
-  import { Ref } from '@hanzo/core'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Ref } from '@hanzo/core'
   import { resizeObserver } from '@hanzo/ui'
 
   import { MessageInput } from '@hanzo/communication-resources'
@@ -57,7 +57,7 @@
     <EditCardTableOfContents bind:this={content} bind:scrollDiv {doc} {readonly} {context} {isContextLoaded} />
   {/key}
 {/if}
-{#if !readonly && getMetadata(communication.metadata.Enabled) === true}
+{#if !readonly && getMetadata(communication.metadata.Enabled) === true && hasAccountRole(getCurrentAccount(), AccountRole.User)}
   <div class="message-input" use:resizeObserver={onInputResize}>
     <MessageInput
       card={doc}

@@ -1,6 +1,6 @@
 <!--
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
-// Copyright © 2021 Hanzo AI Inc.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
+// Copyright © 2021 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -18,7 +18,7 @@
   import core, { AttachedData, Ref, SortingOrder, Space, generateId } from '@hanzo/core'
   import { OK, Status } from '@hanzo/platform'
   import { Card, SpaceSelector, createQuery, getClient } from '@hanzo/presentation'
-  import task, { TaskType, makeRank } from '@hanzo/task'
+  import { TaskType } from '@hanzo/task'
   import { EditBox, Grid, Status as StatusControl } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import board from '../plugin'
@@ -62,7 +62,6 @@
       throw new Error('sequence object not found')
     }
 
-    const lastOne = await client.findOne(board.class.Card, {}, { sort: { rank: SortingOrder.Descending } })
     const incResult = await client.update(sequence, { $inc: { sequence: 1 } }, true)
 
     const number = (incResult as any).object.sequence
@@ -73,7 +72,7 @@
       title,
       kind,
       identifier: `CARD-${number}`,
-      rank: makeRank(lastOne?.rank, undefined),
+      rank: '',
       assignee: null,
       description: '',
       members: [],

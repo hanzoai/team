@@ -1,5 +1,5 @@
 //
-// Copyright © 2020, 2021 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020, 2021 Anticrm Platform Contributors.
 // Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
+import activity, { type ActivityMessageControl } from '@hanzo/activity'
 import { type Role, type Card } from '@hanzo/card'
 import {
   AvatarType,
@@ -325,7 +325,8 @@ export function createModel (builder: Builder): void {
   })
 
   builder.mixin(contact.class.Person, core.class.Class, core.mixin.TxAccessLevel, {
-    createAccessLevel: AccountRole.Guest
+    createAccessLevel: AccountRole.Guest,
+    isIdentity: true
   })
 
   builder.mixin(contact.class.SocialIdentity, core.class.Class, core.mixin.TxAccessLevel, {
@@ -337,6 +338,13 @@ export function createModel (builder: Builder): void {
 
   builder.mixin(contact.class.Person, core.class.Class, activity.mixin.ActivityDoc, {
     preposition: contact.string.For
+  })
+
+  // Prevent leaking private social identifiers (emails, external handles) via activity updates.
+  builder.createDoc<ActivityMessageControl<Person>>(activity.class.ActivityMessageControl, core.space.Model, {
+    objectClass: contact.class.Person,
+    skip: [],
+    skipFields: ['socialIds']
   })
 
   builder.mixin(contact.mixin.Employee, core.class.Class, activity.mixin.ActivityDoc, {
@@ -879,10 +887,10 @@ export function createModel (builder: Builder): void {
     core.space.Model,
     {
       label: getEmbeddedLabel('Hanzo'),
-      icon: contact.icon.Hanzo,
-      type: SocialIdType.HANZO
+      icon: contact.icon.Huly,
+      type: SocialIdType.HULY
     },
-    contact.socialIdentityProvider.Hanzo
+    contact.socialIdentityProvider.Huly
   )
 
   builder.createDoc(

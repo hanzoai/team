@@ -2,7 +2,7 @@
   "name": "@hanzo/bitrix-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile ui",
@@ -61,7 +61,10 @@
     "@hanzo/recruit": "workspace:^0.7.0",
     "@hanzo/task": "workspace:^0.7.0"
   },
-  "repository": "https://github.com/hanzoai/team-manager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

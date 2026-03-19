@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hanzo AI Inc.
+// Copyright © 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -22,7 +22,17 @@ import { type Attachment } from '@hanzo/attachment'
 import contact from '@hanzo/contact'
 import chunter from '@hanzo/chunter'
 import { getRoleAttributeProps } from '@hanzo/setting'
-import type { Type, Ref, CollectionSize, Markup, RolesAssignment, Permission, Role } from '@hanzo/core'
+import type {
+  Type,
+  Ref,
+  CollectionSize,
+  Markup,
+  RolesAssignment,
+  Permission,
+  Role,
+  Class,
+  Doc
+} from '@hanzo/core'
 import { IndexKind, AccountUuid } from '@hanzo/core'
 import {
   type Builder,
@@ -418,6 +428,25 @@ function defineProductVersionState (builder: Builder): void {
   })
 }
 
+function defineRelationMetadata (builder: Builder): void {
+  const rel = (
+    sourceClass: Ref<Class<Doc>>,
+    field: string,
+    targetClass: Ref<Class<Doc>>,
+    direction: 'forward' | 'inverse' = 'forward'
+  ): void => {
+    builder.createDoc(core.class.RelationMetadata, core.space.Model, {
+      sourceClass,
+      field,
+      targetClass,
+      direction
+    })
+  }
+
+  // Product → ProductVersion via `space` (inverse: versions that belong to this product)
+  rel(products.class.Product, 'space', products.class.ProductVersion, 'inverse')
+}
+
 function defineApplication (builder: Builder): void {
   builder.createDoc(
     workbench.class.Application,
@@ -467,6 +496,7 @@ export function createModel (builder: Builder): void {
   defineProduct(builder)
   defineProductVersion(builder)
   defineProductVersionState(builder)
+  defineRelationMetadata(builder)
   defineApplication(builder)
 }
 

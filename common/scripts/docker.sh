@@ -57,5 +57,6 @@ else
     --to @hanzo/pod-billing \
     --to @hanzo/pod-process \
     --to @hanzo/pod-rating \
-    --to @hanzo/pod-payment
+    --to @hanzo/pod-payment \
+    --to @hanzo/pod-worker
 fi

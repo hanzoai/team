@@ -11,7 +11,7 @@
     "!src/**/__test__/**",
     "tsconfig.json"
   ],
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "_phase:build": "compile transpile src",
@@ -43,7 +43,10 @@
     "@hanzo/core": "workspace:^0.7.24",
     "lexorank": "~1.0.4"
   },
-  "repository": "https://github.com/hcengineering/hanzo.core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/huly.core.git"
+  },
   "publishConfig": {
     "access": "public"
   },

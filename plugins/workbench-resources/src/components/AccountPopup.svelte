@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2020 Hanzo <dev@hanzo.ai>.
+// Copyright © 2020 Anticrm Platform Contributors.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -24,7 +24,7 @@
     hasResource,
     isDisabled
   } from '@hanzo/presentation'
-  import setting, { settingId, SettingsCategory } from '@hanzo/setting'
+  import setting, { RoleCapability, settingId, SettingsCategory } from '@hanzo/setting'
   import {
     Action,
     closePopup,
@@ -42,9 +42,11 @@
   import HelpAndSupport from './HelpAndSupport.svelte'
   import { Analytics } from '@hanzo/analytics'
   import { allowGuestSignUpStore } from '@hanzo/view-resources'
-  import { getMetadata } from '@hanzo/platform'
+  import { getMetadata, getResource } from '@hanzo/platform'
+  import { onMount } from 'svelte'
 
   let items: SettingsCategory[] = []
+  let canGenerateInviteLink = false
 
   const account = getCurrentAccount()
   const settingsQuery = createQuery()
@@ -56,6 +58,16 @@
     },
     { sort: { order: 1 } }
   )
+
+  onMount(() => {
+    void getResource(setting.function.HasRoleCapability).then((checkCapability) => {
+      if (checkCapability != null) {
+        void checkCapability(RoleCapability.GenerateInviteLink).then((v: boolean) => {
+          canGenerateInviteLink = v
+        })
+      }
+    })
+  })
 
   $: person = $myEmployeeStore
 
@@ -131,7 +143,7 @@
       })
     }
     actions.push(...getMenu(items, ['main']))
-    if (hasAccountRole(account, AccountRole.User) && !isDisabled('invites')) {
+    if (hasAccountRole(account, AccountRole.User) && !isDisabled('invites') && canGenerateInviteLink) {
       actions.push({
         icon: setting.icon.InviteWorkspace,
         label: setting.string.InviteWorkspace,

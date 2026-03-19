@@ -15,14 +15,17 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { Icon, Label, tooltip } from '@hanzo/ui'
-  import contact, { SocialIdentity, SocialIdentityProvider } from '@hanzo/contact'
+  import contact, { type SocialIdentity, type SocialIdentityProvider } from '@hanzo/contact'
   import { getClient } from '@hanzo/presentation'
+  import { type SocialId } from '@hanzo/core'
+  import { isSocialIdOwnedByCurrentUser } from '../utils'
 
-  export let value: SocialIdentity
+  export let value: SocialIdentity | SocialId
   export let socialIdProvider: SocialIdentityProvider | undefined = undefined
   export let shouldShowAvatar = true
 
   const client = getClient()
+  let isOwner = false
 
   onMount(() => {
     if (socialIdProvider == null) {
@@ -31,6 +34,9 @@
   })
 
   $: icon = socialIdProvider?.icon ?? contact.icon.Profile
+  $: {
+    isOwner = isSocialIdOwnedByCurrentUser(value)
+  }
 </script>
 
 {#if socialIdProvider != null}
@@ -46,8 +52,12 @@
     </div>
 
     <div class="flex-col flex-gap-0-5">
-      <div>{value.displayValue ?? value.value}</div>
-      {#if shouldShowAvatar}
+      {#if isOwner}
+        <div>{value.displayValue ?? value.value}</div>
+        {#if shouldShowAvatar}
+          <div class="type"><Label label={socialIdProvider.label} /></div>
+        {/if}
+      {:else}
         <div class="type"><Label label={socialIdProvider.label} /></div>
       {/if}
     </div>

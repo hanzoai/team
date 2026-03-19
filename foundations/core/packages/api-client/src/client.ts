@@ -1,5 +1,5 @@
 //
-// Copyright © 2024 Hanzo AI Inc.
+// Copyright © 2024 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -88,7 +88,16 @@ async function createClient (
   config: ServerConfig,
   options: ConnectOptions
 ): Promise<PlatformClient> {
-  addLocation(clientId, () => import(/* webpackChunkName: "client" */ '@hanzo/client-resources'))
+  addLocation(clientId, () => {
+    // In Node/Jest environments, dynamic import callbacks can fail without
+    // --experimental-vm-modules. Use require there and keep dynamic import
+    // for browser/bundler environments.
+    if (typeof window === 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      return Promise.resolve(require('@hanzo/client-resources'))
+    }
+    return import(/* webpackChunkName: "client" */ '@hanzo/client-resources')
+  })
 
   const { socketFactory, connectionTimeout } = options
 

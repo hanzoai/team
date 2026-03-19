@@ -1,5 +1,5 @@
 //
-// Copyright © 2023 Hanzo AI Inc.
+// Copyright © 2023 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -20,7 +20,7 @@ import core from '@hanzo/model-core'
 import task from '@hanzo/model-task'
 import view, { showColorsViewOption } from '@hanzo/model-view'
 import tags from '@hanzo/tags'
-import { type BuildModelKey, type ViewOptionsModel } from '@hanzo/view'
+import { type ViewOptionModel, type BuildModelKey, type ViewOptionsModel } from '@hanzo/view'
 import tracker from './plugin'
 
 export const issuesOptions = (kanban: boolean): ViewOptionsModel => ({
@@ -543,14 +543,42 @@ export function defineViewlets (builder: Builder): void {
     tracker.viewlet.ComponentList
   )
 
+  const hideArchivedOption: ViewOptionModel = {
+    key: 'hideArchived',
+    type: 'toggle',
+    defaultValue: false,
+    actionTarget: 'options',
+    action: view.function.HideArchived,
+    label: view.string.HideArchived
+  }
+
+  const tableOptions: ViewOptionsModel = {
+    groupBy: [],
+    orderBy: [],
+    other: [hideArchivedOption]
+  }
+
+  const projectListOptions: ViewOptionsModel = {
+    groupBy: ['createdBy', 'modifiedBy'],
+    orderBy: [
+      ['name', SortingOrder.Ascending],
+      ['identifier', SortingOrder.Ascending],
+      ['modifiedOn', SortingOrder.Descending],
+      ['createdOn', SortingOrder.Descending]
+    ],
+    other: [hideArchivedOption]
+  }
+
   builder.createDoc(
     view.class.Viewlet,
     core.space.Model,
     {
       attachTo: tracker.class.Project,
       descriptor: view.viewlet.Table,
+      viewOptions: tableOptions,
       configOptions: {
-        hiddenKeys: ['identifier', 'name', 'description']
+        hiddenKeys: ['identifier', 'name', 'description'],
+        sortable: true
       },
       config: [
         {
@@ -576,6 +604,44 @@ export function defineViewlets (builder: Builder): void {
       }
     },
     tracker.viewlet.ProjectList
+  )
+
+  builder.createDoc(
+    view.class.Viewlet,
+    core.space.Model,
+    {
+      attachTo: tracker.class.Project,
+      descriptor: view.viewlet.List,
+      viewOptions: projectListOptions,
+      configOptions: {
+        strict: true,
+        hiddenKeys: ['identifier', 'name', 'description']
+      },
+      config: [
+        {
+          key: '',
+          presenter: tracker.component.ProjectPresenter,
+          props: {
+            openIssues: true,
+            shouldUseMargin: true
+          }
+        },
+        'members',
+        {
+          key: 'defaultAssignee',
+          props: { kind: 'list' }
+        },
+        {
+          key: 'modifiedOn',
+          presenter: tracker.component.ModificationDatePresenter,
+          displayProps: { fixed: 'right', dividerBefore: true }
+        }
+      ],
+      options: {
+        showArchived: true
+      }
+    },
+    tracker.viewlet.ProjectListGrouped
   )
 
   const milestoneOptions: ViewOptionsModel = {

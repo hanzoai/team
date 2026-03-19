@@ -1,6 +1,6 @@
 services:
   stream:
-    image: 'hardcoreeng/stream'
+    image: 'hanzoai/stream'
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     container_name: stream
@@ -18,7 +18,7 @@ services:
       - 1080:1080
     restart: unless-stopped
   media:
-    image: 'hardcoreeng/media'
+    image: 'hanzoai/media'
     extra_hosts:
       - 'hanzo.local:host-gateway'
     container_name: media
@@ -29,7 +29,7 @@ services:
       - QUEUE_CONFIG=${QUEUE_CONFIG}
     restart: unless-stopped
   preview:
-    image: 'hardcoreeng/preview'
+    image: 'hanzoai/preview'
     extra_hosts:
       - 'hanzo.local:host-gateway'
     container_name: preview
@@ -68,7 +68,7 @@ services:
       - --mode dev-container
       - --smp 1
       - --default-log-level=info
-      - --memory 256M
+      - --memory 512M
     container_name: redpanda
     volumes:
       - redpanda:/var/lib/redpanda/data
@@ -132,7 +132,7 @@ services:
     restart: unless-stopped
 
   account:
-    image: hardcoreeng/account
+    image: hanzoai/account
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -166,7 +166,7 @@ services:
       - MAILBOX_MAX_COUNT_PER_ACCOUNT=2
     restart: unless-stopped
   stats:
-    image: hardcoreeng/stats
+    image: hanzoai/stats
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     ports:
@@ -177,7 +177,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   payment:
-    image: hardcoreeng/payment
+    image: hanzoai/payment
     extra_hosts:
       - 'hanzo.local:host-gateway'
     ports:
@@ -194,7 +194,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   workspace_cockroach:
-    image: hardcoreeng/workspace
+    image: hanzoai/workspace
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -224,7 +224,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   collaborator:
-    image: hardcoreeng/collaborator
+    image: hanzoai/collaborator
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -242,7 +242,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   front:
-    image: hardcoreeng/front
+    image: hanzoai/front
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -285,7 +285,7 @@ services:
       - EXPORT_URL=http://hanzo.local:4009
     restart: unless-stopped
   transactor_cockroach:
-    image: hardcoreeng/transactor
+    image: hanzoai/transactor
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -327,7 +327,7 @@ services:
       - HYLYLAKE_URL=http://hanzo.local:8096
     restart: unless-stopped
   rekoni:
-    image: hardcoreeng/rekoni-service
+    image: hanzoai/rekoni-service
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -337,7 +337,7 @@ services:
       - STATS_URL=http://hanzo.local:4901
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
   fulltext_cockroach:
-    image: hardcoreeng/fulltext
+    image: hanzoai/fulltext
     extra_hosts:
       - 'hanzo.local:host-gateway'
     depends_on:
@@ -366,7 +366,7 @@ services:
       - HANZOLAKE_URL=http://hanzo.local:8096
       - COMMUNICATION_API_ENABLED=true
   print:
-    image: hardcoreeng/print
+    image: hanzoai/print
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -381,7 +381,7 @@ services:
       - ACCOUNTS_URL=http://hanzo.local:3000
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
   sign:
-    image: hardcoreeng/sign
+    image: hanzoai/sign
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -403,7 +403,7 @@ services:
       - STATS_URL=http://hanzo.local:4900
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
   # aiBot:
-  #   image: hardcoreeng/ai-bot
+  #   image: hanzoai/ai-bot
   #   ports:
   #     - 4010:4010
   #   extra_hosts:
@@ -424,7 +424,7 @@ services:
   # #      - LOVE_ENDPOINT=http://hanzo.local:8096
   # #      - OPENAI_API_KEY=token
   analytics:
-    image: hardcoreeng/analytics-collector
+    image: hanzoai/analytics-collector
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     restart: unless-stopped
@@ -441,7 +441,7 @@ services:
       # - INSIGHTS_API_KEY=${INSIGHTS_API_KEY}
       # - MAX_PAYLOAD_SIZE=10mb
   export:
-    image: hardcoreeng/export
+    image: hanzoai/export
     extra_hosts:
       - 'hanzoai.local:host-gateway'
     links:
@@ -460,7 +460,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   datalake:
-    image: hardcoreeng/datalake
+    image: hanzoai/datalake
     extra_hosts:
       - 'hanzo.local:host-gateway'
     depends_on:
@@ -486,7 +486,7 @@ services:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318/v1/traces
     restart: unless-stopped
   hanzolake:
-    image: hardcoreeng/hanzolake
+    image: hanzoai/hanzolake
     extra_hosts:
       - 'hanzo.local:host-gateway'
     depends_on:
@@ -505,7 +505,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=minioadmin
     restart: unless-stopped
   hanzokvs:
-    image: hardcoreeng/hanzokvs
+    image: hanzoai/hanzokvs
     depends_on:
       cockroach:
         condition: service_started
@@ -518,7 +518,7 @@ services:
       - HANZO_TOKEN_SECRET=secret
     restart: unless-stopped
   hanzogun:
-    image: hardcoreeng/hanzogun
+    image: hanzoai/hanzogun
     depends_on:
       redpanda:
         condition: service_started
@@ -533,7 +533,7 @@ services:
       - HANZO_ACCOUNT_SERVICE=http://hanzo.local:3000
     restart: unless-stopped
   hanzopulse:
-    image: hardcoreeng/hanzopulse
+    image: hanzoai/hanzopulse
     depends_on:
       kv:
         condition: service_started
@@ -545,7 +545,7 @@ services:
     restart: unless-stopped
 
   process-service:
-    image: hardcoreeng/process
+    image: hanzoai/process
     extra_hosts:
       - 'hanzo.local:host-gateway'
     depends_on:
@@ -559,8 +559,24 @@ services:
       - QUEUE_CONFIG=${QUEUE_CONFIG}
       - QUEUE_REGION=cockroach
     restart: unless-stopped
+  time-machine:
+    image: hanzoai/worker
+    extra_hosts:
+      - 'huly.local:host-gateway'
+    depends_on:
+      redpanda:
+        condition: service_started
+      account:
+        condition: service_started
+      cockroach:
+        condition: service_started
+    environment:
+      - DB_URL=${DB_CR_URL}
+      - QUEUE_CONFIG=${QUEUE_CONFIG}
+      - QUEUE_REGION=cockroach
+    restart: unless-stopped
   #  translate:
-  #    image: hardcoreeng/translate
+  #    image: hanzoai/translate
   #    extra_hosts:
   #      - 'hanzo.local:host-gateway'
   #    depends_on:
@@ -577,7 +593,7 @@ services:
   #      - OPENAI_API_KEY=
   #    restart: unless-stopped
   backup-cockroach:
-    image: hardcoreeng/backup
+    image: hanzoai/backup
     extra_hosts:
       - 'hanzo.local:host-gateway'
     depends_on:
@@ -605,7 +621,7 @@ services:
       - TEMPORAL_ADDRESS=localhost:7233
     restart: unless-stopped
   backup-api:
-    image: hardcoreeng/backup-api
+    image: hanzoai/backup-api
     extra_hosts:
       - 'hanzo.local:host-gateway'
     depends_on:
@@ -628,7 +644,7 @@ services:
     restart: unless-stopped
 
   rating_cockroach:
-    image: hardcoreeng/rating
+    image: hanzoai/rating
     extra_hosts:
       - 'hanzo.local:host-gateway'
     links:

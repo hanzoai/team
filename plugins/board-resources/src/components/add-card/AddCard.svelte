@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Hanzo AI Inc.
+// Copyright © 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,8 +15,7 @@
 <script lang="ts">
   import type { Card as BoardCard } from '@hanzo/board'
   import board from '../../plugin'
-  import { makeRank } from '@hanzo/task'
-  import core, { AttachedData, generateId, Ref, SortingOrder, Space } from '@hanzo/core'
+  import core, { AttachedData, generateId, Ref, Space } from '@hanzo/core'
   import { IconAdd, Button, showPopup } from '@hanzo/ui'
   import { getClient } from '@hanzo/presentation'
   import AddCardEditor from './AddCardEditor.svelte'
@@ -36,14 +35,13 @@
       throw new Error('sequence object not found')
     }
 
-    const lastOne = await client.findOne(board.class.Card, {}, { sort: { rank: SortingOrder.Descending } })
     const incResult = await client.update(sequence, { $inc: { sequence: 1 } }, true)
 
     const value: AttachedData<BoardCard> = {
       status: state._id,
       number: (incResult as any).object.sequence,
       title,
-      rank: makeRank(lastOne?.rank, undefined),
+      rank: '',
       assignee: null,
       description: '',
       members: [],

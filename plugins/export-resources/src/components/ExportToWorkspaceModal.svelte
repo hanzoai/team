@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -24,11 +24,11 @@
     type Space,
     type Class
   } from '@hanzo/core'
-  import { Card, getCurrentWorkspaceUuid } from '@hanzo/presentation'
+  import { Card, getClient, getCurrentWorkspaceUuid } from '@hanzo/presentation'
   import { DropdownLabels, DropdownLabelsIntl, Label } from '@hanzo/ui'
   import { getResource } from '@hanzo/platform'
   import login from '@hanzo/login'
-  import { type RelationDefinition, shouldSkipDocument, isEffectiveDocument } from '@hanzo/export'
+  import { shouldSkipDocument, isEffectiveDocument } from '@hanzo/export'
 
   import { createEventDispatcher } from 'svelte'
 
@@ -37,9 +37,9 @@
 
   export let query: DocumentQuery<Doc> | undefined = undefined
   export let value: Doc | Doc[] | Space
-  export let relations: RelationDefinition[] | undefined = undefined
   export let docClass: Ref<Class<Doc>> | undefined = undefined
   export let spaceExport: boolean | undefined = false
+  export let projectDocExport: boolean | undefined = false
 
   const dispatch = createEventDispatcher()
 
@@ -118,16 +118,36 @@
   $: canSave =
     targetWorkspace !== undefined && _class != null && (spaceExport === true || filteredSelectedDocs.length > 0)
 
+  async function getExportDocuments (): Promise<Array<Doc>> {
+    if (docClass == null) {
+      console.error('Document class is required to export project documents')
+      return []
+    }
+    const client = getClient()
+    const innerIds = selectedDocs.map((d) => (d as any)?.document).filter((id) => id != null)
+
+    if (innerIds.length > 0) {
+      const docs = await client.findAll(docClass, {
+        _id: { $in: innerIds }
+      })
+      return filterDocsForExport(docs, exportFilterMode)
+    }
+    return []
+  }
+
   async function handleExport (): Promise<void> {
     if (!canSave || _class == null) return
 
     loading = true
+
+    const effectiveDocs = projectDocExport === true ? await getExportDocuments() : filteredSelectedDocs
+
     void exportToWorkspace(
       _class,
       exportQuery,
-      filteredSelectedDocs,
+      effectiveDocs,
       targetWorkspace,
-      relations,
+      undefined,
       exportFilterMode === 'skipArchivedObsolete',
       exportFilterMode === 'effectiveOnly'
     )

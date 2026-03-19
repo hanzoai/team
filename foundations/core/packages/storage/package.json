@@ -55,7 +55,10 @@
       "import": "./lib/index.js"
     }
   },
-  "repository": "https://github.com/hcengineering/hanzo.core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/huly.core.git"
+  },
   "publishConfig": {
     "access": "public"
   }

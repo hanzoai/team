@@ -52,7 +52,10 @@
   "dependencies": {
     "svelte": "^4.2.20"
   },
-  "repository": "https://github.com/hcengineering/hanzo.utils",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/huly.utils.git"
+  },
   "publishConfig": {
     "access": "public"
   }

@@ -1,4 +1,4 @@
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -18,13 +18,11 @@ import {
   getCurrentAccount,
   type MarkupBlobRef,
   type Ref,
-  SortingOrder,
   type Timestamp
 } from '@hanzo/core'
 import { type Poll, type PollAnswer } from '@hanzo/communication'
 import { getClient, getCommunicationClient } from '@hanzo/presentation'
-import card, { type Card } from '@hanzo/card'
-import { makeRank } from '@hanzo/rank'
+import { type Card } from '@hanzo/card'
 import { type AppletAttachment, type MessageID } from '@hanzo/communication-types'
 
 import communication from './plugin'
@@ -71,11 +69,10 @@ export async function createPoll (parent: Card, message: MessageID, params: Poll
   const client = getClient()
   const communicationClient = getCommunicationClient()
   const hierarchy = client.getHierarchy()
-  const lastOne = await client.findOne(card.class.Card, {}, { sort: { rank: SortingOrder.Descending } })
 
   const data: Data<Poll> = {
     title: params.question,
-    rank: makeRank(lastOne?.rank, undefined),
+    rank: '',
     content: '' as MarkupBlobRef,
     parentInfo: [],
     blobs: {},

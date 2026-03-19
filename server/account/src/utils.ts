@@ -1351,6 +1351,7 @@ export async function getWorkspacesInfoWithStatusByIds (
   db: AccountDB,
   uuids: WorkspaceUuid[]
 ): Promise<WorkspaceInfoWithStatus[]> {
+  if (!Array.isArray(uuids) || uuids.length === 0) return []
   const statuses = await db.workspaceStatus.find({ workspaceUuid: { $in: uuids } })
   const statusesMap = statuses.reduce<Record<string, WorkspaceStatus>>((sm, s) => {
     sm[s.workspaceUuid] = s
@@ -1546,7 +1547,7 @@ export async function loginOrSignUpWithProvider (
         return null
       }
 
-      personUuid = await db.person.insertOne({ firstName: first, lastName: last })
+      personUuid = await db.person.insertOne({ firstName: first, lastName: last ?? '' })
     }
 
     if (personUuid == null) {

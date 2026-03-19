@@ -249,6 +249,14 @@
     },
     {
       "commandKind": "global",
+      "name": "docker:patch",
+      "summary": "Build and push docker images with a custom version",
+      "description": "Allows building and pushing docker images with a manually specified version tag. Usage: rush docker:patch --version <version> [rush-args]",
+      "safeForSimultaneousRushProcesses": true,
+      "shellCommand": "./common/scripts/docker_patch.sh"
+    },
+    {
+      "commandKind": "global",
       "name": "docker-server",
       "summary": "Build docker with platform",
       "description": "use to build all docker containers required for platform",
@@ -286,6 +294,14 @@
       "description": "Start minified docker compose (docker-compose.yaml + docker-compose.min.yaml) for resource-constrained machines",
       "safeForSimultaneousRushProcesses": true,
       "shellCommand": "cd ./dev && docker compose -f docker-compose.yaml -f docker-compose.min.yaml up -d --force-recreate"
+    },
+    {
+      "commandKind": "global",
+      "name": "docker:up:pg",
+      "summary": "Up development stack with PostgreSQL",
+      "description": "Start dev docker compose with PostgreSQL override (docker-compose.yaml + docker-compose.pg.yaml, profile=postgres)",
+      "safeForSimultaneousRushProcesses": true,
+      "shellCommand": "cd ./dev && docker compose -f docker-compose.yaml -f docker-compose.pg.yaml --profile postgres up -d --force-recreate"
     },
     {
       "commandKind": "global",
@@ -424,6 +440,22 @@
       "longName": "--branch",
       "description": "Force formatting of branch",
       "associatedCommands": ["fast-format"]
+    },
+    {
+      "parameterKind": "string",
+      "argumentName": "VERSION",
+      "required": false,
+      "longName": "--version",
+      "description": "The version tag to use for docker images",
+      "associatedCommands": ["docker:patch"]
+    },
+    {
+      "parameterKind": "string",
+      "argumentName": "PLATFORM",
+      "required": false,
+      "longName": "--platform",
+      "description": "The target platform for docker build (e.g., linux/amd64). Defaults to linux/amd64.",
+      "associatedCommands": ["docker:patch"]
     }
     // {
     //   /**

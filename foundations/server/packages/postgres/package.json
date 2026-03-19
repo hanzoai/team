@@ -41,7 +41,10 @@
     "@hanzo/server-core": "workspace:^0.7.18",
     "@hanzo/postgres-base": "workspace:^0.7.17"
   },
-  "repository": "https://github.com/hcengineering/hanzo.server",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/huly.server.git"
+  },
   "publishConfig": {
     "access": "public"
   },

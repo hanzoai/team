@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Hanzo AI Inc.
+// Copyright © 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -50,7 +50,7 @@
     SpaceSelector
   } from '@hanzo/presentation'
   import tags, { type TagElement, TagReference } from '@hanzo/tags'
-  import { makeRank, TaskType } from '@hanzo/task'
+  import { TaskType } from '@hanzo/task'
   import { TaskKindSelector } from '@hanzo/task-resources'
   import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
   import {
@@ -165,13 +165,15 @@
       return
     }
 
+    const _parentIssue = parentIssue
     return {
       ...draft,
       ...(status != null ? { status } : {}),
       ...(priority != null ? { priority } : {}),
       ...(assignee != null ? { assignee } : {}),
       ...(component != null ? { component } : {}),
-      ...(milestone != null ? { milestone } : {})
+      ...(milestone != null ? { milestone } : {}),
+      ...(_parentIssue !== undefined ? { parentIssue: _parentIssue._id } : {})
     }
   }
 
@@ -460,11 +462,6 @@
     try {
       const operations = client.apply(undefined, 'tracker.createIssue')
 
-      const lastOne = await client.findOne<Issue>(
-        tracker.class.Issue,
-        { space: _space },
-        { sort: { rank: SortingOrder.Descending } }
-      )
       const incResult = await client.updateDoc(
         tracker.class.Project,
         core.space.Space,
@@ -488,7 +485,7 @@
         number,
         status: object.status,
         priority: object.priority,
-        rank: makeRank(lastOne?.rank, undefined),
+        rank: '',
         comments: 0,
         subIssues: 0,
         dueDate: object.dueDate,

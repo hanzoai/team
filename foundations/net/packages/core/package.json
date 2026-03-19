@@ -48,7 +48,7 @@
   "dependencies": {
     "uuid": "^8.3.2"
   },
-  "repository": "https://github.com/hcengineering/hanzo.net",
+  "repository": "https://github.com/hanzoai/hanzo.net",
   "exports": {
     ".": {
       "types": "./types/index.d.ts",

@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2022 Hanzo AI Inc.
+// Copyright © 2022 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -16,7 +16,7 @@
   import core, { Attribute, CustomSequence, IndexKind, Ref, Type, TypeIdentifier as TypeId } from '@hanzo/core'
   import { TypeIdentifier } from '@hanzo/model'
   import { createQuery, getClient } from '@hanzo/presentation'
-  import { EditBox, Label, Toggle } from '@hanzo/ui'
+  import { EditBox, Label, Toggle, Button, ButtonIcon } from '@hanzo/ui'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
 
@@ -42,6 +42,11 @@
   })
 
   $: currentSequence = sequences.find((s) => s._id === seq)
+
+  async function resetSequence () {
+    if (!editable || currentSequence === undefined) return
+    await client.update(currentSequence, { sequence: 0 })
+  }
 
   async function change () {
     if (!editable) return
@@ -70,7 +75,7 @@
 <span class="label">
   <Label label={core.string.Id} />
 </span>
-<div class="flex-row-center">
+<div class="flex-row-center" style="gap: .5rem">
   <EditBox
     bind:value={identifier}
     disabled={!editable}
@@ -79,6 +84,9 @@
     maxWidth={'50%'}
     on:change={change}
   />
+  {#if editable && currentSequence?.sequence && currentSequence.sequence > 0}
+    <ButtonIcon icon={setting.icon.Reset} tooltip={{ label: setting.string.Reset }} on:click={resetSequence} />
+  {/if}
   {#if editable && identifiers.has(identifier.toUpperCase())}
     <div class="overflow-label duplicated-identifier">
       <Label label={setting.string.IdentifierExists} />

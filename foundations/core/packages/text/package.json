@@ -11,7 +11,7 @@
     "!src/**/__test__/**",
     "tsconfig.json"
   ],
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -80,9 +80,14 @@
     "prosemirror-codemark": "^0.4.2",
     "fast-equals": "^5.2.2",
     "@tiptap/extension-text-align": "~2.11.0",
-    "@tiptap/extension-text-style": "~2.11.0"
+    "@tiptap/extension-text-style": "~2.11.0",
+    "@tiptap/extension-subscript": "^2.11.7",
+    "@tiptap/extension-superscript": "^2.11.7"
   },
-  "repository": "https://github.com/hcengineering/hanzo.core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/huly.core.git"
+  },
   "publishConfig": {
     "access": "public"
   },

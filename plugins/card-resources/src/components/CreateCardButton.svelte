@@ -1,5 +1,5 @@
 <!--
-// Copyright © 2025 Hanzo AI Inc.
+// Copyright © 2025 Hardcore Engineering Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License. You may
@@ -15,9 +15,8 @@
 <script lang="ts">
   import { Analytics } from '@hanzo/analytics'
   import { Card, CardEvents } from '@hanzo/card'
-  import core, { Class, Data, Doc, fillDefaults, MarkupBlobRef, Ref, SortingOrder } from '@hanzo/core'
+  import core, { Class, Data, Doc, fillDefaults, MarkupBlobRef, Ref } from '@hanzo/core'
   import { translate } from '@hanzo/platform'
-  import { makeRank } from '@hanzo/rank'
   import { ButtonIcon, getCurrentLocation, IconAdd, navigate } from '@hanzo/ui'
   import { getClient } from '@hanzo/presentation'
   import card from '../plugin'
@@ -29,12 +28,11 @@
 
   async function createCard (): Promise<void> {
     if (_class === undefined) return
-    const lastOne = await client.findOne(card.class.Card, {}, { sort: { rank: SortingOrder.Descending } })
     const title = await translate(card.string.Card, {})
 
     const data: Data<Card> = {
       title,
-      rank: makeRank(lastOne?.rank, undefined),
+      rank: '',
       content: '' as MarkupBlobRef,
       parentInfo: [],
       blobs: {}

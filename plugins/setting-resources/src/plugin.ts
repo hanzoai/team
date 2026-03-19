@@ -152,11 +152,14 @@ export default mergeIds(settingId, setting, {
     Login: '' as IntlString,
     Primary: '' as IntlString,
     IdentifierExists: '' as IntlString,
+    Reset: '' as IntlString,
     Restricted: '' as IntlString,
     RestrictedAttributeWarning: '' as IntlString,
     PasswordAgingRule: '' as IntlString,
     PasswordAgingRuleDescription: '' as IntlString,
     ShowInTitle: '' as IntlString,
-    SpaceMembersOnly: '' as IntlString
+    SpaceMembersOnly: '' as IntlString,
+    LastOwnerLeaveTitle: '' as IntlString,
+    LastOwnerLeaveMessage: '' as IntlString
   }
 })

@@ -14,7 +14,7 @@
     "README.md",
     "CHANGELOG.md"
   ],
-  "author": "Hanzo <dev@hanzo.ai>",
+  "author": "Anticrm Platform Contributors",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -40,7 +40,10 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-n": "^15.4.0"
   },
-  "repository": "https://github.com/hanzoai/platform",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "exports": {
     ".": {
       "types": "./types/index.d.ts",

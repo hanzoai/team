@@ -9,7 +9,7 @@
     "types/**/*",
     "tsconfig.json"
   ],
-  "author": "Hanzo AI Inc.",
+  "author": "Hardcore Engineering Inc.",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -44,7 +44,10 @@
     "emojibase-data": "^16.0.0",
     "emojibase-regex": "^16.0.0"
   },
-  "repository": "https://github.com/hanzoai/platform",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "publishConfig": {
     "access": "public"
   }

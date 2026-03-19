@@ -23,7 +23,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: ai-bot
-          image: hardcoreeng/ai-bot:latest
+          image: hanzoai/ai-bot:latest
           ports:
             - containerPort: 4010
           env:

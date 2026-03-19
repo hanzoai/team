@@ -62,7 +62,10 @@
     "@hanzo/text-markdown": "workspace:^0.7.20",
     "snappyjs": "^0.7.0"
   },
-  "repository": "https://github.com/hcengineering/hanzo.core",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/huly.core.git"
+  },
   "publishConfig": {
     "access": "public"
   },
