@@ -850,6 +850,38 @@ export function start (
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   app.delete('/files/*', handleDelete)
 
+  // -- Tasks API proxy (tasks.hanzo.ai via K8s internal service) --
+  // Forwards /api/tasks/* to the durable task execution service.
+  // IAM JWT token is passed through for org-scoped multi-tenant isolation.
+  const tasksApiUrl = process.env.TASKS_API_URL ?? 'http://tasks.hanzo.svc:7234'
+
+  app.all('/api/tasks/*', async (req: Request, res: Response) => {
+    try {
+      const token = req.headers.authorization ?? ''
+      const path = req.path.replace('/api/tasks', '/api/v1/tasks')
+      const upstream = `${tasksApiUrl}${path}`
+
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+      if (token !== '') {
+        headers.Authorization = token
+      }
+
+      const init: RequestInit = {
+        method: req.method,
+        headers
+      }
+      if (req.method !== 'GET' && req.method !== 'HEAD' && req.body != null) {
+        init.body = JSON.stringify(req.body)
+      }
+
+      const upstream_res = await fetch(upstream, init)
+      const body = await upstream_res.text()
+      res.status(upstream_res.status).set('Content-Type', 'application/json').send(body)
+    } catch (err: any) {
+      res.status(502).json({ error: 'Tasks service unavailable', details: err?.message })
+    }
+  })
+
   // todo remove it after update all customers chrome extensions
   app.get('/import', (req, res) => {
     void handleImportGet(req, res)
