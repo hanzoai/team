@@ -565,6 +565,10 @@ spec:
               value: "true"
             - name: BRANDING_URL
               value: "/branding.json"
+            - name: HIDE_LOCAL_LOGIN
+              value: "true"
+            - name: DISABLE_SIGNUP
+              value: "true"
           volumeMounts:
             - name: index-patch
               mountPath: /app/dist/index.html

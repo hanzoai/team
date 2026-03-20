@@ -1,4 +1,5 @@
 # AI Bot Service — connects to Hanzo Cloud API (OpenAI-compatible /api/chat/completions)
+# Registers with Playground control-plane for shared bot discovery
 # Secret 'ai-bot-secret' with key 'openai-api-key' must be created separately
 # via: kubectl create secret generic ai-bot-secret -n team --from-literal=openai-api-key=<key>
 ---
@@ -67,6 +68,13 @@ spec:
               value: "AI"
             - name: STATS_URL
               value: "http://stats:4900"
+            # Playground control-plane — shared bot registry
+            - name: PLAYGROUND_URL
+              value: "http://playground:8080"
+            - name: HANZO_NODE_ID
+              value: "ai-bot"
+            - name: HANZO_PUBLIC_URL
+              value: "http://ai-bot:4010"
           resources:
             requests:
               memory: 128Mi

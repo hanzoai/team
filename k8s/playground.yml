@@ -1,0 +1,125 @@
+# Playground Control Plane — shared bot registry for hanzo.team + hanzo.bot
+# Provides: bot discovery, execution tracking, memory, workflow DAGs
+# Docs: https://hanzo.bot
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playground
+  namespace: team
+  labels:
+    app: playground
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playground
+  template:
+    metadata:
+      labels:
+        app: playground
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: playground
+          image: ghcr.io/hanzoai/playground:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PLAYGROUND_HOME
+              value: "/data"
+            - name: PLAYGROUND_HTTP_ADDR
+              value: "0.0.0.0:8080"
+            - name: PLAYGROUND_STORAGE_MODE
+              value: "postgres"
+            - name: PLAYGROUND_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: team-secret
+                  key: playground-postgres-url
+            - name: PLAYGROUND_UI_ENABLED
+              value: "true"
+            - name: PLAYGROUND_UI_MODE
+              value: "embedded"
+            - name: PLAYGROUND_DID_ENABLED
+              value: "true"
+            - name: PLAYGROUND_DID_METHOD
+              value: "did:key"
+            # LLM gateway for bot AI calls
+            - name: OPENAI_BASE_URL
+              value: "http://cloud-api.hanzo.svc:8000/api"
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ai-bot-secret
+                  key: openai-api-key
+            # IAM for auth
+            - name: IAM_ENDPOINT
+              value: "https://hanzo.id"
+            - name: HANZO_API_URL
+              value: "https://api.hanzo.ai/v1"
+          volumeMounts:
+            - name: playground-data
+              mountPath: /data
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 100m
+            limits:
+              memory: 1Gi
+              cpu: "1"
+      volumes:
+        - name: playground-data
+          persistentVolumeClaim:
+            claimName: playground-data
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: playground-data
+  namespace: team
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: playground
+  namespace: team
+  labels:
+    app: playground
+spec:
+  selector:
+    app: playground
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: playground-pdb
+  namespace: team
+spec:
+  maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: playground
