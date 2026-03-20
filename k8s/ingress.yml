@@ -21,6 +21,9 @@ spec:
         - app.hanzo.team
         - bot.hanzo.team
       secretName: hanzo-team-tls
+    - hosts:
+        - app.hanzo.bot
+      secretName: hanzo-bot-tls
   rules:
     - host: hanzo.team
       http:
@@ -43,6 +46,16 @@ spec:
                 port:
                   number: 8080
     - host: bot.hanzo.team
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: playground
+                port:
+                  number: 8080
+    - host: app.hanzo.bot
       http:
         paths:
           - path: /
