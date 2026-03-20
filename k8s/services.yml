@@ -545,8 +545,8 @@ spec:
               value: "en"
             - name: LAST_NAME_FIRST
               value: "true"
-            - name: BRANDING_URL
-              value: "/branding.json"
+            - name: BRANDING_PATH
+              value: "/var/cfg/branding.json"
             - name: HIDE_LOCAL_LOGIN
               value: "true"
             - name: DISABLE_SIGNUP
@@ -555,6 +555,9 @@ spec:
             - name: index-patch
               mountPath: /app/dist/index.html
               subPath: index.html
+            - name: branding
+              mountPath: /var/cfg/branding.json
+              subPath: branding.json
           resources:
             requests:
               memory: 128Mi
@@ -568,6 +571,9 @@ spec:
         - name: index-patch
           configMap:
             name: front-index-patch
+        - name: branding
+          configMap:
+            name: team-branding
 ---
 apiVersion: v1
 kind: Service

@@ -14,7 +14,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/upstream-hash-by: "$remote_addr"
 spec:
-  ingressClassName: nginx
+  ingressClassName: ingress
   tls:
     - hosts:
         - hanzo.team
@@ -39,9 +39,9 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: team-nginx
+                name: front
                 port:
-                  number: 80
+                  number: 8080
     - host: bot.hanzo.team
       http:
         paths:
