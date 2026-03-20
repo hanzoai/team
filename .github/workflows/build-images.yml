@@ -1,0 +1,236 @@
+name: Build & Push Docker Images
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [develop]
+    tags:
+      - v*
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Override version tag (leave empty for auto: git tag or short SHA)'
+        required: false
+        default: ''
+        type: string
+      platform:
+        description: 'Target platform'
+        required: false
+        default: 'linux/amd64'
+        type: choice
+        options:
+          - linux/amd64
+          - linux/amd64,linux/arm64
+
+env:
+  DOCKER_REGISTRY: ghcr.io/
+  DOCKER_CLI_HINTS: false
+  DOCKER_BUILDKIT: 1
+  INIT_SCRIPTS_BRANCH: 'main'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          filter: tree:0
+          submodules: recursive
+
+      - name: Free disk space
+        uses: ./.github/actions/free-disk-space
+
+      - name: Set up QEMU
+        if: contains(github.event.inputs.platform || 'linux/amd64', 'arm64')
+        uses: docker/setup-qemu-action@v4
+
+      - name: Configure docker
+        uses: docker/setup-docker-action@v5
+        with:
+          daemon-config: |
+            {
+              "features": {
+                "containerd-snapshotter": true
+              }
+            }
+
+      - name: Login to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout init repository
+        run: |
+          wget https://github.com/hanzoai/init/archive/refs/heads/${{ env.INIT_SCRIPTS_BRANCH }}.zip
+          unzip ${{ env.INIT_SCRIPTS_BRANCH }}.zip -d pods/workspace
+          mv pods/workspace/init-${{ env.INIT_SCRIPTS_BRANCH }} pods/workspace/init
+          rm -rf ${{ env.INIT_SCRIPTS_BRANCH }}.zip
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - uses: pnpm/action-setup@v5
+        with:
+          version: latest
+
+      - name: Cache node modules
+        uses: actions/cache@v5
+        env:
+          cache-name: cache-node-platform
+        with:
+          path: |
+            common/temp
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+
+      - name: Install dependencies
+        run: node common/scripts/install-run-rush.js install
+
+      - name: Model version from git tags
+        run: node common/scripts/install-run-rush.js model-version
+
+      - name: Determine version tag
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            echo "tag=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          elif [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Build all Docker images
+        run: node common/scripts/install-run-rush.js docker:build -v
+        env:
+          DOCKER_EXTRA: --platform=${{ github.event.inputs.platform || 'linux/amd64' }}
+          DOCKER_BUILD_CLEANUP: true
+
+      - name: Build love-agent
+        run: |
+          cd ./services/ai-bot/love-agent
+          pnpm install && pnpm build
+          pnpm docker:build
+        env:
+          DOCKER_EXTRA: --platform=${{ github.event.inputs.platform || 'linux/amd64' }}
+
+      - name: Tag and push all images
+        env:
+          VERSION: ${{ steps.version.outputs.tag }}
+          SHA: ${{ steps.version.outputs.sha }}
+        run: |
+          images=(
+            hanzoai/front
+            hanzoai/transactor
+            hanzoai/account
+            hanzoai/workspace
+            hanzoai/collaborator
+            hanzoai/fulltext
+            hanzoai/stats
+            hanzoai/backup
+            hanzoai/preview
+            hanzoai/media
+            hanzoai/link-preview
+            hanzoai/ai-bot
+            hanzoai/rekoni-service
+            hanzoai/love
+            hanzoai/love-agent
+            hanzoai/print
+            hanzoai/sign
+            hanzoai/analytics-collector
+            hanzoai/mail
+            hanzoai/mail-worker
+            hanzoai/inbound-mail
+            hanzoai/telegram
+            hanzoai/telegram-bot
+            hanzoai/github
+            hanzoai/gmail
+            hanzoai/calendar
+            hanzoai/calendar-mailer
+            hanzoai/notification
+            hanzoai/datalake
+            hanzoai/export
+            hanzoai/billing
+            hanzoai/payment
+            hanzoai/rating
+            hanzoai/process
+            hanzoai/worker
+            hanzoai/tool
+            hanzoai/import-tool
+            hanzoai/translate
+            hanzoai/msg2file
+            hanzoai/backup-api
+            hanzoai/network-pod
+            hanzoai/network-tool
+          )
+
+          failed=()
+          for name in "${images[@]}"; do
+            src="ghcr.io/${name}:${SHA}"
+            if ! docker image inspect "$src" > /dev/null 2>&1; then
+              echo "SKIP (not built): $name"
+              continue
+            fi
+            echo "Pushing ghcr.io/${name}:${VERSION} and ghcr.io/${name}:latest"
+            docker tag "$src" "ghcr.io/${name}:${VERSION}"
+            docker tag "$src" "ghcr.io/${name}:latest"
+            docker push "ghcr.io/${name}:${VERSION}" || failed+=("$name:${VERSION}")
+            docker push "ghcr.io/${name}:latest"     || failed+=("$name:latest")
+          done
+
+          if [ ${#failed[@]} -gt 0 ]; then
+            echo "::error::Failed to push: ${failed[*]}"
+            exit 1
+          fi
+
+      - name: Push external service images
+        env:
+          VERSION: ${{ steps.version.outputs.tag }}
+        run: |
+          cd pods/external
+          find services.d/ -type f -name "*.service" ! -name "-*" | sort | while read -r file; do
+            line=$(grep -v -e '^[[:space:]]*$' -e '^#' "$file" | head -n 1)
+            target_repo=$(echo "$line" | cut -d ' ' -f1 | tr -d '[:space:]')
+            source=$(echo "$line" | cut -d ' ' -f2 | tr -d '[:space:]')
+            if [ -n "$target_repo" ] && [ -n "$source" ]; then
+              target="ghcr.io/hanzoai/${target_repo}:${VERSION}"
+              target_latest="ghcr.io/hanzoai/${target_repo}:latest"
+              echo "Copy: $source -> $target"
+              docker pull --quiet "$source" > /dev/null 2>&1 || true
+              docker tag "$source" "$target" 2>/dev/null && docker push "$target" || echo "SKIP: $target_repo"
+              docker tag "$source" "$target_latest" 2>/dev/null && docker push "$target_latest" || true
+            fi
+          done
+
+      - name: Summary
+        env:
+          VERSION: ${{ steps.version.outputs.tag }}
+        run: |
+          echo "## Docker Images Published" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Registry:** \`ghcr.io/hanzoai\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Version:** \`${VERSION}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "**SHA:** \`${GITHUB_SHA::8}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Platform:** \`${{ github.event.inputs.platform || 'linux/amd64' }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Built Images" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          docker images --format '{{.Repository}}:{{.Tag}}' \
+            | grep '^ghcr.io/hanzoai/' \
+            | grep -v '<none>' \
+            | sort -u >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

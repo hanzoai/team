@@ -1,5 +1,7 @@
 set -e
 
+# DOCKER_REGISTRY: prefix for image names (e.g. "ghcr.io/" for GHCR).
+docker_registry="${DOCKER_REGISTRY:-}"
 registry=hanzoai
 tag=latest
 
@@ -21,7 +23,7 @@ find services.d/ -type f -name "*.service" ! -name "-*" | sort | while read -r f
     source=$(echo $line | cut -d ' ' -f2 | tr -d '[:space:]') 
 
     if [ ! -z $target_repo ] && [ ! -z $source ]; then
-        target=$registry/$target_repo:$tag
+        target=${docker_registry}$registry/$target_repo:$tag
 
         # Check if target image already exists locally
         if docker image inspect "$target" > /dev/null 2>&1; then
