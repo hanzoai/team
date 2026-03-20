@@ -21,6 +21,15 @@ spec:
     spec:
       imagePullSecrets:
         - name: ghcr-secret
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        - name: init-data
+          image: busybox:1.36
+          command: ['sh', '-c', 'mkdir -p /data/packages /data/config && chown -R 1000:1000 /data']
+          volumeMounts:
+            - name: playground-data
+              mountPath: /data
       containers:
         - name: playground
           image: ghcr.io/hanzoai/playground:latest
@@ -32,12 +41,7 @@ spec:
             - name: PLAYGROUND_HTTP_ADDR
               value: "0.0.0.0:8080"
             - name: PLAYGROUND_STORAGE_MODE
-              value: "postgres"
-            - name: PLAYGROUND_DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: team-secret
-                  key: playground-postgres-url
+              value: "local"
             - name: PLAYGROUND_UI_ENABLED
               value: "true"
             - name: PLAYGROUND_UI_MODE
@@ -46,14 +50,9 @@ spec:
               value: "true"
             - name: PLAYGROUND_DID_METHOD
               value: "did:key"
-            # LLM gateway for bot AI calls
+            # LLM gateway for bot AI calls (bots bring their own keys via env)
             - name: OPENAI_BASE_URL
               value: "http://cloud-api.hanzo.svc:8000/api"
-            - name: OPENAI_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: ai-bot-secret
-                  key: openai-api-key
             # IAM for auth
             - name: IAM_ENDPOINT
               value: "https://hanzo.id"

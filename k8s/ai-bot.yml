@@ -24,7 +24,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: ai-bot
-          image: hanzoai/ai-bot:latest
+          image: hardcoreeng/ai-bot:latest
           ports:
             - containerPort: 4010
           env:
@@ -36,17 +36,14 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: team-secret
-                  key: server-secret
+                  key: server_secret
             - name: MONGO_URL
               valueFrom:
                 secretKeyRef:
                   name: team-secret
-                  key: mongodb-url
+                  key: mongodb_url
             - name: STORAGE_CONFIG
-              valueFrom:
-                secretKeyRef:
-                  name: team-secret
-                  key: minio-connection-string
+              value: "s3|minio:9000?accessKey=hanzo&secretKey=hanzo-minio-secret"
             # Hanzo Cloud API — OpenAI-compatible chat completions
             - name: OPENAI_API_KEY
               valueFrom:
