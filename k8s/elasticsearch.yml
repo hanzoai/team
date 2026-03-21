@@ -30,9 +30,7 @@ spec:
             - name: ES_JAVA_OPTS
               value: "-Xms512m -Xmx512m"
             - name: http.cors.enabled
-              value: "true"
-            - name: http.cors.allow-origin
-              value: "*"
+              value: "false"
           resources:
             requests:
               memory: 768Mi
