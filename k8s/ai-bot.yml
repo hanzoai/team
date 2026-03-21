@@ -24,7 +24,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: ai-bot
-          image: ghcr.io/hanzoai/bot:main-amd64
+          image: ghcr.io/hanzoai/bot:latest
           ports:
             - containerPort: 18789
           env:
