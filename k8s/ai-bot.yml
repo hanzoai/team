@@ -24,9 +24,9 @@ spec:
         - name: ghcr-secret
       containers:
         - name: ai-bot
-          image: ghcr.io/hanzoai/ai-bot:v0.7.0
+          image: ghcr.io/hanzoai/bot:main-amd64
           ports:
-            - containerPort: 4010
+            - containerPort: 18789
           env:
             - name: PORT
               value: "4010"
