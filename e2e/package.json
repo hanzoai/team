@@ -1,0 +1,14 @@
+{
+  "name": "@hanzo/e2e-bots",
+  "version": "0.7.0",
+  "private": true,
+  "scripts": {
+    "ci": "playwright install --with-deps chromium",
+    "test": "playwright test",
+    "test:bots": "playwright test tests/bots.spec.ts",
+    "test:headed": "playwright test tests/bots.spec.ts --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2"
+  }
+}
