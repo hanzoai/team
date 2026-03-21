@@ -5,6 +5,12 @@ const PLAYGROUND_API = 'https://bot.hanzo.team'
 const APP_BOT = 'https://app.hanzo.bot'
 const APP_TEAM = 'https://app.hanzo.team'
 
+// Playground API key (set via PLAYGROUND_API_KEY env var or fallback)
+const PLAYGROUND_KEY = process.env.PLAYGROUND_API_KEY ?? ''
+const playgroundHeaders = PLAYGROUND_KEY
+  ? { 'Authorization': `Bearer ${PLAYGROUND_KEY}`, 'Content-Type': 'application/json' }
+  : { 'Content-Type': 'application/json' }
+
 // ---------------------------------------------------------------------------
 // 1. Playground API Tests (no login needed)
 // ---------------------------------------------------------------------------
@@ -18,7 +24,7 @@ test.describe('Playground API', () => {
   })
 
   test('GET /api/v1/nodes returns 200 with at least 1 node', async ({ request }) => {
-    const res = await request.get(`${PLAYGROUND_API}/api/v1/nodes`)
+    const res = await request.get(`${PLAYGROUND_API}/api/v1/nodes`, { headers: playgroundHeaders })
     expect(res.status()).toBe(200)
 
     const body = await res.json()
@@ -29,7 +35,7 @@ test.describe('Playground API', () => {
   })
 
   test('hanzo-bot-gateway node exists with chat, translate, summarize bots', async ({ request }) => {
-    const res = await request.get(`${PLAYGROUND_API}/api/v1/nodes`)
+    const res = await request.get(`${PLAYGROUND_API}/api/v1/nodes`, { headers: playgroundHeaders })
     expect(res.status()).toBe(200)
 
     const body = await res.json()
@@ -205,7 +211,7 @@ test.describe('Unified bot infrastructure', () => {
   test('bot.hanzo.team nodes are accessible from both domains', async ({ request }) => {
     // Both bot.hanzo.team and app.hanzo.bot route to the same playground service.
     const [res1, res2] = await Promise.all([
-      request.get(`${PLAYGROUND_API}/api/v1/nodes`),
+      request.get(`${PLAYGROUND_API}/api/v1/nodes`, { headers: playgroundHeaders }),
       request.get(`${APP_BOT}/api/v1/nodes`)
     ])
 
@@ -237,7 +243,7 @@ test.describe('Unified bot infrastructure', () => {
     // Instead, verify that the playground knows about the ai-bot node,
     // which proves the bot registered itself via PLAYGROUND_URL and the
     // transactor can reach it via AI_BOT_URL=http://ai-bot:4010.
-    const res = await request.get(`${PLAYGROUND_API}/api/v1/nodes`)
+    const res = await request.get(`${PLAYGROUND_API}/api/v1/nodes`, { headers: playgroundHeaders })
     expect(res.status()).toBe(200)
 
     const body = await res.json()
