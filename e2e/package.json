@@ -9,6 +9,7 @@
     "test:headed": "playwright test tests/bots.spec.ts --headed"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.2"
+    "@playwright/test": "^1.48.2",
+    "dotenv": "^17.3.1"
   }
 }
