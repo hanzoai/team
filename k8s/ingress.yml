@@ -1,5 +1,5 @@
-# hanzo.team → team-landing (Next.js landing page)
-# app.hanzo.team → team-nginx → front (Svelte collaboration app)
+# hanzo.team → team-landing (static site via hanzoai/static)
+# app.hanzo.team → front (Svelte collaboration app)
 # bot.hanzo.team → playground control-plane (shared bot registry + UI)
 ---
 apiVersion: networking.k8s.io/v1
@@ -8,11 +8,9 @@ metadata:
   name: team-ingress
   namespace: team
   annotations:
-    # Using Cloudflare origin cert (*.hanzo.team) — no cert-manager needed
-    nginx.ingress.kubernetes.io/proxy-body-size: 100m
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
-    nginx.ingress.kubernetes.io/upstream-hash-by: "$remote_addr"
+    hanzo.ai/proxy-body-size: 100m
+    hanzo.ai/proxy-read-timeout: "3600"
+    hanzo.ai/proxy-send-timeout: "3600"
 spec:
   ingressClassName: ingress
   tls:
