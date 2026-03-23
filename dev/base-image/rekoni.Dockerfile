@@ -1,4 +1,4 @@
-FROM hardcoreeng/base
+FROM ghcr.io/hanzoai/base
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
