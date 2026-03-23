@@ -3,9 +3,13 @@
 # Default version if not set
 VERSION=${VERSION:-"latest"}
 
-docker push hanzoai/base:${VERSION}
-docker push hanzoai/base-slim:${VERSION}
-docker push hanzoai/rekoni-base:${VERSION}
-docker push hanzoai/print-base:${VERSION}
-docker push hanzoai/front-base:${VERSION}
-docker push hanzoai/preview-base:${VERSION}
+# DOCKER_REGISTRY: prefix for image names (e.g. "ghcr.io/" for GHCR).
+# Empty by default for local builds. Always include trailing slash if set.
+registry="${DOCKER_REGISTRY:-}"
+
+docker push "${registry}hanzoai/base:${VERSION}"
+docker push "${registry}hanzoai/base-slim:${VERSION}"
+docker push "${registry}hanzoai/rekoni-base:${VERSION}"
+docker push "${registry}hanzoai/print-base:${VERSION}"
+docker push "${registry}hanzoai/front-base:${VERSION}"
+docker push "${registry}hanzoai/preview-base:${VERSION}"

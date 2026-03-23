@@ -4,6 +4,7 @@ name: CI
 
 permissions:
   contents: read
+  packages: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -212,13 +213,14 @@ jobs:
           path: ${{ env.CacheFolders}}
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
-      - name: Login to Docker Hub
+      - name: Login to GHCR
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         continue-on-error: true
         uses: docker/login-action@v4
         with:
-          username: hardcoreeng
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare server
         run: |
@@ -262,13 +264,14 @@ jobs:
       - name: Installing...
         run: node common/scripts/install-run-rush.js install
 
-      - name: Login to Docker Hub
+      - name: Login to GHCR
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         continue-on-error: true
         uses: docker/login-action@v4
         with:
-          username: hardcoreeng
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
       - name: Docker Build
@@ -394,13 +397,14 @@ jobs:
       - name: Installing...
         run: node common/scripts/install-run-rush.js install
 
-      - name: Login to Docker Hub
+      - name: Login to GHCR
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         continue-on-error: true
         uses: docker/login-action@v4
         with:
-          username: hardcoreeng
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
       - name: Docker Build
@@ -491,13 +495,14 @@ jobs:
       - name: Installing...
         run: node common/scripts/install-run-rush.js install
 
-      - name: Login to Docker Hub
+      - name: Login to GHCR
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         continue-on-error: true
         uses: docker/login-action@v4
         with:
-          username: hardcoreeng
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
       - name: Docker Build
@@ -575,13 +580,14 @@ jobs:
       - name: Build sanity-tests suite
         run: node common/scripts/install-run-rush.js build -t @hanzo/tests-sanity
 
-      - name: Login to Docker Hub
+      - name: Login to GHCR
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
         continue-on-error: true
         uses: docker/login-action@v4
         with:
-          username: hardcoreeng
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Free space
         uses: ./.github/actions/free-disk-space
       - name: Docker Build
@@ -690,13 +696,12 @@ jobs:
       - name: Model version from git tags
         run: node common/scripts/install-run-rush.js model-version
 
-      - name: Login to Docker Hub
-        if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
-        continue-on-error: true
+      - name: Login to GHCR
         uses: docker/login-action@v4
         with:
-          username: hardcoreeng
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker build
         run: |
@@ -707,6 +712,7 @@ jobs:
           DOCKER_EXTRA: --platform=linux/amd64,linux/arm64
           DOCKER_BUILDKIT: 1
           DOCKER_BUILD_CLEANUP: true
+          DOCKER_REGISTRY: ghcr.io/
       - name: Docker build love-agent
         run: |
           cd ./services/ai-bot/love-agent
@@ -716,12 +722,7 @@ jobs:
           DOCKER_CLI_HINTS: false
           DOCKER_EXTRA: --platform=linux/amd64,linux/arm64
           DOCKER_BUILDKIT: 1
-      - name: Login to Docker Hub
-        if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/s') }}
-        uses: docker/login-action@v4
-        with:
-          username: hardcoreeng
-          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+          DOCKER_REGISTRY: ghcr.io/
       # - name: Docker push staging
       #   if: ${{ github.ref == 'refs/heads/main' }}
       #   run: node common/scripts/install-run-rush.js docker:staging -v
@@ -730,12 +731,16 @@ jobs:
         run: |
           echo Pushing release of tag ${{ github.ref }}
           node common/scripts/install-run-rush.js docker:push -v
+        env:
+          DOCKER_REGISTRY: ghcr.io/
       - name: Docker push love-agent
         if: ${{ (startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/s')) && (github.event_name != 'workflow_dispatch' || github.event.inputs.skip_publish != 'true') }}
         run: |
           echo Pushing love-agent release of tag ${{ github.ref }}
           cd ./services/ai-bot/love-agent
           pnpm docker:push
+        env:
+          DOCKER_REGISTRY: ghcr.io/
 
   dist-build:
     # if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || startsWith(github.ref, 'refs/tags/s') }}
