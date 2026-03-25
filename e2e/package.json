@@ -1,12 +1,18 @@
 {
-  "name": "@hanzo/e2e-bots",
+  "name": "@hanzo/e2e",
   "version": "0.7.0",
   "private": true,
   "scripts": {
     "ci": "playwright install --with-deps chromium",
     "test": "playwright test",
-    "test:bots": "playwright test tests/bots.spec.ts",
-    "test:headed": "playwright test tests/bots.spec.ts --headed"
+    "test:endpoints": "playwright test --project=endpoints",
+    "test:auth": "playwright test --project=auth",
+    "test:docs": "playwright test --project=docs",
+    "test:platform": "playwright test --project=platform",
+    "test:branding": "playwright test --project=branding",
+    "test:api": "playwright test --project=api",
+    "test:bots": "playwright test --project=bots",
+    "test:headed": "playwright test --headed"
   },
   "devDependencies": {
     "@playwright/test": "^1.48.2",
