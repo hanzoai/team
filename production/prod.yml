@@ -2,7 +2,7 @@ name: hanzo
 version: "3"
 services:
   nginx:
-    image: "nginx:1.21.3"
+    image: "ghcr.io/hanzoai/static:latest"
     ports:
       - "0.0.0.0:81:80"
     volumes:

@@ -160,7 +160,6 @@ jobs:
     - name: Validate production configs
       run: |
         cd production
-        nginx -t -c nginx.conf || true
         docker compose -f compose.yml config
     
   security-scan:
