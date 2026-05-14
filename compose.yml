@@ -1,0 +1,21 @@
+# Local dev compose for hanzo-team. One service. SQLite under
+# hz_data/. Mount source so HooksWatch + Air rebuild on change.
+#
+# Use:
+#   docker compose up --build
+#   open http://localhost:8080
+services:
+  team:
+    build: .
+    image: ghcr.io/hanzoai/team:dev
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      TEAM_HOOKS_WATCH: "false"      # the binary runs the prebuilt .js
+    volumes:
+      - team-data:/app/hz_data
+
+volumes:
+  team-data:

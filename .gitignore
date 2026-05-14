@@ -1,0 +1,14 @@
+team
+team.exe
+*.test
+hz_data/
+hz_hooks/
+.env
+.env.local
+node_modules/
+functions/dist/
+dist/
+*.log
+.DS_Store
+coverage.out
+coverage.html
