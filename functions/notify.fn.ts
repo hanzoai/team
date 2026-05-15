@@ -18,7 +18,7 @@ interface NotifyRequest {
   vars?:     Record<string, string | number | boolean>;
 }
 
-routerAdd("POST", "/api/notify", (e) => {
+routerAdd("POST", "/v1/notify", (e) => {
   if (!e.auth) {
     return e.json(401, { error: "auth required" });
   }

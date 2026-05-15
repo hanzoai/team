@@ -11,9 +11,9 @@ hanzo-team (one Go process, one port)
 ├── @hanzo/base               # SQLite + admin UI + JSVM + plugin system
 ├── platform plugin           # Hanzo IAM auth, KMS, multi-tenant
 ├── jsvm plugin               # Goja runtime, .fn.ts handlers in goroutines
-├── pkg/auth                  # /api/me, /api/logout
-├── pkg/billing               # /api/billing/* → commerce.hanzo.ai
-├── pkg/bot                   # /api/bot/*     → hanzo.bot
+├── pkg/auth                  # /v1/me, /v1/logout
+├── pkg/billing               # /v1/billing/* → commerce.hanzo.ai
+├── pkg/bot                   # /v1/bot/*     → hanzo.bot
 ├── functions/*.fn.ts         # ai, notify, calendar, github, … (one
 │                             #   .fn.ts per legacy TS pod)
 └── migrations/*.js           # workspaces, projects, tasks
@@ -24,10 +24,10 @@ configured **inside Hanzo IAM**. team-go never sees it — we are just
 an OAuth client.
 
 Billing: Commerce (`commerce.hanzo.ai`) is the single source of truth.
-The `/api/billing/*` surface here is a thin proxy that re-mints the
+The `/v1/billing/*` surface here is a thin proxy that re-mints the
 identity headers from the JWT-validated auth context.
 
-AI: `/api/bot/*` proxies to `hanzo.bot`. `/api/ai/complete` (in
+AI: `/v1/bot/*` proxies to `hanzo.bot`. `/v1/ai/complete` (in
 `functions/ai.fn.ts`) is a one-shot completion helper.
 
 ## Run locally
@@ -40,7 +40,7 @@ cp .env.example .env
 make dev
 # → ./team serve --dev --http :8080
 # → http://localhost:8080/_/        Base admin UI
-# → http://localhost:8080/api/      app API surface
+# → http://localhost:8080/v1/       app API surface
 ```
 
 Migration CLI:
@@ -87,7 +87,7 @@ Each legacy `pods/X/src/__start.ts` becomes one `functions/X.fn.ts`:
 
 ```ts
 /// <reference path="./types.d.ts" />
-routerAdd("POST", "/api/x/foo", (e) => {
+routerAdd("POST", "/v1/x/foo", (e) => {
   if (!e.auth) return e.json(401, { error: "auth required" });
   // … your handler …
   return e.json(200, { ok: true });
@@ -104,7 +104,7 @@ microservice fan-out.
 ```
 .
 ├── cmd/team/main.go        # ~80 lines — boot Base + plugins
-├── pkg/auth/auth.go        # /api/me, /api/logout
+├── pkg/auth/auth.go        # /v1/me, /v1/logout
 ├── pkg/billing/billing.go  # commerce proxy
 ├── pkg/bot/bot.go          # hanzo.bot proxy
 ├── functions/

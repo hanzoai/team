@@ -3,18 +3,20 @@
 // Per docs (hanzo/universe/CLAUDE.md): Commerce is the single source
 // of truth for billing, credits, usage and subscription state across
 // every Hanzo service. team-go does not own any of that — it just
-// reverse-proxies authenticated requests to /api/billing/* into the
+// reverse-proxies authenticated requests to /v1/billing/* into the
 // Commerce REST surface, attaching X-User-Id + X-Org-Id from the
 // JWT-validated request context.
 //
-//	GET  /api/billing/subscription            — current plan
-//	GET  /api/billing/usage?from=&to=         — usage records
-//	GET  /api/billing/invoices                — invoice list
-//	POST /api/billing/checkout                — start checkout session
+//	GET  /v1/billing/subscription            — current plan
+//	GET  /v1/billing/usage?from=&to=         — usage records
+//	GET  /v1/billing/invoices                — invoice list
+//	POST /v1/billing/checkout                — start checkout session
 //
 // The Commerce endpoint is read from COMMERCE_ENDPOINT
 // (default https://commerce.hanzo.ai). In-cluster, set to
-// http://commerce.hanzo.svc:8001 to avoid a public hop.
+// http://commerce.hanzo.svc:8001 to avoid a public hop. Commerce's
+// own surface is already on /v1/billing/*, so the proxy is a 1:1
+// path mapping — no rewrite.
 package billing
 
 import (
@@ -34,7 +36,7 @@ const (
 	envEndpoint     = "COMMERCE_ENDPOINT"
 )
 
-// Register binds the /api/billing/* proxy onto app.
+// Register binds the /v1/billing/* proxy onto app.
 func Register(app core.App) {
 	endpoint, err := url.Parse(commerceEndpoint())
 	if err != nil {
@@ -46,7 +48,7 @@ func Register(app core.App) {
 
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
-			e.Router.Any("/api/billing/{path...}", func(re *core.RequestEvent) error {
+			e.Router.Any("/v1/billing/{path...}", func(re *core.RequestEvent) error {
 				return proxy(re, endpoint, client)
 			})
 			return e.Next()
@@ -66,8 +68,8 @@ func proxy(re *core.RequestEvent, endpoint *url.URL, client *http.Client) error 
 		return re.UnauthorizedError("billing requires auth", nil)
 	}
 
-	// /api/billing/foo → COMMERCE/api/billing/foo (Commerce serves
-	// this surface natively, so no path rewrite).
+	// /v1/billing/foo → COMMERCE/v1/billing/foo (Commerce already serves
+	// /v1/billing/* natively, so the proxy is a 1:1 path mapping).
 	upstream := *endpoint
 	upstream.Path = strings.TrimRight(endpoint.Path, "/") + re.Request.URL.Path
 	upstream.RawQuery = re.Request.URL.RawQuery

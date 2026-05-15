@@ -4,8 +4,8 @@
 // wrapper, runtimes in hanzobot/ts, hanzobot/go, etc.). This package
 // exposes a single SSE endpoint that team's Svelte UI can talk to:
 //
-//	POST /api/bot/chat   { messages: [...] }   → SSE stream
-//	GET  /api/bot/skills                       → skill list (cached)
+//	POST /v1/bot/chat   { messages: [...] }   → SSE stream
+//	GET  /v1/bot/skills                       → skill list (cached)
 //
 // Skills + auth + rate limits live inside hanzo.bot. team-go just
 // forwards requests with the JWT-validated identity so the bot can
@@ -28,7 +28,7 @@ const (
 	envEndpoint     = "BOT_ENDPOINT"
 )
 
-// Register binds /api/bot/* onto app.
+// Register binds /v1/bot/* onto app.
 func Register(app core.App) {
 	endpoint, err := url.Parse(botEndpoint())
 	if err != nil {
@@ -41,7 +41,7 @@ func Register(app core.App) {
 
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
-			e.Router.Any("/api/bot/{path...}", func(re *core.RequestEvent) error {
+			e.Router.Any("/v1/bot/{path...}", func(re *core.RequestEvent) error {
 				return proxy(re, endpoint, client)
 			})
 			return e.Next()

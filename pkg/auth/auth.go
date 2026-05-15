@@ -1,9 +1,9 @@
 // Package auth surfaces the small set of endpoints the Huly Svelte UI
 // needs on top of what hanzo/base's platform plugin already provides:
 //
-//	GET  /api/me     — returns the resolved IAM user from the request ctx
-//	POST /api/logout — clears the local session cookie (IAM end-session
-//	                   is reachable at IAM_ENDPOINT/oauth/logout)
+//	GET  /v1/me     — returns the resolved IAM user from the request ctx
+//	POST /v1/logout — clears the local session cookie (IAM end-session
+//	                  is reachable at IAM_ENDPOINT/oauth/logout)
 //
 // All actual auth — code exchange, JWT validation, /oauth/userinfo —
 // is handled by hanzo/base/plugins/platform. This file is just thin UI
@@ -18,12 +18,12 @@ import (
 	"github.com/hanzoai/base/tools/hook"
 )
 
-// Register binds /api/me and /api/logout on the Base app.
+// Register binds /v1/me and /v1/logout on the Base app.
 func Register(app core.App) {
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
-			e.Router.GET("/api/me", handleMe)
-			e.Router.POST("/api/logout", handleLogout)
+			e.Router.GET("/v1/me", handleMe)
+			e.Router.POST("/v1/logout", handleLogout)
 			return e.Next()
 		},
 	})

@@ -1,5 +1,5 @@
-team
-team.exe
+/team
+/team.exe
 *.test
 hz_data/
 hz_hooks/

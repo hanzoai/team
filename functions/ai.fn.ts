@@ -2,14 +2,14 @@
 //
 // AI assistant — formerly the `ai-bot` + `love-agent` pods in the Huly
 // Node stack. Now runs inside Goja, one goroutine per request, served
-// by the team binary on /api/ai/*.
+// by the team binary on /v1/ai/*.
 //
 // Real chat + tool calling is delegated to hanzo.bot via
-// pkg/bot/bot.go (/api/bot/*). This handler is a small helper that
+// pkg/bot/bot.go (/v1/bot/*). This handler is a small helper that
 // the Huly Svelte UI calls for inline "explain" / "summarize" actions
 // where we want a single completion, not a streaming chat.
 
-routerAdd("POST", "/api/ai/complete", (e) => {
+routerAdd("POST", "/v1/ai/complete", (e) => {
   // platform plugin already validated the JWT; e.auth is set.
   if (!e.auth) {
     return e.json(401, { error: "auth required" });
