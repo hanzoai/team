@@ -22,7 +22,10 @@ import (
 	teamauth "github.com/hanzoai/team-go/pkg/auth"
 	teambilling "github.com/hanzoai/team-go/pkg/billing"
 	teambot "github.com/hanzoai/team-go/pkg/bot"
+	teamfiles "github.com/hanzoai/team-go/pkg/files"
 	teamiam "github.com/hanzoai/team-go/pkg/iam"
+	teammetrics "github.com/hanzoai/team-go/pkg/metrics"
+	teamsubscribe "github.com/hanzoai/team-go/pkg/subscribe"
 )
 
 func main() {
@@ -74,10 +77,15 @@ func main() {
 		},
 	})
 
-	teamiam.Register(app)     // /v1/iam/*     → IAM_ENDPOINT (transparent OIDC reverse proxy)
-	teamauth.Register(app)    // /v1/me, /v1/logout
-	teambilling.Register(app) // /v1/billing/* → commerce.hanzo.ai
-	teambot.Register(app)     // /v1/bot/*     → hanzo.bot (chat agent in-app)
+	teamiam.Register(app)       // /v1/iam/*      → IAM_ENDPOINT (transparent OIDC reverse proxy)
+	teamauth.Register(app)      // /v1/me, /v1/logout
+	teambilling.Register(app)   // /v1/billing/*  → commerce.hanzo.ai
+	teambot.Register(app)       // /v1/bot/*      → hanzo.bot (chat agent in-app)
+	teamfiles.Register(app)     // /v1/files/*    → 307 alias for Base /v1/base/files/*
+	teamsubscribe.Register(app) // /v1/subscribe  → WS record-change stream
+	// metrics middleware MUST register before app.Start so its wrap
+	// catches every other registered route.
+	teammetrics.Register(app, envOr("TEAM_VERSION", "dev"))
 
 	if err := app.Start(); err != nil {
 		log.Fatal(err)
