@@ -51,9 +51,12 @@ func Register(app core.App, version string) {
 
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
-			// /metrics must not be authed — scrapers (kube-prometheus,
-			// VictoriaMetrics agent) hit it without credentials.
-			e.Router.GET("/metrics", apis.WrapStdHandler(promhttp.Handler()))
+			// /v1/metrics must not be authed — scrapers (kube-prometheus,
+			// VictoriaMetrics agent) hit it without credentials. We use
+			// /v1/metrics not /metrics because every route in this stack
+			// lives under /v1; scrapers get a relabel_config in their
+			// ServiceMonitor / vmagent config to point at the right path.
+			e.Router.GET("/v1/metrics", apis.WrapStdHandler(promhttp.Handler()))
 
 			// Global router middleware: tap before+after the request.
 			// We can't read the matched pattern from RequestEvent
