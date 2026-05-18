@@ -7,12 +7,13 @@
 // only thing we actually need is the proxy. So we inline it here — small,
 // orthogonal, deletable the day we move team-go to base v1.x.
 //
-// Path contract: requests to /v1/iam/<rest> are forwarded verbatim to
-// ${IAM_ENDPOINT}/v1/iam/<rest>. The full /v1/iam prefix is preserved
-// because hanzo.id's OIDC discovery doc advertises endpoints at
-// https://hanzo.id/v1/iam/* (authorize, token, userinfo, jwks, …).
-// IAM_ENDPOINT therefore points at the host (https://hanzo.id), not the
-// /v1/iam mount.
+// Path contract: requests to /v1/iam/<rest> are forwarded to
+// ${IAM_ENDPOINT}<rest>. The /v1/iam prefix is the LOCAL mount —
+// hanzo.id itself mounts OIDC at the root (/oauth/authorize,
+// /oauth/token, /oauth/userinfo, /.well-known/jwks, …) per HIP-0026.
+// Stripping /v1/iam here keeps the same-origin contract for clients
+// while talking to hanzo.id's actual route layout. Matches the
+// base v1.x plugins/platform/iam_proxy.go behavior.
 package iam
 
 import (
@@ -63,8 +64,12 @@ func iamEndpoint() string {
 }
 
 func proxy(re *core.RequestEvent, endpoint *url.URL) error {
+	rest := strings.TrimPrefix(re.Request.URL.Path, "/v1/iam")
+	if rest == "" {
+		rest = "/"
+	}
 	upstream := *endpoint
-	upstream.Path = strings.TrimRight(endpoint.Path, "/") + re.Request.URL.Path
+	upstream.Path = strings.TrimRight(endpoint.Path, "/") + rest
 	upstream.RawQuery = re.Request.URL.RawQuery
 
 	req, err := http.NewRequestWithContext(re.Request.Context(),
