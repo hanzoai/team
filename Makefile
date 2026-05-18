@@ -24,8 +24,8 @@ functions:
 	@if command -v $(GOA) >/dev/null; then \
 		$(GOA) build --functions-dir ./functions --migrations-dir ./migrations; \
 	else \
-		echo "goa not installed; falling back to bunx esbuild"; \
-		bunx esbuild --bundle --format=cjs --target=es2015 --platform=neutral \
+		echo "goa not installed; falling back to npx esbuild"; \
+		npx --yes esbuild --bundle --format=cjs --target=es2015 --platform=neutral \
 			--outdir=functions/dist --out-extension:.js=.js \
 			functions/*.fn.ts; \
 	fi

@@ -2,14 +2,11 @@
 FROM golang:1.26-alpine AS build
 
 RUN apk add --no-cache git make bash nodejs npm
+RUN npm install -g esbuild
 
 WORKDIR /src
 COPY go.mod go.sum ./
 RUN go mod download
-
-# Install goa CLI for .ts → .js transpilation. Falls back to bunx
-# esbuild if goa isn't available (Makefile handles both).
-RUN go install github.com/liquidityio/goa/cmd/goa@latest || true
 
 COPY . .
 
