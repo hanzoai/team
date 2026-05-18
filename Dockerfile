@@ -1,5 +1,5 @@
 # Stage 1 — toolchain build (transpile .ts + go build).
-FROM golang:1.23-alpine AS build
+FROM golang:1.26-alpine AS build
 
 RUN apk add --no-cache git make bash nodejs npm
 
