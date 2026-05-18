@@ -72,26 +72,41 @@ func proxy(re *core.RequestEvent, endpoint *url.URL) error {
 	upstream.Path = strings.TrimRight(endpoint.Path, "/") + rest
 	upstream.RawQuery = re.Request.URL.RawQuery
 
+	// Only attach the body for methods that actually carry one. Passing
+	// a non-nil Body on GET/HEAD/DELETE makes Go's transport set
+	// Content-Length: 0, which hanzo.id's CF worker treats as malformed
+	// and 500s on.
+	var body io.Reader
+	switch re.Request.Method {
+	case http.MethodPost, http.MethodPut, http.MethodPatch:
+		body = re.Request.Body
+	}
 	req, err := http.NewRequestWithContext(re.Request.Context(),
-		re.Request.Method, upstream.String(), re.Request.Body)
+		re.Request.Method, upstream.String(), body)
 	if err != nil {
 		return re.InternalServerError("iam proxy build failed", err)
 	}
 	// Forward a small allow-list of headers. We deliberately do NOT
 	// blanket-forward: ingress controllers (and any front Cloudflare)
 	// attach X-Forwarded-*, CF-*, Cdn-Loop, Origin, etc., and hanzo.id's
-	// own Cloudflare worker throws if it sees a cf-* loop or a foreign
-	// X-Forwarded-Host. Same-origin OIDC works with just the OAuth-
-	// relevant headers.
+	// own Cloudflare worker throws if it sees a cf-* loop, a foreign
+	// X-Forwarded-Host, or even Content-Length: 0 on a GET (the latter
+	// reliably triggers a "Worker threw exception" 500 — verified
+	// against /.well-known/openid-configuration, /.well-known/jwks,
+	// /oauth/token; same-origin curl proves it).
+	//
+	// Content-Length is intentionally absent from this list. Go's
+	// http transport will set it correctly from req.Body for methods
+	// that actually carry a body; forwarding the client's value would
+	// just re-inject the 500 trigger on bodyless GETs.
 	allow := map[string]struct{}{
-		"Accept":          {},
-		"Accept-Language": {},
-		"Authorization":   {},
-		"Content-Type":    {},
-		"Content-Length":  {},
-		"Cookie":          {},
-		"User-Agent":      {},
-		"If-None-Match":   {},
+		"Accept":            {},
+		"Accept-Language":   {},
+		"Authorization":     {},
+		"Content-Type":      {},
+		"Cookie":            {},
+		"User-Agent":        {},
+		"If-None-Match":     {},
 		"If-Modified-Since": {},
 	}
 	for k, v := range re.Request.Header {
