@@ -9,12 +9,15 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/hanzoai/base"
+	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/base/plugins/jsvm"
 	"github.com/hanzoai/base/plugins/migratecmd"
 	"github.com/hanzoai/base/plugins/platform"
+	"github.com/hanzoai/base/tools/hook"
 
 	teamauth "github.com/hanzoai/team-go/pkg/auth"
 	teambilling "github.com/hanzoai/team-go/pkg/billing"
@@ -55,9 +58,24 @@ func main() {
 	})
 
 	// ---- Native-Go services ----
-	teamauth.Register(app)        // /v1/me, /v1/logout (platform handles /v1/iam/oauth/*)
-	teambilling.Register(app)     // /v1/billing/* → commerce.hanzo.ai
-	teambot.Register(app)         // /v1/bot/*     → hanzo.bot (chat agent in-app)
+	// /v1/health is the k8s readiness/liveness target — registered FIRST
+	// so it shadows any later catch-all. Always returns 200 with the
+	// running binary's commit (TEAM_VERSION env, set by Dockerfile build-arg).
+	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
+		Func: func(e *core.ServeEvent) error {
+			e.Router.GET("/v1/health", func(re *core.RequestEvent) error {
+				return re.JSON(http.StatusOK, map[string]string{
+					"status":  "ok",
+					"version": envOr("TEAM_VERSION", "dev"),
+				})
+			})
+			return e.Next()
+		},
+	})
+
+	teamauth.Register(app)    // /v1/me, /v1/logout (platform handles /v1/iam/oauth/*)
+	teambilling.Register(app) // /v1/billing/* → commerce.hanzo.ai
+	teambot.Register(app)     // /v1/bot/*     → hanzo.bot (chat agent in-app)
 
 	if err := app.Start(); err != nil {
 		log.Fatal(err)
