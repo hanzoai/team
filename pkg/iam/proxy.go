@@ -77,15 +77,27 @@ func proxy(re *core.RequestEvent, endpoint *url.URL) error {
 	if err != nil {
 		return re.InternalServerError("iam proxy build failed", err)
 	}
+	// Forward a small allow-list of headers. We deliberately do NOT
+	// blanket-forward: ingress controllers (and any front Cloudflare)
+	// attach X-Forwarded-*, CF-*, Cdn-Loop, Origin, etc., and hanzo.id's
+	// own Cloudflare worker throws if it sees a cf-* loop or a foreign
+	// X-Forwarded-Host. Same-origin OIDC works with just the OAuth-
+	// relevant headers.
+	allow := map[string]struct{}{
+		"Accept":          {},
+		"Accept-Language": {},
+		"Authorization":   {},
+		"Content-Type":    {},
+		"Content-Length":  {},
+		"Cookie":          {},
+		"User-Agent":      {},
+		"If-None-Match":   {},
+		"If-Modified-Since": {},
+	}
 	for k, v := range re.Request.Header {
-		switch k {
-		case "Connection", "Keep-Alive", "Proxy-Authenticate",
-			"Proxy-Authorization", "Te", "Trailer", "Transfer-Encoding",
-			"Upgrade", "Host",
-			"X-User-Id", "X-Org-Id", "X-User-Email":
-			continue
+		if _, ok := allow[k]; ok {
+			req.Header[k] = v
 		}
-		req.Header[k] = v
 	}
 	req.Host = endpoint.Host
 	req.Header.Set("X-Accel-Buffering", "no")
