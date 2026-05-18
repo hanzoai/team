@@ -150,7 +150,7 @@ migrate((app) => {
       { name: "assignee_id",  type: "text" },
       { name: "status",       type: "select", values: ["backlog","todo","in_progress","review","done","cancelled"], maxSelect: 1, required: true },
       { name: "priority",     type: "select", values: ["low","medium","high","urgent"], maxSelect: 1 },
-      { name: "labels",       type: "select", values: ["bug","feat","docs","chore","security"], maxSelect: 8 },
+      { name: "labels",       type: "select", values: ["bug","feat","docs","chore","security"], maxSelect: 5 },
       { name: "due_at",       type: "date" },
       { name: "created_at",   type: "autodate", onCreate: true },
       { name: "updated_at",   type: "autodate", onCreate: true, onUpdate: true },
