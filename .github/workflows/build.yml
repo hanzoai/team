@@ -1,0 +1,27 @@
+name: Container Images CD
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+jobs:
+  docker:
+    if: github.repository == 'hanzoai/team-go'
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    uses: hanzoai/.github/.github/workflows/docker-build.yml@main
+    with:
+      image: ghcr.io/hanzoai/team-go
+      platforms: linux/amd64
+      build-args: |
+        COMMIT_HASH=${{ github.sha }}
+    secrets: inherit
