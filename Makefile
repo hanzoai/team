@@ -3,7 +3,7 @@ BIN   := team
 PKG   := github.com/hanzoai/team-go/cmd/team
 
 # Goa CLI provides the TS→JS transpiler. Install via:
-#   go install github.com/liquidityio/goa/cmd/goa@latest
+#   go install github.com/<your-org>/goa/cmd/goa@latest
 GOA   ?= goa
 
 .PHONY: build dev run test fmt lint tidy functions clean docker
