@@ -1,8 +1,11 @@
 # Stage 1 — toolchain build (transpile .ts + go build).
 FROM golang:1.26-alpine AS build
 
-RUN apk add --no-cache git make bash nodejs npm
+RUN apk add --no-cache git make bash nodejs npm ca-certificates tzdata
 RUN npm install -g esbuild
+
+# Create nonroot user/group records to copy into scratch runtime.
+RUN addgroup -g 65532 -S nonroot && adduser -u 65532 -S nonroot -G nonroot
 
 WORKDIR /src
 COPY go.mod go.sum ./
@@ -14,11 +17,17 @@ COPY . .
 ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
 RUN make functions && go build -ldflags="-s -w" -o /team ./cmd/team
 
-# Stage 2 — distroless runtime. Ships ONLY:
+# Stage 2 — scratch runtime. Ships ONLY:
 #   - /team             (~25–30 MB static binary)
 #   - /functions/dist   (compiled JS hooks)
 #   - /migrations       (JS migrations, run by `team migrate up`)
-FROM gcr.io/distroless/static-debian12:nonroot
+#   - CA certs, tzdata, passwd/group for nonroot user
+FROM scratch
+
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=build /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=build /etc/passwd /etc/passwd
+COPY --from=build /etc/group /etc/group
 
 WORKDIR /app
 COPY --from=build /team /app/team
@@ -30,6 +39,6 @@ ENV TEAM_HOOKS_DIR=/app/functions/dist \
     TEAM_HOOKS_WATCH=false
 
 EXPOSE 8080
-USER nonroot:nonroot
+USER 65532:65532
 ENTRYPOINT ["/app/team"]
 CMD ["serve", "--http", "0.0.0.0:8080"]
