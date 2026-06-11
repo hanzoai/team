@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/prometheus/client_golang/prometheus/promhttp"
+	metric "github.com/luxfi/metric"
 )
 
 func TestRouteLabel(t *testing.T) {
@@ -51,12 +51,12 @@ func TestStatusRecorderCapture(t *testing.T) {
 }
 
 // TestMetricsEndpoint checks that scraping /metrics through
-// promhttp.Handler() surfaces our build_info gauge AND the standard
+// metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{}) surfaces our build_info gauge AND the standard
 // Go-runtime collectors (the implicit-coverage check for promauto).
 func TestMetricsEndpoint(t *testing.T) {
 	buildInfo.WithLabelValues("test").Set(1)
 
-	srv := httptest.NewServer(promhttp.Handler())
+	srv := httptest.NewServer(metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{}))
 	defer srv.Close()
 
 	resp, err := http.Get(srv.URL)
@@ -102,7 +102,7 @@ func TestRequestCountersScrape(t *testing.T) {
 	reqTotal.WithLabelValues("/v1/health", "GET", "200").Inc()
 	reqDuration.WithLabelValues("/v1/health", "GET").Observe(0.001)
 
-	srv := httptest.NewServer(promhttp.Handler())
+	srv := httptest.NewServer(metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{}))
 	defer srv.Close()
 	resp, err := http.Get(srv.URL)
 	if err != nil {

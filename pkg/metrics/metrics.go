@@ -2,7 +2,7 @@
 // middleware that records per-route timing + status. Go runtime metrics
 // (goroutines, GC, mem) come for free from the default promauto
 // registerer via collectors.NewGoCollector + NewProcessCollector, which
-// promhttp.Handler() exposes alongside our app metrics.
+// metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{}) exposes alongside our app metrics.
 //
 // Route label cardinality: we use the matched router pattern (not the
 // raw request path), so /v1/iam/oauth/token and /v1/iam/oauth/userinfo
@@ -19,24 +19,22 @@ import (
 	"github.com/hanzoai/base/apis"
 	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/base/tools/hook"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promauto"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
+	metric "github.com/luxfi/metric"
 )
 
 var (
-	reqTotal = promauto.NewCounterVec(prometheus.CounterOpts{
+	reqTotal = metric.NewCounterVec(metric.CounterOpts{
 		Name: "team_http_requests_total",
 		Help: "Count of HTTP requests handled by team-go.",
 	}, []string{"route", "method", "status"})
 
-	reqDuration = promauto.NewHistogramVec(prometheus.HistogramOpts{
+	reqDuration = metric.NewHistogramVec(metric.HistogramOpts{
 		Name:    "team_http_request_duration_seconds",
 		Help:    "Latency of HTTP requests handled by team-go.",
-		Buckets: prometheus.DefBuckets,
+		Buckets: metric.DefBuckets,
 	}, []string{"route", "method"})
 
-	buildInfo = promauto.NewGaugeVec(prometheus.GaugeOpts{
+	buildInfo = metric.NewGaugeVec(metric.GaugeOpts{
 		Name: "team_build_info",
 		Help: "Constant 1, labelled with the running binary's version.",
 	}, []string{"version"})
@@ -56,7 +54,7 @@ func Register(app core.App, version string) {
 			// /v1/metrics not /metrics because every route in this stack
 			// lives under /v1; scrapers get a relabel_config in their
 			// ServiceMonitor / vmagent config to point at the right path.
-			e.Router.GET("/v1/metrics", apis.WrapStdHandler(promhttp.Handler()))
+			e.Router.GET("/v1/metrics", apis.WrapStdHandler(metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{})))
 
 			// Global router middleware: tap before+after the request.
 			// We can't read the matched pattern from RequestEvent
