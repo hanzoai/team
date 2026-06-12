@@ -141,6 +141,8 @@ type FeatureFlags struct {
 	MmBlocksEnabled bool
 
 	ChannelBookmarks bool
+	// EnableExperienceAPI gates the DDIL experience surface area.
+	EnableExperienceAPI bool
 }
 
 func (f *FeatureFlags) SetDefaults() {
@@ -201,6 +203,7 @@ func (f *FeatureFlags) SetDefaults() {
 	f.MmBlocksEnabled = true
 
 	f.ChannelBookmarks = true
+	f.EnableExperienceAPI = true
 }
 
 // IsChannelPermissionPoliciesEnabled reports whether channel-scope
