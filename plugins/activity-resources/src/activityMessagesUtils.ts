@@ -24,25 +24,25 @@ import core, {
   type Mixin,
   type Ref,
   SortingOrder
-} from '@hanzo/core'
-import view, { type AttributeModel } from '@hanzo/view'
-import { getClient, getFiltredKeys } from '@hanzo/presentation'
+} from '@hanzoteam/core'
+import view, { type AttributeModel } from '@hanzoteam/view'
+import { getClient, getFiltredKeys } from '@hanzoteam/presentation'
 import {
   buildRemovedDoc,
   getAttributePresenter,
   getDocLinkTitle,
   hasAttributePresenter
-} from '@hanzo/view-resources'
-import contact, { type Person } from '@hanzo/contact'
-import { type IntlString } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui'
+} from '@hanzoteam/view-resources'
+import contact, { type Person } from '@hanzoteam/contact'
+import { type IntlString } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui'
 import activity, {
   type ActivityMessage,
   type DisplayActivityMessage,
   type DisplayDocUpdateMessage,
   type DocAttributeUpdates,
   type DocUpdateMessage
-} from '@hanzo/activity'
+} from '@hanzoteam/activity'
 
 // Use 5 minutes to combine similar messages
 const combineThresholdMs = 5 * 60 * 1000

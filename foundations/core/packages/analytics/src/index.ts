@@ -2,7 +2,7 @@
 // Copyright © 2024 Hanzo AI Inc
 //
 
-import { addEventListener, PlatformEvent, Severity, Status, translate } from '@hanzo/platform'
+import { addEventListener, PlatformEvent, Severity, Status, translate } from '@hanzoteam/platform'
 
 export const providers: AnalyticProvider[] = []
 export interface AnalyticProvider {

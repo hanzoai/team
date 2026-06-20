@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import documents, { TExternalSpace, TProject } from '@hanzo/model-controlled-documents'
-import type { Document } from '@hanzo/controlled-documents'
-import type { Product, ProductVersionState, ProductVersion } from '@hanzo/products'
-import { productsId } from '@hanzo/products'
-import activity from '@hanzo/activity'
-import { type Attachment } from '@hanzo/attachment'
-import contact from '@hanzo/contact'
-import chunter from '@hanzo/chunter'
-import { getRoleAttributeProps } from '@hanzo/setting'
+import documents, { TExternalSpace, TProject } from '@hanzoteam/model-controlled-documents'
+import type { Document } from '@hanzoteam/controlled-documents'
+import type { Product, ProductVersionState, ProductVersion } from '@hanzoteam/products'
+import { productsId } from '@hanzoteam/products'
+import activity from '@hanzoteam/activity'
+import { type Attachment } from '@hanzoteam/attachment'
+import contact from '@hanzoteam/contact'
+import chunter from '@hanzoteam/chunter'
+import { getRoleAttributeProps } from '@hanzoteam/setting'
 import type {
   Type,
   Ref,
@@ -32,8 +32,8 @@ import type {
   Role,
   Class,
   Doc
-} from '@hanzo/core'
-import { IndexKind, AccountUuid } from '@hanzo/core'
+} from '@hanzoteam/core'
+import { IndexKind, AccountUuid } from '@hanzoteam/core'
 import {
   type Builder,
   Model,
@@ -51,20 +51,20 @@ import {
   ReadOnly,
   Mixin,
   TypeAccountUuid
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import core, { TType } from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import tracker from '@hanzo/model-tracker'
-import { type Action } from '@hanzo/view'
-import view, { createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import { getEmbeddedLabel, type Asset } from '@hanzo/platform'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import core, { TType } from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
+import tracker from '@hanzoteam/model-tracker'
+import { type Action } from '@hanzoteam/view'
+import view, { createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import { getEmbeddedLabel, type Asset } from '@hanzoteam/platform'
 
 import products from './plugin'
 import { roles } from './roles'
 
-export { productsId } from '@hanzo/products/src/index'
+export { productsId } from '@hanzoteam/products/src/index'
 
 const productPermissions: Ref<Permission>[] = [
   documents.permission.CreateDocument,

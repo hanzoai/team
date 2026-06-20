@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Icon, Label, Loading, Scroller } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { TableBrowser, ViewletsSettingButton } from '@hanzo/view-resources'
+  import { Doc, DocumentQuery } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Icon, Label, Loading, Scroller } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { TableBrowser, ViewletsSettingButton } from '@hanzoteam/view-resources'
 
   import testManagement from '../../plugin'
 

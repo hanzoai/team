@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { formatName } from '@hanzo/contact'
-  import { Icon, Label } from '@hanzo/ui'
-  import activity, { DocAttributeUpdates } from '@hanzo/activity'
+  import { formatName } from '@hanzoteam/contact'
+  import { Icon, Label } from '@hanzoteam/ui'
+  import activity, { DocAttributeUpdates } from '@hanzoteam/activity'
 
   import contact from '../../plugin'
 

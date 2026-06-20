@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { State } from '@hanzo/process'
-  import { Button, IconAdd, showPopup } from '@hanzo/ui'
+  import { State } from '@hanzoteam/process'
+  import { Button, IconAdd, showPopup } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import AddTransitionPopup from './AddTransitionPopup.svelte'
 

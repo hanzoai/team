@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { MediaSession, MediaState } from '@hanzo/media'
+import type { MediaSession, MediaState } from '@hanzoteam/media'
 import { type Readable, derived, readable, writable } from 'svelte/store'
 
 export interface PermissionStore {

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, HTMLViewer } from '@hanzo/presentation'
-  import { TelegramMessage } from '@hanzo/telegram'
-  import { Ref } from '@hanzo/core'
+  import { createQuery, HTMLViewer } from '@hanzoteam/presentation'
+  import { TelegramMessage } from '@hanzoteam/telegram'
+  import { Ref } from '@hanzoteam/core'
 
   import telegram from '../plugin'
 

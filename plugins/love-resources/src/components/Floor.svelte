@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole, Ref, WithLookup } from '@hanzo/core'
-  import { Floor, Room } from '@hanzo/love'
-  import { Component, DropdownLabels, Header, IconEdit, ModernButton } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { ViewletSelector } from '@hanzo/view-resources'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Ref, WithLookup } from '@hanzoteam/core'
+  import { Floor, Room } from '@hanzoteam/love'
+  import { Component, DropdownLabels, Header, IconEdit, ModernButton } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { ViewletSelector } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import lovePlg from '../plugin'

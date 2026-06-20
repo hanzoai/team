@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person as Contact } from '@hanzo/contact'
-  import type { Class, Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { IconSize } from '@hanzo/ui'
+  import { Person as Contact } from '@hanzoteam/contact'
+  import type { Class, Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { IconSize } from '@hanzoteam/ui'
   import Avatar from './Avatar.svelte'
   import EmptyAvatar from './icons/EmptyAvatar.svelte'
 

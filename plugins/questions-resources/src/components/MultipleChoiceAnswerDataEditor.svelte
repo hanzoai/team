@@ -13,8 +13,8 @@
     MultipleChoiceQuestion,
     MultipleChoiceQuestionAnswer,
     MultipleChoiceQuestionData
-  } from '@hanzo/questions'
-  import { CheckBox } from '@hanzo/ui'
+  } from '@hanzoteam/questions'
+  import { CheckBox } from '@hanzoteam/ui'
   import LabelEditor from './LabelEditor.svelte'
   import OptionsList from './OptionsList.svelte'
 

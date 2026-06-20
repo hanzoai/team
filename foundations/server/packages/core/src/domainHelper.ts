@@ -1,4 +1,4 @@
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import type {
   Doc,
   Domain,
@@ -8,8 +8,8 @@ import type {
   MeasureContext,
   ModelDb,
   WorkspaceUuid
-} from '@hanzo/core'
-import core, { DOMAIN_BENCHMARK, DOMAIN_MODEL, IndexKind, IndexOrder } from '@hanzo/core'
+} from '@hanzoteam/core'
+import core, { DOMAIN_BENCHMARK, DOMAIN_MODEL, IndexKind, IndexOrder } from '@hanzoteam/core'
 import { deepEqual } from 'fast-equals'
 import type { DomainHelper, DomainHelperOperations } from './adapter'
 

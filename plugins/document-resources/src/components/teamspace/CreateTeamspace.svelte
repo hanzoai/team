@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
   import core, {
     Data,
     DocumentUpdate,
@@ -27,10 +27,10 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import document, { Teamspace, DocumentEvents } from '@hanzo/document'
-  import { Asset } from '@hanzo/platform'
-  import presentation, { IconWithEmoji, Card, getClient, reduceCalls } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import document, { Teamspace, DocumentEvents } from '@hanzoteam/document'
+  import { Asset } from '@hanzoteam/platform'
+  import presentation, { IconWithEmoji, Card, getClient, reduceCalls } from '@hanzoteam/presentation'
   import {
     Button,
     EditBox,
@@ -41,11 +41,11 @@
     getPlatformColorForTextDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { IconPicker, SpaceTypeSelector } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { IconPicker, SpaceTypeSelector } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   import documentRes from '../../plugin'
 

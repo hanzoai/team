@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { FindLabelsParams, Label } from '@hanzo/communication-types'
+import type { FindLabelsParams, Label } from '@hanzoteam/communication-types'
 import {
   CardEventType,
   CreateLabelEvent,
@@ -25,8 +25,8 @@ import {
   RemoveCardEvent,
   RemoveLabelEvent,
   UpdateCardTypeEvent
-} from '@hanzo/communication-sdk-types'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/communication-sdk-types'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 import { QueryResult } from '../result'
 import { type Query, type QueryId, QueryOptions } from '../types'

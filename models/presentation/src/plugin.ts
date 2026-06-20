@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
+import { mergeIds } from '@hanzoteam/platform'
 // Import plugin directly to prevent .svelte components to being exposed to type typescript.
-import presentation, { presentationId } from '@hanzo/presentation/src/plugin'
+import presentation, { presentationId } from '@hanzoteam/presentation/src/plugin'
 
 export default mergeIds(presentationId, presentation, {})

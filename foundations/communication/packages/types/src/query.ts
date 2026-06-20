@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { SortingOrder } from '@hanzo/core'
+import { SortingOrder } from '@hanzoteam/core'
 
 import type { MessageID } from './message'
 import type { ContextID, NotificationID, NotificationType } from './notification'

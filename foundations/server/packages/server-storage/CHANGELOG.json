@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/server-storage",
+  "name": "@hanzoteam/server-storage",
   "entries": [
     {
       "version": "0.7.17",
@@ -13,19 +13,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `^0.7.17` to `0.7.18`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `^0.7.17` to `0.7.18`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `^0.7.16` to `0.7.17`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `^0.7.16` to `0.7.17`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `^0.7.16` to `0.7.17`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `^0.7.16` to `0.7.17`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `^0.7.16` to `0.7.17`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `^0.7.16` to `0.7.17`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `^0.7.16` to `0.7.17`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `^0.7.16` to `0.7.17`"
           }
         ]
       }
@@ -42,19 +42,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `^0.7.16` to `0.7.17`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `^0.7.16` to `0.7.17`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `^0.7.15` to `0.7.16`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `^0.7.15` to `0.7.16`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `^0.7.15` to `0.7.16`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `^0.7.15` to `0.7.16`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `^0.7.15` to `0.7.16`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `^0.7.15` to `0.7.16`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `^0.7.15` to `0.7.16`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `^0.7.15` to `0.7.16`"
           }
         ]
       }
@@ -71,19 +71,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `^0.7.14` to `0.7.15`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `^0.7.14` to `0.7.15`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `^0.7.14` to `0.7.15`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `^0.7.14` to `0.7.15`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `^0.7.14` to `0.7.15`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `^0.7.14` to `0.7.15`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `^0.7.14` to `0.7.15`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `^0.7.14` to `0.7.15`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `^0.7.14` to `0.7.15`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `^0.7.14` to `0.7.15`"
           }
         ]
       }
@@ -100,19 +100,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.7` to `0.7.8`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.7` to `0.7.8`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.7` to `0.7.8`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.7` to `0.7.8`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.7` to `0.7.8`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.7` to `0.7.8`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.7` to `0.7.8`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.7` to `0.7.8`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.8` to `0.7.9`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.8` to `0.7.9`"
           }
         ]
       }
@@ -129,19 +129,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.6` to `0.7.7`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.6` to `0.7.7`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.6` to `0.7.7`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.6` to `0.7.7`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.7` to `0.7.8`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.7` to `0.7.8`"
           }
         ]
       }
@@ -153,19 +153,19 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.6` to `0.7.7`"
           }
         ]
       }
@@ -177,19 +177,19 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.5` to `0.7.6`"
           }
         ]
       }
@@ -206,19 +206,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.4` to `0.7.5`"
           }
         ]
       }
@@ -235,19 +235,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.2` to `0.7.3`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.2` to `0.7.3`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.2` to `0.7.3`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.2` to `0.7.3`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.2` to `0.7.3`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.2` to `0.7.3`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.2` to `0.7.3`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.2` to `0.7.3`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.3` to `0.7.4`"
           }
         ]
       }
@@ -264,19 +264,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.1` to `0.7.2`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.1` to `0.7.2`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.1` to `0.7.2`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.1` to `0.7.2`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.1` to `0.7.2`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.1` to `0.7.2`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.1` to `0.7.2`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.1` to `0.7.2`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.2` to `0.7.3`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.2` to `0.7.3`"
           }
         ]
       }
@@ -296,19 +296,19 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.0` to `0.7.1`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.0` to `0.7.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/minio\" from `0.7.0` to `0.7.1`"
+            "comment": "Updating dependency \"@hanzoteam/minio\" from `0.7.0` to `0.7.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/s3\" from `0.7.0` to `0.7.1`"
+            "comment": "Updating dependency \"@hanzoteam/s3\" from `0.7.0` to `0.7.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/datalake\" from `0.7.0` to `0.7.1`"
+            "comment": "Updating dependency \"@hanzoteam/datalake\" from `0.7.0` to `0.7.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.1` to `0.7.2`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.1` to `0.7.2`"
           }
         ]
       }
@@ -325,7 +325,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/hanzolake\" from `0.7.0` to `0.7.1`"
+            "comment": "Updating dependency \"@hanzoteam/hanzolake\" from `0.7.0` to `0.7.1`"
           }
         ]
       }

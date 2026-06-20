@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import attachment, { AttachmentsEvents } from '@hanzo/attachment'
+  import { Analytics } from '@hanzoteam/analytics'
+  import attachment, { AttachmentsEvents } from '@hanzoteam/attachment'
   import contact, {
     AvatarType,
     Channel,
@@ -22,8 +22,8 @@
     combineName,
     findContacts,
     Person
-  } from '@hanzo/contact'
-  import { ChannelsDropdown, EditableAvatar, PersonPresenter } from '@hanzo/contact-resources'
+  } from '@hanzoteam/contact'
+  import { ChannelsDropdown, EditableAvatar, PersonPresenter } from '@hanzoteam/contact-resources'
   import core, {
     Account,
     AttachedData,
@@ -38,8 +38,8 @@
     WithLookup,
     type Blob,
     type PersonId
-  } from '@hanzo/core'
-  import { getMetadata, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  } from '@hanzoteam/core'
+  import { getMetadata, getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
   import presentation, {
     Card,
     createQuery,
@@ -51,10 +51,10 @@
     KeyedAttribute,
     MessageBox,
     MultipleDraftController
-  } from '@hanzo/presentation'
-  import { Candidate, CandidateDraft, RecruitEvents } from '@hanzo/recruit'
-  import { recognizeDocument } from '@hanzo/rekoni'
-  import tags, { findTagCategory, TagElement, TagReference } from '@hanzo/tags'
+  } from '@hanzoteam/presentation'
+  import { Candidate, CandidateDraft, RecruitEvents } from '@hanzoteam/recruit'
+  import { recognizeDocument } from '@hanzoteam/rekoni'
+  import tags, { findTagCategory, TagElement, TagReference } from '@hanzoteam/tags'
   import {
     Button,
     Component,
@@ -70,7 +70,7 @@
     showPopup,
     Spinner,
     ActionIcon
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import recruit from '../plugin'
   import { getCandidateIdentifier } from '../utils'

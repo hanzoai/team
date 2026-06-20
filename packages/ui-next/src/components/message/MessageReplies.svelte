@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { ticker, DAY, HOUR, MINUTE, languageStore } from '@hanzo/ui'
-  import { translateCB } from '@hanzo/platform'
+  import { ticker, DAY, HOUR, MINUTE, languageStore } from '@hanzoteam/ui'
+  import { translateCB } from '@hanzoteam/platform'
 
   import uiNext from '../../plugin'
   import Label from '../Label.svelte'

@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import inventory, { Category } from '@hanzo/inventory'
-  import { createQuery } from '@hanzo/presentation'
+  import { Ref } from '@hanzoteam/core'
+  import inventory, { Category } from '@hanzoteam/inventory'
+  import { createQuery } from '@hanzoteam/presentation'
   import CategoryPresenter from './CategoryPresenter.svelte'
 
   export let value: Ref<Category>

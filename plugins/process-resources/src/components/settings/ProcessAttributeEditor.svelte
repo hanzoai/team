@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getAttributeEditor, getAttributePresenterClass, getClient } from '@hanzo/presentation'
-  import { Process } from '@hanzo/process'
-  import { AnySvelteComponent } from '@hanzo/ui'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getAttributeEditor, getAttributePresenterClass, getClient } from '@hanzoteam/presentation'
+  import { Process } from '@hanzoteam/process'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { getContext } from '../../utils'
   import ProcessAttribute from '../ProcessAttribute.svelte'

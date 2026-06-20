@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import achievement from '@hanzo/achievement'
-  import { Label } from '@hanzo/ui'
+  import achievement from '@hanzoteam/achievement'
+  import { Label } from '@hanzoteam/ui'
 </script>
 
 <div class="header-container gap-2 px-4">

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery } from '@hanzo/presentation'
-  import { Ref } from '@hanzo/core'
-  import { SharedMessages } from '@hanzo/gmail'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Ref } from '@hanzoteam/core'
+  import { SharedMessages } from '@hanzoteam/gmail'
 
   import gmail from '../../plugin'
   import SharedMessagesView from '../SharedMessages.svelte'

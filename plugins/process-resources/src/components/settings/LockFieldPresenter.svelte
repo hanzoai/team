@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../../plugin'
-  import { Process } from '@hanzo/process'
+  import { Process } from '@hanzoteam/process'
 
   export let process: Process
   export let params: Record<string, any>

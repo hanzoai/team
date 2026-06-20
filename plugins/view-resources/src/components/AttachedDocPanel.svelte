@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedDoc, Class, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Component } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { AttachedDoc, Class, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Component } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   export let _id: Ref<AttachedDoc>
   export let _class: Ref<Class<AttachedDoc>>

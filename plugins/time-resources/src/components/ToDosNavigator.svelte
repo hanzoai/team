@@ -1,12 +1,12 @@
 <script lang="ts">
-  import calendar from '@hanzo/calendar'
-  import { ScheduleNavSection } from '@hanzo/calendar-resources'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { Ref, getCurrentAccount } from '@hanzo/core'
-  import { Asset, getMetadata, getResource, IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { NavFooter } from '@hanzo/workbench-resources'
-  import tagsPlugin, { TagElement as TagElementType } from '@hanzo/tags'
+  import calendar from '@hanzoteam/calendar'
+  import { ScheduleNavSection } from '@hanzoteam/calendar-resources'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { Asset, getMetadata, getResource, IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { NavFooter } from '@hanzoteam/workbench-resources'
+  import tagsPlugin, { TagElement as TagElementType } from '@hanzoteam/tags'
   import ui, {
     Label,
     Separator,
@@ -23,7 +23,7 @@
     IconMoreV,
     IconLink,
     Action
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { ToDosMode } from '..'
   import time from '../plugin'
 

@@ -19,7 +19,7 @@ import {
   DocumentState,
   type Project,
   type ProjectDocument
-} from '@hanzo/controlled-documents'
+} from '@hanzoteam/controlled-documents'
 import {
   checkPermission,
   type Class,
@@ -29,11 +29,11 @@ import {
   type Ref,
   type RelatedDocument,
   type WithLookup
-} from '@hanzo/core'
-import { type Resources } from '@hanzo/platform'
-import { getClient, MessageBox, type ObjectSearchResult } from '@hanzo/presentation'
-import { showPopup } from '@hanzo/ui'
-import { getCurrentEmployee } from '@hanzo/contact'
+} from '@hanzoteam/core'
+import { type Resources } from '@hanzoteam/platform'
+import { getClient, MessageBox, type ObjectSearchResult } from '@hanzoteam/presentation'
+import { showPopup } from '@hanzoteam/ui'
+import { getCurrentEmployee } from '@hanzoteam/contact'
 
 import CreateDocument from './components/CreateDocument.svelte'
 import DeleteCategoryPopup from './components/category/popups/DeleteCategoryPopup.svelte'
@@ -81,7 +81,7 @@ import ProjectPresenter from './components/project/ProjectPresenter.svelte'
 import ProjectRefPresenter from './components/project/ProjectRefPresenter.svelte'
 import Projects from './components/project/Projects.svelte'
 
-import { getPrintBaseURL } from '@hanzo/print'
+import { getPrintBaseURL } from '@hanzoteam/print'
 import CreateFolder from './components/create-doc/CreateFolder.svelte'
 import TransferDocumentPopup from './components/document/popups/TransferDocumentPopup.svelte'
 import { resolveLocation } from './navigation'

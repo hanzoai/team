@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { devModelId } from '@hanzo/devmodel'
-import { PresentationClientHook } from '@hanzo/devmodel-resources'
-import login from '@hanzo/login'
-import { addLocation, setMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+import { devModelId } from '@hanzoteam/devmodel'
+import { PresentationClientHook } from '@hanzoteam/devmodel-resources'
+import login from '@hanzoteam/login'
+import { addLocation, setMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
 
 export function configurePlatformDevServer () {
   // Set devmodel to hook client to be able to present all activity
@@ -28,6 +28,6 @@ function enableDevModel () {
   setMetadata(presentation.metadata.ClientHook, new PresentationClientHook())
   addLocation(
     devModelId,
-    async () => await import(/* webpackChunkName: "devmodel" */ '@hanzo/devmodel-resources')
+    async () => await import(/* webpackChunkName: "devmodel" */ '@hanzoteam/devmodel-resources')
   )
 }

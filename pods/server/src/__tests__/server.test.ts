@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { UNAUTHORIZED } from '@hanzo/platform'
-import { RPCHandler, type Response } from '@hanzo/rpc'
-import { generateToken } from '@hanzo/server-token'
+import { UNAUTHORIZED } from '@hanzoteam/platform'
+import { RPCHandler, type Response } from '@hanzoteam/rpc'
+import { generateToken } from '@hanzoteam/server-token'
 import WebSocket from 'ws'
 
 import {
@@ -39,9 +39,9 @@ import {
   type Tx,
   type TxResult,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { startSessionManager, type SessionManagerOptions } from '@hanzo/server'
-import { createDummyQueue, createDummyStorageAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { startSessionManager, type SessionManagerOptions } from '@hanzoteam/server'
+import { createDummyQueue, createDummyStorageAdapter } from '@hanzoteam/server-core'
 import { startHttpServer } from '../server_http'
 import { genMinModel } from './minmodel'
 

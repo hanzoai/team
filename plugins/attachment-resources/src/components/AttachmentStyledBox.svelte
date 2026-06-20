@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
+  import { Attachment } from '@hanzoteam/attachment'
   import {
     type Blob,
     BlobMetadata,
@@ -26,8 +26,8 @@
     Space,
     toIdMap,
     TxOperations
-  } from '@hanzo/core'
-  import { IntlString, setPlatformStatus, unknownError } from '@hanzo/platform'
+  } from '@hanzoteam/core'
+  import { IntlString, setPlatformStatus, unknownError } from '@hanzoteam/platform'
   import {
     createQuery,
     deleteFile,
@@ -36,12 +36,12 @@
     FileOrBlob,
     getClient,
     uploadFile
-  } from '@hanzo/presentation'
-  import { EmptyMarkup } from '@hanzo/text'
-  import textEditor, { type RefAction } from '@hanzo/text-editor'
-  import { AttachIcon, EditorKitOptions, StyledTextBox } from '@hanzo/text-editor-resources'
-  import { ButtonSize } from '@hanzo/ui'
-  import { type FileUploadCallbackParams, uploadFiles } from '@hanzo/uploader'
+  } from '@hanzoteam/presentation'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import textEditor, { type RefAction } from '@hanzoteam/text-editor'
+  import { AttachIcon, EditorKitOptions, StyledTextBox } from '@hanzoteam/text-editor-resources'
+  import { ButtonSize } from '@hanzoteam/ui'
+  import { type FileUploadCallbackParams, uploadFiles } from '@hanzoteam/uploader'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import attachment from '../plugin'

@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { UserBox } from '@hanzo/contact-resources'
-  import type { Lead } from '@hanzo/lead'
-  import { EditBox, Grid } from '@hanzo/ui'
-  import contact from '@hanzo/contact'
+  import { getClient } from '@hanzoteam/presentation'
+  import { UserBox } from '@hanzoteam/contact-resources'
+  import type { Lead } from '@hanzoteam/lead'
+  import { EditBox, Grid } from '@hanzoteam/ui'
+  import contact from '@hanzoteam/contact'
   import { createEventDispatcher, onMount } from 'svelte'
   import lead from '../plugin'
-  import { restrictionStore } from '@hanzo/view-resources'
+  import { restrictionStore } from '@hanzoteam/view-resources'
 
   export let object: Lead
   export let readonly: boolean = false

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { Event } from '@hanzo/calendar'
-import { Data, MeasureContext, WorkspaceUuid } from '@hanzo/core'
+import { Event } from '@hanzoteam/calendar'
+import { Data, MeasureContext, WorkspaceUuid } from '@hanzoteam/core'
 import { createNotification, MeetingNotificationType } from './notification'
 import { type EventCUDMessage } from './types'
 import { isMeeting } from './utils'

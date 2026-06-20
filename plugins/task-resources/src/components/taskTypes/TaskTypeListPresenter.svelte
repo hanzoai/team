@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import type { TaskType } from '@hanzo/task'
-  import view from '@hanzo/view'
+  import { Ref } from '@hanzoteam/core'
+  import type { TaskType } from '@hanzoteam/task'
+  import view from '@hanzoteam/view'
   import { taskTypeStore } from '../../'
   import TaskTypeIcon from './TaskTypeIcon.svelte'
-  import { getClient } from '@hanzo/presentation'
-  import task from '@hanzo/task'
+  import { getClient } from '@hanzoteam/presentation'
+  import task from '@hanzoteam/task'
 
   export let value: TaskType | Ref<TaskType> | undefined
 

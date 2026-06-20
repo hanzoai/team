@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { setMetadata } from '@hanzo/platform'
-import type { PersonUuid, WorkspaceUuid } from '@hanzo/core'
+import { setMetadata } from '@hanzoteam/platform'
+import type { PersonUuid, WorkspaceUuid } from '@hanzoteam/core'
 import { decodeToken, generateToken } from '../token'
 import plugin from '../plugin'
 

@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, ArrOf, Class, Doc, Ref, Type } from '@hanzo/core'
-  import { ArrOf as createArrOf } from '@hanzo/model'
-  import { getClient } from '@hanzo/presentation'
-  import { AnyComponent, Component, DropdownLabelsIntl, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import core, { AnyAttribute, ArrOf, Class, Doc, Ref, Type } from '@hanzoteam/core'
+  import { ArrOf as createArrOf } from '@hanzoteam/model'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnyComponent, Component, DropdownLabelsIntl, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
 
   export let type: ArrOf<Doc> | undefined
   export let editable: boolean = true

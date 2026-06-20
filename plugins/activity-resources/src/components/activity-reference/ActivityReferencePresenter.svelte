@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityReference } from '@hanzo/activity'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Action, Label, ShowMore } from '@hanzo/ui'
-  import { getPersonByPersonIdCb } from '@hanzo/contact-resources'
-  import { Doc } from '@hanzo/core'
-  import { getCurrentEmployee, Person } from '@hanzo/contact'
-  import view, { ObjectPanel } from '@hanzo/view'
-  import { DocNavLink, getDocLinkTitle } from '@hanzo/view-resources'
+  import activity, { ActivityReference } from '@hanzoteam/activity'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Action, Label, ShowMore } from '@hanzoteam/ui'
+  import { getPersonByPersonIdCb } from '@hanzoteam/contact-resources'
+  import { Doc } from '@hanzoteam/core'
+  import { getCurrentEmployee, Person } from '@hanzoteam/contact'
+  import view, { ObjectPanel } from '@hanzoteam/view'
+  import { DocNavLink, getDocLinkTitle } from '@hanzoteam/view-resources'
 
   import ReferenceContent from './ReferenceContent.svelte'
   import ReferenceSrcPresenter from './ReferenceSrcPresenter.svelte'

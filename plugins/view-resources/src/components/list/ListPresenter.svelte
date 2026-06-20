@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { PermissionsStore } from '@hanzo/contact'
-  import core, { AnyAttribute, Doc, Ref, TypedSpace } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { AttributeModel } from '@hanzo/view'
+  import contact, { PermissionsStore } from '@hanzoteam/contact'
+  import core, { AnyAttribute, Doc, Ref, TypedSpace } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { AttributeModel } from '@hanzoteam/view'
   import { createEventDispatcher, onMount } from 'svelte'
   import { Readable } from 'svelte/store'
   import { canChangeAttribute, FixedColumn, restrictionStore } from '../..'

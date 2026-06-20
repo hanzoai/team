@@ -3,8 +3,8 @@
 -->
 
 <script lang="ts">
-  import { StateTag, StateType } from '@hanzo/ui'
-  import type { TrainingRequest } from '@hanzo/training'
+  import { StateTag, StateType } from '@hanzoteam/ui'
+  import type { TrainingRequest } from '@hanzoteam/training'
 
   import training from '../plugin'
 

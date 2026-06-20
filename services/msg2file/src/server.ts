@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { Token } from '@hanzo/server-token'
+import { Token } from '@hanzoteam/server-token'
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
 import { type Server } from 'http'
-import { extractToken } from '@hanzo/server-client'
-import { MeasureContext } from '@hanzo/core'
-import { CardID } from '@hanzo/communication-types'
+import { extractToken } from '@hanzoteam/server-client'
+import { MeasureContext } from '@hanzoteam/core'
+import { CardID } from '@hanzoteam/communication-types'
 
 import config from './config'
 import { register } from './worker'

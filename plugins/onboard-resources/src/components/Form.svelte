@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { reduceCalls } from '@hanzo/core'
-  import { type IntlString, OK, Severity, Status, translate } from '@hanzo/platform'
-  import { Button, Label, StylishEdit, deviceOptionsStore as deviceInfo, themeStore } from '@hanzo/ui'
+  import { reduceCalls } from '@hanzoteam/core'
+  import { type IntlString, OK, Severity, Status, translate } from '@hanzoteam/platform'
+  import { Button, Label, StylishEdit, deviceOptionsStore as deviceInfo, themeStore } from '@hanzoteam/ui'
   import { onMount } from 'svelte'
 
   import { BottomAction } from '..'

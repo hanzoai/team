@@ -10,9 +10,9 @@ import type {
   Version,
   WorkspaceInfoWithStatus,
   WorkspaceUuid
-} from '@hanzo/core'
-import core, { Hierarchy, systemAccountUuid, TxProcessor, versionToString } from '@hanzo/core'
-import { getAccountClient, getTransactorEndpoint } from '@hanzo/server-client'
+} from '@hanzoteam/core'
+import core, { Hierarchy, systemAccountUuid, TxProcessor, versionToString } from '@hanzoteam/core'
+import { getAccountClient, getTransactorEndpoint } from '@hanzoteam/server-client'
 import {
   createContentAdapter,
   QueueTopic,
@@ -30,11 +30,11 @@ import {
   type QueueWorkspaceMessage,
   type QueueWorkspaceReindexMessage,
   type StorageAdapter
-} from '@hanzo/server-core'
-import { type QueueSourced, type FulltextDBConfiguration } from '@hanzo/server-indexer'
-import { generateToken } from '@hanzo/server-token'
-import { type Event } from '@hanzo/communication-sdk-types'
-import { getWorkspaceClient as getHanzolakeClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/server-core'
+import { type QueueSourced, type FulltextDBConfiguration } from '@hanzoteam/server-indexer'
+import { generateToken } from '@hanzoteam/server-token'
+import { type Event } from '@hanzoteam/communication-sdk-types'
+import { getWorkspaceClient as getHanzolakeClient } from '@hanzoteam/hanzolake-client'
 
 import { WorkspaceIndexer } from './workspace'
 

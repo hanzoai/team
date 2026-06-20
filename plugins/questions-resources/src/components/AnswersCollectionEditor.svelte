@@ -2,10 +2,10 @@
   Copyright @ 2024 Hanzo AI Inc.
 -->
 <script lang="ts">
-  import type { Answer, AnswerDataOf, Question } from '@hanzo/questions'
-  import { type Class, type Doc, type Ref, SortingOrder } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import type { Answer, AnswerDataOf, Question } from '@hanzoteam/questions'
+  import { type Class, type Doc, type Ref, SortingOrder } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
   import questions from '../plugin'
   import { createAnswer } from '../utils'
   import AnswersItemEditor from './AnswersItemEditor.svelte'

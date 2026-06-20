@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Doc, DocumentUpdate } from '@hanzo/core'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { Process, type State, type Step } from '@hanzo/process'
-  import { clearSettingsStore } from '@hanzo/setting-resources'
-  import { ButtonIcon, IconDelete, Modal } from '@hanzo/ui'
+  import { Doc, DocumentUpdate } from '@hanzoteam/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { Process, type State, type Step } from '@hanzoteam/process'
+  import { clearSettingsStore } from '@hanzoteam/setting-resources'
+  import { ButtonIcon, IconDelete, Modal } from '@hanzoteam/ui'
   import plugin from '../plugin'
   import StepEditor from './StepEditor.svelte'
 

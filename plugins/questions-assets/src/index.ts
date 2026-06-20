@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { loadMetadata } from '@hanzo/platform'
-import questions from '@hanzo/questions'
+import { loadMetadata } from '@hanzoteam/platform'
+import questions from '@hanzoteam/questions'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(questions.icon, {

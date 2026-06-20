@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Context, Func, Process, ProcessFunction } from '@hanzo/process'
-  import { ButtonIcon, eventToHTMLElement, IconSettings, Label, showPopup } from '@hanzo/ui'
+  import { AnyAttribute, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Context, Func, Process, ProcessFunction } from '@hanzoteam/process'
+  import { ButtonIcon, eventToHTMLElement, IconSettings, Label, showPopup } from '@hanzoteam/ui'
   import plugin from '../../plugin'
 
   export let attribute: AnyAttribute

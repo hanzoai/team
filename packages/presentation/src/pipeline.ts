@@ -20,8 +20,8 @@ import {
   type Tx,
   type TxResult,
   type WithLookup
-} from '@hanzo/core'
-import platform, { PlatformError, setPlatformStatus, unknownError, type Resource } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import platform, { PlatformError, setPlatformStatus, unknownError, type Resource } from '@hanzoteam/platform'
 
 /**
  * @public

@@ -1,7 +1,7 @@
-import { ChannelProvider } from '@hanzo/contact'
-import { AnyAttribute, AttachedDoc, Class, Doc, IntegrationKind, Mixin, Ref } from '@hanzo/core'
-import { ExpertKnowledge, InitialKnowledge, MeaningfullKnowledge } from '@hanzo/tags'
-import { ProjectType } from '@hanzo/task'
+import { ChannelProvider } from '@hanzoteam/contact'
+import { AnyAttribute, AttachedDoc, Class, Doc, IntegrationKind, Mixin, Ref } from '@hanzoteam/core'
+import { ExpertKnowledge, InitialKnowledge, MeaningfullKnowledge } from '@hanzoteam/tags'
+import { ProjectType } from '@hanzoteam/task'
 
 /**
  * @public

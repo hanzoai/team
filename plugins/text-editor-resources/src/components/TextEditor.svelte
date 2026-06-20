@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { type Blob, Markup, type Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { EmptyMarkup, getMarkup, markupToJSON } from '@hanzo/text'
-  import textEditor from '@hanzo/text-editor'
-  import { themeStore } from '@hanzo/ui'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { type Blob, Markup, type Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { EmptyMarkup, getMarkup, markupToJSON } from '@hanzoteam/text'
+  import textEditor from '@hanzoteam/text-editor'
+  import { themeStore } from '@hanzoteam/ui'
   import { Content, Editor, FocusPosition, mergeAttributes } from '@tiptap/core'
   import { ParseOptions } from '@tiptap/pm/model'
   import { EditorView } from '@tiptap/pm/view'

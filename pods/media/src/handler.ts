@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import attachment, { type Attachment } from '@hanzo/attachment'
-import { Event, MessageEventType } from '@hanzo/communication-sdk-types'
-import { BlobAttachment } from '@hanzo/communication-types'
-import drive, { type FileVersion } from '@hanzo/drive'
+import attachment, { type Attachment } from '@hanzoteam/attachment'
+import { Event, MessageEventType } from '@hanzoteam/communication-sdk-types'
+import { BlobAttachment } from '@hanzoteam/communication-types'
+import drive, { type FileVersion } from '@hanzoteam/drive'
 import core, {
   type Blob,
   type Doc,
@@ -27,8 +27,8 @@ import core, {
   type TxDomainEvent,
   type WorkspaceUuid,
   OperationDomain
-} from '@hanzo/core'
-import { PlatformQueueProducer } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { PlatformQueueProducer } from '@hanzoteam/server-core'
 import { BlobSource, BlobSourceType, VideoTranscodeRequest, VideoTranscodeResult } from './types'
 import { WorkspaceClient } from './client'
 

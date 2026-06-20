@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata, translate } from '@hanzo/platform'
-  import { Button, Html, IconClose, Label, themeStore } from '@hanzo/ui'
+  import { getMetadata, translate } from '@hanzoteam/platform'
+  import { Button, Html, IconClose, Label, themeStore } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
-  import { concatLink } from '@hanzo/core'
-  import presentation from '@hanzo/presentation'
-  import { calendarId } from '@hanzo/calendar'
+  import { concatLink } from '@hanzoteam/core'
+  import presentation from '@hanzoteam/presentation'
+  import { calendarId } from '@hanzoteam/calendar'
 
   const dispatch = createEventDispatcher()
 

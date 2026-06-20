@@ -20,9 +20,9 @@ import {
   PersonUuid,
   SocialIdType,
   TxOperations
-} from '@hanzo/core'
-import contact, { AvatarType, combineName, SocialIdentityRef } from '@hanzo/contact'
-import { AccountClient } from '@hanzo/account-client'
+} from '@hanzoteam/core'
+import contact, { AvatarType, combineName, SocialIdentityRef } from '@hanzoteam/contact'
+import { AccountClient } from '@hanzoteam/account-client'
 
 export async function ensureGlobalPerson (
   ctx: MeasureContext,

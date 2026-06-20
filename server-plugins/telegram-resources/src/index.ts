@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity, { ActivityMessage } from '@hanzo/activity'
-import chunter, { ChatMessage } from '@hanzo/chunter'
-import contact, { Channel, Person } from '@hanzo/contact'
+import activity, { ActivityMessage } from '@hanzoteam/activity'
+import chunter, { ChatMessage } from '@hanzoteam/chunter'
+import contact, { Channel, Person } from '@hanzoteam/contact'
 import core, {
   PersonId,
   Class,
@@ -29,31 +29,31 @@ import core, {
   TxProcessor,
   TxCUD,
   TxUpdateDoc
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import notification, {
   ActivityInboxNotification,
   InboxNotification,
   MentionInboxNotification,
   NotificationProviderSetting,
   NotificationType
-} from '@hanzo/notification'
-import { getResource, translate } from '@hanzo/platform'
-import { getAccountBySocialId, getPerson } from '@hanzo/server-contact'
-import { PlatformQueueProducer, QueueTopic, TriggerControl } from '@hanzo/server-core'
+} from '@hanzoteam/notification'
+import { getResource, translate } from '@hanzoteam/platform'
+import { getAccountBySocialId, getPerson } from '@hanzoteam/server-contact'
+import { PlatformQueueProducer, QueueTopic, TriggerControl } from '@hanzoteam/server-core'
 import {
   getNotificationLink,
   getTextPresenter,
   getTranslatedNotificationContent,
   AvailableProvidersCache,
   AvailableProvidersCacheKey
-} from '@hanzo/server-notification-resources'
+} from '@hanzoteam/server-notification-resources'
 import {
   type TelegramNotificationQueueMessage,
   TelegramQueueMessageType,
   TelegramQueueMessage
-} from '@hanzo/server-telegram'
-import telegram, { TelegramMessage } from '@hanzo/telegram'
-import { jsonToHTML, markupToJSON } from '@hanzo/text'
+} from '@hanzoteam/server-telegram'
+import telegram, { TelegramMessage } from '@hanzoteam/telegram'
+import { jsonToHTML, markupToJSON } from '@hanzoteam/text'
 
 /**
  * @public

@@ -2,11 +2,11 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { setMetadata } from '@hanzo/platform'
-import serverClient from '@hanzo/server-client'
-import { loadBrandingMap } from '@hanzo/server-core'
-import { storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken from '@hanzo/server-token'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClient from '@hanzoteam/server-client'
+import { loadBrandingMap } from '@hanzoteam/server-core'
+import { storageConfigFromEnv } from '@hanzoteam/server-storage'
+import serverToken from '@hanzoteam/server-token'
 
 import config from './config'
 import { createServer, listen } from './server'

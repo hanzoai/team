@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/server",
+  "name": "@hanzoteam/server",
   "entries": [
     {
       "version": "0.6.2",
@@ -13,10 +13,10 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `~0.6.10` to `~0.6.11`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `~0.6.10` to `~0.6.11`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/mongo\" from `~0.6.0` to `~0.6.1`"
+            "comment": "Updating dependency \"@hanzoteam/mongo\" from `~0.6.0` to `~0.6.1`"
           }
         ]
       }
@@ -28,7 +28,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/platform\" from `~0.6.3` to `~0.6.4`"
+            "comment": "Updating dependency \"@hanzoteam/platform\" from `~0.6.3` to `~0.6.4`"
           }
         ]
       }

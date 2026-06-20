@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { concatLink, type WorkspaceUuid } from '@hanzo/core'
+import { concatLink, type WorkspaceUuid } from '@hanzoteam/core'
 import { CheckoutResponse, SubscribeRequest, CheckoutStatus, SubscriptionData } from './types'
 import { PaymentError, NetworkError } from './error'
 

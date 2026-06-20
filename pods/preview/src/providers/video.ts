@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { systemAccountUuid, type MeasureContext, type WorkspaceUuid } from '@hanzo/core'
-import { StorageAdapter } from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
+import { systemAccountUuid, type MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
+import { StorageAdapter } from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
 
 import { getImageMetadata } from '../metadata'
 import { TemporaryDir } from '../tempdir'

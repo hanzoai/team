@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getResource, translateCB } from '@hanzo/platform'
-  import { createQuery, getClient, IconWithEmoji } from '@hanzo/presentation'
-  import { AnyComponent, Icon, LabelAndProps, themeStore, tooltip } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getResource, translateCB } from '@hanzoteam/platform'
+  import { createQuery, getClient, IconWithEmoji } from '@hanzoteam/presentation'
+  import { AnyComponent, Icon, LabelAndProps, themeStore, tooltip } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
-  import { getReferenceLabel } from '@hanzo/text-editor-resources/src/components/extension/reference'
+  import { getReferenceLabel } from '@hanzoteam/text-editor-resources/src/components/extension/reference'
   import { classIcon } from '../utils'
   import DocNavLink from './DocNavLink.svelte'
-  import contact from '@hanzo/contact'
+  import contact from '@hanzoteam/contact'
 
   export let _id: Ref<Doc> | undefined = undefined
   export let _class: Ref<Class<Doc>> | undefined = undefined

@@ -20,7 +20,7 @@ import {
   type Hierarchy,
   type ModelDb,
   type Ref
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 
 /**
  * @public

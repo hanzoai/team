@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { IntlString, translate } from '@hanzo/platform'
+  import { IntlString, translate } from '@hanzoteam/platform'
 
   import type { DropdownIntlItem } from '../types'
   import IconCheck from './icons/Check.svelte'

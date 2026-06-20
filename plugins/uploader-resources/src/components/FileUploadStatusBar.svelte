@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { ProgressCircle, showPopup, tooltip } from '@hanzo/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { ProgressCircle, showPopup, tooltip } from '@hanzoteam/ui'
 
   import { type Upload } from '../store'
 

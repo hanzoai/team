@@ -3,12 +3,12 @@
 //
 //
 
-import type { Plugin } from '@hanzo/platform'
-import products from '@hanzo/products'
+import type { Plugin } from '@hanzoteam/platform'
+import products from '@hanzoteam/products'
 
-import core from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import serverCore from '@hanzo/server-core'
+import core from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
+import serverCore from '@hanzoteam/server-core'
 
 export const serverProductsId = 'server-products' as Plugin
 

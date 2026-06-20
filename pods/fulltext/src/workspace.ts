@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Api as CommunicationApi } from '@hanzo/communication-server'
+import { Api as CommunicationApi } from '@hanzoteam/communication-server'
 import core, {
   type Class,
   type Doc,
@@ -15,8 +15,8 @@ import core, {
   type TxWorkspaceEvent,
   WorkspaceEvent,
   type WorkspaceIds
-} from '@hanzo/core'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/core'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 import {
   ContextNameMiddleware,
   DBAdapterInitMiddleware,
@@ -24,8 +24,8 @@ import {
   DomainFindMiddleware,
   LowLevelMiddleware,
   ModelMiddleware
-} from '@hanzo/middleware'
-import { PlatformError, unknownError } from '@hanzo/platform'
+} from '@hanzoteam/middleware'
+import { PlatformError, unknownError } from '@hanzoteam/platform'
 import {
   type ConsumerControl,
   type ContentTextAdapter,
@@ -36,10 +36,10 @@ import {
   type Pipeline,
   type PipelineContext,
   type StorageAdapter
-} from '@hanzo/server-core'
-import { FullTextIndexPipeline } from '@hanzo/server-indexer'
-import { getConfig } from '@hanzo/server-pipeline'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import { FullTextIndexPipeline } from '@hanzoteam/server-indexer'
+import { getConfig } from '@hanzoteam/server-pipeline'
+import { generateToken } from '@hanzoteam/server-token'
 
 import { fulltextModelFilter } from './utils'
 

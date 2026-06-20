@@ -2,20 +2,20 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
-import { githubId } from '@hanzo/github'
-import github from '@hanzo/github-resources/src/plugin'
+import { mergeIds, type IntlString, type Resource } from '@hanzoteam/platform'
+import { githubId } from '@hanzoteam/github'
+import github from '@hanzoteam/github-resources/src/plugin'
 
-import { type ChatMessageViewlet } from '@hanzo/chunter'
-import { type Doc, type Ref, type Space } from '@hanzo/core'
+import { type ChatMessageViewlet } from '@hanzoteam/chunter'
+import { type Doc, type Ref, type Space } from '@hanzoteam/core'
 import {
   type DocCreateFunction,
   type ObjectSearchCategory,
   type DocCreateAnalyticsPropsFunction
-} from '@hanzo/model-presentation'
-import { type NotificationGroup } from '@hanzo/notification'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type ActionCategory, type Viewlet } from '@hanzo/view'
+} from '@hanzoteam/model-presentation'
+import { type NotificationGroup } from '@hanzoteam/notification'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type ActionCategory, type Viewlet } from '@hanzoteam/view'
 
 export default mergeIds(githubId, github, {
   component: {

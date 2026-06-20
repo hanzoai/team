@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Tag } from '@hanzo/card'
-  import core, { AnyAttribute, Ref } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import presentation, { Card, getClient } from '@hanzo/presentation'
-  import { Context, Process, ProcessFunction } from '@hanzo/process'
-  import { AnySvelteComponent } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { MasterTag, Tag } from '@hanzoteam/card'
+  import core, { AnyAttribute, Ref } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import presentation, { Card, getClient } from '@hanzoteam/presentation'
+  import { Context, Process, ProcessFunction } from '@hanzoteam/process'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import ProcessAttribute from '../ProcessAttribute.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let func: ProcessFunction
   export let process: Process

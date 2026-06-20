@@ -1,4 +1,4 @@
-import { AccountUuid, Ref, Timestamp, generateId } from '@hanzo/core'
+import { AccountUuid, Ref, Timestamp, generateId } from '@hanzoteam/core'
 import calendar, {
   Calendar,
   PrimaryCalendar,

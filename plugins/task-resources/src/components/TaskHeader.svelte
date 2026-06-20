@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import core, { Class, Doc, Mixin, Ref, RefTo } from '@hanzo/core'
-  import { AttributesBar, getClient, KeyedAttribute } from '@hanzo/presentation'
-  import { UserBox } from '@hanzo/contact-resources'
-  import { Task } from '@hanzo/task'
+  import contact from '@hanzoteam/contact'
+  import core, { Class, Doc, Mixin, Ref, RefTo } from '@hanzoteam/core'
+  import { AttributesBar, getClient, KeyedAttribute } from '@hanzoteam/presentation'
+  import { UserBox } from '@hanzoteam/contact-resources'
+  import { Task } from '@hanzoteam/task'
   import task from '../plugin'
-  import { DocAttributeBar } from '@hanzo/view-resources'
+  import { DocAttributeBar } from '@hanzoteam/view-resources'
 
   export let object: Task
   export let keys: KeyedAttribute[]

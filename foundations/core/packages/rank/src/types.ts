@@ -13,4 +13,4 @@
 // limitations under the License.
 //
 
-export { type Rank } from '@hanzo/core'
+export { type Rank } from '@hanzoteam/core'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import contact from '@hanzo/contact'
-  import { myEmployeeStore } from '@hanzo/contact-resources'
+  import { Analytics } from '@hanzoteam/analytics'
+  import contact from '@hanzoteam/contact'
+  import { myEmployeeStore } from '@hanzoteam/contact-resources'
   import core, {
     AccountRole,
     Class,
@@ -25,12 +25,12 @@
     Ref,
     SortingOrder,
     Space
-  } from '@hanzo/core'
-  import login, { loginId } from '@hanzo/login'
-  import notification, { DocNotifyContext, InboxNotification, notificationId } from '@hanzo/notification'
-  import { BrowserNotificatator, InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import inbox, { inboxId } from '@hanzo/inbox'
-  import { broadcastEvent, getMetadata, getResource, IntlString, translate } from '@hanzo/platform'
+  } from '@hanzoteam/core'
+  import login, { loginId } from '@hanzoteam/login'
+  import notification, { DocNotifyContext, InboxNotification, notificationId } from '@hanzoteam/notification'
+  import { BrowserNotificatator, InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import inbox, { inboxId } from '@hanzoteam/inbox'
+  import { broadcastEvent, getMetadata, getResource, IntlString, translate } from '@hanzoteam/platform'
   import {
     ActionContext,
     ComponentExtensions,
@@ -39,9 +39,9 @@
     getClient,
     isAdminUser,
     reduceCalls
-  } from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
-  import support, { supportLink, SupportStatus } from '@hanzo/support'
+  } from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting'
+  import support, { supportLink, SupportStatus } from '@hanzoteam/support'
   import {
     AnyComponent,
     areLocationsEqual,
@@ -82,8 +82,8 @@
     showPopup,
     TooltipInstance,
     workbenchSeparators
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import {
     accessDeniedStore,
     ActionHandler,
@@ -92,15 +92,15 @@
     NavLink,
     parseLinkId,
     updateFocus
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import type {
     Application,
     NavigatorModel,
     SpecialNavModel,
     ViewConfiguration,
     WorkbenchTab
-  } from '@hanzo/workbench'
-  import communication from '@hanzo/communication'
+  } from '@hanzoteam/workbench'
+  import communication from '@hanzoteam/communication'
   import { getContext, onDestroy, onMount, tick } from 'svelte'
   import { subscribeMobile } from '../mobile'
   import workbench from '../plugin'

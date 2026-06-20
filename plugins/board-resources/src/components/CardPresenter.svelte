@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Card } from '@hanzo/board'
-  import { getPanelURI, Icon } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import type { Card } from '@hanzoteam/board'
+  import { getPanelURI, Icon } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import board from '../plugin'
 
   export let value: Card

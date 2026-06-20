@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hanzo/core'
-import drive, { type File } from '@hanzo/drive'
+import { type Ref } from '@hanzoteam/core'
+import drive, { type File } from '@hanzoteam/drive'
 import {
   previewTypes as $previewTypes,
   FilePreview,
   getClient,
   getPreviewType,
   type FilePreviewExtension
-} from '@hanzo/presentation'
+} from '@hanzoteam/presentation'
 import { type Editor } from '@tiptap/core'
 import { SvelteRenderer } from '../../../node-view'
 import { parseReferenceUrl } from '../../reference'

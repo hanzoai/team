@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { parseContext, Process, ProcessToDo, Step, UserResult } from '@hanzo/process'
+  import { parseContext, Process, ProcessToDo, Step, UserResult } from '@hanzoteam/process'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import ParamsEditor from './ParamsEditor.svelte'
-  import { Label, Toggle } from '@hanzo/ui'
+  import { Label, Toggle } from '@hanzoteam/ui'
   import ResultsEditor from './ResultsEditor.svelte'
 
   export let process: Process

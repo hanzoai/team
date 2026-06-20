@@ -1,7 +1,7 @@
-import { getClient as getAccountClient, type WorkspaceLoginInfo } from '@hanzo/account-client'
-import { Analytics } from '@hanzo/analytics'
-import client from '@hanzo/client'
-import contact, { ensureEmployee, setCurrentEmployee, setCurrentEmployeeSpace } from '@hanzo/contact'
+import { getClient as getAccountClient, type WorkspaceLoginInfo } from '@hanzoteam/account-client'
+import { Analytics } from '@hanzoteam/analytics'
+import client from '@hanzoteam/client'
+import contact, { ensureEmployee, setCurrentEmployee, setCurrentEmployeeSpace } from '@hanzoteam/contact'
 import core, {
   type Account,
   AccountRole,
@@ -19,8 +19,8 @@ import core, {
   versionToString,
   SocialIdType,
   type WorkspaceInfoWithStatus
-} from '@hanzo/core'
-import login, { loginId, type Pages } from '@hanzo/login'
+} from '@hanzoteam/core'
+import login, { loginId, type Pages } from '@hanzoteam/login'
 import platform, {
   broadcastEvent,
   getMetadata,
@@ -34,7 +34,7 @@ import platform, {
   Status,
   type StatusCode,
   translateCB
-} from '@hanzo/platform'
+} from '@hanzoteam/platform'
 import presentation, {
   loadServerConfig,
   purgeClient,
@@ -46,7 +46,7 @@ import presentation, {
   setPresentationCookie,
   uiContext,
   upgradeDownloadProgress
-} from '@hanzo/presentation'
+} from '@hanzoteam/presentation'
 import {
   desktopPlatform,
   getCurrentLocation,
@@ -54,13 +54,13 @@ import {
   navigate,
   setMetadataLocalStorage,
   themeStore
-} from '@hanzo/ui'
+} from '@hanzoteam/ui'
 import { get, writable } from 'svelte/store'
 
 import plugin from './plugin'
 import { logOut, workspaceCreating } from './utils'
-import { WorkbenchEvents } from '@hanzo/workbench'
-import { allowGuestSignUpStore } from '@hanzo/view-resources'
+import { WorkbenchEvents } from '@hanzoteam/workbench'
+import { allowGuestSignUpStore } from '@hanzoteam/view-resources'
 
 export const error = writable<string | undefined>(undefined)
 export const errorActions = writable<ErrorAction[]>([])

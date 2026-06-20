@@ -14,11 +14,11 @@
 //
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import core from '@hanzo/core'
-import { mergeIds } from '@hanzo/platform'
-import { recorderId } from '@hanzo/recorder'
-import recorder from '@hanzo/recorder-resources/src/plugin'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import core from '@hanzoteam/core'
+import { mergeIds } from '@hanzoteam/platform'
+import { recorderId } from '@hanzoteam/recorder'
+import recorder from '@hanzoteam/recorder-resources/src/plugin'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
 export default mergeIds(recorderId, recorder, {
   component: {

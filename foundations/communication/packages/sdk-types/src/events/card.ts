@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { CardID, CardType, SocialID } from '@hanzo/communication-types'
+import type { CardID, CardType, SocialID } from '@hanzoteam/communication-types'
 
 import type { BaseEvent } from './common'
 

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { ActionContext } from '@hanzo/presentation'
-  import { Issue } from '@hanzo/tracker'
-  import { AnyComponent, AnySvelteComponent, registerFocus } from '@hanzo/ui'
-  import { ViewOptions, Viewlet, ViewletPreference } from '@hanzo/view'
-  import { List, ListSelectionProvider, SelectDirection } from '@hanzo/view-resources'
+  import { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { ActionContext } from '@hanzoteam/presentation'
+  import { Issue } from '@hanzoteam/tracker'
+  import { AnyComponent, AnySvelteComponent, registerFocus } from '@hanzoteam/ui'
+  import { ViewOptions, Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { List, ListSelectionProvider, SelectDirection } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../../plugin'
 

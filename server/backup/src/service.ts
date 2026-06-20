@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   groupByArray,
   isActiveMode,
@@ -27,16 +27,16 @@ import {
   type MeasureContext,
   type WorkspaceIds,
   type WorkspaceInfoWithStatus
-} from '@hanzo/core'
-import { getAccountDB } from '@hanzo/account'
-import { getAccountClient } from '@hanzo/server-client'
+} from '@hanzoteam/core'
+import { getAccountDB } from '@hanzoteam/account'
+import { getAccountClient } from '@hanzoteam/server-client'
 import {
   type DbConfiguration,
   type Pipeline,
   type PipelineFactory,
   type StorageAdapter
-} from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
 import { clearInterval } from 'node:timers'
 import { createStorageBackupStorage } from './storage'
 import { backup } from './backup'

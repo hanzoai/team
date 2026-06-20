@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { getClient as getAccountClient, isWorkspaceLoginInfo } from '@hanzo/account-client'
-import { Analytics } from '@hanzo/analytics'
-import { type ServerApi as CommunicationApi } from '@hanzo/communication-sdk-types'
+import { getClient as getAccountClient, isWorkspaceLoginInfo } from '@hanzoteam/account-client'
+import { Analytics } from '@hanzoteam/analytics'
+import { type ServerApi as CommunicationApi } from '@hanzoteam/communication-sdk-types'
 import core, {
   AccountRole,
   cutObjectArray,
@@ -45,9 +45,9 @@ import core, {
   type WorkspaceDataId,
   type WorkspaceInfoWithStatus,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { unknownError, type Status } from '@hanzo/platform'
-import { type HelloRequest, type HelloResponse, type Request, type Response } from '@hanzo/rpc'
+} from '@hanzoteam/core'
+import { unknownError, type Status } from '@hanzoteam/platform'
+import { type HelloRequest, type HelloResponse, type Request, type Response } from '@hanzoteam/rpc'
 import {
   CommunicationApiFactory,
   LOGGING_ENABLED,
@@ -68,10 +68,10 @@ import {
   type Session,
   type SessionFactory,
   type Workspace
-} from '@hanzo/server-core'
-import { generateToken, type Token } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import { generateToken, type Token } from '@hanzoteam/server-token'
 
-import { WorkspaceIds } from '@hanzo/core'
+import { WorkspaceIds } from '@hanzoteam/core'
 import { sendResponse } from './utils'
 
 const ticksPerSecond = 20

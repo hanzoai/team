@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocUpdateMessage } from '@hanzo/activity'
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Attachment } from '@hanzo/attachment'
-  import { getOrBuildObject } from '@hanzo/view-resources'
+  import { DocUpdateMessage } from '@hanzoteam/activity'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { getOrBuildObject } from '@hanzoteam/view-resources'
 
   import attachment from '../../plugin'
   import AttachmentPresenter from '../AttachmentPresenter.svelte'

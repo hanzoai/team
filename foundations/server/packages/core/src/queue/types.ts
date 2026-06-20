@@ -1,4 +1,4 @@
-import type { MeasureContext, WorkspaceUuid } from '@hanzo/core'
+import type { MeasureContext, WorkspaceUuid } from '@hanzoteam/core'
 
 export enum QueueTopic {
   // Topic with partitions to split workspace transactions into

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MessageID, type CardID } from '@hanzo/communication-types'
+import { type MessageID, type CardID } from '@hanzoteam/communication-types'
 
 export interface ChatWidgetData {
   id: string

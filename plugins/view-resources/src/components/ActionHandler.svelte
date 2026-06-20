@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import core, { Doc, Hierarchy, Ref, Space, TxRemoveDoc, type Tx } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { addTxListener, contextStore, getClient, reduceCalls } from '@hanzo/presentation'
-  import { AnyComponent, Component } from '@hanzo/ui'
-  import { Action, ViewContextType } from '@hanzo/view'
+  import { Analytics } from '@hanzoteam/analytics'
+  import core, { Doc, Hierarchy, Ref, Space, TxRemoveDoc, type Tx } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { addTxListener, contextStore, getClient, reduceCalls } from '@hanzoteam/presentation'
+  import { AnyComponent, Component } from '@hanzoteam/ui'
+  import { Action, ViewContextType } from '@hanzoteam/view'
   import { fly } from 'svelte/transition'
   import { getContextActionsSync, getSelection } from '../actions'
   import { ListSelectionProvider, SelectionStore, focusStore, previewDocument, selectionStore } from '../selection'

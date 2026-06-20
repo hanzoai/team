@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import tags, { TagReference } from '@hanzo/tags'
-  import { ButtonBase, ButtonKind, Icon, Label, getEventPopupPositionElement, showPopup } from '@hanzo/ui'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import tags, { TagReference } from '@hanzoteam/tags'
+  import { ButtonBase, ButtonKind, Icon, Label, getEventPopupPositionElement, showPopup } from '@hanzoteam/ui'
   import tagsPlugin from '../plugin'
   import TagReferencePresenter from './TagReferencePresenter.svelte'
   import TagsEditorPopup from './TagsEditorPopup.svelte'

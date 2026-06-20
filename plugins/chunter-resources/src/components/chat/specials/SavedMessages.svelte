@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment, SavedAttachments } from '@hanzo/attachment'
-  import { AttachmentPreview, savedAttachmentsStore } from '@hanzo/attachment-resources'
-  import { getName as getContactName } from '@hanzo/contact'
-  import { getPersonByPersonId } from '@hanzo/contact-resources'
-  import { getDisplayTime, Ref, WithLookup } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label, Scroller, Lazy } from '@hanzo/ui'
-  import activity, { ActivityMessage, SavedMessage } from '@hanzo/activity'
-  import { ActivityMessagePresenter, savedMessagesStore } from '@hanzo/activity-resources'
+  import { Attachment, SavedAttachments } from '@hanzoteam/attachment'
+  import { AttachmentPreview, savedAttachmentsStore } from '@hanzoteam/attachment-resources'
+  import { getName as getContactName } from '@hanzoteam/contact'
+  import { getPersonByPersonId } from '@hanzoteam/contact-resources'
+  import { getDisplayTime, Ref, WithLookup } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label, Scroller, Lazy } from '@hanzoteam/ui'
+  import activity, { ActivityMessage, SavedMessage } from '@hanzoteam/activity'
+  import { ActivityMessagePresenter, savedMessagesStore } from '@hanzoteam/activity-resources'
 
   import chunter from '../../../plugin'
   import Header from '../../Header.svelte'

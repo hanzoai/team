@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { Process, SelectedExecutionContext } from '@hanzo/process'
-  import ui, { Label } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process, SelectedExecutionContext } from '@hanzoteam/process'
+  import ui, { Label } from '@hanzoteam/ui'
   import ProcessContextPresenter from '../contextEditors/ProcessContextPresenter.svelte'
 
   export let contextValue: SelectedExecutionContext

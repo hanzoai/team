@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { Icon, Label } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { Icon, Label } from '@hanzoteam/ui'
   import type { ComponentProps } from 'svelte'
 
   export let icon: ComponentProps<Icon>['icon']

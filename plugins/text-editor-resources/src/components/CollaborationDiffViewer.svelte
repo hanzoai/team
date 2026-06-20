@@ -15,8 +15,8 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { MarkupNode } from '@hanzo/text'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { MarkupNode } from '@hanzoteam/text'
   import { onDestroy, onMount } from 'svelte'
   import { Doc as Ydoc, encodeStateAsUpdate, applyUpdate } from 'yjs'
 

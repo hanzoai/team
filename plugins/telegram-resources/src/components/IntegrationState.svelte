@@ -14,16 +14,16 @@
 -->
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
-  import type { Integration } from '@hanzo/account-client'
+  import type { Integration } from '@hanzoteam/account-client'
   import {
     IntegrationClient,
     IntegrationUpdatedData,
     onIntegrationEvent,
     isDisabled,
     isUnauthorizedError
-  } from '@hanzo/integration-client'
-  import { BaseIntegrationState, IntegrationStateRow } from '@hanzo/setting-resources'
-  import { OK, ERROR, Status } from '@hanzo/platform'
+  } from '@hanzoteam/integration-client'
+  import { BaseIntegrationState, IntegrationStateRow } from '@hanzoteam/setting-resources'
+  import { OK, ERROR, Status } from '@hanzoteam/platform'
 
   import telegram from '../plugin'
   import { type TelegramChannelConfig, type TelegramChannelData, getIntegrationClient, listChannels } from '../api'

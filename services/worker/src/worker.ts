@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { MeasureMetricsContext } from '@hanzo/core'
-import { getPlatformQueue } from '@hanzo/kafka'
-import { QueueTopic } from '@hanzo/server-core'
-import { TimeMachineMessage } from '@hanzo/server-process'
+import { MeasureMetricsContext } from '@hanzoteam/core'
+import { getPlatformQueue } from '@hanzoteam/kafka'
+import { QueueTopic } from '@hanzoteam/server-core'
+import { TimeMachineMessage } from '@hanzoteam/server-process'
 import { TimeMachineDB } from './db'
 import { SendTimeEvent } from './activities'
 import config from './config'

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { DropdownIntlItem, DropdownLabelsIntl, DropdownLabelsPopupIntl, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { Room, RoomLanguage } from '@hanzo/love'
+  import { getClient } from '@hanzoteam/presentation'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { DropdownIntlItem, DropdownLabelsIntl, DropdownLabelsPopupIntl, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { Room, RoomLanguage } from '@hanzoteam/love'
 
   import { languagesDisplayData } from '../types'
   import LanguageIcon from './LanguageIcon.svelte'

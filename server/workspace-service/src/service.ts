@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getClient as getAccountClient } from '@hanzo/account-client'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
 import {
   DOMAIN_BLOB,
   getBranding,
@@ -29,40 +29,40 @@ import {
   type WorkspaceInfoWithStatus,
   type WorkspaceUpdateEvent,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { type MigrateOperation, type ModelLogger } from '@hanzo/model'
+} from '@hanzoteam/core'
+import { type MigrateOperation, type ModelLogger } from '@hanzoteam/model'
 import {
   getTransactorEndpoint,
   withRetryConnUntilSuccess,
   withRetryConnUntilTimeout
-} from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { FileModelLogger, prepareTools } from '@hanzo/server-tool'
+} from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { FileModelLogger, prepareTools } from '@hanzoteam/server-tool'
 import { randomUUID } from 'crypto'
 import path from 'path'
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   createMongoAdapter,
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   shutdownMongo
-} from '@hanzo/mongo'
+} from '@hanzoteam/mongo'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions,
   shutdownPostgres
-} from '@hanzo/postgres'
-import { doBackupWorkspace, doRestoreWorkspace } from '@hanzo/server-backup'
+} from '@hanzoteam/postgres'
+import { doBackupWorkspace, doRestoreWorkspace } from '@hanzoteam/server-backup'
 import {
   workspaceEvents,
   type PipelineFactory,
   type PlatformQueueProducer,
   type QueueWorkspaceMessage,
   type StorageAdapter
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import {
   createBackupPipeline,
   getConfig,
@@ -73,8 +73,8 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hanzo/server-pipeline'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+} from '@hanzoteam/server-pipeline'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
 import { createWorkspace, upgradeWorkspace } from './ws-operations'
 
 export interface WorkspaceOptions {

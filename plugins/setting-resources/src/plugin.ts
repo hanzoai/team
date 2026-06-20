@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hanzo/core'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import setting, { settingId } from '@hanzo/setting'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type Widget } from '@hanzo/workbench'
+import { type Ref } from '@hanzoteam/core'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import setting, { settingId } from '@hanzoteam/setting'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Widget } from '@hanzoteam/workbench'
 
 export default mergeIds(settingId, setting, {
   ids: {

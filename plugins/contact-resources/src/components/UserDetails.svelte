@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { IconSize } from '@hanzo/ui'
-  import { Person, getName } from '@hanzo/contact'
+  import { getClient } from '@hanzoteam/presentation'
+  import { IconSize } from '@hanzoteam/ui'
+  import { Person, getName } from '@hanzoteam/contact'
 
   import Avatar from './Avatar.svelte'
 

@@ -10,15 +10,15 @@ import core, {
   Ref,
   TxOperations,
   withContext
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubProject,
   GithubReviewThread
-} from '@hanzo/github'
-import { LiveQuery } from '@hanzo/query'
-import { EmptyMarkup } from '@hanzo/text'
+} from '@hanzoteam/github'
+import { LiveQuery } from '@hanzoteam/query'
+import { EmptyMarkup } from '@hanzoteam/text'
 import {
   ContainerFocus,
   DocSyncManager,
@@ -45,7 +45,7 @@ import {
   syncDerivedDocuments
 } from './utils'
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import { PullRequestReviewThreadEvent } from '@octokit/webhooks-types'
 import config from '../config'
 import { githubConfiguration } from './configuration'

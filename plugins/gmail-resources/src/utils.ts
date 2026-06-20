@@ -1,11 +1,11 @@
 import { get } from 'svelte/store'
-import { getName as getContactName } from '@hanzo/contact'
-import contact, { type Channel, type Contact } from '@hanzo/contact'
-import { employeeBySocialKeyStore, getPersonByPersonId } from '@hanzo/contact-resources'
-import { buildSocialIdString, type PersonId, SocialIdType, type Client, type Doc, type Ref } from '@hanzo/core'
-import { type Message, type SharedMessage } from '@hanzo/gmail'
-import { getClient } from '@hanzo/presentation'
-import type { Integration } from '@hanzo/account-client'
+import { getName as getContactName } from '@hanzoteam/contact'
+import contact, { type Channel, type Contact } from '@hanzoteam/contact'
+import { employeeBySocialKeyStore, getPersonByPersonId } from '@hanzoteam/contact-resources'
+import { buildSocialIdString, type PersonId, SocialIdType, type Client, type Doc, type Ref } from '@hanzoteam/core'
+import { type Message, type SharedMessage } from '@hanzoteam/gmail'
+import { getClient } from '@hanzoteam/presentation'
+import type { Integration } from '@hanzoteam/account-client'
 
 import gmail from './plugin'
 

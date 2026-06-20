@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import process, { ExecutionLogAction } from '@hanzo/process'
-  import { Icon } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import process, { ExecutionLogAction } from '@hanzoteam/process'
+  import { Icon } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   export let value: ExecutionLogAction
 </script>

@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   Class,
   Doc,
@@ -25,12 +25,12 @@ import {
   SearchQuery,
   TxResult,
   WorkspaceUuid
-} from '@hanzo/core'
-import type { FullTextAdapter, IndexedDoc, SearchScoring, SearchStringResult } from '@hanzo/server-core'
-import serverCore from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import type { FullTextAdapter, IndexedDoc, SearchScoring, SearchStringResult } from '@hanzoteam/server-core'
+import serverCore from '@hanzoteam/server-core'
 
 import { Client, errors as esErr } from '@elastic/elasticsearch'
-import { getMetadata } from '@hanzo/platform'
+import { getMetadata } from '@hanzoteam/platform'
 
 const DEFAULT_LIMIT = 200
 

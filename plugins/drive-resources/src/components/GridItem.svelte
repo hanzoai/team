@@ -14,18 +14,18 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import core, { type WithLookup } from '@hanzo/core'
-  import { type Resource } from '@hanzo/drive'
-  import { getClient } from '@hanzo/presentation'
-  import { Button, IconMoreH } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import core, { type WithLookup } from '@hanzoteam/core'
+  import { type Resource } from '@hanzoteam/drive'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Button, IconMoreH } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import {
     ObjectPresenter,
     TimestampPresenter,
     PersonIdPresenter,
     openDoc,
     showMenu
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import FileSizePresenter from './FileSizePresenter.svelte'

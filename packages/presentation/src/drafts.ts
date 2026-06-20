@@ -1,4 +1,4 @@
-import { fetchMetadataLocalStorage, setMetadataLocalStorage } from '@hanzo/ui'
+import { fetchMetadataLocalStorage, setMetadataLocalStorage } from '@hanzoteam/ui'
 import { deepEqual } from 'fast-equals'
 import { type Unsubscriber, writable } from 'svelte/store'
 import presentation from './plugin'

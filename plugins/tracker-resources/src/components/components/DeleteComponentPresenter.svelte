@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import view from '@hanzo/view'
-  import { Button, ButtonSize, ButtonKind, LabelAndProps, showPopup } from '@hanzo/ui'
-  import { getClient, MessageBox } from '@hanzo/presentation'
-  import type { Component } from '@hanzo/tracker'
+  import view from '@hanzoteam/view'
+  import { Button, ButtonSize, ButtonKind, LabelAndProps, showPopup } from '@hanzoteam/ui'
+  import { getClient, MessageBox } from '@hanzoteam/presentation'
+  import type { Component } from '@hanzoteam/tracker'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
 

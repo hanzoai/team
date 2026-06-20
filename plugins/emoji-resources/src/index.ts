@@ -1,4 +1,4 @@
-import type { Resources } from '@hanzo/platform'
+import type { Resources } from '@hanzoteam/platform'
 import EmojiPopup from './components/EmojiPopup.svelte'
 import SettingsEmojiTable from './components/settings/SettingsEmojiTable.svelte'
 import WorkbenchExtension from './components/WorkbenchExtension.svelte'

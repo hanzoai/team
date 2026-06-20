@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import contact from '@hanzo/contact'
-import { SortingOrder } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import task from '@hanzo/model-task'
-import view, { showColorsViewOption } from '@hanzo/model-view'
-import tags from '@hanzo/tags'
-import { type ViewOptionModel, type BuildModelKey, type ViewOptionsModel } from '@hanzo/view'
+import contact from '@hanzoteam/contact'
+import { SortingOrder } from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import task from '@hanzoteam/model-task'
+import view, { showColorsViewOption } from '@hanzoteam/model-view'
+import tags from '@hanzoteam/tags'
+import { type ViewOptionModel, type BuildModelKey, type ViewOptionsModel } from '@hanzoteam/view'
 import tracker from './plugin'
 
 export const issuesOptions = (kanban: boolean): ViewOptionsModel => ({

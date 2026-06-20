@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 import Inbox from './components/inbox/Inbox.svelte'
 import NotificationSettings from './components/settings/NotificationSettings.svelte'

@@ -12,10 +12,10 @@ import core, {
   type Ref,
   type RefTo,
   type TypeIdentifier
-} from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import view from '@hanzo/view'
+} from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import view from '@hanzoteam/view'
 import card from './plugin'
 
 export async function importModule (json: string): Promise<void> {

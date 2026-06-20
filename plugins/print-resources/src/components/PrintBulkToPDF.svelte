@@ -15,10 +15,10 @@
 
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import type { Blob, Doc, Ref } from '@hanzo/core'
-  import presentation, { Card, getClient, PDFViewer } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { Button, Label, Loading, Scroller } from '@hanzo/ui'
+  import type { Blob, Doc, Ref } from '@hanzoteam/core'
+  import presentation, { Card, getClient, PDFViewer } from '@hanzoteam/presentation'
+  import view from '@hanzoteam/view'
+  import { Button, Label, Loading, Scroller } from '@hanzoteam/ui'
 
   import print from '../plugin'
   import { type PdfResult, printAll, downloadPdf, downloadAllPdfs } from '../printUtils'

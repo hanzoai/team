@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, RelatedDocument, DocumentQuery } from '@hanzo/core'
+  import { Ref, RelatedDocument, DocumentQuery } from '@hanzoteam/core'
 
-  import { getResource, IntlString } from '@hanzo/platform'
+  import { getResource, IntlString } from '@hanzoteam/platform'
   import ui, {
     createFocusManager,
     deviceOptionsStore,
@@ -28,7 +28,7 @@
     Icon,
     tooltip,
     EditWithIcon
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import presentation from '../plugin'
   import { ObjectSearchCategory, ObjectSearchResult } from '../types'

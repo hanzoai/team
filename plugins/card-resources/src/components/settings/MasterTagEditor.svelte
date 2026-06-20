@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { getClient } from '@hanzo/presentation'
+  import { MasterTag } from '@hanzoteam/card'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     ButtonIcon,
     Component,
@@ -24,7 +24,7 @@
     Separator,
     defineSeparators,
     secondNavSeparators
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import card from '../../plugin'
 
   export let masterTag: MasterTag

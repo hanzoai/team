@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Asset, type IntlString, plugin, type Plugin } from '@hanzo/platform'
+import { type Asset, type IntlString, plugin, type Plugin } from '@hanzoteam/platform'
 
 export const globalProfileId = 'global-profile' as Plugin
 export const globalProfileRoute = 'user'

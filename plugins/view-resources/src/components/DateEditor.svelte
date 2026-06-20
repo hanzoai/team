@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TypeDate } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { DateRangePresenter } from '@hanzo/ui'
+  import { TypeDate } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { DateRangePresenter } from '@hanzoteam/ui'
 
   export let value: number | null | undefined
   export let type: TypeDate | undefined

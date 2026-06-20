@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import achievement from '@hanzo/achievement'
-import { type IntlString, type Asset } from '@hanzo/platform'
+import achievement from '@hanzoteam/achievement'
+import { type IntlString, type Asset } from '@hanzoteam/platform'
 
 interface PersonAchievement {
   icon: Asset

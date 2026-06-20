@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Integration, IntegrationKey, IntegrationSecret } from '@hanzo/account-client'
-import { IntegrationKind, PersonId, WorkspaceUuid } from '@hanzo/core'
+import { Integration, IntegrationKey, IntegrationSecret } from '@hanzoteam/account-client'
+import { IntegrationKind, PersonId, WorkspaceUuid } from '@hanzoteam/core'
 
 export type IntegrationStatus = 'active' | 'inactive' | 'connecting' | 'disconnecting' | 'error' | 'unknown'
 

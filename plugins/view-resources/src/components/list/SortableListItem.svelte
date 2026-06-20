@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation from '@hanzo/presentation'
-  import { Icon, IconEdit, IconClose, tooltip, Button, IconCircles } from '@hanzo/ui'
+  import presentation from '@hanzoteam/presentation'
+  import { Icon, IconEdit, IconClose, tooltip, Button, IconCircles } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let style = ''

@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { DOMAIN_TX, type Domain, type MeasureContext } from '@hanzo/core'
+import { Analytics } from '@hanzoteam/analytics'
+import { DOMAIN_TX, type Domain, type MeasureContext } from '@hanzoteam/core'
 import { type DbAdapter, type DomainHelper } from './adapter'
 import type { DbConfiguration } from './configuration'
 import { DummyDbAdapter } from './mem'

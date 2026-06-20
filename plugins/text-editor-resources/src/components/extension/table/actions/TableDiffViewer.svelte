@@ -14,11 +14,11 @@
 //
 -->
 <script lang="ts">
-  import { markdownToMarkup } from '@hanzo/text-markdown'
-  import presentation, { Card } from '@hanzo/presentation'
-  import textEditor from '@hanzo/text-editor'
+  import { markdownToMarkup } from '@hanzoteam/text-markdown'
+  import presentation, { Card } from '@hanzoteam/presentation'
+  import textEditor from '@hanzoteam/text-editor'
   import { createEventDispatcher } from 'svelte'
-  import type { TableMetadata } from '@hanzo/view'
+  import type { TableMetadata } from '@hanzoteam/view'
 
   import MarkupDiffViewer from '../../../MarkupDiffViewer.svelte'
   import TableSourceInfo from './TableSourceInfo.svelte'

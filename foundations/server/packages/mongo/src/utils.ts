@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { generateId, type Doc, type Domain, type FieldIndexConfig } from '@hanzo/core'
-import { PlatformError, unknownStatus } from '@hanzo/platform'
-import { type DomainHelperOperations } from '@hanzo/server-core'
+import { generateId, type Doc, type Domain, type FieldIndexConfig } from '@hanzoteam/core'
+import { PlatformError, unknownStatus } from '@hanzoteam/platform'
+import { type DomainHelperOperations } from '@hanzoteam/server-core'
 import { MongoClient, type Collection, type Db, type Document } from 'mongodb'
 
 const connections = new Map<string, MongoClientReferenceImpl>()

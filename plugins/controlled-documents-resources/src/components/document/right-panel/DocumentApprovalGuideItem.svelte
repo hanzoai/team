@@ -1,6 +1,6 @@
 <script lang="ts">
-  import documents, { ControlledDocumentState } from '@hanzo/controlled-documents'
-  import { Label, Button, showPopup } from '@hanzo/ui'
+  import documents, { ControlledDocumentState } from '@hanzoteam/controlled-documents'
+  import { Label, Button, showPopup } from '@hanzoteam/ui'
 
   import TeamPopup from '../../TeamPopup.svelte'
   import {

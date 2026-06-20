@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { generateId, Ref } from '@hanzo/core'
-  import presentation, { createQuery, getClient, KeyedAttribute } from '@hanzo/presentation'
-  import tags, { TagElement, TagReference } from '@hanzo/tags'
-  import { TaskKindSelector } from '@hanzo/task-resources'
-  import { StyledTextArea } from '@hanzo/text-editor-resources'
+  import { generateId, Ref } from '@hanzoteam/core'
+  import presentation, { createQuery, getClient, KeyedAttribute } from '@hanzoteam/presentation'
+  import tags, { TagElement, TagReference } from '@hanzoteam/tags'
+  import { TaskKindSelector } from '@hanzoteam/task-resources'
+  import { StyledTextArea } from '@hanzoteam/text-editor-resources'
   import {
     Component as ComponentType,
     IssuePriority,
     IssueTemplateChild,
     Milestone,
     Project
-  } from '@hanzo/tracker'
-  import { Button, Component, EditBox } from '@hanzo/ui'
+  } from '@hanzoteam/tracker'
+  import { Button, Component, EditBox } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import AssigneeEditor from '../issues/AssigneeEditor.svelte'

@@ -14,17 +14,17 @@
 // limitations under the License.
 //
 
-import contact, { contactId } from '@hanzo/contact'
-import { type Client, type Doc } from '@hanzo/core'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { type LabelAndProps, type Location } from '@hanzo/ui/src/types'
+import contact, { contactId } from '@hanzoteam/contact'
+import { type Client, type Doc } from '@hanzoteam/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { type LabelAndProps, type Location } from '@hanzoteam/ui/src/types'
 import {
   type CreateAggregationManagerFunc,
   type GrouppingManagerResource,
   type FilterFunction,
   type SortFunc,
   type ViewActionAvailabilityFunction
-} from '@hanzo/view'
+} from '@hanzoteam/view'
 
 export default mergeIds(contactId, contact, {
   string: {

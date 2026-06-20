@@ -22,7 +22,7 @@ import {
   NotificationEventType,
   PeerEventType,
   type SessionData
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import type {
   AccountUuid,
   CardID,
@@ -32,7 +32,7 @@ import type {
   Label,
   Notification,
   NotificationContext
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import type { CommunicationCallbacks, Enriched, Middleware, MiddlewareContext, Subscription } from '../types'
 import { BaseMiddleware } from './base'

@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import activity, { type ActivityMessageControl } from '@hanzo/activity'
-import { type Role, type Card } from '@hanzo/card'
+import activity, { type ActivityMessageControl } from '@hanzoteam/activity'
+import { type Role, type Card } from '@hanzoteam/card'
 import {
   AvatarType,
   type UserRole,
@@ -35,7 +35,7 @@ import {
   type Status,
   type SocialIdentityProvider,
   type Translation
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import {
   AccountRole,
   type ClassCollaborators,
@@ -53,8 +53,8 @@ import {
   type PersonUuid,
   type Ref,
   type Timestamp
-} from '@hanzo/core'
-import { createSystemType } from '@hanzo/model-card'
+} from '@hanzoteam/core'
+import { createSystemType } from '@hanzoteam/model-card'
 import {
   Collection as CollectionType,
   Hidden,
@@ -74,26 +74,26 @@ import {
   TypeTimestamp,
   UX,
   type Builder
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import chunter from '@hanzo/model-chunter'
-import core, { TAttachedDoc, TDoc, TSpace } from '@hanzo/model-core'
-import { createPublicLinkAction } from '@hanzo/model-guest'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import presentation from '@hanzo/model-presentation'
-import view, { createAction, createAttributePresenter, type Viewlet } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hanzo/platform'
-import setting from '@hanzo/setting'
-import templates from '@hanzo/templates'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type Action } from '@hanzo/view'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import chunter from '@hanzoteam/model-chunter'
+import core, { TAttachedDoc, TDoc, TSpace } from '@hanzoteam/model-core'
+import { createPublicLinkAction } from '@hanzoteam/model-guest'
+import { generateClassNotificationTypes } from '@hanzoteam/model-notification'
+import presentation from '@hanzoteam/model-presentation'
+import view, { createAction, createAttributePresenter, type Viewlet } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import notification from '@hanzoteam/notification'
+import { getEmbeddedLabel, type Asset, type IntlString, type Resource } from '@hanzoteam/platform'
+import setting from '@hanzoteam/setting'
+import templates from '@hanzoteam/templates'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action } from '@hanzoteam/view'
 import contact from './plugin'
-import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
-import preference, { TPreference } from '@hanzo/model-preference'
+import { PaletteColorIndexes } from '@hanzoteam/ui/src/colors'
+import preference, { TPreference } from '@hanzoteam/model-preference'
 
-export { contactId } from '@hanzo/contact'
+export { contactId } from '@hanzoteam/contact'
 export { contactOperation } from './migration'
 export { contact as default }
 
@@ -887,10 +887,10 @@ export function createModel (builder: Builder): void {
     core.space.Model,
     {
       label: getEmbeddedLabel('Hanzo'),
-      icon: contact.icon.Huly,
-      type: SocialIdType.HULY
+      icon: contact.icon.Hanzo,
+      type: SocialIdType.HANZO
     },
-    contact.socialIdentityProvider.Huly
+    contact.socialIdentityProvider.Hanzo
   )
 
   builder.createDoc(

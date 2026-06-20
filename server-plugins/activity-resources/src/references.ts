@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import activity, { type ActivityMessage, type ActivityReference, type UserMentionInfo } from '@hanzo/activity'
-import contact, { type Employee, type Person } from '@hanzo/contact'
+import activity, { type ActivityMessage, type ActivityReference, type UserMentionInfo } from '@hanzoteam/activity'
+import contact, { type Employee, type Person } from '@hanzoteam/contact'
 import core, {
   type AccountUuid,
   type Blob,
@@ -37,18 +37,18 @@ import core, {
   type TxUpdateDoc,
   type Type,
   getClassCollaborators
-} from '@hanzo/core'
-import notification, { type MentionInboxNotification, type NotificationType } from '@hanzo/notification'
-import { getPerson } from '@hanzo/server-contact'
-import { type StorageAdapter, type TriggerControl } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import notification, { type MentionInboxNotification, type NotificationType } from '@hanzoteam/notification'
+import { getPerson } from '@hanzoteam/server-contact'
+import { type StorageAdapter, type TriggerControl } from '@hanzoteam/server-core'
 import {
   getAllowedProviders,
   getCommonNotificationTxes,
   getNotificationProviderControl,
   getReceiversInfo,
   type NotificationProviderControl
-} from '@hanzo/server-notification-resources'
-import { areEqualJson, extractReferences, jsonToMarkup, markupToJSON } from '@hanzo/text-core'
+} from '@hanzoteam/server-notification-resources'
+import { areEqualJson, extractReferences, jsonToMarkup, markupToJSON } from '@hanzoteam/text-core'
 
 export function isDocMentioned (doc: Ref<Doc>, content: string): boolean {
   const references = []

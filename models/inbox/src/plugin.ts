@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { inboxId } from '@hanzo/inbox'
-import inbox from '@hanzo/inbox-resources/src/plugin'
-import { type Ref } from '@hanzo/core'
-import { type Application } from '@hanzo/model-workbench'
-import { mergeIds } from '@hanzo/platform'
+import { inboxId } from '@hanzoteam/inbox'
+import inbox from '@hanzoteam/inbox-resources/src/plugin'
+import { type Ref } from '@hanzoteam/core'
+import { type Application } from '@hanzoteam/model-workbench'
+import { mergeIds } from '@hanzoteam/platform'
 
 export default mergeIds(inboxId, inbox, {
   app: {

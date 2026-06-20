@@ -13,21 +13,21 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { SocialIdentity, SocialIdentityProvider, SocialIdentityRef } from '@hanzo/contact'
-  import { SocialIdentityPresenter } from '@hanzo/contact-resources'
+  import contact, { SocialIdentity, SocialIdentityProvider, SocialIdentityRef } from '@hanzoteam/contact'
+  import { SocialIdentityPresenter } from '@hanzoteam/contact-resources'
   import {
     getCurrentAccount,
     loginSocialTypes,
     pickPrimarySocialId,
     setCurrentAccount,
     SocialId
-  } from '@hanzo/core'
-  import { setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { getClient, MessageBox } from '@hanzo/presentation'
-  import { getPlatformColorDef, Label, PaletteColorIndexes, showPopup, themeStore } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import { setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { getClient, MessageBox } from '@hanzoteam/presentation'
+  import { getPlatformColorDef, Label, PaletteColorIndexes, showPopup, themeStore } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import setting from '../../plugin'
   import { getAccountClient } from '../../utils'
 

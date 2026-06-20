@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hanzo/core'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import { requestId } from '@hanzo/request'
-import request from '@hanzo/request-resources/src/plugin'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import type { NotificationGroup, NotificationType } from '@hanzo/notification'
+import { type Ref } from '@hanzoteam/core'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import { requestId } from '@hanzoteam/request'
+import request from '@hanzoteam/request-resources/src/plugin'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import type { NotificationGroup, NotificationType } from '@hanzoteam/notification'
 
 export default mergeIds(requestId, request, {
   component: {

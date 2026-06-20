@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Timestamp } from '@hanzo/core'
+  import { Ref, Timestamp } from '@hanzoteam/core'
   import DatePresenter from './DatePresenter.svelte'
-  import { Label, RangeDatePopup, SimpleDatePopup, showPopup } from '@hanzo/ui'
+  import { Label, RangeDatePopup, SimpleDatePopup, showPopup } from '@hanzoteam/ui'
   import view from '../../plugin'
-  import { Filter, FilterMode } from '@hanzo/view'
+  import { Filter, FilterMode } from '@hanzoteam/view'
 
   export let filter: Filter
   export let onChange: (e: Filter) => void

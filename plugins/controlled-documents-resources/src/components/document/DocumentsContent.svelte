@@ -4,10 +4,10 @@
 //
 -->
 <script lang="ts">
-  import { Document } from '@hanzo/controlled-documents'
-  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import { Component } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { Document } from '@hanzoteam/controlled-documents'
+  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { Component } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference, ViewOptions } from '@hanzoteam/view'
 
   export let _class: Ref<Class<Document>>
   export let viewlet: WithLookup<Viewlet>

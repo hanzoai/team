@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Widget, WidgetTab } from '@hanzo/workbench'
+  import { Widget, WidgetTab } from '@hanzoteam/workbench'
   import { createEventDispatcher } from 'svelte'
-  import presentation from '@hanzo/presentation'
-  import { Action, Component } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import presentation from '@hanzoteam/presentation'
+  import { Action, Component } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   import SidebarTab from './SidebarTab.svelte'
   import { closeWidgetTab, pinWidgetTab, unpinWidgetTab } from '../../sidebar'

@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { type Client } from '@hanzo/core'
-import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
+import { type Client } from '@hanzoteam/core'
+import { createClient, getTransactorEndpoint } from '@hanzoteam/server-client'
 
 export async function getClient (token: string): Promise<Client> {
   const endpoint = await getTransactorEndpoint(token)

@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hanzo/attachment'
-  import chunter from '@hanzo/chunter'
-  import { FileBrowser } from '@hanzo/attachment-resources'
-  import { Scroller, Switcher } from '@hanzo/ui'
-  import type { AnySvelteComponent } from '@hanzo/ui'
-  import contact from '@hanzo/contact'
-  import contactPlg from '@hanzo/contact-resources/src/plugin'
-  import { EmployeeBrowser } from '@hanzo/contact-resources'
+  import attachment from '@hanzoteam/attachment'
+  import chunter from '@hanzoteam/chunter'
+  import { FileBrowser } from '@hanzoteam/attachment-resources'
+  import { Scroller, Switcher } from '@hanzoteam/ui'
+  import type { AnySvelteComponent } from '@hanzoteam/ui'
+  import contact from '@hanzoteam/contact'
+  import contactPlg from '@hanzoteam/contact-resources/src/plugin'
+  import { EmployeeBrowser } from '@hanzoteam/contact-resources'
   import MessagesBrowser from './MessagesBrowser.svelte'
-  import { FilterBar, FilterButton } from '@hanzo/view-resources'
-  import { Class, Doc, Ref } from '@hanzo/core'
+  import { FilterBar, FilterButton } from '@hanzoteam/view-resources'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
 
   import { userSearch } from '../../../index'
   import { SearchType } from '../../../utils'

@@ -18,10 +18,10 @@
     DocumentState,
     ProjectDocumentTree,
     getDocumentName
-  } from '@hanzo/controlled-documents'
-  import { type Doc, type Ref } from '@hanzo/core'
-  import { type Action } from '@hanzo/ui'
-  import { TreeItem } from '@hanzo/view-resources'
+  } from '@hanzoteam/controlled-documents'
+  import { type Doc, type Ref } from '@hanzoteam/core'
+  import { type Action } from '@hanzoteam/ui'
+  import { TreeItem } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   export let tree = new ProjectDocumentTree()

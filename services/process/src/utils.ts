@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import { createRestTxOperations } from '@hanzo/api-client'
-import { systemAccountUuid, TxOperations, WorkspaceUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import { createRestTxOperations } from '@hanzoteam/api-client'
+import { systemAccountUuid, TxOperations, WorkspaceUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 import config from './config'
 
 export const SERVICE_NAME = 'process-service'

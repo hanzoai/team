@@ -1,4 +1,4 @@
-# Change Log - @hanzo/communication-rest-client
+# Change Log - @hanzoteam/communication-rest-client
 
 This log was last generated on Mon, 27 Oct 2025 16:28:25 GMT and should not be manually modified.
 

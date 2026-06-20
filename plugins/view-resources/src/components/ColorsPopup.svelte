@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ColorDefinition, getPlatformColors, themeStore } from '@hanzo/ui'
+  import { ColorDefinition, getPlatformColors, themeStore } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
   import PopupDialog from './PopupDialog.svelte'

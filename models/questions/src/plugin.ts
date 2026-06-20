@@ -2,11 +2,11 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { questionsId } from '@hanzo/questions'
-import questions from '@hanzo/questions-resources/src/plugin'
-import type { Ref } from '@hanzo/core'
-import { mergeIds } from '@hanzo/platform'
-import type { ActionCategory } from '@hanzo/view'
+import { questionsId } from '@hanzoteam/questions'
+import questions from '@hanzoteam/questions-resources/src/plugin'
+import type { Ref } from '@hanzoteam/core'
+import { mergeIds } from '@hanzoteam/platform'
+import type { ActionCategory } from '@hanzoteam/view'
 
 export default mergeIds(questionsId, questions, {
   actionCategory: {

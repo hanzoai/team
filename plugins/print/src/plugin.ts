@@ -2,9 +2,9 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { type Doc } from '@hanzo/core'
-import { type IntlString, type Metadata, type Plugin, plugin, type Asset, type Resource } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type Doc } from '@hanzoteam/core'
+import { type IntlString, type Metadata, type Plugin, plugin, type Asset, type Resource } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
 export const printId = 'print' as Plugin
 

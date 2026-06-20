@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type SpaceType, type SpaceTypeDescriptor } from '@hanzo/core'
+  import { type SpaceType, type SpaceTypeDescriptor } from '@hanzoteam/core'
 
   import ClassAttributes from '../../ClassAttributes.svelte'
 

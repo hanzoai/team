@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import textEditor, { type ActionContext } from '@hanzo/text-editor'
-import { getEventPositionElement, SelectPopup, showPopup } from '@hanzo/ui'
+import textEditor, { type ActionContext } from '@hanzoteam/text-editor'
+import { getEventPositionElement, SelectPopup, showPopup } from '@hanzoteam/ui'
 import { type Editor } from '@tiptap/core'
 import TiptapTable from '@tiptap/extension-table'
 import { CellSelection, TableMap } from '@tiptap/pm/tables'

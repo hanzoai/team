@@ -12,9 +12,9 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { CheckBox, Loading } from '@hanzo/ui'
-  import { getCurrentAccount, WithLookup } from '@hanzo/core'
-  import { Poll, PollAnswer } from '@hanzo/communication'
+  import { CheckBox, Loading } from '@hanzoteam/ui'
+  import { getCurrentAccount, WithLookup } from '@hanzoteam/core'
+  import { Poll, PollAnswer } from '@hanzoteam/communication'
   import { createEventDispatcher } from 'svelte'
 
   import { PollOption } from '../../poll'

@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/model-desktop-downloads",
+  "name": "@hanzoteam/model-desktop-downloads",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Copyright © Hanzo AI Inc.",
-  "template": "@hanzo/model-package",
+  "template": "@hanzoteam/model-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "test": "jest --passWithNoTests --silent --forceExit"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -34,14 +34,14 @@
     "ts-jest": "^29.1.1"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/model": "workspace:^0.7.17",
-    "@hanzo/model-core": "workspace:^0.7.0",
-    "@hanzo/desktop-downloads": "workspace:^0.7.0",
-    "@hanzo/model-presentation": "workspace:^0.7.0",
-    "@hanzo/model-workbench": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/desktop-downloads-resources": "workspace:^0.7.0",
-    "@hanzo/ui": "workspace:^0.7.0"
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/model": "workspace:^0.7.17",
+    "@hanzoteam/model-core": "workspace:^0.7.0",
+    "@hanzoteam/desktop-downloads": "workspace:^0.7.0",
+    "@hanzoteam/model-presentation": "workspace:^0.7.0",
+    "@hanzoteam/model-workbench": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/desktop-downloads-resources": "workspace:^0.7.0",
+    "@hanzoteam/ui": "workspace:^0.7.0"
   }
 }

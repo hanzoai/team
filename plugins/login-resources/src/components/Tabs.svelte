@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { getCurrentLocation, Label, navigate } from '@hanzo/ui'
+  import { getCurrentLocation, Label, navigate } from '@hanzoteam/ui'
 
   import login from '../plugin'
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Class, Data, Doc, Hierarchy, Ref } from '@hanzo/core'
+  import { Class, Data, Doc, Hierarchy, Ref } from '@hanzoteam/core'
   import { InlineAttributeBarEditor } from '..'
   import { KeyedAttribute } from '../attributes'
   import { getClient, getFiltredKeys, isCollectionAttr, isCollabAttr, isMarkupAttr } from '../utils'

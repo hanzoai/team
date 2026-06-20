@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import attachment, { Attachment, AttachmentsEvents } from '@hanzo/attachment'
-  import contact from '@hanzo/contact'
-  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hanzo/core'
-  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { FileOrBlob, KeyedAttribute, createQuery, getClient, uploadFile } from '@hanzo/presentation'
-  import textEditor, { type RefAction, type TextEditorHandler } from '@hanzo/text-editor'
+  import { Analytics } from '@hanzoteam/analytics'
+  import attachment, { Attachment, AttachmentsEvents } from '@hanzoteam/attachment'
+  import contact from '@hanzoteam/contact'
+  import core, { BlobMetadata, Doc, PersonId, Ref, generateId, type Blob, type Space } from '@hanzoteam/core'
+  import { IntlString, getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { FileOrBlob, KeyedAttribute, createQuery, getClient, uploadFile } from '@hanzoteam/presentation'
+  import textEditor, { type RefAction, type TextEditorHandler } from '@hanzoteam/text-editor'
   import {
     AttachIcon,
     CollaborativeAttributeBox,
@@ -27,15 +27,15 @@
     addTableHandler,
     defaultRefActions,
     getModelRefActions
-  } from '@hanzo/text-editor-resources'
-  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement } from '@hanzo/ui'
+  } from '@hanzoteam/text-editor-resources'
+  import { AnySvelteComponent, getEventPositionElement, getPopupPositionElement } from '@hanzoteam/ui'
   import {
     getUploadHandlers,
     uploadFiles,
     UploadHandlerDefinition,
     type FileUploadCallbackParams
-  } from '@hanzo/uploader'
-  import { getCollaborationUser, getObjectId } from '@hanzo/view-resources'
+  } from '@hanzoteam/uploader'
+  import { getCollaborationUser, getObjectId } from '@hanzoteam/view-resources'
 
   import AttachmentsGrid from './AttachmentsGrid.svelte'
 

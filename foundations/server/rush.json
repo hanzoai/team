@@ -331,25 +331,25 @@
    */
   "projects": [
     {
-      "packageName": "@hanzo/scripts",
+      "packageName": "@hanzoteam/scripts",
       "projectFolder": "common/scripts",
       "shouldPublish": false
     },
-    { "packageName": "@hanzo/server-client", "projectFolder": "packages/client", "shouldPublish": true },
-    { "packageName": "@hanzo/collaboration", "projectFolder": "packages/collaboration", "shouldPublish": true },
-    { "packageName": "@hanzo/server-core", "projectFolder": "packages/core", "shouldPublish": true },
-    { "packageName": "@hanzo/datalake", "projectFolder": "packages/datalake", "shouldPublish": true },
-    { "packageName": "@hanzo/hanzolake", "projectFolder": "packages/hanzolake", "shouldPublish": true },
-    { "packageName": "@hanzo/elastic", "projectFolder": "packages/elastic", "shouldPublish": true },
-    { "packageName": "@hanzo/kafka", "projectFolder": "packages/kafka", "shouldPublish": true },
-    { "packageName": "@hanzo/middleware", "projectFolder": "packages/middleware", "shouldPublish": true },
-    { "packageName": "@hanzo/minio", "projectFolder": "packages/minio", "shouldPublish": true },
-    { "packageName": "@hanzo/mongo", "projectFolder": "packages/mongo", "shouldPublish": true },
-    { "packageName": "@hanzo/postgres", "projectFolder": "packages/postgres", "shouldPublish": true },
-    { "packageName": "@hanzo/s3", "projectFolder": "packages/s3", "shouldPublish": true },
-    { "packageName": "@hanzo/server", "projectFolder": "packages/server", "shouldPublish": true },
+    { "packageName": "@hanzoteam/server-client", "projectFolder": "packages/client", "shouldPublish": true },
+    { "packageName": "@hanzoteam/collaboration", "projectFolder": "packages/collaboration", "shouldPublish": true },
+    { "packageName": "@hanzoteam/server-core", "projectFolder": "packages/core", "shouldPublish": true },
+    { "packageName": "@hanzoteam/datalake", "projectFolder": "packages/datalake", "shouldPublish": true },
+    { "packageName": "@hanzoteam/hanzolake", "projectFolder": "packages/hanzolake", "shouldPublish": true },
+    { "packageName": "@hanzoteam/elastic", "projectFolder": "packages/elastic", "shouldPublish": true },
+    { "packageName": "@hanzoteam/kafka", "projectFolder": "packages/kafka", "shouldPublish": true },
+    { "packageName": "@hanzoteam/middleware", "projectFolder": "packages/middleware", "shouldPublish": true },
+    { "packageName": "@hanzoteam/minio", "projectFolder": "packages/minio", "shouldPublish": true },
+    { "packageName": "@hanzoteam/mongo", "projectFolder": "packages/mongo", "shouldPublish": true },
+    { "packageName": "@hanzoteam/postgres", "projectFolder": "packages/postgres", "shouldPublish": true },
+    { "packageName": "@hanzoteam/s3", "projectFolder": "packages/s3", "shouldPublish": true },
+    { "packageName": "@hanzoteam/server", "projectFolder": "packages/server", "shouldPublish": true },
     {
-      "packageName": "@hanzo/server-storage",
+      "packageName": "@hanzoteam/server-storage",
       "projectFolder": "packages/server-storage",
       "shouldPublish": true
     }

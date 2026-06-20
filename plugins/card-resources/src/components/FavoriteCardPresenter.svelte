@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, FavoriteCard } from '@hanzo/card'
-  import { Asset } from '@hanzo/platform'
-  import { AnySvelteComponent } from '@hanzo/ui'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { Ref, WithLookup } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
+  import { Card, FavoriteCard } from '@hanzoteam/card'
+  import { Asset } from '@hanzoteam/platform'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { Ref, WithLookup } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
 
   import card from '../plugin'
   import CardPresenter from './CardPresenter.svelte'

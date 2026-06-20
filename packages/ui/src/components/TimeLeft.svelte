@@ -15,7 +15,7 @@
 
 <script lang="ts">
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { Timestamp } from '@hanzo/core'
+  import { Timestamp } from '@hanzoteam/core'
 
   import { Label } from '..'
   import ui from '../plugin'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, ClassifierKind, Data, Ref, RefTo, Status, generateId, toIdMap } from '@hanzo/core'
-  import { Resource, getEmbeddedLabel, getResource } from '@hanzo/platform'
-  import presentation, { getClient, hasResource } from '@hanzo/presentation'
+  import core, { Class, ClassifierKind, Data, Ref, RefTo, Status, generateId, toIdMap } from '@hanzoteam/core'
+  import { Resource, getEmbeddedLabel, getResource } from '@hanzoteam/platform'
+  import presentation, { getClient, hasResource } from '@hanzoteam/presentation'
   import {
     ProjectType,
     ProjectTypeDescriptor,
@@ -24,11 +24,11 @@
     TaskTypeDescriptor,
     createState,
     findStatusAttr
-  } from '@hanzo/task'
-  import { DropdownIntlItem, Modal, ModernEditbox, Label, ButtonMenu } from '@hanzo/ui'
+  } from '@hanzoteam/task'
+  import { DropdownIntlItem, Modal, ModernEditbox, Label, ButtonMenu } from '@hanzoteam/ui'
   import task from '../../plugin'
   import TaskTypeKindEditor from './TaskTypeKindEditor.svelte'
-  import { clearSettingsStore } from '@hanzo/setting-resources'
+  import { clearSettingsStore } from '@hanzoteam/setting-resources'
 
   const client = getClient()
   export let type: ProjectType

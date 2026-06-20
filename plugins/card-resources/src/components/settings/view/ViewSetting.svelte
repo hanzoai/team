@@ -15,12 +15,12 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import core, { AnyAttribute, Association, AssociationQuery, Class, Client, Doc, Ref, Type } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel, IntlString } from '@hanzo/platform'
-  import { getAttributePresenterClass, getClient, hasResource } from '@hanzo/presentation'
-  import { resizeObserver } from '@hanzo/ui'
-  import view, { BuildModelKey, Viewlet, ViewletPreference } from '@hanzo/view'
-  import { buildConfigLookup, getKeyLabel, ViewletClassSettings } from '@hanzo/view-resources'
+  import core, { AnyAttribute, Association, AssociationQuery, Class, Client, Doc, Ref, Type } from '@hanzoteam/core'
+  import { Asset, getEmbeddedLabel, IntlString } from '@hanzoteam/platform'
+  import { getAttributePresenterClass, getClient, hasResource } from '@hanzoteam/presentation'
+  import { resizeObserver } from '@hanzoteam/ui'
+  import view, { BuildModelKey, Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { buildConfigLookup, getKeyLabel, ViewletClassSettings } from '@hanzoteam/view-resources'
 
   export let viewlet: Viewlet
 

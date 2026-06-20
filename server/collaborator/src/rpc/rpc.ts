@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hanzo/core'
-import type { StorageAdapter } from '@hanzo/server-core'
+import { MeasureContext } from '@hanzoteam/core'
+import type { StorageAdapter } from '@hanzoteam/server-core'
 import { Hocuspocus } from '@hocuspocus/server'
 import { Transformer } from '@hocuspocus/transformer'
 import { Context } from '../context'

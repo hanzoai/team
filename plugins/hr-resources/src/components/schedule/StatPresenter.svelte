@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
+  import { Ref } from '@hanzoteam/core'
 
-  import { Request, Staff } from '@hanzo/hr'
+  import { Request, Staff } from '@hanzoteam/hr'
 
   export let value: Staff
   export let display: (requests: Request[], staff: Staff) => number | string

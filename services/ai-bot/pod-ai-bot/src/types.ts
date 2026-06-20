@@ -14,7 +14,7 @@
 //
 
 import { ObjectId } from 'mongodb'
-import { Class, Doc, Ref, PersonUuid } from '@hanzo/core'
+import { Class, Doc, Ref, PersonUuid } from '@hanzoteam/core'
 
 export interface HistoryRecord {
   _id?: ObjectId

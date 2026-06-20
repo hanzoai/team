@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 import CreateFunnel from './components/CreateFunnel.svelte'
 import CreateLead from './components/CreateLead.svelte'

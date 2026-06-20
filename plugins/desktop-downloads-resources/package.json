@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/desktop-downloads-resources",
+  "name": "@hanzoteam/desktop-downloads-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
   "author": "Hanzo AI Inc.",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/jest": "^29.5.5",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -39,14 +39,14 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/presentation": "workspace:^0.7.0",
-    "@hanzo/desktop-downloads": "workspace:^0.7.0",
-    "@hanzo/theme": "workspace:^0.7.0",
-    "@hanzo/ui": "workspace:^0.7.0",
-    "@hanzo/view": "workspace:^0.7.0",
-    "@hanzo/view-resources": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/presentation": "workspace:^0.7.0",
+    "@hanzoteam/desktop-downloads": "workspace:^0.7.0",
+    "@hanzoteam/theme": "workspace:^0.7.0",
+    "@hanzoteam/ui": "workspace:^0.7.0",
+    "@hanzoteam/view": "workspace:^0.7.0",
+    "@hanzoteam/view-resources": "workspace:^0.7.0",
     "install": "^0.13.0",
     "svelte": "^4.2.20"
   }

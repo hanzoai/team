@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { DocumentState } from '@hanzo/controlled-documents'
+  import { DocumentState } from '@hanzoteam/controlled-documents'
   import StatePresenter from './StatePresenter.svelte'
   import { documentStatesOrder } from '../../../utils'
 

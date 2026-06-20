@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessagePreviewType, DisplayDocUpdateMessage } from '@hanzo/activity'
-  import { BaseMessagePreview } from '@hanzo/activity-resources'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { getClient } from '@hanzo/presentation'
-  import { Icon, Label } from '@hanzo/ui'
-  import { ObjectPresenter } from '@hanzo/view-resources'
+  import activity, { ActivityMessagePreviewType, DisplayDocUpdateMessage } from '@hanzoteam/activity'
+  import { BaseMessagePreview } from '@hanzoteam/activity-resources'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Icon, Label } from '@hanzoteam/ui'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
 
   import request from '../plugin'
 

@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import { AccountRole } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import chunter from '@hanzo/model-chunter'
-import view, { createAction, type Viewlet } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import { surveyId } from '@hanzo/survey'
+import activity from '@hanzoteam/activity'
+import { AccountRole } from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import chunter from '@hanzoteam/model-chunter'
+import view, { createAction, type Viewlet } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import { surveyId } from '@hanzoteam/survey'
 import { TPoll, TSurvey } from './types'
 import survey from './plugin'
 
-export { surveyId } from '@hanzo/survey'
+export { surveyId } from '@hanzoteam/survey'
 export { surveyOperation } from './migration'
 export default survey
 export * from './types'

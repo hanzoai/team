@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { Doc, FindOptions, SortingOrder } from '@hanzo/core'
-  import { ObjectPopup, getClient } from '@hanzo/presentation'
+  import { Card } from '@hanzoteam/card'
+  import { Doc, FindOptions, SortingOrder } from '@hanzoteam/core'
+  import { ObjectPopup, getClient } from '@hanzoteam/presentation'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
 

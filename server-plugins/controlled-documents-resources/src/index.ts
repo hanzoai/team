@@ -1,7 +1,7 @@
 //
 // Copyright © 2023-2024 Hanzo AI Inc.
 //
-import { Person, type Employee } from '@hanzo/contact'
+import { Person, type Employee } from '@hanzoteam/contact'
 import core, {
   combineAttributes,
   DocumentQuery,
@@ -18,10 +18,10 @@ import core, {
   type Timestamp,
   type TxCUD,
   concatLink
-} from '@hanzo/core'
-import { NotificationType } from '@hanzo/notification'
-import { getEmployees, getSocialIds } from '@hanzo/server-contact'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { NotificationType } from '@hanzoteam/notification'
+import { getEmployees, getSocialIds } from '@hanzoteam/server-contact'
+import serverCore, { TriggerControl } from '@hanzoteam/server-core'
 
 import documents, {
   ControlledDocument,
@@ -33,11 +33,11 @@ import documents, {
   getEffectiveDocUpdates,
   type DocumentRequest,
   type DocumentTraining
-} from '@hanzo/controlled-documents'
-import { RequestStatus } from '@hanzo/request'
-import training, { TrainingState, type TrainingRequest } from '@hanzo/training'
-import { getMetadata } from '@hanzo/platform'
-import { workbenchId } from '@hanzo/workbench'
+} from '@hanzoteam/controlled-documents'
+import { RequestStatus } from '@hanzoteam/request'
+import training, { TrainingState, type TrainingRequest } from '@hanzoteam/training'
+import { getMetadata } from '@hanzoteam/platform'
+import { workbenchId } from '@hanzoteam/workbench'
 import slugify from 'slugify'
 
 async function getDocs (

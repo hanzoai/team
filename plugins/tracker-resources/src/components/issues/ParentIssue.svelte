@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Issue } from '@hanzo/tracker'
-  import { Button, IconClose } from '@hanzo/ui'
+  import { Issue } from '@hanzoteam/tracker'
+  import { Button, IconClose } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import PriorityRefPresenter from './PriorityRefPresenter.svelte'

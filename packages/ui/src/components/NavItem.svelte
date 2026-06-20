@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
   import {
     Icon,
     Label,

@@ -15,10 +15,10 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
   import { fade } from 'svelte/transition'
-  import { createQuery, getCurrentWorkspaceUuid } from '@hanzo/presentation'
-  import { type IntegrationType, IntegrationError } from '@hanzo/setting'
-  import setting from '@hanzo/setting'
-  import { type Integration } from '@hanzo/account-client'
+  import { createQuery, getCurrentWorkspaceUuid } from '@hanzoteam/presentation'
+  import { type IntegrationType, IntegrationError } from '@hanzoteam/setting'
+  import setting from '@hanzoteam/setting'
+  import { type Integration } from '@hanzoteam/account-client'
   import {
     Header,
     Breadcrumb,
@@ -28,15 +28,15 @@
     TabItem,
     Switcher,
     Loading
-  } from '@hanzo/ui'
-  import { translate } from '@hanzo/platform'
-  import { onIntegrationEvent } from '@hanzo/integration-client'
+  } from '@hanzoteam/ui'
+  import { translate } from '@hanzoteam/platform'
+  import { onIntegrationEvent } from '@hanzoteam/integration-client'
 
   import IntegrationCard from './IntegrationCard.svelte'
   import IntegrationErrorNotification from './IntegrationErrorNotification.svelte'
   import { getAccountClient } from '../../utils'
-  import { Analytics } from '@hanzo/analytics'
-  import { IntegrationKind } from '@hanzo/core'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { IntegrationKind } from '@hanzoteam/core'
 
   const typeQuery = createQuery()
 

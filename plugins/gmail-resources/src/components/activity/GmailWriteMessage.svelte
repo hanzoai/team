@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Ref } from '@hanzo/core'
-  import { Message } from '@hanzo/gmail'
-  import { showPopup } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Ref } from '@hanzoteam/core'
+  import { Message } from '@hanzoteam/gmail'
+  import { showPopup } from '@hanzoteam/ui'
 
   import gmail from '../../plugin'
   import Main from '../Main.svelte'

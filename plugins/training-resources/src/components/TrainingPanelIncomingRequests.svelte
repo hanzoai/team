@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import { navigate } from '@hanzo/ui'
-  import type { Training } from '@hanzo/training'
+  import { navigate } from '@hanzoteam/ui'
+  import type { Training } from '@hanzoteam/training'
   import training from '../plugin'
   import { trainingRoute, TrainingRouteTab } from '../routing/routes/trainingRoute'
   import { canViewTrainingIncomingRequests, getCurrentEmployeeRef } from '../utils'

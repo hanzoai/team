@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Class, Client, Doc, Ref } from '@hanzo/core'
-import { type IntlString, type Metadata, type Plugin, plugin, type Resource, type Asset } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import type { NotificationGroup, NotificationType } from '@hanzo/notification'
+import type { Class, Client, Doc, Ref } from '@hanzoteam/core'
+import { type IntlString, type Metadata, type Plugin, plugin, type Resource, type Asset } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import type { NotificationGroup, NotificationType } from '@hanzoteam/notification'
 import type { ExportResultRecord } from './types'
 
 export const exportId = 'export' as Plugin

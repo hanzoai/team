@@ -12,7 +12,7 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, Label, showPopup } from '@hanzo/ui'
+  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, Label, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import LanguagePresenter from './LanguagePresenter.svelte'

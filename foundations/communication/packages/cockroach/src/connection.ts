@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-// Full copy from @hanzo/postgres
+// Full copy from @hanzoteam/postgres
 import postgres from 'postgres'
 import { v4 as uuid } from 'uuid'
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Employee } from '@hanzo/contact'
+import type { Employee } from '@hanzoteam/contact'
 import type {
   TestCase,
   TestSuite,
@@ -26,11 +26,11 @@ import type {
   TestResult,
   TestPlan,
   TestPlanItem
-} from '@hanzo/test-management'
-import { type Attachment } from '@hanzo/attachment'
-import contact from '@hanzo/contact'
-import chunter from '@hanzo/chunter'
-import { getEmbeddedLabel } from '@hanzo/platform'
+} from '@hanzoteam/test-management'
+import { type Attachment } from '@hanzoteam/attachment'
+import contact from '@hanzoteam/contact'
+import chunter from '@hanzoteam/chunter'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
 import {
   DateRangeMode,
   IndexKind,
@@ -44,7 +44,7 @@ import {
   type MarkupBlobRef,
   type Class,
   type AccountUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   Mixin,
   Model,
@@ -59,13 +59,13 @@ import {
   ReadOnly,
   TypeDate,
   Hidden
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import core, { TAttachedDoc, TDoc, TType, TTypedSpace } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import core, { TAttachedDoc, TDoc, TType, TTypedSpace } from '@hanzoteam/model-core'
 
 import testManagement from './plugin'
 
-export { testManagementId } from '@hanzo/test-management/src/index'
+export { testManagementId } from '@hanzoteam/test-management/src/index'
 
 export const DOMAIN_TEST_MANAGEMENT = 'test-management' as Domain
 

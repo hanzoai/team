@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import notification from '@hanzo/model-notification'
-import core from '@hanzo/model-core'
-import contact from '@hanzo/model-contact'
-import love from '@hanzo/model-love'
-import { type Builder } from '@hanzo/model'
+import notification from '@hanzoteam/model-notification'
+import core from '@hanzoteam/model-core'
+import contact from '@hanzoteam/model-contact'
+import love from '@hanzoteam/model-love'
+import { type Builder } from '@hanzoteam/model'
 
 import gmail from './plugin'
 

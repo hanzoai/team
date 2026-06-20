@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { getMetadata } from '@hanzo/platform'
-import contact from '@hanzo/contact'
-import { type Person } from '@hanzo/core'
-import { avatarWhiteColors, avatarDarkColors, type ColorDefinition } from '@hanzo/ui'
-import { type UserProfile, getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
-import login from '@hanzo/login'
-import presentation from '@hanzo/presentation'
+import { getMetadata } from '@hanzoteam/platform'
+import contact from '@hanzoteam/contact'
+import { type Person } from '@hanzoteam/core'
+import { avatarWhiteColors, avatarDarkColors, type ColorDefinition } from '@hanzoteam/ui'
+import { type UserProfile, getClient as getAccountClientRaw, type AccountClient } from '@hanzoteam/account-client'
+import login from '@hanzoteam/login'
+import presentation from '@hanzoteam/presentation'
 
 export function getDisplayName (person: Person): string {
   return getMetadata(contact.metadata.LastNameFirst) === true

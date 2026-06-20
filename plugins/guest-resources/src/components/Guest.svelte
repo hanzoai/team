@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import core, { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { getMetadata, getResource } from '@hanzo/platform'
-  import presentation, { ActionContext, decodeTokenPayload, getClient } from '@hanzo/presentation'
+  import { Analytics } from '@hanzoteam/analytics'
+  import core, { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { getMetadata, getResource } from '@hanzoteam/platform'
+  import presentation, { ActionContext, decodeTokenPayload, getClient } from '@hanzoteam/presentation'
   import {
     AnyComponent,
     Component,
@@ -34,11 +34,11 @@
     getCurrentLocation,
     setResolvedLocation,
     showPanel
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { ListSelectionProvider, parseLinkId, restrictionStore, updateFocus } from '@hanzo/view-resources'
-  import workbench, { Application, NavigatorModel, SpecialNavModel, ViewConfiguration } from '@hanzo/workbench'
-  import { SpaceView, buildNavModel } from '@hanzo/workbench-resources'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { ListSelectionProvider, parseLinkId, restrictionStore, updateFocus } from '@hanzoteam/view-resources'
+  import workbench, { Application, NavigatorModel, SpecialNavModel, ViewConfiguration } from '@hanzoteam/workbench'
+  import { SpaceView, buildNavModel } from '@hanzoteam/workbench-resources'
   import { workbenchGuestSeparators } from '..'
   import guest from '../plugin'
   import { checkAccess } from '../utils'

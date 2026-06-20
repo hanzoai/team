@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Class } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Project } from '@hanzo/task'
+  import { Class } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Project } from '@hanzoteam/task'
   import { typeStore } from '../..'
   import task from '../../plugin'
 

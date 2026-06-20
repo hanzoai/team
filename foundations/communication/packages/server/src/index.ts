@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hanzo/core'
+import { type MeasureContext } from '@hanzoteam/core'
 import type {
   FindNotificationContextParams,
   FindNotificationsParams,
@@ -27,9 +27,9 @@ import type {
   FindPeersParams,
   Peer,
   CardID, FindMessagesMetaParams, MessageMeta, FindMessagesGroupParams, MessagesGroup
-} from '@hanzo/communication-types'
-import { createDbAdapter } from '@hanzo/communication-cockroach'
-import type { EventResult, Event, ServerApi, SessionData } from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-types'
+import { createDbAdapter } from '@hanzoteam/communication-cockroach'
+import type { EventResult, Event, ServerApi, SessionData } from '@hanzoteam/communication-sdk-types'
 
 import { getMetadata } from './metadata'
 import type { CommunicationCallbacks, Subscription } from './types'

@@ -3,8 +3,8 @@
 //
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import chunter from '@hanzo/chunter'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import chunter from '@hanzoteam/chunter'
 import core, {
   BrandingMap,
   buildSocialIdString,
@@ -25,24 +25,24 @@ import core, {
   WorkspaceUuid,
   type PersonUuid,
   type Ref
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import github, {
   GithubAuthentication,
   githubId,
   makeQuery,
   type GithubIntegration,
   githubIntegrationKind
-} from '@hanzo/github'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import { generateToken } from '@hanzo/server-token'
-import tracker from '@hanzo/tracker'
+} from '@hanzoteam/github'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
+import { generateToken } from '@hanzoteam/server-token'
+import tracker from '@hanzoteam/tracker'
 import { Installation, type InstallationCreatedEvent, type InstallationUnsuspendEvent } from '@octokit/webhooks-types'
 import { App, Octokit } from 'octokit'
 
-import { Analytics } from '@hanzo/analytics'
-import { SplitLogger } from '@hanzo/analytics-service'
-import contact, { type Employee, type SocialIdentityRef } from '@hanzo/contact'
-import { type StorageAdapter } from '@hanzo/server-core'
+import { Analytics } from '@hanzoteam/analytics'
+import { SplitLogger } from '@hanzoteam/analytics-service'
+import contact, { type Employee, type SocialIdentityRef } from '@hanzoteam/contact'
+import { type StorageAdapter } from '@hanzoteam/server-core'
 import { join } from 'path'
 import { createPlatformClient } from './client'
 import config from './config'

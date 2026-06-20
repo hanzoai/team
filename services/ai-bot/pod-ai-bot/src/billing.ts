@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { groupByArray, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+import { groupByArray, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 import {
   getClient as getBillingClient,
   type BillingClient,
   AiTranscriptData,
   AiTokensData
-} from '@hanzo/billing-client'
-import { withRetry } from '@hanzo/retry'
+} from '@hanzoteam/billing-client'
+import { withRetry } from '@hanzoteam/retry'
 
 import config from './config'
 

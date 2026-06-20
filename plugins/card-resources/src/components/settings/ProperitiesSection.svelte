@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { ClassPermission, Ref } from '@hanzo/core'
-  import { getClient, MessageBox } from '@hanzo/presentation'
-  import { ClassAttributes } from '@hanzo/setting-resources'
-  import setting from '@hanzo/setting-resources/src/plugin'
-  import { ButtonIcon, showPopup } from '@hanzo/ui'
+  import { MasterTag } from '@hanzoteam/card'
+  import { ClassPermission, Ref } from '@hanzoteam/core'
+  import { getClient, MessageBox } from '@hanzoteam/presentation'
+  import { ClassAttributes } from '@hanzoteam/setting-resources'
+  import setting from '@hanzoteam/setting-resources/src/plugin'
+  import { ButtonIcon, showPopup } from '@hanzoteam/ui'
   import card from '../../plugin'
   import { createTypePermissions } from '../../utils'
 

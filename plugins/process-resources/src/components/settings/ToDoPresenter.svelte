@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { parseContext, Process, SelectedContext, SelectedExecutionContext } from '@hanzo/process'
-  import ui, { Label } from '@hanzo/ui'
+  import { parseContext, Process, SelectedContext, SelectedExecutionContext } from '@hanzoteam/process'
+  import ui, { Label } from '@hanzoteam/ui'
   import ExecutionContextPresenter from '../attributeEditors/ExecutionContextPresenter.svelte'
 
   export let process: Process

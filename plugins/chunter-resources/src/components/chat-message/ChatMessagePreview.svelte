@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import { ActivityMessagePreviewType } from '@hanzo/activity'
-  import { BaseMessagePreview } from '@hanzo/activity-resources'
-  import attachment, { Attachment } from '@hanzo/attachment'
-  import { AttachmentsTooltip } from '@hanzo/attachment-resources'
-  import { ChatMessage } from '@hanzo/chunter'
-  import { createQuery } from '@hanzo/presentation'
-  import { Action, Icon, Label, tooltip } from '@hanzo/ui'
-  import { isEmptyMarkup } from '@hanzo/text'
+  import { ActivityMessagePreviewType } from '@hanzoteam/activity'
+  import { BaseMessagePreview } from '@hanzoteam/activity-resources'
+  import attachment, { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentsTooltip } from '@hanzoteam/attachment-resources'
+  import { ChatMessage } from '@hanzoteam/chunter'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Action, Icon, Label, tooltip } from '@hanzoteam/ui'
+  import { isEmptyMarkup } from '@hanzoteam/text'
 
   export let value: ChatMessage
   export let readonly = false

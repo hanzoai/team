@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { type TagCategory, tagsId } from '@hanzo/tags'
-import tags from '@hanzo/tags-resources/src/plugin'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type ViewAction } from '@hanzo/model-view'
+import { type Ref } from '@hanzoteam/core'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import { type TagCategory, tagsId } from '@hanzoteam/tags'
+import tags from '@hanzoteam/tags-resources/src/plugin'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type ViewAction } from '@hanzoteam/model-view'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import view from '@hanzo/view'
+import view from '@hanzoteam/view'
 
 export default mergeIds(tagsId, tags, {
   // Without it, CLI version is failed with some svelte dependency exception.

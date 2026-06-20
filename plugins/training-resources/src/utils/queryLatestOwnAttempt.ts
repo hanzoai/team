@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { TrainingAttempt, TrainingRequest } from '@hanzo/training'
-import { SortingOrder } from '@hanzo/core'
-import { type LiveQuery } from '@hanzo/presentation'
+import type { TrainingAttempt, TrainingRequest } from '@hanzoteam/training'
+import { SortingOrder } from '@hanzoteam/core'
+import { type LiveQuery } from '@hanzoteam/presentation'
 import training from '../plugin'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 

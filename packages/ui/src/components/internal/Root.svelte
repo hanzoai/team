@@ -1,10 +1,10 @@
 <script lang="ts">
-  import platform, { OK, PlatformEvent, Severity, Status, addEventListener, getMetadata } from '@hanzo/platform'
+  import platform, { OK, PlatformEvent, Severity, Status, addEventListener, getMetadata } from '@hanzoteam/platform'
   import { onDestroy, onMount } from 'svelte'
   import type { AnyComponent, WidthType } from '../../types'
   import { deviceSizes, deviceWidths } from '../../types'
   // import { applicationShortcutKey } from '../../utils'
-  import { Theme, themeStore } from '@hanzo/theme'
+  import { Theme, themeStore } from '@hanzoteam/theme'
   import {
     IconArrowLeft,
     IconArrowRight,

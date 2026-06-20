@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import core from '@hanzo/core'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { ContextId, Process, ProcessContext } from '@hanzo/process'
-  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
-  import { EditBox, getCurrentLocation, Grid, Modal, navigate } from '@hanzo/ui'
+  import core from '@hanzoteam/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { ContextId, Process, ProcessContext } from '@hanzoteam/process'
+  import { clearSettingsStore, settingsStore } from '@hanzoteam/setting-resources'
+  import { EditBox, getCurrentLocation, Grid, Modal, navigate } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import ProcessContextRawPresenter from '../contextEditors/ProcessContextRawPresenter.svelte'
   import AsideStepEditor from './AsideStepEditor.svelte'

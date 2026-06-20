@@ -22,9 +22,9 @@
     PropertyType,
     Ref,
     Type
-  } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel, getResource, translateCB } from '@hanzo/platform'
-  import presentation, { getClient, MessageBox } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import { Asset, getEmbeddedLabel, getResource, translateCB } from '@hanzoteam/platform'
+  import presentation, { getClient, MessageBox } from '@hanzoteam/presentation'
   import {
     AnyComponent,
     ButtonIcon,
@@ -38,9 +38,9 @@
     showPopup,
     themeStore,
     Toggle
-  } from '@hanzo/ui'
-  import { IconPicker } from '@hanzo/view-resources'
-  import view from '@hanzo/view-resources/src/plugin'
+  } from '@hanzoteam/ui'
+  import { IconPicker } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import setting from '../plugin'
   import { clearSettingsStore } from '../store'
 

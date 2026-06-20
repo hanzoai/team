@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { showPopup, HeaderButton } from '@hanzo/ui'
+  import { showPopup, HeaderButton } from '@hanzoteam/ui'
   import lead from '../plugin'
   import CreateCustomer from './CreateCustomer.svelte'
-  import { AccountRole } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
+  import { AccountRole } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
 
   const client = getClient()
 

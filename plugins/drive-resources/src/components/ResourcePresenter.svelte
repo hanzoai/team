@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { type File, type Folder, type Resource } from '@hanzo/drive'
-  import { getClient } from '@hanzo/presentation'
-  import { ObjectPresenterType } from '@hanzo/view'
+  import { type File, type Folder, type Resource } from '@hanzoteam/drive'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ObjectPresenterType } from '@hanzoteam/view'
 
   import drive from '../plugin'
 

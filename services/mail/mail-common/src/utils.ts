@@ -16,7 +16,7 @@ import TurndownService from 'turndown'
 import sanitizeHtml from 'sanitize-html'
 import { imageSize } from 'image-size'
 
-import { BlobMetadata, MeasureContext } from '@hanzo/core'
+import { BlobMetadata, MeasureContext } from '@hanzoteam/core'
 import {
   Attachment,
   EmailContact,
@@ -26,9 +26,9 @@ import {
   HanzoMessageTypeHeader,
   MailHeader
 } from './types'
-import { MessageExtra, MessageID } from '@hanzo/communication-types'
-import { CreateMessageEvent } from '@hanzo/communication-sdk-types'
-import { generateMessageId } from '@hanzo/communication-shared'
+import { MessageExtra, MessageID } from '@hanzoteam/communication-types'
+import { CreateMessageEvent } from '@hanzoteam/communication-sdk-types'
+import { generateMessageId } from '@hanzoteam/communication-shared'
 
 const NAME_EMAIL_PATTERN = /^(?:"?([^"<]+)"?\s*)?<([^>]+)>$/
 const NAME_SEGMENT_REGEX = /[\s,;]+/

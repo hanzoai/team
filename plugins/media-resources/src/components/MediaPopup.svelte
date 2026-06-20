@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ComponentExtensions } from '@hanzo/presentation'
+  import { ComponentExtensions } from '@hanzoteam/presentation'
 
   import media from '../plugin'
 
   import MediaPopupCamSelector from './MediaPopupCamSelector.svelte'
   import MediaPopupMicSelector from './MediaPopupMicSelector.svelte'
   import MediaPopupSpkSelector from './MediaPopupSpkSelector.svelte'
-  import { getMediaDevices } from '@hanzo/media'
-  import { Loading } from '@hanzo/ui'
+  import { getMediaDevices } from '@hanzoteam/media'
+  import { Loading } from '@hanzoteam/ui'
 
   let micOpened = false
   let camOpened = false

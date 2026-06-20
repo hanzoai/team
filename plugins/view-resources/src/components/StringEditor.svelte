@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import type { ButtonSize, ButtonKind, EditStyle } from '@hanzo/ui'
-  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import type { ButtonSize, ButtonKind, EditStyle } from '@hanzoteam/ui'
+  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzoteam/ui'
   import EditBoxPopup from './EditBoxPopup.svelte'
 
   export let label: IntlString

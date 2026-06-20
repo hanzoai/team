@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hanzo/calendar'
-  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import { IntlString, Asset } from '@hanzo/platform'
+  import { Event } from '@hanzoteam/calendar'
+  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { IntlString, Asset } from '@hanzoteam/platform'
   import {
     AnyComponent,
     Button,
@@ -26,11 +26,11 @@
     showPopup,
     Header,
     Breadcrumb
-  } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { ViewletSelector, getViewOptions, viewOptionStore } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { ViewletSelector, getViewOptions, viewOptionStore } from '@hanzoteam/view-resources'
   import calendar from '../plugin'
-  // import { deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  // import { deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
 
   export let _class: Ref<Class<Event>> = calendar.class.Event
   export let space: Ref<Space> | undefined = undefined

@@ -578,7 +578,7 @@ jobs:
         run: node common/scripts/install-run-rush.js install
 
       - name: Build sanity-tests suite
-        run: node common/scripts/install-run-rush.js build -t @hanzo/tests-sanity
+        run: node common/scripts/install-run-rush.js build -t @hanzoteam/tests-sanity
 
       - name: Login to GHCR
         if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
@@ -606,7 +606,7 @@ jobs:
       - name: Run API tests
         run: |
           cd ./ws-tests/api-tests
-          node ../../common/scripts/install-run-rush.js validate --to @hanzo/api-tests
+          node ../../common/scripts/install-run-rush.js validate --to @hanzoteam/api-tests
           node ../../common/scripts/install-run-rushx.js api-test --verbose
       - name: Install Playwright
         run: |

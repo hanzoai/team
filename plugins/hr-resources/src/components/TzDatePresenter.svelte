@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TzDate } from '@hanzo/hr'
-  import { DateRangePresenter } from '@hanzo/ui'
+  import { TzDate } from '@hanzoteam/hr'
+  import { DateRangePresenter } from '@hanzoteam/ui'
 
   export let value: TzDate | null | undefined
   export let noShift: boolean = false

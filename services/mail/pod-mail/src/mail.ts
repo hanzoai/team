@@ -16,8 +16,8 @@ import { type SendMailOptions, type Transporter } from 'nodemailer'
 import { LRUCache } from 'lru-cache'
 import { createHash } from 'node:crypto'
 
-import { Analytics } from '@hanzo/analytics'
-import { MeasureContext } from '@hanzo/core'
+import { Analytics } from '@hanzoteam/analytics'
+import { MeasureContext } from '@hanzoteam/core'
 
 import config from './config'
 import { getDefaultTransport, getSmtpTransport } from './transport'

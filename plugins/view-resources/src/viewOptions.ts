@@ -7,10 +7,10 @@ import {
   type Ref,
   SortingOrder,
   type Space
-} from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import { type LiveQuery, createQuery, getAttributePresenterClass, getClient } from '@hanzo/presentation'
-import { locationToUrl, getCurrentResolvedLocation } from '@hanzo/ui'
+} from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import { type LiveQuery, createQuery, getAttributePresenterClass, getClient } from '@hanzoteam/presentation'
+import { locationToUrl, getCurrentResolvedLocation } from '@hanzoteam/ui'
 import {
   type ViewOptionsOption,
   type ViewQueryOption,
@@ -21,7 +21,7 @@ import {
   type ViewOptions,
   type Viewlet,
   type ViewletDescriptor
-} from '@hanzo/view'
+} from '@hanzoteam/view'
 import { get, writable } from 'svelte/store'
 import view from './plugin'
 import { groupByCategory } from './utils'

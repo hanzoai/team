@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type BackupConfig } from '@hanzo/server-backup'
+import { type BackupConfig } from '@hanzoteam/server-backup'
 
 interface Config extends Omit<BackupConfig, 'Token'> {
   AccountsURL: string

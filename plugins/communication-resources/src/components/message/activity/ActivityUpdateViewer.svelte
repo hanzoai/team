@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttributeModel } from '@hanzo/view'
-  import { ActivityUpdate, ActivityUpdateType, Markdown } from '@hanzo/communication-types'
+  import { AttributeModel } from '@hanzoteam/view'
+  import { ActivityUpdate, ActivityUpdateType, Markdown } from '@hanzoteam/communication-types'
 
   import ActivityUpdateTagViewer from './ActivityUpdateTagViewer.svelte'
   import ActivityUpdateAttributeViewer from './ActivityUpdateAttributeViewer.svelte'
   import ActivityUpdateCollaboratorsViewer from './ActivityUpdateCollaboratorsViewer.svelte'
-  import { Person } from '@hanzo/contact'
-  import { Card } from '@hanzo/card'
+  import { Person } from '@hanzoteam/contact'
+  import { Card } from '@hanzoteam/card'
   import ActivityUpdateTypeViewer from './ActivityUpdateTypeViewer.svelte'
   import ActivityUpdateProcessViewer from './ActivityUpdateProcessViewer.svelte'
   import ActivityCollaborativeContentViewer from './ActivityCollaborativeContentViewer.svelte'

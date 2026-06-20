@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import fs from 'fs'
 import path from 'path'
 

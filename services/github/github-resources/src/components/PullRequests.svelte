@@ -3,16 +3,16 @@
 //
 -->
 <script lang="ts">
-  import { DocumentQuery, Ref } from '@hanzo/core'
+  import { DocumentQuery, Ref } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
 
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import tracker, { Issue, Project } from '@hanzo/tracker'
-  import { IModeSelector, resolvedLocationStore } from '@hanzo/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import tracker, { Issue, Project } from '@hanzoteam/tracker'
+  import { IModeSelector, resolvedLocationStore } from '@hanzoteam/ui'
 
-  import task from '@hanzo/task'
-  import { GithubProject, GithubPullRequest } from '@hanzo/github'
+  import task from '@hanzoteam/task'
+  import { GithubProject, GithubPullRequest } from '@hanzoteam/github'
   import PullRequestsView from './PullRequestsView.svelte'
 
   export let currentSpace: Ref<GithubProject> | undefined = undefined

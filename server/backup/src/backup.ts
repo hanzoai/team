@@ -33,12 +33,12 @@ import core, {
   type Tx,
   type TxCUD,
   type WorkspaceIds
-} from '@hanzo/core'
-import { type Person as GlobalPerson, type SocialId, type AccountDB } from '@hanzo/account'
-import contact, { type Person, type SocialIdentity, type SocialIdentityRef } from '@hanzo/contact'
-import { DOMAIN_CHANNEL, DOMAIN_CONTACT } from '@hanzo/model-contact'
-import { BlobClient } from '@hanzo/server-client'
-import { BackupClientOps, createDummyStorageAdapter, estimateDocSize, type Pipeline } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { type Person as GlobalPerson, type SocialId, type AccountDB } from '@hanzoteam/account'
+import contact, { type Person, type SocialIdentity, type SocialIdentityRef } from '@hanzoteam/contact'
+import { DOMAIN_CHANNEL, DOMAIN_CONTACT } from '@hanzoteam/model-contact'
+import { BlobClient } from '@hanzoteam/server-client'
+import { BackupClientOps, createDummyStorageAdapter, estimateDocSize, type Pipeline } from '@hanzoteam/server-core'
 import { deepEqual } from 'fast-equals'
 import { createReadStream, createWriteStream, mkdtempSync } from 'node:fs'
 import { rm } from 'node:fs/promises'

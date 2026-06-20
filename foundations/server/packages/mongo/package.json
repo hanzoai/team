@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/mongo",
+  "name": "@hanzoteam/mongo",
   "version": "0.7.17",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Anticrm Platform Contributors",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -35,9 +35,9 @@
     "eslint-plugin-svelte": "^2.35.1"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/server-core": "workspace:^0.7.18",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
     "mongodb": "^6.16.0",
     "bson": "^6.10.3"
   },

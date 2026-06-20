@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { DbAdapter } from '@hanzo/communication-sdk-types'
+import { DbAdapter } from '@hanzoteam/communication-sdk-types'
 import type {
   CardID, FindMessagesOptions,
   Message,
@@ -20,15 +20,15 @@ import type {
   PersonUuid,
   SocialID,
   WorkspaceUuid
-} from '@hanzo/communication-types'
-import { generateToken } from '@hanzo/server-token'
-import { Account, MeasureContext, systemAccountUuid } from '@hanzo/core'
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import { loadMessages } from '@hanzo/communication-shared'
+} from '@hanzoteam/communication-types'
+import { generateToken } from '@hanzoteam/server-token'
+import { Account, MeasureContext, systemAccountUuid } from '@hanzoteam/core'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import { loadMessages } from '@hanzoteam/communication-shared'
 
 import { Blob } from './blob'
 import type { Metadata } from './types'
-import { getWorkspaceClient, HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+import { getWorkspaceClient, HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 export class LowLevelClient {
   private readonly messageMetaCache = new Map<string, MessageMeta>()

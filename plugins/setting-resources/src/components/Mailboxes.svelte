@@ -23,14 +23,14 @@
     ModernButton,
     Scroller,
     showPopup
-  } from '@hanzo/ui'
-  import setting from '@hanzo/setting'
+  } from '@hanzoteam/ui'
+  import setting from '@hanzoteam/setting'
   import MailboxEditorModal from './MailboxEditorModal.svelte'
   import { getAccountClient } from '../utils'
   import { onMount } from 'svelte'
-  import { MailboxInfo, MailboxOptions } from '@hanzo/account-client'
+  import { MailboxInfo, MailboxOptions } from '@hanzoteam/account-client'
   import MailboxItem from './MailboxItem.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   let boxesLoading = true
   let optionsLoading = true

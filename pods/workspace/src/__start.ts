@@ -1,13 +1,13 @@
 //
 // Copyright © 2023 Hanzo AI Inc.
 //
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { newMetrics, type Tx } from '@hanzo/core'
-import { getPlatformQueue } from '@hanzo/kafka'
-import builder, { getModelVersion, migrateOperations } from '@hanzo/model-all'
-import { initStatisticsContext, loadBrandingMap } from '@hanzo/server-core'
-import { serveWorkspaceAccount } from '@hanzo/workspace-service'
+import { Analytics } from '@hanzoteam/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { newMetrics, type Tx } from '@hanzoteam/core'
+import { getPlatformQueue } from '@hanzoteam/kafka'
+import builder, { getModelVersion, migrateOperations } from '@hanzoteam/model-all'
+import { initStatisticsContext, loadBrandingMap } from '@hanzoteam/server-core'
+import { serveWorkspaceAccount } from '@hanzoteam/workspace-service'
 import { join } from 'path'
 
 const txes = JSON.parse(JSON.stringify(builder().getTxes())) as Tx[]

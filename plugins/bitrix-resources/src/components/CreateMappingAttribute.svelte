@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixFieldMapping, Fields, MappingOperation } from '@hanzo/bitrix'
-  import { AnyAttribute } from '@hanzo/core'
-  import presentation, { Card } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import { BitrixEntityMapping, BitrixFieldMapping, Fields, MappingOperation } from '@hanzoteam/bitrix'
+  import { AnyAttribute } from '@hanzoteam/core'
+  import presentation, { Card } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
   import bitrix from '../plugin'
   import CopyMapping from './mappings/CopyMapping.svelte'
   import CreateAttachedDocMapping from './mappings/CreateHRApplicationMapping.svelte'

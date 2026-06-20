@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 import type { Emoji } from 'emojibase'
-import type { Blob, Doc, Ref } from '@hanzo/core'
+import type { Blob, Doc, Ref } from '@hanzoteam/core'
 
 export { default as Emoji } from 'emojibase'
 export type ExtendedEmoji = Emoji | CustomEmoji

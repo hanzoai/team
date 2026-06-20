@@ -3,7 +3,7 @@
 -->
 
 <script lang="ts">
-  import type { Question } from '@hanzo/questions'
+  import type { Question } from '@hanzoteam/questions'
   import questions from '../plugin'
   import {
     Button,
@@ -13,9 +13,9 @@
     Label,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Class, type Doc, Ref, SortingOrder } from '@hanzo/core'
+  } from '@hanzoteam/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Class, type Doc, Ref, SortingOrder } from '@hanzoteam/core'
   import { createQuestion, getQuestionClasses, initQuestion } from '../utils'
   import QuestionsItemEditor from './QuestionsItemEditor.svelte'
 

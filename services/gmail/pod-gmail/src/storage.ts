@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { MongoClientReference, getMongoClient } from '@hanzo/mongo'
+import { MongoClientReference, getMongoClient } from '@hanzoteam/mongo'
 import { MongoClient } from 'mongodb'
 
 import config from './config'

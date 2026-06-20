@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Ref, Space } from '@hanzo/core'
-  import { Button, TextArea } from '@hanzo/ui'
+  import { Ref, Space } from '@hanzoteam/core'
+  import { Button, TextArea } from '@hanzoteam/ui'
   import board from '../plugin'
   import CardsArchive from './CardArchive.svelte'
   import ListArchive from './ListArchive.svelte'

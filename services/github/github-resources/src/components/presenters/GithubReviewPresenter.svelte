@@ -3,17 +3,17 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { GithubPullRequestReviewState, GithubReview } from '@hanzo/github'
+  import { WithLookup } from '@hanzoteam/core'
+  import { GithubPullRequestReviewState, GithubReview } from '@hanzoteam/github'
 
-  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hanzo/activity-resources'
-  import { getPersonByPersonIdCb } from '@hanzo/contact-resources'
-  import { IntlString } from '@hanzo/platform'
-  import { MessageViewer } from '@hanzo/presentation'
-  import { isEmptyMarkup } from '@hanzo/text'
-  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzo/ui'
+  import { ActivityMessageHeader, ActivityMessageTemplate } from '@hanzoteam/activity-resources'
+  import { getPersonByPersonIdCb } from '@hanzoteam/contact-resources'
+  import { IntlString } from '@hanzoteam/platform'
+  import { MessageViewer } from '@hanzoteam/presentation'
+  import { isEmptyMarkup } from '@hanzoteam/text'
+  import { PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzoteam/ui'
   import github from '../../plugin'
-  import { Person } from '@hanzo/contact'
+  import { Person } from '@hanzoteam/contact'
 
   export let value: WithLookup<GithubReview>
   export let showNotify: boolean = false

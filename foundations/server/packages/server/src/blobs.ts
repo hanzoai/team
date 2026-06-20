@@ -1,6 +1,6 @@
-import { Analytics } from '@hanzo/analytics'
-import type { MeasureContext, WorkspaceIds } from '@hanzo/core'
-import type { StorageAdapter } from '@hanzo/server-core'
+import { Analytics } from '@hanzoteam/analytics'
+import type { MeasureContext, WorkspaceIds } from '@hanzoteam/core'
+import type { StorageAdapter } from '@hanzoteam/server-core'
 
 const cacheControlNoCache = 'public, no-store, no-cache, must-revalidate, max-age=0'
 

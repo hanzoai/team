@@ -12,9 +12,9 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { AccountUuid, PersonUuid } from '@hanzo/core'
-  import { Avatar, employeeByAccountStore } from '@hanzo/contact-resources'
-  import { Person } from '@hanzo/contact'
+  import { AccountUuid, PersonUuid } from '@hanzoteam/core'
+  import { Avatar, employeeByAccountStore } from '@hanzoteam/contact-resources'
+  import { Person } from '@hanzoteam/contact'
 
   export let persons: Record<PersonUuid, number> = {}
 

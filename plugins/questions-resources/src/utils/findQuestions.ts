@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import questions, { type Question } from '@hanzo/questions'
-import { type Doc, SortingOrder } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+import questions, { type Question } from '@hanzoteam/questions'
+import { type Doc, SortingOrder } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 
 export async function findQuestions<Parent extends Doc, Collection extends Extract<keyof Parent, string> | string> (
   from: Parent,

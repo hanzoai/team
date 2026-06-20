@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { ExpandRightDouble } from '@hanzo/contact-resources'
-  import { FindOptions, Status as TaskStatus } from '@hanzo/core'
-  import { OK, Severity, Status } from '@hanzo/platform'
-  import presentation, { Card, SpaceSelect, createQuery, getClient } from '@hanzo/presentation'
-  import type { Applicant, Vacancy } from '@hanzo/recruit'
-  import { getStates } from '@hanzo/task'
-  import { typeStore } from '@hanzo/task-resources'
+  import contact from '@hanzoteam/contact'
+  import { ExpandRightDouble } from '@hanzoteam/contact-resources'
+  import { FindOptions, Status as TaskStatus } from '@hanzoteam/core'
+  import { OK, Severity, Status } from '@hanzoteam/platform'
+  import presentation, { Card, SpaceSelect, createQuery, getClient } from '@hanzoteam/presentation'
+  import type { Applicant, Vacancy } from '@hanzoteam/recruit'
+  import { getStates } from '@hanzoteam/task'
+  import { typeStore } from '@hanzoteam/task-resources'
   import ui, {
     Button,
     ColorPopup,
@@ -35,9 +35,9 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
-  import { moveToSpace } from '@hanzo/view-resources/src/utils'
+  } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
+  import { moveToSpace } from '@hanzoteam/view-resources/src/utils'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../plugin'
   import ApplicationPresenter from './ApplicationPresenter.svelte'

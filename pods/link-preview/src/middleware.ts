@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { MeasureContext } from '@hanzo/core'
-import { extractToken } from '@hanzo/server-client'
-import { Token } from '@hanzo/server-token'
+import { Analytics } from '@hanzoteam/analytics'
+import { MeasureContext } from '@hanzoteam/core'
+import { extractToken } from '@hanzoteam/server-client'
+import { Token } from '@hanzoteam/server-token'
 import { type Response, type Request, type NextFunction, type RequestHandler, type ErrorRequestHandler } from 'express'
 import { HttpError } from './error'
 

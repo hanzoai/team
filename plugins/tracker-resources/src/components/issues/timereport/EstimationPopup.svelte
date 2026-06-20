@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
-  import { Issue, Project } from '@hanzo/tracker'
-  import { Button, EditStyle, eventToHTMLElement, IconAdd, Label, showPopup } from '@hanzo/ui'
-  import { EditBoxPopup } from '@hanzo/view-resources'
+  import presentation, { Card, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Issue, Project } from '@hanzoteam/tracker'
+  import { Button, EditStyle, eventToHTMLElement, IconAdd, Label, showPopup } from '@hanzoteam/ui'
+  import { EditBoxPopup } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../../plugin'
   import IssuePresenter from '../IssuePresenter.svelte'

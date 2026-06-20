@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, IconScribble } from '@hanzo/ui'
+  import { Button, IconScribble } from '@hanzoteam/ui'
   import { Node } from '@tiptap/pm/model'
   import { Editor } from '@tiptap/core'
   import { onDestroy, onMount } from 'svelte'

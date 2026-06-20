@@ -33,7 +33,7 @@ import {
   MessageMeta,
   FindMessagesGroupParams,
   MessagesGroup
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import {
   type AddCollaboratorsEvent,
   AttachmentPatchEvent,
@@ -64,14 +64,14 @@ import {
   type UpdateNotificationContextEvent,
   type UpdateNotificationEvent,
   UpdatePatchEvent
-} from '@hanzo/communication-sdk-types'
-import { MessageProcessor } from '@hanzo/communication-shared'
+} from '@hanzoteam/communication-sdk-types'
+import { MessageProcessor } from '@hanzoteam/communication-shared'
 import {
   AddAttachmentsOperation,
   RemoveAttachmentsOperation,
   SetAttachmentsOperation,
   UpdateAttachmentsOperation
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 
 import type { Enriched, Middleware, MiddlewareContext } from '../types'
 import { BaseMiddleware } from './base'

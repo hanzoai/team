@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import { Card, FavoriteCard, MasterTag } from '@hanzo/card'
-  import core, { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
+  import { Card, FavoriteCard, MasterTag } from '@hanzoteam/card'
+  import core, { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
   import { createEventDispatcher } from 'svelte'
-  import { IconMoreV, NavItem, Action, ButtonIcon } from '@hanzo/ui'
-  import { NotificationContext } from '@hanzo/communication-types'
-  import view from '@hanzo/view'
-  import { showMenu } from '@hanzo/view-resources'
-  import preference from '@hanzo/preference'
+  import { IconMoreV, NavItem, Action, ButtonIcon } from '@hanzoteam/ui'
+  import { NotificationContext } from '@hanzoteam/communication-types'
+  import view from '@hanzoteam/view'
+  import { showMenu } from '@hanzoteam/view-resources'
+  import preference from '@hanzoteam/preference'
 
   import cardPlugin from '../../plugin'
   import { CardsNavigatorConfig } from '../../types'

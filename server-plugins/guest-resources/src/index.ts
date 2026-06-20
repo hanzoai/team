@@ -25,12 +25,12 @@ import core, {
   WorkspaceIds,
   concatLink,
   generateId
-} from '@hanzo/core'
-import guest, { PublicLink, guestAccount, guestId } from '@hanzo/guest'
-import { getMetadata } from '@hanzo/platform'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
-import view from '@hanzo/view'
+} from '@hanzoteam/core'
+import guest, { PublicLink, guestAccount, guestId } from '@hanzoteam/guest'
+import { getMetadata } from '@hanzoteam/platform'
+import serverCore, { TriggerControl } from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
+import view from '@hanzoteam/view'
 
 /**
  * @public

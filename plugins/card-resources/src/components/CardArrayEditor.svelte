@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hanzo/card'
-  import { AnyAttribute, ArrOf, Class, Ref, RefTo, Type } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
-  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, Label, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Card, MasterTag } from '@hanzoteam/card'
+  import { AnyAttribute, ArrOf, Class, Ref, RefTo, Type } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, Label, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
   import CardsPopup from './CardsPopup.svelte'

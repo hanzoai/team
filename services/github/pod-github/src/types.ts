@@ -1,4 +1,4 @@
-import { Person } from '@hanzo/contact'
+import { Person } from '@hanzoteam/contact'
 import {
   Branding,
   Class,
@@ -14,17 +14,17 @@ import {
   WorkspaceUuid,
   type Blob,
   type MeasureContext
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   DocSyncInfo,
   GithubIntegration,
   GithubIntegrationRepository,
   GithubProject,
   GithubUserInfo
-} from '@hanzo/github'
-import { LiveQuery } from '@hanzo/query'
-import { ProjectType, TaskType } from '@hanzo/task'
-import { MarkupNode } from '@hanzo/text'
+} from '@hanzoteam/github'
+import { LiveQuery } from '@hanzoteam/query'
+import { ProjectType, TaskType } from '@hanzoteam/task'
+import { MarkupNode } from '@hanzoteam/text'
 import { User } from '@octokit/webhooks-types'
 import { Octokit } from 'octokit'
 

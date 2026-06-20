@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-  import { createQuery } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { Button, navigate, Notification, NotificationToast } from '@hanzo/ui'
-  import type { Training } from '@hanzo/training'
+  import { createQuery } from '@hanzoteam/presentation'
+  import view from '@hanzoteam/view'
+  import { Button, navigate, Notification, NotificationToast } from '@hanzoteam/ui'
+  import type { Training } from '@hanzoteam/training'
   import { trainingRoute } from '../routing/routes/trainingRoute'
   import PanelTitle from './PanelTitle.svelte'
   import training from '../plugin'

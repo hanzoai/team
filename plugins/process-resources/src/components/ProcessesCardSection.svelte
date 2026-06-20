@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
+  import { Card } from '@hanzoteam/card'
 
   import ProcessesExtension from './ProcessesExtension.svelte'
 

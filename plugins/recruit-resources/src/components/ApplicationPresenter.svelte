@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import recruit, { Applicant } from '@hanzo/recruit'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import recruit, { Applicant } from '@hanzoteam/recruit'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
 
   export let value: Applicant
   export let inline: boolean = false

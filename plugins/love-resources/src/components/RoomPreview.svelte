@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee, Person } from '@hanzo/contact'
-  import { Avatar, myEmployeeStore, getPersonByPersonRef } from '@hanzo/contact-resources'
-  import { ParticipantInfo, Room, RoomAccess, RoomType, MeetingStatus } from '@hanzo/love'
-  import { Icon, Label, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { getCurrentEmployee, Person } from '@hanzoteam/contact'
+  import { Avatar, myEmployeeStore, getPersonByPersonRef } from '@hanzoteam/contact-resources'
+  import { ParticipantInfo, Room, RoomAccess, RoomType, MeetingStatus } from '@hanzoteam/love'
+  import { Icon, Label, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { getClient } from '@hanzo/presentation'
-  import { openDoc } from '@hanzo/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { openDoc } from '@hanzoteam/view-resources'
 
   import love from '../plugin'
   import { myInfo, selectedRoomPlace, currentRoom, currentMeetingMinutes } from '../stores'
   import { getRoomLabel } from '../utils'
   import PersonActionPopup from './PersonActionPopup.svelte'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
   import { lkSessionConnected } from '../liveKitClient'
 
   export let room: Room

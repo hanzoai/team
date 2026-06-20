@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { BasePreview } from '@hanzo/activity-resources'
-  import { Doc, Markup } from '@hanzo/core'
-  import { CommonInboxNotification } from '@hanzo/notification'
-  import { IntlString, translateCB } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { themeStore } from '@hanzo/ui'
+  import { BasePreview } from '@hanzoteam/activity-resources'
+  import { Doc, Markup } from '@hanzoteam/core'
+  import { CommonInboxNotification } from '@hanzoteam/notification'
+  import { IntlString, translateCB } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { themeStore } from '@hanzoteam/ui'
 
   export let value: CommonInboxNotification
 

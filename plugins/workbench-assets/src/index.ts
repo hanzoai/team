@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hanzo/platform'
-import workbench from '@hanzo/workbench'
+import { loadMetadata } from '@hanzoteam/platform'
+import workbench from '@hanzoteam/workbench'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(workbench.icon, {

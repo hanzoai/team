@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { concatLink, type Client, type Doc, type Ref } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import { getCurrentResolvedLocation, locationToUrl } from '@hanzo/ui'
-import presentation from '@hanzo/presentation'
-import type { TableMetadata, Viewlet } from '@hanzo/view'
+import { concatLink, type Client, type Doc, type Ref } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import { getCurrentResolvedLocation, locationToUrl } from '@hanzoteam/ui'
+import presentation from '@hanzoteam/presentation'
+import type { TableMetadata, Viewlet } from '@hanzoteam/view'
 import type { CopyAsMarkdownTableProps, CopyRelationshipTableAsMarkdownProps } from '../types'
 import { loadViewletConfig } from '../model/viewletLoader'
 import { modelToConfig } from '../model/tableModel'

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type FileUploadTarget } from '@hanzo/uploader'
+import { type FileUploadTarget } from '@hanzoteam/uploader'
 import { writable } from 'svelte/store'
 
 /** @public */

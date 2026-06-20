@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { AttachedData, Class, Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { ButtonKind, ButtonSize, closeTooltip, showPopup } from '@hanzo/ui'
+  import type { AttachedData, Class, Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { ButtonKind, ButtonSize, closeTooltip, showPopup } from '@hanzoteam/ui'
 
-  import { Channel, ChannelProvider } from '@hanzo/contact'
-  import { restrictionStore } from '@hanzo/view-resources'
+  import { Channel, ChannelProvider } from '@hanzoteam/contact'
+  import { restrictionStore } from '@hanzoteam/view-resources'
   import contact from '../plugin'
   import ChannelsDropdown from './ChannelsDropdown.svelte'
 

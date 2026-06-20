@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MeasureContext, SortingOrder, WorkspaceUuid, PersonUuid } from '@hanzo/core'
-import { HanzolakeWorkspaceClient, getWorkspaceClient } from '@hanzo/hanzolake-client'
+import { MeasureContext, SortingOrder, WorkspaceUuid, PersonUuid } from '@hanzoteam/core'
+import { HanzolakeWorkspaceClient, getWorkspaceClient } from '@hanzoteam/hanzolake-client'
 import {
   CardID,
   BlobID,
@@ -28,13 +28,13 @@ import {
   AttachmentUpdateData,
   MessageType,
   SocialID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import { Blob } from '../blob'
 import { Metadata } from '../types'
 
 // Mock dependencies
-jest.mock('@hanzo/hanzolake-client')
-jest.mock('@hanzo/server-token', () => ({
+jest.mock('@hanzoteam/hanzolake-client')
+jest.mock('@hanzoteam/server-token', () => ({
   generateToken: jest.fn(() => 'mock-token')
 }))
 jest.mock('uuid', () => ({

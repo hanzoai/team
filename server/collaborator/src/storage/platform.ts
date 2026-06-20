@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import activity, { DocUpdateMessage } from '@hanzo/activity'
-import { Analytics } from '@hanzo/analytics'
-import { loadCollabJson, loadCollabYdoc, saveCollabJson, saveCollabYdoc } from '@hanzo/collaboration'
-import { decodeDocumentId } from '@hanzo/collaborator-client'
-import { CreateMessageEvent, MessageEventType } from '@hanzo/communication-sdk-types'
-import { ActivityCollaborativeChange, ActivityUpdateType, MessageType } from '@hanzo/communication-types'
-import core, { AttachedData, Doc, MeasureContext, OperationDomain, Ref, Space, TxOperations } from '@hanzo/core'
-import { StorageAdapter } from '@hanzo/server-core'
-import { areEqualMarkups } from '@hanzo/text'
-import { markupToYDoc } from '@hanzo/text-ydoc'
+import activity, { DocUpdateMessage } from '@hanzoteam/activity'
+import { Analytics } from '@hanzoteam/analytics'
+import { loadCollabJson, loadCollabYdoc, saveCollabJson, saveCollabYdoc } from '@hanzoteam/collaboration'
+import { decodeDocumentId } from '@hanzoteam/collaborator-client'
+import { CreateMessageEvent, MessageEventType } from '@hanzoteam/communication-sdk-types'
+import { ActivityCollaborativeChange, ActivityUpdateType, MessageType } from '@hanzoteam/communication-types'
+import core, { AttachedData, Doc, MeasureContext, OperationDomain, Ref, Space, TxOperations } from '@hanzoteam/core'
+import { StorageAdapter } from '@hanzoteam/server-core'
+import { areEqualMarkups } from '@hanzoteam/text'
+import { markupToYDoc } from '@hanzoteam/text-ydoc'
 import { Doc as YDoc } from 'yjs'
 
 import { Context } from '../context'

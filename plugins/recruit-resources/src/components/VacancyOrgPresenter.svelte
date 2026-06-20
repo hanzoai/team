@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import type { Vacancy } from '@hanzo/recruit'
+  import { WithLookup } from '@hanzoteam/core'
+  import type { Vacancy } from '@hanzoteam/recruit'
   import VacancyCard from './VacancyCard.svelte'
 
   export let value: WithLookup<Vacancy>

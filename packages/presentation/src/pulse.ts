@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
-import { HanzopulseClient } from '@hanzo/hanzopulse-client'
-import { getMetadata } from '@hanzo/platform'
+import { HanzopulseClient } from '@hanzoteam/hanzopulse-client'
+import { getMetadata } from '@hanzoteam/platform'
 import presentation from './plugin'
 
 let currentWorkspaceUuid: string | undefined

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import task from '@hanzo/task'
-  import { Issue } from '@hanzo/tracker'
-  import { DueDatePresenter } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import task from '@hanzoteam/task'
+  import { Issue } from '@hanzoteam/tracker'
+  import { DueDatePresenter } from '@hanzoteam/ui'
 
   export let value: WithLookup<Issue>
   export let width: string | undefined = undefined

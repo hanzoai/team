@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { OK, Severity, Status, translate } from '@hanzo/platform'
-  import { Button, Label, StylishEdit, deviceOptionsStore as deviceInfo, themeStore } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { OK, Severity, Status, translate } from '@hanzoteam/platform'
+  import { Button, Label, StylishEdit, deviceOptionsStore as deviceInfo, themeStore } from '@hanzoteam/ui'
   import StatusControl from './StatusControl.svelte'
 
   import { onMount } from 'svelte'

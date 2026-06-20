@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/communication-sdk-types",
+  "name": "@hanzoteam/communication-sdk-types",
   "entries": [
     {
       "version": "0.7.12",
@@ -13,7 +13,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/communication-types\" from `^0.7.11` to `0.7.12`"
+            "comment": "Updating dependency \"@hanzoteam/communication-types\" from `^0.7.11` to `0.7.12`"
           }
         ]
       }
@@ -33,7 +33,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/communication-types\" from `^0.7.8` to `0.7.9`"
+            "comment": "Updating dependency \"@hanzoteam/communication-types\" from `^0.7.8` to `0.7.9`"
           }
         ]
       }
@@ -50,7 +50,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/communication-types\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/communication-types\" from `^0.7.3` to `0.7.4`"
           }
         ]
       }

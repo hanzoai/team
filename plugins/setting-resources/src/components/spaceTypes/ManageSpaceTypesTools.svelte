@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ButtonIcon, IconAdd, showPopup } from '@hanzo/ui'
+  import { ButtonIcon, IconAdd, showPopup } from '@hanzoteam/ui'
   import CreateSpaceType from './CreateSpaceType.svelte'
-  import { isOwnerOrMaintainer } from '@hanzo/core'
+  import { isOwnerOrMaintainer } from '@hanzoteam/core'
 
   function handleAdd (): void {
     showPopup(CreateSpaceType, {}, 'top')

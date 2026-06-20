@@ -6,8 +6,8 @@ import {
   type Ref,
   type Space,
   type TxOperations
-} from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
 import { onDestroy } from 'svelte'
 import { get, writable, type Writable } from 'svelte/store'
 import { type LiveQuery } from '../..'

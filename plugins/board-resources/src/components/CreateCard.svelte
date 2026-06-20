@@ -14,15 +14,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Board, Card as BoardCard } from '@hanzo/board'
-  import core, { AttachedData, Ref, SortingOrder, Space, generateId } from '@hanzo/core'
-  import { OK, Status } from '@hanzo/platform'
-  import { Card, SpaceSelector, createQuery, getClient } from '@hanzo/presentation'
-  import { TaskType } from '@hanzo/task'
-  import { EditBox, Grid, Status as StatusControl } from '@hanzo/ui'
+  import type { Board, Card as BoardCard } from '@hanzoteam/board'
+  import core, { AttachedData, Ref, SortingOrder, Space, generateId } from '@hanzoteam/core'
+  import { OK, Status } from '@hanzoteam/platform'
+  import { Card, SpaceSelector, createQuery, getClient } from '@hanzoteam/presentation'
+  import { TaskType } from '@hanzoteam/task'
+  import { EditBox, Grid, Status as StatusControl } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import board from '../plugin'
-  import { TaskKindSelector } from '@hanzo/task-resources'
+  import { TaskKindSelector } from '@hanzoteam/task-resources'
 
   export let space: Ref<Space>
 

@@ -2,11 +2,11 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Question, Rank } from '@hanzo/questions'
-import { type Class, type Ref } from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import type { ThemeOptions } from '@hanzo/theme'
+import type { Question, Rank } from '@hanzoteam/questions'
+import { type Class, type Ref } from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import type { ThemeOptions } from '@hanzoteam/theme'
 import { LexoRank } from 'lexorank'
 import type { CreateQuestionData } from './createQuestion'
 import { getQuestionMixin } from './getQuestionMixin'

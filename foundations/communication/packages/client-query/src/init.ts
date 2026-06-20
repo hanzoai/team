@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { LiveQueries } from '@hanzo/communication-query'
-import type { FindClient } from '@hanzo/communication-sdk-types'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+import { LiveQueries } from '@hanzoteam/communication-query'
+import type { FindClient } from '@hanzoteam/communication-sdk-types'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
-export type { MessageQueryParams } from '@hanzo/communication-query'
+export type { MessageQueryParams } from '@hanzoteam/communication-query'
 
 let lq: LiveQueries
 let onDestroy: (fn: () => void) => void = () => {}

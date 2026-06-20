@@ -23,7 +23,7 @@ import {
   type Hierarchy,
   generateId,
   platformNow
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { DataMapper } from '../workspace/data-mapper'
 import { type ExportState } from '../workspace/types'
 

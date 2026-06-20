@@ -30,9 +30,9 @@ import core, {
   type TxCUD,
   type TxCreateDoc,
   type AccountUuid
-} from '@hanzo/core'
-import type { IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import type { IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 
 export const txFactory = new TxFactory(core.account.System)
 

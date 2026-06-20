@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/global-profile-resources",
+  "name": "@hanzoteam/global-profile-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
   "author": "Anticrm Platform Contributors",
@@ -18,7 +18,7 @@
     "svelte-loader": "^3.2.0",
     "sass": "^1.80.0",
     "svelte-preprocess": "^5.1.4",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
@@ -38,15 +38,15 @@
   },
   "dependencies": {
     "svelte": "^4.2.20",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/ui": "workspace:^0.7.0",
-    "@hanzo/view": "workspace:^0.7.0",
-    "@hanzo/presentation": "workspace:^0.7.0",
-    "@hanzo/global-profile": "workspace:^0.7.0",
-    "@hanzo/account-client": "workspace:^0.7.21",
-    "@hanzo/login": "workspace:^0.7.0",
-    "@hanzo/contact": "workspace:^0.7.0",
-    "@hanzo/theme": "workspace:^0.7.0"
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/ui": "workspace:^0.7.0",
+    "@hanzoteam/view": "workspace:^0.7.0",
+    "@hanzoteam/presentation": "workspace:^0.7.0",
+    "@hanzoteam/global-profile": "workspace:^0.7.0",
+    "@hanzoteam/account-client": "workspace:^0.7.21",
+    "@hanzoteam/login": "workspace:^0.7.0",
+    "@hanzoteam/contact": "workspace:^0.7.0",
+    "@hanzoteam/theme": "workspace:^0.7.0"
   }
 }

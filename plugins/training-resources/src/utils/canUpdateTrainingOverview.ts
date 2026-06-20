@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Training, TrainingState } from '@hanzo/training'
+import { type Training, TrainingState } from '@hanzoteam/training'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 
 export function canUpdateTrainingOverview (object: Training): boolean {

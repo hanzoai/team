@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/postgres",
+      "packageName": "@hanzoteam/postgres",
       "comment": "Fix ne predicate",
       "type": "patch"
     }
   ],
-  "packageName": "@hanzo/postgres"
+  "packageName": "@hanzoteam/postgres"
 }

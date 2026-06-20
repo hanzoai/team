@@ -14,7 +14,7 @@
     ButtonBase,
     closeTooltip,
     Icon
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { getEmojiByShortCode, getEmojiSkins, getUnicodeEmojiByShortCode } from '../utils'
   import {
     searchEmoji,
@@ -26,13 +26,13 @@
     getSkinTone,
     setSkinTone
   } from '../store'
-  import type { EmojiWithGroup } from '@hanzo/emoji'
+  import type { EmojiWithGroup } from '@hanzoteam/emoji'
   import ActionsPopup from './ActionsPopup.svelte'
   import SkinTonePopup from './SkinTonePopup.svelte'
   import EmojiGroup from './EmojiGroup.svelte'
-  import emojiPlugin, { isCustomEmoji } from '@hanzo/emoji'
+  import emojiPlugin, { isCustomEmoji } from '@hanzoteam/emoji'
   import { emojiCategories, EmojiCategory } from '../types'
-  import { Ref, Blob } from '@hanzo/core'
+  import { Ref, Blob } from '@hanzoteam/core'
 
   export let embedded = false
   export let selected: string | Ref<Blob> | undefined

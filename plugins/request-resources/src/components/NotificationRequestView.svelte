@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Request } from '@hanzo/request'
-  import { Label } from '@hanzo/ui'
-  import { DocNavLink, ObjectPresenter } from '@hanzo/view-resources'
+  import { Doc } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Request } from '@hanzoteam/request'
+  import { Label } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectPresenter } from '@hanzoteam/view-resources'
   import requests from '../plugin'
   import RequestLabel from './RequestLabel.svelte'
 

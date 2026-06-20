@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { Doc, Mixin, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label, RadioButton } from '@hanzo/ui'
-  import { FixedColumn } from '@hanzo/view-resources'
+  import { Person } from '@hanzoteam/contact'
+  import { Doc, Mixin, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label, RadioButton } from '@hanzoteam/ui'
+  import { FixedColumn } from '@hanzoteam/view-resources'
 
   export let value: Person
   export let targetEmp: Person

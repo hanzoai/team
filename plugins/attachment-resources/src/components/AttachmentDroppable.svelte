@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
-  import { Class, Data, Doc, Ref, Space } from '@hanzo/core'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { Class, Data, Doc, Ref, Space } from '@hanzoteam/core'
 
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
   import { createAttachments } from '../utils'
   import attachment from '../plugin'
   import { createEventDispatcher } from 'svelte'

@@ -14,17 +14,17 @@
 -->
 
 <script lang="ts">
-  import card, { Card, CardSection, CardViewDefaults } from '@hanzo/card'
-  import communication from '@hanzo/communication'
-  import { NotificationContext } from '@hanzo/communication-types'
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Heading } from '@hanzo/text-editor'
-  import { TableOfContents } from '@hanzo/text-editor-resources'
-  import { Component, Loading, ModernButton, Scroller } from '@hanzo/ui'
+  import card, { Card, CardSection, CardViewDefaults } from '@hanzoteam/card'
+  import communication from '@hanzoteam/communication'
+  import { NotificationContext } from '@hanzoteam/communication-types'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Heading } from '@hanzoteam/text-editor'
+  import { TableOfContents } from '@hanzoteam/text-editor-resources'
+  import { Component, Loading, ModernButton, Scroller } from '@hanzoteam/ui'
   import { SvelteComponent, tick } from 'svelte'
 
-  import { getMetadata } from '@hanzo/platform'
+  import { getMetadata } from '@hanzoteam/platform'
   import { getCardSections, getCardToc } from '../card'
   import { CardSectionAction } from '../types'
 

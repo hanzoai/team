@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Ref, Space } from '@hanzo/core'
-  import { Label, Button, Component, IconBack, IconClose } from '@hanzo/ui'
+  import { Ref, Space } from '@hanzoteam/core'
+  import { Label, Button, Component, IconBack, IconClose } from '@hanzoteam/ui'
   import board from '../plugin'
-  import { createQuery } from '@hanzo/presentation'
-  import { MenuPage } from '@hanzo/board'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { MenuPage } from '@hanzoteam/board'
   import { createEventDispatcher } from 'svelte'
 
   export let currentSpace: Ref<Space> | undefined

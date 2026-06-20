@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/onboard-resources",
+  "name": "@hanzoteam/onboard-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
   "author": "Hanzo AI Inc.",
@@ -19,7 +19,7 @@
     "svelte-loader": "^3.2.0",
     "sass": "^1.80.0",
     "svelte-preprocess": "^5.1.4",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
@@ -39,17 +39,17 @@
     "svelte-eslint-parser": "^0.33.1"
   },
   "dependencies": {
-    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzoteam/platform": "workspace:^0.7.19",
     "svelte": "^4.2.20",
-    "@hanzo/login": "workspace:^0.7.0",
-    "@hanzo/login-resources": "workspace:^0.7.0",
-    "@hanzo/onboard": "workspace:^0.7.0",
-    "@hanzo/ui": "workspace:^0.7.0",
-    "@hanzo/workbench": "workspace:^0.7.0",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/presentation": "workspace:^0.7.0",
-    "@hanzo/setting": "workspace:^0.7.0",
-    "@hanzo/theme": "workspace:^0.7.0",
-    "@hanzo/analytics": "workspace:^0.7.17"
+    "@hanzoteam/login": "workspace:^0.7.0",
+    "@hanzoteam/login-resources": "workspace:^0.7.0",
+    "@hanzoteam/onboard": "workspace:^0.7.0",
+    "@hanzoteam/ui": "workspace:^0.7.0",
+    "@hanzoteam/workbench": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/presentation": "workspace:^0.7.0",
+    "@hanzoteam/setting": "workspace:^0.7.0",
+    "@hanzoteam/theme": "workspace:^0.7.0",
+    "@hanzoteam/analytics": "workspace:^0.7.17"
   }
 }

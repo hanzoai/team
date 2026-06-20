@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import type { Attachment } from '@hanzo/attachment'
-import attachments from '@hanzo/model-attachment'
-import questions, { TypePercentage } from '@hanzo/model-questions'
-import type { Answer, Percentage, Question } from '@hanzo/questions'
+import type { Attachment } from '@hanzoteam/attachment'
+import attachments from '@hanzoteam/model-attachment'
+import questions, { TypePercentage } from '@hanzoteam/model-questions'
+import type { Answer, Percentage, Question } from '@hanzoteam/questions'
 import {
   type Training,
   type TrainingAttempt,
   TrainingAttemptState,
   type TrainingRequest,
   TrainingState
-} from '@hanzo/training'
-import contact, { type Employee } from '@hanzo/contact'
+} from '@hanzoteam/training'
+import contact, { type Employee } from '@hanzoteam/contact'
 import core, {
   type Class,
   type CollectionSize,
@@ -38,7 +38,7 @@ import core, {
   RolesAssignment,
   Role,
   type AccountUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ArrOf,
   Collection,
@@ -53,10 +53,10 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hanzo/model'
-import { TAttachedDoc, TDoc, TType, TTypedSpace } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import { TAttachedDoc, TDoc, TType, TTypedSpace } from '@hanzoteam/model-core'
 import training from './plugin'
-import { getEmbeddedLabel } from '@hanzo/platform'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
 
 export const DOMAIN_TRAINING = 'training' as Domain
 

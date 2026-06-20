@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Blob, type Ref } from '@hanzo/core'
-  import { getFileUrl } from '@hanzo/presentation'
-  import { Loading, Scroller } from '@hanzo/ui'
+  import { type Blob, type Ref } from '@hanzoteam/core'
+  import { getFileUrl } from '@hanzoteam/presentation'
+  import { Loading, Scroller } from '@hanzoteam/ui'
 
   export let value: Ref<Blob>
   export let name: string

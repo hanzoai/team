@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
-import { type HanzolakeWorkspaceClient, type JsonPatch, getWorkspaceClient } from '@hanzo/hanzolake-client'
-import { generateToken } from '@hanzo/server-token'
+import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzoteam/core'
+import { type HanzolakeWorkspaceClient, type JsonPatch, getWorkspaceClient } from '@hanzoteam/hanzolake-client'
+import { generateToken } from '@hanzoteam/server-token'
 import {
   BlobID,
   CardID,
@@ -22,7 +22,7 @@ import {
   MessageID,
   TranslatesMessageDoc,
   TranslatedMessagesDoc
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import config from './config'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { PersonId, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import contact, { getPersonRefByPersonIdCb, Person } from '@hanzo/contact'
-  import { IconSize } from '@hanzo/ui'
+  import { PersonId, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import contact, { getPersonRefByPersonIdCb, Person } from '@hanzoteam/contact'
+  import { IconSize } from '@hanzoteam/ui'
 
   import ObjectPresenter from './ObjectPresenter.svelte'
 

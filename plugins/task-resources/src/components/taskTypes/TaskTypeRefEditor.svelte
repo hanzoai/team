@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { TaskType } from '@hanzo/task'
-  import { DropdownLabels, DropdownTextItem } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { TaskType } from '@hanzoteam/task'
+  import { DropdownLabels, DropdownTextItem } from '@hanzoteam/ui'
 
   export let label: IntlString
   export let value: Ref<TaskType>[] = []

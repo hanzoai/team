@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import core, { DOMAIN_MODEL, type Domain, IndexKind } from '@hanzo/core'
-import { type Builder, Index, Model } from '@hanzo/model'
-import preference, { TPreference } from '@hanzo/model-preference'
+import core, { DOMAIN_MODEL, type Domain, IndexKind } from '@hanzoteam/core'
+import { type Builder, Index, Model } from '@hanzoteam/model'
+import preference, { TPreference } from '@hanzoteam/model-preference'
 import support, {
   type SupportConversation,
   type SupportSystem,
   type SupportWidgetFactory
-} from '@hanzo/support'
+} from '@hanzoteam/support'
 
-import { TDoc } from '@hanzo/model-core'
-import { type Resource } from '@hanzo/platform'
+import { TDoc } from '@hanzoteam/model-core'
+import { type Resource } from '@hanzoteam/platform'
 
-export { supportId } from '@hanzo/support'
+export { supportId } from '@hanzoteam/support'
 export { support as default }
 
 export const DOMAIN_SUPPORT = 'support' as Domain

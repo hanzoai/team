@@ -15,10 +15,10 @@
 <script lang="ts">
   import { onMount } from 'svelte'
 
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { getMetadata } from '@hanzo/platform'
-  import { pushRootBarComponent } from '@hanzo/ui'
-  import presentation from '@hanzo/presentation'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { getMetadata } from '@hanzoteam/platform'
+  import { pushRootBarComponent } from '@hanzoteam/ui'
+  import presentation from '@hanzoteam/presentation'
 
   import billing from '../plugin'
   import { getWorkspaceInfo } from '../utils'

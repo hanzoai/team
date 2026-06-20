@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { CardEvents, MasterTag } from '@hanzo/card'
-  import core, { Association, Class, Doc, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
-  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
-  import { ButtonIcon, Icon, IconAdd, Label, showPopup } from '@hanzo/ui'
+  import { CardEvents, MasterTag } from '@hanzoteam/card'
+  import core, { Association, Class, Doc, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting'
+  import { clearSettingsStore, settingsStore } from '@hanzoteam/setting-resources'
+  import { ButtonIcon, Icon, IconAdd, Label, showPopup } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
   import CreateRelation from './CreateRelation.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let masterTag: MasterTag
 

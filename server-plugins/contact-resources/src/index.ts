@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import card from '@hanzo/card'
+import card from '@hanzoteam/card'
 import contact, {
   Channel,
   Contact,
@@ -29,7 +29,7 @@ import contact, {
   Person,
   PersonSpace,
   type UserProfile
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import core, {
   AccountRole,
   AccountUuid,
@@ -52,12 +52,12 @@ import core, {
   TypedSpace,
   TxFactory,
   PermissionsGrant
-} from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import { makeRank } from '@hanzo/rank'
-import { getAccountBySocialId, getCurrentPerson } from '@hanzo/server-contact'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
-import { workbenchId } from '@hanzo/workbench'
+} from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import { makeRank } from '@hanzoteam/rank'
+import { getAccountBySocialId, getCurrentPerson } from '@hanzoteam/server-contact'
+import serverCore, { TriggerControl } from '@hanzoteam/server-core'
+import { workbenchId } from '@hanzoteam/workbench'
 
 export async function OnSpaceTypeMembers (txes: Tx[], control: TriggerControl): Promise<Tx[]> {
   const result: Tx[] = []

@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact } from '@hanzo/contact'
-  import { UserBox } from '@hanzo/contact-resources'
+  import contact, { Contact } from '@hanzoteam/contact'
+  import { UserBox } from '@hanzoteam/contact-resources'
   import core, {
     AccountRole,
     AttachedData,
@@ -25,17 +25,17 @@
     hasAccountRole,
     Ref,
     Status as TaskStatus
-  } from '@hanzo/core'
-  import { Customer, Funnel, Lead, LeadEvents } from '@hanzo/lead'
-  import { OK, Status } from '@hanzo/platform'
-  import { Card, createQuery, getClient, InlineAttributeBar, SpaceSelector } from '@hanzo/presentation'
-  import task, { getStates, TaskType } from '@hanzo/task'
-  import { TaskKindSelector, typeStore } from '@hanzo/task-resources'
-  import { Button, createFocusManager, EditBox, FocusHandler, Label, Status as StatusControl } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
+  } from '@hanzoteam/core'
+  import { Customer, Funnel, Lead, LeadEvents } from '@hanzoteam/lead'
+  import { OK, Status } from '@hanzoteam/platform'
+  import { Card, createQuery, getClient, InlineAttributeBar, SpaceSelector } from '@hanzoteam/presentation'
+  import task, { getStates, TaskType } from '@hanzoteam/task'
+  import { TaskKindSelector, typeStore } from '@hanzoteam/task-resources'
+  import { Button, createFocusManager, EditBox, FocusHandler, Label, Status as StatusControl } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import lead from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let space: Ref<Funnel>
   export let customer: Ref<Contact> | null = null

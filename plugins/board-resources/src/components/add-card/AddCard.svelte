@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Card as BoardCard } from '@hanzo/board'
+  import type { Card as BoardCard } from '@hanzoteam/board'
   import board from '../../plugin'
-  import core, { AttachedData, generateId, Ref, Space } from '@hanzo/core'
-  import { IconAdd, Button, showPopup } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
+  import core, { AttachedData, generateId, Ref, Space } from '@hanzoteam/core'
+  import { IconAdd, Button, showPopup } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
   import AddCardEditor from './AddCardEditor.svelte'
   import AddMultipleCardsPopup from './AddMultipleCardsPopup.svelte'
 

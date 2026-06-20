@@ -30,8 +30,8 @@
     defineSeparators,
     twoPanelsSeparators,
     resizeObserver
-  } from '@hanzo/ui'
-  import { Class, Doc, DocumentQuery, Ref, Space, mergeQueries } from '@hanzo/core'
+  } from '@hanzoteam/ui'
+  import { Class, Doc, DocumentQuery, Ref, Space, mergeQueries } from '@hanzoteam/core'
   import ClassHeader from './ClassHeader.svelte'
 
   export let space: Ref<Space> | undefined = undefined

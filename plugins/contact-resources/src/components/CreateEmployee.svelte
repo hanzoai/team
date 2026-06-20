@@ -21,7 +21,7 @@
     Employee,
     Person,
     SocialIdentityRef
-  } from '@hanzo/contact'
+  } from '@hanzoteam/contact'
   import {
     AccountRole,
     AttachedData,
@@ -30,17 +30,17 @@
     generateId,
     Ref,
     SocialIdType
-  } from '@hanzo/core'
-  import login from '@hanzo/login'
-  import { getResource } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { createFocusManager, EditBox, FocusHandler, IconInfo, Label } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import login from '@hanzoteam/login'
+  import { getResource } from '@hanzoteam/platform'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { createFocusManager, EditBox, FocusHandler, IconInfo, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { ChannelsDropdown } from '..'
   import contact from '../plugin'
   import { employeeBySocialKeyStore, getAccountClient } from '../utils'
   import EditableAvatar from './EditableAvatar.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let canSave: boolean = true
   export let onCreate: ((id: Ref<Employee>) => Promise<void>) | undefined = undefined

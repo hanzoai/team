@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type AnalyticEvent } from '@hanzo/analytics-collector'
+import { type AnalyticEvent } from '@hanzoteam/analytics-collector'
 
 export interface AnalyticsConfig {
   ANALYTICS_COLLECTOR_URL?: string

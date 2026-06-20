@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { LinkPreviewCard } from '@hanzo/attachment-resources'
+  import { LinkPreviewCard } from '@hanzoteam/attachment-resources'
 
   import { LinkPreviewDraft } from '../../types'
 

@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MessageViewer } from '@hanzo/presentation'
-  import { deviceOptionsStore as deviceInfo, resizeObserver } from '@hanzo/ui'
+  import { MessageViewer } from '@hanzoteam/presentation'
+  import { deviceOptionsStore as deviceInfo, resizeObserver } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let value: string

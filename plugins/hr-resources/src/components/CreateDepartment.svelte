@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { EmployeeBox } from '@hanzo/contact-resources'
-  import core, { Ref } from '@hanzo/core'
-  import { Department, HrEvents } from '@hanzo/hr'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { Button, EditBox, FocusHandler, createFocusManager } from '@hanzo/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import { EmployeeBox } from '@hanzoteam/contact-resources'
+  import core, { Ref } from '@hanzoteam/core'
+  import { Department, HrEvents } from '@hanzoteam/hr'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { Button, EditBox, FocusHandler, createFocusManager } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import hr from '../plugin'
   import DepartmentEditor from './DepartmentEditor.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let parent: Ref<Department> = hr.ids.Head
 

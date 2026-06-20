@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     ContextId,
     createContext,
@@ -23,7 +23,7 @@
     ProcessToDo,
     SelectedContext,
     SelectedExecutionContext
-  } from '@hanzo/process'
+  } from '@hanzoteam/process'
   import ui, {
     Button,
     ButtonKind,
@@ -33,12 +33,12 @@
     SelectPopup,
     SelectPopupValueType,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import ExecutionContextPresenter from '../attributeEditors/ExecutionContextPresenter.svelte'
   import ProcessContextPresenter from './ProcessContextPresenter.svelte'
-  import { Class, Ref } from '@hanzo/core'
+  import { Class, Ref } from '@hanzoteam/core'
 
   export let readonly: boolean
   export let process: Process

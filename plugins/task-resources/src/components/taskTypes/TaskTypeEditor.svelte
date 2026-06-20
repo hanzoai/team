@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, SortingOrder, Status } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel, getResource } from '@hanzo/platform'
-  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hanzo/presentation'
-  import { ClassAttributes, settingsStore } from '@hanzo/setting-resources'
-  import task, { ProjectType, TaskType, calculateStatuses, findStatusAttr } from '@hanzo/task'
+  import { Ref, SortingOrder, Status } from '@hanzoteam/core'
+  import { Asset, getEmbeddedLabel, getResource } from '@hanzoteam/platform'
+  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hanzoteam/presentation'
+  import { ClassAttributes, settingsStore } from '@hanzoteam/setting-resources'
+  import task, { ProjectType, TaskType, calculateStatuses, findStatusAttr } from '@hanzoteam/task'
   import {
     ButtonIcon,
     Icon,
@@ -31,8 +31,8 @@
     getCurrentLocation,
     navigate,
     showPopup
-  } from '@hanzo/ui'
-  import { IconPicker, deleteObjects, statusStore } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { IconPicker, deleteObjects, statusStore } from '@hanzoteam/view-resources'
   import { taskTypeStore } from '../..'
   import plugin from '../../plugin'
   import StatesProjectEditor from '../state/StatesProjectEditor.svelte'

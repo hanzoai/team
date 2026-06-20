@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
-import type { Integration } from '@hanzo/account-client'
+import { type Resources } from '@hanzoteam/platform'
+import type { Integration } from '@hanzoteam/account-client'
 
 import Configure from './components/Configure.svelte'
 import IconHanzoAssistant from './components/icons/HanzoAssistant.svelte'

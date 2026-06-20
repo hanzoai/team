@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { Document } from '@hanzo/controlled-documents'
-  import { Label } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import { Document } from '@hanzoteam/controlled-documents'
+  import { Label } from '@hanzoteam/ui'
   import document from '../../../plugin'
 
   export let value: WithLookup<Document> | undefined

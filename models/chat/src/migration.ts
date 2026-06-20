@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import card, { type Card, cardId, type CardSpace, DOMAIN_CARD, type MasterTag } from '@hanzo/card'
+import card, { type Card, cardId, type CardSpace, DOMAIN_CARD, type MasterTag } from '@hanzoteam/card'
 import core, {
   type Doc,
   type Ref,
@@ -21,7 +21,7 @@ import core, {
   DOMAIN_MODEL_TX,
   type TxCreateDoc,
   DOMAIN_SPACE
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   type MigrateOperation,
   type MigrationClient,
@@ -30,7 +30,7 @@ import {
   type MigrationDocumentQuery,
   type MigrateMode,
   tryMigrate
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 import chat from './plugin'
 
 const channelMasterTag = 'chat:masterTag:Channel' as Ref<MasterTag>

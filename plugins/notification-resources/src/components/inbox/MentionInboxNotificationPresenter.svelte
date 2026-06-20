@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityMessagePreview } from '@hanzo/activity-resources'
-  import { MentionInboxNotification } from '@hanzo/notification'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import activity, { ActivityMessage } from '@hanzo/activity'
-  import { Doc, Ref, Space } from '@hanzo/core'
+  import { ActivityMessagePreview } from '@hanzoteam/activity-resources'
+  import { MentionInboxNotification } from '@hanzoteam/notification'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import activity, { ActivityMessage } from '@hanzoteam/activity'
+  import { Doc, Ref, Space } from '@hanzoteam/core'
 
   import CommonInboxNotificationPresenter from './CommonInboxNotificationPresenter.svelte'
 

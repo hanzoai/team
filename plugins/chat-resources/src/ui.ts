@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Message } from '@hanzo/communication-types'
+import { type Message } from '@hanzoteam/communication-types'
 
 export interface MessagesGroup {
   day: number

@@ -2,16 +2,16 @@ import {
   type AccountClient,
   type WorkspaceLoginInfo,
   getClient as getAccountClientRaw
-} from '@hanzo/account-client'
-import client from '@hanzo/client'
-import { type Doc, AccountRole } from '@hanzo/core'
-import login from '@hanzo/login'
-import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
-import { getCurrentLocation, navigate } from '@hanzo/ui'
-import view from '@hanzo/view'
-import { getObjectLinkFragment } from '@hanzo/view-resources'
-import { workbenchId } from '@hanzo/workbench'
+} from '@hanzoteam/account-client'
+import client from '@hanzoteam/client'
+import { type Doc, AccountRole } from '@hanzoteam/core'
+import login from '@hanzoteam/login'
+import { getMetadata, getResource, setMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
+import { getCurrentLocation, navigate } from '@hanzoteam/ui'
+import view from '@hanzoteam/view'
+import { getObjectLinkFragment } from '@hanzoteam/view-resources'
+import { workbenchId } from '@hanzoteam/workbench'
 
 function getAccountClient (token: string | undefined | null): AccountClient {
   const accountsUrl = getMetadata(login.metadata.AccountsUrl)

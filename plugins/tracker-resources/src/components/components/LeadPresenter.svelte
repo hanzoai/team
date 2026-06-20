@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hanzo/contact'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { Component } from '@hanzo/tracker'
-  import { getClient } from '@hanzo/presentation'
-  import { UsersPopup } from '@hanzo/contact-resources'
-  import { AttributeModel } from '@hanzo/view'
-  import { eventToHTMLElement, IconSize, showPopup } from '@hanzo/ui'
-  import { getObjectPresenter } from '@hanzo/view-resources'
-  import { IntlString } from '@hanzo/platform'
+  import contact, { Employee } from '@hanzoteam/contact'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { Component } from '@hanzoteam/tracker'
+  import { getClient } from '@hanzoteam/presentation'
+  import { UsersPopup } from '@hanzoteam/contact-resources'
+  import { AttributeModel } from '@hanzoteam/view'
+  import { eventToHTMLElement, IconSize, showPopup } from '@hanzoteam/ui'
+  import { getObjectPresenter } from '@hanzoteam/view-resources'
+  import { IntlString } from '@hanzoteam/platform'
   import tracker from '../../plugin'
   import LeadPopup from './LeadPopup.svelte'
 

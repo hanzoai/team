@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import chunter from '@hanzo/chunter'
-import contact, { type PersonSpace } from '@hanzo/contact'
+import chunter from '@hanzoteam/chunter'
+import contact, { type PersonSpace } from '@hanzoteam/contact'
 import core, {
   DOMAIN_TX,
   type PersonId,
@@ -28,7 +28,7 @@ import core, {
   type Collaborator,
   generateId,
   DOMAIN_TRANSIENT
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   migrateSpace,
   type MigrateUpdate,
@@ -37,7 +37,7 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 import notification, {
   notificationId,
   type PushSubscription,
@@ -45,8 +45,8 @@ import notification, {
   type DocNotifyContext,
   type InboxNotification,
   type OldCollaborators
-} from '@hanzo/notification'
-import { DOMAIN_PREFERENCE } from '@hanzo/preference'
+} from '@hanzoteam/notification'
+import { DOMAIN_PREFERENCE } from '@hanzoteam/preference'
 
 import {
   DOMAIN_SPACE,
@@ -54,7 +54,7 @@ import {
   getAccountUuidByOldAccount,
   getUniqueAccountsFromOldAccounts,
   getSocialIdFromOldAccount
-} from '@hanzo/model-core'
+} from '@hanzoteam/model-core'
 import { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_USER_NOTIFY } from './index'
 
 export async function removeNotifications (

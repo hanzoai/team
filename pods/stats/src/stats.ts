@@ -2,9 +2,9 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { metricsAggregate, type MeasureContext } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
+import { Analytics } from '@hanzoteam/analytics'
+import { metricsAggregate, type MeasureContext } from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
 import {
   getCPUInfo,
   getMemoryInfo,
@@ -12,8 +12,8 @@ import {
   type MemoryStatistics,
   type ServiceStatistics,
   type WorkspaceStatistics
-} from '@hanzo/server-core'
-import serverToken, { decodeToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import serverToken, { decodeToken } from '@hanzoteam/server-token'
 import cors from '@koa/cors'
 import type { IncomingHttpHeaders } from 'http'
 import Koa from 'koa'

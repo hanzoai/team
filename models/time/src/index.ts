@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import board from '@hanzo/board'
-import calendarPlugin, { type Visibility } from '@hanzo/calendar'
-import contactPlugin, { type Employee } from '@hanzo/contact'
+import activity from '@hanzoteam/activity'
+import board from '@hanzoteam/board'
+import calendarPlugin, { type Visibility } from '@hanzoteam/calendar'
+import contactPlugin, { type Employee } from '@hanzoteam/contact'
 import {
   AccountRole,
   DOMAIN_MODEL,
@@ -30,8 +30,8 @@ import {
   type Space,
   type Timestamp,
   type Type
-} from '@hanzo/core'
-import lead from '@hanzo/lead'
+} from '@hanzoteam/core'
+import lead from '@hanzoteam/lead'
 import {
   Collection,
   Hidden,
@@ -46,16 +46,16 @@ import {
   type Builder,
   TypeMarkup,
   TypeRank
-} from '@hanzo/model'
-import { TEvent } from '@hanzo/model-calendar'
-import core, { TAttachedDoc, TClass, TDoc, TType } from '@hanzo/model-core'
-import document from '@hanzo/model-document'
-import tracker from '@hanzo/model-tracker'
-import view, { createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification, { type NotificationGroup } from '@hanzo/notification'
-import recruit from '@hanzo/recruit'
-import tags from '@hanzo/tags'
+} from '@hanzoteam/model'
+import { TEvent } from '@hanzoteam/model-calendar'
+import core, { TAttachedDoc, TClass, TDoc, TType } from '@hanzoteam/model-core'
+import document from '@hanzoteam/model-document'
+import tracker from '@hanzoteam/model-tracker'
+import view, { createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import notification, { type NotificationGroup } from '@hanzoteam/notification'
+import recruit from '@hanzoteam/recruit'
+import tags from '@hanzoteam/tags'
 import {
   timeId,
   type ItemPresenter,
@@ -65,15 +65,15 @@ import {
   type TodoAutomationHelper,
   type TodoDoneTester,
   type WorkSlot
-} from '@hanzo/time'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+} from '@hanzoteam/time'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
-import type { Resource } from '@hanzo/platform'
-import type { Rank } from '@hanzo/task'
-import task from '@hanzo/task'
+import type { Resource } from '@hanzoteam/platform'
+import type { Rank } from '@hanzoteam/task'
+import task from '@hanzoteam/task'
 import time from './plugin'
 
-export { timeId } from '@hanzo/time'
+export { timeId } from '@hanzoteam/time'
 export { default } from './plugin'
 
 export const DOMAIN_TIME = 'time' as Domain

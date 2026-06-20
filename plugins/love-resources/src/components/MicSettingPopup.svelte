@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { getEmbeddedLabel, translate } from '@hanzo/platform'
-  import { DropdownLabels, DropdownTextItem, Label, Toggle } from '@hanzo/ui'
+  import { getEmbeddedLabel, translate } from '@hanzoteam/platform'
+  import { DropdownLabels, DropdownTextItem, Label, Toggle } from '@hanzoteam/ui'
   import { Room } from 'livekit-client'
   import love from '../plugin'
   import { getActive, krispProcessor, lk, selectedMicId, selectedSpeakerId } from '../utils'
-  import { DevicesPreference } from '@hanzo/love'
-  import { getCurrentAccount, Ref, Space } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
+  import { DevicesPreference } from '@hanzoteam/love'
+  import { getCurrentAccount, Ref, Space } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
   import { myPreferences } from '../stores'
   import { isKrispNoiseFilterSupported } from '@livekit/krisp-noise-filter'
 

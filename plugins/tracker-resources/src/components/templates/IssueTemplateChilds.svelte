@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Component, Issue, IssueTemplateChild, Project, Milestone } from '@hanzo/tracker'
-  import { Button, ExpandCollapse, IconAdd, Scroller, closeTooltip } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { Component, Issue, IssueTemplateChild, Project, Milestone } from '@hanzoteam/tracker'
+  import { Button, ExpandCollapse, IconAdd, Scroller, closeTooltip } from '@hanzoteam/ui'
   import { afterUpdate, createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import Collapsed from '../icons/Collapsed.svelte'

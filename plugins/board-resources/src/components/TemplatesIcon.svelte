@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Icon, IconSize } from '@hanzo/ui'
-  import board from '@hanzo/board'
+  import { Icon, IconSize } from '@hanzoteam/ui'
+  import board from '@hanzoteam/board'
   export let size: IconSize = 'small'
 </script>
 

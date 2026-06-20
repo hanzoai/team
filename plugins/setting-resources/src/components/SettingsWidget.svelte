@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WidgetState } from '@hanzo/workbench-resources'
-  import { type AnyComponent, Component } from '@hanzo/ui'
+  import { WidgetState } from '@hanzoteam/workbench-resources'
+  import { type AnyComponent, Component } from '@hanzoteam/ui'
   import { ComponentType } from 'svelte'
 
   export let widgetState: WidgetState | undefined

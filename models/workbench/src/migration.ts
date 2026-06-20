@@ -17,11 +17,11 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hanzo/model'
-import { DOMAIN_PREFERENCE } from '@hanzo/preference'
-import workbench, { type WorkbenchTab } from '@hanzo/workbench'
-import core, { type AccountUuid, DOMAIN_TX } from '@hanzo/core'
-import { getAccountUuidBySocialKey, getSocialKeyByOldAccount } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import { DOMAIN_PREFERENCE } from '@hanzoteam/preference'
+import workbench, { type WorkbenchTab } from '@hanzoteam/workbench'
+import core, { type AccountUuid, DOMAIN_TX } from '@hanzoteam/core'
+import { getAccountUuidBySocialKey, getSocialKeyByOldAccount } from '@hanzoteam/model-core'
 
 import { workbenchId } from '.'
 

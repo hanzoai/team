@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity from '@hanzo/activity'
-  import { Analytics } from '@hanzo/analytics'
-  import { Attachment } from '@hanzo/attachment'
-  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import { Employee } from '@hanzo/contact'
+  import activity from '@hanzoteam/activity'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import { Employee } from '@hanzoteam/contact'
   import core, {
     AccountRole,
     Class,
@@ -32,9 +32,9 @@
     Ref,
     SortingOrder,
     toIdMap
-  } from '@hanzo/core'
-  import { getResource, translate } from '@hanzo/platform'
-  import preference, { SpacePreference } from '@hanzo/preference'
+  } from '@hanzoteam/core'
+  import { getResource, translate } from '@hanzoteam/platform'
+  import preference, { SpacePreference } from '@hanzoteam/preference'
   import {
     Card,
     createMarkup,
@@ -48,11 +48,11 @@
     MessageBox,
     MultipleDraftController,
     SpaceSelector
-  } from '@hanzo/presentation'
-  import tags, { type TagElement, TagReference } from '@hanzo/tags'
-  import { TaskType } from '@hanzo/task'
-  import { TaskKindSelector } from '@hanzo/task-resources'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+  } from '@hanzoteam/presentation'
+  import tags, { type TagElement, TagReference } from '@hanzoteam/tags'
+  import { TaskType } from '@hanzoteam/task'
+  import { TaskKindSelector } from '@hanzoteam/task-resources'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
   import {
     Component as ComponentType,
     Issue,
@@ -65,7 +65,7 @@
     Project,
     ProjectTargetPreference,
     TrackerEvents
-  } from '@hanzo/tracker'
+  } from '@hanzoteam/tracker'
   import {
     addNotification,
     Button,
@@ -78,9 +78,9 @@
     Label,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { ObjectBox } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { ObjectBox } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import { activeComponent, activeMilestone, generateIssueShortLink, updateIssueRelation } from '../issues'

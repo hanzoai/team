@@ -2,7 +2,7 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { type Plugin, plugin, Metadata } from '@hanzo/platform'
+import { type Plugin, plugin, Metadata } from '@hanzoteam/platform'
 
 export const signId = 'sign' as Plugin
 

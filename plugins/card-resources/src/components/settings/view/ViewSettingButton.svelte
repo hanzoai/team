@@ -15,12 +15,12 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { ButtonIcon, showPopup, closeTooltip } from '@hanzo/ui'
-  import view, { Viewlet } from '@hanzo/view'
+  import { ButtonIcon, showPopup, closeTooltip } from '@hanzoteam/ui'
+  import view, { Viewlet } from '@hanzoteam/view'
 
   import ViewOptionsButton from './ViewOptionsButton.svelte'
   import ViewletSetting from './ViewSetting.svelte'
-  import { Data } from '@hanzo/core'
+  import { Data } from '@hanzoteam/core'
 
   export let kind: 'primary' | 'secondary' | 'tertiary' | 'negative' = 'secondary'
   export let viewlet: Data<Viewlet> | undefined = undefined

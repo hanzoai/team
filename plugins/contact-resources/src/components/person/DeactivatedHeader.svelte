@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
-  import contact from '@hanzo/contact'
-  import type { IntlString } from '@hanzo/platform'
+  import { Label } from '@hanzoteam/ui'
+  import contact from '@hanzoteam/contact'
+  import type { IntlString } from '@hanzoteam/platform'
 
   export let header: IntlString = contact.string.DeactivatedAccount
 </script>

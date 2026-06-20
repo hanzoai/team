@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Blob, type Ref } from '@hanzo/core'
-  import { createQuery, getPreviewThumbnail } from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
+  import { type Blob, type Ref } from '@hanzoteam/core'
+  import { createQuery, getPreviewThumbnail } from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting'
 
   export let workspace: string
   export let title: string

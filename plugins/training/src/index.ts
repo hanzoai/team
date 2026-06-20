@@ -2,7 +2,7 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { type Asset, type IntlString, type Plugin, plugin } from '@hanzo/platform'
+import { type Asset, type IntlString, type Plugin, plugin } from '@hanzoteam/platform'
 import {
   Doc,
   Mixin,
@@ -14,7 +14,7 @@ import {
   type SpaceTypeDescriptor,
   type Type,
   type TypedSpace
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   type Training,
   type TrainingRequest,
@@ -22,7 +22,7 @@ import {
   type TrainingAttemptState,
   TrainingState
 } from './types'
-import type { AnyComponent } from '@hanzo/ui/src/types'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
 
 /** @public */
 export const trainingId = 'training' as Plugin

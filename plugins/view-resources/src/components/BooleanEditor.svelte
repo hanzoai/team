@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, showPopup, eventToHTMLElement } from '@hanzo/ui'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Button, showPopup, eventToHTMLElement } from '@hanzoteam/ui'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
   import BooleanPresenter from './BooleanPresenter.svelte'
   import BooleanEditorPopup from './BooleanEditorPopup.svelte'
 

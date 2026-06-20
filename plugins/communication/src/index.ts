@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Asset, IntlString, Metadata, plugin, Plugin } from '@hanzo/platform'
-import { CardSection, MasterTag } from '@hanzo/card'
-import { Class, Ref } from '@hanzo/core'
+import { Asset, IntlString, Metadata, plugin, Plugin } from '@hanzoteam/platform'
+import { CardSection, MasterTag } from '@hanzoteam/card'
+import { Class, Ref } from '@hanzoteam/core'
 
 import { GuestCommunicationSettings, Applet, CustomActivityPresenter, MessageAction, PollAnswer } from './types'
 

@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/model-questions",
+  "name": "@hanzoteam/model-questions",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -35,16 +35,16 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
-    "@hanzo/questions": "workspace:^0.7.0",
-    "@hanzo/questions-resources": "workspace:^0.7.0",
-    "@hanzo/contact": "workspace:^0.7.0",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/model": "workspace:^0.7.17",
-    "@hanzo/model-core": "workspace:^0.7.0",
-    "@hanzo/model-tracker": "workspace:^0.7.0",
-    "@hanzo/model-view": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/view": "workspace:^0.7.0"
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/questions": "workspace:^0.7.0",
+    "@hanzoteam/questions-resources": "workspace:^0.7.0",
+    "@hanzoteam/contact": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/model": "workspace:^0.7.17",
+    "@hanzoteam/model-core": "workspace:^0.7.0",
+    "@hanzoteam/model-tracker": "workspace:^0.7.0",
+    "@hanzoteam/model-view": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/view": "workspace:^0.7.0"
   }
 }

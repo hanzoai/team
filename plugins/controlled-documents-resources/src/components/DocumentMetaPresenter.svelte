@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SortingOrder } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import documents, { Document, DocumentMeta, getDocumentName } from '@hanzo/controlled-documents'
+  import { SortingOrder } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import documents, { Document, DocumentMeta, getDocumentName } from '@hanzoteam/controlled-documents'
 
   import document from '../plugin'
 

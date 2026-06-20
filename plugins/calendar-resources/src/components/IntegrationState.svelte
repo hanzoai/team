@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Calendar } from '@hanzo/calendar'
-  import { getCurrentAccount } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import type { Integration } from '@hanzo/account-client'
-  import { BaseIntegrationState, IntegrationStateRow } from '@hanzo/setting-resources'
-  import { OK } from '@hanzo/platform'
+  import { Calendar } from '@hanzoteam/calendar'
+  import { getCurrentAccount } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import type { Integration } from '@hanzoteam/account-client'
+  import { BaseIntegrationState, IntegrationStateRow } from '@hanzoteam/setting-resources'
+  import { OK } from '@hanzoteam/platform'
 
   import calendar from '../plugin'
 

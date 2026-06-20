@@ -26,7 +26,7 @@ Containers are the core building blocks of Hanzo Network applications. They enca
 Every container must implement the `Container` interface:
 
 ```typescript
-import type { Container, ContainerUuid, ClientUuid } from '@hanzo/network-core'
+import type { Container, ContainerUuid, ClientUuid } from '@hanzoteam/network-core'
 
 interface Container {
   // Handle requests from clients
@@ -124,8 +124,8 @@ export class CalculatorContainer implements Container {
 Containers are created by factory functions:
 
 ```typescript
-import type { GetOptions, ContainerUuid } from '@hanzo/network-core'
-import { createNetworkClient } from '@hanzo/network-client'
+import type { GetOptions, ContainerUuid } from '@hanzoteam/network-core'
+import { createNetworkClient } from '@hanzoteam/network-client'
 
 const client = createNetworkClient('localhost:3737')
 await client.waitConnection(5000)

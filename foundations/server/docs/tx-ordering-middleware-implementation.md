@@ -225,7 +225,7 @@ Simulates the full pipeline flow with mocked next middleware.
 In your middleware configuration:
 
 ```typescript
-import { TxOrderingMiddleware } from '@hanzo/middleware'
+import { TxOrderingMiddleware } from '@hanzoteam/middleware'
 
 const pipeline = [
   // ... other middleware

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { ClassAttributes, ClassHierarchy, clearSettingsStore } from '@hanzo/setting-resources'
+  import { MasterTag } from '@hanzoteam/card'
+  import { Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ClassAttributes, ClassHierarchy, clearSettingsStore } from '@hanzoteam/setting-resources'
   import {
     Breadcrumb,
     Button,
@@ -29,8 +29,8 @@
     navigate,
     showPopup,
     twoPanelsSeparators
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import card from '../plugin'
   import CreateTag from './CreateTag.svelte'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { AnyComponent, Component } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnyComponent, Component } from '@hanzoteam/ui'
   import view from '../plugin'
 
   export let link: HTMLLinkElement

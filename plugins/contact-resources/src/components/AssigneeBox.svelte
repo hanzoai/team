@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact, Employee, Person, getName } from '@hanzo/contact'
-  import { Class, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
-  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
-  import presentation, { getClient, reduceCalls } from '@hanzo/presentation'
+  import contact, { Contact, Employee, Person, getName } from '@hanzoteam/contact'
+  import { Class, DocumentQuery, FindOptions, Ref } from '@hanzoteam/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzoteam/platform'
+  import presentation, { getClient, reduceCalls } from '@hanzoteam/presentation'
   import {
     ActionIcon,
     Button,
@@ -30,9 +30,9 @@
     getFocusManager,
     showPopup,
     tooltip
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { openDoc } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { openDoc } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { PersonLabelTooltip, getPersonByPersonRefStore } from '..'
   import { AssigneeCategory } from '../assignee'

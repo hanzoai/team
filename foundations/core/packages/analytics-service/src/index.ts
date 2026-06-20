@@ -2,10 +2,10 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { AnalyticProvider, Analytics } from '@hanzo/analytics'
-import { initOpenTelemetrySDK, reportOTELError } from '@hanzo/measurements-otlp'
+import { AnalyticProvider, Analytics } from '@hanzoteam/analytics'
+import { initOpenTelemetrySDK, reportOTELError } from '@hanzoteam/measurements-otlp'
 
-export * from '@hanzo/measurements-otlp'
+export * from '@hanzoteam/measurements-otlp'
 export * from './logging'
 
 class OTELAnalyticsProvider implements AnalyticProvider {

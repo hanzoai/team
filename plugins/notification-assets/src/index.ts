@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import notification from '@hanzo/notification'
-import { loadMetadata } from '@hanzo/platform'
+import notification from '@hanzoteam/notification'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(notification.icon, {

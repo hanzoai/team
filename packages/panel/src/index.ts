@@ -14,5 +14,5 @@
 // limitations under the License.
 //
 
-import '@hanzo/platform-rig/profiles/ui/svelte'
+import '@hanzoteam/platform-rig/profiles/ui/svelte'
 export { default as Panel } from './components/Panel.svelte'

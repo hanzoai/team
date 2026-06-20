@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { DueDatePresenter, ButtonSize, ButtonKind } from '@hanzo/ui'
-  import { WithLookup } from '@hanzo/core'
-  import task, { Task } from '@hanzo/task'
-  import { statusStore } from '@hanzo/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DueDatePresenter, ButtonSize, ButtonKind } from '@hanzoteam/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import task, { Task } from '@hanzoteam/task'
+  import { statusStore } from '@hanzoteam/view-resources'
 
   export let object: WithLookup<Task>
   export let width: string | undefined = undefined

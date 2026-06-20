@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Markup, generateId } from '@hanzo/core'
-import { type MarkupNode, jsonToMarkup, jsonToPmNode, markupToJSON } from '@hanzo/text'
+import { type Markup, generateId } from '@hanzoteam/core'
+import { type MarkupNode, jsonToMarkup, jsonToPmNode, markupToJSON } from '@hanzoteam/text'
 import { prosemirrorToYXmlFragment, yDocToProsemirrorJSON } from 'y-prosemirror'
 import { deepEqual } from 'fast-equals'
 import { Doc as YDoc } from 'yjs'

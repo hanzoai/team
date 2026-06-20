@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Lead } from '@hanzo/lead'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import lead from '@hanzo/lead'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { ObjectPresenterType } from '@hanzo/view'
+  import type { Lead } from '@hanzoteam/lead'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
+  import lead from '@hanzoteam/lead'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { ObjectPresenterType } from '@hanzoteam/view'
 
   export let value: Lead
   export let inline: boolean = false

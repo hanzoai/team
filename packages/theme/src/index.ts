@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import '@hanzo/platform-rig/profiles/ui/svelte'
+import { Analytics } from '@hanzoteam/analytics'
+import '@hanzoteam/platform-rig/profiles/ui/svelte'
 import { derived, writable } from 'svelte/store'
 import { ThemeVariant, type ThemeVariantType } from './variants'
 

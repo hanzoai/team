@@ -2,11 +2,11 @@
 // Copyright © 2023, 2025 Hanzo AI Inc.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { newMetrics } from '@hanzo/core'
-import { startFront } from '@hanzo/front/src/starter'
-import { initStatisticsContext } from '@hanzo/server-core'
+import { Analytics } from '@hanzoteam/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { newMetrics } from '@hanzoteam/core'
+import { startFront } from '@hanzoteam/front/src/starter'
+import { initStatisticsContext } from '@hanzoteam/server-core'
 import { join } from 'path'
 
 configureAnalytics('front', process.env.VERSION ?? '0.7.0')

@@ -2,7 +2,7 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import chunter from '@hanzo/chunter'
+import chunter from '@hanzoteam/chunter'
 import core, {
   Doc,
   DocumentUpdate,
@@ -18,11 +18,11 @@ import core, {
   systemAccountUuid,
   type Class,
   type TxMixin
-} from '@hanzo/core'
-import github, { DocSyncInfo, GithubProject } from '@hanzo/github'
-import { TriggerControl } from '@hanzo/server-core'
-import time, { ToDo } from '@hanzo/time'
-import tracker from '@hanzo/tracker'
+} from '@hanzoteam/core'
+import github, { DocSyncInfo, GithubProject } from '@hanzoteam/github'
+import { TriggerControl } from '@hanzoteam/server-core'
+import time, { ToDo } from '@hanzoteam/time'
+import tracker from '@hanzoteam/tracker'
 
 /**
  * @public

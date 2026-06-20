@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type DrawingCmd } from '@hanzo/presentation'
-import { showPopup } from '@hanzo/ui'
+import { type DrawingCmd } from '@hanzoteam/presentation'
+import { showPopup } from '@hanzoteam/ui'
 import { type Editor, mergeAttributes, Node } from '@tiptap/core'
 import { NodeSelection } from '@tiptap/pm/state'
 import type { Array as YArray, Map as YMap, Doc as YDoc } from 'yjs'

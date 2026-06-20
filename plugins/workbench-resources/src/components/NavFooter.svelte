@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import setting from '@hanzo/setting'
-  import { Icon, Label, showPopup } from '@hanzo/ui'
+  import setting from '@hanzoteam/setting'
+  import { Icon, Label, showPopup } from '@hanzoteam/ui'
   import workbench from '../plugin'
   import HelpAndSupport from './HelpAndSupport.svelte'
 

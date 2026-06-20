@@ -4,9 +4,9 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { IssuePresenter } from '@hanzo/tracker-resources'
-  import github, { GithubPullRequest } from '@hanzo/github'
+  import { WithLookup } from '@hanzoteam/core'
+  import { IssuePresenter } from '@hanzoteam/tracker-resources'
+  import github, { GithubPullRequest } from '@hanzoteam/github'
 
   export let value: WithLookup<GithubPullRequest>
   export let disabled = false

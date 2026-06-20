@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { concatLink, WorkspaceUuid, Blob, Ref } from '@hanzo/core'
+import core, { concatLink, WorkspaceUuid, Blob, Ref } from '@hanzoteam/core'
 import { Readable } from 'stream'
 import { StorageClient } from './types'
 import { loadServerConfig, ServerConfig } from '../config'

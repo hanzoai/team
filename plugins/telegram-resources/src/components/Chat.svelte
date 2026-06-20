@@ -15,18 +15,18 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import attachment from '@hanzo/attachment'
-  import { AttachmentRefInput } from '@hanzo/attachment-resources'
-  import contact, { Channel, Contact, Person, getName as getContactName } from '@hanzo/contact'
-  import { Avatar } from '@hanzo/contact-resources'
-  import core, { Ref, SortingOrder, generateId, getCurrentAccount } from '@hanzo/core'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { getEmbeddedLabel, getResource } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting, { Integration } from '@hanzo/setting'
-  import type { NewTelegramMessage, SharedTelegramMessage, TelegramMessage } from '@hanzo/telegram'
-  import templates, { TemplateDataProvider } from '@hanzo/templates'
-  import { jsonToHTML, markupToJSON } from '@hanzo/text'
+  import attachment from '@hanzoteam/attachment'
+  import { AttachmentRefInput } from '@hanzoteam/attachment-resources'
+  import contact, { Channel, Contact, Person, getName as getContactName } from '@hanzoteam/contact'
+  import { Avatar } from '@hanzoteam/contact-resources'
+  import core, { Ref, SortingOrder, generateId, getCurrentAccount } from '@hanzoteam/core'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import { getEmbeddedLabel, getResource } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import setting, { Integration } from '@hanzoteam/setting'
+  import type { NewTelegramMessage, SharedTelegramMessage, TelegramMessage } from '@hanzoteam/telegram'
+  import templates, { TemplateDataProvider } from '@hanzoteam/templates'
+  import { jsonToHTML, markupToJSON } from '@hanzoteam/text'
   import {
     Button,
     Icon,
@@ -37,7 +37,7 @@
     eventToHTMLElement,
     showPopup,
     tooltip
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import telegram from '../plugin'
   import Connect from './Connect.svelte'

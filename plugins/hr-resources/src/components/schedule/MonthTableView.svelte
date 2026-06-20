@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { Doc, Ref } from '@hanzo/core'
-  import type { Request, RequestType, Staff } from '@hanzo/hr'
-  import { Department } from '@hanzo/hr'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Button, DropdownIntlItem, Label, Loading, showPopup, tableToCSV } from '@hanzo/ui'
-  import { BuildModelKey, Viewlet, ViewletPreference } from '@hanzo/view'
-  import { TableBrowser, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
+  import { Employee } from '@hanzoteam/contact'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import type { Request, RequestType, Staff } from '@hanzoteam/hr'
+  import { Department } from '@hanzoteam/hr'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Button, DropdownIntlItem, Label, Loading, showPopup, tableToCSV } from '@hanzoteam/ui'
+  import { BuildModelKey, Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { TableBrowser, ViewletSelector, ViewletSettingButton } from '@hanzoteam/view-resources'
   import hr from '../../plugin'
   import {
     EmployeeReports,

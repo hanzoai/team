@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import { type BackupClient, type DocChunk } from './backup'
 import {
   type Class,
@@ -26,7 +26,7 @@ import {
 } from './classes'
 import core from './component'
 import { Hierarchy } from './hierarchy'
-import { type MeasureContext, MeasureMetricsContext } from '@hanzo/measurements'
+import { type MeasureContext, MeasureMetricsContext } from '@hanzoteam/measurements'
 import { ModelDb } from './memdb'
 import type {
   DocumentQuery,

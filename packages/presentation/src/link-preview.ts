@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getMetadata } from '@hanzo/platform'
+import { getMetadata } from '@hanzoteam/platform'
 import plugin from './plugin'
 
 export function isLinkPreviewEnabled (): boolean {

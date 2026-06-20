@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { WorkspaceUuid } from '@hanzo/core'
-import { RetryOptions } from '@hanzo/retry'
+import { WorkspaceUuid } from '@hanzoteam/core'
+import { RetryOptions } from '@hanzoteam/retry'
 
 import { fetchSafe, unwrapContentLength, unwrapEtag, unwrapLastModified } from './utils'
 import {

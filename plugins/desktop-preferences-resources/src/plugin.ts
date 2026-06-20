@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import desktopPreferences, { desktopPreferencesId } from '@hanzo/desktop-preferences'
+import { mergeIds } from '@hanzoteam/platform'
+import desktopPreferences, { desktopPreferencesId } from '@hanzoteam/desktop-preferences'
 
 export default mergeIds(desktopPreferencesId, desktopPreferences, {})

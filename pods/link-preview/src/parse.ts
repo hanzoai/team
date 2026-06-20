@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import * as cheerio from 'cheerio'
 import { imageSize } from 'image-size'
 import oembedProviders from 'oembed-providers'

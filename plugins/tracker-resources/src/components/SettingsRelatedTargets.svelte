@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Space } from '@hanzo/core'
-  import { Header, Breadcrumb } from '@hanzo/ui'
+  import { Space } from '@hanzoteam/core'
+  import { Header, Breadcrumb } from '@hanzoteam/ui'
   import tracker from '../plugin'
   import EditRelatedTargets from './EditRelatedTargets.svelte'
 

@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type QuerySelector } from '@hanzo/core'
-import { getEmbeddedLabel, type IntlString } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui'
-import view from '@hanzo/view-resources/src/plugin'
+import { type QuerySelector } from '@hanzoteam/core'
+import { getEmbeddedLabel, type IntlString } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui'
+import view from '@hanzoteam/view-resources/src/plugin'
 import plugin from './plugin'
 
 export interface Mode {

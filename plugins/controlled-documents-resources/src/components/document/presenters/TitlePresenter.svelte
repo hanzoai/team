@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Document } from '@hanzo/controlled-documents'
-  import { WithLookup } from '@hanzo/core'
-  import { tooltip } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Document } from '@hanzoteam/controlled-documents'
+  import { WithLookup } from '@hanzoteam/core'
+  import { tooltip } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
 
   export let value: WithLookup<Document>
   export let inline = false

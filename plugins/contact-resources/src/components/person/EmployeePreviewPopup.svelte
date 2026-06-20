@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, Person } from '@hanzo/contact'
-  import { AccountUuid, Class, Doc, Ref } from '@hanzo/core'
-  import { ComponentExtensions, createQuery, getClient, hasResource } from '@hanzo/presentation'
-  import { ButtonIcon, Component, navigate } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { getObjectLinkFragment } from '@hanzo/view-resources'
+  import { Employee, Person } from '@hanzoteam/contact'
+  import { AccountUuid, Class, Doc, Ref } from '@hanzoteam/core'
+  import { ComponentExtensions, createQuery, getClient, hasResource } from '@hanzoteam/presentation'
+  import { ButtonIcon, Component, navigate } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { getObjectLinkFragment } from '@hanzoteam/view-resources'
 
-  import rating, { type PersonRating } from '@hanzo/rating'
+  import rating, { type PersonRating } from '@hanzoteam/rating'
   import { EmployeePresenter, getPersonByPersonRefStore } from '../../index'
   import contact from '../../plugin'
   import { employeeByIdStore } from '../../utils'

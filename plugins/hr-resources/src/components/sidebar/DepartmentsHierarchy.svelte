@@ -14,12 +14,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Ref } from '@hanzo/core'
-  import { Department } from '@hanzo/hr'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Action, IconEdit } from '@hanzo/ui'
-  import { getActions as getContributedActions, TreeElement } from '@hanzo/view-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { Department } from '@hanzoteam/hr'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Action, IconEdit } from '@hanzoteam/ui'
+  import { getActions as getContributedActions, TreeElement } from '@hanzoteam/view-resources'
   import hr from '../../plugin'
 
   export let departments: Ref<Department>[]

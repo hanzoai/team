@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Domain, Ref } from '@hanzo/core'
-import type { ExportResultRecord } from '@hanzo/export'
-import { type Builder, Model, Prop, ArrOf, TypeRef, TypeString, TypeNumber, UX } from '@hanzo/model'
-import core, { TDoc } from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import workbench from '@hanzo/workbench'
-import view from '@hanzo/model-view'
-import notification from '@hanzo/notification'
-import exportPlugin from '@hanzo/export'
+import type { Class, Doc, Domain, Ref } from '@hanzoteam/core'
+import type { ExportResultRecord } from '@hanzoteam/export'
+import { type Builder, Model, Prop, ArrOf, TypeRef, TypeString, TypeNumber, UX } from '@hanzoteam/model'
+import core, { TDoc } from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
+import workbench from '@hanzoteam/workbench'
+import view from '@hanzoteam/model-view'
+import notification from '@hanzoteam/notification'
+import exportPlugin from '@hanzoteam/export'
 
 import exportModelPlugin from './plugin'
 
-export { exportId } from '@hanzo/export'
+export { exportId } from '@hanzoteam/export'
 export * from './migration'
 export default exportModelPlugin
 

@@ -1,21 +1,21 @@
-import type { Doc } from '@hanzo/core'
+import type { Doc } from '@hanzoteam/core'
 
-import { Analytics } from '@hanzo/analytics'
-import { createPublicLink } from '@hanzo/guest'
-import { getMetadata } from '@hanzo/platform'
-import { printToPDF } from '@hanzo/print'
-import { signPDF } from '@hanzo/sign'
-import { getDocTitle } from '@hanzo/view-resources'
+import { Analytics } from '@hanzoteam/analytics'
+import { createPublicLink } from '@hanzoteam/guest'
+import { getMetadata } from '@hanzoteam/platform'
+import { printToPDF } from '@hanzoteam/print'
+import { signPDF } from '@hanzoteam/sign'
+import { getDocTitle } from '@hanzoteam/view-resources'
 
 import { ensurePublicLink, printAll } from './printUtils'
 
-jest.mock('@hanzo/analytics', () => ({
+jest.mock('@hanzoteam/analytics', () => ({
   Analytics: {
     handleError: jest.fn()
   }
 }))
 
-jest.mock('@hanzo/guest', () => ({
+jest.mock('@hanzoteam/guest', () => ({
   __esModule: true,
   default: {
     class: {
@@ -25,20 +25,20 @@ jest.mock('@hanzo/guest', () => ({
   createPublicLink: jest.fn()
 }))
 
-jest.mock('@hanzo/view-resources', () => ({
+jest.mock('@hanzoteam/view-resources', () => ({
   getDocTitle: jest.fn(),
   getObjectLinkFragment: jest.fn(async () => ({ path: [], fragment: 'x' }))
 }))
 
-jest.mock('@hanzo/platform', () => {
-  const actual = jest.requireActual('@hanzo/platform')
+jest.mock('@hanzoteam/platform', () => {
+  const actual = jest.requireActual('@hanzoteam/platform')
   return {
     ...actual,
     getMetadata: jest.fn()
   }
 })
 
-jest.mock('@hanzo/presentation', () => ({
+jest.mock('@hanzoteam/presentation', () => ({
   __esModule: true,
   default: {
     metadata: {
@@ -48,11 +48,11 @@ jest.mock('@hanzo/presentation', () => ({
   getFileUrl: jest.fn()
 }))
 
-jest.mock('@hanzo/print', () => ({
+jest.mock('@hanzoteam/print', () => ({
   printToPDF: jest.fn()
 }))
 
-jest.mock('@hanzo/sign', () => ({
+jest.mock('@hanzoteam/sign', () => ({
   signPDF: jest.fn()
 }))
 

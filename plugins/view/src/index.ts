@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { Class, Doc, DocumentQuery, FindOptions, Mixin, Ref } from '@hanzo/core'
-import { Asset, IntlString, Plugin, Resource, plugin } from '@hanzo/platform'
-import { AnyComponent, PopupAlignment, PopupPosAlignment, type ComponentExtensionId } from '@hanzo/ui/src/types'
+import { Class, Doc, DocumentQuery, FindOptions, Mixin, Ref } from '@hanzoteam/core'
+import { Asset, IntlString, Plugin, Resource, plugin } from '@hanzoteam/platform'
+import { AnyComponent, PopupAlignment, PopupPosAlignment, type ComponentExtensionId } from '@hanzoteam/ui/src/types'
 import {
   Action,
   ActionCategory,

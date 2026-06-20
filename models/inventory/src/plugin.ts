@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { type ChatMessageViewlet } from '@hanzo/chunter'
-import type { Client, Doc, Ref } from '@hanzo/core'
-import { inventoryId } from '@hanzo/inventory'
-import inventory from '@hanzo/inventory-resources/src/plugin'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction, type Viewlet } from '@hanzo/view'
+import { type ChatMessageViewlet } from '@hanzoteam/chunter'
+import type { Client, Doc, Ref } from '@hanzoteam/core'
+import { inventoryId } from '@hanzoteam/inventory'
+import inventory from '@hanzoteam/inventory-resources/src/plugin'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction, type Viewlet } from '@hanzoteam/view'
 export default mergeIds(inventoryId, inventory, {
   action: {
     CreateSubcategory: '' as Ref<Action>

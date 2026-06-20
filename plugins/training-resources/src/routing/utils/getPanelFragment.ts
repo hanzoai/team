@@ -2,10 +2,10 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Doc } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import { getPanelURI } from '@hanzo/ui'
-import view, { type ObjectPanel } from '@hanzo/view'
+import type { Doc } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import { getPanelURI } from '@hanzoteam/ui'
+import view, { type ObjectPanel } from '@hanzoteam/view'
 
 export function getPanelFragment<T extends Doc> (object: Pick<T, '_class' | '_id'>): string {
   const hierarchy = getClient().getHierarchy()

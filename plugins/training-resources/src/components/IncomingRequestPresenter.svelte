@@ -3,10 +3,10 @@
 -->
 
 <script lang="ts">
-  import type { TrainingAttempt, TrainingRequest } from '@hanzo/training'
-  import type { WithLookup } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import type { TrainingAttempt, TrainingRequest } from '@hanzoteam/training'
+  import type { WithLookup } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import { queryLatestOwnAttempt } from '../utils'
 
   export let value: WithLookup<TrainingRequest>

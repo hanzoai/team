@@ -2,8 +2,8 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import core, { Doc, TxOperations } from '@hanzo/core'
-import { type Location } from '@hanzo/ui'
+import core, { Doc, TxOperations } from '@hanzoteam/core'
+import { type Location } from '@hanzoteam/ui'
 
 import guest from './index'
 

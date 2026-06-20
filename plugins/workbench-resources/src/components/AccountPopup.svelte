@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { formatName, getCurrentEmployee } from '@hanzo/contact'
-  import { myEmployeeStore } from '@hanzo/contact-resources'
-  import core, { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import rating, { type PersonRating } from '@hanzo/rating'
-  import login, { loginId } from '@hanzo/login'
+  import contact, { formatName, getCurrentEmployee } from '@hanzoteam/contact'
+  import { myEmployeeStore } from '@hanzoteam/contact-resources'
+  import core, { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import rating, { type PersonRating } from '@hanzoteam/rating'
+  import login, { loginId } from '@hanzoteam/login'
   import presentation, {
     createQuery,
     getCurrentWorkspaceUrl,
     hasResource,
     isDisabled
-  } from '@hanzo/presentation'
-  import setting, { RoleCapability, settingId, SettingsCategory } from '@hanzo/setting'
+  } from '@hanzoteam/presentation'
+  import setting, { RoleCapability, settingId, SettingsCategory } from '@hanzoteam/setting'
   import {
     Action,
     closePopup,
@@ -35,14 +35,14 @@
     Menu,
     navigate,
     showPopup
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import workbench from '../plugin'
   import { logOut } from '../utils'
   import HelpAndSupport from './HelpAndSupport.svelte'
-  import { Analytics } from '@hanzo/analytics'
-  import { allowGuestSignUpStore } from '@hanzo/view-resources'
-  import { getMetadata, getResource } from '@hanzo/platform'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { allowGuestSignUpStore } from '@hanzoteam/view-resources'
+  import { getMetadata, getResource } from '@hanzoteam/platform'
   import { onMount } from 'svelte'
 
   let items: SettingsCategory[] = []

@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Document } from '@hanzo/document'
+  import { Document } from '@hanzoteam/document'
 
   export let value: Document
 </script>

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hanzo/calendar'
-  import { DateRangeMode, Doc } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { DatePresenter, DateTimeRangePresenter, Label, showPopup, DateRangePresenter } from '@hanzo/ui'
-  import view, { ObjectEditor } from '@hanzo/view'
+  import { Event } from '@hanzoteam/calendar'
+  import { DateRangeMode, Doc } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DatePresenter, DateTimeRangePresenter, Label, showPopup, DateRangePresenter } from '@hanzoteam/ui'
+  import view, { ObjectEditor } from '@hanzoteam/view'
   import calendar from '../plugin'
 
   export let value: Event

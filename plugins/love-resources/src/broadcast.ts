@@ -1,4 +1,4 @@
-import { location } from '@hanzo/ui'
+import { location } from '@hanzoteam/ui'
 
 let key = ''
 

@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/model-tags",
+  "name": "@hanzoteam/model-tags",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/model-package",
+  "template": "@hanzoteam/model-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "test": "jest --passWithNoTests --silent --forceExit"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.54.0",
@@ -34,15 +34,15 @@
     "ts-jest": "^29.1.1"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/model": "workspace:^0.7.17",
-    "@hanzo/model-core": "workspace:^0.7.0",
-    "@hanzo/model-view": "workspace:^0.7.0",
-    "@hanzo/notification": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/tags": "workspace:^0.7.0",
-    "@hanzo/tags-resources": "workspace:^0.7.0",
-    "@hanzo/ui": "workspace:^0.7.0",
-    "@hanzo/view": "workspace:^0.7.0"
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/model": "workspace:^0.7.17",
+    "@hanzoteam/model-core": "workspace:^0.7.0",
+    "@hanzoteam/model-view": "workspace:^0.7.0",
+    "@hanzoteam/notification": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/tags": "workspace:^0.7.0",
+    "@hanzoteam/tags-resources": "workspace:^0.7.0",
+    "@hanzoteam/ui": "workspace:^0.7.0",
+    "@hanzoteam/view": "workspace:^0.7.0"
   }
 }

@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Ref, IntegrationKind } from '@hanzo/core'
-import { type Plugin, plugin } from '@hanzo/platform'
-import type { Handler, IntegrationType } from '@hanzo/setting'
-import type { AnyComponent } from '@hanzo/ui'
+import type { Ref, IntegrationKind } from '@hanzoteam/core'
+import { type Plugin, plugin } from '@hanzoteam/platform'
+import type { Handler, IntegrationType } from '@hanzoteam/setting'
+import type { AnyComponent } from '@hanzoteam/ui'
 
 /**
  * @public

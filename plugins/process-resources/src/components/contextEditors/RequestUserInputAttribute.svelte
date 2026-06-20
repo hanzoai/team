@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, generateId, Ref, RefTo, Space } from '@hanzo/core'
-  import { findAttributeEditor, getClient } from '@hanzo/presentation'
-  import { AnyComponent, Component, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import core, { AnyAttribute, Class, Doc, generateId, Ref, RefTo, Space } from '@hanzoteam/core'
+  import { findAttributeEditor, getClient } from '@hanzoteam/presentation'
+  import { AnyComponent, Component, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
 
   export let key: string

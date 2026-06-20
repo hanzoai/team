@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Tier } from '@hanzo/billing'
-  import { UsageStatus } from '@hanzo/core'
-  import { Label } from '@hanzo/ui'
+  import { Tier } from '@hanzoteam/billing'
+  import { UsageStatus } from '@hanzoteam/core'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../plugin'
   import UsageProgress from './UsageProgress.svelte'
   import { calculateLimits } from '../utils'

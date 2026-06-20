@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { PersonRefPresenter } from '@hanzo/contact-resources'
-  import { DocumentValidationState } from '@hanzo/controlled-documents'
-  import { Chevron, Label, tooltip } from '@hanzo/ui'
+  import { PersonRefPresenter } from '@hanzoteam/contact-resources'
+  import { DocumentValidationState } from '@hanzoteam/controlled-documents'
+  import { Chevron, Label, tooltip } from '@hanzoteam/ui'
   import { slide } from 'svelte/transition'
 
   import documentsRes from '../../../plugin'

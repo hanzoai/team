@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, Enum, Ref } from '@hanzo/core'
-  import { ObjectCreate, ObjectPopup } from '@hanzo/presentation'
+  import type { Class, Doc, DocumentQuery, Enum, Ref } from '@hanzoteam/core'
+  import { ObjectCreate, ObjectPopup } from '@hanzoteam/presentation'
 
   export let _class: Ref<Class<Enum>>
   export let selected: Ref<Enum> | undefined

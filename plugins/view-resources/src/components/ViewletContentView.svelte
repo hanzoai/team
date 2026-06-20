@@ -1,9 +1,9 @@
 <script lang="ts">
-  import core, { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, Component, Loading } from '@hanzo/ui'
-  import view, { ViewOptions, Viewlet, ViewletPreference } from '@hanzo/view'
+  import core, { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, Component, Loading } from '@hanzoteam/ui'
+  import view, { ViewOptions, Viewlet, ViewletPreference } from '@hanzoteam/view'
 
   export let viewlet: WithLookup<Viewlet>
   export let _class: Ref<Class<Doc>>

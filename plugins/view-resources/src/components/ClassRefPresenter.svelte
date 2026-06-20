@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import type { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
 
   export let value: Ref<Class<Doc>>
   export let shrink: boolean = false

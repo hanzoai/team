@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type RegionInfo } from '@hanzo/account-client'
-  import { LoginInfo } from '@hanzo/login'
-  import { OK, Severity, Status, getEmbeddedLabel } from '@hanzo/platform'
-  import { ButtonMenu, getCurrentLocation, navigate } from '@hanzo/ui'
-  import { workbenchId } from '@hanzo/workbench'
+  import { type RegionInfo } from '@hanzoteam/account-client'
+  import { LoginInfo } from '@hanzoteam/login'
+  import { OK, Severity, Status, getEmbeddedLabel } from '@hanzoteam/platform'
+  import { ButtonMenu, getCurrentLocation, navigate } from '@hanzoteam/ui'
+  import { workbenchId } from '@hanzoteam/workbench'
   import { onMount } from 'svelte'
   import login from '../plugin'
   import { createWorkspace, getAccount, getAccountDisplayName, getRegionInfo, goTo, setLoginInfo } from '../utils'

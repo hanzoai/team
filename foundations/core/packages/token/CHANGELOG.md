@@ -1,4 +1,4 @@
-# Change Log - @hanzo/server-token
+# Change Log - @hanzoteam/server-token
 
 This log was last generated on Mon, 27 Oct 2025 13:27:12 GMT and should not be manually modified.
 

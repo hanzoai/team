@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Ref, WithLookup } from '@hanzo/core'
+import type { Class, Doc, Ref, WithLookup } from '@hanzoteam/core'
 import {
   navigate,
   type Location,
@@ -21,21 +21,21 @@ import {
   getLocation,
   locationStorageKeyId,
   getCurrentLocation
-} from '@hanzo/ui'
-import { inboxId } from '@hanzo/inbox'
-import { type MessageID, type Notification } from '@hanzo/communication-types'
-import { decodeObjectURI, encodeObjectURI } from '@hanzo/view'
-import activity, { type ActivityMessage } from '@hanzo/activity'
+} from '@hanzoteam/ui'
+import { inboxId } from '@hanzoteam/inbox'
+import { type MessageID, type Notification } from '@hanzoteam/communication-types'
+import { decodeObjectURI, encodeObjectURI } from '@hanzoteam/view'
+import activity, { type ActivityMessage } from '@hanzoteam/activity'
 import {
   type ActivityInboxNotification,
   type DocNotifyContext,
   type InboxNotification
-} from '@hanzo/notification'
-import { getResource } from '@hanzo/platform'
-import chunter, { type ThreadMessage } from '@hanzo/chunter'
-import { isActivityMessageClass, messageInFocus } from '@hanzo/activity-resources'
-import { getClient } from '@hanzo/presentation'
-import { isMentionNotification, isReactionNotification } from '@hanzo/notification-resources'
+} from '@hanzoteam/notification'
+import { getResource } from '@hanzoteam/platform'
+import chunter, { type ThreadMessage } from '@hanzoteam/chunter'
+import { isActivityMessageClass, messageInFocus } from '@hanzoteam/activity-resources'
+import { getClient } from '@hanzoteam/presentation'
+import { isMentionNotification, isReactionNotification } from '@hanzoteam/notification-resources'
 import { type NavigationItem } from './type'
 
 // Url: /inbox/{_class}&{_id}/{thread}?message={messageId}

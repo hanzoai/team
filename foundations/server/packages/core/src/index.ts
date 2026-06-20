@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-export type { StorageAdapter } from '@hanzo/storage'
+export type { StorageAdapter } from '@hanzoteam/storage'
 export * from './adapter'
 export * from './base'
 export * from './benchmark'

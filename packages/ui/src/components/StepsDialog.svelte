@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
   import { createEventDispatcher, SvelteComponent } from 'svelte'
   import ui from '../plugin'
   import {

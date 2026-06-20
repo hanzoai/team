@@ -7,7 +7,7 @@ A TypeScript client library for interacting with the hanzoai Platform API.
 In order to be able to install required packages, you will need to obtain GitHub access token. You can create a token by following the instructions [here](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token).
 
 ```bash
-npm install @hanzo/api-client
+npm install @hanzoteam/api-client
 ```
 
 ## WebSocket Client vs REST Client
@@ -17,7 +17,7 @@ The api client package provides two main client variants: a WebSocket client and
 ### WebSocket Client
 
 ```ts
-import { connect } from '@hanzo/api-client'
+import { connect } from '@hanzoteam/api-client'
 
 // Connect to Hanzo Team
 const client = await connect('https://hanzo.app', {
@@ -36,7 +36,7 @@ await client.close()
 ### REST Client
 
 ```ts
-import { connectRest } from '@hanzo/api-client'
+import { connectRest } from '@hanzoteam/api-client'
 
 // Connect to Hanzo Team
 const client = await connectRest('https://hanzo.app', {
@@ -69,7 +69,7 @@ Parameters:
 ### Using Email and Password
 
 ```ts
-import { connect } from '@hanzo/api-client'
+import { connect } from '@hanzoteam/api-client'
 
 const client = await connect('https://hanzo.app', {
   email: 'johndoe@example.com',
@@ -85,7 +85,7 @@ await client.close()
 ### Using Token
 
 ```ts
-import { connect } from '@hanzo/api-client'
+import { connect } from '@hanzoteam/api-client'
 
 const client = await connect('https://hanzo.app', {
   token: '...',
@@ -123,7 +123,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hanzo/contact'
+import contact from '@hanzoteam/contact'
 
 ...
 
@@ -153,8 +153,8 @@ Parameters:
 Example:
 
 ```ts
-import { SortingOrder } from '@hanzo/core'
-import contact from '@hanzo/contact'
+import { SortingOrder } from '@hanzoteam/core'
+import contact from '@hanzoteam/contact'
 
 ..
 
@@ -190,7 +190,7 @@ Parameters:
 Example:
 
 ```ts
-import contact, { AvatarType } from '@hanzo/contact'
+import contact, { AvatarType } from '@hanzoteam/contact'
 
 ..
 
@@ -219,7 +219,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hanzo/contact'
+import contact from '@hanzoteam/contact'
 
 ..
 
@@ -246,7 +246,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hanzo/contact'
+import contact from '@hanzoteam/contact'
 
 ..
 
@@ -276,7 +276,7 @@ Parameters:
 Example:
 
 ```ts
-import contact, { AvatarType } from '@hanzo/contact'
+import contact, { AvatarType } from '@hanzoteam/contact'
 
 ..
 
@@ -320,7 +320,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hanzo/contact'
+import contact from '@hanzoteam/contact'
 
 ..
 
@@ -353,7 +353,7 @@ Parameters:
 Example:
 
 ```ts
-import contact from '@hanzo/contact'
+import contact from '@hanzoteam/contact'
 
 ..
 
@@ -384,7 +384,7 @@ Parameters:
 - `attributes`: Attributes of the mixin
 
 ```ts
-import contact, { AvatarType } from '@hanzo/contact'
+import contact, { AvatarType } from '@hanzoteam/contact'
 
 ..
 
@@ -423,7 +423,7 @@ Parameters:
 - `attributes`: Attributes of the mixin to update
 
 ```ts
-import contact, { AvatarType } from '@hanzo/contact'
+import contact, { AvatarType } from '@hanzoteam/contact'
 
 ..
 

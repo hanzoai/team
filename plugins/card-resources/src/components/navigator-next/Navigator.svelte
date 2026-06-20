@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { Scroller } from '@hanzo/ui'
-  import { MasterTag, Card, CardSpace } from '@hanzo/card'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Scroller } from '@hanzoteam/ui'
+  import { MasterTag, Card, CardSpace } from '@hanzoteam/card'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import { createEventDispatcher } from 'svelte'
-  import { SavedView } from '@hanzo/workbench-resources'
-  import { getCurrentAccount, SortingOrder, Ref } from '@hanzo/core'
+  import { SavedView } from '@hanzoteam/workbench-resources'
+  import { getCurrentAccount, SortingOrder, Ref } from '@hanzoteam/core'
 
   import { type NavigatorConfig } from '../../types'
   import NavigatorSpace from './NavigatorSpace.svelte'

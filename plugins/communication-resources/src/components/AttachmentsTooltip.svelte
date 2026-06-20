@@ -12,7 +12,7 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Attachment } from '@hanzo/communication-types'
+  import { Attachment } from '@hanzoteam/communication-types'
 
   import AttachmentName from './AttachmentName.svelte'
 

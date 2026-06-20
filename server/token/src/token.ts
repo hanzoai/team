@@ -1,5 +1,5 @@
-// import { AccountUuid, MeasureContext, PersonUuid, WorkspaceUuid } from '@hanzo/core'
-// import { getMetadata } from '@hanzo/platform'
+// import { AccountUuid, MeasureContext, PersonUuid, WorkspaceUuid } from '@hanzoteam/core'
+// import { getMetadata } from '@hanzoteam/platform'
 // import jwt from 'jsonwebtoken'
 // import serverPlugin from './plugin'
 
@@ -121,8 +121,8 @@ QUIEodXhtNx1MtSmQUl073a4qE/Bph6Eybag10jJ5VcyBTWYgEH91V+YITGZbJnc
 //     }
 // }
 
-import { AccountUuid, MeasureContext, PersonUuid, WorkspaceUuid } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
+import { AccountUuid, MeasureContext, PersonUuid, WorkspaceUuid } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
 import jwt from 'jsonwebtoken'
 import { encode } from 'jwt-simple'
 import serverPlugin from './plugin'

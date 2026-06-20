@@ -1,7 +1,7 @@
-import board, { type Board, type CommonBoardPreference } from '@hanzo/board'
-import core, { getCurrentAccount, type Ref, type TxOperations } from '@hanzo/core'
-import { createQuery, getClient } from '@hanzo/presentation'
-import type { ProjectType } from '@hanzo/task'
+import board, { type Board, type CommonBoardPreference } from '@hanzoteam/board'
+import core, { getCurrentAccount, type Ref, type TxOperations } from '@hanzoteam/core'
+import { createQuery, getClient } from '@hanzoteam/presentation'
+import type { ProjectType } from '@hanzoteam/task'
 import {
   EastSideColor,
   FeijoaColor,
@@ -13,7 +13,7 @@ import {
   SalmonColor,
   SeaBuckthornColor,
   SeagullColor
-} from '@hanzo/ui'
+} from '@hanzoteam/ui'
 import { readable } from 'svelte/store'
 
 export async function createBoard (

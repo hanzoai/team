@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { requestId } from '@hanzo/request'
+import { requestId } from '@hanzoteam/request'
 import {
   tryMigrate,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 
 export const requestOperation: MigrateOperation = {
   async migrate (client: MigrationClient, mode): Promise<void> {

@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Card, CardSpace, MasterTag } from '@hanzo/card'
-  import { Ref } from '@hanzo/core'
+  import { Card, CardSpace, MasterTag } from '@hanzoteam/card'
+  import { Ref } from '@hanzoteam/core'
 
   import type { NavigatorConfig } from '../../types'
   import NavigatorHierarchy from './NavigatorHierarchy.svelte'

@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hanzo/attachment'
-  import contact, { Channel, Organization } from '@hanzo/contact'
-  import { ChannelsEditor } from '@hanzo/contact-resources'
-  import { Ref, WithLookup } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Vacancy } from '@hanzo/recruit'
-  import { Component, Label } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import attachment from '@hanzoteam/attachment'
+  import contact, { Channel, Organization } from '@hanzoteam/contact'
+  import { ChannelsEditor } from '@hanzoteam/contact-resources'
+  import { Ref, WithLookup } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Vacancy } from '@hanzoteam/recruit'
+  import { Component, Label } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
   import VacancyIcon from './icons/Vacancy.svelte'
-  import chunter from '@hanzo/chunter'
+  import chunter from '@hanzoteam/chunter'
 
   export let vacancy: WithLookup<Vacancy> | undefined
   export let disabled: boolean = false

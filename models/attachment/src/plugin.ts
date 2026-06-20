@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import type { ActivityMessage, DocUpdateMessageViewlet } from '@hanzo/activity'
-import { attachmentId } from '@hanzo/attachment'
-import attachment from '@hanzo/attachment-resources/src/plugin'
-import type { Ref, Doc } from '@hanzo/core'
-import type { IntlString, Resource } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import type { ActionCategory } from '@hanzo/view'
+import type { ActivityMessage, DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import { attachmentId } from '@hanzoteam/attachment'
+import attachment from '@hanzoteam/attachment-resources/src/plugin'
+import type { Ref, Doc } from '@hanzoteam/core'
+import type { IntlString, Resource } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import type { ActionCategory } from '@hanzoteam/view'
 
 export default mergeIds(attachmentId, attachment, {
   component: {

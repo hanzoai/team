@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { DeleteConfirmationPopup } from '@hanzo/contact-resources'
-  import { Status } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import task, { TaskType } from '@hanzo/task'
-  import { ButtonMenu } from '@hanzo/ui'
+  import { DeleteConfirmationPopup } from '@hanzoteam/contact-resources'
+  import { Status } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import task, { TaskType } from '@hanzoteam/task'
+  import { ButtonMenu } from '@hanzoteam/ui'
 
   export let object: Status
   export let taskType: TaskType

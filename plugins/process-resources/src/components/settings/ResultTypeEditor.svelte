@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, PropertyType, Ref, Type } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import setting from '@hanzo/setting-resources/src/plugin'
-  import { AnyComponent, Component, DropdownIntlItem, DropdownLabelsIntl, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import core, { Class, PropertyType, Ref, Type } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting-resources/src/plugin'
+  import { AnyComponent, Component, DropdownIntlItem, DropdownLabelsIntl, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
 

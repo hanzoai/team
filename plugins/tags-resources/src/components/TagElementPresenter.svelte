@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset } from '@hanzo/platform'
-  import { TagElement } from '@hanzo/tags'
-  import { AnySvelteComponent, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { Asset } from '@hanzoteam/platform'
+  import { TagElement } from '@hanzoteam/tags'
+  import { AnySvelteComponent, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
   import EditTagElement from './EditTagElement.svelte'
   import TagItem from './TagItem.svelte'
 

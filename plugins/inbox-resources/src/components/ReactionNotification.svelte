@@ -12,12 +12,12 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Message, Notification, ReactionNotificationContent, SocialID } from '@hanzo/communication-types'
-  import { EmojiPresenter } from '@hanzo/emoji-resources'
-  import { Card } from '@hanzo/card'
-  import { Label } from '@hanzo/ui'
-  import { Person } from '@hanzo/contact'
-  import { employeeByPersonIdStore, getPersonByPersonId } from '@hanzo/contact-resources'
+  import { Message, Notification, ReactionNotificationContent, SocialID } from '@hanzoteam/communication-types'
+  import { EmojiPresenter } from '@hanzoteam/emoji-resources'
+  import { Card } from '@hanzoteam/card'
+  import { Label } from '@hanzoteam/ui'
+  import { Person } from '@hanzoteam/contact'
+  import { employeeByPersonIdStore, getPersonByPersonId } from '@hanzoteam/contact-resources'
 
   import NotificationPreview from './preview/NotificationPreview.svelte'
   import PreviewTemplate from './preview/PreviewTemplate.svelte'

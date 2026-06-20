@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Theme } from '@hanzo/theme'
+  import { Theme } from '@hanzoteam/theme'
 </script>
 
 <Theme>

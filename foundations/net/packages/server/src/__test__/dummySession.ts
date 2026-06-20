@@ -1,4 +1,4 @@
-import type { Container, ClientUuid } from '@hanzo/network-core'
+import type { Container, ClientUuid } from '@hanzoteam/network-core'
 
 export class DummySessionContainer implements Container {
   async request (operation: string, data?: any, clientId?: ClientUuid): Promise<any> {

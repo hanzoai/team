@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { assessAnswers, findAnswers, findQuestions } from '@hanzo/questions-resources'
+import { assessAnswers, findAnswers, findQuestions } from '@hanzoteam/questions-resources'
 import {
   type Training,
   type TrainingAttempt,
   TrainingAttemptState,
   type TrainingRequest
-} from '@hanzo/training'
-import { getClient } from '@hanzo/presentation'
+} from '@hanzoteam/training'
+import { getClient } from '@hanzoteam/presentation'
 import { canUpdateTrainingAttempt } from './canUpdateTrainingAttempt'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 

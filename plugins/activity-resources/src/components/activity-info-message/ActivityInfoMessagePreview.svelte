@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { ActivityInfoMessage, ActivityMessagePreviewType } from '@hanzo/activity'
+  import { ActivityInfoMessage, ActivityMessagePreviewType } from '@hanzoteam/activity'
 
   import BaseMessagePreview from '../activity-message/BaseMessagePreview.svelte'
 

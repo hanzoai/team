@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   Association,
   AssociationQuery,
@@ -64,8 +64,8 @@ import core, {
   type DomainRequestOptions,
   type DomainResult,
   type OperationDomain
-} from '@hanzo/core'
-import { PlatformError } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { PlatformError } from '@hanzoteam/platform'
 import { deepEqual } from 'fast-equals'
 import { Refs } from './refs'
 import { ResultArray } from './results'

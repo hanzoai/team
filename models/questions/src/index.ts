@@ -18,12 +18,12 @@ import type {
   SingleChoiceAssessmentAnswer,
   SingleChoiceQuestion,
   SingleChoiceQuestionAnswer
-} from '@hanzo/questions'
-import { type Class, type MixinData, type Ref } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import tracker from '@hanzo/model-tracker'
-import view, { createAction } from '@hanzo/model-view'
+} from '@hanzoteam/questions'
+import { type Class, type MixinData, type Ref } from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import tracker from '@hanzoteam/model-tracker'
+import view, { createAction } from '@hanzoteam/model-view'
 import {
   TAnswer,
   TAssessment,
@@ -58,7 +58,7 @@ import questions from './plugin'
 
 export { questionsOperation } from './migration'
 export { default } from './plugin'
-export { questionsId } from '@hanzo/questions/src/index'
+export { questionsId } from '@hanzoteam/questions/src/index'
 export * from './doc-types'
 
 export function createModel (builder: Builder): void {

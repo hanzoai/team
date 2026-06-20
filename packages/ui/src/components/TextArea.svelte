@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { translateCB } from '@hanzo/platform'
-  import { themeStore } from '@hanzo/theme'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { translateCB } from '@hanzoteam/platform'
+  import { themeStore } from '@hanzoteam/theme'
   import plugin from '../plugin'
   import Label from './Label.svelte'
 

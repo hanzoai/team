@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Integration } from '@hanzo/account-client'
-  import { BaseIntegrationState } from '@hanzo/setting-resources'
-  import { CardPresenter } from '@hanzo/card-resources'
-  import { OK } from '@hanzo/platform'
+  import type { Integration } from '@hanzoteam/account-client'
+  import { BaseIntegrationState } from '@hanzoteam/setting-resources'
+  import { CardPresenter } from '@hanzoteam/card-resources'
+  import { OK } from '@hanzoteam/platform'
 
   export let integration: Integration
 </script>

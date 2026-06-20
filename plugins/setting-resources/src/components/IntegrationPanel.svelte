@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Panel } from '@hanzo/panel'
-  import { createQuery } from '@hanzo/presentation'
-  import { Integration, IntegrationType } from '@hanzo/setting'
+  import { Ref } from '@hanzoteam/core'
+  import { Panel } from '@hanzoteam/panel'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Integration, IntegrationType } from '@hanzoteam/setting'
   import setting from '../plugin'
   import PluginCard from './PluginCard.svelte'
-  import { translate } from '@hanzo/platform'
-  import { themeStore } from '@hanzo/ui'
+  import { translate } from '@hanzoteam/platform'
+  import { themeStore } from '@hanzoteam/ui'
 
   export let _id: Ref<Integration>
   // export let _class: Ref<Class<Integration>>

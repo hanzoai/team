@@ -14,16 +14,16 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import serverCore from '@hanzo/server-core'
-import core from '@hanzo/core'
-import serverNotification from '@hanzo/server-notification'
-import serverSetting from '@hanzo/server-setting'
-import setting from '@hanzo/setting'
-import serverTemplates from '@hanzo/server-templates'
-import templates from '@hanzo/templates'
+import { type Builder } from '@hanzoteam/model'
+import serverCore from '@hanzoteam/server-core'
+import core from '@hanzoteam/core'
+import serverNotification from '@hanzoteam/server-notification'
+import serverSetting from '@hanzoteam/server-setting'
+import setting from '@hanzoteam/setting'
+import serverTemplates from '@hanzoteam/server-templates'
+import templates from '@hanzoteam/templates'
 
-export { serverSettingId } from '@hanzo/server-setting'
+export { serverSettingId } from '@hanzoteam/server-setting'
 
 export function createModel (builder: Builder): void {
   builder.mixin(setting.class.Integration, core.class.Class, serverNotification.mixin.HTMLPresenter, {

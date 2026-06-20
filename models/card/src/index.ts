@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import activity from '@hanzo/activity'
-import communication from '@hanzo/communication'
+import activity from '@hanzoteam/activity'
+import communication from '@hanzoteam/communication'
 import {
   type CanCreateCardResource,
   type Card,
@@ -32,8 +32,8 @@ import {
   type PermissionObjectClass,
   type Role,
   type Tag
-} from '@hanzo/card'
-import chunter from '@hanzo/chunter'
+} from '@hanzoteam/card'
+import chunter from '@hanzoteam/chunter'
 import core, {
   AccountRole,
   type Blobs,
@@ -50,7 +50,7 @@ import core, {
   type Rank,
   type Ref,
   SortingOrder
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ArrOf,
   type Builder,
@@ -67,27 +67,27 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import { TRole as TBaseRole, TClass, TDoc, TMixin, TTypedSpace } from '@hanzo/model-core'
-import { createPublicLinkAction } from '@hanzo/model-guest'
-import preference, { TPreference } from '@hanzo/model-preference'
-import presentation from '@hanzo/model-presentation'
-import setting from '@hanzo/model-setting'
-import view, { type Viewlet } from '@hanzo/model-view'
-import workbench, { WidgetType } from '@hanzo/model-workbench'
-import converter from '@hanzo/converter'
-import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hanzo/platform'
-import time, { type ToDo } from '@hanzo/time'
-import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type BuildModelKey } from '@hanzo/view'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import { TRole as TBaseRole, TClass, TDoc, TMixin, TTypedSpace } from '@hanzoteam/model-core'
+import { createPublicLinkAction } from '@hanzoteam/model-guest'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import presentation from '@hanzoteam/model-presentation'
+import setting from '@hanzoteam/model-setting'
+import view, { type Viewlet } from '@hanzoteam/model-view'
+import workbench, { WidgetType } from '@hanzoteam/model-workbench'
+import converter from '@hanzoteam/converter'
+import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hanzoteam/platform'
+import time, { type ToDo } from '@hanzoteam/time'
+import { PaletteColorIndexes } from '@hanzoteam/ui/src/colors'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type BuildModelKey } from '@hanzoteam/view'
 import { createActions } from './actions'
 import { definePermissions } from './permissions'
 import card from './plugin'
-import notification from '@hanzo/notification'
+import notification from '@hanzoteam/notification'
 
-export { cardId } from '@hanzo/card'
+export { cardId } from '@hanzoteam/card'
 
 @Model(card.class.MasterTag, core.class.Class)
 export class TMasterTag extends TClass implements MasterTag {

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref, Class } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Doc, Ref, Class } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     Component,
     defineSeparators,
@@ -25,15 +25,15 @@
     Location,
     restoreLocation,
     deviceOptionsStore as deviceInfo
-  } from '@hanzo/ui'
-  import { NavigatorModel, SpecialNavModel } from '@hanzo/workbench'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  } from '@hanzoteam/ui'
+  import { NavigatorModel, SpecialNavModel } from '@hanzoteam/workbench'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
   import { onMount, onDestroy } from 'svelte'
-  import { chunterId } from '@hanzo/chunter'
-  import view, { decodeObjectURI } from '@hanzo/view'
-  import { parseLinkId, getObjectLinkId } from '@hanzo/view-resources'
-  import { ActivityMessage } from '@hanzo/activity'
-  import { loadSavedAttachments } from '@hanzo/attachment-resources'
+  import { chunterId } from '@hanzoteam/chunter'
+  import view, { decodeObjectURI } from '@hanzoteam/view'
+  import { parseLinkId, getObjectLinkId } from '@hanzoteam/view-resources'
+  import { ActivityMessage } from '@hanzoteam/activity'
+  import { loadSavedAttachments } from '@hanzoteam/attachment-resources'
 
   import ChatNavigator from './navigator/ChatNavigator.svelte'
   import ChannelView from '../ChannelView.svelte'

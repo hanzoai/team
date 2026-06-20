@@ -14,16 +14,16 @@
 // limitations under the License.
 //
 
-import { type ChatMessageViewlet } from '@hanzo/chunter'
-import type { Doc, Ref, Status } from '@hanzo/core'
-import { leadId } from '@hanzo/lead'
-import lead from '@hanzo/lead-resources/src/plugin'
-import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import { type TaskTypeDescriptor } from '@hanzo/task'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory, type Viewlet } from '@hanzo/view'
+import { type ChatMessageViewlet } from '@hanzoteam/chunter'
+import type { Doc, Ref, Status } from '@hanzoteam/core'
+import { leadId } from '@hanzoteam/lead'
+import lead from '@hanzoteam/lead-resources/src/plugin'
+import { type NotificationGroup, type NotificationType } from '@hanzoteam/notification'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import { type TaskTypeDescriptor } from '@hanzoteam/task'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory, type Viewlet } from '@hanzoteam/view'
 
 export default mergeIds(leadId, lead, {
   string: {

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, Class, Doc, Ref } from '@hanzo/core'
-  import presentation, { Card, getAttributeEditor, getClient } from '@hanzo/presentation'
-  import { SelectedContext } from '@hanzo/process'
-  import { AnySvelteComponent, CheckBox, Label } from '@hanzo/ui'
+  import { AnyAttribute, Class, Doc, Ref } from '@hanzoteam/core'
+  import presentation, { Card, getAttributeEditor, getClient } from '@hanzoteam/presentation'
+  import { SelectedContext } from '@hanzoteam/process'
+  import { AnySvelteComponent, CheckBox, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
 

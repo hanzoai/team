@@ -21,8 +21,8 @@
     ButtonIcon,
     showPopup,
     PopupResult
-  } from '@hanzo/ui'
-  import { MeetingMinutes, Room } from '@hanzo/love'
+  } from '@hanzoteam/ui'
+  import { MeetingMinutes, Room } from '@hanzoteam/love'
   import { onDestroy } from 'svelte'
 
   import RoomModal from '../../RoomModal.svelte'

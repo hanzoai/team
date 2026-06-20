@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { ID } from '@hanzo/communication-types'
+import type { ID } from '@hanzoteam/communication-types'
 
 export class QueryResult<T> {
   private objectById: Map<ID, T>

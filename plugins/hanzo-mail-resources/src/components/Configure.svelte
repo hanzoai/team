@@ -16,12 +16,12 @@
   import { createEventDispatcher, onMount } from 'svelte'
   import { fade } from 'svelte/transition'
 
-  import presentation, { Card, getClient, getCurrentWorkspaceUuid, SpaceSelector } from '@hanzo/presentation'
-  import { DropdownLabels, Icon, Label, Loading } from '@hanzo/ui'
-  import { type Integration } from '@hanzo/account-client'
-  import { isWorkspaceIntegration, getIntegrationConfig } from '@hanzo/integration-client'
-  import card from '@hanzo/card'
-  import contact from '@hanzo/contact'
+  import presentation, { Card, getClient, getCurrentWorkspaceUuid, SpaceSelector } from '@hanzoteam/presentation'
+  import { DropdownLabels, Icon, Label, Loading } from '@hanzoteam/ui'
+  import { type Integration } from '@hanzoteam/account-client'
+  import { isWorkspaceIntegration, getIntegrationConfig } from '@hanzoteam/integration-client'
+  import card from '@hanzoteam/card'
+  import contact from '@hanzoteam/contact'
 
   import { getIntegrationClient, getAccountClient } from '../utils'
   import hanzoMail from '../plugin'
@@ -32,9 +32,9 @@
     SocialIdType,
     Space,
     type PersonId
-  } from '@hanzo/core'
+  } from '@hanzoteam/core'
   import HanzoMail from './icons/HanzoMail.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let integration: Integration | undefined = undefined
 

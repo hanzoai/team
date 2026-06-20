@@ -1,4 +1,4 @@
-import { DOMAIN_COLLABORATOR, DOMAIN_MODEL_TX, DOMAIN_RELATION, DOMAIN_SPACE, DOMAIN_TX } from '@hanzo/core'
+import { DOMAIN_COLLABORATOR, DOMAIN_MODEL_TX, DOMAIN_RELATION, DOMAIN_SPACE, DOMAIN_TX } from '@hanzoteam/core'
 
 export type DataType = 'bigint' | 'bool' | 'text' | 'text[]'
 

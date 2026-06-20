@@ -1,4 +1,4 @@
-import { BackRPCServer } from '@hanzo/network-backrpc'
+import { BackRPCServer } from '@hanzoteam/network-backrpc'
 import {
   type Container,
   type ClientUuid,
@@ -8,7 +8,7 @@ import {
   type TickManager,
   type ContainerEndpointRef,
   containerDirectRef
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 
 export class DummyWorkspaceContainer implements Container {
   server!: BackRPCServer<ClientUuid>

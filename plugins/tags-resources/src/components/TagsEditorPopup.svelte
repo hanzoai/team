@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import tags, { TagElement, TagsEvents } from '@hanzo/tags'
-  import { Analytics } from '@hanzo/analytics'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import tags, { TagElement, TagsEvents } from '@hanzoteam/tags'
+  import { Analytics } from '@hanzoteam/analytics'
 
   import TagsPopup from './TagsPopup.svelte'
-  import { getObjectId } from '@hanzo/view-resources'
+  import { getObjectId } from '@hanzoteam/view-resources'
 
   export let object: Doc
   export let targetClass: Ref<Class<Doc>> = object._class

@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { plugin } from '@hanzo/platform'
-import type { Plugin } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui'
+import { plugin } from '@hanzoteam/platform'
+import type { Plugin } from '@hanzoteam/platform'
+import type { AnyComponent } from '@hanzoteam/ui'
 
 /**
  * @public

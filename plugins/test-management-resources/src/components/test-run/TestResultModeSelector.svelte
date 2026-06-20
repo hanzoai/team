@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IModeSelector, ModeSelector, resolvedLocationStore } from '@hanzo/ui'
-  import { IntlString } from '@hanzo/platform'
+  import { IModeSelector, ModeSelector, resolvedLocationStore } from '@hanzoteam/ui'
+  import { IntlString } from '@hanzoteam/platform'
 
   import { getCurrentMode, onModeChanged } from '../../navigation'
 

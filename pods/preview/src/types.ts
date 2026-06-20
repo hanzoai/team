@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, type WorkspaceUuid } from '@hanzo/core'
+import { type MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
 
 export interface PreviewFile {
   filePath: string

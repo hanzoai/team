@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { activityId, type ActivityMessage, type DocUpdateMessageViewlet } from '@hanzo/activity'
-import activity from '@hanzo/activity-resources/src/plugin'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { type Doc, type Ref } from '@hanzo/core'
-import type { Location } from '@hanzo/ui/src/types'
+import { activityId, type ActivityMessage, type DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import activity from '@hanzoteam/activity-resources/src/plugin'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import type { Location } from '@hanzoteam/ui/src/types'
 import {
   type Action,
   type ActionCategory,
   type ViewAction,
   type ViewActionAvailabilityFunction
-} from '@hanzo/view'
-import { type NotificationGroup } from '@hanzo/notification'
+} from '@hanzoteam/view'
+import { type NotificationGroup } from '@hanzoteam/notification'
 
 export default mergeIds(activityId, activity, {
   string: {

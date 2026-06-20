@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ChannelProvider } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
-  import { IconCheck, Icon, Label, resizeObserver } from '@hanzo/ui'
-  import { Filter } from '@hanzo/view'
-  import { FILTER_DEBOUNCE_MS, FilterQuery, sortFilterValues } from '@hanzo/view-resources'
+  import { ChannelProvider } from '@hanzoteam/contact'
+  import { Ref } from '@hanzoteam/core'
+  import { IconCheck, Icon, Label, resizeObserver } from '@hanzoteam/ui'
+  import { Filter } from '@hanzoteam/view'
+  import { FILTER_DEBOUNCE_MS, FilterQuery, sortFilterValues } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { channelProviders } from '../utils'
   import contact from '../plugin'

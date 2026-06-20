@@ -14,13 +14,13 @@
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { CalendarMode } from '@hanzo/calendar-resources'
-  import calendar from '@hanzo/calendar-resources/src/plugin'
-  import { DocumentQuery, Ref } from '@hanzo/core'
-  import { Department, Staff } from '@hanzo/hr'
-  import { createQuery } from '@hanzo/presentation'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import type { TabItem, DropdownIntlItem } from '@hanzo/ui'
+  import { CalendarMode } from '@hanzoteam/calendar-resources'
+  import calendar from '@hanzoteam/calendar-resources/src/plugin'
+  import { DocumentQuery, Ref } from '@hanzoteam/core'
+  import { Department, Staff } from '@hanzoteam/hr'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import type { TabItem, DropdownIntlItem } from '@hanzoteam/ui'
   import {
     ModernButton,
     ButtonIcon,
@@ -36,10 +36,10 @@
     deviceOptionsStore as deviceInfo,
     tableToCSV,
     showPopup
-  } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
-  import { getCurrentEmployee } from '@hanzo/contact'
+  } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { ViewletSelector, ViewletSettingButton } from '@hanzoteam/view-resources'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
 
   import hr from '../plugin'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Tag } from '@hanzo/card'
-  import core, { Association, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { ObjectBox } from '@hanzo/view-resources'
+  import { MasterTag, Tag } from '@hanzoteam/card'
+  import core, { Association, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ObjectBox } from '@hanzoteam/view-resources'
 
   import card from '../../../plugin'
 

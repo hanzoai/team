@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MediaInfo, updateSelectedSpeakerId } from '@hanzo/media'
+  import { MediaInfo, updateSelectedSpeakerId } from '@hanzoteam/media'
 
   import media from '../plugin'
   import { micAccess, sessions } from '../stores'

@@ -4,11 +4,11 @@
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
   import { createEventDispatcher } from 'svelte'
-  import emojiPlugin, { ExtendedEmoji, Emoji } from '@hanzo/emoji'
+  import emojiPlugin, { ExtendedEmoji, Emoji } from '@hanzoteam/emoji'
   import { getEmojiByHexcode, getEmojiSkins } from '../utils'
   import EmojiButton from './EmojiButton.svelte'
   import { getSkinTone, unicodeEmojiStore } from '../store'
-  import { Label, IconDelete, closeTooltip, ButtonBase } from '@hanzo/ui'
+  import { Label, IconDelete, closeTooltip, ButtonBase } from '@hanzoteam/ui'
   import SkinToneTooltip from './SkinToneTooltip.svelte'
 
   export let emoji: ExtendedEmoji

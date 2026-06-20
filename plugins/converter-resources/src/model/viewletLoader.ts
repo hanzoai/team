@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Client, type Doc, type Hierarchy, type Ref } from '@hanzo/core'
-import type { BuildModelKey, Viewlet } from '@hanzo/view'
-import viewPlugin from '@hanzo/view'
+import core, { type Class, type Client, type Doc, type Hierarchy, type Ref } from '@hanzoteam/core'
+import type { BuildModelKey, Viewlet } from '@hanzoteam/view'
+import viewPlugin from '@hanzoteam/view'
 
 /**
  * Loads the actual viewlet configuration, including user preferences

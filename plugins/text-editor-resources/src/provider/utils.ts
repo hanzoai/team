@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Blob, type CollaborativeDoc, type Ref, generateId } from '@hanzo/core'
-import { encodeDocumentId } from '@hanzo/collaborator-client'
-import { OK, Severity, Status, getMetadata, setPlatformStatus } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+import { type Blob, type CollaborativeDoc, type Ref, generateId } from '@hanzoteam/core'
+import { encodeDocumentId } from '@hanzoteam/collaborator-client'
+import { OK, Severity, Status, getMetadata, setPlatformStatus } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
 import { Doc as Ydoc } from 'yjs'
 
 import plugin from '../plugin'

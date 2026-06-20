@@ -18,7 +18,7 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 import attachment, { attachmentId, DOMAIN_ATTACHMENT } from '.'
 
 export const attachmentOperation: MigrateOperation = {

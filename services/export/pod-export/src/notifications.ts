@@ -12,7 +12,7 @@
 // limitations under the License.
 //
 
-import { getClient } from '@hanzo/account-client'
+import { getClient } from '@hanzoteam/account-client'
 import core, {
   AccountRole,
   type AccountUuid,
@@ -25,10 +25,10 @@ import core, {
   type TxOperations,
   WorkspaceIds,
   WorkspaceUuid
-} from '@hanzo/core'
-import exportPlugin from '@hanzo/export'
-import notification from '@hanzo/notification'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import exportPlugin from '@hanzoteam/export'
+import notification from '@hanzoteam/notification'
+import { generateToken } from '@hanzoteam/server-token'
 import envConfig from './config'
 
 export async function sendExportCompletionNotification (

@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Doc } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import serverCore, { type ObjectDDParticipant } from '@hanzo/server-core'
-import serverTags from '@hanzo/server-tags'
-import tags from '@hanzo/tags'
+import core, { type Class, type Doc } from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
+import serverCore, { type ObjectDDParticipant } from '@hanzoteam/server-core'
+import serverTags from '@hanzoteam/server-tags'
+import tags from '@hanzoteam/tags'
 
-export { serverTagsId } from '@hanzo/server-tags'
+export { serverTagsId } from '@hanzoteam/server-tags'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {

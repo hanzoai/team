@@ -1,9 +1,9 @@
 <script lang="ts">
-  import core, { RateLimiter, concatLink, metricsAggregate, platformNow, type Metrics } from '@hanzo/core'
-  import login from '@hanzo/login'
-  import { getEmbeddedLabel, getMetadata } from '@hanzo/platform'
-  import presentation, { getClient, isAdminUser, uiContext } from '@hanzo/presentation'
-  import { Button, EditBox, IconArrowLeft, IconArrowRight, fetchMetadataLocalStorage, ticker } from '@hanzo/ui'
+  import core, { RateLimiter, concatLink, metricsAggregate, platformNow, type Metrics } from '@hanzoteam/core'
+  import login from '@hanzoteam/login'
+  import { getEmbeddedLabel, getMetadata } from '@hanzoteam/platform'
+  import presentation, { getClient, isAdminUser, uiContext } from '@hanzoteam/presentation'
+  import { Button, EditBox, IconArrowLeft, IconArrowRight, fetchMetadataLocalStorage, ticker } from '@hanzoteam/ui'
   import MetricsInfo from './statistics/MetricsInfo.svelte'
 
   const _endpoint: string = fetchMetadataLocalStorage(login.metadata.LoginEndpoint) ?? ''

@@ -3,9 +3,9 @@
 -->
 
 <script lang="ts">
-  import type { TrainingRequest } from '@hanzo/training'
-  import type { WithLookup } from '@hanzo/core'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import type { TrainingRequest } from '@hanzoteam/training'
+  import type { WithLookup } from '@hanzoteam/core'
+  import { DocNavLink } from '@hanzoteam/view-resources'
 
   export let value: WithLookup<TrainingRequest>
   export let disabled: boolean = false

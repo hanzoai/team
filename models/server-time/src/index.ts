@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { Mixin, type Builder } from '@hanzo/model'
+import { Mixin, type Builder } from '@hanzoteam/model'
 
-import core, { type Tx } from '@hanzo/core'
-import { TClass } from '@hanzo/model-core'
-import { type Resource } from '@hanzo/platform'
-import serverCore, { type TriggerControl } from '@hanzo/server-core'
-import tracker from '@hanzo/tracker'
-import serverTime, { type ToDoFactory, type OnToDo } from '@hanzo/server-time'
-import time, { type ToDo, type WorkSlot } from '@hanzo/time'
+import core, { type Tx } from '@hanzoteam/core'
+import { TClass } from '@hanzoteam/model-core'
+import { type Resource } from '@hanzoteam/platform'
+import serverCore, { type TriggerControl } from '@hanzoteam/server-core'
+import tracker from '@hanzoteam/tracker'
+import serverTime, { type ToDoFactory, type OnToDo } from '@hanzoteam/server-time'
+import time, { type ToDo, type WorkSlot } from '@hanzoteam/time'
 
 @Mixin(serverTime.mixin.ToDoFactory, core.class.Class)
 export class TToDoFactory extends TClass implements ToDoFactory {
@@ -95,4 +95,4 @@ export function createModel (builder: Builder): void {
   })
 }
 
-export * from '@hanzo/server-time'
+export * from '@hanzoteam/server-time'

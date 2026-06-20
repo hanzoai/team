@@ -209,7 +209,7 @@ module.exports = [
   {
     mode: dev ? 'development' : mode,
     entry: {
-      serviceWorker: '@hanzo/notification/src/serviceWorker.ts'
+      serviceWorker: '@hanzoteam/notification/src/serviceWorker.ts'
     },
     module: {
       rules: [
@@ -249,7 +249,7 @@ module.exports = [
         }
       : undefined,
     entry: {
-      bundle: ['@hanzo/theme/styles/global.scss', ...(dev ? ['./src/main-dev.ts'] : ['./src/main.ts'])]
+      bundle: ['@hanzoteam/theme/styles/global.scss', ...(dev ? ['./src/main-dev.ts'] : ['./src/main.ts'])]
     },
     ignoreWarnings: [
       {
@@ -262,7 +262,7 @@ module.exports = [
       symlinks: true,
       alias: {
         svelte: path.resolve('node_modules', 'svelte/src/runtime'),
-        '@hanzo/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
+        '@hanzoteam/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
       },
       fallback: {
         crypto: false

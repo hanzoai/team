@@ -15,16 +15,16 @@
 
 <script lang="ts">
   import { slide } from 'svelte/transition'
-  import { Data, Ref, WithLookup } from '@hanzo/core'
-  import { IconCollapseArrow, RadioButton } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
+  import { Data, Ref, WithLookup } from '@hanzoteam/core'
+  import { IconCollapseArrow, RadioButton } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
   import documents, {
     type ControlledDocument,
     type DocumentCategory,
     type DocumentSpace,
     type DocumentTemplate,
     DocumentState
-  } from '@hanzo/controlled-documents'
+  } from '@hanzoteam/controlled-documents'
 
   import { $templateStep as templateStep, templateStepUpdated } from '../../../stores/wizards/create-document'
 

@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import { ComponentExtensions, getClient, LiteMessageViewer } from '@hanzo/presentation'
-  import { Person } from '@hanzo/contact'
-  import { Avatar, getPersonByPersonIdCb, SystemAvatar } from '@hanzo/contact-resources'
-  import core, { PersonId, Doc, Timestamp } from '@hanzo/core'
-  import { Icon, Label, resizeObserver, TimeSince, tooltip } from '@hanzo/ui'
-  import { Asset, getEmbeddedLabel, IntlString } from '@hanzo/platform'
-  import activity, { ActivityMessage, ActivityMessagePreviewType } from '@hanzo/activity'
-  import { classIcon, DocNavLink } from '@hanzo/view-resources'
-  import { markupToText } from '@hanzo/text'
+  import { ComponentExtensions, getClient, LiteMessageViewer } from '@hanzoteam/presentation'
+  import { Person } from '@hanzoteam/contact'
+  import { Avatar, getPersonByPersonIdCb, SystemAvatar } from '@hanzoteam/contact-resources'
+  import core, { PersonId, Doc, Timestamp } from '@hanzoteam/core'
+  import { Icon, Label, resizeObserver, TimeSince, tooltip } from '@hanzoteam/ui'
+  import { Asset, getEmbeddedLabel, IntlString } from '@hanzoteam/platform'
+  import activity, { ActivityMessage, ActivityMessagePreviewType } from '@hanzoteam/activity'
+  import { classIcon, DocNavLink } from '@hanzoteam/view-resources'
+  import { markupToText } from '@hanzoteam/text'
 
   export let message: ActivityMessage | undefined = undefined
   export let text: string | undefined = undefined

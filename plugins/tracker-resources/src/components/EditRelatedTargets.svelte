@@ -1,9 +1,9 @@
 <script lang="ts">
-  import core, { Space, WithLookup } from '@hanzo/core'
-  import { SpaceSelector, createQuery, getClient } from '@hanzo/presentation'
-  import { RelatedIssueTarget } from '@hanzo/tracker'
-  import { Button, Icon, IconArrowRight, IconDelete, Label } from '@hanzo/ui'
-  import { FixedColumn } from '@hanzo/view-resources'
+  import core, { Space, WithLookup } from '@hanzoteam/core'
+  import { SpaceSelector, createQuery, getClient } from '@hanzoteam/presentation'
+  import { RelatedIssueTarget } from '@hanzoteam/tracker'
+  import { Button, Icon, IconArrowRight, IconDelete, Label } from '@hanzoteam/ui'
+  import { FixedColumn } from '@hanzoteam/view-resources'
   import tracker from '../plugin'
 
   export let value: Space | undefined

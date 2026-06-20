@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Attachment } from '@hanzo/attachment'
-import card, { type Card, type CardSpace, type MasterTag, type Tag } from '@hanzo/card'
+import { type Attachment } from '@hanzoteam/attachment'
+import card, { type Card, type CardSpace, type MasterTag, type Tag } from '@hanzoteam/card'
 import core, {
   type Association,
   type Attribute,
@@ -26,12 +26,12 @@ import core, {
   type Ref,
   type Relation,
   type Space
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import * as fs from 'fs'
 import * as yaml from 'js-yaml'
 import { contentType } from 'mime-types'
 import * as path from 'path'
-import { type IntlString } from '@hanzo/platform'
+import { type IntlString } from '@hanzoteam/platform'
 import { type Logger } from '../importer/logger'
 import { type Props, type UnifiedDoc, type UnifiedFile, type UnifiedMixin, type UnifiedUpdate } from '../types'
 import { type UnifiedFormatParser } from './parser'

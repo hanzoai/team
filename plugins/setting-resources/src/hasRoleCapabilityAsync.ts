@@ -12,10 +12,10 @@
 // limitations under the License.
 //
 
-import type { InviteSettings, RoleCapabilityId, RoleCapabilitySettings } from '@hanzo/setting'
-import { getCurrentAccount } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import setting, { RoleCapability } from '@hanzo/setting'
+import type { InviteSettings, RoleCapabilityId, RoleCapabilitySettings } from '@hanzoteam/setting'
+import { getCurrentAccount } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import setting, { RoleCapability } from '@hanzoteam/setting'
 import { hasRoleCapability } from './roleCapability'
 import { resolveInviteSettings } from './inviteSettingsUtils'
 

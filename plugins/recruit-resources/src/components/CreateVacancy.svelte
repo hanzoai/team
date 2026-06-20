@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import contact, { Organization } from '@hanzo/contact'
-  import { AccountArrayEditor, UserBox } from '@hanzo/contact-resources'
+  import { AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import contact, { Organization } from '@hanzoteam/contact'
+  import { AccountArrayEditor, UserBox } from '@hanzoteam/contact-resources'
   import core, {
     AttachedData,
     Data,
@@ -28,8 +28,8 @@
     getCurrentAccount,
     makeCollabId,
     AccountUuid
-  } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
   import {
     Card,
     InlineAttributeBar,
@@ -37,12 +37,12 @@
     createMarkup,
     createQuery,
     getClient
-  } from '@hanzo/presentation'
-  import { RecruitEvents, Vacancy, Vacancy as VacancyClass } from '@hanzo/recruit'
-  import tags from '@hanzo/tags'
-  import task, { ProjectType } from '@hanzo/task'
-  import { selectedTypeStore, typeStore } from '@hanzo/task-resources'
-  import tracker, { Issue, IssueStatus, IssueTemplate, IssueTemplateData, Project } from '@hanzo/tracker'
+  } from '@hanzoteam/presentation'
+  import { RecruitEvents, Vacancy, Vacancy as VacancyClass } from '@hanzoteam/recruit'
+  import tags from '@hanzoteam/tags'
+  import task, { ProjectType } from '@hanzoteam/task'
+  import { selectedTypeStore, typeStore } from '@hanzoteam/task-resources'
+  import tracker, { Issue, IssueStatus, IssueTemplate, IssueTemplateData, Project } from '@hanzoteam/tracker'
   import {
     Button,
     Component,
@@ -51,14 +51,14 @@
     IconAttachment,
     createFocusManager,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../plugin'
   import Company from './icons/Company.svelte'
   import VacancyIcon from './icons/Vacancy.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import { getSequenceId } from '../utils'
-  import { isEmptyMarkup } from '@hanzo/text'
+  import { isEmptyMarkup } from '@hanzoteam/text'
 
   const dispatch = createEventDispatcher()
 

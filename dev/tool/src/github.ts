@@ -13,12 +13,12 @@ import core, {
   type TxCUD,
   type WorkspaceUuid,
   type IntegrationKind
-} from '@hanzo/core'
-import { getAccountsFromTxes, getSocialKeyByOldEmail } from '@hanzo/model-core'
-import { getAccountClient } from '@hanzo/server-client'
-import { createDummyStorageAdapter, wrapPipeline, type PipelineFactory } from '@hanzo/server-core'
-import { createBackupPipeline, createEmptyBroadcastOps } from '@hanzo/server-pipeline'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { getAccountsFromTxes, getSocialKeyByOldEmail } from '@hanzoteam/model-core'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { createDummyStorageAdapter, wrapPipeline, type PipelineFactory } from '@hanzoteam/server-core'
+import { createBackupPipeline, createEmptyBroadcastOps } from '@hanzoteam/server-pipeline'
+import { generateToken } from '@hanzoteam/server-token'
 import type { Db } from 'mongodb'
 
 /**

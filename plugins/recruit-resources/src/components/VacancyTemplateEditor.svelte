@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttributesBar, getClient } from '@hanzo/presentation'
-  import { ProjectType } from '@hanzo/task'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
-  import tracker from '@hanzo/tracker'
-  import { Button, Component, Icon, IconAdd, Label, showPopup } from '@hanzo/ui'
-  import { getFiltredKeys } from '@hanzo/view-resources'
+  import { AttributesBar, getClient } from '@hanzoteam/presentation'
+  import { ProjectType } from '@hanzoteam/task'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
+  import tracker from '@hanzoteam/tracker'
+  import { Button, Component, Icon, IconAdd, Label, showPopup } from '@hanzoteam/ui'
+  import { getFiltredKeys } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
 
   export let type: ProjectType

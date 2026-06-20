@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { Event, getAllEvents } from '@hanzo/calendar'
-  import { calendarByIdStore } from '@hanzo/calendar-resources'
-  import contact, { getCurrentEmployee, Person } from '@hanzo/contact'
-  import { employeeRefByAccountUuidStore, getPersonRefsByPersonIdsCb } from '@hanzo/contact-resources'
+  import calendar, { Event, getAllEvents } from '@hanzoteam/calendar'
+  import { calendarByIdStore } from '@hanzoteam/calendar-resources'
+  import contact, { getCurrentEmployee, Person } from '@hanzoteam/contact'
+  import { employeeRefByAccountUuidStore, getPersonRefsByPersonIdsCb } from '@hanzoteam/contact-resources'
   import core, {
     Doc,
     IdMap,
@@ -28,13 +28,13 @@
     TxCUD,
     TxUpdateDoc,
     unique
-  } from '@hanzo/core'
-  import { Asset } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Project } from '@hanzo/task'
-  import { ToDo, WorkSlot } from '@hanzo/time'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/core'
+  import { Asset } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Project } from '@hanzoteam/task'
+  import { ToDo, WorkSlot } from '@hanzoteam/time'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import time from '../../../plugin'
   import TimePresenter from '../../presenters/TimePresenter.svelte'
   import WithTeamData from '../WithTeamData.svelte'

@@ -2,7 +2,7 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import core from '@hanzo/core'
+import core from '@hanzoteam/core'
 
 import documents from './plugin'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MarkupNode, jsonToMarkup, markupToJSON, htmlToJSON } from '@hanzo/text'
-import { MarkdownParser, storeNodes, storeMarks, MarkdownState } from '@hanzo/text-markdown'
+import { MarkupNode, jsonToMarkup, markupToJSON, htmlToJSON } from '@hanzoteam/text'
+import { MarkdownParser, storeNodes, storeMarks, MarkdownState } from '@hanzoteam/text-markdown'
 import { GithubKit } from './extensions'
 import { hashanzoaiLink, hashanzoaiLinkText } from '../sync/guest'
 

@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Card, SpaceSelector, createQuery, getClient } from '@hanzo/presentation'
-  import { Component, Issue, Milestone, Project } from '@hanzo/tracker'
-  import ui, { Button, IconForward, Label, Spinner, Toggle, tooltip } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Ref } from '@hanzoteam/core'
+  import { Card, SpaceSelector, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Component, Issue, Milestone, Project } from '@hanzoteam/tracker'
+  import ui, { Button, IconForward, Label, Spinner, Toggle, tooltip } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import { componentStore } from '../../component'
   import tracker from '../../plugin'

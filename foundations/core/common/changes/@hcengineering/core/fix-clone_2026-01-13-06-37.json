@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/core",
+      "packageName": "@hanzoteam/core",
       "comment": "Fix object clone",
       "type": "patch"
     }
   ],
-  "packageName": "@hanzo/core"
+  "packageName": "@hanzoteam/core"
 }

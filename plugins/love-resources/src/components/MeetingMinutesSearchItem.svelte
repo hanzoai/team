@@ -14,9 +14,9 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import love, { type MeetingMinutes } from '@hanzo/love'
-  import { Icon } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import love, { type MeetingMinutes } from '@hanzoteam/love'
+  import { Icon } from '@hanzoteam/ui'
 
   export let value: WithLookup<MeetingMinutes>
 </script>

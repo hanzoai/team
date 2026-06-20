@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { PermissionsStore } from '@hanzo/contact'
-  import type { Attachment } from '@hanzo/attachment'
-  import core, { BlobType, type WithLookup } from '@hanzo/core'
+  import contact, { PermissionsStore } from '@hanzoteam/contact'
+  import type { Attachment } from '@hanzoteam/attachment'
+  import core, { BlobType, type WithLookup } from '@hanzoteam/core'
   import presentation, {
     canPreviewFile,
     getBlobRef,
@@ -24,12 +24,12 @@
     previewTypes,
     getJsonOrEmpty,
     sizeToWidth
-  } from '@hanzo/presentation'
-  import { Label, Spinner } from '@hanzo/ui'
+  } from '@hanzoteam/presentation'
+  import { Label, Spinner } from '@hanzoteam/ui'
   import WebIcon from './icons/Web.svelte'
   import filesize from 'filesize'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { getResource } from '@hanzo/platform'
+  import { getResource } from '@hanzoteam/platform'
   import { Readable } from 'svelte/store'
   import { getType, isAttachment, openAttachmentInSidebar, showAttachmentPreviewPopup } from '../utils'
   import AttachmentName from './AttachmentName.svelte'

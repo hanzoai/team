@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { releaseStream } from '@hanzo/media'
+  import { releaseStream } from '@hanzoteam/media'
   import { onDestroy } from 'svelte'
 
   export let selected: MediaDeviceInfo

@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import attachmentPlugin, { type Attachment } from '@hanzo/attachment'
-import contactPlugin from '@hanzo/contact'
+import { Analytics } from '@hanzoteam/analytics'
+import attachmentPlugin, { type Attachment } from '@hanzoteam/attachment'
+import contactPlugin from '@hanzoteam/contact'
 import core, {
   type AnyAttribute,
   type AttachedDoc,
@@ -48,8 +48,8 @@ import core, {
   withContext,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
-import drivePlugin, { type FileVersion } from '@hanzo/drive'
+} from '@hanzoteam/core'
+import drivePlugin, { type FileVersion } from '@hanzoteam/drive'
 import type {
   ConsumerControl,
   ContentTextAdapter,
@@ -58,10 +58,10 @@ import type {
   FulltextListener,
   IndexedDoc,
   StorageAdapter
-} from '@hanzo/server-core'
-import { RateLimiter, SessionDataImpl } from '@hanzo/server-core'
-import { jsonToText, markupToJSON, markupToText } from '@hanzo/text'
-import card, { type Card } from '@hanzo/card'
+} from '@hanzoteam/server-core'
+import { RateLimiter, SessionDataImpl } from '@hanzoteam/server-core'
+import { jsonToText, markupToJSON, markupToText } from '@hanzoteam/text'
+import card, { type Card } from '@hanzoteam/card'
 import { findSearchPresenter, updateDocWithPresenter } from '../mapper'
 import { type FullTextPipeline } from './types'
 import { blobPseudoClass, createIndexedDoc, createIndexedDocFromMessage, getContent, messagePseudoClass } from './utils'
@@ -78,7 +78,7 @@ import {
   type SessionData as CommunicationSession,
   type UpdateCardTypeEvent,
   type UpdatePatchEvent
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import {
   type AttachmentID,
   type BlobAttachment,
@@ -86,16 +86,16 @@ import {
   type CardID,
   type Message,
   type MessageID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import {
   isBlobAttachment,
   isBlobAttachmentType,
   isLinkPreviewAttachment,
   loadMessages,
   loadMessagesGroups
-} from '@hanzo/communication-shared'
-import { markdownToMarkup } from '@hanzo/text-markdown'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/communication-shared'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 export * from './types'
 export * from './utils'

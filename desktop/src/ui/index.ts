@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { loginId } from '@hanzo/login'
-import { loveId } from '@hanzo/love'
-import { timeId } from '@hanzo/time'
+import { loginId } from '@hanzoteam/login'
+import { loveId } from '@hanzoteam/love'
+import { timeId } from '@hanzoteam/time'
 
-import { getEmbeddedLabel, getMetadata, getResource, translate } from '@hanzo/platform'
-import presentation, { MessageBox, setDownloadProgress, getClient } from '@hanzo/presentation'
-import setting, { settingId } from '@hanzo/setting'
+import { getEmbeddedLabel, getMetadata, getResource, translate } from '@hanzoteam/platform'
+import presentation, { MessageBox, setDownloadProgress, getClient } from '@hanzoteam/presentation'
+import setting, { settingId } from '@hanzoteam/setting'
 import {
   closePanel,
   closePopup,
@@ -31,20 +31,20 @@ import {
   pushRootBarProgressComponent,
   removeRootBarComponent,
   showPopup
-} from '@hanzo/ui'
-import { handleDownloadItem } from '@hanzo/desktop-downloads'
-import notification, { notificationId } from '@hanzo/notification'
-import { inboxId } from '@hanzo/inbox'
-import workbench, { workbenchId, logOut } from '@hanzo/workbench'
-import view, { Action, encodeObjectURI } from '@hanzo/view'
-import { resolveLocation } from '@hanzo/notification-resources'
-import { themeStore, ThemeVariant } from '@hanzo/theme'
-import type { Application } from '@hanzo/workbench'
-import { isAllowedToRole } from '@hanzo/workbench-resources'
-import card from '@hanzo/card'
-import communication from '@hanzo/communication'
+} from '@hanzoteam/ui'
+import { handleDownloadItem } from '@hanzoteam/desktop-downloads'
+import notification, { notificationId } from '@hanzoteam/notification'
+import { inboxId } from '@hanzoteam/inbox'
+import workbench, { workbenchId, logOut } from '@hanzoteam/workbench'
+import view, { Action, encodeObjectURI } from '@hanzoteam/view'
+import { resolveLocation } from '@hanzoteam/notification-resources'
+import { themeStore, ThemeVariant } from '@hanzoteam/theme'
+import type { Application } from '@hanzoteam/workbench'
+import { isAllowedToRole } from '@hanzoteam/workbench-resources'
+import card from '@hanzoteam/card'
+import communication from '@hanzoteam/communication'
 
-import { isOwnerOrMaintainer, getCurrentAccount, Ref } from '@hanzo/core'
+import { isOwnerOrMaintainer, getCurrentAccount, Ref } from '@hanzoteam/core'
 import { configurePlatform } from './platform'
 import { setupTitleBarMenu } from './titleBarMenu'
 import { defineScreenShare, defineGetDisplayMedia } from './screenShare'

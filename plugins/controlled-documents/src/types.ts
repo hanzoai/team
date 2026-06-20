@@ -1,9 +1,9 @@
 //
 // Copyright © 2022-2023 Hanzo AI Inc.
 //
-import { Attachment } from '@hanzo/attachment'
-import { ChatMessage } from '@hanzo/chunter'
-import { Employee } from '@hanzo/contact'
+import { Attachment } from '@hanzoteam/attachment'
+import { ChatMessage } from '@hanzoteam/chunter'
+import { Employee } from '@hanzoteam/contact'
 import {
   type AttachedDoc,
   type Class,
@@ -18,10 +18,10 @@ import {
   SpaceType,
   SpaceTypeDescriptor,
   Rank
-} from '@hanzo/core'
-import { type TagReference } from '@hanzo/tags'
-import { Request } from '@hanzo/request'
-import type { Training, TrainingRequest } from '@hanzo/training'
+} from '@hanzoteam/core'
+import { type TagReference } from '@hanzoteam/tags'
+import { Request } from '@hanzoteam/request'
+import type { Training, TrainingRequest } from '@hanzoteam/training'
 
 /**
  * @public

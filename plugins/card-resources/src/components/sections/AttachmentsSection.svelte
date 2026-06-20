@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { Attachments } from '@hanzo/attachment-resources'
+  import { Card } from '@hanzoteam/card'
+  import { Attachments } from '@hanzoteam/attachment-resources'
   import { createEventDispatcher, onMount } from 'svelte'
 
   export let readonly: boolean = false

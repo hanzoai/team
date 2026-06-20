@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { type Class, type Doc, type Ref } from '@hanzo/core'
-  import exportPlugin, { type ExportResultRecord } from '@hanzo/export'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { Button, IconMoreH, Label } from '@hanzo/ui'
-  import { DocNavLink, ObjectPresenter, showMenu } from '@hanzo/view-resources'
-  import view from '@hanzo/view'
+  import core, { type Class, type Doc, type Ref } from '@hanzoteam/core'
+  import exportPlugin, { type ExportResultRecord } from '@hanzoteam/export'
+  import notification from '@hanzoteam/notification'
+  import { Panel } from '@hanzoteam/panel'
+  import { getResource } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Button, IconMoreH, Label } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectPresenter, showMenu } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   export let _id: Ref<ExportResultRecord>

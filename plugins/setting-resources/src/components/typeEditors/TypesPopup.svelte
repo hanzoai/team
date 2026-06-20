@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label, resizeObserver, Scroller } from '@hanzo/ui'
-  import { DropdownIntlItem } from '@hanzo/ui/src/types'
+  import core from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label, resizeObserver, Scroller } from '@hanzoteam/ui'
+  import { DropdownIntlItem } from '@hanzoteam/ui/src/types'
   import { createEventDispatcher } from 'svelte'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
 
   const dispatch = createEventDispatcher()
 

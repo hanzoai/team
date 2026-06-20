@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { AnyAttribute } from '@hanzo/core'
-  import { Context, Process } from '@hanzo/process'
-  import { Component } from '@hanzo/ui'
+  import { AnyAttribute } from '@hanzoteam/core'
+  import { Context, Process } from '@hanzoteam/process'
+  import { Component } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { buildResult, Mode, ModeId, Modes, parseValue } from '../../query'
   import BaseCriteriaEditor from './BaseCriteriaEditor.svelte'

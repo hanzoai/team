@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import cardPlugin, { Card } from '@hanzo/card'
-import { CreateMessageEvent, MessageEventType } from '@hanzo/communication-sdk-types'
-import { ActivityProcess, ActivityUpdateType, MessageType } from '@hanzo/communication-types'
+import cardPlugin, { Card } from '@hanzoteam/card'
+import { CreateMessageEvent, MessageEventType } from '@hanzoteam/communication-sdk-types'
+import { ActivityProcess, ActivityUpdateType, MessageType } from '@hanzoteam/communication-types'
 import core, {
   Doc,
   generateId,
@@ -31,9 +31,9 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   WorkspaceUuid
-} from '@hanzo/core'
-import { getPlatformQueue } from '@hanzo/kafka'
-import { getResource } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { getPlatformQueue } from '@hanzoteam/kafka'
+import { getResource } from '@hanzoteam/platform'
 import process, {
   Execution,
   ExecutionError,
@@ -51,8 +51,8 @@ import process, {
   Transition,
   Trigger,
   UserResult
-} from '@hanzo/process'
-import { QueueTopic } from '@hanzo/server-core'
+} from '@hanzoteam/process'
+import { QueueTopic } from '@hanzoteam/server-core'
 import serverProcess, {
   ExecuteResult,
   MethodImpl,
@@ -60,8 +60,8 @@ import serverProcess, {
   ProcessMessage,
   TimeMachineMessage,
   TriggerImpl
-} from '@hanzo/server-process'
-import { getContextValue } from '@hanzo/server-process-resources'
+} from '@hanzoteam/server-process'
+import { getContextValue } from '@hanzoteam/server-process-resources'
 import { createCollaboratorClient } from './collaborator'
 import { isError } from './errors'
 import { getClient, releaseClient, SERVICE_NAME } from './utils'

@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, Person, formatName } from '@hanzo/contact'
-  import { employeeByIdStore } from '@hanzo/contact-resources'
+  import { Employee, Person, formatName } from '@hanzoteam/contact'
+  import { employeeByIdStore } from '@hanzoteam/contact-resources'
   import documents, {
     ControlledDocument,
     DocumentRequest,
     DocumentValidationState,
     emptyBundle
-  } from '@hanzo/controlled-documents'
-  import { Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Label, Scroller } from '@hanzo/ui'
+  } from '@hanzoteam/controlled-documents'
+  import { Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label, Scroller } from '@hanzoteam/ui'
 
   import documentsRes from '../../plugin'
   import {

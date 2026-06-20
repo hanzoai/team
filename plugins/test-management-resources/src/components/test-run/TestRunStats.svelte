@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import type { TestRun } from '@hanzo/test-management'
-  import { Label, ProgressCircle, Loading } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import type { TestRun } from '@hanzoteam/test-management'
+  import { Label, ProgressCircle, Loading } from '@hanzoteam/ui'
 
   import TestRunResult from './TestRunResult.svelte'
   import { type TestRunStats, getTestRunStats } from '../../testRunUtils'

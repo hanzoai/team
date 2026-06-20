@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type AnalyticProvider } from '@hanzo/analytics'
-import { AnalyticEventType } from '@hanzo/analytics-collector'
-import { getMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+import { type AnalyticProvider } from '@hanzoteam/analytics'
+import { AnalyticEventType } from '@hanzoteam/analytics-collector'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
 import { type QueuedEvent } from './types'
 import { collectEventMetadata, triggerUrlChange } from './utils'
 

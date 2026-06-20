@@ -3,10 +3,10 @@
 -->
 
 <script lang="ts">
-  import { type TrainingAttempt, TrainingAttemptState } from '@hanzo/training'
-  import { DocumentQuery } from '@hanzo/core'
-  import { type IModeSelector, navigate, rawLocation } from '@hanzo/ui'
-  import { SpecialView } from '@hanzo/workbench-resources'
+  import { type TrainingAttempt, TrainingAttemptState } from '@hanzoteam/training'
+  import { DocumentQuery } from '@hanzoteam/core'
+  import { type IModeSelector, navigate, rawLocation } from '@hanzoteam/ui'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
   import type { ComponentProps } from 'svelte'
   import { myResultsRoute, MyResultsRouteTab } from '../routing/routes/myResultsRoute'
   import { getCurrentEmployeeRef } from '../utils'

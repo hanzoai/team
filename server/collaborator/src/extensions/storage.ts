@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { type Markup, MeasureContext } from '@hanzo/core'
+import { Analytics } from '@hanzoteam/analytics'
+import { type Markup, MeasureContext } from '@hanzoteam/core'
 import {
   Document,
   Extension,

@@ -8,7 +8,7 @@
 
 1. **Always use Rush commands**, never npm/pnpm directly: `rush install`, `rush build`, `rush test`, `rush update`
 2. **Internal dependencies must use `workspace:^` protocol** in package.json
-3. **All packages extend `@hanzo/platform-rig`** for tsconfig/eslint - don't override configs
+3. **All packages extend `@hanzoteam/platform-rig`** for tsconfig/eslint - don't override configs
 4. **Co-locate tests** in `src/__tests__/` directories (Jest + ts-jest)
 5. **Named exports only** - avoid default exports
 
@@ -35,7 +35,7 @@ packages/<name>/
 
 ## Key Architecture Patterns
 
-**Plugin System**: `@hanzo/platform` provides dependency injection. Packages register resources/services via plugin manifests. Example: `packages/core/src/plugin.ts`
+**Plugin System**: `@hanzoteam/platform` provides dependency injection. Packages register resources/services via plugin manifests. Example: `packages/core/src/plugin.ts`
 
 **Data Flow**: `core` → abstract models (Doc, Ref, Class) → `client` → concrete implementations → WebSocket/REST via `api-client`
 

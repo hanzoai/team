@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hanzo/core'
-  import { TypeRef } from '@hanzo/model'
-  import { getClient } from '@hanzo/presentation'
-  import { Component, DropdownLabelsIntl, Label } from '@hanzo/ui'
-  import view from '@hanzo/view-resources/src/plugin'
-  import card from '@hanzo/card'
+  import core, { AnyAttribute, Class, Doc, DOMAIN_STATUS, Ref, RefTo } from '@hanzoteam/core'
+  import { TypeRef } from '@hanzoteam/model'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Component, DropdownLabelsIntl, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view-resources/src/plugin'
+  import card from '@hanzoteam/card'
   import { createEventDispatcher } from 'svelte'
-  import type { ButtonKind, ButtonSize, DropdownIntlItem } from '@hanzo/ui'
-  import contactPlugin from '@hanzo/contact'
+  import type { ButtonKind, ButtonSize, DropdownIntlItem } from '@hanzoteam/ui'
+  import contactPlugin from '@hanzoteam/contact'
 
   export let type: RefTo<Doc> | undefined
   export let attribute: AnyAttribute | undefined

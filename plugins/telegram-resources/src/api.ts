@@ -12,19 +12,19 @@
 // limitations under the License.
 //
 
-import { concatLink, type Ref, type Space, type PersonId } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
+import { concatLink, type Ref, type Space, type PersonId } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
 import telegram from './plugin'
-import presentation, { getCurrentWorkspaceUuid } from '@hanzo/presentation'
-import login from '@hanzo/login'
-import { telegramIntegrationKind } from '@hanzo/telegram'
+import presentation, { getCurrentWorkspaceUuid } from '@hanzoteam/presentation'
+import login from '@hanzoteam/login'
+import { telegramIntegrationKind } from '@hanzoteam/telegram'
 import {
   getIntegrationClient as getIntegrationClientRaw,
   type IntegrationClient,
   request as httpRequest
-} from '@hanzo/integration-client'
-import { withRetry } from '@hanzo/retry'
-import type { Integration } from '@hanzo/account-client'
+} from '@hanzoteam/integration-client'
+import { withRetry } from '@hanzoteam/retry'
+import type { Integration } from '@hanzoteam/account-client'
 
 export type IntegrationState =
   | { status: 'authorized' | 'wantcode' | 'wantpassword', number: string, socialId?: PersonId }

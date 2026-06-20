@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, IntlString } from '@hanzo/platform'
-  import { Icon, IconSize, Label } from '@hanzo/ui'
+  import { Asset, IntlString } from '@hanzoteam/platform'
+  import { Icon, IconSize, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { flip } from 'svelte/animate'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Blob, Ref } from '@hanzo/core'
-  import { Blurhash, Image, Loading } from '@hanzo/ui'
+  import type { Blob, Ref } from '@hanzoteam/core'
+  import { Blurhash, Image, Loading } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { getBlobRef } from '../preview'
 

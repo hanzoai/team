@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { type Data, reduceCalls, type WithLookup } from '@hanzo/core'
-  import { AvatarInfo, getAvatarColorForId, getAvatarDisplayName, getAvatarUrlInfo } from '@hanzo/contact'
-  import { themeStore } from '@hanzo/theme'
-  import { ColorDefinition, getPlatformAvatarColorByName, getPlatformAvatarColorForTextDef } from '@hanzo/ui'
-  import { getClient, sizeToWidth } from '@hanzo/presentation'
+  import { type Data, reduceCalls, type WithLookup } from '@hanzoteam/core'
+  import { AvatarInfo, getAvatarColorForId, getAvatarDisplayName, getAvatarUrlInfo } from '@hanzoteam/contact'
+  import { themeStore } from '@hanzoteam/theme'
+  import { ColorDefinition, getPlatformAvatarColorByName, getPlatformAvatarColorForTextDef } from '@hanzoteam/ui'
+  import { getClient, sizeToWidth } from '@hanzoteam/presentation'
 
   import { AvatarShape, AvatarSize } from '../types'
 

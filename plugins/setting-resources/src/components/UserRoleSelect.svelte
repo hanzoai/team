@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole } from '@hanzo/core'
-  import { DropdownLabelsIntl, type DropdownIntlItem } from '@hanzo/ui'
+  import { AccountRole } from '@hanzoteam/core'
+  import { DropdownLabelsIntl, type DropdownIntlItem } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import settingRes from '../plugin'

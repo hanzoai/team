@@ -12,10 +12,10 @@
 // limitations under the License.
 import { get, writable } from 'svelte/store'
 
-import type { AccountUuid, Class, Ref } from '@hanzo/core'
-import type { Person } from '@hanzo/contact'
-import { getClient } from '@hanzo/presentation'
-import type { LabelAndProps } from '@hanzo/ui'
+import type { AccountUuid, Class, Ref } from '@hanzoteam/core'
+import type { Person } from '@hanzoteam/contact'
+import { getClient } from '@hanzoteam/presentation'
+import type { LabelAndProps } from '@hanzoteam/ui'
 
 import contact from '../../plugin'
 import EmployeePreviewPopup from './EmployeePreviewPopup.svelte'

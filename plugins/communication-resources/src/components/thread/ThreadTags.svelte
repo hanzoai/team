@@ -12,10 +12,10 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag } from '@hanzo/card'
-  import { Component } from '@hanzo/ui'
-  import { CardType } from '@hanzo/communication-types'
-  import { getClient } from '@hanzo/presentation'
+  import cardPlugin, { Card, MasterTag } from '@hanzoteam/card'
+  import { Component } from '@hanzoteam/ui'
+  import { CardType } from '@hanzoteam/communication-types'
+  import { getClient } from '@hanzoteam/presentation'
 
   export let card: Card | undefined = undefined
   export let type: CardType

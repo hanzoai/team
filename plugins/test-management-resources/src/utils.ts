@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import type { DocumentQuery, Ref } from '@hanzo/core'
-import { showPopup, showPanel } from '@hanzo/ui'
+import { Analytics } from '@hanzoteam/analytics'
+import type { DocumentQuery, Ref } from '@hanzoteam/core'
+import { showPopup, showPanel } from '@hanzoteam/ui'
 import testManagement, {
   type TestProject,
   type TestCase,
   type TestSuite,
   type TestResult,
   type TestPlan
-} from '@hanzo/test-management'
+} from '@hanzoteam/test-management'
 
 import CreateTestSuiteComponent from './components/test-suite/CreateTestSuite.svelte'
 import EditTestSuiteComponent from './components/test-suite/EditTestSuite.svelte'

@@ -16,9 +16,9 @@
 -->
 
 <script lang="ts">
-  import { createQuery } from '@hanzo/presentation'
-  import { navigate } from '@hanzo/ui'
-  import type { Training, TrainingRequest } from '@hanzo/training'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { navigate } from '@hanzoteam/ui'
+  import type { Training, TrainingRequest } from '@hanzoteam/training'
   import training from '../plugin'
   import { trainingRequestRoute, TrainingRequestRouteTab } from '../routing/routes/trainingRequestRoute'
   import { canViewTrainingTraineesResults } from '../utils'

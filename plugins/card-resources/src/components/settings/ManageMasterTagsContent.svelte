@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { MasterTag } from '@hanzo/card'
-  import core, { Doc, Ref } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { MasterTag } from '@hanzoteam/card'
+  import core, { Doc, Ref } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     AnyComponent,
     AnySvelteComponent,
@@ -30,7 +30,7 @@
     navigate,
     resizeObserver,
     resolvedLocationStore
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { onDestroy, onMount } from 'svelte'
   import card from '../../plugin'
   import MasterTagEditor from './MasterTagEditor.svelte'

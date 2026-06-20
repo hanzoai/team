@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Component, SelectPopup, showPopup } from '@hanzo/ui'
-  import type { MouseTargetEvent } from '@hanzo/ui'
+  import { Component, SelectPopup, showPopup } from '@hanzoteam/ui'
+  import type { MouseTargetEvent } from '@hanzoteam/ui'
   import { NavLink } from '../..'
   import { BreadcrumbsModel } from './types'
   import { hasComponent } from './utils'

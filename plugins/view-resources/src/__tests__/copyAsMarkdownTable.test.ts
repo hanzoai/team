@@ -16,16 +16,16 @@
 // Mock platform plugin function first (before any imports)
 // Import after mocks are set up
 import { CopyAsMarkdownTable, isIntlString } from '../copyAsMarkdownTable'
-import core, { type Class, type Doc, type Ref } from '@hanzo/core'
-import { type IntlString } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import { getCurrentLanguage } from '@hanzo/theme'
+import core, { type Class, type Doc, type Ref } from '@hanzoteam/core'
+import { type IntlString } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import { getCurrentLanguage } from '@hanzoteam/theme'
 import { copyMarkdown } from '../actionImpl'
-import { addNotification } from '@hanzo/ui'
+import { addNotification } from '@hanzoteam/ui'
 import { buildModel } from '../utils'
 
-jest.mock('@hanzo/platform', () => {
-  const actual = jest.requireActual('@hanzo/platform')
+jest.mock('@hanzoteam/platform', () => {
+  const actual = jest.requireActual('@hanzoteam/platform')
   return {
     ...actual,
     plugin: jest.fn((id: string, def: any) => def),
@@ -39,11 +39,11 @@ jest.mock('@hanzo/platform', () => {
   }
 })
 
-jest.mock('@hanzo/presentation', () => ({
+jest.mock('@hanzoteam/presentation', () => ({
   getClient: jest.fn()
 }))
 
-jest.mock('@hanzo/theme', () => ({
+jest.mock('@hanzoteam/theme', () => ({
   getCurrentLanguage: jest.fn(() => 'en')
 }))
 
@@ -52,7 +52,7 @@ jest.mock('../actionImpl', () => ({
   copyMarkdown: jest.fn()
 }))
 
-jest.mock('@hanzo/ui', () => ({
+jest.mock('@hanzoteam/ui', () => ({
   addNotification: jest.fn(),
   NotificationSeverity: {
     Success: 'success'
@@ -341,7 +341,7 @@ describe('copyAsMarkdownTable', () => {
 
       mockGetObjectLinkFragment.mockResolvedValue(mockLocation)
 
-      const uiModule = await import('@hanzo/ui')
+      const uiModule = await import('@hanzoteam/ui')
       const mockLocationToUrl = uiModule.locationToUrl as jest.Mock
       mockLocationToUrl.mockReturnValue('workbench/w3/card/test-doc-id')
 

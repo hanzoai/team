@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import view from '@hanzo/model-view'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import view from '@hanzoteam/model-view'
 import testManagement from './plugin'
 
 /**

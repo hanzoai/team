@@ -21,10 +21,10 @@ import {
   WorkspaceUuid,
   concatLink,
   makeCollabId
-} from '@hanzo/core'
-import { type CollaboratorClient, getClient } from '@hanzo/collaborator-client'
-import { htmlToJSON, jsonToHTML, jsonToMarkup, markupToJSON } from '@hanzo/text'
-import { markdownToMarkup, markupToMarkdown } from '@hanzo/text-markdown'
+} from '@hanzoteam/core'
+import { type CollaboratorClient, getClient } from '@hanzoteam/collaborator-client'
+import { htmlToJSON, jsonToHTML, jsonToMarkup, markupToJSON } from '@hanzoteam/text'
+import { markdownToMarkup, markupToMarkdown } from '@hanzoteam/text-markdown'
 
 import { type ServerConfig } from '../config'
 import { type MarkupOperations, type MarkupFormat, type MarkupRef } from './types'

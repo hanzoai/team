@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { getClient as getAccountClient } from '@hanzo/account-client'
-  import contact, { SocialIdentityRef } from '@hanzo/contact'
-  import { getCurrentAccount, SocialIdType } from '@hanzo/core'
-  import login from '@hanzo/login'
+  import { getClient as getAccountClient } from '@hanzoteam/account-client'
+  import contact, { SocialIdentityRef } from '@hanzoteam/contact'
+  import { getCurrentAccount, SocialIdType } from '@hanzoteam/core'
+  import login from '@hanzoteam/login'
   import {
     ERROR,
     getMetadata,
@@ -28,9 +28,9 @@
     Severity,
     Status,
     translate
-  } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { EditBox, ModernDialog, StylishEdit, Status as StatusControl } from '@hanzo/ui'
+  } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { EditBox, ModernDialog, StylishEdit, Status as StatusControl } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import plugin from '../plugin'

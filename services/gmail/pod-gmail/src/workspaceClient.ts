@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import contact, { type Channel as PlatformChannel, type Person, Employee } from '@hanzo/contact'
+import contact, { type Channel as PlatformChannel, type Person, Employee } from '@hanzoteam/contact'
 import core, {
   type WorkspaceUuid,
   type Client,
@@ -30,16 +30,16 @@ import core, {
   PersonId,
   AccountUuid,
   TxOperations
-} from '@hanzo/core'
-import gmailP, { type NewMessage } from '@hanzo/gmail'
-import type { StorageAdapter } from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import gmailP, { type NewMessage } from '@hanzoteam/gmail'
+import type { StorageAdapter } from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
 import { getClient } from './client'
 import { GmailClient } from './gmail'
 import { type Channel, type ProjectCredentials, type User } from './types'
 import { getAccountSocialIds } from './accounts'
 import { cleanIntegrations } from './integrations'
-import { CreateMessageEvent } from '@hanzo/communication-sdk-types'
+import { CreateMessageEvent } from '@hanzoteam/communication-sdk-types'
 
 export class WorkspaceClient {
   private messageSubscribed: boolean = false

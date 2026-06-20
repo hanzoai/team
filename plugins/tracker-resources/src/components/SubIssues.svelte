@@ -13,21 +13,21 @@
  // limitations under the License.
  -->
 <script lang="ts">
-  import attachment, { Attachment } from '@hanzo/attachment'
-  import core, { AttachedData, Doc, makeCollabId, Ref } from '@hanzo/core'
-  import { DraftController, draftsStore, getClient, deleteFile, createMarkup } from '@hanzo/presentation'
-  import tags from '@hanzo/tags'
-  import { isEmptyMarkup } from '@hanzo/text'
-  import { Component, Issue, IssueDraft, IssueParentInfo, Milestone, Project } from '@hanzo/tracker'
-  import { Button, ExpandCollapse, Scroller } from '@hanzo/ui'
+  import attachment, { Attachment } from '@hanzoteam/attachment'
+  import core, { AttachedData, Doc, makeCollabId, Ref } from '@hanzoteam/core'
+  import { DraftController, draftsStore, getClient, deleteFile, createMarkup } from '@hanzoteam/presentation'
+  import tags from '@hanzoteam/tags'
+  import { isEmptyMarkup } from '@hanzoteam/text'
+  import { Component, Issue, IssueDraft, IssueParentInfo, Milestone, Project } from '@hanzoteam/tracker'
+  import { Button, ExpandCollapse, Scroller } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
   import tracker from '../plugin'
   import Collapsed from './icons/Collapsed.svelte'
   import Expanded from './icons/Expanded.svelte'
   import DraftIssueChildList from './templates/DraftIssueChildList.svelte'
-  import { taskTypeStore } from '@hanzo/task-resources'
-  import { getTaskTypeStates } from '@hanzo/task'
-  import { statusStore } from '@hanzo/view-resources'
+  import { taskTypeStore } from '@hanzoteam/task-resources'
+  import { getTaskTypeStates } from '@hanzoteam/task'
+  import { statusStore } from '@hanzoteam/view-resources'
 
   export let projectId: Ref<Project>
   export let project: Project | undefined

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ratingPlugin, { DocReaction, ReactionKind } from '@hanzo/rating'
-  import { Icon } from '@hanzo/ui'
+  import ratingPlugin, { DocReaction, ReactionKind } from '@hanzoteam/rating'
+  import { Icon } from '@hanzoteam/ui'
   import ReactionPresenter from './ReactionPresenter.svelte'
 
   export let value: DocReaction | null = null

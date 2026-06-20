@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { concatLink } from '@hanzo/core'
+import { concatLink } from '@hanzoteam/core'
 
 export interface ServerConfig {
   ACCOUNTS_URL: string

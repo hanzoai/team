@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import chunter from '@hanzo/chunter'
-  import { type Doc, type PersonId, getCurrentAccount } from '@hanzo/core'
-  import { getName } from '@hanzo/contact'
-  import { getPersonsByPersonIds } from '@hanzo/contact-resources'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
-  import { type TypingInfo, typing } from '@hanzo/presence-resources'
+  import chunter from '@hanzoteam/chunter'
+  import { type Doc, type PersonId, getCurrentAccount } from '@hanzoteam/core'
+  import { getName } from '@hanzoteam/contact'
+  import { getPersonsByPersonIds } from '@hanzoteam/contact-resources'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
+  import { type TypingInfo, typing } from '@hanzoteam/presence-resources'
 
   export let object: Doc
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { HTMLViewer } from '@hanzo/presentation'
-  import { getPlatformColor, Label as LabelComponent, themeStore } from '@hanzo/ui'
+  import { HTMLViewer } from '@hanzoteam/presentation'
+  import { getPlatformColor, Label as LabelComponent, themeStore } from '@hanzoteam/ui'
   import view from '../../plugin'
 
   export let href: string

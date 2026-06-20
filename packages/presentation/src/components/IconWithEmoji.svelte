@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Blob } from '@hanzo/core'
-  import { IconSize, fromCodePoint } from '@hanzo/ui'
+  import { Ref, Blob } from '@hanzoteam/core'
+  import { IconSize, fromCodePoint } from '@hanzoteam/ui'
   import { getBlobRef } from '../preview'
 
   export let icon: number | number[] | Ref<Blob>

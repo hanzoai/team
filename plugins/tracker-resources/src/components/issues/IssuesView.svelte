@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import { Asset, IntlString, translateCB } from '@hanzo/platform'
-  import { ComponentExtensions } from '@hanzo/presentation'
-  import { Issue, TrackerEvents } from '@hanzo/tracker'
-  import { IModeSelector, themeStore } from '@hanzo/ui'
-  import { ViewOptions, Viewlet } from '@hanzo/view'
-  import { FilterBar, SpaceHeader, ViewletContentView, ViewletSettingButton } from '@hanzo/view-resources'
+  import { DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { Asset, IntlString, translateCB } from '@hanzoteam/platform'
+  import { ComponentExtensions } from '@hanzoteam/presentation'
+  import { Issue, TrackerEvents } from '@hanzoteam/tracker'
+  import { IModeSelector, themeStore } from '@hanzoteam/ui'
+  import { ViewOptions, Viewlet } from '@hanzoteam/view'
+  import { FilterBar, SpaceHeader, ViewletContentView, ViewletSettingButton } from '@hanzoteam/view-resources'
   import tracker from '../../plugin'
   import CreateIssue from '../CreateIssue.svelte'
 

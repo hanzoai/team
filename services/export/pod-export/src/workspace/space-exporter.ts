@@ -22,8 +22,8 @@ import {
   type Ref,
   type Space,
   type TxOperations
-} from '@hanzo/core'
-import core from '@hanzo/model-core'
+} from '@hanzoteam/core'
+import core from '@hanzoteam/model-core'
 import { type ExportState } from './types'
 
 /**

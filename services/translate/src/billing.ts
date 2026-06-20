@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { AiTokensData, getClient as getBillingClient } from '@hanzo/billing-client'
-import { MeasureContext, systemAccountUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+import { AiTokensData, getClient as getBillingClient } from '@hanzoteam/billing-client'
+import { MeasureContext, systemAccountUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 
 import config from './config'
 

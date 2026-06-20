@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import { copyTextToClipboard } from '@hanzo/presentation'
-  import { CircleButton, closeTooltip, Label } from '@hanzo/ui'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import { copyTextToClipboard } from '@hanzoteam/presentation'
+  import { CircleButton, closeTooltip, Label } from '@hanzoteam/ui'
   import IconCopy from './icons/Copy.svelte'
 
   interface Item {

@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 import Templates from './components/Templates.svelte'
-import { type TextEditorHandler } from '@hanzo/text-editor'
-import { showPopup } from '@hanzo/ui'
+import { type TextEditorHandler } from '@hanzoteam/text-editor'
+import { showPopup } from '@hanzoteam/ui'
 import EditorTemplatePopup from './components/EditorTemplatePopup.svelte'
 import CreateTemplateCategory from './components/CreateTemplateCategory.svelte'
 import TemplatePopup from './components/TemplatePopup.svelte'

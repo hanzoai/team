@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Member } from '@hanzo/contact'
-  import type { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Button, IconAdd, Label, Section, showPopup, Scroller } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { Table, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
+  import { Member } from '@hanzoteam/contact'
+  import type { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Button, IconAdd, Label, Section, showPopup, Scroller } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { Table, ViewletSelector, ViewletSettingButton } from '@hanzoteam/view-resources'
   import contact from '../plugin'
   import UsersPopup from './UsersPopup.svelte'
   import IconMembersOutline from './icons/MembersOutline.svelte'

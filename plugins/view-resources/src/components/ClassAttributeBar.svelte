@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Rank, Ref, toRank } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { AttributesBar, KeyedAttribute, createQuery, getAttribute, getClient } from '@hanzo/presentation'
-  import setting, { settingId } from '@hanzo/setting'
-  import { Button, Label, getCurrentResolvedLocation, navigate } from '@hanzo/ui'
+  import core, { Class, Doc, Rank, Ref, toRank } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { AttributesBar, KeyedAttribute, createQuery, getAttribute, getClient } from '@hanzoteam/presentation'
+  import setting, { settingId } from '@hanzoteam/setting'
+  import { Button, Label, getCurrentResolvedLocation, navigate } from '@hanzoteam/ui'
   import { getFiltredKeys, isCollectionAttr, restrictionStore } from '../utils'
 
   export let object: Doc | Record<string, any>

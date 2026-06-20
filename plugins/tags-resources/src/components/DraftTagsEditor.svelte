@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { TagReference } from '@hanzo/tags'
-  import { Button, ButtonKind, Icon, Label, getEventPopupPositionElement, showPopup } from '@hanzo/ui'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { TagReference } from '@hanzoteam/tags'
+  import { Button, ButtonKind, Icon, Label, getEventPopupPositionElement, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import tagsPlugin from '../plugin'
   import DraftTagsPopup from './DraftTagsPopup.svelte'

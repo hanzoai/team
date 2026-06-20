@@ -2,7 +2,7 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { getMetadata } from '@hanzo/platform'
+import { getMetadata } from '@hanzoteam/platform'
 
 import print from './plugin'
 

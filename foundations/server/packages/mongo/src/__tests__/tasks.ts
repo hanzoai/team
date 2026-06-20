@@ -9,8 +9,8 @@ import {
   type Ref,
   type Space,
   type Tx
-} from '@hanzo/core'
-import { type IntlString, plugin, type Plugin } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { type IntlString, plugin, type Plugin } from '@hanzoteam/platform'
 import { createClass } from './minmodel'
 
 export interface TaskComment extends AttachedDoc {

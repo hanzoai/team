@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Doc, type Ref, type Space } from '@hanzo/core'
-import { gmailId } from '@hanzo/gmail'
+import core, { type Class, type Doc, type Ref, type Space } from '@hanzoteam/core'
+import { gmailId } from '@hanzoteam/gmail'
 import {
   migrateSpace,
   tryMigrate,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 import { DOMAIN_GMAIL } from '.'
-import notification from '@hanzo/notification'
-import { DOMAIN_PREFERENCE } from '@hanzo/preference'
+import notification from '@hanzoteam/notification'
+import { DOMAIN_PREFERENCE } from '@hanzoteam/preference'
 
 import gmail from './plugin'
 

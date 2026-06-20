@@ -3,7 +3,7 @@
 -->
 
 <script lang="ts">
-  import { type IModeSelector, TabList } from '@hanzo/ui'
+  import { type IModeSelector, TabList } from '@hanzoteam/ui'
 
   export let modes: IModeSelector<any>
 

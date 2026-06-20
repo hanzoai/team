@@ -12,7 +12,7 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { getBlobRef } from '@hanzo/presentation'
+  import { getBlobRef } from '@hanzoteam/presentation'
 
   import { getCustomEmoji } from '../utils'
 

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { concatLink } from '@hanzo/core'
-  import { getMetadata } from '@hanzo/platform'
-  import presentation, { NavLink } from '@hanzo/presentation'
-  import { trackerId, type Issue, type IssueParentInfo } from '@hanzo/tracker'
-  import { getCurrentLocation, locationToUrl } from '@hanzo/ui'
+  import { concatLink } from '@hanzoteam/core'
+  import { getMetadata } from '@hanzoteam/platform'
+  import presentation, { NavLink } from '@hanzoteam/presentation'
+  import { trackerId, type Issue, type IssueParentInfo } from '@hanzoteam/tracker'
+  import { getCurrentLocation, locationToUrl } from '@hanzoteam/ui'
 
   export let value: Issue | undefined
 

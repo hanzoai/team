@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { resizeObserver } from '@hanzo/ui'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { resizeObserver } from '@hanzoteam/ui'
   import { onMount, onDestroy } from 'svelte'
   import { drawing, type DrawingData, type DrawingTool } from '../drawing'
   import DrawingBoardToolbar from './DrawingBoardToolbar.svelte'
   import { DrawingCommandsProcessor } from '../drawingCommandsProcessor'
   import { Doc as YDoc } from 'yjs'
   import { ColorMetaNameOrHex } from '../drawingUtils'
-  import { themeStore } from '@hanzo/theme'
+  import { themeStore } from '@hanzoteam/theme'
   import { ColorsList, ThemeAwareColor } from '../drawingColors'
   import { DrawingCmd, CommandUid, DrawTextCmd } from '../drawingCommand'
 

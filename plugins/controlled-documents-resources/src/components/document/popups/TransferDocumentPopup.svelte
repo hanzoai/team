@@ -24,11 +24,11 @@
     type DocumentSpaceType,
     type Project,
     type ProjectDocument
-  } from '@hanzo/controlled-documents'
-  import { TypedSpace, type Doc, type Ref, type Space } from '@hanzo/core'
-  import presentation, { getClient, SpaceSelector } from '@hanzo/presentation'
-  import { Button, Label } from '@hanzo/ui'
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  } from '@hanzoteam/controlled-documents'
+  import { TypedSpace, type Doc, type Ref, type Space } from '@hanzoteam/core'
+  import presentation, { getClient, SpaceSelector } from '@hanzoteam/presentation'
+  import { Button, Label } from '@hanzoteam/ui'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
   import { createEventDispatcher } from 'svelte'
 
   import documentsRes from '../../../plugin'

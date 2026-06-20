@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { AnyComponent, Component, Tabs } from '@hanzo/ui'
+  import contact from '@hanzoteam/contact'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnyComponent, Component, Tabs } from '@hanzoteam/ui'
 
   const client = getClient()
 

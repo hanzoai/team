@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import core, { Doc, generateId, type PersonId, Ref } from '@hanzo/core'
-  import presentation, { DraftController, getClient, KeyedAttribute } from '@hanzo/presentation'
-  import tags, { TagElement, TagReference } from '@hanzo/tags'
-  import { TaskType } from '@hanzo/task'
-  import { TaskKindSelector } from '@hanzo/task-resources'
+  import { AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import core, { Doc, generateId, type PersonId, Ref } from '@hanzoteam/core'
+  import presentation, { DraftController, getClient, KeyedAttribute } from '@hanzoteam/presentation'
+  import tags, { TagElement, TagReference } from '@hanzoteam/tags'
+  import { TaskType } from '@hanzoteam/task'
+  import { TaskKindSelector } from '@hanzoteam/task-resources'
   import {
     Component as ComponentType,
     Issue,
@@ -26,8 +26,8 @@
     IssuePriority,
     Milestone,
     Project
-  } from '@hanzo/tracker'
-  import { Button, Component, EditBox } from '@hanzo/ui'
+  } from '@hanzoteam/tracker'
+  import { Button, Component, EditBox } from '@hanzoteam/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import tracker from '../../plugin'
   import AssigneeEditor from '../issues/AssigneeEditor.svelte'

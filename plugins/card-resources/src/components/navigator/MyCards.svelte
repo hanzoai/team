@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import core, { DocumentQuery, getCurrentAccount, QuerySelector, Ref } from '@hanzo/core'
-  import { type Asset, type IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { IModeSelector, resolvedLocationStore } from '@hanzo/ui'
-  import { SpecialView } from '@hanzo/workbench-resources'
+  import { Card } from '@hanzoteam/card'
+  import core, { DocumentQuery, getCurrentAccount, QuerySelector, Ref } from '@hanzoteam/core'
+  import { type Asset, type IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { IModeSelector, resolvedLocationStore } from '@hanzoteam/ui'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
   import { createEventDispatcher } from 'svelte'
 
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import time, { ToDo } from '@hanzo/time'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import time, { ToDo } from '@hanzoteam/time'
   import card from '../../plugin'
 
   export let config: [string, IntlString, object][] = []

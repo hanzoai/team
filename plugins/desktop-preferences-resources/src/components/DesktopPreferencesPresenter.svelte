@@ -1,9 +1,9 @@
 <script lang="ts">
-  import core, { Doc, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Grid, Label, Toggle } from '@hanzo/ui'
+  import core, { Doc, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Grid, Label, Toggle } from '@hanzoteam/ui'
 
-  import desktopPreferences, { PreferenceKey } from '@hanzo/desktop-preferences'
+  import desktopPreferences, { PreferenceKey } from '@hanzoteam/desktop-preferences'
 
   import { activePreferences } from '../utils'
 

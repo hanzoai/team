@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type IntlString } from '@hanzo/platform'
+import { type IntlString } from '@hanzoteam/platform'
 import InviteLink from './components/InviteLink.svelte'
 import LoginApp from './components/LoginApp.svelte'
 import LoginOtpForm from './components/LoginOtpForm.svelte'
@@ -32,7 +32,7 @@ import {
   resendInvite
 } from './utils'
 
-import { type Pages, pages } from '@hanzo/login'
+import { type Pages, pages } from '@hanzoteam/login'
 export { pages, type Pages }
 /*!
  * Anticrm Platform™ Login Plugin

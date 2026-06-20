@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { SpaceTypeDescriptor, generateId } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { ProjectTypeDescriptor, createProjectType } from '@hanzo/task'
-  import { ToggleWithLabel } from '@hanzo/ui'
+  import { SpaceTypeDescriptor, generateId } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ProjectTypeDescriptor, createProjectType } from '@hanzoteam/task'
+  import { ToggleWithLabel } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import task from '../../plugin'
 

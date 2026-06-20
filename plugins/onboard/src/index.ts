@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui'
+import type { Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { AnyComponent } from '@hanzoteam/ui'
 
 /** @public */
 export const onboardId = 'onboard' as Plugin

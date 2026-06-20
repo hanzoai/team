@@ -22,8 +22,8 @@
     SortingOrder,
     Space,
     type WithLookup
-  } from '@hanzo/core'
-  import presentation, { getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
   import ui, {
     deviceOptionsStore,
     EditWithIcon,
@@ -33,8 +33,8 @@
     Label,
     Loading,
     resizeObserver
-  } from '@hanzo/ui'
-  import { Filter, ViewOptions } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { Filter, ViewOptions } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import { FILTER_DEBOUNCE_MS, sortFilterValues } from '../../filter'
   import view from '../../plugin'

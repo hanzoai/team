@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import diffview from '@hanzo/diffview'
-  import { MarkupNode } from '@hanzo/text'
-  import { Component } from '@hanzo/ui'
+  import diffview from '@hanzoteam/diffview'
+  import { MarkupNode } from '@hanzoteam/text'
+  import { Component } from '@hanzoteam/ui'
   import type { SvelteComponent } from 'svelte'
 
   export let node: MarkupNode

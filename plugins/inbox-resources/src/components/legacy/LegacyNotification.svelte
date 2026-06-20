@@ -19,9 +19,9 @@
     DisplayInboxNotification,
     MentionInboxNotification,
     ReactionInboxNotification
-  } from '@hanzo/notification'
-  import { Doc } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/notification'
+  import { Doc } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
 
   import ActivityInboxNotificationPresenter from './ActivityInboxNotificationPresenter.svelte'
   import MentionInboxNotificationPresenter from './MentionInboxNotificationPresenter.svelte'

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   toFindResult,
   withContext,
@@ -36,7 +36,7 @@ import {
   type Timestamp,
   type Tx,
   type TxResult
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { emptyBroadcastResult } from './base'
 import { type Middleware, type MiddlewareCreator, type Pipeline, type PipelineContext } from './types'
 

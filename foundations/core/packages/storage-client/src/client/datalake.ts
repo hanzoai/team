@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { concatLink } from '@hanzo/core'
+import { concatLink } from '@hanzoteam/core'
 import { FileStorage, FileStorageUploadOptions } from '../types'
 import { uploadMultipart, uploadXhr } from '../upload'
 

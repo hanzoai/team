@@ -25,9 +25,9 @@
     Ref,
     RefTo,
     Type
-  } from '@hanzo/core'
-  import { IntlString, getResource } from '@hanzo/platform'
-  import presentation, { MessageBox, createQuery, getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import { IntlString, getResource } from '@hanzoteam/platform'
+  import presentation, { MessageBox, createQuery, getClient } from '@hanzoteam/presentation'
   import {
     Action,
     AnySvelteComponent,
@@ -36,11 +36,11 @@
     Menu,
     getEventPositionElement,
     showPopup
-  } from '@hanzo/ui'
-  import { getContextActions, SortableList } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { getContextActions, SortableList } from '@hanzoteam/view-resources'
   import settings from '../plugin'
   import ClassAttributeRow from './ClassAttributeRow.svelte'
-  import { makeRank } from '@hanzo/rank'
+  import { makeRank } from '@hanzoteam/rank'
   import EditAttribute from './EditAttribute.svelte'
 
   export let _class: Ref<Class<Doc>>

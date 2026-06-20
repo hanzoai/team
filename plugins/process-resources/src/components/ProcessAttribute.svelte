@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Tag } from '@hanzo/card'
-  import { AnyAttribute, Class, Doc, Ref } from '@hanzo/core'
-  import { Context, createContext, parseContext, Process, SelectedContext } from '@hanzo/process'
+  import { MasterTag, Tag } from '@hanzoteam/card'
+  import { AnyAttribute, Class, Doc, Ref } from '@hanzoteam/core'
+  import { Context, createContext, parseContext, Process, SelectedContext } from '@hanzoteam/process'
   import {
     AnySvelteComponent,
     Button,
@@ -25,8 +25,8 @@
     Label,
     showPopup,
     tooltip
-  } from '@hanzo/ui'
-  import { AttributeCategory } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { AttributeCategory } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import ContextSelectorPopup from './attributeEditors/ContextSelectorPopup.svelte'
   import ContextValue from './attributeEditors/ContextValue.svelte'

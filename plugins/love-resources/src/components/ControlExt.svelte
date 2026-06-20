@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { personByIdStore } from '@hanzo/contact-resources'
-  import { IdMap, Ref, toIdMap } from '@hanzo/core'
-  import { Person, getCurrentEmployee } from '@hanzo/contact'
+  import { personByIdStore } from '@hanzoteam/contact-resources'
+  import { IdMap, Ref, toIdMap } from '@hanzoteam/core'
+  import { Person, getCurrentEmployee } from '@hanzoteam/contact'
   import {
     Invite,
     isOffice,
@@ -25,8 +25,8 @@
     RequestStatus,
     Room,
     RoomType
-  } from '@hanzo/love'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/love'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     closePopup,
     eventToHTMLElement,
@@ -35,10 +35,10 @@
     PopupResult,
     showPopup,
     closeTooltip
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
-  import workbench from '@hanzo/workbench'
-  import { closeWidget, closeWidgetTab, sidebarStore } from '@hanzo/workbench-resources'
+  import workbench from '@hanzoteam/workbench'
+  import { closeWidget, closeWidgetTab, sidebarStore } from '@hanzoteam/workbench-resources'
 
   import love from '../plugin'
   import { activeInvites, currentRoom, infos, myInfo, myInvites, myOffice, myRequests, rooms } from '../stores'

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, SortingOrder } from '@hanzo/core'
-  import { createQuery, getClient, MessageBox, IconDownload } from '@hanzo/presentation'
-  import { Process, State, Transition } from '@hanzo/process'
-  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
+  import { Ref, SortingOrder } from '@hanzoteam/core'
+  import { createQuery, getClient, MessageBox, IconDownload } from '@hanzoteam/presentation'
+  import { Process, State, Transition } from '@hanzoteam/process'
+  import { clearSettingsStore, settingsStore } from '@hanzoteam/setting-resources'
   import {
     ButtonIcon,
     defineSeparators,
@@ -29,9 +29,9 @@
     Scroller,
     secondNavSeparators,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { exportProcess } from '../../exporter'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import process from '../../plugin'
   import ContextEditor from './ContextEditor.svelte'

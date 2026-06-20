@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { notEmpty } from '@hanzo/core'
-import { type AnySvelteComponentWithProps, DebouncedCaller } from '@hanzo/ui'
+import { notEmpty } from '@hanzoteam/core'
+import { type AnySvelteComponentWithProps, DebouncedCaller } from '@hanzoteam/ui'
 import { type Editor, Extension, type Range } from '@tiptap/core'
 import { type Node } from '@tiptap/pm/model'
 import { type EditorState, Plugin, PluginKey, TextSelection, type Transaction } from '@tiptap/pm/state'
@@ -23,7 +23,7 @@ import { deepEqual } from 'fast-equals'
 import tippy, { type Placement, type Props as TippyProps } from 'tippy.js'
 import { SvelteRenderer } from '../../node-view'
 import EditorToolbar from './EditorToolbar.svelte'
-import { type ActionContext } from '@hanzo/text-editor'
+import { type ActionContext } from '@hanzoteam/text-editor'
 
 export interface ToolbarCursor<T> {
   source: CursorSource

@@ -24,7 +24,7 @@ import {
   NotificationID,
   BlobID,
   SocialID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import type { BaseEvent } from './common'
 

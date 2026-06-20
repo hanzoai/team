@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, DocumentQuery, IdMap, Ref, Status, Timestamp } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import type { Project, Task } from '@hanzo/task'
-  import task, { getStates } from '@hanzo/task'
-  import { BarDashboard, DashboardItem } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
+  import core, { Class, DocumentQuery, IdMap, Ref, Status, Timestamp } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import type { Project, Task } from '@hanzoteam/task'
+  import task, { getStates } from '@hanzoteam/task'
+  import { BarDashboard, DashboardItem } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
   import CreateFilter from './CreateFilter.svelte'
   import { typeStore } from '..'
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import lead from '@hanzo/lead'
-  import { Icon, IconSize } from '@hanzo/ui'
+  import lead from '@hanzoteam/lead'
+  import { Icon, IconSize } from '@hanzoteam/ui'
   export let size: IconSize = 'small'
 </script>
 

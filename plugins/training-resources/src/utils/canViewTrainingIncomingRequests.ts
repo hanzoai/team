@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Training } from '@hanzo/training'
+import type { Training } from '@hanzoteam/training'
 import { canViewTraining } from './canViewTraining'
 
 export function canViewTrainingIncomingRequests (training: Training): boolean {

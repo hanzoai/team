@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Photo } from '@hanzo/attachment'
-  import { Class, Doc, Ref, Space, type WithLookup } from '@hanzo/core'
-  import { setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { createQuery, getBlobRef, getClient, uploadFile } from '@hanzo/presentation'
-  import { Button, IconAdd, Label, Spinner } from '@hanzo/ui'
+  import { Photo } from '@hanzoteam/attachment'
+  import { Class, Doc, Ref, Space, type WithLookup } from '@hanzoteam/core'
+  import { setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { createQuery, getBlobRef, getClient, uploadFile } from '@hanzoteam/presentation'
+  import { Button, IconAdd, Label, Spinner } from '@hanzoteam/ui'
   import attachment from '../plugin'
   import { showAttachmentPreviewPopup } from '../utils'
   import UploadDuo from './icons/UploadDuo.svelte'

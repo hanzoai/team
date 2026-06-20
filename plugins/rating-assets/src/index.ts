@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import rating from '@hanzo/rating'
-import { loadMetadata } from '@hanzo/platform'
+import rating from '@hanzoteam/rating'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const ratingIcon = require('../assets/icon.svg') as string // eslint-disable-line
 loadMetadata(rating.icon, {

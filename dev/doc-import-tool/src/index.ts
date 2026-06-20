@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Employee } from '@hanzo/contact'
-import documents, { type DocumentSpace } from '@hanzo/controlled-documents'
+import { type Employee } from '@hanzoteam/contact'
+import documents, { type DocumentSpace } from '@hanzoteam/controlled-documents'
 import {
   MeasureMetricsContext,
   type Ref,
   systemAccountUuid,
   type WorkspaceUuid,
   type WorkspaceDataId
-} from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import serverClientPlugin from '@hanzo/server-client'
-import { type StorageAdapter } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken, { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClientPlugin from '@hanzoteam/server-client'
+import { type StorageAdapter } from '@hanzoteam/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
+import serverToken, { generateToken } from '@hanzoteam/server-token'
 import { program } from 'commander'
 
 import { importDoc } from './commands'

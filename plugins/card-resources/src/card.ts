@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { getClient } from '@hanzo/presentation'
-import cardPlugin, { type Card, type CardSection } from '@hanzo/card'
-import { getResource } from '@hanzo/platform'
-import { type Heading } from '@hanzo/text-editor'
+import { getClient } from '@hanzoteam/presentation'
+import cardPlugin, { type Card, type CardSection } from '@hanzoteam/card'
+import { getResource } from '@hanzoteam/platform'
+import { type Heading } from '@hanzoteam/text-editor'
 
 export async function getCardSections (card: Card): Promise<CardSection[]> {
   const client = getClient()

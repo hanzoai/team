@@ -25,7 +25,7 @@
     SelectPopupValueType,
     eventToHTMLElement,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { ComponentType, createEventDispatcher, onMount } from 'svelte'
   import IconEraser from './icons/Eraser.svelte'
   import IconMove from './icons/Move.svelte'
@@ -39,8 +39,8 @@
   import DrawingBoardToolbarColorIcon from './DrawingBoardToolbarColorIcon.svelte'
   import DrawingBoardColorSelectorIcon from './DrawingBoardColorSelectorIcon.svelte'
   import { ColorsList, DrawingBoardColoringSetup } from '../drawingColors'
-  import { Analytics } from '@hanzo/analytics'
-  import type { IntlString } from '@hanzo/platform'
+  import { Analytics } from '@hanzoteam/analytics'
+  import type { IntlString } from '@hanzoteam/platform'
 
   interface ToolPresentation {
     label: IntlString

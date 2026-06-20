@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card from '@hanzo/card'
-  import core, { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { ObjectBox } from '@hanzo/view-resources'
-  import { Loading } from '@hanzo/ui'
+  import card from '@hanzoteam/card'
+  import core, { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ObjectBox } from '@hanzoteam/view-resources'
+  import { Loading } from '@hanzoteam/ui'
 
   export let parentTag: Ref<Class<Doc>>
   export let childTag: Ref<Class<Doc>>

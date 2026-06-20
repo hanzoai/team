@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { areDatesEqual, getUserTimezone } from '@hanzo/ui'
+  import { areDatesEqual, getUserTimezone } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { utcToZonedTime } from 'date-fns-tz'
   import DateEditor from './DateEditor.svelte'

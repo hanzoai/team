@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Button } from '@hanzo/ui'
+  import { Button } from '@hanzoteam/ui'
 
   import testManagement from '../../plugin'
 </script>

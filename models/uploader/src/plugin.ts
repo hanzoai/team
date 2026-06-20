@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { uploaderId } from '@hanzo/uploader'
-import uploader from '@hanzo/uploader-resources/src/plugin'
+import { mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { uploaderId } from '@hanzoteam/uploader'
+import uploader from '@hanzoteam/uploader-resources/src/plugin'
 
 export default mergeIds(uploaderId, uploader, {
   component: {

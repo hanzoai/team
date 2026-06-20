@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TagElement } from '@hanzo/tags'
-  import { getPlatformColorDef, themeStore } from '@hanzo/ui'
+  import { TagElement } from '@hanzoteam/tags'
+  import { getPlatformColorDef, themeStore } from '@hanzoteam/ui'
 
   export let values: TagElement[]
   export let limit: number = 4

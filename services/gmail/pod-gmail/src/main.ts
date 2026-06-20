@@ -15,15 +15,15 @@
 // limitations under the License.
 //
 
-import { isWorkspaceLoginInfo } from '@hanzo/account-client'
-import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { newMetrics, PersonId } from '@hanzo/core'
-import { closeQueue, initQueue } from '@hanzo/mail-common'
-import { setMetadata } from '@hanzo/platform'
-import serverClient, { getAccountClient } from '@hanzo/server-client'
-import { initStatisticsContext, type StorageConfiguration } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken, { decodeToken } from '@hanzo/server-token'
+import { isWorkspaceLoginInfo } from '@hanzoteam/account-client'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { newMetrics, PersonId } from '@hanzoteam/core'
+import { closeQueue, initQueue } from '@hanzoteam/mail-common'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClient, { getAccountClient } from '@hanzoteam/server-client'
+import { initStatisticsContext, type StorageConfiguration } from '@hanzoteam/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
+import serverToken, { decodeToken } from '@hanzoteam/server-token'
 import { type IncomingHttpHeaders } from 'http'
 import { join } from 'path'
 

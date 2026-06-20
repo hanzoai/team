@@ -15,16 +15,16 @@
  * // cd examples && rushx run:retry
  */
 
-import { AgentImpl, TickManagerImpl, NetworkImpl } from '@hanzo/network-core'
-import { NetworkServer } from '@hanzo/network-server'
-import { createNetworkClient, NetworkAgentServer } from '@hanzo/network-client'
+import { AgentImpl, TickManagerImpl, NetworkImpl } from '@hanzoteam/network-core'
+import { NetworkServer } from '@hanzoteam/network-server'
+import { createNetworkClient, NetworkAgentServer } from '@hanzoteam/network-client'
 import type { 
   Container, 
   ContainerUuid, 
   ClientUuid,
   ContainerKind,
   GetOptions
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 
 class UnreliableServiceContainer implements Container {
   private callCount = 0

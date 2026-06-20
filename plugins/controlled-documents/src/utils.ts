@@ -27,17 +27,17 @@ import {
   Timestamp,
   toIdMap,
   TxOperations
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { LexoDecimal, LexoNumeralSystem36, LexoRank } from 'lexorank'
 import LexoRankBucket from 'lexorank/lib/lexoRank/lexoRankBucket'
 
 import documents from './plugin'
 
-import attachment, { Attachment } from '@hanzo/attachment'
-import chunter, { ChatMessage } from '@hanzo/chunter'
-import { Employee, getCurrentEmployee, Person } from '@hanzo/contact'
-import { makeRank } from '@hanzo/rank'
-import tags, { TagReference } from '@hanzo/tags'
+import attachment, { Attachment } from '@hanzoteam/attachment'
+import chunter, { ChatMessage } from '@hanzoteam/chunter'
+import { Employee, getCurrentEmployee, Person } from '@hanzoteam/contact'
+import { makeRank } from '@hanzoteam/rank'
+import tags, { TagReference } from '@hanzoteam/tags'
 import {
   ChangeControl,
   ControlledDocument,

@@ -15,16 +15,16 @@
 //
 -->
 <script lang="ts">
-  import core, { Data, Ref } from '@hanzo/core'
-  import { type Drive, type Folder, createFolder, DriveEvents } from '@hanzo/drive'
-  import { Card, SpaceSelector, getClient } from '@hanzo/presentation'
-  import { EditBox, FocusHandler, createFocusManager } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { ObjectBox } from '@hanzo/view-resources'
+  import core, { Data, Ref } from '@hanzoteam/core'
+  import { type Drive, type Folder, createFolder, DriveEvents } from '@hanzoteam/drive'
+  import { Card, SpaceSelector, getClient } from '@hanzoteam/presentation'
+  import { EditBox, FocusHandler, createFocusManager } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { ObjectBox } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import drive from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export function canClose (): boolean {
     return name === ''

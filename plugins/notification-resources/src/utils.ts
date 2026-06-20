@@ -17,15 +17,15 @@ import activity, {
   type ActivityMessage,
   type DisplayDocUpdateMessage,
   type DocUpdateMessage
-} from '@hanzo/activity'
+} from '@hanzoteam/activity'
 import {
   activityMessagesComparator,
   combineActivityMessages,
   isActivityMessageClass,
   messageInFocus
-} from '@hanzo/activity-resources'
-import { Analytics } from '@hanzo/analytics'
-import chunter, { type ThreadMessage } from '@hanzo/chunter'
+} from '@hanzoteam/activity-resources'
+import { Analytics } from '@hanzoteam/analytics'
+import chunter, { type ThreadMessage } from '@hanzoteam/chunter'
 import core, {
   type Class,
   type Doc,
@@ -35,7 +35,7 @@ import core, {
   type TxOperations,
   type WithLookup,
   getClassCollaborators
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import notification, {
   type ActivityInboxNotification,
   type DisplayInboxNotification,
@@ -48,9 +48,9 @@ import notification, {
   type NotificationType,
   type NotificationTypeSetting,
   type ReactionInboxNotification
-} from '@hanzo/notification'
-import { getMetadata, getResource } from '@hanzo/platform'
-import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
+} from '@hanzoteam/notification'
+import { getMetadata, getResource } from '@hanzoteam/platform'
+import { createQuery, getClient, MessageBox } from '@hanzoteam/presentation'
 import {
   getCurrentLocation,
   getLocation,
@@ -60,10 +60,10 @@ import {
   parseLocation,
   type ResolvedLocation,
   showPopup
-} from '@hanzo/ui'
-import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hanzo/view'
-import { getObjectLinkId, parseLinkId } from '@hanzo/view-resources'
-import type { LocationData } from '@hanzo/workbench'
+} from '@hanzoteam/ui'
+import view, { decodeObjectURI, encodeObjectURI, type LinkIdProvider } from '@hanzoteam/view'
+import { getObjectLinkId, parseLinkId } from '@hanzoteam/view-resources'
+import type { LocationData } from '@hanzoteam/workbench'
 import { get, writable } from 'svelte/store'
 
 import { InboxNotificationsClientImpl } from './inboxNotificationsClient'

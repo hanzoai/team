@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { MeasureContext, PersonUuid, PersonId, WorkspaceUuid } from '@hanzo/core'
-import { RestClient, createRestClient } from '@hanzo/api-client'
-import { WorkspaceLoginInfo } from '@hanzo/account-client'
+import { MeasureContext, PersonUuid, PersonId, WorkspaceUuid } from '@hanzoteam/core'
+import { RestClient, createRestClient } from '@hanzoteam/api-client'
+import { WorkspaceLoginInfo } from '@hanzoteam/account-client'
 import { PersonCache, PersonCacheFactory, CachedPerson } from '../person'
 import { EmailContact } from '../types'
 
 // Mock the createRestClient function
-jest.mock('@hanzo/api-client', () => ({
-  ...jest.requireActual('@hanzo/api-client'),
+jest.mock('@hanzoteam/api-client', () => ({
+  ...jest.requireActual('@hanzoteam/api-client'),
   createRestClient: jest.fn()
 }))
 

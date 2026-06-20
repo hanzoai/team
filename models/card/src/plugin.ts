@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import type { ViewletViewAction, Action, ActionCategory, ViewAction } from '@hanzo/view'
-import { type Card, cardId } from '@hanzo/card'
-import card from '@hanzo/card-resources/src/plugin'
-import type { Client, Doc, Ref } from '@hanzo/core'
-import {} from '@hanzo/core'
-import { mergeIds, type Resource } from '@hanzo/platform'
-import { type TagCategory } from '@hanzo/tags'
-import { type Location, type ResolvedLocation } from '@hanzo/ui/src/types'
-import { type LocationData } from '@hanzo/workbench'
-import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
+import type { ViewletViewAction, Action, ActionCategory, ViewAction } from '@hanzoteam/view'
+import { type Card, cardId } from '@hanzoteam/card'
+import card from '@hanzoteam/card-resources/src/plugin'
+import type { Client, Doc, Ref } from '@hanzoteam/core'
+import {} from '@hanzoteam/core'
+import { mergeIds, type Resource } from '@hanzoteam/platform'
+import { type TagCategory } from '@hanzoteam/tags'
+import { type Location, type ResolvedLocation } from '@hanzoteam/ui/src/types'
+import { type LocationData } from '@hanzoteam/workbench'
+import { type NotificationGroup, type NotificationType } from '@hanzoteam/notification'
 
 export default mergeIds(cardId, card, {
   app: {

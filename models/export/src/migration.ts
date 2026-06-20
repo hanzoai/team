@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MigrateOperation, type MigrationClient, type MigrationUpgradeClient } from '@hanzo/model'
+import { type MigrateOperation, type MigrationClient, type MigrationUpgradeClient } from '@hanzoteam/model'
 
 export const exportOperation: MigrateOperation = {
   async migrate (client: MigrationClient): Promise<void> {},

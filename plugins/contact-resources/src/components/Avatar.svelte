@@ -22,9 +22,9 @@
     getAvatarProvider,
     getAvatarProviderId,
     Person
-  } from '@hanzo/contact'
-  import { Asset, getResource } from '@hanzo/platform'
-  import { getBlobURL, getClient, reduceCalls, sizeToWidth } from '@hanzo/presentation'
+  } from '@hanzoteam/contact'
+  import { Asset, getResource } from '@hanzoteam/platform'
+  import { getBlobURL, getClient, reduceCalls, sizeToWidth } from '@hanzoteam/presentation'
   import {
     AnySvelteComponent,
     ColorDefinition,
@@ -34,9 +34,9 @@
     IconSize,
     themeStore,
     tooltip
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { onMount } from 'svelte'
-  import { AccountUuid, type Data, PersonUuid, Ref, type WithLookup } from '@hanzo/core'
+  import { AccountUuid, type Data, PersonUuid, Ref, type WithLookup } from '@hanzoteam/core'
 
   import { loadUsersStatus, statusByUserStore } from '../utils'
   import AvatarInstance from './AvatarInstance.svelte'

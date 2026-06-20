@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, Tag } from '@hanzo/card'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import setting, { settingId } from '@hanzo/setting'
+  import { Card, Tag } from '@hanzoteam/card'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import setting, { settingId } from '@hanzoteam/setting'
   import {
     Button,
     Chevron,
@@ -29,7 +29,7 @@
     showPopup,
     themeStore,
     tooltip
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import CardAttributes from './CardAttributes.svelte'
 
   export let value: Card

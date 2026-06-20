@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import { upgradeDownloadProgress } from '@hanzo/presentation'
+  import { getMetadata } from '@hanzoteam/platform'
+  import { upgradeDownloadProgress } from '@hanzoteam/presentation'
   import {
     Button,
     Component,
@@ -25,10 +25,10 @@
     fetchMetadataLocalStorage,
     location,
     setMetadataLocalStorage
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { connect, disconnect, error, errorActions } from '../connect'
 
-  import workbench, { workbenchId } from '@hanzo/workbench'
+  import workbench, { workbenchId } from '@hanzoteam/workbench'
   import { onDestroy } from 'svelte'
   import workbenchRes from '../plugin'
   import { workspaceCreating } from '../utils'

@@ -1,6 +1,6 @@
-import { systemAccountUuid, type WorkspaceUuid } from '@hanzo/core'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
+import { systemAccountUuid, type WorkspaceUuid } from '@hanzoteam/core'
+import { getTransactorEndpoint } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
 
 export function getToolToken (workspace?: WorkspaceUuid): string {
   return generateToken(systemAccountUuid, workspace, { service: 'tool', admin: 'true' })

@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Button, IconClose, Label, ProgressCircle, Scroller, tooltip } from '@hanzo/ui'
-  import { ObjectPresenter } from '@hanzo/view-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Button, IconClose, Label, ProgressCircle, Scroller, tooltip } from '@hanzoteam/ui'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import IconCompleted from './icons/Completed.svelte'

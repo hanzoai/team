@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { Ref } from '@hanzo/core'
-  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
-  import { clearSettingsStore } from '@hanzo/setting-resources'
+  import { MasterTag } from '@hanzoteam/card'
+  import { Ref } from '@hanzoteam/core'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzoteam/presentation'
+  import { clearSettingsStore } from '@hanzoteam/setting-resources'
   import {
     Icon,
     IconOpenedArrow,
@@ -25,10 +25,10 @@
     getCurrentResolvedLocation,
     navigate,
     resolvedLocationStore
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
   import card from '../../plugin'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
 
   export let categoryName: string
 

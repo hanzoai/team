@@ -14,8 +14,8 @@
 
 import { type Editor } from '@tiptap/core'
 import { Node } from '@tiptap/pm/model'
-import { markdownToMarkup } from '@hanzo/text-markdown'
-import { showPopup } from '@hanzo/ui'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
+import { showPopup } from '@hanzoteam/ui'
 import { findTable } from '../utils'
 import { getTableMetadata } from '../tableMetadata'
 import TableRefreshConfirmation from './TableRefreshConfirmation.svelte'

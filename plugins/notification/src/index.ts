@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { ActivityMessage, Reaction } from '@hanzo/activity'
+import { ActivityMessage, Reaction } from '@hanzoteam/activity'
 import {
   PersonId,
   AnyAttribute,
@@ -33,14 +33,14 @@ import {
   AccountUuid,
   Collaborator,
   CollectionSize
-} from '@hanzo/core'
-import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
-import { IntegrationType } from '@hanzo/setting'
-import { AnyComponent, Location, ResolvedLocation } from '@hanzo/ui'
-import { Action } from '@hanzo/view'
-import { PersonSpace } from '@hanzo/contact'
+} from '@hanzoteam/core'
+import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { Preference } from '@hanzoteam/preference'
+import { IntegrationType } from '@hanzoteam/setting'
+import { AnyComponent, Location, ResolvedLocation } from '@hanzoteam/ui'
+import { Action } from '@hanzoteam/view'
+import { PersonSpace } from '@hanzoteam/contact'
 
 import { Readable, Writable } from './types'
 

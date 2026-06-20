@@ -8,14 +8,14 @@ import {
   Space,
   Class,
   PersonId
-} from '@hanzo/core'
-import { StorageAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { StorageAdapter } from '@hanzoteam/server-core'
 import { gmail_v1 } from 'googleapis'
 import { AttachmentHandler } from '../message/attachments'
-import type { Attachment as AttachedFile } from '@hanzo/mail-common'
-import attachment, { Attachment } from '@hanzo/attachment'
+import type { Attachment as AttachedFile } from '@hanzoteam/mail-common'
+import attachment, { Attachment } from '@hanzoteam/attachment'
 import { decode64, encode64 } from '../base64'
-import { WorkspaceLoginInfo } from '@hanzo/account-client'
+import { WorkspaceLoginInfo } from '@hanzoteam/account-client'
 
 jest.mock('../config')
 

@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space, getCurrentAccount } from '@hanzo/core'
-  import { Asset, getResource } from '@hanzo/platform'
-  import { AnyComponent, AnySvelteComponent, ButtonSize } from '@hanzo/ui'
+  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space, getCurrentAccount } from '@hanzoteam/core'
+  import { Asset, getResource } from '@hanzoteam/platform'
+  import { AnyComponent, AnySvelteComponent, ButtonSize } from '@hanzoteam/ui'
   import { ObjectCreate } from '../types'
   import { createQuery } from '../utils'
   import DocPopup from './DocPopup.svelte'

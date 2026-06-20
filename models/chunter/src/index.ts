@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import activity, { type ActivityMessageControl } from '@hanzo/activity'
-import { chunterId, type ChunterSpace } from '@hanzo/chunter'
-import contact from '@hanzo/contact'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import view from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import { WidgetType } from '@hanzo/workbench'
+import activity, { type ActivityMessageControl } from '@hanzoteam/activity'
+import { chunterId, type ChunterSpace } from '@hanzoteam/chunter'
+import contact from '@hanzoteam/contact'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
+import view from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import { WidgetType } from '@hanzoteam/workbench'
 
 import { defineActions } from './actions'
 import { defineNotifications } from './notifications'
@@ -37,9 +37,9 @@ import {
   TObjectChatPanel,
   TThreadMessage
 } from './types'
-import { AccountRole } from '@hanzo/core'
+import { AccountRole } from '@hanzoteam/core'
 
-export { chunterId } from '@hanzo/chunter'
+export { chunterId } from '@hanzoteam/chunter'
 export { chunterOperation } from './migration'
 export * from './types'
 

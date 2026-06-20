@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Person } from '@hanzo/contact'
+import type { Person } from '@hanzoteam/contact'
 import {
   AttachedDoc,
   Attribute,
@@ -29,15 +29,15 @@ import {
   SpaceType,
   SpaceTypeDescriptor,
   TypedSpace
-} from '@hanzo/core'
-import { NotificationType } from '@hanzo/notification'
-import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
-import { Action, IconProps, ViewletDescriptor } from '@hanzo/view'
+} from '@hanzoteam/core'
+import { NotificationType } from '@hanzoteam/notification'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { AnyComponent, ComponentExtensionId } from '@hanzoteam/ui'
+import { Action, IconProps, ViewletDescriptor } from '@hanzoteam/view'
 
 export * from './utils'
-export type { Rank } from '@hanzo/rank'
+export type { Rank } from '@hanzoteam/rank'
 
 /** @public */
 export interface DocWithRank extends Doc {

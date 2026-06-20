@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
   import tracker from '../../../plugin'
   import CopyToClipboardButton from './CopyToClipboardButton.svelte'
 

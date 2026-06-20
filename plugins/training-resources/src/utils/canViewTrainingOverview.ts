@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import training, { type Training } from '@hanzo/training'
+import training, { type Training } from '@hanzoteam/training'
 import { canViewTraining } from './canViewTraining'
-import { getClient } from '@hanzo/presentation'
+import { getClient } from '@hanzoteam/presentation'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 
 export async function canViewTrainingOverview (trn: Training): Promise<boolean> {

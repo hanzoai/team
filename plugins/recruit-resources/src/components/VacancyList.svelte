@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import presentation from '@hanzo/presentation'
-  import { Button, Icon, IconAdd, Label, Scroller, showPopup } from '@hanzo/ui'
-  import view, { BuildModelKey } from '@hanzo/view'
-  import { Table } from '@hanzo/view-resources'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import presentation from '@hanzoteam/presentation'
+  import { Button, Icon, IconAdd, Label, Scroller, showPopup } from '@hanzoteam/ui'
+  import view, { BuildModelKey } from '@hanzoteam/view'
+  import { Table } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
   import CreateVacancy from './CreateVacancy.svelte'
   import FileDuo from './icons/FileDuo.svelte'

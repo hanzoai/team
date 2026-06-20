@@ -1,5 +1,5 @@
 //
-import training, { type Training } from '@hanzo/training'
+import training, { type Training } from '@hanzoteam/training'
 // Copyright © 2022-2023 Hanzo AI Inc.
 //
 // Licensed under the Eclipse Public License, Version 2.0 (the "License");
@@ -20,11 +20,11 @@ import {
   type DocumentTraining,
   type Project,
   type DocumentTemplate
-} from '@hanzo/controlled-documents'
-import attachment from '@hanzo/attachment'
-import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hanzo/core'
-import { createQuery } from '@hanzo/presentation'
-import { RequestStatus } from '@hanzo/request'
+} from '@hanzoteam/controlled-documents'
+import attachment from '@hanzoteam/attachment'
+import { type Class, type DocumentQuery, type Ref, SortingOrder } from '@hanzoteam/core'
+import { createQuery } from '@hanzoteam/presentation'
+import { RequestStatus } from '@hanzoteam/request'
 
 import documents from '../../../plugin'
 import {

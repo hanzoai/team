@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Folder } from '@hanzo/drive'
+  import { type Folder } from '@hanzoteam/drive'
 
   import FolderBrowser from './FolderBrowser.svelte'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangeMode, type MixinUpdate, Timestamp } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
+  import { DateRangeMode, type MixinUpdate, Timestamp } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
   import {
     DatePresenter,
     DropdownLabels,
@@ -23,9 +23,9 @@
     RadioButton,
     Scroller,
     Toggle
-  } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import { UserBoxItems } from '@hanzo/contact-resources'
+  } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { UserBoxItems } from '@hanzoteam/contact-resources'
   import {
     type Document,
     ControlledDocumentState,
@@ -34,12 +34,12 @@
     type DocumentTraining,
     periodicReviewIntervals,
     ControlledDocument
-  } from '@hanzo/controlled-documents'
+  } from '@hanzoteam/controlled-documents'
   import {
     NullablePositiveNumberEditor,
     TrainingRefEditor,
     TrainingRequestRolesEditor
-  } from '@hanzo/training-resources'
+  } from '@hanzoteam/training-resources'
   import { createDocumentTraining, getDocumentTrainingClass, updateDocumentTraining } from '../../docutils'
 
   import documentsRes from '../../plugin'

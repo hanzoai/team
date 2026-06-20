@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
-  import { IntlString } from '@hanzo/platform'
+  import { Label } from '@hanzoteam/ui'
+  import { IntlString } from '@hanzoteam/platform'
   export let label: IntlString | undefined
 </script>
 

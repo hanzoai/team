@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import plugin, { Label, Lazy } from '@hanzo/ui'
+  import plugin, { Label, Lazy } from '@hanzoteam/ui'
   import EmojiGroupPalette from './EmojiGroupPalette.svelte'
-  import { EmojiWithGroup } from '@hanzo/emoji'
+  import { EmojiWithGroup } from '@hanzoteam/emoji'
   import { EmojiCategory } from '../types'
   import { resultEmojis } from '../store'
-  import { Ref, Blob } from '@hanzo/core'
+  import { Ref, Blob } from '@hanzoteam/core'
 
   export let group: EmojiCategory
   export let lazy: boolean = true

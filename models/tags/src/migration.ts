@@ -1,12 +1,12 @@
-import core, { type Ref, type Space } from '@hanzo/core'
+import core, { type Ref, type Space } from '@hanzoteam/core'
 import {
   migrateSpace,
   tryMigrate,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import { tagsId } from '@hanzo/tags'
+} from '@hanzoteam/model'
+import { tagsId } from '@hanzoteam/tags'
 import { DOMAIN_TAGS } from '.'
 
 export const tagsOperation: MigrateOperation = {

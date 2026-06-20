@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { type Person } from '@hanzo/contact'
+  import contact, { type Person } from '@hanzoteam/contact'
   import {
     DrawingBoardToolbar,
     DrawingCmd,
@@ -26,10 +26,10 @@
     ThemeAwareColor,
     ColorsList,
     ColorMetaNameOrHex
-  } from '@hanzo/presentation'
-  import presence from '@hanzo/presence'
-  import { getResource } from '@hanzo/platform'
-  import { Loading, Component, themeStore } from '@hanzo/ui'
+  } from '@hanzoteam/presentation'
+  import presence from '@hanzoteam/presence'
+  import { getResource } from '@hanzoteam/platform'
+  import { Loading, Component, themeStore } from '@hanzoteam/ui'
   import { onMount, onDestroy } from 'svelte'
   import { Array as YArray, Map as YMap, Doc as YDoc } from 'yjs'
 

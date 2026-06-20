@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { AccountClient } from '@hanzo/account-client'
+import { AccountClient } from '@hanzoteam/account-client'
 import calendar, {
   AccessLevel,
   Calendar,
@@ -23,8 +23,8 @@ import calendar, {
   ReccuringInstance,
   Visibility,
   calendarIntegrationKind
-} from '@hanzo/calendar'
-import contact, { Contact, getPersonRefsBySocialIds, Person } from '@hanzo/contact'
+} from '@hanzoteam/calendar'
+import contact, { Contact, getPersonRefsBySocialIds, Person } from '@hanzoteam/contact'
 import core, {
   AttachedData,
   Data,
@@ -38,9 +38,9 @@ import core, {
   SocialIdType,
   TxOperations,
   TxProcessor
-} from '@hanzo/core'
-import setting from '@hanzo/setting'
-import { htmlToMarkup } from '@hanzo/text'
+} from '@hanzoteam/core'
+import setting from '@hanzoteam/setting'
+import { htmlToMarkup } from '@hanzoteam/text'
 import { deepEqual } from 'fast-equals'
 import { calendar_v3 } from 'googleapis'
 import { getClient } from './client'

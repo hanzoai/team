@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
-import calendar from '@hanzo/calendar'
-import core, { type Class, type Doc } from '@hanzo/core'
-import serverNotification from '@hanzo/server-notification'
-import serverCalendar from '@hanzo/server-calendar'
-import serverCore, { type ObjectDDParticipant } from '@hanzo/server-core'
-import contact from '@hanzo/contact'
+import calendar from '@hanzoteam/calendar'
+import core, { type Class, type Doc } from '@hanzoteam/core'
+import serverNotification from '@hanzoteam/server-notification'
+import serverCalendar from '@hanzoteam/server-calendar'
+import serverCore, { type ObjectDDParticipant } from '@hanzoteam/server-core'
+import contact from '@hanzoteam/contact'
 
-export { serverCalendarId } from '@hanzo/server-calendar'
+export { serverCalendarId } from '@hanzoteam/server-calendar'
 
 export function createModel (builder: Builder): void {
   builder.mixin(calendar.class.Event, core.class.Class, serverNotification.mixin.HTMLPresenter, {

@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Employee } from '@hanzo/contact'
-import { type AttachedDoc, type Ref, type Timestamp } from '@hanzo/core'
+import type { Employee } from '@hanzoteam/contact'
+import { type AttachedDoc, type Ref, type Timestamp } from '@hanzoteam/core'
 
 /**
  * @public

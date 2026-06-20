@@ -1,5 +1,5 @@
 import { type Writable } from 'svelte/store'
-import { generateId } from '@hanzo/core'
+import { generateId } from '@hanzoteam/core'
 
 import { type Notification } from './Notification'
 import { NotificationPosition } from './NotificationPosition'

@@ -3,11 +3,11 @@
 //
 //
 
-import { Class, Doc, DocumentQuery, FindOptions, FindResult, Hierarchy, Ref, concatLink } from '@hanzo/core'
-import document, { Document, documentId } from '@hanzo/document'
-import { getMetadata } from '@hanzo/platform'
-import { workbenchId } from '@hanzo/workbench'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
+import { Class, Doc, DocumentQuery, FindOptions, FindResult, Hierarchy, Ref, concatLink } from '@hanzoteam/core'
+import document, { Document, documentId } from '@hanzoteam/document'
+import { getMetadata } from '@hanzoteam/platform'
+import { workbenchId } from '@hanzoteam/workbench'
+import serverCore, { TriggerControl } from '@hanzoteam/server-core'
 import slugify from 'slugify'
 
 function getDocumentId (doc: Document): string {

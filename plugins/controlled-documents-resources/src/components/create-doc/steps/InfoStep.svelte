@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { DropdownLabels, EditBox, Label, RadioGroup } from '@hanzo/ui'
-  import core, { type AttachedData, type Data } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { DropdownLabels, EditBox, Label, RadioGroup } from '@hanzoteam/ui'
+  import core, { type AttachedData, type Data } from '@hanzoteam/core'
+  import { translate } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     type Document,
     type ChangeControl,
@@ -26,7 +26,7 @@
     type DocumentTemplate,
     getDocumentId,
     TEMPLATE_PREFIX
-  } from '@hanzo/controlled-documents'
+  } from '@hanzoteam/controlled-documents'
 
   import IconWarning from '../../icons/IconWarning.svelte'
   import { $infoStep as infoStep, infoStepUpdated } from '../../../stores/wizards/create-document'

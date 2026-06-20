@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Timestamp } from '@hanzo/core'
-  import { closeTooltip, Label, resizeObserver } from '@hanzo/ui'
+  import { Timestamp } from '@hanzoteam/core'
+  import { closeTooltip, Label, resizeObserver } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import task from '../plugin'
-  import { TimestampPresenter } from '@hanzo/view-resources'
+  import { TimestampPresenter } from '@hanzoteam/view-resources'
 
   const dispatch = createEventDispatcher()
 

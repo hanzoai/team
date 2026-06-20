@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/core'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/core'
 
 import communication from './plugin'
 

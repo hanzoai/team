@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import serverCore from '@hanzo/server-core'
-import core from '@hanzo/core'
-import serverActivity from '@hanzo/server-activity'
-import serverNotification from '@hanzo/server-notification'
-import activity from '@hanzo/activity'
-import notification from '@hanzo/notification'
-import card from '@hanzo/card'
+import { type Builder } from '@hanzoteam/model'
+import serverCore from '@hanzoteam/server-core'
+import core from '@hanzoteam/core'
+import serverActivity from '@hanzoteam/server-activity'
+import serverNotification from '@hanzoteam/server-notification'
+import activity from '@hanzoteam/activity'
+import notification from '@hanzoteam/notification'
+import card from '@hanzoteam/card'
 
 export { activityServerOperation } from './migration'
-export { serverActivityId } from '@hanzo/server-activity'
+export { serverActivityId } from '@hanzoteam/server-activity'
 
 export function createModel (builder: Builder): void {
   builder.mixin(activity.class.DocUpdateMessage, core.class.Class, serverNotification.mixin.TextPresenter, {

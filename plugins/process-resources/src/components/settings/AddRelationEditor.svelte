@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Association, Ref, Relation } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Process, Step } from '@hanzo/process'
-  import { Label, tooltip } from '@hanzo/ui'
+  import core, { AnyAttribute, Association, Ref, Relation } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process, Step } from '@hanzoteam/process'
+  import { Label, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { getContext, getMockAttribute } from '../../utils'
   import ProcessAttribute from '../ProcessAttribute.svelte'

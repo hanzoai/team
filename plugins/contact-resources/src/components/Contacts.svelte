@@ -14,20 +14,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery } from '@hanzo/core'
-  import { ActionContext } from '@hanzo/presentation'
-  import { Button, Label, Loading, SearchEdit, showPopup } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { Doc, DocumentQuery } from '@hanzoteam/core'
+  import { ActionContext } from '@hanzoteam/presentation'
+  import { Button, Label, Loading, SearchEdit, showPopup } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzoteam/view'
   import {
     FilterBar,
     FilterButton,
     TableBrowser,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import contact from '../plugin'
   import CreateContact from './CreateContact.svelte'
-  // import { deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  // import { deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
 
   let search = ''
   let searchQuery: DocumentQuery<Doc> = {}

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { createQuery } from '@hanzo/presentation'
-  import { Process } from '@hanzo/process'
-  import { Separator, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
-  import { SpecialView } from '@hanzo/workbench-resources'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Process } from '@hanzoteam/process'
+  import { Separator, deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
   import { onDestroy } from 'svelte'
   import plugin from '../plugin'
   import { Special } from '../types'

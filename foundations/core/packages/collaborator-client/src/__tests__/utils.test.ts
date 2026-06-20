@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { CollaborativeDoc, Doc, Ref } from '@hanzo/core'
+import core, { CollaborativeDoc, Doc, Ref } from '@hanzoteam/core'
 import { encodeDocumentId, decodeDocumentId } from '../utils'
 
 describe('utils', () => {

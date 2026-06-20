@@ -17,7 +17,7 @@ module.exports = {
       testEnvironment: 'jsdom',
       testMatch: ['**/drawing.test.ts'],
       moduleNameMapper: {
-        '^@hanzo/platform-rig/profiles/ui/svelte$': `${SVELTE_MOCKS_PATH}/svelte-runtime.ts`,
+        '^@hanzoteam/platform-rig/profiles/ui/svelte$': `${SVELTE_MOCKS_PATH}/svelte-runtime.ts`,
         '^svelte/store$': `${SVELTE_MOCKS_PATH}/svelte-store.ts`,
         '^svelte/transition$': `${SVELTE_MOCKS_PATH}/svelte-transition.ts`,
         '^svelte/animate$': `${SVELTE_MOCKS_PATH}/svelte-animate.ts`,

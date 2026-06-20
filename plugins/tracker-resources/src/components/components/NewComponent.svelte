@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { EmployeeBox } from '@hanzo/contact-resources'
-  import { Data, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { Card, SpaceSelector, getClient } from '@hanzo/presentation'
-  import { StyledTextArea } from '@hanzo/text-editor-resources'
-  import { Component, Project } from '@hanzo/tracker'
-  import { EditBox } from '@hanzo/ui'
+  import { EmployeeBox } from '@hanzoteam/contact-resources'
+  import { Data, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Card, SpaceSelector, getClient } from '@hanzoteam/presentation'
+  import { StyledTextArea } from '@hanzoteam/text-editor-resources'
+  import { Component, Project } from '@hanzoteam/tracker'
+  import { EditBox } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../plugin'
   import ProjectPresenter from '../projects/ProjectPresenter.svelte'

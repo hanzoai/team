@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, type WorkspaceUuid } from '@hanzo/core'
+import { type MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
 import {
   QueueTopic,
   type ConsumerControl,
@@ -21,7 +21,7 @@ import {
   type ConsumerMessage,
   type PlatformQueue,
   type PlatformQueueProducer
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import { Kafka, Partitioners, type Consumer, type Producer, CompressionTypes } from 'kafkajs'
 import type * as tls from 'tls'
 

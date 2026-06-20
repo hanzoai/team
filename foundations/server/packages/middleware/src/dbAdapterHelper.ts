@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { withContext, type MeasureContext } from '@hanzo/core'
-import type { Middleware, PipelineContext } from '@hanzo/server-core'
-import { BaseMiddleware, DomainIndexHelperImpl } from '@hanzo/server-core'
+import { withContext, type MeasureContext } from '@hanzoteam/core'
+import type { Middleware, PipelineContext } from '@hanzoteam/server-core'
+import { BaseMiddleware, DomainIndexHelperImpl } from '@hanzoteam/server-core'
 
 /**
  * @public

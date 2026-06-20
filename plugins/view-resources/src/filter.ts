@@ -9,11 +9,11 @@ import core, {
   type ObjQueryType,
   type Ref,
   type RefTo
-} from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import { createQuery, getClient, type LiveQuery } from '@hanzo/presentation'
-import { getCurrentResolvedLocation, locationToUrl, type AnyComponent } from '@hanzo/ui'
-import { type Filter, type FilterMode, type FilteredView, type KeyFilter } from '@hanzo/view'
+} from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import { createQuery, getClient, type LiveQuery } from '@hanzoteam/presentation'
+import { getCurrentResolvedLocation, locationToUrl, type AnyComponent } from '@hanzoteam/ui'
+import { type Filter, type FilterMode, type FilteredView, type KeyFilter } from '@hanzoteam/view'
 import { get, writable } from 'svelte/store'
 import view from './plugin'
 

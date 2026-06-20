@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { type TagCategory } from '@hanzo/tags'
-import time, { timeId } from '@hanzo/time'
+import { type Ref } from '@hanzoteam/core'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import { type TagCategory } from '@hanzoteam/tags'
+import time, { timeId } from '@hanzoteam/time'
 
 export default mergeIds(timeId, time, {
   category: {

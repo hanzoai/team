@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Widget, WidgetPreference, WidgetType } from '@hanzo/workbench'
-  import { CheckBox, Grid, Modal } from '@hanzo/ui'
-  import core, { Ref } from '@hanzo/core'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import { Widget, WidgetPreference, WidgetType } from '@hanzoteam/workbench'
+  import { CheckBox, Grid, Modal } from '@hanzoteam/ui'
+  import core, { Ref } from '@hanzoteam/core'
+  import presentation, { createQuery, getClient } from '@hanzoteam/presentation'
   import { createEventDispatcher } from 'svelte'
 
   import WidgetPresenter from './WidgetPresenter.svelte'

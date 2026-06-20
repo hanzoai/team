@@ -14,12 +14,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import type { Class, DocumentQuery, Ref } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { Label, showPopup, ActionIcon, IconClose, IconAdd, Icon } from '@hanzo/ui'
-  import type { IconSize } from '@hanzo/ui'
-  import { ObjectPresenter } from '@hanzo/view-resources'
-  import documents, { type Document } from '@hanzo/controlled-documents'
+  import type { Class, DocumentQuery, Ref } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { Label, showPopup, ActionIcon, IconClose, IconAdd, Icon } from '@hanzoteam/ui'
+  import type { IconSize } from '@hanzoteam/ui'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
+  import documents, { type Document } from '@hanzoteam/controlled-documents'
 
   import documentsRes from '../plugin'
   import DocumentsPopup from './DocumentsPopup.svelte'

@@ -12,7 +12,7 @@ import {
   WorkspaceInfo,
   AccountInfo,
   IntegrationKind
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 
 export interface LoginInfo {
   account: AccountUuid

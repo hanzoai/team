@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { CodeForm, Icon, IconCheckmark, Label, Loading, Modal, ModernButton } from '@hanzo/ui'
-  import presentation from '@hanzo/presentation'
-  import { getEmbeddedLabel, getMetadata, IntlString } from '@hanzo/platform'
-  import { concatLink, getCurrentAccount } from '@hanzo/core'
+  import { CodeForm, Icon, IconCheckmark, Label, Loading, Modal, ModernButton } from '@hanzoteam/ui'
+  import presentation from '@hanzoteam/presentation'
+  import { getEmbeddedLabel, getMetadata, IntlString } from '@hanzoteam/platform'
+  import { concatLink, getCurrentAccount } from '@hanzoteam/core'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import telegram from '../plugin'

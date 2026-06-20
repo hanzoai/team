@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import {} from '@hanzo/notification'
-import type { Doc, Ref, Space } from '@hanzo/core'
-import { mergeIds, type IntlString } from '@hanzo/platform'
-import { type TagCategory } from '@hanzo/tags'
-import { taskId } from '@hanzo/task'
-import task from '@hanzo/task-resources/src/plugin'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import type { Action, ActionCategory, ViewAction, Viewlet } from '@hanzo/view'
+import {} from '@hanzoteam/notification'
+import type { Doc, Ref, Space } from '@hanzoteam/core'
+import { mergeIds, type IntlString } from '@hanzoteam/platform'
+import { type TagCategory } from '@hanzoteam/tags'
+import { taskId } from '@hanzoteam/task'
+import task from '@hanzoteam/task-resources/src/plugin'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import type { Action, ActionCategory, ViewAction, Viewlet } from '@hanzoteam/view'
 
 export default mergeIds(taskId, task, {
   action: {

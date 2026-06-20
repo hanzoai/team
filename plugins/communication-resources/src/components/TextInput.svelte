@@ -11,12 +11,12 @@
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
 <script lang="ts">
-  import { Markup, type Blob, type Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { areEqualMarkups, EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
-  import { TextEditorHandler } from '@hanzo/text-editor'
-  import { TextEditor } from '@hanzo/text-editor-resources'
-  import { Button, ButtonIcon, handler, IconComponent, IconSend, registerFocus } from '@hanzo/ui'
+  import { Markup, type Blob, type Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { areEqualMarkups, EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
+  import { TextEditorHandler } from '@hanzoteam/text-editor'
+  import { TextEditor } from '@hanzoteam/text-editor-resources'
+  import { Button, ButtonIcon, handler, IconComponent, IconSend, registerFocus } from '@hanzoteam/ui'
   import { FocusPosition } from '@tiptap/core'
   import { EditorView } from '@tiptap/pm/view'
   import { createEventDispatcher } from 'svelte'

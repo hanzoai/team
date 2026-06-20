@@ -1,4 +1,4 @@
-import { type IntlString } from '@hanzo/platform'
+import { type IntlString } from '@hanzoteam/platform'
 import { derived, get } from 'svelte/store'
 import type { AnyComponent, AnySvelteComponent, LabelAndProps, TooltipAlignment } from './types'
 import { modalStore } from './modals'

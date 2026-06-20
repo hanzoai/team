@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { AttachedDoc, Ref, WithLookup } from '@hanzo/core'
-  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
-  import { getMetadata } from '@hanzo/platform'
-  import presentation, { NavLink, getClient, isAdminUser, MessageBox } from '@hanzo/presentation'
-  import tracker, { Project } from '@hanzo/tracker'
+  import { AttachedDoc, Ref, WithLookup } from '@hanzoteam/core'
+  import { GithubIntegration, GithubIntegrationRepository, GithubProject } from '@hanzoteam/github'
+  import { getMetadata } from '@hanzoteam/platform'
+  import presentation, { NavLink, getClient, isAdminUser, MessageBox } from '@hanzoteam/presentation'
+  import tracker, { Project } from '@hanzoteam/tracker'
   import ui, {
     Action,
     Button,
@@ -17,9 +17,9 @@
     TimeSince,
     getEventPositionElement,
     showPopup
-  } from '@hanzo/ui'
-  import { ObjectPresenter } from '@hanzo/view-resources'
-  import { Analytics } from '@hanzo/analytics'
+  } from '@hanzoteam/ui'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
+  import { Analytics } from '@hanzoteam/analytics'
 
   import github from '../plugin'
   import ConnectProject from './ConnectProject.svelte'

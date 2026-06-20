@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import core, { type Blob, type Ref, DOMAIN_BLOB, generateId, toIdMap } from '@hanzo/core'
-import type { File, FileVersion, Resource } from '@hanzo/drive'
+import core, { type Blob, type Ref, DOMAIN_BLOB, generateId, toIdMap } from '@hanzoteam/core'
+import type { File, FileVersion, Resource } from '@hanzoteam/drive'
 import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient,
   tryMigrate,
   tryUpgrade
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 
 import drive, { DOMAIN_DRIVE, driveId } from './index'
 

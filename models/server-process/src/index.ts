@@ -11,13 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import cardPlugin from '@hanzo/card'
-import core, { type Doc } from '@hanzo/core'
-import { Mixin, type Builder } from '@hanzo/model'
-import { TMethod, TProcessFunction, TTrigger } from '@hanzo/model-process'
-import type { Resource } from '@hanzo/platform'
-import process, { ExecutionStatus } from '@hanzo/process'
-import serverCore from '@hanzo/server-core'
+import cardPlugin from '@hanzoteam/card'
+import core, { type Doc } from '@hanzoteam/core'
+import { Mixin, type Builder } from '@hanzoteam/model'
+import { TMethod, TProcessFunction, TTrigger } from '@hanzoteam/model-process'
+import type { Resource } from '@hanzoteam/platform'
+import process, { ExecutionStatus } from '@hanzoteam/process'
+import serverCore from '@hanzoteam/server-core'
 import serverProcess, {
   type RollbackFunc,
   type ExecuteFunc,
@@ -26,9 +26,9 @@ import serverProcess, {
   type TransformFunc,
   type TriggerImpl,
   type CheckFunc
-} from '@hanzo/server-process'
+} from '@hanzoteam/server-process'
 
-export { serverProcessId } from '@hanzo/server-process'
+export { serverProcessId } from '@hanzoteam/server-process'
 
 @Mixin(serverProcess.mixin.MethodImpl, process.class.Method)
 export class TMethodImpl extends TMethod implements MethodImpl<Doc> {

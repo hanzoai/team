@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { translate } from '@hanzo/platform'
-  import { ExecutionError } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { translate } from '@hanzoteam/platform'
+  import { ExecutionError } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
 
   export let value: ExecutionError[]
 

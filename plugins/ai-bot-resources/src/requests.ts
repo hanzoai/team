@@ -19,11 +19,11 @@ import {
   type SummarizeMessagesResponse,
   type TranslateRequest,
   type TranslateResponse
-} from '@hanzo/ai-bot'
-import { type Class, concatLink, type Doc, type Markup, type Ref } from '@hanzo/core'
-import { type Room, type RoomLanguage } from '@hanzo/love'
-import { getMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+} from '@hanzoteam/ai-bot'
+import { type Class, concatLink, type Doc, type Markup, type Ref } from '@hanzoteam/core'
+import { type Room, type RoomLanguage } from '@hanzoteam/love'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
 
 import aiBot from './plugin'
 

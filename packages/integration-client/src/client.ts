@@ -20,8 +20,8 @@ import {
   IntegrationKey,
   IntegrationSecret,
   type AccountClient
-} from '@hanzo/account-client'
-import { IntegrationKind, PersonId, WorkspaceUuid } from '@hanzo/core'
+} from '@hanzoteam/account-client'
+import { IntegrationKind, PersonId, WorkspaceUuid } from '@hanzoteam/core'
 import { v4 as uuid } from 'uuid'
 
 import { IntegrationClient, IntegrationEventData, IntegrationUpdatedData, IntegrationErrorData } from './types'

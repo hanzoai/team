@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import activity, { type DocUpdateMessage } from '@hanzo/activity'
+import activity, { type DocUpdateMessage } from '@hanzoteam/activity'
 import {
   DOMAIN_MODEL_TX,
   DOMAIN_SEQUENCE,
@@ -30,7 +30,7 @@ import {
   type Status,
   type TxCreateDoc,
   type TxUpdateDoc
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   createOrUpdate,
   migrateSpace,
@@ -41,10 +41,10 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   type ModelLogger
-} from '@hanzo/model'
-import { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
-import core, { DOMAIN_SPACE } from '@hanzo/model-core'
-import tags from '@hanzo/model-tags'
+} from '@hanzoteam/model'
+import { DOMAIN_ACTIVITY } from '@hanzoteam/model-activity'
+import core, { DOMAIN_SPACE } from '@hanzoteam/model-core'
+import tags from '@hanzoteam/model-tags'
 import {
   taskId,
   type Project,
@@ -53,7 +53,7 @@ import {
   type ProjectTypeDescriptor,
   type Task,
   type TaskType
-} from '@hanzo/task'
+} from '@hanzoteam/task'
 
 import { DOMAIN_TASK } from '.'
 import task from './plugin'

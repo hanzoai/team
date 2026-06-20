@@ -14,8 +14,8 @@
 //
 
 import postgres from 'postgres'
-import { AccountUuid, Ref, WorkspaceUuid } from '@hanzo/core'
-import { ActivityMessage } from '@hanzo/activity'
+import { AccountUuid, Ref, WorkspaceUuid } from '@hanzoteam/core'
+import { ActivityMessage } from '@hanzoteam/activity'
 
 import config from './config'
 import { ChannelId, ChannelRecord, MessageRecord, OtpRecord, ReplyRecord } from './types'

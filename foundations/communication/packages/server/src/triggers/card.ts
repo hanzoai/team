@@ -20,8 +20,8 @@ import {
   type Event,
   UpdateCardTypeEvent,
   RemoveCardEvent
-} from '@hanzo/communication-sdk-types'
-import { type ActivityTypeUpdate, ActivityUpdateType, MessageType } from '@hanzo/communication-types'
+} from '@hanzoteam/communication-sdk-types'
+import { type ActivityTypeUpdate, ActivityUpdateType, MessageType } from '@hanzoteam/communication-types'
 
 import type { Enriched, TriggerCtx, TriggerFn, Triggers } from '../types'
 

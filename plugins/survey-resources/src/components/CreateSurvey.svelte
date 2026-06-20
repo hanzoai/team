@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { Data, generateId } from '@hanzo/core'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { Survey } from '@hanzo/survey'
-  import { createFocusManager, EditBox, FocusHandler } from '@hanzo/ui'
+  import { Data, generateId } from '@hanzoteam/core'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { Survey } from '@hanzoteam/survey'
+  import { createFocusManager, EditBox, FocusHandler } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import survey from '../plugin'
 

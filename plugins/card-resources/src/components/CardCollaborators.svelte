@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, Person } from '@hanzo/contact'
-  import { ButtonIcon, IconDelete, ModernButton, Scroller } from '@hanzo/ui'
-  import { employeeByIdStore, IconAddMember, UserDetails } from '@hanzo/contact-resources'
-  import { notEmpty, Ref } from '@hanzo/core'
+  import { Employee, Person } from '@hanzoteam/contact'
+  import { ButtonIcon, IconDelete, ModernButton, Scroller } from '@hanzoteam/ui'
+  import { employeeByIdStore, IconAddMember, UserDetails } from '@hanzoteam/contact-resources'
+  import { notEmpty, Ref } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
 
   import card from '../plugin'

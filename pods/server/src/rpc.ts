@@ -1,11 +1,11 @@
-import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzoteam/account-client'
 import contact, {
   AvatarType,
   combineName,
   type Person,
   type SocialIdentity,
   type SocialIdentityRef
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import core, {
   buildSocialIdString,
   generateId,
@@ -24,10 +24,10 @@ import core, {
   type SearchQuery,
   type TxCUD,
   type TxDomainEvent
-} from '@hanzo/core'
-import { rpcJSONReplacer, type RateLimitInfo } from '@hanzo/rpc'
-import type { ClientSessionCtx, ConnectionSocket, Session, SessionManager } from '@hanzo/server-core'
-import { decodeToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { rpcJSONReplacer, type RateLimitInfo } from '@hanzoteam/rpc'
+import type { ClientSessionCtx, ConnectionSocket, Session, SessionManager } from '@hanzoteam/server-core'
+import { decodeToken } from '@hanzoteam/server-token'
 
 import { createHash } from 'crypto'
 import { type Express, type Response as ExpressResponse, type Request } from 'express'
@@ -37,7 +37,7 @@ import { promisify } from 'util'
 import { gzip } from 'zlib'
 import { retrieveJson } from './utils'
 
-import { unknownError } from '@hanzo/platform'
+import { unknownError } from '@hanzoteam/platform'
 
 export const COMMUNICATION_DOMAIN = 'communication' as OperationDomain
 interface RPCClientInfo {
@@ -453,7 +453,7 @@ export function registerRPC (app: Express, sessions: SessionManager, ctx: Measur
     })
   })
 
-  // To use in non-js (rust) clients that can't link to @hanzo/core
+  // To use in non-js (rust) clients that can't link to @hanzoteam/core
   app.get('/api/v1/generate-id/:workspaceId', (req, res) => {
     void withSession(req, res, 'generateId', async (ctx, session, rateLimit) => {
       const result = { id: generateId() }

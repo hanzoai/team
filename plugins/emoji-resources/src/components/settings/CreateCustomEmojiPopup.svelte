@@ -1,12 +1,12 @@
 <script lang="ts">
-  import core from '@hanzo/core'
-  import { Button, EditBox, Label, Modal, showPopup } from '@hanzo/ui'
+  import core from '@hanzoteam/core'
+  import { Button, EditBox, Label, Modal, showPopup } from '@hanzoteam/ui'
 
   import { getEmojiByShortCode } from '../../utils'
-  import emojiPlugin, { shortcodeRegex } from '@hanzo/emoji'
+  import emojiPlugin, { shortcodeRegex } from '@hanzoteam/emoji'
   import { createEventDispatcher } from 'svelte'
-  import { getClient, MessageBox, uploadFile } from '@hanzo/presentation'
-  import { IntlString } from '@hanzo/platform'
+  import { getClient, MessageBox, uploadFile } from '@hanzoteam/presentation'
+  import { IntlString } from '@hanzoteam/platform'
 
   const client = getClient()
   const dispatch = createEventDispatcher()

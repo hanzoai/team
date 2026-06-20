@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, mergeQueries, Ref, Space, WithLookup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { Project, ProjectType, ProjectTypeDescriptor } from '@hanzo/task'
-  import { AnyComponent, Button, Component, IconAdd, Loading, SearchInput, showPopup, Header } from '@hanzo/ui'
-  import { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { Class, Doc, DocumentQuery, mergeQueries, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Project, ProjectType, ProjectTypeDescriptor } from '@hanzoteam/task'
+  import { AnyComponent, Button, Component, IconAdd, Loading, SearchInput, showPopup, Header } from '@hanzoteam/ui'
+  import { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions } from '@hanzoteam/view'
   import {
     FilterBar,
     FilterButton,
     getResultOptions,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { selectedTaskTypeStore, selectedTypeStore, taskTypeStore } from '..'
   import task from '../plugin'
   import TypeSelector from './TypeSelector.svelte'

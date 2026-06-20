@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import core, { type Ref, type SpaceType, type SpaceTypeDescriptor } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { type DropdownTextItem, ButtonKind, ButtonSize, DropdownLabels } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import core, { type Ref, type SpaceType, type SpaceTypeDescriptor } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { type DropdownTextItem, ButtonKind, ButtonSize, DropdownLabels } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   export let descriptors: Ref<SpaceTypeDescriptor>[]
   export let type: Ref<SpaceType> | undefined = undefined

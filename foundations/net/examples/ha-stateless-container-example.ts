@@ -16,9 +16,9 @@
  * // cd examples && rushx run:ha
  */
 
-import { AgentImpl, containerUuid as generateContainerUuid, TickManagerImpl, containerOnAgentEndpointRef, NetworkImpl } from '@hanzo/network-core'
-import { createNetworkClient, type StatelessContainersFactory, NetworkAgentServer } from '@hanzo/network-client'
-import { NetworkServer } from '@hanzo/network-server'
+import { AgentImpl, containerUuid as generateContainerUuid, TickManagerImpl, containerOnAgentEndpointRef, NetworkImpl } from '@hanzoteam/network-core'
+import { createNetworkClient, type StatelessContainersFactory, NetworkAgentServer } from '@hanzoteam/network-client'
+import { NetworkServer } from '@hanzoteam/network-server'
 import type { 
   Container, 
   ContainerUuid, 
@@ -27,7 +27,7 @@ import type {
   AgentEndpointRef,
   ClientUuid,
   GetOptions
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 
 // Example stateless container implementation
 class HAServiceContainer implements Container {

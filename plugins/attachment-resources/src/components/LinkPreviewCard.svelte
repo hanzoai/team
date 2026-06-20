@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import presentation from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import { LinkPreviewData } from '../types'

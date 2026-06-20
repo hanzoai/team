@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { retry } from '@hanzo/communication-shared'
-import { StorageAdapter, UploadedObjectInfo } from '@hanzo/server-core'
-import { MeasureContext } from '@hanzo/core'
-import { BlobID, WorkspaceID } from '@hanzo/communication-types'
+import { retry } from '@hanzoteam/communication-shared'
+import { StorageAdapter, UploadedObjectInfo } from '@hanzoteam/server-core'
+import { MeasureContext } from '@hanzoteam/core'
+import { BlobID, WorkspaceID } from '@hanzoteam/communication-types'
 import { type Readable } from 'stream'
 
 export async function getFile (

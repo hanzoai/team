@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 import emojiPlugin from './plugin'
-import { Model, Prop, ReadOnly, TypeRef, TypeString } from '@hanzo/model'
-import core, { TDoc } from '@hanzo/model-core'
-import type { Ref, Blob, Domain } from '@hanzo/core'
-import { type CustomEmoji } from '@hanzo/emoji'
+import { Model, Prop, ReadOnly, TypeRef, TypeString } from '@hanzoteam/model'
+import core, { TDoc } from '@hanzoteam/model-core'
+import type { Ref, Blob, Domain } from '@hanzoteam/core'
+import { type CustomEmoji } from '@hanzoteam/emoji'
 
 export const DOMAIN_EMOJI = 'emoji' as Domain
 

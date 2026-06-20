@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card, CardSpace, FavoriteCard, MasterTag } from '@hanzo/card'
-  import { Ref, WithLookup } from '@hanzo/core'
-  import { createQuery, createNotificationContextsQuery, getClient } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { Label, NotificationContext, NotificationType, SortingOrder } from '@hanzo/communication-types'
-  import { NavGroup } from '@hanzo/ui'
-  import preference from '@hanzo/preference'
+  import cardPlugin, { Card, CardSpace, FavoriteCard, MasterTag } from '@hanzoteam/card'
+  import { Ref, WithLookup } from '@hanzoteam/core'
+  import { createQuery, createNotificationContextsQuery, getClient } from '@hanzoteam/presentation'
+  import view from '@hanzoteam/view'
+  import { Label, NotificationContext, NotificationType, SortingOrder } from '@hanzoteam/communication-types'
+  import { NavGroup } from '@hanzoteam/ui'
+  import preference from '@hanzoteam/preference'
   import { createEventDispatcher } from 'svelte'
-  import { labelsStore } from '@hanzo/communication-resources'
+  import { labelsStore } from '@hanzoteam/communication-resources'
 
   import type { CardsNavigatorConfig } from '../../types'
   import NavigatorCard from './NavigatorCard.svelte'

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getClient, type SubscriptionType, type AccountClient } from '@hanzo/account-client'
+import { getClient, type SubscriptionType, type AccountClient } from '@hanzoteam/account-client'
 
 /**
  * Get account client for service operations

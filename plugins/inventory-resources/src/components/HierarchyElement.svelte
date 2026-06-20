@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref, getObjectValue } from '@hanzo/core'
-  import inventory, { Category } from '@hanzo/inventory'
-  import { IconMoreV } from '@hanzo/ui'
-  import { AttributeModel } from '@hanzo/view'
-  import { showMenu } from '@hanzo/view-resources'
+  import { Doc, Ref, getObjectValue } from '@hanzoteam/core'
+  import inventory, { Category } from '@hanzoteam/inventory'
+  import { IconMoreV } from '@hanzoteam/ui'
+  import { AttributeModel } from '@hanzoteam/view'
+  import { showMenu } from '@hanzoteam/view-resources'
   import HierarchyElement from './HierarchyElement.svelte'
   import Collapse from './icons/Collapse.svelte'
   import Expand from './icons/Expand.svelte'

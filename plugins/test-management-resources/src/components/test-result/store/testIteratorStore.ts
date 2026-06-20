@@ -20,8 +20,8 @@ import {
   type IteratorParams,
   ObjectIteratorProvider,
   getDefaultIteratorState
-} from '@hanzo/view-resources'
-import testManagement, { type TestResult } from '@hanzo/test-management'
+} from '@hanzoteam/view-resources'
+import testManagement, { type TestResult } from '@hanzoteam/test-management'
 
 export const testIteratorStore = writable<IteratorState<TestResult>>(getDefaultIteratorState<TestResult>({}))
 

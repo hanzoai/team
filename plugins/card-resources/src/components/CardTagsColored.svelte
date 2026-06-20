@@ -12,11 +12,11 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Class, ClassifierKind, Doc, Mixin, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Card, MasterTag, Tag } from '@hanzo/card'
+  import { Class, ClassifierKind, Doc, Mixin, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Card, MasterTag, Tag } from '@hanzoteam/card'
   import { onMount, onDestroy } from 'svelte'
-  import { tooltip } from '@hanzo/ui'
+  import { tooltip } from '@hanzoteam/ui'
   import CardTagColored from './CardTagColored.svelte'
   import TagsPopup from './TagsPopup.svelte'
 

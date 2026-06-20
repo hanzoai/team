@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Component, Label, Loading, Progress, Toggle } from '@hanzo/ui'
+  import { Component, Label, Loading, Progress, Toggle } from '@hanzoteam/ui'
   import love from '../../plugin'
   import { myPreferences } from '../../stores'
   import { blurProcessor, updateBlurRadius } from '../../utils'
-  import mediaPlugin, { getMediaDevices } from '@hanzo/media'
+  import mediaPlugin, { getMediaDevices } from '@hanzoteam/media'
 
   $: blurRadius = $myPreferences?.blurRadius ?? 0
 </script>

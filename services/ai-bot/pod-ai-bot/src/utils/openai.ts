@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { AccountUuid, MeasureContext, Ref, WorkspaceUuid } from '@hanzo/core'
-import { countTokens } from '@hanzo/openai'
+import { AccountUuid, MeasureContext, Ref, WorkspaceUuid } from '@hanzoteam/core'
+import { countTokens } from '@hanzoteam/openai'
 import { Tiktoken } from 'js-tiktoken'
 import OpenAI from 'openai'
 
-import { PersonMessage } from '@hanzo/ai-bot'
-import contact, { Contact } from '@hanzo/contact'
+import { PersonMessage } from '@hanzoteam/ai-bot'
+import contact, { Contact } from '@hanzoteam/contact'
 import config from '../config'
 import { HistoryRecord } from '../types'
 import { WorkspaceClient } from '../workspace/workspaceClient'

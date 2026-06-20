@@ -3,12 +3,12 @@
 //
 //
 
-import client, { ClientSocket } from '@hanzo/client'
-import clientResources from '@hanzo/client-resources'
-import { Client, ClientConnectEvent, systemAccountUuid, WorkspaceUuid, type MeasureContext } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
+import client, { ClientSocket } from '@hanzoteam/client'
+import clientResources from '@hanzoteam/client-resources'
+import { Client, ClientConnectEvent, systemAccountUuid, WorkspaceUuid, type MeasureContext } from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
+import { getTransactorEndpoint } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
 import WebSocket from 'ws'
 import config from './config'
 

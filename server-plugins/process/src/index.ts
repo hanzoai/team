@@ -1,8 +1,8 @@
-import { Doc, Mixin, Ref } from '@hanzo/core'
-import type { Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { Execution, Method, ProcessFunction, Trigger } from '@hanzo/process'
-import { TriggerFunc } from '@hanzo/server-core'
+import { Doc, Mixin, Ref } from '@hanzoteam/core'
+import type { Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { Execution, Method, ProcessFunction, Trigger } from '@hanzoteam/process'
+import { TriggerFunc } from '@hanzoteam/server-core'
 import { ExecuteFunc, ProcessControl, RollbackFunc, TransformFunc } from './types'
 
 export * from './types'

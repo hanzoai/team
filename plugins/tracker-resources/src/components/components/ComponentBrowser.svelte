@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, WithLookup } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { isCreateAllowed } from '@hanzo/presentation'
-  import { Component } from '@hanzo/tracker'
-  import { Button, IconAdd, Breadcrumbs, SearchInput, showPopup, Header } from '@hanzo/ui'
-  import { ViewOptions, Viewlet } from '@hanzo/view'
-  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
+  import { DocumentQuery, WithLookup } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { isCreateAllowed } from '@hanzoteam/presentation'
+  import { Component } from '@hanzoteam/tracker'
+  import { Button, IconAdd, Breadcrumbs, SearchInput, showPopup, Header } from '@hanzoteam/ui'
+  import { ViewOptions, Viewlet } from '@hanzoteam/view'
+  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hanzoteam/view-resources'
   import tracker from '../../plugin'
   import { ComponentsFilterMode, activeProjects, componentsTitleMap } from '../../utils'
   import ComponentsContent from './ComponentsContent.svelte'

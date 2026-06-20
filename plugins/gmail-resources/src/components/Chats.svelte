@@ -15,12 +15,12 @@
 -->
 <script lang="ts">
   /* eslint-disable @typescript-eslint/no-unused-vars */
-  import { Channel, Contact } from '@hanzo/contact'
-  import { Ref, SortingOrder } from '@hanzo/core'
-  import { Message, SharedMessage } from '@hanzo/gmail'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import plugin, { Button, Icon, IconShare, Label, Scroller } from '@hanzo/ui'
+  import { Channel, Contact } from '@hanzoteam/contact'
+  import { Ref, SortingOrder } from '@hanzoteam/core'
+  import { Message, SharedMessage } from '@hanzoteam/gmail'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import plugin, { Button, Icon, IconShare, Label, Scroller } from '@hanzoteam/ui'
 
   import gmail from '../plugin'
   import { convertMessages } from '../utils'

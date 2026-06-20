@@ -14,15 +14,15 @@
 // limitations under the License.
 //
 
-import { AccountClient, getClient as getAccountClientRaw, isWorkspaceLoginInfo } from '@hanzo/account-client'
-import { generateId, newMetrics, type WorkspaceIds } from '@hanzo/core'
-import { initStatisticsContext, StorageConfiguration } from '@hanzo/server-core'
-import { buildStorageFromConfig } from '@hanzo/server-storage'
+import { AccountClient, getClient as getAccountClientRaw, isWorkspaceLoginInfo } from '@hanzoteam/account-client'
+import { generateId, newMetrics, type WorkspaceIds } from '@hanzoteam/core'
+import { initStatisticsContext, StorageConfiguration } from '@hanzoteam/server-core'
+import { buildStorageFromConfig } from '@hanzoteam/server-storage'
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type Response } from 'express'
 import { type Server } from 'http'
 
-import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
 import { join } from 'path'
 import { extractBranding, type Branding, type BrandingMap } from './branding'
 import config from './config'

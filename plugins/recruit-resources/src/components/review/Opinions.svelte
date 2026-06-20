@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hanzo/core'
-  import { Button, IconAdd, Label, showPopup } from '@hanzo/ui'
-  import { Table } from '@hanzo/view-resources'
+  import type { Doc, Ref } from '@hanzoteam/core'
+  import { Button, IconAdd, Label, showPopup } from '@hanzoteam/ui'
+  import { Table } from '@hanzoteam/view-resources'
   import recruit from '../../plugin'
   import FileDuo from '../icons/FileDuo.svelte'
   import SectionEmpty from '../SectionEmpty.svelte'

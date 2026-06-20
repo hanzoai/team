@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MediaInfo, updateSelectedCamId } from '@hanzo/media'
-  import { Label } from '@hanzo/ui'
+  import { MediaInfo, updateSelectedCamId } from '@hanzoteam/media'
+  import { Label } from '@hanzoteam/ui'
 
   import media from '../plugin'
   import { camAccess, state, sessions } from '../stores'

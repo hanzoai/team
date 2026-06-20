@@ -3,8 +3,8 @@
 -->
 
 <script lang="ts">
-  import type { Training, TrainingRequest } from '@hanzo/training'
-  import { AttributeBarEditor, Card, createQuery, KeyedAttribute } from '@hanzo/presentation'
+  import type { Training, TrainingRequest } from '@hanzoteam/training'
+  import { AttributeBarEditor, Card, createQuery, KeyedAttribute } from '@hanzoteam/presentation'
   import training from '../plugin'
   import { canChangeTrainingRequestOwner, changeTrainingRequestOwner } from '../utils'
   import PanelTitle from './PanelTitle.svelte'

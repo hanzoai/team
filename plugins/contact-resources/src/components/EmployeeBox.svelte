@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, Person } from '@hanzo/contact'
-  import type { Class, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
-  import { ButtonKind, ButtonSize, IconSize, LabelAndProps } from '@hanzo/ui'
+  import contact, { Employee, Person } from '@hanzoteam/contact'
+  import type { Class, DocumentQuery, FindOptions, Ref } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import presentation from '@hanzoteam/presentation'
+  import { ButtonKind, ButtonSize, IconSize, LabelAndProps } from '@hanzoteam/ui'
   import UserBox from './UserBox.svelte'
   import IconPerson from './icons/Person.svelte'
 

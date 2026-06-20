@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { RelatedContext, SelectedContext } from '@hanzo/process'
-  import { Label, resizeObserver, Scroller } from '@hanzo/ui'
+  import { AnyAttribute } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { RelatedContext, SelectedContext } from '@hanzoteam/process'
+  import { Label, resizeObserver, Scroller } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { getRelationReduceFunc, getValueReduceFunc } from '../../utils'
 

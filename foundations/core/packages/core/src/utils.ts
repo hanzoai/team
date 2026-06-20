@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getEmbeddedLabel, getMetadata, type IntlString } from '@hanzo/platform'
+import { getEmbeddedLabel, getMetadata, type IntlString } from '@hanzoteam/platform'
 import { deepEqual } from 'fast-equals'
 import { DOMAIN_BENCHMARK } from './benchmark'
 import {
@@ -992,7 +992,7 @@ export function unique<T> (arr: T[]): T[] {
 export function uniqueNotEmpty<T extends NonNullable<unknown>> (arr: Array<T | undefined | null>): T[] {
   return unique(arr).filter(notEmpty)
 }
-export { platformNow, platformNowDiff } from '@hanzo/measurements'
+export { platformNow, platformNowDiff } from '@hanzoteam/measurements'
 
 export interface PermissionsGrant {
   spaces?: Ref<Space>[]

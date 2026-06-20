@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Data, generateId, Ref } from '@hanzo/core'
-  import { Document, DocumentEvents, Teamspace } from '@hanzo/document'
-  import { IconWithEmoji, Card, getClient, SpaceSelector } from '@hanzo/presentation'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { Data, generateId, Ref } from '@hanzoteam/core'
+  import { Document, DocumentEvents, Teamspace } from '@hanzoteam/document'
+  import { IconWithEmoji, Card, getClient, SpaceSelector } from '@hanzoteam/presentation'
   import {
     Button,
     createFocusManager,
@@ -27,9 +27,9 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { IconPicker, ObjectBox } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { IconPicker, ObjectBox } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import document from '../plugin'

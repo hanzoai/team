@@ -1,6 +1,6 @@
-import type { MeasureContext, Metrics } from '@hanzo/core'
-import { concatLink, MeasureMetricsContext, newMetrics, systemAccountUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+import type { MeasureContext, Metrics } from '@hanzoteam/core'
+import { concatLink, MeasureMetricsContext, newMetrics, systemAccountUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 import os from 'os'
 
 export interface MemoryStatistics {

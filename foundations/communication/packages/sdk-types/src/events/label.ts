@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { CardID, LabelID, CardType, AccountUuid } from '@hanzo/communication-types'
+import type { CardID, LabelID, CardType, AccountUuid } from '@hanzoteam/communication-types'
 import type { BaseEvent } from './common'
 
 export enum LabelEventType {

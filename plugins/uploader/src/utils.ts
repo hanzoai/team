@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Client, type DocumentQuery } from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
+import { Client, type DocumentQuery } from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
 
 import uploader from './plugin'
 import type { FileUploadOptions, FileUploadPopupOptions, FileWithPath, UploadHandlerDefinition } from './types'

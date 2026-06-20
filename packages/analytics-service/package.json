@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/analytics-service",
+  "name": "@hanzoteam/analytics-service",
   "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -38,9 +38,9 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/analytics": "^0.6.4",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/analytics": "^0.6.4",
     "winston": "^3.11.0",
     "winston-daily-rotate-file": "^5.0.0",
     "@sentry/node": "^8.52.1"

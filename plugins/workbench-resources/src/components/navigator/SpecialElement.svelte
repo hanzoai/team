@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import type { Action } from '@hanzo/ui'
-  import { ButtonIcon, NavItem } from '@hanzo/ui'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import type { Action } from '@hanzoteam/ui'
+  import { ButtonIcon, NavItem } from '@hanzoteam/ui'
 
   export let icon: Asset | undefined = undefined
   export let iconProps: Record<string, any> | undefined = undefined

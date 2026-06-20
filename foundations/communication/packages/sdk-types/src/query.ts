@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Window } from '@hanzo/communication-types'
+import type { Window } from '@hanzoteam/communication-types'
 
 export type PagedQueryCallback<T> = (window: Window<T>) => void
 export type QueryCallback<T> = (result: T[]) => void

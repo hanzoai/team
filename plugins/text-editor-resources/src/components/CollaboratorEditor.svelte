@@ -15,11 +15,11 @@
 //
 -->
 <script lang="ts">
-  import { type Doc } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { KeyedAttribute } from '@hanzo/presentation'
-  import textEditor, { CollaborationUser, TextEditorCommandHandler } from '@hanzo/text-editor'
-  import { AnySvelteComponent, IconSize, registerFocus } from '@hanzo/ui'
+  import { type Doc } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { KeyedAttribute } from '@hanzoteam/presentation'
+  import textEditor, { CollaborationUser, TextEditorCommandHandler } from '@hanzoteam/text-editor'
+  import { AnySvelteComponent, IconSize, registerFocus } from '@hanzoteam/ui'
   import { FocusPosition } from '@tiptap/core'
 
   import { EditorKitOptions } from '../kits/editor-kit'

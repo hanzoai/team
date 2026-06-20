@@ -16,13 +16,13 @@
 -->
 
 <script lang="ts">
-  import { Class, Ref, type WithLookup } from '@hanzo/core'
-  import { Panel } from '@hanzo/panel'
-  import { ActionContext, createQuery } from '@hanzo/presentation'
-  import { Button, IconMoreH, navigate, type IModeSelector, rawLocation } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { showMenu } from '@hanzo/view-resources'
-  import { type Training, type TrainingAttempt, type TrainingRequest } from '@hanzo/training'
+  import { Class, Ref, type WithLookup } from '@hanzoteam/core'
+  import { Panel } from '@hanzoteam/panel'
+  import { ActionContext, createQuery } from '@hanzoteam/presentation'
+  import { Button, IconMoreH, navigate, type IModeSelector, rawLocation } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { showMenu } from '@hanzoteam/view-resources'
+  import { type Training, type TrainingAttempt, type TrainingRequest } from '@hanzoteam/training'
   import training from '../plugin'
   import { MyResultsRouteTab, myResultsRoute } from '../routing/routes/myResultsRoute'
   import { TrainingAttemptRouteTab, trainingAttemptRoute } from '../routing/routes/trainingAttemptRoute'

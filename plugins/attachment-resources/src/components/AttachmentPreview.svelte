@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
-  import { BlobType, WithLookup } from '@hanzo/core'
-  import { ListSelectionProvider } from '@hanzo/view-resources'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { BlobType, WithLookup } from '@hanzoteam/core'
+  import { ListSelectionProvider } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { AttachmentImageSize } from '../types'
   import { getType, isAttachment, showAttachmentPreviewPopup } from '../utils'

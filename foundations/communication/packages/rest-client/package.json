@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/communication-rest-client",
+  "name": "@hanzoteam/communication-rest-client",
   "version": "0.7.12",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -20,7 +20,7 @@
     "clean": "rm -rf lib && rm -rf types rm -rf node_modules"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "esbuild": "^0.25.10",
@@ -37,10 +37,10 @@
     "@types/snappyjs": "^0.7.1"
   },
   "dependencies": {
-    "@hanzo/communication-types": "workspace:^0.7.12",
-    "@hanzo/communication-sdk-types": "workspace:^0.7.12",
-    "@hanzo/communication-shared": "workspace:^0.7.11",
-    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzoteam/communication-types": "workspace:^0.7.12",
+    "@hanzoteam/communication-sdk-types": "workspace:^0.7.12",
+    "@hanzoteam/communication-shared": "workspace:^0.7.11",
+    "@hanzoteam/core": "workspace:^0.7.24",
     "snappyjs": "^0.7.0"
   },
   "repository": {

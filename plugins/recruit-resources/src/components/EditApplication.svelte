@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery } from '@hanzo/presentation'
-  import type { Applicant, Candidate, Vacancy } from '@hanzo/recruit'
-  import { Scroller } from '@hanzo/ui'
+  import { createQuery } from '@hanzoteam/presentation'
+  import type { Applicant, Candidate, Vacancy } from '@hanzoteam/recruit'
+  import { Scroller } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import CandidateCard from './CandidateCard.svelte'
   import VacancyCard from './VacancyCard.svelte'

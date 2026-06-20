@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import core, { TxOperations } from '@hanzo/core'
+import core, { TxOperations } from '@hanzoteam/core'
 import {
   tryUpgrade,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 import templates from './plugin'
-import { templatesId } from '@hanzo/templates'
+import { templatesId } from '@hanzoteam/templates'
 
 export const templatesOperation: MigrateOperation = {
   async migrate (client: MigrationClient): Promise<void> {},

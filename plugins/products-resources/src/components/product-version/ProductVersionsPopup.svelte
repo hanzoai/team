@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Product, ProductVersion } from '@hanzo/products'
-  import core, { FindOptions, SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Label, Loading } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { DocNavLink, ObjectPresenter, Table } from '@hanzo/view-resources'
+  import type { Product, ProductVersion } from '@hanzoteam/products'
+  import core, { FindOptions, SortingOrder } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Label, Loading } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { DocNavLink, ObjectPresenter, Table } from '@hanzoteam/view-resources'
   import products from '../../plugin'
 
   export let value: Product

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Asset, type IntlString } from '@hanzo/platform'
+import { type Asset, type IntlString } from '@hanzoteam/platform'
 import { type Attribute, type Doc, type Domain, type Ref } from './classes'
 
 /**

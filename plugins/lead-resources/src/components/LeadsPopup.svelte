@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Customer } from '@hanzo/lead'
-  import { Table } from '@hanzo/view-resources'
+  import type { Customer } from '@hanzoteam/lead'
+  import { Table } from '@hanzoteam/view-resources'
   import leads from '../plugin'
 
   export let value: Customer

@@ -17,11 +17,11 @@
     ActivityNotificationViewlet,
     DisplayInboxNotification,
     DocNotifyContext
-  } from '@hanzo/notification'
-  import { Ref, Timestamp } from '@hanzo/core'
+  } from '@hanzoteam/notification'
+  import { Ref, Timestamp } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
-  import { ListView } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
+  import { ListView } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
 
   import { InboxNotificationsClientImpl } from '../../inboxNotificationsClient'
   import DocNotifyContextCard from '../DocNotifyContextCard.svelte'

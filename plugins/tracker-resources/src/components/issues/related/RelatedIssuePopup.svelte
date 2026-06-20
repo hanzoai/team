@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { SortingOrder, toIdMap, type IdMap, type Ref, type StatusCategory } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import tracker, { type Issue, type Project } from '@hanzo/tracker'
+  import core, { SortingOrder, toIdMap, type IdMap, type Ref, type StatusCategory } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import tracker, { type Issue, type Project } from '@hanzoteam/tracker'
   import {
     createFocusManager,
     deviceOptionsStore,
@@ -31,8 +31,8 @@
     showPanel,
     Spinner,
     type SelectPopupValueType
-  } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { subIssueListProvider, type IssueRef } from '../../../utils'
   import RelatedIssuePresenter from './RelatedIssuePresenter.svelte'

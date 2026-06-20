@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person, SocialIdentity } from '@hanzo/contact'
-  import core, { FindResult, getObjectValue, includesAny, PersonId, Ref, Space, WithLookup } from '@hanzo/core'
-  import presentation, { getClient } from '@hanzo/presentation'
+  import contact, { Person, SocialIdentity } from '@hanzoteam/contact'
+  import core, { FindResult, getObjectValue, includesAny, PersonId, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
   import ui, {
     deviceOptionsStore,
     EditWithIcon,
@@ -24,9 +24,9 @@
     IconSearch,
     Loading,
     resizeObserver
-  } from '@hanzo/ui'
-  import view, { Filter } from '@hanzo/view'
-  import { FILTER_DEBOUNCE_MS, sortFilterValues } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view, { Filter } from '@hanzoteam/view'
+  import { FILTER_DEBOUNCE_MS, sortFilterValues } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import PersonPresenter from './PersonPresenter.svelte'

@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { DocumentQuery } from '@hanzo/core'
-  import { Button, Breadcrumb, Scroller, SearchInput, showPopup, IconAdd, Header } from '@hanzo/ui'
-  import type { Category } from '@hanzo/inventory'
+  import core, { DocumentQuery } from '@hanzoteam/core'
+  import { Button, Breadcrumb, Scroller, SearchInput, showPopup, IconAdd, Header } from '@hanzoteam/ui'
+  import type { Category } from '@hanzoteam/inventory'
   import inventory from '../plugin'
   import CreateCategory from './CreateCategory.svelte'
   import HierarchyView from './HierarchyView.svelte'
-  // import { deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  // import { deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
 
   let search = ''
   let resultQuery: DocumentQuery<Category> = {}

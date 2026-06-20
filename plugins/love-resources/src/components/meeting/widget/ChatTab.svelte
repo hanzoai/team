@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import love, { MeetingMinutes } from '@hanzo/love'
-  import { ChannelEmbeddedContent } from '@hanzo/chunter-resources'
-  import { ActivityMessage } from '@hanzo/activity'
-  import { updateTabData, WidgetState } from '@hanzo/workbench-resources'
+  import love, { MeetingMinutes } from '@hanzoteam/love'
+  import { ChannelEmbeddedContent } from '@hanzoteam/chunter-resources'
+  import { ActivityMessage } from '@hanzoteam/activity'
+  import { updateTabData, WidgetState } from '@hanzoteam/workbench-resources'
 
   export let widgetState: WidgetState
   export let meetingMinutes: MeetingMinutes

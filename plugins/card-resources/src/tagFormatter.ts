@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Class, ClassifierKind, type Doc, type Hierarchy, type Ref } from '@hanzo/core'
-import { translate, type IntlString } from '@hanzo/platform'
-import cardPlugin, { type Card } from '@hanzo/card'
-import { type AttributeModel } from '@hanzo/view'
+import { type Class, ClassifierKind, type Doc, type Hierarchy, type Ref } from '@hanzoteam/core'
+import { translate, type IntlString } from '@hanzoteam/platform'
+import cardPlugin, { type Card } from '@hanzoteam/card'
+import { type AttributeModel } from '@hanzoteam/view'
 
 function isIntlString (value: unknown): value is IntlString {
   return typeof value === 'string' || (typeof value === 'object' && value !== null)

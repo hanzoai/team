@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Class, type Blob, type Doc, type Ref } from '@hanzo/core'
+import { Class, type Blob, type Doc, type Ref } from '@hanzoteam/core'
 
 /** @public */
 export type MarkupRef = Ref<Blob>

@@ -31,14 +31,14 @@ import core, {
   type TxCUD,
   TxProcessor,
   systemAccountUuid
-} from '@hanzo/core'
-import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import platform, { PlatformError, Severity, Status } from '@hanzoteam/platform'
 import {
   BaseMiddleware,
   type Middleware,
   type PipelineContext,
   type TxMiddlewareResult
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 export const DOMAIN_PREFERENCE = 'preference' as Domain
 
 /**

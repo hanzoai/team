@@ -1,7 +1,7 @@
-import { type Class, type Doc, type DocumentQuery, type Ref } from '@hanzo/core'
-import { type BuildModelKey, type Viewlet, type ViewOptions } from '@hanzo/view'
+import { type Class, type Doc, type DocumentQuery, type Ref } from '@hanzoteam/core'
+import { type BuildModelKey, type Viewlet, type ViewOptions } from '@hanzoteam/view'
 import { writable } from 'svelte/store'
-import type { CopyRelationshipTableAsMarkdownProps } from '@hanzo/converter'
+import type { CopyRelationshipTableAsMarkdownProps } from '@hanzoteam/converter'
 
 /**
  * Context for the current viewlet table being displayed

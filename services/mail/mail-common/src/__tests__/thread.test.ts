@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { MeasureContext, Ref } from '@hanzo/core'
-import { KeyValueClient } from '@hanzo/kvs-client'
-import { Card } from '@hanzo/card'
-import { PersonSpace } from '@hanzo/contact'
+import { MeasureContext, Ref } from '@hanzoteam/core'
+import { KeyValueClient } from '@hanzoteam/kvs-client'
+import { Card } from '@hanzoteam/card'
+import { PersonSpace } from '@hanzoteam/contact'
 import { ThreadLookupService, ThreadInfo } from '../thread'
 
 describe('ThreadLookupService', () => {

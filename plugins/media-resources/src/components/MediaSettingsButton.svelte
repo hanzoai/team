@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IconMoreH, StatusBarButton, showPopup } from '@hanzo/ui'
+  import { IconMoreH, StatusBarButton, showPopup } from '@hanzoteam/ui'
 
   import { sessions } from '../stores'
 

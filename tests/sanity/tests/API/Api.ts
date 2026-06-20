@@ -1,4 +1,4 @@
-import type { WorkspaceInfoWithStatus, WorkspaceLoginInfo } from '@hanzo/account'
+import type { WorkspaceInfoWithStatus, WorkspaceLoginInfo } from '@hanzoteam/account'
 import { APIRequestContext } from '@playwright/test'
 import { DevUrl, LocalUrl, PlatformURI, PlatformWorkspaceRegion } from '../utils'
 

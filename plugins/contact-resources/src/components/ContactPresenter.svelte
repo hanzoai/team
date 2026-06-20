@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Employee, Organization } from '@hanzo/contact'
-  import { getClient } from '@hanzo/presentation'
+  import { Contact, Employee, Organization } from '@hanzoteam/contact'
+  import { getClient } from '@hanzoteam/presentation'
   import contact from '../plugin'
   import EmployeePresenter from './EmployeePresenter.svelte'
 
   import OrganizationPresenter from './OrganizationPresenter.svelte'
   import PersonPresenter from './PersonPresenter.svelte'
-  import { IconSize } from '@hanzo/ui'
+  import { IconSize } from '@hanzoteam/ui'
 
   export let value: Contact
   export let inline: boolean = false

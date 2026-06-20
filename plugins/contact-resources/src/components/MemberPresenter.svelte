@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Member } from '@hanzo/contact'
-  import { getClient } from '@hanzo/presentation'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import contact, { Member } from '@hanzoteam/contact'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import { ContactPresenter } from '..'
 
   export let value: Member

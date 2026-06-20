@@ -24,9 +24,9 @@ import type {
   LoginInfoRequest,
   LoginInfoByToken,
   LoginInfoRequestData
-} from '@hanzo/account-client'
-import { getClient as getAccountClientRaw } from '@hanzo/account-client'
-import { Analytics } from '@hanzo/analytics'
+} from '@hanzoteam/account-client'
+import { getClient as getAccountClientRaw } from '@hanzoteam/account-client'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   AccountRole,
   concatLink,
@@ -36,8 +36,8 @@ import {
   type WorkspaceUuid,
   type WorkspaceInfoWithStatus,
   type WorkspaceUserOperation
-} from '@hanzo/core'
-import { loginId } from '@hanzo/login'
+} from '@hanzoteam/core'
+import { loginId } from '@hanzoteam/login'
 import platform, {
   OK,
   PlatformError,
@@ -48,8 +48,8 @@ import platform, {
   translate,
   unknownError,
   unknownStatus
-} from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+} from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
 import {
   getCurrentLocation,
   isSameSegments,
@@ -58,8 +58,8 @@ import {
   navigate,
   setMetadataLocalStorage,
   type Location
-} from '@hanzo/ui'
-import { logIn, workbenchId } from '@hanzo/workbench'
+} from '@hanzoteam/ui'
+import { logIn, workbenchId } from '@hanzoteam/workbench'
 
 import { LoginEvents } from './analytics'
 import { SSO_TOKEN, USER_INFO, RETRY_ON_SSO_LOGIN } from './const'

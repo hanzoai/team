@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { generateId, Ref } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
-  import { Process, SelectedUserRequest, State } from '@hanzo/process'
-  import { settingsStore } from '@hanzo/setting-resources'
+  import core, { generateId, Ref } from '@hanzoteam/core'
+  import { translate } from '@hanzoteam/platform'
+  import { createQuery, getClient, MessageBox } from '@hanzoteam/presentation'
+  import { Process, SelectedUserRequest, State } from '@hanzoteam/process'
+  import { settingsStore } from '@hanzoteam/setting-resources'
   import {
     Button,
     ButtonIcon,
@@ -34,7 +34,7 @@
     secondNavSeparators,
     Separator,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import process from '../plugin'
   import Aside from './Aside.svelte'

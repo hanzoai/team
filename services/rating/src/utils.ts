@@ -12,8 +12,8 @@ import core, {
   type Tx,
   type TxCUD,
   TxProcessor
-} from '@hanzo/core'
-import { DOMAIN_PERSON_RATING, DOMAIN_RATING_REACTION, type PersonRating } from '@hanzo/rating'
+} from '@hanzoteam/core'
+import { DOMAIN_PERSON_RATING, DOMAIN_RATING_REACTION, type PersonRating } from '@hanzoteam/rating'
 
 export function fulltextModelFilter (h: Hierarchy, model: Tx[]): Tx[] {
   const allowedClasess: Ref<Class<Doc>>[] = [

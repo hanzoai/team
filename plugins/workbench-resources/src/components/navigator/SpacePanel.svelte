@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Ref, Space } from '@hanzo/core'
-  import core from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { EditBox, Label, Scroller, Panel, Component } from '@hanzo/ui'
+  import type { Class, Ref, Space } from '@hanzoteam/core'
+  import core from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { EditBox, Label, Scroller, Panel, Component } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import workbench from '../../plugin'
-  import contact from '@hanzo/contact'
+  import contact from '@hanzoteam/contact'
 
   export let _id: Ref<Space>
   export let _class: Ref<Class<Space>>

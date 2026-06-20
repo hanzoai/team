@@ -2,8 +2,8 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { type Doc } from '@hanzo/core'
-import { type ViewActionAvailabilityFunction, type ViewActionFunction } from '@hanzo/view'
+import { type Doc } from '@hanzoteam/core'
+import { type ViewActionAvailabilityFunction, type ViewActionFunction } from '@hanzoteam/view'
 
 // TODO: Move to platform?
 export interface ActionWithAvailability<T extends Doc, P = never> {

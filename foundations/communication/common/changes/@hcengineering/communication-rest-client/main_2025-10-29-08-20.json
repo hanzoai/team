@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/communication-rest-client",
+      "packageName": "@hanzoteam/communication-rest-client",
       "comment": "update deps",
       "type": "patch"
     }
   ],
-  "packageName": "@hanzo/communication-rest-client"
+  "packageName": "@hanzoteam/communication-rest-client"
 }

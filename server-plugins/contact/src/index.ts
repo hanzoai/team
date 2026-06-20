@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import type { Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { TriggerFunc, SearchPresenterProvider } from '@hanzo/server-core'
-import { Presenter } from '@hanzo/server-notification'
-import { TemplateFieldServerFunc } from '@hanzo/server-templates'
+import type { Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { TriggerFunc, SearchPresenterProvider } from '@hanzoteam/server-core'
+import { Presenter } from '@hanzoteam/server-notification'
+import { TemplateFieldServerFunc } from '@hanzoteam/server-templates'
 
 export * from './utils'
 

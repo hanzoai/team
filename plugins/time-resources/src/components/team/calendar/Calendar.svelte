@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Project } from '@hanzo/task'
+  import { Project } from '@hanzoteam/task'
   import TeamCalendar from './TeamCalendar.svelte'
   import TeamCalendarDay from './TeamCalendarDay.svelte'
-  import { Ref } from '@hanzo/core'
+  import { Ref } from '@hanzoteam/core'
   import Header from '../../Header.svelte'
-  import { DropdownLabels, DropdownLabelsIntl } from '@hanzo/ui'
+  import { DropdownLabels, DropdownLabelsIntl } from '@hanzoteam/ui'
   import time from '../../../plugin'
 
   export let space: Ref<Project>

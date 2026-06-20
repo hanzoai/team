@@ -4,17 +4,17 @@
 //
 -->
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { UserBoxItems, getPermittedPersons, permissionsStore } from '@hanzo/contact-resources'
+  import { Employee } from '@hanzoteam/contact'
+  import { UserBoxItems, getPermittedPersons, permissionsStore } from '@hanzoteam/contact-resources'
   import documents, {
     ControlledDocument,
     ControlledDocumentState,
     DocumentRequest
-  } from '@hanzo/controlled-documents'
-  import { Class, Ref, TxOperations } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { RequestStatus } from '@hanzo/request'
-  import { Label, ModernDialog, showPopup } from '@hanzo/ui'
+  } from '@hanzoteam/controlled-documents'
+  import { Class, Ref, TxOperations } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { RequestStatus } from '@hanzoteam/request'
+  import { Label, ModernDialog, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import documentsRes from '../plugin'

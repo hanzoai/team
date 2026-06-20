@@ -17,6 +17,6 @@
 import { textEditorId } from './plugin'
 
 export { default } from './plugin'
-export * from '@hanzo/presentation/src/types'
+export * from '@hanzoteam/presentation/src/types'
 export * from './types'
 export { textEditorId }

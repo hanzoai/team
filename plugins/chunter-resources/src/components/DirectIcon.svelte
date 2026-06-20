@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DirectMessage } from '@hanzo/chunter'
-  import contact, { Person } from '@hanzo/contact'
-  import { Avatar, CombineAvatars } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Icon, IconSize } from '@hanzo/ui'
-  import { classIcon } from '@hanzo/view-resources'
+  import { DirectMessage } from '@hanzoteam/chunter'
+  import contact, { Person } from '@hanzoteam/contact'
+  import { Avatar, CombineAvatars } from '@hanzoteam/contact-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Icon, IconSize } from '@hanzoteam/ui'
+  import { classIcon } from '@hanzoteam/view-resources'
 
   import chunter from '../plugin'
   import { getDmPersons } from '../utils'

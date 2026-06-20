@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import { pushRootBarComponent } from '@hanzo/ui'
+  import { getMetadata } from '@hanzoteam/platform'
+  import { pushRootBarComponent } from '@hanzoteam/ui'
   import { onMount } from 'svelte'
 
   import recorder from '../plugin'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
 
   const readonly = !hasAccountRole(getCurrentAccount(), AccountRole.Guest)
 

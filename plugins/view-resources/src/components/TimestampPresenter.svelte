@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, ButtonSize, TimeSince } from '@hanzo/ui'
+  import { Button, ButtonSize, TimeSince } from '@hanzoteam/ui'
 
   export let value: number
   export let kind: 'no-border' | 'link' | 'list' = 'no-border'

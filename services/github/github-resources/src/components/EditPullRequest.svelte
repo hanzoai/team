@@ -3,7 +3,7 @@
 //
 -->
 <script lang="ts">
-  import { GithubPullRequest } from '@hanzo/github'
+  import { GithubPullRequest } from '@hanzoteam/github'
   import PullRequestDiff from './PullRequestDiff.svelte'
 
   export let object: GithubPullRequest

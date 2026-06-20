@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Metadata, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { TriggerFunc } from '@hanzo/server-core'
+import type { Metadata, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { TriggerFunc } from '@hanzoteam/server-core'
 
 export * from './types'
 export const serverAiBotId = 'server-ai-bot' as Plugin

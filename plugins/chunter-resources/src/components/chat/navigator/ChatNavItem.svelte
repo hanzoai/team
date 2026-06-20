@@ -13,20 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import notification, { DocNotifyContext, InboxNotification } from '@hanzo/notification'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Action, IconEdit } from '@hanzo/ui'
-  import { getActions, getObjectLinkId } from '@hanzo/view-resources'
+  import notification, { DocNotifyContext, InboxNotification } from '@hanzoteam/notification'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Action, IconEdit } from '@hanzoteam/ui'
+  import { getActions, getObjectLinkId } from '@hanzoteam/view-resources'
   import {
     getNotificationsCount,
     InboxNotificationsClientImpl,
     isActivityNotification,
     isMentionNotification
-  } from '@hanzo/notification-resources'
+  } from '@hanzoteam/notification-resources'
   import { createEventDispatcher } from 'svelte'
-  import view from '@hanzo/view'
-  import { Doc } from '@hanzo/core'
+  import view from '@hanzoteam/view'
+  import { Doc } from '@hanzoteam/core'
 
   import NavItem from './NavItem.svelte'
   import { ChatNavItemModel } from '../types'

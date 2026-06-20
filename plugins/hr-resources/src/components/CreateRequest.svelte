@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import calendar from '@hanzo/calendar'
-  import { Employee } from '@hanzo/contact'
-  import { EmployeeBox } from '@hanzo/contact-resources'
-  import core, { DocumentQuery, generateId, Markup, Ref } from '@hanzo/core'
-  import { Request, RequestType, Staff, timeToTzDate } from '@hanzo/hr'
-  import { translate } from '@hanzo/platform'
-  import { Card, createQuery, getClient } from '@hanzo/presentation'
-  import { EmptyMarkup } from '@hanzo/text'
+  import { AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import calendar from '@hanzoteam/calendar'
+  import { Employee } from '@hanzoteam/contact'
+  import { EmployeeBox } from '@hanzoteam/contact-resources'
+  import core, { DocumentQuery, generateId, Markup, Ref } from '@hanzoteam/core'
+  import { Request, RequestType, Staff, timeToTzDate } from '@hanzoteam/hr'
+  import { translate } from '@hanzoteam/platform'
+  import { Card, createQuery, getClient } from '@hanzoteam/presentation'
+  import { EmptyMarkup } from '@hanzoteam/text'
   import ui, {
     Button,
     DateRangePresenter,
@@ -29,7 +29,7 @@
     IconAttachment,
     Label,
     themeStore
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import hr from '../plugin'
   import { getRequests } from '../utils'

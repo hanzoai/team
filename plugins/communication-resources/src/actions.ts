@@ -16,9 +16,9 @@ import communication, {
   type MessageAction,
   type MessageActionFunction,
   type MessageActionVisibilityTester
-} from '@hanzo/communication'
-import { languageStore, showPopup } from '@hanzo/ui'
-import emojiPlugin from '@hanzo/emoji'
+} from '@hanzoteam/communication'
+import { languageStore, showPopup } from '@hanzoteam/ui'
+import emojiPlugin from '@hanzoteam/emoji'
 import {
   type AppletParams,
   type AttachmentID,
@@ -29,9 +29,9 @@ import {
   type Message,
   type MessageID,
   MessageType
-} from '@hanzo/communication-types'
-import cardPlugin, { type Card, type MasterTag } from '@hanzo/card'
-import { addRefreshListener, deleteFile, getClient, getCommunicationClient } from '@hanzo/presentation'
+} from '@hanzoteam/communication-types'
+import cardPlugin, { type Card, type MasterTag } from '@hanzoteam/card'
+import { addRefreshListener, deleteFile, getClient, getCommunicationClient } from '@hanzoteam/presentation'
 import {
   AccountRole,
   fillDefaults,
@@ -40,18 +40,18 @@ import {
   hasAccountRole,
   type MarkupBlobRef,
   type Ref
-} from '@hanzo/core'
-import { getMetadata, getResource } from '@hanzo/platform'
-import { employeeByPersonIdStore } from '@hanzo/contact-resources'
-import { getEmployeeBySocialId } from '@hanzo/contact'
-import chat from '@hanzo/chat'
-import { markupToText } from '@hanzo/text'
+} from '@hanzoteam/core'
+import { getMetadata, getResource } from '@hanzoteam/platform'
+import { employeeByPersonIdStore } from '@hanzoteam/contact-resources'
+import { getEmployeeBySocialId } from '@hanzoteam/contact'
+import chat from '@hanzoteam/chat'
+import { markupToText } from '@hanzoteam/text'
 import { get } from 'svelte/store'
-import { translate as aiTranslate } from '@hanzo/ai-bot-resources'
-import aiBot from '@hanzo/ai-bot'
+import { translate as aiTranslate } from '@hanzoteam/ai-bot-resources'
+import aiBot from '@hanzoteam/ai-bot'
 import CreateCardFromMessagePopup from './components/CreateCardFromMessagePopup.svelte'
-import { Analytics } from '@hanzo/analytics'
-import { isAppletAttachment, isBlobAttachment, isLinkPreviewAttachment } from '@hanzo/communication-shared'
+import { Analytics } from '@hanzoteam/analytics'
+import { isAppletAttachment, isBlobAttachment, isLinkPreviewAttachment } from '@hanzoteam/communication-shared'
 
 import { isCardAllowedForCommunications, loadLinkPreviewParams, showForbidden, toggleReaction, toMarkup } from './utils'
 import {

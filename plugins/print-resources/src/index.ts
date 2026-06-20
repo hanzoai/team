@@ -1,10 +1,10 @@
 //
 // Copyright © 2024 Hanzo AI Inc.
 //
-import { type Doc } from '@hanzo/core'
-import { type Resources } from '@hanzo/platform'
-import { showPopup } from '@hanzo/ui'
-import { getPrintBaseURL } from '@hanzo/print'
+import { type Doc } from '@hanzoteam/core'
+import { type Resources } from '@hanzoteam/platform'
+import { showPopup } from '@hanzoteam/ui'
+import { getPrintBaseURL } from '@hanzoteam/print'
 
 import PrintToPDF from './components/PrintToPDF.svelte'
 import PrintBulkToPDF from './components/PrintBulkToPDF.svelte'

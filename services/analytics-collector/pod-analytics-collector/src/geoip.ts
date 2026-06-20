@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hanzo/core'
+import { type MeasureContext } from '@hanzoteam/core'
 import * as fs from 'fs'
 import * as maxmind from 'maxmind'
 import * as path from 'path'

@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import presentation, { getFileUrl } from '@hanzo/presentation'
+  import { getMetadata } from '@hanzoteam/platform'
+  import presentation, { getFileUrl } from '@hanzoteam/presentation'
   import HLS, { HlsConfig, LoaderConfiguration, LoaderContext, LoaderCallbacks, LoadPolicy } from 'hls.js'
   import { onDestroy, onMount } from 'svelte'
   import Plyr from 'plyr'

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { getCurrentLocation, Label, Loading, TimeLeft } from '@hanzo/ui'
-  import { logIn } from '@hanzo/workbench'
-  import { trackOAuthCompletion } from '@hanzo/analytics-providers'
-  import { type LoginInfoRequest, type LoginInfoByToken } from '@hanzo/account-client'
-  import platform, { OK, PlatformError, Status, unknownError } from '@hanzo/platform'
+  import { getCurrentLocation, Label, Loading, TimeLeft } from '@hanzoteam/ui'
+  import { logIn } from '@hanzoteam/workbench'
+  import { trackOAuthCompletion } from '@hanzoteam/analytics-providers'
+  import { type LoginInfoRequest, type LoginInfoByToken } from '@hanzoteam/account-client'
+  import platform, { OK, PlatformError, Status, unknownError } from '@hanzoteam/platform'
 
   import type { Field } from '../types'
   import {

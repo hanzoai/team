@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Class, type Ref, SortingOrder } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Loading } from '@hanzo/ui'
-  import documents, { type ControlledDocument, type Project } from '@hanzo/controlled-documents'
+  import { type Class, type Ref, SortingOrder } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Loading } from '@hanzoteam/ui'
+  import documents, { type ControlledDocument, type Project } from '@hanzoteam/controlled-documents'
 
   import EditDocPanel from './EditDocPanel.svelte'
 

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import testManagement, { type TestRun, type TestCase, TestRunStatus } from '@hanzo/test-management'
+import { type Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import testManagement, { type TestRun, type TestCase, TestRunStatus } from '@hanzoteam/test-management'
 
 export async function getTestCases (objectId: Ref<TestRun>): Promise<TestCase[]> {
   if (objectId === undefined) {

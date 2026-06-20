@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Type } from '@hanzo/core'
-  import { Process, UserResult } from '@hanzo/process'
-  import { Button, EditBox, IconClose, Label } from '@hanzo/ui'
+  import core, { Type } from '@hanzoteam/core'
+  import { Process, UserResult } from '@hanzoteam/process'
+  import { Button, EditBox, IconClose, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { generateContextId } from '../../utils'
   import ResultTypeSelector from './ResultTypeSelector.svelte'

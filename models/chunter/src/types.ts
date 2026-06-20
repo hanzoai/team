@@ -24,8 +24,8 @@ import {
   TypeString,
   UX,
   Hidden
-} from '@hanzo/model'
-import core, { TClass, TDoc, TSpace } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import core, { TClass, TDoc, TSpace } from '@hanzoteam/model-core'
 import type {
   Channel,
   ChatMessage,
@@ -35,7 +35,7 @@ import type {
   DirectMessage,
   ObjectChatPanel,
   ThreadMessage
-} from '@hanzo/chunter'
+} from '@hanzoteam/chunter'
 import {
   type Class,
   type Doc,
@@ -45,13 +45,13 @@ import {
   type Ref,
   type Space,
   type Timestamp
-} from '@hanzo/core'
-import contact, { type ChannelProvider as SocialChannelProvider, type Person } from '@hanzo/contact'
-import activity, { type ActivityMessage } from '@hanzo/activity'
-import { TActivityMessage } from '@hanzo/model-activity'
-import attachment from '@hanzo/model-attachment'
-import type { IntlString } from '@hanzo/platform'
-import type { DocNotifyContext } from '@hanzo/notification'
+} from '@hanzoteam/core'
+import contact, { type ChannelProvider as SocialChannelProvider, type Person } from '@hanzoteam/contact'
+import activity, { type ActivityMessage } from '@hanzoteam/activity'
+import { TActivityMessage } from '@hanzoteam/model-activity'
+import attachment from '@hanzoteam/model-attachment'
+import type { IntlString } from '@hanzoteam/platform'
+import type { DocNotifyContext } from '@hanzoteam/notification'
 
 import chunter from './plugin'
 

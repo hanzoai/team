@@ -49,7 +49,7 @@ npm run test:coverage            # With coverage
 
 - TypeScript strict mode, Prettier formatting
 - Imports: `@hanzo/` namespace, named imports, grouped (external/internal/types)
-- Errors: `PlatformError` from `@hanzo/platform`, `unknownError` wrapper
+- Errors: `PlatformError` from `@hanzoteam/platform`, `unknownError` wrapper
 - Async: `async/await`, `MeasureContext` for cancellation, cleanup in finally blocks
 - Security: No secrets in code, validate inputs, prepared statements, rate limiting
 

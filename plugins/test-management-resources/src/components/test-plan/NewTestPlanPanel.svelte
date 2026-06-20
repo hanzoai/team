@@ -15,23 +15,23 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { Analytics } from '@hanzo/analytics'
-  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import { ActionContext, getClient } from '@hanzo/presentation'
-  import core, { Data, Ref, generateId, getCurrentAccount } from '@hanzo/core'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import { ActionContext, getClient } from '@hanzoteam/presentation'
+  import core, { Data, Ref, generateId, getCurrentAccount } from '@hanzoteam/core'
   import testManagement, {
     TestProject,
     TestPlan,
     TestCase,
     TestPlanItem,
     TestManagementEvents
-  } from '@hanzo/test-management'
-  import { Panel } from '@hanzo/panel'
-  import { ModernButton, EditBox, Label } from '@hanzo/ui'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { IntlString } from '@hanzo/platform'
-  import { Attachment } from '@hanzo/attachment'
-  import { Employee } from '@hanzo/contact'
+  } from '@hanzoteam/test-management'
+  import { Panel } from '@hanzoteam/panel'
+  import { ModernButton, EditBox, Label } from '@hanzoteam/ui'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { Employee } from '@hanzoteam/contact'
 
   import NewTestPlanAside from './NewTestPlanAside.svelte'
   import TestCaseSelector from '../test-case/TestCaseSelector.svelte'

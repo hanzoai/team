@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ComponentExtensions } from '@hanzo/presentation'
+  import { ComponentExtensions } from '@hanzoteam/presentation'
   import media from '../plugin'
   import { state, sessions } from '../stores'
 

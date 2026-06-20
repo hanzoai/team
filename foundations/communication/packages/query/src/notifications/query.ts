@@ -18,7 +18,7 @@ import {
   type Notification,
   SortingOrder,
   WithTotal
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import {
   CreateNotificationEvent,
   type Event,
@@ -28,9 +28,9 @@ import {
   RemoveNotificationContextEvent,
   RemoveNotificationsEvent,
   UpdateNotificationEvent
-} from '@hanzo/communication-sdk-types'
-import { NotificationProcessor } from '@hanzo/communication-shared'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/communication-sdk-types'
+import { NotificationProcessor } from '@hanzoteam/communication-shared'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 import { defaultQueryParams, NotificationQueryParams, type PagedQuery, type QueryId, QueryOptions } from '../types'
 import { QueryResult } from '../result'

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { setPlatformStatus, unknownError } from '@hanzo/platform'
-import { imageSizeToRatio, getImageSize } from '@hanzo/presentation'
+import { setPlatformStatus, unknownError } from '@hanzoteam/platform'
+import { imageSizeToRatio, getImageSize } from '@hanzoteam/presentation'
 import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 import { type EditorView } from '@tiptap/pm/view'
 
 import { type FileAttachFunction } from '../types'
-import type { Blob, Ref } from '@hanzo/core'
+import type { Blob, Ref } from '@hanzoteam/core'
 
 /**
  * @public

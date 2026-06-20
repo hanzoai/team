@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { concatLink, Doc, Hierarchy } from '@hanzo/core'
-  import presentation, { NavLink, getClient, createQuery, MessageBox } from '@hanzo/presentation'
-  import { AnyComponent, getPanelURI, locationToUrl, showPopup } from '@hanzo/ui'
+  import { concatLink, Doc, Hierarchy } from '@hanzoteam/core'
+  import presentation, { NavLink, getClient, createQuery, MessageBox } from '@hanzoteam/presentation'
+  import { AnyComponent, getPanelURI, locationToUrl, showPopup } from '@hanzoteam/ui'
   import view from '../plugin'
   import { getObjectLinkFragment, restrictionStore } from '../utils'
-  import { getMetadata } from '@hanzo/platform'
+  import { getMetadata } from '@hanzoteam/platform'
 
   export let object: Doc | undefined
   export let disabled: boolean = false

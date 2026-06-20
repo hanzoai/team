@@ -23,10 +23,10 @@
   import Collapse from './icons/Collapse.svelte'
   import { ScreenRecorder } from '../screen-recorder'
   import { createEventDispatcher } from 'svelte'
-  import { showPopup, Label } from '@hanzo/ui'
+  import { showPopup, Label } from '@hanzoteam/ui'
   import Countdown from './Countdown.svelte'
-  import { getMetadata } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
+  import { getMetadata } from '@hanzoteam/platform'
+  import presentation from '@hanzoteam/presentation'
   import plugin from '../plugin'
 
   let timer: number | undefined = undefined

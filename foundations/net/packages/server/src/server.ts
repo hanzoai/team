@@ -12,9 +12,9 @@ import {
   type NetworkAgent,
   type NetworkWithClients,
   type TickManager
-} from '@hanzo/network-core'
-import { BackRPCServer, type BackRPCResponseSend, type BackRPCServerHandler } from '@hanzo/network-backrpc'
-import { opNames } from '@hanzo/network-client'
+} from '@hanzoteam/network-core'
+import { BackRPCServer, type BackRPCResponseSend, type BackRPCServerHandler } from '@hanzoteam/network-backrpc'
+import { opNames } from '@hanzoteam/network-client'
 
 class AgentCallbackHandler implements NetworkAgent {
   constructor (

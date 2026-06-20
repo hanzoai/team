@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Data } from '@hanzo/core'
-  import { TestResult } from '@hanzo/test-management'
-  import { getClient } from '@hanzo/presentation'
+  import { Data } from '@hanzoteam/core'
+  import { TestResult } from '@hanzoteam/test-management'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     Button,
     ButtonKind,
@@ -26,7 +26,7 @@
     eventToHTMLElement,
     showPopup,
     Label
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
 
   import { defaultTestRunStatuses, testRunStatusAssets } from '../../types'
   import testManagement from '../../plugin'

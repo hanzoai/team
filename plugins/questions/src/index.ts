@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Class, Mixin, Ref, Type } from '@hanzo/core'
-import { type Asset, type IntlString, type Plugin, plugin } from '@hanzo/platform'
+import type { Class, Mixin, Ref, Type } from '@hanzoteam/core'
+import { type Asset, type IntlString, type Plugin, plugin } from '@hanzoteam/platform'
 import type {
   Answer,
   Assessment,

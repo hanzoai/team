@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import core, { type Ref, type Space } from '@hanzo/core'
-import { inventoryId } from '@hanzo/inventory'
+import core, { type Ref, type Space } from '@hanzoteam/core'
+import { inventoryId } from '@hanzoteam/inventory'
 import {
   migrateSpace,
   tryMigrate,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 import { DOMAIN_INVENTORY } from '.'
 
 export const inventoryOperation: MigrateOperation = {

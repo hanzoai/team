@@ -21,17 +21,17 @@
     RecurringRule,
     Visibility,
     generateEventId
-  } from '@hanzo/calendar'
-  import { getCurrentEmployee, Person } from '@hanzo/contact'
-  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hanzo/core'
+  } from '@hanzoteam/calendar'
+  import { getCurrentEmployee, Person } from '@hanzoteam/contact'
+  import core, { Class, Doc, Markup, Ref, Space, generateId, getCurrentAccount } from '@hanzoteam/core'
   import presentation, {
     createQuery,
     DocCreateExtComponent,
     DocCreateExtensionManager,
     getClient
-  } from '@hanzo/presentation'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
+  } from '@hanzoteam/presentation'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
   import {
     Button,
     EditBox,
@@ -42,7 +42,7 @@
     getUserTimezone,
     showPopup,
     Scroller
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
   import { saveUTC } from '../utils'

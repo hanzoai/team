@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { Data, Ref, TypedSpace } from '@hanzo/core'
-  import { Employee } from '@hanzo/contact'
-  import { type ControlledDocument } from '@hanzo/controlled-documents'
+  import { Data, Ref, TypedSpace } from '@hanzoteam/core'
+  import { Employee } from '@hanzoteam/contact'
+  import { type ControlledDocument } from '@hanzoteam/controlled-documents'
 
   import DocTeam from '../../document/DocTeam.svelte'
 

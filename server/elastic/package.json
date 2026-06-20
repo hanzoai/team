@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/elastic",
+  "name": "@hanzoteam/elastic",
   "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -23,7 +23,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -39,11 +39,11 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/server-core": "^0.6.5",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/server-core": "^0.6.5",
     "@elastic/elasticsearch": "^7.17.14",
-    "@hanzo/analytics": "^0.6.4"
+    "@hanzoteam/analytics": "^0.6.4"
   },
   "repository": "https://github.com/hanzoai/team-manager",
   "publishConfig": {

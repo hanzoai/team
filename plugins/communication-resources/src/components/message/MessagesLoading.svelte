@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label, Loading } from '@hanzo/ui'
+  import { Label, Loading } from '@hanzoteam/ui'
 
   import communication from '../../plugin'
 </script>

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { closeLiveQueries, initLiveQueries, refreshLiveQueries } from '@hanzo/communication-client-query'
+import { closeLiveQueries, initLiveQueries, refreshLiveQueries } from '@hanzoteam/communication-client-query'
 import {
   type AddAttachmentsOperation,
   type AddCollaboratorsEvent,
@@ -35,7 +35,7 @@ import {
   type UpdateNotificationEvent,
   type NotificationQuery,
   type UpdatePatchEvent
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import {
   type AccountUuid,
   type CardID,
@@ -65,7 +65,7 @@ import {
   type MessageMeta,
   type FindMessagesGroupParams,
   type MessagesGroup
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import core, {
   generateId,
   getCurrentAccount,
@@ -75,13 +75,13 @@ import core, {
   type Tx,
   type TxDomainEvent,
   AccountRole
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { onDestroy } from 'svelte'
-import { addNotification, NotificationSeverity, languageStore } from '@hanzo/ui'
-import { getMetadata, translate } from '@hanzo/platform'
-import view from '@hanzo/view'
+import { addNotification, NotificationSeverity, languageStore } from '@hanzoteam/ui'
+import { getMetadata, translate } from '@hanzoteam/platform'
+import view from '@hanzoteam/view'
 import { get } from 'svelte/store'
-import { getWorkspaceClient as getHanzolakeClient } from '@hanzo/hanzolake-client'
+import { getWorkspaceClient as getHanzolakeClient } from '@hanzoteam/hanzolake-client'
 import { v4 as uuid } from 'uuid'
 
 import { getCurrentWorkspaceUuid } from './file'
@@ -96,7 +96,7 @@ export {
   createNotificationsQuery,
   initLiveQueries,
   type MessageQueryParams
-} from '@hanzo/communication-client-query'
+} from '@hanzoteam/communication-client-query'
 
 let client: CommunicationClient
 

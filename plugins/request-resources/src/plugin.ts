@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import request, { requestId } from '@hanzo/request'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import request, { requestId } from '@hanzoteam/request'
 
 export default mergeIds(requestId, request, {
   string: {

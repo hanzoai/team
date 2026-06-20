@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { mergeIds, type Resource } from '@hanzo/platform'
+import { mergeIds, type Resource } from '@hanzoteam/platform'
 import textEditor, {
   type TextActionActiveFunction,
   type TextActionFunction,
   type TextActionVisibleFunction,
   textEditorId
-} from '@hanzo/text-editor'
+} from '@hanzoteam/text-editor'
 
 export default mergeIds(textEditorId, textEditor, {
   function: {

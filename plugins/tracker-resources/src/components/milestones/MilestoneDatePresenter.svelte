@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Timestamp } from '@hanzo/core'
+  import { Timestamp } from '@hanzoteam/core'
 
-  import { getClient } from '@hanzo/presentation'
-  import { Milestone } from '@hanzo/tracker'
-  import { DatePresenter, ButtonSize } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Milestone } from '@hanzoteam/tracker'
+  import { DatePresenter, ButtonSize } from '@hanzoteam/ui'
 
   export let value: Milestone
   export let field = 'targetDate'

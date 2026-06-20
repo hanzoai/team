@@ -2,16 +2,16 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { type Data, type Ref, type Space, type TxOperations } from '@hanzo/core'
-import { type Resources } from '@hanzo/platform'
+import { type Data, type Ref, type Space, type TxOperations } from '@hanzoteam/core'
+import { type Resources } from '@hanzoteam/platform'
 import {
   getClient,
   type DocCreateFunction,
   type DocCreatePhase,
   type DocCreateAnalyticsPropsFunction
-} from '@hanzo/presentation'
-import tracker, { type Issue } from '@hanzo/tracker'
-import { type GithubIntegrationRepository } from '@hanzo/github'
+} from '@hanzoteam/presentation'
+import tracker, { type Issue } from '@hanzoteam/tracker'
+import { type GithubIntegrationRepository } from '@hanzoteam/github'
 import AuthenticationCheck from './components/AuthenticationCheck.svelte'
 import GithubIssueHeader from './components/GithubIssueHeader.svelte'
 import Configure from './components/Configure.svelte'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getAttribute, getAttributeEditor, getClient } from '@hanzo/presentation'
+  import { Person } from '@hanzoteam/contact'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getAttribute, getAttributeEditor, getClient } from '@hanzoteam/presentation'
   import MergeComparer from './MergeComparer.svelte'
 
   export let value: Person

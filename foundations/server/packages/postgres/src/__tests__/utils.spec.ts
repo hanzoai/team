@@ -1,4 +1,4 @@
-import { type DocumentUpdate, type Ref, type Space, type WorkspaceUuid } from '@hanzo/core'
+import { type DocumentUpdate, type Ref, type Space, type WorkspaceUuid } from '@hanzoteam/core'
 import {
   convertArrayParams,
   convertDoc,

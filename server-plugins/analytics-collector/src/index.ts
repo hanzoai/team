@@ -13,6 +13,6 @@
 // limitations under the License.
 //
 
-import type { Plugin } from '@hanzo/platform'
+import type { Plugin } from '@hanzoteam/platform'
 
 export const serverAnalyticsCollectorId = 'server-analytics-collector' as Plugin

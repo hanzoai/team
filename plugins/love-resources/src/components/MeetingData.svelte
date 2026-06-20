@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Room } from '@hanzo/love'
-  import { Button, CheckBox } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { Room } from '@hanzoteam/love'
+  import { Button, CheckBox } from '@hanzoteam/ui'
   import { Writable } from 'svelte/store'
   import love from '../plugin'
   import RoomSelector from './RoomSelector.svelte'

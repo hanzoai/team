@@ -15,9 +15,9 @@
 import { type GaxiosResponse } from 'gaxios'
 import { gmail_v1 } from 'googleapis'
 
-import { type MeasureContext, PersonId, WorkspaceUuid } from '@hanzo/core'
-import { type KeyValueClient } from '@hanzo/kvs-client'
-import { SyncMutex, type SyncOptions } from '@hanzo/mail-common'
+import { type MeasureContext, PersonId, WorkspaceUuid } from '@hanzoteam/core'
+import { type KeyValueClient } from '@hanzoteam/kvs-client'
+import { SyncMutex, type SyncOptions } from '@hanzoteam/mail-common'
 
 import { RateLimiter } from '../rateLimiter'
 import { IMessageManager } from './types'

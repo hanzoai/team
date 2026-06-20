@@ -14,7 +14,7 @@
 //
 
 import { estimateDocSize, OneSecondCountersImpl } from '../utils'
-import { platformNow } from '@hanzo/core'
+import { platformNow } from '@hanzoteam/core'
 
 describe('OneSecondCountersImpl', () => {
   let counters: OneSecondCountersImpl

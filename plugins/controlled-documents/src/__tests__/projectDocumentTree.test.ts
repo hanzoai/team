@@ -1,4 +1,4 @@
-import { type Ref } from '@hanzo/core'
+import { type Ref } from '@hanzoteam/core'
 import documents from '../index'
 import { type DocumentBundle, emptyBundle, ProjectDocumentTree } from '../utils'
 

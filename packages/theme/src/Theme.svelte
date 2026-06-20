@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import platform, { loadPluginStrings, setMetadata } from '@hanzo/platform'
+  import { Analytics } from '@hanzoteam/analytics'
+  import platform, { loadPluginStrings, setMetadata } from '@hanzoteam/platform'
   import { onMount, setContext } from 'svelte'
   import { writable } from 'svelte/store'
   import { ThemeVariant } from './variants'

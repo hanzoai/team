@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { ObjectBox } from '@hanzo/view-resources'
-  import view, { ViewletDescriptor } from '@hanzo/view'
-  import { IntlString } from '@hanzo/platform'
+  import { Ref } from '@hanzoteam/core'
+  import { ObjectBox } from '@hanzoteam/view-resources'
+  import view, { ViewletDescriptor } from '@hanzoteam/view'
+  import { IntlString } from '@hanzoteam/platform'
   import card from '../../../plugin'
 
   export let value: Ref<ViewletDescriptor> | undefined = undefined

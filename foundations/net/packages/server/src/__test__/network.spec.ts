@@ -1,4 +1,4 @@
-import { NetworkAgentServer, NetworkClientImpl } from '@hanzo/network-client'
+import { NetworkAgentServer, NetworkClientImpl } from '@hanzoteam/network-client'
 import {
   AgentImpl,
   composeCID,
@@ -14,7 +14,7 @@ import {
   type ContainerKind,
   type NetworkClient,
   type TickManager
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 import { NetworkServer } from '../server'
 import { DummySessionContainer } from './dummySession'
 import { DummyWorkspaceContainer } from './dummyWorkspace'

@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { type IntlString, type Resource, mergeIds } from '@hanzo/platform'
-import { type PresentationMiddlewareCreator } from '@hanzo/presentation/src/pipeline'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import view, { viewId } from '@hanzo/view'
+import { type IntlString, type Resource, mergeIds } from '@hanzoteam/platform'
+import { type PresentationMiddlewareCreator } from '@hanzoteam/presentation/src/pipeline'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import view, { viewId } from '@hanzoteam/view'
 
 export default mergeIds(viewId, view, {
   component: {

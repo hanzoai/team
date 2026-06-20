@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, Ref } from '@hanzo/core'
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { Issue, IssueStatus, Project } from '@hanzo/tracker'
-  import { IModeSelector, resolvedLocationStore } from '@hanzo/ui'
-  import view, { Viewlet } from '@hanzo/view'
+  import { DocumentQuery, Ref } from '@hanzoteam/core'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Issue, IssueStatus, Project } from '@hanzoteam/tracker'
+  import { IModeSelector, resolvedLocationStore } from '@hanzoteam/ui'
+  import view, { Viewlet } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
 
-  import { TypeSelector, selectedTaskTypeStore, selectedTypeStore, taskTypeStore } from '@hanzo/task-resources'
+  import { TypeSelector, selectedTaskTypeStore, selectedTypeStore, taskTypeStore } from '@hanzoteam/task-resources'
   import tracker from '../../plugin'
   import IssuesView from './IssuesView.svelte'
 
-  import task from '@hanzo/task'
+  import task from '@hanzoteam/task'
 
   export let currentSpace: Ref<Project> | undefined = undefined
   export let baseQuery: DocumentQuery<Issue> = {}

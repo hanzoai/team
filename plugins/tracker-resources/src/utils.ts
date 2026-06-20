@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { type Person } from '@hanzo/contact'
+import { Analytics } from '@hanzoteam/analytics'
+import { type Person } from '@hanzoteam/contact'
 import core, {
   AccountRole,
   SortingOrder,
@@ -37,16 +37,16 @@ import core, {
   type TxUpdateDoc,
   getCurrentAccount,
   type WithLookup
-} from '@hanzo/core'
-import { type IntlString } from '@hanzo/platform'
-import { createQuery, getClient, onClient } from '@hanzo/presentation'
-import task, { getStatusIndex, makeRank, type TaskType, type ProjectType } from '@hanzo/task'
+} from '@hanzoteam/core'
+import { type IntlString } from '@hanzoteam/platform'
+import { createQuery, getClient, onClient } from '@hanzoteam/presentation'
+import task, { getStatusIndex, makeRank, type TaskType, type ProjectType } from '@hanzoteam/task'
 import {
   selectedTaskTypeStore,
   activeProjects as taskActiveProjects,
   taskTypeStore,
   typesOfJoinedProjectsStore
-} from '@hanzo/task-resources'
+} from '@hanzoteam/task-resources'
 import {
   IssuePriority,
   MilestoneStatus,
@@ -56,10 +56,10 @@ import {
   type IssueStatus,
   type Milestone,
   type Project
-} from '@hanzo/tracker'
-import { areDatesEqual, isWeekend, PaletteColorIndexes } from '@hanzo/ui'
-import { type KeyFilter, type ViewletDescriptor } from '@hanzo/view'
-import { CategoryQuery, ListSelectionProvider, statusStore, type SelectDirection } from '@hanzo/view-resources'
+} from '@hanzoteam/tracker'
+import { areDatesEqual, isWeekend, PaletteColorIndexes } from '@hanzoteam/ui'
+import { type KeyFilter, type ViewletDescriptor } from '@hanzoteam/view'
+import { CategoryQuery, ListSelectionProvider, statusStore, type SelectDirection } from '@hanzoteam/view-resources'
 import { derived, get, writable } from 'svelte/store'
 import tracker from './plugin'
 import { defaultMilestoneStatuses, defaultPriorities } from './types'

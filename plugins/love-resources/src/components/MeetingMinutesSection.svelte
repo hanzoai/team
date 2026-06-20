@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { Label, Section, Scroller } from '@hanzo/ui'
-  import { Table, ViewletsSettingButton } from '@hanzo/view-resources'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
+  import type { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { Label, Section, Scroller } from '@hanzoteam/ui'
+  import { Table, ViewletsSettingButton } from '@hanzoteam/view-resources'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
 
   import love from '../plugin'
 

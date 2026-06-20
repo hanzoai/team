@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Role } from '@hanzo/card'
-  import { getClient } from '@hanzo/presentation'
-  import { SelectedContextFunc } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import { Role } from '@hanzoteam/card'
+  import { getClient } from '@hanzoteam/presentation'
+  import { SelectedContextFunc } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
 
   export let contextValue: SelectedContextFunc
 

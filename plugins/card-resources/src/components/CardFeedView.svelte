@@ -11,11 +11,11 @@
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Card, CardSpace, type MasterTag } from '@hanzo/card'
-  import core, { DocumentQuery, type Ref, SortingOrder } from '@hanzo/core'
-  import ui, { Label, Scroller, Loading } from '@hanzo/ui'
-  import card from '@hanzo/card'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Card, CardSpace, type MasterTag } from '@hanzoteam/card'
+  import core, { DocumentQuery, type Ref, SortingOrder } from '@hanzoteam/core'
+  import ui, { Label, Scroller, Loading } from '@hanzoteam/ui'
+  import card from '@hanzoteam/card'
 
   import FeedCardPresenter from './FeedCardPresenter.svelte'
   import NewCardForm from './NewCardForm.svelte'

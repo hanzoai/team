@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Attachment } from '@hanzo/attachment'
-  import type { BlobType, WithLookup } from '@hanzo/core'
-  import { getFileUrl, getVideoMeta, getPreviewThumbnail } from '@hanzo/presentation'
-  import { HlsVideo } from '@hanzo/hls'
-  import { Video } from '@hanzo/ui'
+  import type { Attachment } from '@hanzoteam/attachment'
+  import type { BlobType, WithLookup } from '@hanzoteam/core'
+  import { getFileUrl, getVideoMeta, getPreviewThumbnail } from '@hanzoteam/presentation'
+  import { HlsVideo } from '@hanzoteam/hls'
+  import { Video } from '@hanzoteam/ui'
 
   export let value: WithLookup<Attachment> | BlobType
   export let preload = false

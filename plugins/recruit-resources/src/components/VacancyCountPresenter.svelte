@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { recruitId, Vacancy } from '@hanzo/recruit'
-  import { closeTooltip, getCurrentResolvedLocation, Icon, navigate, tooltip } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { recruitId, Vacancy } from '@hanzoteam/recruit'
+  import { closeTooltip, getCurrentResolvedLocation, Icon, navigate, tooltip } from '@hanzoteam/ui'
   import recruit from '../plugin'
   import VacancyApplicationsPopup from './VacancyApplicationsPopup.svelte'
 

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact, Person } from '@hanzo/contact'
-  import { AssigneeBox } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { ActionIcon, EditBox, Icon, IconDelete, resizeObserver } from '@hanzo/ui'
-  import { Room, RoomAccess, RoomType, isOffice } from '@hanzo/love'
+  import contact, { Contact, Person } from '@hanzoteam/contact'
+  import { AssigneeBox } from '@hanzoteam/contact-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ActionIcon, EditBox, Icon, IconDelete, resizeObserver } from '@hanzoteam/ui'
+  import { Room, RoomAccess, RoomType, isOffice } from '@hanzoteam/love'
   import { createEventDispatcher, onMount } from 'svelte'
   import { cubicOut } from 'svelte/easing'
   import { tweened } from 'svelte/motion'
@@ -26,7 +26,7 @@
   import { infos, lockedRoom } from '../stores'
   import { RoomSide, shadowNormal } from '../types'
   import { getRoomLabel } from '../utils'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
 
   export let room: Room
   export let cellSize: number

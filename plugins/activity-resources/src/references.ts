@@ -6,11 +6,11 @@ import core, {
   type RelatedDocument,
   type Space,
   type TxOperations
-} from '@hanzo/core'
-import activity, { type ActivityReference } from '@hanzo/activity'
-import { type IntlString, translate } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import contact from '@hanzo/contact'
+} from '@hanzoteam/core'
+import activity, { type ActivityReference } from '@hanzoteam/activity'
+import { type IntlString, translate } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import contact from '@hanzoteam/contact'
 
 async function updateReferencesList (
   client: TxOperations,

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hanzo/attachment'
-  import { Card } from '@hanzo/card'
-  import { Blob, BlobMetadata, Ref } from '@hanzo/core'
-  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Heading } from '@hanzo/text-editor'
-  import { TableOfContents } from '@hanzo/text-editor-resources'
+  import attachment from '@hanzoteam/attachment'
+  import { Card } from '@hanzoteam/card'
+  import { Blob, BlobMetadata, Ref } from '@hanzoteam/core'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Heading } from '@hanzoteam/text-editor'
+  import { TableOfContents } from '@hanzoteam/text-editor-resources'
   import { createEventDispatcher } from 'svelte'
 
   import ContentEditor from './ContentEditor.svelte'

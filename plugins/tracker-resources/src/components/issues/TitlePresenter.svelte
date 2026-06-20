@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import type { Issue } from '@hanzo/tracker'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import { WithLookup } from '@hanzoteam/core'
+  import type { Issue } from '@hanzoteam/tracker'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import tracker from '../../plugin'
   import ParentNamesPresenter from './ParentNamesPresenter.svelte'
 

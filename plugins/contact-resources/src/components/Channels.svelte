@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel } from '@hanzo/contact'
-  import type { AttachedData, Doc, Ref } from '@hanzo/core'
-  import presentation from '@hanzo/presentation'
-  import { CircleButton, eventToHTMLElement, IconAdd, Label, showPopup } from '@hanzo/ui'
+  import { Channel } from '@hanzoteam/contact'
+  import type { AttachedData, Doc, Ref } from '@hanzoteam/core'
+  import presentation from '@hanzoteam/presentation'
+  import { CircleButton, eventToHTMLElement, IconAdd, Label, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import contact from '../plugin'
   import ChannelsView from './ChannelsView.svelte'

@@ -1,4 +1,4 @@
-# Change Log - @hanzo/platform
+# Change Log - @hanzoteam/platform
 
 This log was last generated on Wed, 26 Nov 2025 15:28:11 GMT and should not be manually modified.
 

@@ -15,8 +15,8 @@
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
-  import { Asset } from '@hanzo/platform'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
+  import { Asset } from '@hanzoteam/platform'
   import core, {
     Data,
     DocumentUpdate,
@@ -29,10 +29,10 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import view from '@hanzo/view'
-  import testManagement, { TestProject } from '@hanzo/test-management'
-  import presentation, { Card, IconWithEmoji, getClient, reduceCalls } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import view from '@hanzoteam/view'
+  import testManagement, { TestProject } from '@hanzoteam/test-management'
+  import presentation, { Card, IconWithEmoji, getClient, reduceCalls } from '@hanzoteam/presentation'
   import {
     Button,
     EditBox,
@@ -43,8 +43,8 @@
     getPlatformColorDef,
     getPlatformColorForTextDef,
     themeStore
-  } from '@hanzo/ui'
-  import { IconPicker, SpaceTypeSelector } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { IconPicker, SpaceTypeSelector } from '@hanzoteam/view-resources'
 
   import testManagementRes from '../../plugin'
 

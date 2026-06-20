@@ -1,8 +1,8 @@
 <script lang="ts">
   import love from '../../../plugin'
-  import { ModernButton } from '@hanzo/ui'
+  import { ModernButton } from '@hanzoteam/ui'
   import { myInfo, myOffice } from '../../../stores'
-  import { isOffice, Room } from '@hanzo/love'
+  import { isOffice, Room } from '@hanzoteam/love'
   import { createEventDispatcher } from 'svelte'
   import { leaveMeeting } from '../../../meetings'
 

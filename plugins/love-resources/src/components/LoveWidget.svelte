@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole, Ref } from '@hanzo/core'
-  import love, { Floor, Room } from '@hanzo/love'
-  import { Breadcrumbs, ButtonIcon, eventToHTMLElement, Header, IconAdd, Scroller, showPopup } from '@hanzo/ui'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Ref } from '@hanzoteam/core'
+  import love, { Floor, Room } from '@hanzoteam/love'
+  import { Breadcrumbs, ButtonIcon, eventToHTMLElement, Header, IconAdd, Scroller, showPopup } from '@hanzoteam/ui'
   import { floors, rooms, selectedFloor } from '../stores'
   import FloorPreview from './FloorPreview.svelte'
   import EditFloorPopup from './EditFloorPopup.svelte'

@@ -23,10 +23,10 @@ import questions, {
   type SingleChoiceAssessmentAnswer,
   type SingleChoiceQuestion,
   type SingleChoiceQuestionAnswer
-} from '@hanzo/questions'
-import type { Ref } from '@hanzo/core'
-import { mergeIds, type Resource } from '@hanzo/platform'
-import type { Action, ViewActionAvailabilityFunction, ViewActionFunction } from '@hanzo/view'
+} from '@hanzoteam/questions'
+import type { Ref } from '@hanzoteam/core'
+import { mergeIds, type Resource } from '@hanzoteam/platform'
+import type { Action, ViewActionAvailabilityFunction, ViewActionFunction } from '@hanzoteam/view'
 
 export default mergeIds(questionsId, questions, {
   action: {

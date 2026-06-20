@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import core, { type IdMap, type Status, toIdMap } from '@hanzo/core'
-import { createQuery, onClient } from '@hanzo/presentation'
+import core, { type IdMap, type Status, toIdMap } from '@hanzoteam/core'
+import { createQuery, onClient } from '@hanzoteam/presentation'
 import { writable } from 'svelte/store'
 
 interface Store {

@@ -1,7 +1,7 @@
-import type { Blob, Ref } from '@hanzo/core'
-import { concatLink } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import { withRetry } from '@hanzo/retry'
+import type { Blob, Ref } from '@hanzoteam/core'
+import { concatLink } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import { withRetry } from '@hanzoteam/retry'
 
 import { getFileUrl, getCurrentWorkspaceUuid, getFileStorage } from './file'
 import presentation from './plugin'

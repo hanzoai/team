@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { decodeDocumentId } from '@hanzo/collaborator-client'
-import { MeasureContext } from '@hanzo/core'
-import { decodeToken } from '@hanzo/server-token'
+import { decodeDocumentId } from '@hanzoteam/collaborator-client'
+import { MeasureContext } from '@hanzoteam/core'
+import { decodeToken } from '@hanzoteam/server-token'
 import { Extension, onAuthenticatePayload } from '@hocuspocus/server'
-import { isReadOnlyOrGuest } from '@hanzo/account'
+import { isReadOnlyOrGuest } from '@hanzoteam/account'
 
 import { Context, buildContext } from '../context'
 import { getWorkspaceIds } from '../utils'

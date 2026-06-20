@@ -1,7 +1,7 @@
-import { aiBotSocialIdentityStore } from '@hanzo/ai-bot-resources'
-import { getCurrentEmployee } from '@hanzo/contact'
-import { getPersonRefByPersonId } from '@hanzo/contact-resources'
-import { type Ref } from '@hanzo/core'
+import { aiBotSocialIdentityStore } from '@hanzoteam/ai-bot-resources'
+import { getCurrentEmployee } from '@hanzoteam/contact'
+import { getPersonRefByPersonId } from '@hanzoteam/contact-resources'
+import { type Ref } from '@hanzoteam/core'
 import {
   type DevicesPreference,
   type Floor,
@@ -9,8 +9,8 @@ import {
   type Office,
   type ParticipantInfo,
   type Room
-} from '@hanzo/love'
-import { createQuery, onClient } from '@hanzo/presentation'
+} from '@hanzoteam/love'
+import { createQuery, onClient } from '@hanzoteam/presentation'
 import { derived, get, writable } from 'svelte/store'
 
 import love from './plugin'

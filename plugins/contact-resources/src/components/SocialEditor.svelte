@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData, Ref } from '@hanzo/core'
+  import { AttachedData, Ref } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
-  import { EditBox, Button, ScrollBox, Label } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
+  import { EditBox, Button, ScrollBox, Label } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
 
-  import { ChannelProvider, Channel } from '@hanzo/contact'
+  import { ChannelProvider, Channel } from '@hanzoteam/contact'
   import contact from '../plugin'
 
   export let values: Channel[]

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { Card, getClient } from '@hanzo/presentation'
-  import { Process } from '@hanzo/process'
-  import { ToggleWithLabel } from '@hanzo/ui'
+  import presentation, { Card, getClient } from '@hanzoteam/presentation'
+  import { Process } from '@hanzoteam/process'
+  import { ToggleWithLabel } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import process from '../../plugin'
 

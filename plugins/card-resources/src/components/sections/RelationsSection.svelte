@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { RelationsEditor } from '@hanzo/view-resources'
+  import { Card } from '@hanzoteam/card'
+  import { RelationsEditor } from '@hanzoteam/view-resources'
 
   export let readonly: boolean = false
   export let doc: Card

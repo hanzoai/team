@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Ref } from '@hanzo/core'
-import { type Drive } from '@hanzo/drive'
-import { Asset, plugin, Plugin, Resource, Metadata } from '@hanzo/platform'
-import { type UploadHandler } from '@hanzo/uploader'
+import { type Ref } from '@hanzoteam/core'
+import { type Drive } from '@hanzoteam/drive'
+import { Asset, plugin, Plugin, Resource, Metadata } from '@hanzoteam/platform'
+import { type UploadHandler } from '@hanzoteam/uploader'
 
 /**
  * @public

@@ -1,6 +1,6 @@
 // Copyright © 2022 Hanzo AI Inc.
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   type Class,
   type Data,
@@ -8,13 +8,13 @@ import core, {
   type DocumentQuery,
   type FindResult,
   type Ref
-} from '@hanzo/core'
-import { type Asset } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import { type TagCategory, type TagElement, type TagReference, TagsEvents } from '@hanzo/tags'
-import { type ColorDefinition, getColorNumberByText } from '@hanzo/ui'
-import { type Filter } from '@hanzo/view'
-import { FilterQuery } from '@hanzo/view-resources'
+} from '@hanzoteam/core'
+import { type Asset } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import { type TagCategory, type TagElement, type TagReference, TagsEvents } from '@hanzoteam/tags'
+import { type ColorDefinition, getColorNumberByText } from '@hanzoteam/ui'
+import { type Filter } from '@hanzoteam/view'
+import { FilterQuery } from '@hanzoteam/view-resources'
 import { writable } from 'svelte/store'
 import tags from './plugin'
 

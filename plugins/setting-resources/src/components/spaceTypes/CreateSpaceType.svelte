@@ -15,12 +15,12 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import core, { Class, Ref, SpaceTypeDescriptor, generateId, SpaceType, Data } from '@hanzo/core'
-  import { Card, getClient, hasResource } from '@hanzo/presentation'
-  import { AnySvelteComponent, EditBox } from '@hanzo/ui'
-  import { Resource, getResource } from '@hanzo/platform'
-  import { ObjectBox } from '@hanzo/view-resources'
-  import setting, { SpaceTypeCreator, createSpaceType } from '@hanzo/setting'
+  import core, { Class, Ref, SpaceTypeDescriptor, generateId, SpaceType, Data } from '@hanzoteam/core'
+  import { Card, getClient, hasResource } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, EditBox } from '@hanzoteam/ui'
+  import { Resource, getResource } from '@hanzoteam/platform'
+  import { ObjectBox } from '@hanzoteam/view-resources'
+  import setting, { SpaceTypeCreator, createSpaceType } from '@hanzoteam/setting'
 
   import settingRes from '../../plugin'
 

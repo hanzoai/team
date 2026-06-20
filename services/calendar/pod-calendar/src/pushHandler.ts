@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { AccountClient } from '@hanzo/account-client'
-import { calendarIntegrationKind } from '@hanzo/calendar'
-import { MeasureContext, TxOperations } from '@hanzo/core'
+import { AccountClient } from '@hanzoteam/account-client'
+import { calendarIntegrationKind } from '@hanzoteam/calendar'
+import { MeasureContext, TxOperations } from '@hanzoteam/core'
 import { getClient } from './client'
 import { IncomingSyncManager } from './sync'
 import { GoogleEmail, Token } from './types'

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { TaskTypeKind } from '@hanzo/task'
-  import { Label, ButtonMenu } from '@hanzo/ui'
+  import { TaskTypeKind } from '@hanzoteam/task'
+  import { Label, ButtonMenu } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import IconLayers from '../icons/Layers.svelte'
   import IconLayerTop from '../icons/LayerTop.svelte'

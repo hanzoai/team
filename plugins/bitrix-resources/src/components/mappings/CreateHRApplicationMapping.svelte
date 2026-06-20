@@ -6,14 +6,14 @@
     Fields,
     MappingOperation,
     getAllAttributes
-  } from '@hanzo/bitrix'
-  import { AnyAttribute, Status } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { getClient, InlineAttributeBarEditor } from '@hanzo/presentation'
-  import recruit from '@hanzo/recruit'
-  import task from '@hanzo/task'
-  import { Button, DropdownLabels, DropdownLabelsIntl, DropdownTextItem, IconAdd } from '@hanzo/ui'
-  import { ObjectBox } from '@hanzo/view-resources'
+  } from '@hanzoteam/bitrix'
+  import { AnyAttribute, Status } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { getClient, InlineAttributeBarEditor } from '@hanzoteam/presentation'
+  import recruit from '@hanzoteam/recruit'
+  import task from '@hanzoteam/task'
+  import { Button, DropdownLabels, DropdownLabelsIntl, DropdownTextItem, IconAdd } from '@hanzoteam/ui'
+  import { ObjectBox } from '@hanzoteam/view-resources'
   import bitrix from '../../plugin'
 
   export let mapping: BitrixEntityMapping

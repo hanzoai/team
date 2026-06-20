@@ -19,7 +19,7 @@ import {
   type MarkupNode,
   MarkupMarkType,
   MarkupNodeType
-} from '@hanzo/text-core'
+} from '@hanzoteam/text-core'
 import { Parser } from 'htmlparser2'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

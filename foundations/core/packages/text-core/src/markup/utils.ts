@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Markup } from '@hanzo/core'
+import { Markup } from '@hanzoteam/core'
 
 import { deepEqual } from 'fast-equals'
 import hashIt from 'hash-it'

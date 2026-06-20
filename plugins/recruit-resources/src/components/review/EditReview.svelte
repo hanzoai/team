@@ -14,16 +14,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact } from '@hanzo/contact'
-  import { UserBox } from '@hanzo/contact-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { RecruitEvents, Review } from '@hanzo/recruit'
-  import { FullDescriptionBox } from '@hanzo/text-editor-resources'
-  import { EditBox, Grid } from '@hanzo/ui'
-  import { ObjectPresenter, openDoc } from '@hanzo/view-resources'
+  import contact, { Contact } from '@hanzoteam/contact'
+  import { UserBox } from '@hanzoteam/contact-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { RecruitEvents, Review } from '@hanzoteam/recruit'
+  import { FullDescriptionBox } from '@hanzoteam/text-editor-resources'
+  import { EditBox, Grid } from '@hanzoteam/ui'
+  import { ObjectPresenter, openDoc } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
   import recruit from '../../plugin'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let object: Review
 

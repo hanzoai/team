@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import { Mixin, Model, type Builder } from '@hanzo/model'
-import { TClass, TDoc } from '@hanzo/model-core'
-import type { Resource } from '@hanzo/platform'
+import { Mixin, Model, type Builder } from '@hanzoteam/model'
+import { TClass, TDoc } from '@hanzoteam/model-core'
+import type { Resource } from '@hanzoteam/platform'
 
-import core, { DOMAIN_MODEL } from '@hanzo/core'
+import core, { DOMAIN_MODEL } from '@hanzoteam/core'
 import type {
   FieldTemplateComponent,
   ObjectDDParticipant,
@@ -26,10 +26,10 @@ import type {
   SearchPresenter,
   Trigger,
   TriggerFunc
-} from '@hanzo/server-core'
-import serverCore from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
+import serverCore from '@hanzoteam/server-core'
 
-export { serverCoreId } from '@hanzo/server-core'
+export { serverCoreId } from '@hanzoteam/server-core'
 
 @Model(serverCore.class.Trigger, core.class.Doc, DOMAIN_MODEL)
 export class TTrigger extends TDoc implements Trigger {

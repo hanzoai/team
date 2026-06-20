@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type AccountClient } from '@hanzo/account-client'
+import { type AccountClient } from '@hanzoteam/account-client'
 import core, {
   type Branding,
   type Client,
@@ -37,14 +37,14 @@ import core, {
   type WithLookup,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   consoleModelLogger,
   type MigrateMode,
   type MigrateOperation,
   type ModelLogger,
   tryMigrate
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 import {
   type DbAdapter,
   DomainIndexHelperImpl,
@@ -52,12 +52,12 @@ import {
   type PlatformQueueProducer,
   type QueueWorkspaceMessage,
   type StorageAdapter
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import { type InitScript, WorkspaceInitializer } from './initializer'
 import toolPlugin from './plugin'
 import { MigrateClientImpl } from './upgrade'
 
-import { getMetadata, PlatformError, unknownError } from '@hanzo/platform'
+import { getMetadata, PlatformError, unknownError } from '@hanzoteam/platform'
 import fs from 'fs'
 import * as yaml from 'js-yaml'
 import path from 'path'

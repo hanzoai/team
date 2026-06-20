@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, ClassifierKind, Doc, Mixin, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
-  import { Icon, Label, themeStore, tooltip } from '@hanzo/ui'
+  import { Class, ClassifierKind, Doc, Mixin, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting'
+  import { Icon, Label, themeStore, tooltip } from '@hanzoteam/ui'
   import { getMixinStyle } from '../utils'
 
   export let value: Doc

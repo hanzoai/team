@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Metrics, type MetricsData } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Button, Expandable, showPopup } from '@hanzo/ui'
-  import { FixedColumn } from '@hanzo/view-resources'
+  import { Metrics, type MetricsData } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Button, Expandable, showPopup } from '@hanzoteam/ui'
+  import { FixedColumn } from '@hanzoteam/view-resources'
   import Params from './Params.svelte'
 
   export let metrics: Metrics

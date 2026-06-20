@@ -1,4 +1,4 @@
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import { Config } from '../config'
 import { parseLinkPreviewDetails, LinkPreviewError } from '../parse'
 

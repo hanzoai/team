@@ -1,7 +1,7 @@
 <!-- Circular Level Display with Progress -->
 <script lang="ts">
-  import { translateCB } from '@hanzo/platform'
-  import ratingPlugin, { getLevelInfo } from '@hanzo/rating'
+  import { translateCB } from '@hanzoteam/platform'
+  import ratingPlugin, { getLevelInfo } from '@hanzoteam/rating'
 
   export let rating: number = 0
   export let showValues = false

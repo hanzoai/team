@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type AnySvelteComponent, ButtonIcon, IconSize } from '@hanzo/ui'
-  import { Asset, IntlString } from '@hanzo/platform'
+  import { type AnySvelteComponent, ButtonIcon, IconSize } from '@hanzoteam/ui'
+  import { Asset, IntlString } from '@hanzoteam/platform'
   import { ComponentType } from 'svelte'
 
   export let label: IntlString

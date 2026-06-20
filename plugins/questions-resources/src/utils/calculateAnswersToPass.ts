@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Percentage, Question } from '@hanzo/questions'
+import type { Percentage, Question } from '@hanzoteam/questions'
 import { isAssessment } from './isAssessment'
 
 /**

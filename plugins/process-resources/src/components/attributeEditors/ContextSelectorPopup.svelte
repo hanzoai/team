@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Tag } from '@hanzo/card'
-  import { AnyAttribute, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
+  import { MasterTag, Tag } from '@hanzoteam/card'
+  import { AnyAttribute, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     Context,
     Process,
@@ -23,8 +23,8 @@
     ProcessFunction,
     RelatedContext,
     SelectedContext
-  } from '@hanzo/process'
-  import { eventToHTMLElement, Label, resizeObserver, Scroller, showPopup, Submenu } from '@hanzo/ui'
+  } from '@hanzoteam/process'
+  import { eventToHTMLElement, Label, resizeObserver, Scroller, showPopup, Submenu } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import { generateContextId, getRelationObjectReduceFunc, getValueReduceFunc } from '../../utils'

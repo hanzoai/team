@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
-  import { getPlatformColor, themeStore } from '@hanzo/ui'
+  import { Doc } from '@hanzoteam/core'
+  import { getPlatformColor, themeStore } from '@hanzoteam/ui'
   import { InboxNotificationsClientImpl } from '../inboxNotificationsClient'
 
   export let value: Doc

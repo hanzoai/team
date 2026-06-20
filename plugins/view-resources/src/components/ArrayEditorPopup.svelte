@@ -1,9 +1,9 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { ObjectPopup } from '@hanzo/presentation'
+  import { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { ObjectPopup } from '@hanzoteam/presentation'
 
   export let _class: Ref<Class<Doc>>
   export let selectedObjects: Ref<Doc>[] = []

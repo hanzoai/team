@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getDay, type Ref, type Timestamp } from '@hanzo/core'
+import { getDay, type Ref, type Timestamp } from '@hanzoteam/core'
 import { get } from 'svelte/store'
-import { sortActivityMessages } from '@hanzo/activity-resources'
-import { type ActivityMessage, type DisplayActivityMessage } from '@hanzo/activity'
-import { type DocNotifyContext } from '@hanzo/notification'
+import { sortActivityMessages } from '@hanzoteam/activity-resources'
+import { type ActivityMessage, type DisplayActivityMessage } from '@hanzoteam/activity'
+import { type DocNotifyContext } from '@hanzoteam/notification'
 
 import { getClosestDate, readChannelMessages } from './utils'
 import { type ChannelDataProvider } from './channelDataProvider'

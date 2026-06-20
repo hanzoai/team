@@ -35,11 +35,11 @@ import core, {
   type Tx,
   type TxResult,
   type WithLookup
-} from '@hanzo/core'
-import { getMetadata, type IntlString, type Resources } from '@hanzo/platform'
-import { addTxListener } from '@hanzo/presentation'
-import type { ClientHook } from '@hanzo/presentation/src/plugin'
-import { testing } from '@hanzo/ui'
+} from '@hanzoteam/core'
+import { getMetadata, type IntlString, type Resources } from '@hanzoteam/platform'
+import { addTxListener } from '@hanzoteam/presentation'
+import type { ClientHook } from '@hanzoteam/presentation/src/plugin'
+import { testing } from '@hanzoteam/ui'
 import devmodel from './plugin'
 
 export interface TxWitHResult {

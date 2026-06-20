@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Execution } from '@hanzo/process'
+  import { WithLookup } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Execution } from '@hanzoteam/process'
   import ErrorPresenter from './ErrorPresenter.svelte'
   import { continueExecution } from '../utils'
-  import { showPopup } from '@hanzo/ui'
+  import { showPopup } from '@hanzoteam/ui'
   import ExecutionDetails from './ExecutionDetails.svelte'
 
   export let value: WithLookup<Execution>

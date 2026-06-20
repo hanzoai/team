@@ -1,4 +1,4 @@
-import { type AnySvelteComponent, ModernPopup, showPopup } from '@hanzo/ui'
+import { type AnySvelteComponent, ModernPopup, showPopup } from '@hanzoteam/ui'
 import { handleSvg } from './icons'
 
 export interface OptionItem {

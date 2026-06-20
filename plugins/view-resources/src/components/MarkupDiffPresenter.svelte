@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, Markup } from '@hanzo/core'
-  import { EmptyMarkup, MarkupNode, MarkupNodeType, markupToJSON } from '@hanzo/text'
-  import { MarkupDiffViewer } from '@hanzo/text-editor-resources'
-  import { ShowMore } from '@hanzo/ui'
+  import { AnyAttribute, Markup } from '@hanzoteam/core'
+  import { EmptyMarkup, MarkupNode, MarkupNodeType, markupToJSON } from '@hanzoteam/text'
+  import { MarkupDiffViewer } from '@hanzoteam/text-editor-resources'
+  import { ShowMore } from '@hanzoteam/ui'
   import { deepEqual } from 'fast-equals'
 
   export let value: Markup | undefined

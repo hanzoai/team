@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { newMetrics, type Tx } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import serverClient from '@hanzo/server-client'
-import serverToken from '@hanzo/server-token'
-import { storageConfigFromEnv } from '@hanzo/server-storage'
-import builder, { getModelVersion } from '@hanzo/model-all'
-import { initStatisticsContext } from '@hanzo/server-core'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
+import { newMetrics, type Tx } from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClient from '@hanzoteam/server-client'
+import serverToken from '@hanzoteam/server-token'
+import { storageConfigFromEnv } from '@hanzoteam/server-storage'
+import builder, { getModelVersion } from '@hanzoteam/model-all'
+import { initStatisticsContext } from '@hanzoteam/server-core'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
 import { join } from 'path'
 import {
   registerAdapterFactory,
@@ -29,8 +29,8 @@ import {
   registerStringLoaders,
   registerDestroyFactory,
   setAdapterSecurity
-} from '@hanzo/server-pipeline'
-import { createPostgresAdapter, createPostgresTxAdapter, createPostgreeDestroyAdapter } from '@hanzo/postgres'
+} from '@hanzoteam/server-pipeline'
+import { createPostgresAdapter, createPostgresTxAdapter, createPostgreeDestroyAdapter } from '@hanzoteam/postgres'
 
 import config from './config'
 import { createServer, listen } from './server'

@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import type { Task } from '@hanzo/task'
-  import { Icon } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { Task } from '@hanzoteam/task'
+  import { Icon } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import task from '../plugin'
 
   export let value: Task

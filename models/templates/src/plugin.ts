@@ -14,15 +14,15 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { type SettingsCategory } from '@hanzo/setting'
-import { templatesId } from '@hanzo/templates'
-import templates from '@hanzo/templates-resources/src/plugin'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { type SettingsCategory } from '@hanzoteam/setting'
+import { templatesId } from '@hanzoteam/templates'
+import templates from '@hanzoteam/templates-resources/src/plugin'
 
-import { type RefInputAction, type RefInputActionItem } from '@hanzo/model-text-editor'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory } from '@hanzo/view'
+import { type RefInputAction, type RefInputActionItem } from '@hanzoteam/model-text-editor'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory } from '@hanzoteam/view'
 
 export default mergeIds(templatesId, templates, {
   ids: {

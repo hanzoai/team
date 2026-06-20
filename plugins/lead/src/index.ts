@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import type { Contact } from '@hanzo/contact'
+import type { Contact } from '@hanzoteam/contact'
 import type {
   Attribute,
   Class,
@@ -25,11 +25,11 @@ import type {
   Status,
   Timestamp,
   Permission
-} from '@hanzo/core'
-import { Mixin } from '@hanzo/core'
-import type { Asset, IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { Project, ProjectType, ProjectTypeDescriptor, Task, TaskType } from '@hanzo/task'
+} from '@hanzoteam/core'
+import { Mixin } from '@hanzoteam/core'
+import type { Asset, IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { Project, ProjectType, ProjectTypeDescriptor, Task, TaskType } from '@hanzoteam/task'
 
 /**
  * @public

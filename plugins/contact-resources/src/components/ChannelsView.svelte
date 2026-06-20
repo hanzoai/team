@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Channel, ChannelProvider } from '@hanzo/contact'
-  import { AttachedData, Doc, Ref, toIdMap } from '@hanzo/core'
-  import notification, { DocNotifyContext, InboxNotification } from '@hanzo/notification'
-  import { Asset, IntlString, getResource } from '@hanzo/platform'
-  import type { AnyComponent } from '@hanzo/ui'
-  import { Button } from '@hanzo/ui'
+  import type { Channel, ChannelProvider } from '@hanzoteam/contact'
+  import { AttachedData, Doc, Ref, toIdMap } from '@hanzoteam/core'
+  import notification, { DocNotifyContext, InboxNotification } from '@hanzoteam/notification'
+  import { Asset, IntlString, getResource } from '@hanzoteam/platform'
+  import type { AnyComponent } from '@hanzoteam/ui'
+  import { Button } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { readable, Readable, Writable, writable } from 'svelte/store'
 

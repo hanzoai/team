@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import { StorageConfiguration } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken from '@hanzo/server-token'
+import { MeasureContext } from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
+import { StorageConfiguration } from '@hanzoteam/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
+import serverToken from '@hanzoteam/server-token'
 import { start } from '.'
 
 export function startFront (ctx: MeasureContext, extraConfig?: Record<string, string | undefined>): void {

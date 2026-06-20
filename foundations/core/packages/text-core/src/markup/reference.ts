@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Class, Doc, Ref } from '@hanzo/core'
+import { Class, Doc, Ref } from '@hanzoteam/core'
 import { MarkupNode, MarkupNodeType, ReferenceMarkupNode } from '../markup/model'
 import { traverseNode } from '../markup/traverse'
 

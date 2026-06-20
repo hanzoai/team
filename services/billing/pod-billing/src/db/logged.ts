@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext, type WorkspaceUuid } from '@hanzo/core'
+import { MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
 import {
   AiTokensData,
   AiTokensUsage,

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hanzo/activity'
-  import { Action, IconMoreV, showPopup } from '@hanzo/ui'
-  import { getActions, Menu } from '@hanzo/view-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { getResource } from '@hanzo/platform'
-  import view, { Action as ViewAction } from '@hanzo/view'
-  import { Ref } from '@hanzo/core'
+  import activity, { ActivityMessage } from '@hanzoteam/activity'
+  import { Action, IconMoreV, showPopup } from '@hanzoteam/ui'
+  import { getActions, Menu } from '@hanzoteam/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { getResource } from '@hanzoteam/platform'
+  import view, { Action as ViewAction } from '@hanzoteam/view'
+  import { Ref } from '@hanzoteam/core'
 
   import ActivityMessageAction from './ActivityMessageAction.svelte'
   import { savedMessagesStore } from '../activity'

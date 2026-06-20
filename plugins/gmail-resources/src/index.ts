@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { getMetadata, type Resources } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+import { getMetadata, type Resources } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
 import GmailWriteMessage from './components/activity/GmailWriteMessage.svelte'
 import GmailSharedMessage from './components/activity/GmailSharedMessage.svelte'
 import Configure from './components/Configure.svelte'
@@ -24,10 +24,10 @@ import IconGmail from './components/icons/GmailColor.svelte'
 import Main from './components/Main.svelte'
 import NewMessages from './components/NewMessages.svelte'
 import IntegrationState from './components/IntegrationState.svelte'
-import gmail from '@hanzo/gmail'
+import gmail from '@hanzoteam/gmail'
 import { checkHasEmail, MessageTitleProvider } from './utils'
 import { getIntegrationClient, signout } from './api'
-import type { Integration } from '@hanzo/account-client'
+import type { Integration } from '@hanzoteam/account-client'
 
 export default async (): Promise<Resources> => ({
   component: {

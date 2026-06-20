@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
-  import recruit, { Vacancy } from '@hanzo/recruit'
-  import { Table } from '@hanzo/view-resources'
+  import { Doc, DocumentQuery, FindOptions, Ref } from '@hanzoteam/core'
+  import recruit, { Vacancy } from '@hanzoteam/recruit'
+  import { Table } from '@hanzoteam/view-resources'
 
   export let value: Ref<Vacancy>[]
   export let resultQuery: DocumentQuery<Doc>

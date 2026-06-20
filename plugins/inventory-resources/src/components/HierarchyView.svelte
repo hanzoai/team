@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref, SortingOrder } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Label, Loading } from '@hanzo/ui'
-  import { buildModel } from '@hanzo/view-resources'
-  import { Category } from '@hanzo/inventory'
+  import { Class, Doc, DocumentQuery, FindOptions, Ref, SortingOrder } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Label, Loading } from '@hanzoteam/ui'
+  import { buildModel } from '@hanzoteam/view-resources'
+  import { Category } from '@hanzoteam/inventory'
   import HierarchyElement from './HierarchyElement.svelte'
-  import { buildConfigLookup } from '@hanzo/view-resources/src/utils'
+  import { buildConfigLookup } from '@hanzoteam/view-resources/src/utils'
 
   export let _class: Ref<Class<Category>>
   export let query: DocumentQuery<Category> = {}

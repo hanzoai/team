@@ -7,10 +7,10 @@ import {
   type TrainingAttempt,
   TrainingAttemptState,
   type TrainingRequest
-} from '@hanzo/training'
-import { type Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import { navigate } from '@hanzo/ui'
+} from '@hanzoteam/training'
+import { type Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import { navigate } from '@hanzoteam/ui'
 import training from '../plugin'
 import { trainingAttemptRoute } from '../routing/routes/trainingAttemptRoute'
 import { canCreateTrainingAttempt } from './canCreateTrainingAttempt'

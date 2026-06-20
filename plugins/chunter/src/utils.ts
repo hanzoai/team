@@ -1,5 +1,5 @@
 import { deepEqual } from 'fast-equals'
-import core, { type AccountUuid, type Ref, TxOperations } from '@hanzo/core'
+import core, { type AccountUuid, type Ref, TxOperations } from '@hanzoteam/core'
 
 import chunter, { DirectMessage } from '.'
 

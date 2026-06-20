@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Card } from '@hanzo/card'
+import { type Card } from '@hanzoteam/card'
 import {
   type ActivityAttributeUpdate,
   type ActivityMessage,
@@ -20,10 +20,10 @@ import {
   ActivityUpdateType,
   type Message,
   MessageType
-} from '@hanzo/communication-types'
-import core, { type Class, type Client, type Doc, type Mixin, type Ref } from '@hanzo/core'
-import view, { type AttributeModel } from '@hanzo/view'
-import { buildRemovedDoc, getAttributePresenter } from '@hanzo/view-resources'
+} from '@hanzoteam/communication-types'
+import core, { type Class, type Client, type Doc, type Mixin, type Ref } from '@hanzoteam/core'
+import view, { type AttributeModel } from '@hanzoteam/view'
+import { buildRemovedDoc, getAttributePresenter } from '@hanzoteam/view-resources'
 
 const valueTypes: ReadonlyArray<Ref<Class<Doc>>> = [
   core.class.TypeString,

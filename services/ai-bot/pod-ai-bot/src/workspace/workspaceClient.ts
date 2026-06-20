@@ -17,9 +17,9 @@ import {
   ConnectMeetingRequest,
   DisconnectMeetingRequest,
   IdentityResponse
-} from '@hanzo/ai-bot'
-import attachment, { Attachment } from '@hanzo/attachment'
-import chunter, { ChatMessage, ThreadMessage } from '@hanzo/chunter'
+} from '@hanzoteam/ai-bot'
+import attachment, { Attachment } from '@hanzoteam/attachment'
+import chunter, { ChatMessage, ThreadMessage } from '@hanzoteam/chunter'
 import contact, {
   AvatarType,
   combineName,
@@ -27,7 +27,7 @@ import contact, {
   getFirstName,
   getLastName,
   Person
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import core, {
   type Account,
   AccountRole,
@@ -49,25 +49,25 @@ import core, {
   type WorkspaceIds,
   AccountUuid,
   pickPrimarySocialId
-} from '@hanzo/core'
-import { Room } from '@hanzo/love'
-import { WorkspaceInfoRecord } from '@hanzo/server-ai-bot'
+} from '@hanzoteam/core'
+import { Room } from '@hanzoteam/love'
+import { WorkspaceInfoRecord } from '@hanzoteam/server-ai-bot'
 import fs from 'fs'
 import { WithId } from 'mongodb'
 import OpenAI from 'openai'
 import { Tiktoken } from 'js-tiktoken'
 
-import { StorageAdapter } from '@hanzo/server-core'
+import { StorageAdapter } from '@hanzoteam/server-core'
 import config from '../config'
 import { HistoryRecord } from '../types'
 import { createChatCompletionWithTools, requestSummary } from '../utils/openai'
 import { connectPlatform } from '../utils/platform'
 import { LoveController } from './love'
 import { DbStorage } from '../storage'
-import { jsonToMarkup, markupToText } from '@hanzo/text'
-import { markdownToMarkup } from '@hanzo/text-markdown'
-import { countTokens } from '@hanzo/openai'
-import { getAccountClient } from '@hanzo/server-client'
+import { jsonToMarkup, markupToText } from '@hanzoteam/text'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
+import { countTokens } from '@hanzoteam/openai'
+import { getAccountClient } from '@hanzoteam/server-client'
 import { getGlobalPerson } from '../utils/account'
 
 export class WorkspaceClient {

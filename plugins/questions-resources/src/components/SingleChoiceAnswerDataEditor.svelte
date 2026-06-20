@@ -13,7 +13,7 @@
     SingleChoiceQuestion,
     SingleChoiceQuestionAnswer,
     SingleChoiceQuestionData
-  } from '@hanzo/questions'
+  } from '@hanzoteam/questions'
   import LabelEditor from './LabelEditor.svelte'
   import OptionsList from './OptionsList.svelte'
   import RadioButton from './RadioButton.svelte'

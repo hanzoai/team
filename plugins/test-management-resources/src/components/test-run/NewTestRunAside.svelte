@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { DatePresenter, Label, tooltip } from '@hanzo/ui'
-  import { Employee } from '@hanzo/contact'
-  import { EmployeeBox } from '@hanzo/contact-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { DatePresenter, Label, tooltip } from '@hanzoteam/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import { EmployeeBox } from '@hanzoteam/contact-resources'
 
-  import testManagement from '@hanzo/test-management'
+  import testManagement from '@hanzoteam/test-management'
 
   export let defaultAssignee: Ref<Employee> | undefined = undefined
   export let dueDate: number | undefined = undefined

@@ -31,9 +31,9 @@ import core, {
   type TxCUD,
   TxFactory,
   type AccountUuid
-} from '@hanzo/core'
-import type { IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import type { IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 import { taskPlugin } from './tasks'
 
 export const txFactory = new TxFactory(core.account.System)

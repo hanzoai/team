@@ -14,16 +14,16 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, onMount, onDestroy } from 'svelte'
-  import { ActionContext } from '@hanzo/presentation'
-  import { WithLookup } from '@hanzo/core'
-  import testManagement, { TestResult, TestCase } from '@hanzo/test-management'
-  import { Panel } from '@hanzo/panel'
-  import { Button } from '@hanzo/ui'
+  import { ActionContext } from '@hanzoteam/presentation'
+  import { WithLookup } from '@hanzoteam/core'
+  import testManagement, { TestResult, TestCase } from '@hanzoteam/test-management'
+  import { Panel } from '@hanzoteam/panel'
+  import { Button } from '@hanzoteam/ui'
 
   import { testResultIteratorProvider, testIteratorStore } from './store/testIteratorStore'
   import TestResultAside from './TestResultAside.svelte'
   import TestCaseDetails from '../test-case/TestCaseDetails.svelte'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
 
   const dispatch = createEventDispatcher()
 

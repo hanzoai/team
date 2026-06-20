@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { Button, showPopup } from '@hanzo/ui'
-  import { getMetadata } from '@hanzo/platform'
-  import presentation, { MessageBox } from '@hanzo/presentation'
-  import { type TransformConfig } from '@hanzo/export'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { Button, showPopup } from '@hanzoteam/ui'
+  import { getMetadata } from '@hanzoteam/platform'
+  import presentation, { MessageBox } from '@hanzoteam/presentation'
+  import { type TransformConfig } from '@hanzoteam/export'
   import plugin from '../plugin'
 
   export let _class: Ref<Class<Doc>>

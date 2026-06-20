@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
-  import { type AnyComponent, Label } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
-  import { IntlString } from '@hanzo/platform'
+  import { Doc } from '@hanzoteam/core'
+  import { type AnyComponent, Label } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
+  import { IntlString } from '@hanzoteam/platform'
 
   export let object: Doc
   export let title: string = ''

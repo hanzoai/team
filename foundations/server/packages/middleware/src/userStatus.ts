@@ -24,13 +24,13 @@ import core, {
   type TxCreateDoc,
   type TxUpdateDoc,
   type Ref
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   BaseMiddleware,
   type Middleware,
   type TxMiddlewareResult,
   type PipelineContext
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
 /**
  * @public

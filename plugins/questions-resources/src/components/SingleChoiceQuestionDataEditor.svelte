@@ -12,7 +12,7 @@
     type SingleChoiceAssessmentData,
     type SingleChoiceQuestion,
     type SingleChoiceQuestionData
-  } from '@hanzo/questions'
+  } from '@hanzoteam/questions'
   import { moveItem } from '../utils'
   import LabelEditor from './LabelEditor.svelte'
   import OptionsList, { type OptionsListDropEvent } from './OptionsList.svelte'

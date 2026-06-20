@@ -6,7 +6,7 @@
   TODO:
   * Add since to synchronization
 */
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   AttachedData,
   Doc,
@@ -23,7 +23,7 @@ import core, {
   makeDocCollabId,
   withContext,
   type MeasureContext
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
@@ -31,9 +31,9 @@ import github, {
   GithubProject,
   IntegrationRepositoryData,
   GithubIssue as TGithubIssue
-} from '@hanzo/github'
-import task, { TaskType, calcRank } from '@hanzo/task'
-import tracker, { Issue, IssuePriority } from '@hanzo/tracker'
+} from '@hanzoteam/github'
+import task, { TaskType, calcRank } from '@hanzoteam/task'
+import tracker, { Issue, IssuePriority } from '@hanzoteam/tracker'
 import { Issue as GithubIssue, IssuesEvent, ProjectsV2ItemEvent } from '@octokit/webhooks-types'
 import { Octokit } from 'octokit'
 import config from '../config'

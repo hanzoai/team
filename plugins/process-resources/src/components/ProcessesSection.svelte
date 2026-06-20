@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import core, { generateId, Ref } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Process, State } from '@hanzo/process'
-  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, IconFile, IconOpen, Label, navigate } from '@hanzo/ui'
+  import { MasterTag } from '@hanzoteam/card'
+  import core, { generateId, Ref } from '@hanzoteam/core'
+  import { translate } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Process, State } from '@hanzoteam/process'
+  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, IconFile, IconOpen, Label, navigate } from '@hanzoteam/ui'
   import process from '../plugin'
-  import { makeRank } from '@hanzo/rank'
+  import { makeRank } from '@hanzoteam/rank'
   import { importProcess } from '../exporter'
 
   export let masterTag: MasterTag

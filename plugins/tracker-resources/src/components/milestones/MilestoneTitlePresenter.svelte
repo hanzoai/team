@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Milestone } from '@hanzo/tracker'
-  import { getMonthName, Icon } from '@hanzo/ui'
+  import { Milestone } from '@hanzoteam/tracker'
+  import { getMonthName, Icon } from '@hanzoteam/ui'
   import tracker from '../../plugin'
   export let value: Milestone | undefined
 </script>

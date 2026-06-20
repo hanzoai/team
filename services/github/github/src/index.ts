@@ -1,9 +1,9 @@
 //
 // Copyright © 2023 Hanzo AI Inc.
 //
-import { ActivityMessage, ActivityMessageViewlet } from '@hanzo/activity'
-import { Attachment } from '@hanzo/attachment'
-import { Person } from '@hanzo/contact'
+import { ActivityMessage, ActivityMessageViewlet } from '@hanzoteam/activity'
+import { Attachment } from '@hanzoteam/attachment'
+import { Person } from '@hanzoteam/contact'
 import {
   AttachedDoc,
   Class,
@@ -16,14 +16,14 @@ import {
   PersonId,
   Ref,
   Timestamp
-} from '@hanzo/core'
-import { Asset, IntlString, Metadata, Plugin, plugin } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
-import task, { ProjectTypeDescriptor, TaskStatusFactory, TaskTypeDescriptor } from '@hanzo/task'
-import { ToDo } from '@hanzo/time'
-import { Component, Issue, Project } from '@hanzo/tracker'
-import { AnyComponent } from '@hanzo/ui'
-import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
+} from '@hanzoteam/core'
+import { Asset, IntlString, Metadata, Plugin, plugin } from '@hanzoteam/platform'
+import { Preference } from '@hanzoteam/preference'
+import task, { ProjectTypeDescriptor, TaskStatusFactory, TaskTypeDescriptor } from '@hanzoteam/task'
+import { ToDo } from '@hanzoteam/time'
+import { Component, Issue, Project } from '@hanzoteam/tracker'
+import { AnyComponent } from '@hanzoteam/ui'
+import { PaletteColorIndexes } from '@hanzoteam/ui/src/colors'
 
 /**
  * @public

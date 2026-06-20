@@ -24,16 +24,16 @@ import core, {
   TxProcessor,
   TxUpdateDoc,
   WorkspaceUuid
-} from '@hanzo/core'
-import { createRestClient, RestClient } from '@hanzo/api-client'
-import { generateToken } from '@hanzo/server-token'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import contact, { Translation } from '@hanzo/contact'
-import { BlobID, CardID, Markdown, Message, MessageID } from '@hanzo/communication-types'
-import { withRetry } from '@hanzo/retry'
-import { Analytics } from '@hanzo/analytics'
+} from '@hanzoteam/core'
+import { createRestClient, RestClient } from '@hanzoteam/api-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { getTransactorEndpoint } from '@hanzoteam/server-client'
+import contact, { Translation } from '@hanzoteam/contact'
+import { BlobID, CardID, Markdown, Message, MessageID } from '@hanzoteam/communication-types'
+import { withRetry } from '@hanzoteam/retry'
+import { Analytics } from '@hanzoteam/analytics'
 import OpenAI from 'openai'
-import { MessageEventType, TranslateMessageEvent, UpdatePatchEvent } from '@hanzo/communication-sdk-types'
+import { MessageEventType, TranslateMessageEvent, UpdatePatchEvent } from '@hanzoteam/communication-sdk-types'
 
 import { Storage } from './storage'
 import config from './config'

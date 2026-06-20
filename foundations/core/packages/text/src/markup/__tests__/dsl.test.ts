@@ -7,7 +7,7 @@ import {
   nodeParagraph,
   nodeReference,
   nodeText
-} from '@hanzo/text-core'
+} from '@hanzoteam/text-core'
 import { jsonToHTML } from '../utils'
 
 describe('dsl', () => {

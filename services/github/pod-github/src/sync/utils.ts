@@ -1,4 +1,4 @@
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   AttachedDoc,
   Class,
@@ -12,16 +12,16 @@ import core, {
   Status,
   Timestamp,
   TxOperations
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubIssueStateReason,
   GithubProject
-} from '@hanzo/github'
-import { PlatformError, unknownStatus } from '@hanzo/platform'
-import task from '@hanzo/task'
-import { IssueStatus } from '@hanzo/tracker'
+} from '@hanzoteam/github'
+import { PlatformError, unknownStatus } from '@hanzoteam/platform'
+import task from '@hanzoteam/task'
+import { IssueStatus } from '@hanzoteam/tracker'
 import { deepEqual } from 'fast-equals'
 import { Octokit } from 'octokit'
 import { ContainerFocus, githubExternalSyncVersion } from '../types'

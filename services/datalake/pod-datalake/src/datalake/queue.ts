@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { TxFactory, type Blob, type Ref, type Tx } from '@hanzo/core'
+import core, { TxFactory, type Blob, type Ref, type Tx } from '@hanzoteam/core'
 
 const factory = new TxFactory(core.account.System)
 

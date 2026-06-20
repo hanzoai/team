@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Avatar, getPersonByPersonRefStore } from '@hanzo/contact-resources'
-  import { ParticipantInfo } from '@hanzo/love'
-  import { Scroller } from '@hanzo/ui'
-  import { formatName } from '@hanzo/contact'
+  import { Avatar, getPersonByPersonRefStore } from '@hanzoteam/contact-resources'
+  import { ParticipantInfo } from '@hanzoteam/love'
+  import { Scroller } from '@hanzoteam/ui'
+  import { formatName } from '@hanzoteam/contact'
 
   export let items: (ParticipantInfo & { onclick?: (e: MouseEvent) => void })[]
 

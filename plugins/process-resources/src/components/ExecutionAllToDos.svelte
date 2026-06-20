@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { createQuery } from '@hanzo/presentation'
-  import { Execution, ProcessToDo } from '@hanzo/process'
-  import time from '@hanzo/time'
-  import { Component } from '@hanzo/ui'
+  import contact from '@hanzoteam/contact'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Execution, ProcessToDo } from '@hanzoteam/process'
+  import time from '@hanzoteam/time'
+  import { Component } from '@hanzoteam/ui'
   import plugin from '../plugin'
 
   export let value: Execution

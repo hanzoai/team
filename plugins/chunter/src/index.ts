@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { ActivityMessage, ActivityMessageViewlet } from '@hanzo/activity'
-import type { Class, Doc, Markup, Mixin, Ref, Space, Timestamp } from '@hanzo/core'
-import { NotificationType } from '@hanzo/notification'
-import type { Asset, Plugin, Resource } from '@hanzo/platform'
-import { IntlString, plugin } from '@hanzo/platform'
-import { AnyComponent } from '@hanzo/ui'
-import { Action } from '@hanzo/view'
-import { Person, ChannelProvider as SocialChannelProvider } from '@hanzo/contact'
-import { Widget, WidgetTab } from '@hanzo/workbench'
+import { ActivityMessage, ActivityMessageViewlet } from '@hanzoteam/activity'
+import type { Class, Doc, Markup, Mixin, Ref, Space, Timestamp } from '@hanzoteam/core'
+import { NotificationType } from '@hanzoteam/notification'
+import type { Asset, Plugin, Resource } from '@hanzoteam/platform'
+import { IntlString, plugin } from '@hanzoteam/platform'
+import { AnyComponent } from '@hanzoteam/ui'
+import { Action } from '@hanzoteam/view'
+import { Person, ChannelProvider as SocialChannelProvider } from '@hanzoteam/contact'
+import { Widget, WidgetTab } from '@hanzoteam/workbench'
 
 /**
  * @public

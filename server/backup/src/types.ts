@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Doc, Domain, Ref, type BackupStatus, type WorkspaceUuid } from '@hanzo/core'
+import { Doc, Domain, Ref, type BackupStatus, type WorkspaceUuid } from '@hanzoteam/core'
 export * from './storage'
 
 /**

@@ -13,21 +13,21 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Visibility } from '@hanzo/calendar'
-  import calendar from '@hanzo/calendar-resources/src/plugin'
-  import core, { Class, Ref, Space, getCurrentAccount, Markup } from '@hanzo/core'
-  import { SpaceSelector, getClient, createQuery } from '@hanzo/presentation'
-  import tags from '@hanzo/tags'
-  import task from '@hanzo/task'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
-  import { ModernEditbox, CheckBox, Component, IconClose, Label, Modal, Spinner, ButtonIcon } from '@hanzo/ui'
-  import { ToDo, ToDoPriority } from '@hanzo/time'
+  import { Visibility } from '@hanzoteam/calendar'
+  import calendar from '@hanzoteam/calendar-resources/src/plugin'
+  import core, { Class, Ref, Space, getCurrentAccount, Markup } from '@hanzoteam/core'
+  import { SpaceSelector, getClient, createQuery } from '@hanzoteam/presentation'
+  import tags from '@hanzoteam/tags'
+  import task from '@hanzoteam/task'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
+  import { ModernEditbox, CheckBox, Component, IconClose, Label, Modal, Spinner, ButtonIcon } from '@hanzoteam/ui'
+  import { ToDo, ToDoPriority } from '@hanzoteam/time'
   import { createEventDispatcher } from 'svelte'
   import time from '../plugin'
   import DueDateEditor from './DueDateEditor.svelte'
   import PriorityEditor from './PriorityEditor.svelte'
   import TodoWorkslots from './TodoWorkslots.svelte'
-  import { VisibilityEditor } from '@hanzo/calendar-resources'
+  import { VisibilityEditor } from '@hanzoteam/calendar-resources'
 
   // export let object: ToDo
   export let _id: Ref<ToDo>

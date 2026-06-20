@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor } from '@hanzo/contact-resources'
-  import core, { AccountUuid, Collaborator, Doc } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { AccountArrayEditor } from '@hanzoteam/contact-resources'
+  import core, { AccountUuid, Collaborator, Doc } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import notification from '../plugin'
 
   export let object: Doc

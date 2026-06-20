@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Account, Doc } from '@hanzo/core'
-import { Resource } from '@hanzo/platform'
+import { Account, Doc } from '@hanzoteam/core'
+import { Resource } from '@hanzoteam/platform'
 
 /**
  * @public

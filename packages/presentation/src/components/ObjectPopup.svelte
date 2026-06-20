@@ -20,9 +20,9 @@
     type DocumentQuery,
     type FindOptions,
     type Ref
-  } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { Label } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import presentation, { searchFor, type SearchItem } from '..'
   import { ObjectCreate, type ObjectSearchCategory } from '../types'

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Account } from '@hanzo/core'
-import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
+import type { Account } from '@hanzoteam/core'
+import platform, { PlatformError, Severity, Status } from '@hanzoteam/platform'
 import { Packr } from 'msgpackr'
 
 /**

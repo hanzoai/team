@@ -22,7 +22,7 @@ import {
   UpdateNotificationContextEvent,
   RemovePatchEvent,
   RemoveCollaboratorsEvent
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import {
   type AccountUuid,
   type ActivityCollaboratorsUpdate,
@@ -30,8 +30,8 @@ import {
   MessageType,
   NotificationType,
   SubscriptionLabelID
-} from '@hanzo/communication-types'
-import { groupByArray } from '@hanzo/core'
+} from '@hanzoteam/communication-types'
+import { groupByArray } from '@hanzoteam/core'
 
 import type { TriggerCtx, TriggerFn, Triggers } from '../types'
 import { getAddCollaboratorsMessageContent, getRemoveCollaboratorsMessageContent } from './utils'

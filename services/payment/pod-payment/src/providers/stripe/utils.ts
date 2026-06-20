@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type AccountUuid, type WorkspaceUuid, type MeasureContext } from '@hanzo/core'
-import type { SubscriptionData } from '@hanzo/account-client'
-import { SubscriptionStatus, SubscriptionType } from '@hanzo/account-client'
+import { type AccountUuid, type WorkspaceUuid, type MeasureContext } from '@hanzoteam/core'
+import type { SubscriptionData } from '@hanzoteam/account-client'
+import { SubscriptionStatus, SubscriptionType } from '@hanzoteam/account-client'
 import type Stripe from 'stripe'
 
 /**

@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { Doc, Mixin } from '@hanzo/core'
-  import { Button, Grid, IconDownOutline, IconUpOutline, resizeObserver } from '@hanzo/ui'
+  import { Card } from '@hanzoteam/card'
+  import { Doc, Mixin } from '@hanzoteam/core'
+  import { Button, Grid, IconDownOutline, IconUpOutline, resizeObserver } from '@hanzoteam/ui'
   import card from '../plugin'
   import MasterTagAttributes from './MasterTagAttributes.svelte'
   import TagAttributes from './TagAttributes.svelte'
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
 
   export let value: Card
   export let readonly: boolean = false

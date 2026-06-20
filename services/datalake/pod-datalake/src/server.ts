@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { getClient } from '@hanzo/account-client'
-import { MeasureContext, Tx, metricsAggregate } from '@hanzo/core'
-import { PlatformQueue, QueueTopic, getCPUInfo, getMemoryInfo } from '@hanzo/server-core'
-import { decodeToken, TokenError } from '@hanzo/server-token'
+import { Analytics } from '@hanzoteam/analytics'
+import { getClient } from '@hanzoteam/account-client'
+import { MeasureContext, Tx, metricsAggregate } from '@hanzoteam/core'
+import { PlatformQueue, QueueTopic, getCPUInfo, getMemoryInfo } from '@hanzoteam/server-core'
+import { decodeToken, TokenError } from '@hanzoteam/server-token'
 
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Response } from 'express'

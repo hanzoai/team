@@ -20,11 +20,11 @@ import {
   type MigrationDocumentQuery,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hanzo/model'
-import { DOMAIN_PREFERENCE } from '@hanzo/preference'
-import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hanzo/view'
-import { getSocialIdFromOldAccount, getSocialKeyByOldAccount, getUniqueAccounts } from '@hanzo/model-core'
-import core, { type AccountUuid, type PersonId } from '@hanzo/core'
+} from '@hanzoteam/model'
+import { DOMAIN_PREFERENCE } from '@hanzoteam/preference'
+import view, { type Filter, type FilteredView, type ViewletPreference, viewId } from '@hanzoteam/view'
+import { getSocialIdFromOldAccount, getSocialKeyByOldAccount, getUniqueAccounts } from '@hanzoteam/model-core'
+import core, { type AccountUuid, type PersonId } from '@hanzoteam/core'
 
 import { DOMAIN_VIEW } from '.'
 

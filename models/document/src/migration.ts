@@ -23,8 +23,8 @@ import {
   type CollaborativeDoc,
   type Doc,
   type AccountUuid
-} from '@hanzo/core'
-import { type Document, type DocumentSnapshot, type Teamspace } from '@hanzo/document'
+} from '@hanzoteam/core'
+import { type Document, type DocumentSnapshot, type Teamspace } from '@hanzoteam/document'
 import {
   migrateSpaceRanks,
   tryMigrate,
@@ -33,15 +33,15 @@ import {
   type MigrationClient,
   type MigrationDocumentQuery,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
-import core, { DOMAIN_SPACE, getAccountUuidBySocialKey, getSocialKeyByOldAccount } from '@hanzo/model-core'
-import { DOMAIN_NOTIFICATION } from '@hanzo/notification'
-import { type Asset } from '@hanzo/platform'
-import { makeRank } from '@hanzo/rank'
+} from '@hanzoteam/model'
+import { DOMAIN_ACTIVITY } from '@hanzoteam/model-activity'
+import core, { DOMAIN_SPACE, getAccountUuidBySocialKey, getSocialKeyByOldAccount } from '@hanzoteam/model-core'
+import { DOMAIN_NOTIFICATION } from '@hanzoteam/notification'
+import { type Asset } from '@hanzoteam/platform'
+import { makeRank } from '@hanzoteam/rank'
 
-import { loadCollabYdoc, saveCollabYdoc, yDocCopyXmlField } from '@hanzo/collaboration'
-import attachment, { DOMAIN_ATTACHMENT } from '@hanzo/model-attachment'
+import { loadCollabYdoc, saveCollabYdoc, yDocCopyXmlField } from '@hanzoteam/collaboration'
+import attachment, { DOMAIN_ATTACHMENT } from '@hanzoteam/model-attachment'
 import document, { documentId, DOMAIN_DOCUMENT } from './index'
 
 async function migrateDocumentIcons (client: MigrationClient): Promise<void> {

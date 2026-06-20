@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import login from '@hanzo/login'
-  import { getResource } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
-  import { Breadcrumb, Button, EditBox, Header, Icon, Label } from '@hanzo/ui'
+  import { Analytics } from '@hanzoteam/analytics'
+  import login from '@hanzoteam/login'
+  import { getResource } from '@hanzoteam/platform'
+  import presentation from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting'
+  import { Breadcrumb, Button, EditBox, Header, Icon, Label } from '@hanzoteam/ui'
   import plugin from '../plugin'
   import Error from './icons/Error.svelte'
 

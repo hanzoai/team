@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/love-agent",
+  "name": "@hanzoteam/love-agent",
   "version": "0.7.0",
   "main": "lib/index.js",
   "types": "types/index.d.ts",

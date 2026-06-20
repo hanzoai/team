@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { type Message, Window, NotificationContext } from '@hanzo/communication-types'
-  import { createMessagesQuery, getCommunicationClient } from '@hanzo/presentation'
-  import { MessagesGroup as MessagesGroupPresenter } from '@hanzo/ui-next'
-  import { Scroller } from '@hanzo/ui'
-  import { getCurrentAccount, SortingOrder } from '@hanzo/core'
+  import { Card } from '@hanzoteam/card'
+  import { type Message, Window, NotificationContext } from '@hanzoteam/communication-types'
+  import { createMessagesQuery, getCommunicationClient } from '@hanzoteam/presentation'
+  import { MessagesGroup as MessagesGroupPresenter } from '@hanzoteam/ui-next'
+  import { Scroller } from '@hanzoteam/ui'
+  import { getCurrentAccount, SortingOrder } from '@hanzoteam/core'
   import { tick } from 'svelte'
 
   import ReverseScroller from './internal/ReverseScroller.svelte'

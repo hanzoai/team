@@ -277,7 +277,7 @@ docker run -p 4006:4006 \
 ### Build
 
 ```bash
-rush build --to @hanzo/pod-export
+rush build --to @hanzoteam/pod-export
 ```
 
 ### Run Locally

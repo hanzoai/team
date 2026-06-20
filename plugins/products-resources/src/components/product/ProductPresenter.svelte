@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-  import { Product } from '@hanzo/products'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { tooltip } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { Product } from '@hanzoteam/products'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
 
   import products from '../../plugin'
 

@@ -4,7 +4,7 @@ import {
   type Container,
   type ContainerUuid,
   type GetOptions
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 import { createNetworkClient } from '../index'
 
 // Mock NetworkAgentServer to avoid actual network operations

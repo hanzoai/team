@@ -13,9 +13,9 @@ import {
   type TxOperations,
   type BlobMetadata,
   type AccountRole
-} from '@hanzo/core'
-import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
-import { type AnyComponent, type AnySvelteComponent, type ComponentExtensionId } from '@hanzo/ui/src/types'
+} from '@hanzoteam/core'
+import { type Asset, type IntlString, type Resource } from '@hanzoteam/platform'
+import { type AnyComponent, type AnySvelteComponent, type ComponentExtensionId } from '@hanzoteam/ui/src/types'
 
 export * from './components/breadcrumbs/types'
 

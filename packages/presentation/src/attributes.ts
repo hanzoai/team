@@ -1,4 +1,4 @@
-import { type AnyAttribute, type Client } from '@hanzo/core'
+import { type AnyAttribute, type Client } from '@hanzoteam/core'
 
 /**
  * @public
@@ -8,7 +8,7 @@ export interface KeyedAttribute {
   attr: AnyAttribute
 }
 
-export { updateAttribute } from '@hanzo/core'
+export { updateAttribute } from '@hanzoteam/core'
 
 export function getAttribute (client: Client, object: any, key: KeyedAttribute): any {
   // Check if attr is mixin and return its value

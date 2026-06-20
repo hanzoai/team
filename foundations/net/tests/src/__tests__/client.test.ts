@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { createNetworkClient } from '@hanzo/network-client'
-import type { NetworkClient } from '@hanzo/network-core'
+import { createNetworkClient } from '@hanzoteam/network-client'
+import type { NetworkClient } from '@hanzoteam/network-core'
 
 jest.setTimeout(6000000)
 describe('network client tests', () => {

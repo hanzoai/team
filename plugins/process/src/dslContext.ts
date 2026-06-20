@@ -1,5 +1,5 @@
-import { Association, Class, Doc, Ref } from '@hanzo/core'
-import { _parseId, Resource } from '@hanzo/platform'
+import { Association, Class, Doc, Ref } from '@hanzoteam/core'
+import { _parseId, Resource } from '@hanzoteam/platform'
 import { ProcessFunction, processId } from '.'
 import {
   Func,

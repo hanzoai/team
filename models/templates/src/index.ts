@@ -14,24 +14,24 @@
 // limitations under the License.
 //
 
-import { type Domain, DOMAIN_MODEL, IndexKind, type Ref, type Markup, AccountRole } from '@hanzo/core'
-import { type Builder, Index, Model, Prop, TypeString, UX, TypeMarkup } from '@hanzo/model'
-import core, { TDoc, TSpace } from '@hanzo/model-core'
-import textEditor from '@hanzo/model-text-editor'
-import tracker from '@hanzo/model-tracker'
-import view, { createAction } from '@hanzo/model-view'
-import { type IntlString, type Resource } from '@hanzo/platform'
-import setting from '@hanzo/setting'
+import { type Domain, DOMAIN_MODEL, IndexKind, type Ref, type Markup, AccountRole } from '@hanzoteam/core'
+import { type Builder, Index, Model, Prop, TypeString, UX, TypeMarkup } from '@hanzoteam/model'
+import core, { TDoc, TSpace } from '@hanzoteam/model-core'
+import textEditor from '@hanzoteam/model-text-editor'
+import tracker from '@hanzoteam/model-tracker'
+import view, { createAction } from '@hanzoteam/model-view'
+import { type IntlString, type Resource } from '@hanzoteam/platform'
+import setting from '@hanzoteam/setting'
 import type {
   MessageTemplate,
   TemplateCategory,
   TemplateField,
   TemplateFieldCategory,
   TemplateFieldFunc
-} from '@hanzo/templates'
+} from '@hanzoteam/templates'
 import templates from './plugin'
 
-export { templatesId } from '@hanzo/templates'
+export { templatesId } from '@hanzoteam/templates'
 export { templatesOperation } from './migration'
 
 export const DOMAIN_TEMPLATES = 'templates' as Domain

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import card, { Card } from '@hanzo/card'
-  import chat from '@hanzo/chat'
-  import communication, { GuestCommunicationSettings } from '@hanzo/communication'
-  import contact, { AvatarType, ensureEmployeeForPerson } from '@hanzo/contact'
-  import { EditableAvatar, getAccountClient } from '@hanzo/contact-resources'
+  import card, { Card } from '@hanzoteam/card'
+  import chat from '@hanzoteam/chat'
+  import communication, { GuestCommunicationSettings } from '@hanzoteam/communication'
+  import contact, { AvatarType, ensureEmployeeForPerson } from '@hanzoteam/contact'
+  import { EditableAvatar, getAccountClient } from '@hanzoteam/contact-resources'
   import core, {
     type Account,
     AccountRole,
@@ -28,11 +28,11 @@
     readOnlyGuestAccountUuid,
     Ref,
     WorkspaceAccountPermission
-  } from '@hanzo/core'
-  import { loginId } from '@hanzo/login'
-  import { translateCB } from '@hanzo/platform'
-  import { createQuery, getClient, MessageBox, uiContext } from '@hanzo/presentation'
-  import { WorkspaceSetting } from '@hanzo/setting'
+  } from '@hanzoteam/core'
+  import { loginId } from '@hanzoteam/login'
+  import { translateCB } from '@hanzoteam/platform'
+  import { createQuery, getClient, MessageBox, uiContext } from '@hanzoteam/presentation'
+  import { WorkspaceSetting } from '@hanzoteam/setting'
   import {
     Breadcrumb,
     Button,
@@ -55,7 +55,7 @@
     showPopup,
     themeStore,
     Toggle
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import settingsRes from '../plugin'
   import ApiTokenPopup from './ApiTokenPopup.svelte'
   import WorkspacePermissionEditor from './WorkspacePermissionEditor.svelte'

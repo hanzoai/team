@@ -22,12 +22,12 @@ import {
   type Ref,
   type RelatedDocument,
   type WithLookup
-} from '@hanzo/core'
-import { type Document, type Teamspace } from '@hanzo/document'
-import { type Resources } from '@hanzo/platform'
-import { getClient, type ObjectSearchResult } from '@hanzo/presentation'
-import { showPopup } from '@hanzo/ui'
-import { openDoc } from '@hanzo/view-resources'
+} from '@hanzoteam/core'
+import { type Document, type Teamspace } from '@hanzoteam/document'
+import { type Resources } from '@hanzoteam/platform'
+import { getClient, type ObjectSearchResult } from '@hanzoteam/presentation'
+import { showPopup } from '@hanzoteam/ui'
+import { openDoc } from '@hanzoteam/view-resources'
 
 import CreateDocument from './components/CreateDocument.svelte'
 import DocumentIcon from './components/DocumentIcon.svelte'

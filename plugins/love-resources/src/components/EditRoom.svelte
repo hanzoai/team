@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { EditBox, ModernButton } from '@hanzo/ui'
-  import { Room, isOffice, type ParticipantInfo } from '@hanzo/love'
+  import { EditBox, ModernButton } from '@hanzoteam/ui'
+  import { Room, isOffice, type ParticipantInfo } from '@hanzoteam/love'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
 
   import love from '../plugin'
   import { getRoomName } from '../utils'

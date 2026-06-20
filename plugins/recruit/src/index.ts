@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import type { Attribute, Class, Doc, Mixin, Permission, Ref, Status } from '@hanzo/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { ProjectTypeDescriptor, TaskType } from '@hanzo/task'
-import { AnyComponent, Location, ResolvedLocation } from '@hanzo/ui'
+import type { Attribute, Class, Doc, Mixin, Permission, Ref, Status } from '@hanzoteam/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { ProjectTypeDescriptor, TaskType } from '@hanzoteam/task'
+import { AnyComponent, Location, ResolvedLocation } from '@hanzoteam/ui'
 import type { Applicant, ApplicantMatch, Candidate, Opinion, Review, Vacancy, VacancyList } from './types'
-import { Action } from '@hanzo/view'
+import { Action } from '@hanzoteam/view'
 
 export * from './types'
 export * from './analytics'

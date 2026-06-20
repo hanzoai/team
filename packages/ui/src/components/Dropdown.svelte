@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
   import { createEventDispatcher } from 'svelte'
   import { getFocusManager } from '../focus'
   import { showPopup } from '../popups'

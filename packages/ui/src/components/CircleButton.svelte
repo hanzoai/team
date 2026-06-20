@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import type { Asset } from '@hanzo/platform'
+  import type { Asset } from '@hanzoteam/platform'
   import type { AnySvelteComponent, ButtonSize } from '../types'
   import Icon from './Icon.svelte'
 

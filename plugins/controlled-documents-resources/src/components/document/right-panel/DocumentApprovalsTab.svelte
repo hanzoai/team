@@ -6,12 +6,12 @@
     DocumentState,
     DocumentValidationState,
     emptyBundle
-  } from '@hanzo/controlled-documents'
+  } from '@hanzoteam/controlled-documents'
 
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Label, Scroller } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Label, Scroller } from '@hanzoteam/ui'
 
-  import chunter, { ChatMessage } from '@hanzo/chunter'
+  import chunter, { ChatMessage } from '@hanzoteam/chunter'
   import documentsRes from '../../../plugin'
   import {
     $controlledDocument as controlledDocument,
@@ -22,7 +22,7 @@
   import DocumentApprovalItem from './DocumentApprovalItem.svelte'
   import RightPanelTabHeader from './RightPanelTabHeader.svelte'
   import { extractValidationWorkflow } from '../../../utils'
-  import { Ref } from '@hanzo/core'
+  import { Ref } from '@hanzoteam/core'
 
   const client = getClient()
   const hierarchy = client.getHierarchy()

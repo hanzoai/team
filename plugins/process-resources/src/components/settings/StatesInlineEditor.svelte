@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Process, State } from '@hanzo/process'
-  import { makeRank } from '@hanzo/rank'
-  import { Button, IconAdd, Label } from '@hanzo/ui'
-  import { SortableDocList } from '@hanzo/view-resources'
+  import core, { Doc } from '@hanzoteam/core'
+  import { translate } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process, State } from '@hanzoteam/process'
+  import { makeRank } from '@hanzoteam/rank'
+  import { Button, IconAdd, Label } from '@hanzoteam/ui'
+  import { SortableDocList } from '@hanzoteam/view-resources'
   import plugin from '../../plugin'
   import StateInlineEditor from './StateInlineEditor.svelte'
 

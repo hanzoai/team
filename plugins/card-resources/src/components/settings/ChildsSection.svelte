@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, Label, navigate, showPopup } from '@hanzo/ui'
+  import { MasterTag } from '@hanzoteam/card'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { ButtonIcon, getCurrentLocation, Icon, IconAdd, Label, navigate, showPopup } from '@hanzoteam/ui'
   import card from '../../plugin'
   import CreateTag from '../CreateTag.svelte'
   import TagsHierarchy from './TagsHierarchy.svelte'

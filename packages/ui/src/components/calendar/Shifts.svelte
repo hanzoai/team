@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangeMode } from '@hanzo/core'
+  import { DateRangeMode } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
   import Scroller from '../Scroller.svelte'
   import TimeShiftPresenter from '../TimeShiftPresenter.svelte'

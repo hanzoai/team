@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, EditBox, Icon, IconArrowRight, parseURL } from '@hanzo/ui'
+  import { Button, EditBox, Icon, IconArrowRight, parseURL } from '@hanzoteam/ui'
   import calendar from '../plugin'
 
   export let value: string | undefined

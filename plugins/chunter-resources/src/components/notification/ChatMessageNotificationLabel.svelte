@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label, tooltip } from '@hanzo/ui'
-  import { DocNotifyContext } from '@hanzo/notification'
-  import { getClient } from '@hanzo/presentation'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getDocLinkTitle, getDocTitle, ObjectIcon } from '@hanzo/view-resources'
-  import { ChatMessage, ThreadMessage } from '@hanzo/chunter'
-  import contact from '@hanzo/contact'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Label, tooltip } from '@hanzoteam/ui'
+  import { DocNotifyContext } from '@hanzoteam/notification'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getDocLinkTitle, getDocTitle, ObjectIcon } from '@hanzoteam/view-resources'
+  import { ChatMessage, ThreadMessage } from '@hanzoteam/chunter'
+  import contact from '@hanzoteam/contact'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
 
   import chunter from '../../plugin'
   import ChatMessagePreview from '../chat-message/ChatMessagePreview.svelte'

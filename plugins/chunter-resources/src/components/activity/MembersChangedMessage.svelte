@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import { DocAttributeUpdates, DocUpdateMessage } from '@hanzo/activity'
-  import { Employee, Person } from '@hanzo/contact'
-  import { AccountUuid, notEmpty, PersonId } from '@hanzo/core'
-  import { PersonPresenter, employeeByAccountStore, employeeByPersonIdStore } from '@hanzo/contact-resources'
-  import { ChunterSpace } from '@hanzo/chunter'
-  import { Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { DocAttributeUpdates, DocUpdateMessage } from '@hanzoteam/activity'
+  import { Employee, Person } from '@hanzoteam/contact'
+  import { AccountUuid, notEmpty, PersonId } from '@hanzoteam/core'
+  import { PersonPresenter, employeeByAccountStore, employeeByPersonIdStore } from '@hanzoteam/contact-resources'
+  import { ChunterSpace } from '@hanzoteam/chunter'
+  import { Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   import chunter from '../../plugin'
   import ChannelIcon from '../ChannelIcon.svelte'

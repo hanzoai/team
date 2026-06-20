@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { boardId, type Card } from '@hanzo/board'
-import { TxOperations } from '@hanzo/core'
+import { boardId, type Card } from '@hanzoteam/board'
+import { TxOperations } from '@hanzoteam/core'
 import {
   createOrUpdate,
   tryMigrate,
@@ -22,10 +22,10 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import core from '@hanzo/model-core'
-import { DOMAIN_TASK, createSequence } from '@hanzo/model-task'
-import tags from '@hanzo/tags'
+} from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import { DOMAIN_TASK, createSequence } from '@hanzoteam/model-task'
+import tags from '@hanzoteam/tags'
 import board from './plugin'
 
 async function createSpace (tx: TxOperations): Promise<void> {

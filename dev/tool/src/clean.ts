@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getAccountDB } from '@hanzo/account'
-import calendar from '@hanzo/calendar'
-import chunter, { type ChatMessage } from '@hanzo/chunter'
-import { loadCollabYdoc, saveCollabYdoc, yDocToBuffer } from '@hanzo/collaboration'
-import contact from '@hanzo/contact'
+import { getAccountDB } from '@hanzoteam/account'
+import calendar from '@hanzoteam/calendar'
+import chunter, { type ChatMessage } from '@hanzoteam/chunter'
+import { loadCollabYdoc, saveCollabYdoc, yDocToBuffer } from '@hanzoteam/collaboration'
+import contact from '@hanzoteam/contact'
 import core, {
   type ArrOf,
   type BackupClient,
@@ -60,20 +60,20 @@ import core, {
   updateAttribute,
   platformNow,
   platformNowDiff
-} from '@hanzo/core'
-import activity, { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
-import { DOMAIN_SPACE } from '@hanzo/model-core'
-import recruitModel, { defaultApplicantStatuses } from '@hanzo/model-recruit'
-import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
-import recruit, { type Applicant, type Vacancy } from '@hanzo/recruit'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import { type StorageAdapter } from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
-import { connect } from '@hanzo/server-tool'
-import tags, { type TagCategory, type TagElement, type TagReference } from '@hanzo/tags'
-import task, { type ProjectType, type Task, type TaskType } from '@hanzo/task'
-// import { updateYDocContent } from '@hanzo/text-ydoc'
-import tracker from '@hanzo/tracker'
+} from '@hanzoteam/core'
+import activity, { DOMAIN_ACTIVITY } from '@hanzoteam/model-activity'
+import { DOMAIN_SPACE } from '@hanzoteam/model-core'
+import recruitModel, { defaultApplicantStatuses } from '@hanzoteam/model-recruit'
+import { getMongoClient, getWorkspaceMongoDB } from '@hanzoteam/mongo'
+import recruit, { type Applicant, type Vacancy } from '@hanzoteam/recruit'
+import { getTransactorEndpoint } from '@hanzoteam/server-client'
+import { type StorageAdapter } from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
+import { connect } from '@hanzoteam/server-tool'
+import tags, { type TagCategory, type TagElement, type TagReference } from '@hanzoteam/tags'
+import task, { type ProjectType, type Task, type TaskType } from '@hanzoteam/task'
+// import { updateYDocContent } from '@hanzoteam/text-ydoc'
+import tracker from '@hanzoteam/tracker'
 import { deepEqual } from 'fast-equals'
 import { type Db } from 'mongodb'
 

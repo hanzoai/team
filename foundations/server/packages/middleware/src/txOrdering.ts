@@ -21,9 +21,9 @@ import {
   type SessionData,
   type Tx,
   type TxCUD
-} from '@hanzo/core'
-import { BaseMiddleware } from '@hanzo/server-core'
-import type { Middleware, MiddlewareCreator, TxMiddlewareResult } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { BaseMiddleware } from '@hanzoteam/server-core'
+import type { Middleware, MiddlewareCreator, TxMiddlewareResult } from '@hanzoteam/server-core'
 
 interface TxOrderEntry {
   txIds: string[] // All transaction IDs in this batch

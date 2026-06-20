@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     Process,
     ProcessToDo,
@@ -21,8 +21,8 @@
     SelectedExecutionContext,
     Step,
     parseContext
-  } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import ExecutionContextPresenter from '../attributeEditors/ExecutionContextPresenter.svelte'
 

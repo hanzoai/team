@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IconSize } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import { Doc } from '@hanzo/core'
+  import { IconSize } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Doc } from '@hanzoteam/core'
   import ObjectIcon from './ObjectIcon.svelte'
 
   import { getDocLinkTitle } from '../utils'

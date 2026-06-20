@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Question } from '@hanzo/questions'
-import { type DocumentUpdate, type TxOperations } from '@hanzo/core'
+import type { Question } from '@hanzoteam/questions'
+import { type DocumentUpdate, type TxOperations } from '@hanzoteam/core'
 import { canUpdateQuestion } from './canUpdateQuestion'
 
 export async function updateQuestion<Q extends Question<unknown>> (

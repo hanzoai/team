@@ -17,9 +17,9 @@
 
 <script lang="ts" context="module">
   import type { ComponentProps } from 'svelte'
-  import type { IntlString } from '@hanzo/platform'
-  import { StateTag, StateType } from '@hanzo/ui'
-  import { ProductVersionState } from '@hanzo/products'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { StateTag, StateType } from '@hanzoteam/ui'
+  import { ProductVersionState } from '@hanzoteam/products'
 
   import products from '../../plugin'
 

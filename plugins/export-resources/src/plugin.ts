@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import exportPlugin, { exportId } from '@hanzo/export'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import exportPlugin, { exportId } from '@hanzoteam/export'
 
 export default mergeIds(exportId, exportPlugin, {
   string: {

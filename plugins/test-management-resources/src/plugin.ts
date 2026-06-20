@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import testManagement, { testManagementId } from '@hanzo/test-management'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import testManagement, { testManagementId } from '@hanzoteam/test-management'
 
 export default mergeIds(testManagementId, testManagement, {
   string: {

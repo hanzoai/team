@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { Class, Doc, DOMAIN_SEQUENCE, Sequence, TxOperations, type Ref, type TypedSpace } from '@hanzo/core'
+import { Class, Doc, DOMAIN_SEQUENCE, Sequence, TxOperations, type Ref, type TypedSpace } from '@hanzoteam/core'
 import {
   tryMigrate,
   tryUpgrade,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import core from '@hanzo/model-core'
-import training, { trainingId } from '@hanzo/training'
+} from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import training, { trainingId } from '@hanzoteam/training'
 import { DOMAIN_TRAINING } from './types'
 
 export const trainingOperation: MigrateOperation = {

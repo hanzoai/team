@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import InlineCommentPresenter from './InlineCommentPresenter.svelte'
-  import textEditor from '@hanzo/text-editor'
-  import { ReferenceInput } from '@hanzo/text-editor-resources'
-  import { Action, Scroller, IconCheck, AnySvelteComponent } from '@hanzo/ui'
+  import textEditor from '@hanzoteam/text-editor'
+  import { ReferenceInput } from '@hanzoteam/text-editor-resources'
+  import { Action, Scroller, IconCheck, AnySvelteComponent } from '@hanzoteam/ui'
   import chunter from '../../plugin'
 
   export let thread: any

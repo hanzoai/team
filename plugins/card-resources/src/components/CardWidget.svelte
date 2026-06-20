@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { closeWidget } from '@hanzo/workbench-resources'
-  import { Widget, WidgetTab } from '@hanzo/workbench'
-  import { createQuery, createNotificationContextsQuery, getClient } from '@hanzo/presentation'
-  import { NotificationContext } from '@hanzo/communication-types'
+  import { closeWidget } from '@hanzoteam/workbench-resources'
+  import { Widget, WidgetTab } from '@hanzoteam/workbench'
+  import { createQuery, createNotificationContextsQuery, getClient } from '@hanzoteam/presentation'
+  import { NotificationContext } from '@hanzoteam/communication-types'
   import { createEventDispatcher } from 'svelte'
-  import { Card } from '@hanzo/card'
-  import { Ref } from '@hanzo/core'
-  import { Button, EditBox, Header, IconClose, IconMoreH } from '@hanzo/ui'
+  import { Card } from '@hanzoteam/card'
+  import { Ref } from '@hanzoteam/core'
+  import { Button, EditBox, Header, IconClose, IconMoreH } from '@hanzoteam/ui'
 
   import card from '../plugin'
   import EditCardNewContent from './EditCardNewContent.svelte'
-  import { showMenu } from '@hanzo/view-resources'
+  import { showMenu } from '@hanzoteam/view-resources'
   import TagsEditor from './TagsEditor.svelte'
   import ParentNamesPresenter from './ParentNamesPresenter.svelte'
 

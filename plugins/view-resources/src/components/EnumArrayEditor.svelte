@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { ArrOf, EnumOf } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { ButtonKind, ButtonSize, DropdownLabels, DropdownTextItem } from '@hanzo/ui'
+  import core, { ArrOf, EnumOf } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ButtonKind, ButtonSize, DropdownLabels, DropdownTextItem } from '@hanzoteam/ui'
 
   export let label: IntlString
   export let value: string[] = []

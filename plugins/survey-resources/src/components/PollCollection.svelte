@@ -15,16 +15,16 @@
 //
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Survey } from '@hanzo/survey'
-  import { Button, IconAdd, Label, Section, navigate, showPopup, Scroller } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { Table, ViewletSelector, ViewletSettingButton, getObjectLinkFragment } from '@hanzo/view-resources'
+  import type { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Survey } from '@hanzoteam/survey'
+  import { Button, IconAdd, Label, Section, navigate, showPopup, Scroller } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { Table, ViewletSelector, ViewletSettingButton, getObjectLinkFragment } from '@hanzoteam/view-resources'
   import SurveyPopup from './SurveyPopup.svelte'
   import survey from '../plugin'
   import { makePollData } from '../utils'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let objectId: Ref<Doc>
   export let space: Ref<Space>

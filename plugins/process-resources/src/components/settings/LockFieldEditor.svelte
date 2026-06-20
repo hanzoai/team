@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import cardPlugin, { Card, MasterTag, Tag } from '@hanzo/card'
-  import core, { AnyAttribute, Class, Ref } from '@hanzo/core'
-  import { Process, Step } from '@hanzo/process'
-  import { Button, eventToHTMLElement, IconClose, Label, SelectPopup, showPopup, tooltip } from '@hanzo/ui'
+  import cardPlugin, { Card, MasterTag, Tag } from '@hanzoteam/card'
+  import core, { AnyAttribute, Class, Ref } from '@hanzoteam/core'
+  import { Process, Step } from '@hanzoteam/process'
+  import { Button, eventToHTMLElement, IconClose, Label, SelectPopup, showPopup, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import TagSelector from './TagSelector.svelte'
-  import presentation, { getClient } from '@hanzo/presentation'
+  import presentation, { getClient } from '@hanzoteam/presentation'
 
   export let process: Process
   export let step: Step<Card>

@@ -24,7 +24,7 @@
     deviceOptionsStore as deviceInfo,
     checkAdaptiveMatching,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
 
   export let popup: boolean = false
 

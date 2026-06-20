@@ -1,8 +1,8 @@
-import { type IntegrationKind, type PersonId, type WorkspaceUuid, systemAccountUuid } from '@hanzo/core'
-import { getAccountClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { type Integration } from '@hanzo/account-client'
-import { getDBClient } from '@hanzo/postgres'
+import { type IntegrationKind, type PersonId, type WorkspaceUuid, systemAccountUuid } from '@hanzoteam/core'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { type Integration } from '@hanzoteam/account-client'
+import { getDBClient } from '@hanzoteam/postgres'
 
 const GITHUB_INTEGRATION: IntegrationKind = 'github' as any
 

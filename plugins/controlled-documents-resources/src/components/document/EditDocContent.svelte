@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment, { Attachment } from '@hanzo/attachment'
-  import documents, { DocumentState } from '@hanzo/controlled-documents'
-  import { type Blob, type Ref, generateId } from '@hanzo/core'
-  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Editor, Heading } from '@hanzo/text-editor'
+  import attachment, { Attachment } from '@hanzoteam/attachment'
+  import documents, { DocumentState } from '@hanzoteam/controlled-documents'
+  import { type Blob, type Ref, generateId } from '@hanzoteam/core'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Editor, Heading } from '@hanzoteam/text-editor'
   import {
     CollaboratorEditor,
     NodeHighlightType,
@@ -27,12 +27,12 @@
     getNodeElement,
     highlightUpdateCommand,
     selectNode
-  } from '@hanzo/text-editor-resources'
-  import { Component, EditBox, Label, Scroller } from '@hanzo/ui'
-  import { getCollaborationUser } from '@hanzo/view-resources'
+  } from '@hanzoteam/text-editor-resources'
+  import { Component, EditBox, Label, Scroller } from '@hanzoteam/ui'
+  import { getCollaborationUser } from '@hanzoteam/view-resources'
   import { merge } from 'effector'
   import { createEventDispatcher, onDestroy, tick } from 'svelte'
-  import activity from '@hanzo/activity'
+  import activity from '@hanzoteam/activity'
   import plugin from '../../plugin'
 
   import {

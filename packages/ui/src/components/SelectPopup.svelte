@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
+  import type { IntlString } from '@hanzoteam/platform'
   import { createEventDispatcher } from 'svelte'
   import { deviceOptionsStore, resizeObserver } from '..'
   import { createFocusManager } from '../focus'
@@ -26,8 +26,8 @@
   import Spinner from './Spinner.svelte'
   import IconCheck from './icons/Check.svelte'
   import IconSearch from './icons/Search.svelte'
-  import { translate } from '@hanzo/platform'
-  import { themeStore } from '@hanzo/theme'
+  import { translate } from '@hanzoteam/platform'
+  import { themeStore } from '@hanzoteam/theme'
 
   export let placeholder: IntlString | undefined = undefined
   export let placeholderParam: any | undefined = undefined

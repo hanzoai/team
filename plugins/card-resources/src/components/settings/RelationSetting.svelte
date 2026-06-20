@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { RelationSetting } from '@hanzo/setting-resources'
-  import contact from '@hanzo/contact'
+  import { getClient } from '@hanzoteam/presentation'
+  import { RelationSetting } from '@hanzoteam/setting-resources'
+  import contact from '@hanzoteam/contact'
   import card from '../../plugin'
-  import { Analytics } from '@hanzo/analytics'
-  import { CardEvents, MasterTag } from '@hanzo/card'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { CardEvents, MasterTag } from '@hanzoteam/card'
 
   const client = getClient()
   const hierarchy = client.getHierarchy()

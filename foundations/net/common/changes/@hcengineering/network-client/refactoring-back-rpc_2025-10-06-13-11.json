@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/network-client",
+      "packageName": "@hanzoteam/network-client",
       "comment": "renamings",
       "type": "none"
     }
   ],
-  "packageName": "@hanzo/network-client"
+  "packageName": "@hanzoteam/network-client"
 }

@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import card from '@hanzo/card'
-  import { SpecialView } from '@hanzo/workbench-resources'
-  import view from '@hanzo/view'
-  import preference from '@hanzo/preference'
+  import card from '@hanzoteam/card'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
+  import view from '@hanzoteam/view'
+  import preference from '@hanzoteam/preference'
 
   export let application: string
 </script>

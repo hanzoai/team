@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole, Ref } from '@hanzo/core'
-  import { ButtonIcon, getCurrentLocation, IconAdd, location, Menu, navigate, showPopup } from '@hanzo/ui'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Ref } from '@hanzoteam/core'
+  import { ButtonIcon, getCurrentLocation, IconAdd, location, Menu, navigate, showPopup } from '@hanzoteam/ui'
 
-  import { MasterTag } from '@hanzo/card'
+  import { MasterTag } from '@hanzoteam/card'
   import card from '../../plugin'
   import CreateSpace from './CreateSpace.svelte'
   import CreateCardPopup from '../CreateCardPopup.svelte'

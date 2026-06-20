@@ -27,8 +27,8 @@ import {
   NotificationContent,
   NotificationType,
   PeerKind, PeerExtra
-} from '@hanzo/communication-types'
-import { Domain } from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-types'
+import { Domain } from '@hanzoteam/communication-sdk-types'
 
 export const schemas = {
   [Domain.MessageIndex]: {

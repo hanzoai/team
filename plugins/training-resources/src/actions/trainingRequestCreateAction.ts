@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { focusActionWithAvailability } from '@hanzo/questions-resources'
-import type { Training } from '@hanzo/training'
-import { showPopup } from '@hanzo/ui'
+import { focusActionWithAvailability } from '@hanzoteam/questions-resources'
+import type { Training } from '@hanzoteam/training'
+import { showPopup } from '@hanzoteam/ui'
 import TrainingRequestCreator from '../components/TrainingRequestCreator.svelte'
 import { canCreateTrainingRequest, type CreateTrainingRequestData } from '../utils'
 

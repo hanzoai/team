@@ -21,10 +21,10 @@ import {
   SocialIdType,
   WorkspaceUuid,
   buildSocialIdString
-} from '@hanzo/core'
-import { getAccountClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { Integration } from '@hanzo/account-client'
+} from '@hanzoteam/core'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { Integration } from '@hanzoteam/account-client'
 
 import { serviceToken } from './utils'
 import { IntegrationInfo } from './types'

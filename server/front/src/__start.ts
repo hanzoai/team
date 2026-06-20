@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { MeasureMetricsContext, newMetrics } from '@hanzo/core'
+import { MeasureMetricsContext, newMetrics } from '@hanzoteam/core'
 import { startFront } from './starter'
 
 const metricsContext = new MeasureMetricsContext('front', {}, {}, newMetrics())

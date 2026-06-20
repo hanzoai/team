@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { type File } from '@hanzo/drive'
-  import { Scroller } from '@hanzo/ui'
-  import { DocAttributeBar } from '@hanzo/view-resources'
+  import { WithLookup } from '@hanzoteam/core'
+  import { type File } from '@hanzoteam/drive'
+  import { Scroller } from '@hanzoteam/ui'
+  import { DocAttributeBar } from '@hanzoteam/view-resources'
 
   export let object: WithLookup<File>
   export let readonly: boolean = false

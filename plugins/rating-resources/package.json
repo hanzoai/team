@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/rating-resources",
+  "name": "@hanzoteam/rating-resources",
   "version": "0.7.0",
   "main": "src/index.ts",
   "author": "Anticrm Platform Contributors",
@@ -16,7 +16,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "svelte-loader": "^3.2.0",
     "sass": "^1.80.0",
     "svelte-preprocess": "^5.1.4",
@@ -38,18 +38,18 @@
     "svelte-eslint-parser": "^0.33.1"
   },
   "dependencies": {
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/platform": "workspace:^0.7.19",
     "svelte": "^4.2.20",
-    "@hanzo/rating": "workspace:^0.7.0",
-    "@hanzo/ui": "workspace:^0.7.0",
-    "@hanzo/presentation": "workspace:^0.7.0",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/view": "workspace:^0.7.0",
-    "@hanzo/emoji": "workspace:^0.7.0",
-    "@hanzo/emoji-resources": "workspace:^0.7.0",
-    "@hanzo/contact": "workspace:^0.7.0",
-    "@hanzo/contact-resources": "workspace:^0.7.0",
-    "@hanzo/view-resources": "workspace:^0.7.0"
+    "@hanzoteam/rating": "workspace:^0.7.0",
+    "@hanzoteam/ui": "workspace:^0.7.0",
+    "@hanzoteam/presentation": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/view": "workspace:^0.7.0",
+    "@hanzoteam/emoji": "workspace:^0.7.0",
+    "@hanzoteam/emoji-resources": "workspace:^0.7.0",
+    "@hanzoteam/contact": "workspace:^0.7.0",
+    "@hanzoteam/contact-resources": "workspace:^0.7.0",
+    "@hanzoteam/view-resources": "workspace:^0.7.0"
   }
 }

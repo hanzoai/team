@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, Person } from '@hanzo/contact'
+  import contact, { Employee, Person } from '@hanzoteam/contact'
   import documents, {
     ControlledDocument,
     ControlledDocumentState,
     DocumentApprovalRequest,
     DocumentReviewRequest,
     DocumentState
-  } from '@hanzo/controlled-documents'
-  import core, { AccountUuid, DocumentUpdate, notEmpty, PersonUuid, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Scroller } from '@hanzo/ui'
+  } from '@hanzoteam/controlled-documents'
+  import core, { AccountUuid, DocumentUpdate, notEmpty, PersonUuid, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Scroller } from '@hanzoteam/ui'
 
   import DocTeam from './DocTeam.svelte'
   import { updateExternalApproversAccess } from '../../utils'

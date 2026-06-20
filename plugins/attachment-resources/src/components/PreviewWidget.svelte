@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import workbench, { Widget, WidgetTab } from '@hanzo/workbench'
-  import { FilePreview, DownloadFileButton, FilePreviewPopup, FileTypeIcon } from '@hanzo/presentation'
-  import { Breadcrumbs, Button, closeTooltip, Header, showPopup } from '@hanzo/ui'
-  import { getResource } from '@hanzo/platform'
-  import view from '@hanzo/view'
+  import workbench, { Widget, WidgetTab } from '@hanzoteam/workbench'
+  import { FilePreview, DownloadFileButton, FilePreviewPopup, FileTypeIcon } from '@hanzoteam/presentation'
+  import { Breadcrumbs, Button, closeTooltip, Header, showPopup } from '@hanzoteam/ui'
+  import { getResource } from '@hanzoteam/platform'
+  import view from '@hanzoteam/view'
 
   import attachment from '../plugin'
 

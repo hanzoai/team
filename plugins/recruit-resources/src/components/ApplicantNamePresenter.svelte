@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import contactPlugin, { getFirstName, getLastName } from '@hanzo/contact'
-  import { getMetadata } from '@hanzo/platform'
+  import contactPlugin, { getFirstName, getLastName } from '@hanzoteam/contact'
+  import { getMetadata } from '@hanzoteam/platform'
 
   export let parentName: string | null | undefined = undefined
   export let spaceName: string | null | undefined = undefined

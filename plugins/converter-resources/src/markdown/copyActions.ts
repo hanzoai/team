@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import type { Doc } from '@hanzo/core'
-import { translate } from '@hanzo/platform'
-import { addNotification, NotificationSeverity } from '@hanzo/ui'
-import { getCurrentLanguage } from '@hanzo/theme'
-import view from '@hanzo/view'
-import { getClient } from '@hanzo/presentation'
-import { copyMarkdown, SimpleNotification } from '@hanzo/view-resources'
+import type { Doc } from '@hanzoteam/core'
+import { translate } from '@hanzoteam/platform'
+import { addNotification, NotificationSeverity } from '@hanzoteam/ui'
+import { getCurrentLanguage } from '@hanzoteam/theme'
+import view from '@hanzoteam/view'
+import { getClient } from '@hanzoteam/presentation'
+import { copyMarkdown, SimpleNotification } from '@hanzoteam/view-resources'
 
 import type { CopyAsMarkdownTableProps, CopyRelationshipTableAsMarkdownProps } from '../types'
 import { buildTableMetadata, buildRelationshipTableMetadata } from '../data'

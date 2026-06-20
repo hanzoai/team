@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hanzo/contact'
-  import { CreateGuest, getPersonRefByPersonId } from '@hanzo/contact-resources'
-  import { Ref, type PersonId } from '@hanzo/core'
-  import { IntlString, translateCB } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting, { Integration } from '@hanzo/setting'
-  import { themeStore } from '@hanzo/theme'
-  import { Button, IconAdd, closePopup, registerFocus, resizeObserver, showPopup } from '@hanzo/ui'
+  import contact, { Person } from '@hanzoteam/contact'
+  import { CreateGuest, getPersonRefByPersonId } from '@hanzoteam/contact-resources'
+  import { Ref, type PersonId } from '@hanzoteam/core'
+  import { IntlString, translateCB } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import setting, { Integration } from '@hanzoteam/setting'
+  import { themeStore } from '@hanzoteam/theme'
+  import { Button, IconAdd, closePopup, registerFocus, resizeObserver, showPopup } from '@hanzoteam/ui'
   import { afterUpdate, createEventDispatcher, onMount } from 'svelte'
   import calendar from '../plugin'
   import ParticipantsPopup from './ParticipantsPopup.svelte'

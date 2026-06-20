@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import type { WithLookup, IdMap, Ref, Space } from '@hanzo/core'
-  import type { ToDo, WorkSlot } from '@hanzo/time'
-  import type { IntlString } from '@hanzo/platform'
-  import type { Project } from '@hanzo/tracker'
+  import type { WithLookup, IdMap, Ref, Space } from '@hanzoteam/core'
+  import type { ToDo, WorkSlot } from '@hanzoteam/time'
+  import type { IntlString } from '@hanzoteam/platform'
+  import type { Project } from '@hanzoteam/tracker'
   import type { ToDosMode } from '..'
-  import { AccordionItem } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import { makeRank } from '@hanzo/task'
+  import { AccordionItem } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { makeRank } from '@hanzoteam/task'
   import ToDoProjectGroup from './ToDoProjectGroup.svelte'
   import ToDoDraggable from './ToDoDraggable.svelte'
   import ToDoElement from './ToDoElement.svelte'

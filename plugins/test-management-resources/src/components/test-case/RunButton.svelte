@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery, Ref, Space, mergeQueries } from '@hanzo/core'
-  import { Button } from '@hanzo/ui'
-  import { selectionStore } from '@hanzo/view-resources'
-  import type { TestCase } from '@hanzo/test-management'
-  import { createQuery } from '@hanzo/presentation'
+  import { Doc, DocumentQuery, Ref, Space, mergeQueries } from '@hanzoteam/core'
+  import { Button } from '@hanzoteam/ui'
+  import { selectionStore } from '@hanzoteam/view-resources'
+  import type { TestCase } from '@hanzoteam/test-management'
+  import { createQuery } from '@hanzoteam/presentation'
 
   import testManagement from '../../plugin'
   import { showCreateTestRunPanel } from '../../utils'

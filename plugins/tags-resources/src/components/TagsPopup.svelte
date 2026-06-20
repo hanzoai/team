@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
-  import { TagCategory, TagElement, findTagCategory } from '@hanzo/tags'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import presentation, { createQuery, getClient } from '@hanzoteam/presentation'
+  import { TagCategory, TagElement, findTagCategory } from '@hanzoteam/tags'
   import {
     Button,
     EditWithIcon,
@@ -30,7 +30,7 @@
     resizeObserver,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import { createTagElement } from '../utils'

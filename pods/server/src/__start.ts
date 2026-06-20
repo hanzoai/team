@@ -3,26 +3,26 @@
 //
 
 // Add this to the VERY top of the first file loaded in your app
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import contactPlugin from '@hanzo/contact'
-import { newMetrics, setOperationLogProfiling } from '@hanzo/core'
-import { getPlatformQueue } from '@hanzo/kafka'
-import { setMetadata } from '@hanzo/platform'
-import { setDBExtraOptions } from '@hanzo/postgres'
-import { serverConfigFromEnv } from '@hanzo/server'
-import serverAiBot from '@hanzo/server-ai-bot'
-import serverCalendar from '@hanzo/server-calendar'
-import serverCard from '@hanzo/server-card'
+import { Analytics } from '@hanzoteam/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import contactPlugin from '@hanzoteam/contact'
+import { newMetrics, setOperationLogProfiling } from '@hanzoteam/core'
+import { getPlatformQueue } from '@hanzoteam/kafka'
+import { setMetadata } from '@hanzoteam/platform'
+import { setDBExtraOptions } from '@hanzoteam/postgres'
+import { serverConfigFromEnv } from '@hanzoteam/server'
+import serverAiBot from '@hanzoteam/server-ai-bot'
+import serverCalendar from '@hanzoteam/server-calendar'
+import serverCard from '@hanzoteam/server-card'
 import serverCore, {
   initStatisticsContext,
   loadBrandingMap,
   type StorageConfiguration,
   type WorkspaceStatistics
-} from '@hanzo/server-core'
-import serverNotification from '@hanzo/server-notification'
-import { storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import serverNotification from '@hanzoteam/server-notification'
+import { storageConfigFromEnv } from '@hanzoteam/server-storage'
+import serverToken from '@hanzoteam/server-token'
 import { join } from 'path'
 import { start } from '.'
 import { profileStart, profileStop } from './profiler'

@@ -24,13 +24,13 @@
     DocumentState,
     copyProjectDocuments,
     deleteProjectDrafts
-  } from '@hanzo/controlled-documents'
-  import { Product, ProductVersion, ProductVersionState } from '@hanzo/products'
-  import { Data, Ref, SortingOrder, generateId } from '@hanzo/core'
-  import { Card, MessageBox, SpaceSelector, createQuery, getClient } from '@hanzo/presentation'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
-  import { DropdownLabelsIntl, EditBox, FocusHandler, createFocusManager, showPopup } from '@hanzo/ui'
-  import { ObjectBox } from '@hanzo/view-resources'
+  } from '@hanzoteam/controlled-documents'
+  import { Product, ProductVersion, ProductVersionState } from '@hanzoteam/products'
+  import { Data, Ref, SortingOrder, generateId } from '@hanzoteam/core'
+  import { Card, MessageBox, SpaceSelector, createQuery, getClient } from '@hanzoteam/presentation'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
+  import { DropdownLabelsIntl, EditBox, FocusHandler, createFocusManager, showPopup } from '@hanzoteam/ui'
+  import { ObjectBox } from '@hanzoteam/view-resources'
 
   import products from '../../plugin'
 

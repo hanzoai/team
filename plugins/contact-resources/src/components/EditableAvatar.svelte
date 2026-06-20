@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hanzo/attachment'
-  import { AvatarType, type AvatarInfo } from '@hanzo/contact'
-  import { Asset, getResource } from '@hanzo/platform'
-  import { AnySvelteComponent, IconSize, showPopup } from '@hanzo/ui'
+  import attachment from '@hanzoteam/attachment'
+  import { AvatarType, type AvatarInfo } from '@hanzoteam/contact'
+  import { Asset, getResource } from '@hanzoteam/platform'
+  import { AnySvelteComponent, IconSize, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
-  import type { Data, Blob as PlatformBlob, Ref, WithLookup } from '@hanzo/core'
+  import type { Data, Blob as PlatformBlob, Ref, WithLookup } from '@hanzoteam/core'
   import AvatarComponent from './Avatar.svelte'
   import SelectAvatarPopup from './SelectAvatarPopup.svelte'
 

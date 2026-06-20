@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/import-tool",
+  "name": "@hanzoteam/import-tool",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -19,9 +19,9 @@
     "docker:tbuild": "docker build -t hanzoai/import-tool . --platform=linux/amd64 && ../../common/scripts/docker_tag_push.sh hanzoai/import-tool",
     "docker:staging": "../../common/scripts/docker_tag.sh hanzoai/import-tool staging",
     "docker:push": "../../common/scripts/docker_tag.sh hanzoai/import-tool",
-    "run-local": "rush bundle --to @hanzo/import-tool >/dev/null && cross-env SERVER_SECRET=secret ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3333 MINIO_ACCESS_KEY=minioadmin MINIO_SECRET_KEY=minioadmin MINIO_ENDPOINT=localhost MONGO_URL=mongodb://localhost:27017 TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) node --max-old-space-size=18000 ./bundle/bundle.js",
-    "run-local-brk": "rush bundle --to @hanzo/import-tool >/dev/null && cross-env SERVER_SECRET=secret ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3333 MINIO_ACCESS_KEY=minioadmin MINIO_SECRET_KEY=minioadmin MINIO_ENDPOINT=localhost MONGO_URL=mongodb://localhost:27017 TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) node --inspect-brk --enable-source-maps --max-old-space-size=18000 ./bundle/bundle.js",
-    "run": "rush bundle --to @hanzo/import-tool >/dev/null && cross-env node --max-old-space-size=8000 ./bundle/bundle.js",
+    "run-local": "rush bundle --to @hanzoteam/import-tool >/dev/null && cross-env SERVER_SECRET=secret ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3333 MINIO_ACCESS_KEY=minioadmin MINIO_SECRET_KEY=minioadmin MINIO_ENDPOINT=localhost MONGO_URL=mongodb://localhost:27017 TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) node --max-old-space-size=18000 ./bundle/bundle.js",
+    "run-local-brk": "rush bundle --to @hanzoteam/import-tool >/dev/null && cross-env SERVER_SECRET=secret ACCOUNTS_URL=http://localhost:3000 TRANSACTOR_URL=ws://localhost:3333 MINIO_ACCESS_KEY=minioadmin MINIO_SECRET_KEY=minioadmin MINIO_ENDPOINT=localhost MONGO_URL=mongodb://localhost:27017 TELEGRAM_DATABASE=telegram-service REKONI_URL=http://localhost:4004 MODEL_VERSION=$(node ../../common/scripts/show_version.js) GIT_REVISION=$(git describe --all --long) node --inspect-brk --enable-source-maps --max-old-space-size=18000 ./bundle/bundle.js",
+    "run": "rush bundle --to @hanzoteam/import-tool >/dev/null && cross-env node --max-old-space-size=8000 ./bundle/bundle.js",
     "upgrade": "rushx run-local upgrade",
     "format": "format src",
     "test": "jest --passWithNoTests --silent --forceExit",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint": "^8.54.0",
     "ts-node": "^10.9.2",
@@ -51,10 +51,10 @@
     "@types/js-yaml": "^4.0.9"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/server-client": "workspace:^0.7.16",
-    "@hanzo/importer": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/server-client": "workspace:^0.7.16",
+    "@hanzoteam/importer": "workspace:^0.7.0",
     "commander": "^14.0.0",
     "js-yaml": "^4.1.0",
     "mammoth": "^1.9.0"

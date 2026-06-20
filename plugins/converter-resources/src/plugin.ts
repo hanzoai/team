@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import converter, { converterId } from '@hanzo/converter'
+import { mergeIds } from '@hanzoteam/platform'
+import converter, { converterId } from '@hanzoteam/converter'
 
 export default mergeIds(converterId, converter, {})

@@ -1,5 +1,5 @@
-import { MeasureMetricsContext, type WorkspaceDataId, type WorkspaceUuid, generateId } from '@hanzo/core'
-import type { StorageConfiguration } from '@hanzo/server-core'
+import { MeasureMetricsContext, type WorkspaceDataId, type WorkspaceUuid, generateId } from '@hanzoteam/core'
+import type { StorageConfiguration } from '@hanzoteam/server-core'
 import { S3Service, processConfigFromEnv, type S3Config } from '.'
 
 const MB = 1024 * 1024

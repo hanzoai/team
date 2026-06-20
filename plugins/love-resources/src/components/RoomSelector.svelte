@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee, formatName } from '@hanzo/contact'
-  import { getPersonByPersonRefStore } from '@hanzo/contact-resources'
-  import { translate } from '@hanzo/platform'
-  import { notEmpty, Ref } from '@hanzo/core'
-  import love, { isOffice, Room } from '@hanzo/love'
-  import { Dropdown, Icon } from '@hanzo/ui'
+  import { getCurrentEmployee, formatName } from '@hanzoteam/contact'
+  import { getPersonByPersonRefStore } from '@hanzoteam/contact-resources'
+  import { translate } from '@hanzoteam/platform'
+  import { notEmpty, Ref } from '@hanzoteam/core'
+  import love, { isOffice, Room } from '@hanzoteam/love'
+  import { Dropdown, Icon } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { rooms } from '../stores'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let value: Ref<Room> | undefined
   export let disabled: boolean = false

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import card, { Card, cardId, MasterTag, Tag } from '@hanzo/card'
+import card, { Card, cardId, MasterTag, Tag } from '@hanzoteam/card'
 import core, {
   AccountUuid,
   AnyAttribute,
@@ -41,11 +41,11 @@ import core, {
   TxProcessor,
   TxRemoveDoc,
   TxUpdateDoc
-} from '@hanzo/core'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
-import setting from '@hanzo/setting'
-import { workbenchId } from '@hanzo/workbench'
-import view from '@hanzo/view'
+} from '@hanzoteam/core'
+import serverCore, { TriggerControl } from '@hanzoteam/server-core'
+import setting from '@hanzoteam/setting'
+import { workbenchId } from '@hanzoteam/workbench'
+import view from '@hanzoteam/view'
 import {
   AddCollaboratorsEvent,
   CardEventType,
@@ -56,12 +56,12 @@ import {
   CreatePeerEvent,
   ThreadPatchEvent,
   MessageEventType
-} from '@hanzo/communication-sdk-types'
-import { getEmployee, getPersonSpaces } from '@hanzo/server-contact'
-import contact, { Employee, formatName, Person } from '@hanzo/contact'
-import communication, { Direct } from '@hanzo/communication'
-import { CardPeer } from '@hanzo/communication-types'
-import { getMetadata } from '@hanzo/platform'
+} from '@hanzoteam/communication-sdk-types'
+import { getEmployee, getPersonSpaces } from '@hanzoteam/server-contact'
+import contact, { Employee, formatName, Person } from '@hanzoteam/contact'
+import communication, { Direct } from '@hanzoteam/communication'
+import { CardPeer } from '@hanzoteam/communication-types'
+import { getMetadata } from '@hanzoteam/platform'
 
 async function OnAttribute (ctx: TxCreateDoc<AnyAttribute>[], control: TriggerControl): Promise<Tx[]> {
   const attr = TxProcessor.createDoc2Doc(ctx[0])

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, Severity, Status } from '@hanzo/platform'
-  import { getCurrentLocation } from '@hanzo/ui'
-  import { logIn } from '@hanzo/workbench'
+  import { OK, Severity, Status } from '@hanzoteam/platform'
+  import { getCurrentLocation } from '@hanzoteam/ui'
+  import { logIn } from '@hanzoteam/workbench'
   import { onMount } from 'svelte'
 
   import login from '../plugin'

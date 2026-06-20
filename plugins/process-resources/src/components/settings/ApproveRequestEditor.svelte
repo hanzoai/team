@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import core, { AnyAttribute } from '@hanzo/core'
-  import { getAttributeEditor, getAttributePresenterClass, getClient } from '@hanzo/presentation'
-  import { ApproveRequest, parseContext, Process, Step } from '@hanzo/process'
-  import { AnySvelteComponent, Label, Toggle } from '@hanzo/ui'
+  import contact from '@hanzoteam/contact'
+  import core, { AnyAttribute } from '@hanzoteam/core'
+  import { getAttributeEditor, getAttributePresenterClass, getClient } from '@hanzoteam/presentation'
+  import { ApproveRequest, parseContext, Process, Step } from '@hanzoteam/process'
+  import { AnySvelteComponent, Label, Toggle } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import { getContext, getMockAttribute } from '../../utils'

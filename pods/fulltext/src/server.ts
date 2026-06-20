@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import type {
   Class,
   Doc,
@@ -9,24 +9,24 @@ import type {
   SearchOptions,
   SearchQuery,
   Tx
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   createMongoAdapter,
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   shutdownMongo
-} from '@hanzo/mongo'
-import { setMetadata } from '@hanzo/platform'
+} from '@hanzoteam/mongo'
+import { setMetadata } from '@hanzoteam/platform'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions,
   shutdownPostgres
-} from '@hanzo/postgres'
-import serverClientPlugin from '@hanzo/server-client'
-import serverCore, { workspaceEvents, type PlatformQueue, type StorageAdapter } from '@hanzo/server-core'
-import { searchFulltext, type FulltextDBConfiguration } from '@hanzo/server-indexer'
+} from '@hanzoteam/postgres'
+import serverClientPlugin from '@hanzoteam/server-client'
+import serverCore, { workspaceEvents, type PlatformQueue, type StorageAdapter } from '@hanzoteam/server-core'
+import { searchFulltext, type FulltextDBConfiguration } from '@hanzoteam/server-indexer'
 import {
   registerAdapterFactory,
   registerDestroyFactory,
@@ -34,8 +34,8 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hanzo/server-pipeline'
-import serverToken, { decodeToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-pipeline'
+import serverToken, { decodeToken } from '@hanzoteam/server-token'
 import cors from '@koa/cors'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'

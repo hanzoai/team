@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref } from '@hanzo/core'
-import { hrId } from '@hanzo/hr'
-import hr from '@hanzo/hr-resources/src/plugin'
-import { type NotificationGroup } from '@hanzo/notification'
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction } from '@hanzo/view'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { hrId } from '@hanzoteam/hr'
+import hr from '@hanzoteam/hr-resources/src/plugin'
+import { type NotificationGroup } from '@hanzoteam/notification'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction } from '@hanzoteam/view'
 
 export default mergeIds(hrId, hr, {
   string: {

@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient, MultipleDraftController } from '@hanzo/presentation'
-  import { HeaderButton, showPopup } from '@hanzo/ui'
+  import { getClient, MultipleDraftController } from '@hanzoteam/presentation'
+  import { HeaderButton, showPopup } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
   import recruit from '../plugin'
   import CreateCandidate from './CreateCandidate.svelte'
-  import { Analytics } from '@hanzo/analytics'
-  import { RecruitEvents } from '@hanzo/recruit'
-  import view from '@hanzo/view'
-  import { AccountRole } from '@hanzo/core'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { RecruitEvents } from '@hanzoteam/recruit'
+  import view from '@hanzoteam/view'
+  import { AccountRole } from '@hanzoteam/core'
 
   let draftExists = false
 

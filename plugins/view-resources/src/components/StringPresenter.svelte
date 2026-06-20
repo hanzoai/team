@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { LabelAndProps, LinkWrapper, tooltip } from '@hanzo/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { LabelAndProps, LinkWrapper, tooltip } from '@hanzoteam/ui'
 
   export let value: string | string[] | undefined
   export let accent: boolean = false

@@ -32,8 +32,8 @@ import {
   WithTotal,
   BlobID,
   SocialID
-} from '@hanzo/communication-types'
-import { withTotal } from '@hanzo/communication-shared'
+} from '@hanzoteam/communication-types'
+import { withTotal } from '@hanzoteam/communication-shared'
 import {
   CollaboratorQuery,
   CollaboratorUpdate,
@@ -42,7 +42,7 @@ import {
   NotificationContextUpdate,
   NotificationQuery,
   NotificationUpdate
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 
 import { BaseDb } from './base'
 import { getCondition } from './utils'

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { getObjectValue, VersionableDoc, type Class, type Doc, type Ref } from '@hanzo/core'
-  import { getResource, type IntlString } from '@hanzo/platform'
+  import core, { getObjectValue, VersionableDoc, type Class, type Doc, type Ref } from '@hanzoteam/core'
+  import { getResource, type IntlString } from '@hanzoteam/platform'
   import {
     AnySvelteComponent,
     Button,
@@ -32,13 +32,13 @@
     resizeObserver,
     showPopup,
     tooltip
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import presentation, { DocPopup } from '..'
   import { ObjectCreate } from '../types'
   import { getClient } from '../utils'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import ObjectPopup from './ObjectPopup.svelte'
 
   export let _class: Ref<Class<Doc>>

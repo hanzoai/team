@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { FindOptions } from '@hanzo/core'
-  import presentation, { Card } from '@hanzo/presentation'
-  import { Issue, Project, TimeSpendReport } from '@hanzo/tracker'
-  import { Button, eventToHTMLElement, IconAdd, Scroller, showPopup, tableSP } from '@hanzo/ui'
-  import { TableBrowser } from '@hanzo/view-resources'
+  import contact from '@hanzoteam/contact'
+  import { FindOptions } from '@hanzoteam/core'
+  import presentation, { Card } from '@hanzoteam/presentation'
+  import { Issue, Project, TimeSpendReport } from '@hanzoteam/tracker'
+  import { Button, eventToHTMLElement, IconAdd, Scroller, showPopup, tableSP } from '@hanzoteam/ui'
+  import { TableBrowser } from '@hanzoteam/view-resources'
   import tracker from '../../../plugin'
   import IssuePresenter from '../IssuePresenter.svelte'
   import ParentNamesPresenter from '../ParentNamesPresenter.svelte'

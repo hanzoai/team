@@ -6,9 +6,9 @@ import { registerGithub } from './github'
 import { registerGoogle } from './google'
 import { registerOpenid } from './openid'
 import { registerToken } from './token'
-import { BrandingMap, MeasureContext } from '@hanzo/core'
-import { type AccountDB } from '@hanzo/account'
-import { type ProviderInfo } from '@hanzo/account-client'
+import { BrandingMap, MeasureContext } from '@hanzoteam/core'
+import { type AccountDB } from '@hanzoteam/account'
+import { type ProviderInfo } from '@hanzoteam/account-client'
 
 export type Passport = typeof passport
 

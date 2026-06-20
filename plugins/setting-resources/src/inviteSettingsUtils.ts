@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { AccountRole } from '@hanzo/core'
-import { getMetadata, type Metadata } from '@hanzo/platform'
-import setting, { type InviteSettings } from '@hanzo/setting'
+import { AccountRole } from '@hanzoteam/core'
+import { getMetadata, type Metadata } from '@hanzoteam/platform'
+import setting, { type InviteSettings } from '@hanzoteam/setting'
 
 const settingInviteMetadata = setting.metadata as unknown as {
   DefaultInviteRole: Metadata<string | undefined>

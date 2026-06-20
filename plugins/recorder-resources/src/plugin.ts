@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import plugin, { recorderId } from '@hanzo/recorder'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import plugin, { recorderId } from '@hanzoteam/recorder'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
 export default mergeIds(recorderId, plugin, {
   component: {

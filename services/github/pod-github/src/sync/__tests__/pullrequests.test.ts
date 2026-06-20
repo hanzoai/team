@@ -1,5 +1,5 @@
 /* eslint-disable import/first */
-import { PersonId } from '@hanzo/core'
+import { PersonId } from '@hanzoteam/core'
 import { PullRequestExternalData } from '../githubTypes'
 import type { UserInfo } from '../../types'
 

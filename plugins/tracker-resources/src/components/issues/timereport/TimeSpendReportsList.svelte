@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { UserBox } from '@hanzo/contact-resources'
-  import { Ref, Space, WithLookup } from '@hanzo/core'
-  import { Project, TimeReportDayType, TimeSpendReport } from '@hanzo/tracker'
+  import contact from '@hanzoteam/contact'
+  import { UserBox } from '@hanzoteam/contact-resources'
+  import { Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { Project, TimeReportDayType, TimeSpendReport } from '@hanzoteam/tracker'
   import {
     DatePresenter,
     ListView,
     deviceOptionsStore as deviceInfo,
     eventToHTMLElement,
     showPopup
-  } from '@hanzo/ui'
-  import { FixedColumn, ListSelectionProvider, showMenu } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { FixedColumn, ListSelectionProvider, showMenu } from '@hanzoteam/view-resources'
   import tracker from '../../../plugin'
   import { activeProjects } from '../../../utils'
   import TimePresenter from './TimePresenter.svelte'

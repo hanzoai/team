@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { DOMAIN_TX, type WorkspaceDataId, type MeasureContext, type Ref, type WorkspaceIds } from '@hanzo/core'
-import { DOMAIN_ATTACHMENT } from '@hanzo/model-attachment'
-import contact, { DOMAIN_CHANNEL } from '@hanzo/model-contact'
-import { DOMAIN_TELEGRAM } from '@hanzo/model-telegram'
-import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
-import { type StorageAdapter } from '@hanzo/server-core'
-import telegram, { type SharedTelegramMessage, type SharedTelegramMessages } from '@hanzo/telegram'
+import { DOMAIN_TX, type WorkspaceDataId, type MeasureContext, type Ref, type WorkspaceIds } from '@hanzoteam/core'
+import { DOMAIN_ATTACHMENT } from '@hanzoteam/model-attachment'
+import contact, { DOMAIN_CHANNEL } from '@hanzoteam/model-contact'
+import { DOMAIN_TELEGRAM } from '@hanzoteam/model-telegram'
+import { getMongoClient, getWorkspaceMongoDB } from '@hanzoteam/mongo'
+import { type StorageAdapter } from '@hanzoteam/server-core'
+import telegram, { type SharedTelegramMessage, type SharedTelegramMessages } from '@hanzoteam/telegram'
 import { type Document, type UpdateFilter } from 'mongodb'
 
 const LastMessages = 'last-msgs'

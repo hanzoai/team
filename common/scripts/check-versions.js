@@ -68,7 +68,7 @@ function parseLockfile() {
       continue
     }
     
-    // Parse @hanzo package entries like '  @hanzo/platform@0.7.3:' or '@hanzo/analytics@0.7.4:'
+    // Parse @hanzo package entries like '  @hanzoteam/platform@0.7.3:' or '@hanzoteam/analytics@0.7.4:'
     if (inPackagesSection && line.match(new RegExp(`^  '?(${SCOPE}/[^@']+)@([^':()]+)(?:\\([^)]*\\))*'?:`))) {
       const packageMatch = line.match(new RegExp(`^  '?(${SCOPE}/[^@']+)@([^':()]+)(?:\\([^)]*\\))*'?:`))
       if (packageMatch) {
@@ -110,8 +110,8 @@ function parseLockfile() {
       inDependenciesSection = false
     }
     
-    // Parse dependency lines like "      '@hanzo/platform': 0.7.3"
-    // This tells us that currentPackageName@currentPackageVersion depends on @hanzo/platform@0.7.3
+    // Parse dependency lines like "      '@hanzoteam/platform': 0.7.3"
+    // This tells us that currentPackageName@currentPackageVersion depends on @hanzoteam/platform@0.7.3
     if (inDependenciesSection && currentPackageName && currentPackageVersion) {
       const depMatch = line.match(/^\s{6}'?(@hanzo\/[^']+)'?:\s+([0-9.]+)/)
       if (depMatch) {

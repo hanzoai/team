@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, ButtonSize, humanReadableFileSize } from '@hanzo/ui'
+  import { Button, ButtonSize, humanReadableFileSize } from '@hanzoteam/ui'
 
   export let value: number | undefined
   export let kind: 'no-border' | 'link' | 'list' = 'no-border'

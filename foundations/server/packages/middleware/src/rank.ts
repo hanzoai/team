@@ -24,14 +24,14 @@ import core, {
   type TxMixin,
   type TypeRank,
   SortingOrder
-} from '@hanzo/core'
-import { makeRank } from '@hanzo/rank'
+} from '@hanzoteam/core'
+import { makeRank } from '@hanzoteam/rank'
 import {
   type Middleware,
   type TxMiddlewareResult,
   type PipelineContext,
   BaseMiddleware
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
 /**
  * Special value to indicate that rank should be auto-generated

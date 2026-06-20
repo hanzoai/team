@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Calendar } from '@hanzo/calendar'
-  import { getCurrentAccount } from '@hanzo/core'
-  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
-  import { Grid, Label, Toggle, tooltip } from '@hanzo/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Calendar } from '@hanzoteam/calendar'
+  import { getCurrentAccount } from '@hanzoteam/core'
+  import presentation, { Card, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Grid, Label, Toggle, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import type { Integration } from '@hanzo/account-client'
+  import type { Integration } from '@hanzoteam/account-client'
   import calendar from '../plugin'
 
   export let integration: Integration

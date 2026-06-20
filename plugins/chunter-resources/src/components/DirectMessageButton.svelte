@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ModernButton, getCurrentLocation } from '@hanzo/ui'
-  import view, { decodeObjectURI } from '@hanzo/view'
-  import { Employee } from '@hanzo/contact'
+  import { ModernButton, getCurrentLocation } from '@hanzoteam/ui'
+  import view, { decodeObjectURI } from '@hanzoteam/view'
+  import { Employee } from '@hanzoteam/contact'
 
   import chunter from '../plugin'
   import { createDirect } from '../utils'
   import { openChannelInSidebar } from '../navigation'
-  import { Asset } from '@hanzo/platform'
+  import { Asset } from '@hanzoteam/platform'
 
   export let employee: Employee
   export let kind: 'primary' | 'secondary' | 'tertiary' | 'negative' = 'secondary'

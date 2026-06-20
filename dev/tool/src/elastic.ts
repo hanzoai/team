@@ -14,7 +14,7 @@
 //
 
 import { Client as ElasticClient } from '@elastic/elasticsearch'
-import { type StorageAdapter } from '@hanzo/server-core'
+import { type StorageAdapter } from '@hanzoteam/server-core'
 
 export async function rebuildElastic (
   mongoUrl: string,

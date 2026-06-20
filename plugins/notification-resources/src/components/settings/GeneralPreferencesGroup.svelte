@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import notification, { NotificationProvider } from '@hanzo/notification'
-  import core, { Ref } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import notification, { NotificationProvider } from '@hanzoteam/notification'
+  import core, { Ref } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
 
   import { providersSettings } from '../../utils'
   import ProviderPreferences from './ProviderPreferences.svelte'

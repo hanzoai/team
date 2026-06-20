@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Attachment } from '@hanzo/attachment'
-  import { BlobType } from '@hanzo/core'
+  import type { Attachment } from '@hanzoteam/attachment'
+  import { BlobType } from '@hanzoteam/core'
 
   export let value: Attachment | BlobType | undefined
 </script>

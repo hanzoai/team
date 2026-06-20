@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Ref } from '@hanzo/core'
-  import drive, { type Drive } from '@hanzo/drive'
-  import { createQuery } from '@hanzo/presentation'
-  import { showMenu } from '@hanzo/view-resources'
+  import { type Ref } from '@hanzoteam/core'
+  import drive, { type Drive } from '@hanzoteam/drive'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { showMenu } from '@hanzoteam/view-resources'
 
   import FolderBrowser from './FolderBrowser.svelte'
 

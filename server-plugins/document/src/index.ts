@@ -3,11 +3,11 @@
 //
 //
 
-import { Doc } from '@hanzo/core'
-import type { Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { ObjectDDParticipantFunc } from '@hanzo/server-core'
-import { Presenter } from '@hanzo/server-notification'
+import { Doc } from '@hanzoteam/core'
+import type { Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { ObjectDDParticipantFunc } from '@hanzoteam/server-core'
+import { Presenter } from '@hanzoteam/server-notification'
 
 /**
  * @public

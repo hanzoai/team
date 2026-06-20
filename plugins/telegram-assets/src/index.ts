@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hanzo/platform'
-import telegram from '@hanzo/telegram'
+import { loadMetadata } from '@hanzoteam/platform'
+import telegram from '@hanzoteam/telegram'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(telegram.icon, {

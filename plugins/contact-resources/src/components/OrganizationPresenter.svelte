@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Organization } from '@hanzo/contact'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { tooltip } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { ObjectPresenterType } from '@hanzo/view'
+  import { Organization } from '@hanzoteam/contact'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
+  import { ObjectPresenterType } from '@hanzoteam/view'
 
   import contact from '../plugin'
   import Company from './icons/Company.svelte'

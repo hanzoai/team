@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { getMetadata } from '@hanzo/platform'
-  import presentation, { getFileUrl } from '@hanzo/presentation'
-  import { Breadcrumb, Button, Expandable, Header, Label, Loading, Scroller } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { getMetadata } from '@hanzoteam/platform'
+  import presentation, { getFileUrl } from '@hanzoteam/presentation'
+  import { Breadcrumb, Button, Expandable, Header, Label, Loading, Scroller } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { onMount } from 'svelte'
   import setting from '../plugin'
   import { BackupInfo, BackupSnapshot } from '../types'

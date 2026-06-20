@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IssueStatus, Project } from '@hanzo/tracker'
+  import { IssueStatus, Project } from '@hanzoteam/tracker'
   import IssueStatusIcon from './IssueStatusIcon.svelte'
-  import { createQuery } from '@hanzo/presentation'
-  import core, { IdMap, Ref, Status, StatusCategory, toIdMap } from '@hanzo/core'
-  import { statusStore } from '@hanzo/view-resources'
+  import { createQuery } from '@hanzoteam/presentation'
+  import core, { IdMap, Ref, Status, StatusCategory, toIdMap } from '@hanzoteam/core'
+  import { statusStore } from '@hanzoteam/view-resources'
 
   export let value: Ref<IssueStatus>[]
   export let space: Ref<Project> | undefined

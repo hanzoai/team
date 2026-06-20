@@ -16,15 +16,15 @@ import {
   fetchLinkPreviewDetails,
   getClient,
   getCommunicationClient
-} from '@hanzo/presentation'
-import { type Card } from '@hanzo/card'
-import { AccountRole, type Data, getCurrentAccount, type Ref, type Space, type Markup } from '@hanzo/core'
-import { getMetadata, translate } from '@hanzo/platform'
-import { addNotification, languageStore, NotificationSeverity, showPopup } from '@hanzo/ui'
-import { type Emoji, type LinkPreviewParams, type Message } from '@hanzo/communication-types'
-import emoji from '@hanzo/emoji'
-import { markdownToMarkup, markupToMarkdown } from '@hanzo/text-markdown'
-import { jsonToMarkup, markupToJSON } from '@hanzo/text'
+} from '@hanzoteam/presentation'
+import { type Card } from '@hanzoteam/card'
+import { AccountRole, type Data, getCurrentAccount, type Ref, type Space, type Markup } from '@hanzoteam/core'
+import { getMetadata, translate } from '@hanzoteam/platform'
+import { addNotification, languageStore, NotificationSeverity, showPopup } from '@hanzoteam/ui'
+import { type Emoji, type LinkPreviewParams, type Message } from '@hanzoteam/communication-types'
+import emoji from '@hanzoteam/emoji'
+import { markdownToMarkup, markupToMarkdown } from '@hanzoteam/text-markdown'
+import { jsonToMarkup, markupToJSON } from '@hanzoteam/text'
 
 import { isCardSubscribed, guestCommunicationAllowedCards } from './stores'
 import IconAt from './components/icons/At.svelte'
@@ -32,9 +32,9 @@ import IconAt from './components/icons/At.svelte'
 import communication from './plugin'
 import { type TextInputAction } from './types'
 import { get } from 'svelte/store'
-import view from '@hanzo/view'
-import { type Direct } from '@hanzo/communication'
-import { type Employee } from '@hanzo/contact'
+import view from '@hanzoteam/view'
+import { type Direct } from '@hanzoteam/communication'
+import { type Employee } from '@hanzoteam/contact'
 
 export async function unsubscribe (card: Card): Promise<void> {
   const client = getCommunicationClient()

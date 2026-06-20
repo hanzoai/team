@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import { Ref, Mixin, Doc } from '@hanzo/core'
-import type { Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { type TriggerControl } from '@hanzo/server-core'
-import { TemplateField } from '@hanzo/templates'
+import { Ref, Mixin, Doc } from '@hanzoteam/core'
+import type { Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { type TriggerControl } from '@hanzoteam/server-core'
+import { TemplateField } from '@hanzoteam/templates'
 
 export type TemplateFieldServerFunc = (
   control: TriggerControl,

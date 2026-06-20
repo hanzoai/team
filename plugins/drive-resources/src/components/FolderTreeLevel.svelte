@@ -14,12 +14,12 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Doc, Ref } from '@hanzo/core'
-  import { Folder } from '@hanzo/drive'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Action, IconEdit } from '@hanzo/ui'
-  import { getActions as getContributedActions, TreeItem } from '@hanzo/view-resources'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { Folder } from '@hanzoteam/drive'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Action, IconEdit } from '@hanzoteam/ui'
+  import { getActions as getContributedActions, TreeItem } from '@hanzoteam/view-resources'
 
   export let folders: Ref<Folder>[]
   export let folderById: Map<Ref<Folder>, Folder>

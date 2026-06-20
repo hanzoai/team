@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentsPresenter } from '@hanzo/attachment-resources'
+  import { AttachmentsPresenter } from '@hanzoteam/attachment-resources'
   import {
     CategoryType,
     Class,
@@ -26,14 +26,14 @@
     mergeQueries,
     Ref,
     WithLookup
-  } from '@hanzo/core'
-  import { Item, Kanban as KanbanUI } from '@hanzo/kanban'
-  import notification from '@hanzo/notification'
-  import { ActionContext, createQuery, getClient } from '@hanzo/presentation'
-  import tags from '@hanzo/tags'
-  import { DocWithRank, getStates } from '@hanzo/task'
-  import { getTaskKanbanResultQuery, typeStore, updateTaskKanbanCategories } from '@hanzo/task-resources'
-  import { Issue, IssuesGrouping, IssuesOrdering, Project } from '@hanzo/tracker'
+  } from '@hanzoteam/core'
+  import { Item, Kanban as KanbanUI } from '@hanzoteam/kanban'
+  import notification from '@hanzoteam/notification'
+  import { ActionContext, createQuery, getClient } from '@hanzoteam/presentation'
+  import tags from '@hanzoteam/tags'
+  import { DocWithRank, getStates } from '@hanzoteam/task'
+  import { getTaskKanbanResultQuery, typeStore, updateTaskKanbanCategories } from '@hanzoteam/task-resources'
+  import { Issue, IssuesGrouping, IssuesOrdering, Project } from '@hanzoteam/tracker'
   import {
     Button,
     ColorDefinition,
@@ -45,8 +45,8 @@
     Loading,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hanzoteam/view'
   import {
     enabledConfig,
     focusStore,
@@ -64,8 +64,8 @@
     setGroupByValues,
     showMenu,
     statusStore
-  } from '@hanzo/view-resources'
-  import { ChatMessagesPresenter } from '@hanzo/chunter-resources'
+  } from '@hanzoteam/view-resources'
+  import { ChatMessagesPresenter } from '@hanzoteam/chunter-resources'
   import { onMount } from 'svelte'
 
   import tracker from '../../plugin'

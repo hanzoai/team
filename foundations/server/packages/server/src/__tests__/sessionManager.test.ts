@@ -21,15 +21,15 @@ import {
   type AccountUuid,
   type MeasureContext,
   type WorkspaceUuid
-} from '@hanzo/core'
-import type { Token } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import type { Token } from '@hanzoteam/server-token'
 
 // Import the module under test after mocks are set up
 // eslint-disable-next-line import/first
 import { TSessionManager, type Timeouts } from '../sessionManager'
 
 // Mock modules before importing the module under test
-jest.mock('@hanzo/account-client', () => ({
+jest.mock('@hanzoteam/account-client', () => ({
   getClient: jest.fn(() => ({
     getWorkspaceInfo: jest.fn(),
     updateLastVisit: jest.fn(),
@@ -37,7 +37,7 @@ jest.mock('@hanzo/account-client', () => ({
   }))
 }))
 
-jest.mock('@hanzo/analytics', () => ({
+jest.mock('@hanzoteam/analytics', () => ({
   Analytics: {
     handleError: jest.fn()
   }
@@ -1570,7 +1570,7 @@ describe('TSessionManager', () => {
 
   describe('account service integration', () => {
     it('should handle getWorkspaceInfo success', async () => {
-      const { getClient } = await import('@hanzo/account-client')
+      const { getClient } = await import('@hanzoteam/account-client')
       const mockWorkspaceInfo = {
         uuid: 'ws-1' as WorkspaceUuid,
         url: 'workspace-1',
@@ -1591,7 +1591,7 @@ describe('TSessionManager', () => {
     })
 
     it('should handle getWorkspaceInfo connection errors', async () => {
-      const { getClient } = await import('@hanzo/account-client')
+      const { getClient } = await import('@hanzoteam/account-client')
       const connectionError = new Error('Connection refused')
       ;(connectionError as any).cause = { code: 'ECONNREFUSED' }
       ;(getClient as jest.Mock).mockReturnValue({
@@ -1604,7 +1604,7 @@ describe('TSessionManager', () => {
     })
 
     it('should handle updateLastVisit', async () => {
-      const { getClient } = await import('@hanzo/account-client')
+      const { getClient } = await import('@hanzoteam/account-client')
       ;(getClient as jest.Mock).mockReturnValue({
         updateLastVisit: jest.fn().mockResolvedValue(undefined)
       })
@@ -1616,7 +1616,7 @@ describe('TSessionManager', () => {
     })
 
     it('should handle getLoginWithWorkspaceInfo', async () => {
-      const { getClient } = await import('@hanzo/account-client')
+      const { getClient } = await import('@hanzoteam/account-client')
       const mockLoginInfo = {
         account: 'user-1' as AccountUuid,
         socialIds: [{ _id: 'social-1' as any, type: 'github', value: 'user' }],

@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type ActivityMessage } from '@hanzo/activity'
-import chunter, { type Channel, type ChatMessage, type DirectMessage } from '@hanzo/chunter'
-import { type Resources } from '@hanzo/platform'
-import { MessageBox, getClient } from '@hanzo/presentation'
-import { getLocation, navigate, showPopup } from '@hanzo/ui'
+import { type ActivityMessage } from '@hanzoteam/activity'
+import chunter, { type Channel, type ChatMessage, type DirectMessage } from '@hanzoteam/chunter'
+import { type Resources } from '@hanzoteam/platform'
+import { MessageBox, getClient } from '@hanzoteam/presentation'
+import { getLocation, navigate, showPopup } from '@hanzoteam/ui'
 import { writable } from 'svelte/store'
 
 import ChannelCreatedMessage from './components/activity/ChannelCreatedMessage.svelte'

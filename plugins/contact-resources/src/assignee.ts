@@ -1,6 +1,6 @@
-import { type Person } from '@hanzo/contact'
-import { type Ref } from '@hanzo/core'
-import { type IntlString } from '@hanzo/platform'
+import { type Person } from '@hanzoteam/contact'
+import { type Ref } from '@hanzoteam/core'
+import { type IntlString } from '@hanzoteam/platform'
 
 /**
  * @public

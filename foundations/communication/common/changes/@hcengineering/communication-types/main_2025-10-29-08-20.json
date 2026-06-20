@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/communication-types",
+      "packageName": "@hanzoteam/communication-types",
       "comment": "update deps",
       "type": "patch"
     }
   ],
-  "packageName": "@hanzo/communication-types"
+  "packageName": "@hanzoteam/communication-types"
 }

@@ -49,8 +49,8 @@ import core, {
   TxFactory,
   type Data,
   type Obj
-} from '@hanzo/core'
-import type { IntlString } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import type { IntlString } from '@hanzoteam/platform'
 
 const txFactory = new TxFactory(core.account.System)
 

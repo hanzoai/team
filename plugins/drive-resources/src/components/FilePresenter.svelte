@@ -15,12 +15,12 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { File } from '@hanzo/drive'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { WithLookup } from '@hanzoteam/core'
+  import { File } from '@hanzoteam/drive'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
 
   import { formatFileVersion, getFileTypeIcon } from '../utils'
 

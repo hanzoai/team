@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { generateId } from '@hanzo/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { generateId } from '@hanzoteam/core'
   import { Label } from '..'
 
   export let id: string = generateId()

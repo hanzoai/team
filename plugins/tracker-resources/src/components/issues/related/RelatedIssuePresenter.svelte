@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Issue } from '@hanzo/tracker'
-  import { statusStore } from '@hanzo/view-resources'
+  import { Issue } from '@hanzoteam/tracker'
+  import { statusStore } from '@hanzoteam/view-resources'
 
   import IssueStatusIcon from '../IssueStatusIcon.svelte'
 

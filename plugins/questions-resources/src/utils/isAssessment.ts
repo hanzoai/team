@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Assessment, Question, QuestionDataOf } from '@hanzo/questions'
-import type { Class, Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+import type { Assessment, Question, QuestionDataOf } from '@hanzoteam/questions'
+import type { Class, Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 import questions from '../plugin'
 
 export function isAssessmentClassRef<Q extends Question<any>, A extends Assessment<QuestionDataOf<Q>, any>> (

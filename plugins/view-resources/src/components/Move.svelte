@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SpaceSelect, getClient, Card } from '@hanzo/presentation'
-  import { Label, Status as StatusControl, themeStore } from '@hanzo/ui'
+  import { SpaceSelect, getClient, Card } from '@hanzoteam/presentation'
+  import { Label, Status as StatusControl, themeStore } from '@hanzoteam/ui'
 
-  import core, { Class, Client, Doc, Ref, SortingOrder, Space } from '@hanzo/core'
-  import { OK, Resource, Severity, Status, getResource, translate } from '@hanzo/platform'
-  import task, { Project, Task, makeRank } from '@hanzo/task'
+  import core, { Class, Client, Doc, Ref, SortingOrder, Space } from '@hanzoteam/core'
+  import { OK, Resource, Severity, Status, getResource, translate } from '@hanzoteam/platform'
+  import task, { Project, Task, makeRank } from '@hanzoteam/task'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
   import { moveToSpace } from '../utils'

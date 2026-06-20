@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
   import NumberEditor from './NumberEditor.svelte'
-  import { AnyAttribute } from '@hanzo/core'
+  import { AnyAttribute } from '@hanzoteam/core'
 
   export let value: number | undefined
   export let label: IntlString

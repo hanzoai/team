@@ -13,9 +13,9 @@
 // limitations under the License.
 */
 
-import onboard, { onboardId } from '@hanzo/onboard'
-import type { IntlString, StatusCode } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
+import onboard, { onboardId } from '@hanzoteam/onboard'
+import type { IntlString, StatusCode } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
 
 export default mergeIds(onboardId, onboard, {
   status: {

@@ -101,7 +101,7 @@ function updatePackageJson(packagePath, eslintDeps) {
   const packageJson = JSON.parse(content)
 
   // Skip if this is the platform-rig package itself
-  if (packageJson.name === '@hanzo/platform-rig') {
+  if (packageJson.name === '@hanzoteam/platform-rig') {
     return { updated: false, changes: [] }
   }
 
@@ -150,7 +150,7 @@ function main() {
     const platformRigPath = findPlatformRigPath()
     if (!platformRigPath) {
       console.log('⚠️  platform-rig package not found in node_modules. Skipping sync.')
-      console.log('   Make sure @hanzo/platform-rig is installed as a dependency.')
+      console.log('   Make sure @hanzoteam/platform-rig is installed as a dependency.')
       return
     }
 
@@ -186,7 +186,7 @@ function main() {
         console.log(`✅ Updated ${project.name}`)
         result.changes.forEach((change) => console.log(change))
         console.log()
-      } else if (result.changes.length === 0 && project.name !== '@hanzo/platform-rig') {
+      } else if (result.changes.length === 0 && project.name !== '@hanzoteam/platform-rig') {
         skippedCount++
       }
     }

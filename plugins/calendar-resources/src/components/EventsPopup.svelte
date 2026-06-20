@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Event } from '@hanzo/calendar'
+  import type { Event } from '@hanzoteam/calendar'
   import EventPresenter from './EventPresenter.svelte'
 
   export let value: Event[]

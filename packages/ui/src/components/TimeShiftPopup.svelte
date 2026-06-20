@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangeMode } from '@hanzo/core'
+  import { DateRangeMode } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
   import ui from '../plugin'
   import { DAY, DateOrShift, HOUR, MINUTE } from '../types'

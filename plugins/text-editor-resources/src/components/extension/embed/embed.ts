@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { getMetadata, translate } from '@hanzo/platform'
-import { type ActionContext, copyTextToClipboard } from '@hanzo/presentation'
-import { EmbedNode as BaseEmbedNode, type ReferenceNodeProps } from '@hanzo/text'
-import textEditor from '@hanzo/text-editor'
+import { getMetadata, translate } from '@hanzoteam/platform'
+import { type ActionContext, copyTextToClipboard } from '@hanzoteam/presentation'
+import { EmbedNode as BaseEmbedNode, type ReferenceNodeProps } from '@hanzoteam/text'
+import textEditor from '@hanzoteam/text-editor'
 import { type Editor, type Range } from '@tiptap/core'
 import { Fragment, type Node, type ResolvedPos, Slice } from '@tiptap/pm/model'
 import { type EditorState, Plugin, PluginKey, Selection, type Transaction } from '@tiptap/pm/state'

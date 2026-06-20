@@ -13,21 +13,21 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Action, Menu, ModernTab, showPopup } from '@hanzo/ui'
-  import { Widget } from '@hanzo/workbench'
-  import { getResource } from '@hanzo/platform'
-  import { ChatWidgetTab } from '@hanzo/chunter'
-  import { InboxNotification } from '@hanzo/notification'
+  import { Action, Menu, ModernTab, showPopup } from '@hanzoteam/ui'
+  import { Widget } from '@hanzoteam/workbench'
+  import { getResource } from '@hanzoteam/platform'
+  import { ChatWidgetTab } from '@hanzoteam/chunter'
+  import { InboxNotification } from '@hanzoteam/notification'
   import {
     getNotificationsCount,
     InboxNotificationsClientImpl,
     isActivityNotification,
     isMentionNotification,
     NotifyMarker
-  } from '@hanzo/notification-resources'
+  } from '@hanzoteam/notification-resources'
   import chunter from '../plugin'
   import { onDestroy } from 'svelte'
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
 
   export let tab: ChatWidgetTab
   export let widget: Widget

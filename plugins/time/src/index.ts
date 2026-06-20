@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Asset, Plugin, Resource } from '@hanzo/platform'
+import type { Asset, Plugin, Resource } from '@hanzoteam/platform'
 import {
   AttachedDoc,
   Class,
@@ -26,12 +26,12 @@ import {
   Space,
   Timestamp,
   Type
-} from '@hanzo/core'
-import { IntlString, plugin } from '@hanzo/platform'
-import { Event, Visibility } from '@hanzo/calendar'
-import { AnyComponent } from '@hanzo/ui'
-import { Employee } from '@hanzo/contact'
-import type { Rank } from '@hanzo/rank'
+} from '@hanzoteam/core'
+import { IntlString, plugin } from '@hanzoteam/platform'
+import { Event, Visibility } from '@hanzoteam/calendar'
+import { AnyComponent } from '@hanzoteam/ui'
+import { Employee } from '@hanzoteam/contact'
+import type { Rank } from '@hanzoteam/rank'
 
 export * from './analytics'
 

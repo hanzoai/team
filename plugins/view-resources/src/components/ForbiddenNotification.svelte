@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Notification, NotificationToast } from '@hanzo/ui'
+  import { Notification, NotificationToast } from '@hanzoteam/ui'
 
   export let onRemove: () => void
   export let notification: Notification

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SortingOrder, WithLookup } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import tags from '@hanzo/tags'
-  import { Component, IconMoreV2, Spinner, showPanel, Icon } from '@hanzo/ui'
-  import { showMenu } from '@hanzo/view-resources'
-  import time, { ToDo, ToDoPriority, WorkSlot } from '@hanzo/time'
+  import { SortingOrder, WithLookup } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import tags from '@hanzoteam/tags'
+  import { Component, IconMoreV2, Spinner, showPanel, Icon } from '@hanzoteam/ui'
+  import { showMenu } from '@hanzoteam/view-resources'
+  import time, { ToDo, ToDoPriority, WorkSlot } from '@hanzoteam/time'
   import plugin from '../plugin'
   import ToDoDuration from './ToDoDuration.svelte'
   import WorkItemPresenter from './WorkItemPresenter.svelte'

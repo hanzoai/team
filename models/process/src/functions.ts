@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import contact from '@hanzo/contact'
-import core from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
+import contact from '@hanzoteam/contact'
+import core from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
 import process from './plugin'
 
 export function defineFunctions (builder: Builder): void {

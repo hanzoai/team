@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref } from '@hanzo/core'
-import { mergeIds } from '@hanzo/platform'
-import { type ViewAction, type Action } from '@hanzo/view'
-import { type FilePreviewExtension } from '@hanzo/presentation/src/types'
-import { printId } from '@hanzo/print'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { mergeIds } from '@hanzoteam/platform'
+import { type ViewAction, type Action } from '@hanzoteam/view'
+import { type FilePreviewExtension } from '@hanzoteam/presentation/src/types'
+import { printId } from '@hanzoteam/print'
 // This import is needed because of similar import in print plugin
 // Otherwise, TS complains about missing types for resulting merge
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import print from '@hanzo/print-resources/src/plugin'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import print from '@hanzoteam/print-resources/src/plugin'
 
 export default mergeIds(printId, print, {
   action: {

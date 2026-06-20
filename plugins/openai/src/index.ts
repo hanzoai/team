@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+import type { Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 
 export const openaiId = 'openai' as Plugin
 

@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/presentation'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
+  import { Card } from '@hanzoteam/presentation'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
 

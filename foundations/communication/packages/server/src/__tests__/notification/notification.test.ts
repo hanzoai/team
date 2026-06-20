@@ -11,13 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type MeasureContext, type WorkspaceUuid, readOnlyGuestAccountUuid } from '@hanzo/core'
+import { type MeasureContext, type WorkspaceUuid, readOnlyGuestAccountUuid } from '@hanzoteam/core'
 import {
   type Event,
   MessageEventType,
   NotificationEventType,
   type CreateNotificationContextResult
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import {
   type AccountUuid,
   type BlobID,
@@ -31,18 +31,18 @@ import {
   NotificationType,
   type ReactionNotificationContent,
   type SocialID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import { notify } from '../../notification/notification'
 import { type TriggerCtx, type Enriched } from '../../types'
 import { getNameBySocialID } from '../../triggers/utils'
 
 // Mock dependencies
-jest.mock('@hanzo/text-markdown', () => ({
+jest.mock('@hanzoteam/text-markdown', () => ({
   markdownToMarkup: jest.fn((md) => ({ type: 'doc', content: [{ type: 'text', text: md }] }))
 }))
 
-jest.mock('@hanzo/text-core', () => ({
+jest.mock('@hanzoteam/text-core', () => ({
   jsonToMarkup: jest.fn((json) => json),
   markupToText: jest.fn((markup) => {
     if (typeof markup === 'string') return markup

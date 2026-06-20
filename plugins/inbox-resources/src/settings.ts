@@ -12,8 +12,8 @@
 // limitations under the License.
 
 import { get, writable } from 'svelte/store'
-import { getCurrentAccount } from '@hanzo/core'
-import { location } from '@hanzo/ui'
+import { getCurrentAccount } from '@hanzoteam/core'
+import { location } from '@hanzoteam/ui'
 
 export interface ViewSetting {
   id: string

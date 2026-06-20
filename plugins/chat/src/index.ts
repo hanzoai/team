@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Ref } from '@hanzo/core'
-import { plugin, IntlString, type Plugin, Asset } from '@hanzo/platform'
-import { MasterTag } from '@hanzo/card'
+import { Ref } from '@hanzoteam/core'
+import { plugin, IntlString, type Plugin, Asset } from '@hanzoteam/platform'
+import { MasterTag } from '@hanzoteam/card'
 
 export const chatId = 'chat' as Plugin
 

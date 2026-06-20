@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { codeBlockOptions } from '@hanzo/text'
-import { getCurrentTheme, isThemeDark, themeStore } from '@hanzo/theme'
-import { showPopup } from '@hanzo/ui'
+import { codeBlockOptions } from '@hanzoteam/text'
+import { getCurrentTheme, isThemeDark, themeStore } from '@hanzoteam/theme'
+import { showPopup } from '@hanzoteam/ui'
 import { mergeAttributes } from '@tiptap/core'
 import { CodeBlockLowlight, type CodeBlockLowlightOptions } from '@tiptap/extension-code-block-lowlight'
 import { type Node as ProseMirrorNode } from '@tiptap/pm/model'

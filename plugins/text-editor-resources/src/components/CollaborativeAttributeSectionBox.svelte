@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
-  import { IntlString, Asset } from '@hanzo/platform'
-  import { KeyedAttribute } from '@hanzo/presentation'
-  import { Label, Icon } from '@hanzo/ui'
-  import type { AnySvelteComponent } from '@hanzo/ui'
-  import textEditor, { CollaborationUser } from '@hanzo/text-editor'
+  import { Doc } from '@hanzoteam/core'
+  import { IntlString, Asset } from '@hanzoteam/platform'
+  import { KeyedAttribute } from '@hanzoteam/presentation'
+  import { Label, Icon } from '@hanzoteam/ui'
+  import type { AnySvelteComponent } from '@hanzoteam/ui'
+  import textEditor, { CollaborationUser } from '@hanzoteam/text-editor'
 
   import CollaborativeAttributeBox from './CollaborativeAttributeBox.svelte'
   import IconDescription from './icons/Description.svelte'

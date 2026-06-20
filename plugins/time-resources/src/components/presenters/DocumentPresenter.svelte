@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Document } from '@hanzo/document'
-  import { DocReferencePresenter } from '@hanzo/view-resources'
+  import type { Document } from '@hanzoteam/document'
+  import { DocReferencePresenter } from '@hanzoteam/view-resources'
 
   export let value: Document
 </script>

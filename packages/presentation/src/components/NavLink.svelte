@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import uiPlugin, { closePopup, closeTooltip, navigate, parseLocation } from '@hanzo/ui'
+  import { getMetadata } from '@hanzoteam/platform'
+  import uiPlugin, { closePopup, closeTooltip, navigate, parseLocation } from '@hanzoteam/ui'
   import presentation from '../plugin'
 
   export let href: string | undefined

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hanzo/core'
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import type { Action, IconSize } from '@hanzo/ui'
+  import type { Doc, Ref } from '@hanzoteam/core'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import type { Action, IconSize } from '@hanzoteam/ui'
   import TreeElement from './TreeElement.svelte'
-  import { AnySvelteComponent } from '@hanzo/ui'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
 
   export let _id: Ref<Doc> | string | undefined = undefined
   export let icon: Asset | AnySvelteComponent | undefined = undefined

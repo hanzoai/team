@@ -1,13 +1,13 @@
-import { AccountUuid, PersonId, WorkspaceUuid, type MeasureContext } from '@hanzo/core'
-import { AccountClient, IntegrationSecret } from '@hanzo/account-client'
-import { getAccountClient } from '@hanzo/server-client'
-import { gmailIntegrationKind } from '@hanzo/gmail'
+import { AccountUuid, PersonId, WorkspaceUuid, type MeasureContext } from '@hanzoteam/core'
+import { AccountClient, IntegrationSecret } from '@hanzoteam/account-client'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { gmailIntegrationKind } from '@hanzoteam/gmail'
 
 import { TokenStorage } from '../tokens'
 import { SecretType, Token } from '../types'
 
 // Mock the getAccountClient function
-jest.mock('@hanzo/server-client', () => ({
+jest.mock('@hanzoteam/server-client', () => ({
   getAccountClient: jest.fn()
 }))
 

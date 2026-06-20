@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { DropdownLabelsIntl } from '@hanzo/ui'
+  import { DropdownLabelsIntl } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { Mode } from '../../query'
 

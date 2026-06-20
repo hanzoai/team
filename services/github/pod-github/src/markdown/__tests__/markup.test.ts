@@ -14,9 +14,9 @@
 //
 
 /* eslint-env jest */
-import { setMetadata } from '@hanzo/platform'
-import serverCore from '@hanzo/server-core'
-import { jsonToHTML, htmlToJSON } from '@hanzo/text'
+import { setMetadata } from '@hanzoteam/platform'
+import serverCore from '@hanzoteam/server-core'
+import { jsonToHTML, htmlToJSON } from '@hanzoteam/text'
 import { markupToMarkdown, markdownToMarkup, parseMessageMarkdown, serializeMessage } from '..'
 import { appendGuestLinkToModel, stripGuestLink } from '../../sync/guest'
 import { GithubKit } from '../extensions'

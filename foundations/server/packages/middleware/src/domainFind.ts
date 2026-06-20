@@ -24,10 +24,10 @@ import {
   type Ref,
   type SessionData,
   DOMAIN_MODEL
-} from '@hanzo/core'
-import { PlatformError, unknownError } from '@hanzo/platform'
-import type { DBAdapterManager, Middleware, PipelineContext, ServerFindOptions } from '@hanzo/server-core'
-import { BaseMiddleware, emptyFindResult } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { PlatformError, unknownError } from '@hanzoteam/platform'
+import type { DBAdapterManager, Middleware, PipelineContext, ServerFindOptions } from '@hanzoteam/server-core'
+import { BaseMiddleware, emptyFindResult } from '@hanzoteam/server-core'
 
 /**
  * Will perform a find inside adapters

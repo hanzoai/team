@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Data, DocumentUpdate } from '@hanzo/core'
-  import { Card, createQuery, getClient } from '@hanzo/presentation'
-  import { TagElement, TagReference } from '@hanzo/tags'
+  import core, { Data, DocumentUpdate } from '@hanzoteam/core'
+  import { Card, createQuery, getClient } from '@hanzoteam/presentation'
+  import { TagElement, TagReference } from '@hanzoteam/tags'
   import {
     DropdownLabels,
     EditBox,
@@ -23,9 +23,9 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { DropdownTextItem } from '@hanzo/ui/src/types'
-  import { ColorsPopup } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { DropdownTextItem } from '@hanzoteam/ui/src/types'
+  import { ColorsPopup } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import { getTagStyle } from '../utils'

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { PersonRefPresenter } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
-  import { ListView } from '@hanzo/ui'
+  import { Person } from '@hanzoteam/contact'
+  import { PersonRefPresenter } from '@hanzoteam/contact-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { ListView } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let participants: Ref<Person>[]

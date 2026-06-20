@@ -2,7 +2,7 @@
 // Copyright @ 2022-2023 Hanzo AI Inc.
 //
 
-import attachment, { type Attachment } from '@hanzo/attachment'
+import attachment, { type Attachment } from '@hanzoteam/attachment'
 import {
   loadCollabYdoc,
   saveCollabYdoc,
@@ -10,7 +10,7 @@ import {
   YXmlElement,
   yXmlElementClone,
   YXmlText
-} from '@hanzo/collaboration'
+} from '@hanzoteam/collaboration'
 import {
   type ChangeControl,
   type ControlledDocument,
@@ -23,7 +23,7 @@ import {
   documentsId,
   DocumentState,
   type ProjectMeta
-} from '@hanzo/controlled-documents'
+} from '@hanzoteam/controlled-documents'
 import {
   type Class,
   type Data,
@@ -36,7 +36,7 @@ import {
   SortingOrder,
   toIdMap,
   TxOperations
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   createDefaultSpace,
   createOrUpdate,
@@ -47,16 +47,16 @@ import {
   type MigrationUpgradeClient,
   tryMigrate,
   tryUpgrade
-} from '@hanzo/model'
-import { DOMAIN_ATTACHMENT } from '@hanzo/model-attachment'
-import core from '@hanzo/model-core'
-import tags from '@hanzo/tags'
+} from '@hanzoteam/model'
+import { DOMAIN_ATTACHMENT } from '@hanzoteam/model-attachment'
+import core from '@hanzoteam/model-core'
+import tags from '@hanzoteam/tags'
 
-import { compareDocumentVersions } from '@hanzo/controlled-documents/src'
-import { makeRank } from '@hanzo/rank'
+import { compareDocumentVersions } from '@hanzoteam/controlled-documents/src'
+import { makeRank } from '@hanzoteam/rank'
 import documents, { DOMAIN_DOCUMENTS } from './index'
-import { DOMAIN_REQUEST } from '@hanzo/model-request'
-import { RequestStatus } from '@hanzo/request'
+import { DOMAIN_REQUEST } from '@hanzoteam/model-request'
+import { RequestStatus } from '@hanzoteam/request'
 
 async function createTemplatesSpace (tx: TxOperations): Promise<void> {
   const existingSpace = await tx.findOne(documents.class.DocumentSpace, {

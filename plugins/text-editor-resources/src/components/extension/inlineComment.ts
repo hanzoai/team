@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import chunter from '@hanzo/chunter'
-import core, { type Markup, type Timestamp, type PersonId, generateId, getCurrentAccount } from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import { type ActionContext } from '@hanzo/presentation'
-import type { AnySvelteComponent } from '@hanzo/ui'
+import chunter from '@hanzoteam/chunter'
+import core, { type Markup, type Timestamp, type PersonId, generateId, getCurrentAccount } from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import { type ActionContext } from '@hanzoteam/presentation'
+import type { AnySvelteComponent } from '@hanzoteam/ui'
 import { type Editor, Extension } from '@tiptap/core'
 import { type Node } from '@tiptap/pm/model'
 import {

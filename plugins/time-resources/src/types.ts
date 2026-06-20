@@ -1,9 +1,9 @@
-import type { WorkSlot, ToDo } from '@hanzo/time'
-import type { IntlString } from '@hanzo/platform'
-import type { Person } from '@hanzo/contact'
-import type { Event } from '@hanzo/calendar'
-import type { Ref } from '@hanzo/core'
-import { ToDoPriority } from '@hanzo/time'
+import type { WorkSlot, ToDo } from '@hanzoteam/time'
+import type { IntlString } from '@hanzoteam/platform'
+import type { Person } from '@hanzoteam/contact'
+import type { Event } from '@hanzoteam/calendar'
+import type { Ref } from '@hanzoteam/core'
+import { ToDoPriority } from '@hanzoteam/time'
 import time from './plugin'
 
 /**

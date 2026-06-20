@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/api-client",
+  "name": "@hanzoteam/api-client",
   "version": "0.6.4",
   "main": "lib/index.js",
   "exports": {
@@ -30,7 +30,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -50,14 +50,14 @@
     "@types/snappyjs": "^0.7.1"
   },
   "dependencies": {
-    "@hanzo/account-client": "^0.6.6",
-    "@hanzo/client": "^0.6.23",
-    "@hanzo/client-resources": "^0.6.32",
-    "@hanzo/collaborator-client": "^0.6.9",
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/text": "^0.6.10",
-    "@hanzo/text-markdown": "^0.6.5",
+    "@hanzoteam/account-client": "^0.6.6",
+    "@hanzoteam/client": "^0.6.23",
+    "@hanzoteam/client-resources": "^0.6.32",
+    "@hanzoteam/collaborator-client": "^0.6.9",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/text": "^0.6.10",
+    "@hanzoteam/text-markdown": "^0.6.5",
     "snappyjs": "^0.7.0"
   },
   "repository": "https://github.com/hanzoai/team-manager",

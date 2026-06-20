@@ -11,16 +11,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import type { Class, Client, Doc, Ref } from '@hanzo/core'
-import type { Location } from '@hanzo/ui'
-import { Analytics } from '@hanzo/analytics'
-import guest, { type PublicLink, createPublicLink } from '@hanzo/guest'
-import view from '@hanzo/view'
-import { getDocTitle, getObjectLinkFragment } from '@hanzo/view-resources'
-import { getMetadata } from '@hanzo/platform'
-import presentation, { getFileUrl } from '@hanzo/presentation'
-import { printToPDF } from '@hanzo/print'
-import { signPDF } from '@hanzo/sign'
+import type { Class, Client, Doc, Ref } from '@hanzoteam/core'
+import type { Location } from '@hanzoteam/ui'
+import { Analytics } from '@hanzoteam/analytics'
+import guest, { type PublicLink, createPublicLink } from '@hanzoteam/guest'
+import view from '@hanzoteam/view'
+import { getDocTitle, getObjectLinkFragment } from '@hanzoteam/view-resources'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation, { getFileUrl } from '@hanzoteam/presentation'
+import { printToPDF } from '@hanzoteam/print'
+import { signPDF } from '@hanzoteam/sign'
 
 export interface PdfResult {
   blobId: string

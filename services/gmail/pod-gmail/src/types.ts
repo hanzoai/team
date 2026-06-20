@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import type { AccountUuid, Doc, SocialId, WorkspaceUuid } from '@hanzo/core'
+import type { AccountUuid, Doc, SocialId, WorkspaceUuid } from '@hanzoteam/core'
 import type { NextFunction, Request, Response } from 'express'
 import type { Credentials } from 'google-auth-library'
-import type { Channel as PlatformChannel } from '@hanzo/contact'
+import type { Channel as PlatformChannel } from '@hanzoteam/contact'
 
 export type Token = User & Credentials
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { RetryOptions, withRetry } from '@hanzo/retry'
+import { RetryOptions, withRetry } from '@hanzoteam/retry'
 import { HanzolakeError, NetworkError } from './error'
 
 async function innerFetchSafe (url: string | URL, init?: RequestInit): Promise<Response> {

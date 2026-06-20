@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { setMetadata } from '@hanzo/platform'
-import serverClient, { withRetry } from '@hanzo/server-client'
-import { initStatisticsContext } from '@hanzo/server-core'
-import serverToken, { generateToken } from '@hanzo/server-token'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClient, { withRetry } from '@hanzoteam/server-client'
+import { initStatisticsContext } from '@hanzoteam/server-core'
+import serverToken, { generateToken } from '@hanzoteam/server-token'
 
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { newMetrics, type SocialId } from '@hanzo/core'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { newMetrics, type SocialId } from '@hanzoteam/core'
 import { join } from 'path'
 import config from './config'
 import { AIControl } from './controller'

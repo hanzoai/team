@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AttachedData, Doc, FindOptions, type Rank, Ref, SortingOrder } from '@hanzo/core'
-  import { ObjectPopup, getClient } from '@hanzo/presentation'
-  import { makeRank } from '@hanzo/task'
-  import { Issue, IssueDraft } from '@hanzo/tracker'
+  import core, { AttachedData, Doc, FindOptions, type Rank, Ref, SortingOrder } from '@hanzoteam/core'
+  import { ObjectPopup, getClient } from '@hanzoteam/presentation'
+  import { makeRank } from '@hanzoteam/task'
+  import { Issue, IssueDraft } from '@hanzoteam/tracker'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../plugin'
   import IssueStatusIcon from './issues/IssueStatusIcon.svelte'

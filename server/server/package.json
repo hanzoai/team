@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/server",
+  "name": "@hanzoteam/server",
   "version": "0.6.8",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@types/node": "~20.11.16",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
@@ -39,15 +39,15 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/account-client": "^0.6.6",
-    "@hanzo/analytics": "^0.6.4",
-    "@hanzo/communication-types": "0.1.176",
-    "@hanzo/communication-sdk-types": "0.1.176",
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/rpc": "^0.6.10",
-    "@hanzo/server-core": "^0.6.5",
-    "@hanzo/server-token": "^0.6.16",
+    "@hanzoteam/account-client": "^0.6.6",
+    "@hanzoteam/analytics": "^0.6.4",
+    "@hanzoteam/communication-types": "0.1.176",
+    "@hanzoteam/communication-sdk-types": "0.1.176",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/rpc": "^0.6.10",
+    "@hanzoteam/server-core": "^0.6.5",
+    "@hanzoteam/server-token": "^0.6.16",
     "jsonwebtoken": "~9.0.2"
   }
 }

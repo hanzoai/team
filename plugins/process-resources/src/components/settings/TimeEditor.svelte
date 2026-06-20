@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import core, { AnyAttribute } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Process } from '@hanzo/process'
-  import { AnySvelteComponent } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Analytics } from '@hanzoteam/analytics'
+  import core, { AnyAttribute } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process } from '@hanzoteam/process'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import { getContext, getMockAttribute } from '../../utils'

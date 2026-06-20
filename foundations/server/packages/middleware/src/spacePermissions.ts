@@ -34,11 +34,11 @@ import core, {
   type SessionData,
   type AccountUuid,
   matchQuery
-} from '@hanzo/core'
-import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
-import { type Middleware, type TxMiddlewareResult, type PipelineContext } from '@hanzo/server-core'
-import contact from '@hanzo/contact'
-import { BaseMiddleware } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import platform, { PlatformError, Severity, Status } from '@hanzoteam/platform'
+import { type Middleware, type TxMiddlewareResult, type PipelineContext } from '@hanzoteam/server-core'
+import contact from '@hanzoteam/contact'
+import { BaseMiddleware } from '@hanzoteam/server-core'
 
 /**
  * @public

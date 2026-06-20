@@ -6,24 +6,24 @@ import {
   type Location,
   navigate,
   languageStore
-} from '@hanzo/ui'
-import { type Ref, type Doc, type Class, generateId, concatLink } from '@hanzo/core'
-import activity, { type ActivityMessage } from '@hanzo/activity'
+} from '@hanzoteam/ui'
+import { type Ref, type Doc, type Class, generateId, concatLink } from '@hanzoteam/core'
+import activity, { type ActivityMessage } from '@hanzoteam/activity'
 import {
   type Channel,
   type ChatWidgetTab,
   chunterId,
   type ChunterSpace,
   type ThreadMessage
-} from '@hanzo/chunter'
-import { type DocNotifyContext, notificationId } from '@hanzo/notification'
-import workbench, { type Widget, workbenchId, type LocationData } from '@hanzo/workbench'
-import { classIcon, getObjectLinkId, parseLinkId } from '@hanzo/view-resources'
-import presentation, { getClient } from '@hanzo/presentation'
-import view, { encodeObjectURI, decodeObjectURI } from '@hanzo/view'
-import { createWidgetTab, isElementFromSidebar, sidebarStore } from '@hanzo/workbench-resources'
-import { type Asset, getMetadata, type IntlString, translate } from '@hanzo/platform'
-import contact from '@hanzo/contact'
+} from '@hanzoteam/chunter'
+import { type DocNotifyContext, notificationId } from '@hanzoteam/notification'
+import workbench, { type Widget, workbenchId, type LocationData } from '@hanzoteam/workbench'
+import { classIcon, getObjectLinkId, parseLinkId } from '@hanzoteam/view-resources'
+import presentation, { getClient } from '@hanzoteam/presentation'
+import view, { encodeObjectURI, decodeObjectURI } from '@hanzoteam/view'
+import { createWidgetTab, isElementFromSidebar, sidebarStore } from '@hanzoteam/workbench-resources'
+import { type Asset, getMetadata, type IntlString, translate } from '@hanzoteam/platform'
+import contact from '@hanzoteam/contact'
 import { get } from 'svelte/store'
 
 import { chatSpecials } from './components/chat/utils'

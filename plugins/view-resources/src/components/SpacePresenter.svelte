@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Space } from '@hanzo/core'
+  import type { Space } from '@hanzoteam/core'
 
   export let value: Space
   export let accent = false

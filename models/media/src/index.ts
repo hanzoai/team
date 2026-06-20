@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import workbench from '@hanzo/model-workbench'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
+import workbench from '@hanzoteam/model-workbench'
 
 import media from './plugin'
 
-export { mediaId } from '@hanzo/media'
+export { mediaId } from '@hanzoteam/media'
 export { media as default }
 
 export function createModel (builder: Builder): void {

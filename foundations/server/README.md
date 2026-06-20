@@ -16,29 +16,29 @@ This repository includes the following server packages:
 
 ### Server Core
 
-- [@hanzo/server-core](packages/core) - Core server infrastructure, adapters, storage management, and server-side utilities
-- [@hanzo/server](packages/server) - Main server implementation and runtime
-- [@hanzo/server-client](packages/client) - Server-side client implementation for inter-service communication
-- [@hanzo/middleware](packages/middleware) - Server middleware components and request processing
+- [@hanzoteam/server-core](packages/core) - Core server infrastructure, adapters, storage management, and server-side utilities
+- [@hanzoteam/server](packages/server) - Main server implementation and runtime
+- [@hanzoteam/server-client](packages/client) - Server-side client implementation for inter-service communication
+- [@hanzoteam/middleware](packages/middleware) - Server middleware components and request processing
 
 ### Database Adapters
 
-- [@hanzo/mongo](packages/mongo) - MongoDB adapter for document storage
-- [@hanzo/postgres](packages/postgres) - PostgreSQL adapter for relational data
-- [@hanzo/elastic](packages/elastic) - Elasticsearch adapter for full-text search and analytics
+- [@hanzoteam/mongo](packages/mongo) - MongoDB adapter for document storage
+- [@hanzoteam/postgres](packages/postgres) - PostgreSQL adapter for relational data
+- [@hanzoteam/elastic](packages/elastic) - Elasticsearch adapter for full-text search and analytics
 
 ### Storage Providers
 
-- [@hanzo/server-storage](packages/server-storage) - Storage abstraction layer and implementations
-- [@hanzo/minio](packages/minio) - MinIO storage provider for object storage
-- [@hanzo/s3](packages/s3) - AWS S3 compatible storage provider
-- [@hanzo/datalake](packages/datalake) - Data lake storage and management
-- [@hanzo/hanzolake](packages/hanzolake) - Hanzo lake storage and management
+- [@hanzoteam/server-storage](packages/server-storage) - Storage abstraction layer and implementations
+- [@hanzoteam/minio](packages/minio) - MinIO storage provider for object storage
+- [@hanzoteam/s3](packages/s3) - AWS S3 compatible storage provider
+- [@hanzoteam/datalake](packages/datalake) - Data lake storage and management
+- [@hanzoteam/hanzolake](packages/hanzolake) - Hanzo lake storage and management
 
 ### Infrastructure
 
-- [@hanzo/kafka](packages/kafka) - Apache Kafka integration for event streaming and messaging
-- [@hanzo/collaboration](packages/collaboration) - Real-time collaborative editing infrastructure
+- [@hanzoteam/kafka](packages/kafka) - Apache Kafka integration for event streaming and messaging
+- [@hanzoteam/collaboration](packages/collaboration) - Real-time collaborative editing infrastructure
 
 ## Pre-requisites
 

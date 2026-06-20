@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { generateId } from '@hanzo/core'
+import { generateId } from '@hanzoteam/core'
 import { type ColorMetaNameOrHex, type CanvasPoint } from './drawingUtils'
 
 export type CommandUid = string & { readonly __brand: 'CommandUid' }

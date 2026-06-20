@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { loadMetadata } from '@hanzo/platform'
-import textEditor from '@hanzo/text-editor'
+import { loadMetadata } from '@hanzoteam/platform'
+import textEditor from '@hanzoteam/text-editor'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(textEditor.icon, {

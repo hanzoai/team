@@ -59,19 +59,19 @@ rush test
 
 ## Packages
 
-### `@hanzo/platform-rig`
+### `@hanzoteam/platform-rig`
 
 A set of utilities for managing platform configurations and profiles.
 
-### `@hanzo/measurements`
+### `@hanzoteam/measurements`
 
 Utilities for handling various measurement-related tasks.
 
-### `@hanzo/measurements-otlp`
+### `@hanzoteam/measurements-otlp`
 
 OpenTelemetry-based utilities for measurements and telemetry.
 
-### `@hanzo/postgres-base`
+### `@hanzoteam/postgres-base`
 
 Base utilities for working with PostgreSQL databases.
 

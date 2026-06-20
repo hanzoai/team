@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { AccountRole } from '@hanzo/core'
-import { Model, type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import preference, { TPreference } from '@hanzo/model-preference'
-import notification from '@hanzo/notification'
+import { AccountRole } from '@hanzoteam/core'
+import { Model, type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import notification from '@hanzoteam/notification'
 
-import desktopPreferences, { type DesktopNotificationPreference } from '@hanzo/desktop-preferences'
+import desktopPreferences, { type DesktopNotificationPreference } from '@hanzoteam/desktop-preferences'
 
-export { desktopPreferencesId } from '@hanzo/desktop-preferences'
+export { desktopPreferencesId } from '@hanzoteam/desktop-preferences'
 
 @Model(desktopPreferences.class.DesktopNotificationPreference, preference.class.Preference)
 export class TDesktopNotificationPreference extends TPreference implements DesktopNotificationPreference {

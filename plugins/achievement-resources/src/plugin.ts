@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { mergeIds } from '@hanzo/platform'
-import achievement, { achievementId } from '@hanzo/achievement'
-import { type AnyComponent } from '@hanzo/ui'
+import { mergeIds } from '@hanzoteam/platform'
+import achievement, { achievementId } from '@hanzoteam/achievement'
+import { type AnyComponent } from '@hanzoteam/ui'
 
 export default mergeIds(achievementId, achievement, {
   component: {

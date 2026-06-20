@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { ObjectBox } from '@hanzo/view-resources'
-  import documents, { Document } from '@hanzo/controlled-documents'
+  import { Ref } from '@hanzoteam/core'
+  import { ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { ObjectBox } from '@hanzoteam/view-resources'
+  import documents, { Document } from '@hanzoteam/controlled-documents'
 
   import products from '../../plugin'
 

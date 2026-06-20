@@ -15,10 +15,10 @@
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import core, { Ref, SpaceType, WithLookup } from '@hanzo/core'
-  import { Location, getCurrentResolvedLocation, navigate, resolvedLocationStore } from '@hanzo/ui'
-  import { createQuery, hasResource } from '@hanzo/presentation'
-  import { Resource } from '@hanzo/platform'
+  import core, { Ref, SpaceType, WithLookup } from '@hanzoteam/core'
+  import { Location, getCurrentResolvedLocation, navigate, resolvedLocationStore } from '@hanzoteam/ui'
+  import { createQuery, hasResource } from '@hanzoteam/presentation'
+  import { Resource } from '@hanzoteam/platform'
 
   import { clearSettingsStore } from '../../store'
   import SpaceTypes from './SpaceTypes.svelte'

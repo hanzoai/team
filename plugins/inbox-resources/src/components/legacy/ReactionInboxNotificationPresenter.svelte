@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityMessagePreview } from '@hanzo/activity-resources'
-  import { ReactionInboxNotification } from '@hanzo/notification'
-  import { createQuery } from '@hanzo/presentation'
-  import { ActivityMessage } from '@hanzo/activity'
-  import { Doc } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Person } from '@hanzo/contact'
-  import { Label } from '@hanzo/ui'
-  import { EmojiPresenter } from '@hanzo/emoji-resources'
+  import { ActivityMessagePreview } from '@hanzoteam/activity-resources'
+  import { ReactionInboxNotification } from '@hanzoteam/notification'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ActivityMessage } from '@hanzoteam/activity'
+  import { Doc } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Person } from '@hanzoteam/contact'
+  import { Label } from '@hanzoteam/ui'
+  import { EmojiPresenter } from '@hanzoteam/emoji-resources'
 
   import PreviewTemplate from '../preview/PreviewTemplate.svelte'
   import inbox from '../../plugin'

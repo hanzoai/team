@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import core, { ClassifierKind, Ref, WithLookup, generateId } from '@hanzo/core'
-  import { getEmbeddedLabel, getMetadata, translate } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import task, { TaskType, updateProjectType, type TaskStatusFactory } from '@hanzo/task'
-  import tracker, { Project, createStatesData } from '@hanzo/tracker'
+  import { Analytics } from '@hanzoteam/analytics'
+  import core, { ClassifierKind, Ref, WithLookup, generateId } from '@hanzoteam/core'
+  import { getEmbeddedLabel, getMetadata, translate } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import task, { TaskType, updateProjectType, type TaskStatusFactory } from '@hanzoteam/task'
+  import tracker, { Project, createStatesData } from '@hanzoteam/tracker'
   import ui, {
     Button,
     IconChevronDown,
@@ -12,13 +12,13 @@
     getEventPopupPositionElement,
     showPopup,
     DropdownLabelsPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import {
     GithubIntegration,
     GithubIntegrationRepository,
     githubPullRequestStates,
     type GithubProject
-  } from '@hanzo/github'
+  } from '@hanzoteam/github'
   import github from '../plugin'
 
   export let integration: WithLookup<GithubIntegration>

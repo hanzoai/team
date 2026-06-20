@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { PersonPreviewProvider, Avatar } from '@hanzo/contact-resources'
-  import { formatName, Person } from '@hanzo/contact'
-  import { Message } from '@hanzo/communication-types'
-  import { Card } from '@hanzo/card'
+  import { PersonPreviewProvider, Avatar } from '@hanzoteam/contact-resources'
+  import { formatName, Person } from '@hanzoteam/contact'
+  import { Message } from '@hanzoteam/communication-types'
+  import { Card } from '@hanzoteam/card'
 
   import MessageContentViewer from './MessageContentViewer.svelte'
   import MessageFooter from './MessageFooter.svelte'

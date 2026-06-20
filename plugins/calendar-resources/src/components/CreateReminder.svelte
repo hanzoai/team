@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccessLevel, Calendar, generateEventId } from '@hanzo/calendar'
-  import { Employee, getCurrentEmployee } from '@hanzo/contact'
-  import { UserBoxList } from '@hanzo/contact-resources'
-  import { Class, DateRangeMode, Doc, Ref, getCurrentAccount } from '@hanzo/core'
-  import { Card, getClient } from '@hanzo/presentation'
-  import ui, { DateRangePresenter, EditBox } from '@hanzo/ui'
+  import { AccessLevel, Calendar, generateEventId } from '@hanzoteam/calendar'
+  import { Employee, getCurrentEmployee } from '@hanzoteam/contact'
+  import { UserBoxList } from '@hanzoteam/contact-resources'
+  import { Class, DateRangeMode, Doc, Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import ui, { DateRangePresenter, EditBox } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
 

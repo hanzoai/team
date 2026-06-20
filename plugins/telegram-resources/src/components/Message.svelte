@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
-  import { AttachmentGroup } from '@hanzo/attachment-resources'
-  import { formatName } from '@hanzo/contact'
-  import { WithLookup } from '@hanzo/core'
-  import { HTMLViewer } from '@hanzo/presentation'
-  import type { SharedTelegramMessage } from '@hanzo/telegram'
-  import { CheckBox, getPlatformColorForText, themeStore } from '@hanzo/ui'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentGroup } from '@hanzoteam/attachment-resources'
+  import { formatName } from '@hanzoteam/contact'
+  import { WithLookup } from '@hanzoteam/core'
+  import { HTMLViewer } from '@hanzoteam/presentation'
+  import type { SharedTelegramMessage } from '@hanzoteam/telegram'
+  import { CheckBox, getPlatformColorForText, themeStore } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let message: WithLookup<SharedTelegramMessage>

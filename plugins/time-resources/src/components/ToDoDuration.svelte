@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { themeStore, formatDuration } from '@hanzo/ui'
-  import { WorkSlot } from '@hanzo/time'
+  import { themeStore, formatDuration } from '@hanzoteam/ui'
+  import { WorkSlot } from '@hanzoteam/time'
   import { calculateEventsDuration } from '../utils'
 
   export let events: WorkSlot[]

@@ -3,11 +3,11 @@
 -->
 
 <script lang="ts">
-  import type { Employee } from '@hanzo/contact'
-  import { type Ref, SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Button, Loading, ProgressCircle, showPopup } from '@hanzo/ui'
-  import { type TrainingAttempt, type TrainingRequest } from '@hanzo/training'
+  import type { Employee } from '@hanzoteam/contact'
+  import { type Ref, SortingOrder } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Button, Loading, ProgressCircle, showPopup } from '@hanzoteam/ui'
+  import { type TrainingAttempt, type TrainingRequest } from '@hanzoteam/training'
   import type { ComponentProps } from 'svelte'
   import training from '../plugin'
   import { type CompletionMap, CompletionMapValueState, getCompletionMap } from '../utils'

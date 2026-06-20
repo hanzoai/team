@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/chunter",
+  "name": "@hanzoteam/chunter",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -37,14 +37,14 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/activity": "workspace:^0.7.0",
-    "@hanzo/contact": "workspace:^0.7.0",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/notification": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/ui": "workspace:^0.7.0",
-    "@hanzo/view": "workspace:^0.7.0",
-    "@hanzo/workbench": "workspace:^0.7.0",
+    "@hanzoteam/activity": "workspace:^0.7.0",
+    "@hanzoteam/contact": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/notification": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/ui": "workspace:^0.7.0",
+    "@hanzoteam/view": "workspace:^0.7.0",
+    "@hanzoteam/workbench": "workspace:^0.7.0",
     "fast-equals": "^5.2.2"
   },
   "repository": {

@@ -16,36 +16,36 @@ This repository includes the following core packages:
 
 ### Core Packages
 
-- **[@hanzo/core](packages/core)** - Core data models, types, and fundamental platform abstractions
-- **[@hanzo/platform](packages/platform)** - Platform runtime, plugin system, and dependency injection
-- **[@hanzo/model](packages/model)** - Data model definitions and schema management
+- **[@hanzoteam/core](packages/core)** - Core data models, types, and fundamental platform abstractions
+- **[@hanzoteam/platform](packages/platform)** - Platform runtime, plugin system, and dependency injection
+- **[@hanzoteam/model](packages/model)** - Data model definitions and schema management
 
 ### Client Libraries
 
-- **[@hanzo/client](packages/client)** - Client-side data access and synchronization layer
-- **[@hanzo/client-resources](packages/client-resources)** - Shared client resources and utilities
-- **[@hanzo/api-client](packages/api-client)** - API client for programmatic access to Hanzo Team (WebSocket and REST)
-- **[@hanzo/account-client](packages/account-client)** - Account management client
-- **[@hanzo/collaborator-client](packages/collaborator-client)** - Real-time collaboration client
-- **[@hanzo/hanzolake-client](packages/hanzolake-client)** - HanzoLake data warehouse client
-- **[@hanzo/analytics](packages/analytics)** - Analytics and tracking
-- **[@hanzo/analytics-service](packages/analytics-service)** - Analytics service implementation
+- **[@hanzoteam/client](packages/client)** - Client-side data access and synchronization layer
+- **[@hanzoteam/client-resources](packages/client-resources)** - Shared client resources and utilities
+- **[@hanzoteam/api-client](packages/api-client)** - API client for programmatic access to Hanzo Team (WebSocket and REST)
+- **[@hanzoteam/account-client](packages/account-client)** - Account management client
+- **[@hanzoteam/collaborator-client](packages/collaborator-client)** - Real-time collaboration client
+- **[@hanzoteam/hanzolake-client](packages/hanzolake-client)** - HanzoLake data warehouse client
+- **[@hanzoteam/analytics](packages/analytics)** - Analytics and tracking
+- **[@hanzoteam/analytics-service](packages/analytics-service)** - Analytics service implementation
 
 ### Text Processing
 
-- **[@hanzo/text](packages/text)** - High-level text processing utilities
-- **[@hanzo/text-core](packages/text-core)** - Core text processing engine
-- **[@hanzo/text-html](packages/text-html)** - HTML text rendering and parsing
-- **[@hanzo/text-markdown](packages/text-markdown)** - Markdown support
-- **[@hanzo/text-ydoc](packages/text-ydoc)** - Yjs document integration for collaborative editing
+- **[@hanzoteam/text](packages/text)** - High-level text processing utilities
+- **[@hanzoteam/text-core](packages/text-core)** - Core text processing engine
+- **[@hanzoteam/text-html](packages/text-html)** - HTML text rendering and parsing
+- **[@hanzoteam/text-markdown](packages/text-markdown)** - Markdown support
+- **[@hanzoteam/text-ydoc](packages/text-ydoc)** - Yjs document integration for collaborative editing
 
 ### Utilities
 
-- **[@hanzo/query](packages/query)** - Query language and execution engine
-- **[@hanzo/storage](packages/storage)** - Storage abstractions and implementations
-- **[@hanzo/rank](packages/rank)** - Ranking and ordering utilities
-- **[@hanzo/retry](packages/retry)** - Retry logic and resilience patterns
-- **[@hanzo/rpc](packages/rpc)** - RPC communication layer
+- **[@hanzoteam/query](packages/query)** - Query language and execution engine
+- **[@hanzoteam/storage](packages/storage)** - Storage abstractions and implementations
+- **[@hanzoteam/rank](packages/rank)** - Ranking and ordering utilities
+- **[@hanzoteam/retry](packages/retry)** - Retry logic and resilience patterns
+- **[@hanzoteam/rpc](packages/rpc)** - RPC communication layer
 - **[@hanzo/token](packages/token)** - Token management and authentication utilities
 
 ## Pre-requisites

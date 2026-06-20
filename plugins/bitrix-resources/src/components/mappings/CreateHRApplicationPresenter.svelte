@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixFieldMapping, CreateHRApplication } from '@hanzo/bitrix'
-  import task from '@hanzo/task'
-  import { ObjectPresenter } from '@hanzo/view-resources'
+  import { BitrixEntityMapping, BitrixFieldMapping, CreateHRApplication } from '@hanzoteam/bitrix'
+  import task from '@hanzoteam/task'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
 
   export let mapping: BitrixEntityMapping
   export let value: BitrixFieldMapping

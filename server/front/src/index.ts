@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hanzo/core'
-import platform, { PlatformError } from '@hanzo/platform'
-import { TokenError, decodeToken } from '@hanzo/server-token'
-import { StorageAdapter } from '@hanzo/storage'
+import { Analytics } from '@hanzoteam/analytics'
+import { MeasureContext, Blob as PlatformBlob, WorkspaceIds, metricsAggregate, type Ref } from '@hanzoteam/core'
+import platform, { PlatformError } from '@hanzoteam/platform'
+import { TokenError, decodeToken } from '@hanzoteam/server-token'
+import { StorageAdapter } from '@hanzoteam/storage'
 import bp from 'body-parser'
 import cors from 'cors'
 import express, { Request, Response } from 'express'
@@ -30,7 +30,7 @@ import { join, normalize, resolve } from 'path'
 import { cwd } from 'process'
 import sharp, { type Sharp } from 'sharp'
 import { v4 as uuid } from 'uuid'
-import { getClient as getAccountClient } from '@hanzo/account-client'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
 import { preConditions } from './utils'
 
 import fs, { createReadStream, mkdtempSync } from 'fs'

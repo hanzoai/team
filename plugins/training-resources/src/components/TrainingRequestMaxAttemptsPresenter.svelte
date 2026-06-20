@@ -19,7 +19,7 @@
 </script>
 
 <script lang="ts">
-  import type { TrainingRequest } from '@hanzo/training'
+  import type { TrainingRequest } from '@hanzoteam/training'
   export let value: TrainingRequest['maxAttempts']
 </script>
 

@@ -15,9 +15,9 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import documents, { ControlledDocument } from '@hanzo/controlled-documents'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
-  import { Button, EditBox, Label } from '@hanzo/ui'
+  import documents, { ControlledDocument } from '@hanzoteam/controlled-documents'
+  import presentation, { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Button, EditBox, Label } from '@hanzoteam/ui'
 
   import IconWarning from '../../icons/IconWarning.svelte'
   import documentsRes from '../../../plugin'

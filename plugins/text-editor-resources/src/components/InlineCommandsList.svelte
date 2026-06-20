@@ -20,7 +20,7 @@
     deviceOptionsStore as deviceInfo,
     PopupResult,
     SelectPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { onDestroy, onMount } from 'svelte'
   import DummyPopup from './DummyPopup.svelte'
 

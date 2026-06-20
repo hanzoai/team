@@ -35,9 +35,9 @@ import {
   toIdMap,
   TxFactory,
   DocumentUpdate
-} from '@hanzo/core'
-import platform, { getMetadata, PlatformError } from '@hanzo/platform'
-import { ColorDefinition } from '@hanzo/ui'
+} from '@hanzoteam/core'
+import platform, { getMetadata, PlatformError } from '@hanzoteam/platform'
+import { ColorDefinition } from '@hanzoteam/ui'
 import contact, {
   AvatarProvider,
   AvatarType,

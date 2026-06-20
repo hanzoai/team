@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store'
 
-import { createQuery } from '@hanzo/presentation'
+import { createQuery } from '@hanzoteam/presentation'
 import desktopPreferences, {
   defaultNotificationPreference,
   type DesktopNotificationPreference,
   type DesktopNotificationPreferenceData
-} from '@hanzo/desktop-preferences'
+} from '@hanzoteam/desktop-preferences'
 
 // /**
 //  * @public

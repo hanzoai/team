@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { RadioGroup, RadioItem } from '@hanzo/ui'
-  import { Room, RoomAccess, isOffice, roomAccessLabel } from '@hanzo/love'
+  import { getClient } from '@hanzoteam/presentation'
+  import { RadioGroup, RadioItem } from '@hanzoteam/ui'
+  import { Room, RoomAccess, isOffice, roomAccessLabel } from '@hanzoteam/love'
   import { createEventDispatcher } from 'svelte'
 
   export let room: Room

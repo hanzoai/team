@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { themeStore } from '@hanzo/theme'
+  import { themeStore } from '@hanzoteam/theme'
   import { updateCustomEmojis, updateUnicodeEmojis } from '../utils'
-  import emojiPlugin from '@hanzo/emoji'
-  import { createQuery } from '@hanzo/presentation'
+  import emojiPlugin from '@hanzoteam/emoji'
+  import { createQuery } from '@hanzoteam/presentation'
   let parentElement: HTMLDivElement
 
   const customEmojisQuery = createQuery()

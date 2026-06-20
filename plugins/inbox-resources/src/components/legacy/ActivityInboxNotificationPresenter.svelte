@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { matchQuery, Doc } from '@hanzo/core'
-  import { ActivityNotificationViewlet, DisplayActivityInboxNotification } from '@hanzo/notification'
+  import { getClient } from '@hanzoteam/presentation'
+  import { matchQuery, Doc } from '@hanzoteam/core'
+  import { ActivityNotificationViewlet, DisplayActivityInboxNotification } from '@hanzoteam/notification'
   import {
     ActivityMessagePreview,
     combineActivityMessages,
     sortActivityMessages
-  } from '@hanzo/activity-resources'
-  import activity, { ActivityMessage, DisplayActivityMessage, DocUpdateMessage } from '@hanzo/activity'
-  import { Component } from '@hanzo/ui'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Person } from '@hanzo/contact'
+  } from '@hanzoteam/activity-resources'
+  import activity, { ActivityMessage, DisplayActivityMessage, DocUpdateMessage } from '@hanzoteam/activity'
+  import { Component } from '@hanzoteam/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Person } from '@hanzoteam/contact'
 
   import PreviewTemplate from '../preview/PreviewTemplate.svelte'
 

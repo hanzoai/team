@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Integration } from '@hanzo/account-client'
-import platform, { PlatformError } from '@hanzo/platform'
+import { Integration } from '@hanzoteam/account-client'
+import platform, { PlatformError } from '@hanzoteam/platform'
 import { IntegrationEventData } from './types'
 
 export function isWorkspaceIntegration (integration: Integration): boolean {

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { AccountUuid, Doc, MarkupBlobRef, Rank, Ref, TypedSpace } from '@hanzo/core'
-import { IconProps } from '@hanzo/view'
+import { AccountUuid, Doc, MarkupBlobRef, Rank, Ref, TypedSpace } from '@hanzoteam/core'
+import { IconProps } from '@hanzoteam/view'
 
 /** @public */
 export interface Teamspace extends TypedSpace, IconProps {}

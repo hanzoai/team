@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import uploader from '@hanzo/uploader'
-import workbench from '@hanzo/workbench'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
+import uploader from '@hanzoteam/uploader'
+import workbench from '@hanzoteam/workbench'
 
 import recorder from './plugin'
 
-export { recorderId } from '@hanzo/recorder'
+export { recorderId } from '@hanzoteam/recorder'
 export { recorder as default }
 export * from './migration'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { codeOptions } from '@hanzo/text'
-import { showPopup } from '@hanzo/ui'
+import { codeOptions } from '@hanzoteam/text'
+import { showPopup } from '@hanzoteam/ui'
 import { type Editor, Extension } from '@tiptap/core'
 import type { CodeOptions } from '@tiptap/extension-code'
 import type { CodeBlockOptions } from '@tiptap/extension-code-block'

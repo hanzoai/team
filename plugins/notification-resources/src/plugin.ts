@@ -14,10 +14,10 @@
 // limitations under the License.
 */
 
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
 
-import notification, { notificationId } from '@hanzo/notification'
+import notification, { notificationId } from '@hanzoteam/notification'
 
 export default mergeIds(notificationId, notification, {
   string: {

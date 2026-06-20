@@ -14,17 +14,17 @@
 // limitations under the License.
 //
 
-import { Employee, Person, PersonSpace } from '@hanzo/contact'
-import { PersonId, Class, Doc, Mixin, Ref, Tx, TxCUD, AccountUuid } from '@hanzo/core'
-import { NotificationContent, NotificationType } from '@hanzo/notification'
-import { Metadata, Plugin, Resource, plugin } from '@hanzo/platform'
-import type { TriggerControl, TriggerFunc } from '@hanzo/server-core'
+import { Employee, Person, PersonSpace } from '@hanzoteam/contact'
+import { PersonId, Class, Doc, Mixin, Ref, Tx, TxCUD, AccountUuid } from '@hanzoteam/core'
+import { NotificationContent, NotificationType } from '@hanzoteam/notification'
+import { Metadata, Plugin, Resource, plugin } from '@hanzoteam/platform'
+import type { TriggerControl, TriggerFunc } from '@hanzoteam/server-core'
 
 /**
  * @public
  */
 export const serverNotificationId = 'server-notification' as Plugin
-export { DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hanzo/notification'
+export { DOMAIN_USER_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_DOC_NOTIFY } from '@hanzoteam/notification'
 
 /**
  * @public

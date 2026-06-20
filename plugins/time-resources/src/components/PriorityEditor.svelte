@@ -20,9 +20,9 @@
     SelectPopupValueType,
     eventToHTMLElement,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { ToDoPriority } from '@hanzo/time'
+  import { ToDoPriority } from '@hanzoteam/time'
   import { defaultToDoPriorities, todoPriorities } from '../utils'
   import Priority from './icons/Priority.svelte'
   import time from '../plugin'

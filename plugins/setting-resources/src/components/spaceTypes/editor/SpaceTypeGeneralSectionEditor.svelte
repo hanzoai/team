@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { AccountArrayEditor } from '@hanzo/contact-resources'
-  import core, { AccountUuid, reduceCalls, type SpaceType, type SpaceTypeDescriptor } from '@hanzo/core'
-  import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
+  import contact from '@hanzoteam/contact'
+  import { AccountArrayEditor } from '@hanzoteam/contact-resources'
+  import core, { AccountUuid, reduceCalls, type SpaceType, type SpaceTypeDescriptor } from '@hanzoteam/core'
+  import { createQuery, getClient, MessageBox } from '@hanzoteam/presentation'
   import {
     ButtonIcon,
     IconDelete,
@@ -27,8 +27,8 @@
     showPopup,
     TextArea,
     Toggle
-  } from '@hanzo/ui'
-  import { deleteObjects } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { deleteObjects } from '@hanzoteam/view-resources'
 
   import settingRes from '../../../plugin'
 

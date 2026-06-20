@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { isWorkspaceLoginInfo } from '@hanzo/account-client'
+import { isWorkspaceLoginInfo } from '@hanzoteam/account-client'
 import {
   AIEventRequest,
   ConnectMeetingRequest,
@@ -25,7 +25,7 @@ import {
   SummarizeMessagesResponse,
   TranslateRequest,
   TranslateResponse
-} from '@hanzo/ai-bot'
+} from '@hanzoteam/ai-bot'
 import core, {
   AccountUuid,
   MeasureContext,
@@ -36,25 +36,25 @@ import core, {
   toIdMap,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { Room } from '@hanzo/love'
-import { WorkspaceInfoRecord } from '@hanzo/server-ai-bot'
-import { getAccountClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { htmlToMarkup, jsonToHTML, jsonToMarkup, markupToJSON } from '@hanzo/text'
+} from '@hanzoteam/core'
+import { Room } from '@hanzoteam/love'
+import { WorkspaceInfoRecord } from '@hanzoteam/server-ai-bot'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { htmlToMarkup, jsonToHTML, jsonToMarkup, markupToJSON } from '@hanzoteam/text'
 import { encodingForModel, getEncoding } from 'js-tiktoken'
 import OpenAI from 'openai'
 
-import chunter from '@hanzo/chunter'
-import { StorageAdapter } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import { markdownToMarkup, markupToMarkdown } from '@hanzo/text-markdown'
+import chunter from '@hanzoteam/chunter'
+import { StorageAdapter } from '@hanzoteam/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
+import { markdownToMarkup, markupToMarkdown } from '@hanzoteam/text-markdown'
 import config from './config'
 import { DbStorage } from './storage'
 import { tryAssignToWorkspace } from './utils/account'
 import { summarizeMessages, translateHtml } from './utils/openai'
 import { WorkspaceClient } from './workspace/workspaceClient'
-import contact, { Contact, getName, SocialIdentityRef } from '@hanzo/contact'
+import contact, { Contact, getName, SocialIdentityRef } from '@hanzoteam/contact'
 
 const CLOSE_INTERVAL_MS = 10 * 60 * 1000 // 10 minutes
 

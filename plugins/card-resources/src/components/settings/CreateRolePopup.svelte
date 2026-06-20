@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Tag } from '@hanzo/card'
-  import core from '@hanzo/core'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { EditBox } from '@hanzo/ui'
+  import { MasterTag, Tag } from '@hanzoteam/card'
+  import core from '@hanzoteam/core'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { EditBox } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import card from '../../plugin'
 

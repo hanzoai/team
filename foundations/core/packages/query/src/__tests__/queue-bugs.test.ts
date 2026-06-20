@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { createClient, SortingOrder, Space, Tx, TxOperations } from '@hanzo/core'
+import core, { createClient, SortingOrder, Space, Tx, TxOperations } from '@hanzoteam/core'
 import { LiveQuery } from '..'
 import { connect } from './connection'
 

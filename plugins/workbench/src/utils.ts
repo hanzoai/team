@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getResource } from '@hanzo/platform'
+import { getResource } from '@hanzoteam/platform'
 import { workbenchPlugin as plugin } from './plugin'
 
 /** @public */

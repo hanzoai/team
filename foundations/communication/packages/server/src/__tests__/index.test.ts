@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MeasureContext, WorkspaceUuid } from '@hanzo/core'
+import { MeasureContext, WorkspaceUuid } from '@hanzoteam/core'
 import {
   CardID,
   Collaborator,
@@ -28,9 +28,9 @@ import {
   Notification,
   NotificationContext,
   Peer
-} from '@hanzo/communication-types'
-import { Event, EventResult, SessionData } from '@hanzo/communication-sdk-types'
-import { createDbAdapter } from '@hanzo/communication-cockroach'
+} from '@hanzoteam/communication-types'
+import { Event, EventResult, SessionData } from '@hanzoteam/communication-sdk-types'
+import { createDbAdapter } from '@hanzoteam/communication-cockroach'
 import { Api } from '../index'
 import { getMetadata } from '../metadata'
 import { buildMiddlewares } from '../middlewares'
@@ -38,7 +38,7 @@ import { Blob } from '../blob'
 import { LowLevelClient } from '../client'
 
 // Mock dependencies
-jest.mock('@hanzo/communication-cockroach')
+jest.mock('@hanzoteam/communication-cockroach')
 jest.mock('../metadata')
 jest.mock('../middlewares')
 jest.mock('../blob')

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Ref, Space } from '@hanzo/core'
-  import ui, { ModernButton } from '@hanzo/ui'
-  import { GithubProject } from '@hanzo/github'
+  import { Ref, Space } from '@hanzoteam/core'
+  import ui, { ModernButton } from '@hanzoteam/ui'
+  import { GithubProject } from '@hanzoteam/github'
   import github from '../plugin'
   import { githubAuth, githubProjects, onAuthorize } from './utils'
-  import { getMetadata } from '@hanzo/platform'
+  import { getMetadata } from '@hanzoteam/platform'
 
   export let space: Ref<Space>
   export let kind: 'primary' | 'secondary' | 'tertiary' | 'negative' = 'secondary'

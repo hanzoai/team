@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import attachment, { attachmentId } from '@hanzo/attachment'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import { type ViewAction } from '@hanzo/view'
+import attachment, { attachmentId } from '@hanzoteam/attachment'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import { type ViewAction } from '@hanzoteam/view'
 
 export default mergeIds(attachmentId, attachment, {
   string: {

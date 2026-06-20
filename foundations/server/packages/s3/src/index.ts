@@ -27,8 +27,8 @@ import core, {
   type Ref,
   type WorkspaceDataId,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
 import serverCore, {
   NoSuchKeyError,
   getDataId,
@@ -38,10 +38,10 @@ import serverCore, {
   type StorageConfig,
   type StorageConfiguration,
   type UploadedObjectInfo
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import { Readable } from 'stream'
 
-import { removeAllObjects, type BucketInfo } from '@hanzo/storage'
+import { removeAllObjects, type BucketInfo } from '@hanzoteam/storage'
 import type { ReadableStream } from 'stream/web'
 
 export interface S3Config extends StorageConfig {

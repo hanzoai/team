@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref } from '@hanzo/core'
-  import type { Customer } from '@hanzo/lead'
-  import { Button, IconAdd, Label, showPopup, resizeObserver, Scroller } from '@hanzo/ui'
-  import { Table } from '@hanzo/view-resources'
+  import type { Ref } from '@hanzoteam/core'
+  import type { Customer } from '@hanzoteam/lead'
+  import { Button, IconAdd, Label, showPopup, resizeObserver, Scroller } from '@hanzoteam/ui'
+  import { Table } from '@hanzoteam/view-resources'
   import lead from '../plugin'
   import CreateLead from './CreateLead.svelte'
 

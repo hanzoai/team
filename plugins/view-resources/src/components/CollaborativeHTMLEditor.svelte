@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { Doc } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { KeyedAttribute } from '@hanzo/presentation'
-  import { CollaborativeAttributeSectionBox } from '@hanzo/text-editor-resources'
-  import { AnySvelteComponent } from '@hanzo/ui'
+  import contact from '@hanzoteam/contact'
+  import { Doc } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { KeyedAttribute } from '@hanzoteam/presentation'
+  import { CollaborativeAttributeSectionBox } from '@hanzoteam/text-editor-resources'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
   import { getCollaborationUser } from '../utils'
 
   export let object: Doc

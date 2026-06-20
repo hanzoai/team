@@ -1,7 +1,7 @@
 <script lang="ts">
-  import calendar, { Event } from '@hanzo/calendar'
-  import { DateRangeMode } from '@hanzo/core'
-  import { Icon, DatePresenter, IconArrowRight } from '@hanzo/ui'
+  import calendar, { Event } from '@hanzoteam/calendar'
+  import { DateRangeMode } from '@hanzoteam/core'
+  import { Icon, DatePresenter, IconArrowRight } from '@hanzoteam/ui'
   import TimePresenter from '../../presenters/TimePresenter.svelte'
 
   export let item: Event

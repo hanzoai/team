@@ -1,6 +1,6 @@
     <script lang="ts">
-        import { OK, Severity, Status } from '@hanzo/platform'
-        import { Button } from '@hanzo/ui'
+        import { OK, Severity, Status } from '@hanzoteam/platform'
+        import { Button } from '@hanzoteam/ui'
         import login from '../plugin'
 
         export let redirectUrl: string

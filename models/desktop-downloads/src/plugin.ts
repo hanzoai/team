@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { desktopDownloadsId } from '@hanzo/desktop-downloads'
-import desktopDownloads from '@hanzo/desktop-downloads-resources/src/plugin'
+import { mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { desktopDownloadsId } from '@hanzoteam/desktop-downloads'
+import desktopDownloads from '@hanzoteam/desktop-downloads-resources/src/plugin'
 
 export default mergeIds(desktopDownloadsId, desktopDownloads, {
   component: {

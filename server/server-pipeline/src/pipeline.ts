@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import card from '@hanzo/card'
+import card from '@hanzoteam/card'
 import {
   DOMAIN_BENCHMARK,
   DOMAIN_BLOB,
@@ -16,7 +16,7 @@ import {
   type Ref,
   type Tx,
   type WorkspaceIds
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ApplyTxMiddleware,
   BroadcastMiddleware,
@@ -50,7 +50,7 @@ import {
   TxMiddleware,
   TxOrderingMiddleware,
   UserStatusMiddleware
-} from '@hanzo/middleware'
+} from '@hanzoteam/middleware'
 import {
   createBenchmarkAdapter,
   createInMemoryAdapter,
@@ -67,12 +67,12 @@ import {
   type PlatformQueue,
   type StorageAdapter,
   type WorkspaceDestroyAdapter
-} from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
 import { createStorageDataAdapter } from './blobStorage'
 import { CommunicationMiddleware, type CommunicationApiFactory } from './communication'
 
-import { RatingMiddleware } from '@hanzo/server-rating'
+import { RatingMiddleware } from '@hanzoteam/server-rating'
 
 /**
  * @public

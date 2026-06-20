@@ -17,9 +17,9 @@ import testManagement, {
   type TestProject,
   type TestRun,
   type TestPlan
-} from '@hanzo/test-management'
-import { type Doc, type Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+} from '@hanzoteam/test-management'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 import {
   getCurrentResolvedLocation,
   getLocation,
@@ -27,10 +27,10 @@ import {
   type Location,
   type ResolvedLocation,
   navigate
-} from '@hanzo/ui'
-import view, { type ObjectPanel } from '@hanzo/view'
-import { accessDeniedStore } from '@hanzo/view-resources'
-import { getCurrentEmployee } from '@hanzo/contact'
+} from '@hanzoteam/ui'
+import view, { type ObjectPanel } from '@hanzoteam/view'
+import { accessDeniedStore } from '@hanzoteam/view-resources'
+import { getCurrentEmployee } from '@hanzoteam/contact'
 
 const PARENT_KEY = 'attachedTo'
 

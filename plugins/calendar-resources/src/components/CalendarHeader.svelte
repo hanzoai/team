@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
 
   import { CalendarMode } from '../index'
   import CalendarNavigation from './CalendarNavigation.svelte'

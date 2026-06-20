@@ -1,7 +1,7 @@
-import { type Employee } from '@hanzo/contact'
-import { type Ref, type WorkspaceDataId, type WorkspaceUuid } from '@hanzo/core'
-import { type DocumentSpace } from '@hanzo/controlled-documents'
-import { type StorageAdapter } from '@hanzo/server-core'
+import { type Employee } from '@hanzoteam/contact'
+import { type Ref, type WorkspaceDataId, type WorkspaceUuid } from '@hanzoteam/core'
+import { type DocumentSpace } from '@hanzoteam/controlled-documents'
+import { type StorageAdapter } from '@hanzoteam/server-core'
 
 import { type HtmlConversionBackend } from './convert/convert'
 

@@ -21,8 +21,8 @@ import {
   FindPeersParams,
   SortingOrder,
   Peer
-} from '@hanzo/communication-types'
-import { Domain } from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-types'
+import { Domain } from '@hanzoteam/communication-sdk-types'
 
 import { BaseDb } from './base'
 import { DbModel, DbModelFilter } from '../schema'

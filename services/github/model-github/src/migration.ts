@@ -2,7 +2,7 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import core, { DOMAIN_TX, toIdMap, type AnyAttribute, type Ref, type Status } from '@hanzo/core'
+import core, { DOMAIN_TX, toIdMap, type AnyAttribute, type Ref, type Status } from '@hanzoteam/core'
 import {
   tryMigrate,
   tryUpgrade,
@@ -12,13 +12,13 @@ import {
   type MigrationDocumentQuery,
   type MigrationIterator,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import chunter from '@hanzo/model-chunter'
-import { DOMAIN_SPACE } from '@hanzo/model-core'
-import { DOMAIN_TASK } from '@hanzo/model-task'
-import task from '@hanzo/task'
-import { htmlToMarkup } from '@hanzo/text'
-import tracker, { type Component, type Issue, type Project } from '@hanzo/tracker'
+} from '@hanzoteam/model'
+import chunter from '@hanzoteam/model-chunter'
+import { DOMAIN_SPACE } from '@hanzoteam/model-core'
+import { DOMAIN_TASK } from '@hanzoteam/model-task'
+import task from '@hanzoteam/task'
+import { htmlToMarkup } from '@hanzoteam/text'
+import tracker, { type Component, type Issue, type Project } from '@hanzoteam/tracker'
 import {
   GithubPullRequestState,
   githubId,
@@ -26,12 +26,12 @@ import {
   type GithubIntegration,
   type GithubIntegrationRepository,
   type GithubPullRequest
-} from '@hanzo/github'
+} from '@hanzoteam/github'
 import github from './plugin'
 
-import { DOMAIN_TIME } from '@hanzo/model-time'
-import { DOMAIN_TRACKER } from '@hanzo/model-tracker'
-import time from '@hanzo/time'
+import { DOMAIN_TIME } from '@hanzoteam/model-time'
+import { DOMAIN_TRACKER } from '@hanzoteam/model-tracker'
+import time from '@hanzoteam/time'
 import { DOMAIN_GITHUB, DOMAIN_GITHUB_SYNC, DOMAIN_GITHUB_USER } from '.'
 
 export async function guessStatus (status: Status, statuses: Status[]): Promise<Status> {

@@ -14,19 +14,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { SearchResultDoc, Ref, Class, Doc } from '@hanzo/core'
+  import core, { SearchResultDoc, Ref, Class, Doc } from '@hanzoteam/core'
   import presentation, {
     SearchResult,
     reduceCalls,
     searchFor,
     type SearchItem,
     getClient
-  } from '@hanzo/presentation'
-  import { Label, ListView, resizeObserver } from '@hanzo/ui'
+  } from '@hanzoteam/presentation'
+  import { Label, ListView, resizeObserver } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import contact from '@hanzo/contact'
+  import contact from '@hanzoteam/contact'
   import { getReferenceLabel, getReferenceObject } from './extension/reference'
-  import { translate } from '@hanzo/platform'
+  import { translate } from '@hanzoteam/platform'
 
   export let query: string = ''
   export let multipleMentions: boolean = false

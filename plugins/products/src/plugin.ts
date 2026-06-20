@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { Mixin, Type, type Class, type Doc, type Ref } from '@hanzo/core'
-import type { Asset, IntlString, Plugin } from '@hanzo/platform'
+import { Mixin, Type, type Class, type Doc, type Ref } from '@hanzoteam/core'
+import type { Asset, IntlString, Plugin } from '@hanzoteam/platform'
 
-import { plugin } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { ActionCategory, Viewlet } from '@hanzo/view'
-import type { DocumentSpaceType, DocumentSpaceTypeDescriptor } from '@hanzo/controlled-documents'
+import { plugin } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { ActionCategory, Viewlet } from '@hanzoteam/view'
+import type { DocumentSpaceType, DocumentSpaceTypeDescriptor } from '@hanzoteam/controlled-documents'
 import { Product, ProductVersion, ProductVersionState } from './types'
 
 /** @public */

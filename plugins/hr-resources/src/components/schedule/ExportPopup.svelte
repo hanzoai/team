@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/presentation'
-  import { DropdownIntlItem, DropdownLabelsIntl, Label } from '@hanzo/ui'
+  import { Card } from '@hanzoteam/presentation'
+  import { DropdownIntlItem, DropdownLabelsIntl, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import hr from '../../plugin'
 

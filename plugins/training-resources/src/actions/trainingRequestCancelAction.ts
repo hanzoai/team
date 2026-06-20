@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { focusActionWithAvailability } from '@hanzo/questions-resources'
-import type { TrainingRequest } from '@hanzo/training'
-import { getClient } from '@hanzo/presentation'
+import { focusActionWithAvailability } from '@hanzoteam/questions-resources'
+import type { TrainingRequest } from '@hanzoteam/training'
+import { getClient } from '@hanzoteam/presentation'
 import { canCancelTrainingRequest, getCurrentEmployeeRef } from '../utils'
 
 export const trainingRequestCancelAction = focusActionWithAvailability<TrainingRequest>(

@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { ApproveRequest } from '@hanzo/process'
-  import { getUserTimezone, tooltip } from '@hanzo/ui'
-  import { BooleanPresenter } from '@hanzo/view-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { ApproveRequest } from '@hanzoteam/process'
+  import { getUserTimezone, tooltip } from '@hanzoteam/ui'
+  import { BooleanPresenter } from '@hanzoteam/view-resources'
 
   export let value: ApproveRequest
 

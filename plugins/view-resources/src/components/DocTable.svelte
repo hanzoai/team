@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { PermissionsStore } from '@hanzo/contact'
-  import core, { AnyAttribute, Class, Doc, Ref, TxOperations, TypedSpace, getObjectValue } from '@hanzo/core'
-  import { getClient, reduceCalls, updateAttribute } from '@hanzo/presentation'
-  import { Label, Loading, mouseAttractor } from '@hanzo/ui'
-  import { AttributeModel, BuildModelKey, BuildModelOptions, Viewlet } from '@hanzo/view'
+  import contact, { PermissionsStore } from '@hanzoteam/contact'
+  import core, { AnyAttribute, Class, Doc, Ref, TxOperations, TypedSpace, getObjectValue } from '@hanzoteam/core'
+  import { getClient, reduceCalls, updateAttribute } from '@hanzoteam/presentation'
+  import { Label, Loading, mouseAttractor } from '@hanzoteam/ui'
+  import { AttributeModel, BuildModelKey, BuildModelOptions, Viewlet } from '@hanzoteam/view'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher, onMount } from 'svelte'
   import { showMenu } from '../actions'
   import view from '../plugin'
   import { buildModel, restrictionStore } from '../utils'
-  import { getResource } from '@hanzo/platform'
+  import { getResource } from '@hanzoteam/platform'
   import { Readable } from 'svelte/store'
   import { canChangeAttribute } from '../permissions'
 

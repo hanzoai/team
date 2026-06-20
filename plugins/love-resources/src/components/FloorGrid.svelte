@@ -14,8 +14,8 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, afterUpdate, onMount } from 'svelte'
-  import { resizeObserver, isSafari, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
-  import { GRID_WIDTH } from '@hanzo/love'
+  import { resizeObserver, isSafari, deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
+  import { GRID_WIDTH } from '@hanzoteam/love'
 
   export let floorContainer: HTMLDivElement
   export let marginInline: string = 'auto'

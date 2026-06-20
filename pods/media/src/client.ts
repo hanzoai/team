@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import attachment, { type Attachment } from '@hanzo/attachment'
-import drive, { FileVersion } from '@hanzo/drive'
+import attachment, { type Attachment } from '@hanzoteam/attachment'
+import drive, { FileVersion } from '@hanzoteam/drive'
 import core, {
   BlobMetadata,
   Class,
@@ -40,14 +40,14 @@ import core, {
   TxResult,
   WithLookup,
   WorkspaceUuid
-} from '@hanzo/core'
-import { type RestClient, createRestClient } from '@hanzo/api-client'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { AttachmentPatchEvent, MessageEventType } from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/core'
+import { type RestClient, createRestClient } from '@hanzoteam/api-client'
+import { getTransactorEndpoint } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { AttachmentPatchEvent, MessageEventType } from '@hanzoteam/communication-sdk-types'
 
 import { BlobSourceType, type VideoTranscodeResult } from './types'
-import { AttachmentID } from '@hanzo/communication-types'
+import { AttachmentID } from '@hanzoteam/communication-types'
 
 async function getClient (workspace: WorkspaceUuid, token: string): Promise<Client> {
   const endpoint = await getTransactorEndpoint(token)

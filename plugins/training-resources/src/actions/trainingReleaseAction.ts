@@ -2,9 +2,9 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { findQuestions, focusActionWithAvailability, releaseQuestion } from '@hanzo/questions-resources'
-import { type Training, TrainingState } from '@hanzo/training'
-import { getClient } from '@hanzo/presentation'
+import { findQuestions, focusActionWithAvailability, releaseQuestion } from '@hanzoteam/questions-resources'
+import { type Training, TrainingState } from '@hanzoteam/training'
+import { getClient } from '@hanzoteam/presentation'
 import { getCurrentEmployeeRef, canReleaseTraining } from '../utils'
 
 export const trainingReleaseAction = focusActionWithAvailability<Training>(

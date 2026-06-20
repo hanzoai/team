@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type ReccuringInstance } from '@hanzo/calendar'
-import { type Doc, type TxOperations } from '@hanzo/core'
-import { type Resources } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import { closePopup, showPopup } from '@hanzo/ui'
+import { type ReccuringInstance } from '@hanzoteam/calendar'
+import { type Doc, type TxOperations } from '@hanzoteam/core'
+import { type Resources } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import { closePopup, showPopup } from '@hanzoteam/ui'
 import CalendarView from './components/CalendarView.svelte'
 import CreateEvent from './components/CreateEvent.svelte'
 import DateTimePresenter from './components/DateTimePresenter.svelte'
@@ -46,10 +46,10 @@ import ScheduleNavSection from './components/ScheduleNavSection.svelte'
 import CalendarSettings from './components/CalendarSettings.svelte'
 import IntegrationState from './components/IntegrationState.svelte'
 import calendar from './plugin'
-import contact from '@hanzo/contact'
-import { deleteObjects } from '@hanzo/view-resources'
+import contact from '@hanzoteam/contact'
+import { deleteObjects } from '@hanzoteam/view-resources'
 import { eventTitleProvider, configureCalDavAccess } from './utils'
-import { type Integration } from '@hanzo/account-client'
+import { type Integration } from '@hanzoteam/account-client'
 import { disconnect, disconnectAll } from './api'
 
 export {

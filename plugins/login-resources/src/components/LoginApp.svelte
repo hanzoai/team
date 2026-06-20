@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata, setMetadata } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
+  import { getMetadata, setMetadata } from '@hanzoteam/platform'
+  import presentation from '@hanzoteam/presentation'
   import {
     Location,
     Popup,
@@ -26,7 +26,7 @@
     location,
     setMetadataLocalStorage,
     themeStore
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { onDestroy, onMount } from 'svelte'
   import { Pages, getAccount, pages } from '..'
   import login from '../plugin'

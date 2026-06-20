@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { NoteKind } from '@hanzo/text'
-  import textEditor from '@hanzo/text-editor'
-  import { Card } from '@hanzo/presentation'
-  import { Button, Label, PlainTextEditor } from '@hanzo/ui'
+  import { NoteKind } from '@hanzoteam/text'
+  import textEditor from '@hanzoteam/text-editor'
+  import { Card } from '@hanzoteam/presentation'
+  import { Button, Label, PlainTextEditor } from '@hanzoteam/ui'
 
   export let text: string
   export let kind: NoteKind = NoteKind.Neutral

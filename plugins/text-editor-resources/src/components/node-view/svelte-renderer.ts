@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { getResource } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui'
+import { getResource } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui'
 import type { ComponentType, SvelteComponent } from 'svelte'
 
 export type SvelteRendererComponent = typeof SvelteComponent | ComponentType | AnyComponent

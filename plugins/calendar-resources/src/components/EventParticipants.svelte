@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
-  import { Button, Icon, Label, IconMoreV, Scroller } from '@hanzo/ui'
+  import { Person } from '@hanzoteam/contact'
+  import { Ref } from '@hanzoteam/core'
+  import { Button, Icon, Label, IconMoreV, Scroller } from '@hanzoteam/ui'
   import calendar from '../plugin'
   import AddParticipant from './AddParticipant.svelte'
   import EventParticipantItem from './EventParticipantItem.svelte'

@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { getClient } from '@hanzo/presentation'
-  import { Doc, Ref } from '@hanzo/core'
-  import { Action, IconEdit } from '@hanzo/ui'
-  import { getResource } from '@hanzo/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { Action, IconEdit } from '@hanzoteam/ui'
+  import { getResource } from '@hanzoteam/platform'
 
   import { TreeItem, getActions as getContributedActions } from '../../index'
 

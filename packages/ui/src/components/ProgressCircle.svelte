@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { themeStore } from '@hanzo/theme'
+  import { themeStore } from '@hanzoteam/theme'
   import { getPlatformColor } from '../colors'
   import { IconSize } from '../types'
 

@@ -11,17 +11,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type InboxNotificationsClient } from '@hanzo/notification'
+import { type InboxNotificationsClient } from '@hanzoteam/notification'
 import { writable, derived, get } from 'svelte/store'
 import {
   createNotificationContextsQuery,
   getCommunicationClient,
   onCommunicationClient
-} from '@hanzo/presentation'
-import { notEmpty, SortingOrder } from '@hanzo/core'
-import cardPlugin from '@hanzo/card'
-import { type NotificationContext, type Window } from '@hanzo/communication-types'
-import { getDisplayInboxData, removeContextNotifications } from '@hanzo/notification-resources'
+} from '@hanzoteam/presentation'
+import { notEmpty, SortingOrder } from '@hanzoteam/core'
+import cardPlugin from '@hanzoteam/card'
+import { type NotificationContext, type Window } from '@hanzoteam/communication-types'
+import { getDisplayInboxData, removeContextNotifications } from '@hanzoteam/notification-resources'
 
 import { type NavigationItem } from './type'
 

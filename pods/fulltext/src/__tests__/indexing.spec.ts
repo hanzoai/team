@@ -11,10 +11,10 @@ import core, {
   type WorkspaceDataId,
   type WorkspaceInfoWithStatus,
   type WorkspaceUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { WorkspaceManager } from '../manager'
 
-import { createPlatformQueue, parseQueueConfig } from '@hanzo/kafka'
+import { createPlatformQueue, parseQueueConfig } from '@hanzoteam/kafka'
 import {
   createDummyStorageAdapter,
   QueueTopic,
@@ -23,8 +23,8 @@ import {
   type FulltextListener,
   type IndexedDoc,
   type QueueWorkspaceMessage
-} from '@hanzo/server-core'
-import { decodeToken, generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import { decodeToken, generateToken } from '@hanzoteam/server-token'
 import { randomUUID } from 'crypto'
 import { createDoc, test, type TestDocument } from './minmodel'
 

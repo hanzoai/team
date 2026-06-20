@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Avatar, getPersonByPersonRefStore } from '@hanzo/contact-resources'
-  import { tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hanzo/ui'
-  import { ParticipantInfo } from '@hanzo/love'
-  import { formatName } from '@hanzo/contact'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Avatar, getPersonByPersonRefStore } from '@hanzoteam/contact-resources'
+  import { tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hanzoteam/ui'
+  import { ParticipantInfo } from '@hanzoteam/love'
+  import { formatName } from '@hanzoteam/contact'
   import ParticipantsList from './ParticipantsList.svelte'
 
   export let label: string

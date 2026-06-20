@@ -1,10 +1,10 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import chunter, { type ChatMessage } from '@hanzo/chunter'
-  import { Ref, generateId } from '@hanzo/core'
-  import { ReferenceInput } from '@hanzo/text-editor-resources'
-  import { popupstore as popups } from '@hanzo/ui'
+  import chunter, { type ChatMessage } from '@hanzoteam/chunter'
+  import { Ref, generateId } from '@hanzoteam/core'
+  import { ReferenceInput } from '@hanzoteam/text-editor-resources'
+  import { popupstore as popups } from '@hanzoteam/ui'
 
   import { addDocumentCommentFx } from '../../../stores/editors/document'
 

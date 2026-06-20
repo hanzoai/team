@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import templates, { templatesId } from '@hanzo/templates'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import templates, { templatesId } from '@hanzoteam/templates'
 
 export default mergeIds(templatesId, templates, {
   string: {

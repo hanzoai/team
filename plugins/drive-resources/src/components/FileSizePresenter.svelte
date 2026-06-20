@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { humanReadableFileSize } from '@hanzo/ui'
+  import { humanReadableFileSize } from '@hanzoteam/ui'
 
   export let value: number | undefined
   export let accent: boolean = false

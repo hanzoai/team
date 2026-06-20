@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import drive from '@hanzo/drive'
+import drive from '@hanzoteam/drive'
 import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient,
   createDefaultSpace,
   tryUpgrade
-} from '@hanzo/model'
-import { recorderId } from '@hanzo/recorder'
+} from '@hanzoteam/model'
+import { recorderId } from '@hanzoteam/recorder'
 import recorder from './plugin'
 
 export const recorderOperation: MigrateOperation = {

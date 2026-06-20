@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { AccountUuid, WorkspaceUuid } from '@hanzo/core'
+import type { AccountUuid, WorkspaceUuid } from '@hanzoteam/core'
 
 export enum SubscriptionType {
   Tier = 'tier', // Main workspace tier (free, starter, pro, enterprise)
@@ -51,8 +51,8 @@ export interface CheckoutResponse {
 
 /**
  * Subscription data for checkout status
- * Matches @hanzo/account-client Subscription type
- * @see @hanzo/account-client
+ * Matches @hanzoteam/account-client Subscription type
+ * @see @hanzoteam/account-client
  */
 export interface SubscriptionData {
   id: string // Internal unique subscription ID

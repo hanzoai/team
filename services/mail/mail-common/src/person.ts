@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, PersonId, PersonUuid, SocialIdType, WorkspaceUuid } from '@hanzo/core'
-import { type RestClient } from '@hanzo/api-client'
-import { createRestClient } from '@hanzo/api-client'
+import { type MeasureContext, PersonId, PersonUuid, SocialIdType, WorkspaceUuid } from '@hanzoteam/core'
+import { type RestClient } from '@hanzoteam/api-client'
+import { createRestClient } from '@hanzoteam/api-client'
 import { EmailContact } from './types'
-import { WorkspaceLoginInfo } from '@hanzo/account-client'
+import { WorkspaceLoginInfo } from '@hanzoteam/account-client'
 
 export interface CachedPerson {
   socialId: PersonId

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Document } from '@hanzo/controlled-documents'
-  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import type { IntlString, Asset } from '@hanzo/platform'
-  import { IModeSelector } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
-  import { ViewletPanelHeader } from '@hanzo/view-resources'
+  import { Document } from '@hanzoteam/controlled-documents'
+  import { Class, DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import type { IntlString, Asset } from '@hanzoteam/platform'
+  import { IModeSelector } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzoteam/view'
+  import { ViewletPanelHeader } from '@hanzoteam/view-resources'
 
   import document from '../plugin'
   import DocumentsContent from './document/DocumentsContent.svelte'

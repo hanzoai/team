@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import { type Response, type Request, type NextFunction, type RequestHandler } from 'express'
 
 export interface MeasueContextOptions {

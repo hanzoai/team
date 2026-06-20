@@ -1,4 +1,4 @@
-import { type AccountClient } from '@hanzo/account-client'
+import { type AccountClient } from '@hanzoteam/account-client'
 import core, {
   Hierarchy,
   ModelDb,
@@ -14,9 +14,9 @@ import core, {
   type Version,
   type WorkspaceIds,
   type WorkspaceInfoWithStatus
-} from '@hanzo/core'
-import { consoleModelLogger, type MigrateMode, type MigrateOperation, type ModelLogger } from '@hanzo/model'
-import { getTransactorEndpoint } from '@hanzo/server-client'
+} from '@hanzoteam/core'
+import { consoleModelLogger, type MigrateMode, type MigrateOperation, type ModelLogger } from '@hanzoteam/model'
+import { getTransactorEndpoint } from '@hanzoteam/server-client'
 import {
   SessionDataImpl,
   wrapPipeline,
@@ -24,11 +24,11 @@ import {
   type PlatformQueueProducer,
   type QueueWorkspaceMessage,
   type StorageAdapter
-} from '@hanzo/server-core'
-import { getServerPipeline, getTxAdapterFactory } from '@hanzo/server-pipeline'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import { generateToken } from '@hanzo/server-token'
-import { initializeWorkspace, initModel, prepareTools, updateModel, upgradeModel } from '@hanzo/server-tool'
+} from '@hanzoteam/server-core'
+import { getServerPipeline, getTxAdapterFactory } from '@hanzoteam/server-pipeline'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
+import { generateToken } from '@hanzoteam/server-token'
+import { initializeWorkspace, initModel, prepareTools, updateModel, upgradeModel } from '@hanzoteam/server-tool'
 
 /**
  * @public

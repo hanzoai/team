@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute, AttributePermission } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import { AnyAttribute, AttributePermission } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
 
   export let value: AttributePermission
   export let inline: boolean = false

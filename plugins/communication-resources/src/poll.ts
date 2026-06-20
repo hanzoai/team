@@ -19,11 +19,11 @@ import {
   type MarkupBlobRef,
   type Ref,
   type Timestamp
-} from '@hanzo/core'
-import { type Poll, type PollAnswer } from '@hanzo/communication'
-import { getClient, getCommunicationClient } from '@hanzo/presentation'
-import { type Card } from '@hanzo/card'
-import { type AppletAttachment, type MessageID } from '@hanzo/communication-types'
+} from '@hanzoteam/core'
+import { type Poll, type PollAnswer } from '@hanzoteam/communication'
+import { getClient, getCommunicationClient } from '@hanzoteam/presentation'
+import { type Card } from '@hanzoteam/card'
+import { type AppletAttachment, type MessageID } from '@hanzoteam/communication-types'
 
 import communication from './plugin'
 

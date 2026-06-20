@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset, IntlString } from '@hanzo/platform'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
   import {
     AnySvelteComponent,
     Breadcrumbs,
@@ -25,15 +25,15 @@
     HeaderAdaptive,
     IconSettings,
     IconToDetails
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import view from '@hanzo/view'
-  import { openDoc } from '@hanzo/view-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { Doc, Ref } from '@hanzo/core'
-  import { ActivityMessagesFilter } from '@hanzo/activity'
-  import workbench from '@hanzo/workbench'
-  import { PresenceAvatars } from '@hanzo/presence-resources'
+  import view from '@hanzoteam/view'
+  import { openDoc } from '@hanzoteam/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { ActivityMessagesFilter } from '@hanzoteam/activity'
+  import workbench from '@hanzoteam/workbench'
+  import { PresenceAvatars } from '@hanzoteam/presence-resources'
 
   import { userSearch } from '../index'
   import chunter from '../plugin'

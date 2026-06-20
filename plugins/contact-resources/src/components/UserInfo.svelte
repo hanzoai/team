@@ -15,10 +15,10 @@
 <script lang="ts">
   import Avatar from './Avatar.svelte'
 
-  import { getName, Person } from '@hanzo/contact'
-  import { Asset } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, IconSize } from '@hanzo/ui'
+  import { getName, Person } from '@hanzoteam/contact'
+  import { Asset } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, IconSize } from '@hanzoteam/ui'
 
   export let value: Person
   export let subtitle: string | undefined = undefined

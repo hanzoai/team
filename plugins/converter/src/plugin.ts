@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import type { Client, Doc, Mixin, Ref } from '@hanzo/core'
-import { type Plugin, type Resource, plugin } from '@hanzo/platform'
-import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
-import type { ComponentPointExtension } from '@hanzo/presentation'
-import type { Action, BuildMarkdownTableMetadata, ViewAction } from '@hanzo/view'
+import type { Client, Doc, Mixin, Ref } from '@hanzoteam/core'
+import { type Plugin, type Resource, plugin } from '@hanzoteam/platform'
+import type { AnyComponent, ComponentExtensionId } from '@hanzoteam/ui'
+import type { ComponentPointExtension } from '@hanzoteam/presentation'
+import type { Action, BuildMarkdownTableMetadata, ViewAction } from '@hanzoteam/view'
 import type {
   CopyAsMarkdownTableFunction,
   CopyRelationshipTableAsMarkdownFunction,

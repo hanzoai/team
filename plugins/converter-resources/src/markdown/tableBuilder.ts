@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Client, type Doc, type Hierarchy, type Ref, type PersonId } from '@hanzo/core'
-import { getCurrentLanguage } from '@hanzo/theme'
+import core, { type Class, type Client, type Doc, type Hierarchy, type Ref, type PersonId } from '@hanzoteam/core'
+import { getCurrentLanguage } from '@hanzoteam/theme'
 import type {
   AttributeModel,
   BuildMarkdownTableMetadata,
   TableMetadata,
   Viewlet,
   BuildModelKey
-} from '@hanzo/view'
-import viewPlugin from '@hanzo/view'
-import { buildConfigLookup, buildModel, getAttributeValue } from '@hanzo/view-resources'
+} from '@hanzoteam/view'
+import viewPlugin from '@hanzoteam/view'
+import { buildConfigLookup, buildModel, getAttributeValue } from '@hanzoteam/view-resources'
 import type { CopyAsMarkdownTableProps, CopyRelationshipTableAsMarkdownProps } from '../types'
 import { formatValue } from '../formatter'
 import { generateHeaders, loadViewletConfig, buildTableModel } from '../model'

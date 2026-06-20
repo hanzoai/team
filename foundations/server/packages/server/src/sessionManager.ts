@@ -17,8 +17,8 @@ import {
   getClient as getAccountClient,
   type LoginInfoWithWorkspaces,
   type LoginInfoWorkspace
-} from '@hanzo/account-client'
-import { Analytics } from '@hanzo/analytics'
+} from '@hanzoteam/account-client'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   AccountRole,
   type AccountUuid,
@@ -50,8 +50,8 @@ import core, {
   type WorkspaceIds,
   type WorkspaceInfoWithStatus,
   type WorkspaceUuid
-} from '@hanzo/core'
-import platform, { Severity, Status, UNAUTHORIZED, unknownError } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import platform, { Severity, Status, UNAUTHORIZED, unknownError } from '@hanzoteam/platform'
 import {
   type HelloRequest,
   type HelloResponse,
@@ -59,7 +59,7 @@ import {
   type Request,
   type Response,
   SlidingWindowRateLimitter
-} from '@hanzo/rpc'
+} from '@hanzoteam/rpc'
 import {
   type AddSessionResponse,
   type ClientSessionCtx,
@@ -84,8 +84,8 @@ import {
   type UserStatistics,
   workspaceEvents,
   type WorkspaceStatistics
-} from '@hanzo/server-core'
-import { generateToken, type Token } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import { generateToken, type Token } from '@hanzoteam/server-token'
 import { ClientSession } from './client'
 import { sendResponse } from './utils'
 import { Workspace } from './workspace'

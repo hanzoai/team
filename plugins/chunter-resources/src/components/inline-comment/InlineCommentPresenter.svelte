@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getPersonByPersonIdCb } from '@hanzo/contact-resources'
-  import { getCurrentAccount, Markup } from '@hanzo/core'
-  import { MessageViewer } from '@hanzo/presentation'
-  import { Action, IconEdit, IconDelete, ShowMore } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import activity, { ActivityMessage, ActivityMessageViewType } from '@hanzo/activity'
-  import { ActivityMessageTemplate } from '@hanzo/activity-resources'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { ReferenceInput } from '@hanzo/text-editor-resources'
-  import { Person } from '@hanzo/contact'
+  import { getPersonByPersonIdCb } from '@hanzoteam/contact-resources'
+  import { getCurrentAccount, Markup } from '@hanzoteam/core'
+  import { MessageViewer } from '@hanzoteam/presentation'
+  import { Action, IconEdit, IconDelete, ShowMore } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import activity, { ActivityMessage, ActivityMessageViewType } from '@hanzoteam/activity'
+  import { ActivityMessageTemplate } from '@hanzoteam/activity-resources'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import { ReferenceInput } from '@hanzoteam/text-editor-resources'
+  import { Person } from '@hanzoteam/contact'
 
   export let value: any
   export let showNotify: boolean = false

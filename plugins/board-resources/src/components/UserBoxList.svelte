@@ -1,8 +1,8 @@
 <script lang="ts">
-  import contact, { Employee } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
+  import contact, { Employee } from '@hanzoteam/contact'
+  import { Ref } from '@hanzoteam/core'
 
-  import { Component } from '@hanzo/ui'
+  import { Component } from '@hanzoteam/ui'
   import board from '../plugin'
 
   export let value: Ref<Employee>[]

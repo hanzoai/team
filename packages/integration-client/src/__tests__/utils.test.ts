@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Integration } from '@hanzo/account-client'
-import { IntegrationKind, PersonId, WorkspaceUuid } from '@hanzo/core'
+import { Integration } from '@hanzoteam/account-client'
+import { IntegrationKind, PersonId, WorkspaceUuid } from '@hanzoteam/core'
 import { isWorkspaceIntegration, isConnection, isSameIntegrationEvent } from '../utils'
 import { IntegrationEventData } from '../types'
 

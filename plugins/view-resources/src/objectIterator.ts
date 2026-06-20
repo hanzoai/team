@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import type { DocumentQuery, Doc, Ref, Class, FindOptions } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+import type { DocumentQuery, Doc, Ref, Class, FindOptions } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 
 export interface IteratorState<T extends Doc> {
   query: DocumentQuery<T>

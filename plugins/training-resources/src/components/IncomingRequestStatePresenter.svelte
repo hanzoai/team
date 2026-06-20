@@ -2,10 +2,10 @@
   Copyright @ 2024 Hanzo AI Inc.
 -->
 <script lang="ts">
-  import { type TrainingAttempt, TrainingAttemptState, type TrainingRequest } from '@hanzo/training'
-  import type { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { Loading, StateTag, StateType } from '@hanzo/ui'
+  import { type TrainingAttempt, TrainingAttemptState, type TrainingRequest } from '@hanzoteam/training'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Loading, StateTag, StateType } from '@hanzoteam/ui'
   import type { ComponentProps } from 'svelte'
   import training from '../plugin'
   import { queryLatestOwnAttempt } from '../utils'

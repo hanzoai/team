@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, getCurrentAccount, hasAccountRole, Timestamp } from '@hanzo/core'
-  import { copyTextToClipboard, createQuery } from '@hanzo/presentation'
-  import setting, { RoleCapability } from '@hanzo/setting'
-  import { getDefaultInviteRole, resolveInviteSettings } from '@hanzo/setting-resources'
-  import { getResource } from '@hanzo/platform'
-  import { AnySvelteComponent, Button, EditBox, Grid, Label, Loading, MiniToggle, ticker } from '@hanzo/ui'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Timestamp } from '@hanzoteam/core'
+  import { copyTextToClipboard, createQuery } from '@hanzoteam/presentation'
+  import setting, { RoleCapability } from '@hanzoteam/setting'
+  import { getDefaultInviteRole, resolveInviteSettings } from '@hanzoteam/setting-resources'
+  import { getResource } from '@hanzoteam/platform'
+  import { AnySvelteComponent, Button, EditBox, Grid, Label, Loading, MiniToggle, ticker } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import login from '../plugin'

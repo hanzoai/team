@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Obj, Ref, isOwnerOrMaintainer } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import core, { Class, Doc, Obj, Ref, isOwnerOrMaintainer } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     AnySvelteComponent,
     Scroller,
@@ -30,7 +30,7 @@
     twoPanelsSeparators,
     Separator,
     NavGroup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import setting from '../plugin'
   import { filterDescendants } from '../utils'
   import ClassAttributes from './ClassAttributes.svelte'

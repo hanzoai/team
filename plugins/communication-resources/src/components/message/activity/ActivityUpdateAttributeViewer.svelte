@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttributeModel } from '@hanzo/view'
-  import { ActivityAttributeUpdate } from '@hanzo/communication-types'
-  import { getClient } from '@hanzo/presentation'
-  import { Class, Ref } from '@hanzo/core'
-  import { Card } from '@hanzo/card'
-  import { Component } from '@hanzo/ui'
+  import { AttributeModel } from '@hanzoteam/view'
+  import { ActivityAttributeUpdate } from '@hanzoteam/communication-types'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Class, Ref } from '@hanzoteam/core'
+  import { Card } from '@hanzoteam/card'
+  import { Component } from '@hanzoteam/ui'
 
   import ActivitySetAttributesViewer from './ActivitySetAttributeViewer.svelte'
   import ActivityAddAttributeViewer from './ActivityAddAttributeViewer.svelte'

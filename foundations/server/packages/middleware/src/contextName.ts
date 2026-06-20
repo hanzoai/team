@@ -24,10 +24,10 @@ import core, {
   type SessionData,
   type Tx,
   type TxApplyIf
-} from '@hanzo/core'
-import type { DomainResult } from '@hanzo/core/src'
-import type { Middleware, PipelineContext, TxMiddlewareResult } from '@hanzo/server-core'
-import { BaseMiddleware } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import type { DomainResult } from '@hanzoteam/core/src'
+import type { Middleware, PipelineContext, TxMiddlewareResult } from '@hanzoteam/server-core'
+import { BaseMiddleware } from '@hanzoteam/server-core'
 
 /**
  * Will support apply tx

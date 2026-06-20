@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hanzo/core'
+import { type MeasureContext } from '@hanzoteam/core'
 
 import { existsSync, mkdirSync } from 'fs'
 import { rm, rename, mkdir, stat } from 'fs/promises'

@@ -12,8 +12,8 @@
     type MultipleChoiceAssessmentData,
     type MultipleChoiceQuestion,
     type MultipleChoiceQuestionData
-  } from '@hanzo/questions'
-  import { CheckBox } from '@hanzo/ui'
+  } from '@hanzoteam/questions'
+  import { CheckBox } from '@hanzoteam/ui'
   import { moveItem } from '../utils'
   import LabelEditor from './LabelEditor.svelte'
   import OptionsList, { type OptionsListDropEvent } from './OptionsList.svelte'

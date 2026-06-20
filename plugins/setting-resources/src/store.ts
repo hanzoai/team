@@ -15,7 +15,7 @@
 
 import { type ComponentType } from 'svelte'
 import { writable } from 'svelte/store'
-import type { AnyComponent } from '@hanzo/ui'
+import type { AnyComponent } from '@hanzoteam/ui'
 
 /**
  * @public

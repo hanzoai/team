@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref } from '@hanzo/core'
-  import { AnySvelteComponent } from '@hanzo/ui'
+  import type { Class, Doc, Ref } from '@hanzoteam/core'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { getAttribute, KeyedAttribute, updateAttribute } from '../attributes'
   import { getAttributeEditor, getClient } from '../utils'

@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { type Location } from '@hanzo/ui'
-  import { type Resource } from '@hanzo/platform'
-  import { IntlString, Asset } from '@hanzo/platform'
+  import { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { type Location } from '@hanzoteam/ui'
+  import { type Resource } from '@hanzoteam/platform'
+  import { IntlString, Asset } from '@hanzoteam/platform'
 
   import FoldersBrowser from './folders/FoldersBrowser.svelte'
 

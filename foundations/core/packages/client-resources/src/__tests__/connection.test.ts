@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { ClientSocket, ClientSocketReadyState, pongConst, pingConst } from '@hanzo/client'
+import { ClientSocket, ClientSocketReadyState, pongConst, pingConst } from '@hanzoteam/client'
 import core, {
   type Tx,
   generateId,
@@ -21,7 +21,7 @@ import core, {
   type PersonUuid,
   TxCreateDoc,
   type Doc
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { connect } from '../connection'
 
 // Mock CloseEvent for Node.js environment (used in MockWebSocket)

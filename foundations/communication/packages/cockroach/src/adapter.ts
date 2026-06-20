@@ -41,7 +41,7 @@ import {
   FindThreadMetaParams,
   MessageMeta, ThreadMeta, BlobID,
   FindMessagesMetaParams
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import type {
   CollaboratorQuery,
   CollaboratorUpdate,
@@ -52,7 +52,7 @@ import type {
   NotificationContextUpdate,
   NotificationQuery,
   NotificationUpdate, ThreadMetaQuery, ThreadMetaUpdate
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 
 import { MessagesDb } from './db/message'
 import { NotificationsDb } from './db/notification'

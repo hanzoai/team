@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Hierarchy, Mixin, Ref, generateId } from '@hanzo/core'
-  import { Asset, IntlString } from '@hanzo/platform'
-  import { ObjectPopup, getClient, updateAttribute } from '@hanzo/presentation'
-  import { Label, SelectPopup, resizeObserver } from '@hanzo/ui'
+  import { Class, Doc, DocumentQuery, FindOptions, Hierarchy, Mixin, Ref, generateId } from '@hanzoteam/core'
+  import { Asset, IntlString } from '@hanzoteam/platform'
+  import { ObjectPopup, getClient, updateAttribute } from '@hanzoteam/presentation'
+  import { Label, SelectPopup, resizeObserver } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
   import ObjectPresenter from './ObjectPresenter.svelte'

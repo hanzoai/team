@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { BlobMetadata, type Blob, type Ref } from '@hanzo/core'
+  import { BlobMetadata, type Blob, type Ref } from '@hanzoteam/core'
   import {
     Button,
     Component,
@@ -21,7 +21,7 @@
     resizeObserver,
     deviceOptionsStore as deviceInfo,
     Loading
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
 
   import presentation from '../plugin'
 

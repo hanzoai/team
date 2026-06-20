@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type AttachedData, type Data, type Ref, type TxOperations, generateId } from '@hanzo/core'
-import { type Location } from '@hanzo/ui'
+import { type AttachedData, type Data, type Ref, type TxOperations, generateId } from '@hanzoteam/core'
+import { type Location } from '@hanzoteam/ui'
 
 import drive, { driveId } from './plugin'
 import type { Drive, File, FileVersion, Folder } from './types'

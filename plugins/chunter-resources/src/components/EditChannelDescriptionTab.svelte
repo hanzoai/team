@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel, ChunterSpace } from '@hanzo/chunter'
-  import { getCurrentAccount } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Button, EditBox } from '@hanzo/ui'
+  import { Channel, ChunterSpace } from '@hanzoteam/chunter'
+  import { getCurrentAccount } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Button, EditBox } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import chunter from '../plugin'
   import EditChannelDescriptionAttachments from './EditChannelDescriptionAttachments.svelte'

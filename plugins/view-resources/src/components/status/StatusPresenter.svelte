@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Status, WithLookup } from '@hanzo/core'
-  import { Asset } from '@hanzo/platform'
-  import { AnySvelteComponent, Icon } from '@hanzo/ui'
+  import { Status, WithLookup } from '@hanzoteam/core'
+  import { Asset } from '@hanzoteam/platform'
+  import { AnySvelteComponent, Icon } from '@hanzoteam/ui'
 
   export let icon: Asset | AnySvelteComponent | undefined = undefined
 

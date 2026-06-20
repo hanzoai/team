@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MeasureContext, WorkspaceUuid } from '@hanzo/core'
-import { MessageEventType, NotificationEventType, SessionData } from '@hanzo/communication-sdk-types'
-import { AccountUuid, CardID, CardType, Markdown, SocialID } from '@hanzo/communication-types'
+import { MeasureContext, WorkspaceUuid } from '@hanzoteam/core'
+import { MessageEventType, NotificationEventType, SessionData } from '@hanzoteam/communication-sdk-types'
+import { AccountUuid, CardID, CardType, Markdown, SocialID } from '@hanzoteam/communication-types'
 
 import { ValidateMiddleware } from '../../middleware/validate'
 import { Enriched, Middleware, MiddlewareContext } from '../../types'

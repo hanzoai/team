@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel, translate } from '@hanzo/platform'
-  import { themeStore, tooltip } from '@hanzo/ui'
+  import { getEmbeddedLabel, translate } from '@hanzoteam/platform'
+  import { themeStore, tooltip } from '@hanzoteam/ui'
   import tracker from '../../../plugin'
 
   export let id: string | undefined = undefined

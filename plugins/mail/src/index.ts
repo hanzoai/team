@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Ref } from '@hanzo/core'
-import { Asset, IntlString, type Plugin, plugin } from '@hanzo/platform'
-import type { Tag } from '@hanzo/card'
+import type { Ref } from '@hanzoteam/core'
+import { Asset, IntlString, type Plugin, plugin } from '@hanzoteam/platform'
+import type { Tag } from '@hanzoteam/card'
 
 /**
  * @public

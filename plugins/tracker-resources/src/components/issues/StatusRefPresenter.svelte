@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Status } from '@hanzo/core'
-  import { Project } from '@hanzo/tracker'
-  import { statusStore } from '@hanzo/view-resources'
+  import { Ref, Status } from '@hanzoteam/core'
+  import { Project } from '@hanzoteam/tracker'
+  import { statusStore } from '@hanzoteam/view-resources'
   import StatusPresenter from './StatusPresenter.svelte'
-  import { selectedTaskTypeStore } from '@hanzo/task-resources'
+  import { selectedTaskTypeStore } from '@hanzoteam/task-resources'
 
   export let value: Ref<Status> | undefined
   export let space: Ref<Project>

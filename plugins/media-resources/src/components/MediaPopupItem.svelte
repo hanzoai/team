@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, IntlString } from '@hanzo/platform'
-  import { AnySvelteComponent, Icon, IconCheck, IconChevronRight, Label, tooltip } from '@hanzo/ui'
+  import { Asset, IntlString } from '@hanzoteam/platform'
+  import { AnySvelteComponent, Icon, IconCheck, IconChevronRight, Label, tooltip } from '@hanzoteam/ui'
   import { ComponentType, createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher()

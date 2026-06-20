@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
-  import { Loading, updatePopup, Scroller } from '@hanzo/ui'
-  import { ListSelectionProvider } from '@hanzo/view-resources'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { Loading, updatePopup, Scroller } from '@hanzoteam/ui'
+  import { ListSelectionProvider } from '@hanzoteam/view-resources'
   import AttachmentPresenter from './AttachmentPresenter.svelte'
   import AttachmentPreview from './AttachmentPreview.svelte'
 

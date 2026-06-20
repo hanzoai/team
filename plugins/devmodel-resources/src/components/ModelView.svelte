@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, TxCUD } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { ScrollBox, tooltip } from '@hanzo/ui'
+  import core, { Doc, TxCUD } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ScrollBox, tooltip } from '@hanzoteam/ui'
   import { toIntl } from '..'
   import ContentPopup from './ContentPopup.svelte'
 

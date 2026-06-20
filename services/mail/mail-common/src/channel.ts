@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { MeasureContext, PersonId, Ref, Space, TxOperations, WorkspaceUuid, generateId } from '@hanzo/core'
-import { type Card } from '@hanzo/card'
-import chat from '@hanzo/chat'
-import mail from '@hanzo/mail'
+import { MeasureContext, PersonId, Ref, Space, TxOperations, WorkspaceUuid, generateId } from '@hanzoteam/core'
+import { type Card } from '@hanzoteam/card'
+import chat from '@hanzoteam/chat'
+import mail from '@hanzoteam/mail'
 import { SyncMutex } from './mutex'
 import { MessageTimeShift, normalizeEmail } from './utils'
 

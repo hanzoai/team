@@ -14,12 +14,12 @@
 // limitations under the License.
 //
 
-import type { AttachedDoc, Blob, BlobMetadata, Class, Doc, Ref } from '@hanzo/core'
-import type { Asset, Plugin } from '@hanzo/platform'
-import { IntlString, plugin, Resource } from '@hanzo/platform'
-import type { Preference } from '@hanzo/preference'
-import { AnyComponent } from '@hanzo/ui'
-import { Widget } from '@hanzo/workbench'
+import type { AttachedDoc, Blob, BlobMetadata, Class, Doc, Ref } from '@hanzoteam/core'
+import type { Asset, Plugin } from '@hanzoteam/platform'
+import { IntlString, plugin, Resource } from '@hanzoteam/platform'
+import type { Preference } from '@hanzoteam/preference'
+import { AnyComponent } from '@hanzoteam/ui'
+import { Widget } from '@hanzoteam/workbench'
 
 export * from './analytics'
 

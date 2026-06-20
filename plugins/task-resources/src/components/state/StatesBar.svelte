@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, Status, StatusCategory, toIdMap } from '@hanzo/core'
-  import { BreadcrumbsElement, createQuery } from '@hanzo/presentation'
-  import task, { Project, ProjectType, getStates } from '@hanzo/task'
-  import { ScrollerBar, getColorNumberByText, getPlatformColor, themeStore } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
+  import core, { IdMap, Ref, Status, StatusCategory, toIdMap } from '@hanzoteam/core'
+  import { BreadcrumbsElement, createQuery } from '@hanzoteam/presentation'
+  import task, { Project, ProjectType, getStates } from '@hanzoteam/task'
+  import { ScrollerBar, getColorNumberByText, getPlatformColor, themeStore } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { typeStore, type StatesBarPosition } from '../..'
 

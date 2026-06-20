@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Process, type Method, type Step } from '@hanzo/process'
-  import { Component, Label } from '@hanzo/ui'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process, type Method, type Step } from '@hanzoteam/process'
+  import { Component, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
 

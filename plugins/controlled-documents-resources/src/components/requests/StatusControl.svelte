@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import type { Status } from '@hanzo/platform'
-  import { Severity } from '@hanzo/platform'
+  import type { Status } from '@hanzoteam/platform'
+  import { Severity } from '@hanzoteam/platform'
 
-  import { Status as StatusControl } from '@hanzo/ui'
+  import { Status as StatusControl } from '@hanzoteam/ui'
 
   export let status: Status
 </script>

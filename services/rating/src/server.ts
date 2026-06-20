@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/unbound-method */
-import type { MeasureContext, Tx } from '@hanzo/core'
+import type { MeasureContext, Tx } from '@hanzoteam/core'
 import {
   createMongoAdapter,
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   shutdownMongo
-} from '@hanzo/mongo'
-import { setMetadata } from '@hanzo/platform'
+} from '@hanzoteam/mongo'
+import { setMetadata } from '@hanzoteam/platform'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions,
   shutdownPostgres
-} from '@hanzo/postgres'
-import serverClientPlugin from '@hanzo/server-client'
-import { type PlatformQueue } from '@hanzo/server-core'
+} from '@hanzoteam/postgres'
+import serverClientPlugin from '@hanzoteam/server-client'
+import { type PlatformQueue } from '@hanzoteam/server-core'
 import {
   registerAdapterFactory,
   registerDestroyFactory,
@@ -23,8 +23,8 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hanzo/server-pipeline'
-import serverToken from '@hanzo/server-token'
+} from '@hanzoteam/server-pipeline'
+import serverToken from '@hanzoteam/server-token'
 
 import { WorkspaceManager } from './manager'
 

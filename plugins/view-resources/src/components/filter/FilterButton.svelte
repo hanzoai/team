@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Button, IconFilter, eventToHTMLElement, resolvedLocationStore, showPopup } from '@hanzo/ui'
-  import { Filter, ViewOptions } from '@hanzo/view'
+  import { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Button, IconFilter, eventToHTMLElement, resolvedLocationStore, showPopup } from '@hanzoteam/ui'
+  import { Filter, ViewOptions } from '@hanzoteam/view'
   import { filterStore, getFilterKey, selectedFilterStore, setFilters } from '../../filter'
   import view from '../../plugin'
   import FilterTypePopup from './FilterTypePopup.svelte'

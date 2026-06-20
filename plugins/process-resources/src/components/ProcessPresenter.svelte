@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Process } from '@hanzo/process'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process } from '@hanzoteam/process'
 
   export let value: Ref<Process>
 

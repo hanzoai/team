@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type IntlString, Severity, Status } from '@hanzo/platform'
-  import { signupStore } from '@hanzo/analytics-providers'
+  import { type IntlString, Severity, Status } from '@hanzoteam/platform'
+  import { signupStore } from '@hanzoteam/analytics-providers'
   import { onMount } from 'svelte'
 
   import { type BottomAction, doLoginAsGuest, doLoginNavigate, LoginMethods } from '../index'
@@ -23,7 +23,7 @@
   import LoginOtpForm from './LoginOtpForm.svelte'
   import BottomActionComponent from './BottomAction.svelte'
   import login from '../plugin'
-  import { LoginInfo } from '@hanzo/account-client'
+  import { LoginInfo } from '@hanzoteam/account-client'
 
   export let navigateUrl: string | undefined = undefined
   export let signUpDisabled = false

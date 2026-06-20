@@ -13,18 +13,18 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import workbench from '@hanzo/model-workbench'
-import { chatId } from '@hanzo/chat'
-import { createSystemType } from '@hanzo/model-card'
-import communication from '@hanzo/communication'
-import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import workbench from '@hanzoteam/model-workbench'
+import { chatId } from '@hanzoteam/chat'
+import { createSystemType } from '@hanzoteam/model-card'
+import communication from '@hanzoteam/communication'
+import { PaletteColorIndexes } from '@hanzoteam/ui/src/colors'
 
 import chat from './plugin'
-import { AccountRole } from '@hanzo/core'
+import { AccountRole } from '@hanzoteam/core'
 
-export { chatId } from '@hanzo/chat'
+export { chatId } from '@hanzoteam/chat'
 export { chatOperation } from './migration'
 export default chat
 

@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import {} from '@hanzo/notification'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import task, { taskId } from '@hanzo/task'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type GetAllValuesFunc, type SortFunc } from '@hanzo/view'
+import {} from '@hanzoteam/notification'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import task, { taskId } from '@hanzoteam/task'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type GetAllValuesFunc, type SortFunc } from '@hanzoteam/view'
 
 export default mergeIds(taskId, task, {
   string: {

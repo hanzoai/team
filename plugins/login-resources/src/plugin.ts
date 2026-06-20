@@ -14,10 +14,10 @@
 // limitations under the License.
 */
 
-import type { IntlString, StatusCode } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
+import type { IntlString, StatusCode } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
 
-import login, { loginId } from '@hanzo/login'
+import login, { loginId } from '@hanzoteam/login'
 
 export default mergeIds(loginId, login, {
   status: {

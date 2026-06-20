@@ -9,11 +9,11 @@ import {
   type Permission,
   Role,
   Sequence
-} from '@hanzo/core'
-import type { Asset, Plugin, Resource } from '@hanzo/platform'
-import { IntlString, plugin } from '@hanzo/platform'
-import type { AnyComponent, ResolvedLocation, Location } from '@hanzo/ui/src/types'
-import { Action, Viewlet } from '@hanzo/view'
+} from '@hanzoteam/core'
+import type { Asset, Plugin, Resource } from '@hanzoteam/platform'
+import { IntlString, plugin } from '@hanzoteam/platform'
+import type { AnyComponent, ResolvedLocation, Location } from '@hanzoteam/ui/src/types'
+import { Action, Viewlet } from '@hanzoteam/view'
 
 import type {
   ChangeControl,
@@ -41,7 +41,7 @@ import type {
   ProjectDocument,
   ControlledDocumentSnapshot
 } from './types'
-import type { NotificationType } from '@hanzo/notification'
+import type { NotificationType } from '@hanzoteam/notification'
 
 /**
  * @public
@@ -136,7 +136,7 @@ export const documentsPlugin = plugin(documentsId, {
   function: {
     CanChangeDocumentOwner: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
     CanDeleteDocumentCategory: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
-    FormatDocumentMarkdownValue: '' as Resource<import('@hanzo/converter').ValueFormatter>
+    FormatDocumentMarkdownValue: '' as Resource<import('@hanzoteam/converter').ValueFormatter>
   },
   icon: {
     Approvals: '' as Asset,

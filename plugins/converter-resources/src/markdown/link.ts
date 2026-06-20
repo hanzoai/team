@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import type { Doc, Hierarchy } from '@hanzo/core'
-import { concatLink } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
-import { getObjectLinkFragment } from '@hanzo/view-resources'
-import { locationToUrl } from '@hanzo/ui'
-import view from '@hanzo/view'
+import type { Doc, Hierarchy } from '@hanzoteam/core'
+import { concatLink } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
+import { getObjectLinkFragment } from '@hanzoteam/view-resources'
+import { locationToUrl } from '@hanzoteam/ui'
+import view from '@hanzoteam/view'
 import { escapeMarkdownLinkText, escapeMarkdownLinkUrl } from './escape'
 
 /**

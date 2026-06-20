@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { Icon, IconDelete, Label, tooltip, IconAdd, Component } from '@hanzo/ui'
-  import { ActivityTagUpdate, Markdown } from '@hanzo/communication-types'
-  import cardPlugin, { Tag } from '@hanzo/card'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Icon, IconDelete, Label, tooltip, IconAdd, Component } from '@hanzoteam/ui'
+  import { ActivityTagUpdate, Markdown } from '@hanzoteam/communication-types'
+  import cardPlugin, { Tag } from '@hanzoteam/card'
 
   import communication from '../../../plugin'
 

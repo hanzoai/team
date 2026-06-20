@@ -1,5 +1,5 @@
-import { MeasureMetricsContext, type WorkspaceUuid } from '@hanzo/core'
-import { getPlatformQueue } from '@hanzo/kafka'
+import { MeasureMetricsContext, type WorkspaceUuid } from '@hanzoteam/core'
+import { getPlatformQueue } from '@hanzoteam/kafka'
 import config from './config'
 
 export async function SendTimeEvent (

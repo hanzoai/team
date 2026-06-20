@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Question } from '@hanzo/questions'
-import { type QuerySelector, SortingOrder } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+import type { Question } from '@hanzoteam/questions'
+import { type QuerySelector, SortingOrder } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 import questions from '../plugin'
 
 export async function findPreviousQuestion (object: Question<unknown>): Promise<Question<unknown> | undefined> {

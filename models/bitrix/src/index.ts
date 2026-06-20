@@ -26,8 +26,8 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hanzo/model'
-import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import core, { TAttachedDoc, TDoc } from '@hanzoteam/model-core'
 import bitrix from './plugin'
 
 import {
@@ -36,7 +36,7 @@ import {
   type BitrixSyncDoc,
   type Fields,
   bitrixIntegrationKind
-} from '@hanzo/bitrix'
+} from '@hanzoteam/bitrix'
 import {
   type AnyAttribute,
   type Class,
@@ -44,14 +44,14 @@ import {
   type Doc,
   type Domain,
   type Ref
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 
-import view, { createAction } from '@hanzo/model-view'
+import view, { createAction } from '@hanzoteam/model-view'
 
-import { getEmbeddedLabel } from '@hanzo/platform'
-import setting from '@hanzo/setting'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
+import setting from '@hanzoteam/setting'
 
-export { bitrixId } from '@hanzo/bitrix'
+export { bitrixId } from '@hanzoteam/bitrix'
 export { bitrixOperation } from './migration'
 export { default } from './plugin'
 

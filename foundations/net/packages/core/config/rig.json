@@ -1,5 +1,5 @@
 {  
   "$schema": "https://developer.microsoft.com/json-schemas/rig-package/rig.schema.json",
-  "rigPackageName": "@hanzo/platform-rig",
+  "rigPackageName": "@hanzoteam/platform-rig",
   "rigProfile": "node"
 }

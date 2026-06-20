@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Builder } from '@hanzo/model'
-import view, { createAction } from '@hanzo/model-view'
-import card from '@hanzo/model-card'
-import core from '@hanzo/model-core'
-import emoji from '@hanzo/model-emoji'
+import { type Builder } from '@hanzoteam/model'
+import view, { createAction } from '@hanzoteam/model-view'
+import card from '@hanzoteam/model-card'
+import core from '@hanzoteam/model-core'
+import emoji from '@hanzoteam/model-emoji'
 
 import communication from './plugin'
 

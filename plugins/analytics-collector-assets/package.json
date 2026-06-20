@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/analytics-collector-assets",
+  "name": "@hanzoteam/analytics-collector-assets",
   "version": "0.7.0",
   "main": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -11,7 +11,7 @@
     "lang"
   ],
   "author": "Copyright © Hanzo AI Inc.",
-  "template": "@hanzo/assets-package",
+  "template": "@hanzoteam/assets-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -25,7 +25,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "eslint-config-standard-with-typescript": "^40.0.0",
@@ -42,8 +42,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/analytics-collector": "workspace:^0.7.0"
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/analytics-collector": "workspace:^0.7.0"
   },
   "exports": {
     ".": {

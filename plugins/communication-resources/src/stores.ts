@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import { get, writable, derived } from 'svelte/store'
-import { createLabelsQuery, createQuery, onClient, onCommunicationClient } from '@hanzo/presentation'
+import { createLabelsQuery, createQuery, onClient, onCommunicationClient } from '@hanzoteam/presentation'
 import {
   MessageType,
   type CardID,
@@ -20,12 +20,12 @@ import {
   type LabelID,
   type Message,
   type MessageID
-} from '@hanzo/communication-types'
-import core, { getCurrentAccount, type Markup, type Ref } from '@hanzo/core'
-import { languageStore } from '@hanzo/ui'
-import cardPlugin, { type Card } from '@hanzo/card'
-import communication from '@hanzo/communication'
-import { translationStore } from '@hanzo/contact-resources'
+} from '@hanzoteam/communication-types'
+import core, { getCurrentAccount, type Markup, type Ref } from '@hanzoteam/core'
+import { languageStore } from '@hanzoteam/ui'
+import cardPlugin, { type Card } from '@hanzoteam/card'
+import communication from '@hanzoteam/communication'
+import { translationStore } from '@hanzoteam/contact-resources'
 
 import { toMarkup } from './utils'
 

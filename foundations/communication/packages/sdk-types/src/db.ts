@@ -43,7 +43,7 @@ import {
   ThreadMeta,
   FindMessagesMetaParams,
   BlobID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 export interface DbAdapter {
   // MessageMeta

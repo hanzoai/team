@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Class, Ref } from '@hanzo/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
-import { plugin, Metadata } from '@hanzo/platform'
+import { Class, Ref } from '@hanzoteam/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin, Metadata } from '@hanzoteam/platform'
 import { SupportClientFactory, SupportConversation, SupportSystem } from './types'
 
 export * from './types'

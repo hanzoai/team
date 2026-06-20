@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { SelectPopup } from '@hanzo/ui'
-  import { Filter, FilterMode } from '@hanzo/view'
+  import { getClient } from '@hanzoteam/presentation'
+  import { SelectPopup } from '@hanzoteam/ui'
+  import { Filter, FilterMode } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../../plugin'
 

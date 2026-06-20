@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Project } from '@hanzo/tracker'
+  import { Ref } from '@hanzoteam/core'
+  import { Project } from '@hanzoteam/tracker'
   import Components from './Components.svelte'
 
   export let currentSpace: Ref<Project>

@@ -1,7 +1,7 @@
 import { attach, sample } from 'effector'
-import { type Ref } from '@hanzo/core'
-import { type ChatMessage } from '@hanzo/chunter'
-import { type EditorMode, DocumentState } from '@hanzo/controlled-documents'
+import { type Ref } from '@hanzoteam/core'
+import { type ChatMessage } from '@hanzoteam/chunter'
+import { type EditorMode, DocumentState } from '@hanzoteam/controlled-documents'
 import { isDocumentCommentAttachedTo } from '../../utils'
 import {
   RightPanelTab,

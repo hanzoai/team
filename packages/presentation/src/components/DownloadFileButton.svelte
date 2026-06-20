@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref, Blob } from '@hanzo/core'
-  import { Button } from '@hanzo/ui'
+  import type { Ref, Blob } from '@hanzoteam/core'
+  import { Button } from '@hanzoteam/ui'
 
   import { getFileUrl } from '../file'
   import Download from './icons/Download.svelte'
   import presentation from '../plugin'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
 
   export let file: Ref<Blob> | undefined
   export let name: string

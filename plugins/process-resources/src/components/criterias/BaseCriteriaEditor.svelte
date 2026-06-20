@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { AnyAttribute } from '@hanzo/core'
-  import { findAttributeEditorByAttribute, getAttributePresenterClass, getClient } from '@hanzo/presentation'
-  import { Context, createContext, parseContext, Process, SelectedContext } from '@hanzo/process'
-  import { Button, Component, eventToHTMLElement, IconAdd, IconClose, showPopup } from '@hanzo/ui'
+  import { AnyAttribute } from '@hanzoteam/core'
+  import { findAttributeEditorByAttribute, getAttributePresenterClass, getClient } from '@hanzoteam/presentation'
+  import { Context, createContext, parseContext, Process, SelectedContext } from '@hanzoteam/process'
+  import { Button, Component, eventToHTMLElement, IconAdd, IconClose, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import ContextSelectorPopup from '../attributeEditors/ContextSelectorPopup.svelte'
   import ContextValue from '../attributeEditors/ContextValue.svelte'

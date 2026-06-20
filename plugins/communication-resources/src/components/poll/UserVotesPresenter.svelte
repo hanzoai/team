@@ -12,10 +12,10 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { UserVote } from '@hanzo/communication'
-  import { employeeByAccountStore, CombineAvatars } from '@hanzo/contact-resources'
-  import { notEmpty } from '@hanzo/core'
-  import contact from '@hanzo/contact'
+  import { UserVote } from '@hanzoteam/communication'
+  import { employeeByAccountStore, CombineAvatars } from '@hanzoteam/contact-resources'
+  import { notEmpty } from '@hanzoteam/core'
+  import contact from '@hanzoteam/contact'
 
   export let value: UserVote[]
 

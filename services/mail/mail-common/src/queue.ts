@@ -1,7 +1,7 @@
 import { Kafka, Producer } from 'kafkajs'
-import { parseQueueConfig } from '@hanzo/kafka'
+import { parseQueueConfig } from '@hanzoteam/kafka'
 import { BaseConfig } from './types'
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 
 let queueRegistry: KafkaQueueRegistry | undefined
 

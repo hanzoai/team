@@ -14,11 +14,11 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, afterUpdate } from 'svelte'
-  import { WithLookup } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import type { Issue } from '@hanzo/tracker'
-  import { Component } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { WithLookup } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { Issue } from '@hanzoteam/tracker'
+  import { Component } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   export let value: WithLookup<Issue>
   export let shouldUseMargin: boolean = false

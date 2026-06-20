@@ -12,11 +12,11 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Message } from '@hanzo/communication-types'
-  import { Icon, Label, tooltip } from '@hanzo/ui'
-  import communication from '@hanzo/communication'
-  import { isAppletAttachment, isBlobAttachment } from '@hanzo/communication-shared'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Message } from '@hanzoteam/communication-types'
+  import { Icon, Label, tooltip } from '@hanzoteam/ui'
+  import communication from '@hanzoteam/communication'
+  import { isAppletAttachment, isBlobAttachment } from '@hanzoteam/communication-shared'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
 
   import AttachmentsTooltip from './AttachmentsTooltip.svelte'
   import AttachmentName from './AttachmentName.svelte'

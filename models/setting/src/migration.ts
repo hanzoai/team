@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { type AccountUuid, type Ref, type Space } from '@hanzo/core'
+import core, { type AccountUuid, type Ref, type Space } from '@hanzoteam/core'
 import {
   migrateSpace,
   type MigrateUpdate,
@@ -22,9 +22,9 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import setting, { DOMAIN_SETTING, type Integration, settingId } from '@hanzo/setting'
-import { getSocialKeyByOldAccount, getUniqueAccountsFromOldAccounts } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import setting, { DOMAIN_SETTING, type Integration, settingId } from '@hanzoteam/setting'
+import { getSocialKeyByOldAccount, getUniqueAccountsFromOldAccounts } from '@hanzoteam/model-core'
 
 /**
  * Migrates old accounts to new accounts

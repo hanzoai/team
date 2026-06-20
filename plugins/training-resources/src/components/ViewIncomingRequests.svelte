@@ -3,9 +3,9 @@
 -->
 
 <script lang="ts">
-  import type { TrainingRequest } from '@hanzo/training'
-  import { DocumentQuery } from '@hanzo/core'
-  import { SpecialView } from '@hanzo/workbench-resources'
+  import type { TrainingRequest } from '@hanzoteam/training'
+  import { DocumentQuery } from '@hanzoteam/core'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
   import type { ComponentProps } from 'svelte'
   import { getCurrentEmployeeRef } from '../utils'
 

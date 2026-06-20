@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { clearSettingsStore } from '@hanzo/setting-resources'
+  import { clearSettingsStore } from '@hanzoteam/setting-resources'
   import {
     ButtonIcon,
     getCurrentResolvedLocation,
@@ -21,7 +21,7 @@
     IconAttachment,
     navigate,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import card from '../../plugin'
   import CreateTag from '../CreateTag.svelte'
 

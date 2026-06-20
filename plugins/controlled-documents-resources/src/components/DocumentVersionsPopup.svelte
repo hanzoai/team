@@ -14,8 +14,8 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { ControlledDocument, DocumentState } from '@hanzo/controlled-documents'
-  import { navigate, Scroller } from '@hanzo/ui'
+  import { ControlledDocument, DocumentState } from '@hanzoteam/controlled-documents'
+  import { navigate, Scroller } from '@hanzoteam/ui'
 
   import { getDocumentLink } from '../navigation'
   import {

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { concatLink, TxOperations } from '@hanzo/core'
+import { concatLink, TxOperations } from '@hanzoteam/core'
 import {
   ClickupImporter,
   defaultDocumentPreprocessors,
@@ -23,9 +23,9 @@ import {
   hanzoaiFormatImporter,
   importNotion,
   type Logger
-} from '@hanzo/importer'
-import { setMetadata } from '@hanzo/platform'
-import serverClientPlugin, { createClient, getAccountClient } from '@hanzo/server-client'
+} from '@hanzoteam/importer'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClientPlugin, { createClient, getAccountClient } from '@hanzoteam/server-client'
 import { program } from 'commander'
 import { readFileSync } from 'fs'
 import * as yaml from 'js-yaml'

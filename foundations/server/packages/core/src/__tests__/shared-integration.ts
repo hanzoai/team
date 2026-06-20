@@ -19,7 +19,7 @@
  *
  * Usage in your adapter test file:
  * ```typescript
- * import { runSharedIntegrationTests } from '@hanzo/server-core/src/__tests__/shared-integration.test'
+ * import { runSharedIntegrationTests } from '@hanzoteam/server-core/src/__tests__/shared-integration.test'
  *
  * describe('My Adapter Tests', () => {
  *   // ... setup code ...
@@ -33,7 +33,7 @@
  * ```
  */
 
-import core, { type Client, type Ref, SortingOrder, type Space, type TxOperations } from '@hanzo/core'
+import core, { type Client, type Ref, SortingOrder, type Space, type TxOperations } from '@hanzoteam/core'
 
 /**
  * Test context provided to the shared test suite

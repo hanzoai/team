@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import documents, { DocumentCategory, DocumentTemplate } from '@hanzo/controlled-documents'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import documents, { DocumentCategory, DocumentTemplate } from '@hanzoteam/controlled-documents'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import { createEventDispatcher } from 'svelte'
 
-  import { Ref } from '@hanzo/core'
-  import { DropdownLabelsPopup } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { DropdownLabelsPopup } from '@hanzoteam/ui'
 
   export let object: DocumentTemplate
 

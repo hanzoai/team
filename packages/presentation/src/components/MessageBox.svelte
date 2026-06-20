@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { translate, type IntlString } from '@hanzo/platform'
-  import { Button, FocusHandler, Label, createFocusManager } from '@hanzo/ui'
+  import { translate, type IntlString } from '@hanzoteam/platform'
+  import { Button, FocusHandler, Label, createFocusManager } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import presentation, { HTMLViewer } from '..'
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import analyticsCollector, { AnalyticEvent, OnboardingChannel } from '@hanzo/analytics-collector'
-import chunter, { Channel, ChatMessage } from '@hanzo/chunter'
-import { getPrimarySocialId, type Person } from '@hanzo/contact'
+import analyticsCollector, { AnalyticEvent, OnboardingChannel } from '@hanzoteam/analytics-collector'
+import chunter, { Channel, ChatMessage } from '@hanzoteam/chunter'
+import { getPrimarySocialId, type Person } from '@hanzoteam/contact'
 import core, {
   AccountUuid,
   Doc,
@@ -30,14 +30,14 @@ import core, {
   TxUpdateDoc,
   WorkspaceInfoWithStatus,
   WorkspaceUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   createGeneralOnboardingChannel,
   getOrCreateOnboardingChannel
-} from '@hanzo/server-analytics-collector-resources'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-analytics-collector-resources'
+import { generateToken } from '@hanzoteam/server-token'
 
-import { getClient as getAccountClient } from '@hanzo/account-client'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
 import { Collection } from 'mongodb'
 import { eventToMarkup, getOnboardingMessage } from './format'
 import { OnboardingMessage } from './types'

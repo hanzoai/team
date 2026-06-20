@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityExtension, ActivityExtensionKind } from '@hanzo/activity'
-  import { Component } from '@hanzo/ui'
+  import { ActivityExtension, ActivityExtensionKind } from '@hanzoteam/activity'
+  import { Component } from '@hanzoteam/ui'
 
   export let kind: ActivityExtensionKind
   export let extensions: ActivityExtension[] = []

@@ -14,16 +14,16 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { isAppletAttachment, isBlobAttachment } from '@hanzo/communication-shared'
-  import { BlobParams, LinkPreviewParams, Message, MessageID, BlobID } from '@hanzo/communication-types'
-  import { generateId, getCurrentAccount, Markup, RateLimiter, Ref } from '@hanzo/core'
-  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { clearTyping, setTyping } from '@hanzo/presence-resources'
-  import { deleteFile, getClient, isLinkPreviewEnabled, uploadFile } from '@hanzo/presentation'
-  import { areEqualMarkups, isEmptyMarkup } from '@hanzo/text'
-  import { showPopup, ThrottledCaller } from '@hanzo/ui'
-  import { FileUploadCallbackParams, getUploadHandlers, UploadHandlerDefinition } from '@hanzo/uploader'
+  import { Card } from '@hanzoteam/card'
+  import { isAppletAttachment, isBlobAttachment } from '@hanzoteam/communication-shared'
+  import { BlobParams, LinkPreviewParams, Message, MessageID, BlobID } from '@hanzoteam/communication-types'
+  import { generateId, getCurrentAccount, Markup, RateLimiter, Ref } from '@hanzoteam/core'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { clearTyping, setTyping } from '@hanzoteam/presence-resources'
+  import { deleteFile, getClient, isLinkPreviewEnabled, uploadFile } from '@hanzoteam/presentation'
+  import { areEqualMarkups, isEmptyMarkup } from '@hanzoteam/text'
+  import { showPopup, ThrottledCaller } from '@hanzoteam/ui'
+  import { FileUploadCallbackParams, getUploadHandlers, UploadHandlerDefinition } from '@hanzoteam/uploader'
   import { createEventDispatcher, tick } from 'svelte'
 
   import { getDraft, getEmptyDraft, messageToDraft, removeDraft, saveDraft } from '../../draft'

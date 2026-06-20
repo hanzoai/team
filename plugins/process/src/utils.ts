@@ -1,7 +1,7 @@
-import { Tx, TxUpdateDoc } from '@hanzo/core/types/tx'
+import { Tx, TxUpdateDoc } from '@hanzoteam/core/types/tx'
 import { SelectedContext } from './types'
-import core from '@hanzo/core'
-import { Card } from '@hanzo/card'
+import core from '@hanzoteam/core'
+import { Card } from '@hanzoteam/card'
 import { parseDSLContext } from './dslContext'
 
 export function parseContext (value: any): SelectedContext | undefined {

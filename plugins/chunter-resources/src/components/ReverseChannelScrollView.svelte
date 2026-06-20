@@ -13,20 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hanzo/activity'
+  import activity, { ActivityMessage } from '@hanzoteam/activity'
   import {
     ActivityMessagePresenter,
     canGroupMessages,
     messageInFocus,
     editingMessageStore
-  } from '@hanzo/activity-resources'
-  import core, { Doc, generateId, getCurrentAccount, Ref, Space, Timestamp, Tx, TxCUD } from '@hanzo/core'
-  import { DocNotifyContext } from '@hanzo/notification'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { addTxListener, getClient, removeTxListener } from '@hanzo/presentation'
-  import { ModernButton, Scroller } from '@hanzo/ui'
+  } from '@hanzoteam/activity-resources'
+  import core, { Doc, generateId, getCurrentAccount, Ref, Space, Timestamp, Tx, TxCUD } from '@hanzoteam/core'
+  import { DocNotifyContext } from '@hanzoteam/notification'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import { addTxListener, getClient, removeTxListener } from '@hanzoteam/presentation'
+  import { ModernButton, Scroller } from '@hanzoteam/ui'
   import { afterUpdate, onDestroy, onMount, tick } from 'svelte'
-  import { ChatMessage } from '@hanzo/chunter'
+  import { ChatMessage } from '@hanzoteam/chunter'
 
   import { ChannelDataProvider, MessageMetadata } from '../channelDataProvider'
   import chunter from '../plugin'

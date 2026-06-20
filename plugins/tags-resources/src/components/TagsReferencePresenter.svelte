@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { TagReference } from '@hanzo/tags'
+  import type { TagReference } from '@hanzoteam/tags'
   import plugin from '../plugin'
-  import { getPlatformColorDef, themeStore, Label } from '@hanzo/ui'
+  import { getPlatformColorDef, themeStore, Label } from '@hanzoteam/ui'
 
   export let items: TagReference[]
   export let kind: 'list' | 'link' | 'todo' = 'list'

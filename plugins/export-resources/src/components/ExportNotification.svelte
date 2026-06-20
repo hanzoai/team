@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Notification, NotificationToast } from '@hanzo/ui'
+  import { type Notification, NotificationToast } from '@hanzoteam/ui'
 
   export let notification: Notification
   export let onRemove: () => void

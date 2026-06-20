@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Class, CollaborativeDoc, Doc, Ref } from '@hanzo/core'
+import { Class, CollaborativeDoc, Doc, Ref } from '@hanzoteam/core'
 
 /** @public */
 export function encodeDocumentId (workspaceId: string, documentId: CollaborativeDoc): string {

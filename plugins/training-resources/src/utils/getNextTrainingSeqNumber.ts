@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { getClient } from '@hanzo/presentation'
-import core, { type Sequence } from '@hanzo/core'
+import { getClient } from '@hanzoteam/presentation'
+import core, { type Sequence } from '@hanzoteam/core'
 import training from '../plugin'
 
 export async function getNextTrainingSeqNumber (): Promise<number> {

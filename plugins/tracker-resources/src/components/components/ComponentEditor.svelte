@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData, DocumentQuery, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { RuleApplyResult, getClient, getDocRules } from '@hanzo/presentation'
-  import { Component, Issue, IssueTemplate, Project, TrackerEvents } from '@hanzo/tracker'
-  import { ButtonKind, ButtonShape, ButtonSize, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  import { AttachedData, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { RuleApplyResult, getClient, getDocRules } from '@hanzoteam/presentation'
+  import { Component, Issue, IssueTemplate, Project, TrackerEvents } from '@hanzoteam/tracker'
+  import { ButtonKind, ButtonShape, ButtonSize, deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
   import { createEventDispatcher, afterUpdate } from 'svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   import { activeComponent } from '../../issues'
   import tracker from '../../plugin'

@@ -2,12 +2,12 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 import { get } from 'svelte/store'
-import { type Employee } from '@hanzo/contact'
-import { employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
-import type { Training, TrainingRequest } from '@hanzo/training'
-import core, { notEmpty, type AttachedData, type Ref, type Role, type RolesAssignment } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import { navigate } from '@hanzo/ui'
+import { type Employee } from '@hanzoteam/contact'
+import { employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
+import type { Training, TrainingRequest } from '@hanzoteam/training'
+import core, { notEmpty, type AttachedData, type Ref, type Role, type RolesAssignment } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import { navigate } from '@hanzoteam/ui'
 import training from '../plugin'
 import { trainingRequestRoute } from '../routing/routes/trainingRequestRoute'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'

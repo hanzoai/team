@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { IntlString, translateCB } from '@hanzo/platform'
-  import { registerFocus, themeStore } from '@hanzo/ui'
+  import { IntlString, translateCB } from '@hanzoteam/platform'
+  import { registerFocus, themeStore } from '@hanzoteam/ui'
   import { onMount } from 'svelte'
-  import { AccountRole, getCurrentAccount } from '@hanzo/core'
+  import { AccountRole, getCurrentAccount } from '@hanzoteam/core'
 
   export let value: string | undefined = undefined
   export let placeholder: IntlString | undefined

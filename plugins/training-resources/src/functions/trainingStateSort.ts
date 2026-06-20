@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { TxOperations } from '@hanzo/core'
-import { type TrainingState, trainingStateOrder } from '@hanzo/training'
+import type { TxOperations } from '@hanzoteam/core'
+import { type TrainingState, trainingStateOrder } from '@hanzoteam/training'
 
 export async function trainingStateSort (_: TxOperations, states: TrainingState[]): Promise<TrainingState[]> {
   return states

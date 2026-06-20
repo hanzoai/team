@@ -1,13 +1,13 @@
-import { type Class, type Doc, generateId, type Ref } from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
+import { type Class, type Doc, generateId, type Ref } from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
 import templates, {
   templateFieldRegexp,
   type TemplateData,
   type TemplateDataProvider,
   type TemplateField,
   type TemplateFieldCategory
-} from '@hanzo/templates'
+} from '@hanzoteam/templates'
 
 const templateData = new Map<Ref<TemplateFieldCategory>, TemplateData[]>()
 

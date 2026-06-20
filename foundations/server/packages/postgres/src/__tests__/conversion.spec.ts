@@ -9,12 +9,12 @@ import core, {
   type Space,
   type Tx,
   type WorkspaceUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { PostgresAdapter } from '../storage'
 import { convertArrayParams, decodeArray, filterProjection } from '../utils'
 import { genMinModel, test, type ComplexClass } from './minmodel'
 import { createDummyClient, type TypedQuery } from './utils'
-import { ConnectionMgr } from '@hanzo/postgres-base'
+import { ConnectionMgr } from '@hanzoteam/postgres-base'
 
 describe('array conversion', () => {
   it('should handle undefined parameters', () => {

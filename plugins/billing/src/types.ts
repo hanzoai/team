@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Doc } from '@hanzo/core'
-import { IntlString } from '@hanzo/platform'
+import { Doc } from '@hanzoteam/core'
+import { IntlString } from '@hanzoteam/platform'
 
 /** @public */
 export interface Tier extends Doc {

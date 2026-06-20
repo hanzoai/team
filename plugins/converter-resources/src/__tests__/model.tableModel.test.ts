@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import type { AttributeModel } from '@hanzo/view'
+import type { AttributeModel } from '@hanzoteam/view'
 import { modelToConfig } from '../model/tableModel'
 
-jest.mock('@hanzo/view-resources', () => ({
+jest.mock('@hanzoteam/view-resources', () => ({
   buildModel: jest.fn(),
   buildConfigLookup: jest.fn()
 }))
 
-jest.mock('@hanzo/view', () => ({
+jest.mock('@hanzoteam/view', () => ({
   default: {
     class: { Viewlet: 'view:class:Viewlet', ViewletPreference: 'view:class:ViewletPreference' },
     viewlet: { Table: 'view:viewlet:Table' }

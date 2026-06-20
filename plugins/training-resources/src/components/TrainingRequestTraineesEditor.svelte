@@ -16,11 +16,11 @@
 -->
 
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { UserBoxList } from '@hanzo/contact-resources'
+  import { Employee } from '@hanzoteam/contact'
+  import { Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { UserBoxList } from '@hanzoteam/contact-resources'
   import training from '../plugin'
 
   export let value: Ref<Employee>[]

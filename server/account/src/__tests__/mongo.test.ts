@@ -23,7 +23,7 @@ import {
   type Version,
   type Data,
   type AccountUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   MongoDbCollection,
   AccountMongoDbCollection,

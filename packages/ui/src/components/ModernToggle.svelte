@@ -3,7 +3,7 @@
   // © 2023 Hanzo AI, Inc. All Rights Reserved.
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
-  import type { IntlString } from '@hanzo/platform'
+  import type { IntlString } from '@hanzoteam/platform'
   import Label from './Label.svelte'
 
   export let title: string | undefined = undefined

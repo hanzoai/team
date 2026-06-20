@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Blob, Class, Doc, Ref } from '@hanzo/core'
-  import { AttrValue, MarkupNode, MarkupNodeType, MarkupMarkType } from '@hanzo/text'
+  import { Blob, Class, Doc, Ref } from '@hanzoteam/core'
+  import { AttrValue, MarkupNode, MarkupNodeType, MarkupMarkType } from '@hanzoteam/text'
 
   import LiteNodes from './LiteNodes.svelte'
   import ObjectNode from '../ObjectNode.svelte'
   import NodeMarks from '../NodeMarks.svelte'
   import { getBlobRef } from '../../../preview'
-  import { ParsedTextWithEmojis } from '@hanzo/emoji'
+  import { ParsedTextWithEmojis } from '@hanzoteam/emoji'
 
   export let node: MarkupNode
   export let colorInherit: boolean = false

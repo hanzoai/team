@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import core, { AccountUuid, AnyAttribute, DocumentQuery, notEmpty, Ref, Space } from '@hanzo/core'
-  import { ButtonKind, IconSize } from '@hanzo/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import core, { AccountUuid, AnyAttribute, DocumentQuery, notEmpty, Ref, Space } from '@hanzoteam/core'
+  import { ButtonKind, IconSize } from '@hanzoteam/ui'
   import { employeeRefByAccountUuidStore, PersonLabelTooltip } from '..'
   import contact from '../plugin'
   import { employeeByIdStore } from '../utils'
   import AssigneeBox from './AssigneeBox.svelte'
   import EmployeePresenter from './EmployeePresenter.svelte'
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
 
   export let value: Ref<Employee> | null | undefined
   export let kind: ButtonKind = 'link'

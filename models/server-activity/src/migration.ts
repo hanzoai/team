@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import activity, { type DocUpdateMessage } from '@hanzo/activity'
+import activity, { type DocUpdateMessage } from '@hanzoteam/activity'
 import core, {
   MeasureMetricsContext,
   SortingOrder,
@@ -26,7 +26,7 @@ import core, {
   type Tx,
   type TxCUD,
   type TxCreateDoc
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   tryMigrate,
   type MigrateOperation,
@@ -34,15 +34,15 @@ import {
   type MigrationIterator,
   type MigrationUpgradeClient,
   type MigrateMode
-} from '@hanzo/model'
-import { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
+} from '@hanzoteam/model'
+import { DOMAIN_ACTIVITY } from '@hanzoteam/model-activity'
 import {
   getAllObjectTransactions,
   serverActivityId,
   type ActivityControl,
   type DocObjectCache
-} from '@hanzo/server-activity'
-import { generateDocUpdateMessages } from '@hanzo/server-activity-resources'
+} from '@hanzoteam/server-activity'
+import { generateDocUpdateMessages } from '@hanzoteam/server-activity-resources'
 
 function getActivityControl (client: MigrationClient): ActivityControl {
   const txFactory = new TxFactory(core.account.System, false)

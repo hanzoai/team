@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { ButtonIcon, IconMoreV, showPopup, Action, getEventPositionElement, Menu } from '@hanzo/ui'
-  import { MessageAction } from '@hanzo/communication'
-  import { getResource } from '@hanzo/platform'
-  import { Message } from '@hanzo/communication-types'
-  import { Card } from '@hanzo/card'
-  import view from '@hanzo/view'
+  import { ButtonIcon, IconMoreV, showPopup, Action, getEventPositionElement, Menu } from '@hanzoteam/ui'
+  import { MessageAction } from '@hanzoteam/communication'
+  import { getResource } from '@hanzoteam/platform'
+  import { Message } from '@hanzoteam/communication-types'
+  import { Card } from '@hanzoteam/card'
+  import view from '@hanzoteam/view'
 
   export let message: Message
   export let card: Card

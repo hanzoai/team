@@ -2,8 +2,8 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { loadMetadata } from '@hanzo/platform'
-import training from '@hanzo/training'
+import { loadMetadata } from '@hanzoteam/platform'
+import training from '@hanzoteam/training'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(training.icon, {

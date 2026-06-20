@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Answer, Assessment, Percentage, Question } from '@hanzo/questions'
-import { getResource } from '@hanzo/platform'
+import type { Answer, Assessment, Percentage, Question } from '@hanzoteam/questions'
+import { getResource } from '@hanzoteam/platform'
 import { getQuestionMixin } from './getQuestionMixin'
 import { isAssessment } from './isAssessment'
 

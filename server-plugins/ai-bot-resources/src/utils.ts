@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { getMetadata } from '@hanzo/platform'
-import serverAIBot from '@hanzo/server-ai-bot'
-import { concatLink, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
-import { AIEventRequest } from '@hanzo/ai-bot'
+import { getMetadata } from '@hanzoteam/platform'
+import serverAIBot from '@hanzoteam/server-ai-bot'
+import { concatLink, MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
+import { AIEventRequest } from '@hanzoteam/ai-bot'
 
 export async function createAccountRequest (workspace: WorkspaceUuid, ctx: MeasureContext): Promise<void> {
   const url = getMetadata(serverAIBot.metadata.EndpointURL) ?? ''

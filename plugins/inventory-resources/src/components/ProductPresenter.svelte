@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Product } from '@hanzo/inventory'
-  import { Icon } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { Product } from '@hanzoteam/inventory'
+  import { Icon } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
 
   import inventory from '../plugin'
 

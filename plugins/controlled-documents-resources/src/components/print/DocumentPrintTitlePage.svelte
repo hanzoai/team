@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
-  import documents, { DocumentState } from '@hanzo/controlled-documents'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
+  import { Label } from '@hanzoteam/ui'
+  import documents, { DocumentState } from '@hanzoteam/controlled-documents'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
 
   import { $controlledDocument as controlledDocument } from '../../stores/editors/document'
   import DocumentHistory from '../document/DocumentHistory.svelte'

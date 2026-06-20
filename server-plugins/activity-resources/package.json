@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/server-activity-resources",
+  "name": "@hanzoteam/server-activity-resources",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Anticrm Platform Contributors",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -34,19 +34,19 @@
     "@types/node": "^22.18.1"
   },
   "dependencies": {
-    "@hanzo/activity": "workspace:^0.7.0",
-    "@hanzo/card": "workspace:^0.7.0",
-    "@hanzo/contact": "workspace:^0.7.0",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/notification": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/server-activity": "workspace:^0.7.0",
-    "@hanzo/server-contact": "workspace:^0.7.0",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/server-notification-resources": "workspace:^0.7.0",
-    "@hanzo/text-core": "workspace:^0.7.18",
-    "@hanzo/communication-sdk-types": "workspace:^0.7.12",
-    "@hanzo/communication-types": "workspace:^0.7.12",
-    "@hanzo/server-card": "workspace:^0.7.0"
+    "@hanzoteam/activity": "workspace:^0.7.0",
+    "@hanzoteam/card": "workspace:^0.7.0",
+    "@hanzoteam/contact": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/notification": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/server-activity": "workspace:^0.7.0",
+    "@hanzoteam/server-contact": "workspace:^0.7.0",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/server-notification-resources": "workspace:^0.7.0",
+    "@hanzoteam/text-core": "workspace:^0.7.18",
+    "@hanzoteam/communication-sdk-types": "workspace:^0.7.12",
+    "@hanzoteam/communication-types": "workspace:^0.7.12",
+    "@hanzoteam/server-card": "workspace:^0.7.0"
   }
 }

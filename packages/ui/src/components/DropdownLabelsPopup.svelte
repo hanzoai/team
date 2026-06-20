@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
+  import type { IntlString } from '@hanzoteam/platform'
   import { createEventDispatcher } from 'svelte'
   import { deviceOptionsStore, resizeObserver } from '..'
   import plugin from '../plugin'

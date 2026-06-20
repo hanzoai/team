@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BitrixEntityMapping, BitrixFieldMapping, FindReferenceOperation } from '@hanzo/bitrix'
+  import { BitrixEntityMapping, BitrixFieldMapping, FindReferenceOperation } from '@hanzoteam/bitrix'
 
   export let mapping: BitrixEntityMapping
   export let value: BitrixFieldMapping

@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { AccountClient } from '@hanzo/account-client'
+import { AccountClient } from '@hanzoteam/account-client'
 import calendar, {
   Event,
   ExternalCalendar,
   ReccuringEvent,
   ReccuringInstance,
   calendarIntegrationKind
-} from '@hanzo/calendar'
-import { Client, MeasureContext, Ref, TxOperations } from '@hanzo/core'
-import { areEqualMarkups, htmlToMarkup, isEmptyMarkup, jsonToHTML, markupToJSON } from '@hanzo/text'
+} from '@hanzoteam/calendar'
+import { Client, MeasureContext, Ref, TxOperations } from '@hanzoteam/core'
+import { areEqualMarkups, htmlToMarkup, isEmptyMarkup, jsonToHTML, markupToJSON } from '@hanzoteam/text'
 import { deepEqual } from 'fast-equals'
 import { OAuth2Client } from 'google-auth-library'
 import { calendar_v3 } from 'googleapis'

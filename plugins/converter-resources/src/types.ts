@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Doc, Class, Ref, Hierarchy, DocumentQuery } from '@hanzo/core'
-import type { AttributeModel, BuildModelKey, Viewlet } from '@hanzo/view'
-import type { Resource } from '@hanzo/platform'
+import type { Doc, Class, Ref, Hierarchy, DocumentQuery } from '@hanzoteam/core'
+import type { AttributeModel, BuildModelKey, Viewlet } from '@hanzoteam/view'
+import type { Resource } from '@hanzoteam/platform'
 
 import { escapeMarkdownLinkText, escapeMarkdownLinkUrl } from './markdown/escape'
 

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import chunter, { ChatMessage, DirectMessage } from '@hanzo/chunter'
-  import { Label } from '@hanzo/ui'
-  import { ActivityMessagePresenter } from '@hanzo/activity-resources'
+  import { SortingOrder } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import chunter, { ChatMessage, DirectMessage } from '@hanzoteam/chunter'
+  import { Label } from '@hanzoteam/ui'
+  import { ActivityMessagePresenter } from '@hanzoteam/activity-resources'
 
   import chunterResources from '../plugin'
   import { getChannelSpace } from '../utils'

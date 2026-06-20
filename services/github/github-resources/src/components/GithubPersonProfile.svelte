@@ -1,9 +1,9 @@
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { NavLink } from '@hanzo/presentation'
-  import tracker from '@hanzo/tracker'
-  import { Icon } from '@hanzo/ui'
-  import { GithubAuthentication } from '@hanzo/github'
+  import contact from '@hanzoteam/contact'
+  import { NavLink } from '@hanzoteam/presentation'
+  import tracker from '@hanzoteam/tracker'
+  import { Icon } from '@hanzoteam/ui'
+  import { GithubAuthentication } from '@hanzoteam/github'
   import github from '../plugin'
 
   export let auth: GithubAuthentication

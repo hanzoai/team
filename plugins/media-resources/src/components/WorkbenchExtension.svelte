@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { pushRootBarComponent } from '@hanzo/ui'
+  import { pushRootBarComponent } from '@hanzoteam/ui'
   import { onMount } from 'svelte'
 
   import media from '../plugin'

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Employee, Organization } from '@hanzo/contact'
+import type { Employee, Organization } from '@hanzoteam/contact'
 import {
   IndexKind,
   type Collection,
@@ -26,7 +26,7 @@ import {
   type Status,
   type Timestamp,
   type AccountUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   Collection as TypeCollection,
   Hidden,
@@ -42,15 +42,15 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import calendar, { TEvent } from '@hanzo/model-calendar'
-import chunter from '@hanzo/model-chunter'
-import contact, { TOrganization, TPerson } from '@hanzo/model-contact'
-import core, { TAttachedDoc } from '@hanzo/model-core'
-import tags from '@hanzo/model-tags'
-import task, { DOMAIN_TASK, TProject, TTask } from '@hanzo/model-task'
-import { getEmbeddedLabel } from '@hanzo/platform'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import calendar, { TEvent } from '@hanzoteam/model-calendar'
+import chunter from '@hanzoteam/model-chunter'
+import contact, { TOrganization, TPerson } from '@hanzoteam/model-contact'
+import core, { TAttachedDoc } from '@hanzoteam/model-core'
+import tags from '@hanzoteam/model-tags'
+import task, { DOMAIN_TASK, TProject, TTask } from '@hanzoteam/model-task'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
 import type {
   Applicant,
   ApplicantMatch,
@@ -59,8 +59,8 @@ import type {
   Review,
   Vacancy,
   VacancyList
-} from '@hanzo/recruit'
-import survey, { type Poll } from '@hanzo/survey'
+} from '@hanzoteam/recruit'
+import survey, { type Poll } from '@hanzoteam/survey'
 import recruit from './plugin'
 
 @Model(recruit.class.Vacancy, task.class.Project)

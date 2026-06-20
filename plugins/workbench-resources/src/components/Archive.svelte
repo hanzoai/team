@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { Icon, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { TableBrowser } from '@hanzo/view-resources'
-  import { NavigatorModel } from '@hanzo/workbench'
+  import core, { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { Icon, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { TableBrowser } from '@hanzoteam/view-resources'
+  import { NavigatorModel } from '@hanzoteam/workbench'
 
   import workbench from '../plugin'
   import { getSpecialSpaceClass } from '../utils'

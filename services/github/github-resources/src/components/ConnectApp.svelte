@@ -4,12 +4,12 @@
 //
 -->
 <script lang="ts">
-  import { PersonId } from '@hanzo/core'
-  import ui, { Label, Location, Spinner, Button, location } from '@hanzo/ui'
+  import { PersonId } from '@hanzoteam/core'
+  import ui, { Label, Location, Spinner, Button, location } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
   import github from '../plugin'
   import { sendGHServiceRequest } from './utils'
-  import { getMetadata } from '@hanzo/platform'
+  import { getMetadata } from '@hanzoteam/platform'
 
   let autoClose = 10
 

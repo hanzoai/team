@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { PersonId, Ref } from '@hanzo/core'
-  import { Component } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import contact, { getPersonRefsBySocialIds, Person } from '@hanzo/contact'
+  import { PersonId, Ref } from '@hanzoteam/core'
+  import { Component } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import contact, { getPersonRefsBySocialIds, Person } from '@hanzoteam/contact'
 
   export let value: PersonId[]
 

@@ -40,9 +40,9 @@ import {
   UXObject,
   AccountUuid,
   Blob
-} from '@hanzo/core'
-import { Asset, IntlString, Resource, Status } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
+} from '@hanzoteam/core'
+import { Asset, IntlString, Resource, Status } from '@hanzoteam/platform'
+import { Preference } from '@hanzoteam/preference'
 import {
   AnyComponent,
   AnySvelteComponent,
@@ -50,7 +50,7 @@ import {
   Location,
   Location as PlatformLocation,
   type LabelAndProps
-} from '@hanzo/ui'
+} from '@hanzoteam/ui'
 
 /**
  * @public

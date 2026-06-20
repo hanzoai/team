@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString, Asset } from '@hanzo/platform'
+  import type { IntlString, Asset } from '@hanzoteam/platform'
   import { createEventDispatcher, ComponentType, afterUpdate } from 'svelte'
 
-  import { DateRangeMode } from '@hanzo/core'
+  import { DateRangeMode } from '@hanzoteam/core'
   import ui from '../../plugin'
   import { showPopup } from '../../popups'
   import { ButtonKind, ButtonSize, AnySvelteComponent } from '../../types'

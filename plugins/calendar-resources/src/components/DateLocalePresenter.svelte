@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getUserTimezone } from '@hanzo/ui'
+  import { getUserTimezone } from '@hanzoteam/ui'
 
   export let date: number
   export let timeZone: string = getUserTimezone()

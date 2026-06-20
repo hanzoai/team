@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type WorkspaceUuid, type MeasureContext, type Ref } from '@hanzo/core'
-import documents, { type DocumentMeta, type ProjectMeta } from '@hanzo/controlled-documents'
-import { DOMAIN_DOCUMENTS } from '@hanzo/model-controlled-documents'
+import { type WorkspaceUuid, type MeasureContext, type Ref } from '@hanzoteam/core'
+import documents, { type DocumentMeta, type ProjectMeta } from '@hanzoteam/controlled-documents'
+import { DOMAIN_DOCUMENTS } from '@hanzoteam/model-controlled-documents'
 import { type Db } from 'mongodb'
-import { makeRank } from '@hanzo/task'
+import { makeRank } from '@hanzoteam/task'
 
 export async function addControlledDocumentRank (
   ctx: MeasureContext,

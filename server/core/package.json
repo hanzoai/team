@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/server-core",
+  "name": "@hanzoteam/server-core",
   "version": "0.6.5",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@types/node": "~20.11.16",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
@@ -35,15 +35,15 @@
     "@types/uuid": "^8.3.1"
   },
   "dependencies": {
-    "@hanzo/analytics": "^0.6.4",
-    "@hanzo/communication-sdk-types": "0.1.176",
-    "@hanzo/communication-types": "0.1.176",
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/query": "^0.6.17",
-    "@hanzo/rpc": "^0.6.10",
-    "@hanzo/server-token": "^0.6.16",
-    "@hanzo/storage": "^0.6.4",
+    "@hanzoteam/analytics": "^0.6.4",
+    "@hanzoteam/communication-sdk-types": "0.1.176",
+    "@hanzoteam/communication-types": "0.1.176",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/query": "^0.6.17",
+    "@hanzoteam/rpc": "^0.6.10",
+    "@hanzoteam/server-token": "^0.6.16",
+    "@hanzoteam/storage": "^0.6.4",
     "fast-equals": "^5.2.2",
     "uuid": "^8.3.2"
   }

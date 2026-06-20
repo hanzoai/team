@@ -14,16 +14,16 @@
 -->
 
 <script lang="ts">
-  import { formatName, getPersonBySocialId, Person } from '@hanzo/contact'
+  import { formatName, getPersonBySocialId, Person } from '@hanzoteam/contact'
   import { createEventDispatcher } from 'svelte'
-  import { getClient } from '@hanzo/presentation'
-  import { Card } from '@hanzo/card'
-  import { getCurrentAccount } from '@hanzo/core'
-  import { EmojiPopup, getEventPositionElement, showPopup, Action as MenuAction } from '@hanzo/ui'
-  import { personByPersonIdStore } from '@hanzo/contact-resources'
-  import type { SocialID } from '@hanzo/communication-types'
-  import { AttachmentPreview } from '@hanzo/attachment-resources'
-  import { Message, MessageType } from '@hanzo/communication-types'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Card } from '@hanzoteam/card'
+  import { getCurrentAccount } from '@hanzoteam/core'
+  import { EmojiPopup, getEventPositionElement, showPopup, Action as MenuAction } from '@hanzoteam/ui'
+  import { personByPersonIdStore } from '@hanzoteam/contact-resources'
+  import type { SocialID } from '@hanzoteam/communication-types'
+  import { AttachmentPreview } from '@hanzoteam/attachment-resources'
+  import { Message, MessageType } from '@hanzoteam/communication-types'
 
   import MessageContentViewer from './MessageContentViewer.svelte'
   import { AvatarSize } from '../../types'

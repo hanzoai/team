@@ -4,8 +4,8 @@ import {
   type MeasureContext,
   type WorkspaceUuid,
   type WorkspaceIds
-} from '@hanzo/core'
-import type { NamedStorageAdapter } from '@hanzo/storage'
+} from '@hanzoteam/core'
+import type { NamedStorageAdapter } from '@hanzoteam/storage'
 import { FallbackStorageAdapter } from '../fallback'
 import { MemStorageAdapter } from './memAdapters'
 

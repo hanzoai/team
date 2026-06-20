@@ -32,15 +32,15 @@ import {
   type WithLookup,
   AccountUuid,
   type SocialIdType
-} from '@hanzo/core'
-import type { Asset, Metadata, Plugin, Resource } from '@hanzo/platform'
-import { IntlString, plugin } from '@hanzo/platform'
-import { TemplateField, TemplateFieldCategory } from '@hanzo/templates'
-import type { AnyComponent, ColorDefinition, ResolvedLocation, Location, ComponentExtensionId } from '@hanzo/ui'
-import { Action, FilterMode, Viewlet } from '@hanzo/view'
+} from '@hanzoteam/core'
+import type { Asset, Metadata, Plugin, Resource } from '@hanzoteam/platform'
+import { IntlString, plugin } from '@hanzoteam/platform'
+import { TemplateField, TemplateFieldCategory } from '@hanzoteam/templates'
+import type { AnyComponent, ColorDefinition, ResolvedLocation, Location, ComponentExtensionId } from '@hanzoteam/ui'
+import { Action, FilterMode, Viewlet } from '@hanzoteam/view'
 import type { Readable } from 'svelte/store'
-import { Card, MasterTag, Role } from '@hanzo/card'
-import { Preference } from '@hanzo/preference'
+import { Card, MasterTag, Role } from '@hanzoteam/card'
+import { Preference } from '@hanzoteam/preference'
 
 import { PermissionsStore } from './types'
 

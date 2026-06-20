@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MarkupNode } from '@hanzo/text-core'
+import { MarkupNode } from '@hanzoteam/text-core'
 import { MarkdownParser } from './parser'
 import { MarkdownState, storeMarks, storeNodes } from './serializer'
 

@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { type Doc, type Ref, notEmpty } from '@hanzo/core'
-  import { type Person, formatName, getCurrentEmployee } from '@hanzo/contact'
-  import { Avatar, getPersonsByPersonRefs } from '@hanzo/contact-resources'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { IconSize, tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hanzo/ui'
+  import { type Doc, type Ref, notEmpty } from '@hanzoteam/core'
+  import { type Person, formatName, getCurrentEmployee } from '@hanzoteam/contact'
+  import { Avatar, getPersonsByPersonRefs } from '@hanzoteam/contact-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { IconSize, tooltip, deviceOptionsStore as deviceInfo, checkAdaptiveMatching } from '@hanzoteam/ui'
 
   import PresenceList from './PresenceList.svelte'
   import { presence } from '../presence'

@@ -1,8 +1,8 @@
 // Mocks for modules used by client
-import type { ContainerConnection, TickManager } from '@hanzo/network-core'
+import type { ContainerConnection, TickManager } from '@hanzoteam/network-core'
 import { NetworkClientImpl } from '../client'
 
-jest.mock('@hanzo/network-backrpc', () => ({
+jest.mock('@hanzoteam/network-backrpc', () => ({
   BackRPCClient: jest.fn().mockImplementation(() => ({
     waitConnection: jest.fn().mockResolvedValue(undefined),
     request: jest.fn().mockResolvedValue(undefined),
@@ -10,7 +10,7 @@ jest.mock('@hanzo/network-backrpc', () => ({
   }))
 }))
 
-jest.mock('@hanzo/network-core', () => ({
+jest.mock('@hanzoteam/network-core', () => ({
   parseEndpointRef: jest.fn((endpoint: string) => {
     if (endpoint === 'routed-endpoint') {
       return { uuid: 'container-1', kind: 'routed', host: 'h', port: 1234, agentId: 'agent-1' }

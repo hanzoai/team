@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Breadcrumbs, location as locationStore, Header, BreadcrumbItem, Loading } from '@hanzo/ui'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Breadcrumbs, location as locationStore, Header, BreadcrumbItem, Loading } from '@hanzoteam/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import activity, { ActivityMessage, DisplayActivityMessage } from '@hanzo/activity'
-  import { getMessageFromLoc, messageInFocus } from '@hanzo/activity-resources'
-  import contact from '@hanzo/contact'
-  import attachment from '@hanzo/attachment'
+  import activity, { ActivityMessage, DisplayActivityMessage } from '@hanzoteam/activity'
+  import { getMessageFromLoc, messageInFocus } from '@hanzoteam/activity-resources'
+  import contact from '@hanzoteam/contact'
+  import attachment from '@hanzoteam/attachment'
 
   import chunter from '../../plugin'
   import { getObjectIcon, getChannelName } from '../../utils'

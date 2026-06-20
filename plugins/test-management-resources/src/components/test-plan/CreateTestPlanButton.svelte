@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, IconAdd } from '@hanzo/ui'
+  import { Button, IconAdd } from '@hanzoteam/ui'
 
   import testManagement from '../../plugin'
   import { showCreateTestPlanPanel } from '../../utils'
