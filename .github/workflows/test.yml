@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     
     services:
       postgres:
@@ -87,7 +87,7 @@ jobs:
       run: docker build -f Dockerfile.dev -t team-test .
     
   test-models:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     
     steps:
     - uses: actions/checkout@v4
@@ -116,7 +116,7 @@ jobs:
         done
     
   test-plugins:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     
     steps:
     - uses: actions/checkout@v4
@@ -145,7 +145,7 @@ jobs:
         done
     
   test-production:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     needs: [test, test-models, test-plugins]
     
     steps:
@@ -163,7 +163,7 @@ jobs:
         docker compose -f compose.yml config
     
   security-scan:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     
     steps:
     - uses: actions/checkout@v4

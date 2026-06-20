@@ -66,7 +66,7 @@ env:
 jobs:
   # This workflow contains a single job called "build"
   build:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -137,7 +137,7 @@ jobs:
           restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ github.sha }}
   svelte-check:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -163,7 +163,7 @@ jobs:
         run: node common/scripts/install-run-rush.js svelte-check -v
   formatting:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -194,7 +194,7 @@ jobs:
           echo '================================================================'
   test:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -233,7 +233,7 @@ jobs:
           ELASTIC_URL: 'http://localhost:9201'
           MONGO_URL: 'mongodb://localhost:27018'
   uitest:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -366,7 +366,7 @@ jobs:
       #     name: db-snapshot
       #     path: ./tests/db_dump
   uitest-pg:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -464,7 +464,7 @@ jobs:
           name: docker-logs-pg
           path: ./tests/sanity/logs
   uitest-qms:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -546,7 +546,7 @@ jobs:
           name: docker-logs-qms
           path: ./qms-tests/sanity/logs
   uitest-workspaces:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v6
@@ -643,7 +643,7 @@ jobs:
           path: ./ws-tests/sanity/logs
   docker-build:
     needs: [uitest-workspaces]
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       # https://github.com/actions/runner-images/issues/2840#issuecomment-790492173
@@ -951,7 +951,7 @@ jobs:
   publish-npm:
     if: startsWith(github.event.inputs.ref || github.ref, 'refs/tags/v') && (github.event_name != 'workflow_dispatch' || github.event.inputs.skip_publish != 'true')
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v6

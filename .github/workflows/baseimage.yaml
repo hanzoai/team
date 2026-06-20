@@ -21,7 +21,7 @@ on:
 
 jobs:
   docker-build:
-    runs-on: ubuntu-latest
+    runs-on: hanzo-build-linux-amd64
     timeout-minutes: 60
     steps:
       - name: Set up QEMU
