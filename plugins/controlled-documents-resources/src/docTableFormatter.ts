@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Doc, type Hierarchy, type Ref, type Space, getObjectValue } from '@hanzo/core'
-import { translate, type IntlString } from '@hanzo/platform'
-import documentsPlugin from '@hanzo/controlled-documents'
-import { type AttributeModel } from '@hanzo/view'
-import { getClient } from '@hanzo/presentation'
-import { isIntlString } from '@hanzo/converter-resources'
+import core, { type Class, type Doc, type Hierarchy, type Ref, type Space, getObjectValue } from '@hanzoteam/core'
+import { translate, type IntlString } from '@hanzoteam/platform'
+import documentsPlugin from '@hanzoteam/controlled-documents'
+import { type AttributeModel } from '@hanzoteam/view'
+import { getClient } from '@hanzoteam/presentation'
+import { isIntlString } from '@hanzoteam/converter-resources'
 
 /**
  * Format version number from major and minor

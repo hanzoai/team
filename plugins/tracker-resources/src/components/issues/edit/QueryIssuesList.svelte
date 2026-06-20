@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Issue } from '@hanzo/tracker'
-  import { Button, Chevron, ExpandCollapse, IconAdd, closeTooltip, resizeObserver, showPopup } from '@hanzo/ui'
-  import view, { ViewOptions, Viewlet, ViewletPreference } from '@hanzo/view'
-  import { ViewletsSettingButton, restrictionStore } from '@hanzo/view-resources'
+  import core, { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Issue } from '@hanzoteam/tracker'
+  import { Button, Chevron, ExpandCollapse, IconAdd, closeTooltip, resizeObserver, showPopup } from '@hanzoteam/ui'
+  import view, { ViewOptions, Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { ViewletsSettingButton, restrictionStore } from '@hanzoteam/view-resources'
   import { afterUpdate } from 'svelte'
   import tracker from '../../../plugin'
   import CreateIssue from '../../CreateIssue.svelte'

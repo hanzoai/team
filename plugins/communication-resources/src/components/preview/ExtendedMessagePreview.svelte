@@ -12,14 +12,14 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { LiteMessageViewer } from '@hanzo/presentation'
-  import { Card } from '@hanzo/card'
-  import { type WithLookup } from '@hanzo/core'
-  import { Message, MessageType, SocialID } from '@hanzo/communication-types'
-  import { Person } from '@hanzo/contact'
-  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
-  import { markdownToMarkup } from '@hanzo/text-markdown'
-  import { jsonToMarkup, markupToText } from '@hanzo/text'
+  import { LiteMessageViewer } from '@hanzoteam/presentation'
+  import { Card } from '@hanzoteam/card'
+  import { type WithLookup } from '@hanzoteam/core'
+  import { Message, MessageType, SocialID } from '@hanzoteam/communication-types'
+  import { Person } from '@hanzoteam/contact'
+  import { getEmbeddedLabel, IntlString } from '@hanzoteam/platform'
+  import { markdownToMarkup } from '@hanzoteam/text-markdown'
+  import { jsonToMarkup, markupToText } from '@hanzoteam/text'
 
   import ActivityMessageViewer from '../message/ActivityMessageViewer.svelte'
   import AttachmentsPreview from '../AttachmentsPreview.svelte'

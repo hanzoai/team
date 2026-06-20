@@ -1,5 +1,5 @@
-import guest, { guestId } from '@hanzo/guest'
-import { type IntlString, mergeIds } from '@hanzo/platform'
+import guest, { guestId } from '@hanzoteam/guest'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
 
 export default mergeIds(guestId, guest, {
   string: {

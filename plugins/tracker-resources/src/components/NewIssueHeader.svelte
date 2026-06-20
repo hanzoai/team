@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import core, { AccountRole, Ref, Space } from '@hanzo/core'
-  import { MultipleDraftController, createQuery, getClient } from '@hanzo/presentation'
-  import { TrackerEvents } from '@hanzo/tracker'
-  import { HeaderButton, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Analytics } from '@hanzoteam/analytics'
+  import core, { AccountRole, Ref, Space } from '@hanzoteam/core'
+  import { MultipleDraftController, createQuery, getClient } from '@hanzoteam/presentation'
+  import { TrackerEvents } from '@hanzoteam/tracker'
+  import { HeaderButton, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   import { onDestroy } from 'svelte'
   import tracker from '../plugin'

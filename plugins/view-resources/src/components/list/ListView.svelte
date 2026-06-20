@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { ActionContext } from '@hanzo/presentation'
-  import { AnyComponent, Scroller, resizeObserver } from '@hanzo/ui'
-  import { BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzo/view'
+  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { ActionContext } from '@hanzoteam/presentation'
+  import { AnyComponent, Scroller, resizeObserver } from '@hanzoteam/ui'
+  import { BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzoteam/view'
   import { onMount } from 'svelte'
   import { ListSelectionProvider, SelectDirection, focusStore } from '../..'
 

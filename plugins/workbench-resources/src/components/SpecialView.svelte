@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space, WithLookup, mergeQueries } from '@hanzo/core'
-  import { Asset, getResource, IntlString, Resource } from '@hanzo/platform'
-  import { getClient, ComponentExtensions } from '@hanzo/presentation'
+  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space, WithLookup, mergeQueries } from '@hanzoteam/core'
+  import { Asset, getResource, IntlString, Resource } from '@hanzoteam/platform'
+  import { getClient, ComponentExtensions } from '@hanzoteam/presentation'
   import {
     AnyComponent,
     AnySvelteComponent,
@@ -29,8 +29,8 @@
     ModeSelector,
     SearchInput,
     showPopup
-  } from '@hanzo/ui'
-  import view, { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions, BuildModelKey } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions, BuildModelKey } from '@hanzoteam/view'
   import {
     FilterBar,
     FilterButton,
@@ -39,8 +39,8 @@
     getViewletSpecialActions,
     ViewletSelector,
     ViewletSettingButton
-  } from '@hanzo/view-resources'
-  import workbench, { type ParentsNavigationModel } from '@hanzo/workbench'
+  } from '@hanzoteam/view-resources'
+  import workbench, { type ParentsNavigationModel } from '@hanzoteam/workbench'
   import ComponentNavigator from './ComponentNavigator.svelte'
   import { deepEqual } from 'fast-equals'
   import { ComponentType } from 'svelte'

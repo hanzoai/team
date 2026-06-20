@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import contact, { type Person } from '@hanzo/contact'
-import { SocialIdType, buildSocialIdString, type Ref, type Timestamp, type TxOperations } from '@hanzo/core'
-import { MarkupNodeType, traverseNode, type MarkupNode } from '@hanzo/text'
-import tracker from '@hanzo/tracker'
+import contact, { type Person } from '@hanzoteam/contact'
+import { SocialIdType, buildSocialIdString, type Ref, type Timestamp, type TxOperations } from '@hanzoteam/core'
+import { MarkupNodeType, traverseNode, type MarkupNode } from '@hanzoteam/text'
+import tracker from '@hanzoteam/tracker'
 import csv from 'csvtojson'
 import { download } from '../importer/dowloader'
 import {

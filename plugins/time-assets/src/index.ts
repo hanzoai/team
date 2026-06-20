@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hanzo/platform'
-import time from '@hanzo/time'
+import { loadMetadata } from '@hanzoteam/platform'
+import time from '@hanzoteam/time'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(time.icon, {

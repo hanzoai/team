@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Mixin, Ref, Space } from '@hanzo/core'
+  import core, { Class, Doc, Mixin, Ref, Space } from '@hanzoteam/core'
   import {
     AttributeBarEditor,
     getClient,
     getFiltredKeys,
     isCollectionAttr,
     KeyedAttribute
-  } from '@hanzo/presentation'
-  import { Scroller } from '@hanzo/ui'
-  import { ClassAttributeBar, getDocMixins } from '@hanzo/view-resources'
-  import { ObjectChatPanel } from '@hanzo/chunter'
+  } from '@hanzoteam/presentation'
+  import { Scroller } from '@hanzoteam/ui'
+  import { ClassAttributeBar, getDocMixins } from '@hanzoteam/view-resources'
+  import { ObjectChatPanel } from '@hanzoteam/chunter'
 
   export let object: Doc
   export let objectChatPanel: ObjectChatPanel | undefined

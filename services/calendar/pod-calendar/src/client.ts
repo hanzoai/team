@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import client from '@hanzo/client'
-import { WorkspaceUuid, type Client } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
+import client from '@hanzoteam/client'
+import { WorkspaceUuid, type Client } from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
+import { createClient, getTransactorEndpoint } from '@hanzoteam/server-client'
 import { getWorkspaceToken } from './utils'
 
 const endpoints = new Map<WorkspaceUuid, string>()

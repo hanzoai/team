@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import type { Process, SelectedConst } from '@hanzo/process'
-  import { AnyComponent, Component } from '@hanzo/ui'
-  import { findAttributePresenter } from '@hanzo/view-resources'
+  import core from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { Process, SelectedConst } from '@hanzoteam/process'
+  import { AnyComponent, Component } from '@hanzoteam/ui'
+  import { findAttributePresenter } from '@hanzoteam/view-resources'
   import { readonly } from 'svelte/store'
 
   export let contextValue: SelectedConst

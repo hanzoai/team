@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association, Class, Doc, Ref } from '@hanzo/core'
-  import { Label } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import { IntlString } from '@hanzo/platform'
-  import { Analytics } from '@hanzo/analytics'
+  import core, { Association, Class, Doc, Ref } from '@hanzoteam/core'
+  import { Label } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let value: Association
 

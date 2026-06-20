@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, IntlString } from '@hanzo/platform'
+  import { Asset, IntlString } from '@hanzoteam/platform'
   import { tooltip } from '../tooltips'
   import type { LabelAndProps, AnySvelteComponent, AnyComponent } from '../types'
   import Component from './Component.svelte'

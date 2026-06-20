@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Notification, NotificationType } from '@hanzo/communication-types'
-  import { Card } from '@hanzo/card'
+  import { Notification, NotificationType } from '@hanzoteam/communication-types'
+  import { Card } from '@hanzoteam/card'
 
   import MessageNotification from './MessageNotification.svelte'
   import ReactionNotification from './ReactionNotification.svelte'

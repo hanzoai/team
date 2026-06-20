@@ -14,7 +14,7 @@
 //
 
 import type postgres from 'postgres'
-import { Domain } from '@hanzo/communication-sdk-types'
+import { Domain } from '@hanzoteam/communication-sdk-types'
 
 /* eslint-disable @typescript-eslint/naming-convention */
 

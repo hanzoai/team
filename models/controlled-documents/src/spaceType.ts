@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { Prop, type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import setting, { getRoleAttributeProps } from '@hanzo/setting'
-import { type Permission, type Ref } from '@hanzo/core'
+import { Prop, type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import setting, { getRoleAttributeProps } from '@hanzoteam/setting'
+import { type Permission, type Ref } from '@hanzoteam/core'
 
 import { TDocumentSpaceTypeData } from './types'
 import documents from './plugin'

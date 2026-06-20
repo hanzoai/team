@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity, { ActivityMessage, DocUpdateMessage } from '@hanzo/activity'
-import { Analytics } from '@hanzo/analytics'
-import chunter, { ChatMessage } from '@hanzo/chunter'
+import activity, { ActivityMessage, DocUpdateMessage } from '@hanzoteam/activity'
+import { Analytics } from '@hanzoteam/analytics'
+import chunter, { ChatMessage } from '@hanzoteam/chunter'
 import contact, {
   Employee,
   formatName,
@@ -22,7 +22,7 @@ import contact, {
   Person,
   SocialIdentity,
   SocialIdentityRef
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import core, {
   AccountUuid,
   Class,
@@ -45,7 +45,7 @@ import core, {
   TxMixin,
   TxProcessor,
   TxUpdateDoc
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import notification, {
   NotificationContent,
   notificationId,
@@ -53,21 +53,21 @@ import notification, {
   type NotificationProviderSetting,
   NotificationType,
   type NotificationTypeSetting
-} from '@hanzo/notification'
-import { getMetadata, getResource, IntlString, translate } from '@hanzo/platform'
-import { getPersonSpaces } from '@hanzo/server-contact'
-import serverCore, { TriggerControl } from '@hanzo/server-core'
+} from '@hanzoteam/notification'
+import { getMetadata, getResource, IntlString, translate } from '@hanzoteam/platform'
+import { getPersonSpaces } from '@hanzoteam/server-contact'
+import serverCore, { TriggerControl } from '@hanzoteam/server-core'
 import serverNotification, {
   HTMLPresenter,
   NotificationPresenter,
   ReceiverInfo,
   SenderInfo,
   TextPresenter
-} from '@hanzo/server-notification'
-import serverView from '@hanzo/server-view'
-import { extractReferences, markupToJSON, Reference } from '@hanzo/text-core'
-import { encodeObjectURI } from '@hanzo/view'
-import { workbenchId } from '@hanzo/workbench'
+} from '@hanzoteam/server-notification'
+import serverView from '@hanzoteam/server-view'
+import { extractReferences, markupToJSON, Reference } from '@hanzoteam/text-core'
+import { encodeObjectURI } from '@hanzoteam/view'
+import { workbenchId } from '@hanzoteam/workbench'
 
 import { NotifyResult } from './types'
 

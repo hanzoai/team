@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PersonRating } from '@hanzo/rating'
+  import type { PersonRating } from '@hanzoteam/rating'
 
   export let rating: PersonRating | undefined
 
@@ -46,8 +46,8 @@
     return Math.max(...monthData.map((val) => (val[1] ?? 0) + (val[2] ?? 0) + (val[3] ?? 0)))
   }
 
-  import ratingPlugin from '@hanzo/rating'
-  import { tooltip } from '@hanzo/ui'
+  import ratingPlugin from '@hanzoteam/rating'
+  import { tooltip } from '@hanzoteam/ui'
 
   // Formatter for localized month names (short form, e.g. 'Jan', 'Feb' or localized equivalent)
   const monthFormatter = new Intl.DateTimeFormat(undefined, { month: 'short' })

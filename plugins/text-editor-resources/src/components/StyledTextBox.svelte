@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Markup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import presentation, { MessageViewer, getFileUrl, getImageSize, imageSizeToRatio } from '@hanzo/presentation'
-  import { EmptyMarkup, mergeKitOptions } from '@hanzo/text'
-  import textEditor, { RefAction } from '@hanzo/text-editor'
+  import { Markup } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import presentation, { MessageViewer, getFileUrl, getImageSize, imageSizeToRatio } from '@hanzoteam/presentation'
+  import { EmptyMarkup, mergeKitOptions } from '@hanzoteam/text'
+  import textEditor, { RefAction } from '@hanzoteam/text-editor'
   import {
     ActionIcon,
     ButtonSize,
@@ -17,7 +17,7 @@
     getPopupPositionElement,
     registerFocus,
     resizeObserver
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import StyledTextEditor from './StyledTextEditor.svelte'

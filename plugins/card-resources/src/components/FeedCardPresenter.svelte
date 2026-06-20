@@ -12,16 +12,16 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import cardPlugin, { Card } from '@hanzo/card'
-  import { CardID, Label as CardLabel, Message, MessageType } from '@hanzo/communication-types'
-  import { SortingOrder, WithLookup } from '@hanzo/core'
-  import { createMessagesQuery } from '@hanzo/presentation'
+  import cardPlugin, { Card } from '@hanzoteam/card'
+  import { CardID, Label as CardLabel, Message, MessageType } from '@hanzoteam/communication-types'
+  import { SortingOrder, WithLookup } from '@hanzoteam/core'
+  import { createMessagesQuery } from '@hanzoteam/presentation'
 
-  import chat from '@hanzo/chat'
-  import { ExtendedMessagePreview, labelsStore } from '@hanzo/communication-resources'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Button, IconDetailsFilled, IconMoreH, tooltip } from '@hanzo/ui'
-  import { DocNavLink, showMenu } from '@hanzo/view-resources'
+  import chat from '@hanzoteam/chat'
+  import { ExtendedMessagePreview, labelsStore } from '@hanzoteam/communication-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Button, IconDetailsFilled, IconMoreH, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, showMenu } from '@hanzoteam/view-resources'
 
   import CardPathPresenter from './CardPathPresenter.svelte'
   import CardTagsColored from './CardTagsColored.svelte'

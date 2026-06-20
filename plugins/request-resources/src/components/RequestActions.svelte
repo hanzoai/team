@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentRefInput } from '@hanzo/attachment-resources'
-  import chunter, { ChatMessage } from '@hanzo/chunter'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { AttachedData, getCurrentAccount, Markup } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Request, RequestStatus } from '@hanzo/request'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
-  import { type RefAction } from '@hanzo/text-editor'
-  import { Button } from '@hanzo/ui'
+  import { AttachmentRefInput } from '@hanzoteam/attachment-resources'
+  import chunter, { ChatMessage } from '@hanzoteam/chunter'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { AttachedData, getCurrentAccount, Markup } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Request, RequestStatus } from '@hanzoteam/request'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
+  import { type RefAction } from '@hanzoteam/text-editor'
+  import { Button } from '@hanzoteam/ui'
 
   import request from '../plugin'
   import Comments from './icons/Comments.svelte'

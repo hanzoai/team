@@ -331,18 +331,18 @@
    */
   "projects": [
     {
-      "packageName": "@hanzo/scripts",
+      "packageName": "@hanzoteam/scripts",
       "projectFolder": "common/scripts",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/platform-rig",
+      "packageName": "@hanzoteam/platform-rig",
       "projectFolder": "packages/platform-rig",
       "reviewCategory": "tools",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/ui-test",
+      "packageName": "@hanzoteam/ui-test",
       "projectFolder": "packages/ui-test",
       "shouldPublish": false
     }

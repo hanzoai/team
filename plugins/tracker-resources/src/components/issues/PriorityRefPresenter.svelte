@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IssuePriority } from '@hanzo/tracker'
-  import { Icon, Label, getPlatformColorDef, themeStore } from '@hanzo/ui'
+  import { IssuePriority } from '@hanzoteam/tracker'
+  import { Icon, Label, getPlatformColorDef, themeStore } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import { IssuePriorityColor, issuePriorities } from '../../utils'
 

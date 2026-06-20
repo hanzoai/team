@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import aiBot, { aiBotId } from '@hanzo/ai-bot'
+import { mergeIds } from '@hanzoteam/platform'
+import aiBot, { aiBotId } from '@hanzoteam/ai-bot'
 
 export default mergeIds(aiBotId, aiBot, {})

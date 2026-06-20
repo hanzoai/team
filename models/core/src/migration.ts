@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { saveCollabJson } from '@hanzo/collaboration'
+import { saveCollabJson } from '@hanzoteam/collaboration'
 import core, {
   buildSocialIdString,
   configUserAccountUuid,
@@ -51,7 +51,7 @@ import core, {
   type TxMixin,
   type TxUpdateDoc,
   type TypedSpace
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   createDefaultSpace,
   tryMigrate,
@@ -63,8 +63,8 @@ import {
   type MigrationDocumentQuery,
   type MigrationIterator,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import { type StorageAdapter } from '@hanzo/storage'
+} from '@hanzoteam/model'
+import { type StorageAdapter } from '@hanzoteam/storage'
 
 async function migrateStatusesToModel (client: MigrationClient, mode: MigrateMode): Promise<void> {
   // Move statuses to model:

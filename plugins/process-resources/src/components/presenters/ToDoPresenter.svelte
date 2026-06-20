@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Process, ProcessToDo, Step, parseContext } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import core from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process, ProcessToDo, Step, parseContext } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import { getContext } from '../../utils'
   import ContextValuePresenter from '../attributeEditors/ContextValuePresenter.svelte'

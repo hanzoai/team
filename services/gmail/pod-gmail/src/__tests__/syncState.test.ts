@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { PersonId } from '@hanzo/core'
-import { KeyValueClient } from '@hanzo/kvs-client'
+import { PersonId } from '@hanzoteam/core'
+import { KeyValueClient } from '@hanzoteam/kvs-client'
 
 import { SyncStateManager } from '../message/syncState'
 import { IntegrationVersion } from '../types'

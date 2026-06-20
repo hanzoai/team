@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   AccountRole,
   ClassifierKind,
@@ -57,10 +57,10 @@ import core, {
   type TypeAny,
   type TypedSpace,
   type WithLookup
-} from '@hanzo/core'
-import { type Restrictions } from '@hanzo/guest'
-import type { Asset, IntlString } from '@hanzo/platform'
-import { getEmbeddedLabel, getMetadata, getResource, translate } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { type Restrictions } from '@hanzoteam/guest'
+import type { Asset, IntlString } from '@hanzoteam/platform'
+import { getEmbeddedLabel, getMetadata, getResource, translate } from '@hanzoteam/platform'
 import presentation, {
   createQuery,
   getAttributePresenterClass,
@@ -70,8 +70,8 @@ import presentation, {
   hasResource,
   isAdminUser,
   type KeyedAttribute
-} from '@hanzo/presentation'
-import { type CollaborationUser } from '@hanzo/text-editor'
+} from '@hanzoteam/presentation'
+import { type CollaborationUser } from '@hanzoteam/text-editor'
 import {
   ErrorPresenter,
   getColorNumberByText,
@@ -85,7 +85,7 @@ import {
   type AnyComponent,
   type AnySvelteComponent,
   type Location
-} from '@hanzo/ui'
+} from '@hanzoteam/ui'
 import view, {
   AttributeCategoryOrder,
   type AttributeCategory,
@@ -98,19 +98,19 @@ import view, {
   type LinkIdProvider,
   type Viewlet,
   type ViewletDescriptor
-} from '@hanzo/view'
+} from '@hanzoteam/view'
 
 import contact, {
   getAllSocialStringsByPersonRef,
   getCurrentEmployee,
   getName,
   type Contact
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import { get, writable } from 'svelte/store'
 import plugin from './plugin'
 import { noCategory } from './viewOptions'
 
-export { getFiltredKeys, isCollectionAttr } from '@hanzo/presentation'
+export { getFiltredKeys, isCollectionAttr } from '@hanzoteam/presentation'
 
 /**
  * Define some properties to be used to show component until data is properly loaded.

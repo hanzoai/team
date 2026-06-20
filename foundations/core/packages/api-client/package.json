@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/api-client",
+  "name": "@hanzoteam/api-client",
   "version": "0.7.18",
   "main": "lib/index.js",
   "exports": {
@@ -32,7 +32,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -52,14 +52,14 @@
     "eslint-plugin-svelte": "^2.35.1"
   },
   "dependencies": {
-    "@hanzo/account-client": "workspace:^0.7.21",
-    "@hanzo/client": "workspace:^0.7.18",
-    "@hanzo/client-resources": "workspace:^0.7.18",
-    "@hanzo/collaborator-client": "workspace:^0.7.17",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/text": "workspace:^0.7.18",
-    "@hanzo/text-markdown": "workspace:^0.7.20",
+    "@hanzoteam/account-client": "workspace:^0.7.21",
+    "@hanzoteam/client": "workspace:^0.7.18",
+    "@hanzoteam/client-resources": "workspace:^0.7.18",
+    "@hanzoteam/collaborator-client": "workspace:^0.7.17",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/text": "workspace:^0.7.18",
+    "@hanzoteam/text-markdown": "workspace:^0.7.20",
     "snappyjs": "^0.7.0"
   },
   "repository": {

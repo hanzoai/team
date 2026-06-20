@@ -17,11 +17,11 @@ import documents, {
   type DocumentState,
   type DocumentSpace,
   documentsId
-} from '@hanzo/controlled-documents'
-import { type Client, type Doc, type Ref, type Space } from '@hanzo/core'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
-import type { KeyFilter, SortFunc, ViewActionAvailabilityFunction } from '@hanzo/view'
+} from '@hanzoteam/controlled-documents'
+import { type Client, type Doc, type Ref, type Space } from '@hanzoteam/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { type AnyComponent, type Location } from '@hanzoteam/ui/src/types'
+import type { KeyFilter, SortFunc, ViewActionAvailabilityFunction } from '@hanzoteam/view'
 
 export default mergeIds(documentsId, documents, {
   component: {

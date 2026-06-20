@@ -19,7 +19,7 @@ import {
   MessageEventType,
   PeerEventType,
   type SessionData
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 
 import type { Enriched, Middleware, MiddlewareContext } from '../types'
 import { BaseMiddleware } from './base'

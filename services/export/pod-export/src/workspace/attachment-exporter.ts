@@ -25,9 +25,9 @@ import {
   type Ref,
   type TxOperations,
   type WorkspaceIds
-} from '@hanzo/core'
-import core from '@hanzo/model-core'
-import { type StorageAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import core from '@hanzoteam/model-core'
+import { type StorageAdapter } from '@hanzoteam/server-core'
 import { Buffer } from 'buffer'
 
 /**

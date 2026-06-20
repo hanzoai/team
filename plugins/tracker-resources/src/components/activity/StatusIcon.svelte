@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, TxUpdateDoc } from '@hanzo/core'
-  import { Issue, Project } from '@hanzo/tracker'
-  import { statusStore } from '@hanzo/view-resources'
+  import { Ref, TxUpdateDoc } from '@hanzoteam/core'
+  import { Issue, Project } from '@hanzoteam/tracker'
+  import { statusStore } from '@hanzoteam/view-resources'
   import IssueStatusIcon from '../issues/IssueStatusIcon.svelte'
 
   export let tx: TxUpdateDoc<Issue>

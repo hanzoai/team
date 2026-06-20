@@ -2,10 +2,10 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import training, { type Training, trainingId, type TrainingRequest } from '@hanzo/training'
-import { mergeIds, type Resource } from '@hanzo/platform'
+import training, { type Training, trainingId, type TrainingRequest } from '@hanzoteam/training'
+import { mergeIds, type Resource } from '@hanzoteam/platform'
 import { type ComponentType } from 'svelte'
-import { type Ref } from '@hanzo/core'
+import { type Ref } from '@hanzoteam/core'
 import {
   type Action,
   type GetAllValuesFunc,
@@ -14,7 +14,7 @@ import {
   type ViewActionAvailabilityFunction,
   type ViewActionFunction,
   type ViewletDescriptor
-} from '@hanzo/view'
+} from '@hanzoteam/view'
 import type EmployeeEditor from './components/EmployeeEditor.svelte'
 import type IncomingRequestPresenter from './components/IncomingRequestPresenter.svelte'
 import type IncomingRequestStatePresenter from './components/IncomingRequestStatePresenter.svelte'

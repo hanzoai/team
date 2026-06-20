@@ -19,7 +19,7 @@ import {
   type TransformOperation,
   OperationType,
   type OperationConfig
-} from '@hanzo/export'
+} from '@hanzoteam/export'
 
 export class Transformer {
   private readonly skipAttributes: Set<string>

@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/network-backrpc",
+      "packageName": "@hanzoteam/network-backrpc",
       "comment": "typing refactoring",
       "type": "none"
     }
   ],
-  "packageName": "@hanzo/network-backrpc"
+  "packageName": "@hanzoteam/network-backrpc"
 }

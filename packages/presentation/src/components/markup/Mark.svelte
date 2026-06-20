@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import { MarkupMark, MarkupMarkType } from '@hanzo/text'
-  import uiPlugin, { navigate, parseLocation } from '@hanzo/ui'
+  import { getMetadata } from '@hanzoteam/platform'
+  import { MarkupMark, MarkupMarkType } from '@hanzoteam/text'
+  import uiPlugin, { navigate, parseLocation } from '@hanzoteam/ui'
 
   import presentation from '../../plugin'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let mark: MarkupMark
 

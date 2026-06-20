@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import type { Drive, Folder, Resource } from '@hanzo/drive'
-  import presentation, { Card, SpaceSelector } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { ObjectBox } from '@hanzo/view-resources'
+  import { Ref } from '@hanzoteam/core'
+  import type { Drive, Folder, Resource } from '@hanzoteam/drive'
+  import presentation, { Card, SpaceSelector } from '@hanzoteam/presentation'
+  import view from '@hanzoteam/view'
+  import { ObjectBox } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
 
   import drive from '../plugin'

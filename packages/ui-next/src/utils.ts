@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { EmojiPopup, showPopup } from '@hanzo/ui'
-import { getCurrentAccount, type Markup } from '@hanzo/core'
-import { markupToJSON, jsonToMarkup } from '@hanzo/text'
-import { markupToMarkdown, markdownToMarkup } from '@hanzo/text-markdown'
-import { type Message } from '@hanzo/communication-types'
-import { getCommunicationClient } from '@hanzo/presentation'
+import { EmojiPopup, showPopup } from '@hanzoteam/ui'
+import { getCurrentAccount, type Markup } from '@hanzoteam/core'
+import { markupToJSON, jsonToMarkup } from '@hanzoteam/text'
+import { markupToMarkdown, markdownToMarkup } from '@hanzoteam/text-markdown'
+import { type Message } from '@hanzoteam/communication-types'
+import { getCommunicationClient } from '@hanzoteam/presentation'
 
 import IconAt from './components/icons/IconAt.svelte'
 import IconEmoji from './components/icons/IconEmoji.svelte'

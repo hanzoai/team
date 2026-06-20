@@ -13,12 +13,12 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { createNotificationsQuery, createQuery } from '@hanzo/presentation'
-  import { CheckBox, Loading, Spinner } from '@hanzo/ui'
-  import { AccountRole, Doc, getCurrentAccount } from '@hanzo/core'
-  import notification, { ActivityNotificationViewlet, InboxNotification } from '@hanzo/notification'
-  import { Card } from '@hanzo/card'
-  import { Notification, NotificationType } from '@hanzo/communication-types'
+  import { createNotificationsQuery, createQuery } from '@hanzoteam/presentation'
+  import { CheckBox, Loading, Spinner } from '@hanzoteam/ui'
+  import { AccountRole, Doc, getCurrentAccount } from '@hanzoteam/core'
+  import notification, { ActivityNotificationViewlet, InboxNotification } from '@hanzoteam/notification'
+  import { Card } from '@hanzoteam/card'
+  import { Notification, NotificationType } from '@hanzoteam/communication-types'
 
   import InboxCardIcon from './InboxCardIcon.svelte'
   import InboxCardTitle from './InboxCardTitle.svelte'
@@ -26,7 +26,7 @@
   import LegacyNotifications from './legacy/LegacyNotifications.svelte'
   import { NavigationItem } from '../type'
   import { NavigationClient } from '../client'
-  import { isReactionNotification } from '@hanzo/notification-resources'
+  import { isReactionNotification } from '@hanzoteam/notification-resources'
 
   export let navClient: NavigationClient
   export let navItem: NavigationItem

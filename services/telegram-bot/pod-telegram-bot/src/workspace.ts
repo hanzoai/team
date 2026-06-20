@@ -26,17 +26,17 @@ import core, {
   Space,
   TxFactory,
   WorkspaceUuid
-} from '@hanzo/core'
-import notification from '@hanzo/notification'
-import chunter, { ChatMessage, ChunterSpace, ThreadMessage } from '@hanzo/chunter'
-import contact, { Person } from '@hanzo/contact'
-import { getTransactorEndpoint } from '@hanzo/server-client'
-import activity, { ActivityMessage } from '@hanzo/activity'
-import attachment, { Attachment } from '@hanzo/attachment'
-import { StorageAdapter } from '@hanzo/server-core'
-import { createRestClient, RestClient } from '@hanzo/api-client'
-import { isEmptyMarkup } from '@hanzo/text'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import notification from '@hanzoteam/notification'
+import chunter, { ChatMessage, ChunterSpace, ThreadMessage } from '@hanzoteam/chunter'
+import contact, { Person } from '@hanzoteam/contact'
+import { getTransactorEndpoint } from '@hanzoteam/server-client'
+import activity, { ActivityMessage } from '@hanzoteam/activity'
+import attachment, { Attachment } from '@hanzoteam/attachment'
+import { StorageAdapter } from '@hanzoteam/server-core'
+import { createRestClient, RestClient } from '@hanzoteam/api-client'
+import { isEmptyMarkup } from '@hanzoteam/text'
+import { generateToken } from '@hanzoteam/server-token'
 
 import { ChannelRecord, MessageRecord, PlatformFileInfo, TelegramFileInfo } from './types'
 

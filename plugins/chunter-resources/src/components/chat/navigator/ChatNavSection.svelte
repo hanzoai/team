@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { statusByUserStore } from '@hanzo/contact-resources'
-  import { Doc, reduceCalls, Ref } from '@hanzo/core'
-  import { DocNotifyContext } from '@hanzo/notification'
-  import { getResource, IntlString, translate } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import ui, { Action, AnySvelteComponent, IconSize, ModernButton, NavGroup } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { getDocTitle } from '@hanzo/view-resources'
+  import contact from '@hanzoteam/contact'
+  import { statusByUserStore } from '@hanzoteam/contact-resources'
+  import { Doc, reduceCalls, Ref } from '@hanzoteam/core'
+  import { DocNotifyContext } from '@hanzoteam/notification'
+  import { getResource, IntlString, translate } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import ui, { Action, AnySvelteComponent, IconSize, ModernButton, NavGroup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { getDocTitle } from '@hanzoteam/view-resources'
 
   import { createEventDispatcher } from 'svelte'
   import chunter from '../../../plugin'

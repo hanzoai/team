@@ -20,8 +20,8 @@ import {
   type SearchQuery,
   type SearchResult,
   type WorkspaceUuid
-} from '@hanzo/core'
-import type { FullTextAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import type { FullTextAdapter } from '@hanzoteam/server-core'
 import { getScoringConfig, mapSearchResultDoc } from './mapper'
 
 export async function searchFulltext (

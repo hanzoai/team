@@ -15,7 +15,7 @@
 //
 -->
 <script lang="ts">
-  import { Modal, ButtonIcon, IconClose, IconMaximize, IconMinimize } from '@hanzo/ui'
+  import { Modal, ButtonIcon, IconClose, IconMaximize, IconMinimize } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let svg: string

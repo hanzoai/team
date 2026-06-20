@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/server",
+  "name": "@hanzoteam/server",
   "version": "0.7.18",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Anticrm Platform Contributors",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -36,13 +36,13 @@
     "eslint-plugin-svelte": "^2.35.1"
   },
   "dependencies": {
-    "@hanzo/account-client": "workspace:^0.7.21",
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/rpc": "workspace:^0.7.17",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/server-token": "workspace:^0.7.17",
+    "@hanzoteam/account-client": "workspace:^0.7.21",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/rpc": "workspace:^0.7.17",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/server-token": "workspace:^0.7.17",
     "utf-8-validate": "^6.0.4"
   },
   "repository": {

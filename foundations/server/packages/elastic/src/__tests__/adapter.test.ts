@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { Class, Doc, MeasureMetricsContext, PersonId, Ref, Space, WorkspaceUuid } from '@hanzo/core'
-import type { FullTextAdapter, IndexedDoc } from '@hanzo/server-core'
+import { Class, Doc, MeasureMetricsContext, PersonId, Ref, Space, WorkspaceUuid } from '@hanzoteam/core'
+import type { FullTextAdapter, IndexedDoc } from '@hanzoteam/server-core'
 
 import { createElasticAdapter } from '../adapter'
 

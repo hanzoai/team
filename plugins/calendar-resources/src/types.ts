@@ -1,4 +1,4 @@
-import { type Timestamp } from '@hanzo/core'
+import { type Timestamp } from '@hanzoteam/core'
 
 export interface CalendarElement {
   id: string

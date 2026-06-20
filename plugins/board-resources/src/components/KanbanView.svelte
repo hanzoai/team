@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/board'
+  import { Card } from '@hanzoteam/board'
   import {
     CategoryType,
     Class,
@@ -25,12 +25,12 @@
     Ref,
     Status,
     WithLookup
-  } from '@hanzo/core'
-  import { Kanban as KanbanUI } from '@hanzo/kanban'
-  import { ActionContext, createQuery } from '@hanzo/presentation'
-  import type { DocWithRank, Project } from '@hanzo/task'
-  import task, { getStates } from '@hanzo/task'
-  import { typeStore } from '@hanzo/task-resources'
+  } from '@hanzoteam/core'
+  import { Kanban as KanbanUI } from '@hanzoteam/kanban'
+  import { ActionContext, createQuery } from '@hanzoteam/presentation'
+  import type { DocWithRank, Project } from '@hanzoteam/task'
+  import task, { getStates } from '@hanzoteam/task'
+  import { typeStore } from '@hanzoteam/task-resources'
   import {
     ListSelectionProvider,
     SelectDirection,
@@ -41,7 +41,7 @@
     setGroupByValues,
     showMenu,
     statusStore
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { onMount } from 'svelte'
   import KanbanCard from './KanbanCard.svelte'
   import ListHeader from './ListHeader.svelte'

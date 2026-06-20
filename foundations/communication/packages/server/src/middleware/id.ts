@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { EventResult, MessageEventType, type Event, type SessionData } from '@hanzo/communication-sdk-types'
+import { EventResult, MessageEventType, type Event, type SessionData } from '@hanzoteam/communication-sdk-types'
 
 import { generateMessageId } from '../messageId'
 import type { Middleware, MiddlewareContext, Enriched } from '../types'

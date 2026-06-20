@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
-  import { Label } from '@hanzo/ui'
-  import { IntlString } from '@hanzo/platform'
-  import { AttributeModel } from '@hanzo/view'
-  import activity, { DisplayDocUpdateMessage, DocUpdateMessageViewlet } from '@hanzo/activity'
-  import { Person } from '@hanzo/contact'
+  import { Doc } from '@hanzoteam/core'
+  import { Label } from '@hanzoteam/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import { AttributeModel } from '@hanzoteam/view'
+  import activity, { DisplayDocUpdateMessage, DocUpdateMessageViewlet } from '@hanzoteam/activity'
+  import { Person } from '@hanzoteam/contact'
 
   import { LinkData, getLinkData } from '../../activityMessagesUtils'
   import ActivityDocLink from '../ActivityDocLink.svelte'

@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { documentsId } from '@hanzo/controlled-documents'
-import documents from '@hanzo/controlled-documents-resources/src/plugin'
-import type { Client, Doc, Ref } from '@hanzo/core'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/model-presentation'
-import { mergeIds, type Resource } from '@hanzo/platform'
-import { type TagCategory } from '@hanzo/tags'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import type { ActionCategory, ViewAction, Viewlet, ViewletViewAction } from '@hanzo/view'
-import { type NotificationType, type NotificationGroup } from '@hanzo/notification'
-import { type TextActionVisibleFunction, type TextActionFunction } from '@hanzo/text-editor'
+import { documentsId } from '@hanzoteam/controlled-documents'
+import documents from '@hanzoteam/controlled-documents-resources/src/plugin'
+import type { Client, Doc, Ref } from '@hanzoteam/core'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzoteam/model-presentation'
+import { mergeIds, type Resource } from '@hanzoteam/platform'
+import { type TagCategory } from '@hanzoteam/tags'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import type { ActionCategory, ViewAction, Viewlet, ViewletViewAction } from '@hanzoteam/view'
+import { type NotificationType, type NotificationGroup } from '@hanzoteam/notification'
+import { type TextActionVisibleFunction, type TextActionFunction } from '@hanzoteam/text-editor'
 
 export default mergeIds(documentsId, documents, {
   component: {

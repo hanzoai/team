@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import core, { type AccountUuid, type PersonId } from '@hanzo/core'
-import { type Builder, Model } from '@hanzo/model'
-import { TAttachedDoc, TDoc } from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
+import core, { type AccountUuid, type PersonId } from '@hanzoteam/core'
+import { type Builder, Model } from '@hanzoteam/model'
+import { TAttachedDoc, TDoc } from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
 import {
   DOMAIN_PERSON_RATING,
   DOMAIN_RATING_REACTION,
@@ -22,13 +22,13 @@ import {
   type DocReaction,
   type PersonRating,
   type ReactionKind
-} from '@hanzo/rating'
-import view from '@hanzo/view'
-import workbench, { WidgetType } from '@hanzo/workbench'
+} from '@hanzoteam/rating'
+import view from '@hanzoteam/view'
+import workbench, { WidgetType } from '@hanzoteam/workbench'
 import { createActions } from './actions'
 import rating from './plugin'
 
-export { ratingId } from '@hanzo/rating'
+export { ratingId } from '@hanzoteam/rating'
 export { ratingOperation } from './migration'
 
 @Model(rating.class.DocReaction, core.class.Doc, DOMAIN_RATING_REACTION)

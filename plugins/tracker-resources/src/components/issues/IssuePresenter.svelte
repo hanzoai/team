@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
-  import { taskTypeStore } from '@hanzo/task-resources'
-  import TaskTypeIcon from '@hanzo/task-resources/src/components/taskTypes/TaskTypeIcon.svelte'
-  import type { Issue } from '@hanzo/tracker'
-  import { AnySvelteComponent, Icon, tooltip } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { ObjectPresenterType } from '@hanzo/view'
+  import { WithLookup } from '@hanzoteam/core'
+  import { Asset, getEmbeddedLabel } from '@hanzoteam/platform'
+  import { taskTypeStore } from '@hanzoteam/task-resources'
+  import TaskTypeIcon from '@hanzoteam/task-resources/src/components/taskTypes/TaskTypeIcon.svelte'
+  import type { Issue } from '@hanzoteam/tracker'
+  import { AnySvelteComponent, Icon, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
+  import { ObjectPresenterType } from '@hanzoteam/view'
 
   import tracker from '../../plugin'
 

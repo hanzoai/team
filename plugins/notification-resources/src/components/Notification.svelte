@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { Avatar, getPersonByPersonIdCb } from '@hanzo/contact-resources'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { BrowserNotification } from '@hanzo/notification'
-  import { Button, navigate, Notification as PlatformNotification, NotificationToast } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import chunter, { ThreadMessage } from '@hanzo/chunter'
-  import { getResource } from '@hanzo/platform'
-  import activity, { ActivityMessage } from '@hanzo/activity'
-  import { getClient, playSound } from '@hanzo/presentation'
+  import { Avatar, getPersonByPersonIdCb } from '@hanzoteam/contact-resources'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { BrowserNotification } from '@hanzoteam/notification'
+  import { Button, navigate, Notification as PlatformNotification, NotificationToast } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import chunter, { ThreadMessage } from '@hanzoteam/chunter'
+  import { getResource } from '@hanzoteam/platform'
+  import activity, { ActivityMessage } from '@hanzoteam/activity'
+  import { getClient, playSound } from '@hanzoteam/presentation'
   import { pushAvailable, subscribePush } from '../utils'
   import plugin from '../plugin'
   import { onMount } from 'svelte'
-  import { Person } from '@hanzo/contact'
+  import { Person } from '@hanzoteam/contact'
 
   export let notification: PlatformNotification
   export let onRemove: () => void

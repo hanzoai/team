@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee, Person } from '@hanzo/contact'
-  import { AccountRole, Doc, getCurrentAccount, PersonId, Ref, uniqueNotEmpty } from '@hanzo/core'
-  import { Card, isAdminUser } from '@hanzo/presentation'
-  import ui, { Button, Label } from '@hanzo/ui'
-  import { ObjectPresenter } from '@hanzo/view-resources'
-  import view from '@hanzo/view-resources/src/plugin'
+  import { getCurrentEmployee, Person } from '@hanzoteam/contact'
+  import { AccountRole, Doc, getCurrentAccount, PersonId, Ref, uniqueNotEmpty } from '@hanzoteam/core'
+  import { Card, isAdminUser } from '@hanzoteam/presentation'
+  import ui, { Button, Label } from '@hanzoteam/ui'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import { createEventDispatcher } from 'svelte'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
 
   import { getPersonRefsByPersonIdsCb, PersonRefPresenter } from '..'
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage, Reaction } from '@hanzo/activity'
-  import { createQuery } from '@hanzo/presentation'
-  import { WithLookup } from '@hanzo/core'
+  import activity, { ActivityMessage, Reaction } from '@hanzoteam/activity'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { WithLookup } from '@hanzoteam/core'
 
   import { getSpace, updateDocReactions } from '../../utils'
   import Reactions from './Reactions.svelte'

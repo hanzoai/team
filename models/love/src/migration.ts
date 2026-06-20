@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import contact from '@hanzo/contact'
-import { TxOperations, type Ref, type Space } from '@hanzo/core'
-import drive from '@hanzo/drive'
+import contact from '@hanzoteam/contact'
+import { TxOperations, type Ref, type Space } from '@hanzoteam/core'
+import drive from '@hanzoteam/drive'
 import {
   MeetingStatus,
   RoomAccess,
@@ -24,7 +24,7 @@ import {
   isOffice,
   loveId,
   type Floor
-} from '@hanzo/love'
+} from '@hanzoteam/love'
 import {
   createDefaultSpace,
   migrateSpace,
@@ -33,8 +33,8 @@ import {
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import core from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
 import { DOMAIN_LOVE, DOMAIN_MEETING_MINUTES } from '.'
 import love from './plugin'
 

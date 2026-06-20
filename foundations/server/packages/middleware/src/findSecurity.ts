@@ -21,8 +21,8 @@ import {
   type MeasureContext,
   type Ref,
   type SessionData
-} from '@hanzo/core'
-import { BaseMiddleware, type Middleware, type PipelineContext } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { BaseMiddleware, type Middleware, type PipelineContext } from '@hanzoteam/server-core'
 
 /**
  * @public

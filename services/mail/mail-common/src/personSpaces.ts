@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MeasureContext, PersonUuid, Space, TxOperations, WorkspaceUuid } from '@hanzo/core'
-import contact, { PersonSpace } from '@hanzo/contact'
+import { MeasureContext, PersonUuid, Space, TxOperations, WorkspaceUuid } from '@hanzoteam/core'
+import contact, { PersonSpace } from '@hanzoteam/contact'
 
 /**
  * Cache for person spaces

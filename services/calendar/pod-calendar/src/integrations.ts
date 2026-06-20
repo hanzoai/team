@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { AccountClient, Integration } from '@hanzo/account-client'
-import { calendarIntegrationKind } from '@hanzo/calendar'
+import { AccountClient, Integration } from '@hanzoteam/account-client'
+import { calendarIntegrationKind } from '@hanzoteam/calendar'
 
 export async function getIntegrations (client: AccountClient): Promise<Integration[]> {
   return (await client.listIntegrations({ kind: calendarIntegrationKind })) ?? []

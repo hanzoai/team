@@ -14,16 +14,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { NewMessage, SharedMessage } from '@hanzo/gmail'
-  import { Button, IconArrowLeft, Label, Scroller, tooltip } from '@hanzo/ui'
+  import { NewMessage, SharedMessage } from '@hanzoteam/gmail'
+  import { Button, IconArrowLeft, Label, Scroller, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import gmail from '../plugin'
   import FullMessageContent from './FullMessageContent.svelte'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import attachment, { Attachment } from '@hanzo/attachment'
-  import { AttachmentPresenter } from '@hanzo/attachment-resources'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Ref } from '@hanzo/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import attachment, { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentPresenter } from '@hanzoteam/attachment-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Ref } from '@hanzoteam/core'
 
   export let currentMessage: SharedMessage
   export let newMessage: boolean

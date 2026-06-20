@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MarkupNode } from '@hanzo/text'
-  import { Html } from '@hanzo/ui'
+  import { MarkupNode } from '@hanzoteam/text'
+  import { Html } from '@hanzoteam/ui'
 
   export let node: MarkupNode
   export let preview = false

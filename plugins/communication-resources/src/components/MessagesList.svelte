@@ -12,7 +12,7 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Card } from '@hanzo/card'
+  import { Card } from '@hanzoteam/card'
   import {
     type Message,
     type NotificationContext,
@@ -20,17 +20,17 @@
     NotificationType,
     Notification,
     Window
-  } from '@hanzo/communication-types'
+  } from '@hanzoteam/communication-types'
   import {
     createMessagesQuery,
     createNotificationsQuery,
     getCommunicationClient,
     type MessageQueryParams
-  } from '@hanzo/presentation'
-  import { SortingOrder, getCurrentAccount } from '@hanzo/core'
+  } from '@hanzoteam/presentation'
+  import { SortingOrder, getCurrentAccount } from '@hanzoteam/core'
   import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte'
-  import { deviceOptionsStore as deviceInfo, isAppFocusedStore } from '@hanzo/ui'
-  import { translationStore } from '@hanzo/contact-resources'
+  import { deviceOptionsStore as deviceInfo, isAppFocusedStore } from '@hanzoteam/ui'
+  import { translationStore } from '@hanzoteam/contact-resources'
 
   import { createMessagesObserver, getGroupDay, groupMessagesByDay, MessagesGroup } from '../messages'
   import MessagesGroupPresenter from './message/MessagesGroupPresenter.svelte'

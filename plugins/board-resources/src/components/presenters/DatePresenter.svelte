@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Card } from '@hanzo/board'
-  import { DateRangeMode } from '@hanzo/core'
-  import { DatePresenter } from '@hanzo/ui'
+  import type { Card } from '@hanzoteam/board'
+  import { DateRangeMode } from '@hanzoteam/core'
+  import { DatePresenter } from '@hanzoteam/ui'
 
   export let value: Card
   export let size: 'x-small' | 'small' = 'small'

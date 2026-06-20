@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { parseMessagesDoc, parseTranslatedMessagesDoc } from '@hanzo/communication-shared'
+import { parseMessagesDoc, parseTranslatedMessagesDoc } from '@hanzoteam/communication-shared'
 import {
   BlobID,
   type CardID,
@@ -23,8 +23,8 @@ import {
   type Message,
   MessagesDoc,
   type Notification, TranslatedMessage, TranslatedMessagesDoc
-} from '@hanzo/communication-types'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/communication-types'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 export async function loadTranslatedMessages (client: HanzolakeWorkspaceClient, cardId: CardID, blobId: BlobID, lang: string): Promise<TranslatedMessage[]> {
   try {

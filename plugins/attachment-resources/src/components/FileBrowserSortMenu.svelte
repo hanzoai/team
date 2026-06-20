@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
-  import { Label, Menu, showPopup, ModernButton, IconOptions } from '@hanzo/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Label, Menu, showPopup, ModernButton, IconOptions } from '@hanzoteam/ui'
   import { FileBrowserSortMode } from '..'
   import attachment from '../plugin'
 

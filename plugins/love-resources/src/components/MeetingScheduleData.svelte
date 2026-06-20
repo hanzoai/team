@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Room } from '@hanzo/love'
+  import { Ref } from '@hanzoteam/core'
+  import { Room } from '@hanzoteam/love'
   import { Writable } from 'svelte/store'
   import RoomSelector from './RoomSelector.svelte'
 

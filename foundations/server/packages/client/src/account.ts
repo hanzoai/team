@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
-import { getMetadata } from '@hanzo/platform'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzoteam/account-client'
+import { getMetadata } from '@hanzoteam/platform'
 
 import plugin from './plugin'
 

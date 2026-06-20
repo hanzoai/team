@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IconSize } from '@hanzo/ui'
+  import type { IconSize } from '@hanzoteam/ui'
 
   export let size: IconSize = 'small'
   export let fill: string = 'currentColor'

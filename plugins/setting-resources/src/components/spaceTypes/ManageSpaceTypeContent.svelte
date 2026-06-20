@@ -24,7 +24,7 @@
     WithLookup,
     isOwnerOrMaintainer,
     toIdMap
-  } from '@hanzo/core'
+  } from '@hanzoteam/core'
   import {
     Location,
     resolvedLocationStore,
@@ -35,11 +35,11 @@
     navigate,
     getCurrentResolvedLocation,
     deviceOptionsStore as deviceInfo
-  } from '@hanzo/ui'
-  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
-  import setting, { SpaceTypeEditor } from '@hanzo/setting'
-  import { Asset, getResource } from '@hanzo/platform'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzoteam/presentation'
+  import setting, { SpaceTypeEditor } from '@hanzoteam/setting'
+  import { Asset, getResource } from '@hanzoteam/platform'
+  import view from '@hanzoteam/view'
 
   import SpaceTypeEditorComponent from './editor/SpaceTypeEditor.svelte'
   import { clearSettingsStore } from '../../store'

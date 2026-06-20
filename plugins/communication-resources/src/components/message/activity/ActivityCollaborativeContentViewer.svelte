@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity from '@hanzo/activity'
-  import { ActivityCollaborativeChange } from '@hanzo/communication-types'
-  import ui, { Label } from '@hanzo/ui'
-  import { AttributeModel } from '@hanzo/view'
-  import { MarkupDiffPresenter } from '@hanzo/view-resources'
+  import activity from '@hanzoteam/activity'
+  import { ActivityCollaborativeChange } from '@hanzoteam/communication-types'
+  import ui, { Label } from '@hanzoteam/ui'
+  import { AttributeModel } from '@hanzoteam/view'
+  import { MarkupDiffPresenter } from '@hanzoteam/view-resources'
 
   export let model: AttributeModel | undefined = undefined
   export let update: ActivityCollaborativeChange

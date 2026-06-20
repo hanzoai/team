@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { aiAssistantIntegrationKind } from '@hanzo/ai-assistant'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import setting from '@hanzo/setting'
+import { aiAssistantIntegrationKind } from '@hanzoteam/ai-assistant'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import setting from '@hanzoteam/setting'
 
 import aiAssistant from './plugin'
 
-export { aiAssistantId } from '@hanzo/ai-assistant'
+export { aiAssistantId } from '@hanzoteam/ai-assistant'
 export { default } from './plugin'
 
 export function createModel (builder: Builder): void {

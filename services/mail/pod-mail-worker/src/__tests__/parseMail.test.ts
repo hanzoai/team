@@ -15,7 +15,7 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import { type MtaMessage } from '../types'
 
 // Create a mock logger context

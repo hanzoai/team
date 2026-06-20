@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { getClient, MessageBox } from '@hanzo/presentation'
-  import { Button, IconDelete, Label, Modal, ModernEditbox, showPopup } from '@hanzo/ui'
-  import view, { Viewlet } from '@hanzo/view'
-  import { clearSettingsStore } from '@hanzo/setting-resources'
-  import setting from '@hanzo/setting'
+  import presentation, { getClient, MessageBox } from '@hanzoteam/presentation'
+  import { Button, IconDelete, Label, Modal, ModernEditbox, showPopup } from '@hanzoteam/ui'
+  import view, { Viewlet } from '@hanzoteam/view'
+  import { clearSettingsStore } from '@hanzoteam/setting-resources'
+  import setting from '@hanzoteam/setting'
 
   import DescriptorBox from './DescriptorBox.svelte'
   import ViewSettingButton from './ViewSettingButton.svelte'

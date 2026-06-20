@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type MeasureContext, type Ref, type Space, type TxOperations } from '@hanzo/core'
+import { type Class, type Doc, type MeasureContext, type Ref, type Space, type TxOperations } from '@hanzoteam/core'
 import { type ExportState } from './types'
 
 /**

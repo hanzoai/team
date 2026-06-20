@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, DocumentQuery, FindOptions, Ref, Status } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Project, Task, getStates } from '@hanzo/task'
-  import type { TabItem } from '@hanzo/ui'
-  import { ScrollerBar, TabList, Switcher } from '@hanzo/ui'
-  import { TableBrowser, statusStore } from '@hanzo/view-resources'
+  import { Class, DocumentQuery, FindOptions, Ref, Status } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Project, Task, getStates } from '@hanzoteam/task'
+  import type { TabItem } from '@hanzoteam/ui'
+  import { ScrollerBar, TabList, Switcher } from '@hanzoteam/ui'
+  import { TableBrowser, statusStore } from '@hanzoteam/view-resources'
   import { typeStore } from '..'
   import task from '../plugin'
   import Lost from './icons/Lost.svelte'

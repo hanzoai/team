@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { type AttachedData, type Class, type Doc, type Hierarchy, type Ref } from '@hanzo/core'
-import type { Resource } from '@hanzo/platform'
-import type { ThemeOptions } from '@hanzo/theme'
+import { type AttachedData, type Class, type Doc, type Hierarchy, type Ref } from '@hanzoteam/core'
+import type { Resource } from '@hanzoteam/platform'
+import type { ThemeOptions } from '@hanzoteam/theme'
 import type { ComponentType, SvelteComponent } from 'svelte'
 import type { Answer, AnswerDataOf, Assessment, AssessmentDataOf, Percentage, Question, QuestionDataOf } from './base'
 

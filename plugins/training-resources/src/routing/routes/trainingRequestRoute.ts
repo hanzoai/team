@@ -2,10 +2,10 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { isEnum, isId } from '@hanzo/core'
-import { trainingId, type TrainingRequest } from '@hanzo/training'
-import { getClient } from '@hanzo/presentation'
-import { getCurrentLocation, type Location, type ResolvedLocation } from '@hanzo/ui'
+import { isEnum, isId } from '@hanzoteam/core'
+import { trainingId, type TrainingRequest } from '@hanzoteam/training'
+import { getClient } from '@hanzoteam/presentation'
+import { getCurrentLocation, type Location, type ResolvedLocation } from '@hanzoteam/ui'
 import training from '../../plugin'
 import { getCurrentEmployeeRef } from '../../utils'
 import { getPanelFragment } from '../utils/getPanelFragment'

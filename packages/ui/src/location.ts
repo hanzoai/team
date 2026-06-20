@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { clone, type Ref, type Space } from '@hanzo/core'
-import { type Plugin } from '@hanzo/platform'
+import { Analytics } from '@hanzoteam/analytics'
+import { clone, type Ref, type Space } from '@hanzoteam/core'
+import { type Plugin } from '@hanzoteam/platform'
 import { derived, get, writable } from 'svelte/store'
 
 import { closePopup } from './popups'

@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { AccountRole, getCurrentAccount, type Ref } from '@hanzo/core'
-import { getCurrentEmployee, type Person } from '@hanzo/contact'
-import { type PopupResult, showPopup } from '@hanzo/ui'
-import { type UnsubscribeCallback } from '@hanzo/hanzopulse-client'
-import presentation, { createPulseClient } from '@hanzo/presentation'
-import { getMetadata } from '@hanzo/platform'
+import { AccountRole, getCurrentAccount, type Ref } from '@hanzoteam/core'
+import { getCurrentEmployee, type Person } from '@hanzoteam/contact'
+import { type PopupResult, showPopup } from '@hanzoteam/ui'
+import { type UnsubscribeCallback } from '@hanzoteam/hanzopulse-client'
+import presentation, { createPulseClient } from '@hanzoteam/presentation'
+import { getMetadata } from '@hanzoteam/platform'
 import { get } from 'svelte/store'
 import { myInfo } from './stores'
-import love, { type Room } from '@hanzo/love'
+import love, { type Room } from '@hanzoteam/love'
 import InviteRequestPopup from './components/meeting/invites/InviteRequestPopup.svelte'
 import InviteResponsePopup from './components/meeting/invites/InviteResponsePopup.svelte'
 import { joinOrCreateMeetingByInvite } from './meetings'

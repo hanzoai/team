@@ -15,9 +15,9 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { EmojiPopup, showPopup } from '@hanzo/ui'
-  import { getCurrentAccount, groupByArray } from '@hanzo/core'
-  import { Reaction } from '@hanzo/communication-types'
+  import { EmojiPopup, showPopup } from '@hanzoteam/ui'
+  import { getCurrentAccount, groupByArray } from '@hanzoteam/core'
+  import { Reaction } from '@hanzoteam/communication-types'
 
   import ReactionPresenter from './ReactionPresenter.svelte'
   import IconEmojiAdd from './icons/IconEmojiAdd.svelte'

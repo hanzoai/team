@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { AttachedDoc, Blob, CollectionSize, Doc, Ref, Type, TypedSpace } from '@hanzo/core'
+import { AttachedDoc, Blob, CollectionSize, Doc, Ref, Type, TypedSpace } from '@hanzoteam/core'
 
 import drive from './plugin'
 

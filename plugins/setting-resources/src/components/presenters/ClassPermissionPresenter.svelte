@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, ClassPermission, Doc } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import { Class, ClassPermission, Doc } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
 
   export let value: ClassPermission
   export let inline: boolean = false

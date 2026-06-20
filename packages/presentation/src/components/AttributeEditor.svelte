@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  // import core from '@hanzo/core'
-  import type { Class, Doc, Ref } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import type { AnySvelteComponent, EditStyle } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  // import core from '@hanzoteam/core'
+  import type { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import type { AnySvelteComponent, EditStyle } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { KeyedAttribute, getAttribute, updateAttribute } from '../attributes'
   import { getAttributePresenterClass, getClient } from '../utils'
 

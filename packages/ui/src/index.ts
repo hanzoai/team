@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { addLocation } from '@hanzo/platform'
+import { addLocation } from '@hanzoteam/platform'
 import { type SvelteComponent } from 'svelte'
 import { readable, writable } from 'svelte/store'
 import Root from './components/internal/Root.svelte'
@@ -49,7 +49,7 @@ export type {
   IPanelState
 } from './types'
 
-export { themeStore, languageStore } from '@hanzo/theme'
+export { themeStore, languageStore } from '@hanzoteam/theme'
 // export { applicationShortcutKey } from './utils'
 export { getCurrentLocation, locationToUrl, navigate, location, setLocationStorageKey } from './location'
 

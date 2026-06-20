@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { ChannelItem } from '@hanzo/contact'
-import type { PersonId, AttachedDoc, Class, Doc, Ref, Timestamp, IntegrationKind } from '@hanzo/core'
-import { NotificationProvider, NotificationType } from '@hanzo/notification'
-import type { IntlString, Metadata, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { Handler, IntegrationType } from '@hanzo/setting'
-import type { AnyComponent } from '@hanzo/ui'
+import { ChannelItem } from '@hanzoteam/contact'
+import type { PersonId, AttachedDoc, Class, Doc, Ref, Timestamp, IntegrationKind } from '@hanzoteam/core'
+import { NotificationProvider, NotificationType } from '@hanzoteam/notification'
+import type { IntlString, Metadata, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { Handler, IntegrationType } from '@hanzoteam/setting'
+import type { AnyComponent } from '@hanzoteam/ui'
 
 /**
  * @public

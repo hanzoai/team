@@ -14,8 +14,8 @@
 //
 
 import { BotCommand } from 'telegraf/typings/core/types/typegram'
-import { translate } from '@hanzo/platform'
-import telegram from '@hanzo/telegram'
+import { translate } from '@hanzoteam/platform'
+import telegram from '@hanzoteam/telegram'
 import { Context, Telegraf } from 'telegraf'
 
 import config from '../config'
@@ -27,7 +27,7 @@ import {
   removeIntegrationsByTg,
   getAnyIntegrationByTelegramId
 } from '../account'
-import { WorkspaceUuid } from '@hanzo/core'
+import { WorkspaceUuid } from '@hanzoteam/core'
 
 export enum Command {
   Start = 'start',

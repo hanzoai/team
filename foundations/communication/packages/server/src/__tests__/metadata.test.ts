@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import { getMetadata } from '../metadata'
-import { MessageID } from '@hanzo/communication-types'
+import { MessageID } from '@hanzoteam/communication-types'
 import { generateMessageId } from '../messageId'
 
 describe('metadata', () => {

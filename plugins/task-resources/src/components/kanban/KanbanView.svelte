@@ -25,14 +25,14 @@
     Lookup,
     mergeQueries,
     Ref
-  } from '@hanzo/core'
-  import { DocWithRank, Item, Kanban as KanbanUI } from '@hanzo/kanban'
-  import { getResource } from '@hanzo/platform'
-  import { ActionContext, createQuery, getClient } from '@hanzo/presentation'
-  import tags from '@hanzo/tags'
-  import { Project, Task, TaskOrdering } from '@hanzo/task'
-  import { ColorDefinition, defaultBackground, Label, themeStore } from '@hanzo/ui'
-  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hanzo/view'
+  } from '@hanzoteam/core'
+  import { DocWithRank, Item, Kanban as KanbanUI } from '@hanzoteam/kanban'
+  import { getResource } from '@hanzoteam/platform'
+  import { ActionContext, createQuery, getClient } from '@hanzoteam/presentation'
+  import tags from '@hanzoteam/tags'
+  import { Project, Task, TaskOrdering } from '@hanzoteam/task'
+  import { ColorDefinition, defaultBackground, Label, themeStore } from '@hanzoteam/ui'
+  import view, { AttributeModel, BuildModelKey, Viewlet, ViewOptionModel, ViewOptions } from '@hanzoteam/view'
   import {
     focusStore,
     getCategoryQueryNoLookup,
@@ -47,7 +47,7 @@
     SelectDirection,
     setGroupByValues,
     showMenu
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { onMount } from 'svelte'
   import task from '../../plugin'
   import { getTaskKanbanResultQuery, updateTaskKanbanCategories } from '../../utils'

@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import { type Blob, type BlobMetadata, type Doc, type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type Blob, type BlobMetadata, type Doc, type Ref } from '@hanzoteam/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 import {
   type FilterFunction,
   type ViewAction,
   type ViewCategoryAction,
   viewId,
   type ViewOptionsAction
-} from '@hanzo/view'
-import { type FileOrBlob, type FilePreviewExtension } from '@hanzo/presentation/src/types'
-import { type PresentationMiddlewareFactory } from '@hanzo/presentation/src/pipeline'
-import view from '@hanzo/view-resources/src/plugin'
+} from '@hanzoteam/view'
+import { type FileOrBlob, type FilePreviewExtension } from '@hanzoteam/presentation/src/types'
+import { type PresentationMiddlewareFactory } from '@hanzoteam/presentation/src/pipeline'
+import view from '@hanzoteam/view-resources/src/plugin'
 
 export default mergeIds(viewId, view, {
   actionImpl: {

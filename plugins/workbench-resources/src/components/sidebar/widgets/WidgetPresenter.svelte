@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Widget } from '@hanzo/workbench'
-  import { Label, Component } from '@hanzo/ui'
+  import { Widget } from '@hanzoteam/workbench'
+  import { Label, Component } from '@hanzoteam/ui'
 
   import AppItem from '../../AppItem.svelte'
 

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, Ref, SortingOrder } from '@hanzo/core'
-  import { IntlString, getEmbeddedLabel, translateCB } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { Milestone } from '@hanzo/tracker'
-  import type { ButtonKind, ButtonSize, LabelAndProps, PopupResult } from '@hanzo/ui'
-  import { Button, ButtonShape, Label, SelectPopup, eventToHTMLElement, showPopup, themeStore } from '@hanzo/ui'
+  import { DocumentQuery, Ref, SortingOrder } from '@hanzoteam/core'
+  import { IntlString, getEmbeddedLabel, translateCB } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Milestone } from '@hanzoteam/tracker'
+  import type { ButtonKind, ButtonSize, LabelAndProps, PopupResult } from '@hanzoteam/ui'
+  import { Button, ButtonShape, Label, SelectPopup, eventToHTMLElement, showPopup, themeStore } from '@hanzoteam/ui'
   import tracker from '../../plugin'
   import { milestoneStatusAssets } from '../../types'
 

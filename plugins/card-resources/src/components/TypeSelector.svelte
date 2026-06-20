@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { Class, ClassifierKind, Doc, Ref } from '@hanzo/core'
-  import { getClient, IconWithEmoji } from '@hanzo/presentation'
-  import { type ButtonKind, type ButtonSize, DropdownIntlItem, NestedDropdown } from '@hanzo/ui'
+  import { MasterTag } from '@hanzoteam/card'
+  import { Class, ClassifierKind, Doc, Ref } from '@hanzoteam/core'
+  import { getClient, IconWithEmoji } from '@hanzoteam/presentation'
+  import { type ButtonKind, type ButtonSize, DropdownIntlItem, NestedDropdown } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import card from '../plugin'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
 
   export let value: Ref<MasterTag>
   export let width: string | undefined = undefined

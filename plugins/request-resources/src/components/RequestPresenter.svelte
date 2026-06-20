@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import request, { Request } from '@hanzo/request'
-  import { getClient } from '@hanzo/presentation'
-  import { Doc } from '@hanzo/core'
-  import { ObjectPresenter } from '@hanzo/view-resources'
-  import { Label } from '@hanzo/ui'
+  import request, { Request } from '@hanzoteam/request'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Doc } from '@hanzoteam/core'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
+  import { Label } from '@hanzoteam/ui'
 
   export let value: Request
 

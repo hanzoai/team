@@ -15,8 +15,8 @@
 //
 -->
 <script lang="ts">
-  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
-  import { Integration } from '@hanzo/setting'
+  import presentation, { Card, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Integration } from '@hanzoteam/setting'
   import { createEventDispatcher, onMount } from 'svelte'
   import bitrix from '../plugin'
 
@@ -26,11 +26,11 @@
     BitrixFieldMapping,
     BitrixProfile,
     StatusValue
-  } from '@hanzo/bitrix'
-  import { Button, eventToHTMLElement, IconAdd, showPopup } from '@hanzo/ui'
+  } from '@hanzoteam/bitrix'
+  import { Button, eventToHTMLElement, IconAdd, showPopup } from '@hanzoteam/ui'
 
-  import { Data, Doc, Ref } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Data, Doc, Ref } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
   import { bitrixQueue } from '../queue'
   import CreateMapping from './CreateMapping.svelte'
   import EntityMapping from './EntityMapping.svelte'

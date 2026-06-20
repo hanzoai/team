@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import { type Channel } from '@hanzo/contact'
-import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hanzo/core'
+import activity from '@hanzoteam/activity'
+import { type Channel } from '@hanzoteam/contact'
+import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hanzoteam/core'
 import {
   ArrOf,
   type Builder,
@@ -28,25 +28,25 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import contact from '@hanzo/model-contact'
-import core, { TAttachedDoc } from '@hanzo/model-core'
-import setting from '@hanzo/setting'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import contact from '@hanzoteam/model-contact'
+import core, { TAttachedDoc } from '@hanzoteam/model-core'
+import setting from '@hanzoteam/setting'
 import {
   type NewTelegramMessage,
   type SharedTelegramMessage,
   type SharedTelegramMessages,
   type TelegramMessage,
   telegramIntegrationKind
-} from '@hanzo/telegram'
-import templates from '@hanzo/templates'
-import view from '@hanzo/view'
+} from '@hanzoteam/telegram'
+import templates from '@hanzoteam/templates'
+import view from '@hanzoteam/view'
 
 import telegram from './plugin'
 import { defineNotifications } from './notification'
 
-export { telegramId } from '@hanzo/telegram'
+export { telegramId } from '@hanzoteam/telegram'
 export { telegramOperation } from './migration'
 export { default } from './plugin'
 

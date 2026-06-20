@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Hierarchy, PersonId } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import { getName, getPersonByPersonId } from '@hanzo/contact'
+import type { Hierarchy, PersonId } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import { getName, getPersonByPersonId } from '@hanzoteam/contact'
 
 /**
  * Load person display name by PersonId with optional caching

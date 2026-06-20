@@ -15,10 +15,10 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import { AttachmentStyleBoxCollabEditor } from '@hanzo/attachment-resources'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { type Class, type Ref } from '@hanzo/core'
-  import { TestCase } from '@hanzo/test-management'
+  import { AttachmentStyleBoxCollabEditor } from '@hanzoteam/attachment-resources'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { type Class, type Ref } from '@hanzoteam/core'
+  import { TestCase } from '@hanzoteam/test-management'
 
   import testManagement from '../../plugin'
 

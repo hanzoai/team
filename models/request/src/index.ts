@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import type { Person } from '@hanzo/contact'
-import contact from '@hanzo/contact'
-import { type Timestamp, type Domain, type Ref, type Tx, type ClassCollaborators } from '@hanzo/core'
+import activity from '@hanzoteam/activity'
+import type { Person } from '@hanzoteam/contact'
+import contact from '@hanzoteam/contact'
+import { type Timestamp, type Domain, type Ref, type Tx, type ClassCollaborators } from '@hanzoteam/core'
 import {
   ArrOf,
   type Builder,
@@ -28,23 +28,23 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hanzo/model'
-import chunter, { TChatMessage } from '@hanzo/model-chunter'
-import core, { TAttachedDoc, TClass } from '@hanzo/model-core'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import view from '@hanzo/model-view'
-import notification from '@hanzo/notification'
+} from '@hanzoteam/model'
+import chunter, { TChatMessage } from '@hanzoteam/model-chunter'
+import core, { TAttachedDoc, TClass } from '@hanzoteam/model-core'
+import { generateClassNotificationTypes } from '@hanzoteam/model-notification'
+import view from '@hanzoteam/model-view'
+import notification from '@hanzoteam/notification'
 import {
   type Request,
   type RequestDecisionComment,
   type RequestPresenter,
   type RequestStatus
-} from '@hanzo/request'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+} from '@hanzoteam/request'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 import request from './plugin'
 
 export { requestOperation } from './migration'
-export { requestId } from '@hanzo/request'
+export { requestId } from '@hanzoteam/request'
 export { default } from './plugin'
 
 export const DOMAIN_REQUEST = 'request' as Domain

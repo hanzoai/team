@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { generateId } from '@hanzo/core'
-import type { IntlString, Metadata } from '@hanzo/platform'
-import { setMetadata, translate } from '@hanzo/platform'
+import { generateId } from '@hanzoteam/core'
+import type { IntlString, Metadata } from '@hanzoteam/platform'
+import { setMetadata, translate } from '@hanzoteam/platform'
 import autolinker from 'autolinker'
 import { writable } from 'svelte/store'
 import { NotificationPosition, NotificationSeverity, notificationsStore, type Notification } from '.'

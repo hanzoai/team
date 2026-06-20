@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { State, Transition } from '@hanzo/process'
-  import { getCurrentLocation, navigate, ButtonIcon, IconDescription, NavItem, Separator } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { State, Transition } from '@hanzoteam/process'
+  import { getCurrentLocation, navigate, ButtonIcon, IconDescription, NavItem, Separator } from '@hanzoteam/ui'
   import TransitionPresenter from './TransitionPresenter.svelte'
   import process from '../../plugin'
 

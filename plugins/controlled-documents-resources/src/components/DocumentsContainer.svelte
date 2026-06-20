@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Class, DocumentQuery, Ref, Space } from '@hanzo/core'
-  import type { IntlString, Asset } from '@hanzo/platform'
-  import { IModeSelector, resolvedLocationStore } from '@hanzo/ui'
-  import { type Document, DocumentState } from '@hanzo/controlled-documents'
+  import { Class, DocumentQuery, Ref, Space } from '@hanzoteam/core'
+  import type { IntlString, Asset } from '@hanzoteam/platform'
+  import { IModeSelector, resolvedLocationStore } from '@hanzoteam/ui'
+  import { type Document, DocumentState } from '@hanzoteam/controlled-documents'
 
   import Documents from './Documents.svelte'
   import document from '../plugin'

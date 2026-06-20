@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import { Asset, getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Action, closePopup, Menu, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { Asset, getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Action, closePopup, Menu, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import contact from '../plugin'
 
   const client = getClient()

@@ -13,20 +13,20 @@
 // limitations under the License.
 //
 
-import { type Domain, IndexKind, type Ref } from '@hanzo/core'
-import { type Category, type Product, type Variant, inventoryId } from '@hanzo/inventory'
-import { type Builder, Collection, Index, Model, Prop, TypeRef, TypeString, UX } from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import core, { TAttachedDoc } from '@hanzo/model-core'
-import { createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import setting from '@hanzo/setting'
-import view, { type Viewlet } from '@hanzo/view'
-import chunter from '@hanzo/model-chunter'
-import activity from '@hanzo/activity'
+import { type Domain, IndexKind, type Ref } from '@hanzoteam/core'
+import { type Category, type Product, type Variant, inventoryId } from '@hanzoteam/inventory'
+import { type Builder, Collection, Index, Model, Prop, TypeRef, TypeString, UX } from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import core, { TAttachedDoc } from '@hanzoteam/model-core'
+import { createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import setting from '@hanzoteam/setting'
+import view, { type Viewlet } from '@hanzoteam/view'
+import chunter from '@hanzoteam/model-chunter'
+import activity from '@hanzoteam/activity'
 
 import inventory from './plugin'
-export { inventoryId } from '@hanzo/inventory'
+export { inventoryId } from '@hanzoteam/inventory'
 export { inventoryOperation } from './migration'
 export { default } from './plugin'
 

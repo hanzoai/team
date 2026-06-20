@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hanzo/card'
-  import { Ref } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, tooltip } from '@hanzo/ui'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { Card, MasterTag } from '@hanzoteam/card'
+  import { Ref } from '@hanzoteam/core'
+  import { Asset, getEmbeddedLabel } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, tooltip } from '@hanzoteam/ui'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
 
   import card from '../plugin'
   import { getCardIds, getCardVersion } from '../cardUtils'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import type { IssueTemplate } from '@hanzo/tracker'
-  import { Icon, showPanel, tooltip } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import type { IssueTemplate } from '@hanzoteam/tracker'
+  import { Icon, showPanel, tooltip } from '@hanzoteam/ui'
   import tracker from '../../plugin'
 
   export let value: WithLookup<IssueTemplate>

@@ -1,9 +1,9 @@
 <script lang="ts">
   import love from '../../../plugin'
-  import { state, toggleMicState } from '@hanzo/media-resources'
-  import { eventToHTMLElement, IconUpOutline, showPopup, SplitButton } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { getClient } from '@hanzo/presentation'
+  import { state, toggleMicState } from '@hanzoteam/media-resources'
+  import { eventToHTMLElement, IconUpOutline, showPopup, SplitButton } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { getClient } from '@hanzoteam/presentation'
   import MicSettingPopup from '../MicSettingPopup.svelte'
 
   export let size: 'large' | 'medium' | 'small' | 'extra-small' | 'min' = 'large'

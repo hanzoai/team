@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import core, { Domain, Tx, TxDomainEvent } from '@hanzo/core'
+import core, { Domain, Tx, TxDomainEvent } from '@hanzoteam/core'
 import {
   CreateMessageEvent,
   MessageEventType,
   RemovePatchEvent,
   UpdatePatchEvent
-} from '@hanzo/communication-sdk-types'
-import { BlobID, CardID, Markdown, Message, MessageID, MessageType } from '@hanzo/communication-types'
-import { MessageProcessor } from '@hanzo/communication-shared'
+} from '@hanzoteam/communication-sdk-types'
+import { BlobID, CardID, Markdown, Message, MessageID, MessageType } from '@hanzoteam/communication-types'
+import { MessageProcessor } from '@hanzoteam/communication-shared'
 
 const COMMUNICATION_DOMAIN = 'communication' as Domain
 

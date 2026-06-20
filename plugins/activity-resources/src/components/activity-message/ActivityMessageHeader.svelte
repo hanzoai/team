@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityMessage } from '@hanzo/activity'
-  import { Person } from '@hanzo/contact'
-  import { Doc } from '@hanzo/core'
-  import { Label } from '@hanzo/ui'
-  import { IntlString } from '@hanzo/platform'
+  import { ActivityMessage } from '@hanzoteam/activity'
+  import { Person } from '@hanzoteam/contact'
+  import { Doc } from '@hanzoteam/core'
+  import { Label } from '@hanzoteam/ui'
+  import { IntlString } from '@hanzoteam/platform'
 
   import { LinkData, getLinkData } from '../../activityMessagesUtils'
   import ActivityDocLink from '../ActivityDocLink.svelte'

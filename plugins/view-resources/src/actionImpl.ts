@@ -1,4 +1,4 @@
-import contact from '@hanzo/contact'
+import contact from '@hanzoteam/contact'
 import core, {
   type Blob,
   type Class,
@@ -10,8 +10,8 @@ import core, {
   type TxResult,
   getCurrentAccount,
   makeDocCollabId
-} from '@hanzo/core'
-import { type Asset, type IntlString, type Resource, getResource } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { type Asset, type IntlString, type Resource, getResource } from '@hanzoteam/platform'
 import {
   type ContextStore,
   MessageBox,
@@ -21,9 +21,9 @@ import {
   getMarkup,
   hasResource,
   updateAttribute
-} from '@hanzo/presentation'
-import { markupToJSON } from '@hanzo/text'
-import { markupToMarkdown } from '@hanzo/text-markdown'
+} from '@hanzoteam/presentation'
+import { markupToJSON } from '@hanzoteam/text'
+import { markupToMarkdown } from '@hanzoteam/text-markdown'
 import {
   type AnyComponent,
   type AnySvelteComponent,
@@ -35,7 +35,7 @@ import {
   navigate,
   showPanel,
   showPopup
-} from '@hanzo/ui'
+} from '@hanzoteam/ui'
 import { get } from 'svelte/store'
 import MoveView from './components/Move.svelte'
 import view from './plugin'
@@ -49,7 +49,7 @@ import {
   selectionStore
 } from './selection'
 import { deleteObjects, getObjectId, getObjectLinkFragment, restrictionStore } from './utils'
-import workbenchPlugin from '@hanzo/workbench'
+import workbenchPlugin from '@hanzoteam/workbench'
 import { CopyAsMarkdownTable } from './copyAsMarkdownTable'
 import { viewletContextStore } from './viewletContextStore'
 

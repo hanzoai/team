@@ -13,20 +13,20 @@
 // limitations under the License.
 //
 
-import analyticsCollector, { AnalyticEvent, AnalyticEventType } from '@hanzo/analytics-collector'
-import chunter, { chunterId } from '@hanzo/chunter'
-import contact, { contactId } from '@hanzo/contact'
-import document, { documentId } from '@hanzo/document'
-import drive, { driveId } from '@hanzo/drive'
-import love, { loveId } from '@hanzo/love'
-import notification, { notificationId } from '@hanzo/notification'
-import recruit, { recruitId } from '@hanzo/recruit'
-import time, { timeId } from '@hanzo/time'
-import tracker, { trackerId } from '@hanzo/tracker'
-import workbench, { WorkbenchEvents } from '@hanzo/workbench'
-import { AccountUuid, Class, Doc, Hierarchy, Markup, Ref, TxOperations } from '@hanzo/core'
-import { MarkupNode, MarkupNodeType, MarkupMark, MarkupMarkType } from '@hanzo/text'
-import { translate } from '@hanzo/platform'
+import analyticsCollector, { AnalyticEvent, AnalyticEventType } from '@hanzoteam/analytics-collector'
+import chunter, { chunterId } from '@hanzoteam/chunter'
+import contact, { contactId } from '@hanzoteam/contact'
+import document, { documentId } from '@hanzoteam/document'
+import drive, { driveId } from '@hanzoteam/drive'
+import love, { loveId } from '@hanzoteam/love'
+import notification, { notificationId } from '@hanzoteam/notification'
+import recruit, { recruitId } from '@hanzoteam/recruit'
+import time, { timeId } from '@hanzoteam/time'
+import tracker, { trackerId } from '@hanzoteam/tracker'
+import workbench, { WorkbenchEvents } from '@hanzoteam/workbench'
+import { AccountUuid, Class, Doc, Hierarchy, Markup, Ref, TxOperations } from '@hanzoteam/core'
+import { MarkupNode, MarkupNodeType, MarkupMark, MarkupMarkType } from '@hanzoteam/text'
+import { translate } from '@hanzoteam/platform'
 
 export async function eventToMarkup (
   event: AnalyticEvent,

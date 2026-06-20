@@ -20,7 +20,7 @@ import {
   loadServerConfig,
   type RestClient,
   type WorkspaceToken
-} from '@hanzo/api-client'
+} from '@hanzoteam/api-client'
 import core, {
   buildSocialIdString,
   generateId,
@@ -35,11 +35,11 @@ import core, {
   type Space,
   type TxCreateDoc,
   type TxOperations
-} from '@hanzo/core'
-import { type AccountClient, getClient as getAccountClient } from '@hanzo/account-client'
-import chunter from '@hanzo/chunter'
-import contact, { ensureEmployee, type SocialIdentityRef, type Person } from '@hanzo/contact'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { type AccountClient, getClient as getAccountClient } from '@hanzoteam/account-client'
+import chunter from '@hanzoteam/chunter'
+import contact, { ensureEmployee, type SocialIdentityRef, type Person } from '@hanzoteam/contact'
+import { generateToken } from '@hanzoteam/server-token'
 
 describe('rest-api-server', () => {
   const testCtx = new MeasureMetricsContext('test', {})

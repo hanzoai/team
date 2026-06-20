@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { DocUpdateMessage } from '@hanzo/activity'
+import { DocUpdateMessage } from '@hanzoteam/activity'
 import core, {
   Doc,
   Tx,
@@ -26,12 +26,12 @@ import core, {
   PersonId,
   AccountUuid,
   combineAttributes
-} from '@hanzo/core'
-import notification, { NotificationType } from '@hanzo/notification'
-import { getResource, translate } from '@hanzo/platform'
-import request, { Request, RequestStatus } from '@hanzo/request'
-import { pushDocUpdateMessages } from '@hanzo/server-activity-resources'
-import type { TriggerControl } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import notification, { NotificationType } from '@hanzoteam/notification'
+import { getResource, translate } from '@hanzoteam/platform'
+import request, { Request, RequestStatus } from '@hanzoteam/request'
+import { pushDocUpdateMessages } from '@hanzoteam/server-activity-resources'
+import type { TriggerControl } from '@hanzoteam/server-core'
 import {
   getCollaborators,
   getNotificationProviderControl,
@@ -39,8 +39,8 @@ import {
   getReceiversInfo,
   getSenderInfo,
   getTextPresenter
-} from '@hanzo/server-notification-resources'
-import { Person } from '@hanzo/contact'
+} from '@hanzoteam/server-notification-resources'
+import { Person } from '@hanzoteam/contact'
 
 /**
  * @public

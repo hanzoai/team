@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association, AssociationQuery, Doc } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import core, { Association, AssociationQuery, Doc } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import { createEventDispatcher } from 'svelte'
 
   import RelationEditor from './RelationEditor.svelte'

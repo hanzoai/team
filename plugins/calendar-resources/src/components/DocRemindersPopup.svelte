@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hanzo/calendar'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Button, deviceOptionsStore as deviceInfo, IconAdd, Label, Scroller, showPopup } from '@hanzo/ui'
+  import { Event } from '@hanzoteam/calendar'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Button, deviceOptionsStore as deviceInfo, IconAdd, Label, Scroller, showPopup } from '@hanzoteam/ui'
   import calendar from '../plugin'
   import CreateReminder from './CreateReminder.svelte'
   import ReminderPresenter from './ReminderPresenter.svelte'

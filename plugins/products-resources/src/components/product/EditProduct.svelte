@@ -16,17 +16,17 @@
 -->
 
 <script lang="ts">
-  import { AttachmentStyleBoxEditor } from '@hanzo/attachment-resources'
-  import core, { type Class, type Doc, type Ref, getCurrentAccount } from '@hanzo/core'
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource } from '@hanzo/platform'
-  import { ActionContext, MessageViewer, IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
-  import { Button, EditBox, IconMixin, IconMoreH, getPlatformColorDef, showPopup, themeStore } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { DocAttributeBar, IconPicker, getDocMixins, showMenu } from '@hanzo/view-resources'
-  import type { Product } from '@hanzo/products'
+  import { AttachmentStyleBoxEditor } from '@hanzoteam/attachment-resources'
+  import core, { type Class, type Doc, type Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
+  import notification from '@hanzoteam/notification'
+  import { Panel } from '@hanzoteam/panel'
+  import { getResource } from '@hanzoteam/platform'
+  import { ActionContext, MessageViewer, IconWithEmoji, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Button, EditBox, IconMixin, IconMoreH, getPlatformColorDef, showPopup, themeStore } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { DocAttributeBar, IconPicker, getDocMixins, showMenu } from '@hanzoteam/view-resources'
+  import type { Product } from '@hanzoteam/products'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import products from '../../plugin'

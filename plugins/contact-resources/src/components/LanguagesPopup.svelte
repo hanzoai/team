@@ -11,9 +11,9 @@
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
 <script lang="ts">
-  import { SelectPopup, SelectPopupValueType } from '@hanzo/ui'
+  import { SelectPopup, SelectPopupValueType } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
 
   import { languagesDisplayData } from '../translation'
   import LanguageIcon from './LanguageIcon.svelte'

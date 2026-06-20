@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/front",
+  "name": "@hanzoteam/front",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
@@ -46,24 +46,24 @@
     "@types/morgan": "~1.9.9"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
     "express": "^4.21.2",
     "express-fileupload": "^1.5.1",
     "express-static-gzip": "^2.2.0",
     "uuid": "^8.3.2",
     "cors": "^2.8.5",
-    "@hanzo/account-client": "workspace:^0.7.21",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/storage": "workspace:^0.7.17",
-    "@hanzo/server-storage": "workspace:^0.7.16",
-    "@hanzo/server-token": "workspace:^0.7.17",
-    "@hanzo/attachment": "workspace:^0.7.0",
+    "@hanzoteam/account-client": "workspace:^0.7.21",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/storage": "workspace:^0.7.17",
+    "@hanzoteam/server-storage": "workspace:^0.7.16",
+    "@hanzoteam/server-token": "workspace:^0.7.17",
+    "@hanzoteam/attachment": "workspace:^0.7.0",
     "body-parser": "^1.20.3",
     "sharp": "~0.34.3",
-    "@hanzo/minio": "workspace:^0.7.17",
-    "@hanzo/mongo": "workspace:^0.7.16",
+    "@hanzoteam/minio": "workspace:^0.7.17",
+    "@hanzoteam/mongo": "workspace:^0.7.16",
     "morgan": "^1.10.0",
-    "@hanzo/analytics": "workspace:^0.7.17"
+    "@hanzoteam/analytics": "workspace:^0.7.17"
   }
 }

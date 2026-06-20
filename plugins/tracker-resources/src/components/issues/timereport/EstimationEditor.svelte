@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData } from '@hanzo/core'
+  import { AttachedData } from '@hanzoteam/core'
 
-  import { getClient } from '@hanzo/presentation'
-  import { Issue, IssueDraft } from '@hanzo/tracker'
-  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, showPopup } from '@hanzo/ui'
-  import { EditBoxPopup, FixedColumn } from '@hanzo/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Issue, IssueDraft } from '@hanzoteam/tracker'
+  import { Button, ButtonKind, ButtonSize, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
+  import { EditBoxPopup, FixedColumn } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tracker from '../../../plugin'
   import EstimationPopup from './EstimationPopup.svelte'

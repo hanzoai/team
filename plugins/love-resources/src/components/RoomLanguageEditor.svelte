@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Room, RoomLanguage } from '@hanzo/love'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Room, RoomLanguage } from '@hanzoteam/love'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
 
   import RoomLanguageComponent from './RoomLanguage.svelte'
   import {
@@ -11,7 +11,7 @@
     DropdownLabelsPopupIntl,
     eventToHTMLElement,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { languagesDisplayData } from '../types'
   import LanguageIcon from './LanguageIcon.svelte'
 

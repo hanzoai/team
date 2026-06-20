@@ -13,23 +13,23 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { Calendar } from '@hanzo/calendar'
-  import type { Organization, Person } from '@hanzo/contact'
-  import contact, { getCurrentEmployee } from '@hanzo/contact'
-  import core, { Class, Client, DateRangeMode, Doc, generateId, Markup, PersonId, Ref } from '@hanzo/core'
-  import { getResource, OK, Resource, Severity, Status } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { UserBox, UserBoxList } from '@hanzo/contact-resources'
-  import { Applicant, Candidate, RecruitEvents, Review } from '@hanzo/recruit'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { StyledTextArea } from '@hanzo/text-editor-resources'
-  import { DateRangePresenter, EditBox, Status as StatusControl } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { ObjectSearchBox } from '@hanzo/view-resources'
+  import calendar, { Calendar } from '@hanzoteam/calendar'
+  import type { Organization, Person } from '@hanzoteam/contact'
+  import contact, { getCurrentEmployee } from '@hanzoteam/contact'
+  import core, { Class, Client, DateRangeMode, Doc, generateId, Markup, PersonId, Ref } from '@hanzoteam/core'
+  import { getResource, OK, Resource, Severity, Status } from '@hanzoteam/platform'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { UserBox, UserBoxList } from '@hanzoteam/contact-resources'
+  import { Applicant, Candidate, RecruitEvents, Review } from '@hanzoteam/recruit'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import { StyledTextArea } from '@hanzoteam/text-editor-resources'
+  import { DateRangePresenter, EditBox, Status as StatusControl } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { ObjectSearchBox } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../../plugin'
   import IconCompany from '../icons/Company.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   // export let space: Ref<Project>
   export let candidate: Ref<Person>

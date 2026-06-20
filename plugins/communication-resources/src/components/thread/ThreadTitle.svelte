@@ -12,8 +12,8 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { tooltip } from '@hanzo/ui'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { tooltip } from '@hanzoteam/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
 
   export let title: string
 </script>

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Component, ComponentExtensionId } from '@hanzo/ui'
+  import { Component, ComponentExtensionId } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import { ComponentPointExtension } from '../../types'
   import { getClient } from '../../utils'
-  import { getCurrentAccount, hasAccountRole } from '@hanzo/core'
+  import { getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
 
   export let extension: ComponentExtensionId
   export let props: Record<string, any> = {}

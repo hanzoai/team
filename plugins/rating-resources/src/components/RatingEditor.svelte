@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Class, Doc, Ref } from '@hanzo/core'
-  import core, { getCurrentAccount, groupByArray } from '@hanzo/core'
-  import emojiPlugin from '@hanzo/emoji'
-  import { translateCB, getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import type { DocReaction } from '@hanzo/rating'
-  import ratingPlugin, { ReactionKind } from '@hanzo/rating'
-  import { Button, showPopup } from '@hanzo/ui'
+  import type { Class, Doc, Ref } from '@hanzoteam/core'
+  import core, { getCurrentAccount, groupByArray } from '@hanzoteam/core'
+  import emojiPlugin from '@hanzoteam/emoji'
+  import { translateCB, getEmbeddedLabel } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import type { DocReaction } from '@hanzoteam/rating'
+  import ratingPlugin, { ReactionKind } from '@hanzoteam/rating'
+  import { Button, showPopup } from '@hanzoteam/ui'
   import ReactionPresenter from './ReactionPresenter.svelte'
 
   export let _id: Ref<Doc>

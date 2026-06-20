@@ -3,7 +3,7 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import core, { createClient, TxOperations } from '@hanzo/core'
+import core, { createClient, TxOperations } from '@hanzoteam/core'
 import { LiveQuery } from '..'
 import { connect } from './connection'
 import { test } from './minmodel'

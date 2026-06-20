@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/panel",
+  "name": "@hanzoteam/panel",
   "entries": [
     {
       "version": "0.7.0",
@@ -8,7 +8,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/presentation\" from `~0.6.1` to `~0.6.2`"
+            "comment": "Updating dependency \"@hanzoteam/presentation\" from `~0.6.1` to `~0.6.2`"
           }
         ]
       }

@@ -3,12 +3,12 @@
 //
 //
 
-import { Ref } from '@hanzo/core'
-import type { Metadata, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { TriggerFunc } from '@hanzo/server-core'
-import { TodoDoneTester } from '@hanzo/time'
-import { GithubProject } from '@hanzo/github'
+import { Ref } from '@hanzoteam/core'
+import type { Metadata, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { TriggerFunc } from '@hanzoteam/server-core'
+import { TodoDoneTester } from '@hanzoteam/time'
+import { GithubProject } from '@hanzoteam/github'
 
 /**
  * @public

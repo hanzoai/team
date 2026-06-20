@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { ModernEditbox, ButtonMenu, Label, Modal, TextArea } from '@hanzo/ui'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import core, { getCurrentAccount } from '@hanzo/core'
-  import contact, { getCurrentEmployee } from '@hanzo/contact'
+  import { ModernEditbox, ButtonMenu, Label, Modal, TextArea } from '@hanzoteam/ui'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import core, { getCurrentAccount } from '@hanzoteam/core'
+  import contact, { getCurrentEmployee } from '@hanzoteam/contact'
 
   import Lock from '../../icons/Lock.svelte'
   import chunter from '../../../plugin'

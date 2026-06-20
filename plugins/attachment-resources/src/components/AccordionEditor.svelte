@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref, Space } from '@hanzo/core'
-  import textEditorPlugin from '@hanzo/text-editor'
-  import { TextEditor } from '@hanzo/text-editor-resources'
-  import { Button, IconDownOutline, Label, tooltip } from '@hanzo/ui'
+  import { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import textEditorPlugin from '@hanzoteam/text-editor'
+  import { TextEditor } from '@hanzoteam/text-editor-resources'
+  import { Button, IconDownOutline, Label, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import type { AccordionItem } from '..'

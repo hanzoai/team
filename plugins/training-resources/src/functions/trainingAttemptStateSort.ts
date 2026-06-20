@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { type TrainingAttemptState, trainingAttemptStateOrder } from '@hanzo/training'
-import { type TxOperations } from '@hanzo/core'
+import { type TrainingAttemptState, trainingAttemptStateOrder } from '@hanzoteam/training'
+import { type TxOperations } from '@hanzoteam/core'
 
 export async function trainingAttemptStateSort (
   _: TxOperations,

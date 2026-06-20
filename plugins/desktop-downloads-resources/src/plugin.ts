@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import desktopDownloads, { desktopDownloadsId } from '@hanzo/desktop-downloads'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import desktopDownloads, { desktopDownloadsId } from '@hanzoteam/desktop-downloads'
 
 export default mergeIds(desktopDownloadsId, desktopDownloads, {
   component: {

@@ -22,10 +22,10 @@
     type ProjectDocument,
     ProjectDocumentTree,
     getDocumentName
-  } from '@hanzo/controlled-documents'
-  import { type Doc, type Ref, type Space, WithLookup } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/controlled-documents'
+  import { type Doc, type Ref, type Space, WithLookup } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     type Action,
     IconEdit,
@@ -34,9 +34,9 @@
     getPlatformColorForTextDef,
     navigate,
     themeStore
-  } from '@hanzo/ui'
-  import { ActionGroup } from '@hanzo/view'
-  import { TreeItem, TreeNode, getActions as getContributedActions } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { ActionGroup } from '@hanzoteam/view'
+  import { TreeItem, TreeNode, getActions as getContributedActions } from '@hanzoteam/view-resources'
 
   import { getDocumentIdFromFragment, getProjectDocumentLink } from '../../navigation'
   import {

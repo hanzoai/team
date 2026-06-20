@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { translateCB } from '@hanzo/platform'
-  import presentation, { createQuery } from '@hanzo/presentation'
-  import { TagCategory, TagElement } from '@hanzo/tags'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { translateCB } from '@hanzoteam/platform'
+  import presentation, { createQuery } from '@hanzoteam/presentation'
+  import { TagCategory, TagElement } from '@hanzoteam/tags'
   import {
     Button,
     CheckBox,
@@ -27,7 +27,7 @@
     getPlatformColorDef,
     resizeObserver,
     themeStore
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import tags from '../plugin'
 

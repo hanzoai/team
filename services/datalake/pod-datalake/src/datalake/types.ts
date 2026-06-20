@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext, WorkspaceUuid } from '@hanzo/core'
+import { MeasureContext, WorkspaceUuid } from '@hanzoteam/core'
 import { type Readable } from 'stream'
 import { S3Bucket } from '../s3'
 import { WorkspaceStatsResult } from './db'

@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { Plugin, Resource, plugin } from '@hanzo/platform'
-import { ObjectDDParticipantFunc, TriggerFunc } from '@hanzo/server-core'
-import { TypeMatchFunc } from '@hanzo/server-notification'
-import { TemplateFieldServerFunc } from '@hanzo/server-templates'
+import { Plugin, Resource, plugin } from '@hanzoteam/platform'
+import { ObjectDDParticipantFunc, TriggerFunc } from '@hanzoteam/server-core'
+import { TypeMatchFunc } from '@hanzoteam/server-notification'
+import { TemplateFieldServerFunc } from '@hanzoteam/server-templates'
 
 export * from './types'
 /**

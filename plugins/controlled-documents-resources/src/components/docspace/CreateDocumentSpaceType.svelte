@@ -15,10 +15,10 @@
 
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Data, SpaceTypeDescriptor, generateId } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import documents, { DocumentSpaceType, DocumentSpaceTypeDescriptor } from '@hanzo/controlled-documents'
-  import { createSpaceType } from '@hanzo/setting'
+  import { Data, SpaceTypeDescriptor, generateId } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import documents, { DocumentSpaceType, DocumentSpaceTypeDescriptor } from '@hanzoteam/controlled-documents'
+  import { createSpaceType } from '@hanzoteam/setting'
 
   const client = getClient()
 

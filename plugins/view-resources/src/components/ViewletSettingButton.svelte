@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ButtonIcon, showPopup, closeTooltip } from '@hanzo/ui'
-  import { ViewOptionModel, ViewOptions, Viewlet, type ViewOptionsModel, BuildModelKey } from '@hanzo/view'
+  import { ButtonIcon, showPopup, closeTooltip } from '@hanzoteam/ui'
+  import { ViewOptionModel, ViewOptions, Viewlet, type ViewOptionsModel, BuildModelKey } from '@hanzoteam/view'
   import view from '../plugin'
   import { getViewOptions, viewOptionStore, defaultOptions } from '../viewOptions'
   import ViewOptionsButton from './ViewOptionsButton.svelte'

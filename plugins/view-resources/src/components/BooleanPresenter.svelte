@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { BooleanIcon, Label } from '@hanzo/ui'
+  import { BooleanIcon, Label } from '@hanzoteam/ui'
   import { getBooleanLabel } from '../utils'
 
   export let value: boolean | null | undefined

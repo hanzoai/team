@@ -19,13 +19,13 @@
     DocumentRequest,
     DocumentState,
     Project
-  } from '@hanzo/controlled-documents'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Collaboration } from '@hanzo/text-editor-resources'
+  } from '@hanzoteam/controlled-documents'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import notification from '@hanzoteam/notification'
+  import { Panel } from '@hanzoteam/panel'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Collaboration } from '@hanzoteam/text-editor-resources'
   import {
     Button,
     Chevron,
@@ -37,8 +37,8 @@
     showPopup,
     Tab,
     Tabs
-  } from '@hanzo/ui'
-  import { showMenu } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { showMenu } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
 
   import { createDocumentSnapshotAndEdit, createNewDraftForControlledDoc, getDocReference } from '../docutils'

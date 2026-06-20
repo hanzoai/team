@@ -14,9 +14,9 @@
 //
 
 import { writable, derived, get } from 'svelte/store'
-import { type SubscriptionData } from '@hanzo/account-client'
-import { type Tier } from '@hanzo/billing'
-import { type UsageStatus, type WorkspaceInfoWithStatus } from '@hanzo/core'
+import { type SubscriptionData } from '@hanzoteam/account-client'
+import { type Tier } from '@hanzoteam/billing'
+import { type UsageStatus, type WorkspaceInfoWithStatus } from '@hanzoteam/core'
 import { checkUsageAgainstLimits } from '../utils'
 
 export interface SubscriptionState {

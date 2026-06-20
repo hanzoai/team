@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Training } from '@hanzo/training'
-import attachment, { type Attachment } from '@hanzo/attachment'
-import type { Ref, TxOperations } from '@hanzo/core'
+import type { Training } from '@hanzoteam/training'
+import attachment, { type Attachment } from '@hanzoteam/attachment'
+import type { Ref, TxOperations } from '@hanzoteam/core'
 
 /**
  * Copy attachments metadata, not files. It should only be detached on remove rather than deleted.

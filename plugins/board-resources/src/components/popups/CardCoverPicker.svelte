@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { CardCover, Card } from '@hanzo/board'
-  import presentation, { Card as Popup, getClient } from '@hanzo/presentation'
-  import { Button, hexColorToNumber, Icon, Label, IconCheck } from '@hanzo/ui'
+  import { CardCover, Card } from '@hanzoteam/board'
+  import presentation, { Card as Popup, getClient } from '@hanzoteam/presentation'
+  import { Button, hexColorToNumber, Icon, Label, IconCheck } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import board from '../../plugin'
   import { getBoardAvailableColors } from '../../utils/BoardUtils'

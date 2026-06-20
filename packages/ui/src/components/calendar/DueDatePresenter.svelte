@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Timestamp } from '@hanzo/core'
+  import { Timestamp } from '@hanzoteam/core'
   import DueDatePopup from './DueDatePopup.svelte'
   import { tooltip } from '../../tooltips'
   import ui from '../../plugin'

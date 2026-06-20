@@ -14,9 +14,9 @@
 //
 
 import type { NextFunction, Request, Response } from 'express'
-import { extractToken, getAccountClient } from '@hanzo/server-client'
-import { AccountRole, systemAccountUuid } from '@hanzo/core'
-import { Token } from '@hanzo/server-token'
+import { extractToken, getAccountClient } from '@hanzoteam/server-client'
+import { AccountRole, systemAccountUuid } from '@hanzoteam/core'
+import { Token } from '@hanzoteam/server-token'
 
 interface RequestWithAuth extends Request {
   token?: Token

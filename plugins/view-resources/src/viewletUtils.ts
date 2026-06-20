@@ -5,8 +5,8 @@
 // you may not use this file except in compliance with the License.
 //
 
-import type { Client, Ref } from '@hanzo/core'
-import view, { type Viewlet, type ViewletViewAction } from '@hanzo/view'
+import type { Client, Ref } from '@hanzoteam/core'
+import view, { type Viewlet, type ViewletViewAction } from '@hanzoteam/view'
 
 /** Shape used by the header UI; both viewlet- and descriptor-scoped actions provide this. */
 export interface ResolvedViewletSpecialAction {

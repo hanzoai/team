@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityExtension as ActivityExtensionComponent } from '@hanzo/activity-resources'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import activity, { ActivityExtension } from '@hanzo/activity'
-  import { getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, Icon, Label } from '@hanzo/ui'
-  import { Asset, getResource, IntlString } from '@hanzo/platform'
-  import view from '@hanzo/view'
+  import { ActivityExtension as ActivityExtensionComponent } from '@hanzoteam/activity-resources'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import activity, { ActivityExtension } from '@hanzoteam/activity'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, Icon, Label } from '@hanzoteam/ui'
+  import { Asset, getResource, IntlString } from '@hanzoteam/platform'
+  import view from '@hanzoteam/view'
 
   import { getChannelName, getObjectIcon } from '../utils'
   import chunter from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let object: Doc
   export let readonly = false

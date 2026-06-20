@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { notEmpty, PersonId, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { ButtonKind, ButtonSize, IconSize } from '@hanzo/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import { notEmpty, PersonId, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { ButtonKind, ButtonSize, IconSize } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import contact from '../plugin'
   import { employeeByPersonIdStore, primarySocialIdByEmployeeRefStore } from '../utils'
   import UserBox from './UserBox.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let label: IntlString = contact.string.Employee
   export let value: PersonId | null | undefined

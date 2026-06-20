@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedData, Class, Doc, Ref } from '@hanzo/core'
-  import { TagElement, TagReference } from '@hanzo/tags'
+  import { AttachedData, Class, Doc, Ref } from '@hanzoteam/core'
+  import { TagElement, TagReference } from '@hanzoteam/tags'
   import { createEventDispatcher } from 'svelte'
   import TagsPopup from './TagsPopup.svelte'
 

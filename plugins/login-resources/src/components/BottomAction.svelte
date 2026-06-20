@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { NavLink } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import { NavLink } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
 
   import { BottomAction, goTo } from '../index'
   import { getHref } from '../utils'

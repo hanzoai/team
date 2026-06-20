@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact, Member, Organization } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Scroller } from '@hanzo/ui'
+  import contact, { Contact, Member, Organization } from '@hanzoteam/contact'
+  import { Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Scroller } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import ExpandRightDouble from './icons/ExpandRightDouble.svelte'
   import OrganizationCard from './OrganizationCard.svelte'

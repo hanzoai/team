@@ -24,9 +24,9 @@ import core, {
   type Space,
   TxOperations,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { type DbAdapter, wrapAdapterToClient } from '@hanzo/server-core'
-import { runSharedIntegrationTests } from '@hanzo/server-core/src/__tests__/shared-integration'
+} from '@hanzoteam/core'
+import { type DbAdapter, wrapAdapterToClient } from '@hanzoteam/server-core'
+import { runSharedIntegrationTests } from '@hanzoteam/server-core/src/__tests__/shared-integration'
 import { createMongoAdapter, createMongoTxAdapter } from '..'
 import { getMongoClient, type MongoClientReference, shutdownMongo } from '../utils'
 import { genMinModel } from './minmodel'

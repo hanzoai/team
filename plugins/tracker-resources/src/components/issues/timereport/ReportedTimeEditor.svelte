@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { Issue, Project } from '@hanzo/tracker'
-  import { ActionIcon, IconAdd, Label, eventToHTMLElement, floorFractionDigits, showPopup } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { Issue, Project } from '@hanzoteam/tracker'
+  import { ActionIcon, IconAdd, Label, eventToHTMLElement, floorFractionDigits, showPopup } from '@hanzoteam/ui'
   import { activeProjects } from '../../../utils'
   import ReportsPopup from './ReportsPopup.svelte'
   import TimePresenter from './TimePresenter.svelte'

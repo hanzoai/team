@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MarkupNode } from '@hanzo/text-core'
+import { MarkupNode } from '@hanzoteam/text-core'
 import { htmlToMarkup, markupToHtml } from '..'
 
 const tests: Array<{ name: string, markup: object, html: string }> = [

@@ -22,10 +22,10 @@ import core, {
   type PersonId,
   getDisplayTime,
   getObjectValue
-} from '@hanzo/core'
-import { translate, type IntlString, getResource } from '@hanzo/platform'
-import type { AttributeModel } from '@hanzo/view'
-import converter from '@hanzo/converter'
+} from '@hanzoteam/core'
+import { translate, type IntlString, getResource } from '@hanzoteam/platform'
+import type { AttributeModel } from '@hanzoteam/view'
+import converter from '@hanzoteam/converter'
 import { getFormattersForClass } from './registry'
 import {
   formatArrayValue,

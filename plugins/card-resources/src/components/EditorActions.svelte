@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ButtonIcon, handler } from '@hanzo/ui'
-  import type { RefAction, TextEditorHandler } from '@hanzo/text-editor'
-  import { getEditorHandler } from '@hanzo/text-editor-resources/src/components/editor-context'
+  import { ButtonIcon, handler } from '@hanzoteam/ui'
+  import type { RefAction, TextEditorHandler } from '@hanzoteam/text-editor'
+  import { getEditorHandler } from '@hanzoteam/text-editor-resources/src/components/editor-context'
 
   export let actions: RefAction[] = []
 

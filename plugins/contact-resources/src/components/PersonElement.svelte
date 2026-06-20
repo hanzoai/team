@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, Person } from '@hanzo/contact'
-  import { IconSize, LabelAndProps, tooltip } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { ObjectPresenterType } from '@hanzo/view'
+  import { Employee, Person } from '@hanzoteam/contact'
+  import { IconSize, LabelAndProps, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
+  import { ObjectPresenterType } from '@hanzoteam/view'
 
   import Avatar from './Avatar.svelte'
 

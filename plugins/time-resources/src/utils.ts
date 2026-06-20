@@ -1,10 +1,10 @@
-import { getCurrentAccount, type Client, type Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import type { ToDo, WorkSlot } from '@hanzo/time'
-import time from '@hanzo/time'
-import type { DefSeparators } from '@hanzo/ui'
+import { getCurrentAccount, type Client, type Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import type { ToDo, WorkSlot } from '@hanzoteam/time'
+import time from '@hanzoteam/time'
+import type { DefSeparators } from '@hanzoteam/ui'
 
-import calendarPlugin, { AccessLevel, getPrimaryCalendar, type Calendar } from '@hanzo/calendar'
+import calendarPlugin, { AccessLevel, getPrimaryCalendar, type Calendar } from '@hanzoteam/calendar'
 
 export * from './types'
 

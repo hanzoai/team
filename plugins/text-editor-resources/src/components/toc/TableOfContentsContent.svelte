@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { FocusHandler, Label, createFocusManager, tooltip } from '@hanzo/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { FocusHandler, Label, createFocusManager, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import textEditor, { Heading } from '@hanzo/text-editor'
+  import textEditor, { Heading } from '@hanzoteam/text-editor'
 
   export let items: Heading[] = []
   export let selected: Heading | undefined = undefined

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import textEditor from '@hanzo/text-editor'
+import textEditor from '@hanzoteam/text-editor'
 import { type Editor } from '@tiptap/core'
 import { CellSelection, TableMap } from '@tiptap/pm/tables'
 import { Decoration, DecorationSet } from '@tiptap/pm/view'

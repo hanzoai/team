@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SharedMessages } from '@hanzo/gmail'
-  import { showPopup } from '@hanzo/ui'
+  import { SharedMessages } from '@hanzoteam/gmail'
+  import { showPopup } from '@hanzoteam/ui'
   import FullMessagePopup from './FullMessagePopup.svelte'
   import Messages from './Messages.svelte'
 

@@ -1,5 +1,5 @@
-import card from '@hanzo/card'
-import core from '@hanzo/core'
+import card from '@hanzoteam/card'
+import core from '@hanzoteam/core'
 import * as fs from 'fs'
 import * as path from 'path'
 

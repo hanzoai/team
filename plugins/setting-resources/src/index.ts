@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type Mixin } from '@hanzo/core'
-import { type Resources } from '@hanzo/platform'
-import { getClient, MessageBox } from '@hanzo/presentation'
-import { showPopup } from '@hanzo/ui'
-import { deleteObject } from '@hanzo/view-resources/src/utils'
+import { type Class, type Doc, type Mixin } from '@hanzoteam/core'
+import { type Resources } from '@hanzoteam/platform'
+import { getClient, MessageBox } from '@hanzoteam/presentation'
+import { showPopup } from '@hanzoteam/ui'
+import { deleteObject } from '@hanzoteam/view-resources/src/utils'
 import ClassSetting from './components/ClassSetting.svelte'
 import CreateMixin from './components/CreateMixin.svelte'
 import EditEnum from './components/EditEnum.svelte'
@@ -31,7 +31,7 @@ import Privacy from './components/Privacy.svelte'
 import Profile from './components/Profile.svelte'
 import Settings from './components/Settings.svelte'
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import ClassAttributes from './components/ClassAttributes.svelte'
 import ClassAttributesList from './components/ClassAttributesList.svelte'
 import Configure from './components/Configure.svelte'

@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Icon, Label, tooltip } from '@hanzo/ui'
-  import contact, { type SocialIdentity, type SocialIdentityProvider } from '@hanzo/contact'
-  import { getClient } from '@hanzo/presentation'
-  import { type SocialId } from '@hanzo/core'
+  import { Icon, Label, tooltip } from '@hanzoteam/ui'
+  import contact, { type SocialIdentity, type SocialIdentityProvider } from '@hanzoteam/contact'
+  import { getClient } from '@hanzoteam/presentation'
+  import { type SocialId } from '@hanzoteam/core'
   import { isSocialIdOwnedByCurrentUser } from '../utils'
 
   export let value: SocialIdentity | SocialId

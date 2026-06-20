@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { AccountUuid, Person, PersonId, SocialId, SocialIdType, buildSocialIdString } from '@hanzo/core'
-import { getAccountClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { IntegrationError } from '@hanzo/setting'
+import { AccountUuid, Person, PersonId, SocialId, SocialIdType, buildSocialIdString } from '@hanzoteam/core'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { IntegrationError } from '@hanzoteam/setting'
 
 import { serviceToken } from './utils'
 

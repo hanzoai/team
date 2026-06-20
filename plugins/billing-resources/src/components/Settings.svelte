@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Asset, type IntlString, getMetadata } from '@hanzo/platform'
+  import { type Asset, type IntlString, getMetadata } from '@hanzoteam/platform'
   import {
     AnySvelteComponent,
     Breadcrumb,
@@ -28,8 +28,8 @@
     navigate,
     resolvedLocationStore,
     twoPanelsSeparators
-  } from '@hanzo/ui'
-  import presentation from '@hanzo/presentation'
+  } from '@hanzoteam/ui'
+  import presentation from '@hanzoteam/presentation'
   import { onDestroy } from 'svelte'
 
   // import ResourceUsage from './ResourceUsage.svelte'

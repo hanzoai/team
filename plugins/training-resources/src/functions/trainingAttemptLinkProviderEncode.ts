@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { TrainingAttempt } from '@hanzo/training'
-import type { Location } from '@hanzo/ui'
+import type { TrainingAttempt } from '@hanzoteam/training'
+import type { Location } from '@hanzoteam/ui'
 import { trainingAttemptRoute } from '../routing/routes/trainingAttemptRoute'
 
 export async function trainingAttemptLinkProviderEncode (

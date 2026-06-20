@@ -11,12 +11,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Permission, type Ref } from '@hanzo/core'
-import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
-import { type PresentationMiddlewareCreator } from '@hanzo/presentation'
-import process, { processId } from '@hanzo/process'
-import { type AnyComponent } from '@hanzo/ui'
-import { type ViewQueryAction, type Viewlet } from '@hanzo/view'
+import { type Permission, type Ref } from '@hanzoteam/core'
+import { mergeIds, type IntlString, type Resource } from '@hanzoteam/platform'
+import { type PresentationMiddlewareCreator } from '@hanzoteam/presentation'
+import process, { processId } from '@hanzoteam/process'
+import { type AnyComponent } from '@hanzoteam/ui'
+import { type ViewQueryAction, type Viewlet } from '@hanzoteam/view'
 
 export default mergeIds(processId, process, {
   viewlet: {

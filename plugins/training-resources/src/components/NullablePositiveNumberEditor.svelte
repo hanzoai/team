@@ -3,10 +3,10 @@
 -->
 
 <script lang="ts">
-  import { getEmbeddedLabel, type IntlString } from '@hanzo/platform'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzo/ui'
-  import { EditBoxPopup } from '@hanzo/view-resources'
+  import { getEmbeddedLabel, type IntlString } from '@hanzoteam/platform'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzoteam/ui'
+  import { EditBoxPopup } from '@hanzoteam/view-resources'
   import { unlimitedAttempts } from './TrainingRequestMaxAttemptsPresenter.svelte'
 
   export let placeholder: IntlString = getEmbeddedLabel(unlimitedAttempts)

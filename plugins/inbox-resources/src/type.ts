@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Card } from '@hanzo/card'
-import { type Class, type Doc, type Ref } from '@hanzo/core'
-import { type NotificationContext } from '@hanzo/communication-types'
-import { type DisplayInboxNotification, type DocNotifyContext } from '@hanzo/notification'
+import { type Card } from '@hanzoteam/card'
+import { type Class, type Doc, type Ref } from '@hanzoteam/core'
+import { type NotificationContext } from '@hanzoteam/communication-types'
+import { type DisplayInboxNotification, type DocNotifyContext } from '@hanzoteam/notification'
 
 export type NavigationItem =
   | {

@@ -12,22 +12,22 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import card, { Card, CardSpace, MasterTag } from '@hanzo/card'
-  import presentation, { getClient, getCommunicationClient, SpaceSelector } from '@hanzo/presentation'
+  import card, { Card, CardSpace, MasterTag } from '@hanzoteam/card'
+  import presentation, { getClient, getCommunicationClient, SpaceSelector } from '@hanzoteam/presentation'
   import { createEventDispatcher } from 'svelte'
-  import core, { Data, generateId, Ref, Markup, notEmpty } from '@hanzo/core'
-  import { getResource, translate, getEmbeddedLabel } from '@hanzo/platform'
-  import { Label, Modal, ModernEditbox, languageStore, showPopup, Component } from '@hanzo/ui'
-  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { Employee, getCurrentEmployee } from '@hanzo/contact'
-  import { SelectUsersPopup, employeeByIdStore, permissionsStore } from '@hanzo/contact-resources'
-  import view from '@hanzo/view'
+  import core, { Data, generateId, Ref, Markup, notEmpty } from '@hanzoteam/core'
+  import { getResource, translate, getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Label, Modal, ModernEditbox, languageStore, showPopup, Component } from '@hanzoteam/ui'
+  import { AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import { Employee, getCurrentEmployee } from '@hanzoteam/contact'
+  import { SelectUsersPopup, employeeByIdStore, permissionsStore } from '@hanzoteam/contact-resources'
+  import view from '@hanzoteam/view'
 
   import { createCard } from '../utils'
   import CardCollaborators from './CardCollaborators.svelte'
   import { TypeSelector } from '../index'
-  import { canCreateObject } from '@hanzo/view-resources'
+  import { canCreateObject } from '@hanzoteam/view-resources'
 
   export let title: string = ''
   export let type: Ref<MasterTag> = card.types.Document

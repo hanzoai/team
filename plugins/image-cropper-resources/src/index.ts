@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import '@hanzo/platform-rig/profiles/ui/svelte'
+import '@hanzoteam/platform-rig/profiles/ui/svelte'
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 import Cropper from './components/Cropper.svelte'
 

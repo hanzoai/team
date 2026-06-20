@@ -6,7 +6,7 @@ import type {
   AnswerDataAssessFunction,
   MultipleChoiceAssessment,
   MultipleChoiceAssessmentAnswer
-} from '@hanzo/questions'
+} from '@hanzoteam/questions'
 
 /** @public */
 export const MultipleChoiceAssessmentAssess: AnswerDataAssessFunction<

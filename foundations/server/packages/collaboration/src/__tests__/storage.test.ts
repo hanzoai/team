@@ -20,8 +20,8 @@ import core, {
   type MeasureContext,
   type Ref,
   type WorkspaceIds
-} from '@hanzo/core'
-import { getDataId, type StorageAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { getDataId, type StorageAdapter } from '@hanzoteam/server-core'
 import { Readable } from 'stream'
 import { Doc as YDoc } from 'yjs'
 import { loadCollabJson, loadCollabYdoc, removeCollabYdoc, saveCollabJson, saveCollabYdoc } from '../storage'

@@ -15,7 +15,7 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import {
     AccountRole,
     type Blob,
@@ -27,8 +27,8 @@
     hasAccountRole,
     makeDocCollabId,
     type Ref
-  } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
+  } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
   import {
     DrawingCmd,
     getAttribute,
@@ -37,8 +37,8 @@
     getImageSize,
     imageSizeToRatio,
     KeyedAttribute
-  } from '@hanzo/presentation'
-  import { markupToJSON } from '@hanzo/text'
+  } from '@hanzoteam/presentation'
+  import { markupToJSON } from '@hanzoteam/text'
   import {
     AnySvelteComponent,
     Button,
@@ -50,8 +50,8 @@
     PopupAlignment,
     themeStore,
     ThrottledCaller
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { Editor, FocusPosition, mergeAttributes } from '@tiptap/core'
   import { isChangeOrigin } from '@tiptap/extension-collaboration'
   import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
@@ -63,7 +63,7 @@
     RefAction,
     TextEditorCommandHandler,
     TextEditorHandler
-  } from '@hanzo/text-editor'
+  } from '@hanzoteam/text-editor'
   import { EditorKitOptions, getEditorKit } from '../../src/kits/editor-kit'
   import { deleteAttachment } from '../command/deleteAttachment'
   import { textEditorCommandHandler } from '../commands'

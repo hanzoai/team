@@ -1,4 +1,4 @@
-import type { Metrics, PersonId } from '@hanzo/core'
+import type { Metrics, PersonId } from '@hanzoteam/core'
 
 // Copy from server/core/stats.ts for UI usage.
 export interface MemoryStatistics {

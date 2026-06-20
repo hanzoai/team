@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getName, Person } from '@hanzo/contact'
-  import { Avatar } from '@hanzo/contact-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { tooltip } from '@hanzo/ui'
-  import { openDoc } from '@hanzo/view-resources'
+  import { getName, Person } from '@hanzoteam/contact'
+  import { Avatar } from '@hanzoteam/contact-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { tooltip } from '@hanzoteam/ui'
+  import { openDoc } from '@hanzoteam/view-resources'
   import calendar from '../plugin'
 
   export let value: Person | Person[]

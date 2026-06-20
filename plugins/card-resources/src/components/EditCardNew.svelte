@@ -15,8 +15,8 @@
 //
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { Ref, WithLookup } from '@hanzo/core'
+  import { Card } from '@hanzoteam/card'
+  import { Ref, WithLookup } from '@hanzoteam/core'
   import {
     Button,
     Component,
@@ -30,17 +30,17 @@
     Panel,
     IPanelState,
     deviceOptionsStore as deviceInfo
-  } from '@hanzo/ui'
-  import presence from '@hanzo/presence'
+  } from '@hanzoteam/ui'
+  import presence from '@hanzoteam/presence'
   import {
     createQuery,
     createNotificationContextsQuery,
     getClient,
     ComponentExtensions
-  } from '@hanzo/presentation'
-  import { canChangeDoc, showMenu } from '@hanzo/view-resources'
-  import view from '@hanzo/view'
-  import { NotificationContext } from '@hanzo/communication-types'
+  } from '@hanzoteam/presentation'
+  import { canChangeDoc, showMenu } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view'
+  import { NotificationContext } from '@hanzoteam/communication-types'
 
   import card from '../plugin'
   import CardIcon from './CardIcon.svelte'
@@ -49,7 +49,7 @@
   import ParentNamesPresenter from './ParentNamesPresenter.svelte'
   import { openCardInSidebar } from '../utils'
   import { afterUpdate } from 'svelte'
-  import { permissionsStore } from '@hanzo/contact-resources'
+  import { permissionsStore } from '@hanzoteam/contact-resources'
   import CardVersionSelector from './CardVersionSelector.svelte'
 
   export let _id: Ref<Card>

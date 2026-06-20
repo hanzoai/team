@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type DocumentState, ControlledDocumentState } from '@hanzo/controlled-documents'
+import { type DocumentState, ControlledDocumentState } from '@hanzoteam/controlled-documents'
 import { combine } from 'effector'
 import { $isLatestVersion, $controlledDocument, $documentState } from './editor'
 

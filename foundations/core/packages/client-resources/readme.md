@@ -5,8 +5,8 @@ Package allow to create a client to interact with running platform.
 ## Usage
 
 ```ts
-  import clientResources from '@hanzo/client-resources'
-  import core, { Client } from '@hanzo/core'
+  import clientResources from '@hanzoteam/client-resources'
+  import core, { Client } from '@hanzoteam/core'
 
   // ...
 

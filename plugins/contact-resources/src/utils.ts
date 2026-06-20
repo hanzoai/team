@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type AccountClient, getClient as getAccountClientRaw } from '@hanzo/account-client'
+import { type AccountClient, getClient as getAccountClientRaw } from '@hanzoteam/account-client'
 import {
   addEmployeeListenrer,
   AvatarType,
@@ -49,7 +49,7 @@ import {
   type PersonsByPermission,
   type MembersBySpace,
   type SocialIdentity
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import core, {
   type AccountUuid,
   type AggregateValue,
@@ -75,12 +75,12 @@ import core, {
   type TypedSpace,
   type UserStatus,
   type WithLookup
-} from '@hanzo/core'
-import login from '@hanzo/login'
-import notification, { type DocNotifyContext, type InboxNotification } from '@hanzo/notification'
-import { getMetadata, getResource, type IntlString, translate } from '@hanzo/platform'
-import presentation, { addTxListener, createQuery, getClient, onClient } from '@hanzo/presentation'
-import { type TemplateDataProvider } from '@hanzo/templates'
+} from '@hanzoteam/core'
+import login from '@hanzoteam/login'
+import notification, { type DocNotifyContext, type InboxNotification } from '@hanzoteam/notification'
+import { getMetadata, getResource, type IntlString, translate } from '@hanzoteam/platform'
+import presentation, { addTxListener, createQuery, getClient, onClient } from '@hanzoteam/presentation'
+import { type TemplateDataProvider } from '@hanzoteam/templates'
 import {
   getCurrentResolvedLocation,
   getPanelURI,
@@ -88,10 +88,10 @@ import {
   type Location,
   type ResolvedLocation,
   type TabItem
-} from '@hanzo/ui'
-import view, { type Filter, type GrouppingManager } from '@hanzo/view'
-import { accessDeniedStore, FilterQuery } from '@hanzo/view-resources'
-import { type LocationData } from '@hanzo/workbench'
+} from '@hanzoteam/ui'
+import view, { type Filter, type GrouppingManager } from '@hanzoteam/view'
+import { accessDeniedStore, FilterQuery } from '@hanzoteam/view-resources'
+import { type LocationData } from '@hanzoteam/workbench'
 import { derived, get, type Readable, writable } from 'svelte/store'
 
 import contact from './plugin'

@@ -1,1 +1,1 @@
-export { RateLimiter } from '@hanzo/core'
+export { RateLimiter } from '@hanzoteam/core'

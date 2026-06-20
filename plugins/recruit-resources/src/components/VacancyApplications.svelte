@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { recruitId, Vacancy } from '@hanzo/recruit'
-  import { Button, Icon, IconAdd, Label, Loading, Scroller, showPopup } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { NavLink, Table, ViewletsSettingButton } from '@hanzo/view-resources'
+  import type { Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { recruitId, Vacancy } from '@hanzoteam/recruit'
+  import { Button, Icon, IconAdd, Label, Loading, Scroller, showPopup } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { NavLink, Table, ViewletsSettingButton } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
   import CreateApplication from './CreateApplication.svelte'
   import IconApplication from './icons/Application.svelte'

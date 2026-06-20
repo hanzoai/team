@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getClient as getAccountClient, AccountClient } from '@hanzo/account-client'
-import { createRestTxOperations } from '@hanzo/api-client'
-import { Event } from '@hanzo/calendar'
-import core, { Hierarchy, PersonId, systemAccountUuid, TxOperations, WorkspaceUuid } from '@hanzo/core'
-import love from '@hanzo/love'
-import { generateToken } from '@hanzo/server-token'
+import { getClient as getAccountClient, AccountClient } from '@hanzoteam/account-client'
+import { createRestTxOperations } from '@hanzoteam/api-client'
+import { Event } from '@hanzoteam/calendar'
+import core, { Hierarchy, PersonId, systemAccountUuid, TxOperations, WorkspaceUuid } from '@hanzoteam/core'
+import love from '@hanzoteam/love'
+import { generateToken } from '@hanzoteam/server-token'
 import config from './config'
 
 export async function getClient (

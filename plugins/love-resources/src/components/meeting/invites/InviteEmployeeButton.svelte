@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ButtonBaseSize, IconSize, ModernButton, showPopup } from '@hanzo/ui'
-  import { Employee } from '@hanzo/contact'
+  import { ButtonBaseSize, IconSize, ModernButton, showPopup } from '@hanzoteam/ui'
+  import { Employee } from '@hanzoteam/contact'
   import { currentMeetingRoom } from '../../../meetings'
   import love from '../../../plugin'
-  import { SelectUsersPopup } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
+  import { SelectUsersPopup } from '@hanzoteam/contact-resources'
+  import { Ref } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
   import { sendInvites } from '../../../invites'
   import { infos } from '../../../stores'

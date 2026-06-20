@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import cardPlugin, { MasterTag } from '@hanzo/card'
-  import core, { Class, ClassifierKind, Doc, Ref } from '@hanzo/core'
-  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
-  import { Icon, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import cardPlugin, { MasterTag } from '@hanzoteam/card'
+  import core, { Class, ClassifierKind, Doc, Ref } from '@hanzoteam/core'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Icon, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
 
   export let classes: Ref<Class<Doc>>[] = []

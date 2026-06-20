@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Organization } from '@hanzo/contact'
-  import { CreateOrganization } from '@hanzo/contact-resources'
-  import { Ref, TxOperations } from '@hanzo/core'
-  import { Analytics } from '@hanzo/analytics'
-  import { RecruitEvents } from '@hanzo/recruit'
+  import contact, { Organization } from '@hanzoteam/contact'
+  import { CreateOrganization } from '@hanzoteam/contact-resources'
+  import { Ref, TxOperations } from '@hanzoteam/core'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { RecruitEvents } from '@hanzoteam/recruit'
 
   import recruit from '../plugin'
 

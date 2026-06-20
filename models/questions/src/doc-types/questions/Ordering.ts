@@ -10,10 +10,10 @@ import type {
   OrderingQuestion,
   OrderingQuestionAnswer,
   OrderingQuestionData
-} from '@hanzo/questions'
-import { IndexKind, type Ref, type Type } from '@hanzo/core'
-import { Hidden, Index, Model, Prop, TypeRef, UX } from '@hanzo/model'
-import core, { TType } from '@hanzo/model-core'
+} from '@hanzoteam/questions'
+import { IndexKind, type Ref, type Type } from '@hanzoteam/core'
+import { Hidden, Index, Model, Prop, TypeRef, UX } from '@hanzoteam/model'
+import core, { TType } from '@hanzoteam/model-core'
 import questions from '../../plugin'
 import { TAnswer, TAssessment, TQuestion } from '../base'
 

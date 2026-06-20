@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hanzo/core'
-  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { Table, ViewletsSettingButton } from '@hanzo/view-resources'
+  import type { Doc, Ref } from '@hanzoteam/core'
+  import { Button, IconAdd, Label, Scroller, Section, showPopup } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { Table, ViewletsSettingButton } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
   import CreateApplication from './CreateApplication.svelte'
   import IconApplication from './icons/Application.svelte'

@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActivityInfoMessage } from '@hanzo/activity'
-  import { Avatar, SystemAvatar, getPersonByPersonIdCb } from '@hanzo/contact-resources'
-  import { translateCB } from '@hanzo/platform'
-  import { HTMLViewer } from '@hanzo/presentation'
-  import { Action, themeStore } from '@hanzo/ui'
+  import { ActivityInfoMessage } from '@hanzoteam/activity'
+  import { Avatar, SystemAvatar, getPersonByPersonIdCb } from '@hanzoteam/contact-resources'
+  import { translateCB } from '@hanzoteam/platform'
+  import { HTMLViewer } from '@hanzoteam/presentation'
+  import { Action, themeStore } from '@hanzoteam/ui'
 
   import ActivityMessageHeader from '../activity-message/ActivityMessageHeader.svelte'
   import ActivityMessageTemplate from '../activity-message/ActivityMessageTemplate.svelte'
-  import { Person } from '@hanzo/contact'
+  import { Person } from '@hanzoteam/contact'
 
   export let value: ActivityInfoMessage
   export let showNotify: boolean = false

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import attachment, { type Attachment, type Drawing } from '@hanzo/attachment'
-import chunter, { type ChatMessage } from '@hanzo/chunter'
-import { type Employee, type Person } from '@hanzo/contact'
+import attachment, { type Attachment, type Drawing } from '@hanzoteam/attachment'
+import chunter, { type ChatMessage } from '@hanzoteam/chunter'
+import { type Employee, type Person } from '@hanzoteam/contact'
 import documents, {
   type ChangeControl,
   type ControlledDocument,
@@ -28,7 +28,7 @@ import documents, {
   type OrgSpace,
   type ProjectDocument,
   useDocumentTemplate
-} from '@hanzo/controlled-documents'
+} from '@hanzoteam/controlled-documents'
 import core, {
   type AttachedData,
   type AttachedDoc,
@@ -50,17 +50,17 @@ import core, {
   type TxOperations,
   type PersonId,
   type AccountUuid
-} from '@hanzo/core'
-import document, { type Document, getFirstRank, type Teamspace } from '@hanzo/document'
+} from '@hanzoteam/core'
+import document, { type Document, getFirstRank, type Teamspace } from '@hanzoteam/document'
 import task, {
   createProjectType,
   makeRank,
   type ProjectType,
   type TaskType,
   type TaskTypeWithFactory
-} from '@hanzo/task'
-import { jsonToMarkup } from '@hanzo/text'
-import { markdownToMarkup } from '@hanzo/text-markdown'
+} from '@hanzoteam/task'
+import { jsonToMarkup } from '@hanzoteam/text'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
 import tracker, {
   type Issue,
   type IssueParentInfo,
@@ -68,8 +68,8 @@ import tracker, {
   type IssueStatus,
   type Project,
   TimeReportDayType
-} from '@hanzo/tracker'
-import view from '@hanzo/view'
+} from '@hanzoteam/tracker'
+import view from '@hanzoteam/view'
 import { type Props, type UnifiedUpdate, type UnifiedDoc, type UnifiedFile, type UnifiedMixin } from '../types'
 import { type Logger } from './logger'
 import { type MarkdownPreprocessor, NoopMarkdownPreprocessor } from './preprocessor'

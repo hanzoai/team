@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref, WithLookup, type Status } from '@hanzo/core'
-  import task from '@hanzo/task'
-  import { Project, type Issue } from '@hanzo/tracker'
-  import { Button, ButtonKind, ButtonSize, ProgressCircle } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
+  import { Doc, Ref, WithLookup, type Status } from '@hanzoteam/core'
+  import task from '@hanzoteam/task'
+  import { Project, type Issue } from '@hanzoteam/tracker'
+  import { Button, ButtonKind, ButtonSize, ProgressCircle } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
   import { listIssueStatusOrder, relatedIssues, type IssueRef } from '../../../utils'
   import RelatedIssuePopup from './RelatedIssuePopup.svelte'
 

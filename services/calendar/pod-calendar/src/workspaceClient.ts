@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { AccountClient } from '@hanzo/account-client'
-import calendar, { ExternalCalendar } from '@hanzo/calendar'
-import contact, { getPersonRefsBySocialIds, Person } from '@hanzo/contact'
+import { AccountClient } from '@hanzoteam/account-client'
+import calendar, { ExternalCalendar } from '@hanzoteam/calendar'
+import contact, { getPersonRefsBySocialIds, Person } from '@hanzoteam/contact'
 import core, {
   MeasureContext,
   RateLimiter,
@@ -23,7 +23,7 @@ import core, {
   TxOperations,
   WorkspaceUuid,
   type Ref
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 
 import { CalendarClient } from './calendar'
 import { getClient } from './client'

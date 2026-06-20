@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { createEffect, createStore, forward } from 'effector'
-import { type Attachment } from '@hanzo/attachment'
-import { type Ref, generateId } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import { type CompAndProps, type PopupAlignment, popupstore, showPopup } from '@hanzo/ui'
-import { type Document, type DocumentComment } from '@hanzo/controlled-documents'
+import { type Attachment } from '@hanzoteam/attachment'
+import { type Ref, generateId } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import { type CompAndProps, type PopupAlignment, popupstore, showPopup } from '@hanzoteam/ui'
+import { type Document, type DocumentComment } from '@hanzoteam/controlled-documents'
 import { isDocumentCommentAttachedTo } from '../../../utils'
 import {
   type DocumentCommentsFilter,

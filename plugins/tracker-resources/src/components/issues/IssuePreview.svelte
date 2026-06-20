@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hanzo/attachment'
-  import { AttachmentDocList } from '@hanzo/attachment-resources'
-  import { ChatMessagePopup } from '@hanzo/chunter-resources'
-  import { Ref } from '@hanzo/core'
-  import { IconForward, createQuery, getClient } from '@hanzo/presentation'
-  import { CollaborativeTextEditor } from '@hanzo/text-editor-resources'
-  import { Issue } from '@hanzo/tracker'
-  import { Label, Scroller, resizeObserver } from '@hanzo/ui'
-  import { getCollaborationUser } from '@hanzo/view-resources'
+  import attachment from '@hanzoteam/attachment'
+  import { AttachmentDocList } from '@hanzoteam/attachment-resources'
+  import { ChatMessagePopup } from '@hanzoteam/chunter-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { IconForward, createQuery, getClient } from '@hanzoteam/presentation'
+  import { CollaborativeTextEditor } from '@hanzoteam/text-editor-resources'
+  import { Issue } from '@hanzoteam/tracker'
+  import { Label, Scroller, resizeObserver } from '@hanzoteam/ui'
+  import { getCollaborationUser } from '@hanzoteam/view-resources'
 
   import tracker from '../../plugin'
   import AssigneeEditor from './AssigneeEditor.svelte'

@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/converter",
+  "name": "@hanzoteam/converter",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -37,10 +37,10 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/view": "workspace:^0.7.0",
-    "@hanzo/presentation": "workspace:^0.7.0",
-    "@hanzo/ui": "workspace:^0.7.0"
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/view": "workspace:^0.7.0",
+    "@hanzoteam/presentation": "workspace:^0.7.0",
+    "@hanzoteam/ui": "workspace:^0.7.0"
   }
 }

@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
-import core, { type Class, type Doc } from '@hanzo/core'
-import drive from '@hanzo/drive'
-import serverCore, { type ObjectDDParticipant } from '@hanzo/server-core'
-import serverDrive from '@hanzo/server-drive'
+import core, { type Class, type Doc } from '@hanzoteam/core'
+import drive from '@hanzoteam/drive'
+import serverCore, { type ObjectDDParticipant } from '@hanzoteam/server-core'
+import serverDrive from '@hanzoteam/server-drive'
 
-export { serverDriveId } from '@hanzo/server-drive'
+export { serverDriveId } from '@hanzoteam/server-drive'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {

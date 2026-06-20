@@ -24,9 +24,9 @@ import {
   generateId,
   makeCollabJsonId,
   makeCollabYdocId
-} from '@hanzo/core'
-import { type StorageAdapter } from '@hanzo/server-core'
-import { yDocToMarkup } from '@hanzo/text-ydoc'
+} from '@hanzoteam/core'
+import { type StorageAdapter } from '@hanzoteam/server-core'
+import { yDocToMarkup } from '@hanzoteam/text-ydoc'
 import { Doc as YDoc } from 'yjs'
 
 import { yDocFromBuffer, yDocToBuffer } from './ydoc'

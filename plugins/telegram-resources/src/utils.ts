@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import contact, { getCurrentEmployee } from '@hanzo/contact'
-import { getContactChannel } from '@hanzo/contact-resources'
-import { getClient } from '@hanzo/presentation'
-import { type TemplateDataProvider } from '@hanzo/templates'
-import { getMetadata } from '@hanzo/platform'
+import contact, { getCurrentEmployee } from '@hanzoteam/contact'
+import { getContactChannel } from '@hanzoteam/contact-resources'
+import { getClient } from '@hanzoteam/presentation'
+import { type TemplateDataProvider } from '@hanzoteam/templates'
+import { getMetadata } from '@hanzoteam/platform'
 
 import telegram from './plugin'
 

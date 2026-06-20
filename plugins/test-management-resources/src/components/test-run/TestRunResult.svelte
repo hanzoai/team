@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { BreadcrumbsElement } from '@hanzo/presentation'
-  import { ScrollerBar } from '@hanzo/ui'
+  import { BreadcrumbsElement } from '@hanzoteam/presentation'
+  import { ScrollerBar } from '@hanzoteam/ui'
 
   import { type TestRunStats } from '../../testRunUtils'
 

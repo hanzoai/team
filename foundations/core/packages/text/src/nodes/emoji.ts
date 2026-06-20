@@ -14,7 +14,7 @@
 //
 
 import { Node, mergeAttributes } from '@tiptap/core'
-import type { Blob, Ref } from '@hanzo/core'
+import type { Blob, Ref } from '@hanzoteam/core'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

@@ -7,7 +7,7 @@ import {
   type NetworkAgent,
   type ContainerRecord,
   type ContainerKind
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 import { NetworkClientImpl } from '../client'
 
 // Mock BackRPCClient
@@ -15,7 +15,7 @@ const mockWaitConnection = jest.fn().mockResolvedValue(undefined)
 const mockRequest = jest.fn()
 const mockClose = jest.fn()
 
-jest.mock('@hanzo/network-backrpc', () => {
+jest.mock('@hanzoteam/network-backrpc', () => {
   return {
     BackRPCClient: jest.fn().mockImplementation(() => ({
       waitConnection: mockWaitConnection,

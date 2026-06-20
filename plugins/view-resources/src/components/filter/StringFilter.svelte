@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, resizeObserver, deviceOptionsStore, EditWithIcon, IconSearch } from '@hanzo/ui'
-  import { Filter } from '@hanzo/view'
+  import { Button, resizeObserver, deviceOptionsStore, EditWithIcon, IconSearch } from '@hanzoteam/ui'
+  import { Filter } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../../plugin'
 

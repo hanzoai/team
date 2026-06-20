@@ -4,9 +4,9 @@ import core, {
   type Blob,
   type MeasureContext,
   type WorkspaceDataId
-} from '@hanzo/core'
-import { getDataId } from '@hanzo/server-core'
-import type { BlobStorageIterator, BucketInfo, StorageAdapter, UploadedObjectInfo } from '@hanzo/storage'
+} from '@hanzoteam/core'
+import { getDataId } from '@hanzoteam/server-core'
+import type { BlobStorageIterator, BucketInfo, StorageAdapter, UploadedObjectInfo } from '@hanzoteam/storage'
 import { Readable } from 'stream'
 
 export class MemStorageAdapter implements StorageAdapter {

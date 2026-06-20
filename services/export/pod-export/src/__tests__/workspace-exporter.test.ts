@@ -25,9 +25,9 @@ import {
   type Hierarchy,
   type LowLevelStorage,
   generateId
-} from '@hanzo/core'
-import core from '@hanzo/model-core'
-import { type StorageAdapter, type Pipeline } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import core from '@hanzoteam/model-core'
+import { type StorageAdapter, type Pipeline } from '@hanzoteam/server-core'
 import { CrossWorkspaceExporter, type PipelineFactory, type RelationDefinition } from '../workspace'
 
 // Mock document classes

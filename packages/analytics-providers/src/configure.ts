@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type AnalyticProvider, Analytics } from '@hanzo/analytics'
+import { type AnalyticProvider, Analytics } from '@hanzoteam/analytics'
 import { AnalyticsCollectorProvider } from './analyticsCollector'
 import { type AnalyticsConfig } from './types'
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 import InboxApplication from './components/InboxApplication.svelte'
 

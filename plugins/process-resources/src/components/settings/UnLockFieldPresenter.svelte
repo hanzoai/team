@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Process } from '@hanzo/process'
+  import { Process } from '@hanzoteam/process'
   import LockFieldPresenter from './LockFieldPresenter.svelte'
 
   export let process: Process

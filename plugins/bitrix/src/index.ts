@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Class, Mixin, Ref, Space } from '@hanzo/core'
-import type { Plugin, Resource } from '@hanzo/platform'
-import { Asset, plugin } from '@hanzo/platform'
+import type { Class, Mixin, Ref, Space } from '@hanzoteam/core'
+import type { Plugin, Resource } from '@hanzoteam/platform'
+import { Asset, plugin } from '@hanzoteam/platform'
 import { BitrixEntityMapping, BitrixFieldMapping, BitrixSyncDoc } from './types'
 
 /**

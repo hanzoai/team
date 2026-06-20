@@ -11,13 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type CardSection } from '@hanzo/card'
-import { type Doc, type Ref } from '@hanzo/core'
-import { mergeIds, type IntlString } from '@hanzo/platform'
-import { type PresentationMiddlewareFactory } from '@hanzo/presentation/src/pipeline'
-import { processId } from '@hanzo/process'
-import process from '@hanzo/process-resources/src/plugin'
-import { type Action, type ViewAction } from '@hanzo/view'
+import { type CardSection } from '@hanzoteam/card'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { mergeIds, type IntlString } from '@hanzoteam/platform'
+import { type PresentationMiddlewareFactory } from '@hanzoteam/presentation/src/pipeline'
+import { processId } from '@hanzoteam/process'
+import process from '@hanzoteam/process-resources/src/plugin'
+import { type Action, type ViewAction } from '@hanzoteam/view'
 
 export default mergeIds(processId, process, {
   app: {

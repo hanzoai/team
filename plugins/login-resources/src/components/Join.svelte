@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, PlatformError, Severity, Status, getMetadata, setMetadata } from '@hanzo/platform'
+  import { OK, PlatformError, Severity, Status, getMetadata, setMetadata } from '@hanzoteam/platform'
   import {
     Button,
     Label,
@@ -22,8 +22,8 @@
     deviceOptionsStore as deviceInfo,
     getCurrentLocation,
     navigate
-  } from '@hanzo/ui'
-  import presentation from '@hanzo/presentation'
+  } from '@hanzoteam/ui'
+  import presentation from '@hanzoteam/presentation'
 
   import {
     checkJoined,
@@ -37,9 +37,9 @@
   import Form from './Form.svelte'
   import StatusControl from './StatusControl.svelte'
 
-  import { Analytics } from '@hanzo/analytics'
-  import { signupStore } from '@hanzo/analytics-providers'
-  import { logIn, workbenchId } from '@hanzo/workbench'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { signupStore } from '@hanzoteam/analytics-providers'
+  import { logIn, workbenchId } from '@hanzoteam/workbench'
   import { onMount } from 'svelte'
   import { loginAction, recoveryAction } from '../actions'
   import login from '../plugin'

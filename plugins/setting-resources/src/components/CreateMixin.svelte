@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, ClassifierKind, Data, Doc, Mixin } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { EditBox, Icon, Label } from '@hanzo/ui'
+  import core, { Class, ClassifierKind, Data, Doc, Mixin } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { EditBox, Icon, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import setting from '../plugin'
 

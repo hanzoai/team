@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hanzo/contact'
-  import { Class, Ref, Space } from '@hanzo/core'
-  import { SpaceMultiBoxList } from '@hanzo/presentation'
-  import { Component, DropdownLabelsIntl } from '@hanzo/ui'
+  import contact, { Person } from '@hanzoteam/contact'
+  import { Class, Ref, Space } from '@hanzoteam/core'
+  import { SpaceMultiBoxList } from '@hanzoteam/presentation'
+  import { Component, DropdownLabelsIntl } from '@hanzoteam/ui'
   import attachment from '../plugin'
   import { dateFileBrowserFilters, fileTypeFileBrowserFilters } from '..'
 

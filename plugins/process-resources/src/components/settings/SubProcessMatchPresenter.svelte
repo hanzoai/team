@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { Process, State } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process, State } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../../plugin'
 
   export let params: Record<string, any>

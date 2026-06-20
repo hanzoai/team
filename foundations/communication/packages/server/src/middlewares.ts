@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MeasureContext } from '@hanzo/core'
-import type { EventResult, Event, SessionData } from '@hanzo/communication-sdk-types'
+import { MeasureContext } from '@hanzoteam/core'
+import type { EventResult, Event, SessionData } from '@hanzoteam/communication-sdk-types'
 import type {
   CardID,
   Collaborator,
@@ -27,7 +27,7 @@ import type {
   Notification,
   NotificationContext, Peer,
   WorkspaceUuid
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import type {
   CommunicationCallbacks,

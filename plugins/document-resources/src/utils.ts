@@ -20,14 +20,14 @@ import {
   type Ref,
   SortingOrder,
   type TxOperations
-} from '@hanzo/core'
-import { type Document, type Teamspace, documentId, getFirstRank } from '@hanzo/document'
-import { getMetadata, translate } from '@hanzo/platform'
-import presentation, { getClient } from '@hanzo/presentation'
-import { makeRank } from '@hanzo/rank'
-import { type Location, type ResolvedLocation, getCurrentResolvedLocation, getPanelURI } from '@hanzo/ui'
-import { accessDeniedStore } from '@hanzo/view-resources'
-import { workbenchId } from '@hanzo/workbench'
+} from '@hanzoteam/core'
+import { type Document, type Teamspace, documentId, getFirstRank } from '@hanzoteam/document'
+import { getMetadata, translate } from '@hanzoteam/platform'
+import presentation, { getClient } from '@hanzoteam/presentation'
+import { makeRank } from '@hanzoteam/rank'
+import { type Location, type ResolvedLocation, getCurrentResolvedLocation, getPanelURI } from '@hanzoteam/ui'
+import { accessDeniedStore } from '@hanzoteam/view-resources'
+import { workbenchId } from '@hanzoteam/workbench'
 import slugify from 'slugify'
 
 import document from './plugin'

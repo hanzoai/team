@@ -62,7 +62,7 @@ for( const v of process.argv.slice(2)) {
   }
 }
 
-// Add package.json,  .eslintrc.js and node_modules/@hanzo/platform-rig/ as hash roots.
+// Add package.json,  .eslintrc.js and node_modules/@hanzoteam/platform-rig/ as hash roots.
 for( const f of ['package.json', '.eslintrc.js']) {
   const fFile = join(process.cwd(), f)
   if( existsSync(fFile) ) {
@@ -70,7 +70,7 @@ for( const f of ['package.json', '.eslintrc.js']) {
   }
 }
 
-const rigPackage = 'node_modules/@hanzo/platform-rig/'
+const rigPackage = 'node_modules/@hanzoteam/platform-rig/'
 if( existsSync(rigPackage) ) {
   calcHash(join(process.cwd(), rigPackage), 'changed', false)
 }

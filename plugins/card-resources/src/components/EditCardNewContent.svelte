@@ -14,14 +14,14 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import communication from '@hanzo/communication'
-  import { NotificationContext } from '@hanzo/communication-types'
-  import { AccountRole, getCurrentAccount, hasAccountRole, Ref } from '@hanzo/core'
-  import { resizeObserver } from '@hanzo/ui'
+  import { Card } from '@hanzoteam/card'
+  import communication from '@hanzoteam/communication'
+  import { NotificationContext } from '@hanzoteam/communication-types'
+  import { AccountRole, getCurrentAccount, hasAccountRole, Ref } from '@hanzoteam/core'
+  import { resizeObserver } from '@hanzoteam/ui'
 
-  import { MessageInput } from '@hanzo/communication-resources'
-  import { getMetadata } from '@hanzo/platform'
+  import { MessageInput } from '@hanzoteam/communication-resources'
+  import { getMetadata } from '@hanzoteam/platform'
   import EditCardTableOfContents from './EditCardTableOfContents.svelte'
 
   export let _id: Ref<Card>

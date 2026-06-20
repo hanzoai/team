@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getDisplayMedia, getSelectedCamId, getSelectedMicId, releaseStream } from '@hanzo/media'
+import { getDisplayMedia, getSelectedCamId, getSelectedMicId, releaseStream } from '@hanzoteam/media'
 import { type Readable, derived, get, readable, writable } from 'svelte/store'
 
 import { type CameraPosition, type CameraSize } from '../types'

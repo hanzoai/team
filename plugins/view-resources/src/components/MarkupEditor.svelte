@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { MessageViewer } from '@hanzo/presentation'
-  import { Button, eventToHTMLElement, Label, showPopup } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { MessageViewer } from '@hanzoteam/presentation'
+  import { Button, eventToHTMLElement, Label, showPopup } from '@hanzoteam/ui'
   import MarkupEditorPopup from './MarkupEditorPopup.svelte'
 
   // export let label: IntlString

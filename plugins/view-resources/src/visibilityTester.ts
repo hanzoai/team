@@ -22,8 +22,8 @@ import core, {
   type Doc,
   type Space,
   type TypedSpace
-} from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+} from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 import { get } from 'svelte/store'
 import { spaceSpace } from './utils'
 

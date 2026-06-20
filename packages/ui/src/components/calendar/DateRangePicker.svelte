@@ -14,11 +14,11 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import type { IntlString } from '@hanzo/platform'
+  import type { IntlString } from '@hanzoteam/platform'
   import ui from '../../plugin'
   import Label from '../Label.svelte'
   import DateRangePresenter from './DateRangePresenter.svelte'
-  import { DateRangeMode } from '@hanzo/core'
+  import { DateRangeMode } from '@hanzoteam/core'
 
   export let title: IntlString
   export let value: number | null | undefined = null

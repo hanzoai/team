@@ -17,8 +17,8 @@ import {
   DocNotifyContext,
   InboxNotification,
   NotificationProvider
-} from '@hanzo/notification'
-import { Ref } from '@hanzo/core'
+} from '@hanzoteam/notification'
+import { Ref } from '@hanzoteam/core'
 
 /**
  * @public

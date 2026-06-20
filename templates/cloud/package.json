@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/cloud-package",
+  "name": "@hanzoteam/cloud-package",
   "version": "0.7.0",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -22,7 +22,7 @@
     "format": "format src"
   },
   "peerDependencies": {
-    "@hanzo/platform-rig": "*"
+    "@hanzoteam/platform-rig": "*"
   },
   "devDependencies": {
     "wrangler": "^3.108.1",

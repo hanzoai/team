@@ -1,4 +1,4 @@
-import { createNetworkClient } from '@hanzo/network-client'
+import { createNetworkClient } from '@hanzoteam/network-client'
 import { program } from 'commander'
 
 export function registerAgentOperations (): void {

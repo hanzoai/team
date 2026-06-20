@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { DocumentUpdate, Ref } from '@hanzo/core'
-  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import tracker, { Project, ProjectTargetPreference } from '@hanzo/tracker'
+  import { DocumentUpdate, Ref } from '@hanzoteam/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import tracker, { Project, ProjectTargetPreference } from '@hanzoteam/tracker'
   import {
     Button,
     ButtonWithDropdown,
@@ -13,8 +13,8 @@
     eventToHTMLElement,
     showPopup,
     type SelectPopupValueType
-  } from '@hanzo/ui'
-  import { GithubIntegrationRepository } from '@hanzo/github'
+  } from '@hanzoteam/ui'
+  import { GithubIntegrationRepository } from '@hanzoteam/github'
   import { Writable } from 'svelte/store'
   import github from '../plugin'
   import { integrationRepositories } from './utils'

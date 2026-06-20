@@ -9,7 +9,7 @@ import {
   type FindResult,
   type Ref,
   type Timestamp
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import type { Query, QueryId } from './types'
 
 export interface DocumentRef {

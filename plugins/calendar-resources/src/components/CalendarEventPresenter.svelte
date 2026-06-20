@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event } from '@hanzo/calendar'
-  import { Label, addZero } from '@hanzo/ui'
+  import { Event } from '@hanzoteam/calendar'
+  import { Label, addZero } from '@hanzoteam/ui'
   import calendar from '../plugin'
 
   export let event: Event

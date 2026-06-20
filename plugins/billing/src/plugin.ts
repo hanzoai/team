@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Class, type Ref } from '@hanzo/core'
-import { type Asset, type IntlString, type Metadata, plugin, type Plugin } from '@hanzo/platform'
-import { AnyComponent } from '@hanzo/ui'
+import { type Class, type Ref } from '@hanzoteam/core'
+import { type Asset, type IntlString, type Metadata, plugin, type Plugin } from '@hanzoteam/platform'
+import { AnyComponent } from '@hanzoteam/ui'
 import { Tier } from './types'
 
 /** @public */

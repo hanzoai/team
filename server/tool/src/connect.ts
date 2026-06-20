@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { type Client, type PersonUuid, systemAccountUuid, type Tx, type WorkspaceUuid } from '@hanzo/core'
-import { createClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
+import { type Client, type PersonUuid, systemAccountUuid, type Tx, type WorkspaceUuid } from '@hanzoteam/core'
+import { createClient } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
 
 /**
  * @public

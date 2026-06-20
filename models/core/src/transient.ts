@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type AccountUuid, DOMAIN_TRANSIENT, type UserStatus } from '@hanzo/core'
-import { Model } from '@hanzo/model'
+import { type AccountUuid, DOMAIN_TRANSIENT, type UserStatus } from '@hanzoteam/core'
+import { Model } from '@hanzoteam/model'
 import core from './component'
 import { TDoc } from './core'
 

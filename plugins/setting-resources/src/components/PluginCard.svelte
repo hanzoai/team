@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { getCurrentAccount } from '@hanzo/core'
-  import { getResource, translate } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import type { Integration, IntegrationType } from '@hanzo/setting'
-  import { AnyComponent, Button, Component, Label, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import core, { getCurrentAccount } from '@hanzoteam/core'
+  import { getResource, translate } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { Integration, IntegrationType } from '@hanzoteam/setting'
+  import { AnyComponent, Button, Component, Label, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
   import setting from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let integrationType: IntegrationType
   export let integration: Integration | undefined

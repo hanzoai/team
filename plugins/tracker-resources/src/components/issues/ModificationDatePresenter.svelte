@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { tooltip } from '@hanzo/ui'
+  import { tooltip } from '@hanzoteam/ui'
   import tracker from '../../plugin'
 
   export let value: number

@@ -1,5 +1,5 @@
-import { type DefSeparators } from '@hanzo/ui'
-import { type RoomLanguage } from '@hanzo/love'
+import { type DefSeparators } from '@hanzoteam/ui'
+import { type RoomLanguage } from '@hanzoteam/love'
 
 export interface ResizeInitParams {
   x: number

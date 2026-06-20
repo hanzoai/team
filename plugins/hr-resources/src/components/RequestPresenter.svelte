@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { fromTzDate, Request, tzDateEqual } from '@hanzo/hr'
-  import { getClient } from '@hanzo/presentation'
-  import { DateRangePresenter, Label } from '@hanzo/ui'
+  import { fromTzDate, Request, tzDateEqual } from '@hanzoteam/hr'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DateRangePresenter, Label } from '@hanzoteam/ui'
 
   export let value: Request | null | undefined
   export let noShift: boolean = false

@@ -1,4 +1,4 @@
-import { getLevelInfo } from '@hanzo/rating'
+import { getLevelInfo } from '@hanzoteam/rating'
 
 describe('raiting to level tests', () => {
   it('check levels', () => {

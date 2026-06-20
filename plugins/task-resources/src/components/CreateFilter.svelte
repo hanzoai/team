@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Timestamp } from '@hanzo/core'
+  import { Timestamp } from '@hanzoteam/core'
   import task from '../plugin'
-  import { eventToHTMLElement, Label, showPopup } from '@hanzo/ui'
-  import { TimestampPresenter } from '@hanzo/view-resources'
+  import { eventToHTMLElement, Label, showPopup } from '@hanzoteam/ui'
+  import { TimestampPresenter } from '@hanzoteam/view-resources'
   import CreateFilterPopup from './CreateFilterPopup.svelte'
 
   export let value: Timestamp | undefined

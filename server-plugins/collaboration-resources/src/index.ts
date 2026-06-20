@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { CollaborativeDoc, Doc, Tx, TxRemoveDoc } from '@hanzo/core'
-import core, { makeCollabId, makeCollabYdocId } from '@hanzo/core'
-import { type TriggerControl } from '@hanzo/server-core'
+import type { CollaborativeDoc, Doc, Tx, TxRemoveDoc } from '@hanzoteam/core'
+import core, { makeCollabId, makeCollabYdocId } from '@hanzoteam/core'
+import { type TriggerControl } from '@hanzoteam/server-core'
 
 /**
  * @public

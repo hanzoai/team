@@ -14,8 +14,8 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { DateRangeMode } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
+  import { DateRangeMode } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
   import ui from '../../plugin'
   import Label from '../Label.svelte'
   import DatePresenter from './DatePresenter.svelte'

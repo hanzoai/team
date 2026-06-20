@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { HeaderButtonAction, SelectPopupValueType } from '../types'
-  import { checkPermission, Client, getCurrentAccount, hasAccountRole, TxOperations } from '@hanzo/core'
+  import { checkPermission, Client, getCurrentAccount, hasAccountRole, TxOperations } from '@hanzoteam/core'
   import { ButtonWithDropdown, Button, Loading, IconAdd, IconDropdown } from '../index'
 
   export let mainActionId: number | string | null = null

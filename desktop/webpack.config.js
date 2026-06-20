@@ -28,7 +28,7 @@ module.exports = [
   {
     mode: dev ? 'development' : mode,
     entry: {
-      serviceWorker: '@hanzo/notification/src/serviceWorker.ts'
+      serviceWorker: '@hanzoteam/notification/src/serviceWorker.ts'
     },
     module: {
       rules: [
@@ -125,8 +125,8 @@ module.exports = [
   // ------ UI Part --------------------------
   {
     entry: {
-      bundle: ['@hanzo/theme/styles/global.scss', ...['./src/ui/index.ts']],
-      'recorder-worker': '@hanzo/recorder-resources/src/recorder-worker.ts'
+      bundle: ['@hanzoteam/theme/styles/global.scss', ...['./src/ui/index.ts']],
+      'recorder-worker': '@hanzoteam/recorder-resources/src/recorder-worker.ts'
     },
     ignoreWarnings: [
       {
@@ -139,7 +139,7 @@ module.exports = [
       symlinks: true,
       alias: {
         svelte: path.resolve('node_modules', 'svelte/src/runtime'),
-        '@hanzo/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
+        '@hanzoteam/platform-rig/profiles/ui/svelte': path.resolve('node_modules', 'svelte/src/runtime')
       },
       fallback: {
         crypto: false,

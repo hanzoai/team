@@ -29,14 +29,14 @@ import core, {
   TxFactory,
   TxProcessor,
   type VersionableDoc
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   BaseMiddleware,
   type ServerFindOptions,
   type Middleware,
   type PipelineContext,
   type TxMiddlewareResult
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
 /**
  * @public

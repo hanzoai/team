@@ -15,15 +15,15 @@
 //
 -->
 <script lang="ts">
-  import { Card, Tag } from '@hanzo/card'
-  import { Class, Doc, Mixin, Permission, Ref, TypedSpace } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { CircleButton, eventToHTMLElement, IconAdd, IconDownOutline, SelectPopup, showPopup } from '@hanzo/ui'
+  import { Card, Tag } from '@hanzoteam/card'
+  import { Class, Doc, Mixin, Permission, Ref, TypedSpace } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { CircleButton, eventToHTMLElement, IconAdd, IconDownOutline, SelectPopup, showPopup } from '@hanzoteam/ui'
 
   import MasterTagSelector from './MasterTagSelector.svelte'
   import CardTagColored from './CardTagColored.svelte'
-  import { PermissionsStore } from '@hanzo/contact'
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  import { PermissionsStore } from '@hanzoteam/contact'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
   import card from '../plugin'
 
   export let doc: Card

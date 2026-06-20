@@ -14,15 +14,15 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { ButtonIcon, Icon, IconAdd, IconDelete, Label } from '@hanzo/ui'
-  import setting from '@hanzo/setting'
-  import { Class, Doc, Ref, generateId } from '@hanzo/core'
+  import { ButtonIcon, Icon, IconAdd, IconDelete, Label } from '@hanzoteam/ui'
+  import setting from '@hanzoteam/setting'
+  import { Class, Doc, Ref, generateId } from '@hanzoteam/core'
   import DescriptorBox from './DescriptorBox.svelte'
   import card from '../../../plugin'
-  import { MasterTag, Tag } from '@hanzo/card'
-  import view, { MasterDetailConfig, ViewletDescriptor } from '@hanzo/view'
+  import { MasterTag, Tag } from '@hanzoteam/card'
+  import view, { MasterDetailConfig, ViewletDescriptor } from '@hanzoteam/view'
   import RelatedTagSelect from './RelatedTagSelect.svelte'
-  import { Asset } from '@hanzo/platform'
+  import { Asset } from '@hanzoteam/platform'
 
   export let tag: MasterTag | Tag
 

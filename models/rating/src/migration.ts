@@ -19,8 +19,8 @@ import {
   type MigrationUpgradeClient,
   tryMigrate,
   tryUpgrade
-} from '@hanzo/model'
-import { ratingId } from '@hanzo/rating'
+} from '@hanzoteam/model'
+import { ratingId } from '@hanzoteam/rating'
 
 export const ratingOperation: MigrateOperation = {
   async migrate (client: MigrationClient, mode): Promise<void> {

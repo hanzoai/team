@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import bitrix from '@hanzo/bitrix'
-import { loadMetadata } from '@hanzo/platform'
+import bitrix from '@hanzoteam/bitrix'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(bitrix.icon, {

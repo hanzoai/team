@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Vacancy } from '@hanzo/recruit'
-  import { Icon } from '@hanzo/ui'
+  import type { Vacancy } from '@hanzoteam/recruit'
+  import { Icon } from '@hanzoteam/ui'
   import recruit from '../plugin'
 
   export let value: Vacancy

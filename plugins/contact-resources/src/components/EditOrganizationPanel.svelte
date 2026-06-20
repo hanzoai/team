@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { AttachmentStyleBoxCollabEditor } from '@hanzo/attachment-resources'
-  import core, { Class, Doc, Mixin, Ref } from '@hanzo/core'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource } from '@hanzo/platform'
-  import presentation, { createQuery, getClient, type KeyedAttribute } from '@hanzo/presentation'
-  import { type AnyComponent, Button, Component, IconMixin, IconMoreH, Label } from '@hanzo/ui'
-  import view, { AttributeCategory } from '@hanzo/view'
+  import { AttachmentStyleBoxCollabEditor } from '@hanzoteam/attachment-resources'
+  import core, { Class, Doc, Mixin, Ref } from '@hanzoteam/core'
+  import notification from '@hanzoteam/notification'
+  import { Panel } from '@hanzoteam/panel'
+  import { getResource } from '@hanzoteam/platform'
+  import presentation, { createQuery, getClient, type KeyedAttribute } from '@hanzoteam/presentation'
+  import { type AnyComponent, Button, Component, IconMixin, IconMoreH, Label } from '@hanzoteam/ui'
+  import view, { AttributeCategory } from '@hanzoteam/view'
   import {
     DocAttributeBar,
     DocNavLink,
@@ -14,9 +14,9 @@
     getDocAttrsInfo,
     getDocMixins,
     showMenu
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
-  import { Organization } from '@hanzo/contact'
+  import { Organization } from '@hanzoteam/contact'
 
   import contact from '../plugin'
   import EditOrganization from './EditOrganization.svelte'

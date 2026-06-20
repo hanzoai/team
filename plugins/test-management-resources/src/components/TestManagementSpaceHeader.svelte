@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Button, ButtonWithDropdown, IconAdd, IconDropdown, Loading, SelectPopupValueType } from '@hanzo/ui'
-  import { TestProject } from '@hanzo/test-management'
+  import { AccountRole, Ref, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Button, ButtonWithDropdown, IconAdd, IconDropdown, Loading, SelectPopupValueType } from '@hanzoteam/ui'
+  import { TestProject } from '@hanzoteam/test-management'
 
   import { showCreateTestCasePopup, showCreateTestSuitePopup, showCreateProjectPopup } from '../utils'
   import { getTestSuiteIdFromLocation } from '../navigation'

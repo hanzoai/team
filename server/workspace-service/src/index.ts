@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   versionToString,
   type BrandingMap,
@@ -21,15 +21,15 @@ import {
   type MeasureContext,
   type Tx,
   type Version
-} from '@hanzo/core'
-import { type MigrateOperation } from '@hanzo/model'
-import { setMetadata } from '@hanzo/platform'
-import serverClientPlugin from '@hanzo/server-client'
-import { QueueTopic, type PlatformQueue, type QueueWorkspaceMessage } from '@hanzo/server-core'
-import serverNotification from '@hanzo/server-notification'
-import { createStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
-import serverToken from '@hanzo/server-token'
-import toolPlugin from '@hanzo/server-tool'
+} from '@hanzoteam/core'
+import { type MigrateOperation } from '@hanzoteam/model'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClientPlugin from '@hanzoteam/server-client'
+import { QueueTopic, type PlatformQueue, type QueueWorkspaceMessage } from '@hanzoteam/server-core'
+import serverNotification from '@hanzoteam/server-notification'
+import { createStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
+import serverToken from '@hanzoteam/server-token'
+import toolPlugin from '@hanzoteam/server-tool'
 import { WorkspaceWorker, type WorkspaceOperation } from './service'
 
 export * from './ws-operations'

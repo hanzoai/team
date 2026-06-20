@@ -4,7 +4,7 @@ import {
   GithubPullRequestState,
   GithubReviewDecisionState,
   PullRequestMergeable
-} from '@hanzo/github'
+} from '@hanzoteam/github'
 
 export const assigneesField = `
   assignees(first: 10) {

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import type { ProjectType } from '@hanzo/task'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { ProjectType } from '@hanzoteam/task'
 
   export let value: ProjectType
 

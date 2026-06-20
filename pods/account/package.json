@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/pod-account",
+  "name": "@hanzoteam/pod-account",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "start": "ts-node src/__start.ts",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -52,19 +52,19 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/account": "workspace:^0.7.0",
-    "@hanzo/account-service": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/auth-providers": "workspace:^0.7.0",
-    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzoteam/account": "workspace:^0.7.0",
+    "@hanzoteam/account-service": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/auth-providers": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
     "mongodb": "^6.16.0",
     "koa": "^2.15.4",
     "koa-router": "^12.0.1",
     "koa-bodyparser": "^4.4.1",
     "@koa/cors": "^5.0.0",
-    "@hanzo/server-token": "workspace:^0.7.17",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/analytics-service": "workspace:^0.7.17"
+    "@hanzoteam/server-token": "workspace:^0.7.17",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/analytics-service": "workspace:^0.7.17"
   }
 }

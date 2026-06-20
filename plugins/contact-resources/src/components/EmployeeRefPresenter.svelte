@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { AnyAttribute, Ref, Space } from '@hanzo/core'
-  import { ButtonKind, IconSize } from '@hanzo/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import { AnyAttribute, Ref, Space } from '@hanzoteam/core'
+  import { ButtonKind, IconSize } from '@hanzoteam/ui'
   import { PersonLabelTooltip } from '..'
   import EmployeeAttributePresenter from './EmployeeAttributePresenter.svelte'
 

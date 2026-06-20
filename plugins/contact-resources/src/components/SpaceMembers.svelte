@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee, Person } from '@hanzo/contact'
+  import contact, { Employee, Person } from '@hanzoteam/contact'
   import {
     AccountRole,
     DocumentQuery,
@@ -24,10 +24,10 @@
     hasAccountRole,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import { translateCB } from '@hanzo/platform'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { ActionIcon, IconAdd, IconClose, Label, SearchEdit, showPopup, themeStore } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import { translateCB } from '@hanzoteam/platform'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { ActionIcon, IconAdd, IconClose, Label, SearchEdit, showPopup, themeStore } from '@hanzoteam/ui'
   import AddMembersPopup from './AddMembersPopup.svelte'
   import UserInfo from './UserInfo.svelte'
   import { employeeByIdStore, employeeRefByAccountUuidStore } from '../utils'

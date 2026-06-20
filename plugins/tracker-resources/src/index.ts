@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   type Attribute,
   type Class,
@@ -27,10 +27,10 @@ import {
   type Space,
   toIdMap,
   type TxOperations
-} from '@hanzo/core'
-import { type Resources, type Status, translate } from '@hanzo/platform'
-import { getClient, MessageBox, type ObjectSearchResult } from '@hanzo/presentation'
-import { type Component, type Issue, type Milestone, type Project } from '@hanzo/tracker'
+} from '@hanzoteam/core'
+import { type Resources, type Status, translate } from '@hanzoteam/platform'
+import { getClient, MessageBox, type ObjectSearchResult } from '@hanzoteam/presentation'
+import { type Component, type Issue, type Milestone, type Project } from '@hanzoteam/tracker'
 import {
   closePanel,
   getCurrentLocation,
@@ -38,7 +38,7 @@ import {
   navigate,
   showPopup,
   themeStore
-} from '@hanzo/ui'
+} from '@hanzoteam/ui'
 import ComponentEditor from './components/components/ComponentEditor.svelte'
 import ComponentFilterValuePresenter from './components/components/ComponentFilterValuePresenter.svelte'
 import ComponentPresenter from './components/components/ComponentPresenter.svelte'
@@ -131,7 +131,7 @@ import {
   deleteObject,
   deleteObjects,
   setFilters
-} from '@hanzo/view-resources'
+} from '@hanzoteam/view-resources'
 import MoveAndDeleteMilestonePopup from './components/milestones/MoveAndDeleteMilestonePopup.svelte'
 import EditIssueTemplate from './components/templates/EditIssueTemplate.svelte'
 import TemplateEstimationEditor from './components/templates/EstimationEditor.svelte'
@@ -169,13 +169,13 @@ import ProjectPresenter from './components/projects/ProjectPresenter.svelte'
 import ProjectSpacePresenter from './components/projects/ProjectSpacePresenter.svelte'
 
 import { get } from 'svelte/store'
-import { settingId } from '@hanzo/setting'
-import type { TaskType } from '@hanzo/task'
-import { getAllStates } from '@hanzo/task-resources'
-import view, { type Filter } from '@hanzo/view'
+import { settingId } from '@hanzoteam/setting'
+import type { TaskType } from '@hanzoteam/task'
+import { getAllStates } from '@hanzoteam/task-resources'
+import view, { type Filter } from '@hanzoteam/view'
 import EstimationValueEditor from './components/issues/timereport/EstimationValueEditor.svelte'
 import TimePresenter from './components/issues/timereport/TimePresenter.svelte'
-import { getTargetObjectFromUrl } from '@hanzo/text-editor-resources'
+import { getTargetObjectFromUrl } from '@hanzoteam/text-editor-resources'
 
 export { default as AssigneeEditor } from './components/issues/AssigneeEditor.svelte'
 export { default as SubIssueList } from './components/issues/edit/SubIssueList.svelte'

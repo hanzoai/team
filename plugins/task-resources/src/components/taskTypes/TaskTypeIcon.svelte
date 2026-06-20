@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TaskType } from '@hanzo/task'
-  import { IconWithEmoji } from '@hanzo/presentation'
+  import { TaskType } from '@hanzoteam/task'
+  import { IconWithEmoji } from '@hanzoteam/presentation'
   import {
     ColorDefinition,
     Icon,
@@ -23,8 +23,8 @@
     getColorNumberByText,
     getPlatformColorDef,
     themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher, onMount } from 'svelte'
 
   export let value: TaskType | undefined

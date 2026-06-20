@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { navigate } from '@hanzo/ui'
+  import { navigate } from '@hanzoteam/ui'
   import { onMount } from 'svelte'
   import { StepAuthenticationSSO } from '../const'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset } from '@hanzo/platform'
-  import { AnySvelteComponent, Icon, IconSize } from '@hanzo/ui'
+  import type { Asset } from '@hanzoteam/platform'
+  import { AnySvelteComponent, Icon, IconSize } from '@hanzoteam/ui'
   import { ComponentType } from 'svelte'
 
   export let icon: Asset | AnySvelteComponent | ComponentType

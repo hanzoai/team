@@ -19,14 +19,14 @@ import core, {
   systemAccountUuid,
   type SessionData,
   type TxApplyIf
-} from '@hanzo/core'
-import platform, { PlatformError, Severity, Status } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import platform, { PlatformError, Severity, Status } from '@hanzoteam/platform'
 import {
   BaseMiddleware,
   type Middleware,
   type TxMiddlewareResult,
   type PipelineContext
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
 export const aiBotAccountEmail = 'hanzo.ai.bot@hc.engineering'
 

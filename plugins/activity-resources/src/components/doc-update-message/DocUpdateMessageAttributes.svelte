@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Component } from '@hanzo/ui'
-  import { AttributeModel } from '@hanzo/view'
-  import { getClient } from '@hanzo/presentation'
-  import { DocAttributeUpdates, DocUpdateMessage, DocUpdateMessageViewlet } from '@hanzo/activity'
-  import { Doc, Ref, Space } from '@hanzo/core'
+  import { Component } from '@hanzoteam/ui'
+  import { AttributeModel } from '@hanzoteam/view'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DocAttributeUpdates, DocUpdateMessage, DocUpdateMessageViewlet } from '@hanzoteam/activity'
+  import { Doc, Ref, Space } from '@hanzoteam/core'
 
   import activity from '../../plugin'
 

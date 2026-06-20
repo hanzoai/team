@@ -1,7 +1,7 @@
-import contact, { getName } from '@hanzo/contact'
-import { Hierarchy, type Class, type Client, type Doc, type Ref } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import presentation, { getClient } from '@hanzo/presentation'
+import contact, { getName } from '@hanzoteam/contact'
+import { Hierarchy, type Class, type Client, type Doc, type Ref } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation, { getClient } from '@hanzoteam/presentation'
 import {
   recruitId,
   type Applicant,
@@ -9,13 +9,13 @@ import {
   type Review,
   type Vacancy,
   type VacancyList
-} from '@hanzo/recruit'
-import { type Poll } from '@hanzo/survey'
-import { generatePollLocation } from '@hanzo/survey-resources'
-import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hanzo/ui'
-import view from '@hanzo/view'
-import { accessDeniedStore } from '@hanzo/view-resources'
-import { workbenchId } from '@hanzo/workbench'
+} from '@hanzoteam/recruit'
+import { type Poll } from '@hanzoteam/survey'
+import { generatePollLocation } from '@hanzoteam/survey-resources'
+import { getCurrentResolvedLocation, getPanelURI, type Location, type ResolvedLocation } from '@hanzoteam/ui'
+import view from '@hanzoteam/view'
+import { accessDeniedStore } from '@hanzoteam/view-resources'
+import { workbenchId } from '@hanzoteam/workbench'
 import recruit from './plugin'
 
 type RecruitDocument = Vacancy | Applicant | Review

@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import workbench from '@hanzo/model-workbench'
-import { inboxId } from '@hanzo/inbox'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import workbench from '@hanzoteam/model-workbench'
+import { inboxId } from '@hanzoteam/inbox'
 
 import inbox from './plugin'
 
-export { inboxId } from '@hanzo/inbox'
+export { inboxId } from '@hanzoteam/inbox'
 export { inboxOperation } from './migration'
 export default inbox
 

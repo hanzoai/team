@@ -331,137 +331,137 @@
    */
   "projects": [
     {
-      "packageName": "@hanzo/scripts",
+      "packageName": "@hanzoteam/scripts",
       "projectFolder": "common/scripts",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/account-client",
+      "packageName": "@hanzoteam/account-client",
       "projectFolder": "packages/account-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/analytics",
+      "packageName": "@hanzoteam/analytics",
       "projectFolder": "packages/analytics",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/analytics-service",
+      "packageName": "@hanzoteam/analytics-service",
       "projectFolder": "packages/analytics-service",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/api-client",
+      "packageName": "@hanzoteam/api-client",
       "projectFolder": "packages/api-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/collaborator-client",
+      "packageName": "@hanzoteam/collaborator-client",
       "projectFolder": "packages/collaborator-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/core",
+      "packageName": "@hanzoteam/core",
       "projectFolder": "packages/core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/model",
+      "packageName": "@hanzoteam/model",
       "projectFolder": "packages/model",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/platform",
+      "packageName": "@hanzoteam/platform",
       "projectFolder": "packages/platform",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/query",
+      "packageName": "@hanzoteam/query",
       "projectFolder": "packages/query",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/rank",
+      "packageName": "@hanzoteam/rank",
       "projectFolder": "packages/rank",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/retry",
+      "packageName": "@hanzoteam/retry",
       "projectFolder": "packages/retry",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/storage",
+      "packageName": "@hanzoteam/storage",
       "projectFolder": "packages/storage",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text",
+      "packageName": "@hanzoteam/text",
       "projectFolder": "packages/text",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-core",
+      "packageName": "@hanzoteam/text-core",
       "projectFolder": "packages/text-core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-html",
+      "packageName": "@hanzoteam/text-html",
       "projectFolder": "packages/text-html",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-markdown",
+      "packageName": "@hanzoteam/text-markdown",
       "projectFolder": "packages/text-markdown",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-ydoc",
+      "packageName": "@hanzoteam/text-ydoc",
       "projectFolder": "packages/text-ydoc",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/client",
+      "packageName": "@hanzoteam/client",
       "projectFolder": "packages/client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/client-resources",
+      "packageName": "@hanzoteam/client-resources",
       "projectFolder": "packages/client-resources",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/rpc",
+      "packageName": "@hanzoteam/rpc",
       "projectFolder": "packages/rpc",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/server-token",
+      "packageName": "@hanzoteam/server-token",
       "projectFolder": "packages/token",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/hanzolake-client",
+      "packageName": "@hanzoteam/hanzolake-client",
       "projectFolder": "packages/hanzolake-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/storage-client",
+      "packageName": "@hanzoteam/storage-client",
       "projectFolder": "packages/storage-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/measurements",
+      "packageName": "@hanzoteam/measurements",
       "projectFolder": "packages/measurements",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/measurements-otlp",
+      "packageName": "@hanzoteam/measurements-otlp",
       "projectFolder": "packages/measurements-otlp",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/postgres-base",
+      "packageName": "@hanzoteam/postgres-base",
       "projectFolder": "packages/postgres-base",
       "shouldPublish": true
     }

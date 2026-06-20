@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset } from '@hanzo/platform'
-  import { themeStore } from '@hanzo/theme'
-  import { AnySvelteComponent, ColorDefinition, Icon, IconSize, resizeObserver } from '@hanzo/ui'
+  import { Asset } from '@hanzoteam/platform'
+  import { themeStore } from '@hanzoteam/theme'
+  import { AnySvelteComponent, ColorDefinition, Icon, IconSize, resizeObserver } from '@hanzoteam/ui'
   import AvatarIcon from './icons/Avatar.svelte'
   import { createEventDispatcher } from 'svelte'
 

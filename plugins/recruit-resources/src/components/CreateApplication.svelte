@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import chunter from '@hanzo/chunter'
-  import type { Contact, Employee, Person } from '@hanzo/contact'
-  import contact from '@hanzo/contact'
-  import { EmployeeBox, ExpandRightDouble, UserBox } from '@hanzo/contact-resources'
+  import { AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import chunter from '@hanzoteam/chunter'
+  import type { Contact, Employee, Person } from '@hanzoteam/contact'
+  import contact from '@hanzoteam/contact'
+  import { EmployeeBox, ExpandRightDouble, UserBox } from '@hanzoteam/contact-resources'
   import core, {
     AccountRole,
     Class,
@@ -33,19 +33,19 @@
     generateId,
     getCurrentAccount,
     hasAccountRole
-  } from '@hanzo/core'
-  import { OK, Resource, Severity, Status, getResource } from '@hanzo/platform'
+  } from '@hanzoteam/core'
+  import { OK, Resource, Severity, Status, getResource } from '@hanzoteam/platform'
   import presentation, {
     Card,
     InlineAttributeBar,
     SpaceSelect,
     createQuery,
     getClient
-  } from '@hanzo/presentation'
-  import { recruitId, type Applicant, type Candidate, type Vacancy, RecruitEvents } from '@hanzo/recruit'
-  import { TaskType, getStates } from '@hanzo/task'
-  import { TaskKindSelector, selectedTypeStore, typeStore } from '@hanzo/task-resources'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+  } from '@hanzoteam/presentation'
+  import { recruitId, type Applicant, type Candidate, type Vacancy, RecruitEvents } from '@hanzoteam/recruit'
+  import { TaskType, getStates } from '@hanzoteam/task'
+  import { TaskKindSelector, selectedTypeStore, typeStore } from '@hanzoteam/task-resources'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
   import ui, {
     Button,
     ColorPopup,
@@ -58,15 +58,15 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { statusStore } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../plugin'
   import CandidateCard from './CandidateCard.svelte'
   import VacancyCard from './VacancyCard.svelte'
   import VacancyOrgPresenter from './VacancyOrgPresenter.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import { getCandidateIdentifier, getSequenceId } from '../utils'
 
   export let space: Ref<Vacancy>

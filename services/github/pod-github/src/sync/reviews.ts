@@ -10,15 +10,15 @@ import core, {
   Ref,
   TxOperations,
   withContext
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
   GithubProject,
   GithubPullRequestReviewState,
   GithubReview
-} from '@hanzo/github'
-import { LiveQuery } from '@hanzo/query'
+} from '@hanzoteam/github'
+import { LiveQuery } from '@hanzoteam/query'
 import {
   ContainerFocus,
   DocSyncManager,
@@ -31,7 +31,7 @@ import {
 import { PullRequestExternalData, Review as ReviewExternalData, reviewDetails, toReviewState } from './githubTypes'
 import { collectUpdate, deleteObjects, ensureGraphQLOctokit, errorToObj, isGHWriteAllowed, syncChilds } from './utils'
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import { PullRequestReviewEvent, PullRequestReviewSubmittedEvent } from '@octokit/webhooks-types'
 import config from '../config'
 

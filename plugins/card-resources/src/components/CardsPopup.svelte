@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient, ObjectPopup } from '@hanzo/presentation'
-  import { Card } from '@hanzo/card'
-  import { Class, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { Label } from '@hanzo/ui'
+  import { getClient, ObjectPopup } from '@hanzoteam/presentation'
+  import { Card } from '@hanzoteam/card'
+  import { Class, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import CardPresenter from './CardPresenter.svelte'
 

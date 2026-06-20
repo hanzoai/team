@@ -17,7 +17,7 @@
 
 <script lang="ts">
   import type { ComponentProps } from 'svelte'
-  import { EmployeeEditor } from '@hanzo/contact-resources'
+  import { EmployeeEditor } from '@hanzoteam/contact-resources'
 
   type $$Props = ComponentProps<EmployeeEditor>
   const { showNavigate, ...rest } = $$props as $$Props

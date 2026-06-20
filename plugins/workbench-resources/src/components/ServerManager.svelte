@@ -5,9 +5,9 @@
 
   import ServerManagerGeneral from './ServerManagerGeneral.svelte'
 
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
-  import { Breadcrumb, ButtonIcon, Header, IconClose, IconSettings, Switcher, TabItem } from '@hanzo/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import presentation from '@hanzoteam/presentation'
+  import { Breadcrumb, ButtonIcon, Header, IconClose, IconSettings, Switcher, TabItem } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   const dispatch = createEventDispatcher()

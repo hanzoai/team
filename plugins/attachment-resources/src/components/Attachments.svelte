@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
-  import { Class, Data, Doc, DocumentQuery, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { Icon, Label, resizeObserver, Scroller, Spinner, ButtonIcon, IconAdd } from '@hanzo/ui'
-  import view, { BuildModelKey } from '@hanzo/view'
-  import { Table } from '@hanzo/view-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { FileUploadCallbackParams, uploadFiles } from '@hanzo/uploader'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { Class, Data, Doc, DocumentQuery, Ref, Space } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Icon, Label, resizeObserver, Scroller, Spinner, ButtonIcon, IconAdd } from '@hanzoteam/ui'
+  import view, { BuildModelKey } from '@hanzoteam/view'
+  import { Table } from '@hanzoteam/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { FileUploadCallbackParams, uploadFiles } from '@hanzoteam/uploader'
   import { createEventDispatcher } from 'svelte'
 
   import attachment from '../plugin'

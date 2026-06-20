@@ -1,11 +1,11 @@
 <script lang="ts">
-  import core, { AccountRole, getCurrentAccount, type Ref } from '@hanzo/core'
-  import type { Application } from '@hanzo/workbench'
-  import { createQuery } from '@hanzo/presentation'
-  import workbench from '@hanzo/workbench'
+  import core, { AccountRole, getCurrentAccount, type Ref } from '@hanzoteam/core'
+  import type { Application } from '@hanzoteam/workbench'
+  import { createQuery } from '@hanzoteam/presentation'
+  import workbench from '@hanzoteam/workbench'
   import { hideApplication, isAllowedToRole, showApplication } from '../utils'
-  import { Loading, IconCheck, Label, Icon } from '@hanzo/ui'
-  import { getMetadata } from '@hanzo/platform'
+  import { Loading, IconCheck, Label, Icon } from '@hanzoteam/ui'
+  import { getMetadata } from '@hanzoteam/platform'
   // import Drag from './icons/Drag.svelte'
 
     export let apps: Application[] = []

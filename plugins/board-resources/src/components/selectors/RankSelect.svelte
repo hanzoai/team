@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Card } from '@hanzo/board'
-  import { Ref, SortingOrder } from '@hanzo/core'
-  import { IntlString, translate } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { makeRank, State } from '@hanzo/task'
-  import { DropdownLabels, DropdownTextItem, themeStore } from '@hanzo/ui'
+  import { Card } from '@hanzoteam/board'
+  import { Ref, SortingOrder } from '@hanzoteam/core'
+  import { IntlString, translate } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { makeRank, State } from '@hanzoteam/task'
+  import { DropdownLabels, DropdownTextItem, themeStore } from '@hanzoteam/ui'
   import board from '../../plugin'
 
   export let object: Card

@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { EditBox, Label, showPopup, eventToHTMLElement, Button } from '@hanzoteam/ui'
   import EditBoxPopup from './EditBoxPopup.svelte'
-  import { AnyAttribute, TypeNumber } from '@hanzo/core'
+  import { AnyAttribute, TypeNumber } from '@hanzoteam/core'
 
   export let label: IntlString
   export let value: number | undefined

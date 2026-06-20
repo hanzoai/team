@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import task, { type ProjectType } from '@hanzo/task'
-  import { Icon } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import task, { type ProjectType } from '@hanzoteam/task'
+  import { Icon } from '@hanzoteam/ui'
   import { typeStore } from '../..'
 
   export let value: ProjectType | Ref<ProjectType> | undefined

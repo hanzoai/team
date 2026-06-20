@@ -20,9 +20,9 @@ import {
   NotificationEventType,
   PeerEventType,
   type SessionData
-} from '@hanzo/communication-sdk-types'
-import { AccountRole, systemAccountUuid } from '@hanzo/core'
-import type { AccountUuid, CardID, MessageID, SocialID } from '@hanzo/communication-types'
+} from '@hanzoteam/communication-sdk-types'
+import { AccountRole, systemAccountUuid } from '@hanzoteam/core'
+import type { AccountUuid, CardID, MessageID, SocialID } from '@hanzoteam/communication-types'
 
 import { ApiError } from '../error'
 import type { Enriched, Middleware, MiddlewareContext } from '../types'

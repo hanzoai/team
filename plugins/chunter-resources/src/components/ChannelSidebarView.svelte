@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery } from '@hanzo/presentation'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { DocNotifyContext } from '@hanzo/notification'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { Widget } from '@hanzo/workbench'
-  import { ActivityMessage } from '@hanzo/activity'
-  import { ChatWidgetTab } from '@hanzo/chunter'
-  import { Presence } from '@hanzo/presence-resources'
-  import { updateTabData } from '@hanzo/workbench-resources'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { DocNotifyContext } from '@hanzoteam/notification'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import { Widget } from '@hanzoteam/workbench'
+  import { ActivityMessage } from '@hanzoteam/activity'
+  import { ChatWidgetTab } from '@hanzoteam/chunter'
+  import { Presence } from '@hanzoteam/presence-resources'
+  import { updateTabData } from '@hanzoteam/workbench-resources'
 
   import Channel from './Channel.svelte'
   import { closeThreadInSidebarChannel } from '../navigation'

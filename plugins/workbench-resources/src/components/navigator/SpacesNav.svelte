@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, Ref, Space, AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { IntlString, getResource } from '@hanzo/platform'
-  import preference from '@hanzo/preference'
-  import { getClient } from '@hanzo/presentation'
+  import core, { Doc, Ref, Space, AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { IntlString, getResource } from '@hanzoteam/platform'
+  import preference from '@hanzoteam/preference'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     Action,
     AnyComponent,
@@ -26,12 +26,12 @@
     getCurrentResolvedLocation,
     navigate,
     showPopup
-  } from '@hanzo/ui'
-  import { TreeNode } from '@hanzo/view-resources'
-  import { SpacesNavModel } from '@hanzo/workbench'
+  } from '@hanzoteam/ui'
+  import { TreeNode } from '@hanzoteam/view-resources'
+  import { SpacesNavModel } from '@hanzoteam/workbench'
   import { createEventDispatcher } from 'svelte'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { DocNotifyContext, InboxNotification } from '@hanzo/notification'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import { DocNotifyContext, InboxNotification } from '@hanzoteam/notification'
 
   import plugin from '../../plugin'
   import TreeSeparator from './TreeSeparator.svelte'

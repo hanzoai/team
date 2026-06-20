@@ -3,9 +3,9 @@
 -->
 
 <script lang="ts">
-  import type { TrainingAttempt } from '@hanzo/training'
-  import { createQuery } from '@hanzo/presentation'
-  import { Label, Loading } from '@hanzo/ui'
+  import type { TrainingAttempt } from '@hanzoteam/training'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Label, Loading } from '@hanzoteam/ui'
   import training from '../plugin'
   import TrainingRequestMaxAttemptsPresenter from './TrainingRequestMaxAttemptsPresenter.svelte'
 

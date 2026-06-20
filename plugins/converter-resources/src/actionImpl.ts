@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Doc } from '@hanzo/core'
-import type { CopyAsMarkdownTableProps } from '@hanzo/converter'
+import type { Doc } from '@hanzoteam/core'
+import type { CopyAsMarkdownTableProps } from '@hanzoteam/converter'
 import { copyAsMarkdownTable } from './markdown'
 
 export async function copyAsMarkdownTableAction (

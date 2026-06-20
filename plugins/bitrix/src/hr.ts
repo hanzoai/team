@@ -1,7 +1,7 @@
-import { Organization } from '@hanzo/contact'
-import core, { PersonId, Client, Data, Doc, Ref, Status, TxOperations, generateId } from '@hanzo/core'
-import recruit, { Applicant, Vacancy } from '@hanzo/recruit'
-import task, { ProjectType } from '@hanzo/task'
+import { Organization } from '@hanzoteam/contact'
+import core, { PersonId, Client, Data, Doc, Ref, Status, TxOperations, generateId } from '@hanzoteam/core'
+import recruit, { Applicant, Vacancy } from '@hanzoteam/recruit'
+import task, { ProjectType } from '@hanzoteam/task'
 
 export async function createVacancy (
   rawClient: Client,

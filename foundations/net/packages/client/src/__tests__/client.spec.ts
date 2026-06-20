@@ -1,8 +1,8 @@
-import type { ContainerEndpointRef, ContainerUuid, GetOptions } from '@hanzo/network-core'
+import type { ContainerEndpointRef, ContainerUuid, GetOptions } from '@hanzoteam/network-core'
 import { NetworkClientImpl } from '../client'
 
 // Mock BackRPCClient used inside NetworkClientImpl
-jest.mock('@hanzo/network-backrpc', () => {
+jest.mock('@hanzoteam/network-backrpc', () => {
   return {
     BackRPCClient: jest.fn().mockImplementation(() => ({
       waitConnection: jest.fn().mockResolvedValue(undefined),

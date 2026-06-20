@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, DocumentQuery, Hierarchy, Ref } from '@hanzo/core'
-import type { Resource } from '@hanzo/platform'
-import type { AttributeModel, BuildModelKey, Viewlet } from '@hanzo/view'
+import type { Class, Doc, DocumentQuery, Hierarchy, Ref } from '@hanzoteam/core'
+import type { Resource } from '@hanzoteam/platform'
+import type { AttributeModel, BuildModelKey, Viewlet } from '@hanzoteam/view'
 
 /**
  * Value formatter function for custom field extraction during markdown/export

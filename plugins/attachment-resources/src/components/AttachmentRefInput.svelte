@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment, AttachmentMetadata } from '@hanzo/attachment'
+  import { Attachment, AttachmentMetadata } from '@hanzoteam/attachment'
   import {
     Blob as PlatformBlob,
     BlobMetadata,
@@ -27,8 +27,8 @@
     Space,
     generateId,
     toIdMap
-  } from '@hanzo/core'
-  import { Asset, IntlString, getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  } from '@hanzoteam/core'
+  import { Asset, IntlString, getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
   import {
     DraftController,
     canDisplayLinkPreview,
@@ -41,16 +41,16 @@
     uploadFile,
     LinkPreviewAttachmentMetadata,
     generateFileId
-  } from '@hanzo/presentation'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
-  import textEditor, { type RefAction } from '@hanzo/text-editor'
-  import { AttachIcon, ReferenceInput } from '@hanzo/text-editor-resources'
-  import { Loading, type AnySvelteComponent } from '@hanzo/ui'
+  } from '@hanzoteam/presentation'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
+  import textEditor, { type RefAction } from '@hanzoteam/text-editor'
+  import { AttachIcon, ReferenceInput } from '@hanzoteam/text-editor-resources'
+  import { Loading, type AnySvelteComponent } from '@hanzoteam/ui'
   import {
     type FileUploadCallbackParams,
     type UploadHandlerDefinition,
     getUploadHandlers
-  } from '@hanzo/uploader'
+  } from '@hanzoteam/uploader'
   import { createEventDispatcher, onDestroy, tick } from 'svelte'
   import attachment from '../plugin'
   import AttachmentPresenter from './AttachmentPresenter.svelte'

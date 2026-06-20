@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Question } from '@hanzo/questions'
-import { type AttachedData, type Class, type Doc, type Ref, type Space, type TxOperations } from '@hanzo/core'
+import type { Question } from '@hanzoteam/questions'
+import { type AttachedData, type Class, type Doc, type Ref, type Space, type TxOperations } from '@hanzoteam/core'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 
 export type CreateQuestionData<Q extends Question<any>> = Omit<AttachedData<Q>, 'owner' | 'releasedBy' | 'releasedOn'>

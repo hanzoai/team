@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type ThemeVariantType } from '@hanzo/theme'
+import { type ThemeVariantType } from '@hanzoteam/theme'
 import {
   type CanvasPoint,
   easeInOutCubic,

@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { loadMetadata } from '@hanzo/platform'
-import card from '@hanzo/card'
+import { loadMetadata } from '@hanzoteam/platform'
+import card from '@hanzoteam/card'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(card.icon, {

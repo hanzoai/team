@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { type Board, boardId } from '@hanzo/board'
-import board from '@hanzo/board-resources/src/plugin'
-import type { Ref, Sequence } from '@hanzo/core'
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { type TaskTypeDescriptor, type ProjectType } from '@hanzo/task'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ViewAction, type Viewlet, type ViewletDescriptor } from '@hanzo/view'
+import { type Board, boardId } from '@hanzoteam/board'
+import board from '@hanzoteam/board-resources/src/plugin'
+import type { Ref, Sequence } from '@hanzoteam/core'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import { type TaskTypeDescriptor, type ProjectType } from '@hanzoteam/task'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ViewAction, type Viewlet, type ViewletDescriptor } from '@hanzoteam/view'
 
 export default mergeIds(boardId, board, {
   component: {

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ControlledDocument } from '@hanzo/controlled-documents'
-  import { IconCheck } from '@hanzo/ui'
+  import { ControlledDocument } from '@hanzoteam/controlled-documents'
+  import { IconCheck } from '@hanzoteam/ui'
   import StatePresenter from './document/presenters/StatePresenter.svelte'
   import { getDocumentVersionString } from '../utils'
 

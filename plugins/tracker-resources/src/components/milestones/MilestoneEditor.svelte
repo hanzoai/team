@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Issue, IssueTemplate, Milestone, Project, TrackerEvents } from '@hanzo/tracker'
-  import { Analytics } from '@hanzo/analytics'
+  import { Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Issue, IssueTemplate, Milestone, Project, TrackerEvents } from '@hanzoteam/tracker'
+  import { Analytics } from '@hanzoteam/analytics'
   import {
     ButtonKind,
     ButtonShape,
     ButtonSize,
     DatePresenter,
     deviceOptionsStore as deviceInfo
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher, afterUpdate } from 'svelte'
   import { activeMilestone } from '../../issues'
   import tracker from '../../plugin'

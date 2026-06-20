@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import activity, { type ActivityMessage, type DocUpdateMessage } from '@hanzo/activity'
-import attachment, { type Attachment } from '@hanzo/attachment'
-import core, { SortingOrder, type Markup, type ObjQueryType, type SortingQuery } from '@hanzo/core'
-import { type IntlString, type Resources } from '@hanzo/platform'
-import { PDFViewer, deleteFile, getClient, uploadFile } from '@hanzo/presentation'
+import activity, { type ActivityMessage, type DocUpdateMessage } from '@hanzoteam/activity'
+import attachment, { type Attachment } from '@hanzoteam/attachment'
+import core, { SortingOrder, type Markup, type ObjQueryType, type SortingQuery } from '@hanzoteam/core'
+import { type IntlString, type Resources } from '@hanzoteam/platform'
+import { PDFViewer, deleteFile, getClient, uploadFile } from '@hanzoteam/presentation'
 
 import AccordionEditor from './components/AccordionEditor.svelte'
 import AddAttachment from './components/AddAttachment.svelte'

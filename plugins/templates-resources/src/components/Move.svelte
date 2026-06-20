@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import presentation, { Card, getClient, SpaceSelector } from '@hanzo/presentation'
-  import { MessageTemplate, TemplateCategory } from '@hanzo/templates'
+  import { Ref } from '@hanzoteam/core'
+  import presentation, { Card, getClient, SpaceSelector } from '@hanzoteam/presentation'
+  import { MessageTemplate, TemplateCategory } from '@hanzoteam/templates'
   import templates from '../plugin'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
 
   export let value: MessageTemplate

@@ -4,11 +4,11 @@
   // Licensed under the Eclipse Public License v2.0 (SPDX: EPL-2.0).
   //
   import { createEventDispatcher } from 'svelte'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { tooltip, capitalizeFirstLetter, type LabelAndProps } from '@hanzo/ui'
-  import { isCustomEmoji, type ExtendedEmoji } from '@hanzo/emoji'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { tooltip, capitalizeFirstLetter, type LabelAndProps } from '@hanzoteam/ui'
+  import { isCustomEmoji, type ExtendedEmoji } from '@hanzoteam/emoji'
   import { getEmojiSkins } from '../utils'
-  import { getBlobRef } from '@hanzo/presentation'
+  import { getBlobRef } from '@hanzoteam/presentation'
 
   export let emoji: ExtendedEmoji
   export let selected: boolean = false

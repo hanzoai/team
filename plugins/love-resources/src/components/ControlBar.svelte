@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { Room, RoomType, isOffice, roomAccessIcon } from '@hanzo/love'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { Room, RoomType, isOffice, roomAccessIcon } from '@hanzoteam/love'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     ButtonMenu,
     DropdownIntlItem,
@@ -31,9 +31,9 @@
     showPopup,
     type AnySvelteComponent,
     type CompAndProps
-  } from '@hanzo/ui'
-  import view, { Action } from '@hanzo/view'
-  import { getActions } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view, { Action } from '@hanzoteam/view'
+  import { getActions } from '@hanzoteam/view-resources'
 
   import love from '../plugin'
   import { currentRoom, myInfo, myOffice } from '../stores'

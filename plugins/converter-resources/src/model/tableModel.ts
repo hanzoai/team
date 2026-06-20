@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import core, { type Class, type Client, type Doc, type Hierarchy, type Ref } from '@hanzo/core'
-import type { AttributeModel, BuildModelKey, Viewlet } from '@hanzo/view'
-import viewPlugin from '@hanzo/view'
-import { buildModel, buildConfigLookup } from '@hanzo/view-resources'
+import core, { type Class, type Client, type Doc, type Hierarchy, type Ref } from '@hanzoteam/core'
+import type { AttributeModel, BuildModelKey, Viewlet } from '@hanzoteam/view'
+import viewPlugin from '@hanzoteam/view'
+import { buildModel, buildConfigLookup } from '@hanzoteam/view-resources'
 import { DocumentAttributeKey } from '../formatter/utils'
 
 /**

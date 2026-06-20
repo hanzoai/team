@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { PersonId } from '@hanzo/core'
-  import { ObjectPresenter } from '@hanzo/view-resources'
-  import contact from '@hanzo/contact'
-  import { getPersonRefByPersonIdStore } from '@hanzo/contact-resources'
+  import { PersonId } from '@hanzoteam/core'
+  import { ObjectPresenter } from '@hanzoteam/view-resources'
+  import contact from '@hanzoteam/contact'
+  import { getPersonRefByPersonIdStore } from '@hanzoteam/contact-resources'
 
   export let socialIds: PersonId[] = []
 

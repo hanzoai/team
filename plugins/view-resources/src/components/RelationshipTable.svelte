@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { PermissionsStore } from '@hanzo/contact'
+  import contact, { PermissionsStore } from '@hanzoteam/contact'
   import core, {
     AnyAttribute,
     AssociationQuery,
@@ -29,9 +29,9 @@
     WithLookup,
     getObjectValue,
     mergeQueries
-  } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { createQuery, getClient, reduceCalls, updateAttribute } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { createQuery, getClient, reduceCalls, updateAttribute } from '@hanzoteam/presentation'
   import ui, {
     Button,
     Label,
@@ -40,8 +40,8 @@
     lazyObserver,
     resizeObserver,
     showPopup
-  } from '@hanzo/ui'
-  import { AttributeModel, BuildModelKey, BuildModelOptions, ViewOptionModel, ViewOptions } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { AttributeModel, BuildModelKey, BuildModelOptions, ViewOptionModel, ViewOptions } from '@hanzoteam/view'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import { Readable } from 'svelte/store'

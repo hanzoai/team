@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Document, Teamspace } from '@hanzo/document'
-  import presentation, { Card, getClient, SpaceSelector } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { ObjectBox } from '@hanzo/view-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { Document, Teamspace } from '@hanzoteam/document'
+  import presentation, { Card, getClient, SpaceSelector } from '@hanzoteam/presentation'
+  import view from '@hanzoteam/view'
+  import { ObjectBox } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import document from '../plugin'
   import TeamspacePresenter from './teamspace/TeamspacePresenter.svelte'

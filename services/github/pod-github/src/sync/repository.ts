@@ -11,8 +11,8 @@ import core, {
   TxOperations,
   generateId,
   withContext
-} from '@hanzo/core'
-import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
+} from '@hanzoteam/core'
+import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hanzoteam/github'
 import { Endpoints } from '@octokit/types'
 import {
   Repository,

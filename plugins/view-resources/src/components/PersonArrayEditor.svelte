@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { PersonId } from '@hanzo/core'
-  import contact from '@hanzo/contact'
-  import { IntlString } from '@hanzo/platform'
-  import { ButtonKind, ButtonSize, Component } from '@hanzo/ui'
+  import { PersonId } from '@hanzoteam/core'
+  import contact from '@hanzoteam/contact'
+  import { IntlString } from '@hanzoteam/platform'
+  import { ButtonKind, ButtonSize, Component } from '@hanzoteam/ui'
 
   export let label: IntlString
   export let value: PersonId[]

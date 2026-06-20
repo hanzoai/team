@@ -2,9 +2,9 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import type { AttachedData } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import type { Question } from '@hanzo/questions'
+import type { AttachedData } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import type { Question } from '@hanzoteam/questions'
 import { LexoRank } from 'lexorank'
 import { canUpdateQuestion, findNextQuestion, getCurrentEmployeeRef, isAssessment } from '../utils'
 import { focusActionWithAvailability } from './ActionWithAvailability'

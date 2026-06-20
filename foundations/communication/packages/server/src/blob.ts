@@ -17,9 +17,9 @@ import {
   SortingOrder,
   systemAccountUuid,
   WorkspaceUuid
-} from '@hanzo/core'
-import { getWorkspaceClient, type HanzolakeWorkspaceClient, type JsonPatch } from '@hanzo/hanzolake-client'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { getWorkspaceClient, type HanzolakeWorkspaceClient, type JsonPatch } from '@hanzoteam/hanzolake-client'
+import { generateToken } from '@hanzoteam/server-token'
 import {
   Attachment,
   AttachmentID,
@@ -39,7 +39,7 @@ import {
   MessagesGroupsDoc,
   Thread
   , ComparisonOperator
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import { v4 as uuid } from 'uuid'
 
 import { Metadata } from './types'

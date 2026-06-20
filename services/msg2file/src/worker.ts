@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MeasureContext, RateLimiter, Ref, Blob, groupByArray } from '@hanzo/core'
+import { MeasureContext, RateLimiter, Ref, Blob, groupByArray } from '@hanzoteam/core'
 import {
   type CardID,
   type FileMessage,
@@ -24,15 +24,15 @@ import {
   type Message,
   MessagesGroup,
   BlobID
-} from '@hanzo/communication-types'
-import cardPlugin, { type Card } from '@hanzo/card'
+} from '@hanzoteam/communication-types'
+import cardPlugin, { type Card } from '@hanzoteam/card'
 import yaml from 'js-yaml'
 import { v4 as uuid } from 'uuid'
-import { MessageRequestEventType } from '@hanzo/communication-sdk-types'
-import { retry } from '@hanzo/communication-shared'
-import { StorageAdapter } from '@hanzo/server-core'
+import { MessageRequestEventType } from '@hanzoteam/communication-sdk-types'
+import { retry } from '@hanzoteam/communication-shared'
+import { StorageAdapter } from '@hanzoteam/server-core'
 import { deserializeMessage } from '@hanzo/communication-yaml'
-import { RestClient as CommunicationRestClient } from '@hanzo/communication-rest-client'
+import { RestClient as CommunicationRestClient } from '@hanzoteam/communication-rest-client'
 
 import { PostgresDB, SyncRecord } from './db'
 import config from './config'

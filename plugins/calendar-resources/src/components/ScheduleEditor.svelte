@@ -15,17 +15,17 @@
 //
 -->
 <script lang="ts">
-  import type { Schedule, ScheduleAvailability } from '@hanzo/calendar'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import core, { Data, generateId, Space } from '@hanzo/core'
+  import type { Schedule, ScheduleAvailability } from '@hanzoteam/calendar'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import core, { Data, generateId, Space } from '@hanzoteam/core'
   import {
     ComponentExtensions,
     createQuery,
     DocCreateExtComponent,
     DocCreateExtensionManager,
     getClient
-  } from '@hanzo/presentation'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
+  } from '@hanzoteam/presentation'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
   import ui, {
     Button,
     ButtonIcon,
@@ -49,13 +49,13 @@
     showPopup,
     themeStore,
     TimeInputBox
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
   import CalendarSelector from './CalendarSelector.svelte'
   import TimeZoneSelector from './TimeZoneSelector.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let schedule: Schedule | undefined
 

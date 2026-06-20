@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import { type WorkspaceIds } from '@hanzo/core'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import { type WorkspaceIds } from '@hanzoteam/core'
 
 import config from './config'
 

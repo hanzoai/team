@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   AccountRole,
   MeasureContext,
@@ -21,18 +21,18 @@ import {
   type WorkspaceDataId,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { getCPUInfo, getMemoryInfo } from '@hanzo/server-core'
-import { decodeToken, decodeTokenVerbose, TokenError } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { getCPUInfo, getMemoryInfo } from '@hanzoteam/server-core'
+import { decodeToken, decodeTokenVerbose, TokenError } from '@hanzoteam/server-token'
 
 import cors from 'cors'
 import express, { type Express, type NextFunction, type Request, type RequestHandler, type Response } from 'express'
 import { type Server } from 'http'
 import morgan from 'morgan'
 
-import { getClient } from '@hanzo/account-client'
-import { createStorageBackupStorage, type BackupInfo, type BackupStorage } from '@hanzo/server-backup'
-import { createStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import { getClient } from '@hanzoteam/account-client'
+import { createStorageBackupStorage, type BackupInfo, type BackupStorage } from '@hanzoteam/server-backup'
+import { createStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
 import { gunzipSync } from 'zlib'
 import { Config } from './config'
 import { ApiError } from './error'

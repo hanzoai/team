@@ -5,7 +5,7 @@ import {
   type ReccuringEvent,
   type ReccuringInstance,
   generateEventId
-} from '@hanzo/calendar'
+} from '@hanzoteam/calendar'
 import {
   type Client,
   type Doc,
@@ -15,15 +15,15 @@ import {
   type Timestamp,
   getCurrentAccount,
   toIdMap
-} from '@hanzo/core'
-import presentation, { createQuery, getClient, onClient } from '@hanzo/presentation'
-import { closePopup, DAY, showPopup } from '@hanzo/ui'
+} from '@hanzoteam/core'
+import presentation, { createQuery, getClient, onClient } from '@hanzoteam/presentation'
+import { closePopup, DAY, showPopup } from '@hanzoteam/ui'
 import { writable } from 'svelte/store'
 import UpdateRecInstancePopup from './components/UpdateRecInstancePopup.svelte'
 import calendar from './plugin'
-import { getMetadata } from '@hanzo/platform'
-import login from '@hanzo/login'
-import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
+import { getMetadata } from '@hanzoteam/platform'
+import login from '@hanzoteam/login'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzoteam/account-client'
 import CalDavAccess from './components/CalDavAccess.svelte'
 
 export function saveUTC (date: Timestamp): Timestamp {

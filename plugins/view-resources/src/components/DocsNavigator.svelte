@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
-  import { Breadcrumbs, BreadcrumbsModel, getClient } from '@hanzo/presentation'
-  import { AttributeModel } from '@hanzo/view'
+  import { Doc } from '@hanzoteam/core'
+  import { Breadcrumbs, BreadcrumbsModel, getClient } from '@hanzoteam/presentation'
+  import { AttributeModel } from '@hanzoteam/view'
   import { getObjectPresenter, restrictionStore } from '../utils'
 
   export let elements: readonly Doc[]

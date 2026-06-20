@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import products, { type Product } from '@hanzo/products'
-import type { Class, Client, DocumentQuery, Ref, RelatedDocument, WithLookup } from '@hanzo/core'
-import { type Resources } from '@hanzo/platform'
-import { type ObjectSearchResult } from '@hanzo/presentation'
+import products, { type Product } from '@hanzoteam/products'
+import type { Class, Client, DocumentQuery, Ref, RelatedDocument, WithLookup } from '@hanzoteam/core'
+import { type Resources } from '@hanzoteam/platform'
+import { type ObjectSearchResult } from '@hanzoteam/presentation'
 
 import CreateProduct from './components/product/CreateProduct.svelte'
 import EditProduct from './components/product/EditProduct.svelte'

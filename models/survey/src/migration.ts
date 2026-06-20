@@ -20,7 +20,7 @@ import {
   type MigrationUpgradeClient,
   tryMigrate,
   tryUpgrade
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 
 import survey, { surveyId } from './index'
 

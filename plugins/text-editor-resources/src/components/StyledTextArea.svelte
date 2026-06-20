@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Markup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { EmptyMarkup } from '@hanzo/text'
-  import textEditor from '@hanzo/text-editor'
-  import { ButtonSize, Label } from '@hanzo/ui'
+  import { Markup } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import textEditor from '@hanzoteam/text-editor'
+  import { ButtonSize, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import StyledTextEditor from './StyledTextEditor.svelte'

@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/account-client",
+      "packageName": "@hanzoteam/account-client",
       "comment": "Add permission methods",
       "type": "patch"
     }
   ],
-  "packageName": "@hanzo/account-client"
+  "packageName": "@hanzoteam/account-client"
 }

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Class, type Doc, type Ref, type Space } from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
+import { type Class, type Doc, type Ref, type Space } from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
 import {
   CodeExtension,
   codeOptions,
@@ -27,8 +27,8 @@ import {
   Highlight,
   Subscript,
   Superscript
-} from '@hanzo/text'
-import textEditor, { type ActionContext, type ExtensionCreator, type TextEditorMode } from '@hanzo/text-editor'
+} from '@hanzoteam/text'
+import textEditor, { type ActionContext, type ExtensionCreator, type TextEditorMode } from '@hanzoteam/text-editor'
 import { type AnyExtension, Extension } from '@tiptap/core'
 import TableHeader from '@tiptap/extension-table-header'
 import 'prosemirror-codemark/dist/codemark.css'

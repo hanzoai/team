@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { AccountRole, type Space, getCurrentAccount } from '@hanzo/core'
-import { type Resources } from '@hanzo/platform'
+import { AccountRole, type Space, getCurrentAccount } from '@hanzoteam/core'
+import { type Resources } from '@hanzoteam/platform'
 import ApplicationPresenter from './components/ApplicationPresenter.svelte'
 import Archive from './components/Archive.svelte'
 import SpacePanel from './components/navigator/SpacePanel.svelte'
@@ -24,7 +24,7 @@ import { doNavigate, logIn, logOut } from './utils'
 import Workbench from './components/Workbench.svelte'
 import ServerManager from './components/ServerManager.svelte'
 import WorkbenchTabs from './components/WorkbenchTabs.svelte'
-import { isAdminUser } from '@hanzo/presentation'
+import { isAdminUser } from '@hanzoteam/presentation'
 import { canCloseTab, closeCurrentTab, closeTab, OpenInNewTab, pinTab, unpinTab } from './workbench'
 import { closeWidget, closeWidgetTab, createWidgetTab, getSidebarObject } from './sidebar'
 

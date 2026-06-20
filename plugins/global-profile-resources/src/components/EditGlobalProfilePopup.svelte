@@ -14,8 +14,8 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Button, Label, Toggle } from '@hanzo/ui'
-  import globalProfile from '@hanzo/global-profile'
+  import { Button, Label, Toggle } from '@hanzoteam/ui'
+  import globalProfile from '@hanzoteam/global-profile'
   import ProfileField from './ProfileField.svelte'
 
   export let firstName: string = ''

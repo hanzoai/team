@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MarkupNode } from '@hanzo/text-core'
+import { type MarkupNode } from '@hanzoteam/text-core'
 import { type HtmlParserOptions, HtmlParser } from './parser'
 import { type HtmlSerializerOptions, HtmlSerializer } from './serializer'
 

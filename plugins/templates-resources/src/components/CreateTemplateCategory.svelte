@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { getCurrentAccount } from '@hanzo/core'
-  import presentation, { getClient, SpaceCreateCard } from '@hanzo/presentation'
-  import { EditBox, Grid, ToggleWithLabel } from '@hanzo/ui'
+  import core, { getCurrentAccount } from '@hanzoteam/core'
+  import presentation, { getClient, SpaceCreateCard } from '@hanzoteam/presentation'
+  import { EditBox, Grid, ToggleWithLabel } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import templates from '../plugin'
 

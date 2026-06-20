@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Department } from '@hanzo/hr'
-  import { Scroller, Separator, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
-  import { TreeNode } from '@hanzo/view-resources'
-  import { NavFooter, NavHeader } from '@hanzo/workbench-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { Department } from '@hanzoteam/hr'
+  import { Scroller, Separator, deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
+  import { TreeNode } from '@hanzoteam/view-resources'
+  import { NavFooter, NavHeader } from '@hanzoteam/workbench-resources'
 
   import hr from '../../plugin'
 

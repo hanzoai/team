@@ -15,7 +15,7 @@
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
   import core, {
     Data,
     DocumentUpdate,
@@ -28,15 +28,15 @@
     Class,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import presentation, { Card, getClient } from '@hanzo/presentation'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
-  import { EditBox, Label, Toggle } from '@hanzo/ui'
-  import { SpaceTypeSelector } from '@hanzo/view-resources'
-  import documents, { DocumentSpace, DocumentSpaceType } from '@hanzo/controlled-documents'
+  } from '@hanzoteam/core'
+  import presentation, { Card, getClient } from '@hanzoteam/presentation'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
+  import { EditBox, Label, Toggle } from '@hanzoteam/ui'
+  import { SpaceTypeSelector } from '@hanzoteam/view-resources'
+  import documents, { DocumentSpace, DocumentSpaceType } from '@hanzoteam/controlled-documents'
 
   import documentsRes from '../../plugin'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
 
   export let docSpace: DocumentSpace | undefined = undefined
   export let clazz: Ref<Class<DocumentSpace>> = documents.class.OrgSpace

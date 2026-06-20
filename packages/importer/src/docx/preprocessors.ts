@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import documents from '@hanzo/controlled-documents'
-import { type AttrValue, type MarkupNode, MarkupNodeType } from '@hanzo/text'
+import documents from '@hanzoteam/controlled-documents'
+import { type AttrValue, type MarkupNode, MarkupNodeType } from '@hanzoteam/text'
 import { dirname, join, relative } from 'path'
 import { type DocumentPreprocessorSpec, type DocumentState } from './docx'
 

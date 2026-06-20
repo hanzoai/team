@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, Severity, Status } from '@hanzo/platform'
-  import { MessageBox } from '@hanzo/presentation'
+  import { OK, Severity, Status } from '@hanzoteam/platform'
+  import { MessageBox } from '@hanzoteam/presentation'
 
-  import { showPopup } from '@hanzo/ui'
+  import { showPopup } from '@hanzoteam/ui'
   import { BottomAction } from '..'
   import { signUpAction } from '../actions'
   import login from '../plugin'

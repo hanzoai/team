@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import board from '@hanzo/board'
-import { loadMetadata } from '@hanzo/platform'
+import board from '@hanzoteam/board'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(board.icon, {

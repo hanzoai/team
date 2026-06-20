@@ -19,7 +19,7 @@ import activity, {
   type DocAttributeUpdates,
   type DocUpdateMessage,
   type Reaction
-} from '@hanzo/activity'
+} from '@hanzoteam/activity'
 import core, {
   type PersonId,
   type AttachedDoc,
@@ -37,16 +37,16 @@ import core, {
   type TxCUD,
   TxProcessor,
   type TxRemoveDoc
-} from '@hanzo/core'
-import { getAccountBySocialId, getPerson } from '@hanzo/server-contact'
+} from '@hanzoteam/core'
+import { getAccountBySocialId, getPerson } from '@hanzoteam/server-contact'
 import notification, {
   type NotificationContent,
   type NotificationType,
   type ReactionInboxNotification
-} from '@hanzo/notification'
-import { getMetadata, getResource, translate } from '@hanzo/platform'
-import { type ActivityControl, type DocObjectCache } from '@hanzo/server-activity'
-import type { TriggerControl } from '@hanzo/server-core'
+} from '@hanzoteam/notification'
+import { getMetadata, getResource, translate } from '@hanzoteam/platform'
+import { type ActivityControl, type DocObjectCache } from '@hanzoteam/server-activity'
+import type { TriggerControl } from '@hanzoteam/server-core'
 import {
   createCollaboratorNotifications,
   getAllowedProviders,
@@ -54,9 +54,9 @@ import {
   getNotificationProviderControl,
   getReceiversInfo,
   getTextPresenter
-} from '@hanzo/server-notification-resources'
-import card, { type Card } from '@hanzo/card'
-import serverCard from '@hanzo/server-card'
+} from '@hanzoteam/server-notification-resources'
+import card, { type Card } from '@hanzoteam/card'
+import serverCard from '@hanzoteam/server-card'
 
 import { ReferenceTrigger } from './references'
 import { getAttrName, getCollectionAttribute, getDocUpdateAction, getTxAttributesUpdates } from './utils'

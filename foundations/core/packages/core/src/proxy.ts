@@ -1,4 +1,4 @@
-import { PlatformError, unknownError } from '@hanzo/platform'
+import { PlatformError, unknownError } from '@hanzoteam/platform'
 import { type Ref } from '.'
 import type { Doc, Mixin } from './classes'
 

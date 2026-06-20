@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
-  import { Button, Icon, IconStop, Label } from '@hanzo/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Button, Icon, IconStop, Label } from '@hanzoteam/ui'
   import { Track } from 'livekit-client'
   import { createEventDispatcher, onMount } from 'svelte'
 

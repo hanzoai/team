@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { setMetadata } from '@hanzo/platform'
-import serverToken from '@hanzo/server-token'
+import { setMetadata } from '@hanzoteam/platform'
+import serverToken from '@hanzoteam/server-token'
 
-import type { MeasureContext } from '@hanzo/core'
-import serverClient from '@hanzo/server-client'
-import type { StorageConfiguration } from '@hanzo/server-core'
-import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import type { MeasureContext } from '@hanzoteam/core'
+import serverClient from '@hanzoteam/server-client'
+import type { StorageConfiguration } from '@hanzoteam/server-core'
+import { buildStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
 import config from './config'
 import { start } from './server'
 

@@ -26,10 +26,10 @@
     RateLimiter,
     Ref,
     Space
-  } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { DocWithRank, makeRank } from '@hanzo/task'
+  } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { DocWithRank, makeRank } from '@hanzoteam/task'
   import ui, {
     AnyComponent,
     AnySvelteComponent,
@@ -38,8 +38,8 @@
     Loading,
     Label,
     Scroller
-  } from '@hanzo/ui'
-  import { AttributeModel, BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { AttributeModel, BuildModelKey, ViewOptionModel, ViewOptions, Viewlet } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import { fade } from 'svelte/transition'
   import { showMenu } from '../../actions'

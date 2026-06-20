@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import core, { coreId } from '@hanzo/core'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
+import core, { coreId } from '@hanzoteam/core'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
 
 export default mergeIds(coreId, core, {
   string: {

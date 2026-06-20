@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { DocumentMeta } from '@hanzo/controlled-documents'
+  import { WithLookup } from '@hanzoteam/core'
+  import { DocumentMeta } from '@hanzoteam/controlled-documents'
 
   import DocumentIcon from './icons/DocumentIcon.svelte'
 

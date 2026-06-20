@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment from '@hanzo/attachment'
-  import { Channel, Organization } from '@hanzo/contact'
-  import { createQuery } from '@hanzo/presentation'
+  import attachment from '@hanzoteam/attachment'
+  import { Channel, Organization } from '@hanzoteam/contact'
+  import { createQuery } from '@hanzoteam/presentation'
   import Avatar from './Avatar.svelte'
-  import { Component, Label } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import { Component, Label } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import contact from '../plugin'
   import ChannelsEditor from './ChannelsEditor.svelte'
 

@@ -6,16 +6,16 @@
 // a copy of the License at https://www.eclipse.org/legal/epl-2.0
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { ButtonMenu, IconCopy, IconMoreH, type DropdownIntlItem } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { viewletContextStore } from '@hanzo/view-resources'
+  import type { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ButtonMenu, IconCopy, IconMoreH, type DropdownIntlItem } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { viewletContextStore } from '@hanzoteam/view-resources'
   import { copyAsMarkdownTableFromResource, copyRelationshipTableAsMarkdown } from '../markdown/copyActions'
 
   export let _class: Ref<Class<Doc>>
   export let query: DocumentQuery<Doc> = {}
-  export let config: Array<string | import('@hanzo/view').BuildModelKey> = []
+  export let config: Array<string | import('@hanzoteam/view').BuildModelKey> = []
 
   // TODO: Register actions separately and make common extension for viewlet actions
   const COPY_ALL_ACTION_ID = 'copy-all'

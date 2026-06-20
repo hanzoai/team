@@ -27,11 +27,11 @@ import {
   SpaceType,
   TypedSpace,
   VersionableDoc
-} from '@hanzo/core'
-import { Asset, IntlString, plugin, Plugin, Resource } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
-import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
-import { IconProps } from '@hanzo/view'
+} from '@hanzoteam/core'
+import { Asset, IntlString, plugin, Plugin, Resource } from '@hanzoteam/platform'
+import { Preference } from '@hanzoteam/preference'
+import type { AnyComponent, ComponentExtensionId } from '@hanzoteam/ui'
+import { IconProps } from '@hanzoteam/view'
 
 export * from './analytics'
 

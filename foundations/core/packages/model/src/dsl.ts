@@ -55,8 +55,8 @@ import core, {
   type TypeIdentifier as TypeIdentifierType,
   type TypeNumber as TypeNumberType,
   generateId
-} from '@hanzo/core'
-import type { Asset, IntlString } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import type { Asset, IntlString } from '@hanzoteam/platform'
 import toposort from 'toposort'
 
 const targets = new Map<any, Map<string, IndexKind>>()

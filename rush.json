@@ -331,13 +331,13 @@
     // },
     //
     {
-      "packageName": "@hanzo/platform-rig",
+      "packageName": "@hanzoteam/platform-rig",
       "projectFolder": "foundations/utils/packages/platform-rig",
       "reviewCategory": "tools",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/ui-test",
+      "packageName": "@hanzoteam/ui-test",
       "projectFolder": "foundations/utils/packages/ui-test",
       "shouldPublish": false
     },
@@ -345,1769 +345,1769 @@
     /// CORE Modules
 
     {
-      "packageName": "@hanzo/account-client",
+      "packageName": "@hanzoteam/account-client",
       "projectFolder": "foundations/core/packages/account-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/analytics",
+      "packageName": "@hanzoteam/analytics",
       "projectFolder": "foundations/core/packages/analytics",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/analytics-service",
+      "packageName": "@hanzoteam/analytics-service",
       "projectFolder": "foundations/core/packages/analytics-service",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/api-client",
+      "packageName": "@hanzoteam/api-client",
       "projectFolder": "foundations/core/packages/api-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/collaborator-client",
+      "packageName": "@hanzoteam/collaborator-client",
       "projectFolder": "foundations/core/packages/collaborator-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/core",
+      "packageName": "@hanzoteam/core",
       "projectFolder": "foundations/core/packages/core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/model",
+      "packageName": "@hanzoteam/model",
       "projectFolder": "foundations/core/packages/model",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/platform",
+      "packageName": "@hanzoteam/platform",
       "projectFolder": "foundations/core/packages/platform",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/query",
+      "packageName": "@hanzoteam/query",
       "projectFolder": "foundations/core/packages/query",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/rank",
+      "packageName": "@hanzoteam/rank",
       "projectFolder": "foundations/core/packages/rank",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/retry",
+      "packageName": "@hanzoteam/retry",
       "projectFolder": "foundations/core/packages/retry",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/storage",
+      "packageName": "@hanzoteam/storage",
       "projectFolder": "foundations/core/packages/storage",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text",
+      "packageName": "@hanzoteam/text",
       "projectFolder": "foundations/core/packages/text",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-core",
+      "packageName": "@hanzoteam/text-core",
       "projectFolder": "foundations/core/packages/text-core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-html",
+      "packageName": "@hanzoteam/text-html",
       "projectFolder": "foundations/core/packages/text-html",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-markdown",
+      "packageName": "@hanzoteam/text-markdown",
       "projectFolder": "foundations/core/packages/text-markdown",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/text-ydoc",
+      "packageName": "@hanzoteam/text-ydoc",
       "projectFolder": "foundations/core/packages/text-ydoc",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/client",
+      "packageName": "@hanzoteam/client",
       "projectFolder": "foundations/core/packages/client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/client-resources",
+      "packageName": "@hanzoteam/client-resources",
       "projectFolder": "foundations/core/packages/client-resources",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/rpc",
+      "packageName": "@hanzoteam/rpc",
       "projectFolder": "foundations/core/packages/rpc",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/server-token",
+      "packageName": "@hanzoteam/server-token",
       "projectFolder": "foundations/core/packages/token",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/hanzolake-client",
+      "packageName": "@hanzoteam/hanzolake-client",
       "projectFolder": "foundations/core/packages/hanzolake-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/storage-client",
+      "packageName": "@hanzoteam/storage-client",
       "projectFolder": "foundations/core/packages/storage-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/measurements",
+      "packageName": "@hanzoteam/measurements",
       "projectFolder": "foundations/core/packages/measurements",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/measurements-otlp",
+      "packageName": "@hanzoteam/measurements-otlp",
       "projectFolder": "foundations/core/packages/measurements-otlp",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/postgres-base",
+      "packageName": "@hanzoteam/postgres-base",
       "projectFolder": "foundations/core/packages/postgres-base",
       "shouldPublish": true
     },
     // Communication
     {
-      "packageName": "@hanzo/communication-types",
+      "packageName": "@hanzoteam/communication-types",
       "projectFolder": "foundations/communication/packages/types",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/communication-sdk-types",
+      "packageName": "@hanzoteam/communication-sdk-types",
       "projectFolder": "foundations/communication/packages/sdk-types",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/communication-shared",
+      "packageName": "@hanzoteam/communication-shared",
       "projectFolder": "foundations/communication/packages/shared",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/communication-rest-client",
+      "packageName": "@hanzoteam/communication-rest-client",
       "projectFolder": "foundations/communication/packages/rest-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/communication-cockroach",
+      "packageName": "@hanzoteam/communication-cockroach",
       "projectFolder": "foundations/communication/packages/cockroach",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/communication-server",
+      "packageName": "@hanzoteam/communication-server",
       "projectFolder": "foundations/communication/packages/server",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/communication-query",
+      "packageName": "@hanzoteam/communication-query",
       "projectFolder": "foundations/communication/packages/query",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/communication-client-query",
+      "packageName": "@hanzoteam/communication-client-query",
       "projectFolder": "foundations/communication/packages/client-query",
       "shouldPublish": true
     },
     /// Server
 
     {
-      "packageName": "@hanzo/server-client",
+      "packageName": "@hanzoteam/server-client",
       "projectFolder": "foundations/server/packages/client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/collaboration",
+      "packageName": "@hanzoteam/collaboration",
       "projectFolder": "foundations/server/packages/collaboration",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/server-core",
+      "packageName": "@hanzoteam/server-core",
       "projectFolder": "foundations/server/packages/core",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/datalake",
+      "packageName": "@hanzoteam/datalake",
       "projectFolder": "foundations/server/packages/datalake",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/hanzolake",
+      "packageName": "@hanzoteam/hanzolake",
       "projectFolder": "foundations/server/packages/hanzolake",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/elastic",
+      "packageName": "@hanzoteam/elastic",
       "projectFolder": "foundations/server/packages/elastic",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/kafka",
+      "packageName": "@hanzoteam/kafka",
       "projectFolder": "foundations/server/packages/kafka",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/middleware",
+      "packageName": "@hanzoteam/middleware",
       "projectFolder": "foundations/server/packages/middleware",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/minio",
+      "packageName": "@hanzoteam/minio",
       "projectFolder": "foundations/server/packages/minio",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/mongo",
+      "packageName": "@hanzoteam/mongo",
       "projectFolder": "foundations/server/packages/mongo",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/postgres",
+      "packageName": "@hanzoteam/postgres",
       "projectFolder": "foundations/server/packages/postgres",
       "shouldPublish": true
     },
-    { "packageName": "@hanzo/s3", "projectFolder": "foundations/server/packages/s3", "shouldPublish": true },
+    { "packageName": "@hanzoteam/s3", "projectFolder": "foundations/server/packages/s3", "shouldPublish": true },
     {
-      "packageName": "@hanzo/server",
+      "packageName": "@hanzoteam/server",
       "projectFolder": "foundations/server/packages/server",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/server-storage",
+      "packageName": "@hanzoteam/server-storage",
       "projectFolder": "foundations/server/packages/server-storage",
       "shouldPublish": true
     },
 
     /// Platform modules
     {
-      "packageName": "@hanzo/analytics-providers",
+      "packageName": "@hanzoteam/analytics-providers",
       "projectFolder": "packages/analytics-providers",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/highlight",
+      "packageName": "@hanzoteam/highlight",
       "projectFolder": "packages/highlight",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/api-tests",
+      "packageName": "@hanzoteam/api-tests",
       "projectFolder": "ws-tests/api-tests",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/importer",
+      "packageName": "@hanzoteam/importer",
       "projectFolder": "packages/importer",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hls",
+      "packageName": "@hanzoteam/hls",
       "projectFolder": "packages/hls",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/theme",
+      "packageName": "@hanzoteam/theme",
       "projectFolder": "packages/theme",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/ui",
+      "packageName": "@hanzoteam/ui",
       "projectFolder": "packages/ui",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/uploader",
+      "packageName": "@hanzoteam/uploader",
       "projectFolder": "plugins/uploader",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/uploader-assets",
+      "packageName": "@hanzoteam/uploader-assets",
       "projectFolder": "plugins/uploader-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/uploader-resources",
+      "packageName": "@hanzoteam/uploader-resources",
       "projectFolder": "plugins/uploader-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-uploader",
+      "packageName": "@hanzoteam/model-uploader",
       "projectFolder": "models/uploader",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/media",
+      "packageName": "@hanzoteam/media",
       "projectFolder": "plugins/media",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/media-resources",
+      "packageName": "@hanzoteam/media-resources",
       "projectFolder": "plugins/media-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/media-assets",
+      "packageName": "@hanzoteam/media-assets",
       "projectFolder": "plugins/media-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-media",
+      "packageName": "@hanzoteam/model-media",
       "projectFolder": "models/media",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/recorder",
+      "packageName": "@hanzoteam/recorder",
       "projectFolder": "plugins/recorder",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/recorder-resources",
+      "packageName": "@hanzoteam/recorder-resources",
       "projectFolder": "plugins/recorder-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/recorder-assets",
+      "packageName": "@hanzoteam/recorder-assets",
       "projectFolder": "plugins/recorder-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-recorder",
+      "packageName": "@hanzoteam/model-recorder",
       "projectFolder": "models/recorder",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/presence",
+      "packageName": "@hanzoteam/presence",
       "projectFolder": "plugins/presence",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/presence-resources",
+      "packageName": "@hanzoteam/presence-resources",
       "projectFolder": "plugins/presence-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-presence",
+      "packageName": "@hanzoteam/model-presence",
       "projectFolder": "models/presence",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/billing-client",
+      "packageName": "@hanzoteam/billing-client",
       "projectFolder": "packages/billing-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/payment-client",
+      "packageName": "@hanzoteam/payment-client",
       "projectFolder": "packages/payment-client",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/prod",
+      "packageName": "@hanzoteam/prod",
       "projectFolder": "dev/prod",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-indexer",
+      "packageName": "@hanzoteam/server-indexer",
       "projectFolder": "server/indexer",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-pipeline",
+      "packageName": "@hanzoteam/server-pipeline",
       "projectFolder": "server/server-pipeline",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/login",
+      "packageName": "@hanzoteam/login",
       "projectFolder": "plugins/login",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/login-assets",
+      "packageName": "@hanzoteam/login-assets",
       "projectFolder": "plugins/login-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/login-resources",
+      "packageName": "@hanzoteam/login-resources",
       "projectFolder": "plugins/login-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/onboard",
+      "packageName": "@hanzoteam/onboard",
       "projectFolder": "plugins/onboard",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/onboard-assets",
+      "packageName": "@hanzoteam/onboard-assets",
       "projectFolder": "plugins/onboard-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/onboard-resources",
+      "packageName": "@hanzoteam/onboard-resources",
       "projectFolder": "plugins/onboard-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/workbench",
+      "packageName": "@hanzoteam/workbench",
       "projectFolder": "plugins/workbench",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/workbench-assets",
+      "packageName": "@hanzoteam/workbench-assets",
       "projectFolder": "plugins/workbench-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/workbench-resources",
+      "packageName": "@hanzoteam/workbench-resources",
       "projectFolder": "plugins/workbench-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/presentation",
+      "packageName": "@hanzoteam/presentation",
       "projectFolder": "packages/presentation",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-presentation",
+      "packageName": "@hanzoteam/model-presentation",
       "projectFolder": "models/presentation",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/view",
+      "packageName": "@hanzoteam/view",
       "projectFolder": "plugins/view",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/view-assets",
+      "packageName": "@hanzoteam/view-assets",
       "projectFolder": "plugins/view-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/view-resources",
+      "packageName": "@hanzoteam/view-resources",
       "projectFolder": "plugins/view-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-core",
+      "packageName": "@hanzoteam/model-core",
       "projectFolder": "models/core",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-all",
+      "packageName": "@hanzoteam/model-all",
       "projectFolder": "models/all",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-view",
+      "packageName": "@hanzoteam/model-view",
       "projectFolder": "models/view",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/contact",
+      "packageName": "@hanzoteam/contact",
       "projectFolder": "plugins/contact",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/contact-assets",
+      "packageName": "@hanzoteam/contact-assets",
       "projectFolder": "plugins/contact-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/contact-resources",
+      "packageName": "@hanzoteam/contact-resources",
       "projectFolder": "plugins/contact-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/task",
+      "packageName": "@hanzoteam/task",
       "projectFolder": "plugins/task",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/task-assets",
+      "packageName": "@hanzoteam/task-assets",
       "projectFolder": "plugins/task-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/task-resources",
+      "packageName": "@hanzoteam/task-resources",
       "projectFolder": "plugins/task-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-workbench",
+      "packageName": "@hanzoteam/model-workbench",
       "projectFolder": "models/workbench",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-task",
+      "packageName": "@hanzoteam/model-task",
       "projectFolder": "models/task",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-contact",
+      "packageName": "@hanzoteam/model-contact",
       "projectFolder": "models/contact",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/text-editor",
+      "packageName": "@hanzoteam/text-editor",
       "projectFolder": "plugins/text-editor",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/text-editor-assets",
+      "packageName": "@hanzoteam/text-editor-assets",
       "projectFolder": "plugins/text-editor-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/text-editor-resources",
+      "packageName": "@hanzoteam/text-editor-resources",
       "projectFolder": "plugins/text-editor-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/chunter",
+      "packageName": "@hanzoteam/chunter",
       "projectFolder": "plugins/chunter",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/chunter-assets",
+      "packageName": "@hanzoteam/chunter-assets",
       "projectFolder": "plugins/chunter-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/chunter-resources",
+      "packageName": "@hanzoteam/chunter-resources",
       "projectFolder": "plugins/chunter-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-chunter",
+      "packageName": "@hanzoteam/model-chunter",
       "projectFolder": "models/chunter",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/recruit",
+      "packageName": "@hanzoteam/recruit",
       "projectFolder": "plugins/recruit",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/recruit-assets",
+      "packageName": "@hanzoteam/recruit-assets",
       "projectFolder": "plugins/recruit-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/recruit-resources",
+      "packageName": "@hanzoteam/recruit-resources",
       "projectFolder": "plugins/recruit-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-recruit",
+      "packageName": "@hanzoteam/model-recruit",
       "projectFolder": "models/recruit",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/image-cropper",
+      "packageName": "@hanzoteam/image-cropper",
       "projectFolder": "plugins/image-cropper",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/image-cropper-resources",
+      "packageName": "@hanzoteam/image-cropper-resources",
       "projectFolder": "plugins/image-cropper-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-core",
+      "packageName": "@hanzoteam/model-server-core",
       "projectFolder": "models/server-core",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-attachment",
+      "packageName": "@hanzoteam/server-attachment",
       "projectFolder": "server-plugins/attachment",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-attachment",
+      "packageName": "@hanzoteam/model-server-attachment",
       "projectFolder": "models/server-attachment",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-attachment-resources",
+      "packageName": "@hanzoteam/server-attachment-resources",
       "projectFolder": "server-plugins/attachment-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-collaboration",
+      "packageName": "@hanzoteam/server-collaboration",
       "projectFolder": "server-plugins/collaboration",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-collaboration",
+      "packageName": "@hanzoteam/model-server-collaboration",
       "projectFolder": "models/server-collaboration",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-collaboration-resources",
+      "packageName": "@hanzoteam/server-collaboration-resources",
       "projectFolder": "server-plugins/collaboration-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-contact",
+      "packageName": "@hanzoteam/server-contact",
       "projectFolder": "server-plugins/contact",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-contact",
+      "packageName": "@hanzoteam/model-server-contact",
       "projectFolder": "models/server-contact",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-contact-resources",
+      "packageName": "@hanzoteam/server-contact-resources",
       "projectFolder": "server-plugins/contact-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-front",
+      "packageName": "@hanzoteam/pod-front",
       "projectFolder": "pods/front",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-stats",
+      "packageName": "@hanzoteam/pod-stats",
       "projectFolder": "pods/stats",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-server",
+      "packageName": "@hanzoteam/pod-server",
       "projectFolder": "pods/server",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-external",
+      "packageName": "@hanzoteam/pod-external",
       "projectFolder": "pods/external",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/front",
+      "packageName": "@hanzoteam/front",
       "projectFolder": "server/front",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/account",
+      "packageName": "@hanzoteam/account",
       "projectFolder": "server/account",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/account-service",
+      "packageName": "@hanzoteam/account-service",
       "projectFolder": "server/account-service",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/workspace-service",
+      "packageName": "@hanzoteam/workspace-service",
       "projectFolder": "server/workspace-service",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/collaborator",
+      "packageName": "@hanzoteam/collaborator",
       "projectFolder": "server/collaborator",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/tool",
+      "packageName": "@hanzoteam/tool",
       "projectFolder": "dev/tool",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/import-tool",
+      "packageName": "@hanzoteam/import-tool",
       "projectFolder": "dev/import-tool",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-account",
+      "packageName": "@hanzoteam/pod-account",
       "projectFolder": "pods/account",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-workspace",
+      "packageName": "@hanzoteam/pod-workspace",
       "projectFolder": "pods/workspace",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-collaborator",
+      "packageName": "@hanzoteam/pod-collaborator",
       "projectFolder": "pods/collaborator",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/panel",
+      "packageName": "@hanzoteam/panel",
       "projectFolder": "packages/panel",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/activity",
+      "packageName": "@hanzoteam/activity",
       "projectFolder": "plugins/activity",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/activity-assets",
+      "packageName": "@hanzoteam/activity-assets",
       "projectFolder": "plugins/activity-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/activity-resources",
+      "packageName": "@hanzoteam/activity-resources",
       "projectFolder": "plugins/activity-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-activity",
+      "packageName": "@hanzoteam/model-activity",
       "projectFolder": "models/activity",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/setting",
+      "packageName": "@hanzoteam/setting",
       "projectFolder": "plugins/setting",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/setting-assets",
+      "packageName": "@hanzoteam/setting-assets",
       "projectFolder": "plugins/setting-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/setting-resources",
+      "packageName": "@hanzoteam/setting-resources",
       "projectFolder": "plugins/setting-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-setting",
+      "packageName": "@hanzoteam/model-setting",
       "projectFolder": "models/setting",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/telegram",
+      "packageName": "@hanzoteam/telegram",
       "projectFolder": "plugins/telegram",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/telegram-assets",
+      "packageName": "@hanzoteam/telegram-assets",
       "projectFolder": "plugins/telegram-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/telegram-resources",
+      "packageName": "@hanzoteam/telegram-resources",
       "projectFolder": "plugins/telegram-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-telegram",
+      "packageName": "@hanzoteam/model-telegram",
       "projectFolder": "models/telegram",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/devmodel-resources",
+      "packageName": "@hanzoteam/devmodel-resources",
       "projectFolder": "plugins/devmodel-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/devmodel",
+      "packageName": "@hanzoteam/devmodel",
       "projectFolder": "plugins/devmodel",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/attachment",
+      "packageName": "@hanzoteam/attachment",
       "projectFolder": "plugins/attachment",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/attachment-assets",
+      "packageName": "@hanzoteam/attachment-assets",
       "projectFolder": "plugins/attachment-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/attachment-resources",
+      "packageName": "@hanzoteam/attachment-resources",
       "projectFolder": "plugins/attachment-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-attachment",
+      "packageName": "@hanzoteam/model-attachment",
       "projectFolder": "models/attachment",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/lead",
+      "packageName": "@hanzoteam/lead",
       "projectFolder": "plugins/lead",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/lead-assets",
+      "packageName": "@hanzoteam/lead-assets",
       "projectFolder": "plugins/lead-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/lead-resources",
+      "packageName": "@hanzoteam/lead-resources",
       "projectFolder": "plugins/lead-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-lead",
+      "packageName": "@hanzoteam/model-lead",
       "projectFolder": "models/lead",
       "shouldPublish": false
     },
     // {
-    //   "packageName": "@hanzo/storybook",
+    //   "packageName": "@hanzoteam/storybook",
     //   "projectFolder": "dev/storybook",
     //   "shouldPublish": false
     // },
     {
-      "packageName": "@hanzo/model-gmail",
+      "packageName": "@hanzoteam/model-gmail",
       "projectFolder": "models/gmail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/gmail",
+      "packageName": "@hanzoteam/gmail",
       "projectFolder": "plugins/gmail",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/gmail-assets",
+      "packageName": "@hanzoteam/gmail-assets",
       "projectFolder": "plugins/gmail-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/gmail-resources",
+      "packageName": "@hanzoteam/gmail-resources",
       "projectFolder": "plugins/gmail-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/global-profile",
+      "packageName": "@hanzoteam/global-profile",
       "projectFolder": "plugins/global-profile",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/global-profile-assets",
+      "packageName": "@hanzoteam/global-profile-assets",
       "projectFolder": "plugins/global-profile-assets",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/global-profile-resources",
+      "packageName": "@hanzoteam/global-profile-resources",
       "projectFolder": "plugins/global-profile-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-inventory",
+      "packageName": "@hanzoteam/model-inventory",
       "projectFolder": "models/inventory",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/inventory",
+      "packageName": "@hanzoteam/inventory",
       "projectFolder": "plugins/inventory",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/inventory-assets",
+      "packageName": "@hanzoteam/inventory-assets",
       "projectFolder": "plugins/inventory-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/inventory-resources",
+      "packageName": "@hanzoteam/inventory-resources",
       "projectFolder": "plugins/inventory-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/templates",
+      "packageName": "@hanzoteam/templates",
       "projectFolder": "plugins/templates",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/templates-assets",
+      "packageName": "@hanzoteam/templates-assets",
       "projectFolder": "plugins/templates-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/templates-resources",
+      "packageName": "@hanzoteam/templates-resources",
       "projectFolder": "plugins/templates-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-templates",
+      "packageName": "@hanzoteam/model-templates",
       "projectFolder": "models/templates",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-templates",
+      "packageName": "@hanzoteam/server-templates",
       "projectFolder": "server-plugins/templates",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-templates",
+      "packageName": "@hanzoteam/model-server-templates",
       "projectFolder": "models/server-templates",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-text-editor",
+      "packageName": "@hanzoteam/model-text-editor",
       "projectFolder": "models/text-editor",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-tool",
+      "packageName": "@hanzoteam/server-tool",
       "projectFolder": "server/tool",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/tests-sanity",
+      "packageName": "@hanzoteam/tests-sanity",
       "projectFolder": "tests/sanity",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/tests-ws-sanity",
+      "packageName": "@hanzoteam/tests-ws-sanity",
       "projectFolder": "ws-tests/sanity",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/qms-tests-sanity",
+      "packageName": "@hanzoteam/qms-tests-sanity",
       "projectFolder": "qms-tests/sanity",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/rekoni",
+      "packageName": "@hanzoteam/rekoni",
       "projectFolder": "packages/rekoni",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-notification",
+      "packageName": "@hanzoteam/model-notification",
       "projectFolder": "models/notification",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/notification",
+      "packageName": "@hanzoteam/notification",
       "projectFolder": "plugins/notification",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/notification-assets",
+      "packageName": "@hanzoteam/notification-assets",
       "projectFolder": "plugins/notification-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/notification-resources",
+      "packageName": "@hanzoteam/notification-resources",
       "projectFolder": "plugins/notification-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-notification",
+      "packageName": "@hanzoteam/server-notification",
       "projectFolder": "server-plugins/notification",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-notification",
+      "packageName": "@hanzoteam/model-server-notification",
       "projectFolder": "models/server-notification",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-notification-resources",
+      "packageName": "@hanzoteam/server-notification-resources",
       "projectFolder": "server-plugins/notification-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/tags",
+      "packageName": "@hanzoteam/tags",
       "projectFolder": "plugins/tags",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/tags-assets",
+      "packageName": "@hanzoteam/tags-assets",
       "projectFolder": "plugins/tags-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/tags-resources",
+      "packageName": "@hanzoteam/tags-resources",
       "projectFolder": "plugins/tags-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-tags",
+      "packageName": "@hanzoteam/model-tags",
       "projectFolder": "models/tags",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-chunter",
+      "packageName": "@hanzoteam/server-chunter",
       "projectFolder": "server-plugins/chunter",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-chunter",
+      "packageName": "@hanzoteam/model-server-chunter",
       "projectFolder": "models/server-chunter",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-chunter-resources",
+      "packageName": "@hanzoteam/server-chunter-resources",
       "projectFolder": "server-plugins/chunter-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-inventory",
+      "packageName": "@hanzoteam/server-inventory",
       "projectFolder": "server-plugins/inventory",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-inventory",
+      "packageName": "@hanzoteam/model-server-inventory",
       "projectFolder": "models/server-inventory",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-inventory-resources",
+      "packageName": "@hanzoteam/server-inventory-resources",
       "projectFolder": "server-plugins/inventory-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-lead",
+      "packageName": "@hanzoteam/server-lead",
       "projectFolder": "server-plugins/lead",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-lead",
+      "packageName": "@hanzoteam/model-server-lead",
       "projectFolder": "models/server-lead",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-lead-resources",
+      "packageName": "@hanzoteam/server-lead-resources",
       "projectFolder": "server-plugins/lead-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-recruit",
+      "packageName": "@hanzoteam/server-recruit",
       "projectFolder": "server-plugins/recruit",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-recruit",
+      "packageName": "@hanzoteam/model-server-recruit",
       "projectFolder": "models/server-recruit",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-recruit-resources",
+      "packageName": "@hanzoteam/server-recruit-resources",
       "projectFolder": "server-plugins/recruit-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-task",
+      "packageName": "@hanzoteam/server-task",
       "projectFolder": "server-plugins/task",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-task",
+      "packageName": "@hanzoteam/model-server-task",
       "projectFolder": "models/server-task",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-tracker",
+      "packageName": "@hanzoteam/server-tracker",
       "projectFolder": "server-plugins/tracker",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-tracker",
+      "packageName": "@hanzoteam/model-server-tracker",
       "projectFolder": "models/server-tracker",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-tracker-resources",
+      "packageName": "@hanzoteam/server-tracker-resources",
       "projectFolder": "server-plugins/tracker-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-task-resources",
+      "packageName": "@hanzoteam/server-task-resources",
       "projectFolder": "server-plugins/task-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-setting",
+      "packageName": "@hanzoteam/server-setting",
       "projectFolder": "server-plugins/setting",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-setting",
+      "packageName": "@hanzoteam/model-server-setting",
       "projectFolder": "models/server-setting",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-setting-resources",
+      "packageName": "@hanzoteam/server-setting-resources",
       "projectFolder": "server-plugins/setting-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/calendar",
+      "packageName": "@hanzoteam/calendar",
       "projectFolder": "plugins/calendar",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/calendar-assets",
+      "packageName": "@hanzoteam/calendar-assets",
       "projectFolder": "plugins/calendar-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/calendar-resources",
+      "packageName": "@hanzoteam/calendar-resources",
       "projectFolder": "plugins/calendar-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-calendar",
+      "packageName": "@hanzoteam/model-calendar",
       "projectFolder": "models/calendar",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-tags",
+      "packageName": "@hanzoteam/server-tags",
       "projectFolder": "server-plugins/tags",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-tags",
+      "packageName": "@hanzoteam/model-server-tags",
       "projectFolder": "models/server-tags",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-tags-resources",
+      "packageName": "@hanzoteam/server-tags-resources",
       "projectFolder": "server-plugins/tags-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-calendar",
+      "packageName": "@hanzoteam/server-calendar",
       "projectFolder": "server-plugins/calendar",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-calendar",
+      "packageName": "@hanzoteam/model-server-calendar",
       "projectFolder": "models/server-calendar",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-calendar-resources",
+      "packageName": "@hanzoteam/server-calendar-resources",
       "projectFolder": "server-plugins/calendar-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-gmail",
+      "packageName": "@hanzoteam/server-gmail",
       "projectFolder": "server-plugins/gmail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-gmail",
+      "packageName": "@hanzoteam/model-server-gmail",
       "projectFolder": "models/server-gmail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-gmail-resources",
+      "packageName": "@hanzoteam/server-gmail-resources",
       "projectFolder": "server-plugins/gmail-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-telegram",
+      "packageName": "@hanzoteam/server-telegram",
       "projectFolder": "server-plugins/telegram",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-telegram",
+      "packageName": "@hanzoteam/model-server-telegram",
       "projectFolder": "models/server-telegram",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-telegram-resources",
+      "packageName": "@hanzoteam/server-telegram-resources",
       "projectFolder": "server-plugins/telegram-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/tracker",
+      "packageName": "@hanzoteam/tracker",
       "projectFolder": "plugins/tracker",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/tracker-assets",
+      "packageName": "@hanzoteam/tracker-assets",
       "projectFolder": "plugins/tracker-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/tracker-resources",
+      "packageName": "@hanzoteam/tracker-resources",
       "projectFolder": "plugins/tracker-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-tracker",
+      "packageName": "@hanzoteam/model-tracker",
       "projectFolder": "models/tracker",
       "shouldPublish": false
     },
 
     {
-      "packageName": "@hanzo/board",
+      "packageName": "@hanzoteam/board",
       "projectFolder": "plugins/board",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/board-assets",
+      "packageName": "@hanzoteam/board-assets",
       "projectFolder": "plugins/board-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/board-resources",
+      "packageName": "@hanzoteam/board-resources",
       "projectFolder": "plugins/board-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-board",
+      "packageName": "@hanzoteam/model-board",
       "projectFolder": "models/board",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/kanban",
+      "packageName": "@hanzoteam/kanban",
       "projectFolder": "packages/kanban",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/preference",
+      "packageName": "@hanzoteam/preference",
       "projectFolder": "plugins/preference",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/preference-assets",
+      "packageName": "@hanzoteam/preference-assets",
       "projectFolder": "plugins/preference-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-preference",
+      "packageName": "@hanzoteam/model-preference",
       "projectFolder": "models/preference",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-preference",
+      "packageName": "@hanzoteam/server-preference",
       "projectFolder": "server-plugins/preference",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-backup",
+      "packageName": "@hanzoteam/server-backup",
       "projectFolder": "server/backup",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/backup-service",
+      "packageName": "@hanzoteam/backup-service",
       "projectFolder": "server/backup-service",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-backup",
+      "packageName": "@hanzoteam/pod-backup",
       "projectFolder": "pods/backup",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-fulltext",
+      "packageName": "@hanzoteam/pod-fulltext",
       "projectFolder": "pods/fulltext",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-media",
+      "packageName": "@hanzoteam/pod-media",
       "projectFolder": "pods/media",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-preview",
+      "packageName": "@hanzoteam/pod-preview",
       "projectFolder": "pods/preview",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-link-preview",
+      "packageName": "@hanzoteam/pod-link-preview",
       "projectFolder": "pods/link-preview",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hr",
+      "packageName": "@hanzoteam/hr",
       "projectFolder": "plugins/hr",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/hr-assets",
+      "packageName": "@hanzoteam/hr-assets",
       "projectFolder": "plugins/hr-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hr-resources",
+      "packageName": "@hanzoteam/hr-resources",
       "projectFolder": "plugins/hr-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-hr",
+      "packageName": "@hanzoteam/model-hr",
       "projectFolder": "models/hr",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-hr",
+      "packageName": "@hanzoteam/server-hr",
       "projectFolder": "server-plugins/hr",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-hr",
+      "packageName": "@hanzoteam/model-server-hr",
       "projectFolder": "models/server-hr",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-hr-resources",
+      "packageName": "@hanzoteam/server-hr-resources",
       "projectFolder": "server-plugins/hr-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/bitrix",
+      "packageName": "@hanzoteam/bitrix",
       "projectFolder": "plugins/bitrix",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/bitrix-assets",
+      "packageName": "@hanzoteam/bitrix-assets",
       "projectFolder": "plugins/bitrix-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/bitrix-resources",
+      "packageName": "@hanzoteam/bitrix-resources",
       "projectFolder": "plugins/bitrix-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-bitrix",
+      "packageName": "@hanzoteam/model-bitrix",
       "projectFolder": "models/bitrix",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/request",
+      "packageName": "@hanzoteam/request",
       "projectFolder": "plugins/request",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/request-assets",
+      "packageName": "@hanzoteam/request-assets",
       "projectFolder": "plugins/request-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/request-resources",
+      "packageName": "@hanzoteam/request-resources",
       "projectFolder": "plugins/request-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-request",
+      "packageName": "@hanzoteam/model-request",
       "projectFolder": "models/request",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-request",
+      "packageName": "@hanzoteam/server-request",
       "projectFolder": "server-plugins/request",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-request",
+      "packageName": "@hanzoteam/model-server-request",
       "projectFolder": "models/server-request",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-request-resources",
+      "packageName": "@hanzoteam/server-request-resources",
       "projectFolder": "server-plugins/request-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-view",
+      "packageName": "@hanzoteam/server-view",
       "projectFolder": "server-plugins/view",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-view",
+      "packageName": "@hanzoteam/model-server-view",
       "projectFolder": "models/server-view",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-view-resources",
+      "packageName": "@hanzoteam/server-view-resources",
       "projectFolder": "server-plugins/view-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-activity",
+      "packageName": "@hanzoteam/server-activity",
       "projectFolder": "server-plugins/activity",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-activity",
+      "packageName": "@hanzoteam/model-server-activity",
       "projectFolder": "models/server-activity",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-activity-resources",
+      "packageName": "@hanzoteam/server-activity-resources",
       "projectFolder": "server-plugins/activity-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-support",
+      "packageName": "@hanzoteam/model-support",
       "projectFolder": "models/support",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/support",
+      "packageName": "@hanzoteam/support",
       "projectFolder": "plugins/support",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/support-assets",
+      "packageName": "@hanzoteam/support-assets",
       "projectFolder": "plugins/support-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/support-resources",
+      "packageName": "@hanzoteam/support-resources",
       "projectFolder": "plugins/support-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/guest",
+      "packageName": "@hanzoteam/guest",
       "projectFolder": "plugins/guest",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/guest-assets",
+      "packageName": "@hanzoteam/guest-assets",
       "projectFolder": "plugins/guest-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/guest-resources",
+      "packageName": "@hanzoteam/guest-resources",
       "projectFolder": "plugins/guest-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-guest",
+      "packageName": "@hanzoteam/model-guest",
       "projectFolder": "models/guest",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-guest",
+      "packageName": "@hanzoteam/server-guest",
       "projectFolder": "server-plugins/guest",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-guest",
+      "packageName": "@hanzoteam/model-server-guest",
       "projectFolder": "models/server-guest",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-guest-resources",
+      "packageName": "@hanzoteam/server-guest-resources",
       "projectFolder": "server-plugins/guest-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/auth-providers",
+      "packageName": "@hanzoteam/auth-providers",
       "projectFolder": "pods/authProviders",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/time",
+      "packageName": "@hanzoteam/time",
       "projectFolder": "plugins/time",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/time-assets",
+      "packageName": "@hanzoteam/time-assets",
       "projectFolder": "plugins/time-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/time-resources",
+      "packageName": "@hanzoteam/time-resources",
       "projectFolder": "plugins/time-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-time",
+      "packageName": "@hanzoteam/model-time",
       "projectFolder": "models/time",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-time",
+      "packageName": "@hanzoteam/server-time",
       "projectFolder": "server-plugins/time",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-time-resources",
+      "packageName": "@hanzoteam/server-time-resources",
       "projectFolder": "server-plugins/time-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-time",
+      "packageName": "@hanzoteam/model-server-time",
       "projectFolder": "models/server-time",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/document",
+      "packageName": "@hanzoteam/document",
       "projectFolder": "plugins/document",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/document-assets",
+      "packageName": "@hanzoteam/document-assets",
       "projectFolder": "plugins/document-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/document-resources",
+      "packageName": "@hanzoteam/document-resources",
       "projectFolder": "plugins/document-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-document",
+      "packageName": "@hanzoteam/model-document",
       "projectFolder": "models/document",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-document",
+      "packageName": "@hanzoteam/server-document",
       "projectFolder": "server-plugins/document",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-document-resources",
+      "packageName": "@hanzoteam/server-document-resources",
       "projectFolder": "server-plugins/document-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-document",
+      "packageName": "@hanzoteam/model-server-document",
       "projectFolder": "models/server-document",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/love",
+      "packageName": "@hanzoteam/love",
       "projectFolder": "plugins/love",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/love-assets",
+      "packageName": "@hanzoteam/love-assets",
       "projectFolder": "plugins/love-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/love-resources",
+      "packageName": "@hanzoteam/love-resources",
       "projectFolder": "plugins/love-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-love",
+      "packageName": "@hanzoteam/model-love",
       "projectFolder": "models/love",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-love",
+      "packageName": "@hanzoteam/server-love",
       "projectFolder": "server-plugins/love",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-love-resources",
+      "packageName": "@hanzoteam/server-love-resources",
       "projectFolder": "server-plugins/love-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-love",
+      "packageName": "@hanzoteam/model-server-love",
       "projectFolder": "models/server-love",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/drive",
+      "packageName": "@hanzoteam/drive",
       "projectFolder": "plugins/drive",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/drive-assets",
+      "packageName": "@hanzoteam/drive-assets",
       "projectFolder": "plugins/drive-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/drive-resources",
+      "packageName": "@hanzoteam/drive-resources",
       "projectFolder": "plugins/drive-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-drive",
+      "packageName": "@hanzoteam/model-drive",
       "projectFolder": "models/drive",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-drive",
+      "packageName": "@hanzoteam/server-drive",
       "projectFolder": "server-plugins/drive",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-drive",
+      "packageName": "@hanzoteam/model-server-drive",
       "projectFolder": "models/server-drive",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-drive-resources",
+      "packageName": "@hanzoteam/server-drive-resources",
       "projectFolder": "server-plugins/drive-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/controlled-documents",
+      "packageName": "@hanzoteam/controlled-documents",
       "projectFolder": "plugins/controlled-documents",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/controlled-documents-assets",
+      "packageName": "@hanzoteam/controlled-documents-assets",
       "projectFolder": "plugins/controlled-documents-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/controlled-documents-resources",
+      "packageName": "@hanzoteam/controlled-documents-resources",
       "projectFolder": "plugins/controlled-documents-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/converter",
+      "packageName": "@hanzoteam/converter",
       "projectFolder": "plugins/converter",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/converter-resources",
+      "packageName": "@hanzoteam/converter-resources",
       "projectFolder": "plugins/converter-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-converter",
+      "packageName": "@hanzoteam/model-converter",
       "projectFolder": "models/converter",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-controlled-documents",
+      "packageName": "@hanzoteam/model-controlled-documents",
       "projectFolder": "models/controlled-documents",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-controlled-documents",
+      "packageName": "@hanzoteam/server-controlled-documents",
       "projectFolder": "server-plugins/controlled-documents",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-controlled-documents-resources",
+      "packageName": "@hanzoteam/server-controlled-documents-resources",
       "projectFolder": "server-plugins/controlled-documents-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-controlled-documents",
+      "packageName": "@hanzoteam/model-server-controlled-documents",
       "projectFolder": "models/server-controlled-documents",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/print",
+      "packageName": "@hanzoteam/print",
       "projectFolder": "plugins/print",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/print-assets",
+      "packageName": "@hanzoteam/print-assets",
       "projectFolder": "plugins/print-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/print-resources",
+      "packageName": "@hanzoteam/print-resources",
       "projectFolder": "plugins/print-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-print",
+      "packageName": "@hanzoteam/model-print",
       "projectFolder": "models/print",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-export",
+      "packageName": "@hanzoteam/model-export",
       "projectFolder": "models/export",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/export",
+      "packageName": "@hanzoteam/export",
       "projectFolder": "plugins/export",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/export-assets",
+      "packageName": "@hanzoteam/export-assets",
       "projectFolder": "plugins/export-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/export-resources",
+      "packageName": "@hanzoteam/export-resources",
       "projectFolder": "plugins/export-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/sign",
+      "packageName": "@hanzoteam/sign",
       "projectFolder": "plugins/sign",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/products",
+      "packageName": "@hanzoteam/products",
       "projectFolder": "plugins/products",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/products-assets",
+      "packageName": "@hanzoteam/products-assets",
       "projectFolder": "plugins/products-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/products-resources",
+      "packageName": "@hanzoteam/products-resources",
       "projectFolder": "plugins/products-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-products",
+      "packageName": "@hanzoteam/model-products",
       "projectFolder": "models/products",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-products",
+      "packageName": "@hanzoteam/model-server-products",
       "projectFolder": "models/server-products",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/questions",
+      "packageName": "@hanzoteam/questions",
       "projectFolder": "plugins/questions",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/questions-assets",
+      "packageName": "@hanzoteam/questions-assets",
       "projectFolder": "plugins/questions-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/questions-resources",
+      "packageName": "@hanzoteam/questions-resources",
       "projectFolder": "plugins/questions-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-questions",
+      "packageName": "@hanzoteam/model-questions",
       "projectFolder": "models/questions",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/training",
+      "packageName": "@hanzoteam/training",
       "projectFolder": "plugins/training",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/training-assets",
+      "packageName": "@hanzoteam/training-assets",
       "projectFolder": "plugins/training-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/training-resources",
+      "packageName": "@hanzoteam/training-resources",
       "projectFolder": "plugins/training-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-training",
+      "packageName": "@hanzoteam/server-training",
       "projectFolder": "server-plugins/training",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-training-resources",
+      "packageName": "@hanzoteam/server-training-resources",
       "projectFolder": "server-plugins/training-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-training",
+      "packageName": "@hanzoteam/model-training",
       "projectFolder": "models/training",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-training",
+      "packageName": "@hanzoteam/model-server-training",
       "projectFolder": "models/server-training",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/desktop",
+      "packageName": "@hanzoteam/desktop",
       "projectFolder": "desktop",
       "shouldPublish": false
     },
@@ -2122,617 +2122,617 @@
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/diffview",
+      "packageName": "@hanzoteam/diffview",
       "projectFolder": "plugins/diffview",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/diffview-assets",
+      "packageName": "@hanzoteam/diffview-assets",
       "projectFolder": "plugins/diffview-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/diffview-resources",
+      "packageName": "@hanzoteam/diffview-resources",
       "projectFolder": "plugins/diffview-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/github",
+      "packageName": "@hanzoteam/github",
       "projectFolder": "services/github/github",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/github-assets",
+      "packageName": "@hanzoteam/github-assets",
       "projectFolder": "services/github/github-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/github-resources",
+      "packageName": "@hanzoteam/github-resources",
       "projectFolder": "services/github/github-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-github",
+      "packageName": "@hanzoteam/model-github",
       "projectFolder": "services/github/model-github",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-github",
+      "packageName": "@hanzoteam/pod-github",
       "projectFolder": "services/github/pod-github",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-github",
+      "packageName": "@hanzoteam/server-github",
       "projectFolder": "services/github/server-github",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-github-resources",
+      "packageName": "@hanzoteam/server-github-resources",
       "projectFolder": "services/github/server-github-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-github-model",
+      "packageName": "@hanzoteam/server-github-model",
       "projectFolder": "services/github/server-github-model",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/desktop-preferences",
+      "packageName": "@hanzoteam/desktop-preferences",
       "projectFolder": "plugins/desktop-preferences",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/desktop-preferences-assets",
+      "packageName": "@hanzoteam/desktop-preferences-assets",
       "projectFolder": "plugins/desktop-preferences-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/desktop-preferences-resources",
+      "packageName": "@hanzoteam/desktop-preferences-resources",
       "projectFolder": "plugins/desktop-preferences-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-desktop-preferences",
+      "packageName": "@hanzoteam/model-desktop-preferences",
       "projectFolder": "models/desktop-preferences",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/desktop-downloads",
+      "packageName": "@hanzoteam/desktop-downloads",
       "projectFolder": "plugins/desktop-downloads",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/desktop-downloads-assets",
+      "packageName": "@hanzoteam/desktop-downloads-assets",
       "projectFolder": "plugins/desktop-downloads-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/desktop-downloads-resources",
+      "packageName": "@hanzoteam/desktop-downloads-resources",
       "projectFolder": "plugins/desktop-downloads-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-desktop-downloads",
+      "packageName": "@hanzoteam/model-desktop-downloads",
       "projectFolder": "models/desktop-downloads",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-notification",
+      "packageName": "@hanzoteam/pod-notification",
       "projectFolder": "services/notification/pod-notification",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-telegram",
+      "packageName": "@hanzoteam/pod-telegram",
       "projectFolder": "services/telegram/pod-telegram",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-gmail",
+      "packageName": "@hanzoteam/pod-gmail",
       "projectFolder": "services/gmail/pod-gmail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-calendar",
+      "packageName": "@hanzoteam/pod-calendar",
       "projectFolder": "services/calendar/pod-calendar",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-calendar-mailer",
+      "packageName": "@hanzoteam/pod-calendar-mailer",
       "projectFolder": "services/calendar/pod-calendar-mailer",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/qms-doc-import-tool",
+      "packageName": "@hanzoteam/qms-doc-import-tool",
       "projectFolder": "dev/doc-import-tool",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-datalake",
+      "packageName": "@hanzoteam/pod-datalake",
       "projectFolder": "services/datalake/pod-datalake",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-billing",
+      "packageName": "@hanzoteam/pod-billing",
       "projectFolder": "services/billing/pod-billing",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-payment",
+      "packageName": "@hanzoteam/pod-payment",
       "projectFolder": "services/payment/pod-payment",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-love",
+      "packageName": "@hanzoteam/pod-love",
       "projectFolder": "services/love",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-print",
+      "packageName": "@hanzoteam/pod-print",
       "projectFolder": "services/print/pod-print",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-export",
+      "packageName": "@hanzoteam/pod-export",
       "projectFolder": "services/export/pod-export",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-sign",
+      "packageName": "@hanzoteam/pod-sign",
       "projectFolder": "services/sign/pod-sign",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/rekoni-service",
+      "packageName": "@hanzoteam/rekoni-service",
       "projectFolder": "services/rekoni",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-analytics-collector",
+      "packageName": "@hanzoteam/pod-analytics-collector",
       "projectFolder": "services/analytics-collector/pod-analytics-collector",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/analytics-collector",
+      "packageName": "@hanzoteam/analytics-collector",
       "projectFolder": "plugins/analytics-collector",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/analytics-collector-assets",
+      "packageName": "@hanzoteam/analytics-collector-assets",
       "projectFolder": "plugins/analytics-collector-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/analytics-collector-resources",
+      "packageName": "@hanzoteam/analytics-collector-resources",
       "projectFolder": "plugins/analytics-collector-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-analytics-collector",
+      "packageName": "@hanzoteam/model-analytics-collector",
       "projectFolder": "models/analytics-collector",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-analytics-collector",
+      "packageName": "@hanzoteam/server-analytics-collector",
       "projectFolder": "server-plugins/analytics-collector",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-analytics-collector-resources",
+      "packageName": "@hanzoteam/server-analytics-collector-resources",
       "projectFolder": "server-plugins/analytics-collector-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-ai-bot",
+      "packageName": "@hanzoteam/pod-ai-bot",
       "projectFolder": "services/ai-bot/pod-ai-bot",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/ai-bot",
+      "packageName": "@hanzoteam/ai-bot",
       "projectFolder": "plugins/ai-bot",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/ai-bot-resources",
+      "packageName": "@hanzoteam/ai-bot-resources",
       "projectFolder": "plugins/ai-bot-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-ai-bot",
+      "packageName": "@hanzoteam/model-ai-bot",
       "projectFolder": "models/ai-bot",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-ai-bot",
+      "packageName": "@hanzoteam/model-server-ai-bot",
       "projectFolder": "models/server-ai-bot",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-ai-bot",
+      "packageName": "@hanzoteam/server-ai-bot",
       "projectFolder": "server-plugins/ai-bot",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-ai-bot-resources",
+      "packageName": "@hanzoteam/server-ai-bot-resources",
       "projectFolder": "server-plugins/ai-bot-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-telegram-bot",
+      "packageName": "@hanzoteam/pod-telegram-bot",
       "projectFolder": "services/telegram-bot/pod-telegram-bot",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/openai",
+      "packageName": "@hanzoteam/openai",
       "projectFolder": "plugins/openai",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/scripts",
+      "packageName": "@hanzoteam/scripts",
       "projectFolder": "common/scripts",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-test-management",
+      "packageName": "@hanzoteam/model-test-management",
       "projectFolder": "models/test-management",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/test-management",
+      "packageName": "@hanzoteam/test-management",
       "projectFolder": "plugins/test-management",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/test-management-resources",
+      "packageName": "@hanzoteam/test-management-resources",
       "projectFolder": "plugins/test-management-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/test-management-assets",
+      "packageName": "@hanzoteam/test-management-assets",
       "projectFolder": "plugins/test-management-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/survey",
+      "packageName": "@hanzoteam/survey",
       "projectFolder": "plugins/survey",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-survey",
+      "packageName": "@hanzoteam/model-survey",
       "projectFolder": "models/survey",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/survey-assets",
+      "packageName": "@hanzoteam/survey-assets",
       "projectFolder": "plugins/survey-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/survey-resources",
+      "packageName": "@hanzoteam/survey-resources",
       "projectFolder": "plugins/survey-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/card",
+      "packageName": "@hanzoteam/card",
       "projectFolder": "plugins/card",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-card",
+      "packageName": "@hanzoteam/model-card",
       "projectFolder": "models/card",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/card-assets",
+      "packageName": "@hanzoteam/card-assets",
       "projectFolder": "plugins/card-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/card-resources",
+      "packageName": "@hanzoteam/card-resources",
       "projectFolder": "plugins/card-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-card",
+      "packageName": "@hanzoteam/server-card",
       "projectFolder": "server-plugins/card",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-card-resources",
+      "packageName": "@hanzoteam/server-card-resources",
       "projectFolder": "server-plugins/card-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-card",
+      "packageName": "@hanzoteam/model-server-card",
       "projectFolder": "models/server-card",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/mail",
+      "packageName": "@hanzoteam/mail",
       "projectFolder": "plugins/mail",
       "shouldPublish": true
     },
     {
-      "packageName": "@hanzo/model-mail",
+      "packageName": "@hanzoteam/model-mail",
       "projectFolder": "models/mail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/mail-assets",
+      "packageName": "@hanzoteam/mail-assets",
       "projectFolder": "plugins/mail-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-mail",
+      "packageName": "@hanzoteam/pod-mail",
       "projectFolder": "services/mail/pod-mail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/chat",
+      "packageName": "@hanzoteam/chat",
       "projectFolder": "plugins/chat",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/chat-assets",
+      "packageName": "@hanzoteam/chat-assets",
       "projectFolder": "plugins/chat-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/chat-resources",
+      "packageName": "@hanzoteam/chat-resources",
       "projectFolder": "plugins/chat-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-chat",
+      "packageName": "@hanzoteam/model-chat",
       "projectFolder": "models/chat",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/process",
+      "packageName": "@hanzoteam/process",
       "projectFolder": "plugins/process",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/process-assets",
+      "packageName": "@hanzoteam/process-assets",
       "projectFolder": "plugins/process-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/process-resources",
+      "packageName": "@hanzoteam/process-resources",
       "projectFolder": "plugins/process-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-process",
+      "packageName": "@hanzoteam/model-process",
       "projectFolder": "models/process",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-process",
+      "packageName": "@hanzoteam/server-process",
       "projectFolder": "server-plugins/process",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-server-process",
+      "packageName": "@hanzoteam/model-server-process",
       "projectFolder": "models/server-process",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-process-resources",
+      "packageName": "@hanzoteam/server-process-resources",
       "projectFolder": "server-plugins/process-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/inbox",
+      "packageName": "@hanzoteam/inbox",
       "projectFolder": "plugins/inbox",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/inbox-assets",
+      "packageName": "@hanzoteam/inbox-assets",
       "projectFolder": "plugins/inbox-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/inbox-resources",
+      "packageName": "@hanzoteam/inbox-resources",
       "projectFolder": "plugins/inbox-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-inbox",
+      "packageName": "@hanzoteam/model-inbox",
       "projectFolder": "models/inbox",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-mail-worker",
+      "packageName": "@hanzoteam/pod-mail-worker",
       "projectFolder": "services/mail/pod-mail-worker",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/achievement",
+      "packageName": "@hanzoteam/achievement",
       "projectFolder": "plugins/achievement",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/achievement-assets",
+      "packageName": "@hanzoteam/achievement-assets",
       "projectFolder": "plugins/achievement-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/achievement-resources",
+      "packageName": "@hanzoteam/achievement-resources",
       "projectFolder": "plugins/achievement-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-achievement",
+      "packageName": "@hanzoteam/model-achievement",
       "projectFolder": "models/achievement",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/kvs-client",
+      "packageName": "@hanzoteam/kvs-client",
       "projectFolder": "packages/kvs-client",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hanzopulse-client",
+      "packageName": "@hanzoteam/hanzopulse-client",
       "projectFolder": "packages/hanzopulse-client",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/communication",
+      "packageName": "@hanzoteam/communication",
       "projectFolder": "plugins/communication",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/communication-assets",
+      "packageName": "@hanzoteam/communication-assets",
       "projectFolder": "plugins/communication-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/communication-resources",
+      "packageName": "@hanzoteam/communication-resources",
       "projectFolder": "plugins/communication-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-communication",
+      "packageName": "@hanzoteam/model-communication",
       "projectFolder": "models/communication",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/mail-common",
+      "packageName": "@hanzoteam/mail-common",
       "projectFolder": "services/mail/mail-common",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/emoji",
+      "packageName": "@hanzoteam/emoji",
       "projectFolder": "plugins/emoji",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/emoji-assets",
+      "packageName": "@hanzoteam/emoji-assets",
       "projectFolder": "plugins/emoji-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/emoji-resources",
+      "packageName": "@hanzoteam/emoji-resources",
       "projectFolder": "plugins/emoji-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-emoji",
+      "packageName": "@hanzoteam/model-emoji",
       "projectFolder": "models/emoji",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/backup-api-pod",
+      "packageName": "@hanzoteam/backup-api-pod",
       "projectFolder": "services/backup/backup-api-pod",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/billing",
+      "packageName": "@hanzoteam/billing",
       "projectFolder": "plugins/billing",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/billing-assets",
+      "packageName": "@hanzoteam/billing-assets",
       "projectFolder": "plugins/billing-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/billing-resources",
+      "packageName": "@hanzoteam/billing-resources",
       "projectFolder": "plugins/billing-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-billing",
+      "packageName": "@hanzoteam/model-billing",
       "projectFolder": "models/billing",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-process",
+      "packageName": "@hanzoteam/pod-process",
       "projectFolder": "services/process",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/integration-client",
+      "packageName": "@hanzoteam/integration-client",
       "projectFolder": "packages/integration-client",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-hanzo-mail",
+      "packageName": "@hanzoteam/model-hanzo-mail",
       "projectFolder": "models/hanzo-mail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hanzo-mail",
+      "packageName": "@hanzoteam/hanzo-mail",
       "projectFolder": "plugins/hanzo-mail",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hanzo-mail-assets",
+      "packageName": "@hanzoteam/hanzo-mail-assets",
       "projectFolder": "plugins/hanzo-mail-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/hanzo-mail-resources",
+      "packageName": "@hanzoteam/hanzo-mail-resources",
       "projectFolder": "plugins/hanzo-mail-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-ai-assistant",
+      "packageName": "@hanzoteam/model-ai-assistant",
       "projectFolder": "models/ai-assistant",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/ai-assistant",
+      "packageName": "@hanzoteam/ai-assistant",
       "projectFolder": "plugins/ai-assistant",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/ai-assistant-assets",
+      "packageName": "@hanzoteam/ai-assistant-assets",
       "projectFolder": "plugins/ai-assistant-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/ai-assistant-resources",
+      "packageName": "@hanzoteam/ai-assistant-resources",
       "projectFolder": "plugins/ai-assistant-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-worker",
+      "packageName": "@hanzoteam/pod-worker",
       "projectFolder": "services/worker",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-translate",
+      "packageName": "@hanzoteam/pod-translate",
       "projectFolder": "services/translate",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/rating",
+      "packageName": "@hanzoteam/rating",
       "projectFolder": "plugins/rating",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/rating-assets",
+      "packageName": "@hanzoteam/rating-assets",
       "projectFolder": "plugins/rating-assets",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/rating-resources",
+      "packageName": "@hanzoteam/rating-resources",
       "projectFolder": "plugins/rating-resources",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/server-rating",
+      "packageName": "@hanzoteam/server-rating",
       "projectFolder": "server-plugins/rating",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/model-rating",
+      "packageName": "@hanzoteam/model-rating",
       "projectFolder": "models/rating",
       "shouldPublish": false
     },
     {
-      "packageName": "@hanzo/pod-rating",
+      "packageName": "@hanzoteam/pod-rating",
       "projectFolder": "services/rating",
       "shouldPublish": false
     }

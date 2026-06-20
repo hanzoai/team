@@ -3,11 +3,11 @@
 -->
 
 <script lang="ts">
-  import type { Question } from '@hanzo/questions'
-  import type { Training } from '@hanzo/training'
-  import { createQuery } from '@hanzo/presentation'
-  import { calculateAnswersToPass, queryQuestions } from '@hanzo/questions-resources'
-  import { Loading } from '@hanzo/ui'
+  import type { Question } from '@hanzoteam/questions'
+  import type { Training } from '@hanzoteam/training'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { calculateAnswersToPass, queryQuestions } from '@hanzoteam/questions-resources'
+  import { Loading } from '@hanzoteam/ui'
   import Score from './Score.svelte'
 
   export let value: Training

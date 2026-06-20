@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { chunterId, DirectMessage } from '@hanzo/chunter'
-  import { getClient } from '@hanzo/presentation'
-  import { NavLink } from '@hanzo/view-resources'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { tooltip } from '@hanzo/ui'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { chunterId, DirectMessage } from '@hanzoteam/chunter'
+  import { getClient } from '@hanzoteam/presentation'
+  import { NavLink } from '@hanzoteam/view-resources'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { tooltip } from '@hanzoteam/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
 
   import { getDmName } from '../utils'
   import DirectIcon from './DirectIcon.svelte'

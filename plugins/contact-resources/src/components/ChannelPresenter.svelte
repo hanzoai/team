@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel } from '@hanzo/contact'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { ButtonSize, CircleButton, tooltip } from '@hanzo/ui'
+  import { Channel } from '@hanzoteam/contact'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { ButtonSize, CircleButton, tooltip } from '@hanzoteam/ui'
   import { channelProviders } from '../utils'
 
   export let value: Channel

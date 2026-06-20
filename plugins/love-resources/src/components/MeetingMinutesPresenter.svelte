@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import love, { MeetingMinutes } from '@hanzo/love'
-  import { WithLookup } from '@hanzo/core'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { tooltip, Icon } from '@hanzo/ui'
+  import love, { MeetingMinutes } from '@hanzoteam/love'
+  import { WithLookup } from '@hanzoteam/core'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
+  import { tooltip, Icon } from '@hanzoteam/ui'
 
   export let value: WithLookup<MeetingMinutes>
   export let inline: boolean = false

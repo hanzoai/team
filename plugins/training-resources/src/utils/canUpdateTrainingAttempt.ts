@@ -2,7 +2,7 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { type Training, type TrainingAttempt, type TrainingRequest, TrainingState } from '@hanzo/training'
+import { type Training, type TrainingAttempt, type TrainingRequest, TrainingState } from '@hanzoteam/training'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 
 export function canUpdateTrainingAttempt (

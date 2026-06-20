@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import core, { DocumentQuery, getCurrentAccount, Ref } from '@hanzo/core'
-  import type { IntlString, Asset } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import type { Issue, IssueStatus } from '@hanzo/tracker'
-  import { IModeSelector, resolvedLocationStore } from '@hanzo/ui'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import core, { DocumentQuery, getCurrentAccount, Ref } from '@hanzoteam/core'
+  import type { IntlString, Asset } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import type { Issue, IssueStatus } from '@hanzoteam/tracker'
+  import { IModeSelector, resolvedLocationStore } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
-  import task from '@hanzo/task'
+  import task from '@hanzoteam/task'
   import tracker from '../../plugin'
   import IssuesView from '../issues/IssuesView.svelte'
 

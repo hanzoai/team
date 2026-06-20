@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { pushRootBarComponent } from '@hanzo/ui'
+  import { pushRootBarComponent } from '@hanzoteam/ui'
   import { RemoteParticipant, RemoteTrack, RemoteTrackPublication, RoomEvent, Track } from 'livekit-client'
   import { onDestroy, onMount } from 'svelte'
   import love from '../plugin'
   import { liveKitClient, lk } from '../utils'
   import { lkSessionConnected } from '../liveKitClient'
   import { subscribeInviteRequests, unsubscribeInviteRequests } from '../invites'
-  import { Room } from '@hanzo/love'
+  import { Room } from '@hanzoteam/love'
   import { subscribeJoinRequests, unsubscribeJoinRequests } from '../joinRequests'
-  import { Ref } from '@hanzo/core'
+  import { Ref } from '@hanzoteam/core'
   import { myInfo } from '../stores'
 
   let parentElement: HTMLDivElement

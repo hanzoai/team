@@ -1,5 +1,5 @@
-import attachment, { Attachment } from '@hanzo/attachment'
-import contact, { Channel, Organization } from '@hanzo/contact'
+import attachment, { Attachment } from '@hanzoteam/attachment'
+import contact, { Channel, Organization } from '@hanzoteam/contact'
 import core, {
   AnyAttribute,
   AttachedDoc,
@@ -17,11 +17,11 @@ import core, {
   WithLookup,
   generateId,
   type Blob as PlatformBlob
-} from '@hanzo/core'
-import { Message } from '@hanzo/gmail'
-import recruit, { Applicant, Candidate, Vacancy } from '@hanzo/recruit'
-import tags, { TagCategory, TagElement, TagReference } from '@hanzo/tags'
-import task from '@hanzo/task'
+} from '@hanzoteam/core'
+import { Message } from '@hanzoteam/gmail'
+import recruit, { Applicant, Candidate, Vacancy } from '@hanzoteam/recruit'
+import tags, { TagCategory, TagElement, TagReference } from '@hanzoteam/tags'
+import task from '@hanzoteam/task'
 import bitrix, {
   BitrixEntityMapping,
   BitrixEntityType,

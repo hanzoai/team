@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { Doc } from '@hanzo/core'
-import type { Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { TriggerFunc } from '@hanzo/server-core'
-import { Presenter, NotificationContentProvider } from '@hanzo/server-notification'
+import { Doc } from '@hanzoteam/core'
+import type { Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { TriggerFunc } from '@hanzoteam/server-core'
+import { Presenter, NotificationContentProvider } from '@hanzoteam/server-notification'
 
 /**
  * @public

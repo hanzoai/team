@@ -2,8 +2,8 @@ import type { Collection } from 'mongodb'
 import { getDB } from './storage'
 import { LastMsgRecord, TgUser, User, UserRecord, WorkspaceChannel } from './types'
 import { WorkspaceWorker } from './workspace'
-import { StorageAdapter } from '@hanzo/server-core'
-import { MeasureContext } from '@hanzo/core'
+import { StorageAdapter } from '@hanzoteam/server-core'
+import { MeasureContext } from '@hanzoteam/core'
 
 export class PlatformWorker {
   private constructor (

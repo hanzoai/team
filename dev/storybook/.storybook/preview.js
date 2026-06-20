@@ -1,13 +1,13 @@
 /** @type { import('@storybook/svelte').Preview } */
 
-import '@hanzo/theme/styles/global.scss';
+import '@hanzoteam/theme/styles/global.scss';
 import './styles/styles.scss';
 
-import { addStringsLoader } from '@hanzo/platform';
+import { addStringsLoader } from '@hanzoteam/platform';
 import ThemeDecorator from './decorators/ThemeDecorator';
 
 addStringsLoader('ui', async (lang) => {
-  return await import(`@hanzo/ui/lang/${lang}.json`);
+  return await import(`@hanzoteam/ui/lang/${lang}.json`);
 });
 
 const preview = {

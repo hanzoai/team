@@ -22,14 +22,14 @@
     ModernPopup,
     eventToHTMLElement,
     showPopup
-  } from '@hanzo/ui'
-  import setting from '@hanzo/setting'
-  import { MailboxInfo } from '@hanzo/account-client'
-  import { getClient, MessageBox } from '@hanzo/presentation'
+  } from '@hanzoteam/ui'
+  import setting from '@hanzoteam/setting'
+  import { MailboxInfo } from '@hanzoteam/account-client'
+  import { getClient, MessageBox } from '@hanzoteam/presentation'
   import { getAccountClient } from '../utils'
-  import contact, { getCurrentEmployee } from '@hanzo/contact'
-  import { buildSocialIdString, SocialIdType } from '@hanzo/core'
-  import { Analytics } from '@hanzo/analytics'
+  import contact, { getCurrentEmployee } from '@hanzoteam/contact'
+  import { buildSocialIdString, SocialIdType } from '@hanzoteam/core'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let mailbox: MailboxInfo
   export let mailboxIdx: number

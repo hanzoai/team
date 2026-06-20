@@ -2,7 +2,7 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { type MigrateOperation, type MigrationClient, type MigrationUpgradeClient } from '@hanzo/model'
+import { type MigrateOperation, type MigrationClient, type MigrationUpgradeClient } from '@hanzoteam/model'
 
 export const questionsOperation: MigrateOperation = {
   async migrate (client: MigrationClient): Promise<void> {},

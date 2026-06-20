@@ -3,7 +3,7 @@
 -->
 
 <script lang="ts">
-  import { RadioButton } from '@hanzo/ui'
+  import { RadioButton } from '@hanzoteam/ui'
   import type { ComponentProps } from 'svelte'
 
   /**

@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { type Attachment } from '@hanzo/attachment'
-import card from '@hanzo/card'
-import contact, { type Employee, type Person } from '@hanzo/contact'
+import { type Attachment } from '@hanzoteam/attachment'
+import card from '@hanzoteam/card'
+import contact, { type Employee, type Person } from '@hanzoteam/contact'
 import documents, {
   type ControlledDocument,
   type DocumentCategory,
   type DocumentMeta,
   DocumentState
-} from '@hanzo/controlled-documents'
+} from '@hanzoteam/controlled-documents'
 import {
   type AccountUuid,
   generateId,
@@ -29,10 +29,10 @@ import {
   type Ref,
   SocialIdType,
   type TxOperations
-} from '@hanzo/core'
-import document, { type Document } from '@hanzo/document'
-import core from '@hanzo/model-core'
-import tracker, { type Issue, type Project } from '@hanzo/tracker'
+} from '@hanzoteam/core'
+import document, { type Document } from '@hanzoteam/document'
+import core from '@hanzoteam/model-core'
+import tracker, { type Issue, type Project } from '@hanzoteam/tracker'
 import * as fs from 'fs'
 import sizeOf from 'image-size'
 import * as yaml from 'js-yaml'

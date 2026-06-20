@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Ref } from '@hanzo/core'
+import type { Class, Doc, Ref } from '@hanzoteam/core'
 
 export function decodeObjectURI (value: string): [Ref<Doc>, Ref<Class<Doc>>] {
   return decodeURIComponent(value).split('|') as [Ref<Doc>, Ref<Class<Doc>>]

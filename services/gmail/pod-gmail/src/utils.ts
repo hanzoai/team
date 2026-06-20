@@ -22,13 +22,13 @@ import {
   Space,
   systemAccountUuid,
   WorkspaceUuid
-} from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 import { deepEqual } from 'fast-equals'
-import { type KeyValueClient, getClient as getKeyValueClient } from '@hanzo/kvs-client'
+import { type KeyValueClient, getClient as getKeyValueClient } from '@hanzoteam/kvs-client'
 import { type Token, type User } from './types'
 import config from './config'
-import { Integration } from '@hanzo/account-client'
+import { Integration } from '@hanzoteam/account-client'
 
 export class DeferredPromise<T = any> {
   public readonly promise: Promise<T>

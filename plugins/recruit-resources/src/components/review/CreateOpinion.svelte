@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Person } from '@hanzo/contact'
-  import core, { Account, generateId, Ref } from '@hanzo/core'
-  import { OK, Status } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import type { Opinion, Review } from '@hanzo/recruit'
-  import { Project } from '@hanzo/task'
-  import { StyledTextArea } from '@hanzo/text-editor-resources'
-  import { EditBox, Status as StatusControl } from '@hanzo/ui'
+  import type { Person } from '@hanzoteam/contact'
+  import core, { Account, generateId, Ref } from '@hanzoteam/core'
+  import { OK, Status } from '@hanzoteam/platform'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import type { Opinion, Review } from '@hanzoteam/recruit'
+  import { Project } from '@hanzoteam/task'
+  import { StyledTextArea } from '@hanzoteam/text-editor-resources'
+  import { EditBox, Status as StatusControl } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../../plugin'
 

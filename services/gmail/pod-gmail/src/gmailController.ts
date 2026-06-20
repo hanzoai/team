@@ -25,11 +25,11 @@ import {
   WorkspaceInfoWithStatus,
   WorkspaceUuid,
   type PersonId
-} from '@hanzo/core'
-import { toMessageEvent, normalizeEmail } from '@hanzo/mail-common'
-import { ConsumerHandle, PlatformQueue, QueueTopic, type StorageAdapter } from '@hanzo/server-core'
-import { getPlatformQueue } from '@hanzo/kafka'
-import { getAccountClient } from '@hanzo/server-client'
+} from '@hanzoteam/core'
+import { toMessageEvent, normalizeEmail } from '@hanzoteam/mail-common'
+import { ConsumerHandle, PlatformQueue, QueueTopic, type StorageAdapter } from '@hanzoteam/server-core'
+import { getPlatformQueue } from '@hanzoteam/kafka'
+import { getAccountClient } from '@hanzoteam/server-client'
 
 import { decode64 } from './base64'
 import config from './config'
@@ -48,8 +48,8 @@ import { WorkspaceClient } from './workspaceClient'
 import { getIntegrationClient } from './integrations'
 
 import { AuthProvider } from './gmail/auth'
-import { AccountClient } from '@hanzo/account-client'
-import { CreateMessageEvent } from '@hanzo/communication-sdk-types'
+import { AccountClient } from '@hanzoteam/account-client'
+import { CreateMessageEvent } from '@hanzoteam/communication-sdk-types'
 
 export class GmailController {
   private readonly workspaces: Map<string, WorkspaceClient> = new Map<string, WorkspaceClient>()

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button, IconClose, Notification } from '@hanzo/ui'
+  import { Button, IconClose, Notification } from '@hanzoteam/ui'
   import { fade } from 'svelte/transition'
 
   export let onRemove: () => void

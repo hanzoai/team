@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
-  import { Card } from '@hanzo/presentation'
-  import { Button, Label } from '@hanzo/ui'
-  import view from '@hanzo/view-resources/src/plugin'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Card } from '@hanzoteam/presentation'
+  import { Button, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import { createEventDispatcher } from 'svelte'
   import task from '../../plugin'
 

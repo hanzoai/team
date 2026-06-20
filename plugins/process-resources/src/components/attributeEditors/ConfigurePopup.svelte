@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Context, Func, Process, ProcessFunction, SelectedContext } from '@hanzo/process'
+  import core, { AnyAttribute, Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Context, Func, Process, ProcessFunction, SelectedContext } from '@hanzoteam/process'
   import {
     ButtonIcon,
     CheckBox,
@@ -28,8 +28,8 @@
     Scroller,
     showPopup,
     Submenu
-  } from '@hanzo/ui'
-  import { AttributeCategory } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { AttributeCategory } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import FallbackEditor from '../contextEditors/FallbackEditor.svelte'

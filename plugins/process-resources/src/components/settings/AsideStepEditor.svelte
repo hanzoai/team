@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { Method, Process, Transition, type Step } from '@hanzo/process'
-  import { clearSettingsStore } from '@hanzo/setting-resources'
-  import { ButtonIcon, IconDelete, Label, Modal } from '@hanzo/ui'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { Method, Process, Transition, type Step } from '@hanzoteam/process'
+  import { clearSettingsStore } from '@hanzoteam/setting-resources'
+  import { ButtonIcon, IconDelete, Label, Modal } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import StepEditor from './StepEditor.svelte'
   import ContextFooter from './ContextFooter.svelte'

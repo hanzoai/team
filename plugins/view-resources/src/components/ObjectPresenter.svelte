@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, RelatedDocument } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { AttributeModel } from '@hanzo/view'
+  import type { Class, Doc, Ref, RelatedDocument } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { AttributeModel } from '@hanzoteam/view'
   import { getObjectPresenter } from '../utils'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let objectId: Ref<Doc> | undefined = undefined
   export let _class: Ref<Class<Doc>> | undefined = undefined

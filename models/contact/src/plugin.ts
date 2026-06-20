@@ -14,17 +14,17 @@
 // limitations under the License.
 //
 
-import { contactId } from '@hanzo/contact'
-import contact from '@hanzo/contact-resources/src/plugin'
-import type { Client, Doc, DocManager, Ref } from '@hanzo/core'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/model-presentation'
-import { type NotificationGroup } from '@hanzo/notification'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { type TemplateFieldFunc } from '@hanzo/templates'
-import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction } from '@hanzo/view'
-import { type ChatMessageViewlet } from '@hanzo/chunter'
-import { type LocationData } from '@hanzo/workbench'
+import { contactId } from '@hanzoteam/contact'
+import contact from '@hanzoteam/contact-resources/src/plugin'
+import type { Client, Doc, DocManager, Ref } from '@hanzoteam/core'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzoteam/model-presentation'
+import { type NotificationGroup } from '@hanzoteam/notification'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { type TemplateFieldFunc } from '@hanzoteam/templates'
+import { type AnyComponent, type Location } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction } from '@hanzoteam/view'
+import { type ChatMessageViewlet } from '@hanzoteam/chunter'
+import { type LocationData } from '@hanzoteam/workbench'
 
 export default mergeIds(contactId, contact, {
   activity: {

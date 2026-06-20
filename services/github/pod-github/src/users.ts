@@ -1,8 +1,8 @@
-import type { AccountClient, IntegrationSecret } from '@hanzo/account-client'
-import core, { systemAccountUuid, type MeasureContext, type PersonId, type WorkspaceUuid } from '@hanzo/core'
-import { getAccountClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
-import { githubUserIntegrationKind } from '@hanzo/github'
+import type { AccountClient, IntegrationSecret } from '@hanzoteam/account-client'
+import core, { systemAccountUuid, type MeasureContext, type PersonId, type WorkspaceUuid } from '@hanzoteam/core'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
+import { githubUserIntegrationKind } from '@hanzoteam/github'
 import type { GithubUserRecord } from './types'
 
 export class UserManager {

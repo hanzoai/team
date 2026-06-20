@@ -15,13 +15,13 @@
 //
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Panel } from '@hanzo/panel'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Poll } from '@hanzo/survey'
-  import { Button, DebouncedCaller, IconMoreH, ThrottledCaller } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { DocNavLink, ParentsNavigator, showMenu } from '@hanzo/view-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { Panel } from '@hanzoteam/panel'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Poll } from '@hanzoteam/survey'
+  import { Button, DebouncedCaller, IconMoreH, ThrottledCaller } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { DocNavLink, ParentsNavigator, showMenu } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import survey from '../plugin'
   import EditPoll from './EditPoll.svelte'

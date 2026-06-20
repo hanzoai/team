@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
+  import type { IntlString } from '@hanzoteam/platform'
   import { createEventDispatcher } from 'svelte'
-  import { Button, EditBox, IconCheck, resizeObserver } from '@hanzo/ui'
-  import type { EditStyle } from '@hanzo/ui'
+  import { Button, EditBox, IconCheck, resizeObserver } from '@hanzoteam/ui'
+  import type { EditStyle } from '@hanzoteam/ui'
 
   export let value: string | number | undefined
   export let format: 'text' | 'password' | 'number'

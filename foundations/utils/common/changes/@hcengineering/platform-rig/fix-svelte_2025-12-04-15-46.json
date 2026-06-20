@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/platform-rig",
+      "packageName": "@hanzoteam/platform-rig",
       "comment": "Ignore svelte preprocess warnings",
       "type": "patch"
     }
   ],
-  "packageName": "@hanzo/platform-rig"
+  "packageName": "@hanzoteam/platform-rig"
 }

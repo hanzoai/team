@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Card } from '@hanzo/board'
-  import { Class, FindOptions, Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import task, { Project, State } from '@hanzo/task'
-  import tags from '@hanzo/tags'
-  import { TableBrowser } from '@hanzo/view-resources'
+  import { Card } from '@hanzoteam/board'
+  import { Class, FindOptions, Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import task, { Project, State } from '@hanzoteam/task'
+  import tags from '@hanzoteam/tags'
+  import { TableBrowser } from '@hanzoteam/view-resources'
   import board from '../plugin'
 
   export let _class: Ref<Class<Card>>

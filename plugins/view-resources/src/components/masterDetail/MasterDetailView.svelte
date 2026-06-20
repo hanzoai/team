@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, DocumentQuery, FindOptions, Ref, Space, WithLookup, mergeQueries } from '@hanzo/core'
-  import { MasterDetailConfig, ViewOptions, Viewlet, ViewletDescriptor } from '@hanzo/view'
-  import { getClient } from '@hanzo/presentation'
+  import core, { Doc, DocumentQuery, FindOptions, Ref, Space, WithLookup, mergeQueries } from '@hanzoteam/core'
+  import { MasterDetailConfig, ViewOptions, Viewlet, ViewletDescriptor } from '@hanzoteam/view'
+  import { getClient } from '@hanzoteam/presentation'
 
   import MasterDetailBrowser from './MasterDetailBrowser.svelte'
   import view from '../../plugin'

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import platform, { IntlString, PlatformError } from '@hanzo/platform'
-  import ui, { Button, EditBox, IconClose, Label, IconError } from '@hanzo/ui'
+  import platform, { IntlString, PlatformError } from '@hanzoteam/platform'
+  import ui, { Button, EditBox, IconClose, Label, IconError } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { type Integration } from '@hanzo/account-client'
+  import { type Integration } from '@hanzoteam/account-client'
   import { isValidPhoneNumber } from 'libphonenumber-js'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   import PhoneInput from './PhoneInput.svelte'
   import PinPad from './PinPad.svelte'

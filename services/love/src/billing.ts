@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 import { AccessToken, EgressInfo } from 'livekit-server-sdk'
-import { getClient as getBillingClient, LiveKitSessionData } from '@hanzo/billing-client'
+import { getClient as getBillingClient, LiveKitSessionData } from '@hanzoteam/billing-client'
 import config from './config'
 
 interface LiveKitSession {

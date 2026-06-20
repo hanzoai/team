@@ -1,8 +1,8 @@
 <script lang="ts">
-  import board, { Card } from '@hanzo/board'
-  import core, { Space } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import board, { Card } from '@hanzoteam/board'
+  import core, { Space } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
 
   export let value: Card
   export let withoutSpace: boolean

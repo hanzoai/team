@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Html, Loading, themeStore } from '@hanzo/ui'
-  import { DiffFile, DiffLine, DiffLineType, DiffViewMode } from '@hanzo/diffview'
+  import { Html, Loading, themeStore } from '@hanzoteam/ui'
+  import { DiffFile, DiffLine, DiffLineType, DiffViewMode } from '@hanzoteam/diffview'
 
   import { DiffLineRenderResult, RenderOptions, renderHunk } from '../render'
 

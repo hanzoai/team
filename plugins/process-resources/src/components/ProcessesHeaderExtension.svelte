@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { ApproveRequest, EventButton, Execution, ExecutionStatus, ProcessToDo } from '@hanzo/process'
-  import { Button } from '@hanzo/ui'
+  import { Card } from '@hanzoteam/card'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { ApproveRequest, EventButton, Execution, ExecutionStatus, ProcessToDo } from '@hanzoteam/process'
+  import { Button } from '@hanzoteam/ui'
   import process from '../plugin'
   import ApproveRequestButtons from './ApproveRequestButtons.svelte'
 

@@ -14,11 +14,11 @@
 //
 -->
 <script lang="ts">
-  import core from '@hanzo/core'
-  import { IconWithEmoji, getClient } from '@hanzo/presentation'
-  import ui, { Icon, Label } from '@hanzo/ui'
-  import view, { type TableMetadata } from '@hanzo/view'
-  import textEditor from '@hanzo/text-editor'
+  import core from '@hanzoteam/core'
+  import { IconWithEmoji, getClient } from '@hanzoteam/presentation'
+  import ui, { Icon, Label } from '@hanzoteam/ui'
+  import view, { type TableMetadata } from '@hanzoteam/view'
+  import textEditor from '@hanzoteam/text-editor'
 
   export let metadata: TableMetadata
 

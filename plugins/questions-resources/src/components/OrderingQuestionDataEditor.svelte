@@ -13,14 +13,14 @@
     type OrderingQuestion,
     type OrderingQuestionData,
     type OrderingPosition
-  } from '@hanzo/questions'
+  } from '@hanzoteam/questions'
   import {
     Button,
     DropdownLabelsPopup,
     type DropdownTextItem,
     type PopupPositionElement,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { moveItem } from '../utils'
   import LabelEditor from './LabelEditor.svelte'
   import OptionsList, { type OptionsListDropEvent } from './OptionsList.svelte'

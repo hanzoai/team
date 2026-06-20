@@ -22,7 +22,7 @@ import core, {
   type Ref,
   type Space,
   type Status
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   createOrUpdate,
   migrateSpace,
@@ -32,13 +32,13 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   type ModelLogger
-} from '@hanzo/model'
-import tags, { type TagCategory } from '@hanzo/model-tags'
-import task, { createSequence, DOMAIN_TASK, migrateDefaultStatusesBase } from '@hanzo/model-task'
-import { recruitId, type Applicant } from '@hanzo/recruit'
+} from '@hanzoteam/model'
+import tags, { type TagCategory } from '@hanzoteam/model-tags'
+import task, { createSequence, DOMAIN_TASK, migrateDefaultStatusesBase } from '@hanzoteam/model-task'
+import { recruitId, type Applicant } from '@hanzoteam/recruit'
 
-import { DOMAIN_CALENDAR } from '@hanzo/model-calendar'
-import { DOMAIN_SPACE } from '@hanzo/model-core'
+import { DOMAIN_CALENDAR } from '@hanzoteam/model-calendar'
+import { DOMAIN_SPACE } from '@hanzoteam/model-core'
 import recruit from './plugin'
 import { defaultApplicantStatuses } from './spaceType'
 

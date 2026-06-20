@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type Class, type Data, type Doc, type Ref } from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type AttributeCategory } from '@hanzo/view'
+import { type Class, type Data, type Doc, type Ref } from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type AttributeCategory } from '@hanzoteam/view'
 import view from '.'
 
 export function createAction<T extends Doc = Doc, P = Record<string, any>> (

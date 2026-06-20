@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Enum } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
+  import core, { Enum } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
   import {
     Breadcrumb,
     ButtonIcon,
@@ -29,8 +29,8 @@
     defineSeparators,
     twoPanelsSeparators,
     showPopup
-  } from '@hanzo/ui'
-  import { showMenu } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { showMenu } from '@hanzoteam/view-resources'
   import setting from '../plugin'
   import EnumValues from './EnumValues.svelte'
 

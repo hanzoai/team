@@ -13,9 +13,9 @@
  * // cd examples && rushx run:production
  */
 
-import { NetworkImpl, TickManagerImpl, AgentImpl } from '@hanzo/network-core'
-import { NetworkServer } from '@hanzo/network-server'
-import { createNetworkClient, NetworkAgentServer } from '@hanzo/network-client'
+import { NetworkImpl, TickManagerImpl, AgentImpl } from '@hanzoteam/network-core'
+import { NetworkServer } from '@hanzoteam/network-server'
+import { createNetworkClient, NetworkAgentServer } from '@hanzoteam/network-client'
 import type { 
   Container, 
   ContainerUuid, 
@@ -23,7 +23,7 @@ import type {
   ContainerKind,
   GetOptions,
   NetworkEvent
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 
 // Production container with proper lifecycle management
 class ProductionServiceContainer implements Container {

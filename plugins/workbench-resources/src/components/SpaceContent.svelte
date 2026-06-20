@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import core from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { AnyComponent, Component, Loading } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
-  import { FilterBar } from '@hanzo/view-resources'
+  import type { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import core from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { AnyComponent, Component, Loading } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzoteam/view'
+  import { FilterBar } from '@hanzoteam/view-resources'
 
   export let _class: Ref<Class<Doc>>
   export let space: Ref<Space>

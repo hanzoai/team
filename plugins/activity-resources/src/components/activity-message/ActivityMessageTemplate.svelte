@@ -18,16 +18,16 @@
     ActivityMessageViewlet,
     ActivityMessageViewType,
     DisplayActivityMessage
-  } from '@hanzo/activity'
-  import { Person } from '@hanzo/contact'
-  import { Avatar, SystemAvatar } from '@hanzo/contact-resources'
-  import core, { Ref, type SocialId } from '@hanzo/core'
-  import notification from '@hanzo/notification'
-  import { Asset } from '@hanzo/platform'
-  import { ComponentExtensions, getClient } from '@hanzo/presentation'
-  import { Action, Icon, Label } from '@hanzo/ui'
-  import { Action as ViewAction } from '@hanzo/view'
-  import { getActions, restrictionStore, showMenu } from '@hanzo/view-resources'
+  } from '@hanzoteam/activity'
+  import { Person } from '@hanzoteam/contact'
+  import { Avatar, SystemAvatar } from '@hanzoteam/contact-resources'
+  import core, { Ref, type SocialId } from '@hanzoteam/core'
+  import notification from '@hanzoteam/notification'
+  import { Asset } from '@hanzoteam/platform'
+  import { ComponentExtensions, getClient } from '@hanzoteam/presentation'
+  import { Action, Icon, Label } from '@hanzoteam/ui'
+  import { Action as ViewAction } from '@hanzoteam/view'
+  import { getActions, restrictionStore, showMenu } from '@hanzoteam/view-resources'
 
   import { savedMessagesStore } from '../../activity'
   import { MessageInlineAction } from '../../types'

@@ -14,18 +14,18 @@
 // limitations under the License.
 //
 
-import { type BrandingMap, type MeasureContext, type Tx, type WorkspaceIds } from '@hanzo/core'
-import { buildStorageFromConfig } from '@hanzo/server-storage'
+import { type BrandingMap, type MeasureContext, type Tx, type WorkspaceIds } from '@hanzoteam/core'
+import { buildStorageFromConfig } from '@hanzoteam/server-storage'
 
-import { startSessionManager } from '@hanzo/server'
+import { startSessionManager } from '@hanzoteam/server'
 import {
   type CommunicationCallbacks,
   type PlatformQueue,
   type SessionManager,
   type StorageConfiguration
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
-import { Api as CommunicationApi } from '@hanzo/communication-server'
+import { Api as CommunicationApi } from '@hanzoteam/communication-server'
 import {
   createServerPipeline,
   isAdapterSecurity,
@@ -35,24 +35,24 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hanzo/server-pipeline'
+} from '@hanzoteam/server-pipeline'
 
 import {
   createMongoAdapter,
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   shutdownMongo
-} from '@hanzo/mongo'
+} from '@hanzoteam/mongo'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions,
   shutdownPostgres
-} from '@hanzo/postgres'
+} from '@hanzoteam/postgres'
 import { readFileSync } from 'node:fs'
 import { startHttpServer } from './server_http'
-import type { ServerApi } from '@hanzo/communication-sdk-types'
+import type { ServerApi } from '@hanzoteam/communication-sdk-types'
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]
 
 registerStringLoaders()

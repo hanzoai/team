@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label, Toggle } from '@hanzo/ui'
+  import { Label, Toggle } from '@hanzoteam/ui'
   import plugin from '../plugin'
   import { setUseScreenShareSound, useScreenShareSound } from '../recording'
 </script>

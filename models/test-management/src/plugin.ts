@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { testManagementId } from '@hanzo/test-management'
-import testManganement from '@hanzo/test-management-resources/src/plugin'
-import type { Ref } from '@hanzo/core'
-import { mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import type { ActionCategory } from '@hanzo/view'
+import { testManagementId } from '@hanzoteam/test-management'
+import testManganement from '@hanzoteam/test-management-resources/src/plugin'
+import type { Ref } from '@hanzoteam/core'
+import { mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import type { ActionCategory } from '@hanzoteam/view'
 
 export default mergeIds(testManagementId, testManganement, {
   category: {

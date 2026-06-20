@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import { Button, navigate, Notification, NotificationToast } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import presentation, { getCurrentWorkspaceUrl } from '@hanzo/presentation'
+  import { getMetadata } from '@hanzoteam/platform'
+  import { Button, navigate, Notification, NotificationToast } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import presentation, { getCurrentWorkspaceUrl } from '@hanzoteam/presentation'
   import { allowGuestSignUpStore } from '../utils'
 
   export let onRemove: () => void

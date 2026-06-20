@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Issue } from '@hanzo/tracker'
-  import { DocReferencePresenter } from '@hanzo/view-resources'
+  import { Issue } from '@hanzoteam/tracker'
+  import { DocReferencePresenter } from '@hanzoteam/view-resources'
 
   export let value: Issue
 </script>

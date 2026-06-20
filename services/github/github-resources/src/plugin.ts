@@ -2,12 +2,12 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
 
-import github, { githubId } from '@hanzo/github'
-import { type Ref } from '@hanzo/core'
-import { type Handler, type IntegrationType } from '@hanzo/setting'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import github, { githubId } from '@hanzoteam/github'
+import { type Ref } from '@hanzoteam/core'
+import { type Handler, type IntegrationType } from '@hanzoteam/setting'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
 export default mergeIds(githubId, github, {
   string: {

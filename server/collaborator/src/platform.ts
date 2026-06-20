@@ -22,10 +22,10 @@ import core, {
   systemAccountUuid,
   TxOperations,
   WorkspaceUuid
-} from '@hanzo/core'
-import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
-import { Token, generateToken } from '@hanzo/server-token'
-import { getClient as getAccountClient } from '@hanzo/account-client'
+} from '@hanzoteam/core'
+import { createClient, getTransactorEndpoint } from '@hanzoteam/server-client'
+import { Token, generateToken } from '@hanzoteam/server-token'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
 
 import config from './config'
 

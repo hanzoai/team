@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
-  import { Button, DropdownLabelsIntl, FocusHandler, Label, createFocusManager } from '@hanzo/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import presentation from '@hanzoteam/presentation'
+  import { Button, DropdownLabelsIntl, FocusHandler, Label, createFocusManager } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
 

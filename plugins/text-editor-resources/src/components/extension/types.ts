@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Blob, Ref } from '@hanzo/core'
+import type { Blob, Ref } from '@hanzoteam/core'
 
 /**
  * @public

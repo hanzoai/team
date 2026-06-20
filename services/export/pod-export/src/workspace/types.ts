@@ -21,8 +21,8 @@ import {
   type Ref,
   type Space,
   type WorkspaceIds
-} from '@hanzo/core'
-import { type Pipeline } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { type Pipeline } from '@hanzoteam/server-core'
 
 export type PipelineFactory = (ctx: MeasureContext, workspace: WorkspaceIds) => Promise<Pipeline>
 

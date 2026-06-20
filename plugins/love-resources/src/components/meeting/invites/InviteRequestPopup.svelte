@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hanzo/contact'
-  import { CombineAvatars } from '@hanzo/contact-resources'
-  import { Button, Label } from '@hanzo/ui'
+  import contact, { Person } from '@hanzoteam/contact'
+  import { CombineAvatars } from '@hanzoteam/contact-resources'
+  import { Button, Label } from '@hanzoteam/ui'
   import love from '../../../plugin'
-  import { Ref } from '@hanzo/core'
+  import { Ref } from '@hanzoteam/core'
   import { onMount } from 'svelte'
   import {
     cancelInvites,

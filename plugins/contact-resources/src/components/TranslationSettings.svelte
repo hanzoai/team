@@ -12,12 +12,12 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import core, { Data } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Breadcrumb, Header, Label, Toggle } from '@hanzo/ui'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import view from '@hanzo/view'
-  import { getCurrentEmployee, Translation } from '@hanzo/contact'
+  import core, { Data } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Breadcrumb, Header, Label, Toggle } from '@hanzoteam/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import view from '@hanzoteam/view'
+  import { getCurrentEmployee, Translation } from '@hanzoteam/contact'
 
   import contact from '../plugin'
   import LanguageEditor from './LanguageEditor.svelte'

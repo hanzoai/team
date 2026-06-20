@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MarkupMark } from '@hanzo/text'
+  import { MarkupMark } from '@hanzoteam/text'
   import Mark from './Mark.svelte'
 
   export let marks: MarkupMark[]

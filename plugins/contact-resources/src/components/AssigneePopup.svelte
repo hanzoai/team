@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, getCurrentEmployee, Person } from '@hanzo/contact'
-  import { DocumentQuery, FindOptions, Ref } from '@hanzo/core'
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import presentation, { createQuery } from '@hanzo/presentation'
+  import { Contact, getCurrentEmployee, Person } from '@hanzoteam/contact'
+  import { DocumentQuery, FindOptions, Ref } from '@hanzoteam/core'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import presentation, { createQuery } from '@hanzoteam/presentation'
   import {
     AnySvelteComponent,
     EditWithIcon,
@@ -31,7 +31,7 @@
     deviceOptionsStore,
     resizeObserver,
     tooltip
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { AssigneeCategory } from '../assignee'
   import contact from '../plugin'

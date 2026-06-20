@@ -19,8 +19,8 @@
     ProjectDocumentTree,
     type HierarchyDocument,
     type Project
-  } from '@hanzo/controlled-documents'
-  import { type Ref } from '@hanzo/core'
+  } from '@hanzoteam/controlled-documents'
+  import { type Ref } from '@hanzoteam/core'
 
   import { createDocumentHierarchyQuery } from '../../../../utils'
   import DocumentFlatTreeElement from './DocumentFlatTreeElement.svelte'

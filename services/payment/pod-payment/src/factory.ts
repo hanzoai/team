@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type AccountClient } from '@hanzo/account-client'
+import { type AccountClient } from '@hanzoteam/account-client'
 import type { PaymentProvider } from './providers'
 import { PolarProvider } from './providers/polar/provider'
 import { StripeProvider } from './providers/stripe/provider'

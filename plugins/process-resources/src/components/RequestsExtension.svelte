@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import core, { Doc, FindOptions, SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { ApproveRequest } from '@hanzo/process'
-  import { Label, registerFocus, resizeObserver, Section } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import { Card } from '@hanzoteam/card'
+  import core, { Doc, FindOptions, SortingOrder } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ApproveRequest } from '@hanzoteam/process'
+  import { Label, registerFocus, resizeObserver, Section } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzoteam/view'
   import {
     List,
     ListSelectionProvider,
     noCategory,
     SelectDirection,
     ViewletsSettingButton
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import process from '../plugin'
 

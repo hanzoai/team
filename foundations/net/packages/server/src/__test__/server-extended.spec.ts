@@ -1,4 +1,4 @@
-import { NetworkClientImpl } from '@hanzo/network-client'
+import { NetworkClientImpl } from '@hanzoteam/network-client'
 import {
   AgentImpl,
   containerUuid,
@@ -11,7 +11,7 @@ import {
   type GetOptions,
   type Container,
   type ClientUuid
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 import { NetworkServer } from '../server'
 
 class MockContainer implements Container {

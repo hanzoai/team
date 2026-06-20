@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { BlobMetadata, SortingOrder, type Blob, type Ref } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { BlobMetadata, SortingOrder, type Blob, type Ref } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
   import {
     Button,
     Modal,
@@ -27,7 +27,7 @@
     IconMaximize,
     IconMinimize,
     IconClose
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import ActionContext from './ActionContext.svelte'

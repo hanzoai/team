@@ -17,14 +17,14 @@ import core, {
   isArchivingMode,
   isDeletingMode,
   systemAccountUuid
-} from '@hanzo/core'
-import { getClient as getKvsClient } from '@hanzo/kvs-client'
-import { getAccountsFromTxes, getSocialKeyByOldEmail } from '@hanzo/model-core'
-import { getAccountClient } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { getClient as getKvsClient } from '@hanzoteam/kvs-client'
+import { getAccountsFromTxes, getSocialKeyByOldEmail } from '@hanzoteam/model-core'
+import { getAccountClient } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
 
-import { type PipelineFactory, createDummyStorageAdapter, wrapPipeline } from '@hanzo/server-core'
-import { createBackupPipeline, createEmptyBroadcastOps } from '@hanzo/server-pipeline'
+import { type PipelineFactory, createDummyStorageAdapter, wrapPipeline } from '@hanzoteam/server-core'
+import { createBackupPipeline, createEmptyBroadcastOps } from '@hanzoteam/server-pipeline'
 import type { Db } from 'mongodb'
 
 // Old token and history types

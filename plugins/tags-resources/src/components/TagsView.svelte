@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
-  import { Asset, IntlString, translateCB } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { TagCategory, TagElement } from '@hanzo/tags'
+  import { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzoteam/core'
+  import { Asset, IntlString, translateCB } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { TagCategory, TagElement } from '@hanzoteam/tags'
   import {
     AnySvelteComponent,
     Breadcrumb,
@@ -26,12 +26,12 @@
     SearchInput,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { TableBrowser } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { TableBrowser } from '@hanzoteam/view-resources'
   import tags from '../plugin'
   import CategoryBar from './CategoryBar.svelte'
   import CreateTagElement from './CreateTagElement.svelte'
-  // import { deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  // import { deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
   import { TagElementInfo } from '../utils'
 
   export let title: IntlString = tags.string.Tags

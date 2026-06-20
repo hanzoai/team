@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import calendar from '@hanzo/calendar'
-import { loadMetadata } from '@hanzo/platform'
+import calendar from '@hanzoteam/calendar'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(calendar.icon, {

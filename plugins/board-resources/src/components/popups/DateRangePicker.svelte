@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Card } from '@hanzo/board'
-  import calendar from '@hanzo/calendar'
-  import { DocumentUpdate } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import task from '@hanzo/task'
-  import { Label, Button, DateRangePresenter, Component } from '@hanzo/ui'
+  import { Card } from '@hanzoteam/board'
+  import calendar from '@hanzoteam/calendar'
+  import { DocumentUpdate } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import task from '@hanzoteam/task'
+  import { Label, Button, DateRangePresenter, Component } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import board from '../../plugin'

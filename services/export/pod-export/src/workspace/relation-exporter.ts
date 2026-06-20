@@ -20,8 +20,8 @@ import {
   type LowLevelStorage,
   type MeasureContext,
   type Ref
-} from '@hanzo/core'
-import { isId } from '@hanzo/core'
+} from '@hanzoteam/core'
+import { isId } from '@hanzoteam/core'
 import { type ExportState, type RelationDefinition } from './types'
 
 /**

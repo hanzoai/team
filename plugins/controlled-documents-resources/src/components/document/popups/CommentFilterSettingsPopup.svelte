@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import { DropdownIntlItem, DropdownLabelsIntl, Label, Toggle } from '@hanzo/ui'
-  import documents, { type DocumentComment } from '@hanzo/controlled-documents'
+  import { DropdownIntlItem, DropdownLabelsIntl, Label, Toggle } from '@hanzoteam/ui'
+  import documents, { type DocumentComment } from '@hanzoteam/controlled-documents'
   import {
     $documentCommentsFilter as documentCommentsFilter,
     documentCommentsShowResolvedToggled,
     documentCommentsSortByChanged,
     documentCommentsSortingAttributes
   } from '../../../stores/editors/document'
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
 
   const hierarchy = getClient().getHierarchy()
   const sortingOptions: DropdownIntlItem[] = documentCommentsSortingAttributes.map((attr) => {

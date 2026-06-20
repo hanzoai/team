@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
-import { type Employee, type Person } from '@hanzo/contact'
-import { type UnsubscribeCallback, type Callback } from '@hanzo/hanzopulse-client'
-import { type Class, type Doc, type Ref } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import presentation, { createPulseClient } from '@hanzo/presentation'
+import { type Employee, type Person } from '@hanzoteam/contact'
+import { type UnsubscribeCallback, type Callback } from '@hanzoteam/hanzopulse-client'
+import { type Class, type Doc, type Ref } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation, { createPulseClient } from '@hanzoteam/presentation'
 
 export interface PresenceInfo {
   personId: Ref<Person>

@@ -35,8 +35,8 @@ import core, {
   addOperation,
   toFindResult,
   withContext
-} from '@hanzo/core'
-import { PlatformError, getResource, unknownError } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { PlatformError, getResource, unknownError } from '@hanzoteam/platform'
 import serverCore, {
   type Middleware,
   type ObjectDDParticipant,
@@ -50,7 +50,7 @@ import serverCore, {
   SessionDataImpl,
   type SessionFindAll,
   Triggers
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import { filterBroadcastOnly } from './utils'
 
 /**

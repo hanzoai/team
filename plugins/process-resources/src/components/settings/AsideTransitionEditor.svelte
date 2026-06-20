@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
-  import { Process, State, Transition, Trigger } from '@hanzo/process'
-  import { clearSettingsStore } from '@hanzo/setting-resources'
+  import { Ref } from '@hanzoteam/core'
+  import presentation, { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Process, State, Transition, Trigger } from '@hanzoteam/process'
+  import { clearSettingsStore } from '@hanzoteam/setting-resources'
   import {
     ButtonIcon,
     Component,
@@ -13,7 +13,7 @@
     Label,
     ListItem,
     Modal
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import TransitionPresenter from './TransitionPresenter.svelte'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ToDoPriority } from '@hanzo/time'
-  import { Label } from '@hanzo/ui'
+  import { ToDoPriority } from '@hanzoteam/time'
+  import { Label } from '@hanzoteam/ui'
   import { getToDoPriorityColor, todoPriorities } from '../utils'
   import Priority from './icons/Priority.svelte'
 

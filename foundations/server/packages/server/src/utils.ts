@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type WorkspaceUuid, type MeasureContext } from '@hanzo/core'
+import { type WorkspaceUuid, type MeasureContext } from '@hanzoteam/core'
 
 import type {
   AddSessionActive,
@@ -21,10 +21,10 @@ import type {
   ConnectionSocket,
   Session,
   SessionManager
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
-import { type Response } from '@hanzo/rpc'
-import type { Token } from '@hanzo/server-token'
+import { type Response } from '@hanzoteam/rpc'
+import type { Token } from '@hanzoteam/server-token'
 
 export interface WebsocketData {
   connectionSocket?: ConnectionSocket

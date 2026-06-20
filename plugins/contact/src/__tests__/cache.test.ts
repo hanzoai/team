@@ -1,4 +1,4 @@
-import core, { PersonId, Ref, SocialIdType, TxCreateDoc, TxUpdateDoc } from '@hanzo/core'
+import core, { PersonId, Ref, SocialIdType, TxCreateDoc, TxUpdateDoc } from '@hanzoteam/core'
 
 import contact, { AvatarType, Person, SocialIdentity, SocialIdentityRef } from '..'
 import ContactCache, { Change } from '../cache'

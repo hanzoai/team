@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/server-indexer",
+  "name": "@hanzoteam/server-indexer",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -35,24 +35,24 @@
     "@types/uuid": "^8.3.1"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/server-token": "workspace:^0.7.17",
-    "@hanzo/text": "workspace:^0.7.18",
-    "@hanzo/text-markdown": "workspace:^0.7.20",
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/query": "workspace:^0.7.17",
-    "@hanzo/contact": "workspace:^0.7.0",
-    "@hanzo/attachment": "workspace:^0.7.0",
-    "@hanzo/card": "workspace:^0.7.0",
-    "@hanzo/drive": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/server-token": "workspace:^0.7.17",
+    "@hanzoteam/text": "workspace:^0.7.18",
+    "@hanzoteam/text-markdown": "workspace:^0.7.20",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/query": "workspace:^0.7.17",
+    "@hanzoteam/contact": "workspace:^0.7.0",
+    "@hanzoteam/attachment": "workspace:^0.7.0",
+    "@hanzoteam/card": "workspace:^0.7.0",
+    "@hanzoteam/drive": "workspace:^0.7.0",
     "fast-equals": "^5.2.2",
-    "@hanzo/storage": "workspace:^0.7.17",
-    "@hanzo/communication-rest-client": "workspace:^0.7.12",
-    "@hanzo/communication-sdk-types": "workspace:^0.7.12",
-    "@hanzo/communication-shared": "workspace:^0.7.11",
-    "@hanzo/communication-types": "workspace:^0.7.12",
-    "@hanzo/hanzolake-client": "workspace:^0.7.17"
+    "@hanzoteam/storage": "workspace:^0.7.17",
+    "@hanzoteam/communication-rest-client": "workspace:^0.7.12",
+    "@hanzoteam/communication-sdk-types": "workspace:^0.7.12",
+    "@hanzoteam/communication-shared": "workspace:^0.7.11",
+    "@hanzoteam/communication-types": "workspace:^0.7.12",
+    "@hanzoteam/hanzolake-client": "workspace:^0.7.17"
   }
 }

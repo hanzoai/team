@@ -13,22 +13,22 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/login\" from `~0.6.0` to `~0.6.1`"
+            "comment": "Updating dependency \"@hanzoteam/login\" from `~0.6.0` to `~0.6.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/login-resources\" from `~0.6.0` to `~0.6.1`"
+            "comment": "Updating dependency \"@hanzoteam/login-resources\" from `~0.6.0` to `~0.6.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/client\" from `~0.6.0` to `~0.6.1`"
+            "comment": "Updating dependency \"@hanzoteam/client\" from `~0.6.0` to `~0.6.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/workbench\" from `~0.6.0` to `~0.6.1`"
+            "comment": "Updating dependency \"@hanzoteam/workbench\" from `~0.6.0` to `~0.6.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/workbench-resources\" from `~0.6.0` to `~0.6.1`"
+            "comment": "Updating dependency \"@hanzoteam/workbench-resources\" from `~0.6.0` to `~0.6.1`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/client-resources\" from `~0.6.0` to `~0.6.1`"
+            "comment": "Updating dependency \"@hanzoteam/client-resources\" from `~0.6.0` to `~0.6.1`"
           }
         ]
       }
@@ -40,7 +40,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/platform\" from `~0.6.3` to `~0.6.4`"
+            "comment": "Updating dependency \"@hanzoteam/platform\" from `~0.6.3` to `~0.6.4`"
           }
         ]
       }

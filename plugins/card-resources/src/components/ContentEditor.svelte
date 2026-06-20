@@ -15,13 +15,13 @@
 //
 -->
 <script lang="ts">
-  import card, { Card } from '@hanzo/card'
-  import contact from '@hanzo/contact'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { CollaboratorEditor, ImageUploadOptions } from '@hanzo/text-editor-resources'
-  import { AnySvelteComponent } from '@hanzo/ui'
-  import { getCollaborationUser } from '@hanzo/view-resources'
+  import card, { Card } from '@hanzoteam/card'
+  import contact from '@hanzoteam/contact'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { CollaboratorEditor, ImageUploadOptions } from '@hanzoteam/text-editor-resources'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
+  import { getCollaborationUser } from '@hanzoteam/view-resources'
   import { FocusPosition } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
 

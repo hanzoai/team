@@ -12,10 +12,10 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { IntlString } from '@hanzo/platform'
-  import { PreviewTemplate } from '@hanzo/communication-resources'
-  import { SocialID } from '@hanzo/communication-types'
+  import { Person } from '@hanzoteam/contact'
+  import { IntlString } from '@hanzoteam/platform'
+  import { PreviewTemplate } from '@hanzoteam/communication-resources'
+  import { SocialID } from '@hanzoteam/communication-types'
 
   import { isViewSettingEnabled, hideUserNamesSettingId, viewSettingsStore } from '../../settings'
 

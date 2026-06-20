@@ -43,13 +43,13 @@ import core, {
   type Tx,
   TxFactory,
   type TxUpdateDoc
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   BaseMiddleware,
   type Middleware,
   type PipelineContext,
   type TxMiddlewareResult
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import { TxOrderingMiddleware } from '../txOrdering'
 
 /**

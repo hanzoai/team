@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Context, Func, parseContext, Process } from '@hanzo/process'
+  import { Context, Func, parseContext, Process } from '@hanzoteam/process'
   import plugin from '../../plugin'
   import ContextValuePresenter from '../attributeEditors/ContextValuePresenter.svelte'
 

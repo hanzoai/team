@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Blob } from '@hanzo/core'
+import { Blob } from '@hanzoteam/core'
 import { Readable } from 'stream'
 
 export interface StorageClient {

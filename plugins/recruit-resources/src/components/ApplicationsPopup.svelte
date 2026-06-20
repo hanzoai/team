@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Candidate } from '@hanzo/recruit'
-  import { Label } from '@hanzo/ui'
-  import { DocNavLink, ObjectPresenter, Table } from '@hanzo/view-resources'
+  import type { Candidate } from '@hanzoteam/recruit'
+  import { Label } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectPresenter, Table } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
 
   export let value: Candidate

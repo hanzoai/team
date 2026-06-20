@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import process, { State } from '@hanzo/process'
+  import { Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import process, { State } from '@hanzoteam/process'
 
   export let value: Ref<State>
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Transition } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Transition } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../../plugin'
 
   export let transition: Transition

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { htmlToJSON } from '@hanzo/text'
+  import { htmlToJSON } from '@hanzoteam/text'
   import Node from './markup/Node.svelte'
-  import { loadParseEmojisFunction, ParsedTextWithEmojis } from '@hanzo/emoji'
+  import { loadParseEmojisFunction, ParsedTextWithEmojis } from '@hanzoteam/emoji'
   import { onMount } from 'svelte'
 
   export let value: string

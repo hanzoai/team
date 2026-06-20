@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentAccount, Ref } from '@hanzo/core'
-  import presentation, { createQuery, IconWithEmoji, isAdminUser } from '@hanzo/presentation'
-  import { Project } from '@hanzo/tracker'
-  import { Icon, Label, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { NavLink } from '@hanzo/view-resources'
+  import { getCurrentAccount, Ref } from '@hanzoteam/core'
+  import presentation, { createQuery, IconWithEmoji, isAdminUser } from '@hanzoteam/presentation'
+  import { Project } from '@hanzoteam/tracker'
+  import { Icon, Label, getPlatformColorDef, getPlatformColorForTextDef, themeStore } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { NavLink } from '@hanzoteam/view-resources'
   import tracker from '../../plugin'
 
   export let value: Project | Ref<Project> | undefined

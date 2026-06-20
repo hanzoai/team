@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Doc } from '@hanzo/core'
-  import { type File } from '@hanzo/drive'
-  import { DocsNavigator } from '@hanzo/view-resources'
+  import { type Doc } from '@hanzoteam/core'
+  import { type File } from '@hanzoteam/drive'
+  import { DocsNavigator } from '@hanzoteam/view-resources'
 
   import FilePresenter from './FilePresenter.svelte'
   import { resolveParents } from '../utils'

@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { type Class, type Ref } from '@hanzo/core'
-import { type Asset, type IntlString, type Metadata, type Plugin, plugin } from '@hanzo/platform'
+import { type Class, type Ref } from '@hanzoteam/core'
+import { type Asset, type IntlString, type Metadata, type Plugin, plugin } from '@hanzoteam/platform'
 
 import { type TextEditorExtensionFactory, type RefInputActionItem, TextEditorAction, CollaboratorType } from './types'
 

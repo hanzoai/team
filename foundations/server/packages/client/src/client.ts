@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import client, { clientId } from '@hanzo/client'
-import { type Client, type LoadModelResponse, type Tx } from '@hanzo/core'
-import { addLocation, getMetadata, getResource, setMetadata } from '@hanzo/platform'
+import client, { clientId } from '@hanzoteam/client'
+import { type Client, type LoadModelResponse, type Tx } from '@hanzoteam/core'
+import { addLocation, getMetadata, getResource, setMetadata } from '@hanzoteam/platform'
 import crypto from 'node:crypto'
 import plugin from './plugin'
 
@@ -47,7 +47,7 @@ export async function createClient (
     })
     return socket as any
   })
-  addLocation(clientId, () => import('@hanzo/client-resources'))
+  addLocation(clientId, () => import('@hanzoteam/client-resources'))
 
   if (model !== undefined) {
     let prev = ''

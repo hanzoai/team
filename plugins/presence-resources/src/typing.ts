@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License
 
-import { type UnsubscribeCallback, type Callback } from '@hanzo/hanzopulse-client'
-import { type IntlString, getMetadata } from '@hanzo/platform'
-import presentation, { createPulseClient } from '@hanzo/presentation'
-import { type PersonId } from '@hanzo/core'
+import { type UnsubscribeCallback, type Callback } from '@hanzoteam/hanzopulse-client'
+import { type IntlString, getMetadata } from '@hanzoteam/platform'
+import presentation, { createPulseClient } from '@hanzoteam/presentation'
+import { type PersonId } from '@hanzoteam/core'
 
 const typingDelaySeconds = 2
 

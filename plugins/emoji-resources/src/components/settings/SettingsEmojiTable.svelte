@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery } from '@hanzo/core'
-  import { TableBrowser } from '@hanzo/view-resources'
-  import emojiPlugin, { CustomEmoji } from '@hanzo/emoji'
-  import { showPopup, Breadcrumb, Button, Header, IconAdd } from '@hanzo/ui'
+  import { DocumentQuery } from '@hanzoteam/core'
+  import { TableBrowser } from '@hanzoteam/view-resources'
+  import emojiPlugin, { CustomEmoji } from '@hanzoteam/emoji'
+  import { showPopup, Breadcrumb, Button, Header, IconAdd } from '@hanzoteam/ui'
   import CustomEmojiPresenter from './CustomEmojiPresenter.svelte'
   import CreateCustomEmojiPopup from './CreateCustomEmojiPopup.svelte'
 

@@ -2,8 +2,8 @@
  * A set of tests against a real PostgreSQL database, for both CorockachDB and pure.
  */
 
-import { generateUuid, SocialIdType, type AccountUuid, type PersonId } from '@hanzo/core'
-import { getDBClient, shutdownPostgres, type PostgresClientReference } from '@hanzo/postgres'
+import { generateUuid, SocialIdType, type AccountUuid, type PersonId } from '@hanzoteam/core'
+import { getDBClient, shutdownPostgres, type PostgresClientReference } from '@hanzoteam/postgres'
 import { PostgresAccountDB } from '../collections/postgres/postgres'
 import { type SocialId } from '../types'
 import { createAccount, getDbFlavor, normalizeValue } from '../utils'

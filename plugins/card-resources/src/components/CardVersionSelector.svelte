@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { Card, cardId } from '@hanzo/card'
-  import core, { Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Button, DropdownLabels, DropdownTextItem, getCurrentLocation, navigate, showPopup } from '@hanzo/ui'
+  import { Card, cardId } from '@hanzoteam/card'
+  import core, { Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Button, DropdownLabels, DropdownTextItem, getCurrentLocation, navigate, showPopup } from '@hanzoteam/ui'
   import card from '../plugin'
   import NewVersionPopup from './NewVersionPopup.svelte'
 

@@ -14,11 +14,11 @@
 //
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import presentation, { Card } from '@hanzo/presentation'
-  import textEditor from '@hanzo/text-editor'
-  import { Component, Loading } from '@hanzo/ui'
-  import type { BuildModelKey, TableMetadata, Viewlet } from '@hanzo/view'
+  import type { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import presentation, { Card } from '@hanzoteam/presentation'
+  import textEditor from '@hanzoteam/text-editor'
+  import { Component, Loading } from '@hanzoteam/ui'
+  import type { BuildModelKey, TableMetadata, Viewlet } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
 
   import TableSourceInfo from './TableSourceInfo.svelte'

@@ -15,8 +15,8 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte'
   import { fade } from 'svelte/transition'
-  import { getResource, translate } from '@hanzo/platform'
-  import type { IntegrationType } from '@hanzo/setting'
+  import { getResource, translate } from '@hanzoteam/platform'
+  import type { IntegrationType } from '@hanzoteam/setting'
   import {
     AnyComponent,
     Button,
@@ -28,15 +28,15 @@
     showPopup,
     NotificationSeverity,
     themeStore
-  } from '@hanzo/ui'
-  import { Analytics } from '@hanzo/analytics'
-  import { type Integration } from '@hanzo/account-client'
+  } from '@hanzoteam/ui'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { type Integration } from '@hanzoteam/account-client'
   import {
     IntegrationClient,
     isDisabled,
     onIntegrationEvent,
     IntegrationUpdatedData
-  } from '@hanzo/integration-client'
+  } from '@hanzoteam/integration-client'
   import IntegrationErrorNotification from './IntegrationErrorNotification.svelte'
   import { getIntegrationClient } from '../../utils'
 

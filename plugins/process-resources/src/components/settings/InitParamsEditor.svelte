@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { ExecutionContext, parseContext, Process, SelectedUserRequest, Transition } from '@hanzo/process'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ExecutionContext, parseContext, Process, SelectedUserRequest, Transition } from '@hanzoteam/process'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import ProcessAttributeEditor from './ProcessAttributeEditor.svelte'

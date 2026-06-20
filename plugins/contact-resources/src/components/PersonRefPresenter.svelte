@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Person } from '@hanzo/contact'
-  import { Class, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { IconSize } from '@hanzo/ui'
+  import contact, { Person } from '@hanzoteam/contact'
+  import { Class, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { IconSize } from '@hanzoteam/ui'
   import { PersonLabelTooltip } from '..'
   import PersonPresenter from './PersonPresenter.svelte'
 

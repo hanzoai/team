@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/server-client",
+  "name": "@hanzoteam/server-client",
   "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -40,13 +40,13 @@
     "@types/node": "~20.11.16"
   },
   "dependencies": {
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/client-resources": "^0.6.32",
-    "@hanzo/client": "^0.6.23",
-    "@hanzo/account-client": "^0.6.6",
-    "@hanzo/server-core": "^0.6.5",
-    "@hanzo/server-token": "^0.6.16",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/client-resources": "^0.6.32",
+    "@hanzoteam/client": "^0.6.23",
+    "@hanzoteam/account-client": "^0.6.6",
+    "@hanzoteam/server-core": "^0.6.5",
+    "@hanzoteam/server-token": "^0.6.16",
     "ws": "^8.18.0"
   }
 }

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee, getName, Person } from '@hanzo/contact'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
+  import { Employee, getName, Person } from '@hanzoteam/contact'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     getPlatformAvatarColorDef,
     getPlatformAvatarColorForTextDef,
@@ -24,9 +24,9 @@
     LabelAndProps,
     themeStore,
     tooltip
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
-  import { ObjectPresenterType } from '@hanzo/view'
+  import { ObjectPresenterType } from '@hanzoteam/view'
   import Avatar from './Avatar.svelte'
   import PersonElement from './PersonElement.svelte'
 

@@ -14,9 +14,9 @@
 
 import { type Node } from '@tiptap/pm/model'
 import { TableMap } from '@tiptap/pm/tables'
-import type { Client } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import type { TableMetadata } from '@hanzo/view'
+import type { Client } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import type { TableMetadata } from '@hanzoteam/view'
 import { buildMarkdownTableFromDocs } from '../refreshTable'
 
 /**

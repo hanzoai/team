@@ -1,5 +1,5 @@
-import { setMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
+import { setMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
 import { type BottomAction } from '.'
 import login from './plugin'
 import { goTo } from './utils'

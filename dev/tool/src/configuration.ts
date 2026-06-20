@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import core, { type BackupClient, type Client as CoreClient, TxFactory, type WorkspaceUuid } from '@hanzo/core'
-import { connect } from '@hanzo/server-tool'
+import core, { type BackupClient, type Client as CoreClient, TxFactory, type WorkspaceUuid } from '@hanzoteam/core'
+import { connect } from '@hanzoteam/server-tool'
 
 function toLen (val: string, sep: string, len: number): string {
   while (val.length < len) {

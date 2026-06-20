@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 import BitrixConnect from './components/BitrixConnect.svelte'
 import BitrixConfigure from './components/BitrixConfigure.svelte'

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import chunter from '@hanzo/chunter'
-import contact, { type Employee, type Person, getCurrentEmployee } from '@hanzo/contact'
+import chunter from '@hanzoteam/chunter'
+import contact, { type Employee, type Person, getCurrentEmployee } from '@hanzoteam/contact'
 import documents, {
   type ControlledDocument,
   type Document,
@@ -38,7 +38,7 @@ import documents, {
   getDocumentName,
   getFirstRank,
   transferDocuments
-} from '@hanzo/controlled-documents'
+} from '@hanzoteam/controlled-documents'
 import core, {
   type Class,
   type Client,
@@ -58,19 +58,19 @@ import core, {
   checkPermission,
   getCurrentAccount,
   notEmpty
-} from '@hanzo/core'
-import { type IntlString, translate } from '@hanzo/platform'
-import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
-import request, { type Request, RequestStatus } from '@hanzo/request'
-import { isEmptyMarkup } from '@hanzo/text'
-import { type Location, getUserTimezone, showPopup } from '@hanzo/ui'
-import { type KeyFilter } from '@hanzo/view'
+} from '@hanzoteam/core'
+import { type IntlString, translate } from '@hanzoteam/platform'
+import { createQuery, getClient, MessageBox } from '@hanzoteam/presentation'
+import request, { type Request, RequestStatus } from '@hanzoteam/request'
+import { isEmptyMarkup } from '@hanzoteam/text'
+import { type Location, getUserTimezone, showPopup } from '@hanzoteam/ui'
+import { type KeyFilter } from '@hanzoteam/view'
 
-import { makeRank } from '@hanzo/rank'
+import { makeRank } from '@hanzoteam/rank'
 import { getProjectDocumentLink } from './navigation'
 import documentsResources from './plugin'
 import { wizardOpened } from './stores/wizards/create-document'
-import { getPersonRefByPersonId, getPersonRefsByPersonIds } from '@hanzo/contact-resources'
+import { getPersonRefByPersonId, getPersonRefsByPersonIds } from '@hanzoteam/contact-resources'
 
 export type TranslatedDocumentStates = Readonly<Record<DocumentState, string>>
 

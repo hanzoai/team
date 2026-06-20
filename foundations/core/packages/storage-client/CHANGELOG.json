@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/storage-client",
+  "name": "@hanzoteam/storage-client",
   "entries": [
     {
       "version": "0.7.17",
@@ -8,7 +8,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.17` to `0.7.18`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.17` to `0.7.18`"
           }
         ]
       }
@@ -40,7 +40,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.8` to `0.7.10`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.8` to `0.7.10`"
           }
         ]
       }

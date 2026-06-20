@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentAccount, hasAccountRole } from '@hanzo/core'
-  import { createQuery, isAdminUser, isDisabled } from '@hanzo/presentation'
-  import setting, { SettingsCategory } from '@hanzo/setting'
+  import { getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
+  import { createQuery, isAdminUser, isDisabled } from '@hanzoteam/presentation'
+  import setting, { SettingsCategory } from '@hanzoteam/setting'
   import {
     Component,
     Location,
@@ -24,7 +24,7 @@
     navigate,
     resolvedLocationStore,
     deviceOptionsStore as deviceInfo
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { onDestroy, onMount } from 'svelte'
   import { clearSettingsStore } from '../store'
 

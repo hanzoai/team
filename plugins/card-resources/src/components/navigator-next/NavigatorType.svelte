@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import view from '@hanzo/view'
-  import { IconAdd, NavGroup, Action, NavItem, ButtonIcon, showPopup, languageStore } from '@hanzo/ui'
-  import { Ref } from '@hanzo/core'
+  import view from '@hanzoteam/view'
+  import { IconAdd, NavGroup, Action, NavItem, ButtonIcon, showPopup, languageStore } from '@hanzoteam/ui'
+  import { Ref } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
-  import { CardSpace, MasterTag } from '@hanzo/card'
-  import presentation, { IconWithEmoji, getClient } from '@hanzo/presentation'
-  import { translate, getEmbeddedLabel } from '@hanzo/platform'
+  import { CardSpace, MasterTag } from '@hanzoteam/card'
+  import presentation, { IconWithEmoji, getClient } from '@hanzoteam/presentation'
+  import { translate, getEmbeddedLabel } from '@hanzoteam/platform'
 
   import type { NavigatorConfig } from '../../types'
   import cardPlugin from '../../plugin'

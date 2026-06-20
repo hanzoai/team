@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, ClassifierKind, Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { NavItem } from '@hanzo/ui'
-  import { showMenu } from '@hanzo/view-resources'
+  import core, { Class, ClassifierKind, Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { NavItem } from '@hanzoteam/ui'
+  import { showMenu } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import settings from '../plugin'
 

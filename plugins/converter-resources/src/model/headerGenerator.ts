@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Hierarchy, Ref } from '@hanzo/core'
-import { translate, type IntlString } from '@hanzo/platform'
-import type { AttributeModel } from '@hanzo/view'
+import type { Class, Doc, Hierarchy, Ref } from '@hanzoteam/core'
+import { translate, type IntlString } from '@hanzoteam/platform'
+import type { AttributeModel } from '@hanzoteam/view'
 import { isIntlString } from '../formatter/utils'
 
 /**

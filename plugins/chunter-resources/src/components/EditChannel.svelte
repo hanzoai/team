@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ChunterSpace } from '@hanzo/chunter'
-  import type { Class, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { SpaceMembers } from '@hanzo/contact-resources'
-  import { Label, Panel, Scroller } from '@hanzo/ui'
+  import { ChunterSpace } from '@hanzoteam/chunter'
+  import type { Class, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { SpaceMembers } from '@hanzoteam/contact-resources'
+  import { Label, Panel, Scroller } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import chunter from '../plugin'

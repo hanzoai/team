@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute } from '@hanzo/core'
-  import { Label, resizeObserver, Scroller } from '@hanzo/ui'
+  import { AnyAttribute } from '@hanzoteam/core'
+  import { Label, resizeObserver, Scroller } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { SelectedContext, NestedContext } from '@hanzo/process'
+  import { SelectedContext, NestedContext } from '@hanzoteam/process'
   import { getValueReduceFunc } from '../../utils'
 
   export let context: NestedContext

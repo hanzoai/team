@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import uploader from '@hanzo/uploader'
-import { loadMetadata } from '@hanzo/platform'
+import uploader from '@hanzoteam/uploader'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 

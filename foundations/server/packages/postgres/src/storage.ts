@@ -64,7 +64,7 @@ import core, {
   type WithLookup,
   type WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   type ConnectionMgr,
   createDBClient,
@@ -72,7 +72,7 @@ import {
   type DBResult,
   doFetchTypes,
   getDBClient
-} from '@hanzo/postgres-base'
+} from '@hanzoteam/postgres-base'
 import {
   calcHashHash,
   type DbAdapter,
@@ -82,7 +82,7 @@ import {
   type RawFindIterator,
   type ServerFindOptions,
   type TxAdapter
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import type postgres from 'postgres'
 import {
   getDocFieldsByDomains,

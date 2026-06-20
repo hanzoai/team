@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Doc, type DocumentQuery, type Ref, type WithLookup } from '@hanzo/core'
-  import { permissionsStore } from '@hanzo/contact-resources'
-  import drive, { type Drive, type Folder } from '@hanzo/drive'
-  import { Scroller, SearchInput, Panel, Button, IconMoreH } from '@hanzo/ui'
-  import view, { Viewlet, ViewOptions } from '@hanzo/view'
+  import { type Doc, type DocumentQuery, type Ref, type WithLookup } from '@hanzoteam/core'
+  import { permissionsStore } from '@hanzoteam/contact-resources'
+  import drive, { type Drive, type Folder } from '@hanzoteam/drive'
+  import { Scroller, SearchInput, Panel, Button, IconMoreH } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewOptions } from '@hanzoteam/view'
   import {
     FilterBar,
     FilterButton,
@@ -27,7 +27,7 @@
     DocAttributeBar,
     showMenu,
     canCreateObject
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
 
   import DrivePresenter from './DrivePresenter.svelte'
   import FolderHeader from './FolderHeader.svelte'

@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SortingOrder } from '@hanzo/core'
-  import { createMessagesQuery } from '@hanzo/presentation'
-  import { Grid, Section, Spinner } from '@hanzo/ui'
+  import { SortingOrder } from '@hanzoteam/core'
+  import { createMessagesQuery } from '@hanzoteam/presentation'
+  import { Grid, Section, Spinner } from '@hanzoteam/ui'
   import { onDestroy, onMount } from 'svelte'
-  import activity from '@hanzo/activity'
-  import { Card } from '@hanzo/card'
-  import { MessagePresenter, MessageInput } from '@hanzo/ui-next'
-  import { Message, Window } from '@hanzo/communication-types'
+  import activity from '@hanzoteam/activity'
+  import { Card } from '@hanzoteam/card'
+  import { MessagePresenter, MessageInput } from '@hanzoteam/ui-next'
+  import { Message, Window } from '@hanzoteam/communication-types'
 
   export let object: Card
   export let showInput: boolean = true

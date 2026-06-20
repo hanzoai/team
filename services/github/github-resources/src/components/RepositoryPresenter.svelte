@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { GithubIntegrationRepository } from '@hanzo/github'
-  import { translateCB } from '@hanzo/platform'
-  import { Icon, themeStore } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import { GithubIntegrationRepository } from '@hanzoteam/github'
+  import { translateCB } from '@hanzoteam/platform'
+  import { Icon, themeStore } from '@hanzoteam/ui'
   import github from '../plugin'
 
   export let value: WithLookup<GithubIntegrationRepository> | undefined

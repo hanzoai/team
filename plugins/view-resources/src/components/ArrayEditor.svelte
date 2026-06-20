@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Button, eventToHTMLElement, Icon, Label, showPopup } from '@hanzo/ui'
-  import { Ref, Doc, ArrOf, RefTo } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
+  import { Button, eventToHTMLElement, Icon, Label, showPopup } from '@hanzoteam/ui'
+  import { Ref, Doc, ArrOf, RefTo } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
 
   import ArrayEditorPopup from './ArrayEditorPopup.svelte'
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
 
   export let object: Doc
   export let label: IntlString

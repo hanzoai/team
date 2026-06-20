@@ -21,11 +21,11 @@ import {
   RateLimiter,
   toIdMap,
   WorkspaceIds
-} from '@hanzo/core'
-import { Class, Doc, Ref, Space } from '@hanzo/core/types/classes'
-import { type TransformConfig } from '@hanzo/export'
-import core from '@hanzo/model-core'
-import { StorageAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { Class, Doc, Ref, Space } from '@hanzoteam/core/types/classes'
+import { type TransformConfig } from '@hanzoteam/export'
+import core from '@hanzoteam/model-core'
+import { StorageAdapter } from '@hanzoteam/server-core'
 import path from 'path'
 import { UnifiedConverter } from './converter'
 import { UnifiedCsvSerializer } from './csv/csv-serializer'

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import documents, { DocumentCategory } from '@hanzo/controlled-documents'
-  import { Ref } from '@hanzo/core'
+  import documents, { DocumentCategory } from '@hanzoteam/controlled-documents'
+  import { Ref } from '@hanzoteam/core'
 
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
 
   export let value: Ref<DocumentCategory> | undefined

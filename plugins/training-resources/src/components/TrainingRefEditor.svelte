@@ -15,12 +15,12 @@
 //
 -->
 <script lang="ts">
-  import type { Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { ActionIcon, Button, type ButtonKind, type ButtonSize, Label, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { openDoc } from '@hanzo/view-resources'
-  import training, { type Training } from '@hanzo/training'
+  import type { Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { ActionIcon, Button, type ButtonKind, type ButtonSize, Label, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { openDoc } from '@hanzoteam/view-resources'
+  import training, { type Training } from '@hanzoteam/training'
   import type { ComponentProps } from 'svelte'
   import TrainingPresenter from './TrainingPresenter.svelte'
   import TrainingRefEditorPopup from './TrainingRefEditorPopup.svelte'

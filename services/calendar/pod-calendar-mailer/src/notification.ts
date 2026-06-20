@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import calendar, { Event } from '@hanzo/calendar'
-import contact from '@hanzo/contact'
-import { AccountUuid, Doc, MeasureContext, PersonId, Ref, Space, WorkspaceUuid } from '@hanzo/core'
-import notification from '@hanzo/notification'
-import { IntlString } from '@hanzo/platform'
+import calendar, { Event } from '@hanzoteam/calendar'
+import contact from '@hanzoteam/contact'
+import { AccountUuid, Doc, MeasureContext, PersonId, Ref, Space, WorkspaceUuid } from '@hanzoteam/core'
+import notification from '@hanzoteam/notification'
+import { IntlString } from '@hanzoteam/platform'
 import { getClient } from './utils'
 
 export enum MeetingNotificationType {

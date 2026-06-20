@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AccountRole, getCurrentAccount, type Ref } from '@hanzo/core'
-  import login from '@hanzo/login'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting, { type InviteSettings, type RoleCapabilitySettings, RoleCapability } from '@hanzo/setting'
+  import core, { AccountRole, getCurrentAccount, type Ref } from '@hanzoteam/core'
+  import login from '@hanzoteam/login'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import setting, { type InviteSettings, type RoleCapabilitySettings, RoleCapability } from '@hanzoteam/setting'
   import { hasRoleCapability } from '../roleCapability'
   import { getDefaultInviterRoles, getDefaultInviteRole, resolveInviteSettings } from '../inviteSettingsUtils'
-  import { translate } from '@hanzo/platform'
+  import { translate } from '@hanzoteam/platform'
   import {
     Breadcrumb,
     DropdownLabels,
@@ -31,7 +31,7 @@
     Scroller,
     themeStore,
     Toggle
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import settingRes from '../plugin'
   import UserRoleSelect from './UserRoleSelect.svelte'
 
@@ -174,18 +174,18 @@
   }
 </script>
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.InviteSettings} label={settingRes.string.InviteSettings} size={'large'} isCurrent />
   </Header>
-  <div class="hulyComponent-content__column content">
+  <div class="hanzoaiComponent-content__column content">
     {#if loading}
       <div class="w-full h-full flex-col-center justify-center">
         <Loading />
       </div>
     {:else}
       <Scroller align={'center'} padding={'var(--spacing-3)'} bottomPadding={'var(--spacing-3)'}>
-        <div class="hulyComponent-content flex-col flex-gap-4">
+        <div class="hanzoaiComponent-content flex-col flex-gap-4">
           <div class="title"><Label label={settingRes.string.InviteSettings} /></div>
 
           <div class="settings-list mt-6">

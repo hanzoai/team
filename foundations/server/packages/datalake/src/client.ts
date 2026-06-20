@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext, type WorkspaceUuid, concatLink } from '@hanzo/core'
+import { type MeasureContext, type WorkspaceUuid, concatLink } from '@hanzoteam/core'
 import { Readable } from 'stream'
 
 import { DatalakeError, NetworkError, NotFoundError } from './error'

@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Class, Doc, getCurrentAccount, Ref } from '@hanzo/core'
-  import notification, { BrowserNotification } from '@hanzo/notification'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { addNotification, getCurrentResolvedLocation, Location, NotificationSeverity } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { parseLinkId } from '@hanzo/view-resources'
-  import { Analytics } from '@hanzo/analytics'
-  import workbench, { Application } from '@hanzo/workbench'
-  import { getResource } from '@hanzo/platform'
+  import { AccountRole, Class, Doc, getCurrentAccount, Ref } from '@hanzoteam/core'
+  import notification, { BrowserNotification } from '@hanzoteam/notification'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { addNotification, getCurrentResolvedLocation, Location, NotificationSeverity } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { parseLinkId } from '@hanzoteam/view-resources'
+  import { Analytics } from '@hanzoteam/analytics'
+  import workbench, { Application } from '@hanzoteam/workbench'
+  import { getResource } from '@hanzoteam/platform'
 
   import { checkPermission, pushAllowed, subscribePush } from '../utils'
   import Notification from './Notification.svelte'

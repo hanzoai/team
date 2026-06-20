@@ -1,6 +1,6 @@
 import { writable, derived, get } from 'svelte/store'
-import { isCustomEmoji, type EmojiWithGroup } from '@hanzo/emoji'
-import { getCurrentAccount } from '@hanzo/core'
+import { isCustomEmoji, type EmojiWithGroup } from '@hanzoteam/emoji'
+import { getCurrentAccount } from '@hanzoteam/core'
 
 export const unicodeEmojiStore = writable<EmojiWithGroup[]>([])
 export const customEmojiStore = writable<EmojiWithGroup[]>([])

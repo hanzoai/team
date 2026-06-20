@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import type { ProjectType, ProjectTypeDescriptor } from '@hanzo/task'
-  import task from '@hanzo/task'
-  import type { DropdownTextItem } from '@hanzo/ui'
-  import { ButtonKind, ButtonSize, DropdownLabels } from '@hanzo/ui'
+  import type { Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import type { ProjectType, ProjectTypeDescriptor } from '@hanzoteam/task'
+  import task from '@hanzoteam/task'
+  import type { DropdownTextItem } from '@hanzoteam/ui'
+  import { ButtonKind, ButtonSize, DropdownLabels } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
 

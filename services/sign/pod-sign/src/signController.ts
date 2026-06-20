@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { systemAccountUuid, WorkspaceUuid, type Client } from '@hanzo/core'
-import { generateToken, type Token } from '@hanzo/server-token'
+import { systemAccountUuid, WorkspaceUuid, type Client } from '@hanzoteam/core'
+import { generateToken, type Token } from '@hanzoteam/server-token'
 
-import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
+import { createClient, getTransactorEndpoint } from '@hanzoteam/server-client'
 
 export class SignController {
   private readonly clients: Map<string, Client> = new Map<string, Client>()

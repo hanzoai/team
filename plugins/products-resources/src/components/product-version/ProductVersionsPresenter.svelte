@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Product } from '@hanzo/products'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import { Product } from '@hanzoteam/products'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import products from '../../plugin'
   import ProductVersionsPopup from './ProductVersionsPopup.svelte'
 

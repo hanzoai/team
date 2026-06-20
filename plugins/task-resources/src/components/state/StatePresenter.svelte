@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, Status, StatusCategory } from '@hanzo/core'
-  import { Asset } from '@hanzo/platform'
-  import { IconWithEmoji, getClient, reduceCalls } from '@hanzo/presentation'
-  import task, { Project, ProjectType, TaskType } from '@hanzo/task'
+  import core, { IdMap, Ref, Status, StatusCategory } from '@hanzoteam/core'
+  import { Asset } from '@hanzoteam/platform'
+  import { IconWithEmoji, getClient, reduceCalls } from '@hanzoteam/presentation'
+  import task, { Project, ProjectType, TaskType } from '@hanzoteam/task'
   import {
     ColorDefinition,
     Icon,
@@ -25,9 +25,9 @@
     getColorNumberByText,
     getPlatformColorDef,
     themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { statusStore } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
   import { selectedTypeStore, typeStore } from '../..'
   import IconBacklog from '../icons/IconBacklog.svelte'

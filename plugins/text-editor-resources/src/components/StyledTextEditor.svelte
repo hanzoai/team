@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Blob, Markup, type Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { EmptyMarkup } from '@hanzo/text'
-  import textEditor, { RefAction, TextEditorHandler } from '@hanzo/text-editor'
-  import { Button, type ButtonSize, Scroller } from '@hanzo/ui'
+  import { type Blob, Markup, type Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import textEditor, { RefAction, TextEditorHandler } from '@hanzoteam/text-editor'
+  import { Button, type ButtonSize, Scroller } from '@hanzoteam/ui'
   import { type Editor, mergeAttributes } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
   import { EditorKitOptions } from '../kits/editor-kit'

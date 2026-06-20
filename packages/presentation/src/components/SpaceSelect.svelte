@@ -15,8 +15,8 @@
 <script lang="ts">
   import { ComponentType, createEventDispatcher } from 'svelte'
 
-  import { Class, DocumentQuery, FindOptions, Ref, Space } from '@hanzo/core'
-  import { Asset, IntlString } from '@hanzo/platform'
+  import { Class, DocumentQuery, FindOptions, Ref, Space } from '@hanzoteam/core'
+  import { Asset, IntlString } from '@hanzoteam/platform'
   import {
     AnyComponent,
     AnySvelteComponent,
@@ -34,8 +34,8 @@
     getPlatformColorForTextDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import view, { IconProps } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view, { IconProps } from '@hanzoteam/view'
 
   import { ObjectCreate } from '../types'
   import { getClient, reduceCalls } from '../utils'

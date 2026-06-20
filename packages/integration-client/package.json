@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/integration-client",
+  "name": "@hanzoteam/integration-client",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -42,10 +42,10 @@
     "@types/uuid": "^8.3.1"
   },
   "dependencies": {
-    "@hanzo/account-client": "workspace:^0.7.21",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/kvs-client": "workspace:^0.7.0",
+    "@hanzoteam/account-client": "workspace:^0.7.21",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/kvs-client": "workspace:^0.7.0",
     "uuid": "^8.3.2"
   },
   "repository": {

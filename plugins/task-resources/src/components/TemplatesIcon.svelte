@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Icon, IconSize } from '@hanzo/ui'
+  import { Icon, IconSize } from '@hanzoteam/ui'
   import IconFolder from './icons/Folder.svelte'
 
   export let size: IconSize = 'small'

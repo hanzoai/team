@@ -24,7 +24,7 @@ import {
   SocialIdType,
   systemAccountUuid,
   type WorkspaceUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   generateWorkspaceUrl,
   cleanEmail,
@@ -70,16 +70,16 @@ import {
   isPasswordChangedSince
 } from '../utils'
 // eslint-disable-next-line import/no-named-default
-import platform, { getMetadata, PlatformError, Severity, Status } from '@hanzo/platform'
-import { decodeTokenVerbose, generateToken, TokenError } from '@hanzo/server-token'
+import platform, { getMetadata, PlatformError, Severity, Status } from '@hanzoteam/platform'
+import { decodeTokenVerbose, generateToken, TokenError } from '@hanzoteam/server-token'
 import { randomBytes } from 'crypto'
 
 import { type AccountDB, type AccountEvent, AccountEventType, type Workspace } from '../types'
 import { accountPlugin } from '../plugin'
 
 // Mock platform with minimum required functionality
-jest.mock('@hanzo/platform', () => {
-  const actual = jest.requireActual('@hanzo/platform')
+jest.mock('@hanzoteam/platform', () => {
+  const actual = jest.requireActual('@hanzoteam/platform')
 
   return {
     ...actual,
@@ -91,14 +91,14 @@ jest.mock('@hanzo/platform', () => {
 })
 
 // Mock server-token
-jest.mock('@hanzo/server-token', () => ({
-  TokenError: jest.requireActual('@hanzo/server-token').TokenError,
+jest.mock('@hanzoteam/server-token', () => ({
+  TokenError: jest.requireActual('@hanzoteam/server-token').TokenError,
   decodeTokenVerbose: jest.fn(),
   generateToken: jest.fn()
 }))
 
 // Mock analytics
-jest.mock('@hanzo/analytics', () => ({
+jest.mock('@hanzoteam/analytics', () => ({
   Analytics: {
     handleError: jest.fn()
   }

@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { themeStore } from '@hanzo/theme'
-  import { translate } from '@hanzo/platform'
-  import { Timestamp } from '@hanzo/core'
+  import { themeStore } from '@hanzoteam/theme'
+  import { translate } from '@hanzoteam/platform'
+  import { Timestamp } from '@hanzoteam/core'
 
   import ui from '../plugin'
 

@@ -12,17 +12,17 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Person, formatName } from '@hanzo/contact'
-  import { IntlString } from '@hanzo/platform'
-  import { resizeObserver, TimeSince, tooltip } from '@hanzo/ui'
+  import { Person, formatName } from '@hanzoteam/contact'
+  import { IntlString } from '@hanzoteam/platform'
+  import { resizeObserver, TimeSince, tooltip } from '@hanzoteam/ui'
   import {
     Avatar,
     PersonPreviewProvider,
     SystemAvatar,
     employeeByPersonIdStore,
     getPersonByPersonId
-  } from '@hanzo/contact-resources'
-  import { SocialID } from '@hanzo/communication-types'
+  } from '@hanzoteam/contact-resources'
+  import { SocialID } from '@hanzoteam/communication-types'
 
   export let tooltipLabel: IntlString | undefined = undefined
   export let person: Person | undefined = undefined

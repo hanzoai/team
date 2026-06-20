@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
-import login from '@hanzo/login'
-import { type GmailSyncState, gmailIntegrationKind } from '@hanzo/gmail'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
+import login from '@hanzoteam/login'
+import { type GmailSyncState, gmailIntegrationKind } from '@hanzoteam/gmail'
 import {
   getIntegrationClient as getIntegrationClientRaw,
   type IntegrationClient,
   request as httpRequest
-} from '@hanzo/integration-client'
+} from '@hanzoteam/integration-client'
 
 import gmail from './plugin'
 

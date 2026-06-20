@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
-  import { Label } from '@hanzo/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Label } from '@hanzoteam/ui'
 
   export let label: IntlString
 </script>

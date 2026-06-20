@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ComponentExtensions } from '@hanzo/presentation'
-  import { ProjectType, ProjectTypeDescriptor } from '@hanzo/task'
+  import { ComponentExtensions } from '@hanzoteam/presentation'
+  import { ProjectType, ProjectTypeDescriptor } from '@hanzoteam/task'
   import task from '../../plugin'
 
   export let type: ProjectType | undefined

@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
+  import { getClient } from '@hanzoteam/presentation'
   import plugin from '../plugin'
-  import { Execution, ExecutionStatus } from '@hanzo/process'
+  import { Execution, ExecutionStatus } from '@hanzoteam/process'
   import TransitionPresenter from './settings/TransitionPresenter.svelte'
   import TriggerPresenter from './settings/TriggerPresenter.svelte'
-  import { Label } from '@hanzo/ui'
+  import { Label } from '@hanzoteam/ui'
 
   export let execution: Execution
 

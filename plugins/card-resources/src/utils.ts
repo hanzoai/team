@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type AccountClient, getClient as getAccountClientRaw } from '@hanzo/account-client'
-import { Analytics } from '@hanzo/analytics'
-import { type Card, CardEvents, cardId, type CardSpace, type MasterTag, type Tag } from '@hanzo/card'
-import { chatId } from '@hanzo/chat'
-import communication from '@hanzo/communication'
+import { type AccountClient, getClient as getAccountClientRaw } from '@hanzoteam/account-client'
+import { Analytics } from '@hanzoteam/analytics'
+import { type Card, CardEvents, cardId, type CardSpace, type MasterTag, type Tag } from '@hanzoteam/card'
+import { chatId } from '@hanzoteam/chat'
+import communication from '@hanzoteam/communication'
 import core, {
   AccountRole,
   type Class,
@@ -39,9 +39,9 @@ import core, {
   toRank,
   type TxOperations,
   type WithLookup
-} from '@hanzo/core'
-import login from '@hanzo/login'
-import { getMetadata, translate } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import login from '@hanzoteam/login'
+import { getMetadata, translate } from '@hanzoteam/platform'
 import presentation, {
   createMarkup,
   getClient,
@@ -49,8 +49,8 @@ import presentation, {
   IconWithEmoji,
   MessageBox,
   type ObjectSearchResult
-} from '@hanzo/presentation'
-import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+} from '@hanzoteam/presentation'
+import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
 import {
   getCurrentLocation,
   getCurrentResolvedLocation,
@@ -61,13 +61,13 @@ import {
   navigate,
   type ResolvedLocation,
   showPopup
-} from '@hanzo/ui'
-import view, { canCopyLink, encodeObjectURI } from '@hanzo/view'
-import { accessDeniedStore } from '@hanzo/view-resources'
-import workbench, { type LocationData, type Widget, type WidgetTab } from '@hanzo/workbench'
-import { createWidgetTab } from '@hanzo/workbench-resources'
+} from '@hanzoteam/ui'
+import view, { canCopyLink, encodeObjectURI } from '@hanzoteam/view'
+import { accessDeniedStore } from '@hanzoteam/view-resources'
+import workbench, { type LocationData, type Widget, type WidgetTab } from '@hanzoteam/workbench'
+import { createWidgetTab } from '@hanzoteam/workbench-resources'
 
-import attachment from '@hanzo/attachment'
+import attachment from '@hanzoteam/attachment'
 import CardSearchItem from './components/CardSearchItem.svelte'
 import CreateSpace from './components/navigator/CreateSpace.svelte'
 import card from './plugin'

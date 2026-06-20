@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IssuePriority } from '@hanzo/tracker'
-  import { Icon } from '@hanzo/ui'
+  import { IssuePriority } from '@hanzoteam/tracker'
+  import { Icon } from '@hanzoteam/ui'
   import { issuePriorities } from '../../utils'
 
   export let value: IssuePriority

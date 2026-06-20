@@ -14,10 +14,10 @@
 //
 
 import { writable } from 'svelte/store'
-import { type ChatMessage } from '@hanzo/chunter'
-import { type Markup, type Ref } from '@hanzo/core'
-import { languageStore } from '@hanzo/ui'
-import { type ActivityMessage } from '@hanzo/activity'
+import { type ChatMessage } from '@hanzoteam/chunter'
+import { type Markup, type Ref } from '@hanzoteam/core'
+import { languageStore } from '@hanzoteam/ui'
+import { type ActivityMessage } from '@hanzoteam/activity'
 
 export const translatingMessagesStore = writable<Set<Ref<ChatMessage>>>(new Set())
 export const translatedMessagesStore = writable<Map<Ref<ChatMessage>, Markup>>(new Map())

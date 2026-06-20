@@ -14,16 +14,16 @@
 -->
 
 <script lang="ts">
-  import { TypedSpace, type Doc, type Ref, type Space } from '@hanzo/core'
+  import { TypedSpace, type Doc, type Ref, type Space } from '@hanzoteam/core'
   import documents, {
     type DocumentSpace,
     type DocumentSpaceType,
     type Project,
     type ProjectDocument
-  } from '@hanzo/controlled-documents'
-  import { SpaceSelector, getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
+  } from '@hanzoteam/controlled-documents'
+  import { SpaceSelector, getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
 
   import { $locationStep as locationStep, locationStepUpdated } from '../../../stores/wizards/create-document'
   import DocumentParentSelector from '../../hierarchy/DocumentParentSelector.svelte'

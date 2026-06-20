@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Attribute, CustomSequence, IndexKind, Ref, Type, TypeIdentifier as TypeId } from '@hanzo/core'
-  import { TypeIdentifier } from '@hanzo/model'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { EditBox, Label, Toggle, Button, ButtonIcon } from '@hanzo/ui'
+  import core, { Attribute, CustomSequence, IndexKind, Ref, Type, TypeIdentifier as TypeId } from '@hanzoteam/core'
+  import { TypeIdentifier } from '@hanzoteam/model'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { EditBox, Label, Toggle, Button, ButtonIcon } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
 

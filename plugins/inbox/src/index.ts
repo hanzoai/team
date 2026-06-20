@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Asset, IntlString, type Plugin, plugin } from '@hanzo/platform'
+import { Asset, IntlString, type Plugin, plugin } from '@hanzoteam/platform'
 
 export const inboxId = 'inbox' as Plugin
 

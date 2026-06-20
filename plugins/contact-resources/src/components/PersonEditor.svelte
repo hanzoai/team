@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { Ref, RefTo } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
+  import { Person } from '@hanzoteam/contact'
+  import { Ref, RefTo } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
   import contact from '../plugin'
-  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { ButtonKind, ButtonSize } from '@hanzoteam/ui'
   import UserBox from './UserBox.svelte'
 
   export let value: Ref<Person> | undefined

@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, Ref, Space, WithLookup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient, reduceCalls } from '@hanzo/presentation'
-  import { AnyComponent, Component, resolvedLocationStore } from '@hanzo/ui'
-  import view, { ViewOptions, Viewlet } from '@hanzo/view'
+  import core, { Class, Doc, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient, reduceCalls } from '@hanzoteam/presentation'
+  import { AnyComponent, Component, resolvedLocationStore } from '@hanzoteam/ui'
+  import view, { ViewOptions, Viewlet } from '@hanzoteam/view'
   import {
     activeViewlet,
     getViewOptions,
     makeViewletKey,
     updateActiveViewlet,
     viewOptionStore
-  } from '@hanzo/view-resources'
-  import type { ViewConfiguration } from '@hanzo/workbench'
+  } from '@hanzoteam/view-resources'
+  import type { ViewConfiguration } from '@hanzoteam/workbench'
   import { onDestroy } from 'svelte'
   import SpaceContent from './SpaceContent.svelte'
   import SpaceHeader from './SpaceHeader.svelte'

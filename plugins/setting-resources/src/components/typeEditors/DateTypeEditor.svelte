@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { DateRangeMode, TypeDate as DateType } from '@hanzo/core'
-  import { TypeDate } from '@hanzo/model'
-  import { IntlString } from '@hanzo/platform'
-  import { DropdownLabelsIntl, Label, DropdownIntlItem } from '@hanzo/ui'
+  import core, { DateRangeMode, TypeDate as DateType } from '@hanzoteam/core'
+  import { TypeDate } from '@hanzoteam/model'
+  import { IntlString } from '@hanzoteam/platform'
+  import { DropdownLabelsIntl, Label, DropdownIntlItem } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import setting from '../../plugin'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
 
   export let type: DateType | undefined
   export let editable: boolean = true

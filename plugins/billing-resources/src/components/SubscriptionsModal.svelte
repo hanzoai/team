@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ModernDialog } from '@hanzo/ui'
+  import { ModernDialog } from '@hanzoteam/ui'
   import billing from '../plugin'
   import Subscriptions from './Subscriptions.svelte'
 

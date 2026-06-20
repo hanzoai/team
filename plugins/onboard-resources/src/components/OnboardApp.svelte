@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import login from '@hanzo/login'
-  import { getAccount } from '@hanzo/login-resources'
-  import { getMetadata, setMetadata } from '@hanzo/platform'
-  import presentation from '@hanzo/presentation'
+  import login from '@hanzoteam/login'
+  import { getAccount } from '@hanzoteam/login-resources'
+  import { getMetadata, setMetadata } from '@hanzoteam/platform'
+  import presentation from '@hanzoteam/presentation'
   import {
     Location,
     Popup,
@@ -27,8 +27,8 @@
     location,
     setMetadataLocalStorage,
     themeStore
-  } from '@hanzo/ui'
-  import workbench from '@hanzo/workbench'
+  } from '@hanzoteam/ui'
+  import workbench from '@hanzoteam/workbench'
   import { onDestroy, onMount } from 'svelte'
 
   import Auth from './Auth.svelte'

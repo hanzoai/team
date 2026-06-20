@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { checkForbiddenPermission, type Class, type Doc, type Ref } from '@hanzo/core'
-  import type { AnySvelteComponent, ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { Icon, Label, tooltip } from '@hanzo/ui'
+  import { checkForbiddenPermission, type Class, type Doc, type Ref } from '@hanzoteam/core'
+  import type { AnySvelteComponent, ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { Icon, Label, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { getAttribute, KeyedAttribute, updateAttribute } from '../attributes'
   import { getAttributeEditor, getClient } from '../utils'
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
 
   export let key: KeyedAttribute | string
   export let object: Doc | Record<string, any>

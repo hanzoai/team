@@ -20,8 +20,8 @@ import core, {
   type WorkspaceIds,
   systemAccountUuid,
   withContext
-} from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
 import {
   type BlobStorageIterator,
   type BucketInfo,
@@ -30,8 +30,8 @@ import {
   type StorageConfig,
   type StorageConfiguration,
   type UploadedObjectInfo
-} from '@hanzo/server-core'
-import serverToken, { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import serverToken, { generateToken } from '@hanzoteam/server-token'
 import { type Readable } from 'stream'
 import { type UploadObjectParams, DatalakeClient, type WorkspaceStats } from './client'
 import { NotFoundError } from './error'

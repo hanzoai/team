@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getAttributePresenterClass, getClient } from '@hanzo/presentation'
-  import { parseContext, Process } from '@hanzo/process'
-  import { AnyComponent, Component, Label } from '@hanzo/ui'
-  import { AttributeCategory } from '@hanzo/view'
-  import { findAttributePresenter } from '@hanzo/view-resources'
-  import view from '@hanzo/view-resources/src/plugin'
+  import { getAttributePresenterClass, getClient } from '@hanzoteam/presentation'
+  import { parseContext, Process } from '@hanzoteam/process'
+  import { AnyComponent, Component, Label } from '@hanzoteam/ui'
+  import { AttributeCategory } from '@hanzoteam/view'
+  import { findAttributePresenter } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import { Mode, Modes, parseValue } from '../../query'
   import ContextValuePresenter from '../attributeEditors/ContextValuePresenter.svelte'
   import { getContext } from '../../utils'
-  import core from '@hanzo/core'
+  import core from '@hanzoteam/core'
 
   export let process: Process
   export let key: string

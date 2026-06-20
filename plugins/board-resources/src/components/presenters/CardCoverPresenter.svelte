@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CardCover } from '@hanzo/board'
+  import { CardCover } from '@hanzoteam/board'
 
   import ColorPresenter from './ColorPresenter.svelte'
   export let value: CardCover

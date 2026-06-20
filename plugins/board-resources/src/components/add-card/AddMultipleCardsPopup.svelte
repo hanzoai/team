@@ -1,6 +1,6 @@
 <script lang="ts">
   import board from '../../plugin'
-  import { Button, ActionIcon, IconClose, Label } from '@hanzo/ui'
+  import { Button, ActionIcon, IconClose, Label } from '@hanzoteam/ui'
 
   export let cardsNumber: number
   export let onAddSingle: () => void

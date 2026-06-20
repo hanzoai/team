@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getDocTitle } from '@hanzo/view-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { Channel } from '@hanzo/chunter'
-  import { ActivityMessagesFilter, WithReferences } from '@hanzo/activity'
-  import contact from '@hanzo/contact'
-  import view from '@hanzo/view'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getDocTitle } from '@hanzoteam/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Channel } from '@hanzoteam/chunter'
+  import { ActivityMessagesFilter, WithReferences } from '@hanzoteam/activity'
+  import contact from '@hanzoteam/contact'
+  import view from '@hanzoteam/view'
   import Header from './Header.svelte'
   import chunter from '../plugin'
   import { getObjectIcon, getChannelName } from '../utils'

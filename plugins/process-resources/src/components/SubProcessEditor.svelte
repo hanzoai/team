@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Process, Step } from '@hanzo/process'
-  import { DropdownLabels, DropdownTextItem, Label } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Process, Step } from '@hanzoteam/process'
+  import { DropdownLabels, DropdownTextItem, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../plugin'
 

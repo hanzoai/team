@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Attachment } from '@hanzo/attachment'
-  import type { BlobType, WithLookup } from '@hanzo/core'
-  import { Image } from '@hanzo/presentation'
+  import type { Attachment } from '@hanzoteam/attachment'
+  import type { BlobType, WithLookup } from '@hanzoteam/core'
+  import { Image } from '@hanzoteam/presentation'
 
   import BrokenImage from './icons/BrokenImage.svelte'
   import { AttachmentImageSize } from '../types'

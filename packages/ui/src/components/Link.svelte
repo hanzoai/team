@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Asset } from '@hanzo/platform'
+  import type { Asset } from '@hanzoteam/platform'
   import type { AnySvelteComponent } from '../types'
   import Icon from './Icon.svelte'
 

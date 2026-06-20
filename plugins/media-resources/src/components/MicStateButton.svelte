@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type MicState } from '@hanzo/media'
-  import { Icon, tooltip } from '@hanzo/ui'
+  import { type MicState } from '@hanzoteam/media'
+  import { Icon, tooltip } from '@hanzoteam/ui'
 
   import media from '../plugin'
 

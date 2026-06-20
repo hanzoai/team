@@ -14,15 +14,15 @@
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { Ref } from '@hanzo/core'
+  import { Ref } from '@hanzoteam/core'
   import type {
     NotificationType,
     NotificationGroup,
     NotificationPreferencesGroup,
     NotificationTypeSetting
-  } from '@hanzo/notification'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/notification'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
   import {
     Breadcrumb,
     defineSeparators,
@@ -36,7 +36,7 @@
     Scroller,
     Separator,
     twoPanelsSeparators
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
 
   import notification from '../../plugin'
   import NotificationGroupSetting from './NotificationGroupSetting.svelte'

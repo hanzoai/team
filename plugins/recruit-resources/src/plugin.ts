@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import type { IntlString, Resource, StatusCode } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/presentation/src/types'
-import recruit, { recruitId } from '@hanzo/recruit'
-import { type TagCategory } from '@hanzo/tags'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type FilterFunction, type FilterMode, type Viewlet } from '@hanzo/view'
+import { type Client, type Doc, type Ref } from '@hanzoteam/core'
+import type { IntlString, Resource, StatusCode } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzoteam/presentation/src/types'
+import recruit, { recruitId } from '@hanzoteam/recruit'
+import { type TagCategory } from '@hanzoteam/tags'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type FilterFunction, type FilterMode, type Viewlet } from '@hanzoteam/view'
 
 export default mergeIds(recruitId, recruit, {
   viewlet: {

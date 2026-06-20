@@ -14,8 +14,8 @@
 //
 
 import type { Express } from 'express'
-import type { MeasureContext, WorkspaceUuid } from '@hanzo/core'
-import { type SubscriptionType, type SubscriptionData } from '@hanzo/account-client'
+import type { MeasureContext, WorkspaceUuid } from '@hanzoteam/core'
+import { type SubscriptionType, type SubscriptionData } from '@hanzoteam/account-client'
 
 /**
  * Payment subscription plan configuration

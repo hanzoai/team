@@ -15,11 +15,11 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { getClient, Card } from '@hanzo/presentation'
-  import { DirectMessage } from '@hanzo/chunter'
-  import workbench from '@hanzo/workbench'
-  import { getResource } from '@hanzo/platform'
-  import { EditBox } from '@hanzo/ui'
+  import { getClient, Card } from '@hanzoteam/presentation'
+  import { DirectMessage } from '@hanzoteam/chunter'
+  import workbench from '@hanzoteam/workbench'
+  import { getResource } from '@hanzoteam/platform'
+  import { EditBox } from '@hanzoteam/ui'
 
   import chunter from '../plugin'
 

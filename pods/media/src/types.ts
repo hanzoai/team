@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Class, Doc, Ref } from '@hanzo/core'
-import type { CardID, MessageID } from '@hanzo/communication-types'
+import type { Class, Doc, Ref } from '@hanzoteam/core'
+import type { CardID, MessageID } from '@hanzoteam/communication-types'
 
 export enum BlobSourceType {
   Doc = 'doc',

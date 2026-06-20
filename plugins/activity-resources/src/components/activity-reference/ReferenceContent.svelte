@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MessageViewer } from '@hanzo/presentation'
-  import { ActivityReference } from '@hanzo/activity'
+  import { MessageViewer } from '@hanzoteam/presentation'
+  import { ActivityReference } from '@hanzoteam/activity'
 
   export let value: ActivityReference | undefined = undefined
 </script>

@@ -2,11 +2,11 @@
   Copyright @ 2024 Hanzo AI Inc.
 -->
 <script lang="ts">
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
-  import { type TrainingRequest } from '@hanzo/training'
-  import type { DocumentQuery } from '@hanzo/core'
-  import { type IModeSelector, navigate, rawLocation } from '@hanzo/ui'
-  import { SpecialView } from '@hanzo/workbench-resources'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
+  import { type TrainingRequest } from '@hanzoteam/training'
+  import type { DocumentQuery } from '@hanzoteam/core'
+  import { type IModeSelector, navigate, rawLocation } from '@hanzoteam/ui'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
   import { type ComponentProps } from 'svelte'
   import training from '../plugin'
   import { sentRequestRoute, SentRequestsRouteTab } from '../routing/routes/sentRequestsRoute'

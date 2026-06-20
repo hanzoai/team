@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/middleware",
+  "name": "@hanzoteam/middleware",
   "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -37,14 +37,14 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/ai-bot": "^0.6.4",
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/server-core": "^0.6.5",
-    "@hanzo/server-preference": "^0.6.4",
-    "@hanzo/server-notification": "^0.6.5",
-    "@hanzo/query": "^0.6.17",
-    "@hanzo/analytics": "^0.6.4",
+    "@hanzoteam/ai-bot": "^0.6.4",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/server-core": "^0.6.5",
+    "@hanzoteam/server-preference": "^0.6.4",
+    "@hanzoteam/server-notification": "^0.6.5",
+    "@hanzoteam/query": "^0.6.17",
+    "@hanzoteam/analytics": "^0.6.4",
     "fast-equals": "^5.2.2"
   }
 }

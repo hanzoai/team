@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Loading, Scroller, formatDuration, formatNumberCompact, themeStore } from '@hanzo/ui'
-  import { getCurrentWorkspaceUuid } from '@hanzo/presentation'
-  import billingPlugin from '@hanzo/billing'
-  import love from '@hanzo/love'
-  import view from '@hanzo/view'
+  import { Loading, Scroller, formatDuration, formatNumberCompact, themeStore } from '@hanzoteam/ui'
+  import { getCurrentWorkspaceUuid } from '@hanzoteam/presentation'
+  import billingPlugin from '@hanzoteam/billing'
+  import love from '@hanzoteam/love'
+  import view from '@hanzoteam/view'
   import filesize from 'filesize'
   import StatsCard from './StatsCard.svelte'
-  import drivePlugin from '@hanzo/drive'
+  import drivePlugin from '@hanzoteam/drive'
   import Category from './Category.svelte'
   import ChartCard from './ChartCard.svelte'
   import { getBillingClient } from '../utils'

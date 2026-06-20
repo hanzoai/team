@@ -14,7 +14,7 @@
 //
 
 import { canDisplayLinkPreview, fetchLinkPreviewDetails, type LinkPreviewDetails } from '../link-preview'
-import { setMetadata } from '@hanzo/platform'
+import { setMetadata } from '@hanzoteam/platform'
 import plugin from '../plugin'
 
 const fechFunc =

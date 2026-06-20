@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Vacancy } from '@hanzo/recruit'
-  import { TimeSince } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { Vacancy } from '@hanzoteam/recruit'
+  import { TimeSince } from '@hanzoteam/ui'
 
   export let value: Vacancy
   export let applications: Map<Ref<Vacancy>, { count: number, modifiedOn: number }> | undefined

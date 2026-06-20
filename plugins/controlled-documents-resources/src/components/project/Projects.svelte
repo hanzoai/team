@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Ref, WithLookup } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { DocumentSpace, DocumentSpaceType, Project } from '@hanzo/controlled-documents'
+  import { Class, Ref, WithLookup } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { DocumentSpace, DocumentSpaceType, Project } from '@hanzoteam/controlled-documents'
   import documents from '../../plugin'
   import ProjectsView from './ProjectsView.svelte'
 

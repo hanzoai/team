@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { Ref, Class, Data } from '@hanzo/core'
-import { Preference } from '@hanzo/preference'
-import { NotificationPreferencesGroup } from '@hanzo/notification'
-import type { Asset, IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { AnyComponent } from '@hanzo/ui'
+import { Ref, Class, Data } from '@hanzoteam/core'
+import { Preference } from '@hanzoteam/preference'
+import { NotificationPreferencesGroup } from '@hanzoteam/notification'
+import type { Asset, IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { AnyComponent } from '@hanzoteam/ui'
 
 /**
  * @public

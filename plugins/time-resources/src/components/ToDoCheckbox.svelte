@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ToDoPriority } from '@hanzo/time'
-  import { CheckBox } from '@hanzo/ui'
+  import { ToDoPriority } from '@hanzoteam/time'
+  import { CheckBox } from '@hanzoteam/ui'
   import { getToDoPriorityColor } from '../utils'
 
   export let checked: boolean = false

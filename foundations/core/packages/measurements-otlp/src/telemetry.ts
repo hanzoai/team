@@ -14,7 +14,7 @@ import {
   type Metrics,
   type ParamsType,
   type WithOptions
-} from '@hanzo/measurements'
+} from '@hanzoteam/measurements'
 import {
   context,
   metrics as otelMetrics,

@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { Class, Ref, WithLookup } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { ControlledDocument, DocumentApprovalRequest } from '@hanzo/controlled-documents'
+  import { Class, Ref, WithLookup } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ControlledDocument, DocumentApprovalRequest } from '@hanzoteam/controlled-documents'
 
   import EditDoc from '../EditDoc.svelte'
 

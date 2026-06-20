@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Document, ExternalSpace, Project } from '@hanzo/controlled-documents'
-import { Attachment } from '@hanzo/attachment'
-import { type CollectionSize, type Ref, Markup } from '@hanzo/core'
-import { IconProps } from '@hanzo/view'
+import { type Document, ExternalSpace, Project } from '@hanzoteam/controlled-documents'
+import { Attachment } from '@hanzoteam/attachment'
+import { type CollectionSize, type Ref, Markup } from '@hanzoteam/core'
+import { IconProps } from '@hanzoteam/view'
 
 /** @public */
 export enum ProductVersionState {

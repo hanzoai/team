@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { MarkupMarkType, MarkupNodeType, type MarkupNode } from '@hanzo/text'
-import { markdownToMarkup } from '@hanzo/text-markdown'
+import { MarkupMarkType, MarkupNodeType, type MarkupNode } from '@hanzoteam/text'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
 import { Extension } from '@tiptap/core'
 import { Node, type Schema } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'

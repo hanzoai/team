@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Event, EventResult, type SessionData } from '@hanzo/communication-sdk-types'
+import { type Event, EventResult, type SessionData } from '@hanzoteam/communication-sdk-types'
 import type {
   FindNotificationContextParams,
   FindNotificationsParams,
@@ -30,7 +30,7 @@ import type {
   MessageMeta,
   FindMessagesGroupParams,
   MessagesGroup
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import type { Enriched, Middleware, MiddlewareContext, Subscription } from '../types'
 

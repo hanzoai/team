@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { FernColor, FlamingoColor, IconSize } from '@hanzo/ui'
+  import { FernColor, FlamingoColor, IconSize } from '@hanzoteam/ui'
 
   export let value: number
   export let min: number = 0

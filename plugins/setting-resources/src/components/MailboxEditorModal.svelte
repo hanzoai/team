@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MailboxOptions } from '@hanzo/account-client'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { Dropdown, ListItem, Modal, ModernEditbox, Spinner, themeStore } from '@hanzo/ui'
-  import setting from '@hanzo/setting'
+  import { MailboxOptions } from '@hanzoteam/account-client'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { Dropdown, ListItem, Modal, ModernEditbox, Spinner, themeStore } from '@hanzoteam/ui'
+  import setting from '@hanzoteam/setting'
   import { createEventDispatcher } from 'svelte'
   import { getAccountClient } from '../utils'
-  import { IntlString, translateCB } from '@hanzo/platform'
-  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hanzo/contact'
-  import { buildSocialIdString, SocialIdType } from '@hanzo/core'
-  import { Analytics } from '@hanzo/analytics'
+  import { IntlString, translateCB } from '@hanzoteam/platform'
+  import contact, { getCurrentEmployee, SocialIdentityRef } from '@hanzoteam/contact'
+  import { buildSocialIdString, SocialIdType } from '@hanzoteam/core'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let mailboxOptions: MailboxOptions
 

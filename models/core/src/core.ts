@@ -62,7 +62,7 @@ import {
   type TypeAny,
   type Version,
   type VersionableClass
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   Hidden,
   Index,
@@ -78,8 +78,8 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hanzo/model'
-import { getEmbeddedLabel, type IntlString, type Plugin } from '@hanzo/platform'
+} from '@hanzoteam/model'
+import { getEmbeddedLabel, type IntlString, type Plugin } from '@hanzoteam/platform'
 import core from './component'
 
 // C O R E

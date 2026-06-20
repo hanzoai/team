@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Client, ClientConnectEvent, MeasureContext, TxPersistenceStore } from '@hanzo/core'
-import { type Plugin, type Resource, type Metadata, type StatusCode, plugin } from '@hanzo/platform'
+import type { Client, ClientConnectEvent, MeasureContext, TxPersistenceStore } from '@hanzoteam/core'
+import { type Plugin, type Resource, type Metadata, type StatusCode, plugin } from '@hanzoteam/platform'
 
 /**
  * @public

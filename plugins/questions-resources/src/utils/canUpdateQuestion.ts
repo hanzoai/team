@@ -2,7 +2,7 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Question } from '@hanzo/questions'
+import type { Question } from '@hanzoteam/questions'
 import { getCurrentEmployeeRef } from './getCurrentEmployeeRef'
 
 export function canUpdateQuestion (object: Question<unknown>): boolean {

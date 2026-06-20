@@ -1,15 +1,15 @@
 //
 // Copyright @ 2022 Hanzo AI Inc.
 //
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
-import training from '@hanzo/model-training'
-import serverTraining from '@hanzo/server-training'
-import core from '@hanzo/core'
-import notification from '@hanzo/notification'
-import serverNotification from '@hanzo/server-notification'
+import training from '@hanzoteam/model-training'
+import serverTraining from '@hanzoteam/server-training'
+import core from '@hanzoteam/core'
+import notification from '@hanzoteam/notification'
+import serverNotification from '@hanzoteam/server-notification'
 
-export { serverTrainingId } from '@hanzo/server-training/src/index'
+export { serverTrainingId } from '@hanzoteam/server-training/src/index'
 
 export function createModel (builder: Builder): void {
   builder.mixin(

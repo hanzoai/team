@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, IdMap, Ref, toIdMap } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { TagElement, TagReference } from '@hanzo/tags'
+  import { Class, Doc, IdMap, Ref, toIdMap } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { TagElement, TagReference } from '@hanzoteam/tags'
   import tags from '../plugin'
   import TagItem from './TagItem.svelte'
   import { selectedTagElements } from '../utils'
-  import { Label } from '@hanzo/ui'
+  import { Label } from '@hanzoteam/ui'
 
   export let object: Doc
   export let _class: Ref<Class<Doc>>

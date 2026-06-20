@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { ProductVersionState } from '@hanzo/products'
-import { type IntlString } from '@hanzo/platform'
+import { ProductVersionState } from '@hanzoteam/products'
+import { type IntlString } from '@hanzoteam/platform'
 
 import products from './plugin'
 

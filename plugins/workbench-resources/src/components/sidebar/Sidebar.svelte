@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { panelstore } from '@hanzo/ui'
-  import { Widget, WidgetPreference } from '@hanzo/workbench'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { panelstore } from '@hanzoteam/ui'
+  import { Widget, WidgetPreference } from '@hanzoteam/workbench'
 
   import workbench from '../../plugin'
   import { sidebarStore, SidebarVariant } from '../../sidebar'
   import SidebarExpanded from './SidebarExpanded.svelte'
   import SidebarMini from './SidebarMini.svelte'
   import { isAllowedToRole } from '../../utils'
-  import { getCurrentAccount } from '@hanzo/core'
+  import { getCurrentAccount } from '@hanzoteam/core'
 
   const account = getCurrentAccount()
   const client = getClient()

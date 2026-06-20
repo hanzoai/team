@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/text-core",
+  "name": "@hanzoteam/text-core",
   "entries": [
     {
       "version": "0.7.18",
@@ -20,7 +20,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.17` to `0.7.18`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.17` to `0.7.18`"
           }
         ]
       }
@@ -37,7 +37,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.6` to `0.7.7`"
           }
         ]
       }
@@ -54,7 +54,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.5` to `0.7.6`"
           }
         ]
       }
@@ -66,7 +66,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.3` to `0.7.4`"
           }
         ]
       }

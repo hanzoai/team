@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Integration } from '@hanzo/account-client'
+  import { Integration } from '@hanzoteam/account-client'
   import Connect from './Connect.svelte'
 
   export let integration: Integration | undefined = undefined

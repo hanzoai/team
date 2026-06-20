@@ -33,15 +33,15 @@ import {
   type WorkspaceInfoWithStatus as WorkspaceInfoWithStatusCore,
   type WorkspaceMode,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { getMongoClient } from '@hanzo/mongo' // TODO: get rid of this import later
-import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzo/platform'
-import { getDBClient, setDBExtraOptions } from '@hanzo/postgres'
+} from '@hanzoteam/core'
+import { getMongoClient } from '@hanzoteam/mongo' // TODO: get rid of this import later
+import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzoteam/platform'
+import { getDBClient, setDBExtraOptions } from '@hanzoteam/postgres'
 import { pbkdf2Sync, randomBytes } from 'crypto'
 import otpGenerator from 'otp-generator'
 
-import { Analytics } from '@hanzo/analytics'
-import { decodeTokenVerbose, generateToken, type PermissionsGrant, TokenError } from '@hanzo/server-token'
+import { Analytics } from '@hanzoteam/analytics'
+import { decodeTokenVerbose, generateToken, type PermissionsGrant, TokenError } from '@hanzoteam/server-token'
 import { MongoAccountDB } from './collections/mongo'
 import { PostgresAccountDB } from './collections/postgres/postgres'
 import { accountPlugin } from './plugin'

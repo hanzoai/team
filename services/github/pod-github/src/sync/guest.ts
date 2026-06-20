@@ -2,11 +2,11 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { Branding, generateUuid, PersonUuid, TxOperations, WorkspaceIds, WorkspaceUuid } from '@hanzo/core'
-import { MarkupMarkType, MarkupNode, MarkupNodeType, traverseNode } from '@hanzo/text'
-import { getPublicLink } from '@hanzo/server-guest-resources'
-import { Task } from '@hanzo/task'
-import { generateToken } from '@hanzo/server-token'
+import { Branding, generateUuid, PersonUuid, TxOperations, WorkspaceIds, WorkspaceUuid } from '@hanzoteam/core'
+import { MarkupMarkType, MarkupNode, MarkupNodeType, traverseNode } from '@hanzoteam/text'
+import { getPublicLink } from '@hanzoteam/server-guest-resources'
+import { Task } from '@hanzoteam/task'
+import { generateToken } from '@hanzoteam/server-token'
 
 const githubLinkText = process.env.LINK_TEXT ?? 'hanzoai&reg;:'
 

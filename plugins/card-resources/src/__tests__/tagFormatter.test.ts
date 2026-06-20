@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import type { AttributeModel } from '@hanzo/view'
-import cardPlugin, { type Card } from '@hanzo/card'
-import { ClassifierKind, type Class, type Doc, type Hierarchy, type Ref } from '@hanzo/core'
+import type { AttributeModel } from '@hanzoteam/view'
+import cardPlugin, { type Card } from '@hanzoteam/card'
+import { ClassifierKind, type Class, type Doc, type Hierarchy, type Ref } from '@hanzoteam/core'
 import { isTagsColumn, formatCardTagsForMarkdown, formatTagValue } from '../tagFormatter'
 
-jest.mock('@hanzo/platform', () => {
-  const actual = jest.requireActual('@hanzo/platform')
+jest.mock('@hanzoteam/platform', () => {
+  const actual = jest.requireActual('@hanzoteam/platform')
   return {
     ...actual,
     translate: jest.fn(async (str: unknown) => String(str))

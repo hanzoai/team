@@ -12,20 +12,20 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { Applet, Poll, PollAnswer, UserVote } from '@hanzo/communication'
-  import { AppletAttachment } from '@hanzo/communication-types'
-  import { DAY, getEventPositionElement, Label, Menu, showPopup, ticker, TimeSince } from '@hanzo/ui'
-  import contact, { getCurrentEmployeeSpace } from '@hanzo/contact'
-  import { employeeByAccountStore, CombineAvatars } from '@hanzo/contact-resources'
-  import { notEmpty, getCurrentAccount, isOtherDay, Timestamp, getDay } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  import { Applet, Poll, PollAnswer, UserVote } from '@hanzoteam/communication'
+  import { AppletAttachment } from '@hanzoteam/communication-types'
+  import { DAY, getEventPositionElement, Label, Menu, showPopup, ticker, TimeSince } from '@hanzoteam/ui'
+  import contact, { getCurrentEmployeeSpace } from '@hanzoteam/contact'
+  import { employeeByAccountStore, CombineAvatars } from '@hanzoteam/contact-resources'
+  import { notEmpty, getCurrentAccount, isOtherDay, Timestamp, getDay } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
 
   import communication from '../../plugin'
   import { isVotedByMe, PollConfig, PollOption } from '../../poll'
   import PollOptionPresenter from './PollOptionPresenter.svelte'
   import PollResults from './PollResults.svelte'
-  import { openDoc } from '@hanzo/view-resources'
-  import { IntlString } from '@hanzo/platform'
+  import { openDoc } from '@hanzoteam/view-resources'
+  import { IntlString } from '@hanzoteam/platform'
 
   export let applet: Applet
   export let attachment: AppletAttachment<PollConfig>

@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import notification from '@hanzo/model-notification'
-import core from '@hanzo/model-core'
-import contact from '@hanzo/model-contact'
-import chunter from '@hanzo/chunter'
-import love from '@hanzo/love'
+import { type Builder } from '@hanzoteam/model'
+import notification from '@hanzoteam/model-notification'
+import core from '@hanzoteam/model-core'
+import contact from '@hanzoteam/model-contact'
+import chunter from '@hanzoteam/chunter'
+import love from '@hanzoteam/love'
 
 import telegram from './plugin'
 

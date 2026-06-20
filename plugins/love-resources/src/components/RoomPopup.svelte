@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { UserInfo, getPersonByPersonRef } from '@hanzo/contact-resources'
-  import { Class, Doc, Ref } from '@hanzo/core'
+  import { Person } from '@hanzoteam/contact'
+  import { UserInfo, getPersonByPersonRef } from '@hanzoteam/contact-resources'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
 
-  import { IconArrowLeft, Location, ModernButton, Scroller, location, navigate, panelstore } from '@hanzo/ui'
+  import { IconArrowLeft, Location, ModernButton, Scroller, location, navigate, panelstore } from '@hanzoteam/ui'
 
-  import { MeetingMinutes, ParticipantInfo, Room, loveId } from '@hanzo/love'
-  import { getClient } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { getObjectLinkFragment } from '@hanzo/view-resources'
+  import { MeetingMinutes, ParticipantInfo, Room, loveId } from '@hanzoteam/love'
+  import { getClient } from '@hanzoteam/presentation'
+  import view from '@hanzoteam/view'
+  import { getObjectLinkFragment } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import love from '../plugin'
   import { currentMeetingMinutes, infos, myInfo } from '../stores'

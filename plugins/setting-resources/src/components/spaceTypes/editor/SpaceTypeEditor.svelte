@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import core, { SpaceType, SpaceTypeDescriptor } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { SpaceTypeEditor } from '@hanzo/setting'
+  import { getClient } from '@hanzoteam/presentation'
+  import core, { SpaceType, SpaceTypeDescriptor } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { SpaceTypeEditor } from '@hanzoteam/setting'
   import {
     ButtonIcon,
     Component,
@@ -26,7 +26,7 @@
     Separator,
     defineSeparators,
     secondNavSeparators
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
 
   export let type: SpaceType
   export let descriptor: SpaceTypeDescriptor | undefined

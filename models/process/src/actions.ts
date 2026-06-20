@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import card from '@hanzo/card'
-import core from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
+import card from '@hanzoteam/card'
+import core from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
 import process from './plugin'
 
 export function defineMethods (builder: Builder): void {

@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Builder } from '@hanzo/model'
-import presentation from '@hanzo/model-presentation'
-import setting from '@hanzo/model-setting'
-import view, { actionTemplates, createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
+import { type Builder } from '@hanzoteam/model'
+import presentation from '@hanzoteam/model-presentation'
+import setting from '@hanzoteam/model-setting'
+import view, { actionTemplates, createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
 import card from './plugin'
 
 export function createActions (builder: Builder): void {

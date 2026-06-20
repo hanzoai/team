@@ -1,9 +1,9 @@
 //
 // Copyright © 2023 Hanzo AI Inc.
 //
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, SplitLogger } from '@hanzo/analytics-service'
-import { MeasureMetricsContext, metricsToString, newMetrics } from '@hanzo/core'
+import { Analytics } from '@hanzoteam/analytics'
+import { configureAnalytics, SplitLogger } from '@hanzoteam/analytics-service'
+import { MeasureMetricsContext, metricsToString, newMetrics } from '@hanzoteam/core'
 import { writeFile } from 'fs/promises'
 import { join } from 'path'
 import { serveStats } from './stats'

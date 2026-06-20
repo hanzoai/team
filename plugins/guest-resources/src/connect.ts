@@ -1,6 +1,6 @@
-import { Analytics } from '@hanzo/analytics'
-import client from '@hanzo/client'
-import { setCurrentEmployee, type Employee } from '@hanzo/contact'
+import { Analytics } from '@hanzoteam/analytics'
+import client from '@hanzoteam/client'
+import { setCurrentEmployee, type Employee } from '@hanzoteam/contact'
 import core, {
   ClientConnectEvent,
   concatLink,
@@ -11,9 +11,9 @@ import core, {
   type PersonId,
   type Ref,
   type Version
-} from '@hanzo/core'
-import login, { type WorkspaceLoginInfo } from '@hanzo/login'
-import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import login, { type WorkspaceLoginInfo } from '@hanzoteam/login'
+import { getMetadata, getResource, setMetadata } from '@hanzoteam/platform'
 import presentation, {
   loadServerConfig,
   refreshClient,
@@ -21,9 +21,9 @@ import presentation, {
   setCommunicationClient,
   setPresentationCookie,
   upgradeDownloadProgress
-} from '@hanzo/presentation'
-import { desktopPlatform, getCurrentLocation } from '@hanzo/ui'
-import { logOut } from '@hanzo/workbench'
+} from '@hanzoteam/presentation'
+import { desktopPlatform, getCurrentLocation } from '@hanzoteam/ui'
+import { logOut } from '@hanzoteam/workbench'
 import { get, writable } from 'svelte/store'
 
 export const versionError = writable<string | undefined>(undefined)

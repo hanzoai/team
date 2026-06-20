@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Contact, type Employee } from '@hanzo/contact'
+import { type Contact, type Employee } from '@hanzoteam/contact'
 import {
   AccountRole,
   DOMAIN_MODEL,
@@ -24,7 +24,7 @@ import {
   type Markup,
   type Ref,
   type Type
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   hrId,
   type Department,
@@ -33,7 +33,7 @@ import {
   type RequestType,
   type Staff,
   type TzDate
-} from '@hanzo/hr'
+} from '@hanzoteam/hr'
 import {
   ArrOf,
   Collection,
@@ -48,20 +48,20 @@ import {
   TypeString,
   UX,
   type Builder
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import calendar from '@hanzo/model-calendar'
-import chunter from '@hanzo/model-chunter'
-import contact, { TEmployee } from '@hanzo/model-contact'
-import core, { TAttachedDoc, TDoc, TType } from '@hanzo/model-core'
-import view, { classPresenter, createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification from '@hanzo/notification'
-import { type Asset, type IntlString } from '@hanzo/platform'
-import { PaletteColorIndexes } from '@hanzo/ui/src/colors'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import calendar from '@hanzoteam/model-calendar'
+import chunter from '@hanzoteam/model-chunter'
+import contact, { TEmployee } from '@hanzoteam/model-contact'
+import core, { TAttachedDoc, TDoc, TType } from '@hanzoteam/model-core'
+import view, { classPresenter, createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import notification from '@hanzoteam/notification'
+import { type Asset, type IntlString } from '@hanzoteam/platform'
+import { PaletteColorIndexes } from '@hanzoteam/ui/src/colors'
 import hr from './plugin'
 
-export { hrId } from '@hanzo/hr'
+export { hrId } from '@hanzoteam/hr'
 export { hrOperation } from './migration'
 export { default } from './plugin'
 

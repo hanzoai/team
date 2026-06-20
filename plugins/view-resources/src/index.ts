@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
-import { getEventPopupPositionElement, type PopupAlignment } from '@hanzo/ui'
-import { canCopyLink } from '@hanzo/view'
+import { type Resources } from '@hanzoteam/platform'
+import { getEventPopupPositionElement, type PopupAlignment } from '@hanzoteam/ui'
+import { canCopyLink } from '@hanzoteam/view'
 import { actionImpl } from './actionImpl'
 import ActionsPopup from './components/ActionsPopup.svelte'
 import ArrayEditor from './components/ArrayEditor.svelte'
@@ -220,7 +220,7 @@ export * from './viewletContextStore'
 export { getViewletSpecialActions } from './viewletUtils'
 export { copyMarkdown } from './actionImpl'
 export { default as SimpleNotification } from './components/SimpleNotification.svelte'
-export type { BuildMarkdownTableMetadata } from '@hanzo/view'
+export type { BuildMarkdownTableMetadata } from '@hanzoteam/view'
 export {
   ArrayEditor,
   BooleanEditor,

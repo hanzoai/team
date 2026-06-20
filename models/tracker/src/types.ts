@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import chunter from '@hanzo/chunter'
-import contact, { type Employee, type Person } from '@hanzo/contact'
+import chunter from '@hanzoteam/chunter'
+import contact, { type Employee, type Person } from '@hanzoteam/contact'
 import {
   DOMAIN_MODEL,
   DateRangeMode,
@@ -30,7 +30,7 @@ import {
   type Role,
   type CollectionSize,
   type AccountUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ArrOf,
   Collection,
@@ -48,13 +48,13 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import core, { TAttachedDoc, TDoc, TStatus, TType } from '@hanzo/model-core'
-import task, { TTask, TProject as TTaskProject } from '@hanzo/model-task'
-import { getEmbeddedLabel, type IntlString } from '@hanzo/platform'
-import tags, { type TagElement } from '@hanzo/tags'
-import time, { type ToDo } from '@hanzo/time'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import core, { TAttachedDoc, TDoc, TStatus, TType } from '@hanzoteam/model-core'
+import task, { TTask, TProject as TTaskProject } from '@hanzoteam/model-task'
+import { getEmbeddedLabel, type IntlString } from '@hanzoteam/platform'
+import tags, { type TagElement } from '@hanzoteam/tags'
+import time, { type ToDo } from '@hanzoteam/time'
 import {
   type ProjectTargetPreference,
   type Component,
@@ -73,11 +73,11 @@ import {
   type RelatedSpaceRule,
   type TimeReportDayType,
   type TimeSpendReport
-} from '@hanzo/tracker'
+} from '@hanzoteam/tracker'
 import tracker from './plugin'
-import { type TaskType } from '@hanzo/task'
+import { type TaskType } from '@hanzoteam/task'
 
-import preference, { TPreference } from '@hanzo/model-preference'
+import preference, { TPreference } from '@hanzoteam/model-preference'
 
 export const DOMAIN_TRACKER = 'tracker' as Domain
 

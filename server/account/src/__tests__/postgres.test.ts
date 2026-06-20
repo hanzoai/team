@@ -19,7 +19,7 @@ import {
   type AccountUuid,
   type WorkspaceMode,
   type WorkspaceUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { AccountPostgresDbCollection, PostgresAccountDB, PostgresDbCollection } from '../collections/postgres/postgres'
 import { type Sql } from 'postgres'
 

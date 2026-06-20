@@ -14,14 +14,14 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Attachment } from '@hanzo/attachment'
-  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import { TestCase, TestProject, TestSuite, TestCaseStatus } from '@hanzo/test-management'
-  import core, { fillDefaults, generateId, makeCollabId, Ref, TxOperations, Data } from '@hanzo/core'
-  import { ObjectBox } from '@hanzo/view-resources'
-  import { Card, SpaceSelector, createMarkup, getClient } from '@hanzo/presentation'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
-  import { Button, createFocusManager, EditBox, FocusHandler, IconAttachment, getLocation } from '@hanzo/ui'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import { TestCase, TestProject, TestSuite, TestCaseStatus } from '@hanzoteam/test-management'
+  import core, { fillDefaults, generateId, makeCollabId, Ref, TxOperations, Data } from '@hanzoteam/core'
+  import { ObjectBox } from '@hanzoteam/view-resources'
+  import { Card, SpaceSelector, createMarkup, getClient } from '@hanzoteam/presentation'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
+  import { Button, createFocusManager, EditBox, FocusHandler, IconAttachment, getLocation } from '@hanzoteam/ui'
 
   import StatusEditor from './StatusEditor.svelte'
   import ProjectPresenter from '../project/ProjectPresenter.svelte'

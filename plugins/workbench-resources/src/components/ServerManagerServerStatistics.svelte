@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { FixedColumn } from '@hanzo/view-resources'
-  import { getEmbeddedLabel, getMetadata } from '@hanzo/platform'
-  import presentation, { type OverviewStatistics } from '@hanzo/presentation'
-  import { Button, DropdownLabels, Expandable, IconArrowRight, ticker } from '@hanzo/ui'
+  import { FixedColumn } from '@hanzoteam/view-resources'
+  import { getEmbeddedLabel, getMetadata } from '@hanzoteam/platform'
+  import presentation, { type OverviewStatistics } from '@hanzoteam/presentation'
+  import { Button, DropdownLabels, Expandable, IconArrowRight, ticker } from '@hanzoteam/ui'
   import MetricsStats from './MetricsStats.svelte'
 
   const token: string = getMetadata(presentation.metadata.Token) ?? ''

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, ArrOf, Doc, EnumOf, RefTo, Type } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, Icon, IconMoreV2, IconOpenedArrow, Label, tooltip } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import core, { AnyAttribute, ArrOf, Doc, EnumOf, RefTo, Type } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, Icon, IconMoreV2, IconOpenedArrow, Label, tooltip } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   export let attribute: AnyAttribute
   export let attributeType: IntlString | undefined = undefined

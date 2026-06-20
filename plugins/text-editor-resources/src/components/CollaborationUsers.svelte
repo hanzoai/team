@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import type { AwarenessState, AwarenessStateMap } from '@hanzo/text-editor'
-  import { AnySvelteComponent, Button, DelayedCaller } from '@hanzo/ui'
+  import type { AwarenessState, AwarenessStateMap } from '@hanzoteam/text-editor'
+  import { AnySvelteComponent, Button, DelayedCaller } from '@hanzoteam/ui'
   import { Editor } from '@tiptap/core'
   import { onMount } from 'svelte'
   import { createRelativePositionFromJSON } from 'yjs'

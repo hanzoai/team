@@ -23,9 +23,9 @@ import core, {
   type Ref,
   type Tx,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { getMongoClient, getWorkspaceMongoDB } from '@hanzo/mongo'
-import { connect } from '@hanzo/server-tool'
+} from '@hanzoteam/core'
+import { getMongoClient, getWorkspaceMongoDB } from '@hanzoteam/mongo'
+import { connect } from '@hanzoteam/server-tool'
 import { generateModelDiff, printDiff } from './mdiff'
 
 export async function diffWorkspace (mongoUrl: string, dbName: string, rawTxes: Tx[]): Promise<void> {

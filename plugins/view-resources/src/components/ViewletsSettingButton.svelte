@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { DocumentQuery, WithLookup } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { ButtonIcon, showPopup, closeTooltip } from '@hanzo/ui'
-  import { ViewOptions, Viewlet, ViewletPreference } from '@hanzo/view'
+  import core, { DocumentQuery, WithLookup } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ButtonIcon, showPopup, closeTooltip } from '@hanzoteam/ui'
+  import { ViewOptions, Viewlet, ViewletPreference } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
   import { getViewOptions, viewOptionStore } from '../viewOptions'

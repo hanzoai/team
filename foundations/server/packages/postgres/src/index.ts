@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { getDBClient, retryTxn } from '@hanzo/postgres-base'
-import type { WorkspaceDestroyAdapter } from '@hanzo/server-core'
+import { getDBClient, retryTxn } from '@hanzoteam/postgres-base'
+import type { WorkspaceDestroyAdapter } from '@hanzoteam/server-core'
 import { domainSchemas } from './schemas'
 
 export { domainSchemas, getDocFieldsByDomains, translateDomain, type FieldSchema, type Schema } from './schemas'
 export * from './storage'
 export { convertDoc, createTables } from './utils'
 
-export * from '@hanzo/postgres-base'
+export * from '@hanzoteam/postgres-base'
 
 export function createPostgreeDestroyAdapter (url: string): WorkspaceDestroyAdapter {
   return {

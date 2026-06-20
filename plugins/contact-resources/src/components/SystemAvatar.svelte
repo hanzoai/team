@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Icon, IconSize, resolvedLocationStore } from '@hanzo/ui'
-  import { Asset } from '@hanzo/platform'
+  import { Icon, IconSize, resolvedLocationStore } from '@hanzoteam/ui'
+  import { Asset } from '@hanzoteam/platform'
 
   export let size: IconSize
   export let variant: 'circle' | 'roundedRect' = 'roundedRect'

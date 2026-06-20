@@ -14,16 +14,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachments } from '@hanzo/attachment-resources'
-  import type { Ref } from '@hanzo/core'
-  import core from '@hanzo/core'
-  import { Panel } from '@hanzo/panel'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { MembersBox } from '@hanzo/contact-resources'
-  import type { Funnel } from '@hanzo/lead'
-  import { FullDescriptionBox } from '@hanzo/text-editor-resources'
-  import { EditBox, Grid } from '@hanzo/ui'
-  import { ClassAttributeBar } from '@hanzo/view-resources'
+  import { Attachments } from '@hanzoteam/attachment-resources'
+  import type { Ref } from '@hanzoteam/core'
+  import core from '@hanzoteam/core'
+  import { Panel } from '@hanzoteam/panel'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { MembersBox } from '@hanzoteam/contact-resources'
+  import type { Funnel } from '@hanzoteam/lead'
+  import { FullDescriptionBox } from '@hanzoteam/text-editor-resources'
+  import { EditBox, Grid } from '@hanzoteam/ui'
+  import { ClassAttributeBar } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import lead from '../plugin'
 

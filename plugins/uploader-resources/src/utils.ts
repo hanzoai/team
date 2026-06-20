@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type FileUploadOptions, type FileUploadPopupOptions, toFileWithPath } from '@hanzo/uploader'
-import { type Ref, type Blob, RateLimiter } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import presentation, { generateFileId, getFileMetadata, getFileStorage } from '@hanzo/presentation'
+import { type FileUploadOptions, type FileUploadPopupOptions, toFileWithPath } from '@hanzoteam/uploader'
+import { type Ref, type Blob, RateLimiter } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation, { generateFileId, getFileMetadata, getFileStorage } from '@hanzoteam/presentation'
 import { type FileUpload, type FileUploadInfo, type Upload, trackUpload, untrackUpload } from './store'
 
 const DEFAULT_MAX_PARALLEL_UPLOADS = 10

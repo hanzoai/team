@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Plugin, Asset, IntlString } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { type AnyComponent, type ComponentExtensionId } from '@hanzo/ui'
+import type { Plugin, Asset, IntlString } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { type AnyComponent, type ComponentExtensionId } from '@hanzoteam/ui'
 
 /** @public */
 export const mediaId = 'media' as Plugin

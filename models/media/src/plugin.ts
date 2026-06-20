@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { mediaId } from '@hanzo/media'
-import media from '@hanzo/media-resources/src/plugin'
+import { mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { mediaId } from '@hanzoteam/media'
+import media from '@hanzoteam/media-resources/src/plugin'
 
 export default mergeIds(mediaId, media, {
   component: {

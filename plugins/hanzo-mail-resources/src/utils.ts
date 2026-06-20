@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
-import login from '@hanzo/login'
-import { hanzoMailIntegrationKind } from '@hanzo/hanzo-mail'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
+import login from '@hanzoteam/login'
+import { hanzoMailIntegrationKind } from '@hanzoteam/hanzo-mail'
 import {
   getIntegrationClient as getIntegrationClientRaw,
   type IntegrationClient
-} from '@hanzo/integration-client'
-import { getClient as getAccountClientRaw, type AccountClient } from '@hanzo/account-client'
+} from '@hanzoteam/integration-client'
+import { getClient as getAccountClientRaw, type AccountClient } from '@hanzoteam/account-client'
 
 export async function getIntegrationClient (): Promise<IntegrationClient> {
   const accountsUrl = getMetadata(login.metadata.AccountsUrl)

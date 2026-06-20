@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
-  import { Button, DropdownLabelsIntl, IconBack, IconForward } from '@hanzo/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Button, DropdownLabelsIntl, IconBack, IconForward } from '@hanzoteam/ui'
 
   import { CalendarMode } from '../index'
   import calendar from '../plugin'

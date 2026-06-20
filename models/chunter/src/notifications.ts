@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
-import notification from '@hanzo/model-notification'
-import core from '@hanzo/model-core'
-import activity from '@hanzo/activity'
+import { type Builder } from '@hanzoteam/model'
+import notification from '@hanzoteam/model-notification'
+import core from '@hanzoteam/model-core'
+import activity from '@hanzoteam/activity'
 
 import chunter from './plugin'
-import { type ClassCollaborators } from '@hanzo/core'
-import { type Channel, type DirectMessage } from '@hanzo/chunter'
+import { type ClassCollaborators } from '@hanzoteam/core'
+import { type Channel, type DirectMessage } from '@hanzoteam/chunter'
 
 export function defineNotifications (builder: Builder): void {
   builder.createDoc<ClassCollaborators<DirectMessage>>(core.class.ClassCollaborators, core.space.Model, {

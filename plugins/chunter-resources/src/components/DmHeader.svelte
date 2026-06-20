@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DirectMessage } from '@hanzo/chunter'
-  import contact, { getCurrentEmployee } from '@hanzo/contact'
-  import { CombineAvatars, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
-  import { type Ref, notEmpty } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { SearchEdit } from '@hanzo/ui'
-  import { openDoc } from '@hanzo/view-resources'
+  import { DirectMessage } from '@hanzoteam/chunter'
+  import contact, { getCurrentEmployee } from '@hanzoteam/contact'
+  import { CombineAvatars, employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
+  import { type Ref, notEmpty } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { SearchEdit } from '@hanzoteam/ui'
+  import { openDoc } from '@hanzoteam/view-resources'
 
   import { userSearch } from '../index'
   import chunter from '../plugin'

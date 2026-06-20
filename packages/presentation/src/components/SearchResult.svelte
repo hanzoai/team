@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { notEmpty, SearchResultDoc } from '@hanzo/core'
-  import { getResourceC } from '@hanzo/platform'
-  import { Icon, type AnySvelteComponent } from '@hanzo/ui'
+  import { notEmpty, SearchResultDoc } from '@hanzoteam/core'
+  import { getResourceC } from '@hanzoteam/platform'
+  import { Icon, type AnySvelteComponent } from '@hanzoteam/ui'
   import IconWithEmoji from './IconWithEmoji.svelte'
 
   export let value: SearchResultDoc

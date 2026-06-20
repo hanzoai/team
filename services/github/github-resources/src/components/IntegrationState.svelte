@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttachedDoc, WithLookup } from '@hanzo/core'
-  import { GithubIntegration, GithubIntegrationRepository } from '@hanzo/github'
-  import { getClient } from '@hanzo/presentation'
-  import type { Integration } from '@hanzo/account-client'
-  import { BaseIntegrationState } from '@hanzo/setting-resources'
-  import { OK, ERROR, Status } from '@hanzo/platform'
+  import { AttachedDoc, WithLookup } from '@hanzoteam/core'
+  import { GithubIntegration, GithubIntegrationRepository } from '@hanzoteam/github'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { Integration } from '@hanzoteam/account-client'
+  import { BaseIntegrationState } from '@hanzoteam/setting-resources'
+  import { OK, ERROR, Status } from '@hanzoteam/platform'
 
   import github from '../plugin'
   import RepositoryPresenterRef from './RepositoryPresenterRef.svelte'

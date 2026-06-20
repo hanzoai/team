@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hanzo/core'
+import { type MeasureContext } from '@hanzoteam/core'
 import { Poppler } from 'node-poppler'
 
 export async function pdfToImage (ctx: MeasureContext, pdfFile: string): Promise<string> {

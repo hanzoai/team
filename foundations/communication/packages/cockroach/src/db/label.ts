@@ -20,8 +20,8 @@ import {
   type FindLabelsParams,
   type LabelID,
   type Label
-} from '@hanzo/communication-types'
-import { Domain, LabelQuery, LabelUpdate } from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-types'
+import { Domain, LabelQuery, LabelUpdate } from '@hanzoteam/communication-sdk-types'
 
 import { BaseDb } from './base'
 import { toLabel } from './mapping'

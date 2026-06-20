@@ -4,7 +4,7 @@ import {
   type BackRPCResponseSend,
   type BackRPCServerHandler,
   type ClientId
-} from '@hanzo/network-backrpc'
+} from '@hanzoteam/network-backrpc'
 import {
   agentDirectRef,
   type ClientUuid,
@@ -14,7 +14,7 @@ import {
   type NetworkEvent,
   type TickManager,
   createProxy
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 import { opNames } from './types'
 
 /**

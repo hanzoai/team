@@ -1,5 +1,5 @@
-import { type Data } from '@hanzo/core'
-import { type Viewlet } from '@hanzo/view'
+import { type Data } from '@hanzoteam/core'
+import { type Viewlet } from '@hanzoteam/view'
 
 export function updateViewletConfig (viewlet: Data<Viewlet> | Viewlet, items: any[]): void {
   const enabledAttibutes = items.filter((it) => it.type === 'attribute' && it.enabled).map((it) => it.value)

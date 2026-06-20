@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, Status, StatusCategory, toIdMap } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { ProjectType, TaskType } from '@hanzo/task'
+  import core, { IdMap, Ref, Status, StatusCategory, toIdMap } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ProjectType, TaskType } from '@hanzoteam/task'
   import {
     ColorDefinition,
     getColorNumberByText,
     getPlatformColorDef,
     resizeObserver,
     themeStore
-  } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { typeStore } from '../..'
 

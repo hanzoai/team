@@ -20,10 +20,10 @@
     isArchivingMode,
     isRestoringMode,
     isUpgradingMode
-  } from '@hanzo/core'
-  import { LoginInfo } from '@hanzo/login'
-  import { OK, Severity, Status } from '@hanzo/platform'
-  import presentation, { MessageBox, NavLink, reduceCalls } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import { LoginInfo } from '@hanzoteam/login'
+  import { OK, Severity, Status } from '@hanzoteam/platform'
+  import presentation, { MessageBox, NavLink, reduceCalls } from '@hanzoteam/presentation'
   import {
     Button,
     Label,
@@ -33,8 +33,8 @@
     deviceOptionsStore as deviceInfo,
     showPopup,
     ticker
-  } from '@hanzo/ui'
-  import { logOut } from '@hanzo/workbench'
+  } from '@hanzoteam/ui'
+  import { logOut } from '@hanzoteam/workbench'
   import { onMount } from 'svelte'
 
   import login from '../plugin'

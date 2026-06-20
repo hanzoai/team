@@ -1,5 +1,5 @@
-import { MeasureContext, type WorkspaceIds } from '@hanzo/core'
-import { StorageAdapter } from '@hanzo/server-core'
+import { MeasureContext, type WorkspaceIds } from '@hanzoteam/core'
+import { StorageAdapter } from '@hanzoteam/server-core'
 import { createReadStream, createWriteStream, existsSync, statSync } from 'fs'
 import { mkdir, readdir, readFile, rm, writeFile } from 'fs/promises'
 import { dirname, join } from 'path'

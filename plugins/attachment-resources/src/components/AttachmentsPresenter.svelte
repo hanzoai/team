@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc } from '@hanzo/core'
-  import { Button, ButtonKind, ButtonSize, IconAttachment, tooltip } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import type { Doc } from '@hanzoteam/core'
+  import { Button, ButtonKind, ButtonSize, IconAttachment, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import AttachmentPopup from './AttachmentPopup.svelte'
 
   export let value: number | undefined

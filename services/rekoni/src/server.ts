@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { newMetrics } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import { initStatisticsContext } from '@hanzo/server-core'
-import serverToken from '@hanzo/server-token'
+import { createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { newMetrics } from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
+import { initStatisticsContext } from '@hanzoteam/server-core'
+import serverToken from '@hanzoteam/server-token'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import express from 'express'

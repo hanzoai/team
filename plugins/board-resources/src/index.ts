@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 import Archive from './components/Archive.svelte'
 import BoardHeader from './components/BoardHeader.svelte'

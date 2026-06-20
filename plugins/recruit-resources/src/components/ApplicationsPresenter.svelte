@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Candidate } from '@hanzo/recruit'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import type { Candidate } from '@hanzoteam/recruit'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
   import ApplicationsPopup from './ApplicationsPopup.svelte'
 

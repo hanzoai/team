@@ -21,9 +21,9 @@ import {
   type ServerConfig,
   type StorageClient,
   type WorkspaceToken
-} from '@hanzo/api-client'
-import { systemAccountUuid, generateUuid, type Ref, type Blob } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/api-client'
+import { systemAccountUuid, generateUuid, type Ref, type Blob } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 
 describe('storage-api-server', () => {
   const frontUrl = 'http://hanzo.local:8083'

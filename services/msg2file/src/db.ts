@@ -14,7 +14,7 @@
 //
 
 import postgres from 'postgres'
-import { MessageID, type CardID, type WorkspaceID } from '@hanzo/communication-types'
+import { MessageID, type CardID, type WorkspaceID } from '@hanzoteam/communication-types'
 
 import config from './config'
 

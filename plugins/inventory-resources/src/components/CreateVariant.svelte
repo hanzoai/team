@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { generateId, PersonId, Ref } from '@hanzo/core'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { EditBox, Grid } from '@hanzo/ui'
+  import core, { generateId, PersonId, Ref } from '@hanzoteam/core'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { EditBox, Grid } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import inventory from '../plugin'
-  import { Product, Variant } from '@hanzo/inventory'
+  import { Product, Variant } from '@hanzoteam/inventory'
 
   export let product: Ref<Product>
 

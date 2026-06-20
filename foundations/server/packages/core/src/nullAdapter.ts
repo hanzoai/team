@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type WorkspaceIds, type Hierarchy, type MeasureContext, type ModelDb } from '@hanzo/core'
+import { type WorkspaceIds, type Hierarchy, type MeasureContext, type ModelDb } from '@hanzoteam/core'
 import type { DbAdapter } from './adapter'
 import { DummyDbAdapter } from './mem'
 

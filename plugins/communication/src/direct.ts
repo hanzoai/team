@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Card } from '@hanzo/card'
-import { Ref } from '@hanzo/core'
-import { Person } from '@hanzo/contact'
+import { Card } from '@hanzoteam/card'
+import { Ref } from '@hanzoteam/core'
+import { Person } from '@hanzoteam/contact'
 
 export interface Direct extends Card {
   // TODO: Do we neet it? Can we just reuse collaborators?

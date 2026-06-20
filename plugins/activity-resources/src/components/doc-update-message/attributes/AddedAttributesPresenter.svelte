@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
-  import { AttributeModel } from '@hanzo/view'
-  import activity, { DocAttributeUpdates, DocUpdateMessageViewlet } from '@hanzo/activity'
+  import { Label } from '@hanzoteam/ui'
+  import { AttributeModel } from '@hanzoteam/view'
+  import activity, { DocAttributeUpdates, DocUpdateMessageViewlet } from '@hanzoteam/activity'
 
   import ChangeAttributesTemplate from './ChangeAttributesTemplate.svelte'
 

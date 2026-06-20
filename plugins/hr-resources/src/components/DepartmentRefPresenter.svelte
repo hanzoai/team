@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import hr, { Department } from '@hanzo/hr'
+  import { Ref } from '@hanzoteam/core'
+  import hr, { Department } from '@hanzoteam/hr'
   import DepartmentPresenter from './DepartmentPresenter.svelte'
-  import { createQuery } from '@hanzo/presentation'
+  import { createQuery } from '@hanzoteam/presentation'
 
   export let value: Ref<Department>
 

@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { DropdownIntlItem, DropdownLabelsIntl, Label, Toggle } from '@hanzo/ui'
-  import { Viewlet, ViewOptions, ViewOptionsModel, ViewOptionModel } from '@hanzo/view'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DropdownIntlItem, DropdownLabelsIntl, Label, Toggle } from '@hanzoteam/ui'
+  import { Viewlet, ViewOptions, ViewOptionsModel, ViewOptionModel } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../plugin'
   import { buildConfigLookup, getKeyLabel } from '../utils'
   import { isDropdownType, isToggleType, noCategory } from '../viewOptions'
-  import { SortingOrder } from '@hanzo/core'
+  import { SortingOrder } from '@hanzoteam/core'
 
   export let viewlet: Viewlet
   export let config: ViewOptionsModel

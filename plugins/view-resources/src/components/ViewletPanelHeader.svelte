@@ -4,9 +4,9 @@
 //
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import { translateCB } from '@hanzo/platform'
+  import { Class, Doc, DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import { translateCB } from '@hanzoteam/platform'
   import {
     Breadcrumb,
     Header,
@@ -15,9 +15,9 @@
     ModeSelector,
     SearchInput,
     themeStore
-  } from '@hanzo/ui'
-  import view, { ViewOptions, Viewlet, ViewletPreference, type ViewletViewAction } from '@hanzo/view'
-  import { ComponentExtensions, getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/ui'
+  import view, { ViewOptions, Viewlet, ViewletPreference, type ViewletViewAction } from '@hanzoteam/view'
+  import { ComponentExtensions, getClient } from '@hanzoteam/presentation'
   import { getViewletSpecialActions } from '../viewletUtils'
 
   import FilterBar from './filter/FilterBar.svelte'

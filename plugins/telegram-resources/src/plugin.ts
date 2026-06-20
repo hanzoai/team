@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
 
-import telegram, { telegramId } from '@hanzo/telegram'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import telegram, { telegramId } from '@hanzoteam/telegram'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
 export default mergeIds(telegramId, telegram, {
   string: {

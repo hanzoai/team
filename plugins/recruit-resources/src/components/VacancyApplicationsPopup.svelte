@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { FindOptions, SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Applicant, Vacancy } from '@hanzo/recruit'
-  import { Button, Label, Loading } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { DocNavLink, ObjectPresenter, Table } from '@hanzo/view-resources'
+  import core, { FindOptions, SortingOrder } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Applicant, Vacancy } from '@hanzoteam/recruit'
+  import { Button, Label, Loading } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { DocNavLink, ObjectPresenter, Table } from '@hanzoteam/view-resources'
   import recruit from '../plugin'
 
   export let value: Vacancy

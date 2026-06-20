@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import type { AccountRole, Blob, Permission, Ref, Timestamp, TypedSpace } from '@hanzo/core'
+import type { AccountRole, Blob, Permission, Ref, Timestamp, TypedSpace } from '@hanzoteam/core'
 import type {
   Asset,
   IntlString,
   /* Metadata, Plugin, plugin, */ Resource /*, Service */
-} from '@hanzo/platform'
+} from '@hanzoteam/platform'
 import { /* getContext, */ type ComponentType } from 'svelte'
 
 /**

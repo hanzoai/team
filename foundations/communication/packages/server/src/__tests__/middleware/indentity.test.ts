@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzo/core'
-import { Event, MessageEventType, SessionData } from '@hanzo/communication-sdk-types'
+import { MeasureContext, systemAccountUuid, WorkspaceUuid } from '@hanzoteam/core'
+import { Event, MessageEventType, SessionData } from '@hanzoteam/communication-sdk-types'
 import {
   AccountUuid,
   CardID,
@@ -22,7 +22,7 @@ import {
   MessageID,
   MessageType,
   SocialID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import { IdentityMiddleware } from '../../middleware/indentity'
 import { Enriched, Middleware, MiddlewareContext } from '../../types'
 import { LowLevelClient } from '../../client'

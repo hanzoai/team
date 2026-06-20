@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/backup-api-pod",
+  "name": "@hanzoteam/backup-api-pod",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -31,7 +31,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@tsconfig/node16": "^1.0.4",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
@@ -56,15 +56,15 @@
     "@types/morgan": "~1.9.9"
   },
   "dependencies": {
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/analytics-service": "workspace:^0.7.17",
-    "@hanzo/server-token": "workspace:^0.7.17",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/server-storage": "workspace:^0.7.16",
-    "@hanzo/server-backup": "workspace:^0.7.0",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/account-client": "workspace:^0.7.21",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/analytics-service": "workspace:^0.7.17",
+    "@hanzoteam/server-token": "workspace:^0.7.17",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/server-storage": "workspace:^0.7.16",
+    "@hanzoteam/server-backup": "workspace:^0.7.0",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/account-client": "workspace:^0.7.21",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",

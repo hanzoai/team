@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { chunterId, type ThreadMessage } from '@hanzo/chunter'
+import { chunterId, type ThreadMessage } from '@hanzoteam/chunter'
 import core, {
   TxOperations,
   type Class,
@@ -23,19 +23,19 @@ import core, {
   type Space,
   DOMAIN_TX,
   notEmpty
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   tryMigrate,
   tryUpgrade,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import activity, { migrateMessagesSpace, DOMAIN_ACTIVITY } from '@hanzo/model-activity'
-import notification from '@hanzo/notification'
-import contact, { getAllAccounts } from '@hanzo/contact'
-import { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION } from '@hanzo/model-notification'
-import { type DocUpdateMessage } from '@hanzo/activity'
+} from '@hanzoteam/model'
+import activity, { migrateMessagesSpace, DOMAIN_ACTIVITY } from '@hanzoteam/model-activity'
+import notification from '@hanzoteam/notification'
+import contact, { getAllAccounts } from '@hanzoteam/contact'
+import { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION } from '@hanzoteam/model-notification'
+import { type DocUpdateMessage } from '@hanzoteam/activity'
 
 import { DOMAIN_CHUNTER } from './index'
 import chunter from './plugin'

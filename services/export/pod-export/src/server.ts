@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import { getClient, isWorkspaceLoginInfo } from '@hanzo/account-client'
-import client, { ClientSocket } from '@hanzo/client'
+import { getClient, isWorkspaceLoginInfo } from '@hanzoteam/account-client'
+import client, { ClientSocket } from '@hanzoteam/client'
 import core, {
   AccountRole,
   AccountUuid,
@@ -36,9 +36,9 @@ import core, {
   TxOperations,
   WorkspaceIds,
   type WorkspaceUuid
-} from '@hanzo/core'
-import drive, { createFile, Drive } from '@hanzo/drive'
-import exportPlugin, { type TransformConfig, type RelationDefinition } from '@hanzo/export'
+} from '@hanzoteam/core'
+import drive, { createFile, Drive } from '@hanzoteam/drive'
+import exportPlugin, { type TransformConfig, type RelationDefinition } from '@hanzoteam/export'
 import {
   ContextNameMiddleware,
   DBAdapterInitMiddleware,
@@ -47,10 +47,10 @@ import {
   DomainTxMiddleware,
   LowLevelMiddleware,
   ModelMiddleware
-} from '@hanzo/middleware'
-import notification from '@hanzo/notification'
-import { setMetadata } from '@hanzo/platform'
-import { createClient, getAccountClient, getTransactorEndpoint } from '@hanzo/server-client'
+} from '@hanzoteam/middleware'
+import notification from '@hanzoteam/notification'
+import { setMetadata } from '@hanzoteam/platform'
+import { createClient, getAccountClient, getTransactorEndpoint } from '@hanzoteam/server-client'
 import {
   createDummyStorageAdapter,
   createPipeline,
@@ -59,10 +59,10 @@ import {
   type PipelineContext,
   StorageAdapter,
   StorageConfiguration
-} from '@hanzo/server-core'
-import { getConfig } from '@hanzo/server-pipeline'
-import { buildStorageFromConfig } from '@hanzo/server-storage'
-import { Token, decodeToken, generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import { getConfig } from '@hanzoteam/server-pipeline'
+import { buildStorageFromConfig } from '@hanzoteam/server-storage'
+import { Token, decodeToken, generateToken } from '@hanzoteam/server-token'
 import archiver from 'archiver'
 import { sendExportCompletionNotification } from './notifications'
 import cors from 'cors'

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentAccount } from '@hanzo/core'
-  import contact from '@hanzo/contact'
-  import { DisplayDocUpdateMessage } from '@hanzo/activity'
-  import notification from '@hanzo/notification'
-  import { BaseMessagePreview } from '@hanzo/activity-resources'
-  import { Action, Icon, Label } from '@hanzo/ui'
+  import { getCurrentAccount } from '@hanzoteam/core'
+  import contact from '@hanzoteam/contact'
+  import { DisplayDocUpdateMessage } from '@hanzoteam/activity'
+  import notification from '@hanzoteam/notification'
+  import { BaseMessagePreview } from '@hanzoteam/activity-resources'
+  import { Action, Icon, Label } from '@hanzoteam/ui'
 
   export let message: DisplayDocUpdateMessage
   export let actions: Action[] = []

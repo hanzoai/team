@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type MeasureContext, type WorkspaceUuid } from '@hanzo/core'
-import { CreateMessageEvent, MessageEventType, type SessionData } from '@hanzo/communication-sdk-types'
+import { type MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
+import { CreateMessageEvent, MessageEventType, type SessionData } from '@hanzoteam/communication-sdk-types'
 import {
   type AccountUuid,
   CardID,
@@ -22,7 +22,7 @@ import {
   MessageID,
   MessageType,
   type SocialID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import { BaseMiddleware } from '../../middleware/base'
 import { type Enriched, type Middleware, type MiddlewareContext } from '../../types'

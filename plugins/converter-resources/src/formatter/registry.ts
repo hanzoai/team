@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { Doc, Class, Ref, Hierarchy } from '@hanzo/core'
+import type { Doc, Class, Ref, Hierarchy } from '@hanzoteam/core'
 import type { ValueFormatter } from '../types'
 
 /**

@@ -35,7 +35,7 @@ import {
   type Tx,
   type TxAccessLevel,
   type TypedSpace
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ArrOf,
   Collection,
@@ -49,8 +49,8 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hanzo/model'
-import { getEmbeddedLabel, type Asset, type IntlString } from '@hanzo/platform'
+} from '@hanzoteam/model'
+import { getEmbeddedLabel, type Asset, type IntlString } from '@hanzoteam/platform'
 import core from './component'
 import { TAttachedDoc, TClass, TDoc } from './core'
 // S P A C E

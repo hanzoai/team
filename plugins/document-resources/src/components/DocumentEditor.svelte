@@ -15,13 +15,13 @@
 //
 -->
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import document, { Document } from '@hanzo/document'
-  import { getResource } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { CollaboratorEditor, ImageUploadOptions } from '@hanzo/text-editor-resources'
-  import { AnySvelteComponent } from '@hanzo/ui'
-  import { getCollaborationUser } from '@hanzo/view-resources'
+  import contact from '@hanzoteam/contact'
+  import document, { Document } from '@hanzoteam/document'
+  import { getResource } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { CollaboratorEditor, ImageUploadOptions } from '@hanzoteam/text-editor-resources'
+  import { AnySvelteComponent } from '@hanzoteam/ui'
+  import { getCollaborationUser } from '@hanzoteam/view-resources'
   import { FocusPosition } from '@tiptap/core'
   import { createEventDispatcher } from 'svelte'
 

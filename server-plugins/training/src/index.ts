@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { plugin, type Plugin, type Resource } from '@hanzo/platform'
-import { type Presenter, TypeMatchFunc } from '@hanzo/server-notification'
-import type { TrainingRequest } from '@hanzo/training'
+import { plugin, type Plugin, type Resource } from '@hanzoteam/platform'
+import { type Presenter, TypeMatchFunc } from '@hanzoteam/server-notification'
+import type { TrainingRequest } from '@hanzoteam/training'
 
 /**
  * @public

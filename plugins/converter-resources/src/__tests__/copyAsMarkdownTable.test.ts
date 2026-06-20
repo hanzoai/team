@@ -15,16 +15,16 @@
 
 import { buildMarkdownTableFromDocs, copyAsMarkdownTable } from '../markdown'
 import { isIntlString } from '../formatter'
-import type { Doc, Class, Ref } from '@hanzo/core'
+import type { Doc, Class, Ref } from '@hanzoteam/core'
 import type { CopyAsMarkdownTableProps } from '../types'
-import { getClient } from '@hanzo/presentation'
-import { getCurrentLanguage } from '@hanzo/theme'
-import { copyMarkdown, buildModel, getObjectLinkFragment } from '@hanzo/view-resources'
-import core from '@hanzo/core'
-import { type IntlString } from '@hanzo/platform'
+import { getClient } from '@hanzoteam/presentation'
+import { getCurrentLanguage } from '@hanzoteam/theme'
+import { copyMarkdown, buildModel, getObjectLinkFragment } from '@hanzoteam/view-resources'
+import core from '@hanzoteam/core'
+import { type IntlString } from '@hanzoteam/platform'
 
-jest.mock('@hanzo/platform', () => {
-  const actual = jest.requireActual('@hanzo/platform')
+jest.mock('@hanzoteam/platform', () => {
+  const actual = jest.requireActual('@hanzoteam/platform')
   return {
     ...actual,
     translate: jest.fn(async (str: unknown) => `translated:${String(str)}`),
@@ -37,22 +37,22 @@ jest.mock('@hanzo/platform', () => {
   }
 })
 
-jest.mock('@hanzo/presentation', () => ({
+jest.mock('@hanzoteam/presentation', () => ({
   getClient: jest.fn()
 }))
 
-jest.mock('@hanzo/theme', () => ({
+jest.mock('@hanzoteam/theme', () => ({
   getCurrentLanguage: jest.fn(() => 'en')
 }))
 
-jest.mock('@hanzo/view-resources', () => ({
+jest.mock('@hanzoteam/view-resources', () => ({
   copyMarkdown: jest.fn(),
   buildModel: jest.fn(),
   buildConfigLookup: jest.fn(() => ({})),
   getObjectLinkFragment: jest.fn()
 }))
 
-jest.mock('@hanzo/ui', () => ({
+jest.mock('@hanzoteam/ui', () => ({
   addNotification: jest.fn(),
   NotificationSeverity: { Success: 'success', Error: 'error' },
   locationToUrl: jest.fn((loc: unknown) => {
@@ -64,7 +64,7 @@ jest.mock('@hanzo/ui', () => ({
   getCurrentResolvedLocation: jest.fn(() => ({ path: ['workbench', 'w3', 'card', 'test-id'] }))
 }))
 
-jest.mock('@hanzo/view', () => {
+jest.mock('@hanzoteam/view', () => {
   const viewMock = {
     string: {
       Copied: 'view:string:Copied',
@@ -214,7 +214,7 @@ describe('converter-resources', () => {
       const props: CopyAsMarkdownTableProps = { cardClass: 'card:class:Card' as Ref<Class<Doc>> }
       await copyAsMarkdownTable([mockDoc], evt, props)
       expect(copyMarkdown).toHaveBeenCalled()
-      const { addNotification } = await import('@hanzo/ui')
+      const { addNotification } = await import('@hanzoteam/ui')
       expect(addNotification).toHaveBeenCalled()
     })
   })

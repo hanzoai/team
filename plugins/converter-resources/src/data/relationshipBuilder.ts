@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { Class, Client, Doc, Hierarchy, Ref } from '@hanzo/core'
-import type { AttributeModel } from '@hanzo/view'
-import { buildConfigAssociation, buildConfigLookup } from '@hanzo/view-resources'
+import type { Class, Client, Doc, Hierarchy, Ref } from '@hanzoteam/core'
+import type { AttributeModel } from '@hanzoteam/view'
+import { buildConfigAssociation, buildConfigLookup } from '@hanzoteam/view-resources'
 import type { RelationshipCellModel, RelationshipRowModel } from '../types'
 
 /**

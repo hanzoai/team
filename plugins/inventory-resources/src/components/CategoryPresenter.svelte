@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Category } from '@hanzo/inventory'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { Category } from '@hanzoteam/inventory'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
 
   export let value: Category
   export let inline: boolean = false

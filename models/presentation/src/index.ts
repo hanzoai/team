@@ -21,15 +21,15 @@ import {
   type Doc,
   type Ref,
   type BlobMetadata
-} from '@hanzo/core'
-import { Mixin, Model, Prop, TypeRef, TypeString, type Builder } from '@hanzo/model'
-import core, { TClass, TDoc } from '@hanzo/model-core'
-import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { Mixin, Model, Prop, TypeRef, TypeString, type Builder } from '@hanzoteam/model'
+import core, { TClass, TDoc } from '@hanzoteam/model-core'
+import { type Asset, type IntlString, type Resource } from '@hanzoteam/platform'
 // Import types to prevent .svelte components to being exposed to type typescript.
 import {
   type PresentationMiddlewareCreator,
   type PresentationMiddlewareFactory
-} from '@hanzo/presentation/src/pipeline'
+} from '@hanzoteam/presentation/src/pipeline'
 import {
   type ComponentPointExtension,
   type CreateExtensionKind,
@@ -44,11 +44,11 @@ import {
   type ObjectSearchContext,
   type ObjectSearchFactory,
   type InstantTransactions
-} from '@hanzo/presentation/src/types'
-import { type AnyComponent, type ComponentExtensionId } from '@hanzo/ui/src/types'
+} from '@hanzoteam/presentation/src/types'
+import { type AnyComponent, type ComponentExtensionId } from '@hanzoteam/ui/src/types'
 import presentation from './plugin'
 
-export { presentationId } from '@hanzo/presentation/src/plugin'
+export { presentationId } from '@hanzoteam/presentation/src/plugin'
 export { default } from './plugin'
 export type {
   CreateExtensionKind,

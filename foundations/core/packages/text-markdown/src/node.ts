@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Attrs, MarkupNode } from '@hanzo/text-core'
+import { Attrs, MarkupNode } from '@hanzoteam/text-core'
 
 export function nodeContent (node: MarkupNode): MarkupNode[] {
   return node?.content ?? []

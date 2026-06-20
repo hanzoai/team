@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Process, UserResult } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import { Process, UserResult } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import ToDoContextSelector from '../contextEditors/ToDoContextSelector.svelte'

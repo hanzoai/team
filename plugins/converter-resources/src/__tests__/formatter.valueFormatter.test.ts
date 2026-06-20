@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import core, { type Doc } from '@hanzo/core'
-import type { AttributeModel } from '@hanzo/view'
+import core, { type Doc } from '@hanzoteam/core'
+import type { AttributeModel } from '@hanzoteam/view'
 import { formatValue } from '../formatter/valueFormatter'
 
-jest.mock('@hanzo/platform', () => {
-  const actual = jest.requireActual('@hanzo/platform')
+jest.mock('@hanzoteam/platform', () => {
+  const actual = jest.requireActual('@hanzoteam/platform')
   return {
     ...actual,
     translate: jest.fn(async (str: unknown) => String(str)),

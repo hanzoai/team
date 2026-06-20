@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import contact, { Person, type Contact } from '@hanzo/contact'
-  import { type Ref } from '@hanzo/core'
-  import { Asset } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, IconSize } from '@hanzo/ui'
+  import contact, { Person, type Contact } from '@hanzoteam/contact'
+  import { type Ref } from '@hanzoteam/core'
+  import { Asset } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, IconSize } from '@hanzoteam/ui'
 
   import { getPersonByPersonRefCb } from '../utils'
   import Avatar from './Avatar.svelte'

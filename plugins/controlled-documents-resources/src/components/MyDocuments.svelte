@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Document } from '@hanzo/controlled-documents'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { DocumentQuery } from '@hanzo/core'
+  import { Document } from '@hanzoteam/controlled-documents'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { DocumentQuery } from '@hanzoteam/core'
   import DocumentsContainer from './DocumentsContainer.svelte'
 
   import documents from '../plugin'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
   import { createEventDispatcher } from 'svelte'
 
   export let query: DocumentQuery<Document> = {}

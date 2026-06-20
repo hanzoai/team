@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/kafka",
+  "name": "@hanzoteam/kafka",
   "version": "0.6.4",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "^0.6.0",
+    "@hanzoteam/platform-rig": "^0.6.0",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -34,10 +34,10 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/core": "^0.6.38",
-    "@hanzo/platform": "^0.6.16",
-    "@hanzo/server-core": "^0.6.5",
-    "@hanzo/storage": "^0.6.4",
+    "@hanzoteam/core": "^0.6.38",
+    "@hanzoteam/platform": "^0.6.16",
+    "@hanzoteam/server-core": "^0.6.5",
+    "@hanzoteam/storage": "^0.6.4",
     "kafkajs": "^2.2.4"
   }
 }

@@ -2,11 +2,11 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { findQuestions, updateQuestion } from '@hanzo/questions-resources'
-import type { Training } from '@hanzo/training'
-import type { Employee } from '@hanzo/contact'
-import type { Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+import { findQuestions, updateQuestion } from '@hanzoteam/questions-resources'
+import type { Training } from '@hanzoteam/training'
+import type { Employee } from '@hanzoteam/contact'
+import type { Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 import { canChangeTrainingOwner } from './canChangeTrainingOwner'
 
 export async function changeTrainingOwner (training: Training, owner: Ref<Employee>): Promise<void> {

@@ -3,7 +3,7 @@
 -->
 
 <script lang="ts">
-  import type { Percentage } from '@hanzo/questions'
+  import type { Percentage } from '@hanzoteam/questions'
 
   export let count: number
   export let total: number

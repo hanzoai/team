@@ -19,7 +19,7 @@ import type {
   EventResult,
   UpdatePatchOptions,
   Event
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import type {
   FindNotificationsParams,
   FindNotificationContextParams,
@@ -39,7 +39,7 @@ import type {
   AttachmentID,
   MessagesGroup,
   FindMessagesGroupParams
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 export interface RestClient {
   findMessagesMeta: (params: FindMessagesMetaParams) => Promise<MessageMeta[]>

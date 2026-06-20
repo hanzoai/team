@@ -33,8 +33,8 @@ import {
   type Reaction,
   type ReplyProvider,
   type SavedMessage
-} from '@hanzo/activity'
-import contact, { type Person } from '@hanzo/contact'
+} from '@hanzoteam/activity'
+import contact, { type Person } from '@hanzoteam/contact'
 import core, {
   DOMAIN_MODEL,
   IndexKind,
@@ -50,7 +50,7 @@ import core, {
   type Tx,
   type TxCUD,
   AccountRole
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ArrOf,
   Collection,
@@ -67,19 +67,19 @@ import {
   TypePersonId,
   UX,
   type Builder
-} from '@hanzo/model'
-import { TAttachedDoc, TClass, TDoc } from '@hanzo/model-core'
-import preference, { TPreference } from '@hanzo/model-preference'
-import presentation from '@hanzo/model-presentation'
-import view from '@hanzo/model-view'
-import type { Asset, IntlString, Resource } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+} from '@hanzoteam/model'
+import { TAttachedDoc, TClass, TDoc } from '@hanzoteam/model-core'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import presentation from '@hanzoteam/model-presentation'
+import view from '@hanzoteam/model-view'
+import type { Asset, IntlString, Resource } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
 import { buildActions } from './actions'
 import { buildNotifications } from './notification'
 import activity from './plugin'
 
-export { activityId } from '@hanzo/activity'
+export { activityId } from '@hanzoteam/activity'
 export { activityOperation, migrateMessagesSpace } from './migration'
 
 export const DOMAIN_ACTIVITY = 'activity' as Domain

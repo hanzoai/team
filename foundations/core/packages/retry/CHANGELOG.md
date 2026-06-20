@@ -1,4 +1,4 @@
-# Change Log - @hanzo/retry
+# Change Log - @hanzoteam/retry
 
 This log was last generated on Tue, 14 Oct 2025 04:58:17 GMT and should not be manually modified.
 

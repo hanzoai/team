@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Issue } from '@hanzo/tracker'
+  import { Issue } from '@hanzoteam/tracker'
 
-  import { getClient } from '@hanzo/presentation'
-  import type { ButtonKind } from '@hanzo/ui'
-  import { HyperlinkEditor } from '@hanzo/view-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { ButtonKind } from '@hanzoteam/ui'
+  import { HyperlinkEditor } from '@hanzoteam/view-resources'
   import github from '../../plugin'
   import { integrationRepositories } from '../utils'
 

@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { getClient as getAccountClient } from '@hanzo/account-client'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
 import type {
   Account,
   AccountRole,
@@ -25,11 +25,11 @@ import type {
   Space,
   TxOperations,
   WorkspaceInfoWithStatus
-} from '@hanzo/core'
-import core, { hasAccountRole } from '@hanzo/core'
-import login from '@hanzo/login'
-import { getMetadata, getResource, setMetadata } from '@hanzo/platform'
-import presentation, { closeClient, getClient, setPresentationCookie } from '@hanzo/presentation'
+} from '@hanzoteam/core'
+import core, { hasAccountRole } from '@hanzoteam/core'
+import login from '@hanzoteam/login'
+import { getMetadata, getResource, setMetadata } from '@hanzoteam/platform'
+import presentation, { closeClient, getClient, setPresentationCookie } from '@hanzoteam/presentation'
 import {
     closePanel,
     getCurrentLocation,
@@ -37,9 +37,9 @@ import {
     location,
     navigate,
     setMetadataLocalStorage
-} from '@hanzo/ui'
-import view from '@hanzo/view'
-import workbench, { type Application, type NavigatorModel } from '@hanzo/workbench'
+} from '@hanzoteam/ui'
+import view from '@hanzoteam/view'
+import workbench, { type Application, type NavigatorModel } from '@hanzoteam/workbench'
 import { derived, writable } from 'svelte/store'
 
 export const workspaceCreating = writable<number | undefined>(undefined)

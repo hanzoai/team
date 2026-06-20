@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import core, { type Hierarchy, toRank } from '@hanzo/core'
-import { type Card } from '@hanzo/card'
+import core, { type Hierarchy, toRank } from '@hanzoteam/core'
+import { type Card } from '@hanzoteam/card'
 
 /**
  * Get the IDs string for a card (attributes with showInPresenter, sorted by rank).

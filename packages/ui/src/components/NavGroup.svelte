@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hanzo/core'
+  import type { Doc, Ref } from '@hanzoteam/core'
   import { createEventDispatcher } from 'svelte'
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
   import type { AnyComponent, IconSize, AnySvelteComponent } from '..'
   import {
     showPopup,

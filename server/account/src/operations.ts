@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import {
   type AccountInfo,
   AccountRole,
@@ -34,9 +34,9 @@ import {
   type WorkspaceMemberInfo,
   type WorkspaceUuid,
   type IntegrationKind
-} from '@hanzo/core'
-import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzo/platform'
-import { decodeToken, decodeTokenVerbose, generateToken, type PermissionsGrant } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import platform, { getMetadata, PlatformError, Severity, Status, translate } from '@hanzoteam/platform'
+import { decodeToken, decodeTokenVerbose, generateToken, type PermissionsGrant } from '@hanzoteam/server-token'
 
 import { isAdminEmail } from './admin'
 import { accountPlugin } from './plugin'

@@ -25,9 +25,9 @@ import {
   type Space,
   type WithLookup,
   matchQuery
-} from '@hanzo/core'
-import { type Component } from '@hanzo/tracker'
-import { type GrouppingManager } from '@hanzo/view'
+} from '@hanzoteam/core'
+import { type Component } from '@hanzoteam/tracker'
+import { type GrouppingManager } from '@hanzoteam/view'
 import { get, writable } from 'svelte/store'
 
 export const componentStore = writable<DocManager<Component>>(new DocManager([]))

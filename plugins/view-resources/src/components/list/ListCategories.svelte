@@ -24,10 +24,10 @@
     RateLimiter,
     Ref,
     Space
-  } from '@hanzo/core'
-  import { getResource, IntlString } from '@hanzo/platform'
-  import { getClient, reduceCalls } from '@hanzo/presentation'
-  import { AnyComponent, AnySvelteComponent } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import { getResource, IntlString } from '@hanzoteam/platform'
+  import { getClient, reduceCalls } from '@hanzoteam/presentation'
+  import { AnyComponent, AnySvelteComponent } from '@hanzoteam/ui'
   import {
     AttributeModel,
     BuildModelKey,
@@ -35,7 +35,7 @@
     Viewlet,
     ViewOptionModel,
     ViewOptions
-  } from '@hanzo/view'
+  } from '@hanzoteam/view'
   import { createEventDispatcher, onDestroy, SvelteComponentTyped } from 'svelte'
   import { SelectionFocusProvider } from '../../selection'
   import {

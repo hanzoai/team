@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { gmailId } from '@hanzo/gmail'
-import gmail from '@hanzo/gmail-resources/src/plugin'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import type { DocUpdateMessageViewlet } from '@hanzo/activity'
-import { type Action } from '@hanzo/view'
-import { type NotificationGroup } from '@hanzo/notification'
+import { type Client, type Doc, type Ref } from '@hanzoteam/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { gmailId } from '@hanzoteam/gmail'
+import gmail from '@hanzoteam/gmail-resources/src/plugin'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import type { DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import { type Action } from '@hanzoteam/view'
+import { type NotificationGroup } from '@hanzoteam/notification'
 
 export default mergeIds(gmailId, gmail, {
   action: {

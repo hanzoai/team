@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { IntlString, Plugin, Resource, Asset } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import type { Class, Ref } from '@hanzo/core'
+import type { IntlString, Plugin, Resource, Asset } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import type { Class, Ref } from '@hanzoteam/core'
 import type { UploadFilesFn, UploadFilesPopupFn, UploadHandlerDefinition, UploadHandler } from './types'
 
 /** @public */

@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Doc, getCurrentAccount, Ref, Space } from '@hanzo/core'
+  import core, { Doc, getCurrentAccount, Ref, Space } from '@hanzoteam/core'
   import {
     defineSeparators,
     getCurrentLocation,
@@ -23,14 +23,14 @@
     navigate,
     panelSeparators,
     Separator
-  } from '@hanzo/ui'
-  import { DocNotifyContext } from '@hanzo/notification'
-  import { ActivityMessage } from '@hanzo/activity'
-  import { getClient } from '@hanzo/presentation'
-  import { Channel, ObjectChatPanel } from '@hanzo/chunter'
-  import view from '@hanzo/view'
-  import { messageInFocus } from '@hanzo/activity-resources'
-  import { Presence } from '@hanzo/presence-resources'
+  } from '@hanzoteam/ui'
+  import { DocNotifyContext } from '@hanzoteam/notification'
+  import { ActivityMessage } from '@hanzoteam/activity'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Channel, ObjectChatPanel } from '@hanzoteam/chunter'
+  import view from '@hanzoteam/view'
+  import { messageInFocus } from '@hanzoteam/activity-resources'
+  import { Presence } from '@hanzoteam/presence-resources'
 
   import ChannelComponent from './Channel.svelte'
   import ChannelHeader from './ChannelHeader.svelte'

@@ -1,4 +1,4 @@
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   AccountRole,
   type AnyAttribute,
@@ -19,15 +19,15 @@ import core, {
   type TxCUD,
   TxProcessor,
   type TxResult
-} from '@hanzo/core'
-import platform, { getResource, PlatformError, translate } from '@hanzo/platform'
-import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzo/presentation'
-import view, { type IAggregationManager } from '@hanzo/view'
-import notification from '@hanzo/notification'
-import { addNotification, NotificationSeverity } from '@hanzo/ui'
+} from '@hanzoteam/core'
+import platform, { getResource, PlatformError, translate } from '@hanzoteam/platform'
+import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzoteam/presentation'
+import view, { type IAggregationManager } from '@hanzoteam/view'
+import notification from '@hanzoteam/notification'
+import { addNotification, NotificationSeverity } from '@hanzoteam/ui'
 import ReadOnlyNotification from './components/ReadOnlyNotification.svelte'
 import ForbiddenNotification from './components/ForbiddenNotification.svelte'
-import { getCurrentLanguage } from '@hanzo/theme'
+import { getCurrentLanguage } from '@hanzoteam/theme'
 
 /**
  * @public

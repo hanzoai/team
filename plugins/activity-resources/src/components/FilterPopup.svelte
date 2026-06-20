@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { IntlString } from '@hanzo/platform'
-  import { CheckBox, Label, MiniToggle, resizeObserver } from '@hanzo/ui'
-  import { Ref } from '@hanzo/core'
-  import { ActivityMessagesFilter } from '@hanzo/activity'
+  import { IntlString } from '@hanzoteam/platform'
+  import { CheckBox, Label, MiniToggle, resizeObserver } from '@hanzoteam/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { ActivityMessagesFilter } from '@hanzoteam/activity'
 
   import activity from '../plugin'
   import { getActivityNewestFirst } from '../utils'

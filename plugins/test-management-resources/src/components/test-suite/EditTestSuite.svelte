@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ActionContext, createQuery, getClient } from '@hanzo/presentation'
-  import { type Class, type Ref } from '@hanzo/core'
-  import { TestSuite } from '@hanzo/test-management'
-  import { StyledTextArea } from '@hanzo/text-editor-resources'
-  import { Panel } from '@hanzo/panel'
-  import { EditBox, Breadcrumb } from '@hanzo/ui'
+  import { ActionContext, createQuery, getClient } from '@hanzoteam/presentation'
+  import { type Class, type Ref } from '@hanzoteam/core'
+  import { TestSuite } from '@hanzoteam/test-management'
+  import { StyledTextArea } from '@hanzoteam/text-editor-resources'
+  import { Panel } from '@hanzoteam/panel'
+  import { EditBox, Breadcrumb } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import testManagement from '../../plugin'

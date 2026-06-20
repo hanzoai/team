@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import type { IntlString, Metadata, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+import type { IntlString, Metadata, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 import { type AnyComponent } from './types'
 
 /**

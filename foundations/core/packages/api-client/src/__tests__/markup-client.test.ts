@@ -3,18 +3,18 @@
 //
 
 import { createMarkupOperations } from '../markup/client'
-import { getClient } from '@hanzo/collaborator-client'
-import { makeCollabId } from '@hanzo/core'
+import { getClient } from '@hanzoteam/collaborator-client'
+import { makeCollabId } from '@hanzoteam/core'
 
 // Mock dependencies
-jest.mock('@hanzo/collaborator-client')
-jest.mock('@hanzo/text', () => ({
+jest.mock('@hanzoteam/collaborator-client')
+jest.mock('@hanzoteam/text', () => ({
   htmlToJSON: jest.fn((html) => ({ type: 'doc', content: [{ type: 'text', text: html }] })),
   jsonToHTML: jest.fn((json) => json.content?.[0]?.text ?? ''),
   jsonToMarkup: jest.fn((json) => json.content?.[0]?.text ?? ''),
   markupToJSON: jest.fn((markup) => ({ type: 'doc', content: [{ type: 'text', text: markup }] }))
 }))
-jest.mock('@hanzo/text-markdown', () => ({
+jest.mock('@hanzoteam/text-markdown', () => ({
   markdownToMarkup: jest.fn((md) => md),
   markupToMarkdown: jest.fn((json) => json.content?.[0]?.text ?? '')
 }))

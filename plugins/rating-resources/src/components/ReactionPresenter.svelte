@@ -12,9 +12,9 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { type PersonId } from '@hanzo/core'
-  import { EmojiPresenter } from '@hanzo/emoji-resources'
-  import { Icon, IconComponent, IconSize, tooltip } from '@hanzo/ui'
+  import { type PersonId } from '@hanzoteam/core'
+  import { EmojiPresenter } from '@hanzoteam/emoji-resources'
+  import { Icon, IconComponent, IconSize, tooltip } from '@hanzoteam/ui'
 
   import ReactionsTooltip from './ReactionsTooltip.svelte'
 

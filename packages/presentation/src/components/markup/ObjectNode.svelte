@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { Component, Icon, Label, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import contact from '@hanzo/contact'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { Component, Icon, Label, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import contact from '@hanzoteam/contact'
 
   import { createQuery, getClient } from '../../utils'
   import MessageBox from '../MessageBox.svelte'

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { IntlString, Resources } from '@hanzo/platform'
+import type { IntlString, Resources } from '@hanzoteam/platform'
 import OnboardApp from './components/OnboardApp.svelte'
 
 export default async (): Promise<Resources> => ({

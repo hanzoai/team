@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Mixin } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import setting from '@hanzo/setting'
+  import { Doc, Mixin } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting'
 
   import ClassAttributeBar from './ClassAttributeBar.svelte'
-  import notification from '@hanzo/notification'
+  import notification from '@hanzoteam/notification'
 
   export let object: Doc
   export let mixins: Array<Mixin<Doc>> = []

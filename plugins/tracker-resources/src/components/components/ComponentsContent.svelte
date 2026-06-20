@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import { Component } from '@hanzo/tracker'
-  import { Loading, Component as ViewComponent } from '@hanzo/ui'
-  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzo/view'
+  import core, { DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { Component } from '@hanzoteam/tracker'
+  import { Loading, Component as ViewComponent } from '@hanzoteam/ui'
+  import view, { Viewlet, ViewletPreference, ViewOptions } from '@hanzoteam/view'
   import tracker from '../../plugin'
   import CreateComponent from './NewComponent.svelte'
-  import { createQuery } from '@hanzo/presentation'
+  import { createQuery } from '@hanzoteam/presentation'
 
   export let viewlet: WithLookup<Viewlet>
   export let viewOptions: ViewOptions

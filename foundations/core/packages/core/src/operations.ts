@@ -1,4 +1,4 @@
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import { deepEqual } from 'fast-equals'
 import {
   type DocumentUpdate,

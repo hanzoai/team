@@ -23,9 +23,9 @@ import {
   type Doc,
   type Class,
   type Rank
-} from '@hanzo/core'
-import { Model, Prop, TypeRef, TypeString, UX } from '@hanzo/model'
-import { type Asset, type IntlString } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { Model, Prop, TypeRef, TypeString, UX } from '@hanzoteam/model'
+import { type Asset, type IntlString } from '@hanzoteam/platform'
 import core from './component'
 import { TDoc } from './core'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import attachment, { Attachment } from '@hanzo/attachment'
-  import { Doc, getCurrentAccount, type WithLookup } from '@hanzo/core'
-  import { getClient, getFileUrl } from '@hanzo/presentation'
-  import { Icon, IconMoreV, Menu, showPopup } from '@hanzo/ui'
+  import attachment, { Attachment } from '@hanzoteam/attachment'
+  import { Doc, getCurrentAccount, type WithLookup } from '@hanzoteam/core'
+  import { getClient, getFileUrl } from '@hanzoteam/presentation'
+  import { Icon, IconMoreV, Menu, showPopup } from '@hanzoteam/ui'
   import { AttachmentGalleryPresenter } from '..'
   import FileDownload from './icons/FileDownload.svelte'
 

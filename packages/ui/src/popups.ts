@@ -1,4 +1,4 @@
-import { getResource } from '@hanzo/platform'
+import { getResource } from '@hanzoteam/platform'
 import { type ComponentType } from 'svelte'
 import { derived, get } from 'svelte/store'
 import type {
@@ -12,7 +12,7 @@ import type {
   VerticalAlignment
 } from './types'
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import { modalStore } from './modals'
 
 export interface CompAndProps {

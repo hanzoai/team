@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, platformNow, platformNowDiff, Ref, toIdMap } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import tags, { TagCategory, TagElement, TagReference } from '@hanzo/tags'
-  import { Button, CheckBox, EditBox, Expandable, Lazy, ListView, Loading } from '@hanzo/ui'
-  import { FILTER_DEBOUNCE_MS } from '@hanzo/view-resources'
+  import { Class, Doc, platformNow, platformNowDiff, Ref, toIdMap } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import tags, { TagCategory, TagElement, TagReference } from '@hanzoteam/tags'
+  import { Button, CheckBox, EditBox, Expandable, Lazy, ListView, Loading } from '@hanzoteam/ui'
+  import { FILTER_DEBOUNCE_MS } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../plugin'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { fromTzDate, toTzDate, TzDate } from '@hanzo/hr'
+  import { fromTzDate, toTzDate, TzDate } from '@hanzoteam/hr'
 
-  // import { IntlString } from '@hanzo/platform'
-  import { DateRangePresenter } from '@hanzo/ui'
+  // import { IntlString } from '@hanzoteam/platform'
+  import { DateRangePresenter } from '@hanzoteam/ui'
 
   export let value: TzDate | null | undefined
   export let onChange: (value: TzDate | null | undefined) => void

@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { resizeObserver } from '@hanzo/ui'
+  import { resizeObserver } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { Heading } from '@hanzo/text-editor'
+  import { Heading } from '@hanzoteam/text-editor'
   import TableOfContentsContent from './TableOfContentsContent.svelte'
 
   export let items: Heading[] = []

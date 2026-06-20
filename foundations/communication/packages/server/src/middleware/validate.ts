@@ -20,7 +20,7 @@ import {
   type Event,
   type SessionData,
   PeerEventType
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import {
   type AccountUuid,
   type BlobID,
@@ -41,9 +41,9 @@ import {
   type NotificationContext,
   NotificationType,
   SortingOrder
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import { z, ZodString, ZodType, ZodTypeDef } from 'zod'
-import { isBlobAttachmentType, isLinkPreviewAttachmentType } from '@hanzo/communication-shared'
+import { isBlobAttachmentType, isLinkPreviewAttachmentType } from '@hanzoteam/communication-shared'
 
 import type { Enriched, Middleware, Subscription } from '../types'
 import { BaseMiddleware } from './base'

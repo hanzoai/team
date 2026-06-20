@@ -31,11 +31,11 @@ import {
   WorkspaceIds,
   type IdMap,
   type Space
-} from '@hanzo/core'
-import { type Attachment } from '@hanzo/attachment'
-import attachment from '@hanzo/model-attachment'
-import core from '@hanzo/model-core'
-import { StorageAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { type Attachment } from '@hanzoteam/attachment'
+import attachment from '@hanzoteam/model-attachment'
+import core from '@hanzoteam/model-core'
+import { StorageAdapter } from '@hanzoteam/server-core'
 import { UnifiedAttachment, UnifiedDoc } from './types'
 
 interface DocCache {

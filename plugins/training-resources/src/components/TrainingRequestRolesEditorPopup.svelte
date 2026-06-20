@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import core, { type DocumentQuery, type FindOptions, type Ref, type Role, SortingOrder } from '@hanzo/core'
-  import presentation, { ObjectPopup } from '@hanzo/presentation'
+  import core, { type DocumentQuery, type FindOptions, type Ref, type Role, SortingOrder } from '@hanzoteam/core'
+  import presentation, { ObjectPopup } from '@hanzoteam/presentation'
   import training from '../plugin'
 
   export let selected: Array<Ref<Role>>

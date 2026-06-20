@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Status } from '@hanzo/platform'
-  import { Severity } from '@hanzo/platform'
+  import type { Status } from '@hanzoteam/platform'
+  import { Severity } from '@hanzoteam/platform'
 
   import Info from './icons/Info.svelte'
   import Label from './Label.svelte'

@@ -1,9 +1,9 @@
-import { type Employee, getName } from '@hanzo/contact'
-import { type Ref, type TxOperations } from '@hanzo/core'
-import { type Department, type Request, type RequestType, type Staff, fromTzDate } from '@hanzo/hr'
-import { MessageBox } from '@hanzo/presentation'
-import { type Issue, type TimeSpendReport } from '@hanzo/tracker'
-import { MILLISECONDS_IN_DAY, areDatesEqual, isWeekend, showPopup } from '@hanzo/ui'
+import { type Employee, getName } from '@hanzoteam/contact'
+import { type Ref, type TxOperations } from '@hanzoteam/core'
+import { type Department, type Request, type RequestType, type Staff, fromTzDate } from '@hanzoteam/hr'
+import { MessageBox } from '@hanzoteam/presentation'
+import { type Issue, type TimeSpendReport } from '@hanzoteam/tracker'
+import { MILLISECONDS_IN_DAY, areDatesEqual, isWeekend, showPopup } from '@hanzoteam/ui'
 import hr from './plugin'
 
 const todayDate = new Date()

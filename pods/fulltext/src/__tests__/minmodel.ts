@@ -32,11 +32,11 @@ import core, {
   type Tx,
   type TxCreateDoc,
   TxFactory
-} from '@hanzo/core'
-import type { IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import type { IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 
-import buildModel from '@hanzo/model-all'
+import buildModel from '@hanzoteam/model-all'
 
 const txFactory = new TxFactory(core.account.System)
 

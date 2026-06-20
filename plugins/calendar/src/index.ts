@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Contact, Employee } from '@hanzo/contact'
+import { Contact, Employee } from '@hanzoteam/contact'
 import type {
   AttachedDoc,
   Class,
@@ -24,13 +24,13 @@ import type {
   Ref,
   SystemSpace,
   Timestamp
-} from '@hanzo/core'
-import { NotificationType } from '@hanzo/notification'
-import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
-import { Handler, IntegrationType } from '@hanzo/setting'
-import { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
+} from '@hanzoteam/core'
+import { NotificationType } from '@hanzoteam/notification'
+import type { Asset, IntlString, Metadata, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { Preference } from '@hanzoteam/preference'
+import { Handler, IntegrationType } from '@hanzoteam/setting'
+import { AnyComponent, ComponentExtensionId } from '@hanzoteam/ui'
 
 /**
  * @public

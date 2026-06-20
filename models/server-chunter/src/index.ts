@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
-import core, { type Class, type Doc } from '@hanzo/core'
-import chunter from '@hanzo/chunter'
-import serverNotification from '@hanzo/server-notification'
-import serverCore, { type ObjectDDParticipant } from '@hanzo/server-core'
-import serverChunter from '@hanzo/server-chunter'
-import notification from '@hanzo/notification'
+import core, { type Class, type Doc } from '@hanzoteam/core'
+import chunter from '@hanzoteam/chunter'
+import serverNotification from '@hanzoteam/server-notification'
+import serverCore, { type ObjectDDParticipant } from '@hanzoteam/server-core'
+import serverChunter from '@hanzoteam/server-chunter'
+import notification from '@hanzoteam/notification'
 
-export { serverChunterId } from '@hanzo/server-chunter'
+export { serverChunterId } from '@hanzoteam/server-chunter'
 
 export function createModel (builder: Builder): void {
   builder.mixin(chunter.class.ChunterSpace, core.class.Class, serverNotification.mixin.HTMLPresenter, {

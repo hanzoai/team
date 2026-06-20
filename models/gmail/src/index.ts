@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import { type Channel } from '@hanzo/contact'
-import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hanzo/core'
+import activity from '@hanzoteam/activity'
+import { type Channel } from '@hanzoteam/contact'
+import { type Class, type Domain, IndexKind, type Ref, type Timestamp, type Type } from '@hanzoteam/core'
 import {
   type Message,
   type NewMessage,
   type SharedMessage,
   type SharedMessages,
   gmailIntegrationKind
-} from '@hanzo/gmail'
+} from '@hanzoteam/gmail'
 import {
   ArrOf,
   type Builder,
@@ -34,17 +34,17 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import contact from '@hanzo/model-contact'
-import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
-import view, { createAction } from '@hanzo/model-view'
-import setting from '@hanzo/setting'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import contact from '@hanzoteam/model-contact'
+import core, { TAttachedDoc, TDoc } from '@hanzoteam/model-core'
+import view, { createAction } from '@hanzoteam/model-view'
+import setting from '@hanzoteam/setting'
 
 import gmail from './plugin'
 import { defineNotifications } from './notification'
 
-export { gmailId } from '@hanzo/gmail'
+export { gmailId } from '@hanzoteam/gmail'
 export { gmailOperation } from './migration'
 export { default } from './plugin'
 

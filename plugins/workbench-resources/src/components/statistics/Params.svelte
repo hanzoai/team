@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { OperationLog, OperationLogEntry } from '@hanzo/core'
-  import presentation from '@hanzo/presentation'
-  import { Button, FocusHandler, createFocusManager } from '@hanzo/ui'
+  import type { OperationLog, OperationLogEntry } from '@hanzoteam/core'
+  import presentation from '@hanzoteam/presentation'
+  import { Button, FocusHandler, createFocusManager } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let params: Record<string, any>

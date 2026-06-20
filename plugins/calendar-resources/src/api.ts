@@ -13,17 +13,17 @@
 // limitations under the License.
 //
 
-import { getMetadata } from '@hanzo/platform'
-import presentation from '@hanzo/presentation'
-import login from '@hanzo/login'
-import { type Integration } from '@hanzo/account-client'
+import { getMetadata } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/presentation'
+import login from '@hanzoteam/login'
+import { type Integration } from '@hanzoteam/account-client'
 import {
   type IntegrationClient,
   getIntegrationClient as getIntegrationClientRaw,
   request
-} from '@hanzo/integration-client'
+} from '@hanzoteam/integration-client'
 import calendar from './plugin'
-import { calendarIntegrationKind } from '@hanzo/calendar'
+import { calendarIntegrationKind } from '@hanzoteam/calendar'
 
 export async function signout (integration: Integration, client: IntegrationClient): Promise<void> {
   const url = getMetadata(calendar.metadata.CalendarServiceURL)

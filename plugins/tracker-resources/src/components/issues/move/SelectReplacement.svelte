@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Component, Issue, Project } from '@hanzo/tracker'
-  import { Button, Grid, IconArrowRight, Label, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { Component, Issue, Project } from '@hanzoteam/tracker'
+  import { Button, Grid, IconArrowRight, Label, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
 
   import tracker from '../../../plugin'
   import { ComponentToUpdate } from '../../../utils'

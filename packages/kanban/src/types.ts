@@ -1,5 +1,5 @@
-import { type Doc, type Rank } from '@hanzo/core'
-import { type Asset } from '@hanzo/platform'
+import { type Doc, type Rank } from '@hanzoteam/core'
+import { type Asset } from '@hanzoteam/platform'
 
 /**
  * @public

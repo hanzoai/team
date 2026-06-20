@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import type { Asset, IntlString, Resource } from '@hanzo/platform'
-import type { Blob as PlatformBlob, Class, Doc, Ref } from '@hanzo/core'
+import type { Asset, IntlString, Resource } from '@hanzoteam/platform'
+import type { Blob as PlatformBlob, Class, Doc, Ref } from '@hanzoteam/core'
 
 /** @public */
 export interface FileWithPath extends File {

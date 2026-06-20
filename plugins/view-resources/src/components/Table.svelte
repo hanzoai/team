@@ -28,9 +28,9 @@
     TypedSpace,
     getObjectValue,
     mergeQueries
-  } from '@hanzo/core'
-  import notification from '@hanzo/notification'
-  import { createQuery, getClient, reduceCalls, updateAttribute } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import notification from '@hanzoteam/notification'
+  import { createQuery, getClient, reduceCalls, updateAttribute } from '@hanzoteam/presentation'
   import ui, {
     Button,
     CheckBox,
@@ -41,8 +41,8 @@
     lazyObserver,
     mouseAttractor,
     resizeObserver
-  } from '@hanzo/ui'
-  import { AttributeModel, BuildModelKey, BuildModelOptions, ViewOptionModel, ViewOptions } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { AttributeModel, BuildModelKey, BuildModelOptions, ViewOptionModel, ViewOptions } from '@hanzoteam/view'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher, onMount } from 'svelte'
   import { showMenu } from '../actions'
@@ -51,9 +51,9 @@
   import IconUpDown from './icons/UpDown.svelte'
   import { getResultOptions, getResultQuery } from '../viewOptions'
   import { canEditSpace } from '../visibilityTester'
-  import contact, { PermissionsStore } from '@hanzo/contact'
+  import contact, { PermissionsStore } from '@hanzoteam/contact'
   import { Readable } from 'svelte/store'
-  import { getResource } from '@hanzo/platform'
+  import { getResource } from '@hanzoteam/platform'
   import { canChangeAttribute } from '../permissions'
 
   export let _class: Ref<Class<Doc>>

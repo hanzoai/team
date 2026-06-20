@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 import { decodeContent, decodeEncodedWords } from '../decode'
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 
 jest.mock(
   '../config',

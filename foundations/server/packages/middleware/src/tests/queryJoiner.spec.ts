@@ -1,5 +1,5 @@
-import core, { MeasureMetricsContext, toFindResult } from '@hanzo/core'
-import type { SessionFindAll } from '@hanzo/server-core'
+import core, { MeasureMetricsContext, toFindResult } from '@hanzoteam/core'
+import type { SessionFindAll } from '@hanzoteam/server-core'
 import { QueryJoiner } from '../queryJoin'
 
 describe('test query joiner', () => {

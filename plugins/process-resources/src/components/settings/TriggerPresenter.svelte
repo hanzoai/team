@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { parseContext, Process, Trigger } from '@hanzo/process'
-  import { Component, Icon, IconError, Label, tooltip } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { parseContext, Process, Trigger } from '@hanzoteam/process'
+  import { Component, Icon, IconError, Label, tooltip } from '@hanzoteam/ui'
 
   export let value: Ref<Trigger>
   export let process: Process

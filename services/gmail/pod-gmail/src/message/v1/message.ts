@@ -24,12 +24,12 @@ import {
   TxUpdateDoc,
   AttachedData,
   Data
-} from '@hanzo/core'
-import gmail, { type Message } from '@hanzo/gmail'
+} from '@hanzoteam/core'
+import gmail, { type Message } from '@hanzoteam/gmail'
 import { type GaxiosResponse } from 'gaxios'
 import { gmail_v1 } from 'googleapis'
-import core from '@hanzo/core'
-import attachment, { Attachment } from '@hanzo/attachment'
+import core from '@hanzoteam/core'
+import attachment, { Attachment } from '@hanzoteam/attachment'
 import sanitizeHtml from 'sanitize-html'
 
 import { IMessageManager } from '../types'
@@ -37,7 +37,7 @@ import { type Channel } from '../../types'
 import { AttachmentHandler } from '../attachments'
 import { decode64 } from '../../base64'
 import { diffAttributes } from '../../utils'
-import { SyncOptions } from '@hanzo/mail-common'
+import { SyncOptions } from '@hanzoteam/mail-common'
 
 const EMAIL_REGEX =
   /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/

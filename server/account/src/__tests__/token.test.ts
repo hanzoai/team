@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import type { PersonUuid, WorkspaceUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+import type { PersonUuid, WorkspaceUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 
 export function decodeTokenPayload (token: string): any {
   try {

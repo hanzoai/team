@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Answer, Assessment, Percentage, Question } from '@hanzo/questions'
-import type { Ref } from '@hanzo/core'
+import type { Answer, Assessment, Percentage, Question } from '@hanzoteam/questions'
+import type { Ref } from '@hanzoteam/core'
 import { assessAnswer } from './assessAnswer'
 import { isAssessment } from './isAssessment'
 

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Attachment } from '@hanzo/attachment'
-import { Employee } from '@hanzo/contact'
+import { Attachment } from '@hanzoteam/attachment'
+import { Employee } from '@hanzoteam/contact'
 import {
   Doc,
   type CollectionSize,
@@ -24,8 +24,8 @@ import {
   MarkupBlobRef,
   AttachedDoc,
   Timestamp
-} from '@hanzo/core'
-import { IconProps } from '@hanzo/view'
+} from '@hanzoteam/core'
+import { IconProps } from '@hanzoteam/view'
 
 /** @public */
 export enum TestCaseType {

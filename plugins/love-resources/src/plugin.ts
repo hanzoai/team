@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import love, { loveId } from '@hanzo/love'
-import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
-import { type DocCreateFunction } from '@hanzo/presentation/src/types'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type ViewActionAvailabilityFunction } from '@hanzo/view'
+import love, { loveId } from '@hanzoteam/love'
+import { mergeIds, type IntlString, type Resource } from '@hanzoteam/platform'
+import { type DocCreateFunction } from '@hanzoteam/presentation/src/types'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type ViewActionAvailabilityFunction } from '@hanzoteam/view'
 
 export default mergeIds(loveId, love, {
   component: {

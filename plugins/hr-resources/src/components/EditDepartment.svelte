@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { createFocusManager, EditBox, FocusHandler } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { createFocusManager, EditBox, FocusHandler } from '@hanzoteam/ui'
 
-  import { ChannelsEditor, EditableAvatar } from '@hanzo/contact-resources'
-  import core, { getCurrentAccount, Ref } from '@hanzo/core'
-  import { Department } from '@hanzo/hr'
-  import setting, { IntegrationType } from '@hanzo/setting'
+  import { ChannelsEditor, EditableAvatar } from '@hanzoteam/contact-resources'
+  import core, { getCurrentAccount, Ref } from '@hanzoteam/core'
+  import { Department } from '@hanzoteam/hr'
+  import setting, { IntegrationType } from '@hanzoteam/setting'
   import { createEventDispatcher, onMount } from 'svelte'
   import hr from '../plugin'
   import Members from './Members.svelte'

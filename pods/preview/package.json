@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/pod-preview",
+  "name": "@hanzoteam/pod-preview",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "docker:staging": "../../common/scripts/docker_tag.sh hanzoai/preview staging",
     "docker:abuild": "docker build -t hanzoai/preview . --platform=linux/arm64 && ../../common/scripts/docker_tag_push.sh hanzoai/preview",
     "docker:push": "../../common/scripts/docker_tag.sh hanzoai/preview",
-    "run-bundle": "rushx bundle --to @hanzo/pod-preview && cross-env NODE_ENV=production node --inspect bundle/bundle.js",
+    "run-bundle": "rushx bundle --to @hanzoteam/pod-preview && cross-env NODE_ENV=production node --inspect bundle/bundle.js",
     "run-local": "ts-node src/index.ts",
     "format": "format src",
     "_phase:build": "compile transpile src",
@@ -31,7 +31,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/jest": "^29.5.5",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -55,14 +55,14 @@
     "@types/heic-decode": "^1.1.2"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/analytics-service": "workspace:^0.7.17",
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/server-client": "workspace:^0.7.16",
-    "@hanzo/server-storage": "workspace:^0.7.16",
-    "@hanzo/server-token": "workspace:^0.7.17",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/analytics-service": "workspace:^0.7.17",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/server-client": "workspace:^0.7.16",
+    "@hanzoteam/server-storage": "workspace:^0.7.16",
+    "@hanzoteam/server-token": "workspace:^0.7.17",
     "sharp": "~0.34.3",
     "blurhash": "^2.0.5",
     "dotenv": "^16.4.5",

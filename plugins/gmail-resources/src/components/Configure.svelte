@@ -15,20 +15,20 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { AccountArrayEditor } from '@hanzo/contact-resources'
-  import { AccountUuid } from '@hanzo/core'
-  import presentation, { Card, getClient, getCurrentWorkspaceUuid } from '@hanzo/presentation'
-  import setting, { Integration } from '@hanzo/setting'
-  import { Grid, Label, Toggle } from '@hanzo/ui'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { isWorkspaceIntegration } from '@hanzo/integration-client'
-  import { Integration as AccountIntegration } from '@hanzo/account-client'
+  import { AccountArrayEditor } from '@hanzoteam/contact-resources'
+  import { AccountUuid } from '@hanzoteam/core'
+  import presentation, { Card, getClient, getCurrentWorkspaceUuid } from '@hanzoteam/presentation'
+  import setting, { Integration } from '@hanzoteam/setting'
+  import { Grid, Label, Toggle } from '@hanzoteam/ui'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { isWorkspaceIntegration } from '@hanzoteam/integration-client'
+  import { Integration as AccountIntegration } from '@hanzoteam/account-client'
 
   import ConfigureV2 from './ConfigureV2.svelte'
   import { getIntegrationClient } from '../api'
   import gmail from '../plugin'
   import { isNewGmailIntegration } from '../utils'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let integration: AccountIntegration
   let integrationSettings: Integration | undefined

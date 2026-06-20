@@ -21,7 +21,7 @@
     eventToHTMLElement,
     getTimeZoneName,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import calendar from '../plugin'
 
   export let timeZone: string

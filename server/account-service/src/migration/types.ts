@@ -23,8 +23,8 @@ import type {
   WorkspaceDataId,
   WorkspaceMode,
   WorkspaceUuid
-} from '@hanzo/core'
-import type { Person } from '@hanzo/contact'
+} from '@hanzoteam/core'
+import type { Person } from '@hanzoteam/contact'
 import { type FindCursor } from 'mongodb'
 
 export type ObjectId = any

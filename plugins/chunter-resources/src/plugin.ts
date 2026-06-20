@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import chunter, { chunterId } from '@hanzo/chunter'
-import type { Client, Doc, Ref, Space } from '@hanzo/core'
-import type { IntlString, Resource } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type ViewAction } from '@hanzo/view'
-import { type DocNotifyContext, type InboxNotification } from '@hanzo/notification'
+import chunter, { chunterId } from '@hanzoteam/chunter'
+import type { Client, Doc, Ref, Space } from '@hanzoteam/core'
+import type { IntlString, Resource } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type ViewAction } from '@hanzoteam/view'
+import { type DocNotifyContext, type InboxNotification } from '@hanzoteam/notification'
 
 export default mergeIds(chunterId, chunter, {
   component: {

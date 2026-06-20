@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hanzo/core'
+import { type MeasureContext } from '@hanzoteam/core'
 import sharp from 'sharp'
 
 import { makeBlurhash } from '../utils'

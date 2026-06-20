@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 import { Request, Response } from 'express'
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import {
   type EmailContact,
   type EmailMessage,
@@ -23,9 +23,9 @@ import {
   isHanzoMessage,
   generateNewEmailId,
   MailHeader
-} from '@hanzo/mail-common'
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import { createRestTxOperations } from '@hanzo/api-client'
+} from '@hanzoteam/mail-common'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import { createRestTxOperations } from '@hanzoteam/api-client'
 
 import { mailServiceToken, baseConfig, kvsClient } from './client'
 import config from './config'

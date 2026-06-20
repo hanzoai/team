@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import type { DocUpdateMessageViewlet } from '@hanzo/activity'
-import { type Doc, type Ref } from '@hanzo/core'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { settingId } from '@hanzo/setting'
-import setting from '@hanzo/setting-resources/src/plugin'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction } from '@hanzo/view'
-import { type TemplateFieldFunc } from '@hanzo/templates'
-import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
+import type { DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { settingId } from '@hanzoteam/setting'
+import setting from '@hanzoteam/setting-resources/src/plugin'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction } from '@hanzoteam/view'
+import { type TemplateFieldFunc } from '@hanzoteam/templates'
+import { type NotificationGroup, type NotificationType } from '@hanzoteam/notification'
 
 export default mergeIds(settingId, setting, {
   ids: {

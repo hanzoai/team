@@ -8,7 +8,7 @@ import {
   NewIssue,
   SelectWorkspacePage,
   TrackerNavigationMenuPage
-} from '@hanzo/tests-sanity'
+} from '@hanzoteam/tests-sanity'
 import { test } from '@playwright/test'
 import { AdminPage } from '../model/admin.page'
 

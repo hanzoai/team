@@ -14,9 +14,9 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { File } from '@hanzo/drive'
-  import { Icon } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import { File } from '@hanzoteam/drive'
+  import { Icon } from '@hanzoteam/ui'
 
   import { getFileTypeIcon } from '../utils'
 

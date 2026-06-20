@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { themeStore as themeOptions } from '@hanzo/theme'
+  import { themeStore as themeOptions } from '@hanzoteam/theme'
   import { afterUpdate, beforeUpdate, createEventDispatcher, onDestroy, onMount } from 'svelte'
   import { resizeObserver } from '../resize'
   import { closeTooltip, tooltipstore } from '../tooltips'

@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { trainingId, TrainingSpecialIds } from '@hanzo/training'
-import { getCurrentLocation, type Location } from '@hanzo/ui'
+import { trainingId, TrainingSpecialIds } from '@hanzoteam/training'
+import { getCurrentLocation, type Location } from '@hanzoteam/ui'
 import type { Route, RouteParams } from '../utils/Route'
 
 export interface IncomingRequestsRouteParams extends RouteParams {}

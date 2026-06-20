@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { trainingId } from '@hanzo/training'
-import { type Location, type ResolvedLocation } from '@hanzo/ui'
+import { trainingId } from '@hanzoteam/training'
+import { type Location, type ResolvedLocation } from '@hanzoteam/ui'
 import { trainingAttemptRoute } from './routes/trainingAttemptRoute'
 import { trainingRequestRoute } from './routes/trainingRequestRoute'
 import { trainingRoute } from './routes/trainingRoute'

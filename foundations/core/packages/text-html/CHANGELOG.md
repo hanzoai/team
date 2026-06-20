@@ -1,4 +1,4 @@
-# Change Log - @hanzo/text-html
+# Change Log - @hanzoteam/text-html
 
 This log was last generated on Mon, 27 Oct 2025 16:46:51 GMT and should not be manually modified.
 

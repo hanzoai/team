@@ -1,6 +1,6 @@
-import { systemAccountUuid, type MeasureContext, type WorkspaceUuid } from '@hanzo/core'
-import { type ContentTextAdapter } from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
+import { systemAccountUuid, type MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
+import { type ContentTextAdapter } from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
 
 /**
  * @public

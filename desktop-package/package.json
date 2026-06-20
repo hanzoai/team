@@ -3,7 +3,7 @@
   "version": "0.7.0",
   "main": "dist/main/electron.js",
   "author": "Hanzo AI <hey@hanzoai.io>",
-  "template": "@hanzo/default-package",
+  "template": "@hanzoteam/default-package",
   "scripts": {
     "_phase:package": "rushx package",
     "package": "rm -rf ./dist && cp -r ../desktop/dist . && cp ../desktop/.env ./dist && echo 'done'",
@@ -15,8 +15,8 @@
     "bump": "bump-package-version"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
-    "@hanzo/desktop": "workspace:^0.7.0",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/desktop": "workspace:^0.7.0",
     "@vercel/webpack-asset-relocator-loader": "^1.7.3",
     "node-loader": "~2.0.0",
     "cross-env": "~7.0.3",

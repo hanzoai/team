@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/mongo",
+  "name": "@hanzoteam/mongo",
   "entries": [
     {
       "version": "0.6.1",
@@ -13,7 +13,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `~0.6.10` to `~0.6.11`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `~0.6.10` to `~0.6.11`"
           }
         ]
       }

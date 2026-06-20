@@ -14,15 +14,15 @@
 // limitations under the License.
 //
 
-import { Employee } from '@hanzo/contact'
-import type { Attribute, Class, Doc, Markup, Ref, Status, Timestamp, Type } from '@hanzo/core'
-import type { Asset, IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { Preference } from '@hanzo/preference'
-import { TagCategory } from '@hanzo/tags'
-import type { Project, ProjectTypeDescriptor, Task, TaskType } from '@hanzo/task'
-import type { AnyComponent } from '@hanzo/ui'
-import { Action, ActionCategory } from '@hanzo/view'
+import { Employee } from '@hanzoteam/contact'
+import type { Attribute, Class, Doc, Markup, Ref, Status, Timestamp, Type } from '@hanzoteam/core'
+import type { Asset, IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { Preference } from '@hanzoteam/preference'
+import { TagCategory } from '@hanzoteam/tags'
+import type { Project, ProjectTypeDescriptor, Task, TaskType } from '@hanzoteam/task'
+import type { AnyComponent } from '@hanzoteam/ui'
+import { Action, ActionCategory } from '@hanzoteam/view'
 
 /**
  * @public

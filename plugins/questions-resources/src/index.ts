@@ -2,7 +2,7 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 import { questionDeleteAction } from './actions/questionDeleteAction'
 import { questionDuplicateAction } from './actions/questionDuplicateAction'
 import { questionMoveDownAction } from './actions/questionMoveDownAction'

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { getClient, createQuery } from '@hanzo/presentation'
-  import { Button, ButtonSize, Component, Icon, IconSize, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { IconPicker } from '@hanzo/view-resources'
-  import { Ref } from '@hanzo/core'
+  import { Card } from '@hanzoteam/card'
+  import { getClient, createQuery } from '@hanzoteam/presentation'
+  import { Button, ButtonSize, Component, Icon, IconSize, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { IconPicker } from '@hanzoteam/view-resources'
+  import { Ref } from '@hanzoteam/core'
 
   import card from '../plugin'
   import { getCardIconInfo } from '../utils'

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, getMetadata, IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import setting, { settingId } from '@hanzo/setting'
-  import support from '@hanzo/support'
+  import { Asset, getMetadata, IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import setting, { settingId } from '@hanzoteam/setting'
+  import support from '@hanzoteam/support'
   import {
     AnySvelteComponent,
     Button,
@@ -31,14 +31,14 @@
     getCurrentResolvedLocation,
     navigate,
     topSP
-  } from '@hanzo/ui'
-  import view, { Action, ActionCategory } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view, { Action, ActionCategory } from '@hanzoteam/view'
   import workbench from '../plugin'
   import RightArrowIcon from './icons/Collapsed.svelte'
   import DocumentationIcon from './icons/Documentation.svelte'
   import KeyboardIcon from './icons/Keyboard.svelte'
-  import { WorkbenchEvents } from '@hanzo/workbench'
-  import { Analytics } from '@hanzo/analytics'
+  import { WorkbenchEvents } from '@hanzoteam/workbench'
+  import { Analytics } from '@hanzoteam/analytics'
 
   let shortcuts = false
   let actions: Action[] = []

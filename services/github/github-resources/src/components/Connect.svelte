@@ -8,18 +8,18 @@
 
   import GithubPersonProfile from './GithubPersonProfile.svelte'
 
-  import { Analytics } from '@hanzo/analytics'
-  import { WithLookup, getCurrentAccount } from '@hanzo/core'
-  import { GithubAuthentication, GithubIntegration } from '@hanzo/github'
-  import { getEmbeddedLabel, getMetadata, translate } from '@hanzo/platform'
-  import presentation, { Card, HTMLViewer, NavLink, createQuery, getClient } from '@hanzo/presentation'
-  import { Integration } from '@hanzo/setting'
-  import tracker, { Project } from '@hanzo/tracker'
-  import ui, { Button, Label, Loading, TabItem, TabList, location, ticker } from '@hanzo/ui'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { WithLookup, getCurrentAccount } from '@hanzoteam/core'
+  import { GithubAuthentication, GithubIntegration } from '@hanzoteam/github'
+  import { getEmbeddedLabel, getMetadata, translate } from '@hanzoteam/platform'
+  import presentation, { Card, HTMLViewer, NavLink, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Integration } from '@hanzoteam/setting'
+  import tracker, { Project } from '@hanzoteam/tracker'
+  import ui, { Button, Label, Loading, TabItem, TabList, location, ticker } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import github from '../plugin'
   import { onAuthorize } from './utils'
-  import { clientId } from '@hanzo/client'
+  import { clientId } from '@hanzoteam/client'
 
   export let integration: Integration
 

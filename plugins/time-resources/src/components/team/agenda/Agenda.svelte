@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { Event, getAllEvents } from '@hanzo/calendar'
-  import { IdMap, Ref } from '@hanzo/core'
-  import { Project } from '@hanzo/task'
-  import { ToDo, WorkSlot } from '@hanzo/time'
+  import { Event, getAllEvents } from '@hanzoteam/calendar'
+  import { IdMap, Ref } from '@hanzoteam/core'
+  import { Project } from '@hanzoteam/task'
+  import { ToDo, WorkSlot } from '@hanzoteam/time'
   import Border from '../../Border.svelte'
   import Header from '../../Header.svelte'
   import WithTeamData from '../WithTeamData.svelte'
   import { toSlots } from '../utils'
   import DayPlan from './DayPlan.svelte'
-  import { employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
 
   export let space: Ref<Project>
   export let currentDate: Date

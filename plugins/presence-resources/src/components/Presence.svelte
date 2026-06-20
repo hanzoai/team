@@ -14,7 +14,7 @@
 -->
 
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
+  import { Doc } from '@hanzoteam/core'
 
   import PresenceContext from './PresenceContext.svelte'
 

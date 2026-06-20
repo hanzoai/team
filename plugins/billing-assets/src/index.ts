@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { loadMetadata } from '@hanzo/platform'
-import billingPlugin from '@hanzo/billing'
+import { loadMetadata } from '@hanzoteam/platform'
+import billingPlugin from '@hanzoteam/billing'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(billingPlugin.icon, {

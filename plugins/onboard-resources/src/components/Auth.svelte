@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { LoginInfo, WorkspaceLoginInfo } from '@hanzo/login'
-  import { getLoginInfoFromQuery, navigateToWorkspace } from '@hanzo/login-resources'
-  import { Loading } from '@hanzo/ui'
-  import { logIn } from '@hanzo/workbench'
+  import { LoginInfo, WorkspaceLoginInfo } from '@hanzoteam/login'
+  import { getLoginInfoFromQuery, navigateToWorkspace } from '@hanzoteam/login-resources'
+  import { Loading } from '@hanzoteam/ui'
+  import { logIn } from '@hanzoteam/workbench'
   import { onMount } from 'svelte'
   import { afterConfirm, goToLogin } from '../utils'
 

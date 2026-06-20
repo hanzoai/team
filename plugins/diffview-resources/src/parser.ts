@@ -26,7 +26,7 @@ import {
   type DiffHunk,
   type DiffLine,
   DiffLineType
-} from '@hanzo/diffview'
+} from '@hanzoteam/diffview'
 import { isDevNullName } from './utils'
 
 const diff2htmlConfig: Diff2HtmlConfig = {

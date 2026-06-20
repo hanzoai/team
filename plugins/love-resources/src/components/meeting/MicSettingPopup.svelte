@@ -1,13 +1,13 @@
 <script lang="ts">
-  import core, { getCurrentAccount } from '@hanzo/core'
-  import { DevicesPreference } from '@hanzo/love'
-  import { getClient } from '@hanzo/presentation'
-  import { Component, Label, Loading, Toggle } from '@hanzo/ui'
+  import core, { getCurrentAccount } from '@hanzoteam/core'
+  import { DevicesPreference } from '@hanzoteam/love'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Component, Label, Loading, Toggle } from '@hanzoteam/ui'
   import { isKrispNoiseFilterSupported } from '@livekit/krisp-noise-filter'
   import love from '../../plugin'
   import { myPreferences } from '../../stores'
   import { krispProcessor } from '../../utils'
-  import mediaPlugin, { getMediaDevices } from '@hanzo/media'
+  import mediaPlugin, { getMediaDevices } from '@hanzoteam/media'
 
   const client = getClient()
 

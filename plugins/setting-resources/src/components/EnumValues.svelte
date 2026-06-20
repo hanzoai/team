@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Enum } from '@hanzo/core'
-  import presentation, { getClient, MessageBox } from '@hanzo/presentation'
+  import { Enum } from '@hanzoteam/core'
+  import presentation, { getClient, MessageBox } from '@hanzoteam/presentation'
   import {
     ModernEditbox,
     IconAdd,
@@ -28,8 +28,8 @@
     IconMoreV2,
     ModernPopup,
     eventToHTMLElement
-  } from '@hanzo/ui'
-  import type { DropdownIntlItem } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
+  import type { DropdownIntlItem } from '@hanzoteam/ui'
   import setting from '../plugin'
   import EnumValuesList from './EnumValuesList.svelte'
   import IconCrossedArrows from './icons/CrossedArrows.svelte'

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
-  import { ToDo } from '@hanzo/time'
+  import { Label } from '@hanzoteam/ui'
+  import { ToDo } from '@hanzoteam/time'
   import time from '../plugin'
 
   export let value: ToDo

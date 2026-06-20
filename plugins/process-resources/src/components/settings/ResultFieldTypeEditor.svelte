@@ -14,11 +14,11 @@
 -->
 
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import core, { AnyAttribute, Class, Ref, Type } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Process } from '@hanzo/process'
-  import { DropdownLabelsIntl, Label, tooltip } from '@hanzo/ui'
+  import { MasterTag } from '@hanzoteam/card'
+  import core, { AnyAttribute, Class, Ref, Type } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Process } from '@hanzoteam/process'
+  import { DropdownLabelsIntl, Label, tooltip } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Contact } from '@hanzo/contact'
-  import { ArrOf, Doc, Ref, RefTo } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { ButtonKind } from '@hanzo/ui'
+  import { Contact } from '@hanzoteam/contact'
+  import { ArrOf, Doc, Ref, RefTo } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { ButtonKind } from '@hanzoteam/ui'
   import ContactList from './ContactList.svelte'
 
   export let label: IntlString

@@ -21,8 +21,8 @@ import {
   type MediaSessionEvents,
   getMediaDevices,
   cleanupDeviceLabel
-} from '@hanzo/media'
-import { type IntlString, getEmbeddedLabel } from '@hanzo/platform'
+} from '@hanzoteam/media'
+import { type IntlString, getEmbeddedLabel } from '@hanzoteam/platform'
 import EventEmitter from 'events'
 import { onDestroy } from 'svelte'
 import type TypedEventEmitter from 'typed-emitter'

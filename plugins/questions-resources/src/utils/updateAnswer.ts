@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Answer, Question } from '@hanzo/questions'
-import type { DocumentUpdate, TxOperations } from '@hanzo/core'
+import type { Answer, Question } from '@hanzoteam/questions'
+import type { DocumentUpdate, TxOperations } from '@hanzoteam/core'
 
 export async function updateAnswer<A extends Answer<Question<unknown>, unknown>> (
   client: TxOperations,

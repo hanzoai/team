@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { releaseStream } from '@hanzo/media'
+import { releaseStream } from '@hanzoteam/media'
 import type { CameraPosition, CameraSize } from './types'
 
 export interface StreamComposerConfig {

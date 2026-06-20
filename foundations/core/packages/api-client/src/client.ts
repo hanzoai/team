@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import client, { clientId } from '@hanzo/client'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import client, { clientId } from '@hanzoteam/client'
 import {
   type Account,
   type Class,
@@ -39,8 +39,8 @@ import {
   WorkspaceUuid,
   generateId,
   pickPrimarySocialId
-} from '@hanzo/core'
-import { addLocation, getResource } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { addLocation, getResource } from '@hanzoteam/platform'
 
 import { type ServerConfig, loadServerConfig } from './config'
 import {
@@ -94,9 +94,9 @@ async function createClient (
     // for browser/bundler environments.
     if (typeof window === 'undefined') {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      return Promise.resolve(require('@hanzo/client-resources'))
+      return Promise.resolve(require('@hanzoteam/client-resources'))
     }
-    return import(/* webpackChunkName: "client" */ '@hanzo/client-resources')
+    return import(/* webpackChunkName: "client" */ '@hanzoteam/client-resources')
   })
 
   const { socketFactory, connectionTimeout } = options

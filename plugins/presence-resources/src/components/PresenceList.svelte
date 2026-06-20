@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person, formatName } from '@hanzo/contact'
-  import { Avatar } from '@hanzo/contact-resources'
-  import { IconSize, Scroller } from '@hanzo/ui'
+  import { Person, formatName } from '@hanzoteam/contact'
+  import { Avatar } from '@hanzoteam/contact-resources'
+  import { IconSize, Scroller } from '@hanzoteam/ui'
   import { followee, toggleFollowee } from '../store'
 
   export let persons: Person[]

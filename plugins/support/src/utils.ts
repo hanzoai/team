@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { PersonId, Ref, Space, TxOperations } from '@hanzo/core'
+import { PersonId, Ref, Space, TxOperations } from '@hanzoteam/core'
 
 import support from '.'
 

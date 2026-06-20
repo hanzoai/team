@@ -16,7 +16,7 @@ import { type GaxiosResponse } from 'gaxios'
 import { gmail_v1 } from 'googleapis'
 import sanitizeHtml from 'sanitize-html'
 
-import { type MeasureContext, TxOperations } from '@hanzo/core'
+import { type MeasureContext, TxOperations } from '@hanzoteam/core'
 import {
   createMessages,
   parseEmailHeader,
@@ -27,9 +27,9 @@ import {
   getMessageExtra,
   MailHeader,
   SyncOptions
-} from '@hanzo/mail-common'
-import { type KeyValueClient } from '@hanzo/kvs-client'
-import { AccountClient, isWorkspaceLoginInfo, WorkspaceLoginInfo } from '@hanzo/account-client'
+} from '@hanzoteam/mail-common'
+import { type KeyValueClient } from '@hanzoteam/kvs-client'
+import { AccountClient, isWorkspaceLoginInfo, WorkspaceLoginInfo } from '@hanzoteam/account-client'
 
 import { IMessageManager } from '../types'
 import config from '../../config'

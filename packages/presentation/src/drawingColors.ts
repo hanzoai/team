@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { ThemeVariant, type ThemeVariantType } from '@hanzo/theme'
-import { getPlatformColorByName } from '@hanzo/ui'
+import { ThemeVariant, type ThemeVariantType } from '@hanzoteam/theme'
+import { getPlatformColorByName } from '@hanzoteam/ui'
 import { type ColorMetaName, type ColorMetaNameOrHex } from './drawingUtils'
 
 export class ThemeAwareColor {

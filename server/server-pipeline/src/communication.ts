@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { SessionData as CommunicationSession, Event, ServerApi } from '@hanzo/communication-sdk-types'
+import type { SessionData as CommunicationSession, Event, ServerApi } from '@hanzoteam/communication-sdk-types'
 import core, {
   generateId,
   type DomainParams,
@@ -23,14 +23,14 @@ import core, {
   type SessionData,
   type TxDomainEvent,
   type WorkspaceIds
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   type CommunicationCallbacks,
   type Middleware,
   type MiddlewareCreator,
   type PipelineContext,
   BaseMiddleware
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
 export const COMMUNICATION_DOMAIN = 'communication' as OperationDomain
 

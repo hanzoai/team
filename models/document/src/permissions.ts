@@ -1,6 +1,6 @@
-import type { Builder } from '@hanzo/model'
-import core from '@hanzo/core'
-import document from '@hanzo/document'
+import type { Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/core'
+import document from '@hanzoteam/document'
 
 export function definePermissions (builder: Builder): void {
   builder.createDoc(

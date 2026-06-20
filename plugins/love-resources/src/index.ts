@@ -1,6 +1,6 @@
-import { getMetadata, type Resources } from '@hanzo/platform'
-import aiBot from '@hanzo/ai-bot'
-import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzo/core'
+import { getMetadata, type Resources } from '@hanzoteam/platform'
+import aiBot from '@hanzoteam/ai-bot'
+import { AccountRole, getCurrentAccount, hasAccountRole } from '@hanzoteam/core'
 
 import ControlExt from './components/meeting/ControlExt.svelte'
 import EditMeetingData from './components/EditMeetingData.svelte'
@@ -39,7 +39,7 @@ import {
   getMeetingMinutesTitle,
   queryMeetingMinutes
 } from './utils'
-import { toggleMicState, toggleCamState } from '@hanzo/media-resources'
+import { toggleMicState, toggleCamState } from '@hanzoteam/media-resources'
 
 export { setCustomCreateScreenTracks } from './utils'
 

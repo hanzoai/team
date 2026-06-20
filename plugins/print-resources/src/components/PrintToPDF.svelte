@@ -4,16 +4,16 @@
 -->
 
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Doc, type Blob, type Ref } from '@hanzo/core'
-  import presentation, { PDFViewer, createQuery, getClient } from '@hanzo/presentation'
-  import guest, { PublicLink, createPublicLink } from '@hanzo/guest'
-  import view from '@hanzo/view'
-  import { Location } from '@hanzo/ui'
-  import { getDocTitle, getObjectLinkFragment } from '@hanzo/view-resources'
-  import { printToPDF } from '@hanzo/print'
-  import { signPDF } from '@hanzo/sign'
-  import { getMetadata } from '@hanzo/platform'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { Doc, type Blob, type Ref } from '@hanzoteam/core'
+  import presentation, { PDFViewer, createQuery, getClient } from '@hanzoteam/presentation'
+  import guest, { PublicLink, createPublicLink } from '@hanzoteam/guest'
+  import view from '@hanzoteam/view'
+  import { Location } from '@hanzoteam/ui'
+  import { getDocTitle, getObjectLinkFragment } from '@hanzoteam/view-resources'
+  import { printToPDF } from '@hanzoteam/print'
+  import { signPDF } from '@hanzoteam/sign'
+  import { getMetadata } from '@hanzoteam/platform'
 
   export let object: Doc
   export let signed: boolean = false

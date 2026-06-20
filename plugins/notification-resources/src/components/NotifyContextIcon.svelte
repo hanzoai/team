@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import notification, { DocNotifyContext } from '@hanzo/notification'
-  import { Component, Icon, IconSize } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import { classIcon } from '@hanzo/view-resources'
-  import view from '@hanzo/view'
-  import { Doc } from '@hanzo/core'
+  import notification, { DocNotifyContext } from '@hanzoteam/notification'
+  import { Component, Icon, IconSize } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { classIcon } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view'
+  import { Doc } from '@hanzoteam/core'
 
   import NotifyMarker from './NotifyMarker.svelte'
 

@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Card, type MasterTag } from '@hanzo/card'
+import { type Card, type MasterTag } from '@hanzoteam/card'
 import core, {
   type AnyAttribute,
   type ArrOf,
@@ -31,9 +31,9 @@ import core, {
   type TxFactory,
   TxProcessor,
   type Type
-} from '@hanzo/core'
-import { getResource, type IntlString, PlatformError, Severity, Status } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
+} from '@hanzoteam/core'
+import { getResource, type IntlString, PlatformError, Severity, Status } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
 import {
   type Context,
   type ContextId,
@@ -57,9 +57,9 @@ import {
   type Transition,
   type UpdateCriteriaComponent,
   type UserResult
-} from '@hanzo/process'
-import { showPopup } from '@hanzo/ui'
-import { type AttributeCategory } from '@hanzo/view'
+} from '@hanzoteam/process'
+import { showPopup } from '@hanzoteam/ui'
+import { type AttributeCategory } from '@hanzoteam/view'
 import process from './plugin'
 
 export function isTypeEqual (toCheck: Type<any> | undefined, attr: Type<any>): boolean {

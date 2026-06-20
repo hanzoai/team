@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type IntlString, translate } from '@hanzo/platform'
+import { type IntlString, translate } from '@hanzoteam/platform'
 import { LocalizedSearch } from '../search'
 import type { DropdownIntlItem } from '../types'
 
 // Mock dependencies
-jest.mock('@hanzo/platform', () => ({
+jest.mock('@hanzoteam/platform', () => ({
   translate: jest.fn()
 }))
 
-jest.mock('@hanzo/theme', () => ({
+jest.mock('@hanzoteam/theme', () => ({
   themeStore: {
     language: 'en'
   }

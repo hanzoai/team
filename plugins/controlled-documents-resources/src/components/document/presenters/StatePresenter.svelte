@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { themeStore } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { themeStore } from '@hanzoteam/ui'
   import {
     ControlledDocument,
     ControlledDocumentState,
     Document,
     DocumentState,
     isControlledDocument
-  } from '@hanzo/controlled-documents'
+  } from '@hanzoteam/controlled-documents'
 
   import DocumentStatusTag from '../common/DocumentStatusTag.svelte'
   import {

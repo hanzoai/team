@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import { Process, Transition } from '@hanzo/process'
-  import { Button, getCurrentLocation, IconAdd, Label, navigate, showPopup } from '@hanzo/ui'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { Process, Transition } from '@hanzoteam/process'
+  import { Button, getCurrentLocation, IconAdd, Label, navigate, showPopup } from '@hanzoteam/ui'
   import plugin from '../../plugin'
   import AddTransitionPopup from './AddTransitionPopup.svelte'
   import TransitionPresenter from './TransitionPresenter.svelte'
   import TriggerPresenter from './TriggerPresenter.svelte'
-  import { SortableDocList } from '@hanzo/view-resources'
+  import { SortableDocList } from '@hanzoteam/view-resources'
 
   export let process: Process
   export let readonly: boolean

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { EventResult, Event } from '@hanzo/communication-sdk-types'
+import { EventResult, Event } from '@hanzoteam/communication-sdk-types'
 import {
   SortingOrder,
   type Window,
@@ -22,7 +22,7 @@ import {
   FindNotificationsParams,
   FindMessagesOptions,
   BlobID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import { QueryResult } from './result'
 

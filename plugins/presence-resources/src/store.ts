@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hanzo/core'
-import { type Person } from '@hanzo/contact'
-import { getPersonByPersonRef } from '@hanzo/contact-resources'
+import { type Ref } from '@hanzoteam/core'
+import { type Person } from '@hanzoteam/contact'
+import { getPersonByPersonRef } from '@hanzoteam/contact-resources'
 import { writable, get } from 'svelte/store'
 
 import type { RoomPresence, MyDataItem } from './types'

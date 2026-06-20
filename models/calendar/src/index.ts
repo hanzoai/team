@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
+import activity from '@hanzoteam/activity'
 import {
   type AccessLevel,
   calendarId,
@@ -28,8 +28,8 @@ import {
   type Schedule,
   type ScheduleAvailability,
   type Visibility
-} from '@hanzo/calendar'
-import { type Contact, type Employee } from '@hanzo/contact'
+} from '@hanzoteam/calendar'
+import { type Contact, type Employee } from '@hanzoteam/contact'
 import {
   DateRangeMode,
   IndexKind,
@@ -41,7 +41,7 @@ import {
   type PersonId,
   type ClassCollaborators,
   AccountRole
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ArrOf,
   Collection,
@@ -58,23 +58,23 @@ import {
   TypeTimestamp,
   UX,
   type Builder
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import contact from '@hanzo/model-contact'
-import core, { TAttachedDoc, TClass, TDoc } from '@hanzo/model-core'
-import view, { createAction } from '@hanzo/model-view'
-import notification from '@hanzo/notification'
-import setting from '@hanzo/setting'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import workbench from '@hanzo/model-workbench'
-import { WidgetType } from '@hanzo/workbench'
-import preference, { TPreference } from '@hanzo/model-preference'
-import { calendarIntegrationKind } from '@hanzo/calendar'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import contact from '@hanzoteam/model-contact'
+import core, { TAttachedDoc, TClass, TDoc } from '@hanzoteam/model-core'
+import view, { createAction } from '@hanzoteam/model-view'
+import notification from '@hanzoteam/notification'
+import setting from '@hanzoteam/setting'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import workbench from '@hanzoteam/model-workbench'
+import { WidgetType } from '@hanzoteam/workbench'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import { calendarIntegrationKind } from '@hanzoteam/calendar'
 
 import calendar from './plugin'
 
-export * from '@hanzo/calendar'
-export { calendarId } from '@hanzo/calendar'
+export * from '@hanzoteam/calendar'
+export { calendarId } from '@hanzoteam/calendar'
 export { calendarOperation } from './migration'
 
 export const DOMAIN_CALENDAR = 'calendar' as Domain

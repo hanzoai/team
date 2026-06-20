@@ -23,9 +23,9 @@
     PropertyType,
     Ref,
     Type
-  } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
-  import presentation, { getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import { Asset, getEmbeddedLabel } from '@hanzoteam/platform'
+  import presentation, { getClient } from '@hanzoteam/presentation'
   import {
     AnyComponent,
     ButtonIcon,
@@ -38,10 +38,10 @@
     ModernEditbox,
     showPopup,
     Toggle
-  } from '@hanzo/ui'
-  import { DropdownIntlItem } from '@hanzo/ui/src/types'
-  import view from '@hanzo/view'
-  import { IconPicker } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { DropdownIntlItem } from '@hanzoteam/ui/src/types'
+  import view from '@hanzoteam/view'
+  import { IconPicker } from '@hanzoteam/view-resources'
   import setting from '../plugin'
   import { clearSettingsStore } from '../store'
   import { debug } from 'console'

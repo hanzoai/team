@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient, HTMLViewer } from '@hanzo/presentation'
-  import { TelegramMessage } from '@hanzo/telegram'
-  import { Ref } from '@hanzo/core'
-  import { buildRemovedDoc, checkIsObjectRemoved } from '@hanzo/view-resources'
+  import { createQuery, getClient, HTMLViewer } from '@hanzoteam/presentation'
+  import { TelegramMessage } from '@hanzoteam/telegram'
+  import { Ref } from '@hanzoteam/core'
+  import { buildRemovedDoc, checkIsObjectRemoved } from '@hanzoteam/view-resources'
 
   import telegram from '../../plugin'
 

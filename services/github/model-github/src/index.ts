@@ -22,8 +22,8 @@ import {
   TypeString,
   UX,
   type Builder
-} from '@hanzo/model'
-import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import core, { TAttachedDoc, TDoc } from '@hanzoteam/model-core'
 import github from './plugin'
 
 import {
@@ -40,9 +40,9 @@ import {
   type PersonId,
   type Ref,
   type Timestamp
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 
-import { type Person } from '@hanzo/contact'
+import { type Person } from '@hanzoteam/contact'
 import {
   type DocSyncInfo,
   type GithubAuthentication,
@@ -69,30 +69,30 @@ import {
   type MinimizeReason,
   type PullRequestMergeable,
   githubIntegrationKind
-} from '@hanzo/github'
-import contact, { TPerson } from '@hanzo/model-contact'
-import presentation from '@hanzo/model-presentation'
-import tracker, { TComponent, TIssue, TProject, issuesOptions } from '@hanzo/model-tracker'
-import view, { classPresenter } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import { getEmbeddedLabel } from '@hanzo/platform'
-import setting from '@hanzo/setting'
-import tags from '@hanzo/tags'
-import task from '@hanzo/task'
+} from '@hanzoteam/github'
+import contact, { TPerson } from '@hanzoteam/model-contact'
+import presentation from '@hanzoteam/model-presentation'
+import tracker, { TComponent, TIssue, TProject, issuesOptions } from '@hanzoteam/model-tracker'
+import view, { classPresenter } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
+import setting from '@hanzoteam/setting'
+import tags from '@hanzoteam/tags'
+import task from '@hanzoteam/task'
 
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
+import { generateClassNotificationTypes } from '@hanzoteam/model-notification'
 
-import { type ActivityMessageControl } from '@hanzo/activity'
-import activity, { TActivityMessage } from '@hanzo/model-activity'
-import attachment, { TAttachment } from '@hanzo/model-attachment'
-import chunter from '@hanzo/model-chunter'
-import { TPreference } from '@hanzo/model-preference'
-import { TToDo } from '@hanzo/model-time'
-import notification from '@hanzo/notification'
-import { DOMAIN_PREFERENCE } from '@hanzo/preference'
-import time from '@hanzo/time'
+import { type ActivityMessageControl } from '@hanzoteam/activity'
+import activity, { TActivityMessage } from '@hanzoteam/model-activity'
+import attachment, { TAttachment } from '@hanzoteam/model-attachment'
+import chunter from '@hanzoteam/model-chunter'
+import { TPreference } from '@hanzoteam/model-preference'
+import { TToDo } from '@hanzoteam/model-time'
+import notification from '@hanzoteam/notification'
+import { DOMAIN_PREFERENCE } from '@hanzoteam/preference'
+import time from '@hanzoteam/time'
 
-export { githubId } from '@hanzo/github'
+export { githubId } from '@hanzoteam/github'
 export { githubOperation, githubOperationPreTime } from './migration'
 export { default } from './plugin'
 export const DOMAIN_GITHUB = 'github' as Domain

@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import card, { CardSpace, MasterTag } from '@hanzo/card'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
+  import card, { CardSpace, MasterTag } from '@hanzoteam/card'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
 
   import type { TypesNavigatorConfig } from '../../types'
   import NavigatorType from './NavigatorType.svelte'

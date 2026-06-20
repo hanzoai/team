@@ -20,9 +20,9 @@ import {
   type TxOperations,
   generateId,
   makeCollabId
-} from '@hanzo/core'
-import document, { type Document, type Teamspace, getFirstRank } from '@hanzo/document'
-import { makeRank } from '@hanzo/rank'
+} from '@hanzoteam/core'
+import document, { type Document, type Teamspace, getFirstRank } from '@hanzoteam/document'
+import { makeRank } from '@hanzoteam/rank'
 import {
   jsonToMarkup,
   MarkupMarkType,
@@ -30,12 +30,12 @@ import {
   MarkupNodeType,
   traverseNode,
   traverseNodeMarks
-} from '@hanzo/text'
-import { markdownToMarkup } from '@hanzo/text-markdown'
+} from '@hanzoteam/text'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
 
-import { type Attachment } from '@hanzo/attachment'
-import attachment from '@hanzo/model-attachment'
-import core from '@hanzo/model-core'
+import { type Attachment } from '@hanzoteam/attachment'
+import attachment from '@hanzoteam/model-attachment'
+import core from '@hanzoteam/model-core'
 import { type Dirent } from 'fs'
 import { readdir, readFile, stat } from 'fs/promises'
 import { contentType } from 'mime-types'

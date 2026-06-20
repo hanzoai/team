@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { translate } from '@hanzo/platform'
+  import { translate } from '@hanzoteam/platform'
   import ui from '../plugin'
-  import { themeStore } from '@hanzo/theme'
+  import { themeStore } from '@hanzoteam/theme'
   import { DAY, HOUR, MINUTE } from '../types'
 
   export let value: number

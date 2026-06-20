@@ -2,7 +2,7 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Location, ResolvedLocation } from '@hanzo/ui'
+import type { Location, ResolvedLocation } from '@hanzoteam/ui'
 
 /** @public */
 export type RouteParams = Record<string, any>

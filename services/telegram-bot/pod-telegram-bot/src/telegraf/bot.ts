@@ -15,12 +15,12 @@
 
 import { Context, Markup, NarrowedContext, session, Telegraf } from 'telegraf'
 import { message } from 'telegraf/filters'
-import telegram from '@hanzo/telegram'
-import { htmlToMarkup, isEmptyMarkup, jsonToMarkup, MarkupNodeType } from '@hanzo/text'
+import telegram from '@hanzoteam/telegram'
+import { htmlToMarkup, isEmptyMarkup, jsonToMarkup, MarkupNodeType } from '@hanzoteam/text'
 import { toHTML } from '@telegraf/entity'
 import { CallbackQuery, Message, Update } from 'telegraf/typings/core/types/typegram'
-import { translate } from '@hanzo/platform'
-import { AccountUuid, WorkspaceUuid } from '@hanzo/core'
+import { translate } from '@hanzoteam/platform'
+import { AccountUuid, WorkspaceUuid } from '@hanzoteam/core'
 
 import config from '../config'
 import { PlatformWorker } from '../worker'

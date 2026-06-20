@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ThreadMessage } from '@hanzo/chunter'
+  import { ThreadMessage } from '@hanzoteam/chunter'
   import ThreadMessagePreview from '../threads/ThreadMessagePreview.svelte'
-  import { ActivityMessagePreviewType } from '@hanzo/activity'
+  import { ActivityMessagePreviewType } from '@hanzoteam/activity'
 
   export let message: ThreadMessage
   export let type: ActivityMessagePreviewType = 'full'

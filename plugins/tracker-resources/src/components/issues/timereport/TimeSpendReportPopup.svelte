@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hanzo/contact'
-  import { AttachedData, Class, DocumentUpdate, Ref, Space } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import presentation, { Card, getClient } from '@hanzo/presentation'
-  import { UserBox } from '@hanzo/contact-resources'
-  import { Issue, TimeReportDayType, TimeSpendReport, TrackerEvents } from '@hanzo/tracker'
-  import { Button, DatePresenter, EditBox, Label } from '@hanzo/ui'
+  import contact, { Employee } from '@hanzoteam/contact'
+  import { AttachedData, Class, DocumentUpdate, Ref, Space } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import presentation, { Card, getClient } from '@hanzoteam/presentation'
+  import { UserBox } from '@hanzoteam/contact-resources'
+  import { Issue, TimeReportDayType, TimeSpendReport, TrackerEvents } from '@hanzoteam/tracker'
+  import { Button, DatePresenter, EditBox, Label } from '@hanzoteam/ui'
   import tracker from '../../../plugin'
   import { getTimeReportDate, getTimeReportDayType } from '../../../utils'
   import TitlePresenter from '../TitlePresenter.svelte'
   import TimeReportDayDropdown from './TimeReportDayDropdown.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let issue: Issue | undefined = undefined
   export let issueId: Ref<Issue> | undefined = issue?._id

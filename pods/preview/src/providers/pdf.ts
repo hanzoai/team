@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { MeasureContext, WorkspaceUuid } from '@hanzo/core'
-import type { StorageAdapter } from '@hanzo/server-core'
+import type { MeasureContext, WorkspaceUuid } from '@hanzoteam/core'
+import type { StorageAdapter } from '@hanzoteam/server-core'
 
 import { createWriteStream } from 'fs'
 import { pipeline } from 'stream/promises'

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import calendarPlugin from '@hanzo/calendar'
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { PersonPresenter } from '@hanzo/contact-resources'
-  import { Chevron, Label } from '@hanzo/ui'
+  import calendarPlugin from '@hanzoteam/calendar'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { PersonPresenter } from '@hanzoteam/contact-resources'
+  import { Chevron, Label } from '@hanzoteam/ui'
   import { EventPersonMapping } from '../../../types'
   import TimePresenter from '../../presenters/TimePresenter.svelte'
   import { isVisibleMe } from '../utils'

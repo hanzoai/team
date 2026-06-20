@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Association, Doc, Ref, Relation } from '@hanzo/core'
-  import { createQuery, getClient, ObjectPopup } from '@hanzo/presentation'
+  import core, { Association, Doc, Ref, Relation } from '@hanzoteam/core'
+  import { createQuery, getClient, ObjectPopup } from '@hanzoteam/presentation'
   import ObjectPresenter from './ObjectPresenter.svelte'
 
   export let association: string

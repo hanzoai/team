@@ -1,7 +1,7 @@
-import { getClient as getClientRaw, type AccountClient } from '@hanzo/account-client'
+import { getClient as getClientRaw, type AccountClient } from '@hanzoteam/account-client'
 import { LocalUrl, PlatformAdmin } from '../utils'
-import { systemAccountUuid } from '@hanzo/core'
-import { generateToken } from '@hanzo/server-token'
+import { systemAccountUuid } from '@hanzoteam/core'
+import { generateToken } from '@hanzoteam/server-token'
 
 let adminAccountClient: AccountClient
 

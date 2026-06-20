@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
   import core, {
     getCurrentAccount,
     Ref,
@@ -24,17 +24,17 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import lead, { Funnel, LeadEvents } from '@hanzo/lead'
-  import presentation, { getClient, SpaceCreateCard } from '@hanzo/presentation'
-  import task, { ProjectType } from '@hanzo/task'
-  import ui, { Component, EditBox, Label, Toggle, ToggleWithLabel } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import lead, { Funnel, LeadEvents } from '@hanzoteam/lead'
+  import presentation, { getClient, SpaceCreateCard } from '@hanzoteam/presentation'
+  import task, { ProjectType } from '@hanzoteam/task'
+  import ui, { Component, EditBox, Label, Toggle, ToggleWithLabel } from '@hanzoteam/ui'
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
 
   import leadRes from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
-  import view from '@hanzo/view'
+  import { Analytics } from '@hanzoteam/analytics'
+  import view from '@hanzoteam/view'
 
   export let funnel: Funnel | undefined = undefined
   const dispatch = createEventDispatcher()

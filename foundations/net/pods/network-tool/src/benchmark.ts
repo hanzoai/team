@@ -1,4 +1,4 @@
-import { createNetworkClient } from '@hanzo/network-client'
+import { createNetworkClient } from '@hanzoteam/network-client'
 import {
   containerOnAgentEndpointRef,
   containerUuid,
@@ -9,7 +9,7 @@ import {
   type ContainerReference,
   type ContainerUuid,
   type GetOptions
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 import { program } from 'commander'
 import { addShutdownHandler, tickManager } from './utils'
 

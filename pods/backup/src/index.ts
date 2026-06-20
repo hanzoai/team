@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { startBackup } from '@hanzo/backup-service'
-import { newMetrics, type Tx } from '@hanzo/core'
-import { initStatisticsContext, type PipelineFactory } from '@hanzo/server-core'
+import { Analytics } from '@hanzoteam/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { startBackup } from '@hanzoteam/backup-service'
+import { newMetrics, type Tx } from '@hanzoteam/core'
+import { initStatisticsContext, type PipelineFactory } from '@hanzoteam/server-core'
 import {
   createBackupPipeline,
   getConfig,
@@ -25,7 +25,7 @@ import {
   registerDestroyFactory,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hanzo/server-pipeline'
+} from '@hanzoteam/server-pipeline'
 import { join } from 'path'
 
 import {
@@ -33,14 +33,14 @@ import {
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   shutdownMongo
-} from '@hanzo/mongo'
+} from '@hanzoteam/mongo'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   setDBExtraOptions,
   shutdownPostgres
-} from '@hanzo/postgres'
+} from '@hanzoteam/postgres'
 import { readFileSync } from 'node:fs'
 const model = JSON.parse(readFileSync(process.env.MODEL_JSON ?? 'model.json').toString()) as Tx[]
 

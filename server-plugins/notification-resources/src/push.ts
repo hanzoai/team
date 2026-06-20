@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import serverCore, { TriggerControl } from '@hanzo/server-core'
-import serverNotification, { PUSH_NOTIFICATION_TITLE_SIZE } from '@hanzo/server-notification'
+import serverCore, { TriggerControl } from '@hanzoteam/server-core'
+import serverNotification, { PUSH_NOTIFICATION_TITLE_SIZE } from '@hanzoteam/server-notification'
 import {
   AccountUuid,
   Class,
@@ -26,7 +26,7 @@ import {
   Tx,
   TxCreateDoc,
   TxProcessor
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import notification, {
   ActivityInboxNotification,
   InboxNotification,
@@ -34,21 +34,21 @@ import notification, {
   notificationId,
   PushData,
   PushSubscription
-} from '@hanzo/notification'
-import activity, { ActivityMessage } from '@hanzo/activity'
-import serverView from '@hanzo/server-view'
-import { getMetadata, getResource } from '@hanzo/platform'
-import { workbenchId } from '@hanzo/workbench'
-import { encodeObjectURI } from '@hanzo/view'
+} from '@hanzoteam/notification'
+import activity, { ActivityMessage } from '@hanzoteam/activity'
+import serverView from '@hanzoteam/server-view'
+import { getMetadata, getResource } from '@hanzoteam/platform'
+import { workbenchId } from '@hanzoteam/workbench'
+import { encodeObjectURI } from '@hanzoteam/view'
 import contact, {
   type AvatarInfo,
   getAvatarProviderId,
   getGravatarUrl,
   Person,
   PersonSpace
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import { AvailableProvidersCache, AvailableProvidersCacheKey, getTranslatedNotificationContent } from './index'
-import { getPerson } from '@hanzo/server-contact'
+import { getPerson } from '@hanzoteam/server-contact'
 
 async function createPushFromInbox (
   control: TriggerControl,

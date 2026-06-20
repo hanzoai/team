@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import attachmentP, { Attachment } from '@hanzo/attachment'
-  import { AttachmentPresenter } from '@hanzo/attachment-resources'
-  import contact, { Channel, Contact, getName as getContactName } from '@hanzo/contact'
-  import core, { generateId, getCurrentAccount, Markup, Ref, toIdMap } from '@hanzo/core'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting, { Integration } from '@hanzo/setting'
-  import templates, { TemplateDataProvider } from '@hanzo/templates'
-  import { StyledTextEditor } from '@hanzo/text-editor-resources'
-  import { EmptyMarkup, isEmptyMarkup, markupToJSON } from '@hanzo/text'
-  import { markupToHtml } from '@hanzo/text-html'
+  import { Analytics } from '@hanzoteam/analytics'
+  import attachmentP, { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentPresenter } from '@hanzoteam/attachment-resources'
+  import contact, { Channel, Contact, getName as getContactName } from '@hanzoteam/contact'
+  import core, { generateId, getCurrentAccount, Markup, Ref, toIdMap } from '@hanzoteam/core'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import setting, { Integration } from '@hanzoteam/setting'
+  import templates, { TemplateDataProvider } from '@hanzoteam/templates'
+  import { StyledTextEditor } from '@hanzoteam/text-editor-resources'
+  import { EmptyMarkup, isEmptyMarkup, markupToJSON } from '@hanzoteam/text'
+  import { markupToHtml } from '@hanzoteam/text-html'
   import {
     Button,
     EditBox,
@@ -35,8 +35,8 @@
     Panel,
     Scroller,
     showPopup
-  } from '@hanzo/ui'
-  import { GmailEvents } from '@hanzo/gmail'
+  } from '@hanzoteam/ui'
+  import { GmailEvents } from '@hanzoteam/gmail'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import plugin from '../plugin'
   import Connect from './Connect.svelte'

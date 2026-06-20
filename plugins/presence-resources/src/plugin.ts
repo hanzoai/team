@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import presence, { presenceId } from '@hanzo/presence'
+import { mergeIds } from '@hanzoteam/platform'
+import presence, { presenceId } from '@hanzoteam/presence'
 
 export default mergeIds(presenceId, presence, {})

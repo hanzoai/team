@@ -1,5 +1,5 @@
 import Stripe from 'stripe'
-import type { MeasureContext } from '@hanzo/core'
+import type { MeasureContext } from '@hanzoteam/core'
 
 import { createSubscriptionEventFromInvoiceEvent, transformStripeSubscriptionToData } from '../utils'
 

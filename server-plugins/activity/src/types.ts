@@ -1,5 +1,5 @@
-import { Doc, Hierarchy, ModelDb, Ref, TxCUD, TxFactory, WorkspaceIds, type MeasureContext } from '@hanzo/core'
-import { StorageAdapter, type SessionFindAll } from '@hanzo/server-core'
+import { Doc, Hierarchy, ModelDb, Ref, TxCUD, TxFactory, WorkspaceIds, type MeasureContext } from '@hanzoteam/core'
+import { StorageAdapter, type SessionFindAll } from '@hanzoteam/server-core'
 
 export interface DocObjectCache {
   docs: Map<Ref<Doc>, Doc | null>

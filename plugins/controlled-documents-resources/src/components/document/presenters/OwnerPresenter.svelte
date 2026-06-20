@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import documents, { Document } from '@hanzo/controlled-documents'
-  import { Employee, getCurrentEmployee } from '@hanzo/contact'
-  import { PersonPresenter, checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
-  import { Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import documents, { Document } from '@hanzoteam/controlled-documents'
+  import { Employee, getCurrentEmployee } from '@hanzoteam/contact'
+  import { PersonPresenter, checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { eventToHTMLElement, showPopup } from '@hanzoteam/ui'
 
   import document from '../../../plugin'
   import ChangeOwnerPopup from '../popups/ChangeOwnerPopup.svelte'

@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/api-client",
+  "name": "@hanzoteam/api-client",
   "entries": [
     {
       "version": "0.7.18",
@@ -13,7 +13,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/text\" from `^0.7.17` to `0.7.18`"
+            "comment": "Updating dependency \"@hanzoteam/text\" from `^0.7.17` to `0.7.18`"
           }
         ]
       }
@@ -25,7 +25,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.17` to `0.7.18`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.17` to `0.7.18`"
           }
         ]
       }
@@ -42,28 +42,28 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/account-client\" from `^0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/account-client\" from `^0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/client\" from `^0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/client\" from `^0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/client-resources\" from `^0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/client-resources\" from `^0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/collaborator-client\" from `^0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/collaborator-client\" from `^0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.6` to `0.7.7`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/platform\" from `^0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/platform\" from `^0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/text\" from `^0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/text\" from `^0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/text-markdown\" from `^0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/text-markdown\" from `^0.7.4` to `0.7.5`"
           }
         ]
       }
@@ -80,28 +80,28 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/account-client\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/account-client\" from `^0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/client\" from `^0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/client\" from `^0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/client-resources\" from `^0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/client-resources\" from `^0.7.4` to `0.7.5`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/collaborator-client\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/collaborator-client\" from `^0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.5` to `0.7.6`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/platform\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/platform\" from `^0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/text\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/text\" from `^0.7.3` to `0.7.4`"
           },
           {
-            "comment": "Updating dependency \"@hanzo/text-markdown\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/text-markdown\" from `^0.7.3` to `0.7.4`"
           }
         ]
       }
@@ -113,7 +113,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `^0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `^0.7.3` to `0.7.4`"
           }
         ]
       }

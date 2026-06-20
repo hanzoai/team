@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { coreId } from '@hanzo/core'
-import coreEng from '@hanzo/core/lang/en.json'
-import platformEng from '@hanzo/platform/lang/en.json'
+import { coreId } from '@hanzoteam/core'
+import coreEng from '@hanzoteam/core/lang/en.json'
+import platformEng from '@hanzoteam/platform/lang/en.json'
 
-import { addStringsLoader, platformId } from '@hanzo/platform'
+import { addStringsLoader, platformId } from '@hanzoteam/platform'
 
 export function registerLoaders (): void {
   addStringsLoader(coreId, async (lang: string) => coreEng)

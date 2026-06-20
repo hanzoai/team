@@ -26,21 +26,21 @@ import accountPlugin, {
   updateWorkspaceInfo,
   type AccountDB,
   type Workspace
-} from '@hanzo/account'
+} from '@hanzoteam/account'
 import {
   getMongoAccountDB,
   type Account as OldAccount,
   type Workspace as OldWorkspace
-} from '@hanzo/account-service'
-import { getWorkspaceClient as getHanzolakeClient } from '@hanzo/hanzolake-client'
-import { setMetadata } from '@hanzo/platform'
+} from '@hanzoteam/account-service'
+import { getWorkspaceClient as getHanzolakeClient } from '@hanzoteam/hanzolake-client'
+import { setMetadata } from '@hanzoteam/platform'
 import {
   createPostgreeDestroyAdapter,
   createPostgresAdapter,
   createPostgresTxAdapter,
   getDBClient,
   shutdownPostgres
-} from '@hanzo/postgres'
+} from '@hanzoteam/postgres'
 import {
   backup,
   backupDownload,
@@ -50,8 +50,8 @@ import {
   createFileBackupStorage,
   createStorageBackupStorage,
   restore
-} from '@hanzo/server-backup'
-import serverClientPlugin, { getAccountClient, getTransactorEndpoint } from '@hanzo/server-client'
+} from '@hanzoteam/server-backup'
+import serverClientPlugin, { getAccountClient, getTransactorEndpoint } from '@hanzoteam/server-client'
 import {
   createBackupPipeline,
   createEmptyBroadcastOps,
@@ -61,17 +61,17 @@ import {
   registerStringLoaders,
   registerTxAdapterFactory,
   setAdapterSecurity
-} from '@hanzo/server-pipeline'
-import serverToken, { decodeToken, generateToken } from '@hanzo/server-token'
-import { createWorkspace, upgradeWorkspace } from '@hanzo/workspace-service'
+} from '@hanzoteam/server-pipeline'
+import serverToken, { decodeToken, generateToken } from '@hanzoteam/server-token'
+import { createWorkspace, upgradeWorkspace } from '@hanzoteam/workspace-service'
 
 import { faker } from '@faker-js/faker'
-import { getPlatformQueue } from '@hanzo/kafka'
-import { buildStorageFromConfig, createStorageFromConfig, storageConfigFromEnv } from '@hanzo/server-storage'
+import { getPlatformQueue } from '@hanzoteam/kafka'
+import { buildStorageFromConfig, createStorageFromConfig, storageConfigFromEnv } from '@hanzoteam/server-storage'
 import { program, type Command } from 'commander'
 import { updateField } from './workspace'
 
-import { RatingCalculator, ratingEvents, type QueueRatingMessage } from '@hanzo/pod-rating'
+import { RatingCalculator, ratingEvents, type QueueRatingMessage } from '@hanzoteam/pod-rating'
 
 import {
   AccountRole,
@@ -92,24 +92,24 @@ import {
   type Version,
   type WorkspaceDataId,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { consoleModelLogger, type MigrateOperation } from '@hanzo/model'
+} from '@hanzoteam/core'
+import { consoleModelLogger, type MigrateOperation } from '@hanzoteam/model'
 import {
   createMongoAdapter,
   createMongoDestroyAdapter,
   createMongoTxAdapter,
   getMongoClient,
   shutdownMongo
-} from '@hanzo/mongo'
+} from '@hanzoteam/mongo'
 
-import { getModelVersion } from '@hanzo/model-all'
+import { getModelVersion } from '@hanzoteam/model-all'
 import {
   QueueTopic,
   workspaceEvents,
   type Pipeline,
   type QueueWorkspaceMessage,
   type StorageAdapter
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import { getAccountDBUrl, getKvsUrl, getMongoDBUrl } from './__start'
 // import { fillGithubUsers, fixAccountEmails, renameAccount } from './account'
 import { changeConfiguration } from './configuration'
@@ -129,9 +129,9 @@ import { performGithubAccountMigrations } from './github'
 import { performGmailAccountMigrations } from './gmail'
 import { getToolToken, getWorkspace, getWorkspaceTransactorEndpoint } from './utils'
 
-import { createRestClient } from '@hanzo/api-client'
-import { type CardID } from '@hanzo/communication-types'
-import { sendTransactorEvent } from '@hanzo/server-tool'
+import { createRestClient } from '@hanzoteam/api-client'
+import { type CardID } from '@hanzoteam/communication-types'
+import { sendTransactorEvent } from '@hanzoteam/server-tool'
 import { existsSync } from 'fs'
 import { mkdir, writeFile } from 'fs/promises'
 import { dirname } from 'path'

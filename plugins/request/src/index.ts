@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Person } from '@hanzo/contact'
-import type { AttachedDoc, Class, Doc, Mixin, Ref, Timestamp, Tx } from '@hanzo/core'
-import type { Asset, IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { AnyComponent } from '@hanzo/ui'
-import { ChatMessage } from '@hanzo/chunter'
+import { type Person } from '@hanzoteam/contact'
+import type { AttachedDoc, Class, Doc, Mixin, Ref, Timestamp, Tx } from '@hanzoteam/core'
+import type { Asset, IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { AnyComponent } from '@hanzoteam/ui'
+import { ChatMessage } from '@hanzoteam/chunter'
 
 /**
  * @public

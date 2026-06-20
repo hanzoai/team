@@ -15,8 +15,8 @@
 //
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { jsonToPmNode, MarkupNode } from '@hanzo/text'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { jsonToPmNode, MarkupNode } from '@hanzoteam/text'
   import { Editor, Extension, mergeAttributes } from '@tiptap/core'
   import { Plugin, PluginKey } from '@tiptap/pm/state'
   import { DecorationSet } from '@tiptap/pm/view'

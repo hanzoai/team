@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Data, Ref, Timestamp } from '@hanzo/core'
-  import { Department, PublicHoliday, timeToTzDate } from '@hanzo/hr'
-  import presentation, { Card, getClient } from '@hanzo/presentation'
-  import { Button, DateRangePresenter, EditBox, Label } from '@hanzo/ui'
+  import core, { Data, Ref, Timestamp } from '@hanzoteam/core'
+  import { Department, PublicHoliday, timeToTzDate } from '@hanzoteam/hr'
+  import presentation, { Card, getClient } from '@hanzoteam/presentation'
+  import { Button, DateRangePresenter, EditBox, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import hr from '../../plugin'
   import DepartmentEditor from '../DepartmentEditor.svelte'

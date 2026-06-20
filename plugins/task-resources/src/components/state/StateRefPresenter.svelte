@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Status } from '@hanzo/core'
-  import { Project } from '@hanzo/task'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
+  import { Ref, Status } from '@hanzoteam/core'
+  import { Project } from '@hanzoteam/task'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
   import StateEditor from './StateEditor.svelte'
   import StatePresenter from './StatePresenter.svelte'
 

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import core, { getCurrentAccount } from '@hanzo/core'
-  import { DevicesPreference } from '@hanzo/love'
-  import { getClient } from '@hanzo/presentation'
-  import { Breadcrumb, Header, Label, Toggle } from '@hanzo/ui'
+  import core, { getCurrentAccount } from '@hanzoteam/core'
+  import { DevicesPreference } from '@hanzoteam/love'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Breadcrumb, Header, Label, Toggle } from '@hanzoteam/ui'
   import { isKrispNoiseFilterSupported } from '@livekit/krisp-noise-filter'
   import love from '../plugin'
   import { myPreferences } from '../stores'

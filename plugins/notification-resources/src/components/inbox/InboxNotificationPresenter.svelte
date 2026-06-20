@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { Doc, type Ref, type Space } from '@hanzo/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Doc, type Ref, type Space } from '@hanzoteam/core'
   import notification, {
     ActivityNotificationViewlet,
     CommonInboxNotification,
@@ -22,7 +22,7 @@
     DisplayInboxNotification,
     MentionInboxNotification,
     ReactionInboxNotification
-  } from '@hanzo/notification'
+  } from '@hanzoteam/notification'
   import ActivityInboxNotificationPresenter from './ActivityInboxNotificationPresenter.svelte'
   import MentionInboxNotificationPresenter from './MentionInboxNotificationPresenter.svelte'
   import ReactionInboxNotificationPresenter from './ReactionInboxNotificationPresenter.svelte'

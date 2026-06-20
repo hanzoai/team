@@ -1,5 +1,5 @@
-import attachment, { Attachment } from '@hanzo/attachment'
-import contact, { Channel, Contact, Employee } from '@hanzo/contact'
+import attachment, { Attachment } from '@hanzoteam/attachment'
+import contact, { Channel, Contact, Employee } from '@hanzoteam/contact'
 import core, {
   PersonId,
   ApplyOperations,
@@ -22,10 +22,10 @@ import core, {
   TxProcessor,
   WithLookup,
   type Blob as PlatformBlob
-} from '@hanzo/core'
-import gmail, { Message } from '@hanzo/gmail'
-import recruit from '@hanzo/recruit'
-import tags, { TagElement } from '@hanzo/tags'
+} from '@hanzoteam/core'
+import gmail, { Message } from '@hanzoteam/gmail'
+import recruit from '@hanzoteam/recruit'
+import tags, { TagElement } from '@hanzoteam/tags'
 import { deepEqual } from 'fast-equals'
 import { BitrixClient } from './client'
 import bitrix from './index'
@@ -40,7 +40,7 @@ import {
   LoginInfo
 } from './types'
 import { convert, ConvertResult } from './utils'
-import chunter, { ChatMessage } from '@hanzo/chunter'
+import chunter, { ChatMessage } from '@hanzoteam/chunter'
 
 async function updateDoc (client: ApplyOperations, doc: Doc, raw: Doc | Data<Doc>, date: Timestamp): Promise<Doc> {
   // We need to update fields if they are different.

@@ -23,9 +23,9 @@ import {
   type WorkspaceUuid,
   type AccountUuid,
   systemAccountUuid
-} from '@hanzo/core'
-import platform, { PlatformError, Status, Severity, getMetadata } from '@hanzo/platform'
-import { decodeToken, decodeTokenVerbose } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import platform, { PlatformError, Status, Severity, getMetadata } from '@hanzoteam/platform'
+import { decodeToken, decodeTokenVerbose } from '@hanzoteam/server-token'
 
 import * as utils from '../utils'
 import { type AccountDB, type SocialId } from '../types'
@@ -55,8 +55,8 @@ import {
 import { accountPlugin } from '../plugin'
 
 // Mock platform
-jest.mock('@hanzo/platform', () => {
-  const actual = jest.requireActual('@hanzo/platform')
+jest.mock('@hanzoteam/platform', () => {
+  const actual = jest.requireActual('@hanzoteam/platform')
   return {
     ...actual,
     ...actual.default,
@@ -66,7 +66,7 @@ jest.mock('@hanzo/platform', () => {
 })
 
 // Mock server-token
-jest.mock('@hanzo/server-token', () => ({
+jest.mock('@hanzoteam/server-token', () => ({
   decodeTokenVerbose: jest.fn(),
   decodeToken: jest.fn(),
   generateToken: jest.fn().mockImplementation((account, workspace, extra, _, options) => {

@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/pod-workspace",
+  "name": "@hanzoteam/pod-workspace",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/node-package",
+  "template": "@hanzoteam/node-package",
   "license": "EPL-2.0",
   "scripts": {
     "start": "ts-node src/__start.ts",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -48,15 +48,15 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/workspace-service": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/core": "workspace:^0.7.24",
+    "@hanzoteam/workspace-service": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/core": "workspace:^0.7.24",
     "mongodb": "^6.16.0",
-    "@hanzo/server-token": "workspace:^0.7.17",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/model-all": "workspace:^0.7.0",
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/analytics-service": "workspace:^0.7.17",
-    "@hanzo/kafka": "workspace:^0.7.18"
+    "@hanzoteam/server-token": "workspace:^0.7.17",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/model-all": "workspace:^0.7.0",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/analytics-service": "workspace:^0.7.17",
+    "@hanzoteam/kafka": "workspace:^0.7.18"
   }
 }

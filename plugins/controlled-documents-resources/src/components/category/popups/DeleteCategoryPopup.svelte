@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import documents, { DocumentCategory } from '@hanzo/controlled-documents'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { Button, Label } from '@hanzo/ui'
+  import documents, { DocumentCategory } from '@hanzoteam/controlled-documents'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { Button, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import Info from '../../icons/Info.svelte'

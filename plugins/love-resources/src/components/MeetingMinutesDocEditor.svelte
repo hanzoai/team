@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MeetingMinutes } from '@hanzo/love'
-  import { ObjectPresenter, openDoc } from '@hanzo/view-resources'
-  import view from '@hanzo/view'
-  import { ActionIcon } from '@hanzo/ui'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import type { Doc } from '@hanzo/core'
+  import { MeetingMinutes } from '@hanzoteam/love'
+  import { ObjectPresenter, openDoc } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view'
+  import { ActionIcon } from '@hanzoteam/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import type { Doc } from '@hanzoteam/core'
 
   export let object: MeetingMinutes
 

@@ -13,18 +13,18 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AccountRole, Ref, getCurrentAccount } from '@hanzo/core'
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
-  import { type Drive } from '@hanzo/drive'
-  import { getResource } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { HeaderButton, HeaderButtonAction } from '@hanzo/ui'
-  import { getUploadHandlers } from '@hanzo/uploader'
+  import { AccountRole, Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
+  import { type Drive } from '@hanzoteam/drive'
+  import { getResource } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { HeaderButton, HeaderButtonAction } from '@hanzoteam/ui'
+  import { getUploadHandlers } from '@hanzoteam/uploader'
   import drive from '../plugin'
   import { getFolderIdFromFragment } from '../navigation'
   import { showCreateDrivePopup, showCreateFolderPopup, getUploadOptionsByFragment } from '../utils'
   import { onMount } from 'svelte'
-  import { canCreateObject } from '@hanzo/view-resources'
+  import { canCreateObject } from '@hanzoteam/view-resources'
 
   export let currentSpace: Ref<Drive> | undefined
   export let currentFragment: string | undefined

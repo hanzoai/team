@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { AccessLevel, Calendar, getPrimaryCalendar, PrimaryCalendar } from '@hanzo/calendar'
-  import { getCurrentAccount, Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Dropdown, Icon } from '@hanzo/ui'
+  import { AccessLevel, Calendar, getPrimaryCalendar, PrimaryCalendar } from '@hanzoteam/calendar'
+  import { getCurrentAccount, Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Dropdown, Icon } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import devmodel, { devModelId } from '@hanzo/devmodel'
-import { mergeIds } from '@hanzo/platform'
-import { type Ref } from '@hanzo/core'
-import { type Application } from '@hanzo/workbench'
+import devmodel, { devModelId } from '@hanzoteam/devmodel'
+import { mergeIds } from '@hanzoteam/platform'
+import { type Ref } from '@hanzoteam/core'
+import { type Application } from '@hanzoteam/workbench'
 
 export default mergeIds(devModelId, devmodel, {
   ids: {

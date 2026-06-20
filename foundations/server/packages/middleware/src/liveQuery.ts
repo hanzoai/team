@@ -23,10 +23,10 @@ import {
   type SearchQuery,
   type Tx,
   toFindResult
-} from '@hanzo/core'
-import { LiveQuery as LQ } from '@hanzo/query'
-import { BaseMiddleware } from '@hanzo/server-core'
-import type { Middleware, PipelineContext, ServerFindOptions, TxMiddlewareResult } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { LiveQuery as LQ } from '@hanzoteam/query'
+import { BaseMiddleware } from '@hanzoteam/server-core'
+import type { Middleware, PipelineContext, ServerFindOptions, TxMiddlewareResult } from '@hanzoteam/server-core'
 
 /**
  * @public

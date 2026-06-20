@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, Ref } from '@hanzo/core'
-  import { ObjectCreate, ObjectPopup } from '@hanzo/presentation'
-  import { Milestone, MilestoneStatus } from '@hanzo/tracker'
-  import { Icon, Label } from '@hanzo/ui'
+  import type { Class, Doc, DocumentQuery, Ref } from '@hanzoteam/core'
+  import { ObjectCreate, ObjectPopup } from '@hanzoteam/presentation'
+  import { Milestone, MilestoneStatus } from '@hanzoteam/tracker'
+  import { Icon, Label } from '@hanzoteam/ui'
   import { milestoneStatusAssets } from '../../utils'
   import MilestoneTitlePresenter from './MilestoneTitlePresenter.svelte'
   export let _class: Ref<Class<Milestone>>

@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { AccountRole, type AccountUuid, type Class, DOMAIN_MODEL, type Ref, type Space } from '@hanzo/core'
-import { type Builder, Mixin, Model, Prop, TypeRef, UX } from '@hanzo/model'
-import preference, { TPreference } from '@hanzo/model-preference'
-import { createAction } from '@hanzo/model-view'
-import core, { TClass, TDoc } from '@hanzo/model-core'
-import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hanzo/platform'
-import view, { type KeyBinding } from '@hanzo/view'
+import { AccountRole, type AccountUuid, type Class, DOMAIN_MODEL, type Ref, type Space } from '@hanzoteam/core'
+import { type Builder, Mixin, Model, Prop, TypeRef, UX } from '@hanzoteam/model'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import { createAction } from '@hanzoteam/model-view'
+import core, { TClass, TDoc } from '@hanzoteam/model-core'
+import { type Asset, getEmbeddedLabel, type IntlString, type Resource } from '@hanzoteam/platform'
+import view, { type KeyBinding } from '@hanzoteam/view'
 import type {
   Application,
   ApplicationNavModel,
@@ -31,16 +31,16 @@ import type {
   WidgetTab,
   WidgetType,
   WorkbenchTab
-} from '@hanzo/workbench'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import presentation from '@hanzo/model-presentation'
+} from '@hanzoteam/workbench'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import presentation from '@hanzoteam/model-presentation'
 
 import workbench from './plugin'
 
-export { workbenchId } from '@hanzo/workbench'
+export { workbenchId } from '@hanzoteam/workbench'
 export { workbenchOperation } from './migration'
 export type { Application, Widget }
-export { WidgetType } from '@hanzo/workbench'
+export { WidgetType } from '@hanzoteam/workbench'
 
 @Model(workbench.class.Application, core.class.Doc, DOMAIN_MODEL)
 @UX(workbench.string.Application)

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Card, CardEvents } from '@hanzo/card'
-  import core, { Class, Data, Doc, fillDefaults, MarkupBlobRef, Ref } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { ButtonIcon, getCurrentLocation, IconAdd, navigate } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { Card, CardEvents } from '@hanzoteam/card'
+  import core, { Class, Data, Doc, fillDefaults, MarkupBlobRef, Ref } from '@hanzoteam/core'
+  import { translate } from '@hanzoteam/platform'
+  import { ButtonIcon, getCurrentLocation, IconAdd, navigate } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
   import card from '../plugin'
 
   export let _class: Ref<Class<Doc>> | undefined

@@ -14,9 +14,9 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import drive, { Folder } from '@hanzo/drive'
-  import { Icon } from '@hanzo/ui'
+  import { WithLookup } from '@hanzoteam/core'
+  import drive, { Folder } from '@hanzoteam/drive'
+  import { Icon } from '@hanzoteam/ui'
 
   export let value: WithLookup<Folder>
 </script>

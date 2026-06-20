@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag, Role, Tag } from '@hanzo/card'
-  import core, { Ref } from '@hanzo/core'
-  import { ObjectPopup } from '@hanzo/presentation'
+  import { MasterTag, Role, Tag } from '@hanzoteam/card'
+  import core, { Ref } from '@hanzoteam/core'
+  import { ObjectPopup } from '@hanzoteam/presentation'
   import card from '../../plugin'
 
   export let masterTag: MasterTag | Tag

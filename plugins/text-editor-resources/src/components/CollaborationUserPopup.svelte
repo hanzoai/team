@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { Component } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { CollaborationUser } from '@hanzo/text-editor'
+  import { Component } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { CollaborationUser } from '@hanzoteam/text-editor'
 
   export let user: CollaborationUser
 </script>

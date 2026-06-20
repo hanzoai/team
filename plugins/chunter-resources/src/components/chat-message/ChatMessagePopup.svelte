@@ -15,13 +15,13 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Doc, Ref, SortingOrder } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import activity from '@hanzo/activity'
-  import chunter, { ChatMessage } from '@hanzo/chunter'
-  import { closeTooltip, Label, Lazy, Spinner, resizeObserver, MiniToggle } from '@hanzo/ui'
-  import { ObjectPresenter, DocNavLink } from '@hanzo/view-resources'
-  import { canGroupMessages, getActivityNewestFirst, setActivityNewestFirst } from '@hanzo/activity-resources'
+  import { Doc, Ref, SortingOrder } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import activity from '@hanzoteam/activity'
+  import chunter, { ChatMessage } from '@hanzoteam/chunter'
+  import { closeTooltip, Label, Lazy, Spinner, resizeObserver, MiniToggle } from '@hanzoteam/ui'
+  import { ObjectPresenter, DocNavLink } from '@hanzoteam/view-resources'
+  import { canGroupMessages, getActivityNewestFirst, setActivityNewestFirst } from '@hanzoteam/activity-resources'
 
   import ChatMessageInput from './ChatMessageInput.svelte'
   import ChatMessagePresenter from './ChatMessagePresenter.svelte'

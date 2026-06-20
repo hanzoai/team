@@ -30,8 +30,8 @@ import core, {
   systemAccountUuid,
   type WithLookup,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { type DomainHelperOperations } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { type DomainHelperOperations } from '@hanzoteam/server-core'
 import type postgres from 'postgres'
 import { type ParameterOrJSON } from 'postgres'
 import {
@@ -45,7 +45,7 @@ import {
   type SchemaAndFields,
   translateDomain
 } from './schemas'
-import { retryTxn, type DBClient } from '@hanzo/postgres-base'
+import { retryTxn, type DBClient } from '@hanzoteam/postgres-base'
 
 const loadedDomains = new Set<string>()
 

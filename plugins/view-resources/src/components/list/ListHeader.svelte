@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AggregateValue, Doc, PrimitiveType, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
+  import { AggregateValue, Doc, PrimitiveType, Ref, Space } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
   import {
     AnyComponent,
     AnySvelteComponent,
@@ -31,10 +31,10 @@
     eventToHTMLElement,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { AttributeModel, ViewOptions } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import { AttributeModel, ViewOptions } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   import view from '../../plugin'
   import { SelectionFocusProvider, selectionLimit } from '../../selection'

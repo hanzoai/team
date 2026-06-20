@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, SortingOrder } from '@hanzo/core'
-  import hr, { Request } from '@hanzo/hr'
-  import { Table } from '@hanzo/view-resources'
+  import { Ref, SortingOrder } from '@hanzoteam/core'
+  import hr, { Request } from '@hanzoteam/hr'
+  import { Table } from '@hanzoteam/view-resources'
 
   export let requests: Ref<Request>[]
 </script>

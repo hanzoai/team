@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { IntlString } from '@hanzo/platform'
+import { IntlString } from '@hanzoteam/platform'
 import { ExecutionError, Transition } from '.'
-import { Ref } from '@hanzo/core'
+import { Ref } from '@hanzoteam/core'
 
 export class ProcessError extends Error {
   constructor (

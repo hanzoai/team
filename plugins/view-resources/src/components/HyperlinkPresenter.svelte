@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { ScrollerBar } from '@hanzo/ui'
+  import { ScrollerBar } from '@hanzoteam/ui'
 
   export let value: string
   export let inline: boolean = false

@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, Metadata } from '@hanzo/platform'
+  import { Asset, Metadata } from '@hanzoteam/platform'
   import {
     ButtonIcon,
     fromCodePoint,
@@ -23,8 +23,8 @@
     themeStore,
     Label,
     Component
-  } from '@hanzo/ui'
-  import emojiPlugin from '@hanzo/emoji'
+  } from '@hanzoteam/ui'
+  import emojiPlugin from '@hanzoteam/emoji'
   import { createEventDispatcher } from 'svelte'
   import { iconsLibrary } from '../icons'
   import view from '../plugin'

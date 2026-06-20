@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hanzo/core'
-import type { Middleware, PipelineContext } from '@hanzo/server-core'
-import { BaseMiddleware } from '@hanzo/server-core'
+import { type MeasureContext } from '@hanzoteam/core'
+import type { Middleware, PipelineContext } from '@hanzoteam/server-core'
+import { BaseMiddleware } from '@hanzoteam/server-core'
 
 /**
  * Will support apply tx

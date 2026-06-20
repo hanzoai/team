@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { newMetrics, type Tx } from '@hanzo/core'
-import { initStatisticsContext } from '@hanzo/server-core'
+import { Analytics } from '@hanzoteam/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { newMetrics, type Tx } from '@hanzoteam/core'
+import { initStatisticsContext } from '@hanzoteam/server-core'
 import { join } from 'path'
 
-import { getPlatformQueue } from '@hanzo/kafka'
-import { setMetadata } from '@hanzo/platform'
-import serverToken from '@hanzo/server-token'
+import { getPlatformQueue } from '@hanzoteam/kafka'
+import { setMetadata } from '@hanzoteam/platform'
+import serverToken from '@hanzoteam/server-token'
 import { readFileSync } from 'fs'
 import { startIndexer as startRating } from './server'
 export * from './calculator'

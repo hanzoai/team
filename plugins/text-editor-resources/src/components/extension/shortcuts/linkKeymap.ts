@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { showPopup } from '@hanzo/ui'
+import { showPopup } from '@hanzoteam/ui'
 import { Extension } from '@tiptap/core'
 import { type MarkType } from '@tiptap/pm/model'
 import { Plugin, PluginKey } from '@tiptap/pm/state'

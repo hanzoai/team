@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { Project } from '@hanzo/controlled-documents'
+  import { Class, Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Project } from '@hanzoteam/controlled-documents'
 
   import documents from '../../plugin'
   import ProjectPresenter from './ProjectPresenter.svelte'

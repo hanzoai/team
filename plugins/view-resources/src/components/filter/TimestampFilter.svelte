@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { closeTooltip, resizeObserver } from '@hanzo/ui'
-  import { Filter } from '@hanzo/view'
+  import { closeTooltip, resizeObserver } from '@hanzoteam/ui'
+  import { Filter } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import view from '../../plugin'
   import TimestampPresenter from '../TimestampPresenter.svelte'

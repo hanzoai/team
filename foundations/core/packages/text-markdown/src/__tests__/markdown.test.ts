@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { MarkupNode, MarkupNodeType, MarkupMarkType } from '@hanzo/text-core'
+import { MarkupNode, MarkupNodeType, MarkupMarkType } from '@hanzoteam/text-core'
 import { markdownToMarkup, markupToMarkdown } from '..'
 import { isMarkdownsEquals, normalizeMarkdown } from '../compare'
 

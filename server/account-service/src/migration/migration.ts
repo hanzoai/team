@@ -20,8 +20,8 @@ import {
   type WorkspaceUuid,
   type SocialKey,
   type AccountUuid
-} from '@hanzo/core'
-import { type AccountDB, createAccount } from '@hanzo/account'
+} from '@hanzoteam/core'
+import { type AccountDB, createAccount } from '@hanzoteam/account'
 import { getMongoAccountDB } from './utils'
 import { type Account as OldAccount, type Workspace as OldWorkspace } from './types'
 import { type MongoAccountDB } from './collections/mongo'

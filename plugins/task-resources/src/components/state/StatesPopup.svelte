@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IdMap, Ref, Status } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import task, { Project, ProjectType } from '@hanzo/task'
-  import { resizeObserver } from '@hanzo/ui'
-  import { ObjectPresenter, statusStore } from '@hanzo/view-resources'
+  import { IdMap, Ref, Status } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import task, { Project, ProjectType } from '@hanzoteam/task'
+  import { resizeObserver } from '@hanzoteam/ui'
+  import { ObjectPresenter, statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { typeStore } from '../..'
 

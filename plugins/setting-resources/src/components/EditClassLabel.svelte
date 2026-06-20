@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Class, Doc, DocumentUpdate, Tx, TxCreateDoc, TxUpdateDoc } from '@hanzo/core'
-  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
-  import presentation, { Card, createQuery, getClient } from '@hanzo/presentation'
-  import { Button, EditBox, Label } from '@hanzo/ui'
+  import core, { Class, Doc, DocumentUpdate, Tx, TxCreateDoc, TxUpdateDoc } from '@hanzoteam/core'
+  import { getEmbeddedLabel, IntlString } from '@hanzoteam/platform'
+  import presentation, { Card, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Button, EditBox, Label } from '@hanzoteam/ui'
 
   import { createEventDispatcher } from 'svelte'
   import setting from '../plugin'

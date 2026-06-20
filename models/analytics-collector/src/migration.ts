@@ -18,11 +18,11 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   tryMigrate
-} from '@hanzo/model'
-import { analyticsCollectorId } from '@hanzo/analytics-collector'
-import { DOMAIN_SPACE } from '@hanzo/model-core'
-import { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION } from '@hanzo/model-notification'
-import { DOMAIN_ACTIVITY } from '@hanzo/model-activity'
+} from '@hanzoteam/model'
+import { analyticsCollectorId } from '@hanzoteam/analytics-collector'
+import { DOMAIN_SPACE } from '@hanzoteam/model-core'
+import { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION } from '@hanzoteam/model-notification'
+import { DOMAIN_ACTIVITY } from '@hanzoteam/model-activity'
 
 async function removeOnboardingChannels (client: MigrationClient): Promise<void> {
   const channels = await client.find(DOMAIN_SPACE, { 'analytics:mixin:AnalyticsChannel': { $exists: true } })

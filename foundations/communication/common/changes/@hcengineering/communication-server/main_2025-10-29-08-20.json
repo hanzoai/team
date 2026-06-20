@@ -1,10 +1,10 @@
 {
   "changes": [
     {
-      "packageName": "@hanzo/communication-server",
+      "packageName": "@hanzoteam/communication-server",
       "comment": "update deps",
       "type": "patch"
     }
   ],
-  "packageName": "@hanzo/communication-server"
+  "packageName": "@hanzoteam/communication-server"
 }

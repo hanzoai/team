@@ -1,5 +1,5 @@
-import { Employee, Person } from '@hanzo/contact'
-import { Data, generateId, Ref } from '@hanzo/core'
+import { Employee, Person } from '@hanzoteam/contact'
+import { Data, generateId, Ref } from '@hanzoteam/core'
 
 import love from './plugin'
 import { Office, ParticipantInfo, Room, RoomAccess, RoomType } from './types'

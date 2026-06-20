@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { hanzoMailIntegrationKind } from '@hanzo/hanzo-mail'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import setting from '@hanzo/setting'
+import { hanzoMailIntegrationKind } from '@hanzoteam/hanzo-mail'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import setting from '@hanzoteam/setting'
 
 import hanzoMail from './plugin'
 
-export { hanzoMailId } from '@hanzo/hanzo-mail'
+export { hanzoMailId } from '@hanzoteam/hanzo-mail'
 export { default } from './plugin'
 
 export function createModel (builder: Builder): void {

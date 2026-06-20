@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/server-analytics-collector",
+  "name": "@hanzoteam/server-analytics-collector",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -21,7 +21,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/jest": "^29.5.5",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -37,9 +37,9 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@hanzo/analytics-collector": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/server-core": "workspace:^0.7.18"
+    "@hanzoteam/analytics-collector": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/server-core": "workspace:^0.7.18"
   }
 }

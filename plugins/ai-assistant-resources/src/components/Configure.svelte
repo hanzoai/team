@@ -16,15 +16,15 @@
   import { createEventDispatcher, onMount } from 'svelte'
   import { fade } from 'svelte/transition'
 
-  import presentation, { Card, getCurrentWorkspaceUuid } from '@hanzo/presentation'
-  import { Label, Loading } from '@hanzo/ui'
-  import { type Integration } from '@hanzo/account-client'
-  import { isWorkspaceIntegration } from '@hanzo/integration-client'
-  import { Analytics } from '@hanzo/analytics'
+  import presentation, { Card, getCurrentWorkspaceUuid } from '@hanzoteam/presentation'
+  import { Label, Loading } from '@hanzoteam/ui'
+  import { type Integration } from '@hanzoteam/account-client'
+  import { isWorkspaceIntegration } from '@hanzoteam/integration-client'
+  import { Analytics } from '@hanzoteam/analytics'
 
   import { getIntegrationClient, getAccountClient } from '../utils'
   import aiAssistant from '../plugin'
-  import { buildSocialIdString, getCurrentAccount, SocialIdType, type PersonId } from '@hanzo/core'
+  import { buildSocialIdString, getCurrentAccount, SocialIdType, type PersonId } from '@hanzoteam/core'
   import HanzoAssistant from './icons/HanzoAssistant.svelte'
 
   export let integration: Integration | undefined = undefined

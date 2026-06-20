@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/pod-mail",
+  "name": "@hanzoteam/pod-mail",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
@@ -55,10 +55,10 @@
   "dependencies": {
     "@aws-sdk/client-ses": "^3.738.0",
     "@types/nodemailer": "^6.4.17",
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/analytics-service": "workspace:^0.7.17",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/server-core": "workspace:^0.7.18",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/analytics-service": "workspace:^0.7.17",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.2",

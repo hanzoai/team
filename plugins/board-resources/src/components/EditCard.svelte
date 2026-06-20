@@ -14,14 +14,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachments } from '@hanzo/attachment-resources'
-  import type { Card } from '@hanzo/board'
-  import core, { Class, Doc, Mixin, Ref, Space } from '@hanzo/core'
-  import { Panel } from '@hanzo/panel'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
-  import { Button, EditBox, IconMoreH } from '@hanzo/ui'
-  import { DocAttributeBar, ParentsNavigator, invokeAction, showMenu } from '@hanzo/view-resources'
+  import { Attachments } from '@hanzoteam/attachment-resources'
+  import type { Card } from '@hanzoteam/board'
+  import core, { Class, Doc, Mixin, Ref, Space } from '@hanzoteam/core'
+  import { Panel } from '@hanzoteam/panel'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
+  import { Button, EditBox, IconMoreH } from '@hanzoteam/ui'
+  import { DocAttributeBar, ParentsNavigator, invokeAction, showMenu } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
   import board from '../plugin'
   import { getCardActions } from '../utils/CardActionUtils'

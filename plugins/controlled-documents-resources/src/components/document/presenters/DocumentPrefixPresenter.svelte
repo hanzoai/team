@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type DocumentTemplate } from '@hanzo/controlled-documents'
+  import { type DocumentTemplate } from '@hanzoteam/controlled-documents'
 
-  import { Label, eventToHTMLElement, showPopup } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Label, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   import ChangeDocPrefixPopup from '../popups/ChangeDocPrefixPopup.svelte'
 

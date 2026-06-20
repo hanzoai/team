@@ -16,15 +16,15 @@
 -->
 
 <script lang="ts">
-  import questions from '@hanzo/questions'
-  import { AnswersCollectionEditor } from '@hanzo/questions-resources'
+  import questions from '@hanzoteam/questions'
+  import { AnswersCollectionEditor } from '@hanzoteam/questions-resources'
   import {
     type Training,
     type TrainingAttempt,
     TrainingAttemptState,
     type TrainingRequest
-  } from '@hanzo/training'
-  import { Button, Label } from '@hanzo/ui'
+  } from '@hanzoteam/training'
+  import { Button, Label } from '@hanzoteam/ui'
   import training from '../plugin'
   import { canUpdateTrainingAttempt, getCurrentEmployeeRef, submitTrainingAttempt } from '../utils'
   import Score from './Score.svelte'

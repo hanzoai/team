@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { Avatar } from '@hanzo/contact-resources'
-  import { Label } from '@hanzo/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import { Avatar } from '@hanzoteam/contact-resources'
+  import { Label } from '@hanzoteam/ui'
   import tracker from '../../plugin'
 
   export let lead: Employee

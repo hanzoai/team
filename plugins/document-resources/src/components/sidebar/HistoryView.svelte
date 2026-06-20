@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { EmployeePresenter, getPersonByPersonIdCb } from '@hanzo/contact-resources'
-  import { DocumentSnapshot } from '@hanzo/document'
-  import { TimeSince } from '@hanzo/ui'
+  import { Person } from '@hanzoteam/contact'
+  import { EmployeePresenter, getPersonByPersonIdCb } from '@hanzoteam/contact-resources'
+  import { DocumentSnapshot } from '@hanzoteam/document'
+  import { TimeSince } from '@hanzoteam/ui'
 
   export let value: DocumentSnapshot
 

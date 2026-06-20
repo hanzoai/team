@@ -7,10 +7,10 @@
     FindReferenceOperation,
     MappingOperation,
     mappingTypes
-  } from '@hanzo/bitrix'
-  import core, { AnyAttribute } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { DropdownLabels, DropdownTextItem } from '@hanzo/ui'
+  } from '@hanzoteam/bitrix'
+  import core, { AnyAttribute } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DropdownLabels, DropdownTextItem } from '@hanzoteam/ui'
   import bitrix from '../../plugin'
 
   export let mapping: BitrixEntityMapping

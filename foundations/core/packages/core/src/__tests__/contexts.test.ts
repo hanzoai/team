@@ -1,4 +1,4 @@
-import { MeasureMetricsContext } from '@hanzo/measurements'
+import { MeasureMetricsContext } from '@hanzoteam/measurements'
 
 describe('context tests', () => {
   it('check withLog proper catch', async () => {

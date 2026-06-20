@@ -15,9 +15,9 @@
 //
 -->
 <script lang="ts">
-  import { Document } from '@hanzo/document'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { EditBox } from '@hanzo/ui'
+  import { Document } from '@hanzoteam/document'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { EditBox } from '@hanzoteam/ui'
   import document from '../plugin'
 
   export let doc: Document

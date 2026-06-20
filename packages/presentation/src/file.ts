@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type Blob as PlatformBlob, type Ref, type WorkspaceUuid } from '@hanzo/core'
-import { getMetadata } from '@hanzo/platform'
-import { type FileStorage, createFileStorage as createStorageClient } from '@hanzo/storage-client'
+import { type Blob as PlatformBlob, type Ref, type WorkspaceUuid } from '@hanzoteam/core'
+import { getMetadata } from '@hanzoteam/platform'
+import { type FileStorage, createFileStorage as createStorageClient } from '@hanzoteam/storage-client'
 import { v4 as uuid } from 'uuid'
 
 import plugin from './plugin'

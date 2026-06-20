@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import cardPlugin, { type Card } from '@hanzo/card'
+import cardPlugin, { type Card } from '@hanzoteam/card'
 import core, {
   generateId,
   getCurrentAccount,
@@ -27,9 +27,9 @@ import core, {
   type TxMixin,
   type TxResult,
   type TxUpdateDoc
-} from '@hanzo/core'
-import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzo/presentation'
-import { type ApproveRequest, ExecutionStatus, isUpdateTx, type ProcessToDo } from '@hanzo/process'
+} from '@hanzoteam/core'
+import { BasePresentationMiddleware, type PresentationMiddleware } from '@hanzoteam/presentation'
+import { type ApproveRequest, ExecutionStatus, isUpdateTx, type ProcessToDo } from '@hanzoteam/process'
 import process from './plugin'
 import { createExecution, getNextStateUserInput, pickTransition, requestResult } from './utils'
 

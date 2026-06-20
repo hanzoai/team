@@ -19,9 +19,9 @@ import core, {
   type TxApplyIf,
   type TxApplyResult,
   type TxResult
-} from '@hanzo/core'
-import type { Middleware, PipelineContext, TxMiddlewareResult } from '@hanzo/server-core'
-import { BaseMiddleware } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import type { Middleware, PipelineContext, TxMiddlewareResult } from '@hanzoteam/server-core'
+import { BaseMiddleware } from '@hanzoteam/server-core'
 
 /**
  * Will support apply tx

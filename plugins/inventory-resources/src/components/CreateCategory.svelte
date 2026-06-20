@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AttachedData, AttachedDoc, Doc, Ref, generateId } from '@hanzo/core'
-  import { OK, Status } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import type { Category } from '@hanzo/inventory'
-  import { EditBox, Button, Status as StatusControl } from '@hanzo/ui'
+  import core, { AttachedData, AttachedDoc, Doc, Ref, generateId } from '@hanzoteam/core'
+  import { OK, Status } from '@hanzoteam/platform'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import type { Category } from '@hanzoteam/inventory'
+  import { EditBox, Button, Status as StatusControl } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import inventory from '../plugin'
 

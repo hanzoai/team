@@ -13,14 +13,14 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hanzo/contact'
-  import { UsersPopup } from '@hanzo/contact-resources'
-  import type { Ref } from '@hanzo/core'
-  import { type Department } from '@hanzo/hr'
-  import { getClient } from '@hanzo/presentation'
-  import { Button, IconAdd, Label, Section, showPopup, Scroller } from '@hanzo/ui'
-  import { Viewlet, ViewletPreference } from '@hanzo/view'
-  import { Table, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
+  import contact, { Employee } from '@hanzoteam/contact'
+  import { UsersPopup } from '@hanzoteam/contact-resources'
+  import type { Ref } from '@hanzoteam/core'
+  import { type Department } from '@hanzoteam/hr'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Button, IconAdd, Label, Section, showPopup, Scroller } from '@hanzoteam/ui'
+  import { Viewlet, ViewletPreference } from '@hanzoteam/view'
+  import { Table, ViewletSelector, ViewletSettingButton } from '@hanzoteam/view-resources'
   import hr from '../plugin'
 
   export let department: Department

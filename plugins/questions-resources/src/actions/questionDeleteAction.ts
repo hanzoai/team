@@ -2,8 +2,8 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import type { Question } from '@hanzo/questions'
-import { getClient } from '@hanzo/presentation'
+import type { Question } from '@hanzoteam/questions'
+import { getClient } from '@hanzoteam/presentation'
 import { canUpdateQuestion } from '../utils'
 import { eachItemActionWithAvailability } from './ActionWithAvailability'
 

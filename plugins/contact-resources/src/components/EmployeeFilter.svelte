@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Employee } from '@hanzo/contact'
-  import core, { Doc, FindResult, getObjectValue, Ref, SortingOrder, Space } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import presentation, { getClient } from '@hanzo/presentation'
+  import contact, { Employee } from '@hanzoteam/contact'
+  import core, { Doc, FindResult, getObjectValue, Ref, SortingOrder, Space } from '@hanzoteam/core'
+  import { translate } from '@hanzoteam/platform'
+  import presentation, { getClient } from '@hanzoteam/presentation'
   import ui, {
     addNotification,
     deviceOptionsStore,
@@ -27,10 +27,10 @@
     Loading,
     resizeObserver,
     themeStore
-  } from '@hanzo/ui'
-  import { Filter } from '@hanzo/view'
-  import { FILTER_DEBOUNCE_MS, FilterRemovedNotification, sortFilterValues } from '@hanzo/view-resources'
-  import view from '@hanzo/view-resources/src/plugin'
+  } from '@hanzoteam/ui'
+  import { Filter } from '@hanzoteam/view'
+  import { FILTER_DEBOUNCE_MS, FilterRemovedNotification, sortFilterValues } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import { createEventDispatcher } from 'svelte'
   import EmployeePresenter from './EmployeePresenter.svelte'
 

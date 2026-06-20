@@ -14,15 +14,15 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Reaction } from '@hanzo/activity'
-  import { Doc, getCurrentAccount, PersonId, Ref, Blob } from '@hanzo/core'
-  import { IconAdd, showPopup, tooltip } from '@hanzo/ui'
-  import { includesAny } from '@hanzo/contact'
-  import emojiPlugin from '@hanzo/emoji'
+  import { Reaction } from '@hanzoteam/activity'
+  import { Doc, getCurrentAccount, PersonId, Ref, Blob } from '@hanzoteam/core'
+  import { IconAdd, showPopup, tooltip } from '@hanzoteam/ui'
+  import { includesAny } from '@hanzoteam/contact'
+  import emojiPlugin from '@hanzoteam/emoji'
 
   import ReactionsTooltip from './ReactionsTooltip.svelte'
   import { updateDocReactions } from '../../utils'
-  import { getBlobRef } from '@hanzo/presentation'
+  import { getBlobRef } from '@hanzoteam/presentation'
 
   export let reactions: Reaction[] = []
   export let object: Doc | undefined = undefined

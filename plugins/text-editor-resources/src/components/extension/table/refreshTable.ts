@@ -12,10 +12,10 @@
 // limitations under the License.
 //
 
-import type { Client, Doc } from '@hanzo/core'
-import { getResource } from '@hanzo/platform'
-import converter from '@hanzo/converter'
-import { type BuildMarkdownTableMetadata, type TableMetadata } from '@hanzo/view'
+import type { Client, Doc } from '@hanzoteam/core'
+import { getResource } from '@hanzoteam/platform'
+import converter from '@hanzoteam/converter'
+import { type BuildMarkdownTableMetadata, type TableMetadata } from '@hanzoteam/view'
 
 /**
  * Build markdown table string from documents and metadata

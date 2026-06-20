@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import cardPlugin, { Card } from '@hanzo/card'
-  import { WithLookup } from '@hanzo/core'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import { getEmbeddedLabel } from '@hanzo/platform'
+  import cardPlugin, { Card } from '@hanzoteam/card'
+  import { WithLookup } from '@hanzoteam/core'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
   import TagDivider from './TagDivider.svelte'
 
   import { openCardInSidebar } from '../utils'

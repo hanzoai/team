@@ -16,7 +16,7 @@
 -->
 
 <script lang="ts">
-  import { Notification, NotificationToast, Label } from '@hanzo/ui'
+  import { Notification, NotificationToast, Label } from '@hanzoteam/ui'
 
   import documents from '../plugin'
 

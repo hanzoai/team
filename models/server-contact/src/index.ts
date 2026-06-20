@@ -14,16 +14,16 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
-import contact from '@hanzo/contact'
-import core from '@hanzo/core'
-import serverContact from '@hanzo/server-contact'
-import serverCore from '@hanzo/server-core'
-import serverNotification from '@hanzo/server-notification'
-import serverTemplates from '@hanzo/server-templates'
-import templates from '@hanzo/templates'
-export { serverContactId } from '@hanzo/server-contact'
+import contact from '@hanzoteam/contact'
+import core from '@hanzoteam/core'
+import serverContact from '@hanzoteam/server-contact'
+import serverCore from '@hanzoteam/server-core'
+import serverNotification from '@hanzoteam/server-notification'
+import serverTemplates from '@hanzoteam/server-templates'
+import templates from '@hanzoteam/templates'
+export { serverContactId } from '@hanzoteam/server-contact'
 
 export function createModel (builder: Builder): void {
   builder.mixin(contact.class.Person, core.class.Class, serverNotification.mixin.HTMLPresenter, {

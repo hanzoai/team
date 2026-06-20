@@ -18,13 +18,13 @@ import documents, {
   type EditorMode,
   type ControlledDocument,
   type DocumentReviewRequest
-} from '@hanzo/controlled-documents'
-import { generateId, type Ref } from '@hanzo/core'
-import { getCurrentEmployee } from '@hanzo/contact'
-import { RequestStatus } from '@hanzo/request'
-import { getClient } from '@hanzo/presentation'
-import { type ActionContext } from '@hanzo/text-editor'
-import { getNodeElement, selectNode } from '@hanzo/text-editor-resources'
+} from '@hanzoteam/controlled-documents'
+import { generateId, type Ref } from '@hanzoteam/core'
+import { getCurrentEmployee } from '@hanzoteam/contact'
+import { RequestStatus } from '@hanzoteam/request'
+import { getClient } from '@hanzoteam/presentation'
+import { type ActionContext } from '@hanzoteam/text-editor'
+import { getNodeElement, selectNode } from '@hanzoteam/text-editor-resources'
 
 import { showAddCommentPopupFx } from './stores/editors/document'
 import { $editorMode } from './stores/editors/document/editor'

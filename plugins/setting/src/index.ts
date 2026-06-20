@@ -24,12 +24,12 @@ import type {
   AccountUuid,
   Domain,
   IntegrationKind
-} from '@hanzo/core'
-import type { Metadata, Plugin } from '@hanzo/platform'
-import { Asset, IntlString, Resource, plugin } from '@hanzo/platform'
-import { TemplateField, TemplateFieldCategory } from '@hanzo/templates'
-import { Action, AnyComponent } from '@hanzo/ui'
-import { type Integration as AccountIntegration } from '@hanzo/account-client'
+} from '@hanzoteam/core'
+import type { Metadata, Plugin } from '@hanzoteam/platform'
+import { Asset, IntlString, Resource, plugin } from '@hanzoteam/platform'
+import { TemplateField, TemplateFieldCategory } from '@hanzoteam/templates'
+import { Action, AnyComponent } from '@hanzoteam/ui'
+import { type Integration as AccountIntegration } from '@hanzoteam/account-client'
 
 import { SpaceTypeCreator, SpaceTypeEditor } from './spaceTypeEditor'
 

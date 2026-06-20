@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import contact, { Employee, Person } from '@hanzo/contact'
+import { Analytics } from '@hanzoteam/analytics'
+import contact, { Employee, Person } from '@hanzoteam/contact'
 
 import core, {
   AttachedData,
@@ -33,24 +33,24 @@ import core, {
   TxUpdateDoc,
   toIdMap,
   Space
-} from '@hanzo/core'
-import notification, { CommonInboxNotification } from '@hanzo/notification'
-import { getResource } from '@hanzo/platform'
-import type { TriggerControl } from '@hanzo/server-core'
-import { getSocialStrings } from '@hanzo/server-contact'
-import { ReceiverInfo, SenderInfo } from '@hanzo/server-notification'
+} from '@hanzoteam/core'
+import notification, { CommonInboxNotification } from '@hanzoteam/notification'
+import { getResource } from '@hanzoteam/platform'
+import type { TriggerControl } from '@hanzoteam/server-core'
+import { getSocialStrings } from '@hanzoteam/server-contact'
+import { ReceiverInfo, SenderInfo } from '@hanzoteam/server-notification'
 import {
   getCommonNotificationTxes,
   getNotificationContent,
   getNotificationProviderControl,
   isShouldNotifyTx,
   getSenderInfo
-} from '@hanzo/server-notification-resources'
-import serverTime, { OnToDo, ToDoFactory } from '@hanzo/server-time'
-import task, { makeRank } from '@hanzo/task'
-import { jsonToMarkup, nodeDoc, nodeParagraph, nodeText } from '@hanzo/text-core'
-import time, { ProjectToDo, ToDo, ToDoPriority, TodoAutomationHelper, WorkSlot } from '@hanzo/time'
-import tracker, { Issue, IssueStatus, Project, TimeSpendReport } from '@hanzo/tracker'
+} from '@hanzoteam/server-notification-resources'
+import serverTime, { OnToDo, ToDoFactory } from '@hanzoteam/server-time'
+import task, { makeRank } from '@hanzoteam/task'
+import { jsonToMarkup, nodeDoc, nodeParagraph, nodeText } from '@hanzoteam/text-core'
+import time, { ProjectToDo, ToDo, ToDoPriority, TodoAutomationHelper, WorkSlot } from '@hanzoteam/time'
+import tracker, { Issue, IssueStatus, Project, TimeSpendReport } from '@hanzoteam/tracker'
 
 /**
  * @public

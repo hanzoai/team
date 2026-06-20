@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Button, eventToHTMLElement, Icon, Scroller, IconMoreV, showPopup, Label } from '@hanzo/ui'
+  import { Button, eventToHTMLElement, Icon, Scroller, IconMoreV, showPopup, Label } from '@hanzoteam/ui'
   import calendar from '../plugin'
   import ReminderPopup from './ReminderPopup.svelte'
   import EventReminderItem from './EventReminderItem.svelte'

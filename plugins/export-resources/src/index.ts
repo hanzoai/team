@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Client, Doc, Ref } from '@hanzo/core'
-import exportPlugin, { type ExportResultRecord } from '@hanzo/export'
-import { type Resources, translate } from '@hanzo/platform'
-import { themeStore } from '@hanzo/ui'
+import type { Client, Doc, Ref } from '@hanzoteam/core'
+import exportPlugin, { type ExportResultRecord } from '@hanzoteam/export'
+import { type Resources, translate } from '@hanzoteam/platform'
+import { themeStore } from '@hanzoteam/ui'
 import { get } from 'svelte/store'
 import ExportButton from './components/ExportButton.svelte'
 import ExportSettings from './components/ExportSettings.svelte'

@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type Hierarchy, type Ref, type PersonId } from '@hanzo/core'
-import trackerPlugin, { type Component, type IssueStatus, type Milestone, type Project } from '@hanzo/tracker'
-import { type AttributeModel } from '@hanzo/view'
-import { getClient } from '@hanzo/presentation'
-import { getName, getPersonByPersonId } from '@hanzo/contact'
+import { type Class, type Doc, type Hierarchy, type Ref, type PersonId } from '@hanzoteam/core'
+import trackerPlugin, { type Component, type IssueStatus, type Milestone, type Project } from '@hanzoteam/tracker'
+import { type AttributeModel } from '@hanzoteam/view'
+import { getClient } from '@hanzoteam/presentation'
+import { getName, getPersonByPersonId } from '@hanzoteam/contact'
 
 /**
  * Cache for IssueStatus ID -> name mappings to reduce database calls

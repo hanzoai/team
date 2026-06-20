@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { type AnyAttribute, type Doc, type Domain } from '@hanzo/core'
+import core, { type AnyAttribute, type Doc, type Domain } from '@hanzoteam/core'
 import {
   tryMigrate,
   type MigrateOperation,
@@ -22,8 +22,8 @@ import {
   type MigrationDocumentQuery,
   type MigrationIterator,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import { htmlToMarkup, jsonToPmNode, jsonToText } from '@hanzo/text'
+} from '@hanzoteam/model'
+import { htmlToMarkup, jsonToPmNode, jsonToText } from '@hanzoteam/text'
 
 async function migrateMarkup (client: MigrationClient): Promise<void> {
   const hierarchy = client.hierarchy

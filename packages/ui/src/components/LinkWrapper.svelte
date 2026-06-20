@@ -15,8 +15,8 @@
 <script lang="ts">
   // This component converts all URLs from the provided string or IntlString to Links.
 
-  import { IntlString, translateCB } from '@hanzo/platform'
-  import { themeStore } from '@hanzo/theme'
+  import { IntlString, translateCB } from '@hanzoteam/platform'
+  import { themeStore } from '@hanzoteam/theme'
   import { replaceURLs } from '../utils'
 
   export let text: string | undefined = undefined

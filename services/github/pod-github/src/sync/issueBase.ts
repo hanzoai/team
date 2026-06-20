@@ -7,10 +7,10 @@
   * Add since to synchronization
 */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import activity from '@hanzo/activity'
-import { Analytics } from '@hanzo/analytics'
-import { CollaboratorClient } from '@hanzo/collaborator-client'
-import contact, { Person } from '@hanzo/contact'
+import activity from '@hanzoteam/activity'
+import { Analytics } from '@hanzoteam/analytics'
+import { CollaboratorClient } from '@hanzoteam/collaborator-client'
+import contact, { Person } from '@hanzoteam/contact'
 import core, {
   AttachedDoc,
   Class,
@@ -24,15 +24,15 @@ import core, {
   TxOperations,
   makeDocCollabId,
   withContext
-} from '@hanzo/core'
-import github, { DocSyncInfo, GithubIntegrationRepository, GithubIssue, GithubProject } from '@hanzo/github'
-import { IntlString } from '@hanzo/platform'
-import { LiveQuery } from '@hanzo/query'
-import { getPublicLink } from '@hanzo/server-guest-resources'
-import task, { type Task } from '@hanzo/task'
-import { MarkupNode, MarkupNodeType, areEqualMarkups, markupToJSON, traverseNode } from '@hanzo/text'
-import time, { type ToDo } from '@hanzo/time'
-import tracker, { Issue } from '@hanzo/tracker'
+} from '@hanzoteam/core'
+import github, { DocSyncInfo, GithubIntegrationRepository, GithubIssue, GithubProject } from '@hanzoteam/github'
+import { IntlString } from '@hanzoteam/platform'
+import { LiveQuery } from '@hanzoteam/query'
+import { getPublicLink } from '@hanzoteam/server-guest-resources'
+import task, { type Task } from '@hanzoteam/task'
+import { MarkupNode, MarkupNodeType, areEqualMarkups, markupToJSON, traverseNode } from '@hanzoteam/text'
+import time, { type ToDo } from '@hanzoteam/time'
+import tracker, { Issue } from '@hanzoteam/tracker'
 import { deepEqual } from 'fast-equals'
 import { Octokit } from 'octokit'
 import { ContainerFocus, IntegrationManager, githubExternalSyncVersion, githubSyncVersion } from '../types'

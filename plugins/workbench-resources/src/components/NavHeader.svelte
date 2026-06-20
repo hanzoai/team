@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { Label } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { Label } from '@hanzoteam/ui'
 
   export let label: IntlString
   export let withButton: boolean = false

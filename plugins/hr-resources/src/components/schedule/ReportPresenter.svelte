@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Staff } from '@hanzo/hr'
-  import { floorFractionDigits } from '@hanzo/ui'
+  import { Staff } from '@hanzoteam/hr'
+  import { floorFractionDigits } from '@hanzoteam/ui'
 
   export let value: Staff
   export let display: (staff: Staff) => number | string

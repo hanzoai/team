@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AnyAttribute } from '@hanzo/core'
-  import type { TagReference } from '@hanzo/tags'
-  import { Chip, getPlatformColorDef, Icon, IconClose, resizeObserver, themeStore } from '@hanzo/ui'
+  import { AnyAttribute } from '@hanzoteam/core'
+  import type { TagReference } from '@hanzoteam/tags'
+  import { Chip, getPlatformColorDef, Icon, IconClose, resizeObserver, themeStore } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import TagItem from './TagItem.svelte'
 

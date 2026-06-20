@@ -21,10 +21,10 @@
     type Doc,
     type IdMap,
     type Ref
-  } from '@hanzo/core'
-  import { translateCB } from '@hanzo/platform'
-  import { createQuery, KeyedAttribute } from '@hanzo/presentation'
-  import { TagElement, TagReference } from '@hanzo/tags'
+  } from '@hanzoteam/core'
+  import { translateCB } from '@hanzoteam/platform'
+  import { createQuery, KeyedAttribute } from '@hanzoteam/presentation'
+  import { TagElement, TagReference } from '@hanzoteam/tags'
   import {
     Button,
     getEventPopupPositionElement,
@@ -34,7 +34,7 @@
     ShowMore,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import TagItem from './TagItem.svelte'

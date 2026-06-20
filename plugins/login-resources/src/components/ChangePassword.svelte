@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, Severity, Status } from '@hanzo/platform'
+  import { OK, Severity, Status } from '@hanzoteam/platform'
 
-  import { getCurrentLocation, navigate } from '@hanzo/ui'
+  import { getCurrentLocation, navigate } from '@hanzoteam/ui'
   import login from '../plugin'
   import type { Field } from '../types'
   import { changePassword } from '../utils'

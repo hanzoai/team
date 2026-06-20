@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Status } from '@hanzo/platform'
+  import type { Status } from '@hanzoteam/platform'
   import { tooltip as tp } from '../tooltips'
   import type { LabelAndProps } from '../types'
 

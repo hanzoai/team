@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import type { AttributeModel } from '@hanzo/view'
-import type { IntlString } from '@hanzo/platform'
-import type { Class, Client, Doc, Hierarchy, Ref } from '@hanzo/core'
+import type { AttributeModel } from '@hanzoteam/view'
+import type { IntlString } from '@hanzoteam/platform'
+import type { Class, Client, Doc, Hierarchy, Ref } from '@hanzoteam/core'
 import { rebuildRelationshipTableViewModel } from '../data/relationshipBuilder'
 
-jest.mock('@hanzo/view-resources', () => ({
+jest.mock('@hanzoteam/view-resources', () => ({
   buildConfigAssociation: jest.fn(() => []),
   buildConfigLookup: jest.fn(() => ({}))
 }))

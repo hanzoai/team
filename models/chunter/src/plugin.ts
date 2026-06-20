@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import type { ActivityMessage } from '@hanzo/activity'
-import { chunterId, type Channel } from '@hanzo/chunter'
-import chunter from '@hanzo/chunter-resources/src/plugin'
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import { type NotificationGroup } from '@hanzo/notification'
-import type { IntlString, Resource } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import type { AnyComponent, Location } from '@hanzo/ui/src/types'
-import type { Action, ActionCategory, ViewAction, Viewlet, ViewletDescriptor } from '@hanzo/view'
-import { type WidgetTab, type LocationData } from '@hanzo/workbench'
+import type { ActivityMessage } from '@hanzoteam/activity'
+import { chunterId, type Channel } from '@hanzoteam/chunter'
+import chunter from '@hanzoteam/chunter-resources/src/plugin'
+import { type Client, type Doc, type Ref } from '@hanzoteam/core'
+import { type NotificationGroup } from '@hanzoteam/notification'
+import type { IntlString, Resource } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import type { AnyComponent, Location } from '@hanzoteam/ui/src/types'
+import type { Action, ActionCategory, ViewAction, Viewlet, ViewletDescriptor } from '@hanzoteam/view'
+import { type WidgetTab, type LocationData } from '@hanzoteam/workbench'
 
 export default mergeIds(chunterId, chunter, {
   component: {

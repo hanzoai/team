@@ -36,8 +36,8 @@ import {
   TranslatedMessage,
   TranslatedMessagesDoc,
   WithTotal
-} from '@hanzo/communication-types'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/communication-types'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 const COUNTER_BITS = 10n
 const RANDOM_BITS = 10n

@@ -3,8 +3,8 @@
 -->
 
 <script lang="ts">
-  import { type Training } from '@hanzo/training'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import { type Training } from '@hanzoteam/training'
+  import { DocNavLink } from '@hanzoteam/view-resources'
 
   export let value: Training
   export let disabled: boolean = false

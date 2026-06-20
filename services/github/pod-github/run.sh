@@ -7,5 +7,5 @@ export ACCOUNTS_URL=http://localhost:3000
 export COLLABORATOR_URL=ws://hanzo.local:3078
 export STORAGE_CONFIG="datalake|http://hanzo.local:4030"
 export OTEL_EXPORTER_OTLP_ENDPOINT=http://hanzo.local:4318/v1/traces
-rush bundle --to @hanzo/pod-github
+rush bundle --to @hanzoteam/pod-github
 node $@ bundle/bundle.js $@

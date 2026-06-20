@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { DocReferencePresenter } from '@hanzo/view-resources'
-  import view from '@hanzo/view'
-  import { Icon, Label } from '@hanzo/ui'
+  import type { Doc } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { DocReferencePresenter } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view'
+  import { Icon, Label } from '@hanzoteam/ui'
 
   import activity from '../../plugin'
   import { isActivityMessage } from '../../activityMessagesUtils'

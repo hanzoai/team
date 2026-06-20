@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref } from '@hanzo/core'
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import type { Action, AnySvelteComponent, IconSize } from '@hanzo/ui'
+  import type { Doc, Ref } from '@hanzoteam/core'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import type { Action, AnySvelteComponent, IconSize } from '@hanzoteam/ui'
   import {
     ActionIcon,
     IconMoreH,
@@ -26,8 +26,8 @@
     NavItem,
     NavGroup,
     ButtonIcon
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   export let _id: Ref<Doc> | string | undefined = undefined
   export let icon: Asset | AnySvelteComponent | undefined = undefined

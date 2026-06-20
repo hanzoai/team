@@ -1,5 +1,5 @@
-import attachment, { type Attachment } from '@hanzo/attachment'
-import { getClient as getCollaboratorClient } from '@hanzo/collaborator-client'
+import attachment, { type Attachment } from '@hanzoteam/attachment'
+import { getClient as getCollaboratorClient } from '@hanzoteam/collaborator-client'
 import documents, {
   type ChangeControl,
   type ControlledDocument,
@@ -11,7 +11,7 @@ import documents, {
   createChangeControl,
   createControlledDocFromTemplate,
   createDocumentTemplate
-} from '@hanzo/controlled-documents'
+} from '@hanzoteam/controlled-documents'
 import core, {
   type AttachedData,
   type BackupClient,
@@ -24,9 +24,9 @@ import core, {
   makeDocCollabId,
   systemAccountUuid,
   type Blob
-} from '@hanzo/core'
-import { createClient, getTransactorEndpoint } from '@hanzo/server-client'
-import { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/core'
+import { createClient, getTransactorEndpoint } from '@hanzoteam/server-client'
+import { generateToken } from '@hanzoteam/server-token'
 import { findAll, getOuterHTML } from 'domutils'
 import { parseDocument } from 'htmlparser2'
 

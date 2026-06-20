@@ -16,16 +16,16 @@
 -->
 
 <script lang="ts">
-  import { AttachmentStyleBoxEditor } from '@hanzo/attachment-resources'
-  import core, { Class, Doc, Ref, WithLookup, getCurrentAccount } from '@hanzo/core'
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource } from '@hanzo/platform'
-  import { ActionContext, MessageViewer, createQuery, getClient } from '@hanzo/presentation'
-  import { Button, IconMixin, IconMoreH } from '@hanzo/ui'
-  import { DocAttributeBar, getDocMixins, showMenu } from '@hanzo/view-resources'
-  import type { ProductVersion } from '@hanzo/products'
+  import { AttachmentStyleBoxEditor } from '@hanzoteam/attachment-resources'
+  import core, { Class, Doc, Ref, WithLookup, getCurrentAccount } from '@hanzoteam/core'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
+  import notification from '@hanzoteam/notification'
+  import { Panel } from '@hanzoteam/panel'
+  import { getResource } from '@hanzoteam/platform'
+  import { ActionContext, MessageViewer, createQuery, getClient } from '@hanzoteam/presentation'
+  import { Button, IconMixin, IconMoreH } from '@hanzoteam/ui'
+  import { DocAttributeBar, getDocMixins, showMenu } from '@hanzoteam/view-resources'
+  import type { ProductVersion } from '@hanzoteam/products'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
 
   import products from '../../plugin'

@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { LoginInfo } from '@hanzo/account-client'
-  import { Timestamp } from '@hanzo/core'
-  import { OK, Severity, Status } from '@hanzo/platform'
-  import { CodeInput, deviceOptionsStore as deviceInfo, Label, TimeLeft } from '@hanzo/ui'
+  import { LoginInfo } from '@hanzoteam/account-client'
+  import { Timestamp } from '@hanzoteam/core'
+  import { OK, Severity, Status } from '@hanzoteam/platform'
+  import { CodeInput, deviceOptionsStore as deviceInfo, Label, TimeLeft } from '@hanzoteam/ui'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import Tabs from './Tabs.svelte'

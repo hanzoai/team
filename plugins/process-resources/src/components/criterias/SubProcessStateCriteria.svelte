@@ -14,15 +14,15 @@
 -->
 
 <script lang="ts">
-  import { Ref, SortingOrder } from '@hanzo/core'
-  import { Process, State } from '@hanzo/process'
-  import { Dropdown, DropdownLabels } from '@hanzo/ui'
+  import { Ref, SortingOrder } from '@hanzoteam/core'
+  import { Process, State } from '@hanzoteam/process'
+  import { Dropdown, DropdownLabels } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import { buildResult, Modes, parseValue } from '../../query'
   import ModeSelector from './ModeSelector.svelte'
-  import { ObjectBox } from '@hanzo/view-resources'
-  import { createQuery } from '@hanzo/presentation'
+  import { ObjectBox } from '@hanzoteam/view-resources'
+  import { createQuery } from '@hanzoteam/presentation'
 
   export let readonly: boolean
   export let target: Ref<Process> | undefined

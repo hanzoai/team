@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { IntlString, Metadata, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { Class, Ref } from '@hanzo/core'
-import { Channel } from '@hanzo/chunter'
+import type { IntlString, Metadata, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { Class, Ref } from '@hanzoteam/core'
+import { Channel } from '@hanzoteam/chunter'
 
 import { OnboardingChannel } from './types'
 

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+import type { Asset, IntlString, Metadata, Plugin, StatusCode } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 import type { BenchmarkDoc } from './benchmark'
 import type {
   Account,

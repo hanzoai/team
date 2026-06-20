@@ -12,16 +12,16 @@
  * // cd examples && rushx run:basic
  */
 
-import { AgentImpl, TickManagerImpl, NetworkImpl, createProxyHandler } from '@hanzo/network-core'
-import { NetworkServer } from '@hanzo/network-server'
-import { createNetworkClient, NetworkAgentServer } from '@hanzo/network-client'
+import { AgentImpl, TickManagerImpl, NetworkImpl, createProxyHandler } from '@hanzoteam/network-core'
+import { NetworkServer } from '@hanzoteam/network-server'
+import { createNetworkClient, NetworkAgentServer } from '@hanzoteam/network-client'
 import type { 
   Container, 
   ContainerUuid, 
   ClientUuid,
   ContainerKind,
   GetOptions
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 
 // Define the service interface for type-safe proxy usage
 interface DataProcessorService {

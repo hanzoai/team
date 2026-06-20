@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { permissionsStore } from '@hanzo/contact-resources'
-import type { Class, Client, Doc, DocumentQuery, Ref, RelatedDocument, WithLookup } from '@hanzo/core'
-import drive, { type Drive, type File, type FileVersion, type Folder } from '@hanzo/drive'
-import { type Resources } from '@hanzo/platform'
-import { type ObjectSearchResult, getFileUrl } from '@hanzo/presentation'
-import { showPopup, type Location } from '@hanzo/ui'
-import { canChangeDoc, canCreateObject, canDeleteObject, canRemoveDoc } from '@hanzo/view-resources'
+import { permissionsStore } from '@hanzoteam/contact-resources'
+import type { Class, Client, Doc, DocumentQuery, Ref, RelatedDocument, WithLookup } from '@hanzoteam/core'
+import drive, { type Drive, type File, type FileVersion, type Folder } from '@hanzoteam/drive'
+import { type Resources } from '@hanzoteam/platform'
+import { type ObjectSearchResult, getFileUrl } from '@hanzoteam/presentation'
+import { showPopup, type Location } from '@hanzoteam/ui'
+import { canChangeDoc, canCreateObject, canDeleteObject, canRemoveDoc } from '@hanzoteam/view-resources'
 import { get } from 'svelte/store'
 
 import CreateDrive from './components/CreateDrive.svelte'

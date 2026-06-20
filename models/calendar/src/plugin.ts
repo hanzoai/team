@@ -13,22 +13,22 @@
 // limitations under the License.
 //
 
-import { type DocUpdateMessageViewlet } from '@hanzo/activity'
-import { calendarId } from '@hanzo/calendar'
-import calendar from '@hanzo/calendar-resources/src/plugin'
-import { type Doc, type Ref } from '@hanzo/core'
-import { type NotificationGroup } from '@hanzo/notification'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import { type DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import { calendarId } from '@hanzoteam/calendar'
+import calendar from '@hanzoteam/calendar-resources/src/plugin'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { type NotificationGroup } from '@hanzoteam/notification'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 import {
   type Action,
   type ActionCategory,
   type ViewAction,
   type Viewlet,
   type ViewletDescriptor
-} from '@hanzo/view'
-import { type Widget } from '@hanzo/workbench'
+} from '@hanzoteam/view'
+import { type Widget } from '@hanzoteam/workbench'
 
 export default mergeIds(calendarId, calendar, {
   component: {

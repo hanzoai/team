@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import core from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
-import task from '@hanzo/task'
-import serverCore from '@hanzo/server-core'
-import serverTask from '@hanzo/server-task'
+import core from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
+import task from '@hanzoteam/task'
+import serverCore from '@hanzoteam/server-core'
+import serverTask from '@hanzoteam/server-task'
 
-export { serverTaskId } from '@hanzo/server-task'
+export { serverTaskId } from '@hanzoteam/server-task'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {

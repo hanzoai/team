@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, DocumentQuery, Ref, Space } from '@hanzo/core'
-  import core, { WithLookup } from '@hanzo/core'
-  import { IntlString, Asset } from '@hanzo/platform'
-  import presentation, { createQuery, getClient } from '@hanzo/presentation'
+  import type { Class, Doc, DocumentQuery, Ref, Space } from '@hanzoteam/core'
+  import core, { WithLookup } from '@hanzoteam/core'
+  import { IntlString, Asset } from '@hanzoteam/platform'
+  import presentation, { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     AnyComponent,
     Button,
@@ -26,15 +26,15 @@
     Header,
     LinkWrapper,
     Breadcrumbs
-  } from '@hanzo/ui'
-  import view, { ViewOptions, Viewlet } from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view, { ViewOptions, Viewlet } from '@hanzoteam/view'
   import {
     FilterButton,
     ViewletSelector,
     ViewletSettingButton,
     DocNavLink,
     classIcon
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../plugin'
 

@@ -21,9 +21,9 @@ import core, {
   type WorkspaceIds,
   systemAccountUuid,
   withContext
-} from '@hanzo/core'
-import { type HanzolakeClient, type PutOptions, getClient } from '@hanzo/hanzolake-client'
-import { getMetadata } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { type HanzolakeClient, type PutOptions, getClient } from '@hanzoteam/hanzolake-client'
+import { getMetadata } from '@hanzoteam/platform'
 import {
   type BlobStorageIterator,
   type BucketInfo,
@@ -31,8 +31,8 @@ import {
   type StorageConfig,
   type StorageConfiguration,
   type UploadedObjectInfo
-} from '@hanzo/server-core'
-import serverToken, { generateToken } from '@hanzo/server-token'
+} from '@hanzoteam/server-core'
+import serverToken, { generateToken } from '@hanzoteam/server-token'
 import { Readable } from 'stream'
 import { NotFoundError } from './error'
 

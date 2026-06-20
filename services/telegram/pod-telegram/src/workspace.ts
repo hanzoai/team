@@ -1,5 +1,5 @@
-import attachment, { Attachment } from '@hanzo/attachment'
-import contact, { Channel, Contact as PContact, getFirstName, getLastName } from '@hanzo/contact'
+import attachment, { Attachment } from '@hanzoteam/attachment'
+import contact, { Channel, Contact as PContact, getFirstName, getLastName } from '@hanzoteam/contact'
 import core, {
   PersonId,
   Blob,
@@ -18,11 +18,11 @@ import core, {
   TxUpdateDoc,
   systemAccountUuid,
   WorkspaceDataId
-} from '@hanzo/core'
-import type { StorageAdapter } from '@hanzo/server-core'
-import { generateToken } from '@hanzo/server-token'
-import settingP from '@hanzo/setting'
-import telegramP, { NewTelegramMessage } from '@hanzo/telegram'
+} from '@hanzoteam/core'
+import type { StorageAdapter } from '@hanzoteam/server-core'
+import { generateToken } from '@hanzoteam/server-token'
+import settingP from '@hanzoteam/setting'
+import telegramP, { NewTelegramMessage } from '@hanzoteam/telegram'
 import type { Collection } from 'mongodb'
 import { Api } from 'telegram'
 import { v4 as uuid } from 'uuid'

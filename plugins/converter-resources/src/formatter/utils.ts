@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import core, { type AnyAttribute, type Class, type Doc, type Ref } from '@hanzo/core'
-import { translate, type IntlString } from '@hanzo/platform'
+import core, { type AnyAttribute, type Class, type Doc, type Ref } from '@hanzoteam/core'
+import { translate, type IntlString } from '@hanzoteam/platform'
 
 export enum DocumentAttributeKey {
   CreatedBy = 'createdBy',

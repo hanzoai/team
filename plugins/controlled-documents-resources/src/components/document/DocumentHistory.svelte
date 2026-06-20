@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Ref } from '@hanzo/core'
-  import { Label, Scroller } from '@hanzo/ui'
-  import { getClient } from '@hanzo/presentation'
-  import documents, { type ChangeControl } from '@hanzo/controlled-documents'
-  import { getCurrentEmployee } from '@hanzo/contact'
+  import { type Ref } from '@hanzoteam/core'
+  import { Label, Scroller } from '@hanzoteam/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import documents, { type ChangeControl } from '@hanzoteam/controlled-documents'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
 
   import documentsRes from '../../plugin'
   import {

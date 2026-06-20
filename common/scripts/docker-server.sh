@@ -1,3 +1,3 @@
 rush docker:build -p 20 \
---to @hanzo/pod-server \
---to @hanzo/tool || true
+--to @hanzoteam/pod-server \
+--to @hanzoteam/tool || true

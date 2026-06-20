@@ -2,9 +2,9 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/core'
-import documents from '@hanzo/controlled-documents'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/core'
+import documents from '@hanzoteam/controlled-documents'
 
 export function definePermissions (builder: Builder): void {
   builder.createDoc(

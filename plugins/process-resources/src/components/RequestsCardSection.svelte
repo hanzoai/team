@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { createQuery } from '@hanzo/presentation'
+  import { Card } from '@hanzoteam/card'
+  import { createQuery } from '@hanzoteam/presentation'
   import process from '../plugin'
 
   import RequestsExtension from './RequestsExtension.svelte'

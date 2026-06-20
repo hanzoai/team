@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type ClientSocketFactory } from '@hanzo/client'
+import { type ClientSocketFactory } from '@hanzoteam/client'
 import {
   CollaborativeDoc,
   type Account,
@@ -35,7 +35,7 @@ import {
   type Space,
   type TxResult,
   type WithLookup
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { type MarkupContent, type MarkupOperations } from './markup'
 
 type WithPropertyType<T, X, Y> = {

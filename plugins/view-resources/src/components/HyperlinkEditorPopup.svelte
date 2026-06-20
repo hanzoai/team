@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
-  import { translateCB } from '@hanzo/platform'
-  import { copyTextToClipboard } from '@hanzo/presentation'
-  import { Button, IconArrowRight, IconBlueCheck, IconClose, IconCopy, Label, themeStore } from '@hanzo/ui'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { translateCB } from '@hanzoteam/platform'
+  import { copyTextToClipboard } from '@hanzoteam/presentation'
+  import { Button, IconArrowRight, IconBlueCheck, IconClose, IconCopy, Label, themeStore } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import view from '../plugin'
 

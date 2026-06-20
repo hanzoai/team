@@ -23,7 +23,7 @@ import type {
   Label, MessageMeta,
   Notification,
   NotificationContext, WithTotal
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import type { EventResult, Event } from './events/event'
 

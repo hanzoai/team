@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Request } from '@hanzo/request'
-  import { Label } from '@hanzo/ui'
-  import { DocNavLink, ObjectPresenter } from '@hanzo/view-resources'
+  import { Request } from '@hanzoteam/request'
+  import { Label } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectPresenter } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
   import request from '../plugin'
   import RequestActions from './RequestActions.svelte'
   import RequestDetail from './RequestDetail.svelte'
-  import { createQuery } from '@hanzo/presentation'
-  import { Doc } from '@hanzo/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Doc } from '@hanzoteam/core'
 
   export let object: Request
 

@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { OK, Severity, Status } from '@hanzo/platform'
-  import { logIn } from '@hanzo/workbench'
-  import { signupStore } from '@hanzo/analytics-providers'
+  import { OK, Severity, Status } from '@hanzoteam/platform'
+  import { logIn } from '@hanzoteam/workbench'
+  import { signupStore } from '@hanzoteam/analytics-providers'
 
   import BottomActionComponent from './BottomAction.svelte'
   import login from '../plugin'

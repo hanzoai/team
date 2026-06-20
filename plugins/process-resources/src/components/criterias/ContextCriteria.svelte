@@ -14,19 +14,19 @@
 -->
 
 <script lang="ts">
-  import { getAttributePresenterClass, getClient } from '@hanzo/presentation'
+  import { getAttributePresenterClass, getClient } from '@hanzoteam/presentation'
   import {
     Context,
     ContextId,
     Process,
     SelectedExecutionContext,
     UpdateCriteriaComponent
-  } from '@hanzo/process'
-  import { AnyComponent, Component } from '@hanzo/ui'
+  } from '@hanzoteam/process'
+  import { AnyComponent, Component } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { getContext, getCriteriaEditor, getMockAttribute } from '../../utils'
   import ExecutionContextPresenter from '../attributeEditors/ExecutionContextPresenter.svelte'
-  import { AnyAttribute } from '@hanzo/core'
+  import { AnyAttribute } from '@hanzoteam/core'
 
   export let process: Process
   export let value: string | undefined

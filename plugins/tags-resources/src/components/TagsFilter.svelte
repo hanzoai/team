@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, FindResult, Ref } from '@hanzo/core'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { TagCategory, TagElement } from '@hanzo/tags'
+  import { Class, Doc, FindResult, Ref } from '@hanzoteam/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { TagCategory, TagElement } from '@hanzoteam/tags'
   import {
     Button,
     EditWithIcon,
@@ -30,9 +30,9 @@
     resizeObserver,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { Filter } from '@hanzo/view'
-  import { FILTER_DEBOUNCE_MS, FilterQuery, sortFilterValues } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { Filter } from '@hanzoteam/view'
+  import { FILTER_DEBOUNCE_MS, FilterQuery, sortFilterValues } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import tags from '../plugin'
   import { tagLevel } from '../utils'

@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/core",
+  "name": "@hanzoteam/core",
   "version": "0.7.25",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -28,7 +28,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -45,9 +45,9 @@
     "eslint-plugin-svelte": "^2.35.1"
   },
   "dependencies": {
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/analytics": "workspace:^0.7.17",
-    "@hanzo/measurements": "workspace:^0.7.18",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/analytics": "workspace:^0.7.17",
+    "@hanzoteam/measurements": "workspace:^0.7.18",
     "fast-equals": "^5.2.2"
   },
   "repository": {

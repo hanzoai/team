@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hanzo/activity'
-  import { ActivityMessagePresenter } from '@hanzo/activity-resources'
-  import attachment from '@hanzo/attachment'
-  import core, { Collaborator, getCurrentAccount, Ref, SortingOrder } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Lazy, Loading, Scroller } from '@hanzo/ui'
+  import activity, { ActivityMessage } from '@hanzoteam/activity'
+  import { ActivityMessagePresenter } from '@hanzoteam/activity-resources'
+  import attachment from '@hanzoteam/attachment'
+  import core, { Collaborator, getCurrentAccount, Ref, SortingOrder } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Lazy, Loading, Scroller } from '@hanzoteam/ui'
 
   import { openMessageFromSpecial } from '../../navigation'
   import chunter from '../../plugin'

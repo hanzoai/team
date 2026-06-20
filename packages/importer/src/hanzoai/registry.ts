@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Tag } from '@hanzo/card'
+import { type Tag } from '@hanzoteam/card'
 import {
   type Association,
   type Attribute,
@@ -21,7 +21,7 @@ import {
   type Doc,
   generateId,
   type Ref
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { type UnifiedDoc } from '../types'
 import { v4 as uuid } from 'uuid'
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import core, { concatLink, generateId, OperationDomain, TxDomainEvent } from '@hanzo/core'
+import core, { concatLink, generateId, OperationDomain, TxDomainEvent } from '@hanzoteam/core'
 import {
   type EventResult,
   type Event,
@@ -21,7 +21,7 @@ import {
   type CreateMessageOptions,
   UpdatePatchOptions,
   MessageEventType
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import {
   type FindNotificationContextParams,
   type NotificationContext,
@@ -40,8 +40,8 @@ import {
   FindMessagesMetaParams,
   FindMessagesGroupParams,
   MessagesGroup
-} from '@hanzo/communication-types'
-import { retry } from '@hanzo/communication-shared'
+} from '@hanzoteam/communication-types'
+import { retry } from '@hanzoteam/communication-shared'
 
 import { extractJson } from './utils'
 import type { RestClient } from './types'

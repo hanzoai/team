@@ -4,10 +4,10 @@ import {
   type Blob,
   type MeasureContext,
   type StorageIterator
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { type Readable } from 'stream'
 
-import { getMetadata } from '@hanzo/platform'
+import { getMetadata } from '@hanzoteam/platform'
 import {
   type BlobStorageIterator,
   type BucketInfo,
@@ -16,10 +16,10 @@ import {
   type StorageAdapter,
   type StorageAdapterEx,
   type UploadedObjectInfo
-} from '@hanzo/storage'
+} from '@hanzoteam/storage'
 
-import { Analytics } from '@hanzo/analytics'
-import serverCore, { getDataId, type StorageConfig, type StorageConfiguration } from '@hanzo/server-core'
+import { Analytics } from '@hanzoteam/analytics'
+import serverCore, { getDataId, type StorageConfig, type StorageConfiguration } from '@hanzoteam/server-core'
 
 class NoSuchKeyError extends Error {
   code: string

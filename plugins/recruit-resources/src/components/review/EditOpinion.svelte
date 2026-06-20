@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { DocumentUpdate, Ref } from '@hanzo/core'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { Opinion } from '@hanzo/recruit'
-  import { StyledTextArea } from '@hanzo/text-editor-resources'
-  import { EditBox } from '@hanzo/ui'
+  import type { DocumentUpdate, Ref } from '@hanzoteam/core'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { Opinion } from '@hanzoteam/recruit'
+  import { StyledTextArea } from '@hanzoteam/text-editor-resources'
+  import { EditBox } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import recruit from '../../plugin'
 

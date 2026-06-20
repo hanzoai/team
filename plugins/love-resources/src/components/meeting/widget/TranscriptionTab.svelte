@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MeetingMinutes, Room } from '@hanzo/love'
-  import { ChannelEmbeddedContent } from '@hanzo/chunter-resources'
-  import { WidgetState } from '@hanzo/workbench-resources'
+  import { MeetingMinutes, Room } from '@hanzoteam/love'
+  import { ChannelEmbeddedContent } from '@hanzoteam/chunter-resources'
+  import { WidgetState } from '@hanzoteam/workbench-resources'
 
   export let widgetState: WidgetState
   export let meetingMinutes: MeetingMinutes

@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import chunter from '@hanzo/chunter'
+import activity from '@hanzoteam/activity'
+import chunter from '@hanzoteam/chunter'
 import core, {
   type Blob,
   type Class,
@@ -28,7 +28,7 @@ import core, {
   IndexKind,
   SortingOrder,
   type AccountUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   type Drive,
   type File,
@@ -37,7 +37,7 @@ import {
   type Resource,
   TypeFileVersion,
   driveId
-} from '@hanzo/drive'
+} from '@hanzoteam/drive'
 import {
   type Builder,
   Collection,
@@ -53,19 +53,19 @@ import {
   TypeString,
   TypeTimestamp,
   UX
-} from '@hanzo/model'
-import { TAttachedDoc, TDoc, TType, TTypedSpace } from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import print from '@hanzo/model-print'
-import tracker from '@hanzo/model-tracker'
-import view, { type Viewlet, actionTemplates, classPresenter, createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import { getEmbeddedLabel } from '@hanzo/platform'
+} from '@hanzoteam/model'
+import { TAttachedDoc, TDoc, TType, TTypedSpace } from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
+import print from '@hanzoteam/model-print'
+import tracker from '@hanzoteam/model-tracker'
+import view, { type Viewlet, actionTemplates, classPresenter, createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
 
 import drive from './plugin'
 import { definePermissions } from './permissions'
 
-export { driveId } from '@hanzo/drive'
+export { driveId } from '@hanzoteam/drive'
 export { driveOperation } from './migration'
 export { drive as default }
 

@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/storage-client",
+  "name": "@hanzoteam/storage-client",
   "version": "0.7.17",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "cross-env": "~7.0.3",
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -42,7 +42,7 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24"
+    "@hanzoteam/core": "workspace:^0.7.24"
   },
   "repository": {
     "type": "git",

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { generateId, PersonId } from '@hanzo/core'
+import { generateId, PersonId } from '@hanzoteam/core'
 import type { Credentials, OAuth2Client } from 'google-auth-library'
 import { calendar_v3, google } from 'googleapis'
 import { Collection, Db } from 'mongodb'

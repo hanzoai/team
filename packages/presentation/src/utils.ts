@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import core, {
   type Account,
   AccountRole,
@@ -56,11 +56,11 @@ import core, {
   type TypeAny,
   type WithLookup,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { getMetadata, getResource } from '@hanzo/platform'
-import { LiveQuery as LQ } from '@hanzo/query'
-import { type AnyComponent, type AnySvelteComponent, getRawCurrentLocation, workspaceId } from '@hanzo/ui'
-import view, { type AttributeCategory, type AttributeEditor } from '@hanzo/view'
+} from '@hanzoteam/core'
+import { getMetadata, getResource } from '@hanzoteam/platform'
+import { LiveQuery as LQ } from '@hanzoteam/query'
+import { type AnyComponent, type AnySvelteComponent, getRawCurrentLocation, workspaceId } from '@hanzoteam/ui'
+import view, { type AttributeCategory, type AttributeEditor } from '@hanzoteam/view'
 import { deepEqual } from 'fast-equals'
 import { onDestroy } from 'svelte'
 import { get, writable } from 'svelte/store'
@@ -69,7 +69,7 @@ import { type KeyedAttribute } from '..'
 import { OptimizeQueryMiddleware, type PresentationPipeline, PresentationPipelineImpl } from './pipeline'
 import plugin, { type ClientHook } from './plugin'
 
-export { reduceCalls } from '@hanzo/core'
+export { reduceCalls } from '@hanzoteam/core'
 
 let liveQuery: LQ
 let rawLiveQuery: LQ

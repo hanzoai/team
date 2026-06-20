@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import questions, { type Question } from '@hanzo/questions'
-import { type Doc, type FindResult, SortingOrder } from '@hanzo/core'
-import { type LiveQuery } from '@hanzo/presentation'
+import questions, { type Question } from '@hanzoteam/questions'
+import { type Doc, type FindResult, SortingOrder } from '@hanzoteam/core'
+import { type LiveQuery } from '@hanzoteam/presentation'
 
 export function queryQuestions<Parent extends Doc, Collection extends Extract<keyof Parent, string> | string> (
   query: LiveQuery,

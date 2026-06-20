@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
-  import { BooleanIcon, Label } from '@hanzo/ui'
+  import { IntlString } from '@hanzoteam/platform'
+  import { BooleanIcon, Label } from '@hanzoteam/ui'
   import request from '../plugin'
-  import { RequestStatus } from '@hanzo/request'
+  import { RequestStatus } from '@hanzoteam/request'
 
   export let value: RequestStatus
 

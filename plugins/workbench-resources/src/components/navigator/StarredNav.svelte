@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { DocNotifyContext, InboxNotification } from '@hanzo/notification'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { TreeNode } from '@hanzo/view-resources'
-  import { SpacesNavModel } from '@hanzo/workbench'
+  import type { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { DocNotifyContext, InboxNotification } from '@hanzoteam/notification'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { TreeNode } from '@hanzoteam/view-resources'
+  import { SpacesNavModel } from '@hanzoteam/workbench'
   import StarredNavItem from './StarredNavItem.svelte'
 
   export let label: IntlString

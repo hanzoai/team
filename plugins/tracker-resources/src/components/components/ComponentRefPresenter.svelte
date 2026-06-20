@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AggregateValue, Ref } from '@hanzo/core'
+  import { AggregateValue, Ref } from '@hanzoteam/core'
   import ComponentPresenter from './ComponentPresenter.svelte'
-  import { Component } from '@hanzo/tracker'
+  import { Component } from '@hanzoteam/tracker'
 
   import { componentStore } from '../../component'
 

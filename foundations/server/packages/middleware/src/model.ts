@@ -30,16 +30,16 @@ import core, {
   DOMAIN_MODEL,
   DOMAIN_TX,
   withContext
-} from '@hanzo/core'
-import { PlatformError, unknownError } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { PlatformError, unknownError } from '@hanzoteam/platform'
 import type {
   Middleware,
   MiddlewareCreator,
   PipelineContext,
   TxAdapter,
   TxMiddlewareResult
-} from '@hanzo/server-core'
-import { BaseMiddleware } from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
+import { BaseMiddleware } from '@hanzoteam/server-core'
 import crypto from 'node:crypto'
 
 const isAccountTx = (it: TxCUD<Doc>): boolean =>

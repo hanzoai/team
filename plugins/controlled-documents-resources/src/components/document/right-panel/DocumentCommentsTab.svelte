@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import chunter from '@hanzo/chunter'
-  import { Ref } from '@hanzo/core'
-  import { Button, Label, showPopup } from '@hanzo/ui'
-  import documents, { type DocumentComment } from '@hanzo/controlled-documents'
+  import chunter from '@hanzoteam/chunter'
+  import { Ref } from '@hanzoteam/core'
+  import { Button, Label, showPopup } from '@hanzoteam/ui'
+  import documents, { type DocumentComment } from '@hanzoteam/controlled-documents'
   import { onDestroy } from 'svelte'
   import {
     $documentCommentHighlightedLocation as highlightedLocation,

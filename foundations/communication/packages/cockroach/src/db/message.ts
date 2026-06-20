@@ -23,8 +23,8 @@ import {
   MessageMeta,
   type SocialID,
   type ThreadMeta
-} from '@hanzo/communication-types'
-import { Domain, ThreadMetaUpdate, ThreadMetaQuery } from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-types'
+import { Domain, ThreadMetaUpdate, ThreadMetaQuery } from '@hanzoteam/communication-sdk-types'
 
 import { BaseDb } from './base'
 import { DbModel, DbModelFilter, schemas } from '../schema'

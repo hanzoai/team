@@ -1,4 +1,4 @@
-import { EmojiNode, type EmojiNodeOptions } from '@hanzo/text'
+import { EmojiNode, type EmojiNodeOptions } from '@hanzoteam/text'
 import {
   emoticonRegex,
   emoticonGlobalRegex,
@@ -8,8 +8,8 @@ import {
   emojiGlobalRegex,
   type ExtendedEmoji,
   isCustomEmoji
-} from '@hanzo/emoji'
-import emojiPlugin from '@hanzo/emoji'
+} from '@hanzoteam/emoji'
+import emojiPlugin from '@hanzoteam/emoji'
 import { type ResolvedPos } from '@tiptap/pm/model'
 import {
   type ExtendedRegExpMatchArray,
@@ -20,8 +20,8 @@ import {
   PasteRule
 } from '@tiptap/core'
 import { type EditorState } from '@tiptap/pm/state'
-import { getBlobRef } from '@hanzo/presentation'
-import { getResource } from '@hanzo/platform'
+import { getBlobRef } from '@hanzoteam/presentation'
+import { getResource } from '@hanzoteam/platform'
 
 const invalidMarks = ['link']
 

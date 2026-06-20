@@ -24,9 +24,9 @@ import {
   type Ref,
   type Status,
   type TxOperations
-} from '@hanzo/core'
-import { type IntlString, type Resources } from '@hanzo/platform'
-import { createQuery, onClient } from '@hanzo/presentation'
+} from '@hanzoteam/core'
+import { type IntlString, type Resources } from '@hanzoteam/platform'
+import { createQuery, onClient } from '@hanzoteam/presentation'
 import task, {
   getStatusIndex,
   makeRank,
@@ -35,10 +35,10 @@ import task, {
   type Rank,
   type Task,
   type TaskType
-} from '@hanzo/task'
-import { getCurrentLocation, navigate, showPopup } from '@hanzo/ui'
-import { type ViewletDescriptor } from '@hanzo/view'
-import { CategoryQuery, statusStore } from '@hanzo/view-resources'
+} from '@hanzoteam/task'
+import { getCurrentLocation, navigate, showPopup } from '@hanzoteam/ui'
+import { type ViewletDescriptor } from '@hanzoteam/view'
+import { CategoryQuery, statusStore } from '@hanzoteam/view-resources'
 import { get, writable } from 'svelte/store'
 
 import AssignedTasks from './components/AssignedTasks.svelte'

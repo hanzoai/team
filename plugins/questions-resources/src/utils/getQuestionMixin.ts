@@ -2,9 +2,9 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Answer, Question, QuestionMixin } from '@hanzo/questions'
-import type { Class, Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
+import type { Answer, Question, QuestionMixin } from '@hanzoteam/questions'
+import type { Class, Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
 import questions from '../plugin'
 
 export function getQuestionMixin<Q extends Question<any>> (

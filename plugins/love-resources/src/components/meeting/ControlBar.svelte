@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Room } from '@hanzo/love'
-  import { IconMaximize, ModernButton, Popup, showPopup, TooltipInstance } from '@hanzo/ui'
+  import { Room } from '@hanzoteam/love'
+  import { IconMaximize, ModernButton, Popup, showPopup, TooltipInstance } from '@hanzoteam/ui'
 
   import love from '../../plugin'
   import { myInfo, myOffice } from '../../stores'

@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/query",
+  "name": "@hanzoteam/query",
   "entries": [
     {
       "version": "0.6.1",
@@ -13,7 +13,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/core\" from `~0.6.3` to `~0.6.8`"
+            "comment": "Updating dependency \"@hanzoteam/core\" from `~0.6.3` to `~0.6.8`"
           }
         ]
       }
@@ -25,7 +25,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/platform\" from `~0.6.3` to `~0.6.4`"
+            "comment": "Updating dependency \"@hanzoteam/platform\" from `~0.6.3` to `~0.6.4`"
           }
         ]
       }

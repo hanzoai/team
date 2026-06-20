@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { RecurringRule } from '@hanzo/calendar'
-import type { AccountUuid, PersonId, Timestamp, WorkspaceUuid } from '@hanzo/core'
+import { RecurringRule } from '@hanzoteam/calendar'
+import type { AccountUuid, PersonId, Timestamp, WorkspaceUuid } from '@hanzoteam/core'
 import type { NextFunction, Request, Response } from 'express'
 import type { Credentials } from 'google-auth-library'
 

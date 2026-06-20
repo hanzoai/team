@@ -1,16 +1,16 @@
 //
 // Copyright © 2023 Hanzo AI Inc.
 //
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/core'
-import serverCore from '@hanzo/server-core'
-import { RequestStatus } from '@hanzo/request'
-import documents, { DocumentState } from '@hanzo/controlled-documents'
-import serverDocuments from '@hanzo/server-controlled-documents'
-import serverNotification from '@hanzo/server-notification'
-import notification from '@hanzo/notification'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/core'
+import serverCore from '@hanzoteam/server-core'
+import { RequestStatus } from '@hanzoteam/request'
+import documents, { DocumentState } from '@hanzoteam/controlled-documents'
+import serverDocuments from '@hanzoteam/server-controlled-documents'
+import serverNotification from '@hanzoteam/server-notification'
+import notification from '@hanzoteam/notification'
 
-export { serverDocumentsId } from '@hanzo/server-controlled-documents/src/index'
+export { serverDocumentsId } from '@hanzoteam/server-controlled-documents/src/index'
 
 export function createModel (builder: Builder): void {
   builder.createDoc(serverCore.class.Trigger, core.space.Model, {

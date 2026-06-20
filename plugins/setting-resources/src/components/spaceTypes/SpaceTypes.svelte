@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, SpaceType, WithLookup } from '@hanzo/core'
-  import { Icon, Label, IconOpenedArrow } from '@hanzo/ui'
+  import { Ref, SpaceType, WithLookup } from '@hanzoteam/core'
+  import { Icon, Label, IconOpenedArrow } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
 

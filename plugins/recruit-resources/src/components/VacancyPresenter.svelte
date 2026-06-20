@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Vacancy } from '@hanzo/recruit'
-  import { Icon, getPlatformAvatarColorForTextDef, themeStore, tooltip } from '@hanzo/ui'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Vacancy } from '@hanzoteam/recruit'
+  import { Icon, getPlatformAvatarColorForTextDef, themeStore, tooltip } from '@hanzoteam/ui'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import recruit from '../plugin'

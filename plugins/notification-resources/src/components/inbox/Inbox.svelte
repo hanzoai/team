@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hanzo/activity'
-  import chunter from '@hanzo/chunter'
-  import { Class, Doc, getCurrentAccount, groupByArray, Ref, SortingOrder } from '@hanzo/core'
-  import { DocNotifyContext, InboxNotification, notificationId } from '@hanzo/notification'
-  import { ActionContext, createQuery, getClient } from '@hanzo/presentation'
+  import activity, { ActivityMessage } from '@hanzoteam/activity'
+  import chunter from '@hanzoteam/chunter'
+  import { Class, Doc, getCurrentAccount, groupByArray, Ref, SortingOrder } from '@hanzoteam/core'
+  import { DocNotifyContext, InboxNotification, notificationId } from '@hanzoteam/notification'
+  import { ActionContext, createQuery, getClient } from '@hanzoteam/presentation'
   import {
     AnyComponent,
     closePanel,
@@ -33,11 +33,11 @@
     Separator,
     TabItem,
     TabList
-  } from '@hanzo/ui'
-  import view, { decodeObjectURI } from '@hanzo/view'
-  import { parseLinkId } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import view, { decodeObjectURI } from '@hanzoteam/view'
+  import { parseLinkId } from '@hanzoteam/view-resources'
   import { get } from 'svelte/store'
-  import { getResource } from '@hanzo/platform'
+  import { getResource } from '@hanzoteam/platform'
 
   import { InboxNotificationsClientImpl } from '../../inboxNotificationsClient'
   import notification from '../../plugin'

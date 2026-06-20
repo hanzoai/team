@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type MeasureContext } from '@hanzo/core'
+import { type MeasureContext } from '@hanzoteam/core'
 import { type DbAdapterFactory } from './adapter'
 import type { ContentTextAdapterFactory, ServiceAdapterConfig } from './types'
 

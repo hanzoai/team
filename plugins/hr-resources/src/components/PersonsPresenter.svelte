@@ -14,12 +14,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { EmployeePresenter } from '@hanzo/contact-resources'
-  import { WithLookup } from '@hanzo/core'
-  import { Staff } from '@hanzo/hr'
-  import { closeTooltip } from '@hanzo/ui'
-  import { showMenu } from '@hanzo/view-resources'
+  import { Employee } from '@hanzoteam/contact'
+  import { EmployeePresenter } from '@hanzoteam/contact-resources'
+  import { WithLookup } from '@hanzoteam/core'
+  import { Staff } from '@hanzoteam/hr'
+  import { closeTooltip } from '@hanzoteam/ui'
+  import { showMenu } from '@hanzoteam/view-resources'
   import hr from '../plugin'
 
   import { flip } from 'svelte/animate'

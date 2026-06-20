@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import textEditor from '@hanzo/text-editor'
-  import { Card } from '@hanzo/presentation'
+  import textEditor from '@hanzoteam/text-editor'
+  import { Card } from '@hanzoteam/presentation'
 
   export let text: string
 </script>

@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { Card } from '@hanzo/presentation'
-  import { ProcessFunction } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
-  import { NumberEditor } from '@hanzo/view-resources'
+  import presentation, { Card } from '@hanzoteam/presentation'
+  import { ProcessFunction } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
+  import { NumberEditor } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import process from '../../plugin'
 

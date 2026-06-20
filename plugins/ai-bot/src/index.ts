@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { buildSocialIdString, SocialIdType } from '@hanzo/core'
-import type { Metadata, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+import { buildSocialIdString, SocialIdType } from '@hanzoteam/core'
+import type { Metadata, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 
 export * from './rest'
 

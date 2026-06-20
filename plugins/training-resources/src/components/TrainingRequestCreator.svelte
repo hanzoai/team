@@ -3,9 +3,9 @@
 -->
 
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
-  import type { Training } from '@hanzo/training'
-  import { AttributeBarEditor, Card, KeyedAttribute } from '@hanzo/presentation'
+  import { Label } from '@hanzoteam/ui'
+  import type { Training } from '@hanzoteam/training'
+  import { AttributeBarEditor, Card, KeyedAttribute } from '@hanzoteam/presentation'
   import training from '../plugin'
   import { createTrainingRequest, type CreateTrainingRequestData } from '../utils'
   import PanelTitle from './PanelTitle.svelte'

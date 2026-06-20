@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
   import { createEventDispatcher } from 'svelte'
   import { resizeObserver } from '..'
   import CheckBox from './CheckBox.svelte'

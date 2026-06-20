@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import card, { type Card, type MasterTag, type Tag } from '@hanzo/card'
+import card, { type Card, type MasterTag, type Tag } from '@hanzoteam/card'
 import core, {
   AccountRole,
   type Class,
@@ -24,7 +24,7 @@ import core, {
   SortingOrder,
   type Space,
   type Tx
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   type Builder,
   Hidden,
@@ -37,14 +37,14 @@ import {
   TypeRef,
   TypeString,
   UX
-} from '@hanzo/model'
-import { TDoc } from '@hanzo/model-core'
-import presentation from '@hanzo/model-presentation'
-import { TToDo } from '@hanzo/model-time'
-import view, { createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import notification, { type NotificationGroup } from '@hanzo/notification'
-import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
+} from '@hanzoteam/model'
+import { TDoc } from '@hanzoteam/model-core'
+import presentation from '@hanzoteam/model-presentation'
+import { TToDo } from '@hanzoteam/model-time'
+import view, { createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import notification, { type NotificationGroup } from '@hanzoteam/notification'
+import { type Asset, type IntlString, type Resource } from '@hanzoteam/platform'
 import {
   type ApproveRequest,
   type CheckFunc,
@@ -70,10 +70,10 @@ import {
   type Trigger,
   type UpdateCriteriaComponent,
   processId
-} from '@hanzo/process'
-import time from '@hanzo/time'
-import { type AnyComponent } from '@hanzo/ui'
-import { type AttributeCategory } from '@hanzo/view'
+} from '@hanzoteam/process'
+import time from '@hanzoteam/time'
+import { type AnyComponent } from '@hanzoteam/ui'
+import { type AttributeCategory } from '@hanzoteam/view'
 import { defineMethods } from './actions'
 import { defineFunctions } from './functions'
 import { definePermissions } from './permission'
@@ -858,6 +858,6 @@ export function createModel (builder: Builder): void {
   })
 }
 
-export { processId } from '@hanzo/process'
+export { processId } from '@hanzoteam/process'
 
 export default process

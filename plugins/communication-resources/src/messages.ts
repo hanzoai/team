@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Message } from '@hanzo/communication-types'
-import { isAppFocusedStore } from '@hanzo/ui'
+import { type Message } from '@hanzoteam/communication-types'
+import { isAppFocusedStore } from '@hanzoteam/ui'
 import { get } from 'svelte/store'
 
 export interface MessagesGroup {

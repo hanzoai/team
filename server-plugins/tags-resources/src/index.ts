@@ -26,9 +26,9 @@ import core, {
   TxCUD,
   TxProcessor,
   TxRemoveDoc
-} from '@hanzo/core'
-import { TriggerControl } from '@hanzo/server-core'
-import tags, { TagElement, TagReference } from '@hanzo/tags'
+} from '@hanzoteam/core'
+import { TriggerControl } from '@hanzoteam/server-core'
+import tags, { TagElement, TagReference } from '@hanzoteam/tags'
 
 /**
  * @public

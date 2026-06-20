@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TestResult } from '@hanzo/test-management'
+  import { TestResult } from '@hanzoteam/test-management'
   import TestResultPresenter from './TestResultPresenter.svelte'
 
   export let object: TestResult

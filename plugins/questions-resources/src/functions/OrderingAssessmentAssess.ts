@@ -2,7 +2,7 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { AnswerDataAssessFunction, OrderingAssessment, OrderingAssessmentAnswer } from '@hanzo/questions'
+import type { AnswerDataAssessFunction, OrderingAssessment, OrderingAssessmentAnswer } from '@hanzoteam/questions'
 
 /** @public */
 export const OrderingAssessmentAssess: AnswerDataAssessFunction<OrderingAssessment, OrderingAssessmentAnswer> = async (

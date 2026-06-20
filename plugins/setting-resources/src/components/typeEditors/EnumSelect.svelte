@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
+  import type { IntlString } from '@hanzoteam/platform'
   import {
     Label,
     showPopup,
@@ -22,11 +22,11 @@
     eventToHTMLElement,
     getFocusManager,
     TooltipAlignment
-  } from '@hanzo/ui'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
   import EnumPopup from './EnumPopup.svelte'
-  import core, { Ref, Class, DocumentQuery, Enum } from '@hanzo/core'
-  import { ObjectCreate } from '@hanzo/presentation'
+  import core, { Ref, Class, DocumentQuery, Enum } from '@hanzoteam/core'
+  import { ObjectCreate } from '@hanzoteam/presentation'
 
   export let label: IntlString
   export let value: Enum | undefined

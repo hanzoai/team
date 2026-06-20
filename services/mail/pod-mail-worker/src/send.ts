@@ -1,4 +1,4 @@
-import { concatLink, MeasureContext } from '@hanzo/core'
+import { concatLink, MeasureContext } from '@hanzoteam/core'
 
 import config from './config'
 import { MailMessage } from './types'

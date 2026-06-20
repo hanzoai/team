@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Channel } from '@hanzo/contact'
-  import { getResource } from '@hanzo/platform'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { showPopup } from '@hanzo/ui'
-  import { ViewAction } from '@hanzo/view'
+  import type { Channel } from '@hanzoteam/contact'
+  import { getResource } from '@hanzoteam/platform'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { showPopup } from '@hanzoteam/ui'
+  import { ViewAction } from '@hanzoteam/view'
   import ChannelsDropdown from './ChannelsDropdown.svelte'
 
   export let value: Channel[] | Channel | null

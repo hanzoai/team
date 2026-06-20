@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import cardPlugin, { type Card, type MasterTag } from '@hanzo/card'
-import type { Class, Doc, Ref } from '@hanzo/core'
-import { navigate, getCurrentResolvedLocation, type Location, type ResolvedLocation } from '@hanzo/ui'
-import { chatId } from '@hanzo/chat'
-import { getClient } from '@hanzo/presentation'
-import { type LocationData } from '@hanzo/workbench'
-import { encodeObjectURI, decodeObjectURI } from '@hanzo/view'
-import { accessDeniedStore } from '@hanzo/view-resources'
+import cardPlugin, { type Card, type MasterTag } from '@hanzoteam/card'
+import type { Class, Doc, Ref } from '@hanzoteam/core'
+import { navigate, getCurrentResolvedLocation, type Location, type ResolvedLocation } from '@hanzoteam/ui'
+import { chatId } from '@hanzoteam/chat'
+import { getClient } from '@hanzoteam/presentation'
+import { type LocationData } from '@hanzoteam/workbench'
+import { encodeObjectURI, decodeObjectURI } from '@hanzoteam/view'
+import { accessDeniedStore } from '@hanzoteam/view-resources'
 
 export function isFavoritesLocation (loc: Location): boolean {
   return loc.path[2] === chatId && loc.path[3] === 'favorites'

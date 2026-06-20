@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { LoginInfo } from '@hanzo/account-client'
-  import { type IntlString, OK, Severity, Status } from '@hanzo/platform'
+  import { LoginInfo } from '@hanzoteam/account-client'
+  import { type IntlString, OK, Severity, Status } from '@hanzoteam/platform'
 
   import { OtpLoginSteps, loginOtp } from '../index'
   import login from '../plugin'

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { ApproveRequest, Execution, ExecutionStatus, ProcessToDo } from '@hanzo/process'
-  import { Button } from '@hanzo/ui'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { ApproveRequest, Execution, ExecutionStatus, ProcessToDo } from '@hanzoteam/process'
+  import { Button } from '@hanzoteam/ui'
   import plugin from '../plugin'
   import ApproveRequestButtons from './ApproveRequestButtons.svelte'
 

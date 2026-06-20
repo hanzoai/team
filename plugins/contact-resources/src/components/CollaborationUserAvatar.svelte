@@ -16,12 +16,12 @@
 -->
 
 <script lang="ts">
-  import { CollaborationUser } from '@hanzo/text-editor'
-  import { IconSize } from '@hanzo/ui'
+  import { CollaborationUser } from '@hanzoteam/text-editor'
+  import { IconSize } from '@hanzoteam/ui'
 
   import { getPersonByPersonIdCb } from '../utils'
   import Avatar from './Avatar.svelte'
-  import { Person } from '@hanzo/contact'
+  import { Person } from '@hanzoteam/contact'
 
   export let user: CollaborationUser
   export let lastUpdate: number

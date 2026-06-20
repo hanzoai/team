@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Blob, Class, Doc, Markup, Ref } from '@hanzo/core'
-  import { Asset, IntlString } from '@hanzo/platform'
-  import { EmptyMarkup, isEmptyMarkup, mergeKitOptions } from '@hanzo/text'
-  import textEditor, { RefAction, TextEditorHandler } from '@hanzo/text-editor'
+  import { Blob, Class, Doc, Markup, Ref } from '@hanzoteam/core'
+  import { Asset, IntlString } from '@hanzoteam/platform'
+  import { EmptyMarkup, isEmptyMarkup, mergeKitOptions } from '@hanzoteam/text'
+  import textEditor, { RefAction, TextEditorHandler } from '@hanzoteam/text-editor'
   import {
     AnySvelteComponent,
     Button,
@@ -26,12 +26,12 @@
     handler,
     IconClose,
     registerFocus
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { FocusPosition } from '@tiptap/core'
   import { EditorView } from '@tiptap/pm/view'
   import { createEventDispatcher } from 'svelte'
 
-  import view from '@hanzo/view'
+  import view from '@hanzoteam/view'
   import TextEditor from './TextEditor.svelte'
   import { defaultRefActions, getModelRefActions } from './editor/actions'
   import Send from './icons/Send.svelte'

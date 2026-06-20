@@ -24,8 +24,8 @@
     eventToHTMLElement,
     getUserTimezone,
     showPopup
-  } from '@hanzo/ui'
-  import { FixedColumn } from '@hanzo/view-resources'
+  } from '@hanzoteam/ui'
+  import { FixedColumn } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import DateLocalePresenter from './DateLocalePresenter.svelte'
 

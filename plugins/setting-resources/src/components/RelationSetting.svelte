@@ -1,7 +1,7 @@
 <script lang="ts">
-  import core, { Association, Class, Data, Doc, Ref } from '@hanzo/core'
-  import { IntlString, translate } from '@hanzo/platform'
-  import { createQuery, getClient, MessageBox } from '@hanzo/presentation'
+  import core, { Association, Class, Data, Doc, Ref } from '@hanzoteam/core'
+  import { IntlString, translate } from '@hanzoteam/platform'
+  import { createQuery, getClient, MessageBox } from '@hanzoteam/presentation'
   import {
     Breadcrumb,
     Button,
@@ -11,10 +11,10 @@
     Separator,
     showPopup,
     twoPanelsSeparators
-  } from '@hanzo/ui'
-  import view from '@hanzo/view-resources/src/plugin'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import settings from '../plugin'
-  import card from '@hanzo/card'
+  import card from '@hanzoteam/card'
   import AssociationEditor from './AssociationEditor.svelte'
 
   export let _classes: Ref<Class<Doc>>[] = [core.class.Doc]

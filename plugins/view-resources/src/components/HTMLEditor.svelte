@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
+  import { Doc } from '@hanzoteam/core'
 
-  import { getAttribute, getClient, KeyedAttribute, updateAttribute } from '@hanzo/presentation'
-  import { FullDescriptionBox } from '@hanzo/text-editor-resources'
+  import { getAttribute, getClient, KeyedAttribute, updateAttribute } from '@hanzoteam/presentation'
+  import { FullDescriptionBox } from '@hanzoteam/text-editor-resources'
 
   // TODO Rename this component to MarkupEditor
   export let object: Doc

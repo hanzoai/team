@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc } from '@hanzo/core'
-  import { translate } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { MethodParams, Process, Step } from '@hanzo/process'
-  import { Component, Icon, IconError, Label, tooltip } from '@hanzo/ui'
+  import { Doc } from '@hanzoteam/core'
+  import { translate } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { MethodParams, Process, Step } from '@hanzoteam/process'
+  import { Component, Icon, IconError, Label, tooltip } from '@hanzoteam/ui'
   import plugin from '../../plugin'
 
   export let action: Step<Doc>

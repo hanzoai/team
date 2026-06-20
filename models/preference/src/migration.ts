@@ -13,15 +13,15 @@
 // limitations under the License.
 //
 
-import core, { type Ref, type Space } from '@hanzo/core'
+import core, { type Ref, type Space } from '@hanzoteam/core'
 import {
   migrateSpace,
   tryMigrate,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
-import { DOMAIN_PREFERENCE, preferenceId } from '@hanzo/preference'
+} from '@hanzoteam/model'
+import { DOMAIN_PREFERENCE, preferenceId } from '@hanzoteam/preference'
 
 export const preferenceOperation: MigrateOperation = {
   async migrate (client: MigrationClient, mode): Promise<void> {

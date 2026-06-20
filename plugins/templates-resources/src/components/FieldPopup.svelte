@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, FindOptions, IdMap, toIdMap } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import presentation, { createQuery, ObjectPopup } from '@hanzo/presentation'
-  import { TemplateField, TemplateFieldCategory } from '@hanzo/templates'
-  import { Label } from '@hanzo/ui'
+  import { DocumentQuery, FindOptions, IdMap, toIdMap } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import presentation, { createQuery, ObjectPopup } from '@hanzoteam/presentation'
+  import { TemplateField, TemplateFieldCategory } from '@hanzoteam/templates'
+  import { Label } from '@hanzoteam/ui'
   import templates from '../plugin'
 
   export let options: FindOptions<TemplateField> | undefined = undefined

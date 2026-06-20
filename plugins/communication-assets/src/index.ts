@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { addStringsLoader, loadMetadata } from '@hanzo/platform'
-import communication, { communicationId } from '@hanzo/communication'
+import { addStringsLoader, loadMetadata } from '@hanzoteam/platform'
+import communication, { communicationId } from '@hanzoteam/communication'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(communication.icon, {

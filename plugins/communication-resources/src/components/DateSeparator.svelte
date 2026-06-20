@@ -12,9 +12,9 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { themeStore } from '@hanzo/ui'
-  import { translate } from '@hanzo/platform'
-  import { Timestamp } from '@hanzo/core'
+  import { themeStore } from '@hanzoteam/ui'
+  import { translate } from '@hanzoteam/platform'
+  import { Timestamp } from '@hanzoteam/core'
 
   import ui from '../plugin'
 

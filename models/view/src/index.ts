@@ -28,18 +28,18 @@ import {
   type Domain,
   type Ref,
   type Space
-} from '@hanzo/core'
-import { type Builder, Mixin, Model, Prop, TypeRecord, TypeRef, TypeString, UX } from '@hanzo/model'
-import core, { TClass, TDoc } from '@hanzo/model-core'
-import preference, { TPreference } from '@hanzo/model-preference'
-import presentation from '@hanzo/model-presentation'
-import { type Asset, getEmbeddedLabel, type IntlString, type Resource, type Status } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { type Builder, Mixin, Model, Prop, TypeRecord, TypeRef, TypeString, UX } from '@hanzoteam/model'
+import core, { TClass, TDoc } from '@hanzoteam/model-core'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import presentation from '@hanzoteam/model-presentation'
+import { type Asset, getEmbeddedLabel, type IntlString, type Resource, type Status } from '@hanzoteam/platform'
 import {
   type AnyComponent,
   type ComponentExtensionId,
   type LabelAndProps,
   type Location
-} from '@hanzo/ui/src/types'
+} from '@hanzoteam/ui/src/types'
 import {
   type TypeEditor,
   type Action,
@@ -106,12 +106,12 @@ import {
   type ViewletDescriptor,
   type ViewletPreference,
   type ViewletViewAction
-} from '@hanzo/view'
+} from '@hanzoteam/view'
 
 import view from './plugin'
 import { classPresenter, createAction } from './utils'
 
-export { viewId } from '@hanzo/view'
+export { viewId } from '@hanzoteam/view'
 export { viewOperation } from './migration'
 export type { ViewAction, Viewlet }
 

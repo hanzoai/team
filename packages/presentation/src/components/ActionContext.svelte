@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, generateId, Ref } from '@hanzo/core'
-  import { ViewContext } from '@hanzo/view'
+  import { Doc, generateId, Ref } from '@hanzoteam/core'
+  import { ViewContext } from '@hanzoteam/view'
   import { onDestroy } from 'svelte'
   import { ContextStore, contextStore } from '../context'
 

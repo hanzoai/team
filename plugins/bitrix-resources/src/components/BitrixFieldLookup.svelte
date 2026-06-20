@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { BitrixClient, BitrixEntityMapping, Fields, FieldValue } from '@hanzo/bitrix'
-  import core, { DateRangeMode, Enum, Ref } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import setting from '@hanzo/setting-resources/src/plugin'
+  import { BitrixClient, BitrixEntityMapping, Fields, FieldValue } from '@hanzoteam/bitrix'
+  import core, { DateRangeMode, Enum, Ref } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import setting from '@hanzoteam/setting-resources/src/plugin'
   import {
     Button,
     DatePresenter,
@@ -15,7 +15,7 @@
     IconEdit,
     Menu,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
 
   import EnumPopup from './EnumPopup.svelte'
 

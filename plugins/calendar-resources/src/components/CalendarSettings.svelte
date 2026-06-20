@@ -1,10 +1,10 @@
 <script lang="ts">
-  import core, { getCurrentAccount, groupByArray, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Breadcrumb, Grid, Header, Label, Scroller, Toggle } from '@hanzo/ui'
+  import core, { getCurrentAccount, groupByArray, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Breadcrumb, Grid, Header, Label, Scroller, Toggle } from '@hanzoteam/ui'
   import calendar from '../plugin'
-  import setting from '@hanzo/setting'
-  import { Calendar, ExternalCalendar, getPrimaryCalendar, PrimaryCalendar, Visibility } from '@hanzo/calendar'
+  import setting from '@hanzoteam/setting'
+  import { Calendar, ExternalCalendar, getPrimaryCalendar, PrimaryCalendar, Visibility } from '@hanzoteam/calendar'
   import VisibilityEditor from './VisibilityEditor.svelte'
   import CalendarSelector from './CalendarSelector.svelte'
 

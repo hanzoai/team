@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { Issue } from '@hanzo/tracker'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { Issue } from '@hanzoteam/tracker'
   import RelationEditorPart from './RelationEditorPart.svelte'
 
   export let value: Issue

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import contact from '@hanzo/contact'
+import contact from '@hanzoteam/contact'
 import core, {
   toIdMap,
   type Client,
@@ -23,14 +23,14 @@ import core, {
   type ObjQueryType,
   type Ref,
   type RelatedDocument
-} from '@hanzo/core'
-import { OK, Severity, Status, type Resources } from '@hanzo/platform'
-import { getClient, type ObjectSearchResult } from '@hanzo/presentation'
-import { type Applicant, type Candidate, type Vacancy } from '@hanzo/recruit'
-import task from '@hanzo/task'
-import { showPopup } from '@hanzo/ui'
-import { type Filter } from '@hanzo/view'
-import { FilterQuery, statusStore } from '@hanzo/view-resources'
+} from '@hanzoteam/core'
+import { OK, Severity, Status, type Resources } from '@hanzoteam/platform'
+import { getClient, type ObjectSearchResult } from '@hanzoteam/presentation'
+import { type Applicant, type Candidate, type Vacancy } from '@hanzoteam/recruit'
+import task from '@hanzoteam/task'
+import { showPopup } from '@hanzoteam/ui'
+import { type Filter } from '@hanzoteam/view'
+import { FilterQuery, statusStore } from '@hanzoteam/view-resources'
 import ApplicantFilter from './components/ApplicantFilter.svelte'
 import ApplicantNamePresenter from './components/ApplicantNamePresenter.svelte'
 import ApplicationItem from './components/ApplicationItem.svelte'

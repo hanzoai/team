@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { DownloadItem } from '@hanzo/desktop-downloads'
-import { ScreenSource } from '@hanzo/love'
-import { Plugin } from '@hanzo/platform'
-import { Ref, Class, Doc } from '@hanzo/core'
+import { DownloadItem } from '@hanzoteam/desktop-downloads'
+import { ScreenSource } from '@hanzoteam/love'
+import { Plugin } from '@hanzoteam/platform'
+import { Ref, Class, Doc } from '@hanzoteam/core'
 import { IpcRendererEvent } from 'electron'
 
 export interface Config {

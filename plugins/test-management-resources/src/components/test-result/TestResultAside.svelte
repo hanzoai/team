@@ -15,14 +15,14 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
 
-  import activity from '@hanzo/activity'
-  import { AttachmentStyleBoxCollabEditor } from '@hanzo/attachment-resources'
-  import { getClient } from '@hanzo/presentation'
-  import { Doc, Mixin, WithLookup } from '@hanzo/core'
-  import testManagement, { TestResult } from '@hanzo/test-management'
-  import { DocAttributeBar, getDocMixins } from '@hanzo/view-resources'
+  import activity from '@hanzoteam/activity'
+  import { AttachmentStyleBoxCollabEditor } from '@hanzoteam/attachment-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Doc, Mixin, WithLookup } from '@hanzoteam/core'
+  import testManagement, { TestResult } from '@hanzoteam/test-management'
+  import { DocAttributeBar, getDocMixins } from '@hanzoteam/view-resources'
 
-  import { Component, Label } from '@hanzo/ui'
+  import { Component, Label } from '@hanzoteam/ui'
   import RightHeader from './RightHeader.svelte'
 
   export let object: WithLookup<TestResult> | undefined

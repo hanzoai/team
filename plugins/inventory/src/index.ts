@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import { AttachedDoc, Class, Doc, Ref } from '@hanzo/core'
-import type { Asset, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+import { AttachedDoc, Class, Doc, Ref } from '@hanzoteam/core'
+import type { Asset, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 
 /**
  * @public

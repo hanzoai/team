@@ -16,11 +16,11 @@
 -->
 <script lang="ts">
   import tracker from '../../plugin'
-  import { Card } from '@hanzo/presentation'
-  import { translate } from '@hanzo/platform'
+  import { Card } from '@hanzoteam/presentation'
+  import { translate } from '@hanzoteam/platform'
   import MilestonePopup from './MilestonePopup.svelte'
-  import { Milestone } from '@hanzo/tracker'
-  import { themeStore } from '@hanzo/ui'
+  import { Milestone } from '@hanzoteam/tracker'
+  import { themeStore } from '@hanzoteam/ui'
 
   export let milestones: Milestone[]
   export let moveAndDeleteMilestone: (selectedMilestone?: Milestone) => Promise<void>

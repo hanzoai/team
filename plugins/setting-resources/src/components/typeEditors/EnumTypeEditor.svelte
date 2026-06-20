@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Enum, EnumOf, IndexKind, Ref } from '@hanzo/core'
-  import { TypeEnum } from '@hanzo/model'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { Button, Label, showPopup } from '@hanzo/ui'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
-  import { EnumEditor } from '@hanzo/view-resources'
+  import core, { Enum, EnumOf, IndexKind, Ref } from '@hanzoteam/core'
+  import { TypeEnum } from '@hanzoteam/model'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { Button, Label, showPopup } from '@hanzoteam/ui'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
+  import { EnumEditor } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import setting from '../../plugin'
   import EnumSelect from './EnumSelect.svelte'

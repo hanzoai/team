@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { DocSyncInfo } from '@hanzo/github'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { DocSyncInfo } from '@hanzoteam/github'
 
   export let issue: DocSyncInfo
   function allowEdit (): void {

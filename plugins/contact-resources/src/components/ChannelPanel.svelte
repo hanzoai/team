@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Channel } from '@hanzo/contact'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { AnyComponent, Component } from '@hanzo/ui'
+  import contact, { Channel } from '@hanzoteam/contact'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { AnyComponent, Component } from '@hanzoteam/ui'
   import { channelProviders } from '../utils'
-  import { DocUpdateMessage } from '@hanzo/activity'
+  import { DocUpdateMessage } from '@hanzoteam/activity'
 
   export let _id: Ref<Channel>
   export let _class: Ref<Class<Channel>>

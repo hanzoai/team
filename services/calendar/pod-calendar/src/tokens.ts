@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { AccountClient, IntegrationSecret } from '@hanzo/account-client'
-import { WorkspaceUuid } from '@hanzo/core'
-import { calendarIntegrationKind } from '@hanzo/calendar'
+import { AccountClient, IntegrationSecret } from '@hanzoteam/account-client'
+import { WorkspaceUuid } from '@hanzoteam/core'
+import { calendarIntegrationKind } from '@hanzoteam/calendar'
 
 export async function getWorkspaceTokens (
   accountClient: AccountClient,

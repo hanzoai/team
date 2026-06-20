@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { NotificationProvider } from '@hanzo/notification'
-  import { AnySvelteComponent, Icon, Label, ModernToggle } from '@hanzo/ui'
-  import { getResource } from '@hanzo/platform'
+  import { NotificationProvider } from '@hanzoteam/notification'
+  import { AnySvelteComponent, Icon, Label, ModernToggle } from '@hanzoteam/ui'
+  import { getResource } from '@hanzoteam/platform'
   import { createEventDispatcher } from 'svelte'
 
   import { providersSettings } from '../../utils'

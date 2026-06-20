@@ -28,13 +28,13 @@ import {
   type SessionData,
   type Timestamp,
   type Tx
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   BaseMiddleware,
   type Middleware,
   type PipelineContext,
   type ServerFindOptions
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 
 interface Query {
   key: string

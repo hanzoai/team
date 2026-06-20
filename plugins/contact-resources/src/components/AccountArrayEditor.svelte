@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hanzo/contact'
-  import { AccountUuid, notEmpty, Ref } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { Contact, Employee, getCurrentEmployee, getName, Person } from '@hanzoteam/contact'
+  import { AccountUuid, notEmpty, Ref } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ButtonKind, ButtonSize } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
   import contact from '../plugin'
   import { employeeByIdStore, employeeRefByAccountUuidStore } from '../utils'

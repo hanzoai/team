@@ -32,8 +32,8 @@ import core, {
   type Space,
   type Tx,
   TxFactory
-} from '@hanzo/core'
-import type { PipelineContext, TxMiddlewareResult } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import type { PipelineContext, TxMiddlewareResult } from '@hanzoteam/server-core'
 import { TxOrderingMiddleware } from '../txOrdering'
 
 interface TestDoc extends Doc {

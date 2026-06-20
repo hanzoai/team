@@ -16,8 +16,8 @@
 -->
 
 <script lang="ts">
-  import contact from '@hanzo/contact-resources/src/plugin'
-  import { AccountArrayEditor } from '@hanzo/contact-resources'
+  import contact from '@hanzoteam/contact-resources/src/plugin'
+  import { AccountArrayEditor } from '@hanzoteam/contact-resources'
   import core, {
     type AccountUuid,
     type Ref,
@@ -26,9 +26,9 @@
     type SpaceType,
     type TypedSpace,
     type WithLookup
-  } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Breadcrumb, Header, Loading } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Breadcrumb, Header, Loading } from '@hanzoteam/ui'
 
   import training from '../plugin'
 

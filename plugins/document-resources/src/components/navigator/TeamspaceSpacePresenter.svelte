@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Ref, SortingOrder, Space, generateId } from '@hanzo/core'
-  import { Document, DocumentEvents, Teamspace } from '@hanzo/document'
-  import { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { Ref, SortingOrder, Space, generateId } from '@hanzoteam/core'
+  import { Document, DocumentEvents, Teamspace } from '@hanzoteam/document'
+  import { IconWithEmoji, createQuery, getClient } from '@hanzoteam/presentation'
   import {
     IconEdit,
     getPlatformColorDef,
@@ -25,11 +25,11 @@
     Action,
     IconAdd,
     closeTooltip
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { TreeNode, openDoc, getActions as getContributedActions } from '@hanzo/view-resources'
-  import { SpacesNavModel } from '@hanzo/workbench'
-  import { getResource } from '@hanzo/platform'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { TreeNode, openDoc, getActions as getContributedActions } from '@hanzoteam/view-resources'
+  import { SpacesNavModel } from '@hanzoteam/workbench'
+  import { getResource } from '@hanzoteam/platform'
 
   import document from '../../plugin'
   import {

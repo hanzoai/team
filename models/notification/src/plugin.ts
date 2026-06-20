@@ -14,13 +14,13 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref } from '@hanzo/core'
-import notification, { notificationId } from '@hanzo/notification'
-import { type IntlString, type Resource, mergeIds } from '@hanzo/platform'
-import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory, type ViewAction } from '@hanzo/view'
-import { type Application, type LocationData } from '@hanzo/workbench'
-import { type DocUpdateMessageViewlet } from '@hanzo/activity'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import notification, { notificationId } from '@hanzoteam/notification'
+import { type IntlString, type Resource, mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent, type Location } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory, type ViewAction } from '@hanzoteam/view'
+import { type Application, type LocationData } from '@hanzoteam/workbench'
+import { type DocUpdateMessageViewlet } from '@hanzoteam/activity'
 
 export default mergeIds(notificationId, notification, {
   string: {

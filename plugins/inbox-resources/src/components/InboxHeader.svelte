@@ -11,7 +11,7 @@
 <!-- See the License for the specific language governing permissions and -->
 <!-- limitations under the License. -->
 <script lang="ts">
-  import { SortingOrder } from '@hanzo/core'
+  import { SortingOrder } from '@hanzoteam/core'
   import {
     IconDelete,
     IconSettings,
@@ -22,11 +22,11 @@
     IconMoreV,
     ButtonMenu,
     Loading
-  } from '@hanzo/ui'
-  import { getCommunicationClient } from '@hanzo/presentation'
-  import { Analytics } from '@hanzo/analytics'
-  import view from '@hanzo/view'
-  import { InboxNotificationsClientImpl } from '@hanzo/notification-resources'
+  } from '@hanzoteam/ui'
+  import { getCommunicationClient } from '@hanzoteam/presentation'
+  import { Analytics } from '@hanzoteam/analytics'
+  import view from '@hanzoteam/view'
+  import { InboxNotificationsClientImpl } from '@hanzoteam/notification-resources'
 
   import inbox from '../plugin'
   import InboxViewSettings from './InboxViewSettings.svelte'

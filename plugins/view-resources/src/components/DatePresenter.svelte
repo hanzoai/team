@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DateRangePresenter } from '@hanzo/ui'
-  import { DateRangeMode } from '@hanzo/core'
+  import { DateRangePresenter } from '@hanzoteam/ui'
+  import { DateRangeMode } from '@hanzoteam/core'
 
   export let value: number | null | undefined
   export let onChange: ((value: number | null) => void) | undefined = undefined

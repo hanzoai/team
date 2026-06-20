@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient, MessageBox } from '@hanzo/presentation'
-  import { Process, State } from '@hanzo/process'
-  import { settingsStore } from '@hanzo/setting-resources'
+  import { getClient, MessageBox } from '@hanzoteam/presentation'
+  import { Process, State } from '@hanzoteam/process'
+  import { settingsStore } from '@hanzoteam/setting-resources'
   import {
     Button,
     ButtonIcon,
@@ -27,8 +27,8 @@
     IconMoreV,
     Menu,
     showPopup
-  } from '@hanzo/ui'
-  import view from '@hanzo/view-resources/src/plugin'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import plugin from '../plugin'
   import { initStep } from '../utils'
   import ActionPresenter from './ActionPresenter.svelte'

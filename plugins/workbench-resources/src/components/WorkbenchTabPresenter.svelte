@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset, getResource, translate } from '@hanzo/platform'
-  import { ComponentExtensions, getClient, reduceCalls } from '@hanzo/presentation'
+  import { Asset, getResource, translate } from '@hanzoteam/platform'
+  import { ComponentExtensions, getClient, reduceCalls } from '@hanzoteam/presentation'
   import {
     AnySvelteComponent,
     closePanel,
@@ -24,10 +24,10 @@
     locationToUrl,
     ModernTab,
     navigate
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { showMenu } from '@hanzo/view-resources'
-  import { WorkbenchTab } from '@hanzo/workbench'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { showMenu } from '@hanzoteam/view-resources'
+  import { WorkbenchTab } from '@hanzoteam/workbench'
 
   import workbench from '../plugin'
   import { closeTab, getTabDataByLocation, getTabLocation, selectTab, tabIdStore, tabsStore } from '../workbench'

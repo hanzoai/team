@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type TrainingState, trainingStateOrder } from '@hanzo/training'
+import { type TrainingState, trainingStateOrder } from '@hanzoteam/training'
 
 export async function trainingStateAllValues (): Promise<TrainingState[]> {
   return [...trainingStateOrder]

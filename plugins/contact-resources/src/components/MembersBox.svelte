@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Space } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { Section } from '@hanzo/ui'
+  import type { Space } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { Section } from '@hanzoteam/ui'
   import plugin from '../plugin'
   import IconMembersOutline from './icons/MembersOutline.svelte'
   import SpaceMembers from './SpaceMembers.svelte'

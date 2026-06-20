@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IntlString } from '@hanzo/platform'
+  import type { IntlString } from '@hanzoteam/platform'
   import {
     Button,
     IconClose,
@@ -24,7 +24,7 @@
     resizeObserver,
     IconBack,
     getFocusManager
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import presentation from '..'
   import IconForward from './icons/Forward.svelte'

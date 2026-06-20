@@ -13,20 +13,20 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import chunter from '@hanzo/chunter'
-import core from '@hanzo/model-core'
-import { SortingOrder, type FindOptions } from '@hanzo/core'
+import activity from '@hanzoteam/activity'
+import chunter from '@hanzoteam/chunter'
+import core from '@hanzoteam/model-core'
+import { SortingOrder, type FindOptions } from '@hanzoteam/core'
 
-import { type Builder } from '@hanzo/model'
-import view, { createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import print from '@hanzo/model-print'
-import tracker from '@hanzo/model-tracker'
-import { type ViewOptionsModel } from '@hanzo/view'
-import contact from '@hanzo/contact'
+import { type Builder } from '@hanzoteam/model'
+import view, { createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import print from '@hanzoteam/model-print'
+import tracker from '@hanzoteam/model-tracker'
+import { type ViewOptionsModel } from '@hanzoteam/view'
+import contact from '@hanzoteam/contact'
 
-import { testManagementId, type TestPlanItem, type TestResult } from '@hanzo/test-management'
+import { testManagementId, type TestPlanItem, type TestResult } from '@hanzoteam/test-management'
 
 import {
   DOMAIN_TEST_MANAGEMENT,
@@ -47,7 +47,7 @@ import {
 import testManagement from './plugin'
 import { definePresenters } from './presenters'
 
-export { testManagementId } from '@hanzo/test-management/src/index'
+export { testManagementId } from '@hanzoteam/test-management/src/index'
 
 function defineApplication (builder: Builder): void {
   builder.createDoc(

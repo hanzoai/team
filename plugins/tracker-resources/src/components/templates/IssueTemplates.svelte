@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, Ref } from '@hanzo/core'
-  import { IssueTemplate, Project } from '@hanzo/tracker'
+  import { DocumentQuery, Ref } from '@hanzoteam/core'
+  import { IssueTemplate, Project } from '@hanzoteam/tracker'
   import tracker from '../../plugin'
   import IssueTemplatesView from './IssueTemplatesView.svelte'
 

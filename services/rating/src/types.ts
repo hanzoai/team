@@ -1,5 +1,5 @@
-import type { Tx } from '@hanzo/core'
-import type { QueueTopic } from '@hanzo/server-core'
+import type { Tx } from '@hanzoteam/core'
+import type { QueueTopic } from '@hanzoteam/server-core'
 
 export enum QueueRatingEvent {
   Reindex = 'reindex',

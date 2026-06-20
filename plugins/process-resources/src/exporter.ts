@@ -1,5 +1,5 @@
-import { type MasterTag } from '@hanzo/card'
-import card from '@hanzo/card'
+import { type MasterTag } from '@hanzoteam/card'
+import card from '@hanzoteam/card'
 import core, {
   type Doc,
   type Ref,
@@ -11,9 +11,9 @@ import core, {
   type ModelDb,
   type Hierarchy,
   type Type
-} from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import { type Process, type Transition } from '@hanzo/process'
+} from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import { type Process, type Transition } from '@hanzoteam/process'
 import processPlugin from './plugin'
 
 export function exportProcesses (_id: Ref<MasterTag>): {

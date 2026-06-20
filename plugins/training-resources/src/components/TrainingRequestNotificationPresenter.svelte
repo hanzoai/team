@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-  import { ActivityMessagePreviewType, DisplayDocUpdateMessage } from '@hanzo/activity'
-  import { BaseMessagePreview } from '@hanzo/activity-resources'
-  import { Action } from '@hanzo/ui'
-  import training from '@hanzo/training'
+  import { ActivityMessagePreviewType, DisplayDocUpdateMessage } from '@hanzoteam/activity'
+  import { BaseMessagePreview } from '@hanzoteam/activity-resources'
+  import { Action } from '@hanzoteam/ui'
+  import training from '@hanzoteam/training'
 
   export let message: DisplayDocUpdateMessage
   export let actions: Action[] = []

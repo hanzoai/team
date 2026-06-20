@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/server-notification",
+  "name": "@hanzoteam/server-notification",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:validate": "compile validate"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/node": "^22.18.1",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
@@ -38,11 +38,11 @@
     "@types/jest": "^29.5.5"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/activity": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/notification": "workspace:^0.7.0",
-    "@hanzo/server-core": "workspace:^0.7.18",
-    "@hanzo/contact": "workspace:^0.7.0"
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/activity": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/notification": "workspace:^0.7.0",
+    "@hanzoteam/server-core": "workspace:^0.7.18",
+    "@hanzoteam/contact": "workspace:^0.7.0"
   }
 }

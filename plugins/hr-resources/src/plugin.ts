@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import hr, { hrId } from '@hanzo/hr'
-import { type IntlString, mergeIds } from '@hanzo/platform'
+import hr, { hrId } from '@hanzoteam/hr'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
 
 export default mergeIds(hrId, hr, {
   string: {

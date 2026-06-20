@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import { Class, IdMap, Ref, Status } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { DocPopup, getClient } from '@hanzo/presentation'
-  import { Task, TaskType } from '@hanzo/task'
-  import { getObjectId, ObjectPresenter, statusStore } from '@hanzo/view-resources'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { Class, IdMap, Ref, Status } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { DocPopup, getClient } from '@hanzoteam/presentation'
+  import { Task, TaskType } from '@hanzoteam/task'
+  import { getObjectId, ObjectPresenter, statusStore } from '@hanzoteam/view-resources'
   import { createEventDispatcher } from 'svelte'
   import { taskTypeStore } from '..'
 

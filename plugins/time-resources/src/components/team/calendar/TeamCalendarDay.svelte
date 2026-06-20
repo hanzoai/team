@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Event, getAllEvents } from '@hanzo/calendar'
-  import { calendarByIdStore } from '@hanzo/calendar-resources'
-  import { getCurrentEmployee, Person } from '@hanzo/contact'
-  import { IdMap, Ref } from '@hanzo/core'
-  import { Project } from '@hanzo/task'
-  import { ToDo, WorkSlot } from '@hanzo/time'
+  import { Event, getAllEvents } from '@hanzoteam/calendar'
+  import { calendarByIdStore } from '@hanzoteam/calendar-resources'
+  import { getCurrentEmployee, Person } from '@hanzoteam/contact'
+  import { IdMap, Ref } from '@hanzoteam/core'
+  import { Project } from '@hanzoteam/task'
+  import { ToDo, WorkSlot } from '@hanzoteam/time'
   import WithTeamData from '../WithTeamData.svelte'
   import { groupTeamData, toSlots } from '../utils'
   import EventElement from './EventElement.svelte'
   import PersonCalendar from './PersonCalendar.svelte'
-  import { employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
 
   export let space: Ref<Project>
   export let currentDate: Date

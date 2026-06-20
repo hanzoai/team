@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import type { TestRun } from '@hanzo/test-management'
-  import { Scroller } from '@hanzo/ui'
-  import { DocAttributeBar } from '@hanzo/view-resources'
+  import { WithLookup } from '@hanzoteam/core'
+  import type { TestRun } from '@hanzoteam/test-management'
+  import { Scroller } from '@hanzoteam/ui'
+  import { DocAttributeBar } from '@hanzoteam/view-resources'
 
   import TestRunStats from './TestRunStats.svelte'
 

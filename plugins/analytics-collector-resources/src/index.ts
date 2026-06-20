@@ -13,6 +13,6 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 export default async (): Promise<Resources> => ({})

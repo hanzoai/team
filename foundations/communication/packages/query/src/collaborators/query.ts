@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import type { AccountUuid, Collaborator, FindCollaboratorsParams } from '@hanzo/communication-types'
+import type { AccountUuid, Collaborator, FindCollaboratorsParams } from '@hanzoteam/communication-types'
 import {
   AddCollaboratorsEvent,
   CardEventType,
@@ -24,8 +24,8 @@ import {
   type QueryCallback,
   RemoveCardEvent,
   RemoveCollaboratorsEvent
-} from '@hanzo/communication-sdk-types'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/communication-sdk-types'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 import { QueryResult } from '../result'
 import { QueryOptions, type Query, type QueryId } from '../types'

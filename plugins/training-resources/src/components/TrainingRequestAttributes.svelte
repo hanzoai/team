@@ -3,10 +3,10 @@
 -->
 
 <script lang="ts">
-  import type { TrainingRequest } from '@hanzo/training'
-  import type { Class } from '@hanzo/core'
-  import { AttributeBarEditor, getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import type { TrainingRequest } from '@hanzoteam/training'
+  import type { Class } from '@hanzoteam/core'
+  import { AttributeBarEditor, getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
   import training from '../plugin'
   import { canUpdateTrainingRequest, getCurrentEmployeeRef } from '../utils'
   import SentRequestCompletionPresenter from './SentRequestCompletionPresenter.svelte'

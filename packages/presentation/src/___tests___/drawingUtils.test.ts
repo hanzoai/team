@@ -23,9 +23,9 @@ import {
   type ColorMetaName,
   type ColorMetaNameOrHex
 } from '../drawingUtils'
-import { ThemeVariant, type ThemeVariantType } from '@hanzo/theme'
+import { ThemeVariant, type ThemeVariantType } from '@hanzoteam/theme'
 
-jest.mock('@hanzo/theme', () => ({
+jest.mock('@hanzoteam/theme', () => ({
   ThemeVariant: {
     Dark: 'dark',
     Light: 'light'
@@ -81,7 +81,7 @@ const StubPlatformColors: Record<string, { light: any, dark: any }> = {
     }
   }
 }
-jest.mock('@hanzo/ui', () => ({
+jest.mock('@hanzoteam/ui', () => ({
   getPlatformColorByName: jest.fn().mockImplementation((name: string, darkTheme: boolean) => {
     const colorDefinition = StubPlatformColors[name]
     if (colorDefinition == null) {

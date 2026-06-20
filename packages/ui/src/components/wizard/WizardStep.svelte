@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { IntlString, translate } from '@hanzo/platform'
+  import { IntlString, translate } from '@hanzoteam/platform'
   import { afterUpdate } from 'svelte'
   import { WizardItemPosition, WizardItemPositionState } from '../..'
-  import { themeStore } from '@hanzo/theme'
+  import { themeStore } from '@hanzoteam/theme'
 
   export let label: IntlString
   export let position: WizardItemPosition

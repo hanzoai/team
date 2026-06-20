@@ -1,7 +1,7 @@
 //
 // Copyright © 2023 Hanzo AI Inc.
 //
-import chunter, { ChatMessage } from '@hanzo/chunter'
+import chunter, { ChatMessage } from '@hanzoteam/chunter'
 import core, {
   PersonId,
   AttachedData,
@@ -11,9 +11,9 @@ import core, {
   Ref,
   TxOperations,
   withContext
-} from '@hanzo/core'
-import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hanzo/github'
-import { LiveQuery } from '@hanzo/query'
+} from '@hanzoteam/core'
+import github, { DocSyncInfo, GithubIntegrationRepository, GithubProject } from '@hanzoteam/github'
+import { LiveQuery } from '@hanzoteam/query'
 import { deepEqual } from 'fast-equals'
 import {
   ContainerFocus,
@@ -26,7 +26,7 @@ import {
 } from '../types'
 import { collectUpdate, deleteObjects, ensureGraphQLOctokit, errorToObj, getSince, isGHWriteAllowed } from './utils'
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import { IssueComment, IssueCommentCreatedEvent, IssueCommentEvent } from '@octokit/webhooks-types'
 import config from '../config'
 

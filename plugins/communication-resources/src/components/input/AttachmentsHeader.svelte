@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { getClient } from '@hanzo/presentation'
-  import { Attachment } from '@hanzo/communication-types'
-  import { Loading } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Attachment } from '@hanzoteam/communication-types'
+  import { Loading } from '@hanzoteam/ui'
 
   import { AppletDraft, BlobDraft, LinkPreviewDraft } from '../../types'
   import communication from '../../plugin'

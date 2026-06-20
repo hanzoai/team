@@ -13,7 +13,7 @@
 //
 
 import { type Editor } from '@tiptap/core'
-import { showPopup } from '@hanzo/ui'
+import { showPopup } from '@hanzoteam/ui'
 import { findTable } from '../utils'
 import { getTableMetadata } from '../tableMetadata'
 import TableDiffViewer from './TableDiffViewer.svelte'

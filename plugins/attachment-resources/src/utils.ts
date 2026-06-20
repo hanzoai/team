@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type Attachment } from '@hanzo/attachment'
+import { type Attachment } from '@hanzoteam/attachment'
 import {
   type BlobMetadata,
   type Blob,
@@ -26,12 +26,12 @@ import {
   type Space,
   type WithLookup,
   type BlobType
-} from '@hanzo/core'
-import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
-import { type FileOrBlob, getClient, getPreviewAlignment, uploadFile } from '@hanzo/presentation'
-import { closeTooltip, showPopup, type PopupResult } from '@hanzo/ui'
-import workbench, { type WidgetTab } from '@hanzo/workbench'
-import view from '@hanzo/view'
+} from '@hanzoteam/core'
+import { getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+import { type FileOrBlob, getClient, getPreviewAlignment, uploadFile } from '@hanzoteam/presentation'
+import { closeTooltip, showPopup, type PopupResult } from '@hanzoteam/ui'
+import workbench, { type WidgetTab } from '@hanzoteam/workbench'
+import view from '@hanzoteam/view'
 
 import attachment from './plugin'
 import AttachmentPreviewPopup from './components/AttachmentPreviewPopup.svelte'

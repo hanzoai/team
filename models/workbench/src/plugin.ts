@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Doc, type Ref, type Space } from '@hanzo/core'
-import { type IntlString, type Resource, mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { workbenchId } from '@hanzo/workbench'
-import workbench from '@hanzo/workbench-resources/src/plugin'
-import type { ActionCategory, ViewActionAvailabilityFunction } from '@hanzo/view'
+import { type Doc, type Ref, type Space } from '@hanzoteam/core'
+import { type IntlString, type Resource, mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { workbenchId } from '@hanzoteam/workbench'
+import workbench from '@hanzoteam/workbench-resources/src/plugin'
+import type { ActionCategory, ViewActionAvailabilityFunction } from '@hanzoteam/view'
 
 export default mergeIds(workbenchId, workbench, {
   component: {

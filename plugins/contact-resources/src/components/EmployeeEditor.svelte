@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import core, { AccountUuid, AnyAttribute, DocumentQuery, notEmpty, Ref, RefTo, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import core, { AccountUuid, AnyAttribute, DocumentQuery, notEmpty, Ref, RefTo, Space } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { ButtonKind, ButtonSize } from '@hanzoteam/ui'
   import { employeeRefByAccountUuidStore } from '..'
   import contact from '../plugin'
   import EmployeeBox from './EmployeeBox.svelte'

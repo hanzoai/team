@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type Builder, Mixin } from '@hanzo/model'
-import core, { TClass } from '@hanzo/model-core'
-import converter, { type MarkdownValueFormatter, type ValueFormatter } from '@hanzo/converter'
-import type { Resource } from '@hanzo/platform'
+import { type Builder, Mixin } from '@hanzoteam/model'
+import core, { TClass } from '@hanzoteam/model-core'
+import converter, { type MarkdownValueFormatter, type ValueFormatter } from '@hanzoteam/converter'
+import type { Resource } from '@hanzoteam/platform'
 
-export { converterId } from '@hanzo/converter'
+export { converterId } from '@hanzoteam/converter'
 
 @Mixin(converter.mixin.MarkdownValueFormatter, core.class.Class)
 export class TMarkdownValueFormatter extends TClass implements MarkdownValueFormatter {

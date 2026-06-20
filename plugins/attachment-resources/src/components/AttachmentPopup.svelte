@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
-  import { createQuery, getClient, uploadFile } from '@hanzo/presentation'
-  import { ActionIcon, IconAdd, Label, Loading } from '@hanzo/ui'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { createQuery, getClient, uploadFile } from '@hanzoteam/presentation'
+  import { ActionIcon, IconAdd, Label, Loading } from '@hanzoteam/ui'
 
-  import core, { Doc, Ref, Space, WithLookup } from '@hanzo/core'
+  import core, { Doc, Ref, Space, WithLookup } from '@hanzoteam/core'
 
-  import { setPlatformStatus, unknownError } from '@hanzo/platform'
+  import { setPlatformStatus, unknownError } from '@hanzoteam/platform'
   import { AttachmentPresenter } from '..'
   import attachment from '../plugin'
 

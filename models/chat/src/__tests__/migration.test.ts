@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import type { Card, MasterTag, ParentInfo } from '@hanzo/card'
-import type { Ref } from '@hanzo/core'
+import type { Card, MasterTag, ParentInfo } from '@hanzoteam/card'
+import type { Ref } from '@hanzoteam/core'
 
 // Import after mocking
 import { performParentInfoMigration } from '../migration'
@@ -27,7 +27,7 @@ jest.mock('../plugin', () => ({
 }))
 
 // Mock card plugin
-jest.mock('@hanzo/card', () => ({
+jest.mock('@hanzoteam/card', () => ({
   class: {
     Card: 'card:class:Card'
   },

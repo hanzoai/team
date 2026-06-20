@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Label } from '@hanzo/ui'
+  import { Label } from '@hanzoteam/ui'
 
   import { MessageInlineAction } from '../../types'
 

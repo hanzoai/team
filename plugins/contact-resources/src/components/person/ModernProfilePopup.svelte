@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import contact from '@hanzo/contact'
-  import { getCurrentTheme, isThemeDark } from '@hanzo/theme'
+  import { getMetadata } from '@hanzoteam/platform'
+  import contact from '@hanzoteam/contact'
+  import { getCurrentTheme, isThemeDark } from '@hanzoteam/theme'
 
   export let disabled: boolean = false
   const backgroundImage = isThemeDark(getCurrentTheme())

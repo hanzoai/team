@@ -32,8 +32,8 @@ import {
   type Tx,
   type TxResult,
   type WithLookup
-} from '@hanzo/core'
-import { PlatformError, unknownError } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { PlatformError, unknownError } from '@hanzoteam/platform'
 
 import type { RestClient } from './types'
 import { extractJson, withRetry } from './utils'

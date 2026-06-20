@@ -15,11 +15,11 @@
 //
 -->
 <script lang="ts">
-  import { WithLookup } from '@hanzo/core'
-  import { Document } from '@hanzo/document'
-  import { tooltip } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { ObjectPresenterType } from '@hanzo/view'
+  import { WithLookup } from '@hanzoteam/core'
+  import { Document } from '@hanzoteam/document'
+  import { tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
+  import { ObjectPresenterType } from '@hanzoteam/view'
 
   import document from '../plugin'
   import DocumentIcon from './DocumentIcon.svelte'

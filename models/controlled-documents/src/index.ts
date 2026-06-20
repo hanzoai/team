@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import contact from '@hanzo/contact'
+import activity from '@hanzoteam/activity'
+import contact from '@hanzoteam/contact'
 import documentsPlugin, {
   type ControlledDocument,
   documentsId,
@@ -25,27 +25,27 @@ import documentsPlugin, {
   type ProjectDocument,
   type ChangeControl,
   type DocumentRequest
-} from '@hanzo/controlled-documents'
-import exportPlugin from '@hanzo/export'
-import { type Builder } from '@hanzo/model'
-import chunter from '@hanzo/model-chunter'
-import core from '@hanzo/model-core'
-import { generateClassNotificationTypes } from '@hanzo/model-notification'
-import presentation from '@hanzo/model-presentation'
-import print from '@hanzo/model-print'
-import request from '@hanzo/model-request'
-import tracker from '@hanzo/model-tracker'
-import view, { classPresenter, createAction } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
-import converter from '@hanzo/converter'
-import notification from '@hanzo/notification'
-import contacts from '@hanzo/model-contact'
-import setting from '@hanzo/setting'
-import tags from '@hanzo/tags'
-import textEditor from '@hanzo/text-editor'
+} from '@hanzoteam/controlled-documents'
+import exportPlugin from '@hanzoteam/export'
+import { type Builder } from '@hanzoteam/model'
+import chunter from '@hanzoteam/model-chunter'
+import core from '@hanzoteam/model-core'
+import { generateClassNotificationTypes } from '@hanzoteam/model-notification'
+import presentation from '@hanzoteam/model-presentation'
+import print from '@hanzoteam/model-print'
+import request from '@hanzoteam/model-request'
+import tracker from '@hanzoteam/model-tracker'
+import view, { classPresenter, createAction } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
+import converter from '@hanzoteam/converter'
+import notification from '@hanzoteam/notification'
+import contacts from '@hanzoteam/model-contact'
+import setting from '@hanzoteam/setting'
+import tags from '@hanzoteam/tags'
+import textEditor from '@hanzoteam/text-editor'
 
-import { AccountRole, type ClassCollaborators, type Class, type Doc, type Lookup, type Ref } from '@hanzo/core'
-import { type Action } from '@hanzo/view'
+import { AccountRole, type ClassCollaborators, type Class, type Doc, type Lookup, type Ref } from '@hanzoteam/core'
+import { type Action } from '@hanzoteam/view'
 import { definePermissions } from './permissions'
 import documents from './plugin'
 import { defineSpaceType } from './spaceType'
@@ -76,7 +76,7 @@ import {
   TTypeDocumentState
 } from './types'
 
-export { documentsId } from '@hanzo/controlled-documents/src/index'
+export { documentsId } from '@hanzoteam/controlled-documents/src/index'
 export * from './types'
 
 function defineRelationMetadata (builder: Builder): void {

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Process, UserResult } from '@hanzo/process'
-  import { Button, Label } from '@hanzo/ui'
+  import { Process, UserResult } from '@hanzoteam/process'
+  import { Button, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import ResultEditor from './ResultEditor.svelte'

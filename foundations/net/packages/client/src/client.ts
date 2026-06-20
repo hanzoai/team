@@ -1,4 +1,4 @@
-import { BackRPCClient, type BackRPCResponseSend } from '@hanzo/network-backrpc'
+import { BackRPCClient, type BackRPCResponseSend } from '@hanzoteam/network-backrpc'
 import {
   agentDirectRef,
   EndpointKind,
@@ -21,7 +21,7 @@ import {
   type TickManager,
   NetworkEventKind,
   createProxy
-} from '@hanzo/network-core'
+} from '@hanzoteam/network-core'
 import { v4 as uuidv4 } from 'uuid'
 import { ContainerConnectionImpl, NetworkDirectConnectionImpl, RoutedNetworkAgentConnectionImpl } from './agent'
 import { opNames } from './types'

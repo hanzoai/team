@@ -1,8 +1,8 @@
-import { getResource } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import { showPopup } from '@hanzo/ui'
-import emojiPlugin from '@hanzo/emoji'
-import textEditor, { type RefAction } from '@hanzo/text-editor'
+import { getResource } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import { showPopup } from '@hanzoteam/ui'
+import emojiPlugin from '@hanzoteam/emoji'
+import textEditor, { type RefAction } from '@hanzoteam/text-editor'
 
 import RiMention from '../icons/RIMention.svelte'
 

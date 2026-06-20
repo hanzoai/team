@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import type { WorkspaceDestroyAdapter } from '@hanzo/server-core'
+import type { WorkspaceDestroyAdapter } from '@hanzoteam/server-core'
 import { getMongoClient, getWorkspaceMongoDB } from './utils'
 
 export * from './storage'

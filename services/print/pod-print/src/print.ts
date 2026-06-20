@@ -1,7 +1,7 @@
 //
 // Copyright © 2024 Hanzo AI Inc.
 //
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import puppeteer, { Page, Viewport } from 'puppeteer'
 
 import config from './config'

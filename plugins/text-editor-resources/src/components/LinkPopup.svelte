@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import textEditor from '@hanzo/text-editor'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { Card } from '@hanzo/presentation'
-  import { EditBox } from '@hanzo/ui'
+  import textEditor from '@hanzoteam/text-editor'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { Card } from '@hanzoteam/presentation'
+  import { EditBox } from '@hanzoteam/ui'
 
   export let link = ''
 

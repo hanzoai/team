@@ -14,9 +14,9 @@
 // limitations under the License.
 //
 
-import attachment, { type Attachment } from '@hanzo/attachment'
-import type { Tx, TxRemoveDoc } from '@hanzo/core'
-import type { TriggerControl } from '@hanzo/server-core'
+import attachment, { type Attachment } from '@hanzoteam/attachment'
+import type { Tx, TxRemoveDoc } from '@hanzoteam/core'
+import type { TriggerControl } from '@hanzoteam/server-core'
 
 /**
  * @public

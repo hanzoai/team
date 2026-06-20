@@ -1,8 +1,8 @@
 import type { Document, ObjectId } from 'bson'
 import { Api } from 'telegram'
 import { TelegramConnectionInterface } from './telegram'
-import { TelegramMessage as OldTelegramMessage } from '@hanzo/telegram'
-import { Timestamp } from '@hanzo/core'
+import { TelegramMessage as OldTelegramMessage } from '@hanzoteam/telegram'
+import { Timestamp } from '@hanzoteam/core'
 
 export interface Doc extends Document {
   _id?: ObjectId

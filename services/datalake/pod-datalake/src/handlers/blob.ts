@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { MeasureContext, type WorkspaceUuid } from '@hanzo/core'
+import { Analytics } from '@hanzoteam/analytics'
+import { MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
 import { type Request, type Response } from 'express'
 import { UploadedFile } from 'express-fileupload'
 import fs from 'fs'

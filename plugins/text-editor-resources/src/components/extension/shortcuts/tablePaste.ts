@@ -12,11 +12,11 @@
 // limitations under the License.
 //
 
-import { markdownToMarkup } from '@hanzo/text-markdown'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
 import { Extension } from '@tiptap/core'
 import { Fragment, Node } from '@tiptap/pm/model'
 import { Plugin } from '@tiptap/pm/state'
-import type { TableMetadata } from '@hanzo/view'
+import type { TableMetadata } from '@hanzoteam/view'
 
 export const TableMetadataPasteExtension = Extension.create({
   name: 'tableMetadataPaste',

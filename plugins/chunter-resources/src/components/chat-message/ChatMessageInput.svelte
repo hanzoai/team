@@ -13,17 +13,17 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage } from '@hanzo/activity'
-  import { Analytics } from '@hanzo/analytics'
-  import { AttachmentRefInput } from '@hanzo/attachment-resources'
-  import chunter, { ChatMessage, ChunterEvents, ThreadMessage } from '@hanzo/chunter'
-  import { Class, Doc, generateId, getCurrentAccount, Ref, type CommitResult } from '@hanzo/core'
-  import { createQuery, DraftController, draftsStore, getClient } from '@hanzo/presentation'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+  import activity, { ActivityMessage } from '@hanzoteam/activity'
+  import { Analytics } from '@hanzoteam/analytics'
+  import { AttachmentRefInput } from '@hanzoteam/attachment-resources'
+  import chunter, { ChatMessage, ChunterEvents, ThreadMessage } from '@hanzoteam/chunter'
+  import { Class, Doc, generateId, getCurrentAccount, Ref, type CommitResult } from '@hanzoteam/core'
+  import { createQuery, DraftController, draftsStore, getClient } from '@hanzoteam/presentation'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
   import { createEventDispatcher } from 'svelte'
-  import { getObjectId } from '@hanzo/view-resources'
-  import { ThrottledCaller } from '@hanzo/ui'
-  import { getSpace, editingMessageStore } from '@hanzo/activity-resources'
+  import { getObjectId } from '@hanzoteam/view-resources'
+  import { ThrottledCaller } from '@hanzoteam/ui'
+  import { getSpace, editingMessageStore } from '@hanzoteam/activity-resources'
 
   import { getChannelSpace } from '../../utils'
   import ChannelTypingInfo from '../ChannelTypingInfo.svelte'
@@ -39,7 +39,7 @@
   export let withTypingInfo = false
   export let onKeyDown: ((e: KeyboardEvent) => void) | undefined = undefined
 
-  import { setTyping, clearTyping } from '@hanzo/presence-resources'
+  import { setTyping, clearTyping } from '@hanzoteam/presence-resources'
 
   type MessageDraft = Pick<ChatMessage, '_id' | 'message' | 'attachments'>
 

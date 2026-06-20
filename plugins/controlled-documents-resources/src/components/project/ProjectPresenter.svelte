@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Project } from '@hanzo/controlled-documents'
+  import { Project } from '@hanzoteam/controlled-documents'
 
   export let value: Project | undefined
   export let inline: boolean = false

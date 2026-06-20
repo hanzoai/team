@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { type Person as GlobalPerson, type SocialId } from '@hanzo/account'
+import { type Person as GlobalPerson, type SocialId } from '@hanzoteam/account'
 import core, {
   Doc,
   Domain,
@@ -24,7 +24,7 @@ import core, {
   Ref,
   type Space,
   type Blob
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   createReadStream,
   createWriteStream,

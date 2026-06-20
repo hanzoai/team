@@ -11,7 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type MeasureContext, type WorkspaceUuid } from '@hanzo/core'
+import { type MeasureContext, type WorkspaceUuid } from '@hanzoteam/core'
 import {
   AddCollaboratorsEvent,
   AttachmentPatchEvent,
@@ -41,7 +41,7 @@ import {
   UpdateNotificationContextEvent,
   UpdateNotificationEvent,
   UpdatePatchEvent
-} from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-sdk-types'
 import {
   type AccountUuid,
   CardID,
@@ -53,7 +53,7 @@ import {
   MessageType,
   NotificationContext,
   type SocialID
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 
 import { BroadcastMiddleware } from '../../middleware/broadcast'
 import { type CommunicationCallbacks, type Enriched, Middleware, type MiddlewareContext } from '../../types'

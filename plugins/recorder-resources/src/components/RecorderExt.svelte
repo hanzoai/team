@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getMetadata } from '@hanzo/platform'
-  import { Icon, tooltip } from '@hanzo/ui'
+  import { getMetadata } from '@hanzoteam/platform'
+  import { Icon, tooltip } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
 
   import IconRec from './icons/Rec.svelte'

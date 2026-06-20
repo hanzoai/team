@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Attachment } from '@hanzo/attachment'
-import { type Person } from '@hanzo/contact'
-import { type Class, type Doc, type Ref, type Space } from '@hanzo/core'
-import { MarkupMarkType, type MarkupNode, MarkupNodeType, traverseNode, traverseNodeMarks } from '@hanzo/text'
+import { type Attachment } from '@hanzoteam/attachment'
+import { type Person } from '@hanzoteam/contact'
+import { type Class, type Doc, type Ref, type Space } from '@hanzoteam/core'
+import { MarkupMarkType, type MarkupNode, MarkupNodeType, traverseNode, traverseNodeMarks } from '@hanzoteam/text'
 import * as fs from 'fs'
 import { contentType } from 'mime-types'
 import * as path from 'path'

@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { getClient, SpaceCreateCard } from '@hanzo/presentation'
-  import task, { ProjectType } from '@hanzo/task'
-  import { Component, EditBox, Grid } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient, SpaceCreateCard } from '@hanzoteam/presentation'
+  import task, { ProjectType } from '@hanzoteam/task'
+  import { Component, EditBox, Grid } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import board from '../plugin'
   import { createBoard } from '../utils/BoardUtils'

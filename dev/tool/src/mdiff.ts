@@ -8,7 +8,7 @@ import core, {
   type Ref,
   type Tx,
   type Type
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { deepEqual } from 'fast-equals'
 
 /**

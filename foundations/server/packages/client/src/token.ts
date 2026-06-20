@@ -1,4 +1,4 @@
-import { type Token, decodeToken } from '@hanzo/server-token'
+import { type Token, decodeToken } from '@hanzoteam/server-token'
 import { type IncomingHttpHeaders } from 'http'
 
 const extractCookieToken = (cookie?: string): string | null => {

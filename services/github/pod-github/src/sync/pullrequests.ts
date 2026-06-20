@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Analytics } from '@hanzo/analytics'
-import contact, { Employee, Person } from '@hanzo/contact'
+import { Analytics } from '@hanzoteam/analytics'
+import contact, { Employee, Person } from '@hanzoteam/contact'
 import core, {
   AttachedData,
   Doc,
@@ -20,7 +20,7 @@ import core, {
   makeDocCollabId,
   withContext,
   type MeasureContext
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import github, {
   DocSyncInfo,
   GithubIntegrationRepository,
@@ -31,10 +31,10 @@ import github, {
   GithubPullRequestState,
   GithubTodo,
   LastReviewState
-} from '@hanzo/github'
-import task, { TaskType, calcRank, makeRank } from '@hanzo/task'
-import time, { ToDo, ToDoPriority } from '@hanzo/time'
-import tracker, { Issue, IssuePriority, IssueStatus, Project } from '@hanzo/tracker'
+} from '@hanzoteam/github'
+import task, { TaskType, calcRank, makeRank } from '@hanzoteam/task'
+import time, { ToDo, ToDoPriority } from '@hanzoteam/time'
+import tracker, { Issue, IssuePriority, IssueStatus, Project } from '@hanzoteam/tracker'
 import { ProjectsV2ItemEvent, PullRequestEvent } from '@octokit/webhooks-types'
 import { Octokit } from 'octokit'
 import config from '../config'

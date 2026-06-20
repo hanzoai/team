@@ -14,13 +14,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Channel, Person, combineName, getCurrentEmployee, getFirstName, getLastName } from '@hanzo/contact'
-  import { AccountRole, Ref, getCurrentAccount, hasAccountRole, type AccountUuid } from '@hanzo/core'
-  import { AttributeEditor, createQuery, getClient, hasResource } from '@hanzo/presentation'
-  import type { PersonRating } from '@hanzo/rating'
-  import ratingPlugin from '@hanzo/rating'
-  import setting, { IntegrationType } from '@hanzo/setting'
-  import { Component, EditBox, FocusHandler, Scroller, createFocusManager } from '@hanzo/ui'
+  import { Channel, Person, combineName, getCurrentEmployee, getFirstName, getLastName } from '@hanzoteam/contact'
+  import { AccountRole, Ref, getCurrentAccount, hasAccountRole, type AccountUuid } from '@hanzoteam/core'
+  import { AttributeEditor, createQuery, getClient, hasResource } from '@hanzoteam/presentation'
+  import type { PersonRating } from '@hanzoteam/rating'
+  import ratingPlugin from '@hanzoteam/rating'
+  import setting, { IntegrationType } from '@hanzoteam/setting'
+  import { Component, EditBox, FocusHandler, Scroller, createFocusManager } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import contact from '../plugin'
   import Avatar from './Avatar.svelte'

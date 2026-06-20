@@ -15,13 +15,13 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { DocumentQuery, Ref } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import { TestCase, TestProject } from '@hanzo/test-management'
-  import { Button, Dialog, Label } from '@hanzo/ui'
-  import { ComponentNavigator } from '@hanzo/workbench-resources'
-  import view from '@hanzo/view'
-  import { selectionStore } from '@hanzo/view-resources'
+  import { DocumentQuery, Ref } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { TestCase, TestProject } from '@hanzoteam/test-management'
+  import { Button, Dialog, Label } from '@hanzoteam/ui'
+  import { ComponentNavigator } from '@hanzoteam/workbench-resources'
+  import view from '@hanzoteam/view'
+  import { selectionStore } from '@hanzoteam/view-resources'
 
   import TestCasesList from './TestCasesList.svelte'
   import testManagement from '../../plugin'

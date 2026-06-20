@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import activity, { activityId } from '@hanzo/activity'
-import type { IntlString } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
+import activity, { activityId } from '@hanzoteam/activity'
+import type { IntlString } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
 
 export default mergeIds(activityId, activity, {
   string: {

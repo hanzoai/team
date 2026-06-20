@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type DownloadItem } from '@hanzo/desktop-downloads'
+import { type DownloadItem } from '@hanzoteam/desktop-downloads'
 import { derived, writable } from 'svelte/store'
 
 const downloadsByKey = writable(new Map<string, DownloadItem>())

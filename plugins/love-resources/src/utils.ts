@@ -1,9 +1,9 @@
-import aiBot from '@hanzo/ai-bot'
-import { connectMeeting, disconnectMeeting } from '@hanzo/ai-bot-resources'
-import { Analytics } from '@hanzo/analytics'
-import calendar, { type Event, type Schedule } from '@hanzo/calendar'
-import chunter from '@hanzo/chunter'
-import { getName } from '@hanzo/contact'
+import aiBot from '@hanzoteam/ai-bot'
+import { connectMeeting, disconnectMeeting } from '@hanzoteam/ai-bot-resources'
+import { Analytics } from '@hanzoteam/analytics'
+import calendar, { type Event, type Schedule } from '@hanzoteam/calendar'
+import chunter from '@hanzoteam/chunter'
+import { getName } from '@hanzoteam/contact'
 import core, {
   AccountRole,
   type Client,
@@ -17,8 +17,8 @@ import core, {
   type Space,
   type TxOperations,
   type WithLookup
-} from '@hanzo/core'
-import login from '@hanzo/login'
+} from '@hanzoteam/core'
+import login from '@hanzoteam/login'
 import {
   isOffice,
   LoveEvents,
@@ -30,19 +30,19 @@ import {
   type RoomMetadata,
   TranscriptionStatus,
   MeetingStatus
-} from '@hanzo/love'
-import { getEmbeddedLabel, getMetadata, getResource, type IntlString } from '@hanzo/platform'
+} from '@hanzoteam/love'
+import { getEmbeddedLabel, getMetadata, getResource, type IntlString } from '@hanzoteam/platform'
 import presentation, {
   copyTextToClipboard,
   type DocCreatePhase,
   getClient,
   type ObjectSearchResult
-} from '@hanzo/presentation'
-import { closePanel, getCurrentLocation, navigate, panelstore, showPopup } from '@hanzo/ui'
-import view from '@hanzo/view'
-import { getObjectLinkFragment } from '@hanzo/view-resources'
-import { type Widget, type WidgetTab } from '@hanzo/workbench'
-import { openWidget, openWidgetTab, sidebarStore, updateWidgetState } from '@hanzo/workbench-resources'
+} from '@hanzoteam/presentation'
+import { closePanel, getCurrentLocation, navigate, panelstore, showPopup } from '@hanzoteam/ui'
+import view from '@hanzoteam/view'
+import { getObjectLinkFragment } from '@hanzoteam/view-resources'
+import { type Widget, type WidgetTab } from '@hanzoteam/workbench'
+import { openWidget, openWidgetTab, sidebarStore, updateWidgetState } from '@hanzoteam/workbench-resources'
 import { isKrispNoiseFilterSupported, KrispNoiseFilter } from '@livekit/krisp-noise-filter'
 import { BackgroundBlur, type BackgroundOptions, type ProcessorWrapper } from '@livekit/track-processors'
 import {
@@ -56,14 +56,14 @@ import {
 } from 'livekit-client'
 import { get, writable } from 'svelte/store'
 
-import { getPersonByPersonRef } from '@hanzo/contact-resources'
+import { getPersonByPersonRef } from '@hanzoteam/contact-resources'
 import MeetingMinutesSearchItem from './components/MeetingMinutesSearchItem.svelte'
 import RoomSettingsPopup from './components/RoomSettingsPopup.svelte'
 import love from './plugin'
 import { $myPreferences, currentMeetingMinutes, currentRoom } from './stores'
 import { getLiveKitClient } from './liveKitClient'
 import { getLoveClient } from './loveClient'
-import { getClient as getAccountClientRaw } from '@hanzo/account-client'
+import { getClient as getAccountClientRaw } from '@hanzoteam/account-client'
 
 export const liveKitClient = getLiveKitClient()
 export const lk: LKRoom = liveKitClient.liveKitRoom

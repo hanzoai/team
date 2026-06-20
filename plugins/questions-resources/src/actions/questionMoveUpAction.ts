@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { getClient } from '@hanzo/presentation'
-import type { Question } from '@hanzo/questions'
+import { getClient } from '@hanzoteam/presentation'
+import type { Question } from '@hanzoteam/questions'
 import { canUpdateQuestion, findPreviousQuestion, updateQuestion } from '../utils'
 import { focusActionWithAvailability } from './ActionWithAvailability'
 

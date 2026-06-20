@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Icon, Label } from '@hanzo/ui'
-  import { Asset, IntlString } from '@hanzo/platform'
+  import { Icon, Label } from '@hanzoteam/ui'
+  import { Asset, IntlString } from '@hanzoteam/platform'
 
   export let icon: Asset
   export let header: IntlString

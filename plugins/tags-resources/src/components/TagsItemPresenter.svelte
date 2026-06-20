@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TagReference } from '@hanzo/tags'
+  import { TagReference } from '@hanzoteam/tags'
   import TagReferencePresenter from './TagReferencePresenter.svelte'
   import TagItem from './TagItem.svelte'
 

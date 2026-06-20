@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { CardID, Message, Patch, PatchType, Reaction, SocialID } from '@hanzo/communication-types'
+import { CardID, Message, Patch, PatchType, Reaction, SocialID } from '@hanzoteam/communication-types'
 
 export function applyPatches (message: Message, patches: Patch[]): Message {
   for (const patch of patches) {

@@ -23,7 +23,7 @@ import {
   type FindLabelsParams,
   FindCollaboratorsParams,
   Collaborator
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import { deepEqual } from 'fast-equals'
 import type {
   QueryCallback,
@@ -31,8 +31,8 @@ import type {
   EventResult,
   PagedQueryCallback,
   FindClient
-} from '@hanzo/communication-sdk-types'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+} from '@hanzoteam/communication-sdk-types'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 import type { FindParams, QueryId, AnyQuery, MessageQueryParams, QueryOptions, MessageQueryOptions, NotificationContextQueryOptions } from './types'
 import { MessagesQuery } from './messages/query'

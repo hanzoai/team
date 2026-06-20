@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Class, Doc } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Component, Label } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import type { Class, Doc } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Component, Label } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   export let value: Class<Doc>
 

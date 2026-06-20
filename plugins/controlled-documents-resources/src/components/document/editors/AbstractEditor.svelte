@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { Document } from '@hanzo/controlled-documents'
-  import { getClient } from '@hanzo/presentation'
-  import { EditBox } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  import { Document } from '@hanzoteam/controlled-documents'
+  import { getClient } from '@hanzoteam/presentation'
+  import { EditBox } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
 
   import plugin from '../../../plugin'
 

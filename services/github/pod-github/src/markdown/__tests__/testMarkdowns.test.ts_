@@ -14,7 +14,7 @@
 //
 
 /* eslint-env jest */
-import { htmlToJSON, jsonToHTML } from '@hanzo/text'
+import { htmlToJSON, jsonToHTML } from '@hanzoteam/text'
 import { parseMessageMarkdown, serializeMessage } from '..'
 import { defaultExtensions } from '../extensions'
 

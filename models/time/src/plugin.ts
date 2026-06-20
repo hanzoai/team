@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import { type Application } from '@hanzo/model-workbench'
-import { type NotificationType } from '@hanzo/notification'
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import { timeId } from '@hanzo/time'
-import time from '@hanzo/time-resources/src/plugin'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ActionCategory } from '@hanzo/view'
+import { type Client, type Doc, type Ref } from '@hanzoteam/core'
+import { type Application } from '@hanzoteam/model-workbench'
+import { type NotificationType } from '@hanzoteam/notification'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import { timeId } from '@hanzoteam/time'
+import time from '@hanzoteam/time-resources/src/plugin'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ActionCategory } from '@hanzoteam/view'
 
 export default mergeIds(timeId, time, {
   action: {

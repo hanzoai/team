@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import inventory from '@hanzo/inventory'
-import { loadMetadata } from '@hanzo/platform'
+import inventory from '@hanzoteam/inventory'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(inventory.icon, {

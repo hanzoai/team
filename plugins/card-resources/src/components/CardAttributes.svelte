@@ -13,19 +13,19 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { PermissionsStore } from '@hanzo/contact'
-  import { permissionsStore } from '@hanzo/contact-resources'
-  import core, { AnyAttribute, Class, Doc, Ref, toRank, TypedSpace } from '@hanzo/core'
-  import notification from '@hanzo/notification'
+  import { Card } from '@hanzoteam/card'
+  import { PermissionsStore } from '@hanzoteam/contact'
+  import { permissionsStore } from '@hanzoteam/contact-resources'
+  import core, { AnyAttribute, Class, Doc, Ref, toRank, TypedSpace } from '@hanzoteam/core'
+  import notification from '@hanzoteam/notification'
   import {
     AttributeBarEditor,
     createQuery,
     getClient,
     isCollectionAttr,
     KeyedAttribute
-  } from '@hanzo/presentation'
-  import { canChangeAttribute } from '@hanzo/view-resources'
+  } from '@hanzoteam/presentation'
+  import { canChangeAttribute } from '@hanzoteam/view-resources'
 
   export let object: Card
   export let _class: Ref<Class<Doc>>

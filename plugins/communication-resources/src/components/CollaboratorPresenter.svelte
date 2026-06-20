@@ -14,10 +14,10 @@
 -->
 
 <script lang="ts">
-  import { AccountUuid } from '@hanzo/core'
-  import { employeeByAccountStore, PersonPresenter } from '@hanzo/contact-resources'
-  import contact, { Person } from '@hanzo/contact'
-  import { createQuery } from '@hanzo/presentation'
+  import { AccountUuid } from '@hanzoteam/core'
+  import { employeeByAccountStore, PersonPresenter } from '@hanzoteam/contact-resources'
+  import contact, { Person } from '@hanzoteam/contact'
+  import { createQuery } from '@hanzoteam/presentation'
 
   export let collaborator: AccountUuid
 

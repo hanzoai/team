@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Card, MasterTag } from '@hanzo/card'
-  import core, { AnyAttribute, Class, Ref } from '@hanzo/core'
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { Process, Step } from '@hanzo/process'
-  import { Button, eventToHTMLElement, SelectPopup, showPopup } from '@hanzo/ui'
+  import { Card, MasterTag } from '@hanzoteam/card'
+  import core, { AnyAttribute, Class, Ref } from '@hanzoteam/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { Process, Step } from '@hanzoteam/process'
+  import { Button, eventToHTMLElement, SelectPopup, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import ParamsEditor from './ParamsEditor.svelte'
 

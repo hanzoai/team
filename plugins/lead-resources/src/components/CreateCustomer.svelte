@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AvatarType, Channel, combineName, Contact, findContacts, type Organization } from '@hanzo/contact'
-  import { ChannelsDropdown, EditableAvatar, PersonPresenter } from '@hanzo/contact-resources'
-  import contact from '@hanzo/contact-resources/src/plugin'
+  import { AvatarType, Channel, combineName, Contact, findContacts, type Organization } from '@hanzoteam/contact'
+  import { ChannelsDropdown, EditableAvatar, PersonPresenter } from '@hanzoteam/contact-resources'
+  import contact from '@hanzoteam/contact-resources/src/plugin'
   import {
     AttachedData,
     Class,
@@ -26,11 +26,11 @@
     WithLookup,
     generateId,
     makeCollabId
-  } from '@hanzo/core'
-  import { Customer, LeadEvents } from '@hanzo/lead'
-  import { Card, createMarkup, getClient, InlineAttributeBar } from '@hanzo/presentation'
-  import { StyledTextBox } from '@hanzo/text-editor-resources'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
+  } from '@hanzoteam/core'
+  import { Customer, LeadEvents } from '@hanzoteam/lead'
+  import { Card, createMarkup, getClient, InlineAttributeBar } from '@hanzoteam/presentation'
+  import { StyledTextBox } from '@hanzoteam/text-editor-resources'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
   import {
     Button,
     createFocusManager,
@@ -41,9 +41,9 @@
     Label,
     SelectPopup,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import lead from '../plugin'
 
   let firstName = ''

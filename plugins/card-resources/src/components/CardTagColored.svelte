@@ -12,7 +12,7 @@
 <!-- limitations under the License. -->
 
 <script lang="ts">
-  import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+  import { getEmbeddedLabel, IntlString } from '@hanzoteam/platform'
   import {
     getPlatformColorDef,
     themeStore,
@@ -21,7 +21,7 @@
     Label,
     IconClose,
     ButtonIcon
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let labelIntl: IntlString | undefined = undefined

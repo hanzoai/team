@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Room } from '@hanzo/love'
+  import { Room } from '@hanzoteam/love'
 
   import { languagesDisplayData } from '../types'
 

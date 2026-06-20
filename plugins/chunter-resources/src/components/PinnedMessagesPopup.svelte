@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import activity, { ActivityMessage, ActivityReference } from '@hanzo/activity'
-  import { ActivityMessagePresenter, sortActivityMessages } from '@hanzo/activity-resources'
-  import { ActionIcon, IconClose, Loading } from '@hanzo/ui'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import activity, { ActivityMessage, ActivityReference } from '@hanzoteam/activity'
+  import { ActivityMessagePresenter, sortActivityMessages } from '@hanzoteam/activity-resources'
+  import { ActionIcon, IconClose, Loading } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import { ThreadMessage } from '@hanzo/chunter'
-  import { Class, Doc, Ref, SortingOrder, Space } from '@hanzo/core'
+  import { ThreadMessage } from '@hanzoteam/chunter'
+  import { Class, Doc, Ref, SortingOrder, Space } from '@hanzoteam/core'
 
   import chunter from '../plugin'
 

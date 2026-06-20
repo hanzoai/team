@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { getCurrentLocation, location, navigate } from '@hanzo/ui'
+import { getCurrentLocation, location, navigate } from '@hanzoteam/ui'
 import { onDestroy } from 'svelte'
 
 interface Message {

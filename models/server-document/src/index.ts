@@ -3,16 +3,16 @@
 //
 //
 
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
-import core, { type Class, type Doc } from '@hanzo/core'
-import document from '@hanzo/document'
-import serverCore, { type ObjectDDParticipant } from '@hanzo/server-core'
-import serverDocument from '@hanzo/server-document'
-import serverNotification from '@hanzo/server-notification'
-import serverView from '@hanzo/server-view'
+import core, { type Class, type Doc } from '@hanzoteam/core'
+import document from '@hanzoteam/document'
+import serverCore, { type ObjectDDParticipant } from '@hanzoteam/server-core'
+import serverDocument from '@hanzoteam/server-document'
+import serverNotification from '@hanzoteam/server-notification'
+import serverView from '@hanzoteam/server-view'
 
-export { serverDocumentId } from '@hanzo/server-document'
+export { serverDocumentId } from '@hanzoteam/server-document'
 
 export function createModel (builder: Builder): void {
   builder.mixin(document.class.Document, core.class.Class, serverNotification.mixin.HTMLPresenter, {

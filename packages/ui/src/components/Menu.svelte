@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import { generateId, Ref, Doc } from '@hanzo/core'
+  import { generateId, Ref, Doc } from '@hanzoteam/core'
   import ui from '../plugin'
   import { closePopup, showPopup } from '../popups'
   import { Action } from '../types'

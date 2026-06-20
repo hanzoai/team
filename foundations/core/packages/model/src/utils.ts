@@ -7,7 +7,7 @@ import {
   type Space,
   type TxOperations,
   type IdMap
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import { deepEqual } from 'fast-equals'
 
 function toUndef (value: any): any {

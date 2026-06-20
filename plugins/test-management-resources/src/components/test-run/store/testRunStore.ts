@@ -11,8 +11,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import type { Ref } from '@hanzo/core'
-import type { TestCase, TestPlan } from '@hanzo/test-management'
+import type { Ref } from '@hanzoteam/core'
+import type { TestCase, TestPlan } from '@hanzoteam/test-management'
 import { writable } from 'svelte/store'
 
 export const selectedTestCases = writable<TestCase[] | undefined>(undefined)

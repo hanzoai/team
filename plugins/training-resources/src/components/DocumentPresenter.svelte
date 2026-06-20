@@ -16,12 +16,12 @@
 -->
 
 <script lang="ts">
-  import presentation, { NavLink } from '@hanzo/presentation'
-  import { locationToUrl } from '@hanzo/ui'
-  import { Document } from '@hanzo/controlled-documents'
+  import presentation, { NavLink } from '@hanzoteam/presentation'
+  import { locationToUrl } from '@hanzoteam/ui'
+  import { Document } from '@hanzoteam/controlled-documents'
   import { documentRoute } from '../routing/routes/documentRoute'
-  import { getMetadata } from '@hanzo/platform'
-  import { concatLink } from '@hanzo/core'
+  import { getMetadata } from '@hanzoteam/platform'
+  import { concatLink } from '@hanzoteam/core'
 
   export let value: Document
 

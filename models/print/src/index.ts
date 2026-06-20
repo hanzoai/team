@@ -2,14 +2,14 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import view, { createAction } from '@hanzo/model-view'
-import presentation from '@hanzo/model-presentation'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import view, { createAction } from '@hanzoteam/model-view'
+import presentation from '@hanzoteam/model-presentation'
 
 import print from './plugin'
 
-export { printId } from '@hanzo/print'
+export { printId } from '@hanzoteam/print'
 export * from './migration'
 export default print
 

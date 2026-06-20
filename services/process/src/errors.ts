@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { ExecutionError } from '@hanzo/process'
-import { ExecuteResult } from '@hanzo/server-process'
+import { ExecutionError } from '@hanzoteam/process'
+import { ExecuteResult } from '@hanzoteam/server-process'
 
 export function isError (value: ExecuteResult | any): value is ExecutionError {
   return (value as ExecutionError)?.error !== undefined

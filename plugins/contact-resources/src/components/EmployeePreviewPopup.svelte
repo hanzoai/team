@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { Employee } from '@hanzo/contact'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { ModernButton, navigate, resizeObserver } from '@hanzo/ui'
+  import { Employee } from '@hanzoteam/contact'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { ModernButton, navigate, resizeObserver } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
-  import view from '@hanzo/view'
-  import { getObjectLinkFragment } from '@hanzo/view-resources'
-  import { ComponentExtensions, getClient } from '@hanzo/presentation'
+  import view from '@hanzoteam/view'
+  import { getObjectLinkFragment } from '@hanzoteam/view-resources'
+  import { ComponentExtensions, getClient } from '@hanzoteam/presentation'
 
   import contact from '../plugin'
   import Avatar from './Avatar.svelte'

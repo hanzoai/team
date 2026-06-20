@@ -25,8 +25,8 @@ import core, {
   TxOperations,
   TypeAny as TypeAnyType,
   getRoleAttributeLabel
-} from '@hanzo/core'
-import { getEmbeddedLabel, IntlString } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import { getEmbeddedLabel, IntlString } from '@hanzoteam/platform'
 
 import setting from './index'
 

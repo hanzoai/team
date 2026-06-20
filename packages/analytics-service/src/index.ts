@@ -2,7 +2,7 @@
 // Copyright © 2024 Hanzo AI Inc.
 //
 
-import { AnalyticProvider, Analytics } from '@hanzo/analytics'
+import { AnalyticProvider, Analytics } from '@hanzoteam/analytics'
 import { SentryAnalyticProvider } from './sentry'
 
 export * from './logging'

@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Ref, type WithLookup } from '@hanzo/core'
-  import { checkMyPermission, permissionsStore } from '@hanzo/contact-resources'
-  import { createFileVersion, type File as DriveFile, type FileVersion } from '@hanzo/drive'
-  import { Panel } from '@hanzo/panel'
-  import { createQuery, getClient, getFileUrl } from '@hanzo/presentation'
-  import { Button, IconMoreH } from '@hanzo/ui'
-  import { FileUploadCallbackParams, showFilesUploadPopup } from '@hanzo/uploader'
-  import view from '@hanzo/view'
-  import { canChangeDoc, showMenu } from '@hanzo/view-resources'
+  import { type Ref, type WithLookup } from '@hanzoteam/core'
+  import { checkMyPermission, permissionsStore } from '@hanzoteam/contact-resources'
+  import { createFileVersion, type File as DriveFile, type FileVersion } from '@hanzoteam/drive'
+  import { Panel } from '@hanzoteam/panel'
+  import { createQuery, getClient, getFileUrl } from '@hanzoteam/presentation'
+  import { Button, IconMoreH } from '@hanzoteam/ui'
+  import { FileUploadCallbackParams, showFilesUploadPopup } from '@hanzoteam/uploader'
+  import view from '@hanzoteam/view'
+  import { canChangeDoc, showMenu } from '@hanzoteam/view-resources'
 
   import EditFile from './EditFile.svelte'
   import FileAside from './FileAside.svelte'

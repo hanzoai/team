@@ -1,4 +1,4 @@
-import { saveCollabJson } from '@hanzo/collaboration'
+import { saveCollabJson } from '@hanzoteam/collaboration'
 import core, {
   type AttachedDoc,
   type Class,
@@ -17,13 +17,13 @@ import core, {
   type PersonInfo,
   type WorkspaceIds,
   buildSocialIdString
-} from '@hanzo/core'
-import { type ModelLogger } from '@hanzo/model'
-import { makeRank } from '@hanzo/rank'
-import { HanzoFormatImporter, StorageFileUploader } from '@hanzo/importer'
-import type { StorageAdapter } from '@hanzo/server-core'
-import { jsonToMarkup } from '@hanzo/text'
-import { markdownToMarkup } from '@hanzo/text-markdown'
+} from '@hanzoteam/core'
+import { type ModelLogger } from '@hanzoteam/model'
+import { makeRank } from '@hanzoteam/rank'
+import { HanzoFormatImporter, StorageFileUploader } from '@hanzoteam/importer'
+import type { StorageAdapter } from '@hanzoteam/server-core'
+import { jsonToMarkup } from '@hanzoteam/text'
+import { markdownToMarkup } from '@hanzoteam/text-markdown'
 import { v4 as uuid } from 'uuid'
 import path from 'path'
 

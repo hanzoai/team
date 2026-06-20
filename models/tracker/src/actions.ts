@@ -13,19 +13,19 @@
 // limitations under the License.
 //
 
-import contact from '@hanzo/contact'
-import { type Builder } from '@hanzo/model'
-import core from '@hanzo/model-core'
-import task from '@hanzo/model-task'
-import view, { actionTemplates, createAction } from '@hanzo/model-view'
-import workbench, { createNavigateAction } from '@hanzo/model-workbench'
-import { type IntlString } from '@hanzo/platform'
-import { TrackerEvents, trackerId } from '@hanzo/tracker'
-import { type KeyBinding } from '@hanzo/view'
+import contact from '@hanzoteam/contact'
+import { type Builder } from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import task from '@hanzoteam/model-task'
+import view, { actionTemplates, createAction } from '@hanzoteam/model-view'
+import workbench, { createNavigateAction } from '@hanzoteam/model-workbench'
+import { type IntlString } from '@hanzoteam/platform'
+import { TrackerEvents, trackerId } from '@hanzoteam/tracker'
+import { type KeyBinding } from '@hanzoteam/view'
 import tracker from './plugin'
 
-import tags from '@hanzo/tags'
-import { defaultPriorities, issuePriorities } from '@hanzo/tracker-resources/src/types'
+import tags from '@hanzoteam/tags'
+import { defaultPriorities, issuePriorities } from '@hanzoteam/tracker-resources/src/types'
 
 function createGotoSpecialAction (
   builder: Builder,

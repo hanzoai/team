@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Asset, type IntlString } from '@hanzo/platform'
+import { type Asset, type IntlString } from '@hanzoteam/platform'
 
-import testManagement, { TestCaseStatus, TestRunStatus } from '@hanzo/test-management'
+import testManagement, { TestCaseStatus, TestRunStatus } from '@hanzoteam/test-management'
 
 /** @public */
 export const defaultTestCaseStatuses = [

@@ -17,8 +17,8 @@
   import { afterUpdate, createEventDispatcher, SvelteComponent } from 'svelte'
   import { Writable, writable } from 'svelte/store'
 
-  import activity from '@hanzo/activity'
-  import { AccountRole, Doc, getCurrentAccount } from '@hanzo/core'
+  import activity from '@hanzoteam/activity'
+  import { AccountRole, Doc, getCurrentAccount } from '@hanzoteam/core'
   import {
     Component,
     deviceOptionsStore as deviceInfo,
@@ -26,10 +26,10 @@
     Scroller,
     resizeObserver,
     HeaderAdaptive
-  } from '@hanzo/ui'
-  import type { ButtonItem } from '@hanzo/ui'
-  import { getResource } from '@hanzo/platform'
-  import presence from '@hanzo/presence'
+  } from '@hanzoteam/ui'
+  import type { ButtonItem } from '@hanzoteam/ui'
+  import { getResource } from '@hanzoteam/platform'
+  import presence from '@hanzoteam/presence'
 
   export let title: string | undefined = undefined
   export let withoutActivity: boolean = false

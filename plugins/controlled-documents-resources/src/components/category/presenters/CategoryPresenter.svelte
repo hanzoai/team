@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentCategory } from '@hanzo/controlled-documents'
+  import { DocumentCategory } from '@hanzoteam/controlled-documents'
 
-  import { Ref, WithLookup } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Icon, tooltip } from '@hanzo/ui'
-  import { DocNavLink } from '@hanzo/view-resources'
+  import { Ref, WithLookup } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Icon, tooltip } from '@hanzoteam/ui'
+  import { DocNavLink } from '@hanzoteam/view-resources'
 
   import documents from '../../../plugin'
 

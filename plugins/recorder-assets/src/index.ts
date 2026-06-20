@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import recorder from '@hanzo/recorder'
-import { loadMetadata } from '@hanzo/platform'
+import recorder from '@hanzoteam/recorder'
+import { loadMetadata } from '@hanzoteam/platform'
 
 const recordIcon = require('../assets/icon.svg') as string // eslint-disable-line
 loadMetadata(recorder.icon, {

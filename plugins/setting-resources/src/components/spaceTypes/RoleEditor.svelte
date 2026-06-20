@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hanzo/presentation'
-  import core, { Permission, Ref, Role, SpaceType, SpaceTypeDescriptor } from '@hanzo/core'
+  import { AttributeEditor, MessageBox, createQuery, getClient } from '@hanzoteam/presentation'
+  import core, { Permission, Ref, Role, SpaceType, SpaceTypeDescriptor } from '@hanzoteam/core'
   import {
     ButtonIcon,
     Icon,
@@ -26,9 +26,9 @@
     getCurrentResolvedLocation,
     navigate,
     showPopup
-  } from '@hanzo/ui'
-  import { ObjectBoxPopup } from '@hanzo/view-resources'
-  import { deleteSpaceTypeRole } from '@hanzo/setting'
+  } from '@hanzoteam/ui'
+  import { ObjectBoxPopup } from '@hanzoteam/view-resources'
+  import { deleteSpaceTypeRole } from '@hanzoteam/setting'
 
   import PersonIcon from '../icons/Person.svelte'
   import settingRes from '../../plugin'

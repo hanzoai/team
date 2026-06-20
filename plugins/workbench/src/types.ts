@@ -14,11 +14,11 @@
 // limitations under the License.
 //
 
-import type { AccountRole, AccountUuid, Class, Doc, DocumentQuery, Obj, Ref, Space } from '@hanzo/core'
-import { DocNotifyContext, InboxNotification } from '@hanzo/notification'
-import type { Asset, IntlString, Resource } from '@hanzo/platform'
-import type { Preference } from '@hanzo/preference'
-import { AnyComponent, type AnySvelteComponent, Location, ResolvedLocation } from '@hanzo/ui'
+import type { AccountRole, AccountUuid, Class, Doc, DocumentQuery, Obj, Ref, Space } from '@hanzoteam/core'
+import { DocNotifyContext, InboxNotification } from '@hanzoteam/notification'
+import type { Asset, IntlString, Resource } from '@hanzoteam/platform'
+import type { Preference } from '@hanzoteam/preference'
+import { AnyComponent, type AnySvelteComponent, Location, ResolvedLocation } from '@hanzoteam/ui'
 
 /** @public */
 export interface LocationData {

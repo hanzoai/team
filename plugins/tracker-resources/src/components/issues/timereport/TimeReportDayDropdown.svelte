@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { TimeReportDayType } from '@hanzo/tracker'
-  import { DropdownIntlItem, DropdownLabelsIntl } from '@hanzo/ui'
-  import type { ButtonKind, ButtonSize } from '@hanzo/ui'
+  import { TimeReportDayType } from '@hanzoteam/tracker'
+  import { DropdownIntlItem, DropdownLabelsIntl } from '@hanzoteam/ui'
+  import type { ButtonKind, ButtonSize } from '@hanzoteam/ui'
   import tracker from '../../../plugin'
   import TimeReportDayIcon from './TimeReportDayIcon.svelte'
 

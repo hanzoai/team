@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Staff } from '@hanzo/hr'
+  import { Staff } from '@hanzoteam/hr'
 
   export let value: Staff
   export let month: Date

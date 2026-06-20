@@ -23,8 +23,8 @@ import core, {
   type Space,
   TxOperations,
   type WorkspaceUuid
-} from '@hanzo/core'
-import { type DbAdapter, wrapAdapterToClient } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import { type DbAdapter, wrapAdapterToClient } from '@hanzoteam/server-core'
 import {
   createPostgresAdapter,
   createPostgresTxAdapter,

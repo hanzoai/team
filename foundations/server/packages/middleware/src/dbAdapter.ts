@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { DOMAIN_MODEL_TX, DOMAIN_TX, withContext, type MeasureContext } from '@hanzo/core'
+import { DOMAIN_MODEL_TX, DOMAIN_TX, withContext, type MeasureContext } from '@hanzoteam/core'
 import type {
   DbAdapter,
   DbConfiguration,
@@ -21,8 +21,8 @@ import type {
   MiddlewareCreator,
   PipelineContext,
   TxAdapter
-} from '@hanzo/server-core'
-import { BaseMiddleware, createServiceAdaptersManager, DbAdapterManagerImpl } from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
+import { BaseMiddleware, createServiceAdaptersManager, DbAdapterManagerImpl } from '@hanzoteam/server-core'
 
 /**
  * @public

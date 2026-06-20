@@ -13,12 +13,12 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
 
-import bitrix, { bitrixId } from '@hanzo/bitrix'
-import { type Ref } from '@hanzo/core'
-import { type Handler, type IntegrationType } from '@hanzo/setting'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import bitrix, { bitrixId } from '@hanzoteam/bitrix'
+import { type Ref } from '@hanzoteam/core'
+import { type Handler, type IntegrationType } from '@hanzoteam/setting'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
 export default mergeIds(bitrixId, bitrix, {
   string: {

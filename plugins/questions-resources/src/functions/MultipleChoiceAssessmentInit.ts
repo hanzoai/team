@@ -6,9 +6,9 @@ import {
   type QuestionInitFunction,
   type QuestionInitFunctionResult,
   type MultipleChoiceAssessment
-} from '@hanzo/questions'
-import { type Hierarchy } from '@hanzo/core'
-import type { ThemeOptions } from '@hanzo/theme'
+} from '@hanzoteam/questions'
+import { type Hierarchy } from '@hanzoteam/core'
+import type { ThemeOptions } from '@hanzoteam/theme'
 import { MultipleChoiceQuestionInit } from './MultipleChoiceQuestionInit'
 
 export const MultipleChoiceAssessmentInit: QuestionInitFunction<MultipleChoiceAssessment> = async (

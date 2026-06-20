@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-import activity, { type ActivityMessage, type Reaction } from '@hanzo/activity'
-import { type PersonSpace } from '@hanzo/contact'
+import activity, { type ActivityMessage, type Reaction } from '@hanzoteam/activity'
+import { type PersonSpace } from '@hanzoteam/contact'
 import {
   AccountRole,
   type Collaborator,
@@ -38,7 +38,7 @@ import {
   type Timestamp,
   type Tx,
   type TxCUD
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   Collection as CollectionType,
   Index,
@@ -53,11 +53,11 @@ import {
   TypeRef,
   UX,
   type Builder
-} from '@hanzo/model'
-import core, { TClass, TDoc } from '@hanzo/model-core'
-import preference, { TPreference } from '@hanzo/model-preference'
-import view, { createAction, template } from '@hanzo/model-view'
-import workbench from '@hanzo/model-workbench'
+} from '@hanzoteam/model'
+import core, { TClass, TDoc } from '@hanzoteam/model-core'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import view, { createAction, template } from '@hanzoteam/model-view'
+import workbench from '@hanzoteam/model-workbench'
 import {
   type Collaborators,
   DOMAIN_DOC_NOTIFY,
@@ -85,14 +85,14 @@ import {
   type PushSubscription,
   type PushSubscriptionKeys,
   type ReactionInboxNotification
-} from '@hanzo/notification'
-import { type Asset, type IntlString, type Resource } from '@hanzo/platform'
-import setting from '@hanzo/setting'
-import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
+} from '@hanzoteam/notification'
+import { type Asset, type IntlString, type Resource } from '@hanzoteam/platform'
+import setting from '@hanzoteam/setting'
+import { type AnyComponent, type Location } from '@hanzoteam/ui/src/types'
 
 import notification from './plugin'
 
-export { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_USER_NOTIFY, notificationId } from '@hanzo/notification'
+export { DOMAIN_DOC_NOTIFY, DOMAIN_NOTIFICATION, DOMAIN_USER_NOTIFY, notificationId } from '@hanzoteam/notification'
 export { notificationOperation } from './migration'
 export { notification as default }
 

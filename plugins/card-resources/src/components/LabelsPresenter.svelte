@@ -14,13 +14,13 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { Card } from '@hanzo/card'
-  import { Label } from '@hanzo/communication-types'
-  import tag, { type TagElement } from '@hanzo/tags'
-  import { TagElementPresenter } from '@hanzo/tags-resources'
-  import { Ref } from '@hanzo/core'
-  import { labelsStore } from '@hanzo/communication-resources'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Card } from '@hanzoteam/card'
+  import { Label } from '@hanzoteam/communication-types'
+  import tag, { type TagElement } from '@hanzoteam/tags'
+  import { TagElementPresenter } from '@hanzoteam/tags-resources'
+  import { Ref } from '@hanzoteam/core'
+  import { labelsStore } from '@hanzoteam/communication-resources'
 
   export let value: Card | undefined = undefined
 

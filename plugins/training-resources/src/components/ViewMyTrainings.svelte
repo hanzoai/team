@@ -2,10 +2,10 @@
   Copyright @ 2024 Hanzo AI Inc.
 -->
 <script lang="ts">
-  import { DocumentQuery } from '@hanzo/core'
-  import { type IModeSelector, navigate, rawLocation } from '@hanzo/ui'
-  import { SpecialView } from '@hanzo/workbench-resources'
-  import { type Training, TrainingState } from '@hanzo/training'
+  import { DocumentQuery } from '@hanzoteam/core'
+  import { type IModeSelector, navigate, rawLocation } from '@hanzoteam/ui'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
+  import { type Training, TrainingState } from '@hanzoteam/training'
   import { type ComponentProps } from 'svelte'
   import training from '../plugin'
   import { myTrainingsRoute, MyTrainingsRouteTab } from '../routing/routes/myTrainingsRoute'

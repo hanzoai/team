@@ -15,7 +15,7 @@
 <script lang="ts">
   import { deepEqual } from 'fast-equals'
   import { createEventDispatcher } from 'svelte'
-  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzo/contact-resources'
+  import { AccountArrayEditor, employeeRefByAccountUuidStore } from '@hanzoteam/contact-resources'
   import core, {
     Data,
     RolesAssignment,
@@ -27,15 +27,15 @@
     WithLookup,
     notEmpty,
     AccountUuid
-  } from '@hanzo/core'
-  import { Drive, DriveEvents } from '@hanzo/drive'
-  import presentation, { Card, getClient, reduceCalls } from '@hanzo/presentation'
-  import { EditBox, Label, Toggle } from '@hanzo/ui'
-  import { SpaceTypeSelector } from '@hanzo/view-resources'
+  } from '@hanzoteam/core'
+  import { Drive, DriveEvents } from '@hanzoteam/drive'
+  import presentation, { Card, getClient, reduceCalls } from '@hanzoteam/presentation'
+  import { EditBox, Label, Toggle } from '@hanzoteam/ui'
+  import { SpaceTypeSelector } from '@hanzoteam/view-resources'
 
   import driveRes from '../plugin'
-  import { Analytics } from '@hanzo/analytics'
-  import view from '@hanzo/view'
+  import { Analytics } from '@hanzoteam/analytics'
+  import view from '@hanzoteam/view'
 
   export let drive: Drive | undefined = undefined
 

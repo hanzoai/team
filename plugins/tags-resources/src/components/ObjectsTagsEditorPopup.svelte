@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import tags, { TagElement, TagReference } from '@hanzo/tags'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import tags, { TagElement, TagReference } from '@hanzoteam/tags'
   import TagsPopup from './TagsPopup.svelte'
 
   export let value: Doc | Doc[]

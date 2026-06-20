@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { Button, Grid, IconArrowRight, eventToHTMLElement, showPopup } from '@hanzo/ui'
-  import { Component, Issue, Project } from '@hanzo/tracker'
+  import { Ref } from '@hanzoteam/core'
+  import { Button, Grid, IconArrowRight, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
+  import { Component, Issue, Project } from '@hanzoteam/tracker'
 
   import { IssueToUpdate } from '../../../utils'
   import ComponentPresenter from '../../components/ComponentPresenter.svelte'

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Attribute, Class, Ref, Status, StatusCategory } from '@hanzo/core'
-  import { Asset, getEmbeddedLabel } from '@hanzo/platform'
-  import presentation, { IconWithEmoji, createQuery, getClient } from '@hanzo/presentation'
-  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
-  import { ProjectType, TaskType, calculateStatuses, createState } from '@hanzo/task'
+  import core, { Attribute, Class, Ref, Status, StatusCategory } from '@hanzoteam/core'
+  import { Asset, getEmbeddedLabel } from '@hanzoteam/platform'
+  import presentation, { IconWithEmoji, createQuery, getClient } from '@hanzoteam/presentation'
+  import { clearSettingsStore, settingsStore } from '@hanzoteam/setting-resources'
+  import { ProjectType, TaskType, calculateStatuses, createState } from '@hanzoteam/task'
   import {
     Component,
     ButtonIcon,
@@ -34,10 +34,10 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import { ColorsPopup, statusStore } from '@hanzo/view-resources'
-  import view from '@hanzo/view-resources/src/plugin'
-  import emojiPlugin from '@hanzo/emoji'
+  } from '@hanzoteam/ui'
+  import { ColorsPopup, statusStore } from '@hanzoteam/view-resources'
+  import view from '@hanzoteam/view-resources/src/plugin'
+  import emojiPlugin from '@hanzoteam/emoji'
   import { taskTypeStore, typeStore } from '../..'
   import task from '../../plugin'
   import ApproveStatusRenamePopup from './ApproveStatusRenamePopup.svelte'

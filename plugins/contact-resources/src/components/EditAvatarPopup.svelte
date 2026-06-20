@@ -14,10 +14,10 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { getResource } from '@hanzo/platform'
-  import { Button } from '@hanzo/ui'
-  import imageCropper from '@hanzo/image-cropper'
-  import presentation from '@hanzo/presentation'
+  import { getResource } from '@hanzoteam/platform'
+  import { Button } from '@hanzoteam/ui'
+  import imageCropper from '@hanzoteam/image-cropper'
+  import presentation from '@hanzoteam/presentation'
 
   export let file: Blob
   export let lessCrop: boolean = false

@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { Asset } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { AnySvelteComponent, Icon, tooltip } from '@hanzo/ui'
-  import { getCollectionCounter } from '@hanzo/view-resources'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { Asset } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, Icon, tooltip } from '@hanzoteam/ui'
+  import { getCollectionCounter } from '@hanzoteam/view-resources'
   import tagsId from '../plugin'
   import TagsPresentationPopup from './TagsPresentationPopup.svelte'
 

@@ -11,11 +11,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type IntlString, mergeIds, type Resource } from '@hanzo/platform'
-import tags, { tagsId } from '@hanzo/tags'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type FilterFunction } from '@hanzo/view'
-import { type Doc, type Ref } from '@hanzo/core'
+import { type IntlString, mergeIds, type Resource } from '@hanzoteam/platform'
+import tags, { tagsId } from '@hanzoteam/tags'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type FilterFunction } from '@hanzoteam/view'
+import { type Doc, type Ref } from '@hanzoteam/core'
 
 export default mergeIds(tagsId, tags, {
   component: {

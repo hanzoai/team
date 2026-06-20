@@ -14,7 +14,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SharedTelegramMessages } from '@hanzo/telegram'
+  import { SharedTelegramMessages } from '@hanzoteam/telegram'
   import Messages from './Messages.svelte'
 
   export let value: SharedTelegramMessages | undefined

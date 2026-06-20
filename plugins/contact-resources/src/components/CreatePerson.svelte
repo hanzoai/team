@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { AvatarType, Channel, combineName, ContactEvents, findPerson, Person } from '@hanzo/contact'
-  import { AttachedData, Data, generateId } from '@hanzo/core'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { createFocusManager, EditBox, FocusHandler, IconInfo, Label } from '@hanzo/ui'
+  import { AvatarType, Channel, combineName, ContactEvents, findPerson, Person } from '@hanzoteam/contact'
+  import { AttachedData, Data, generateId } from '@hanzoteam/core'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { createFocusManager, EditBox, FocusHandler, IconInfo, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import { ChannelsDropdown } from '..'
   import contact from '../plugin'
   import EditableAvatar from './EditableAvatar.svelte'
   import PersonPresenter from './PersonPresenter.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   let avatarEditor: EditableAvatar
 

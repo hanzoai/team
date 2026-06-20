@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Attachment } from '@hanzo/attachment'
-  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzo/attachment-resources'
-  import { Channel, ContactEvents, Organization, findContacts } from '@hanzo/contact'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentPresenter, AttachmentStyledBox } from '@hanzoteam/attachment-resources'
+  import { Channel, ContactEvents, Organization, findContacts } from '@hanzoteam/contact'
   import core, {
     AttachedData,
     fillDefaults,
@@ -24,17 +24,17 @@
     Ref,
     TxOperations,
     WithLookup
-  } from '@hanzo/core'
-  import { Card, createMarkup, getClient, InlineAttributeBar } from '@hanzo/presentation'
-  import { EmptyMarkup, isEmptyMarkup } from '@hanzo/text'
-  import { Button, createFocusManager, EditBox, FocusHandler, IconAttachment, IconInfo, Label } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import { Card, createMarkup, getClient, InlineAttributeBar } from '@hanzoteam/presentation'
+  import { EmptyMarkup, isEmptyMarkup } from '@hanzoteam/text'
+  import { Button, createFocusManager, EditBox, FocusHandler, IconAttachment, IconInfo, Label } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   import contact from '../plugin'
   import ChannelsDropdown from './ChannelsDropdown.svelte'
   import Company from './icons/Company.svelte'
   import OrganizationPresenter from './OrganizationPresenter.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let onCreate: ((orgId: Ref<Organization>, client: TxOperations) => Promise<void>) | undefined = undefined
 

@@ -1,4 +1,4 @@
-import { emojiGlobalRegex, shortcodeGlobalRegex, isCustomEmoji, fetchEmojis, fetchMessages } from '@hanzo/emoji'
+import { emojiGlobalRegex, shortcodeGlobalRegex, isCustomEmoji, fetchEmojis, fetchMessages } from '@hanzoteam/emoji'
 import type {
   EmojiWithGroup,
   ExtendedEmoji,
@@ -7,11 +7,11 @@ import type {
   CustomEmoji,
   TextOrEmoji,
   ParsedTextWithEmojis
-} from '@hanzo/emoji'
+} from '@hanzoteam/emoji'
 import { emojiCategories } from './types'
 import { unicodeEmojiStore, customEmojiStore, getSkinTone } from './store'
 import { get } from 'svelte/store'
-import { deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+import { deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
 
 export function updateCustomEmojis (customEmoji: CustomEmoji[]): void {
   const emoji = customEmoji.map((e) => {

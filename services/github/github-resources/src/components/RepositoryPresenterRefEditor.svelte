@@ -4,8 +4,8 @@
 //
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { IntlString, getEmbeddedLabel } from '@hanzo/platform'
+  import { Ref } from '@hanzoteam/core'
+  import { IntlString, getEmbeddedLabel } from '@hanzoteam/platform'
   import {
     Button,
     ButtonKind,
@@ -17,9 +17,9 @@
     SelectPopupValueType,
     eventToHTMLElement,
     showPopup
-  } from '@hanzo/ui'
-  import { HyperlinkEditor } from '@hanzo/view-resources'
-  import { GithubIntegrationRepository, GithubProject } from '@hanzo/github'
+  } from '@hanzoteam/ui'
+  import { HyperlinkEditor } from '@hanzoteam/view-resources'
+  import { GithubIntegrationRepository, GithubProject } from '@hanzoteam/github'
   import github from '../plugin'
   import { integrationRepositories } from './utils'
 

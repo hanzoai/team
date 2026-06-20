@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { loadMetadata } from '@hanzo/platform'
-import chat from '@hanzo/chat'
+import { loadMetadata } from '@hanzoteam/platform'
+import chat from '@hanzoteam/chat'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(chat.icon, {

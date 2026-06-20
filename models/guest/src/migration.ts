@@ -1,10 +1,10 @@
-import { guestId } from '@hanzo/guest'
+import { guestId } from '@hanzoteam/guest'
 import {
   tryMigrate,
   type MigrateOperation,
   type MigrationClient,
   type MigrationUpgradeClient
-} from '@hanzo/model'
+} from '@hanzoteam/model'
 
 export const guestOperation: MigrateOperation = {
   async migrate (client: MigrationClient, mode): Promise<void> {

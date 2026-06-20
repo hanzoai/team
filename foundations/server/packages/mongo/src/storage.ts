@@ -63,7 +63,7 @@ import core, {
   type TxUpdateDoc,
   type WithLookup,
   type WorkspaceIds
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   calcHashHash,
   type DbAdapter,
@@ -73,7 +73,7 @@ import {
   type ServerFindOptions,
   type StorageAdapter,
   type TxAdapter
-} from '@hanzo/server-core'
+} from '@hanzoteam/server-core'
 import {
   ObjectId,
   type AbstractCursor,

@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-  import { Class, type Doc, type DocumentQuery, Ref, Space, WithLookup } from '@hanzo/core'
-  import { Component, SearchEdit } from '@hanzo/ui'
-  import { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions } from '@hanzo/view'
-  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
+  import { Class, type Doc, type DocumentQuery, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { Component, SearchEdit } from '@hanzoteam/ui'
+  import { Viewlet, ViewletDescriptor, ViewletPreference, ViewOptions } from '@hanzoteam/view'
+  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hanzoteam/view-resources'
 
   // TODO: Move to Platform?
 

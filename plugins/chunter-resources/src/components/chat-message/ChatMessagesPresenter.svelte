@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc } from '@hanzo/core'
-  import { Button, ButtonKind, ButtonSize, IconThread } from '@hanzo/ui'
+  import type { Doc } from '@hanzoteam/core'
+  import { Button, ButtonKind, ButtonSize, IconThread } from '@hanzoteam/ui'
 
   import ChatMessagePopup from './ChatMessagePopup.svelte'
-  import { restrictionStore } from '@hanzo/view-resources'
+  import { restrictionStore } from '@hanzoteam/view-resources'
 
   export let value: number | undefined
   export let object: Doc

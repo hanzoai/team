@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { tooltip, eventToHTMLElement, showPopup } from '@hanzo/ui'
+  import { tooltip, eventToHTMLElement, showPopup } from '@hanzoteam/ui'
 
   import love from '../plugin'
   import { isShareWithSound, liveKitClient } from '../utils'

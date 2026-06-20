@@ -15,10 +15,10 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
 
-  import { Component } from '@hanzo/tracker'
+  import { Component } from '@hanzoteam/tracker'
   import tracker from '../../../plugin'
-  import { Ref } from '@hanzo/core'
-  import { Icon, IconCheck, Label, Scroller } from '@hanzo/ui'
+  import { Ref } from '@hanzoteam/core'
+  import { Icon, IconCheck, Label, Scroller } from '@hanzoteam/ui'
   import ComponentPresenter from '../../components/ComponentPresenter.svelte'
 
   export let components: Component[] | undefined

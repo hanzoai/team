@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type Data, type Ref, TxOperations } from '@hanzo/core'
-import type { ColorDefinition } from '@hanzo/ui'
-import { getMetadata, getResource } from '@hanzo/platform'
+import { type Data, type Ref, TxOperations } from '@hanzoteam/core'
+import type { ColorDefinition } from '@hanzoteam/ui'
+import { getMetadata, getResource } from '@hanzoteam/platform'
 import contact, { AvatarInfo, AvatarProvider, getAvatarProviderId, getFirstName, getLastName } from '.'
 
 export interface AvatarUrlInfo {

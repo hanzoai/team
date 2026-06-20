@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type Blob, type Ref } from '@hanzo/core'
+import { type Blob, type Ref } from '@hanzoteam/core'
 import { HocuspocusProvider, type HocuspocusProviderConfiguration } from '@hocuspocus/provider'
 import { type Provider } from './types'
 

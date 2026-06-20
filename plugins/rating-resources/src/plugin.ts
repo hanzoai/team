@@ -11,9 +11,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { mergeIds } from '@hanzo/platform'
-import rating, { ratingId } from '@hanzo/rating'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import { mergeIds } from '@hanzoteam/platform'
+import rating, { ratingId } from '@hanzoteam/rating'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 export default mergeIds(ratingId, rating, {
   component: {
     RatingEditor: '' as AnyComponent

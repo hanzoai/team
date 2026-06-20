@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type UpdateContentRequest, type UpdateContentResponse } from '@hanzo/collaborator-client'
-import { MeasureContext } from '@hanzo/core'
+import { type UpdateContentRequest, type UpdateContentResponse } from '@hanzoteam/collaborator-client'
+import { MeasureContext } from '@hanzoteam/core'
 import { applyUpdate, encodeStateAsUpdate } from 'yjs'
 import { Context } from '../../context'
 import { RpcMethodParams } from '../rpc'

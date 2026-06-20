@@ -14,7 +14,7 @@
 -->
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Button, IconClose, IconMoreH, TimeShiftPresenter } from '@hanzo/ui'
+  import { Button, IconClose, IconMoreH, TimeShiftPresenter } from '@hanzoteam/ui'
 
   export let reminder: number
   export let disabled: boolean = false

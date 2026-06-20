@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, WithLookup } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { Milestone } from '@hanzo/tracker'
-  import { Button, IconAdd, SearchInput, TabItem, Switcher, showPopup, Header, Breadcrumbs } from '@hanzo/ui'
-  import { ViewOptions, Viewlet } from '@hanzo/view'
-  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hanzo/view-resources'
+  import { DocumentQuery, WithLookup } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Milestone } from '@hanzoteam/tracker'
+  import { Button, IconAdd, SearchInput, TabItem, Switcher, showPopup, Header, Breadcrumbs } from '@hanzoteam/ui'
+  import { ViewOptions, Viewlet } from '@hanzoteam/view'
+  import { FilterBar, FilterButton, ViewletSelector, ViewletSettingButton } from '@hanzoteam/view-resources'
   import tracker from '../../plugin'
   import { MilestoneViewMode, getIncludedMilestoneStatuses, milestoneTitleMap } from '../../utils'
   import MilestoneContent from './MilestoneContent.svelte'

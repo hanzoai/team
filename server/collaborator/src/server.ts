@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { MeasureContext, generateId, metricsAggregate } from '@hanzo/core'
-import type { StorageAdapter } from '@hanzo/server-core'
-import { Token, TokenError, decodeToken } from '@hanzo/server-token'
+import { Analytics } from '@hanzoteam/analytics'
+import { MeasureContext, generateId, metricsAggregate } from '@hanzoteam/core'
+import type { StorageAdapter } from '@hanzoteam/server-core'
+import { Token, TokenError, decodeToken } from '@hanzoteam/server-token'
 import { Hocuspocus } from '@hocuspocus/server'
 import bp from 'body-parser'
 import cors from 'cors'

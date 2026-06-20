@@ -14,10 +14,10 @@
 // limitations under the License.
 //
 
-import activity, { ActivityMessage, DocUpdateMessage } from '@hanzo/activity'
-import { Analytics } from '@hanzo/analytics'
-import chunter, { ChatMessage } from '@hanzo/chunter'
-import contact, { Employee, type Person } from '@hanzo/contact'
+import activity, { ActivityMessage, DocUpdateMessage } from '@hanzoteam/activity'
+import { Analytics } from '@hanzoteam/analytics'
+import chunter, { ChatMessage } from '@hanzoteam/chunter'
+import contact, { Employee, type Person } from '@hanzoteam/contact'
 import core, {
   AccountUuid,
   AnyAttribute,
@@ -49,7 +49,7 @@ import core, {
   TxRemoveDoc,
   TxUpdateDoc,
   getClassCollaborators
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import notification, {
   ActivityInboxNotification,
   CommonInboxNotification,
@@ -57,12 +57,12 @@ import notification, {
   InboxNotification,
   MentionInboxNotification,
   NotificationType
-} from '@hanzo/notification'
-import { getResource, translate } from '@hanzo/platform'
-import { getAccountBySocialId, getEmployeesBySocialIds } from '@hanzo/server-contact'
-import { type TriggerControl } from '@hanzo/server-core'
-import { NOTIFICATION_BODY_SIZE, ReceiverInfo, SenderInfo } from '@hanzo/server-notification'
-import { markupToText, stripTags } from '@hanzo/text-core'
+} from '@hanzoteam/notification'
+import { getResource, translate } from '@hanzoteam/platform'
+import { getAccountBySocialId, getEmployeesBySocialIds } from '@hanzoteam/server-contact'
+import { type TriggerControl } from '@hanzoteam/server-core'
+import { NOTIFICATION_BODY_SIZE, ReceiverInfo, SenderInfo } from '@hanzoteam/server-notification'
+import { markupToText, stripTags } from '@hanzoteam/text-core'
 
 import { PushNotificationsHandler } from './push'
 import {

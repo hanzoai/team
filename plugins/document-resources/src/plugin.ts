@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import document, { documentId, type Document } from '@hanzo/document'
-import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
-import { type AnyComponent, type Location } from '@hanzo/ui/src/types'
+import { type Client, type Doc, type Ref } from '@hanzoteam/core'
+import document, { documentId, type Document } from '@hanzoteam/document'
+import { mergeIds, type IntlString, type Resource } from '@hanzoteam/platform'
+import { type AnyComponent, type Location } from '@hanzoteam/ui/src/types'
 
 export default mergeIds(documentId, document, {
   component: {

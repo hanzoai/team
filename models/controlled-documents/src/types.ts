@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import request from '@hanzo/request'
+import request from '@hanzoteam/request'
 import {
   type ChangeControl,
   type ControlledDocument,
@@ -39,10 +39,10 @@ import {
   type DocumentTraining,
   type DocumentSnapshot,
   type ControlledDocumentSnapshot
-} from '@hanzo/controlled-documents'
-import { TRequest } from '@hanzo/model-request'
-import { type Attachment } from '@hanzo/attachment'
-import contact, { type Employee } from '@hanzo/contact'
+} from '@hanzoteam/controlled-documents'
+import { TRequest } from '@hanzoteam/model-request'
+import { type Attachment } from '@hanzoteam/attachment'
+import contact, { type Employee } from '@hanzoteam/contact'
 import {
   DateRangeMode,
   IndexKind,
@@ -58,7 +58,7 @@ import {
   type RolesAssignment,
   type Rank,
   type AccountUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import {
   ArrOf,
   Collection,
@@ -77,9 +77,9 @@ import {
   TypeMarkup,
   ReadOnly,
   TypeRank
-} from '@hanzo/model'
-import attachment from '@hanzo/model-attachment'
-import chunter, { TChatMessage } from '@hanzo/model-chunter'
+} from '@hanzoteam/model'
+import attachment from '@hanzoteam/model-attachment'
+import chunter, { TChatMessage } from '@hanzoteam/model-chunter'
 import core, {
   TAttachedDoc,
   TDoc,
@@ -87,11 +87,11 @@ import core, {
   TType,
   TSpaceTypeDescriptor,
   TSpaceType
-} from '@hanzo/model-core'
-import { getEmbeddedLabel } from '@hanzo/platform'
-import tags, { type TagReference } from '@hanzo/tags'
-import time, { type ToDo } from '@hanzo/time'
-import training, { type Training, type TrainingRequest } from '@hanzo/training'
+} from '@hanzoteam/model-core'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
+import tags, { type TagReference } from '@hanzoteam/tags'
+import time, { type ToDo } from '@hanzoteam/time'
+import training, { type Training, type TrainingRequest } from '@hanzoteam/training'
 
 import documents from './plugin'
 

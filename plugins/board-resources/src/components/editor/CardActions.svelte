@@ -14,11 +14,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Card } from '@hanzo/board'
-  import { getClient } from '@hanzo/presentation'
-  import { CheckBox, Label } from '@hanzo/ui'
-  import { statusStore } from '@hanzo/view-resources'
-  import core, { Status, TxProcessor } from '@hanzo/core'
+  import type { Card } from '@hanzoteam/board'
+  import { getClient } from '@hanzoteam/presentation'
+  import { CheckBox, Label } from '@hanzoteam/ui'
+  import { statusStore } from '@hanzoteam/view-resources'
+  import core, { Status, TxProcessor } from '@hanzoteam/core'
   import board from '../../plugin'
 
   export let value: Card

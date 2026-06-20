@@ -14,9 +14,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Hierarchy, Ref, mergeQueries } from '@hanzo/core'
-  import { Asset, IntlString } from '@hanzo/platform'
-  import presentation, { ObjectCreate, getClient } from '@hanzo/presentation'
+  import { Class, Doc, DocumentQuery, FindOptions, Hierarchy, Ref, mergeQueries } from '@hanzoteam/core'
+  import { Asset, IntlString } from '@hanzoteam/platform'
+  import presentation, { ObjectCreate, getClient } from '@hanzoteam/presentation'
   import {
     ActionIcon,
     AnySvelteComponent,
@@ -28,8 +28,8 @@
     getEventPositionElement,
     getFocusManager,
     showPopup
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import ObjectBoxPopup from './ObjectBoxPopup.svelte'
   import ObjectPresenter from './ObjectPresenter.svelte'

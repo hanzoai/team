@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { DOMAIN_MODEL_TX, TxOperations, type Ref, type Status } from '@hanzo/core'
-import { leadId, type Lead } from '@hanzo/lead'
+import { DOMAIN_MODEL_TX, TxOperations, type Ref, type Status } from '@hanzoteam/core'
+import { leadId, type Lead } from '@hanzoteam/lead'
 import {
   tryMigrate,
   tryUpgrade,
@@ -22,11 +22,11 @@ import {
   type MigrationClient,
   type MigrationUpgradeClient,
   type ModelLogger
-} from '@hanzo/model'
-import core, { DOMAIN_SPACE } from '@hanzo/model-core'
+} from '@hanzoteam/model'
+import core, { DOMAIN_SPACE } from '@hanzoteam/model-core'
 
-import { DOMAIN_CONTACT } from '@hanzo/model-contact'
-import task, { createSequence, DOMAIN_TASK, migrateDefaultStatusesBase } from '@hanzo/model-task'
+import { DOMAIN_CONTACT } from '@hanzoteam/model-contact'
+import task, { createSequence, DOMAIN_TASK, migrateDefaultStatusesBase } from '@hanzoteam/model-task'
 
 import lead from './plugin'
 import { defaultLeadStatuses } from './spaceType'

@@ -14,16 +14,16 @@
 -->
 
 <script lang="ts">
-  import { getCurrentEmployee } from '@hanzo/contact'
-  import type { DocumentQuery, IdMap, Ref, WithLookup } from '@hanzo/core'
-  import { SortingOrder, toIdMap } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import type { TagElement } from '@hanzo/tags'
-  import tags from '@hanzo/tags'
-  import type { ToDo, WorkSlot } from '@hanzo/time'
-  import type { Project } from '@hanzo/tracker'
-  import tracker from '@hanzo/tracker'
+  import { getCurrentEmployee } from '@hanzoteam/contact'
+  import type { DocumentQuery, IdMap, Ref, WithLookup } from '@hanzoteam/core'
+  import { SortingOrder, toIdMap } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import type { TagElement } from '@hanzoteam/tags'
+  import tags from '@hanzoteam/tags'
+  import type { ToDo, WorkSlot } from '@hanzoteam/time'
+  import type { Project } from '@hanzoteam/tracker'
+  import tracker from '@hanzoteam/tracker'
   import {
     ButtonIcon,
     Header,
@@ -35,8 +35,8 @@
     defaultSP,
     deviceOptionsStore as deviceInfo,
     todosSP
-  } from '@hanzo/ui'
-  import view from '@hanzo/view-resources/src/plugin'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import type { ToDosMode } from '..'
   import time from '../plugin'
   import { getNearest } from '../utils'

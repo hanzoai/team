@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { Component } from '@hanzo/tracker'
+  import { DocumentQuery } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { Component } from '@hanzoteam/tracker'
   import tracker from '../../plugin'
   import { ComponentsFilterMode } from '../../utils'
   import ComponentBrowser from './ComponentBrowser.svelte'

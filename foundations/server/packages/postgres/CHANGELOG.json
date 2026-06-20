@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/postgres",
+  "name": "@hanzoteam/postgres",
   "entries": [
     {
       "version": "0.7.21",
@@ -25,7 +25,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `^0.7.17` to `0.7.18`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `^0.7.17` to `0.7.18`"
           }
         ]
       }
@@ -54,7 +54,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `^0.7.16` to `0.7.17`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `^0.7.16` to `0.7.17`"
           }
         ]
       }
@@ -95,7 +95,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `^0.7.14` to `0.7.15`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `^0.7.14` to `0.7.15`"
           }
         ]
       }
@@ -112,7 +112,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.7` to `0.7.8`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.7` to `0.7.8`"
           }
         ]
       }
@@ -141,7 +141,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.6` to `0.7.7`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.6` to `0.7.7`"
           }
         ]
       }
@@ -158,7 +158,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.5` to `0.7.6`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.5` to `0.7.6`"
           }
         ]
       }
@@ -170,7 +170,7 @@
       "comments": {
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.4` to `0.7.5`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.4` to `0.7.5`"
           }
         ]
       }
@@ -187,7 +187,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.3` to `0.7.4`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.3` to `0.7.4`"
           }
         ]
       }
@@ -204,7 +204,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.2` to `0.7.3`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.2` to `0.7.3`"
           }
         ]
       }
@@ -221,7 +221,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.1` to `0.7.2`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.1` to `0.7.2`"
           }
         ]
       }
@@ -238,7 +238,7 @@
         ],
         "dependency": [
           {
-            "comment": "Updating dependency \"@hanzo/server-core\" from `0.7.0` to `0.7.1`"
+            "comment": "Updating dependency \"@hanzoteam/server-core\" from `0.7.0` to `0.7.1`"
           }
         ]
       }

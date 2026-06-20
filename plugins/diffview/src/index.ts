@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import type { IntlString, Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { AnyComponent } from '@hanzo/ui'
+import type { IntlString, Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { AnyComponent } from '@hanzoteam/ui'
 
 export * from './types'
 

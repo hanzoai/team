@@ -13,9 +13,9 @@
 // limitations under the License.
 //
 
-import { type IntlString, mergeIds } from '@hanzo/platform'
-import { hanzoMailId } from '@hanzo/hanzo-mail'
-import hanzoMail from '@hanzo/hanzo-mail-resources/src/plugin'
+import { type IntlString, mergeIds } from '@hanzoteam/platform'
+import { hanzoMailId } from '@hanzoteam/hanzo-mail'
+import hanzoMail from '@hanzoteam/hanzo-mail-resources/src/plugin'
 
 export default mergeIds(hanzoMailId, hanzoMail, {
   string: {

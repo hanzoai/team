@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { type Client, type Doc, type Ref } from '@hanzo/core'
-import { type NotificationType, type NotificationGroup } from '@hanzo/notification'
-import { type Resource, mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import { type ActionCategory, type ViewAction } from '@hanzo/view'
-import { loveId } from '@hanzo/love'
-import love from '@hanzo/love-resources/src/plugin'
-import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzo/model-presentation'
+import { type Client, type Doc, type Ref } from '@hanzoteam/core'
+import { type NotificationType, type NotificationGroup } from '@hanzoteam/notification'
+import { type Resource, mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import { type ActionCategory, type ViewAction } from '@hanzoteam/view'
+import { loveId } from '@hanzoteam/love'
+import love from '@hanzoteam/love-resources/src/plugin'
+import { type ObjectSearchCategory, type ObjectSearchFactory } from '@hanzoteam/model-presentation'
 
 export default mergeIds(loveId, love, {
   component: {

@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { combineName, getFirstName, getLastName } from '@hanzo/contact'
-  import { ChannelsEditor, EditableAvatar, myEmployeeStore } from '@hanzo/contact-resources'
-  import { AccountRole, getCurrentAccount, SocialIdType } from '@hanzo/core'
-  import login, { loginId } from '@hanzo/login'
-  import platform, { getResource, PlatformError } from '@hanzo/platform'
-  import { AttributeEditor, createQuery, getClient, hasResource, MessageBox } from '@hanzo/presentation'
+  import contact, { combineName, getFirstName, getLastName } from '@hanzoteam/contact'
+  import { ChannelsEditor, EditableAvatar, myEmployeeStore } from '@hanzoteam/contact-resources'
+  import { AccountRole, getCurrentAccount, SocialIdType } from '@hanzoteam/core'
+  import login, { loginId } from '@hanzoteam/login'
+  import platform, { getResource, PlatformError } from '@hanzoteam/platform'
+  import { AttributeEditor, createQuery, getClient, hasResource, MessageBox } from '@hanzoteam/presentation'
   import {
     Breadcrumb,
     Button,
@@ -30,10 +30,10 @@
     navigate,
     Scroller,
     showPopup
-  } from '@hanzo/ui'
-  import { logIn, logOut } from '@hanzo/workbench-resources'
+  } from '@hanzoteam/ui'
+  import { logIn, logOut } from '@hanzoteam/workbench-resources'
 
-  import rating, { type PersonRating } from '@hanzo/rating'
+  import rating, { type PersonRating } from '@hanzoteam/rating'
   import setting from '../plugin'
   import SocialIdsEditor from './socialIds/SocialIdsEditor.svelte'
 
@@ -122,7 +122,7 @@
 
 <FocusHandler {manager} />
 
-<div class="hulyComponent">
+<div class="hanzoaiComponent">
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.AccountSettings} label={setting.string.AccountSettings} size={'large'} isCurrent />
   </Header>

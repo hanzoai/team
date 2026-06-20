@@ -15,23 +15,23 @@
 //
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
-  import attachment, { Attachment } from '@hanzo/attachment'
-  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hanzo/core'
-  import { Document, DocumentEvents, Teamspace } from '@hanzo/document'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource, setPlatformStatus, unknownError } from '@hanzo/platform'
+  import { Analytics } from '@hanzoteam/analytics'
+  import attachment, { Attachment } from '@hanzoteam/attachment'
+  import core, { Doc, Ref, WithLookup, generateId, type Blob } from '@hanzoteam/core'
+  import { Document, DocumentEvents, Teamspace } from '@hanzoteam/document'
+  import notification from '@hanzoteam/notification'
+  import { Panel } from '@hanzoteam/panel'
+  import { getResource, setPlatformStatus, unknownError } from '@hanzoteam/platform'
   import {
     ComponentExtensions,
     IconWithEmoji,
     copyTextToClipboard,
     createQuery,
     getClient
-  } from '@hanzo/presentation'
-  import tags from '@hanzo/tags'
-  import { Heading } from '@hanzo/text-editor'
-  import { TableOfContents } from '@hanzo/text-editor-resources'
+  } from '@hanzoteam/presentation'
+  import tags from '@hanzoteam/tags'
+  import { Heading } from '@hanzoteam/text-editor'
+  import { TableOfContents } from '@hanzoteam/text-editor-resources'
   import TeamspacePresenter from './teamspace/TeamspacePresenter.svelte'
 
   import {
@@ -46,8 +46,8 @@
     getPlatformColorDef,
     showPopup,
     themeStore
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import {
     ClassAttributeBar,
     IconPicker,
@@ -55,7 +55,7 @@
     RelationsEditor,
     restrictionStore,
     showMenu
-  } from '@hanzo/view-resources'
+  } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
 
   import { unlockContent } from '..'

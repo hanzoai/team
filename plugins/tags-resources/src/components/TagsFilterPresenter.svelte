@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { TagElement } from '@hanzo/tags'
+  import { Ref } from '@hanzoteam/core'
+  import { TagElement } from '@hanzoteam/tags'
   import TagFilterPresenter from './TagFilterPresenter.svelte'
-  import { createQuery } from '@hanzo/presentation'
+  import { createQuery } from '@hanzoteam/presentation'
   import tags from '../plugin'
   import CollapsedTags from './CollapsedTags.svelte'
 

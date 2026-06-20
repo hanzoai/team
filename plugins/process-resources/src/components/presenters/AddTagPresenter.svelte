@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Tag } from '@hanzo/card'
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { MethodParams, Step } from '@hanzo/process'
-  import { Label } from '@hanzo/ui'
+  import { Tag } from '@hanzoteam/card'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { MethodParams, Step } from '@hanzoteam/process'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../../plugin'
 
   export let step: Step<Tag>

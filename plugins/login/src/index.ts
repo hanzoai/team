@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { AccountRole, Person, type WorkspaceUuid, WorkspaceInfoWithStatus } from '@hanzo/core'
-import type { Asset, IntlString, Metadata, Plugin, Resource, Status } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import type { AnyComponent } from '@hanzo/ui'
-import type { LoginInfo, WorkspaceLoginInfo } from '@hanzo/account-client'
+import { AccountRole, Person, type WorkspaceUuid, WorkspaceInfoWithStatus } from '@hanzoteam/core'
+import type { Asset, IntlString, Metadata, Plugin, Resource, Status } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import type { AnyComponent } from '@hanzoteam/ui'
+import type { LoginInfo, WorkspaceLoginInfo } from '@hanzoteam/account-client'
 
-export type { LoginInfo, WorkspaceLoginInfo, OtpInfo, RegionInfo } from '@hanzo/account-client'
+export type { LoginInfo, WorkspaceLoginInfo, OtpInfo, RegionInfo } from '@hanzoteam/account-client'
 
 /**
  * @public

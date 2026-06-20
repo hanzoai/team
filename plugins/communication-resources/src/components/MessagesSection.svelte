@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { Card } from '@hanzo/card'
-  import { NotificationContext } from '@hanzo/communication-types'
+  import { Card } from '@hanzoteam/card'
+  import { NotificationContext } from '@hanzoteam/communication-types'
   import { createEventDispatcher, onMount } from 'svelte'
 
   import MessagesList from './MessagesList.svelte'

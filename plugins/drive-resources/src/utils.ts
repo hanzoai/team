@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type Ref, type Space, toIdMap } from '@hanzo/core'
+import { type Class, type Doc, type Ref, type Space, toIdMap } from '@hanzoteam/core'
 import drive, {
   type Drive,
   type FileVersion,
@@ -23,24 +23,24 @@ import drive, {
   createFile,
   createFolder,
   DriveEvents
-} from '@hanzo/drive'
-import { type Asset, setPlatformStatus, unknownError } from '@hanzo/platform'
-import { getClient } from '@hanzo/presentation'
-import { type AnySvelteComponent, showPopup } from '@hanzo/ui'
+} from '@hanzoteam/drive'
+import { type Asset, setPlatformStatus, unknownError } from '@hanzoteam/platform'
+import { getClient } from '@hanzoteam/presentation'
+import { type AnySvelteComponent, showPopup } from '@hanzoteam/ui'
 import {
   type FileUploadCallback,
   type FileUploadOptions,
   getDataTransferFiles,
   showFilesUploadPopup,
   uploadFiles
-} from '@hanzo/uploader'
-import { openDoc } from '@hanzo/view-resources'
+} from '@hanzoteam/uploader'
+import { openDoc } from '@hanzoteam/view-resources'
 
 import CreateDrive from './components/CreateDrive.svelte'
 import CreateFolder from './components/CreateFolder.svelte'
 import RenamePopup from './components/RenamePopup.svelte'
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import FileTypeAudio from './components/icons/FileTypeAudio.svelte'
 import FileTypeImage from './components/icons/FileTypeImage.svelte'
 import FileTypePdf from './components/icons/FileTypePdf.svelte'

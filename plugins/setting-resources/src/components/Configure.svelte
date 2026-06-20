@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { PluginConfiguration, systemAccountUuid } from '@hanzo/core'
+  import { PluginConfiguration, systemAccountUuid } from '@hanzoteam/core'
   import {
     createQuery,
     getClient,
@@ -21,9 +21,9 @@
     hasResource,
     isDisabled,
     isAdminUser
-  } from '@hanzo/presentation'
-  import ratingPlugin, { getRaiting, type PersonRating } from '@hanzo/rating'
-  import { Breadcrumb, Button, Header, Icon, IconInfo, Label, Scroller } from '@hanzo/ui'
+  } from '@hanzoteam/presentation'
+  import ratingPlugin, { getRaiting, type PersonRating } from '@hanzoteam/rating'
+  import { Breadcrumb, Button, Header, Icon, IconInfo, Label, Scroller } from '@hanzoteam/ui'
   import setting from '../plugin'
 
   const client = getClient()

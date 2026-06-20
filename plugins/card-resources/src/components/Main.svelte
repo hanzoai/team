@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { MasterTag } from '@hanzo/card'
-  import { Class, Doc, Ref, Space } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery, IconWithEmoji } from '@hanzo/presentation'
-  import { location } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { SpecialView } from '@hanzo/workbench-resources'
+  import { MasterTag } from '@hanzoteam/card'
+  import { Class, Doc, Ref, Space } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery, IconWithEmoji } from '@hanzoteam/presentation'
+  import { location } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { SpecialView } from '@hanzoteam/workbench-resources'
   import { onDestroy } from 'svelte'
   import card from '../plugin'
 

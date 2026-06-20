@@ -13,20 +13,20 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { Doc, Ref, Space } from '@hanzo/core'
-  import core from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import preference from '@hanzo/preference'
-  import { getClient } from '@hanzo/presentation'
-  import { Action, IconEdit } from '@hanzo/ui'
+  import type { Doc, Ref, Space } from '@hanzoteam/core'
+  import core from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import preference from '@hanzoteam/preference'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Action, IconEdit } from '@hanzoteam/ui'
   import {
     NavLink,
     TreeItem,
     getActions as getContributedActions,
     getSpacePresenter,
     classIcon
-  } from '@hanzo/view-resources'
-  import { SpacesNavModel } from '@hanzo/workbench'
+  } from '@hanzoteam/view-resources'
+  import { SpacesNavModel } from '@hanzoteam/workbench'
   import { getSpaceName } from '../../utils'
 
   export let space: Space

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { RetryOptions } from '@hanzo/retry'
+import { RetryOptions } from '@hanzoteam/retry'
 
 export interface HanzolakeClient {
   head: (workspace: string, key: string, retryOptions?: RetryOptions) => Promise<HanzoResponse<void>>

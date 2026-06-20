@@ -1,5 +1,5 @@
-import { type AccountDB, getLoginInfoByToken } from '@hanzo/account'
-import { BrandingMap, concatLink, MeasureContext, getBranding } from '@hanzo/core'
+import { type AccountDB, getLoginInfoByToken } from '@hanzoteam/account'
+import { BrandingMap, concatLink, MeasureContext, getBranding } from '@hanzoteam/core'
 import Router from 'koa-router'
 import qs from 'querystringify'
 import { Strategy as CustomStrategy } from 'passport-custom'

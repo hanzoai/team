@@ -1,7 +1,7 @@
 //
 // Copyright © 2024 Hanzo AI Inc.
 //
-import { MeasureLogger, ParamsType } from '@hanzo/core'
+import { MeasureLogger, ParamsType } from '@hanzoteam/core'
 import { basename, dirname, join } from 'path'
 import winston from 'winston'
 import DailyRotateFile from 'winston-daily-rotate-file'

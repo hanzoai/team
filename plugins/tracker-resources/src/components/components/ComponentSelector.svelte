@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { DocumentQuery, Ref, SortingOrder } from '@hanzo/core'
-  import { IntlString } from '@hanzo/platform'
-  import { createQuery } from '@hanzo/presentation'
-  import { Component } from '@hanzo/tracker'
-  import type { ButtonKind, ButtonSize, LabelAndProps, SelectPopupValueType } from '@hanzo/ui'
-  import { Button, ButtonShape, SelectPopup, eventToHTMLElement, showPopup, PopupResult } from '@hanzo/ui'
+  import { DocumentQuery, Ref, SortingOrder } from '@hanzoteam/core'
+  import { IntlString } from '@hanzoteam/platform'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { Component } from '@hanzoteam/tracker'
+  import type { ButtonKind, ButtonSize, LabelAndProps, SelectPopupValueType } from '@hanzoteam/ui'
+  import { Button, ButtonShape, SelectPopup, eventToHTMLElement, showPopup, PopupResult } from '@hanzoteam/ui'
   import tracker from '../../plugin'
   import ComponentPresenter from './ComponentPresenter.svelte'
 

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import type { TaskType } from '@hanzo/task'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { TaskType } from '@hanzoteam/task'
   import { taskTypeStore, typeStore, selectedTypeStore } from '../../'
   import TaskTypeIcon from './TaskTypeIcon.svelte'
 

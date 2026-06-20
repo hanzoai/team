@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Type } from '@hanzo/core'
-  import { TypeBoolean } from '@hanzo/model'
-  import { Label, Toggle } from '@hanzo/ui'
-  import { BooleanEditor } from '@hanzo/view-resources'
+  import core, { AnyAttribute, Type } from '@hanzoteam/core'
+  import { TypeBoolean } from '@hanzoteam/model'
+  import { Label, Toggle } from '@hanzoteam/ui'
+  import { BooleanEditor } from '@hanzoteam/view-resources'
   import { createEventDispatcher, onMount } from 'svelte'
   import setting from '../../plugin'
 

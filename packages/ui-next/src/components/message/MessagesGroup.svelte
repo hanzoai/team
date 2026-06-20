@@ -14,9 +14,9 @@
 -->
 
 <script lang="ts">
-  import { getCurrentAccount, Timestamp } from '@hanzo/core'
-  import { Message } from '@hanzo/communication-types'
-  import { Card } from '@hanzo/card'
+  import { getCurrentAccount, Timestamp } from '@hanzoteam/core'
+  import { Message } from '@hanzoteam/communication-types'
+  import { Card } from '@hanzoteam/card'
 
   import DateSeparator from '../DateSeparator.svelte'
   import MessagePresenter from './MessagePresenter.svelte'

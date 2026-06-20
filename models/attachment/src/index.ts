@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
+import activity from '@hanzoteam/activity'
 import type {
   Attachment,
   AttachmentMetadata,
@@ -21,8 +21,8 @@ import type {
   Embedding,
   Photo,
   SavedAttachments
-} from '@hanzo/attachment'
-import { AccountRole, IndexKind, type Blob, type Class, type Doc, type Domain, type Ref } from '@hanzo/core'
+} from '@hanzoteam/attachment'
+import { AccountRole, IndexKind, type Blob, type Class, type Doc, type Domain, type Ref } from '@hanzoteam/core'
 import {
   Hidden,
   Index,
@@ -35,17 +35,17 @@ import {
   TypeTimestamp,
   UX,
   type Builder
-} from '@hanzo/model'
-import core, { TAttachedDoc, TDoc } from '@hanzo/model-core'
-import preference, { TPreference } from '@hanzo/model-preference'
-import view, { createAction } from '@hanzo/model-view'
-import workbench, { WidgetType } from '@hanzo/workbench'
-import { getEmbeddedLabel } from '@hanzo/platform'
-import presentation from '@hanzo/model-presentation'
+} from '@hanzoteam/model'
+import core, { TAttachedDoc, TDoc } from '@hanzoteam/model-core'
+import preference, { TPreference } from '@hanzoteam/model-preference'
+import view, { createAction } from '@hanzoteam/model-view'
+import workbench, { WidgetType } from '@hanzoteam/workbench'
+import { getEmbeddedLabel } from '@hanzoteam/platform'
+import presentation from '@hanzoteam/model-presentation'
 
 import attachment from './plugin'
 
-export { attachmentId } from '@hanzo/attachment'
+export { attachmentId } from '@hanzoteam/attachment'
 export { attachmentOperation } from './migration'
 
 export const DOMAIN_ATTACHMENT = 'attachment' as Domain

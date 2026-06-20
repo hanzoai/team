@@ -22,11 +22,11 @@ import {
   type EditorMode,
   type Project,
   type ProjectDocument
-} from '@hanzo/controlled-documents'
-import { type Attachment } from '@hanzo/attachment'
-import { type Class, type Ref, type WithLookup } from '@hanzo/core'
-import { type PopupAlignment } from '@hanzo/ui'
-import type { Training } from '@hanzo/training'
+} from '@hanzoteam/controlled-documents'
+import { type Attachment } from '@hanzoteam/attachment'
+import { type Class, type Ref, type WithLookup } from '@hanzoteam/core'
+import { type PopupAlignment } from '@hanzoteam/ui'
+import type { Training } from '@hanzoteam/training'
 import { createEvent } from 'effector'
 
 const generateActionName = (action: string): string => `documents/actions/${action}`

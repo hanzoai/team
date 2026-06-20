@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
-import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzo/analytics-service'
-import { newMetrics } from '@hanzo/core'
-import { setMetadata } from '@hanzo/platform'
-import serverClient from '@hanzo/server-client'
-import { initStatisticsContext } from '@hanzo/server-core'
-import serverToken from '@hanzo/server-token'
+import { Analytics } from '@hanzoteam/analytics'
+import { configureAnalytics, createOpenTelemetryMetricsContext, SplitLogger } from '@hanzoteam/analytics-service'
+import { newMetrics } from '@hanzoteam/core'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClient from '@hanzoteam/server-client'
+import { initStatisticsContext } from '@hanzoteam/server-core'
+import serverToken from '@hanzoteam/server-token'
 import { join } from 'path'
 import config from './config'
 import { createServer, listen } from './server'

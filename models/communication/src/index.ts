@@ -11,14 +11,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
 import communication from './plugin'
 import { buildTypes } from './types'
 import { buildCardActions, buildMessageActions } from './actions'
 import { buildApplets } from './applets'
 
-export { communicationId } from '@hanzo/communication'
+export { communicationId } from '@hanzoteam/communication'
 export * from './migration'
 
 export function createModel (builder: Builder): void {

@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { MethodParams, Process } from '@hanzo/process'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { MethodParams, Process } from '@hanzoteam/process'
   import { createEventDispatcher } from 'svelte'
   import ProcessAttributeEditor from './ProcessAttributeEditor.svelte'
 

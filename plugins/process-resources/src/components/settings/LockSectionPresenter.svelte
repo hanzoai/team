@@ -14,8 +14,8 @@
 -->
 
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
   import plugin from '../../plugin'
 
   export let params: Record<string, any>

@@ -17,9 +17,9 @@ import {
   type CreateContentRequest,
   type CreateContentResponse,
   decodeDocumentId
-} from '@hanzo/collaborator-client'
-import { saveCollabJson } from '@hanzo/collaboration'
-import { type Blob, type Ref, MeasureContext } from '@hanzo/core'
+} from '@hanzoteam/collaborator-client'
+import { saveCollabJson } from '@hanzoteam/collaboration'
+import { type Blob, type Ref, MeasureContext } from '@hanzoteam/core'
 import { Context } from '../../context'
 import { RpcMethodParams } from '../rpc'
 

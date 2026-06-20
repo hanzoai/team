@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { TxOperations } from '@hanzo/core'
+import { TxOperations } from '@hanzoteam/core'
 import {
   type MigrateOperation,
   type MigrationClient,
@@ -22,10 +22,10 @@ import {
   tryMigrate,
   tryUpgrade,
   createDefaultSpace
-} from '@hanzo/model'
-import core from '@hanzo/model-core'
-import tags from '@hanzo/tags'
-import { timeId, ToDoPriority } from '@hanzo/time'
+} from '@hanzoteam/model'
+import core from '@hanzoteam/model-core'
+import tags from '@hanzoteam/tags'
+import { timeId, ToDoPriority } from '@hanzoteam/time'
 import { DOMAIN_TIME } from '.'
 import time from './plugin'
 

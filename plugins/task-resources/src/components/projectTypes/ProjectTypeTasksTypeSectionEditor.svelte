@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { SortingOrder } from '@hanzo/core'
-  import { ButtonIcon, IconAdd, Label, getCurrentResolvedLocation, navigate } from '@hanzo/ui'
-  import { createQuery } from '@hanzo/presentation'
-  import { ProjectType, ProjectTypeDescriptor, TaskType } from '@hanzo/task'
-  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
+  import { SortingOrder } from '@hanzoteam/core'
+  import { ButtonIcon, IconAdd, Label, getCurrentResolvedLocation, navigate } from '@hanzoteam/ui'
+  import { createQuery } from '@hanzoteam/presentation'
+  import { ProjectType, ProjectTypeDescriptor, TaskType } from '@hanzoteam/task'
+  import { clearSettingsStore, settingsStore } from '@hanzoteam/setting-resources'
 
   import IconLayers from '../icons/Layers.svelte'
   import TaskTypeIcon from '../taskTypes/TaskTypeIcon.svelte'

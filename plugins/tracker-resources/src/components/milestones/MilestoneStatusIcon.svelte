@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Milestone } from '@hanzo/tracker'
-  import { ButtonSize, Icon } from '@hanzo/ui'
+  import { Milestone } from '@hanzoteam/tracker'
+  import { ButtonSize, Icon } from '@hanzoteam/ui'
   import { milestoneStatusAssets } from '../../utils'
   import tracker from '../../plugin'
 

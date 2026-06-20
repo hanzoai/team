@@ -2,7 +2,7 @@
 // Copyright © 2023 Hanzo AI Inc.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 import { trainingChangeOwnerAction } from './actions/trainingChangeOwnerAction'
 import { trainingDraftAction } from './actions/trainingDraftAction'
 import { trainingDeleteAction } from './actions/trainingDeleteAction'

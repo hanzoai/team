@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
+  import { Person } from '@hanzoteam/contact'
   import {
     getObjectValue,
     type Class,
@@ -21,10 +21,10 @@
     type DocumentQuery,
     type FindOptions,
     type Ref
-  } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hanzo/presentation'
-  import { Component } from '@hanzo/ui'
+  } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hanzoteam/presentation'
+  import { Component } from '@hanzoteam/ui'
   import { findAttributePresenter } from '../utils'
   import ObjectPresenter from './ObjectPresenter.svelte'
 

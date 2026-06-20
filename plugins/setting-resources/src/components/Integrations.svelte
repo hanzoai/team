@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, getCurrentAccount } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import type { Integration, IntegrationType } from '@hanzo/setting'
-  import setting from '@hanzo/setting'
-  import { Header, Breadcrumb } from '@hanzo/ui'
+  import { Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import type { Integration, IntegrationType } from '@hanzoteam/setting'
+  import setting from '@hanzoteam/setting'
+  import { Header, Breadcrumb } from '@hanzoteam/ui'
   import PluginCard from './PluginCard.svelte'
 
   const typeQuery = createQuery()

@@ -14,9 +14,9 @@
 -->
 <script lang="ts">
   import { onDestroy } from 'svelte'
-  import { Ref, Doc } from '@hanzo/core'
-  import type { IntlString } from '@hanzo/platform'
-  import task, { Project } from '@hanzo/task'
+  import { Ref, Doc } from '@hanzoteam/core'
+  import type { IntlString } from '@hanzoteam/platform'
+  import task, { Project } from '@hanzoteam/task'
   import {
     ModeSelector,
     Separator,
@@ -27,18 +27,18 @@
     Breadcrumbs,
     getPlatformColorDef,
     getPlatformColorForTextDef
-  } from '@hanzo/ui'
-  import type { BreadcrumbItem } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
+  import type { BreadcrumbItem } from '@hanzoteam/ui'
   import time from '../../plugin'
   import { teamSeparators } from '../../utils'
   import TeamNavigator from './TeamNavigator.svelte'
   import Agenda from './agenda/Agenda.svelte'
   import Calendar from './calendar/Calendar.svelte'
-  import { IconWithEmoji, getClient } from '@hanzo/presentation'
-  import view from '@hanzo/view'
-  import { Analytics } from '@hanzo/analytics'
-  import tracker, { Project as Proj } from '@hanzo/tracker'
-  import { TimeEvents } from '@hanzo/time'
+  import { IconWithEmoji, getClient } from '@hanzoteam/presentation'
+  import view from '@hanzoteam/view'
+  import { Analytics } from '@hanzoteam/analytics'
+  import tracker, { Project as Proj } from '@hanzoteam/tracker'
+  import { TimeEvents } from '@hanzoteam/time'
 
   const client = getClient()
 

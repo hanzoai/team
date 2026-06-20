@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  // import { Doc } from '@hanzo/core'
-  import type { Blob, Ref } from '@hanzo/core'
-  import { Button, Dialog, EmbeddedPDF, Label, Spinner } from '@hanzo/ui'
+  // import { Doc } from '@hanzoteam/core'
+  import type { Blob, Ref } from '@hanzoteam/core'
+  import { Button, Dialog, EmbeddedPDF, Label, Spinner } from '@hanzoteam/ui'
   import { createEventDispatcher, onMount } from 'svelte'
   import presentation, { getFileUrl } from '..'
   import ActionContext from './ActionContext.svelte'

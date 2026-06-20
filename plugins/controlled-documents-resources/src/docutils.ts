@@ -25,10 +25,10 @@ import {
   type MixinData,
   makeCollabId,
   makeDocCollabId
-} from '@hanzo/core'
-import { setPlatformStatus, translate, unknownError } from '@hanzo/platform'
-import { copyMarkup } from '@hanzo/presentation'
-import { themeStore } from '@hanzo/ui'
+} from '@hanzoteam/core'
+import { setPlatformStatus, translate, unknownError } from '@hanzoteam/platform'
+import { copyMarkup } from '@hanzoteam/presentation'
+import { themeStore } from '@hanzoteam/ui'
 import documents, {
   type ControlledDocument,
   type Document,
@@ -42,8 +42,8 @@ import documents, {
   DocumentState,
   createChangeControl,
   createControlledDocFromTemplate as controlledDocFromTemplate
-} from '@hanzo/controlled-documents'
-import { getCurrentEmployee } from '@hanzo/contact'
+} from '@hanzoteam/controlled-documents'
+import { getCurrentEmployee } from '@hanzoteam/contact'
 import documentsRes from './plugin'
 import { getDocumentVersionString } from './utils'
 

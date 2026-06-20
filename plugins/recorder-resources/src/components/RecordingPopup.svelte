@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { type Blob, type Ref } from '@hanzo/core'
-  import drive, { createFile } from '@hanzo/drive'
-  import { getMediaDevices } from '@hanzo/media'
-  import { micAccess, camAccess } from '@hanzo/media-resources'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { FilePreview, getClient, MessageBox, SpaceSelector } from '@hanzo/presentation'
+  import core, { type Blob, type Ref } from '@hanzoteam/core'
+  import drive, { createFile } from '@hanzoteam/drive'
+  import { getMediaDevices } from '@hanzoteam/media'
+  import { micAccess, camAccess } from '@hanzoteam/media-resources'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { FilePreview, getClient, MessageBox, SpaceSelector } from '@hanzoteam/presentation'
   import {
     EditBox,
     IconUpOutline,
@@ -31,8 +31,8 @@
     eventToHTMLElement,
     resizeObserver,
     showPopup
-  } from '@hanzo/ui'
-  import view from '@hanzo/view'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
 
   import plugin from '../plugin'
@@ -73,7 +73,7 @@
   import IconStop from './icons/Stop.svelte'
   import ShareSettingsPopup from './ShareSettingsPopup.svelte'
   import SettingsPopup from './SettingsPopup.svelte'
-  import { openDocFromRef } from '@hanzo/view-resources'
+  import { openDocFromRef } from '@hanzoteam/view-resources'
 
   const dispatch = createEventDispatcher()
 

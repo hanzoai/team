@@ -14,12 +14,12 @@
 -->
 
 <script lang="ts">
-  import { MessageViewer as MarkupMessageViewer } from '@hanzo/presentation'
-  import { Markdown, Message } from '@hanzo/communication-types'
-  import { Card } from '@hanzo/card'
-  import { Person } from '@hanzo/contact'
-  import { Markup } from '@hanzo/core'
-  import { ShowMore } from '@hanzo/ui'
+  import { MessageViewer as MarkupMessageViewer } from '@hanzoteam/presentation'
+  import { Markdown, Message } from '@hanzoteam/communication-types'
+  import { Card } from '@hanzoteam/card'
+  import { Person } from '@hanzoteam/contact'
+  import { Markup } from '@hanzoteam/core'
+  import { ShowMore } from '@hanzoteam/ui'
 
   import ActivityMessageViewer from './ActivityMessageViewer.svelte'
   import { toMarkup } from '../../utils'

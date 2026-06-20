@@ -13,24 +13,24 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import activity, { ActivityMessage, ActivityMessageViewType, DisplayActivityMessage } from '@hanzo/activity'
+  import activity, { ActivityMessage, ActivityMessageViewType, DisplayActivityMessage } from '@hanzoteam/activity'
   import {
     ActivityDocLink,
     ActivityMessageTemplate,
     MessageInlineAction,
     editingMessageStore
-  } from '@hanzo/activity-resources'
-  import { Attachment } from '@hanzo/attachment'
-  import { AttachmentDocList, AttachmentImageSize } from '@hanzo/attachment-resources'
-  import chunter, { ChatMessage, ChatMessageViewlet } from '@hanzo/chunter'
-  import contact, { getCurrentEmployee, Person, SocialIdentity } from '@hanzo/contact'
-  import { getPersonByPersonIdCb, getSocialIdByPersonIdCb } from '@hanzo/contact-resources'
-  import { Class, Doc, Markup, Ref, Space, WithLookup } from '@hanzo/core'
-  import { getClient, MessageViewer, pendingCreatedDocs } from '@hanzo/presentation'
-  import { EmptyMarkup } from '@hanzo/text'
-  import { Action, Button, IconEdit, ShowMore } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { getDocLinkTitle } from '@hanzo/view-resources'
+  } from '@hanzoteam/activity-resources'
+  import { Attachment } from '@hanzoteam/attachment'
+  import { AttachmentDocList, AttachmentImageSize } from '@hanzoteam/attachment-resources'
+  import chunter, { ChatMessage, ChatMessageViewlet } from '@hanzoteam/chunter'
+  import contact, { getCurrentEmployee, Person, SocialIdentity } from '@hanzoteam/contact'
+  import { getPersonByPersonIdCb, getSocialIdByPersonIdCb } from '@hanzoteam/contact-resources'
+  import { Class, Doc, Markup, Ref, Space, WithLookup } from '@hanzoteam/core'
+  import { getClient, MessageViewer, pendingCreatedDocs } from '@hanzoteam/presentation'
+  import { EmptyMarkup } from '@hanzoteam/text'
+  import { Action, Button, IconEdit, ShowMore } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { getDocLinkTitle } from '@hanzoteam/view-resources'
 
   import { shownTranslatedMessagesStore, translatedMessagesStore, translatingMessagesStore } from '../../stores'
   import ChatMessageHeader from './ChatMessageHeader.svelte'

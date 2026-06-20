@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, getCurrentAccount, Ref } from '@hanzo/core'
-  import notification, { DocNotifyContext } from '@hanzo/notification'
-  import activity, { ActivityMessage, WithReferences } from '@hanzo/activity'
-  import { getClient, isSpace } from '@hanzo/presentation'
-  import { getMessageFromLoc, messageInFocus } from '@hanzo/activity-resources'
-  import { location as locationStore } from '@hanzo/ui'
+  import { Doc, getCurrentAccount, Ref } from '@hanzoteam/core'
+  import notification, { DocNotifyContext } from '@hanzoteam/notification'
+  import activity, { ActivityMessage, WithReferences } from '@hanzoteam/activity'
+  import { getClient, isSpace } from '@hanzoteam/presentation'
+  import { getMessageFromLoc, messageInFocus } from '@hanzoteam/activity-resources'
+  import { location as locationStore } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
 
   import chunter from '../plugin'

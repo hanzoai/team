@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { type Client, type Ref } from '@hanzo/core'
-import { translate } from '@hanzo/platform'
-import { getCurrentLanguage } from '@hanzo/theme'
-import type { TrainingRequest } from '@hanzo/training'
+import { type Client, type Ref } from '@hanzoteam/core'
+import { translate } from '@hanzoteam/platform'
+import { getCurrentLanguage } from '@hanzoteam/theme'
+import type { TrainingRequest } from '@hanzoteam/training'
 import training from '../plugin'
 
 export async function trainingRequestObjectTitleProvider (

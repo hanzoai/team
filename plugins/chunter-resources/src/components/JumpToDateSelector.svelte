@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getDay, Timestamp } from '@hanzo/core'
-  import { DateRangePopup, showPopup } from '@hanzo/ui'
+  import { getDay, Timestamp } from '@hanzoteam/core'
+  import { DateRangePopup, showPopup } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
 
   export let selectedDate: Timestamp | undefined

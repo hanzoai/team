@@ -1,6 +1,6 @@
-import { mergeIds } from '@hanzo/platform'
-import { type AnyComponent } from '@hanzo/ui/src/types'
-import emojiPlugin, { emojiId } from '@hanzo/emoji'
+import { mergeIds } from '@hanzoteam/platform'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
+import emojiPlugin, { emojiId } from '@hanzoteam/emoji'
 
 export default mergeIds(emojiId, emojiPlugin, {
   component: {

@@ -2,10 +2,10 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import { type Training, trainingPrefix, TrainingState } from '@hanzo/training'
-import { type Doc, type Ref } from '@hanzo/core'
-import { getClient } from '@hanzo/presentation'
-import { navigate } from '@hanzo/ui'
+import { type Training, trainingPrefix, TrainingState } from '@hanzoteam/training'
+import { type Doc, type Ref } from '@hanzoteam/core'
+import { getClient } from '@hanzoteam/presentation'
+import { navigate } from '@hanzoteam/ui'
 import training from '../plugin'
 import { trainingRoute } from '../routing/routes/trainingRoute'
 import { canCreateTraining } from './canCreateTraining'

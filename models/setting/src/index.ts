@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import activity from '@hanzo/activity'
-import contact from '@hanzo/contact'
+import activity from '@hanzoteam/activity'
+import contact from '@hanzoteam/contact'
 import {
   AccountRole,
   DOMAIN_MODEL,
@@ -23,13 +23,13 @@ import {
   type ClassCollaborators,
   type Ref,
   type IntegrationKind
-} from '@hanzo/core'
-import exportPlugin from '@hanzo/export'
-import { Mixin, Model, Prop, TypeRecord, UX, type Builder } from '@hanzo/model'
-import core, { TClass, TConfiguration, TDoc } from '@hanzo/model-core'
-import view, { createAction } from '@hanzo/model-view'
-import notification from '@hanzo/notification'
-import type { Asset, IntlString } from '@hanzo/platform'
+} from '@hanzoteam/core'
+import exportPlugin from '@hanzoteam/export'
+import { Mixin, Model, Prop, TypeRecord, UX, type Builder } from '@hanzoteam/model'
+import core, { TClass, TConfiguration, TDoc } from '@hanzoteam/model-core'
+import view, { createAction } from '@hanzoteam/model-view'
+import notification from '@hanzoteam/notification'
+import type { Asset, IntlString } from '@hanzoteam/platform'
 import {
   DOMAIN_SETTING,
   settingId,
@@ -46,14 +46,14 @@ import {
   type SpaceTypeEditorSection,
   type UserMixin,
   type WorkspaceSetting
-} from '@hanzo/setting'
-import templates from '@hanzo/templates'
+} from '@hanzoteam/setting'
+import templates from '@hanzoteam/templates'
 import setting from './plugin'
 
-import workbench, { WidgetType } from '@hanzo/model-workbench'
-import { type AnyComponent } from '@hanzo/ui/src/types'
+import workbench, { WidgetType } from '@hanzoteam/model-workbench'
+import { type AnyComponent } from '@hanzoteam/ui/src/types'
 
-export { settingId } from '@hanzo/setting'
+export { settingId } from '@hanzoteam/setting'
 export { settingOperation } from './migration'
 export { default } from './plugin'
 

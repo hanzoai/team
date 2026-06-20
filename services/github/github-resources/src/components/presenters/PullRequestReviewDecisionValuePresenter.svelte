@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Asset, IntlString } from '@hanzo/platform'
-  import { AnySvelteComponent, Icon, Label, PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzo/ui'
-  import { GithubReviewDecisionState } from '@hanzo/github'
+  import { Asset, IntlString } from '@hanzoteam/platform'
+  import { AnySvelteComponent, Icon, Label, PaletteColorIndexes, getPlatformColor, themeStore } from '@hanzoteam/ui'
+  import { GithubReviewDecisionState } from '@hanzoteam/github'
   import { ComponentType } from 'svelte'
   import github from '../../plugin'
 

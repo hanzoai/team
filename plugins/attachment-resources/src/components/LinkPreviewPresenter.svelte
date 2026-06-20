@@ -18,16 +18,16 @@
     getClient,
     type LinkPreviewDetails,
     LinkPreviewAttachmentMetadata
-  } from '@hanzo/presentation'
-  import { type Attachment } from '@hanzo/attachment'
-  import { type WithLookup } from '@hanzo/core'
+  } from '@hanzoteam/presentation'
+  import { type Attachment } from '@hanzoteam/attachment'
+  import { type WithLookup } from '@hanzoteam/core'
   import { onMount } from 'svelte'
 
   import TrashIcon from './icons/Trash.svelte'
   import { getImageDimensions } from '../utils'
   import LinkPreviewIcon from './LinkPreviewIcon.svelte'
   import LinkPreviewImage from './LinkPreviewImage.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
 
   export let attachment: WithLookup<Attachment>
   export let isOwn = false

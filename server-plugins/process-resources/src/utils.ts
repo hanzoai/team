@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import core, { ArrOf, checkMixinKey, Doc, getObjectValue, RefTo } from '@hanzo/core'
-import { getEmbeddedLabel, getResource } from '@hanzo/platform'
+import core, { ArrOf, checkMixinKey, Doc, getObjectValue, RefTo } from '@hanzoteam/core'
+import { getEmbeddedLabel, getResource } from '@hanzoteam/platform'
 import process, {
   Execution,
   parseContext,
@@ -27,8 +27,8 @@ import process, {
   SelectedNested,
   SelectedRelation,
   SelectedUserRequest
-} from '@hanzo/process'
-import serverProcess, { ProcessControl } from '@hanzo/server-process'
+} from '@hanzoteam/process'
+import serverProcess, { ProcessControl } from '@hanzoteam/server-process'
 
 export async function getContextValue (value: any, control: ProcessControl, execution: Execution): Promise<any> {
   const context = parseContext(value)

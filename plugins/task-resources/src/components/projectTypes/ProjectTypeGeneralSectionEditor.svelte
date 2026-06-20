@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type ProjectType, type ProjectTypeDescriptor } from '@hanzo/task'
-  import { SpaceTypeGeneralSectionEditor } from '@hanzo/setting-resources'
-  import { Component } from '@hanzo/ui'
+  import { type ProjectType, type ProjectTypeDescriptor } from '@hanzoteam/task'
+  import { SpaceTypeGeneralSectionEditor } from '@hanzoteam/setting-resources'
+  import { Component } from '@hanzoteam/ui'
 
   export let type: ProjectType | undefined
   export let descriptor: ProjectTypeDescriptor | undefined

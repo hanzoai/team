@@ -16,10 +16,10 @@
 -->
 
 <script lang="ts">
-  import { TestSuite } from '@hanzo/test-management'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { tooltip } from '@hanzo/ui'
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
+  import { TestSuite } from '@hanzoteam/test-management'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { tooltip } from '@hanzoteam/ui'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
 
   export let value: TestSuite | undefined
   export let inline: boolean = false

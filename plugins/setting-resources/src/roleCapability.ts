@@ -12,9 +12,9 @@
 // limitations under the License.
 //
 
-import type { Account } from '@hanzo/core'
-import { AccountRole, hasAccountRole } from '@hanzo/core'
-import { RoleCapability, type RoleCapabilityId } from '@hanzo/setting'
+import type { Account } from '@hanzoteam/core'
+import { AccountRole, hasAccountRole } from '@hanzoteam/core'
+import { RoleCapability, type RoleCapabilityId } from '@hanzoteam/setting'
 
 import { DEFAULT_INVITE_LINK_GENERATOR_ROLES } from './inviteSettingsUtils'
 

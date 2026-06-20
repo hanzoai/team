@@ -2,8 +2,8 @@
 // Copyright @ 2024 Hanzo AI Inc.
 //
 
-import type { Answer, AnswerDataOf, Question } from '@hanzo/questions'
-import { type AttachedData, type Class, type Doc, type Ref, type Space, type TxOperations } from '@hanzo/core'
+import type { Answer, AnswerDataOf, Question } from '@hanzoteam/questions'
+import { type AttachedData, type Class, type Doc, type Ref, type Space, type TxOperations } from '@hanzoteam/core'
 
 export async function createAnswer<Parent extends Doc, Q extends Question<any>, A extends Answer<Q, any>> (
   client: TxOperations,

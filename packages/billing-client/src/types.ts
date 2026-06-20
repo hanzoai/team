@@ -1,4 +1,4 @@
-import { WorkspaceUuid } from '@hanzo/core'
+import { WorkspaceUuid } from '@hanzoteam/core'
 
 export interface BillingStats {
   liveKitStats: LiveKitStats

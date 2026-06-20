@@ -14,14 +14,14 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hanzo/core'
-import { type IntlString, type Resource, mergeIds } from '@hanzo/platform'
-import { telegramId } from '@hanzo/telegram'
-import telegram from '@hanzo/telegram-resources/src/plugin'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import type { DocUpdateMessageViewlet } from '@hanzo/activity'
-import { type TemplateFieldFunc } from '@hanzo/templates'
-import { type NotificationGroup } from '@hanzo/notification'
+import { type Ref } from '@hanzoteam/core'
+import { type IntlString, type Resource, mergeIds } from '@hanzoteam/platform'
+import { telegramId } from '@hanzoteam/telegram'
+import telegram from '@hanzoteam/telegram-resources/src/plugin'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import type { DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import { type TemplateFieldFunc } from '@hanzoteam/templates'
+import { type NotificationGroup } from '@hanzoteam/notification'
 
 export default mergeIds(telegramId, telegram, {
   string: {

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { mergeIds } from '@hanzo/platform'
-import analyticsCollector, { analyticsCollectorId } from '@hanzo/analytics-collector'
+import { mergeIds } from '@hanzoteam/platform'
+import analyticsCollector, { analyticsCollectorId } from '@hanzoteam/analytics-collector'
 
 export default mergeIds(analyticsCollectorId, analyticsCollector, {})

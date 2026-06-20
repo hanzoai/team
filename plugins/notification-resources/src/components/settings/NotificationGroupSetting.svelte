@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { IdMap, Ref, toIdMap } from '@hanzo/core'
+  import core, { IdMap, Ref, toIdMap } from '@hanzoteam/core'
   import {
     NotificationType,
     NotificationProvider,
@@ -21,10 +21,10 @@
     NotificationTypeSetting,
     NotificationProviderDefaults,
     NotificationProviderSetting
-  } from '@hanzo/notification'
-  import { getResource, IntlString } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
-  import { Grid, Label, ModernToggle } from '@hanzo/ui'
+  } from '@hanzoteam/notification'
+  import { getResource, IntlString } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Grid, Label, ModernToggle } from '@hanzoteam/ui'
 
   import notification from '../../plugin'
   import { providersSettings } from '../../utils'

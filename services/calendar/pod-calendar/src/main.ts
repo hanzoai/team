@@ -13,14 +13,14 @@
 // limitations under the License.
 //
 
-import { SplitLogger, createOpenTelemetryMetricsContext } from '@hanzo/analytics-service'
-import { calendarIntegrationKind } from '@hanzo/calendar'
-import { newMetrics } from '@hanzo/core'
-import { getIntegrationClient } from '@hanzo/integration-client'
-import { setMetadata } from '@hanzo/platform'
-import serverClient, { extractToken, getAccountClient, readToken } from '@hanzo/server-client'
-import { initStatisticsContext } from '@hanzo/server-core'
-import serverToken, { decodeToken } from '@hanzo/server-token'
+import { SplitLogger, createOpenTelemetryMetricsContext } from '@hanzoteam/analytics-service'
+import { calendarIntegrationKind } from '@hanzoteam/calendar'
+import { newMetrics } from '@hanzoteam/core'
+import { getIntegrationClient } from '@hanzoteam/integration-client'
+import { setMetadata } from '@hanzoteam/platform'
+import serverClient, { extractToken, getAccountClient, readToken } from '@hanzoteam/server-client'
+import { initStatisticsContext } from '@hanzoteam/server-core'
+import serverToken, { decodeToken } from '@hanzoteam/server-token'
 import { join } from 'path'
 
 import { AuthController } from './auth'

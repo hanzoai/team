@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { SelectPopup, showPopup, type PopupAlignment } from '@hanzo/ui'
+import { SelectPopup, showPopup, type PopupAlignment } from '@hanzoteam/ui'
 import { type Editor, type Attribute } from '@tiptap/core'
 
-import { type ActionContext } from '@hanzo/text-editor'
+import { type ActionContext } from '@hanzoteam/text-editor'
 import { mInsertTable } from './components/extensions'
 import LinkPopup from './components/LinkPopup.svelte'
 

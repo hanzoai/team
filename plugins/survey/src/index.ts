@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import { Class, Doc, Ref, Space } from '@hanzo/core'
-import { plugin, IntlString, type Asset, type Plugin } from '@hanzo/platform'
-import { Viewlet } from '@hanzo/view'
-import { AnyComponent } from '@hanzo/ui'
+import { Class, Doc, Ref, Space } from '@hanzoteam/core'
+import { plugin, IntlString, type Asset, type Plugin } from '@hanzoteam/platform'
+import { Viewlet } from '@hanzoteam/view'
+import { AnyComponent } from '@hanzoteam/ui'
 import { Poll, Survey } from './types'
 
 export * from './types'

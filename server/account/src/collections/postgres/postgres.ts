@@ -22,7 +22,7 @@ import {
   type WorkspaceUuid,
   type AccountUuid,
   type PersonUuid
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 
 import { getMigrations } from './migrations'
 import type {

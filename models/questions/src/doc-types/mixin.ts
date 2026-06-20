@@ -13,11 +13,11 @@ import type {
   QuestionDataEditor,
   AnswerDataPresenter,
   AnswerDataEditor
-} from '@hanzo/questions'
-import type { Class, Ref } from '@hanzo/core'
-import { Mixin } from '@hanzo/model'
-import core, { TClass } from '@hanzo/model-core'
-import type { Resource } from '@hanzo/platform'
+} from '@hanzoteam/questions'
+import type { Class, Ref } from '@hanzoteam/core'
+import { Mixin } from '@hanzoteam/model'
+import core, { TClass } from '@hanzoteam/model-core'
+import type { Resource } from '@hanzoteam/platform'
 import questions from '../plugin'
 
 /** @public */

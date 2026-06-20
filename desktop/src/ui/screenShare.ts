@@ -14,9 +14,9 @@
 //
 
 import log from 'electron-log'
-import love from '@hanzo/love'
-import { setCustomCreateScreenTracks } from '@hanzo/love-resources'
-import { showPopup } from '@hanzo/ui'
+import love from '@hanzoteam/love'
+import { setCustomCreateScreenTracks } from '@hanzoteam/love-resources'
+import { showPopup } from '@hanzoteam/ui'
 import { Track, LocalTrack, LocalAudioTrack, LocalVideoTrack, ParticipantEvent, TrackInvalidError, ScreenShareCaptureOptions, DeviceUnsupportedError, ScreenSharePresets } from 'livekit-client'
 import { ipcMainExposed } from './typesUtils'
 

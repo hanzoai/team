@@ -13,17 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { type DocUpdateMessageViewlet } from '@hanzo/activity'
-import { type ChatMessageViewlet } from '@hanzo/chunter'
-import { type Doc, type DocManager, type Ref, type StatusCategory } from '@hanzo/core'
-import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
-import { mergeIds, type IntlString, type Resource } from '@hanzo/platform'
-import { type ProjectType } from '@hanzo/task'
-import { trackerId } from '@hanzo/tracker'
-import tracker from '@hanzo/tracker-resources/src/plugin'
-import type { AnyComponent } from '@hanzo/ui/src/types'
-import { type Action, type ViewAction, type Viewlet, type ViewletViewAction } from '@hanzo/view'
-import { type Application } from '@hanzo/workbench'
+import { type DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import { type ChatMessageViewlet } from '@hanzoteam/chunter'
+import { type Doc, type DocManager, type Ref, type StatusCategory } from '@hanzoteam/core'
+import { type NotificationGroup, type NotificationType } from '@hanzoteam/notification'
+import { mergeIds, type IntlString, type Resource } from '@hanzoteam/platform'
+import { type ProjectType } from '@hanzoteam/task'
+import { trackerId } from '@hanzoteam/tracker'
+import tracker from '@hanzoteam/tracker-resources/src/plugin'
+import type { AnyComponent } from '@hanzoteam/ui/src/types'
+import { type Action, type ViewAction, type Viewlet, type ViewletViewAction } from '@hanzoteam/view'
+import { type Application } from '@hanzoteam/workbench'
 
 export default mergeIds(trackerId, tracker, {
   string: {

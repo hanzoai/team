@@ -1,5 +1,5 @@
 {
-  "name": "@hanzo/communication-server",
+  "name": "@hanzoteam/communication-server",
   "version": "0.7.12",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
@@ -22,7 +22,7 @@
     "_phase:test": "jest --passWithNoTests --silent --forceExit"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@types/jest": "^29.5.5",
     "@types/node": "^22.18.1",
     "@types/uuid": "^8.3.1",
@@ -41,16 +41,16 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@hanzo/account-client": "workspace:^0.7.21",
-    "@hanzo/communication-cockroach": "workspace:^0.7.11",
-    "@hanzo/communication-sdk-types": "workspace:^0.7.12",
-    "@hanzo/communication-shared": "workspace:^0.7.11",
-    "@hanzo/communication-types": "workspace:^0.7.12",
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/server-token": "workspace:^0.7.17",
-    "@hanzo/text-core": "workspace:^0.7.18",
-    "@hanzo/text-markdown": "workspace:^0.7.20",
-    "@hanzo/hanzolake-client": "workspace:^0.7.17",
+    "@hanzoteam/account-client": "workspace:^0.7.21",
+    "@hanzoteam/communication-cockroach": "workspace:^0.7.11",
+    "@hanzoteam/communication-sdk-types": "workspace:^0.7.12",
+    "@hanzoteam/communication-shared": "workspace:^0.7.11",
+    "@hanzoteam/communication-types": "workspace:^0.7.12",
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/server-token": "workspace:^0.7.17",
+    "@hanzoteam/text-core": "workspace:^0.7.18",
+    "@hanzoteam/text-markdown": "workspace:^0.7.20",
+    "@hanzoteam/hanzolake-client": "workspace:^0.7.17",
     "uuid": "^8.3.2",
     "zod": "^3.22.4"
   },

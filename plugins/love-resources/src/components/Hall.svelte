@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Contact, Person } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
-  import { Floor as FloorType, Office, Room, isOffice } from '@hanzo/love'
-  import { deviceOptionsStore as deviceInfo } from '@hanzo/ui'
+  import { Contact, Person } from '@hanzoteam/contact'
+  import { Ref } from '@hanzoteam/core'
+  import { Floor as FloorType, Office, Room, isOffice } from '@hanzoteam/love'
+  import { deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
   import { onDestroy } from 'svelte'
   import { activeFloor, floors, rooms, selectedFloor } from '../stores'
   import Floor from './Floor.svelte'

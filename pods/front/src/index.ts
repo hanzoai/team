@@ -1,1 +1,1 @@
-export * from '@hanzo/front'
+export * from '@hanzoteam/front'

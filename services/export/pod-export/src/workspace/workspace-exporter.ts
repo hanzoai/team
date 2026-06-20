@@ -21,10 +21,10 @@ import core, {
   type Space,
   type TxOperations,
   type WorkspaceIds
-} from '@hanzo/core'
-import contact, { type Employee } from '@hanzo/contact'
-import { type StorageAdapter } from '@hanzo/server-core'
-import { isEffectiveDocument, shouldSkipDocument } from '@hanzo/export'
+} from '@hanzoteam/core'
+import contact, { type Employee } from '@hanzoteam/contact'
+import { type StorageAdapter } from '@hanzoteam/server-core'
+import { isEffectiveDocument, shouldSkipDocument } from '@hanzoteam/export'
 import { AttachmentExporter } from './attachment-exporter'
 import { DataMapper } from './data-mapper'
 import { DocumentExporter } from './document-exporter'

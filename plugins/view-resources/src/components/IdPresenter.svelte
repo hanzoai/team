@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { AnyAttribute, Doc, VersionableDoc } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { LabelAndProps, tooltip } from '@hanzo/ui'
+  import core, { AnyAttribute, Doc, VersionableDoc } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { LabelAndProps, tooltip } from '@hanzoteam/ui'
   import DocNavLink from './DocNavLink.svelte'
 
   export let value: string | undefined

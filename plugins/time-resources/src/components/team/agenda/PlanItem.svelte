@@ -1,10 +1,10 @@
 <script lang="ts">
-  import calendarPlugin from '@hanzo/calendar'
-  import { Icon, Label, DatePresenter, IconArrowRight } from '@hanzo/ui'
+  import calendarPlugin from '@hanzoteam/calendar'
+  import { Icon, Label, DatePresenter, IconArrowRight } from '@hanzoteam/ui'
   import { WorkSlotMapping } from '../../../types'
   import ToDoPresenter from '../../ToDoPresenter.svelte'
   import TimePresenter from '../../presenters/TimePresenter.svelte'
-  import { DateRangeMode } from '@hanzo/core'
+  import { DateRangeMode } from '@hanzoteam/core'
 
   export let item: WorkSlotMapping
   export let showAssignee: boolean = false

@@ -13,16 +13,16 @@
 // limitations under the License.
 //
 
-import { type DocUpdateMessageViewlet } from '@hanzo/activity'
-import { type ChatMessageViewlet } from '@hanzo/chunter'
-import type { Client, Doc, Ref, Status } from '@hanzo/core'
-import { type NotificationGroup, type NotificationType } from '@hanzo/notification'
-import type { IntlString, Status as OperationStatus, Resource } from '@hanzo/platform'
-import { mergeIds } from '@hanzo/platform'
-import { recruitId } from '@hanzo/recruit'
-import recruit from '@hanzo/recruit-resources/src/plugin'
-import { type ProjectType, type TaskTypeDescriptor } from '@hanzo/task'
-import type { AnyComponent, Location } from '@hanzo/ui/src/types'
+import { type DocUpdateMessageViewlet } from '@hanzoteam/activity'
+import { type ChatMessageViewlet } from '@hanzoteam/chunter'
+import type { Client, Doc, Ref, Status } from '@hanzoteam/core'
+import { type NotificationGroup, type NotificationType } from '@hanzoteam/notification'
+import type { IntlString, Status as OperationStatus, Resource } from '@hanzoteam/platform'
+import { mergeIds } from '@hanzoteam/platform'
+import { recruitId } from '@hanzoteam/recruit'
+import recruit from '@hanzoteam/recruit-resources/src/plugin'
+import { type ProjectType, type TaskTypeDescriptor } from '@hanzoteam/task'
+import type { AnyComponent, Location } from '@hanzoteam/ui/src/types'
 import type {
   Action,
   ActionCategory,
@@ -31,7 +31,7 @@ import type {
   ViewQueryAction,
   Viewlet,
   ViewletViewAction
-} from '@hanzo/view'
+} from '@hanzoteam/view'
 
 export default mergeIds(recruitId, recruit, {
   action: {

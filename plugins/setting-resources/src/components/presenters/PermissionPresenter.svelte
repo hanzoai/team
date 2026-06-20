@@ -14,8 +14,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Permission } from '@hanzo/core'
-  import { Label } from '@hanzo/ui'
+  import { Permission } from '@hanzoteam/core'
+  import { Label } from '@hanzoteam/ui'
 
   export let value: Permission
   export let inline: boolean = false

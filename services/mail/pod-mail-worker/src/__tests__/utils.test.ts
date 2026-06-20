@@ -14,7 +14,7 @@
 //
 
 import { parseContent, getHeader, removeContentTypeHeader } from '../utils'
-import { MeasureContext } from '@hanzo/core'
+import { MeasureContext } from '@hanzoteam/core'
 import { MtaMessage } from '../types'
 import { readEml } from 'eml-parse-js'
 

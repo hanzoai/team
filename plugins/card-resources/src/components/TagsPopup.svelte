@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Tag } from '@hanzo/card'
+  import { Tag } from '@hanzoteam/card'
   import CardTagColored from './CardTagColored.svelte'
 
   export let tags: Array<Tag> = []

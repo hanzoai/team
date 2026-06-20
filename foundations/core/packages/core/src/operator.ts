@@ -14,7 +14,7 @@
 // limitations under the License.
 //
 
-import { Analytics } from '@hanzo/analytics'
+import { Analytics } from '@hanzoteam/analytics'
 import type { Doc, PropertyType } from './classes'
 import type { Position, PullArray, QueryUpdate } from './tx'
 

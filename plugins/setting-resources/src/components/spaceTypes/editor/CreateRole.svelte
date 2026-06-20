@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import presentation, { getClient } from '@hanzo/presentation'
-  import { createSpaceTypeRole } from '@hanzo/setting'
-  import { Modal, ModernEditbox } from '@hanzo/ui'
-  import { AttachedData, Role, SpaceType } from '@hanzo/core'
+  import presentation, { getClient } from '@hanzoteam/presentation'
+  import { createSpaceTypeRole } from '@hanzoteam/setting'
+  import { Modal, ModernEditbox } from '@hanzoteam/ui'
+  import { AttachedData, Role, SpaceType } from '@hanzoteam/core'
 
   import settingRes from '../../../plugin'
   import { clearSettingsStore } from '../../../store'

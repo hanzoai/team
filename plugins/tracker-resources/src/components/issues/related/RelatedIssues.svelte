@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, DocumentQuery } from '@hanzo/core'
-  import { Issue } from '@hanzo/tracker'
-  import { ViewOptions, Viewlet } from '@hanzo/view'
+  import { Doc, DocumentQuery } from '@hanzoteam/core'
+  import { Issue } from '@hanzoteam/tracker'
+  import { ViewOptions, Viewlet } from '@hanzoteam/view'
   import tracker from '../../../plugin'
   import CreateIssue from '../../CreateIssue.svelte'
   import SubIssueList from '../edit/SubIssueList.svelte'

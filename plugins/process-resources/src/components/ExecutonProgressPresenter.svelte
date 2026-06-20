@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { Label } from '@hanzo/ui'
-  import { State } from '@hanzo/process'
+  import { Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { Label } from '@hanzoteam/ui'
+  import { State } from '@hanzoteam/process'
   import plugin from '../plugin'
 
   export let value: Ref<State>

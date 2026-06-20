@@ -13,13 +13,13 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { type Attachment } from '@hanzo/attachment'
-  import type { BlobType, WithLookup } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import presentation, { canPreviewFile, getFileUrl, previewTypes } from '@hanzo/presentation'
-  import { IconMoreH, Menu, Action as UIAction, showPopup, tooltip } from '@hanzo/ui'
-  import view, { Action } from '@hanzo/view'
-  import workbench from '@hanzo/workbench'
+  import { type Attachment } from '@hanzoteam/attachment'
+  import type { BlobType, WithLookup } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import presentation, { canPreviewFile, getFileUrl, previewTypes } from '@hanzoteam/presentation'
+  import { IconMoreH, Menu, Action as UIAction, showPopup, tooltip } from '@hanzoteam/ui'
+  import view, { Action } from '@hanzoteam/view'
+  import workbench from '@hanzoteam/workbench'
 
   import AttachmentAction from './AttachmentAction.svelte'
   import FileDownload from './icons/FileDownload.svelte'

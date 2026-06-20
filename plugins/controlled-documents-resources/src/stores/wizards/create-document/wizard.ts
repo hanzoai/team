@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import { createStore } from 'effector'
-import { type Ref } from '@hanzo/core'
-import { type DocumentSpace, type Project, type ProjectDocument } from '@hanzo/controlled-documents'
+import { type Ref } from '@hanzoteam/core'
+import { type DocumentSpace, type Project, type ProjectDocument } from '@hanzoteam/controlled-documents'
 
 import {
   currentStepUpdated,

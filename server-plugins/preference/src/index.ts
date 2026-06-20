@@ -13,10 +13,10 @@
 // limitations under the License.
 //
 
-import type { Plugin } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
+import type { Plugin } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
 
-export { DOMAIN_PREFERENCE } from '@hanzo/preference'
+export { DOMAIN_PREFERENCE } from '@hanzoteam/preference'
 
 /**
  * @public

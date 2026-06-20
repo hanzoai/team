@@ -27,12 +27,12 @@
     TooltipInstance,
     getLocation as getPlatformLocation,
     Loading
-  } from '@hanzo/ui'
-  import { PersonWithProfile } from '@hanzo/account-client'
-  import { type AccountUuid, type PersonUuid } from '@hanzo/core'
-  import globalProfile from '@hanzo/global-profile'
-  import view from '@hanzo/view'
-  import { getMetadata } from '@hanzo/platform'
+  } from '@hanzoteam/ui'
+  import { PersonWithProfile } from '@hanzoteam/account-client'
+  import { type AccountUuid, type PersonUuid } from '@hanzoteam/core'
+  import globalProfile from '@hanzoteam/global-profile'
+  import view from '@hanzoteam/view'
+  import { getMetadata } from '@hanzoteam/platform'
 
   import { getAvatarText, getDisplayName, getLocation, getAccountClient, getAvatarColorForId } from '../utils'
   import EditProfilePopup from './EditGlobalProfilePopup.svelte'

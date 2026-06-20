@@ -6,13 +6,13 @@
     CreateChannelOperation,
     Fields,
     MappingOperation
-  } from '@hanzo/bitrix'
-  import { AnyAttribute } from '@hanzo/core'
-  import { getEmbeddedLabel } from '@hanzo/platform'
-  import { getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/bitrix'
+  import { AnyAttribute } from '@hanzoteam/core'
+  import { getEmbeddedLabel } from '@hanzoteam/platform'
+  import { getClient } from '@hanzoteam/presentation'
 
-  import contact, { ChannelProvider } from '@hanzo/contact'
-  import { Button, DropdownLabels, DropdownLabelsIntl, EditBox, IconAdd, IconDelete } from '@hanzo/ui'
+  import contact, { ChannelProvider } from '@hanzoteam/contact'
+  import { Button, DropdownLabels, DropdownLabelsIntl, EditBox, IconAdd, IconDelete } from '@hanzoteam/ui'
   import bitrix from '../../plugin'
 
   export let mapping: BitrixEntityMapping

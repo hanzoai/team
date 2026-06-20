@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { formatName } from '@hanzo/contact'
-  import { Avatar, getPersonByPersonRefStore } from '@hanzo/contact-resources'
-  import { playSound } from '@hanzo/presentation'
-  import { Button, Label } from '@hanzo/ui'
+  import { formatName } from '@hanzoteam/contact'
+  import { Avatar, getPersonByPersonRefStore } from '@hanzoteam/contact-resources'
+  import { playSound } from '@hanzoteam/presentation'
+  import { Button, Label } from '@hanzoteam/ui'
   import love from '../../../plugin'
   import { onDestroy, onMount } from 'svelte'
   import { responseToJoinRequest, JoinRequest } from '../../../joinRequests'

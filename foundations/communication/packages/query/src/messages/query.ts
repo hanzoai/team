@@ -21,7 +21,7 @@ import {
   type MessagesGroup,
   MessagesGroupsDoc,
   SortingOrder
-} from '@hanzo/communication-types'
+} from '@hanzoteam/communication-types'
 import {
   CardEventType,
   type CreateMessageEvent,
@@ -34,10 +34,10 @@ import {
   PatchEvent,
   RemoveCardEvent,
   TranslateMessageEvent
-} from '@hanzo/communication-sdk-types'
-import { MessageProcessor } from '@hanzo/communication-shared'
+} from '@hanzoteam/communication-sdk-types'
+import { MessageProcessor } from '@hanzoteam/communication-shared'
 import { v4 as uuid } from 'uuid'
-import { type HanzolakeWorkspaceClient } from '@hanzo/hanzolake-client'
+import { type HanzolakeWorkspaceClient } from '@hanzoteam/hanzolake-client'
 
 import { QueryResult } from '../result'
 import {

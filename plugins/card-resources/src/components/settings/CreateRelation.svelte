@@ -1,10 +1,10 @@
 <script lang="ts">
-  import contact from '@hanzo/contact'
-  import { Class, Doc, Ref } from '@hanzo/core'
-  import { getClient } from '@hanzo/presentation'
-  import { CreateRelation } from '@hanzo/setting-resources'
+  import contact from '@hanzoteam/contact'
+  import { Class, Doc, Ref } from '@hanzoteam/core'
+  import { getClient } from '@hanzoteam/presentation'
+  import { CreateRelation } from '@hanzoteam/setting-resources'
   import card from '../../plugin'
-  import { MasterTag } from '@hanzo/card'
+  import { MasterTag } from '@hanzoteam/card'
 
   export let aClass: Ref<Class<Doc>> | undefined = undefined
 

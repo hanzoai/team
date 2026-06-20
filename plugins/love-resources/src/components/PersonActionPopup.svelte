@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { Person } from '@hanzo/contact'
-  import { Ref } from '@hanzo/core'
-  import { isOffice, Room, RoomAccess } from '@hanzo/love'
-  import { ActionIcon } from '@hanzo/ui'
+  import { Person } from '@hanzoteam/contact'
+  import { Ref } from '@hanzoteam/core'
+  import { isOffice, Room, RoomAccess } from '@hanzoteam/love'
+  import { ActionIcon } from '@hanzoteam/ui'
   import love from '../plugin'
   import { myInfo } from '../stores'
   import { joinMeeting, kick } from '../meetings'

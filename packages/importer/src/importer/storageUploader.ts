@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import { saveCollabJson } from '@hanzo/collaboration'
+import { saveCollabJson } from '@hanzoteam/collaboration'
 import {
   type CollaborativeDoc,
   type Markup,
@@ -20,8 +20,8 @@ import {
   type Blob as PlatformBlob,
   type Ref,
   type WorkspaceIds
-} from '@hanzo/core'
-import type { StorageAdapter } from '@hanzo/server-core'
+} from '@hanzoteam/core'
+import type { StorageAdapter } from '@hanzoteam/server-core'
 import { type FileUploader, type UploadResult } from './uploader'
 
 export class StorageFileUploader implements FileUploader {

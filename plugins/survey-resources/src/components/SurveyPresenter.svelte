@@ -15,10 +15,10 @@
 //
 -->
 <script lang="ts">
-  import { DocNavLink, ObjectMention } from '@hanzo/view-resources'
-  import { ObjectPresenterType } from '@hanzo/view'
-  import { Icon, Label } from '@hanzo/ui'
-  import survey, { Survey, Poll } from '@hanzo/survey'
+  import { DocNavLink, ObjectMention } from '@hanzoteam/view-resources'
+  import { ObjectPresenterType } from '@hanzoteam/view'
+  import { Icon, Label } from '@hanzoteam/ui'
+  import survey, { Survey, Poll } from '@hanzoteam/survey'
   import { hasText } from '../utils'
 
   export let value: Survey | Poll | undefined | null

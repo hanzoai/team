@@ -11,10 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { MeasureContext, WorkspaceUuid, PersonUuid, Account } from '@hanzo/core'
-import { HanzolakeWorkspaceClient, getWorkspaceClient } from '@hanzo/hanzolake-client'
-import { getClient as getAccountClient } from '@hanzo/account-client'
-import { loadMessages } from '@hanzo/communication-shared'
+import { MeasureContext, WorkspaceUuid, PersonUuid, Account } from '@hanzoteam/core'
+import { HanzolakeWorkspaceClient, getWorkspaceClient } from '@hanzoteam/hanzolake-client'
+import { getClient as getAccountClient } from '@hanzoteam/account-client'
+import { loadMessages } from '@hanzoteam/communication-shared'
 import {
   CardID,
   MessageID,
@@ -23,17 +23,17 @@ import {
   SocialID,
   FindMessagesOptions,
   BlobID
-} from '@hanzo/communication-types'
-import { DbAdapter } from '@hanzo/communication-sdk-types'
+} from '@hanzoteam/communication-types'
+import { DbAdapter } from '@hanzoteam/communication-sdk-types'
 import { LowLevelClient } from '../client'
 import { Blob } from '../blob'
 import { Metadata } from '../types'
 
 // Mock dependencies
-jest.mock('@hanzo/hanzolake-client')
-jest.mock('@hanzo/account-client')
-jest.mock('@hanzo/communication-shared')
-jest.mock('@hanzo/server-token', () => ({
+jest.mock('@hanzoteam/hanzolake-client')
+jest.mock('@hanzoteam/account-client')
+jest.mock('@hanzoteam/communication-shared')
+jest.mock('@hanzoteam/server-token', () => ({
   generateToken: jest.fn(() => 'mock-token')
 }))
 

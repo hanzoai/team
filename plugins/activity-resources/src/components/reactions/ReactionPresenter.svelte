@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Reaction } from '@hanzo/activity'
-  import { Ref, Space } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
+  import { Reaction } from '@hanzoteam/activity'
+  import { Ref, Space } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
 
   import activity from '../../plugin'
 

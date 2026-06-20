@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { addStringsLoader, loadMetadata } from '@hanzo/platform'
-import contact, { contactId } from '@hanzo/contact'
+import { addStringsLoader, loadMetadata } from '@hanzoteam/platform'
+import contact, { contactId } from '@hanzoteam/contact'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(contact.icon, {

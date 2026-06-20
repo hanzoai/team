@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Ref, Blob } from '@hanzo/core'
-  import { AttrValue, MarkupNode, MarkupNodeType } from '@hanzo/text'
+  import { Class, Doc, Ref, Blob } from '@hanzoteam/core'
+  import { AttrValue, MarkupNode, MarkupNodeType } from '@hanzoteam/text'
 
   import CodeBlockNode from './CodeBlockNode.svelte'
   import ObjectNode from './ObjectNode.svelte'
   import MarkdownNode from './MarkdownNode.svelte'
   import Node from './Node.svelte'
   import { getBlobRef } from '../../preview'
-  import { ParsedTextWithEmojis } from '@hanzo/emoji'
+  import { ParsedTextWithEmojis } from '@hanzoteam/emoji'
 
   export let node: MarkupNode
   export let singleTextNode = false

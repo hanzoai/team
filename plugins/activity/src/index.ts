@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { Person } from '@hanzo/contact'
+import { Person } from '@hanzoteam/contact'
 import {
   PersonId,
   AttachedDoc,
@@ -27,12 +27,12 @@ import {
   Tx,
   TxCUD,
   Blob
-} from '@hanzo/core'
-import type { Asset, IntlString, Plugin, Resource } from '@hanzo/platform'
-import { plugin } from '@hanzo/platform'
-import { Preference } from '@hanzo/preference'
-import type { AnyComponent, ComponentExtensionId } from '@hanzo/ui'
-import type { Action } from '@hanzo/view'
+} from '@hanzoteam/core'
+import type { Asset, IntlString, Plugin, Resource } from '@hanzoteam/platform'
+import { plugin } from '@hanzoteam/platform'
+import { Preference } from '@hanzoteam/preference'
+import type { AnyComponent, ComponentExtensionId } from '@hanzoteam/ui'
+import type { Action } from '@hanzoteam/view'
 
 /**
  * @public

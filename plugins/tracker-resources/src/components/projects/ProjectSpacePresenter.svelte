@@ -13,15 +13,15 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, Space } from '@hanzo/core'
-  import { getResource } from '@hanzo/platform'
-  import { Project } from '@hanzo/tracker'
-  import { IconWithEmoji } from '@hanzo/presentation'
-  import { getPlatformColorDef, getPlatformColorForTextDef, themeStore, type Action } from '@hanzo/ui'
-  import view from '@hanzo/view'
-  import { NavLink, TreeNode } from '@hanzo/view-resources'
-  import { SpacesNavModel, SpecialNavModel } from '@hanzo/workbench'
-  import { SpecialElement } from '@hanzo/workbench-resources'
+  import { Ref, Space } from '@hanzoteam/core'
+  import { getResource } from '@hanzoteam/platform'
+  import { Project } from '@hanzoteam/tracker'
+  import { IconWithEmoji } from '@hanzoteam/presentation'
+  import { getPlatformColorDef, getPlatformColorForTextDef, themeStore, type Action } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view'
+  import { NavLink, TreeNode } from '@hanzoteam/view-resources'
+  import { SpacesNavModel, SpecialNavModel } from '@hanzoteam/workbench'
+  import { SpecialElement } from '@hanzoteam/workbench-resources'
 
   export let space: Project
   export let model: SpacesNavModel

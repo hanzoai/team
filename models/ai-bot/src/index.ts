@@ -13,11 +13,11 @@
 // limitations under the License.
 //
 
-import { type Builder } from '@hanzo/model'
+import { type Builder } from '@hanzoteam/model'
 
 import aiBot from './plugin'
 
-export { aiBotId } from '@hanzo/ai-bot'
+export { aiBotId } from '@hanzoteam/ai-bot'
 export { aiBotOperation } from './migration'
 export default aiBot
 

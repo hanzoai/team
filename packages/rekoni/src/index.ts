@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { concatLink } from '@hanzo/core'
-import { getMetadata, PlatformError, unknownError } from '@hanzo/platform'
+import { concatLink } from '@hanzoteam/core'
+import { getMetadata, PlatformError, unknownError } from '@hanzoteam/platform'
 import plugin from './plugin'
 import { ReconiDocument } from './types'
 

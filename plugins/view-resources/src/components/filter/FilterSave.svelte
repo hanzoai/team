@@ -1,8 +1,8 @@
 <script lang="ts">
-  import core, { Class, Doc, Ref, getCurrentAccount } from '@hanzo/core'
-  import { Card, getClient } from '@hanzo/presentation'
-  import { Button, EditBox, ToggleWithLabel, getCurrentResolvedLocation } from '@hanzo/ui'
-  import { ViewOptions } from '@hanzo/view'
+  import core, { Class, Doc, Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { Card, getClient } from '@hanzoteam/presentation'
+  import { Button, EditBox, ToggleWithLabel, getCurrentResolvedLocation } from '@hanzoteam/ui'
+  import { ViewOptions } from '@hanzoteam/view'
   import { createEventDispatcher } from 'svelte'
   import { filterStore } from '../../filter'
   import view from '../../plugin'

@@ -13,9 +13,9 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Asset } from '@hanzo/platform'
-  import { IssuePriority } from '@hanzo/tracker'
-  import { Icon } from '@hanzo/ui'
+  import { Asset } from '@hanzoteam/platform'
+  import { IssuePriority } from '@hanzoteam/tracker'
+  import { Icon } from '@hanzoteam/ui'
   import { issuePriorities } from '../../utils'
 
   export let value: Map<IssuePriority, IssuePriority[]>

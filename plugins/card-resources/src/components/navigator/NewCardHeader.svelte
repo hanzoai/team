@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import {
     AccountRole,
     Data,
@@ -24,8 +24,8 @@
     Ref,
     SortingOrder,
     Space
-  } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
+  } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
   import {
     Button,
     ButtonWithDropdown,
@@ -37,11 +37,11 @@
     navigate,
     SelectPopupValueType,
     showPopup
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
 
-  import { Card, CardEvents, MasterTag } from '@hanzo/card'
-  import { translate } from '@hanzo/platform'
-  import { makeRank } from '@hanzo/rank'
+  import { Card, CardEvents, MasterTag } from '@hanzoteam/card'
+  import { translate } from '@hanzoteam/platform'
+  import { makeRank } from '@hanzoteam/rank'
   import card from '../../plugin'
   import CreateSpace from './CreateSpace.svelte'
 

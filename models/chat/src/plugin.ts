@@ -13,13 +13,13 @@
 // limitations under the License.
 //
 
-import { chatId } from '@hanzo/chat'
-import chat from '@hanzo/chat-resources/src/plugin'
-import { type Ref } from '@hanzo/core'
-import { type Application } from '@hanzo/model-workbench'
-import { mergeIds, type Resource } from '@hanzo/platform'
-import type { Location, ResolvedLocation } from '@hanzo/ui'
-import type { LocationData } from '@hanzo/workbench'
+import { chatId } from '@hanzoteam/chat'
+import chat from '@hanzoteam/chat-resources/src/plugin'
+import { type Ref } from '@hanzoteam/core'
+import { type Application } from '@hanzoteam/model-workbench'
+import { mergeIds, type Resource } from '@hanzoteam/platform'
+import type { Location, ResolvedLocation } from '@hanzoteam/ui'
+import type { LocationData } from '@hanzoteam/workbench'
 
 export default mergeIds(chatId, chat, {
   app: {

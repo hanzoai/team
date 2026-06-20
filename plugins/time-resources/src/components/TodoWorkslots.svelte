@@ -13,16 +13,16 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import calendar, { AccessLevel, Calendar, generateEventId } from '@hanzo/calendar'
-  import contact, { getCurrentEmployee } from '@hanzo/contact'
-  import { Ref, getCurrentAccount } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { closePopup, showPopup } from '@hanzo/ui'
-  import { deleteObjects } from '@hanzo/view-resources'
-  import { TimeEvents, ToDo, WorkSlot } from '@hanzo/time'
+  import calendar, { AccessLevel, Calendar, generateEventId } from '@hanzoteam/calendar'
+  import contact, { getCurrentEmployee } from '@hanzoteam/contact'
+  import { Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { closePopup, showPopup } from '@hanzoteam/ui'
+  import { deleteObjects } from '@hanzoteam/view-resources'
+  import { TimeEvents, ToDo, WorkSlot } from '@hanzoteam/time'
   import time from '../plugin'
   import Workslots from './Workslots.svelte'
-  import { Analytics } from '@hanzo/analytics'
+  import { Analytics } from '@hanzoteam/analytics'
   import { findPrimaryCalendar } from '../utils'
 
   export let todo: ToDo

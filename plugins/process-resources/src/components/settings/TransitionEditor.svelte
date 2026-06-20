@@ -13,10 +13,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Doc, Ref } from '@hanzo/core'
-  import { createQuery, getClient } from '@hanzo/presentation'
-  import { Process, State, Step, Transition } from '@hanzo/process'
-  import { clearSettingsStore, settingsStore } from '@hanzo/setting-resources'
+  import { Doc, Ref } from '@hanzoteam/core'
+  import { createQuery, getClient } from '@hanzoteam/presentation'
+  import { Process, State, Step, Transition } from '@hanzoteam/process'
+  import { clearSettingsStore, settingsStore } from '@hanzoteam/setting-resources'
   import {
     Button,
     ButtonIcon,
@@ -30,8 +30,8 @@
     navigate,
     Scroller,
     showPopup
-  } from '@hanzo/ui'
-  import view from '@hanzo/view-resources/src/plugin'
+  } from '@hanzoteam/ui'
+  import view from '@hanzoteam/view-resources/src/plugin'
   import { createEventDispatcher } from 'svelte'
   import plugin from '../../plugin'
   import { initState } from '../../utils'
@@ -41,7 +41,7 @@
   import Navigator from './Navigator.svelte'
   import TransitionPresenter from './TransitionPresenter.svelte'
   import TriggerPresenter from './TriggerPresenter.svelte'
-  import { SortableList } from '@hanzo/view-resources'
+  import { SortableList } from '@hanzoteam/view-resources'
 
   export let _id: Ref<Transition>
   export let visibleSecondNav: boolean = true

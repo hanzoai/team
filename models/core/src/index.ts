@@ -22,8 +22,8 @@ import {
   DOMAIN_STATUS,
   DOMAIN_TRANSIENT,
   DOMAIN_TX
-} from '@hanzo/core'
-import { type Builder } from '@hanzo/model'
+} from '@hanzoteam/core'
+import { type Builder } from '@hanzoteam/model'
 import { TBenchmarkDoc } from './benchmark'
 import core from './component'
 import {
@@ -94,7 +94,7 @@ import { TDomainStatusPlaceholder, TStatus, TStatusCategory } from './status'
 import { TUserStatus } from './transient'
 import { TTx, TTxApplyIf, TTxCreateDoc, TTxCUD, TTxMixin, TTxRemoveDoc, TTxUpdateDoc, TTxWorkspaceEvent } from './tx'
 
-export { coreId, DOMAIN_SPACE } from '@hanzo/core'
+export { coreId, DOMAIN_SPACE } from '@hanzoteam/core'
 export * from './core'
 export {
   coreOperation,

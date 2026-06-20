@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import core, { Enum } from '@hanzo/core'
-  import presentation, { getClient, MessageBox } from '@hanzo/presentation'
+  import core, { Enum } from '@hanzoteam/core'
+  import presentation, { getClient, MessageBox } from '@hanzoteam/presentation'
   import {
     IconAdd,
     IconAttachment,
@@ -28,14 +28,14 @@
     IconMoreV2,
     eventToHTMLElement,
     ModernPopup
-  } from '@hanzo/ui'
-  import type { DropdownIntlItem } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
+  import type { DropdownIntlItem } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import setting from '../plugin'
   import EnumValuesList from './EnumValuesList.svelte'
   import IconBulletList from './icons/BulletList.svelte'
   import Report from './icons/Report.svelte'
-  import { IntlString } from '@hanzo/platform'
+  import { IntlString } from '@hanzoteam/platform'
 
   export let value: Enum | undefined
   export let name: string = value?.name ?? ''

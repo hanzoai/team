@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { CardCover } from '@hanzo/board'
-  import { Button, eventToHTMLElement, Icon, IconAdd, showPopup } from '@hanzo/ui'
+  import { CardCover } from '@hanzoteam/board'
+  import { Button, eventToHTMLElement, Icon, IconAdd, showPopup } from '@hanzoteam/ui'
   import CardCoverPicker from '../popups/CardCoverPicker.svelte'
   import CardCoverPresenter from '../presenters/CardCoverPresenter.svelte'
 

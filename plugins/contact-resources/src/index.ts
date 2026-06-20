@@ -21,7 +21,7 @@ import {
   type Channel,
   type Contact,
   type Person
-} from '@hanzo/contact'
+} from '@hanzoteam/contact'
 import {
   AccountRole,
   SocialIdType,
@@ -33,10 +33,10 @@ import {
   type Ref,
   type RelatedDocument,
   type WithLookup
-} from '@hanzo/core'
-import login from '@hanzo/login'
-import { getResource, type IntlString, type Resources } from '@hanzo/platform'
-import { MessageBox, getBlobRef, getClient, type ObjectSearchResult } from '@hanzo/presentation'
+} from '@hanzoteam/core'
+import login from '@hanzoteam/login'
+import { getResource, type IntlString, type Resources } from '@hanzoteam/platform'
+import { MessageBox, getBlobRef, getClient, type ObjectSearchResult } from '@hanzoteam/presentation'
 import {
   getPlatformAvatarColorByName,
   getPlatformAvatarColorForTextDef,
@@ -49,8 +49,8 @@ import {
   type AnySvelteComponent,
   type ColorDefinition,
   type TooltipAlignment
-} from '@hanzo/ui'
-import { AggregationManager } from '@hanzo/view-resources'
+} from '@hanzoteam/ui'
+import { AggregationManager } from '@hanzoteam/view-resources'
 import PersonIdArrayEditor from './components/PersonIdArrayEditor.svelte'
 import AccountArrayEditor from './components/AccountArrayEditor.svelte'
 import AccountBox from './components/AccountBox.svelte'

@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { getClient } from '@hanzo/presentation'
-  import type { Opinion } from '@hanzo/recruit'
-  import recruit from '@hanzo/recruit'
-  import { closeTooltip, Icon, showPopup } from '@hanzo/ui'
+  import { getClient } from '@hanzoteam/presentation'
+  import type { Opinion } from '@hanzoteam/recruit'
+  import recruit from '@hanzoteam/recruit'
+  import { closeTooltip, Icon, showPopup } from '@hanzoteam/ui'
   import EditOpinion from './EditOpinion.svelte'
 
   export let value: Opinion

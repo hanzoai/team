@@ -14,10 +14,10 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, Hierarchy, Mixin, Ref } from '@hanzo/core'
-  import notification from '@hanzo/notification'
-  import { Panel } from '@hanzo/panel'
-  import { getResource } from '@hanzo/platform'
+  import { Class, Doc, Hierarchy, Mixin, Ref } from '@hanzoteam/core'
+  import notification from '@hanzoteam/notification'
+  import { Panel } from '@hanzoteam/panel'
+  import { getResource } from '@hanzoteam/platform'
   import {
     ActionContext,
     AttributesBar,
@@ -27,9 +27,9 @@
     getClient,
     hasResource,
     reduceCalls
-  } from '@hanzo/presentation'
-  import { AnyComponent, Button, Component, IconMixin, IconMoreH } from '@hanzo/ui'
-  import view, { AttributeCategory } from '@hanzo/view'
+  } from '@hanzoteam/presentation'
+  import { AnyComponent, Button, Component, IconMixin, IconMoreH } from '@hanzoteam/ui'
+  import view, { AttributeCategory } from '@hanzoteam/view'
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import { DocNavLink, ParentsNavigator, getDocAttrsInfo, getDocLabel, getDocMixins, showMenu, parseLinkId } from '..'

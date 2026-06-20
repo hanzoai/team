@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
-  import { getBlobRef } from '@hanzo/presentation'
-  import { getEmojiByShortCode } from '@hanzo/emoji-resources'
-  import { isCustomEmoji } from '@hanzo/emoji'
+  import { getBlobRef } from '@hanzoteam/presentation'
+  import { getEmojiByShortCode } from '@hanzoteam/emoji-resources'
+  import { isCustomEmoji } from '@hanzoteam/emoji'
 
   export let emoji: string = ''
   export let width: number = 0

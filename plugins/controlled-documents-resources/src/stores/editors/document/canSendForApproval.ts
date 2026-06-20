@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { ControlledDocumentState, DocumentState } from '@hanzo/controlled-documents'
-import { TrainingState } from '@hanzo/training'
+import { ControlledDocumentState, DocumentState } from '@hanzoteam/controlled-documents'
+import { TrainingState } from '@hanzoteam/training'
 import { combine } from 'effector'
 import { $documentComments } from './documentComments'
 import {

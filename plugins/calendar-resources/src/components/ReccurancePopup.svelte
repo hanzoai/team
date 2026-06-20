@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { RecurringRule, getWeekday } from '@hanzo/calendar'
-  import { Timestamp } from '@hanzo/core'
+  import { RecurringRule, getWeekday } from '@hanzoteam/calendar'
+  import { Timestamp } from '@hanzoteam/core'
   import ui, {
     Button,
     CheckBox,
@@ -26,7 +26,7 @@
     NumberInput,
     RadioButton,
     Row
-  } from '@hanzo/ui'
+  } from '@hanzoteam/ui'
   import { createEventDispatcher } from 'svelte'
   import calendar from '../plugin'
   import { SetPosRules } from '../types'

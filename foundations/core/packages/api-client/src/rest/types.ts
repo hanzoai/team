@@ -32,7 +32,7 @@ import {
   type SocialIdType,
   type Storage,
   type WithLookup
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 
 export interface RestClient extends Storage, FulltextStorage {
   getAccount: () => Promise<Account>

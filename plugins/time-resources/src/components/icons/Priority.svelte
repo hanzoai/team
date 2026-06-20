@@ -13,8 +13,8 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import type { IconSize } from '@hanzo/ui'
-  import { ToDoPriority } from '@hanzo/time'
+  import type { IconSize } from '@hanzoteam/ui'
+  import { ToDoPriority } from '@hanzoteam/time'
   import { todoPriorities } from '../../utils'
 
   export let size: IconSize = 'small'

@@ -23,12 +23,12 @@
     type Ref,
     type Space,
     type Class
-  } from '@hanzo/core'
-  import { Card, getClient, getCurrentWorkspaceUuid } from '@hanzo/presentation'
-  import { DropdownLabels, DropdownLabelsIntl, Label } from '@hanzo/ui'
-  import { getResource } from '@hanzo/platform'
-  import login from '@hanzo/login'
-  import { shouldSkipDocument, isEffectiveDocument } from '@hanzo/export'
+  } from '@hanzoteam/core'
+  import { Card, getClient, getCurrentWorkspaceUuid } from '@hanzoteam/presentation'
+  import { DropdownLabels, DropdownLabelsIntl, Label } from '@hanzoteam/ui'
+  import { getResource } from '@hanzoteam/platform'
+  import login from '@hanzoteam/login'
+  import { shouldSkipDocument, isEffectiveDocument } from '@hanzoteam/export'
 
   import { createEventDispatcher } from 'svelte'
 

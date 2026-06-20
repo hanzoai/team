@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { addStringsLoader, loadMetadata } from '@hanzo/platform'
-import guest, { guestId } from '@hanzo/guest'
+import { addStringsLoader, loadMetadata } from '@hanzoteam/platform'
+import guest, { guestId } from '@hanzoteam/guest'
 
 const icons = require('../assets/icons.svg') as string // eslint-disable-line
 loadMetadata(guest.icon, {

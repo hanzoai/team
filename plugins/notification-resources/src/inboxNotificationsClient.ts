@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import activity from '@hanzo/activity'
+import activity from '@hanzoteam/activity'
 import core, {
   type Account,
   AccountRole,
@@ -25,14 +25,14 @@ import core, {
   toIdMap,
   type TxOperations,
   type WithLookup
-} from '@hanzo/core'
+} from '@hanzoteam/core'
 import notification, {
   type ActivityInboxNotification,
   type DocNotifyContext,
   type InboxNotification,
   type InboxNotificationsClient
-} from '@hanzo/notification'
-import { createQuery, getClient, onClient } from '@hanzo/presentation'
+} from '@hanzoteam/notification'
+import { createQuery, getClient, onClient } from '@hanzoteam/presentation'
 import { derived, get, writable } from 'svelte/store'
 
 import { isActivityNotification } from './utils'

@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Resources } from '@hanzo/platform'
+import { type Resources } from '@hanzoteam/platform'
 
 import ChatApplication from './components/ChatApplication.svelte'
 import { resolveLocation, resolveLocationData } from './location'

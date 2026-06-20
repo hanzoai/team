@@ -13,12 +13,12 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Ref, getCurrentAccount } from '@hanzo/core'
-  import { createQuery } from '@hanzo/presentation'
-  import task, { Project } from '@hanzo/task'
-  import { Separator, Scroller, NavItem, deviceOptionsStore as deviceInfo } from '@hanzo/ui'
-  import { ObjectPresenter, TreeNode } from '@hanzo/view-resources'
-  import { NavFooter, NavHeader } from '@hanzo/workbench-resources'
+  import { Ref, getCurrentAccount } from '@hanzoteam/core'
+  import { createQuery } from '@hanzoteam/presentation'
+  import task, { Project } from '@hanzoteam/task'
+  import { Separator, Scroller, NavItem, deviceOptionsStore as deviceInfo } from '@hanzoteam/ui'
+  import { ObjectPresenter, TreeNode } from '@hanzoteam/view-resources'
+  import { NavFooter, NavHeader } from '@hanzoteam/workbench-resources'
   import time from '../../plugin'
 
   export let selected: Ref<Project> | undefined = (localStorage.getItem('team_last_mode') as Ref<Project>) ?? undefined

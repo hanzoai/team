@@ -13,11 +13,11 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import contact, { Contact, getFirstName, getLastName, getName, Person } from '@hanzo/contact'
-  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzo/core'
-  import type { Asset, IntlString } from '@hanzo/platform'
-  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hanzo/presentation'
-  import { AnySvelteComponent, Label } from '@hanzo/ui'
+  import contact, { Contact, getFirstName, getLastName, getName, Person } from '@hanzoteam/contact'
+  import type { Class, Doc, DocumentQuery, FindOptions, Ref } from '@hanzoteam/core'
+  import type { Asset, IntlString } from '@hanzoteam/platform'
+  import presentation, { getClient, ObjectCreate, ObjectPopup } from '@hanzoteam/presentation'
+  import { AnySvelteComponent, Label } from '@hanzoteam/ui'
   import UserInfo from './UserInfo.svelte'
   import { createEventDispatcher } from 'svelte'
 

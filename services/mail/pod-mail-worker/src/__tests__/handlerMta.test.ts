@@ -16,17 +16,17 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { Request, Response } from 'express'
-import { MeasureContext } from '@hanzo/core'
-import { createMessages } from '@hanzo/mail-common'
-import { createRestTxOperations } from '@hanzo/api-client'
+import { MeasureContext } from '@hanzoteam/core'
+import { createMessages } from '@hanzoteam/mail-common'
+import { createRestTxOperations } from '@hanzoteam/api-client'
 
 import { handleMtaHook } from '../handlerMta'
 import * as client from '../client'
 import { type MtaMessage } from '../types'
 
 // Mock only the functions that need to be mocked for testing
-jest.mock('@hanzo/mail-common', () => {
-  const actualMailCommon = jest.requireActual('@hanzo/mail-common')
+jest.mock('@hanzoteam/mail-common', () => {
+  const actualMailCommon = jest.requireActual('@hanzoteam/mail-common')
   return {
     ...actualMailCommon,
     createMessages: jest.fn(),
@@ -62,7 +62,7 @@ const mockLoginInfo = {
   token: 'test-token'
 }
 
-jest.mock('@hanzo/account-client', () => ({
+jest.mock('@hanzoteam/account-client', () => ({
   getClient: jest.fn().mockImplementation(() => ({
     selectWorkspace: jest.fn().mockResolvedValue(mockLoginInfo),
     getLoginInfoByToken: jest.fn().mockResolvedValue(mockLoginInfo),
@@ -90,7 +90,7 @@ const mockTxOperations = {
   update: jest.fn().mockResolvedValue({})
 }
 
-jest.mock('@hanzo/api-client', () => ({
+jest.mock('@hanzoteam/api-client', () => ({
   createRestTxOperations: jest.fn().mockImplementation(() => mockTxOperations)
 }))
 

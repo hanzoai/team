@@ -15,8 +15,8 @@
 
 <!--TODO: implement button by figma-->
 <script lang="ts">
-  import { LabelAndProps, tooltip as showTooltip } from '@hanzo/ui'
-  import { IntlString } from '@hanzo/platform'
+  import { LabelAndProps, tooltip as showTooltip } from '@hanzoteam/ui'
+  import { IntlString } from '@hanzoteam/platform'
 
   import Icon from './Icon.svelte'
   import Label from './Label.svelte'

@@ -1,11 +1,11 @@
 {
-  "name": "@hanzo/model-setting",
+  "name": "@hanzoteam/model-setting",
   "version": "0.7.0",
   "main": "lib/index.js",
   "svelte": "src/index.ts",
   "types": "types/index.d.ts",
   "author": "Hanzo <dev@hanzo.ai>",
-  "template": "@hanzo/model-package",
+  "template": "@hanzoteam/model-package",
   "license": "EPL-2.0",
   "scripts": {
     "build": "compile",
@@ -18,7 +18,7 @@
     "test": "jest --passWithNoTests --silent --forceExit"
   },
   "devDependencies": {
-    "@hanzo/platform-rig": "workspace:^0.7.19",
+    "@hanzoteam/platform-rig": "workspace:^0.7.19",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
@@ -34,21 +34,21 @@
     "ts-jest": "^29.1.1"
   },
   "dependencies": {
-    "@hanzo/core": "workspace:^0.7.24",
-    "@hanzo/model": "workspace:^0.7.17",
-    "@hanzo/ui": "workspace:^0.7.0",
-    "@hanzo/view": "workspace:^0.7.0",
-    "@hanzo/setting": "workspace:^0.7.0",
-    "@hanzo/contact": "workspace:^0.7.0",
-    "@hanzo/setting-resources": "workspace:^0.7.0",
-    "@hanzo/platform": "workspace:^0.7.19",
-    "@hanzo/model-core": "workspace:^0.7.0",
-    "@hanzo/model-view": "workspace:^0.7.0",
-    "@hanzo/model-workbench": "workspace:^0.7.0",
-    "@hanzo/task": "workspace:^0.7.0",
-    "@hanzo/notification": "workspace:^0.7.0",
-    "@hanzo/templates": "workspace:^0.7.0",
-    "@hanzo/activity": "workspace:^0.7.0",
-    "@hanzo/export": "workspace:^0.7.0"
+    "@hanzoteam/core": "workspace:^0.7.24",
+    "@hanzoteam/model": "workspace:^0.7.17",
+    "@hanzoteam/ui": "workspace:^0.7.0",
+    "@hanzoteam/view": "workspace:^0.7.0",
+    "@hanzoteam/setting": "workspace:^0.7.0",
+    "@hanzoteam/contact": "workspace:^0.7.0",
+    "@hanzoteam/setting-resources": "workspace:^0.7.0",
+    "@hanzoteam/platform": "workspace:^0.7.19",
+    "@hanzoteam/model-core": "workspace:^0.7.0",
+    "@hanzoteam/model-view": "workspace:^0.7.0",
+    "@hanzoteam/model-workbench": "workspace:^0.7.0",
+    "@hanzoteam/task": "workspace:^0.7.0",
+    "@hanzoteam/notification": "workspace:^0.7.0",
+    "@hanzoteam/templates": "workspace:^0.7.0",
+    "@hanzoteam/activity": "workspace:^0.7.0",
+    "@hanzoteam/export": "workspace:^0.7.0"
   }
 }
