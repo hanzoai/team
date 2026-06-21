@@ -79,6 +79,21 @@ type RegionInfo struct {
 	Name   string `json:"name"`
 }
 
+// SocialID is one entry of getSocialIds (core SocialId, classes.ts:945). The
+// workbench connect flow runs pickPrimarySocialId over these: it needs at least
+// one with isDeleted!=true and prefers type "hanzo". We surface the account's
+// IAM identity as a single confirmed HANZO social id so the session has a stable
+// primary identity (deterministic _id => same identity across logins).
+type SocialID struct {
+	ID           string `json:"_id"`
+	Type         string `json:"type"`
+	Value        string `json:"value"`
+	Key          string `json:"key"`
+	DisplayValue string `json:"displayValue,omitempty"`
+	VerifiedOn   int64  `json:"verifiedOn,omitempty"`
+	IsDeleted    bool   `json:"isDeleted,omitempty"`
+}
+
 // Status is the Huly PlatformError payload sent as {"error": Status}. code is
 // an i18n key; the frontend rethrows it as a PlatformError.
 type Status struct {

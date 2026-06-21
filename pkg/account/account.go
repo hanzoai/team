@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/hanzoai/base/core"
@@ -215,7 +216,7 @@ func (g *api) rpc(re *core.RequestEvent) error {
 	case "getRegionInfo":
 		return g.ok(re, []RegionInfo{{Region: "", Name: "Default"}})
 	case "getSocialIds":
-		return g.ok(re, []any{})
+		return g.getSocialIds(re)
 	case "getPerson":
 		return g.getPerson(re)
 	case "isReadOnlyGuest":
@@ -294,6 +295,26 @@ func (g *api) getPerson(re *core.RequestEvent) error {
 		return g.fail(re, statusUnauthorized(err.Error()))
 	}
 	return g.ok(re, map[string]any{"uuid": account})
+}
+
+// getSocialIds returns the account's social identities. The workbench connect
+// flow (connect.ts:460) calls this and runs pickPrimarySocialId, which throws
+// "No active social ids provided" on an empty list. We return the single HANZO
+// identity for the account (the IAM sub) — verified, not deleted, deterministic
+// _id — which becomes the session's primary social id.
+func (g *api) getSocialIds(re *core.RequestEvent) error {
+	account, _, err := g.account(re)
+	if err != nil {
+		return g.fail(re, statusUnauthorized(err.Error()))
+	}
+	key := "hanzo:" + account
+	return g.ok(re, []SocialID{{
+		ID:         key,
+		Type:       "hanzo",
+		Value:      account,
+		Key:        key,
+		VerifiedOn: time.Now().UnixMilli(),
+	}})
 }
 
 // ── helpers ───────────────────────────────────────────────────────────────

@@ -27,7 +27,11 @@ const (
 // Register binds the ZAP transactor WebSocket on app.
 func Register(app core.App) {
 	secret := env("SERVER_SECRET", token.DefaultSecret)
-	version := env("TEAM_VERSION", "dev")
+	// Empty by default: the front's onHello skips version-gating when
+	// serverVersion=="" (workbench connect.ts:242). team-go serves a fixed
+	// embedded model, so rolling-upgrade version sync does not apply. Set
+	// TEAM_VERSION only to deliberately pin a version handshake.
+	version := env("TEAM_VERSION", "")
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
 			e.Router.GET(mount+"/{token...}", func(re *core.RequestEvent) error {
