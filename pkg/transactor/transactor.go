@@ -271,17 +271,11 @@ func (s *session) domainRequest(id int64, params []json.RawMessage) []byte {
 	if len(params) > 0 {
 		_ = json.Unmarshal(params[0], &domain)
 	}
-	var op map[string]json.RawMessage
-	if len(params) > 1 {
-		_ = json.Unmarshal(params[1], &op)
-	}
-	var value any = []any{}
-	for key := range op {
-		if strings.HasPrefix(key, "findNotification") {
-			value = map[string]any{"results": []any{}, "total": 0}
-		}
-	}
-	return s.result(id, map[string]any{"domain": domain, "value": value})
+	// The client reads DomainResult.value and, for notifications, calls .pop()
+	// on it — so every communication read returns an empty ARRAY (never an
+	// object), which keeps labels/notifications/contexts queries non-fatal until
+	// the communication plane has its own store.
+	return s.result(id, map[string]any{"domain": domain, "value": []any{}})
 }
 
 // hello answers the handshake. binary:false forces JSON so no msgpack is ever
