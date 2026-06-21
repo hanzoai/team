@@ -50,13 +50,13 @@ func TestStatusRecorderCapture(t *testing.T) {
 	}
 }
 
-// TestMetricsEndpoint checks that scraping /metrics through
-// metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{}) surfaces our build_info gauge AND the standard
-// Go-runtime collectors (the implicit-coverage check for promauto).
+// TestMetricsEndpoint checks that scraping /metrics through metric.Handler()
+// surfaces our build_info gauge AND the standard Go-runtime collectors (the
+// implicit-coverage check for promauto).
 func TestMetricsEndpoint(t *testing.T) {
 	buildInfo.WithLabelValues("test").Set(1)
 
-	srv := httptest.NewServer(metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{}))
+	srv := httptest.NewServer(metric.Handler())
 	defer srv.Close()
 
 	resp, err := http.Get(srv.URL)
