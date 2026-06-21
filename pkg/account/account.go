@@ -146,7 +146,14 @@ func (g *api) bounce(re *core.RequestEvent, tok, navigateURL, errCode string) er
 	if front == "" {
 		front = originOf(re.Request)
 	}
-	dest, err := url.Parse(front + "/login")
+	// The provider ?token return is read by Huly's Auth.svelte — the LoginApp
+	// 'auth' sub-page (loc.path[1]=='auth'). Bare /login mounts the default page
+	// and never consumes the token, so a successful token MUST land on /auth.
+	path := "/login:component:LoginApp/auth"
+	if tok == "" {
+		path = "/login"
+	}
+	dest, err := url.Parse(front + path)
 	if err != nil {
 		return re.String(http.StatusInternalServerError, "bad front url")
 	}
