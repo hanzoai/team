@@ -1,7 +1,7 @@
-// Package token mints and verifies the JWTs that the Huly frontend, the
+// Package token mints and verifies the JWTs that the frontend, the
 // account API and the transactor all share.
 //
-// The wire format is byte-compatible with Huly's `jwt-simple` HS256 tokens
+// The wire format is byte-compatible with the platform `jwt-simple` HS256 tokens
 // (foundations/core/packages/token/src/token.ts): header
 // {"typ":"JWT","alg":"HS256"}, a COMPACT JSON payload whose keys appear in
 // the fixed order {extra, account, workspace, grant, sub, exp, nbf} with
@@ -33,7 +33,7 @@ import (
 
 // DefaultSecret mirrors the upstream `getSecret()` fallback. Production
 // always sets SERVER_SECRET; the literal exists only so dev parity with the
-// Huly pods (which also default to "secret") holds.
+// upstream pods (which also default to "secret") holds.
 const DefaultSecret = "secret"
 
 // header is the constant jwt-simple HS256 header, pre-encoded. jwt-simple

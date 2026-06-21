@@ -8,6 +8,7 @@ require (
 	github.com/hanzoai/dbx v1.15.0
 	github.com/luxfi/metric v1.5.1
 	golang.org/x/net v0.55.0
+	modernc.org/sqlite v1.48.1
 )
 
 require (
@@ -77,5 +78,4 @@ require (
 	modernc.org/libc v1.70.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.48.1 // indirect
 )

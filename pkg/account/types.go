@@ -1,4 +1,4 @@
-// Package account implements the Huly account API the Svelte frontend speaks
+// Package account implements the account API the Svelte frontend speaks
 // to at ACCOUNTS_URL — JSON-RPC over a single POST endpoint, plus the
 // /providers, /auth/{provider} and /cookie REST siblings. It is the login +
 // workspace-selection control plane: identity comes from Hanzo IAM (the
@@ -7,7 +7,7 @@
 // the per-workspace data plane the `endpoint` here points at.
 package account
 
-// Role is the Huly AccountRole. Stored on `members.role` (lowercased) and
+// Role is the platform AccountRole. Stored on `members.role` (lowercased) and
 // surfaced uppercased in WorkspaceLoginInfo.role.
 type Role = string
 
@@ -94,7 +94,7 @@ type SocialID struct {
 	IsDeleted    bool   `json:"isDeleted,omitempty"`
 }
 
-// Status is the Huly PlatformError payload sent as {"error": Status}. code is
+// Status is the platform PlatformError payload sent as {"error": Status}. code is
 // an i18n key; the frontend rethrows it as a PlatformError.
 type Status struct {
 	Severity int            `json:"severity"`

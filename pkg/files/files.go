@@ -2,7 +2,7 @@
 // as a same-origin alias for the Base file API.
 //
 // Base mounts the file API at ${BASE_API_PREFIX}/files/{collection}/...
-// (default /v1/base/files/...). Huly clients and first-party UIs both
+// (default /v1/base/files/...). the platform clients and first-party UIs both
 // prefer the shorter /v1/files/... shape and shouldn't need to know
 // the Base prefix exists. We solve that with a 307 Temporary Redirect:
 //

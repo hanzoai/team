@@ -58,9 +58,9 @@ func TestLiveTransactor(t *testing.T) {
 	t.Logf("loadModel OK: %d transactions, full=%v", len(txs), res["full"])
 }
 
-func send(t *testing.T, conn *websocket.Conn, hulyJSON string) {
+func send(t *testing.T, conn *websocket.Conn, rpcJSON string) {
 	t.Helper()
-	frame := Encode(Envelope{ID: 1, Kind: KindRequest, Payload: []byte(hulyJSON)})
+	frame := Encode(Envelope{ID: 1, Kind: KindRequest, Payload: []byte(rpcJSON)})
 	if err := websocket.Message.Send(conn, frame); err != nil {
 		t.Fatalf("send: %v", err)
 	}

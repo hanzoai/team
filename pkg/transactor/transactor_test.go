@@ -2,11 +2,16 @@ package transactor
 
 import (
 	"encoding/json"
+	"os"
 	"testing"
 )
 
 func testSession() *session {
+	dir, _ := os.MkdirTemp("", "team-test")
 	return &session{
+		server:    &server{hub: newHub()},
+		store:     newStore(dir),
+		hier:      buildHierarchy(modelJSON),
 		account:   "2d4d67ab-30f1-474e-b81f-f60461852259",
 		workspace: "e48f81fd-12be-4bcd-aecb-3eaa9a9b5b18",
 		version:   "test",
@@ -14,8 +19,8 @@ func testSession() *session {
 }
 
 // TestHelloNegotiatesJSON is the load-bearing no-msgpack assertion: the server
-// answers hello with binary=false, so the Huly client serializes JSON for the
-// rest of the session and msgpack is never used.
+// answers hello with binary=false, so the client serializes JSON for the rest
+// of the session and msgpack is never used.
 func TestHelloNegotiatesJSON(t *testing.T) {
 	out := testSession().handle([]byte(`{"id":-1,"method":"hello","params":[]}`))
 	var r map[string]any
@@ -71,13 +76,28 @@ func TestHandleMisc(t *testing.T) {
 	if string(s.handle([]byte("ping"))) != "pong!" {
 		t.Fatal("ping must answer pong!")
 	}
-	// findAll → empty array result
+	// findAll over an empty workspace → an empty TotalArray (the wire shape the
+	// client's rpc reviver turns back into a FindResult).
 	var fa struct {
-		Result []json.RawMessage `json:"result"`
+		Result struct {
+			DataType string            `json:"dataType"`
+			Total    int               `json:"total"`
+			Value    []json.RawMessage `json:"value"`
+		} `json:"result"`
 	}
-	json.Unmarshal(s.handle([]byte(`{"id":2,"method":"findAll","params":[]}`)), &fa)
-	if fa.Result == nil || len(fa.Result) != 0 {
-		t.Fatalf("findAll result = %v, want []", fa.Result)
+	json.Unmarshal(s.handle([]byte(`{"id":2,"method":"findAll","params":["core:class:Doc",{}]}`)), &fa)
+	if fa.Result.DataType != "TotalArray" || fa.Result.Value == nil || len(fa.Result.Value) != 0 {
+		t.Fatalf("findAll result = %+v, want empty TotalArray", fa.Result)
+	}
+	// domainRequest(communication) → a well-formed DomainResult so .value is never null.
+	var dr struct {
+		Result struct {
+			Domain string `json:"domain"`
+		} `json:"result"`
+	}
+	json.Unmarshal(s.handle([]byte(`{"id":3,"method":"domainRequest","params":["communication",{"findLabels":{}}]}`)), &dr)
+	if dr.Result.Domain != "communication" {
+		t.Fatalf("domainRequest domain = %q", dr.Result.Domain)
 	}
 	// tx → object ack, correlated id
 	var tx struct {
@@ -90,10 +110,9 @@ func TestHandleMisc(t *testing.T) {
 	}
 }
 
-// TestEnvelopeWrapsHuly is the end-to-end transport check: a Huly request
-// wrapped in a ZAP envelope decodes, dispatches, and the reply re-wraps with
-// the same correlation id.
-func TestEnvelopeWrapsHuly(t *testing.T) {
+// TestEnvelopeWrapsRPC is the end-to-end transport check: a request wrapped in a
+// ZAP envelope decodes, dispatches, and the reply re-wraps with the same id.
+func TestEnvelopeWrapsRPC(t *testing.T) {
 	req := Encode(Envelope{ID: 42, Kind: KindRequest, Payload: []byte(`{"id":42,"method":"hello","params":[]}`)})
 	env, err := Decode(req)
 	if err != nil {

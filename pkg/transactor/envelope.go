@@ -1,9 +1,9 @@
-// Package transactor serves the Huly workspace data plane the frontend connects
+// Package transactor serves the workspace data plane the frontend connects
 // to after selectWorkspace. The wire is ZAP — Hanzo/Lux's native zero-copy
-// transport format — NOT msgpack and NOT Huly's WS+RPCHandler framing.
+// transport format — NOT msgpack and NOT the legacy WS+RPCHandler framing.
 //
-// Every frame is a single ZAP Envelope object tunnelling one Huly RPC. The
-// envelope carries a JSON payload (Huly's method params/results are model-driven
+// Every frame is a single ZAP Envelope object tunnelling one an RPC. The
+// envelope carries a JSON payload (the platform method params/results are model-driven
 // and far too numerous to schema individually), so we get ZAP's wire framing
 // without a Cap'n-Proto-style type per Tx. The browser side (a byte-identical
 // TS port in team dev/prod/src/zap-envelope.ts) speaks the same Envelope.

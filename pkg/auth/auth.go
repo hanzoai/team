@@ -1,4 +1,4 @@
-// Package auth surfaces the small set of endpoints the Huly Svelte UI
+// Package auth surfaces the small set of endpoints the Team Svelte UI
 // needs on top of what hanzo/base's platform plugin already provides:
 //
 //	GET  /v1/me     — returns the resolved IAM user from the request ctx

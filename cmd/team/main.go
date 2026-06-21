@@ -80,13 +80,13 @@ func main() {
 	})
 
 	teamiam.Register(app)       // /v1/iam/*      → IAM_ENDPOINT (transparent OIDC reverse proxy)
-	teamaccount.Register(app)   // /v1/account/*  → Huly account API (login, workspaces) over IAM
+	teamaccount.Register(app)   // /v1/account/*  → the account API (login, workspaces) over IAM
 	teamauth.Register(app)      // /v1/me, /v1/logout
 	teambilling.Register(app)   // /v1/billing/*  → commerce.hanzo.ai
 	teambot.Register(app)       // /v1/bot/*      → hanzo.bot (chat agent in-app)
 	teamfiles.Register(app)     // /v1/files/*    → 307 alias for Base /v1/base/files/*
 	teamsubscribe.Register(app)  // /v1/subscribe  → WS record-change stream
-	teamtransactor.Register(app) // /transactor/*  → Huly data plane over ZAP (WS)
+	teamtransactor.Register(app) // /transactor/*  → the workspace data plane over ZAP (WS)
 	// metrics middleware MUST register before app.Start so its wrap
 	// catches every other registered route.
 	teammetrics.Register(app, envOr("TEAM_VERSION", "dev"))
