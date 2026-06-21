@@ -96,13 +96,14 @@ func TestMetricsEndpoint(t *testing.T) {
 // scrape side. We don't need the real router for this — incrementing
 // via WithLabelValues is the exact same path the middleware uses.
 func TestRequestCountersScrape(t *testing.T) {
-	reqTotal.Reset()
-	reqDuration.Reset()
+	// luxfi/metric vecs are not resettable; the assertion below is label-exact
+	// (/v1/health GET 200), and only this test increments that label, so there
+	// is no cross-test bleed to clear.
 	reqTotal.WithLabelValues("/v1/health", "GET", "200").Inc()
 	reqTotal.WithLabelValues("/v1/health", "GET", "200").Inc()
 	reqDuration.WithLabelValues("/v1/health", "GET").Observe(0.001)
 
-	srv := httptest.NewServer(metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{}))
+	srv := httptest.NewServer(metric.Handler())
 	defer srv.Close()
 	resp, err := http.Get(srv.URL)
 	if err != nil {
