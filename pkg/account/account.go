@@ -1,6 +1,7 @@
 package account
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -117,17 +118,19 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "exchange_failed")
 	}
-	user, err := platform.ValidateIAMToken(access, g.cfg.platform)
+	// OIDC userinfo, read via the canonical `sub` claim. (Base's
+	// ValidateIAMToken reads `id`, which the OIDC userinfo response — HIP-0111
+	// /v1/iam/oauth/userinfo — does not carry, so we call it directly.)
+	sub, email, name, err := g.userinfo(access)
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "userinfo_failed")
 	}
-	// AccountUuid = the IAM user id (Casdoor sub, a UUID).
-	account := user.ID
+	// AccountUuid = the IAM sub (Casdoor UUID; derive a stable one if not).
+	account := sub
 	if uuid.Validate(account) != nil {
-		// Defensive: derive a stable UUID if IAM ever issues a non-UUID sub.
-		account = uuid.NewSHA1(uuid.NameSpaceURL, []byte("iam:"+user.ID)).String()
+		account = uuid.NewSHA1(uuid.NameSpaceURL, []byte("iam:"+sub)).String()
 	}
-	if err := g.ensureWorkspace(account, user); err != nil {
+	if err := g.ensureWorkspace(account, name, email); err != nil {
 		g.app.Logger().Error("account: ensure workspace", "err", err)
 	}
 	tok, err := token.Generate(account, "", nil, g.cfg.serverSecret)
@@ -335,9 +338,39 @@ func (g *api) membership(account, workspaceID string) Role {
 	return m.GetString("role")
 }
 
+// userinfo fetches the OIDC userinfo for an access token and returns the
+// canonical sub/email/name claims.
+func (g *api) userinfo(access string) (sub, email, name string, err error) {
+	req, err := http.NewRequest("GET", g.cfg.platform.IAMEndpoint+"/v1/iam/oauth/userinfo", nil)
+	if err != nil {
+		return "", "", "", err
+	}
+	req.Header.Set("Authorization", "Bearer "+access)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return "", "", "", err
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return "", "", "", fmt.Errorf("userinfo: status %d", resp.StatusCode)
+	}
+	var u struct {
+		Sub   string `json:"sub"`
+		Email string `json:"email"`
+		Name  string `json:"name"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&u); err != nil {
+		return "", "", "", err
+	}
+	if u.Sub == "" {
+		return "", "", "", fmt.Errorf("userinfo: missing sub")
+	}
+	return u.Sub, u.Email, u.Name, nil
+}
+
 // ensureWorkspace gives a freshly-logged-in account a personal workspace if it
 // has none, so the workspace picker is never empty.
-func (g *api) ensureWorkspace(account string, user *platform.IAMUser) error {
+func (g *api) ensureWorkspace(account, displayName, email string) error {
 	if existing := g.workspacesOf(account); len(existing) > 0 {
 		return nil
 	}
@@ -345,7 +378,7 @@ func (g *api) ensureWorkspace(account string, user *platform.IAMUser) error {
 	if err != nil {
 		return err
 	}
-	name := firstNonEmpty(user.Name, localPart(user.Email), "Workspace")
+	name := firstNonEmpty(displayName, localPart(email), "Workspace")
 	ws := core.NewRecord(wsColl)
 	ws.Set("slug", slugify(name)+"-"+shortID())
 	ws.Set("name", name)
