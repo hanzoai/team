@@ -6,6 +6,34 @@ import (
 	"testing"
 )
 
+// goldenHex is the exact wire encoding of a fixed Envelope. The TS port
+// (team dev/prod/src/zap-envelope.ts) must produce the identical bytes — this
+// constant is the cross-language contract.
+const goldenHex = "5a4150000200000010000000" + // header: ZAP\0 ver2 flags root=16
+	"2b000000" + // size=43
+	"01000000" + // id=1
+	"00" + "000000" + // kind=0 + pad
+	"10000000" + "02000000" + // method ptr: rel=16 len=2
+	"0a000000" + "01000000" + // payload ptr: rel=10 len=1
+	"6869" + "58" // "hi" + "X"
+
+func TestGoldenHex(t *testing.T) {
+	got := hexOf(Encode(Envelope{ID: 1, Kind: KindRequest, Method: "hi", Payload: []byte("X")}))
+	if got != goldenHex {
+		t.Fatalf("golden mismatch\n got %s\nwant %s", got, goldenHex)
+	}
+}
+
+func hexOf(b []byte) string {
+	const h = "0123456789abcdef"
+	out := make([]byte, len(b)*2)
+	for i, c := range b {
+		out[i*2] = h[c>>4]
+		out[i*2+1] = h[c&0xf]
+	}
+	return string(out)
+}
+
 func TestEnvelopeRoundTrip(t *testing.T) {
 	cases := []Envelope{
 		{ID: 1, Kind: KindRequest, Method: "hello", Payload: []byte(`{"binary":false}`)},
