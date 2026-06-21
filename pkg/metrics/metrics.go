@@ -54,7 +54,7 @@ func Register(app core.App, version string) {
 			// /v1/metrics not /metrics because every route in this stack
 			// lives under /v1; scrapers get a relabel_config in their
 			// ServiceMonitor / vmagent config to point at the right path.
-			e.Router.GET("/v1/metrics", apis.WrapStdHandler(metric.NewHTTPHandler(metric.DefaultGatherer, metric.HandlerOpts{})))
+			e.Router.GET("/v1/metrics", apis.WrapStdHandler(metric.Handler()))
 
 			// Global router middleware: tap before+after the request.
 			// We can't read the matched pattern from RequestEvent
