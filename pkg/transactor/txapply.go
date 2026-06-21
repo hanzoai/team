@@ -33,7 +33,7 @@ func (s *session) applyTx(raw json.RawMessage) (any, []json.RawMessage) {
 		}
 		return map[string]any{}, []json.RawMessage{raw}
 	case clTxRemove:
-		_ = s.store.del(s.workspace, str(t["objectId"]))
+		_ = s.store.del(s.org, s.workspace, str(t["objectId"]))
 		return map[string]any{}, []json.RawMessage{raw}
 	case clTxMixin:
 		s.txMixin(t)
@@ -75,13 +75,13 @@ func (s *session) txCreate(t map[string]any) {
 	doc["modifiedOn"] = t["modifiedOn"]
 	doc["createdBy"] = firstNonNil(t["createdBy"], t["modifiedBy"])
 	doc["createdOn"] = firstNonNil(t["createdOn"], t["modifiedOn"])
-	_ = s.store.put(s.workspace, doc)
+	_ = s.store.put(s.org, s.workspace, doc)
 	s.trigger(doc) // emulate server triggers (PersonSpace, etc.)
 }
 
 // txUpdate ports updateDoc2Doc/applyUpdate.
 func (s *session) txUpdate(t map[string]any) map[string]any {
-	doc, _ := s.store.get(s.workspace, str(t["objectId"]))
+	doc, _ := s.store.get(s.org, s.workspace, str(t["objectId"]))
 	if doc == nil {
 		return nil
 	}
@@ -90,13 +90,13 @@ func (s *session) txUpdate(t map[string]any) map[string]any {
 	}
 	doc["modifiedBy"] = t["modifiedBy"]
 	doc["modifiedOn"] = t["modifiedOn"]
-	_ = s.store.put(s.workspace, doc)
+	_ = s.store.put(s.org, s.workspace, doc)
 	return doc
 }
 
 // txMixin ports updateMixin4Doc: mixin data lives under the mixin's class id key.
 func (s *session) txMixin(t map[string]any) {
-	doc, _ := s.store.get(s.workspace, str(t["objectId"]))
+	doc, _ := s.store.get(s.org, s.workspace, str(t["objectId"]))
 	if doc == nil {
 		return
 	}
@@ -114,7 +114,7 @@ func (s *session) txMixin(t map[string]any) {
 	doc[mixin] = sub
 	doc["modifiedBy"] = t["modifiedBy"]
 	doc["modifiedOn"] = t["modifiedOn"]
-	_ = s.store.put(s.workspace, doc)
+	_ = s.store.put(s.org, s.workspace, doc)
 	s.trigger(doc)
 }
 

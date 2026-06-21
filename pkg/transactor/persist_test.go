@@ -13,6 +13,7 @@ func newTestSession(t *testing.T) *session {
 		server:    &server{hub: newHub()},
 		store:     newStore(t.TempDir()),
 		hier:      buildHierarchy(modelJSON),
+		org:       "test-org",
 		workspace: "ws-test",
 		account:   "acc-test",
 	}
@@ -62,7 +63,7 @@ func TestPersistenceCRUD(t *testing.T) {
 	}
 
 	// persistence across a fresh store handle (simulates reconnect/reload)
-	s2 := &session{server: s.server, store: newStore(s.store.dir), hier: s.hier, workspace: s.workspace, account: s.account}
+	s2 := &session{server: s.server, store: newStore(s.store.dir), hier: s.hier, org: s.org, workspace: s.workspace, account: s.account}
 	if docs := s2.queryDocs("tracker:class:Project", nil); len(docs) != 1 {
 		t.Fatalf("reload: want 1 persisted project, got %d", len(docs))
 	}
@@ -112,7 +113,30 @@ func TestSeedSpaces(t *testing.T) {
 	}
 	// idempotent
 	s.seedWorkspace()
-	if n, _ := s.store.count(s.workspace); n != len(systemSpaces()) {
+	if n, _ := s.store.count(s.org, s.workspace); n != len(systemSpaces()) {
 		t.Fatalf("seed not idempotent: count=%d", n)
+	}
+}
+
+// TestTenantIsolation proves two orgs sharing a workspace id never see each
+// other's data — the whole point of per-(org,workspace) SQLite files.
+func TestTenantIsolation(t *testing.T) {
+	st := newStore(t.TempDir())
+	hier := buildHierarchy(modelJSON)
+	mk := func(org string) *session {
+		return &session{server: &server{hub: newHub()}, store: st, hier: hier, org: org, workspace: "shared-ws", account: "u"}
+	}
+	a := mk("org-a")
+	b := mk("org-b")
+
+	a.applyTx(json.RawMessage(`{"_class":"core:class:TxCreateDoc","objectId":"p1",
+		"objectClass":"tracker:class:Project","objectSpace":"core:space:Space",
+		"modifiedBy":"u","modifiedOn":1,"attributes":{"name":"A only"}}`))
+
+	if got := a.queryDocs("tracker:class:Project", nil); len(got) != 1 {
+		t.Fatalf("org-a should see its project, got %d", len(got))
+	}
+	if got := b.queryDocs("tracker:class:Project", nil); len(got) != 0 {
+		t.Fatalf("org-b must NOT see org-a's project (tenant leak), got %d", len(got))
 	}
 }

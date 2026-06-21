@@ -11,11 +11,12 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-// store keeps ONE SQLite database per workspace — the project's data plane is
-// SQLite scoped per user/org/project, no KV and no Postgres. Each workspace
-// file has a single `docs` table; findAll/tx never cross workspace boundaries.
-// The driver is pure-Go modernc.org/sqlite (no cgo), keeping team a clean
-// static binary.
+// store keeps ONE SQLite database per (org, workspace) — the data plane is
+// SQLite scoped per tenant, no KV and no Postgres. Files nest as
+// <dir>/orgs/<org>/ws/<workspace>.db so an org's data is physically isolated
+// (full multitenancy) and the whole tree can live on one durable mount
+// (a PVC today, SeaweedFS/S3 for scale). The driver is pure-Go modernc.org/
+// sqlite (no cgo), keeping team a clean static binary.
 type store struct {
 	dir string
 	mu  sync.Mutex
@@ -24,23 +25,34 @@ type store struct {
 
 func newStore(dir string) *store { return &store{dir: dir, dbs: map[string]*sql.DB{}} }
 
-var wsSanitize = regexp.MustCompile(`[^a-zA-Z0-9_.-]`)
+var pathSanitize = regexp.MustCompile(`[^a-zA-Z0-9_.-]`)
 
-// db opens (creating on first use) the workspace's SQLite file and caches the
-// handle. WAL + busy_timeout make concurrent sessions safe; a single open
+func seg(s string) string {
+	if s == "" {
+		return "_"
+	}
+	return pathSanitize.ReplaceAllString(s, "_")
+}
+
+// db opens (creating on first use) the (org, workspace) SQLite file and caches
+// the handle. WAL + busy_timeout make concurrent sessions safe; a single open
 // connection serializes writes (sqlite is single-writer) which is plenty for a
-// per-user workspace.
-func (s *store) db(workspace string) (*sql.DB, error) {
+// per-workspace store. On a network FS that lacks WAL shared-memory the journal
+// mode falls back via the DSN env knob.
+func (s *store) db(org, workspace string) (*sql.DB, error) {
+	key := org + "|" + workspace
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	if db, ok := s.dbs[workspace]; ok {
+	if db, ok := s.dbs[key]; ok {
 		return db, nil
 	}
-	if err := os.MkdirAll(s.dir, 0o755); err != nil {
+	dir := filepath.Join(s.dir, "orgs", seg(org), "ws")
+	if err := os.MkdirAll(dir, 0o755); err != nil {
 		return nil, err
 	}
-	path := filepath.Join(s.dir, wsSanitize.ReplaceAllString(workspace, "_")+".db")
-	db, err := sql.Open("sqlite", path+"?_pragma=busy_timeout(5000)&_pragma=journal_mode(WAL)&_pragma=foreign_keys(0)")
+	journal := env("SQLITE_JOURNAL_MODE", "WAL") // DELETE/TRUNCATE on FUSE/S3 mounts
+	path := filepath.Join(dir, seg(workspace)+".db")
+	db, err := sql.Open("sqlite", path+"?_pragma=busy_timeout(5000)&_pragma=journal_mode("+journal+")&_pragma=foreign_keys(0)")
 	if err != nil {
 		return nil, err
 	}
@@ -56,13 +68,13 @@ func (s *store) db(workspace string) (*sql.DB, error) {
 		_ = db.Close()
 		return nil, err
 	}
-	s.dbs[workspace] = db
+	s.dbs[key] = db
 	return db, nil
 }
 
 // get returns the stored JSON for a doc, or nil if absent.
-func (s *store) get(workspace, id string) (map[string]any, error) {
-	db, err := s.db(workspace)
+func (s *store) get(org, workspace, id string) (map[string]any, error) {
+	db, err := s.db(org, workspace)
 	if err != nil {
 		return nil, err
 	}
@@ -81,10 +93,10 @@ func (s *store) get(workspace, id string) (map[string]any, error) {
 	return doc, nil
 }
 
-// put upserts a doc keyed by its _id; _class/space are mirrored into columns for
-// the findAll candidate scan.
-func (s *store) put(workspace string, doc map[string]any) error {
-	db, err := s.db(workspace)
+// put upserts a doc keyed by its _id; _class/space mirror into columns for the
+// findAll candidate scan.
+func (s *store) put(org, workspace string, doc map[string]any) error {
+	db, err := s.db(org, workspace)
 	if err != nil {
 		return err
 	}
@@ -92,7 +104,7 @@ func (s *store) put(workspace string, doc map[string]any) error {
 	class, _ := doc["_class"].(string)
 	space, _ := doc["space"].(string)
 	if id == "" || class == "" {
-		return nil // not a storable doc
+		return nil
 	}
 	raw, err := json.Marshal(doc)
 	if err != nil {
@@ -105,8 +117,8 @@ func (s *store) put(workspace string, doc map[string]any) error {
 }
 
 // del removes a doc by id.
-func (s *store) del(workspace, id string) error {
-	db, err := s.db(workspace)
+func (s *store) del(org, workspace, id string) error {
+	db, err := s.db(org, workspace)
 	if err != nil {
 		return err
 	}
@@ -117,8 +129,8 @@ func (s *store) del(workspace, id string) error {
 // byClasses returns the JSON of every doc whose _class is in the given set (the
 // caller passes the descendant set of the queried class). Go-side matchQuery,
 // sort and limit run over these.
-func (s *store) byClasses(workspace string, classes []string) ([]map[string]any, error) {
-	db, err := s.db(workspace)
+func (s *store) byClasses(org, workspace string, classes []string) ([]map[string]any, error) {
+	db, err := s.db(org, workspace)
 	if err != nil {
 		return nil, err
 	}
@@ -154,10 +166,10 @@ func (s *store) byClasses(workspace string, classes []string) ([]map[string]any,
 	return out, rows.Err()
 }
 
-// count returns how many docs the workspace holds — used to seed system spaces
-// exactly once.
-func (s *store) count(workspace string) (int, error) {
-	db, err := s.db(workspace)
+// count returns how many docs the (org, workspace) holds — used to seed system
+// spaces exactly once.
+func (s *store) count(org, workspace string) (int, error) {
+	db, err := s.db(org, workspace)
 	if err != nil {
 		return 0, err
 	}

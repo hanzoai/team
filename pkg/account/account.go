@@ -1,6 +1,7 @@
 package account
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -131,10 +132,18 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if uuid.Validate(account) != nil {
 		account = uuid.NewSHA1(uuid.NameSpaceURL, []byte("iam:"+sub)).String()
 	}
+	// Tenant = the IAM org (Casdoor `owner` claim on the access token). It
+	// scopes every workspace + data file — full multitenancy. The account token
+	// carries it as extra.org so getLoginInfoByToken/selectWorkspace and the
+	// transactor all route to the right tenant.
+	org := orgFromToken(access)
+	if org == "" {
+		org = g.cfg.platform.IAMOrg
+	}
 	if err := g.ensureWorkspace(account, name, email); err != nil {
 		g.app.Logger().Error("account: ensure workspace", "err", err)
 	}
-	tok, err := token.Generate(account, "", nil, g.cfg.serverSecret)
+	tok, err := token.Generate(account, "", map[string]any{"org": org}, g.cfg.serverSecret)
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "token_failed")
 	}
@@ -229,7 +238,7 @@ func (g *api) rpc(re *core.RequestEvent) error {
 }
 
 func (g *api) getLoginInfoByToken(re *core.RequestEvent) error {
-	account, tok, err := g.account(re)
+	account, _, tok, err := g.account(re)
 	if err != nil {
 		return g.fail(re, statusUnauthorized(err.Error()))
 	}
@@ -237,7 +246,7 @@ func (g *api) getLoginInfoByToken(re *core.RequestEvent) error {
 }
 
 func (g *api) getUserWorkspaces(re *core.RequestEvent) error {
-	account, _, err := g.account(re)
+	account, _, _, err := g.account(re)
 	if err != nil {
 		return g.fail(re, statusUnauthorized(err.Error()))
 	}
@@ -249,7 +258,7 @@ func (g *api) getUserWorkspaces(re *core.RequestEvent) error {
 }
 
 func (g *api) selectWorkspace(re *core.RequestEvent, params map[string]any) error {
-	account, _, err := g.account(re)
+	account, org, _, err := g.account(re)
 	if err != nil {
 		return g.fail(re, statusUnauthorized(err.Error()))
 	}
@@ -263,7 +272,9 @@ func (g *api) selectWorkspace(re *core.RequestEvent, params map[string]any) erro
 		return g.fail(re, statusUnauthorized("not a member of "+wsURL))
 	}
 	wsUUID := ws.GetString("uuid")
-	wsTok, err := token.Generate(account, wsUUID, nil, g.cfg.serverSecret)
+	// Carry the tenant into the workspace token so the transactor routes to
+	// orgs/<org>/ws/<workspace>.db.
+	wsTok, err := token.Generate(account, wsUUID, map[string]any{"org": org}, g.cfg.serverSecret)
 	if err != nil {
 		return g.fail(re, statusError("mint workspace token: "+err.Error()))
 	}
@@ -278,7 +289,7 @@ func (g *api) selectWorkspace(re *core.RequestEvent, params map[string]any) erro
 }
 
 func (g *api) getWorkspaceInfo(re *core.RequestEvent, _ map[string]any) error {
-	account, _, err := g.account(re)
+	account, _, _, err := g.account(re)
 	if err != nil {
 		return g.fail(re, statusUnauthorized(err.Error()))
 	}
@@ -290,7 +301,7 @@ func (g *api) getWorkspaceInfo(re *core.RequestEvent, _ map[string]any) error {
 }
 
 func (g *api) getPerson(re *core.RequestEvent) error {
-	account, _, err := g.account(re)
+	account, _, _, err := g.account(re)
 	if err != nil {
 		return g.fail(re, statusUnauthorized(err.Error()))
 	}
@@ -303,7 +314,7 @@ func (g *api) getPerson(re *core.RequestEvent) error {
 // identity for the account (the IAM sub) — verified, not deleted, deterministic
 // _id — which becomes the session's primary social id.
 func (g *api) getSocialIds(re *core.RequestEvent) error {
-	account, _, err := g.account(re)
+	account, _, _, err := g.account(re)
 	if err != nil {
 		return g.fail(re, statusUnauthorized(err.Error()))
 	}
@@ -322,7 +333,7 @@ func (g *api) getSocialIds(re *core.RequestEvent) error {
 // account decodes the request's HS256 bearer/cookie token (minted by this
 // service) into the AccountUuid. The frontend sends OUR token, not an IAM JWT,
 // so this does not go through Base's IAM middleware (re.Auth).
-func (g *api) account(re *core.RequestEvent) (account, tok string, err error) {
+func (g *api) account(re *core.RequestEvent) (account, org, tok string, err error) {
 	tok = bearer(re.Request)
 	if tok == "" {
 		if c, e := re.Request.Cookie(authCookie); e == nil {
@@ -330,16 +341,40 @@ func (g *api) account(re *core.RequestEvent) (account, tok string, err error) {
 		}
 	}
 	if tok == "" {
-		return "", "", fmt.Errorf("no token")
+		return "", "", "", fmt.Errorf("no token")
 	}
 	t, err := token.Decode(tok, g.cfg.serverSecret, true)
 	if err != nil {
-		return "", "", err
+		return "", "", "", err
 	}
 	if t.Account == "" {
-		return "", "", fmt.Errorf("token has no account")
+		return "", "", "", fmt.Errorf("token has no account")
 	}
-	return t.Account, tok, nil
+	org, _ = t.Extra["org"].(string)
+	return t.Account, org, tok, nil
+}
+
+// orgFromToken reads the IAM access-token's `owner` claim (the Casdoor org =
+// the tenant) without verifying — the token came from a trusted code exchange,
+// so we only decode the JSON payload to learn which org the user belongs to.
+func orgFromToken(jwtTok string) string {
+	parts := strings.Split(jwtTok, ".")
+	if len(parts) < 2 {
+		return ""
+	}
+	raw, err := base64.RawURLEncoding.DecodeString(parts[1])
+	if err != nil {
+		if raw, err = base64.StdEncoding.DecodeString(parts[1]); err != nil {
+			return ""
+		}
+	}
+	var claims struct {
+		Owner string `json:"owner"`
+	}
+	if json.Unmarshal(raw, &claims) != nil {
+		return ""
+	}
+	return claims.Owner
 }
 
 func (g *api) workspacesOf(account string) []*core.Record {

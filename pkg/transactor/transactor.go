@@ -68,11 +68,13 @@ func (srv *server) serve(re *core.RequestEvent) error {
 	if err != nil || t.Account == "" || t.Workspace == "" {
 		return re.UnauthorizedError("invalid workspace token", err)
 	}
+	org, _ := t.Extra["org"].(string)
 	sess := &session{
 		server:    srv,
 		store:     srv.store,
 		hier:      srv.hier,
 		account:   t.Account,
+		org:       org,
 		workspace: t.Workspace,
 		version:   srv.version,
 		sessionID: re.Request.URL.Query().Get("sessionId"),
@@ -102,6 +104,7 @@ type session struct {
 	conn      *websocket.Conn
 	wmu       sync.Mutex // serializes writes (loop replies + hub broadcasts)
 	account   string
+	org       string // IAM tenant (token extra.org); scopes the data path
 	workspace string
 	version   string
 	sessionID string
@@ -231,7 +234,7 @@ func (s *session) findOne(id int64, params []json.RawMessage) []byte {
 // mixin + query filtering.
 func (s *session) queryDocs(class string, query map[string]any) []map[string]any {
 	candidates := s.hier.candidates(class)
-	docs, err := s.store.byClasses(s.workspace, candidates)
+	docs, err := s.store.byClasses(s.org, s.workspace, candidates)
 	if err != nil {
 		return nil
 	}

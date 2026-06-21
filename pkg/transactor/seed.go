@@ -37,12 +37,12 @@ func systemSpaces() []map[string]any {
 // seedWorkspace writes the system spaces into a brand-new workspace exactly once
 // (count==0). Idempotent: put is an upsert keyed by _id.
 func (s *session) seedWorkspace() {
-	n, err := s.store.count(s.workspace)
+	n, err := s.store.count(s.org, s.workspace)
 	if err != nil || n > 0 {
 		return
 	}
 	for _, sp := range systemSpaces() {
-		_ = s.store.put(s.workspace, sp)
+		_ = s.store.put(s.org, s.workspace, sp)
 	}
 }
 
@@ -65,11 +65,11 @@ func (s *session) ensurePersonSpace(person string) {
 		return
 	}
 	id := "person-space:" + person
-	if existing, _ := s.store.get(s.workspace, id); existing != nil {
+	if existing, _ := s.store.get(s.org, s.workspace, id); existing != nil {
 		return
 	}
 	now := time.Now().UnixMilli()
-	_ = s.store.put(s.workspace, map[string]any{
+	_ = s.store.put(s.org, s.workspace, map[string]any{
 		"_id": id, "_class": "contact:class:PersonSpace", "space": "core:space:Space",
 		"name": "Personal space", "description": "", "private": true, "archived": false,
 		"person": person, "members": []any{s.account},
