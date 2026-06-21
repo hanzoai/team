@@ -11,6 +11,8 @@
 package metrics
 
 import (
+	"bufio"
+	"net"
 	"net/http"
 	"strconv"
 	"strings"
@@ -128,4 +130,16 @@ func (s *statusRecorder) Flush() {
 	if f, ok := s.ResponseWriter.(http.Flusher); ok {
 		f.Flush()
 	}
+}
+
+// Hijack forwards to the underlying writer so WebSocket endpoints (the ZAP
+// transactor, /v1/subscribe) can upgrade even though this timing wrapper sits
+// in front of every response. Embedding http.ResponseWriter does NOT promote
+// Hijack (it's not in that interface), so without this the wrapper would mask
+// the connection's Hijacker and the upgrade would fail.
+func (s *statusRecorder) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	if hj, ok := s.ResponseWriter.(http.Hijacker); ok {
+		return hj.Hijack()
+	}
+	return nil, nil, http.ErrNotSupported
 }
