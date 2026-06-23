@@ -22,6 +22,12 @@ jobs:
     with:
       image: ghcr.io/hanzoai/team-go
       platforms: linux/amd64
+      # ARC v2 matches jobs by the runner-scale-set NAME, not arbitrary
+      # labels. The reusable workflow defaults runner-amd64 to
+      # ["self-hosted","linux","amd64"], which the hanzo-build-linux-amd64
+      # scale set does NOT claim → jobs queue forever. Pin the scale-set name.
+      runner-amd64: '["hanzo-build-linux-amd64"]'
+      runner-deploy: '["hanzo-build-linux-amd64"]'
       build-args: |
         COMMIT_HASH=${{ github.sha }}
     secrets: inherit

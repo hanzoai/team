@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 # Stage 1 — toolchain build (transpile .ts + go build).
 FROM golang:1.26.4-alpine AS build
 
@@ -8,18 +9,22 @@ RUN npm install -g esbuild
 RUN addgroup -g 65532 -S nonroot && adduser -u 65532 -S nonroot -G nonroot
 
 # Private Go modules (github.com/hanzoai/*) need auth for `go mod download`.
-# GH_TOKEN is a build-time-only ARG (never copied into the scratch runtime);
-# pass it via --build-arg GH_TOKEN=... (CI/kaniko). When empty (public-dep
-# builds) the git rewrite is a harmless no-op.
+# Two delivery paths, both build-time-only (never copied into the scratch
+# runtime):
+#   - BuildKit secret id=gh_token  (docker/buildx CI — NOT baked into layers;
+#     the reusable hanzoai/.github docker-build.yml mounts this)
+#   - --build-arg GH_TOKEN=...      (kaniko, which has no --mount=type=secret)
+# When neither is set (public-dep builds) the git rewrite is a no-op.
 ARG GH_TOKEN=""
 ENV GOPRIVATE=github.com/hanzoai/*,github.com/luxfi/*,github.com/zooai/*
-RUN if [ -n "$GH_TOKEN" ]; then \
-      git config --global url."https://x-access-token:${GH_TOKEN}@github.com/".insteadOf "https://github.com/"; \
-    fi
-
 WORKDIR /src
 COPY go.mod go.sum ./
-RUN go mod download
+RUN --mount=type=secret,id=gh_token,required=false \
+    TOKEN="$(cat /run/secrets/gh_token 2>/dev/null || echo "$GH_TOKEN")"; \
+    if [ -n "$TOKEN" ]; then \
+      git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"; \
+    fi; \
+    go mod download
 
 COPY . .
 
