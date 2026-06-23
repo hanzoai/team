@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -28,11 +29,11 @@ const mount = "/v1/account"
 const authCookie = "account-token"
 
 type config struct {
-	platform      platform.PlatformConfig
-	serverSecret  string
-	frontURL      string // browser destination after IAM (default: request origin)
-	transactor    string // ws:// base returned by selectWorkspace
-	provider      string // IAM provider name surfaced to the frontend ("openid")
+	platform     platform.PlatformConfig
+	serverSecret string
+	frontURL     string // browser destination after IAM (default: request origin)
+	transactor   string // ws:// base returned by selectWorkspace
+	provider     string // IAM provider name surfaced to the frontend ("openid")
 }
 
 func load() config {
@@ -98,7 +99,10 @@ func (g *api) authStart(re *core.RequestEvent) error {
 		"scope":         {"openid profile email"},
 		"state":         {state},
 	}
-	return re.Redirect(http.StatusFound, g.cfg.platform.IAMEndpoint+"/oauth/authorize?"+q.Encode())
+	// Canonical IAM OAuth surface is ${IAMEndpoint}/v1/iam/oauth/* (hanzo.id and
+	// the embedded provider both mount there; the bare /oauth/authorize root is
+	// the SPA, which renders blank). oauthBase() owns the prefix — one way.
+	return re.Redirect(http.StatusFound, oauthBase(g.cfg.platform.IAMEndpoint)+"/oauth/authorize?"+q.Encode())
 }
 
 // authCallback exchanges the IAM code for the user, ensures the account has a
@@ -116,8 +120,9 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	origin := originOf(re.Request)
 	redirect := origin + mount + "/auth/" + g.cfg.provider + "/callback"
 
-	access, _, err := platform.ExchangeOAuth2Token(code, redirect, g.cfg.platform)
+	access, err := g.exchangeCode(code, redirect)
 	if err != nil {
+		g.app.Logger().Error("account: oauth code exchange", "err", err)
 		return g.bounce(re, "", q.Get("state"), "exchange_failed")
 	}
 	// OIDC userinfo, read via the canonical `sub` claim. (Base's
@@ -401,10 +406,66 @@ func (g *api) membership(account, workspaceID string) Role {
 	return m.GetString("role")
 }
 
+// oauthBase returns the canonical IAM OAuth base URL: ${IAMEndpoint}/v1/iam.
+// Hanzo IAM (hanzo.id) and the embedded provider both mount their OIDC surface
+// (authorize/token/userinfo) under /v1/iam — never at the root. Building those
+// URLs without the prefix lands on the SPA/static handler (HTTP 200 text/html),
+// which is the root cause of exchange_failed. One place owns the prefix.
+//
+// Inlined here (rather than base's PlatformConfig.OAuthBase) for the same reason
+// pkg/iam/proxy.go is inlined: team-go pins base v0.39.10, which predates the
+// helper. Deletable the day team-go moves to base v1.x.
+func oauthBase(endpoint string) string {
+	endpoint = strings.TrimRight(endpoint, "/")
+	if endpoint == "" {
+		endpoint = "https://hanzo.id"
+	}
+	return endpoint + "/v1/iam"
+}
+
+// exchangeCode exchanges an authorization code for an access token at the
+// canonical IAM token endpoint (${IAMEndpoint}/v1/iam/oauth/token). team-go is
+// a confidential client (client_secret), so no PKCE — the code is exchanged
+// server-side here. Replaces base v0.39.10's platform.ExchangeOAuth2Token,
+// which POSTs to the bare /oauth/token (the SPA) → exchange_failed.
+func (g *api) exchangeCode(code, redirectURI string) (string, error) {
+	data := url.Values{
+		"grant_type":    {"authorization_code"},
+		"code":          {code},
+		"redirect_uri":  {redirectURI},
+		"client_id":     {g.cfg.platform.IAMClientID},
+		"client_secret": {g.cfg.platform.IAMClientSecret},
+	}
+	resp, err := http.PostForm(oauthBase(g.cfg.platform.IAMEndpoint)+"/oauth/token", data)
+	if err != nil {
+		return "", fmt.Errorf("token exchange request: %w", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(io.LimitReader(resp.Body, 1024))
+		return "", fmt.Errorf("token exchange status %d: %s", resp.StatusCode, strings.TrimSpace(string(body)))
+	}
+	var out struct {
+		AccessToken string `json:"access_token"`
+		Error       string `json:"error"`
+		ErrorDesc   string `json:"error_description"`
+	}
+	if err := json.NewDecoder(resp.Body).Decode(&out); err != nil {
+		return "", fmt.Errorf("token exchange decode: %w", err)
+	}
+	if out.Error != "" {
+		return "", fmt.Errorf("token exchange: %s: %s", out.Error, out.ErrorDesc)
+	}
+	if out.AccessToken == "" {
+		return "", fmt.Errorf("token exchange: empty access_token")
+	}
+	return out.AccessToken, nil
+}
+
 // userinfo fetches the OIDC userinfo for an access token and returns the
 // canonical sub/email/name claims.
 func (g *api) userinfo(access string) (sub, email, name string, err error) {
-	req, err := http.NewRequest("GET", g.cfg.platform.IAMEndpoint+"/v1/iam/oauth/userinfo", nil)
+	req, err := http.NewRequest("GET", oauthBase(g.cfg.platform.IAMEndpoint)+"/oauth/userinfo", nil)
 	if err != nil {
 		return "", "", "", err
 	}

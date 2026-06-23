@@ -8,12 +8,13 @@
 // orthogonal, deletable the day we move team-go to base v1.x.
 //
 // Path contract: requests to /v1/iam/<rest> are forwarded to
-// ${IAM_ENDPOINT}<rest>. The /v1/iam prefix is the LOCAL mount —
-// hanzo.id itself mounts OIDC at the root (/oauth/authorize,
-// /oauth/token, /oauth/userinfo, /.well-known/jwks, …) per HIP-0026.
-// Stripping /v1/iam here keeps the same-origin contract for clients
-// while talking to hanzo.id's actual route layout. Matches the
-// base v1.x plugins/platform/iam_proxy.go behavior.
+// ${IAM_ENDPOINT}/v1/iam/<rest> — the prefix is PRESERVED, not stripped.
+// hanzo.id (and the embedded provider) mount their OIDC surface under
+// /v1/iam (authorize/token/userinfo at /v1/iam/oauth/*, JWKS+discovery at
+// /v1/iam/.well-known/*); the bare root /oauth/* and /.well-known/jwks are
+// the SPA/static handler. Stripping the prefix lands on the SPA (HTTP 200
+// text/html) and breaks the same-origin OIDC contract. Matches base's
+// fixed plugins/platform/iam_proxy.go behavior.
 package iam
 
 import (
@@ -64,12 +65,14 @@ func iamEndpoint() string {
 }
 
 func proxy(re *core.RequestEvent, endpoint *url.URL) error {
-	rest := strings.TrimPrefix(re.Request.URL.Path, "/v1/iam")
-	if rest == "" {
-		rest = "/"
+	// Preserve the /v1/iam prefix — hanzo.id mounts OIDC under /v1/iam, not at
+	// the root. /v1/iam/<rest> → ${IAM_ENDPOINT}/v1/iam/<rest>.
+	path := re.Request.URL.Path
+	if path == "" {
+		path = "/v1/iam"
 	}
 	upstream := *endpoint
-	upstream.Path = strings.TrimRight(endpoint.Path, "/") + rest
+	upstream.Path = strings.TrimRight(endpoint.Path, "/") + path
 	upstream.RawQuery = re.Request.URL.RawQuery
 
 	// Only attach the body for methods that actually carry one. Passing
