@@ -1,0 +1,51 @@
+name: Run in build environment
+description: >
+  Runs a script inside the build-server container. Use for build and check
+  jobs that don't need direct control over the docker run invocation.
+
+inputs:
+  run:
+    description: "Bash script to execute inside the container"
+    required: true
+  fips-enabled:
+    description: "Set to 'true' to use the FIPS build image"
+    required: false
+    default: "false"
+  go-version-file:
+    description: "Path to .go-version file relative to workspace root"
+    required: false
+    default: "server/.go-version"
+  working-directory:
+    description: "Working directory inside the container (absolute path under /mattermost/)"
+    required: false
+    default: "/mattermost/server"
+
+runs:
+  using: composite
+  steps:
+    - name: Read Go version
+      shell: bash
+      run: echo "GO_VERSION=$(cat ${{ inputs.go-version-file }})" >> "${GITHUB_ENV}"
+    - uses: ./.github/actions/load-buildenv
+      id: buildenv
+      with:
+        go-version: ${{ env.GO_VERSION }}
+        fips-enabled: ${{ inputs.fips-enabled }}
+    - name: Run in buildenv
+      shell: bash
+      env:
+        CMD: ${{ inputs.run }}
+        IMAGE: ${{ steps.buildenv.outputs.image }}
+        WORKING_DIR: ${{ inputs.working-directory }}
+      run: |
+        SCRIPT=$(mktemp)
+        printf 'git config --global --add safe.directory /mattermost\n' > "${SCRIPT}"
+        printf '%s\n' "${CMD}" >> "${SCRIPT}"
+        docker run --rm \
+          --network host \
+          -v "$PWD:/mattermost" \
+          -v "${SCRIPT}:/run-script.sh" \
+          -w "${WORKING_DIR}" \
+          "${IMAGE}" \
+          bash /run-script.sh
+        rm -f "${SCRIPT}"
