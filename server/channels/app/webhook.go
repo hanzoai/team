@@ -111,9 +111,6 @@ func (a *App) TriggerWebhook(rctx request.CTX, payload *model.OutgoingWebhookPay
 		}
 	}
 
-	// Mechanism: the post left the channel via an outgoing webhook. Record the
-	// delivery once, and only after a callback URL actually accepts the request.
-	// The target is the webhook integration (its id), not a user.
 	trackDelivery := a.shouldTrackDelivery(channel, post)
 	var deliveryRecorded sync.Once
 
@@ -171,7 +168,6 @@ func (a *App) TriggerWebhook(rctx request.CTX, payload *model.OutgoingWebhookPay
 				return
 			}
 
-			// The webhook endpoint accepted the request: record the delivery once.
 			if trackDelivery {
 				deliveryRecorded.Do(func() {
 					a.RecordPostDelivery(hook.Id, post.Id, model.DeliveryTargetWebhook, model.DeliveryMechanismOutgoingWebhook)

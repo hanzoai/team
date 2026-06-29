@@ -534,8 +534,6 @@ func (h *Hub) Stop() {
 	}
 }
 
-// recordPostDelivery records a single Product-mechanism delivery of postID to
-// userID when delivery recording is wired. No-op when unset or ids are empty.
 func (h *Hub) recordPostDelivery(postID, userID string) {
 	if postID == "" || userID == "" || h.platform.postDeliveryRecorder == nil {
 		return
@@ -732,7 +730,6 @@ func (h *Hub) Start() {
 				postID := msg.GetBroadcast().RecordPostDeliveryID
 
 				broadcast := func(webConn *WebConn) {
-					// Record a delivery for every user this post is broadcast to.
 					h.recordPostDelivery(postID, webConn.UserId)
 					if !connIndex.Has(webConn) {
 						return

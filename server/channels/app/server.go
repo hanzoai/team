@@ -301,9 +301,6 @@ func NewServer(options ...Option) (*Server, error) {
 	// After channel is initialized set it to the App object
 	app := New(ServerConnector(channels))
 
-	// Wire post-delivery recording so the websocket hub (platform layer, which
-	// has no audit access) can record deliveries through the app's audit logger.
-	// The hub no-ops recording until this is set, so wiring it after Start is safe.
 	s.platform.SetPostDeliveryRecorder(func(postID, userID string) {
 		app.RecordPostDelivery(userID, postID, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
 	})

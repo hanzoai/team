@@ -25,10 +25,6 @@ func (a *App) shouldTrackDelivery(channel *model.Channel, post *model.Post) bool
 		post != nil && !post.IsSystemMessage()
 }
 
-// shouldTrackPushDelivery reports whether a push that was actually sent should be
-// recorded as a post delivery. It applies the same policy as shouldTrackDelivery,
-// reading the post/channel attributes carried on the built push message. Only
-// message pushes that carry a post id are eligible (clear/badge pushes are not).
 func (a *App) shouldTrackPushDelivery(msg *model.PushNotification) bool {
 	if msg.Type != model.PushTypeMessage || msg.PostId == "" {
 		return false

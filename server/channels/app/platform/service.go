@@ -136,11 +136,8 @@ type PlatformService struct {
 	// logRootPathOverride overrides MM_LOG_PATH for log root path validation.
 	logRootPathOverride string
 
-	// postDeliveryRecorder, when set, records a Product-mechanism post delivery
-	// for a single (postID, userID) pair — called once per user a websocket
-	// broadcast targets. It is wired from the app layer (which owns the audit
-	// logger) so the hub can emit without an app/audit dependency. Set once at
-	// startup before hubs serve traffic; nil when delivery tracking is not wired.
+	// postDeliveryRecorder is used by Hub websocket broadcast service for recording
+	// post delivery events.
 	postDeliveryRecorder func(postID, userID string)
 }
 
