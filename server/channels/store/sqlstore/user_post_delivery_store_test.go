@@ -93,7 +93,7 @@ func TestUserPostDeliveryStore(t *testing.T) {
 		postID := model.NewId()
 		pluginID := "com.mattermost.plugin-incident-collaboration" // 44 chars, > the old VARCHAR(26)
 		require.NoError(t, s.MarkBulk(ctx, []model.UserPostDelivery{
-			{PostID: postID, TargetID: pluginID, TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechPlugin},
+			{PostID: postID, TargetID: pluginID, TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechanismPlugin},
 		}))
 		got := rowsByPost(t, postID)
 		require.Len(t, got, 1)
