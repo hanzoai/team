@@ -87,10 +87,6 @@ func (a *App) sendPushNotificationSync(rctx request.CTX, post *model.Post, user 
 		return appErr
 	}
 
-	if a.shouldTrackDelivery(channel, post) {
-		a.RecordPostDelivery(user.Id, post.Id, model.DeliveryTargetUser, model.DeliveryMechanismPush)
-	}
-
 	return a.sendPushNotificationToAllSessions(rctx, msg, user.Id, "")
 }
 
@@ -162,6 +158,8 @@ func (a *App) sendPushNotificationToAllSessions(rctx request.CTX, msg *model.Pus
 		)
 		return appErr
 	}
+
+	trackDelivery := a.shouldTrackPushDelivery(msg)
 
 	for _, session := range sessions {
 		// Don't send notifications to this session if it's expired or we want to skip it
@@ -250,6 +248,12 @@ func (a *App) sendPushNotificationToAllSessions(rctx request.CTX, msg *model.Pus
 				mlog.Err(err),
 			)
 			continue
+		}
+
+		// Push accepted by the proxy: record the delivery once for this user.
+		if trackDelivery {
+			a.RecordPostDelivery(userID, msg.PostId, model.DeliveryTargetUser, model.DeliveryMechanismPush)
+			trackDelivery = false
 		}
 
 		rctx.Logger().LogM(mlog.MlvlNotificationTrace, "Notification sent to push proxy",

@@ -111,11 +111,11 @@ func (a *App) TriggerWebhook(rctx request.CTX, payload *model.OutgoingWebhookPay
 		}
 	}
 
-	// Mechanism: the post left the channel via an outgoing webhook. The target is
-	// the webhook integration (its id), not a user.
-	if a.shouldTrackDelivery(channel, post) {
-		a.RecordPostDelivery(hook.Id, post.Id, model.DeliveryTargetWebhook, model.DeliveryMechanismOutgoingWebhook)
-	}
+	// Mechanism: the post left the channel via an outgoing webhook. Record the
+	// delivery once, and only after a callback URL actually accepts the request.
+	// The target is the webhook integration (its id), not a user.
+	trackDelivery := a.shouldTrackDelivery(channel, post)
+	var deliveryRecorded sync.Once
 
 	var wg sync.WaitGroup
 
@@ -169,6 +169,13 @@ func (a *App) TriggerWebhook(rctx request.CTX, payload *model.OutgoingWebhookPay
 					logger.Error("Outgoing Webhook POST failed", mlog.Err(err))
 				}
 				return
+			}
+
+			// The webhook endpoint accepted the request: record the delivery once.
+			if trackDelivery {
+				deliveryRecorded.Do(func() {
+					a.RecordPostDelivery(hook.Id, post.Id, model.DeliveryTargetWebhook, model.DeliveryMechanismOutgoingWebhook)
+				})
 			}
 
 			if webhookResp != nil && (webhookResp.Text != nil || len(webhookResp.Attachments) > 0) {

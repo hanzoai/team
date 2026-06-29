@@ -98,8 +98,6 @@ type Hub struct {
 
 	// Hub-specific semaphore for limiting concurrent goroutines
 	hubSemaphore chan struct{}
-
-	deliveryRecorded map[string]struct{}
 }
 
 // newWebHub creates a new Hub.
@@ -536,15 +534,13 @@ func (h *Hub) Stop() {
 	}
 }
 
-func (h *Hub) flushPostDeliveries(postID string, recorded map[string]struct{}) {
-	if len(recorded) == 0 {
+// recordPostDelivery records a single Product-mechanism delivery of postID to
+// userID when delivery recording is wired. No-op when unset or ids are empty.
+func (h *Hub) recordPostDelivery(postID, userID string) {
+	if postID == "" || userID == "" || h.platform.postDeliveryRecorder == nil {
 		return
 	}
-	userIDs := make([]string, 0, len(recorded))
-	for uid := range recorded {
-		userIDs = append(userIDs, uid)
-	}
-	h.platform.postDeliveryRecorder(postID, userIDs)
+	h.platform.postDeliveryRecorder(postID, userID)
 }
 
 func (h *Hub) Start() {
@@ -733,26 +729,17 @@ func (h *Hub) Start() {
 
 				msg = msg.PrecomputeJSON()
 
-				var recorded map[string]struct{}
-				if postID := msg.GetBroadcast().RecordPostDeliveryID; postID != "" && h.platform.postDeliveryRecorder != nil {
-					if h.deliveryRecorded == nil {
-						h.deliveryRecorded = make(map[string]struct{})
-					}
-					recorded = h.deliveryRecorded
-					clear(recorded)
-					defer h.flushPostDeliveries(postID, recorded)
-				}
+				postID := msg.GetBroadcast().RecordPostDeliveryID
 
 				broadcast := func(webConn *WebConn) {
+					// Record a delivery for every user this post is broadcast to.
+					h.recordPostDelivery(postID, webConn.UserId)
 					if !connIndex.Has(webConn) {
 						return
 					}
 					if webConn.ShouldSendEvent(msg) {
 						select {
 						case webConn.send <- h.runBroadcastHooks(msg, webConn, broadcastHooks, broadcastHookArgs):
-							if recorded != nil && webConn.UserId != "" {
-								recorded[webConn.UserId] = struct{}{}
-							}
 						default:
 							// Don't log the warning if it's an inactive connection.
 							if webConn.Active.Load() {
@@ -768,7 +755,7 @@ func (h *Hub) Start() {
 				// Quick return for a single connection.
 				if webConn := connIndex.ForConnection(msg.GetBroadcast().ConnectionId); webConn != nil {
 					broadcast(webConn)
-					return
+					continue
 				}
 
 				fastIteration := *h.platform.Config().ServiceSettings.EnableWebHubChannelIteration
@@ -782,7 +769,7 @@ func (h *Hub) Start() {
 					for webConn := range targetConns {
 						broadcast(webConn)
 					}
-					return
+					continue
 				}
 
 				// There are multiple hubs in a system. So while supporting both channel based iteration and the old
@@ -790,7 +777,7 @@ func (h *Hub) Start() {
 				// have the targetConns. Therefore, we need to stop here if channel based iteration is enabled, and it's a
 				// channel-scoped event.
 				if channelID := msg.GetBroadcast().ChannelId; channelID != "" && fastIteration {
-					return
+					continue
 				}
 
 				for webConn := range connIndex.All() {

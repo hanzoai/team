@@ -304,8 +304,8 @@ func NewServer(options ...Option) (*Server, error) {
 	// Wire post-delivery recording so the websocket hub (platform layer, which
 	// has no audit access) can record deliveries through the app's audit logger.
 	// The hub no-ops recording until this is set, so wiring it after Start is safe.
-	s.platform.SetPostDeliveryRecorder(func(postID string, userIDs []string) {
-		app.RecordPostDeliveryFanOut(postID, userIDs, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+	s.platform.SetPostDeliveryRecorder(func(postID, userID string) {
+		app.RecordPostDelivery(userID, postID, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
 	})
 
 	// Register property-service hooks AFTER s.ch is populated. The

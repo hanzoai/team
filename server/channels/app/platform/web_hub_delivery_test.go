@@ -9,35 +9,36 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestHubFlushPostDeliveries(t *testing.T) {
-	t.Run("hands a fresh, deduped slice to the recorder", func(t *testing.T) {
-		var gotPostID string
-		var gotUserIDs []string
+func TestHubRecordPostDelivery(t *testing.T) {
+	t.Run("records the (postID, userID) pair", func(t *testing.T) {
+		var gotPostID, gotUserID string
 		h := &Hub{platform: &PlatformService{
-			postDeliveryRecorder: func(postID string, userIDs []string) {
+			postDeliveryRecorder: func(postID, userID string) {
 				gotPostID = postID
-				gotUserIDs = userIDs
+				gotUserID = userID
 			},
 		}}
 
-		recorded := map[string]struct{}{"u1": {}, "u2": {}, "u3": {}}
-		h.flushPostDeliveries("post1", recorded)
+		h.recordPostDelivery("post1", "u1")
 
 		require.Equal(t, "post1", gotPostID)
-		require.ElementsMatch(t, []string{"u1", "u2", "u3"}, gotUserIDs)
-
-		// The slice handed off must NOT alias the reusable dedup map's storage:
-		// mutating the map afterwards must not affect what the recorder received.
-		clear(recorded)
-		require.Len(t, gotUserIDs, 3, "recorder's slice must be owned by the record, not the reused map")
+		require.Equal(t, "u1", gotUserID)
 	})
 
-	t.Run("does not call the recorder for an empty set", func(t *testing.T) {
+	t.Run("no-op when the recorder is not wired", func(t *testing.T) {
+		h := &Hub{platform: &PlatformService{}}
+		require.NotPanics(t, func() { h.recordPostDelivery("post1", "u1") })
+	})
+
+	t.Run("no-op when postID or userID is empty", func(t *testing.T) {
 		called := false
 		h := &Hub{platform: &PlatformService{
-			postDeliveryRecorder: func(string, []string) { called = true },
+			postDeliveryRecorder: func(string, string) { called = true },
 		}}
-		h.flushPostDeliveries("post1", map[string]struct{}{})
+
+		h.recordPostDelivery("", "u1")
+		h.recordPostDelivery("post1", "")
+
 		require.False(t, called)
 	})
 }
