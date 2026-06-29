@@ -1299,18 +1299,8 @@ type TemporaryPostStore interface {
 	GetExpiredPosts(rctx request.CTX, lastPostId string, limit uint64) ([]string, error)
 }
 
-// UserPostDeliveryStore appends to the UserPostDelivery table on an independent
-// Postgres pool (or the primary pool when no dedicated DB is configured). Writes
-// are fire-and-forget batch inserts: duplicates collapse via the unique index
-// (post_id, target_id, target_type, mechanism), so the recorded created_at is
-// the time of first delivery. When the feature is disabled the store is a no-op.
 type UserPostDeliveryStore interface {
-	// MarkBulk records arbitrary mixed (post, target, mechanism) rows in a
-	// single round-trip. Used by the audit delivery target's batching worker
-	// pool to flush an accumulated batch. created_at is stamped server-side.
 	MarkBulk(ctx context.Context, records []model.UserPostDelivery) error
-	// DeleteByPost removes all delivery rows for a post. Used by retention /
-	// when a flagged post is retained or deleted.
 	DeleteByPost(ctx context.Context, postID string) error
 }
 
