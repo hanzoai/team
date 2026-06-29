@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/hero.svg" alt="team" width="880"></p>
+
 # Hanzo Team
 
 [![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/hanloai?style=for-the-badge)](https://x.com/hanzoai)
