@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/hero.svg" alt="team-go" width="880"></p>
+
 # hanzo-team
 
 Single-binary Go backend for `hanzo.team`. Replaces the 40+
