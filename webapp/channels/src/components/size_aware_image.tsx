@@ -225,15 +225,15 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
             ariaLabelImage += ` ${fileInfo.name}`.toLowerCase();
         }
 
-        const fileType = getFileType(fileInfo?.extension ?? '');
+        // const fileType = getFileType(fileInfo?.extension ?? '');
 
-        let conditionalSVGStyleAttribute;
-        if (fileType === FileTypes.SVG) {
-            conditionalSVGStyleAttribute = {
-                width: dimensions?.width || MIN_IMAGE_SIZE,
-                height: 'auto',
-            };
-        }
+        // let conditionalSVGStyleAttribute;
+        // if (fileType === FileTypes.SVG) {
+        //     conditionalSVGStyleAttribute = {
+        //         width: dimensions?.width || MIN_IMAGE_SIZE,
+        //         height: 'auto',
+        //     };
+        // }
 
         const image = (
             <img
@@ -249,7 +249,8 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
                 src={src}
                 onError={this.handleError}
                 onLoad={this.handleLoad}
-                style={conditionalSVGStyleAttribute}
+
+                // style={conditionalSVGStyleAttribute}
             />
         );
 
@@ -456,7 +457,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
                 {fallback}
                 <div
                     className='file-preview__button'
-                    style={{display: shouldShowImg ? 'inline-block' : 'none'}}
+                    style={{display: shouldShowImg ? 'block' : 'none'}}
                 >
                     {this.renderImageWithContainerIfNeeded()}
                 </div>
