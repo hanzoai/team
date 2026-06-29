@@ -21,6 +21,16 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/utils"
 )
 
+// emailNotificationContentsType returns the effective email-notification contents
+// type. The system setting only applies under the licensed EmailNotificationContents
+// feature; otherwise full content is always sent.
+func (a *App) emailNotificationContentsType() string {
+	if license := a.Srv().License(); license != nil && *license.Features.EmailNotificationContents {
+		return *a.Config().EmailSettings.EmailNotificationContentsType
+	}
+	return model.EmailNotificationContentsFull
+}
+
 func (a *App) buildEmailNotification(
 	rctx request.CTX,
 	notification *PostNotification,
@@ -49,10 +59,7 @@ func (a *App) buildEmailNotification(
 	senderName := notification.GetSenderName(nameFormat,
 		*a.Config().ServiceSettings.EnablePostUsernameOverride)
 
-	emailNotificationContentsType := model.EmailNotificationContentsFull
-	if license := a.Srv().License(); license != nil && *license.Features.EmailNotificationContents {
-		emailNotificationContentsType = *a.Config().EmailSettings.EmailNotificationContentsType
-	}
+	emailNotificationContentsType := a.emailNotificationContentsType()
 
 	var subject string
 	if channel.Type == model.ChannelTypeDirect {
@@ -254,7 +261,7 @@ func (a *App) sendNotificationEmail(rctx request.CTX, notification *PostNotifica
 		references = referencesVal
 	}
 
-	if a.shouldTrackDelivery(channel, post) {
+	if a.shouldTrackDelivery(channel, post) && a.emailNotificationContentsType() == model.EmailNotificationContentsFull {
 		a.RecordPostDelivery(user.Id, post.Id, model.DeliveryTargetUser, model.DeliveryMechanismEmail)
 	}
 

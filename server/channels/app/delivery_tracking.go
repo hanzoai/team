@@ -26,7 +26,10 @@ func (a *App) shouldTrackDelivery(channel *model.Channel, post *model.Post) bool
 }
 
 func (a *App) shouldTrackPushDelivery(msg *model.PushNotification) bool {
-	if msg.Type != model.PushTypeMessage || msg.PostId == "" {
+	// Only track when the push actually carries the message body. generic,
+	// generic_no_channel, and id_loaded pushes don't deliver the post content.
+	if msg.Type != model.PushTypeMessage || msg.PostId == "" ||
+		*a.Config().EmailSettings.PushNotificationContents != model.FullNotification {
 		return false
 	}
 	return a.shouldTrackDelivery(
