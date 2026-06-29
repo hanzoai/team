@@ -354,6 +354,7 @@ func (a *App) SanitizePostMetadataForUser(rctx request.CTX, post *model.Post, us
 				} else if !previewPost.Post.IsSystemMessage() {
 					// The previewed post's content is delivered to this user via the
 					// permalink embed, even if it lives in a channel not otherwise tracked.
+					// TODO - https://mattermost.atlassian.net/browse/MM-69493 Track previewed post only when feature is enabled in the previewer post's channel
 					a.RecordPostDelivery(userID, previewPost.Post.Id, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
 				}
 			}

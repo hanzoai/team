@@ -638,10 +638,6 @@ func (ps *PlatformService) SetPluginsEnvironment(runner HookRunner) {
 	ps.pluginEnv = runner
 }
 
-// SetPostDeliveryRecorder wires the callback the hub uses to record websocket
-// post deliveries to the users actually served. See
-// WebsocketBroadcast.RecordPostDeliveryID. Must be called once at startup before
-// hubs serve traffic.
 func (ps *PlatformService) SetPostDeliveryRecorder(fn func(postID string, userIDs []string)) {
 	ps.postDeliveryRecorder = fn
 }
