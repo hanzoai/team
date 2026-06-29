@@ -30,9 +30,6 @@ func SetupConnection(logger mlog.LoggerIFace, connType string, dataSource string
 		attempts)
 }
 
-// SetupDeliveryTrackingConnection opens a connection for the independent
-// post-delivery-tracking pool. It mirrors SetupConnection but reads pool tuning
-// from DeliveryTrackingSettings.
 func SetupDeliveryTrackingConnection(logger mlog.LoggerIFace, connType string, dataSource string, settings *model.DeliveryTrackingSettings, attempts int) (*dbsql.DB, error) {
 	return setupConnection(logger, connType, dataSource, *settings.DriverName,
 		*settings.MaxIdleConns, *settings.MaxOpenConns,

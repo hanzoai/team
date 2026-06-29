@@ -152,8 +152,6 @@ type FeatureFlags struct {
 	// Requires AttributeBasedAccessControl to also be enabled.
 	TeamMembershipAccessControl bool
 
-	// FEATURE_FLAG_REMOVAL: PostDeliveryTracking - Remove this when the feature is GA.
-	// Master switch for post-delivery tracking; off (default) fully disables it.
 	PostDeliveryTracking bool
 }
 
