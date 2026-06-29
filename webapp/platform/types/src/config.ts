@@ -1013,8 +1013,6 @@ export type GuestAccountsSettings = {
 export type ImageProxySettings = {
     Enable: boolean;
     ImageProxyType: string;
-    RemoteImageProxyURL: string;
-    RemoteImageProxyOptions: string;
 };
 
 export type CloudSettings = {
