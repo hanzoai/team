@@ -132,5 +132,4 @@ func TestOnConfigChange(t *testing.T) {
 		require.Equal(t, "https://new.example.com", proxy.siteURL.String())
 		require.Equal(t, "https://new.example.com", proxy.backend.(*LocalBackend).baseURL.String())
 	})
-
 }
