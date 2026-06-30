@@ -176,6 +176,12 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
         }
 
         const requestedSrc = this.props.src;
+
+        if (this.state.svgObjectUrl) {
+            this.revokeSvgObjectUrl();
+            this.setState({svgObjectUrl: null});
+        }
+
         resolveSvgWithViewBox(requestedSrc).then((url) => {
             if (!this.mounted || this.props.src !== requestedSrc) {
                 if (url) {

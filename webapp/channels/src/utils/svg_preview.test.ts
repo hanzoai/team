@@ -60,4 +60,20 @@ describe('utils/svg_preview', () => {
         expect(await resolveSvgWithViewBox('http://localhost/a.svg')).toBeNull();
         expect(appendChild).toHaveBeenCalled();
     });
+
+    test('treats relative length units as not absolute and proceeds to measure', async () => {
+        mockFetch('<svg xmlns="http://www.w3.org/2000/svg" width="10em" height="100vw"><rect width="10" height="10"/></svg>');
+        const appendChild = jest.spyOn(document.body, 'appendChild');
+
+        expect(await resolveSvgWithViewBox('http://localhost/a.svg')).toBeNull();
+        expect(appendChild).toHaveBeenCalled();
+    });
+
+    test('treats auto dimensions as not absolute and proceeds to measure', async () => {
+        mockFetch('<svg xmlns="http://www.w3.org/2000/svg" width="auto" height="auto"><rect width="10" height="10"/></svg>');
+        const appendChild = jest.spyOn(document.body, 'appendChild');
+
+        expect(await resolveSvgWithViewBox('http://localhost/a.svg')).toBeNull();
+        expect(appendChild).toHaveBeenCalled();
+    });
 });

@@ -54,6 +54,8 @@ function useResolvedSvgUrl(previewUrl: string | undefined, enabled: boolean): st
             return undefined;
         }
 
+        setObjectUrl(null);
+
         let cancelled = false;
         let created: string | null = null;
 

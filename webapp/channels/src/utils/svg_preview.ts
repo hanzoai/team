@@ -91,12 +91,39 @@ function measureContentBounds(svg: SVGSVGElement): ContentBounds | null {
     }
 }
 
+const UNSAFE_EMBEDDED_TAGS = ['foreignObject', 'iframe', 'object', 'embed'];
+const REMOVABLE_LINK_ATTRIBUTES = ['href', 'src', 'xlink:href'];
+
 // sanitize strips active content from the throwaway measurement node since it is
 // briefly attached to the live document. The displayed preview keeps using an
 // <img>, which never executes embedded SVG scripts.
 function sanitize(element: Element) {
+    UNSAFE_EMBEDDED_TAGS.forEach((tag) => {
+        element.querySelectorAll(tag).forEach((node) => node.remove());
+    });
     element.querySelectorAll('script').forEach((script) => script.remove());
+    sanitizeAttributes(element);
     removeEventHandlers(element);
+}
+
+function sanitizeAttributes(element: Element) {
+    const nodes = [element, ...Array.from(element.querySelectorAll('*'))];
+    for (const node of nodes) {
+        for (const attr of Array.from(node.attributes)) {
+            const name = attr.name.toLowerCase();
+            if (REMOVABLE_LINK_ATTRIBUTES.includes(name)) {
+                node.removeAttribute(attr.name);
+                continue;
+            }
+            if (name === 'style') {
+                node.setAttribute('style', stripCssUrls(attr.value));
+            }
+        }
+    }
+}
+
+function stripCssUrls(value: string): string {
+    return value.replace(/url\s*\([^)]*\)/gi, 'none');
 }
 
 function removeEventHandlers(element: Element) {
@@ -125,6 +152,13 @@ function hasAbsoluteLength(value: string | null): boolean {
     if (value === null) {
         return false;
     }
+
     const trimmed = value.trim();
-    return trimmed !== '' && !trimmed.endsWith('%');
+    if (trimmed === '' || trimmed.endsWith('%')) {
+        return false;
+    }
+
+    const numeric = trimmed.endsWith('px') ? trimmed.slice(0, -2).trim() : trimmed;
+    const parsed = Number(numeric);
+    return Number.isFinite(parsed) && parsed > 0;
 }
