@@ -31,8 +31,8 @@ import type {WorkspaceWithStatus} from './share_channel_with_workspaces/types';
 
 import './channel_settings_configuration_tab.scss';
 
-const CHANNEL_BANNER_MAX_CHARACTER_LIMIT = 1024;
-const CHANNEL_BANNER_MIN_CHARACTER_LIMIT = 0;
+export const CHANNEL_BANNER_MAX_CHARACTER_LIMIT = 1024;
+export const CHANNEL_BANNER_MIN_CHARACTER_LIMIT = 0;
 
 const DEFAULT_CHANNEL_BANNER = {
     enabled: false,

@@ -16,41 +16,37 @@
 import {ChannelsPage, expect, test} from '@mattermost/playwright-lib';
 
 test.describe('Channel Settings Modal - Join/Leave System Messages', () => {
-    test(
-        'toggle is visible and defaults to ON (messages shown)',
-        {tag: '@channel_settings'},
-        async ({pw}) => {
-            // # Initialize test setup
-            const {adminUser, adminClient, team} = await pw.initSetup();
+    test('toggle is visible and defaults to ON (messages shown)', {tag: '@channel_settings'}, async ({pw}) => {
+        // # Initialize test setup
+        const {adminUser, adminClient, team} = await pw.initSetup();
 
-            // # Create a public channel via API
-            const channel = await adminClient.createChannel({
-                team_id: team.id,
-                name: `jl-toggle-default-${Date.now()}`,
-                display_name: 'JL Toggle Default',
-                type: 'O',
-            } as any);
+        // # Create a public channel via API
+        const channel = await adminClient.createChannel({
+            team_id: team.id,
+            name: `jl-toggle-default-${Date.now()}`,
+            display_name: 'JL Toggle Default',
+            type: 'O',
+        } as any);
 
-            // # Login as admin and navigate to the channel
-            const {page} = await pw.testBrowser.login(adminUser);
-            const channelsPage = new ChannelsPage(page);
-            await channelsPage.goto(team.name, channel.name);
-            await channelsPage.toBeVisible();
+        // # Login as admin and navigate to the channel
+        const {page} = await pw.testBrowser.login(adminUser);
+        const channelsPage = new ChannelsPage(page);
+        await channelsPage.goto(team.name, channel.name);
+        await channelsPage.toBeVisible();
 
-            // # Open Channel Settings and navigate to Configuration tab
-            const channelSettings = await channelsPage.openChannelSettings();
-            const configSettings = await channelSettings.openConfigurationTab();
+        // # Open Channel Settings and navigate to Configuration tab
+        const channelSettings = await channelsPage.openChannelSettings();
+        const configSettings = await channelSettings.openConfigurationTab();
 
-            // * Toggle is visible
-            await expect(configSettings.joinLeaveMessagesToggle).toBeVisible();
+        // * Toggle is visible
+        await expect(configSettings.joinLeaveMessagesToggle).toBeVisible();
 
-            // * Toggle defaults to ON (active class present = messages shown)
-            const classes = await configSettings.joinLeaveMessagesToggle.getAttribute('class');
-            expect(classes).toContain('active');
+        // * Toggle defaults to ON (active class present = messages shown)
+        const classes = await configSettings.joinLeaveMessagesToggle.getAttribute('class');
+        expect(classes).toContain('active');
 
-            await channelSettings.close();
-        },
-    );
+        await channelSettings.close();
+    });
 
     test(
         'disabling the toggle hides join system posts from the channel timeline',
@@ -109,7 +105,9 @@ test.describe('Channel Settings Modal - Join/Leave System Messages', () => {
 
             // * Normal messages are still visible
             await expect(
-                channelsPage.centerView.container.getByTestId('postContent').getByText('This is a regular message that should remain visible'),
+                channelsPage.centerView.container
+                    .getByTestId('postContent')
+                    .getByText('This is a regular message that should remain visible'),
             ).toBeVisible();
         },
     );
