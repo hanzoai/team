@@ -26,13 +26,14 @@ var TokenCmd = &cobra.Command{
 var GenerateUserTokenCmd = &cobra.Command{
 	Use:   "generate [user] [description]",
 	Short: "Generate token for a user",
-	Long: "Generate token for a user. Use --expires-in to set an expiry, which may be required by " +
+	Long: "Generate token for a user. Description is optional. Use --expires-in to set an expiry, which may be required by " +
 		"the server's MaximumPersonalAccessTokenLifetimeDays setting.",
 	Example: `  generate testuser test-token
   generate testuser ci-token --expires-in 90d
-  generate testuser short-lived --expires-in 12h`,
+  generate testuser short-lived --expires-in 12h
+  generate testuser --expires-in 90d`,
 	RunE: withClient(generateTokenForAUserCmdF),
-	Args: cobra.ExactArgs(2),
+	Args: cobra.RangeArgs(1, 2),
 }
 
 var RevokeUserTokenCmd = &cobra.Command{
@@ -85,7 +86,11 @@ func generateTokenForAUserCmdF(c client.Client, command *cobra.Command, args []s
 		return errors.Errorf("could not retrieve user information of %q", userArg)
 	}
 
-	token, _, err := c.CreateUserAccessToken(context.TODO(), user.Id, args[1], expiresAt)
+	description := ""
+	if len(args) > 1 {
+		description = args[1]
+	}
+	token, _, err := c.CreateUserAccessToken(context.TODO(), user.Id, description, expiresAt)
 	if err != nil {
 		return errors.Errorf("could not create token for %q: %s", userArg, err.Error())
 	}
