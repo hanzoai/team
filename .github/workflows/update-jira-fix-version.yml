@@ -26,6 +26,12 @@ on:
       - master
       - 'release-11.*'   # <-- change per repo (see above)
 
+# Minimal read-only permissions. No write access to the repo is needed —
+# Jira is updated via a dedicated API token secret, not GITHUB_TOKEN.
+permissions:
+  contents: read      # required: github.rest.repos.getBranch (master-pr job)
+  pull-requests: read # required: github.rest.pulls.get (cherry-pick-pr job)
+
 env:
   # Numeric series used to filter Jira versions belonging to this product.
   VERSION_SERIES: '11.'        # <-- change per repo (see above)
@@ -153,16 +159,23 @@ jobs:
         env:
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          # Pass step outputs via env to avoid shell injection from arbitrary strings.
+          VERSION: ${{ steps.version.outputs.version }}
+          TICKETS: ${{ steps.ticket.outputs.tickets }}
         run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          IFS=',' read -ra TICKETS <<< "${{ steps.ticket.outputs.tickets }}"
+          # SET replaces any existing Fix Version value (including "Queued" placeholders).
+          # This is intentional: we want exactly one version set per ticket.
+          # Note: cross-product tickets (PRs across multiple repos) may need manual
+          # correction if this overwrites a version set by another repo's workflow.
+          PAYLOAD=$(jq -n --arg v "$VERSION" '{"update":{"fixVersions":[{"set":[{"name":$v}]}]}}')
+          IFS=',' read -ra TICKET_ARRAY <<< "$TICKETS"
 
-          for TICKET in "${TICKETS[@]}"; do
+          for TICKET in "${TICKET_ARRAY[@]}"; do
             HTTP_CODE=$(curl -s -o /tmp/jira_response.json -w "%{http_code}" \
               -X PUT \
               -u "${JIRA_USER_EMAIL}:${JIRA_API_TOKEN}" \
               -H "Content-Type: application/json" \
-              -d "{\"update\":{\"fixVersions\":[{\"set\":[{\"name\":\"${VERSION}\"}]}]}}" \
+              -d "$PAYLOAD" \
               "${JIRA_BASE_URL}/rest/api/3/issue/${TICKET}")
 
             if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
@@ -184,25 +197,33 @@ jobs:
   # ---------------------------------------------------------------------------
   cherry-pick-pr:
     name: Cherry-pick PR → current release
+    # toLower() is not a valid GitHub Actions expression function.
+    # Enumerate the common case variants of "cherry pick" / "cherry-pick" instead.
     if: >
       github.event.pull_request.merged == true &&
       github.event.pull_request.base.ref != 'master' &&
-      (contains(toLower(github.event.pull_request.title), 'cherry pick') ||
-       contains(toLower(github.event.pull_request.title), 'cherry-pick'))
+      (contains(github.event.pull_request.title, 'cherry pick') ||
+       contains(github.event.pull_request.title, 'cherry-pick') ||
+       contains(github.event.pull_request.title, 'Cherry pick') ||
+       contains(github.event.pull_request.title, 'Cherry-pick') ||
+       contains(github.event.pull_request.title, 'Cherry Pick') ||
+       contains(github.event.pull_request.title, 'Cherry-Pick'))
     runs-on: ubuntu-latest
 
     steps:
 
       # Extract the original PR number from the cherry-pick title.
       # "Automated cherry pick of #37124" → 37124
+      # PR_TITLE is passed via env (not inline expansion) to prevent shell injection.
       - name: Extract original PR number
         id: extract
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
-          TITLE="${{ github.event.pull_request.title }}"
-          PR_NUM=$(echo "$TITLE" | grep -oP '#\K[0-9]+' | head -1)
+          PR_NUM=$(printf '%s' "$PR_TITLE" | grep -oP '#\K[0-9]+' | head -1)
 
           if [ -z "$PR_NUM" ]; then
-            echo "::error::Could not extract original PR number from title: $TITLE"
+            echo "::error::Could not extract original PR number from cherry-pick title"
             exit 1
           fi
 
@@ -240,17 +261,24 @@ jobs:
             console.log(`Found ticket(s): ${unique.join(', ')}`);
 
       # Derive the current release version from the target branch name.
-      # release-11.9 → look for unreleased Jira version containing "11.9"
+      # release-11.9 → look for unreleased Jira version matching "11.9"
       # Works for all products: "v11.9", "Mobile v2.41", "Desktop v6.2"
+      #
+      # The jq filter uses a regex boundary check (not plain substring contains) so
+      # that branch "release-11.1" does not accidentally match versions "11.10", "11.11".
       - name: Resolve current release version from branch
         if: steps.ticket.outputs.found == 'true'
         id: version
         env:
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          # Pass via env to avoid shell injection from branch name expansion.
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
-          BRANCH="${{ github.event.pull_request.base.ref }}"
-          VERSION_NUM=$(echo "$BRANCH" | sed 's/release-//')
+          VERSION_NUM="${BASE_REF#release-}"
+          # Escape dots so the version number is matched literally, not as "any char".
+          # Append a non-digit boundary so "11.9" does not match "11.90" or "11.91".
+          VERSION_PATTERN=$(printf '%s' "$VERSION_NUM" | sed 's/\./\\./g')
 
           VERSIONS_JSON=$(curl -sf \
             -u "${JIRA_USER_EMAIL}:${JIRA_API_TOKEN}" \
@@ -262,34 +290,41 @@ jobs:
           fi
 
           VERSION_NAME=$(echo "$VERSIONS_JSON" | jq -r \
-            --arg v "$VERSION_NUM" \
-            '[.[] | select(.released == false and (.name | contains($v)))] | first | .name // empty')
+            --arg v "$VERSION_PATTERN" \
+            '[.[] | select(.released == false and (.name | test($v + "([^0-9]|$)")))] | first | .name // empty')
 
           if [ -z "$VERSION_NAME" ]; then
-            echo "::error::No unreleased Jira version found matching '$VERSION_NUM' (branch: $BRANCH)"
+            echo "::error::No unreleased Jira version found matching '$VERSION_NUM' (branch: $BASE_REF)"
             echo "Available unreleased versions:"
             echo "$VERSIONS_JSON" | jq -r '[.[] | select(.released == false) | .name] | .[]'
             exit 1
           fi
 
           echo "version=$VERSION_NAME" >> "$GITHUB_OUTPUT"
-          echo "Branch '$BRANCH' → Jira version '$VERSION_NAME'"
+          echo "Branch '$BASE_REF' → Jira version '$VERSION_NAME'"
 
       - name: Set Fix Version in Jira
         if: steps.ticket.outputs.found == 'true'
         env:
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          # Pass step outputs via env to avoid shell injection from arbitrary strings.
+          VERSION: ${{ steps.version.outputs.version }}
+          TICKETS: ${{ steps.ticket.outputs.tickets }}
         run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          IFS=',' read -ra TICKETS <<< "${{ steps.ticket.outputs.tickets }}"
+          # SET replaces any existing Fix Version value (including "Queued" placeholders).
+          # This is intentional: we want exactly one version set per ticket.
+          # Note: cross-product tickets (PRs across multiple repos) may need manual
+          # correction if this overwrites a version set by another repo's workflow.
+          PAYLOAD=$(jq -n --arg v "$VERSION" '{"update":{"fixVersions":[{"set":[{"name":$v}]}]}}')
+          IFS=',' read -ra TICKET_ARRAY <<< "$TICKETS"
 
-          for TICKET in "${TICKETS[@]}"; do
+          for TICKET in "${TICKET_ARRAY[@]}"; do
             HTTP_CODE=$(curl -s -o /tmp/jira_response.json -w "%{http_code}" \
               -X PUT \
               -u "${JIRA_USER_EMAIL}:${JIRA_API_TOKEN}" \
               -H "Content-Type: application/json" \
-              -d "{\"update\":{\"fixVersions\":[{\"set\":[{\"name\":\"${VERSION}\"}]}]}}" \
+              -d "$PAYLOAD" \
               "${JIRA_BASE_URL}/rest/api/3/issue/${TICKET}")
 
             if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
