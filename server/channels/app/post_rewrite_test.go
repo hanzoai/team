@@ -7,10 +7,33 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/mattermost/mattermost/server/public/model"
 )
+
+func TestRewriteMessageRequestsStructuredOutput(t *testing.T) {
+	bridge := &testAgentsBridge{
+		completeFn: func(sessionUserID, agentID string, req BridgeCompletionRequest) (string, error) {
+			return `{"rewritten_text":"Improved message"}`, nil
+		},
+	}
+
+	th := Setup(t, WithAgentsBridge(bridge)).InitBasic(t)
+	ctx := th.Context.WithSession(&model.Session{UserId: th.BasicUser.Id})
+
+	response, appErr := th.App.RewriteMessage(ctx, model.NewId(), "hello", model.RewriteActionImproveWriting, "", "")
+	require.Nil(t, appErr)
+	require.NotNil(t, response)
+	assert.Equal(t, "Improved message", response.RewrittenText)
+
+	require.Len(t, bridge.completeCalls, 1)
+	req := bridge.completeCalls[0].request
+	assert.Equal(t, BridgeOperationRewrite, req.Operation)
+	assert.Equal(t, rewriteResponseJSONSchema, req.JSONOutputFormat,
+		"rewrite must request structured output so providers return parseable JSON")
+}
 
 func TestBuildRewriteSystemPrompt(t *testing.T) {
 	basePrompt := model.RewriteSystemPrompt
