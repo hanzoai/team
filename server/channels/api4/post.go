@@ -340,7 +340,9 @@ func getPostsForChannel(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	if !channel.IsGroupOrDirect() {
+		c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	}
 
 	if err := clientPostList.EncodeJSON(w); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))
@@ -423,7 +425,9 @@ func getPostsForChannelAroundLastUnread(c *Context, w http.ResponseWriter, r *ht
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	if !channel.IsGroupOrDirect() {
+		c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	}
 
 	if etag != "" {
 		w.Header().Set(model.HeaderEtagServer, etag)
@@ -527,7 +531,14 @@ func getFlaggedPostsForUser(c *Context, w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	clientPostListForRecording := make([]*model.Post, 0, len(clientPostList.Posts))
+	for _, post := range clientPostList.Posts {
+		if channel, ok := channelMap[post.ChannelId]; ok && !channel.IsGroupOrDirect() {
+			clientPostListForRecording = append(clientPostListForRecording, post)
+		}
+	}
+
+	c.App.RecordPostsDelivery(c.AppContext.Session().UserId, clientPostListForRecording, model.DeliveryMechanismProduct)
 
 	auditRec := c.MakeAuditRecord(model.AuditEventGetFlaggedPosts, model.AuditStatusSuccess)
 	defer c.LogAuditRec(auditRec)
@@ -900,6 +911,12 @@ func getPostThread(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	channel, err := c.App.GetChannel(c.AppContext, post.ChannelId)
+	if err != nil {
+		c.Err = err
+		return
+	}
+
 	if c.HandleEtag(list.Etag(), "Get Post Thread", w, r) {
 		return
 	}
@@ -911,7 +928,9 @@ func getPostThread(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	if !channel.IsGroupOrDirect() {
+		c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	}
 
 	w.Header().Set(model.HeaderEtagServer, clientPostList.Etag())
 
