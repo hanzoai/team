@@ -27,6 +27,9 @@ func TestPreferenceStore(t *testing.T, rctx request.CTX, ss store.Store, s SqlSt
 	t.Run("PreferenceDeleteOrphanedRows", func(t *testing.T) { testPreferenceDeleteOrphanedRows(t, rctx, ss) })
 	t.Run("PreferenceCleanupFlagsBatch", func(t *testing.T) { testPreferenceCleanupFlagsBatch(t, rctx, ss) })
 	t.Run("PreferenceDeleteInvalidVisibleDmsGms", func(t *testing.T) { testDeleteInvalidVisibleDmsGms(t, rctx, ss, s) })
+	t.Run("PreferenceRecordDeletions", func(t *testing.T) { testPreferenceRecordDeletions(t, ss) })
+	t.Run("PreferenceGetDeletedSince", func(t *testing.T) { testPreferenceGetDeletedSince(t, ss) })
+	t.Run("PreferenceSaveClearsTombstones", func(t *testing.T) { testPreferenceSaveClearsTombstones(t, ss) })
 }
 
 func testPreferenceSave(t *testing.T, _ request.CTX, ss store.Store) {
@@ -642,4 +645,81 @@ func testDeleteInvalidVisibleDmsGms(t *testing.T, _ request.CTX, ss store.Store,
 	preference, err = ss.Preference().Get(userId4, category, name)
 	require.NoError(t, err)
 	require.Equal(t, &preferences[6], preference)
+}
+
+func testPreferenceRecordDeletions(t *testing.T, ss store.Store) {
+	userID := model.NewId()
+	prefs := model.Preferences{
+		{UserId: userID, Category: "test_tombstone", Name: "key1", Value: "v"},
+		{UserId: userID, Category: "test_tombstone", Name: "key2", Value: "v"},
+	}
+
+	require.NoError(t, ss.Preference().Save(prefs))
+
+	deleteAt := model.GetMillis()
+	require.NoError(t, ss.Preference().RecordDeletions(prefs, deleteAt))
+
+	tombstones, err := ss.Preference().GetDeletedSince(userID, deleteAt-1)
+	require.NoError(t, err)
+	require.Len(t, tombstones, 2)
+
+	names := make([]string, 0, len(tombstones))
+	for _, ts := range tombstones {
+		names = append(names, ts.Name)
+		assert.Equal(t, userID, ts.UserId)
+		assert.Equal(t, "test_tombstone", ts.Category)
+		assert.Equal(t, deleteAt, ts.DeleteAt)
+	}
+	assert.ElementsMatch(t, []string{"key1", "key2"}, names)
+}
+
+func testPreferenceGetDeletedSince(t *testing.T, ss store.Store) {
+	userID := model.NewId()
+	prefs := model.Preferences{
+		{UserId: userID, Category: "test_tombstone", Name: "a", Value: "v"},
+		{UserId: userID, Category: "test_tombstone", Name: "b", Value: "v"},
+	}
+	require.NoError(t, ss.Preference().Save(prefs))
+
+	deleteAt := model.GetMillis()
+	require.NoError(t, ss.Preference().RecordDeletions(prefs, deleteAt))
+
+	// Should return tombstones deleted after deleteAt-1
+	tombstones, err := ss.Preference().GetDeletedSince(userID, deleteAt-1)
+	require.NoError(t, err)
+	require.Len(t, tombstones, 2, "should return both tombstones deleted after cursor")
+
+	// Nothing deleted before the preference was created
+	tombstonesNone, err := ss.Preference().GetDeletedSince(userID, model.GetMillis()+1000)
+	require.NoError(t, err)
+	assert.Empty(t, tombstonesNone, "should return no tombstones when cursor is in the future")
+
+	// Different user returns empty
+	tombstonesOther, err := ss.Preference().GetDeletedSince(model.NewId(), deleteAt-1)
+	require.NoError(t, err)
+	assert.Empty(t, tombstonesOther, "should not return tombstones for a different user")
+}
+
+func testPreferenceSaveClearsTombstones(t *testing.T, ss store.Store) {
+	userID := model.NewId()
+	pref := model.Preference{UserId: userID, Category: "test_tombstone", Name: "revive_key", Value: "v1"}
+
+	// Save, record deletion tombstone, then re-save — tombstone must be cleared.
+	require.NoError(t, ss.Preference().Save(model.Preferences{pref}))
+
+	deleteAt := model.GetMillis()
+	require.NoError(t, ss.Preference().RecordDeletions(model.Preferences{pref}, deleteAt))
+
+	// Confirm tombstone exists
+	tombstones, err := ss.Preference().GetDeletedSince(userID, deleteAt-1)
+	require.NoError(t, err)
+	require.Len(t, tombstones, 1, "tombstone should exist before re-save")
+
+	// Re-save the preference — should atomically remove the tombstone
+	pref.Value = "v2"
+	require.NoError(t, ss.Preference().Save(model.Preferences{pref}))
+
+	tombstonesAfter, err := ss.Preference().GetDeletedSince(userID, deleteAt-1)
+	require.NoError(t, err)
+	assert.Empty(t, tombstonesAfter, "tombstone should be cleared after re-saving the preference")
 }

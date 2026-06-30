@@ -1135,3 +1135,391 @@ func collectNeededRoles(r model.InitialLoadResponse) map[string]struct{} {
 	}
 	return seen
 }
+
+// --- TestReconnectSync ---
+
+func doReconnectSync(t *testing.T, th *TestHelper, req model.ExperienceSyncRequest) (*http.Response, model.ExperienceSyncResponse, error) {
+	t.Helper()
+	body, err := json.Marshal(req)
+	require.NoError(t, err)
+	resp, apiErr := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+	if apiErr != nil {
+		return resp, model.ExperienceSyncResponse{}, apiErr
+	}
+	defer resp.Body.Close()
+	var r model.ExperienceSyncResponse
+	require.NoError(t, json.NewDecoder(resp.Body).Decode(&r))
+	return resp, r, nil
+}
+
+func TestReconnectSync(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	validSince := model.GetMillis() - 60000 // 1 minute ago
+
+	validReq := func() model.ExperienceSyncRequest {
+		return model.ExperienceSyncRequest{
+			Since: validSince,
+			Scope: model.ExperienceSyncScope{
+				TeamIDs: []string{th.BasicTeam.Id},
+			},
+		}
+	}
+
+	t.Run("unauthenticated request is rejected", func(t *testing.T) {
+		client := th.CreateClient()
+		body, _ := json.Marshal(validReq())
+		resp, err := client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusUnauthorized, resp.StatusCode)
+	})
+
+	t.Run("returns 404 when EnableExperienceAPI is off", func(t *testing.T) {
+		th.ConfigStore.SetReadOnlyFF(false)
+		defer th.ConfigStore.SetReadOnlyFF(true)
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.FeatureFlags.EnableExperienceAPI = false })
+		defer th.App.UpdateConfig(func(cfg *model.Config) { cfg.FeatureFlags.EnableExperienceAPI = true })
+
+		body, _ := json.Marshal(validReq())
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
+
+	t.Run("invalid body returns 400", func(t *testing.T) {
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", "not-json")
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("since=0 returns 400", func(t *testing.T) {
+		req := validReq()
+		req.Since = 0
+		body, _ := json.Marshal(req)
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("negative since returns 400", func(t *testing.T) {
+		req := validReq()
+		req.Since = -1
+		body, _ := json.Marshal(req)
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("empty team_ids returns 400", func(t *testing.T) {
+		req := validReq()
+		req.Scope.TeamIDs = []string{}
+		body, _ := json.Marshal(req)
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid team_id format returns 400", func(t *testing.T) {
+		req := validReq()
+		req.Scope.TeamIDs = []string{"not-a-valid-id"}
+		body, _ := json.Marshal(req)
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid active_channel_id format returns 400", func(t *testing.T) {
+		req := validReq()
+		req.Scope.ActiveChannelID = "bad-id"
+		body, _ := json.Marshal(req)
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid active_thread_id format returns 400", func(t *testing.T) {
+		req := validReq()
+		req.Scope.ActiveThreadID = "bad-id"
+		body, _ := json.Marshal(req)
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("invalid global_threads_team_id format returns 400", func(t *testing.T) {
+		req := validReq()
+		req.Scope.GlobalThreadsTeamID = "bad-id"
+		body, _ := json.Marshal(req)
+		resp, err := th.Client.DoAPIPost(context.Background(), "/sync", string(body))
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("basic reconnect returns populated response", func(t *testing.T) {
+		// Use since=1 so everything changed since is returned
+		req := model.ExperienceSyncRequest{
+			Since: 1,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+		_, r, err := doReconnectSync(t, th, req)
+		require.NoError(t, err)
+
+		assert.Greater(t, r.Timestamp, int64(0))
+		assert.NotEmpty(t, r.Config)
+		assert.NotEmpty(t, r.License)
+
+		// Teams delta for the scoped team
+		require.NotEmpty(t, r.Teams)
+		teamIDs := make([]string, 0, len(r.Teams))
+		for _, td := range r.Teams {
+			teamIDs = append(teamIDs, td.TeamID)
+		}
+		assert.Contains(t, teamIDs, th.BasicTeam.Id)
+	})
+
+	t.Run("me is nil when user profile unchanged since cursor", func(t *testing.T) {
+		// Re-fetch to get the latest UpdateAt after any server-side mutations (e.g. password hash)
+		latestUser, _, err := th.Client.GetMe(context.Background(), "")
+		require.NoError(t, err)
+		req := model.ExperienceSyncRequest{
+			Since: latestUser.UpdateAt + 1,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+		_, r, err2 := doReconnectSync(t, th, req)
+		require.NoError(t, err2)
+		assert.Nil(t, r.Me, "me should be nil when user profile has not changed since cursor")
+	})
+
+	t.Run("me is populated when user profile changed since cursor", func(t *testing.T) {
+		req := model.ExperienceSyncRequest{
+			Since: th.BasicUser.UpdateAt - 1,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+		_, r, err := doReconnectSync(t, th, req)
+		require.NoError(t, err)
+		require.NotNil(t, r.Me)
+		assert.Equal(t, th.BasicUser.Id, r.Me.Id)
+	})
+
+	t.Run("team not a member of is silently skipped", func(t *testing.T) {
+		// Create a team as SystemAdmin — BasicUser is NOT added to it
+		otherTeam := th.CreateTeamWithClient(t, th.SystemAdminClient)
+		req := model.ExperienceSyncRequest{
+			Since: 1,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id, otherTeam.Id}},
+		}
+		_, r, err := doReconnectSync(t, th, req)
+		require.NoError(t, err)
+
+		teamIDs := make([]string, 0, len(r.Teams))
+		for _, td := range r.Teams {
+			teamIDs = append(teamIDs, td.TeamID)
+		}
+		assert.Contains(t, teamIDs, th.BasicTeam.Id)
+		assert.NotContains(t, teamIDs, otherTeam.Id, "non-member team should be silently skipped")
+	})
+
+	t.Run("global_threads_team_id not a member of is silently cleared", func(t *testing.T) {
+		otherTeam := th.CreateTeamWithClient(t, th.SystemAdminClient)
+		req := model.ExperienceSyncRequest{
+			Since: 1,
+			Scope: model.ExperienceSyncScope{
+				TeamIDs:             []string{th.BasicTeam.Id},
+				GlobalThreadsTeamID: otherTeam.Id,
+			},
+		}
+		_, r, err := doReconnectSync(t, th, req)
+		require.NoError(t, err)
+		// GlobalThreadsTeamID was cleared because user is not a member; threads_delta should be nil or empty
+		if r.ThreadsDelta != nil {
+			assert.Empty(t, r.ThreadsDelta.Threads, "threads_delta should have no threads for inaccessible team")
+		}
+	})
+
+	t.Run("teams_unreads always has badge data even when team metadata unchanged", func(t *testing.T) {
+		// Use a since cursor just after the team's UpdateAt — team metadata is unchanged.
+		req := model.ExperienceSyncRequest{
+			Since: th.BasicTeam.UpdateAt + 1,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+		_, r, err := doReconnectSync(t, th, req)
+		require.NoError(t, err)
+
+		// teams_unreads must carry the badge data for this team regardless of metadata change
+		require.NotEmpty(t, r.TeamsUnreads, "teams_unreads should always be present")
+		var teamUnread *model.SyncTeamUnread
+		for _, u := range r.TeamsUnreads {
+			if u.TeamID == th.BasicTeam.Id {
+				teamUnread = u
+				break
+			}
+		}
+		require.NotNil(t, teamUnread, "teams_unreads must include the scoped team regardless of since")
+
+		// The team delta entry itself should NOT include Team metadata when unchanged
+		for _, td := range r.Teams {
+			if td.TeamID == th.BasicTeam.Id {
+				assert.Nil(t, td.Team, "SyncTeamDelta.Team should be nil when team metadata unchanged since cursor")
+				break
+			}
+		}
+	})
+
+	t.Run("teams_unreads covers all teams not just scoped ones", func(t *testing.T) {
+		// Add BasicUser to a second team — it won't be in scope.team_ids
+		secondTeam := th.CreateTeam(t)
+		th.LinkUserToTeam(t, th.BasicUser, secondTeam)
+
+		req := model.ExperienceSyncRequest{
+			Since: 1,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+		_, r, err := doReconnectSync(t, th, req)
+		require.NoError(t, err)
+
+		// teams[] should only contain the scoped team
+		require.Len(t, r.Teams, 1)
+		assert.Equal(t, th.BasicTeam.Id, r.Teams[0].TeamID)
+
+		// teams_unreads must include both teams
+		require.NotEmpty(t, r.TeamsUnreads)
+		unreadTeamIDs := make([]string, 0, len(r.TeamsUnreads))
+		for _, u := range r.TeamsUnreads {
+			unreadTeamIDs = append(unreadTeamIDs, u.TeamID)
+		}
+		assert.Contains(t, unreadTeamIDs, th.BasicTeam.Id, "teams_unreads must include scoped team")
+		assert.Contains(t, unreadTeamIDs, secondTeam.Id, "teams_unreads must include non-scoped team")
+	})
+
+	t.Run("roles only include roles updated since cursor", func(t *testing.T) {
+		// since=now means no roles should have changed
+		req := model.ExperienceSyncRequest{
+			Since: model.GetMillis() + 1000,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+		_, r, err := doReconnectSync(t, th, req)
+		require.NoError(t, err)
+		assert.Empty(t, r.Roles, "no roles should be included when none changed since cursor")
+	})
+
+	t.Run("active_channel included when in scope and user is a member", func(t *testing.T) {
+		_, appErr := th.App.GetChannelMember(th.Context, th.BasicChannel.Id, th.BasicUser.Id)
+		require.Nil(t, appErr)
+
+		req := model.ExperienceSyncRequest{
+			Since: 1,
+			Scope: model.ExperienceSyncScope{
+				TeamIDs:         []string{th.BasicTeam.Id},
+				ActiveChannelID: th.BasicChannel.Id,
+			},
+		}
+		_, r, err2 := doReconnectSync(t, th, req)
+		require.NoError(t, err2)
+		require.NotNil(t, r.ActiveChannel)
+		assert.Equal(t, th.BasicChannel.Id, r.ActiveChannel.ChannelID)
+		assert.NotNil(t, r.ActiveChannel.Stats)
+	})
+
+	t.Run("active_channel skipped when user has no access", func(t *testing.T) {
+		// Create a private channel owned by BasicUser; BasicUser2 is not a member
+		privateChannel := th.CreatePrivateChannel(t)
+
+		// Log in as BasicUser2
+		client2 := th.CreateClient()
+		_, _, err := client2.Login(context.Background(), th.BasicUser2.Email, th.BasicUser2.Password)
+		require.NoError(t, err)
+
+		req := model.ExperienceSyncRequest{
+			Since: 1,
+			Scope: model.ExperienceSyncScope{
+				TeamIDs:         []string{th.BasicTeam.Id},
+				ActiveChannelID: privateChannel.Id,
+			},
+		}
+		body, _ := json.Marshal(req)
+		resp, apiErr := client2.DoAPIPost(context.Background(), "/sync", string(body))
+		require.NoError(t, apiErr)
+		defer resp.Body.Close()
+		var r model.ExperienceSyncResponse
+		require.NoError(t, json.NewDecoder(resp.Body).Decode(&r))
+		assert.Nil(t, r.ActiveChannel, "active_channel should be nil when user has no access")
+	})
+
+	t.Run("preference_tombstones populated when preferences deleted since cursor", func(t *testing.T) {
+		// Use a dedicated user to avoid tombstone pollution from other tests running in parallel.
+		freshUser := th.CreateUser(t)
+		th.LinkUserToTeam(t, freshUser, th.BasicTeam)
+		freshClient := th.CreateClient()
+		_, _, err := freshClient.Login(context.Background(), freshUser.Email, freshUser.Password)
+		require.NoError(t, err)
+
+		pref := model.Preference{
+			UserId:   freshUser.Id,
+			Category: "test_sync_tombstone",
+			Name:     "sync_test_key",
+			Value:    "true",
+		}
+		_, err = freshClient.UpdatePreferences(context.Background(), freshUser.Id, model.Preferences{pref})
+		require.NoError(t, err)
+
+		beforeDelete := model.GetMillis()
+
+		_, err = freshClient.DeletePreferences(context.Background(), freshUser.Id, model.Preferences{pref})
+		require.NoError(t, err)
+
+		tombstones, storeErr := th.Server.Store().Preference().GetDeletedSince(freshUser.Id, beforeDelete-1)
+		require.NoError(t, storeErr, "GetDeletedSince should not fail")
+		require.NotEmpty(t, tombstones, "tombstone should be written after DeletePreferences")
+
+		req := model.ExperienceSyncRequest{
+			Since: beforeDelete - 1,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+
+		body, _ := json.Marshal(req)
+		resp, apiErr := freshClient.DoAPIPost(context.Background(), "/sync", string(body))
+		require.NoError(t, apiErr)
+		defer resp.Body.Close()
+		var r model.ExperienceSyncResponse
+		require.NoError(t, json.NewDecoder(resp.Body).Decode(&r))
+
+		found := false
+		for _, pt := range r.PreferenceTombstones {
+			if pt.Category == pref.Category && pt.Name == pref.Name {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found, "deleted preference should appear in preference_tombstones")
+	})
+
+	t.Run("direct_channels included for new DM created since cursor", func(t *testing.T) {
+		// Use since-50 to avoid boundary condition where channel.UpdateAt == since (excluded by strict >)
+		since := model.GetMillis() - 50
+		dm, _, err := th.Client.CreateDirectChannel(context.Background(), th.BasicUser.Id, th.SystemAdminUser.Id)
+		require.NoError(t, err)
+
+		req := model.ExperienceSyncRequest{
+			Since: since,
+			Scope: model.ExperienceSyncScope{TeamIDs: []string{th.BasicTeam.Id}},
+		}
+		_, r, err2 := doReconnectSync(t, th, req)
+		require.NoError(t, err2)
+
+		found := false
+		for _, ch := range r.DirectChannels {
+			if ch.Id == dm.Id {
+				found = true
+				break
+			}
+		}
+		assert.True(t, found, "newly created DM channel should appear in direct_channels")
+	})
+
+	t.Run("timestamp is always greater than zero", func(t *testing.T) {
+		_, r, err := doReconnectSync(t, th, validReq())
+		require.NoError(t, err)
+		assert.Greater(t, r.Timestamp, int64(0))
+	})
+}

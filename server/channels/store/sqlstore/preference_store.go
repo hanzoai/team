@@ -55,10 +55,44 @@ func (s SqlPreferenceStore) Save(preferences model.Preferences) (err error) {
 		}
 	}
 
+	// Remove stale tombstones for re-saved preferences atomically with the upsert.
+	if removeErr := s.removePreferenceDeletionTombstonesTx(transaction, preferences); removeErr != nil {
+		return errors.Wrap(removeErr, "failed to remove stale preference tombstones")
+	}
+
 	if err := transaction.Commit(); err != nil {
 		// don't need to rollback here since the transaction is already closed
 		return errors.Wrap(err, "commit_transaction")
 	}
+	return nil
+}
+
+func (s SqlPreferenceStore) removePreferenceDeletionTombstonesTx(tx *sqlxTxWrapper, preferences model.Preferences) error {
+	if len(preferences) == 0 {
+		return nil
+	}
+
+	var conditions sq.Or
+	for _, p := range preferences {
+		conditions = append(conditions, sq.And{
+			sq.Eq{"UserId": p.UserId},
+			sq.Eq{"Category": p.Category},
+			sq.Eq{"Name": p.Name},
+		})
+	}
+
+	query, args, err := s.getQueryBuilder().
+		Delete("PreferenceDeletions").
+		Where(conditions).
+		ToSql()
+	if err != nil {
+		return errors.Wrap(err, "could not build sql query for removePreferenceDeletionTombstonesTx")
+	}
+
+	if _, err = tx.Exec(query, args...); err != nil {
+		return errors.Wrap(err, "failed to remove preference deletion tombstones")
+	}
+
 	return nil
 }
 

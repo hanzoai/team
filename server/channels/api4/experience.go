@@ -18,6 +18,7 @@ import (
 func (api *API) InitExperienceAPI() {
 	api.BaseRoutes.Users.Handle("/me/initial_load", api.APISessionRequired(getInitialLoad)).Methods(http.MethodGet)
 	api.BaseRoutes.Users.Handle("/me/teams/{team_id:[A-Za-z0-9]+}/load", api.APISessionRequired(getTeamLoad)).Methods(http.MethodGet)
+	api.BaseRoutes.APIRoot.Handle("/sync", api.APISessionRequired(reconnectSync)).Methods(http.MethodPost)
 }
 
 func getInitialLoad(c *Context, w http.ResponseWriter, r *http.Request) {
@@ -88,5 +89,60 @@ func getTeamLoad(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	if err := json.NewEncoder(w).Encode(resp); err != nil {
 		c.Logger.Warn("Error writing team_load response", mlog.Err(err))
+	}
+}
+
+func reconnectSync(c *Context, w http.ResponseWriter, r *http.Request) {
+	if !c.App.Config().FeatureFlags.EnableExperienceAPI {
+		http.NotFound(w, r)
+		return
+	}
+
+	var req model.ExperienceSyncRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		c.SetInvalidParamWithErr("sync_request", err)
+		return
+	}
+
+	// since must be a positive integer
+	if req.Since <= 0 {
+		c.SetInvalidParam("since")
+		return
+	}
+
+	// scope.team_ids is required and must not be empty
+	if len(req.Scope.TeamIDs) == 0 {
+		c.SetInvalidParam("scope.team_ids")
+		return
+	}
+	for _, id := range req.Scope.TeamIDs {
+		if !model.IsValidId(id) {
+			c.SetInvalidParam("scope.team_ids")
+			return
+		}
+	}
+
+	// optional scope fields: validate IDs when present
+	if req.Scope.ActiveChannelID != "" && !model.IsValidId(req.Scope.ActiveChannelID) {
+		c.SetInvalidParam("scope.active_channel_id")
+		return
+	}
+	if req.Scope.ActiveThreadID != "" && !model.IsValidId(req.Scope.ActiveThreadID) {
+		c.SetInvalidParam("scope.active_thread_id")
+		return
+	}
+	if req.Scope.GlobalThreadsTeamID != "" && !model.IsValidId(req.Scope.GlobalThreadsTeamID) {
+		c.SetInvalidParam("scope.global_threads_team_id")
+		return
+	}
+
+	resp, appErr := c.App.GetExperienceSync(c.AppContext, c.AppContext.Session().UserId, &req)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	if err := json.NewEncoder(w).Encode(resp); err != nil {
+		c.Logger.Warn("Error writing sync response", mlog.Err(err))
 	}
 }
