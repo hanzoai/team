@@ -11,7 +11,15 @@
 // Group: @channels @messaging
 
 describe('Message Reply too long', () => {
+    // The maximum message length is decided by the server (config.MaxPostSize,
+    // derived from PostMessageMaxBytesV2 / 4), so read it rather than hardcoding.
+    let maxReplyLength;
+
     before(() => {
+        cy.apiGetConfig().then(({config}) => {
+            maxReplyLength = parseInt(config.MaxPostSize, 10);
+        });
+
         // # Login as test user and visit off-topic channel
         cy.apiInitSetup({loginAfter: true}).then(({team}) => {
             cy.visit(`/${team.name}/channels/off-topic`);
@@ -35,7 +43,6 @@ describe('Message Reply too long', () => {
         cy.get('.post-error').should('not.exist');
 
         // # Enter too long text into RHS
-        const maxReplyLength = 16383;
         const replyTooLong = replyValid.repeat((maxReplyLength / replyValid.length) + 1);
         cy.uiGetReplyTextBox().invoke('val', replyTooLong).trigger('input');
 
