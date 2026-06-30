@@ -254,8 +254,6 @@ func (a *App) GetOrCreateSystemOwnedBot(rctx request.CTX, botUsername, botDispla
 	}
 
 	// Auto-heal: re-enable the bot if it was disabled (e.g. its owner was deactivated).
-	// UpdateBotActive routes protected bots through the admission-check-free
-	// reactivation path, so recovery succeeds even at the user cap.
 	if bot.DeleteAt != 0 {
 		return a.UpdateBotActive(rctx, bot.UserId, true)
 	}
@@ -427,13 +425,7 @@ func (a *App) UpdateBotActive(rctx request.CTX, botUserId string, active bool) (
 		}
 	}
 
-	if protected && active {
-		// Re-enabling a protected bot bypasses the active-user/license admission
-		// checks so recovery is always possible, even at the user cap.
-		if _, err := a.updateActive(rctx, user, true); err != nil {
-			return nil, err
-		}
-	} else if _, err := a.UpdateActive(rctx, user, active); err != nil {
+	if _, err := a.UpdateActive(rctx, user, active); err != nil {
 		return nil, err
 	}
 
