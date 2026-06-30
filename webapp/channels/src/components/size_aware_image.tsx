@@ -5,7 +5,7 @@
 
 import classNames from 'classnames';
 import React from 'react';
-import type {KeyboardEvent, MouseEvent, SyntheticEvent} from 'react';
+import type {CSSProperties, KeyboardEvent, MouseEvent, SyntheticEvent} from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
@@ -48,6 +48,7 @@ export type Props = WrappedComponentProps & {
     height?: string;
     width?: string;
     title?: string;
+    style?: CSSProperties;
 
     /*
     * Boolean value to pass for showing a loader when image is being loaded
@@ -87,7 +88,7 @@ export type Props = WrappedComponentProps & {
     /**
     * Action to fetch public link of an image from server.
     */
-    getFilePublicLink?: () => Promise<ActionResult<{ link: string }>>;
+    getFilePublicLink?: () => Promise<ActionResult<{link: string}>>;
 
     /*
     * Prevents display of utility buttons when image in a location that makes them inappropriate
@@ -98,7 +99,7 @@ export type Props = WrappedComponentProps & {
     * Indicates whether the file has been rejected and should not show preview
     */
     isFileRejected?: boolean;
-}
+};
 
 type State = {
     loaded: boolean;
@@ -107,7 +108,7 @@ type State = {
     linkCopyInProgress: boolean;
     error: boolean;
     imageWidth: number;
-}
+};
 
 // SizeAwareImage is a component used for rendering images where the dimensions of the image are important for
 // ensuring that the page is laid out correctly.
@@ -219,6 +220,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
         Reflect.deleteProperty(props, 'getFilePublicLink');
         Reflect.deleteProperty(props, 'isFileRejected');
         Reflect.deleteProperty(props, 'intl');
+        Reflect.deleteProperty(props, 'style');
 
         let ariaLabelImage = intl.formatMessage({id: 'file_attachment.thumbnail', defaultMessage: 'file thumbnail'});
         if (fileInfo) {
@@ -227,12 +229,17 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
 
         const fileType = getFileType(fileInfo?.extension ?? '');
 
-        let conditionalSVGStyleAttribute;
+        let conditionalSVGStyleAttribute: CSSProperties | undefined;
         if (fileType === FileTypes.SVG) {
             conditionalSVGStyleAttribute = {
                 width: dimensions?.width || MIN_IMAGE_SIZE,
                 height: 'auto',
             };
+        }
+
+        let mergedImgStyle: CSSProperties | undefined = this.props.style;
+        if (conditionalSVGStyleAttribute) {
+            mergedImgStyle = {...conditionalSVGStyleAttribute, ...this.props.style};
         }
 
         const image = (
@@ -249,7 +256,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
                 src={src}
                 onError={this.handleError}
                 onLoad={this.handleLoad}
-                style={conditionalSVGStyleAttribute}
+                style={mergedImgStyle}
             />
         );
 
