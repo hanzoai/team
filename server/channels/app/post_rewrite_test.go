@@ -35,6 +35,49 @@ func TestRewriteMessageRequestsStructuredOutput(t *testing.T) {
 		"rewrite must request structured output so providers return parseable JSON")
 }
 
+func TestRewriteMessageResponseHandling(t *testing.T) {
+	testCases := []struct {
+		name          string
+		completion    string
+		completionErr error
+		expectedErrID string
+	}{
+		{
+			name:          "non-JSON completion returns parse failed",
+			completion:    "Sure! Here is your rewrite.",
+			expectedErrID: "app.post.rewrite.parse_response_failed",
+		},
+		{
+			name:          "empty rewritten_text returns empty response",
+			completion:    `{"rewritten_text":""}`,
+			expectedErrID: "app.post.rewrite.empty_response",
+		},
+		{
+			name:          "bridge error returns agent call failed",
+			completionErr: assert.AnError,
+			expectedErrID: "app.post.rewrite.agent_call_failed",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			bridge := &testAgentsBridge{
+				completeFn: func(sessionUserID, agentID string, req BridgeCompletionRequest) (string, error) {
+					return tc.completion, tc.completionErr
+				},
+			}
+
+			th := Setup(t, WithAgentsBridge(bridge)).InitBasic(t)
+			ctx := th.Context.WithSession(&model.Session{UserId: th.BasicUser.Id})
+
+			response, appErr := th.App.RewriteMessage(ctx, model.NewId(), "hello", model.RewriteActionImproveWriting, "", "")
+			require.Nil(t, response)
+			require.NotNil(t, appErr)
+			assert.Equal(t, tc.expectedErrID, appErr.Id)
+		})
+	}
+}
+
 func TestBuildRewriteSystemPrompt(t *testing.T) {
 	basePrompt := model.RewriteSystemPrompt
 
