@@ -1,0 +1,302 @@
+# .github/workflows/update-jira-fix-version.yml
+#
+# Automatically sets the Jira Fix Version field when a PR is merged:
+#
+#   Master PR merged    → Fix Version = NEXT release (version with no release branch yet)
+#   Cherry-pick merged  → Fix Version = CURRENT release (version matching the branch)
+#
+# Version names are resolved dynamically from Jira — no hardcoded names,
+# no updates needed at the start of each release cycle.
+#
+# SETUP REQUIRED (one-time per repo):
+#   1. Add secrets JIRA_USER_EMAIL and JIRA_API_TOKEN to the repo or GitHub org.
+#   2. Set VERSION_SERIES below to match the product:
+#        mattermost/mattermost        → '11.'
+#        mattermost/mattermost-mobile → '2.'
+#        mattermost/desktop           → '6.'
+#   3. Update the `branches` list under `on: pull_request` to match the repo's
+#      release branch pattern (same substitution as above).
+
+name: Update Jira Fix Version
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+      - 'release-11.*'   # <-- change per repo (see above)
+
+env:
+  # Numeric series used to filter Jira versions belonging to this product.
+  VERSION_SERIES: '11.'        # <-- change per repo (see above)
+  JIRA_BASE_URL: https://mattermost.atlassian.net
+  JIRA_PROJECT: MM
+
+jobs:
+
+  # ---------------------------------------------------------------------------
+  # Job 1: Master PR merged → set Fix Version to NEXT release.
+  #
+  # "Next release" = the first unreleased Jira version in this product's series
+  # that does not yet have a corresponding release branch in GitHub.
+  # ---------------------------------------------------------------------------
+  master-pr:
+    name: Master PR → next release
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref == 'master'
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Find all MM- ticket keys in the PR title and body.
+      # Master PRs always include the ticket key — no tracing required.
+      - name: Find MM ticket(s) in PR
+        id: ticket
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { title, body } = context.payload.pull_request;
+            const text = `${title}\n${body || ''}`;
+            const matches = [...text.matchAll(/MM-\d+/g)].map(m => m[0]);
+            const unique = [...new Set(matches)];
+
+            if (unique.length === 0) {
+              core.warning('No MM- ticket key found in this PR — skipping Fix Version update.');
+              core.setOutput('found', 'false');
+              return;
+            }
+
+            core.setOutput('tickets', unique.join(','));
+            core.setOutput('found', 'true');
+            console.log(`Found ticket(s): ${unique.join(', ')}`);
+
+      # Determine the next release by querying Jira for all unreleased versions
+      # in this product's series, then checking each one to see if a matching
+      # release branch exists in GitHub. The first version without a branch is
+      # the next (upcoming) release.
+      #
+      # Example (mattermost/mattermost, VERSION_SERIES='11.'):
+      #   Unreleased versions: v11.8 (June 2026), v11.9
+      #   release-11.8 branch exists  → current release, skip
+      #   release-11.9 branch missing → next release ✓
+      - name: Determine next release version
+        if: steps.ticket.outputs.found == 'true'
+        id: version
+        uses: actions/github-script@v7
+        env:
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        with:
+          script: |
+            const versionSeries = process.env.VERSION_SERIES;
+            const auth = Buffer.from(
+              `${process.env.JIRA_USER_EMAIL}:${process.env.JIRA_API_TOKEN}`
+            ).toString('base64');
+
+            // Fetch all unreleased Jira versions for this project
+            const resp = await fetch(
+              `${process.env.JIRA_BASE_URL}/rest/api/3/project/${process.env.JIRA_PROJECT}/versions`,
+              { headers: { Authorization: `Basic ${auth}` } }
+            );
+            if (!resp.ok) {
+              core.setFailed(`Jira versions API returned HTTP ${resp.status}`);
+              return;
+            }
+            const allVersions = await resp.json();
+
+            // Filter to unreleased versions belonging to this product's series
+            const candidates = allVersions.filter(
+              v => !v.released && v.name.includes(versionSeries)
+            );
+            if (candidates.length === 0) {
+              core.setFailed(`No unreleased Jira versions found for series '${versionSeries}'`);
+              return;
+            }
+            console.log(`Unreleased candidates: ${candidates.map(v => v.name).join(', ')}`);
+
+            // Walk through candidates (Jira returns them in sequence order).
+            // The first one without a release branch is the next release.
+            for (const v of candidates) {
+              const numMatch = v.name.match(/(\d+\.\d+)/);
+              if (!numMatch) {
+                console.log(`${v.name}: could not parse version number — skipping`);
+                continue;
+              }
+              const branchName = `release-${numMatch[1]}`;
+
+              try {
+                await github.rest.repos.getBranch({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  branch: branchName,
+                });
+                console.log(`${v.name}: branch '${branchName}' exists → current release, skipping`);
+              } catch (err) {
+                if (err.status === 404) {
+                  console.log(`${v.name}: branch '${branchName}' not found → next release ✓`);
+                  core.setOutput('version', v.name);
+                  return;
+                }
+                core.setFailed(`Unexpected error checking branch '${branchName}': ${err.message}`);
+                return;
+              }
+            }
+
+            core.setFailed(
+              'All unreleased versions already have release branches — ' +
+              'cannot determine next release. Create the next version in Jira.'
+            );
+
+      - name: Set Fix Version in Jira
+        if: steps.ticket.outputs.found == 'true'
+        env:
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          IFS=',' read -ra TICKETS <<< "${{ steps.ticket.outputs.tickets }}"
+
+          for TICKET in "${TICKETS[@]}"; do
+            HTTP_CODE=$(curl -s -o /tmp/jira_response.json -w "%{http_code}" \
+              -X PUT \
+              -u "${JIRA_USER_EMAIL}:${JIRA_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"update\":{\"fixVersions\":[{\"set\":[{\"name\":\"${VERSION}\"}]}]}}" \
+              "${JIRA_BASE_URL}/rest/api/3/issue/${TICKET}")
+
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+              echo "Set Fix Version '${VERSION}' on ${TICKET} (HTTP ${HTTP_CODE})"
+            else
+              echo "::error::Jira API returned HTTP ${HTTP_CODE} for ${TICKET}"
+              cat /tmp/jira_response.json
+              exit 1
+            fi
+          done
+
+  # ---------------------------------------------------------------------------
+  # Job 2: Automated cherry-pick PR merged → set Fix Version to CURRENT release.
+  #
+  # Cherry-pick PRs have no MM ticket key, so Jira automation cannot link them.
+  # This job traces back to the original PR to find the ticket key.
+  #
+  # Cherry-pick title format: "Automated cherry pick of #37124"
+  # ---------------------------------------------------------------------------
+  cherry-pick-pr:
+    name: Cherry-pick PR → current release
+    if: >
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.base.ref != 'master' &&
+      (contains(toLower(github.event.pull_request.title), 'cherry pick') ||
+       contains(toLower(github.event.pull_request.title), 'cherry-pick'))
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Extract the original PR number from the cherry-pick title.
+      # "Automated cherry pick of #37124" → 37124
+      - name: Extract original PR number
+        id: extract
+        run: |
+          TITLE="${{ github.event.pull_request.title }}"
+          PR_NUM=$(echo "$TITLE" | grep -oP '#\K[0-9]+' | head -1)
+
+          if [ -z "$PR_NUM" ]; then
+            echo "::error::Could not extract original PR number from title: $TITLE"
+            exit 1
+          fi
+
+          echo "pr_num=$PR_NUM" >> "$GITHUB_OUTPUT"
+          echo "Original PR: #$PR_NUM"
+
+      # Fetch the original PR and find MM- ticket key(s) in its title and body.
+      # Uses the built-in GITHUB_TOKEN — no extra secret needed.
+      - name: Find MM ticket(s) in original PR
+        id: ticket
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNum = parseInt('${{ steps.extract.outputs.pr_num }}');
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNum,
+            });
+
+            const text = `${pr.title}\n${pr.body || ''}`;
+            const matches = [...text.matchAll(/MM-\d+/g)].map(m => m[0]);
+            const unique = [...new Set(matches)];
+
+            if (unique.length === 0) {
+              core.warning(
+                `No MM- ticket key found in original PR #${prNum} ("${pr.title}") — skipping.`
+              );
+              core.setOutput('found', 'false');
+              return;
+            }
+
+            core.setOutput('tickets', unique.join(','));
+            core.setOutput('found', 'true');
+            console.log(`Found ticket(s): ${unique.join(', ')}`);
+
+      # Derive the current release version from the target branch name.
+      # release-11.9 → look for unreleased Jira version containing "11.9"
+      # Works for all products: "v11.9", "Mobile v2.41", "Desktop v6.2"
+      - name: Resolve current release version from branch
+        if: steps.ticket.outputs.found == 'true'
+        id: version
+        env:
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: |
+          BRANCH="${{ github.event.pull_request.base.ref }}"
+          VERSION_NUM=$(echo "$BRANCH" | sed 's/release-//')
+
+          VERSIONS_JSON=$(curl -sf \
+            -u "${JIRA_USER_EMAIL}:${JIRA_API_TOKEN}" \
+            "${JIRA_BASE_URL}/rest/api/3/project/${JIRA_PROJECT}/versions")
+
+          if [ $? -ne 0 ]; then
+            echo "::error::Failed to query Jira versions API"
+            exit 1
+          fi
+
+          VERSION_NAME=$(echo "$VERSIONS_JSON" | jq -r \
+            --arg v "$VERSION_NUM" \
+            '[.[] | select(.released == false and (.name | contains($v)))] | first | .name // empty')
+
+          if [ -z "$VERSION_NAME" ]; then
+            echo "::error::No unreleased Jira version found matching '$VERSION_NUM' (branch: $BRANCH)"
+            echo "Available unreleased versions:"
+            echo "$VERSIONS_JSON" | jq -r '[.[] | select(.released == false) | .name] | .[]'
+            exit 1
+          fi
+
+          echo "version=$VERSION_NAME" >> "$GITHUB_OUTPUT"
+          echo "Branch '$BRANCH' → Jira version '$VERSION_NAME'"
+
+      - name: Set Fix Version in Jira
+        if: steps.ticket.outputs.found == 'true'
+        env:
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          IFS=',' read -ra TICKETS <<< "${{ steps.ticket.outputs.tickets }}"
+
+          for TICKET in "${TICKETS[@]}"; do
+            HTTP_CODE=$(curl -s -o /tmp/jira_response.json -w "%{http_code}" \
+              -X PUT \
+              -u "${JIRA_USER_EMAIL}:${JIRA_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d "{\"update\":{\"fixVersions\":[{\"set\":[{\"name\":\"${VERSION}\"}]}]}}" \
+              "${JIRA_BASE_URL}/rest/api/3/issue/${TICKET}")
+
+            if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
+              echo "Set Fix Version '${VERSION}' on ${TICKET} (HTTP ${HTTP_CODE})"
+            else
+              echo "::error::Jira API returned HTTP ${HTTP_CODE} for ${TICKET}"
+              cat /tmp/jira_response.json
+              exit 1
+            fi
+          done
