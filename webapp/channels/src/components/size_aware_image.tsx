@@ -5,7 +5,7 @@
 
 import classNames from 'classnames';
 import React from 'react';
-import type {KeyboardEvent, MouseEvent, SyntheticEvent} from 'react';
+import type {CSSProperties, KeyboardEvent, MouseEvent, SyntheticEvent} from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
@@ -49,6 +49,7 @@ export type Props = WrappedComponentProps & {
     height?: string;
     width?: string;
     title?: string;
+    style?: CSSProperties;
 
     /*
     * Boolean value to pass for showing a loader when image is being loaded
@@ -272,6 +273,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
         Reflect.deleteProperty(props, 'getFilePublicLink');
         Reflect.deleteProperty(props, 'isFileRejected');
         Reflect.deleteProperty(props, 'intl');
+        Reflect.deleteProperty(props, 'style');
 
         let ariaLabelImage = intl.formatMessage({id: 'file_attachment.thumbnail', defaultMessage: 'file thumbnail'});
         if (fileInfo) {
@@ -282,7 +284,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
 
         const svgWithoutDimensions = fileType === FileTypes.SVG && !this.dimensionsAvailable(dimensions);
 
-        let conditionalSVGStyleAttribute;
+        let conditionalSVGStyleAttribute: CSSProperties | undefined;
         if (fileType === FileTypes.SVG) {
             conditionalSVGStyleAttribute = {
                 width: dimensions?.width || '100%',
@@ -291,6 +293,11 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
         }
 
         const imageSrc = (svgWithoutDimensions && this.state.svgObjectUrl) ? this.state.svgObjectUrl : src;
+
+        let mergedImgStyle: CSSProperties | undefined = this.props.style;
+        if (conditionalSVGStyleAttribute) {
+            mergedImgStyle = {...conditionalSVGStyleAttribute, ...this.props.style};
+        }
 
         const image = (
             <img
@@ -306,7 +313,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
                 src={imageSrc}
                 onError={this.handleError}
                 onLoad={this.handleLoad}
-                style={conditionalSVGStyleAttribute}
+                style={mergedImgStyle}
             />
         );
 
