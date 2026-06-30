@@ -4,12 +4,91 @@
 package app
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 
 	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/v8/channels/audit"
 )
+
+// enableDeliveryTracking turns on the PostDeliveryTracking feature flag and the
+// admin setting that together gate delivery tracking. The flag is normally
+// read-only in tests, so it must be unlocked first.
+func enableDeliveryTracking(th *TestHelper) {
+	th.Server.platform.SetConfigReadOnlyFF(false)
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		cfg.FeatureFlags.PostDeliveryTracking = true
+		cfg.DeliveryTrackingSettings.Enable = model.NewPointer(true)
+	})
+}
+
+// captureDeliveryRecords swaps in a file-backed audit logger that only records
+// post-delivery events, runs fn, and returns the Meta map of every record
+// emitted. It mirrors how the real user_post_delivery target reads these records.
+func captureDeliveryRecords(t *testing.T, th *TestHelper, fn func()) []map[string]any {
+	t.Helper()
+
+	filePath := filepath.Join(t.TempDir(), "delivery_audit.log")
+	adt := &audit.Audit{}
+	adt.Init(audit.DefMaxQueueSize)
+	require.NoError(t, adt.Configure(mlog.LoggerConfiguration{
+		"delivery_capture": {
+			Type:    "file",
+			Format:  "json",
+			Options: json.RawMessage(fmt.Sprintf(`{"filename": "%s"}`, filePath)),
+			Levels:  []mlog.Level{mlog.LvlAuditPostDelivery},
+		},
+	}))
+
+	old := th.Server.Audit
+	th.Server.Audit = adt
+	fn()
+	th.Server.Audit = old
+	require.NoError(t, adt.Shutdown()) // flushes queued records and closes the file
+
+	data, err := os.ReadFile(filePath)
+	if os.IsNotExist(err) {
+		// The file target only creates the file once it writes a record, so a
+		// missing file means nothing was emitted.
+		return nil
+	}
+	require.NoError(t, err)
+
+	var records []map[string]any
+	for line := range strings.SplitSeq(strings.TrimSpace(string(data)), "\n") {
+		if line == "" {
+			continue
+		}
+		var entry struct {
+			Meta map[string]any `json:"meta"`
+		}
+		require.NoError(t, json.Unmarshal([]byte(line), &entry))
+		records = append(records, entry.Meta)
+	}
+	return records
+}
+
+// deliveryStrings reads a JSON-decoded []any (e.g. post_ids/target_ids) as a
+// []string for comparison.
+func deliveryStrings(t *testing.T, v any) []string {
+	t.Helper()
+	raw, ok := v.([]any)
+	require.True(t, ok, "expected a JSON array, got %T", v)
+	out := make([]string, 0, len(raw))
+	for _, item := range raw {
+		s, ok := item.(string)
+		require.True(t, ok, "expected string element, got %T", item)
+		out = append(out, s)
+	}
+	return out
+}
 
 func TestChunkDeliveryIDs(t *testing.T) {
 	t.Run("nil/empty input returns nil", func(t *testing.T) {
@@ -81,4 +160,233 @@ func TestDeliveryMeta(t *testing.T) {
 		require.True(t, ok, "mechanism must be int16 so the audit target can assert it")
 		require.Equal(t, model.DeliveryMechanismPlugin, v)
 	})
+}
+
+func TestRecordPostListDeliveryToPlugin(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+
+	makeList := func() *model.PostList {
+		return &model.PostList{
+			Order: []string{"p1", "p2", "sys"},
+			Posts: map[string]*model.Post{
+				"p1":  {Id: "p1", Type: model.PostTypeDefault},
+				"p2":  {Id: "p2", Type: model.PostTypeDefault},
+				"sys": {Id: "sys", Type: model.PostTypeJoinChannel},
+			},
+		}
+	}
+
+	t.Run("emits a fan-in record tagged for the plugin target, skipping system posts", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostListDeliveryToPlugin("plugin.example", makeList())
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "plugin.example", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Equal(t, model.DeliveryMechanismPlugin, int16(records[0]["mechanism"].(float64)))
+		require.ElementsMatch(t, []string{"p1", "p2"}, deliveryStrings(t, records[0]["post_ids"]))
+	})
+
+	t.Run("no record when delivery tracking is disabled", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(false) })
+		defer th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(true) })
+
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostListDeliveryToPlugin("plugin.example", makeList())
+		})
+		require.Empty(t, records)
+	})
+
+	t.Run("no record when the list has only system posts", func(t *testing.T) {
+		list := &model.PostList{
+			Order: []string{"sys"},
+			Posts: map[string]*model.Post{"sys": {Id: "sys", Type: model.PostTypeJoinChannel}},
+		}
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostListDeliveryToPlugin("plugin.example", list)
+		})
+		require.Empty(t, records)
+	})
+
+	t.Run("no record when the plugin id is empty", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostListDeliveryToPlugin("", makeList())
+		})
+		require.Empty(t, records)
+	})
+}
+
+func TestRecordPostsDeliveryToPlugin(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+
+	t.Run("emits a fan-in record skipping nil, unsaved, and system posts", func(t *testing.T) {
+		posts := []*model.Post{
+			{Id: "p1", Type: model.PostTypeDefault},
+			nil,
+			{Id: "", Type: model.PostTypeDefault}, // unsaved, no id
+			{Id: "sys", Type: model.PostTypeJoinChannel},
+			{Id: "p2", Type: model.PostTypeDefault},
+		}
+
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostsDeliveryToPlugin("plugin.example", posts)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "plugin.example", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Equal(t, model.DeliveryMechanismPlugin, int16(records[0]["mechanism"].(float64)))
+		require.ElementsMatch(t, []string{"p1", "p2"}, deliveryStrings(t, records[0]["post_ids"]))
+	})
+
+	t.Run("no record when every post is filtered out", func(t *testing.T) {
+		posts := []*model.Post{nil, {Id: ""}, {Id: "sys", Type: model.PostTypeJoinChannel}}
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostsDeliveryToPlugin("plugin.example", posts)
+		})
+		require.Empty(t, records)
+	})
+}
+
+// TestRecordPostListDeliveryTargetTypes guards that the user-facing wrapper still
+// records the default user target (target_type omitted) after the helpers were
+// parameterized to support the plugin target, while the plugin wrapper tags its
+// records explicitly.
+func TestRecordPostListDeliveryTargetTypes(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+
+	list := &model.PostList{
+		Order: []string{"p1"},
+		Posts: map[string]*model.Post{"p1": {Id: "p1", Type: model.PostTypeDefault}},
+	}
+
+	t.Run("user wrapper omits target_type and keeps the given mechanism", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostListDelivery("user1", list, model.DeliveryMechanismProduct)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "user1", records[0]["target_id"])
+		_, hasTargetType := records[0]["target_type"]
+		require.False(t, hasTargetType, "user target_type should be omitted")
+		require.Equal(t, model.DeliveryMechanismProduct, int16(records[0]["mechanism"].(float64)))
+	})
+
+	t.Run("plugin wrapper tags the plugin target type", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostListDeliveryToPlugin("plugin.example", list)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+	})
+}
+
+// TestPluginAPIRecordsPluginDelivery covers the plugin_api.go wiring that records
+// a delivery to the calling plugin whenever it reads post content.
+func TestPluginAPIRecordsPluginDelivery(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+	enableDeliveryTracking(th)
+
+	api := th.SetupPluginAPI() // manifest id is "pluginid"
+	post := th.CreatePost(t, th.BasicChannel)
+
+	t.Run("GetPost records a single plugin delivery", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			_, appErr := api.GetPost(post.Id)
+			require.Nil(t, appErr)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, post.Id, records[0]["post_id"])
+		require.Equal(t, "pluginid", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Equal(t, model.DeliveryMechanismPlugin, int16(records[0]["mechanism"].(float64)))
+	})
+
+	t.Run("GetPostsForChannel records a fan-in plugin delivery", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			_, appErr := api.GetPostsForChannel(th.BasicChannel.Id, 0, 60)
+			require.Nil(t, appErr)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "pluginid", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Contains(t, deliveryStrings(t, records[0]["post_ids"]), post.Id)
+	})
+}
+
+// pluginDeliveryRecords keeps only the records tagged for the plugin target;
+// creating a post also emits user/product delivery records that race in on
+// other goroutines, and those are not what these tests assert on.
+func pluginDeliveryRecords(records []map[string]any) []map[string]any {
+	var out []map[string]any
+	for _, r := range records {
+		if r["target_type"] == model.DeliveryTargetPlugin {
+			out = append(out, r)
+		}
+	}
+	return out
+}
+
+// TestCreatePostRecordsPluginDelivery exercises the guarded_hooks.go +
+// post.go path end to end: a plugin that receives the post via
+// MessageWillBePosted is recorded as a delivery target once the post is saved
+// (the hook runs before the post has an id, so recording is deferred).
+func TestCreatePostRecordsPluginDelivery(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+	enableDeliveryTracking(th)
+
+	tearDown, pluginIDs, _ := SetAppEnvironmentWithPlugins(t, []string{
+		`
+		package main
+
+		import (
+			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/mattermost/mattermost/server/public/model"
+		)
+
+		type MyPlugin struct {
+			plugin.MattermostPlugin
+		}
+
+		func (p *MyPlugin) MessageWillBePosted(c *plugin.Context, post *model.Post) (*model.Post, string) {
+			return nil, ""
+		}
+
+		func main() {
+			plugin.ClientMain(&MyPlugin{})
+		}
+		`,
+	}, th.App, th.NewPluginAPI)
+	defer tearDown()
+	require.Len(t, pluginIDs, 1)
+
+	var created *model.Post
+	records := captureDeliveryRecords(t, th, func() {
+		post := &model.Post{
+			UserId:    th.BasicUser.Id,
+			ChannelId: th.BasicChannel.Id,
+			Message:   "hello plugin delivery",
+		}
+		var appErr *model.AppError
+		created, _, appErr = th.App.CreatePost(th.Context, post, th.BasicChannel, model.CreatePostFlags{SetOnline: true})
+		require.Nil(t, appErr)
+	})
+
+	pluginRecords := pluginDeliveryRecords(records)
+	require.Len(t, pluginRecords, 1)
+	require.Equal(t, created.Id, pluginRecords[0]["post_id"])
+	require.Equal(t, model.DeliveryMechanismPlugin, int16(pluginRecords[0]["mechanism"].(float64)))
+	require.Contains(t, deliveryStrings(t, pluginRecords[0]["target_ids"]), pluginIDs[0])
 }

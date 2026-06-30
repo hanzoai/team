@@ -89,7 +89,23 @@ func (a *App) RecordPostDeliveryFanOut(postID string, targetIDs []string, target
 }
 
 func (a *App) RecordPostListDelivery(userID string, list *model.PostList, mechanism int16) {
-	if !a.deliveryTrackingEnabled() || userID == "" || list == nil || len(list.Order) == 0 {
+	a.recordPostListDelivery(userID, list, model.DeliveryTargetUser, mechanism)
+}
+
+func (a *App) RecordPostsDelivery(userID string, posts []*model.Post, mechanism int16) {
+	a.recordPostsDelivery(userID, posts, model.DeliveryTargetUser, mechanism)
+}
+
+func (a *App) RecordPostListDeliveryToPlugin(pluginID string, list *model.PostList) {
+	a.recordPostListDelivery(pluginID, list, model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin)
+}
+
+func (a *App) RecordPostsDeliveryToPlugin(pluginID string, posts []*model.Post) {
+	a.recordPostsDelivery(pluginID, posts, model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin)
+}
+
+func (a *App) recordPostListDelivery(targetID string, list *model.PostList, targetType string, mechanism int16) {
+	if !a.deliveryTrackingEnabled() || targetID == "" || list == nil || len(list.Order) == 0 {
 		return
 	}
 	postIDs := make([]string, 0, len(list.Order))
@@ -102,11 +118,11 @@ func (a *App) RecordPostListDelivery(userID string, list *model.PostList, mechan
 	if len(postIDs) == 0 {
 		return
 	}
-	a.RecordPostDeliveryFanIn(userID, postIDs, model.DeliveryTargetUser, mechanism)
+	a.RecordPostDeliveryFanIn(targetID, postIDs, targetType, mechanism)
 }
 
-func (a *App) RecordPostsDelivery(userID string, posts []*model.Post, mechanism int16) {
-	if !a.deliveryTrackingEnabled() || userID == "" || len(posts) == 0 {
+func (a *App) recordPostsDelivery(targetID string, posts []*model.Post, targetType string, mechanism int16) {
+	if !a.deliveryTrackingEnabled() || targetID == "" || len(posts) == 0 {
 		return
 	}
 	postIDs := make([]string, 0, len(posts))
@@ -119,7 +135,7 @@ func (a *App) RecordPostsDelivery(userID string, posts []*model.Post, mechanism 
 	if len(postIDs) == 0 {
 		return
 	}
-	a.RecordPostDeliveryFanIn(userID, postIDs, model.DeliveryTargetUser, mechanism)
+	a.RecordPostDeliveryFanIn(targetID, postIDs, targetType, mechanism)
 }
 
 func chunkDeliveryIDs(ids []string, size int) [][]string {
