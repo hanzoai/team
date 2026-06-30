@@ -46,7 +46,7 @@ type NotificationResult = {
     status: string;
     reason?: string;
     data?: string;
-}
+};
 
 type NotificationHooksArgs = {
     title: string;
@@ -55,7 +55,7 @@ type NotificationHooksArgs = {
     soundName: string;
     url: string;
     notify: boolean;
-}
+};
 
 /**
  * This function is used to determine if the desktop sound is enabled.

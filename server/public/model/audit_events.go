@@ -6,10 +6,10 @@ package model
 // Access Control & Security
 const (
 	AuditEventApplyIPFilters            = "applyIPFilters"            // apply IP address filtering
-	AuditEventAssignAccessPolicy        = "assignAccessPolicy"        // assign access control policy to channels
+	AuditEventAssignAccessPolicy        = "assignAccessPolicy"        // assign access control policy to channels and/or teams
 	AuditEventCreateAccessControlPolicy = "createAccessControlPolicy" // create access control policy
 	AuditEventDeleteAccessControlPolicy = "deleteAccessControlPolicy" // delete access control policy
-	AuditEventUnassignAccessPolicy      = "unassignAccessPolicy"      // remove access control policy from channels
+	AuditEventUnassignAccessPolicy      = "unassignAccessPolicy"      // remove access control policy from channels and/or teams
 	AuditEventUpdateActiveStatus        = "updateActiveStatus"        // update active/inactive status of access control policy
 	AuditEventSetActiveStatus           = "setActiveStatus"           // set active/inactive status of multiple access control policies
 
@@ -84,6 +84,9 @@ const (
 	AuditEventAddChannelMember                   = "addChannelMember"                   // add member to channel
 	AuditEventConvertGroupMessageToChannel       = "convertGroupMessageToChannel"       // convert group message to private channel
 	AuditEventCreateChannel                      = "createChannel"                      // create public or private channel
+	AuditEventCreateChannelJoinRequest           = "createChannelJoinRequest"           // request to join a discoverable private channel
+	AuditEventUpdateChannelJoinRequest           = "updateChannelJoinRequest"           // approve or deny a channel join request
+	AuditEventWithdrawChannelJoinRequest         = "withdrawChannelJoinRequest"         // requester cancels their channel join request
 	AuditEventCreateDirectChannel                = "createDirectChannel"                // create direct message channel between two users
 	AuditEventCreateGroupChannel                 = "createGroupChannel"                 // create group message channel with multiple users
 	AuditEventDeleteChannel                      = "deleteChannel"                      // delete channel
@@ -450,7 +453,7 @@ const (
 
 // Users
 const (
-	AuditEventAttachDeviceId               = "attachDeviceId"               // attach device ID to user session for mobile app
+	AuditEventAttachDeviceId               = "attachDeviceId"               // attach device IDs (standard or VoIP) to user session for mobile app
 	AuditEventCreateUser                   = "createUser"                   // create user account
 	AuditEventCreateUserAccessToken        = "createUserAccessToken"        // create personal access token for user API access
 	AuditEventDeleteUser                   = "deleteUser"                   // delete user account
@@ -474,6 +477,7 @@ const (
 	AuditEventRevokeAllSessionsAllUsers    = "revokeAllSessionsAllUsers"    // revoke all active sessions for all users
 	AuditEventRevokeAllSessionsForUser     = "revokeAllSessionsForUser"     // revoke all active sessions for specific user
 	AuditEventRevokeSession                = "revokeSession"                // revoke specific user session
+	AuditEventRejectExpiredUserAccessToken = "rejectExpiredUserAccessToken" // rejected an API request because the personal access token has expired
 	AuditEventRevokeUserAccessToken        = "revokeUserAccessToken"        // revoke user personal access token
 	AuditEventSendPasswordReset            = "sendPasswordReset"            // send password reset email to user
 	AuditEventSendVerificationEmail        = "sendVerificationEmail"        // send email verification link to user

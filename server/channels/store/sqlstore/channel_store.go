@@ -166,8 +166,8 @@ func channelSliceColumns(isSelect bool, prefix ...string) []string {
 			p = "Channels."
 		}
 
-		columns = append(columns, fmt.Sprintf("EXISTS (SELECT 1 FROM AccessControlPolicies acp WHERE acp.ID = %sId) AS PolicyEnforced", p))
-		columns = append(columns, fmt.Sprintf("COALESCE((SELECT acp.Active FROM AccessControlPolicies acp WHERE acp.ID = %sId AND acp.Active = TRUE LIMIT 1), false) AS PolicyIsActive", p))
+		columns = append(columns, fmt.Sprintf("EXISTS (SELECT 1 FROM AccessControlPolicies acp WHERE acp.ID = %sId AND acp.Type = 'channel') AS PolicyEnforced", p))
+		columns = append(columns, fmt.Sprintf("COALESCE((SELECT acp.Active FROM AccessControlPolicies acp WHERE acp.ID = %sId AND acp.Type = 'channel' AND acp.Active = TRUE LIMIT 1), false) AS PolicyIsActive", p))
 	}
 
 	return columns
@@ -3260,6 +3260,9 @@ func (s SqlChannelStore) Autocomplete(rctx request.CTX, userID, term string, inc
 			From("ChannelMembers").
 			Where(sq.Eq{"UserId": userID})))
 	} else {
+		// Non-guests see public channels, private channels they're a member of, and
+		// discoverable private channels (subject to a post-query ABAC visibility filter
+		// applied at the app layer for policy-enforced channels).
 		query = query.Where(sq.Or{
 			sq.NotEq{"c.Type": model.ChannelTypePrivate},
 			sq.And{
@@ -3267,6 +3270,10 @@ func (s SqlChannelStore) Autocomplete(rctx request.CTX, userID, term string, inc
 				sq.Expr("c.Id IN (?)", sq.Select("ChannelId").
 					From("ChannelMembers").
 					Where(sq.Eq{"UserId": userID})),
+			},
+			sq.And{
+				sq.Eq{"c.Type": model.ChannelTypePrivate},
+				sq.Eq{"c.Discoverable": true},
 			},
 		})
 	}
@@ -3311,11 +3318,18 @@ func (s SqlChannelStore) buildAutocompleteInTeamQuery(teamID, userID, term strin
 	if isGuest {
 		query = query.Where(sq.Expr("c.Id IN (?)", memberSubQuery))
 	} else {
+		// Non-guests see public channels, private channels they're a member of, and
+		// discoverable private channels (subject to a post-query ABAC visibility filter
+		// applied at the app layer for policy-enforced channels).
 		query = query.Where(sq.Or{
 			sq.NotEq{"c.Type": model.ChannelTypePrivate},
 			sq.And{
 				sq.Eq{"c.Type": model.ChannelTypePrivate},
 				sq.Expr("c.Id IN (?)", memberSubQuery),
+			},
+			sq.And{
+				sq.Eq{"c.Type": model.ChannelTypePrivate},
+				sq.Eq{"c.Discoverable": true},
 			},
 		})
 	}
@@ -4435,7 +4449,7 @@ func (s SqlChannelStore) GetTeamForChannel(channelID string) (*model.Team, error
 		return nil, errors.Wrap(err, "get_team_for_channel_nested_tosql")
 	}
 	query, args, err := s.getQueryBuilder().
-		Select(teamSliceColumns()...).
+		Select(teamSliceColumns(true)...).
 		From("Teams").Where(sq.Expr("Id = ("+nestedQ+")", nestedArgs...)).ToSql()
 	if err != nil {
 		return nil, errors.Wrap(err, "get_team_for_channel_tosql")

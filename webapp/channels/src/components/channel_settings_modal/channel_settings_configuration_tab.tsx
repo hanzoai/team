@@ -12,9 +12,10 @@ import {PropertyTypes} from 'mattermost-redux/action_types';
 import {patchChannel} from 'mattermost-redux/actions/channels';
 import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
 import {Client4} from 'mattermost-redux/client';
+import {Permissions} from 'mattermost-redux/constants';
 import {isChannelAutotranslated as isChannelAutotranslatedSelector} from 'mattermost-redux/selectors/entities/channels';
+import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
 import {getRemotesForChannel} from 'mattermost-redux/selectors/entities/shared_channels';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
 
 import {ColorSwatch, LevelOptionLabel} from 'components/admin_console/classification_markings/classification_markings_styled';
 import {
@@ -59,7 +60,7 @@ type Props = {
     canManageChannelTranslation?: boolean;
     canManageBanner?: boolean;
     canManageSharedChannels?: boolean;
-}
+};
 
 function bannerHasChanges(originalBannerInfo: Channel['banner_info'], updatedBannerInfo: Channel['banner_info']): boolean {
     return (originalBannerInfo?.text?.trim() || '') !== (updatedBannerInfo?.text?.trim() || '') ||
@@ -104,26 +105,13 @@ function ChannelSettingsConfigurationTab({
     const classificationBanner = useChannelClassificationBanner(channel.id);
 
     const classification = useClassificationMarkings();
-    const isSystemAdmin = useSelector(isCurrentUserSystemAdmin);
-    const canManageClassification = classification.available && isSystemAdmin;
+    const canManageChannelRoles = useSelector((state: GlobalState) =>
+        haveIChannelPermission(state, channel.team_id, channel.id, Permissions.MANAGE_CHANNEL_ROLES),
+    );
+    const canManageClassification = classification.available && canManageChannelRoles;
     const [classificationEnabled, setClassificationEnabled] = useState(classificationBanner.hasClassification);
     const [selectedClassificationId, setSelectedClassificationId] = useState(classificationBanner.classificationId || '');
-
     const bannerLockedByClassification = classificationEnabled && Boolean(selectedClassificationId);
-
-    useEffect(() => {
-        setClassificationEnabled(classificationBanner.hasClassification);
-        setSelectedClassificationId(classificationBanner.classificationId || '');
-
-        if (classificationBanner.hasClassification && classificationBanner.classificationBanner) {
-            setUpdatedChannelBanner((prev) => ({
-                ...prev,
-                enabled: true,
-                text: classificationBanner.classificationBanner?.text ?? prev.text,
-                background_color: classificationBanner.classificationBanner?.background_color || prev.background_color || DEFAULT_CHANNEL_BANNER.background_color,
-            }));
-        }
-    }, [classificationBanner.hasClassification, classificationBanner.classificationId, classificationBanner.classificationBanner]);
 
     const classificationOptions = useMemo(() => {
         return classification.levels.
@@ -156,7 +144,7 @@ function ChannelSettingsConfigurationTab({
     }), [classificationBanner.hasClassification, classificationBanner.classificationId]);
 
     const hasClassificationChanges = classificationEnabled !== initialClassificationState.enabled ||
-        selectedClassificationId !== initialClassificationState.classificationId;
+        (classificationEnabled && selectedClassificationId !== initialClassificationState.classificationId);
 
     const handleClassificationToggle = useCallback(() => {
         setClassificationEnabled((prev) => {
@@ -166,12 +154,9 @@ function ChannelSettingsConfigurationTab({
                     setSelectedClassificationId(lowestRank.id);
                     setUpdatedChannelBanner((banner) => ({
                         ...banner,
-                        enabled: true,
                         text: `**${lowestRank.name}**`,
                         background_color: lowestRank.color,
                     }));
-                } else {
-                    setUpdatedChannelBanner((banner) => ({...banner, enabled: true}));
                 }
             }
             return !prev;
@@ -184,7 +169,6 @@ function ChannelSettingsConfigurationTab({
         if (level) {
             setUpdatedChannelBanner((prev) => ({
                 ...prev,
-                enabled: true,
                 text: `**${level.name}**`,
                 background_color: level.color,
             }));
@@ -357,8 +341,39 @@ function ChannelSettingsConfigurationTab({
         (canManageSharedChannels && hasWorkspaceChanges);
 
     useEffect(() => {
+        if (hasUnsavedChanges) {
+            return;
+        }
+
+        setClassificationEnabled(classificationBanner.hasClassification);
+        setSelectedClassificationId(classificationBanner.classificationId || '');
+
+        // Mirror the classification text/color into the local banner_info form
+        // state so the user can edit text while a classification is active —
+        // but never flip banner_info.enabled. The classification banner renders
+        // off the property value (see channel_banner.tsx); leaving banner_info
+        // disabled means deleting the property value makes the banner disappear
+        // without dragging stale text/color into the manual banner slot.
+        if (classificationBanner.hasClassification && classificationBanner.classificationBanner) {
+            setUpdatedChannelBanner((prev) => ({
+                ...prev,
+                text: classificationBanner.classificationBanner?.text ?? prev.text,
+                background_color: classificationBanner.classificationBanner?.background_color || prev.background_color || DEFAULT_CHANNEL_BANNER.background_color,
+            }));
+        }
+    }, [
+        classificationBanner.hasClassification,
+        classificationBanner.classificationId,
+        classificationBanner.classificationBanner,
+        hasUnsavedChanges,
+    ]);
+
+    useEffect(() => {
         setRequireConfirm(hasUnsavedChanges);
         setAreThereUnsavedChanges?.(hasUnsavedChanges);
+        if (hasUnsavedChanges) {
+            setSaveChangesPanelState((current) => (current === 'saved' ? undefined : current));
+        }
     }, [hasUnsavedChanges, setAreThereUnsavedChanges]);
 
     const handleServerError = useCallback((err: ServerError) => {
@@ -405,7 +420,7 @@ function ChannelSettingsConfigurationTab({
             updated.banner_info = {
                 text: updatedChannelBanner.text?.trim() || '',
                 background_color: updatedChannelBanner.background_color?.trim() || '',
-                enabled: true,
+                enabled: updatedChannelBanner.enabled,
             };
         }
 
@@ -625,18 +640,24 @@ function ChannelSettingsConfigurationTab({
                 <>
                     <div className='channel_banner_header'>
                         <div className='channel_banner_header__text'>
-                            <span className='Input_legend'>
+                            <label
+                                className='Input_legend'
+                                htmlFor='channelClassificationToggle'
+                            >
                                 <FormattedMessage
                                     id='channel_settings.classification.title'
                                     defaultMessage='Classification'
                                 />
-                            </span>
-                            <span className='Input_subheading'>
+                            </label>
+                            <label
+                                className='Input_subheading'
+                                htmlFor='channelClassificationToggle'
+                            >
                                 <FormattedMessage
                                     id='channel_settings.classification.description'
                                     defaultMessage='When enabled, a classification level can be set for the channel with configurable indicators.'
                                 />
-                            </span>
+                            </label>
                         </div>
 
                         <div className='channel_banner_header__toggle'>
@@ -655,19 +676,17 @@ function ChannelSettingsConfigurationTab({
 
                     {classificationEnabled && (
                         <div className='channel_banner_section_body'>
-                            <div style={{marginBottom: 16}}>
-                                <SectionNotice
-                                    type='warning'
-                                    iconOverride='icon-information-outline'
-                                    title={
-                                        <FormattedMessage
-                                            id='admin.classification_markings.notice.title'
-                                            defaultMessage='Classification markings are informational only'
-                                        />
-                                    }
-                                    text={formatMessage({id: 'admin.classification_markings.notice.body', defaultMessage: 'Markings are not tied to access control decisions at this time and are for display purposes only.'})}
-                                />
-                            </div>
+                            <SectionNotice
+                                type='warning'
+                                iconOverride='icon-information-outline'
+                                title={
+                                    <FormattedMessage
+                                        id='admin.classification_markings.notice.title'
+                                        defaultMessage='Classification markings are informational only'
+                                    />
+                                }
+                                text={formatMessage({id: 'admin.classification_markings.notice.body', defaultMessage: 'Markings are not tied to access control decisions at this time and are for display purposes only.'})}
+                            />
 
                             <div className='setting_section'>
                                 <span className='setting_title'>

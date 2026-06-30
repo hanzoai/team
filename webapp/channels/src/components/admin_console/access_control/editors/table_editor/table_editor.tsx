@@ -19,7 +19,7 @@ import ValueSelectorMenu from './value_selector_menu';
 
 import CELHelpModal from '../../modals/cel_help/cel_help_modal';
 import TestResultsModal from '../../modals/policy_test/test_modal';
-import {AddAttributeButton, TestButton, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator} from '../shared';
+import {AddAttributeButton, TestButton, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator, isMultiselectOperator, isRankOperator} from '../shared';
 
 import './table_editor.scss';
 
@@ -93,6 +93,27 @@ interface TableEditorProps {
     isSystemAdmin?: boolean;
     validateExpressionAgainstRequester?: (expression: string) => Promise<ActionResult<{requester_matches: boolean}>>;
 
+    /**
+     * When provided, the built-in TestResultsModal is suppressed and the
+     * Test access rule button forwards its click to the parent. The parent
+     * is responsible for rendering its own results modal — used by the
+     * permission-rule editor so its dual-lane simulation modal can replace
+     * the legacy expression-only one without changing the button's layout.
+     */
+    onTestClick?: () => void;
+
+    /** Force the test button into the disabled state (overrides default). */
+    testButtonDisabled?: boolean;
+
+    /** Tooltip shown when the test button is disabled. Useful for explaining
+     *  why simulation is unavailable (e.g. no attributes loaded). */
+    testButtonTooltip?: string;
+
+    /** Optional label override for the test button. Lets the
+     *  permission-rule editor render "Simulate rules" instead of the
+     *  default "Test access rule" copy. */
+    testButtonLabel?: React.ReactNode;
+
     // Callback to notify parent when masked state changes (for CEL editor integration)
     onMaskedStateChange?: (hasMasked: boolean) => void;
 }
@@ -114,6 +135,31 @@ export const findFirstAvailableAttributeFromList = (
         const allowed = isSynced || isAdminManaged || isProtected || enableUserManagedAttributes;
         return isValidCELIdentifier && allowed;
     });
+};
+
+// Returns the operator a freshly-selected attribute of the given type should
+// default to. Ranked attributes default to "is at least" (the canonical
+// "Secret or above" clearance comparison).
+const defaultOperatorForType = (type?: string): OperatorLabel => {
+    if (type === 'multiselect') {
+        return OperatorLabel.HAS_ANY_OF;
+    }
+    if (type === 'rank') {
+        return OperatorLabel.IS_AT_LEAST;
+    }
+    return OperatorLabel.IS;
+};
+
+// Whether an operator is valid for an attribute of the given type. Mirrors the
+// per-type operator sets shown by OperatorSelectorMenu.
+const isOperatorValidForType = (op: string, type?: string): boolean => {
+    if (type === 'multiselect') {
+        return isMultiselectOperator(op);
+    }
+    if (type === 'rank') {
+        return isRankOperator(op) || op === OperatorLabel.IS_NOT;
+    }
+    return !isMultiselectOperator(op) && !isRankOperator(op);
 };
 
 // Parses a CEL (Common Expression Language) string into a structured array of TableRow objects.
@@ -141,6 +187,12 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
             op = OperatorLabel.IS;
         }
 
+        // OPERATOR_LABELS maps '==' to the generic "is". On a ranked attribute the
+        // same operator reads as "is exactly" so it round-trips to the ranked menu.
+        if (node.attribute_type === 'rank' && op === OperatorLabel.IS) {
+            op = OperatorLabel.IS_EXACTLY;
+        }
+
         let values;
         if (Array.isArray(node.value)) {
             values = node.value;
@@ -162,26 +214,6 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
     return tableRows;
 };
 
-function getTestButtonTooltip(
-    hasMaskedRows: boolean,
-    userWouldBeExcluded: boolean,
-    formatMessage: ReturnType<typeof useIntl>['formatMessage'],
-): string | undefined {
-    if (hasMaskedRows) {
-        return formatMessage({
-            id: 'admin.access_control.table_editor.masked_values_tooltip',
-            defaultMessage: 'Test is unavailable because this policy contains restricted attribute values.',
-        });
-    }
-    if (userWouldBeExcluded) {
-        return formatMessage({
-            id: 'admin.access_control.table_editor.user_excluded_tooltip',
-            defaultMessage: 'You cannot test access rules that would exclude you from the channel',
-        });
-    }
-    return undefined;
-}
-
 // TableEditor provides a user-friendly table interface for constructing and editing
 // CEL (Common Expression Language) expressions based on user attributes.
 // It parses incoming CEL expressions into rows and reconstructs the expression upon changes.
@@ -200,6 +232,10 @@ function TableEditor({
     actions,
     isSystemAdmin = false,
     validateExpressionAgainstRequester,
+    onTestClick,
+    testButtonDisabled,
+    testButtonTooltip,
+    testButtonLabel,
     onMaskedStateChange,
 }: TableEditorProps): JSX.Element {
     const {formatMessage} = useIntl();
@@ -309,7 +345,7 @@ function TableEditor({
         setRows((currentRows) => {
             const newRow: TableRow = {
                 attribute: firstAvailableAttribute.name,
-                operator: firstAvailableAttribute.type === 'multiselect' ? OperatorLabel.HAS_ANY_OF : OperatorLabel.IS,
+                operator: defaultOperatorForType(firstAvailableAttribute.type),
                 values: [],
                 attribute_type: firstAvailableAttribute.type || '',
                 hasMaskedValues: false,
@@ -345,14 +381,14 @@ function TableEditor({
                 newRows[index].values = [];
 
                 const newAttributeObj = userAttributes.find((attr) => attr.name === attribute);
-                newRows[index].attribute_type = newAttributeObj?.type || '';
+                const newType = newAttributeObj?.type || '';
+                newRows[index].attribute_type = newType;
 
-                const isMultiselect = newAttributeObj?.type === 'multiselect';
-                const wasMultiselect = currentRows[index].attribute_type === 'multiselect';
-                if (isMultiselect && !wasMultiselect) {
-                    newRows[index].operator = OperatorLabel.HAS_ANY_OF;
-                } else if (!isMultiselect && wasMultiselect) {
-                    newRows[index].operator = OperatorLabel.IS;
+                // Reset the operator to a valid default when the current one
+                // isn't offered for the new attribute type (e.g. switching a
+                // select row to a ranked attribute, or to/from multiselect).
+                if (!isOperatorValidForType(currentRows[index].operator, newType)) {
+                    newRows[index].operator = defaultOperatorForType(newType);
                 }
 
                 // Values were cleared — row is in an intermediate editing state.
@@ -520,13 +556,35 @@ function TableEditor({
                     })}
                 />
                 <TestButton
-                    onClick={() => setShowTestResults(true)}
-                    disabled={disabled || !value || userWouldBeExcluded || hasMaskedRows}
-                    disabledTooltip={getTestButtonTooltip(hasMaskedRows, userWouldBeExcluded, formatMessage)}
+                    onClick={onTestClick ?? (() => setShowTestResults(true))}
+                    disabled={(testButtonDisabled ?? false) || disabled || (!onTestClick && !value) || userWouldBeExcluded || hasMaskedRows}
+                    disabledTooltip={
+
+                        // Precedence: an explicit parent-supplied
+                        // tooltip paired with `testButtonDisabled`
+                        // wins (the parent already chose what the
+                        // user should see and why), then the
+                        // user-excluded message, then any other
+                        // testButtonTooltip the parent passed
+                        // alongside other disable reasons. The
+                        // earlier `userWouldBeExcluded ? … : tooltip`
+                        // ternary silenced parent hints whenever the
+                        // self-exclusion check happened to also
+                        // be true.
+                        (testButtonDisabled && testButtonTooltip) ||
+                        (userWouldBeExcluded ? formatMessage({
+                            id: 'admin.access_control.table_editor.user_excluded_tooltip',
+                            defaultMessage: 'You cannot test access rules that would exclude you from the channel',
+                        }) : testButtonTooltip)
+                    }
+                    label={testButtonLabel}
                 />
             </div>
 
-            {showTestResults && (
+            {/* Built-in expression-only modal. Suppressed when the parent
+              * provided an `onTestClick` override (used by the permission-rule
+              * editor, which renders its own dual-lane simulation modal). */}
+            {!onTestClick && showTestResults && (
                 <TestResultsModal
                     onExited={() => setShowTestResults(false)}
                     isStacked={true}
