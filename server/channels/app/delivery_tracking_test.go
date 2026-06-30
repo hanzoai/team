@@ -162,6 +162,243 @@ func TestDeliveryMeta(t *testing.T) {
 	})
 }
 
+func TestShouldTrackDelivery(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+
+	openChannel := &model.Channel{Type: model.ChannelTypeOpen}
+	dmChannel := &model.Channel{Type: model.ChannelTypeDirect}
+	gmChannel := &model.Channel{Type: model.ChannelTypeGroup}
+	normalPost := &model.Post{Type: model.PostTypeDefault}
+	systemPost := &model.Post{Type: model.PostTypeJoinChannel}
+
+	t.Run("false when delivery tracking is disabled", func(t *testing.T) {
+		require.False(t, th.App.shouldTrackDelivery(openChannel, normalPost))
+	})
+
+	enableDeliveryTracking(th)
+
+	t.Run("true for a normal post in a non-DM/GM channel", func(t *testing.T) {
+		require.True(t, th.App.shouldTrackDelivery(openChannel, normalPost))
+	})
+
+	t.Run("false for a nil channel", func(t *testing.T) {
+		require.False(t, th.App.shouldTrackDelivery(nil, normalPost))
+	})
+
+	t.Run("false for a nil post", func(t *testing.T) {
+		require.False(t, th.App.shouldTrackDelivery(openChannel, nil))
+	})
+
+	t.Run("false for a direct message channel", func(t *testing.T) {
+		require.False(t, th.App.shouldTrackDelivery(dmChannel, normalPost))
+	})
+
+	t.Run("false for a group message channel", func(t *testing.T) {
+		require.False(t, th.App.shouldTrackDelivery(gmChannel, normalPost))
+	})
+
+	t.Run("false for a system message", func(t *testing.T) {
+		require.False(t, th.App.shouldTrackDelivery(openChannel, systemPost))
+	})
+}
+
+func TestShouldTrackPushDelivery(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		cfg.EmailSettings.PushNotificationContents = model.NewPointer(model.FullNotification)
+	})
+
+	fullMsg := func() *model.PushNotification {
+		return &model.PushNotification{
+			Type:        model.PushTypeMessage,
+			PostId:      "post1",
+			ChannelType: model.ChannelTypeOpen,
+			PostType:    model.PostTypeDefault,
+		}
+	}
+
+	t.Run("true for a full message push carrying the post body", func(t *testing.T) {
+		require.True(t, th.App.shouldTrackPushDelivery(fullMsg()))
+	})
+
+	t.Run("false when delivery tracking is disabled", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(false) })
+		defer th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(true) })
+		require.False(t, th.App.shouldTrackPushDelivery(fullMsg()))
+	})
+
+	t.Run("false for a non-message push type (e.g. clear)", func(t *testing.T) {
+		msg := fullMsg()
+		msg.Type = model.PushTypeClear
+		require.False(t, th.App.shouldTrackPushDelivery(msg))
+	})
+
+	t.Run("false when the push carries no post id", func(t *testing.T) {
+		msg := fullMsg()
+		msg.PostId = ""
+		require.False(t, th.App.shouldTrackPushDelivery(msg))
+	})
+
+	t.Run("false when push contents are not full (id_loaded/generic)", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			cfg.EmailSettings.PushNotificationContents = model.NewPointer(model.GenericNotification)
+		})
+		defer th.App.UpdateConfig(func(cfg *model.Config) {
+			cfg.EmailSettings.PushNotificationContents = model.NewPointer(model.FullNotification)
+		})
+		require.False(t, th.App.shouldTrackPushDelivery(fullMsg()))
+	})
+
+	t.Run("false for a DM/GM channel push", func(t *testing.T) {
+		msg := fullMsg()
+		msg.ChannelType = model.ChannelTypeDirect
+		require.False(t, th.App.shouldTrackPushDelivery(msg))
+	})
+
+	t.Run("false for a system message push", func(t *testing.T) {
+		msg := fullMsg()
+		msg.PostType = model.PostTypeJoinChannel
+		require.False(t, th.App.shouldTrackPushDelivery(msg))
+	})
+}
+
+func TestRecordPostDelivery(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+
+	t.Run("emits a single delivery record", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDelivery("hook1", "post1", model.DeliveryTargetWebhook, model.DeliveryMechanismOutgoingWebhook)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "post1", records[0]["post_id"])
+		require.Equal(t, "hook1", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetWebhook, records[0]["target_type"])
+		require.Equal(t, model.DeliveryMechanismOutgoingWebhook, int16(records[0]["mechanism"].(float64)))
+	})
+
+	t.Run("user target type is omitted from the record", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDelivery("user1", "post1", model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Len(t, records, 1)
+		_, hasTargetType := records[0]["target_type"]
+		require.False(t, hasTargetType)
+	})
+
+	t.Run("no record when target id is empty", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDelivery("", "post1", model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Empty(t, records)
+	})
+
+	t.Run("no record when post id is empty", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDelivery("user1", "", model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Empty(t, records)
+	})
+
+	t.Run("no record when delivery tracking is disabled", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(false) })
+		defer th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(true) })
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDelivery("user1", "post1", model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Empty(t, records)
+	})
+}
+
+func TestRecordPostDeliveryFanIn(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+
+	t.Run("emits one fan-in record with all post ids", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanIn("user1", []string{"p1", "p2"}, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Len(t, records, 1)
+		require.Equal(t, "user1", records[0]["target_id"])
+		require.ElementsMatch(t, []string{"p1", "p2"}, deliveryStrings(t, records[0]["post_ids"]))
+	})
+
+	t.Run("splits into multiple records on the chunk boundary", func(t *testing.T) {
+		postIDs := make([]string, deliveryChunkSize+1)
+		for i := range postIDs {
+			postIDs[i] = fmt.Sprintf("p%d", i)
+		}
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanIn("user1", postIDs, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Len(t, records, 2)
+		require.Len(t, deliveryStrings(t, records[0]["post_ids"]), deliveryChunkSize)
+		require.Len(t, deliveryStrings(t, records[1]["post_ids"]), 1)
+	})
+
+	t.Run("no record when target id is empty", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanIn("", []string{"p1"}, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Empty(t, records)
+	})
+
+	t.Run("no record when there are no post ids", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanIn("user1", nil, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Empty(t, records)
+	})
+}
+
+func TestRecordPostDeliveryFanOut(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+
+	t.Run("emits one fan-out record with all target ids", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanOut("post1", []string{"u1", "u2"}, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Len(t, records, 1)
+		require.Equal(t, "post1", records[0]["post_id"])
+		require.ElementsMatch(t, []string{"u1", "u2"}, deliveryStrings(t, records[0]["target_ids"]))
+	})
+
+	t.Run("splits into multiple records on the chunk boundary", func(t *testing.T) {
+		targetIDs := make([]string, deliveryChunkSize+1)
+		for i := range targetIDs {
+			targetIDs[i] = fmt.Sprintf("u%d", i)
+		}
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanOut("post1", targetIDs, model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin)
+		})
+		require.Len(t, records, 2)
+		require.Len(t, deliveryStrings(t, records[0]["target_ids"]), deliveryChunkSize)
+		require.Len(t, deliveryStrings(t, records[1]["target_ids"]), 1)
+	})
+
+	t.Run("no record when post id is empty", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanOut("", []string{"u1"}, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Empty(t, records)
+	})
+
+	t.Run("no record when there are no target ids", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.RecordPostDeliveryFanOut("post1", nil, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
+		})
+		require.Empty(t, records)
+	})
+}
+
 func TestRecordPostListDeliveryToPlugin(t *testing.T) {
 	mainHelper.Parallel(t)
 	th := Setup(t)
@@ -315,6 +552,57 @@ func TestPluginAPIRecordsPluginDelivery(t *testing.T) {
 	t.Run("GetPostsForChannel records a fan-in plugin delivery", func(t *testing.T) {
 		records := captureDeliveryRecords(t, th, func() {
 			_, appErr := api.GetPostsForChannel(th.BasicChannel.Id, 0, 60)
+			require.Nil(t, appErr)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "pluginid", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Contains(t, deliveryStrings(t, records[0]["post_ids"]), post.Id)
+	})
+
+	t.Run("GetPostThread records a fan-in plugin delivery", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			_, appErr := api.GetPostThread(post.Id)
+			require.Nil(t, appErr)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "pluginid", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Contains(t, deliveryStrings(t, records[0]["post_ids"]), post.Id)
+	})
+
+	t.Run("GetPostsSince records a fan-in plugin delivery", func(t *testing.T) {
+		records := captureDeliveryRecords(t, th, func() {
+			_, appErr := api.GetPostsSince(th.BasicChannel.Id, 1)
+			require.Nil(t, appErr)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "pluginid", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Contains(t, deliveryStrings(t, records[0]["post_ids"]), post.Id)
+	})
+
+	t.Run("GetPostsAfter records a fan-in plugin delivery", func(t *testing.T) {
+		// A post after the anchor so the list is non-empty.
+		later := th.CreatePost(t, th.BasicChannel)
+		records := captureDeliveryRecords(t, th, func() {
+			_, appErr := api.GetPostsAfter(th.BasicChannel.Id, post.Id, 0, 60)
+			require.Nil(t, appErr)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, "pluginid", records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetPlugin, records[0]["target_type"])
+		require.Contains(t, deliveryStrings(t, records[0]["post_ids"]), later.Id)
+	})
+
+	t.Run("GetPostsBefore records a fan-in plugin delivery", func(t *testing.T) {
+		anchor := th.CreatePost(t, th.BasicChannel)
+		records := captureDeliveryRecords(t, th, func() {
+			_, appErr := api.GetPostsBefore(th.BasicChannel.Id, anchor.Id, 0, 60)
 			require.Nil(t, appErr)
 		})
 

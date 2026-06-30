@@ -1325,3 +1325,31 @@ func TestMarkdownConversion(t *testing.T) {
 		})
 	}
 }
+
+func TestEmailNotificationContentsType(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		cfg.EmailSettings.EmailNotificationContentsType = model.NewPointer(model.EmailNotificationContentsGeneric)
+	})
+
+	t.Run("returns full content when there is no license", func(t *testing.T) {
+		th.App.Srv().SetLicense(nil)
+		require.Equal(t, model.EmailNotificationContentsFull, th.App.emailNotificationContentsType())
+	})
+
+	t.Run("returns full content when the license lacks the feature", func(t *testing.T) {
+		license := model.NewTestLicense()
+		license.Features.EmailNotificationContents = model.NewPointer(false)
+		th.App.Srv().SetLicense(license)
+		require.Equal(t, model.EmailNotificationContentsFull, th.App.emailNotificationContentsType())
+	})
+
+	t.Run("returns the configured content type when the feature is licensed", func(t *testing.T) {
+		license := model.NewTestLicense()
+		license.Features.EmailNotificationContents = model.NewPointer(true)
+		th.App.Srv().SetLicense(license)
+		require.Equal(t, model.EmailNotificationContentsGeneric, th.App.emailNotificationContentsType())
+	})
+}

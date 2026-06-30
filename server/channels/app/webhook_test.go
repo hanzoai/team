@@ -1132,6 +1132,83 @@ func TestTriggerOutGoingWebhookWithMultipleURLs(t *testing.T) {
 	}
 }
 
+func TestTriggerWebhookRecordsDelivery(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+	enableDeliveryTracking(th)
+
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		*cfg.ServiceSettings.AllowedUntrustedInternalConnections = "localhost,127.0.0.1"
+		*cfg.ServiceSettings.EnableOutgoingWebhooks = true
+	})
+
+	createHook := func(channel *model.Channel, callbackURLs []string) *model.OutgoingWebhook {
+		hook, err := th.App.CreateOutgoingWebhook(&model.OutgoingWebhook{
+			ChannelId:    channel.Id,
+			TeamId:       channel.TeamId,
+			CallbackURLs: callbackURLs,
+			CreatorId:    th.BasicUser.Id,
+			TriggerWords: []string{"Abracadabra"},
+			ContentType:  "application/json",
+		})
+		require.Nil(t, err)
+		return hook
+	}
+
+	payloadFor := func(hook *model.OutgoingWebhook, channel *model.Channel) *model.OutgoingWebhookPayload {
+		return &model.OutgoingWebhookPayload{
+			Token:     hook.Token,
+			TeamId:    hook.TeamId,
+			ChannelId: channel.Id,
+			PostId:    th.BasicPost.Id,
+			Text:      th.BasicPost.Message,
+		}
+	}
+
+	t.Run("records a single webhook delivery even with multiple callback URLs", func(t *testing.T) {
+		ts1 := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+		defer ts1.Close()
+		ts2 := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+		defer ts2.Close()
+
+		channel := th.CreateChannel(t, th.BasicTeam)
+		hook := createHook(channel, []string{ts1.URL, ts2.URL})
+
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.TriggerWebhook(th.Context, payloadFor(hook, channel), hook, th.BasicPost, channel)
+		})
+
+		require.Len(t, records, 1)
+		require.Equal(t, th.BasicPost.Id, records[0]["post_id"])
+		require.Equal(t, hook.Id, records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetWebhook, records[0]["target_type"])
+		require.Equal(t, model.DeliveryMechanismOutgoingWebhook, int16(records[0]["mechanism"].(float64)))
+	})
+
+	t.Run("no record for a direct message channel", func(t *testing.T) {
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
+		defer ts.Close()
+
+		dm := th.CreateDmChannel(t, th.BasicUser2)
+		// Outgoing webhooks can't be persisted on a DM channel; TriggerWebhook only
+		// reads these fields, so a literal hook exercises the same delivery path.
+		hook := &model.OutgoingWebhook{
+			Id:           model.NewId(),
+			ChannelId:    dm.Id,
+			CallbackURLs: []string{ts.URL},
+			CreatorId:    th.BasicUser.Id,
+			ContentType:  "application/json",
+		}
+		dmPost := th.CreatePost(t, dm)
+
+		records := captureDeliveryRecords(t, th, func() {
+			th.App.TriggerWebhook(th.Context, payloadFor(hook, dm), hook, dmPost, dm)
+		})
+
+		require.Empty(t, records)
+	})
+}
+
 type InfiniteReader struct {
 	Prefix string
 }
