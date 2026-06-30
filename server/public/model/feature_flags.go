@@ -49,8 +49,6 @@ type FeatureFlags struct {
 
 	CloudDedicatedExportUI bool
 
-	ChannelBookmarks bool
-
 	WebSocketEventScope bool
 
 	NotificationMonitoring bool
@@ -172,7 +170,6 @@ func (f *FeatureFlags) SetDefaults() {
 	f.MoveThreadsEnabled = false
 	f.StreamlinedMarketplace = true
 	f.CloudDedicatedExportUI = false
-	f.ChannelBookmarks = true
 	f.WebSocketEventScope = true
 	f.NotificationMonitoring = true
 	f.ExperimentalAuditSettingsSystemConsoleUI = true
