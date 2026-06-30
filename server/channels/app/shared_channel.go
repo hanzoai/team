@@ -229,24 +229,17 @@ func (a *App) RemoveSharedChannelInvitation(remoteID, invitationID string) error
 		}
 		return nil
 	case model.SharedChannelInvitationStatusPending:
-		switch inv.Direction {
-		case model.SharedChannelInvitationDirectionSent:
-			return a.UninviteRemoteFromChannel(inv.ChannelId, inv.RemoteId)
-		case model.SharedChannelInvitationDirectionReceived:
-			hasRemote, hasErr := a.HasRemote(inv.ChannelId, inv.RemoteId)
-			if hasErr != nil {
-				return model.NewAppError("RemoveSharedChannelInvitation", "api.shared_channel.has_remote_error", nil, "", http.StatusInternalServerError).Wrap(hasErr)
-			}
-			if hasRemote {
-				return a.UninviteRemoteFromChannel(inv.ChannelId, inv.RemoteId)
-			}
-			if err := a.Srv().Store().SharedChannelInvitation().Delete(invitationID); err != nil {
-				return model.NewAppError("RemoveSharedChannelInvitation", "api.shared_channel.delete_invitation.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-			}
-			return nil
-		default:
-			return model.NewAppError("RemoveSharedChannelInvitation", "api.shared_channel.delete_invitation.invalid_direction", nil, "direction="+inv.Direction, http.StatusBadRequest)
+		hasRemote, hasErr := a.HasRemote(inv.ChannelId, inv.RemoteId)
+		if hasErr != nil {
+			return model.NewAppError("RemoveSharedChannelInvitation", "api.shared_channel.has_remote_error", nil, "", http.StatusInternalServerError).Wrap(hasErr)
 		}
+		if hasRemote {
+			return a.UninviteRemoteFromChannel(inv.ChannelId, inv.RemoteId)
+		}
+		if err := a.Srv().Store().SharedChannelInvitation().Delete(invitationID); err != nil {
+			return model.NewAppError("RemoveSharedChannelInvitation", "api.shared_channel.delete_invitation.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
+		}
+		return nil
 	default:
 		return model.NewAppError("RemoveSharedChannelInvitation", "api.shared_channel.delete_invitation.invalid_status", nil, "status="+inv.Status, http.StatusBadRequest)
 	}

@@ -105,7 +105,22 @@ func registerSharedChannelInvitationStoreMocks(inv *mocks.SharedChannelInvitatio
 				id, status, errMsg string
 			}{args.Get(0).(string), args.Get(1).(string), args.Get(2).(string)})
 		}).Maybe()
-	inv.On("Get", mock.AnythingOfType("string")).Return(nil, store.NewErrNotFound("SharedChannelInvitation", "id")).Maybe()
+	inv.On("Get", mock.AnythingOfType("string")).Return(
+		func(id string) (*model.SharedChannelInvitation, error) {
+			for _, deletedID := range calls.deletedIDs {
+				if deletedID == id {
+					return nil, store.NewErrNotFound("SharedChannelInvitation", id)
+				}
+			}
+			for _, saved := range calls.saved {
+				if saved.Id == id {
+					cp := *saved
+					return &cp, nil
+				}
+			}
+			return nil, store.NewErrNotFound("SharedChannelInvitation", id)
+		},
+	).Maybe()
 	inv.On("DeleteByChannelId", mock.AnythingOfType("string")).Return(nil).Maybe()
 	inv.On("DeleteByChannelIdAndRemoteId", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil).Maybe()
 }
@@ -803,6 +818,67 @@ func TestSendChannelInvite_invitationPersistence(t *testing.T) {
 		assert.Equal(t, model.SharedChannelInvitationStatusPending, invCalls.saved[0].Status)
 		require.Len(t, invCalls.deletedIDs, 1)
 		assert.Equal(t, invCalls.saved[0].Id, invCalls.deletedIDs[0])
+	})
+
+	t.Run("withdrawn invitation is not confirmed when remote responds", func(t *testing.T) {
+		mockServer := &MockServerIface{}
+		logger := mlog.CreateConsoleTestLogger(t)
+		mockServer.On("Log").Return(logger)
+		mockApp := &MockAppIface{}
+		scs := &Service{
+			server:       mockServer,
+			app:          mockApp,
+			changeSignal: make(chan struct{}, 1),
+			tasks:        make(map[string]syncTask),
+		}
+
+		channel := &model.Channel{Id: model.NewId(), TeamId: model.NewId(), Name: "town-square", Type: model.ChannelTypeOpen}
+		userID := model.NewId()
+		rc := &model.RemoteCluster{
+			RemoteId:    model.NewId(),
+			CreatorId:   userID,
+			LastPingAt:  model.GetMillis(),
+			DisplayName: "Online",
+		}
+		sc := &model.SharedChannel{
+			ChannelId:        channel.Id,
+			ShareDisplayName: "Shared",
+			ShareHeader:      "H",
+			SharePurpose:     "P",
+		}
+
+		invitationID := model.NewId()
+		pendingInv := &model.SharedChannelInvitation{
+			Id:        invitationID,
+			ChannelId: channel.Id,
+			RemoteId:  rc.RemoteId,
+			Direction: model.SharedChannelInvitationDirectionSent,
+			Status:    model.SharedChannelInvitationStatusPending,
+			CreatorId: userID,
+			CreateAt:  model.GetMillis(),
+			UpdateAt:  model.GetMillis(),
+		}
+
+		invMock := mocks.NewSharedChannelInvitationStore(t)
+		invMock.On("EnsurePendingSent", channel.Id, rc.RemoteId, userID).Return(pendingInv, nil).Once()
+		invMock.On("Get", invitationID).Return(nil, store.NewErrNotFound("SharedChannelInvitation", invitationID)).Once()
+
+		mockSharedChannelStore := mocks.SharedChannelStore{}
+		mockSharedChannelStore.On("Get", channel.Id).Return(sc, nil)
+
+		mockStore := &mocks.Store{}
+		mockStore.On("SharedChannel").Return(&mockSharedChannelStore)
+		mockStore.On("SharedChannelInvitation").Return(invMock)
+
+		mockServer.On("GetStore").Return(mockStore)
+		setupMockServerWithRemoteClusterService(mockServer, &stubRemoteClusterService{})
+
+		err := scs.SendChannelInvite(channel, userID, rc)
+		require.NoError(t, err)
+
+		mockSharedChannelStore.AssertNotCalled(t, "SaveRemote", mock.Anything)
+		mockSharedChannelStore.AssertNotCalled(t, "UpdateRemote", mock.Anything)
+		mockApp.AssertNotCalled(t, "Publish", mock.Anything)
 	})
 
 	t.Run("offline remote queues pending invitation when none exists", func(t *testing.T) {

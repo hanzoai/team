@@ -195,6 +195,23 @@ func (scs *Service) SendChannelInvite(channel *model.Channel, userId string, rc 
 			return
 		}
 
+		if invitationID != "" {
+			if _, invErr := scs.server.GetStore().SharedChannelInvitation().Get(invitationID); invErr != nil {
+				if isNotFoundError(invErr) {
+					return
+				}
+				scs.server.Log().LogM(mlog.MlvlSharedChannelServiceError, "SharedChannelService: failed to load invitation during invite confirmation",
+					mlog.String("channel_id", sc.ChannelId),
+					mlog.String("remote_id", rc.RemoteId),
+					mlog.String("invitation_id", invitationID),
+					mlog.Err(invErr),
+				)
+				scs.markInvitationFailedByID(invitationID, invitationInternalErrorMsg)
+				scs.sendEphemeralPost(channel.Id, userId, fmt.Sprintf("Error confirming channel invite for %s: %v", rc.DisplayName, invErr))
+				return
+			}
+		}
+
 		existingScr, err := scs.server.GetStore().SharedChannel().GetRemoteByIds(sc.ChannelId, rc.RemoteId)
 		var errNotFound *store.ErrNotFound
 		if err != nil && !errors.As(err, &errNotFound) {

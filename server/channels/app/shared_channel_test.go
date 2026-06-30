@@ -1037,6 +1037,26 @@ func TestRemoveSharedChannelInvitation(t *testing.T) {
 		require.Error(t, err, "invitation row should be deleted by uninvite path")
 	})
 
+	t.Run("pending sent invitation without remote link deletes orphan row", func(t *testing.T) {
+		channel := th.CreateChannel(t, th.BasicTeam)
+		rc := newRemoteCluster("remove-invitation-sent-orphan")
+
+		inv, err := ss.SharedChannelInvitation().Save(&model.SharedChannelInvitation{
+			ChannelId: channel.Id,
+			RemoteId:  rc.RemoteId,
+			Direction: model.SharedChannelInvitationDirectionSent,
+			Status:    model.SharedChannelInvitationStatusPending,
+			CreatorId: th.BasicUser.Id,
+		})
+		require.NoError(t, err)
+
+		err = th.App.RemoveSharedChannelInvitation(rc.RemoteId, inv.Id)
+		require.NoError(t, err)
+
+		_, err = ss.SharedChannelInvitation().Get(inv.Id)
+		require.Error(t, err, "orphan pending sent invitation should be deleted directly")
+	})
+
 	t.Run("pending received invitation without remote link deletes orphan row", func(t *testing.T) {
 		channel := th.CreateChannel(t, th.BasicTeam)
 		rc := newRemoteCluster("remove-invitation-received")
