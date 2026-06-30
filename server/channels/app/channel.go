@@ -3890,6 +3890,10 @@ func (a *App) GetPinnedPosts(rctx request.CTX, channelID string) (*model.PostLis
 		return nil, appErr
 	}
 
+	if appErr := a.filterSuppressedMembershipPosts(rctx, posts); appErr != nil {
+		return nil, appErr
+	}
+
 	return posts, nil
 }
 

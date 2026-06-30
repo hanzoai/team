@@ -1,0 +1,219 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+package app
+
+import (
+	"testing"
+
+	"github.com/stretchr/testify/require"
+
+	"github.com/mattermost/mattermost/server/public/model"
+)
+
+func createMembershipSystemPost(t *testing.T, th *TestHelper, channel *model.Channel) *model.Post {
+	t.Helper()
+
+	post := &model.Post{
+		UserId:    th.BasicUser.Id,
+		ChannelId: channel.Id,
+		Message:   "user joined the channel",
+		Type:      model.PostTypeJoinChannel,
+		Props: model.StringInterface{
+			"username": th.BasicUser.Username,
+		},
+	}
+
+	created, _, appErr := th.App.CreatePost(th.Context, post, channel, model.CreatePostFlags{})
+	require.Nil(t, appErr)
+	require.NotNil(t, created)
+
+	return created
+}
+
+func setChannelDisableJoinLeaveMessages(t *testing.T, th *TestHelper, channel *model.Channel, disabled bool) *model.Channel {
+	t.Helper()
+
+	patch := &model.ChannelPatch{
+		DisableJoinLeaveMessages: &disabled,
+	}
+
+	updated, appErr := th.App.PatchChannel(th.Context, channel, patch, th.BasicUser.Id)
+	require.Nil(t, appErr)
+
+	return updated
+}
+
+func TestDisableJoinLeaveMessagesReadSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	membershipPost := createMembershipSystemPost(t, th, channel)
+	normalPost := th.CreatePost(t, channel)
+
+	t.Run("excludes membership posts from channel list when enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		postList, appErr := th.App.GetPostsPage(th.Context, model.GetPostsOptions{
+			ChannelId: channel.Id,
+			Page:      0,
+			PerPage:   60,
+			UserId:    th.BasicUser.Id,
+		})
+		require.Nil(t, appErr)
+
+		_, foundMembership := postList.Posts[membershipPost.Id]
+		require.False(t, foundMembership)
+		require.Contains(t, postList.Posts, normalPost.Id)
+	})
+
+	t.Run("two-way door restores visibility when disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		postList, appErr := th.App.GetPostsPage(th.Context, model.GetPostsOptions{
+			ChannelId: channel.Id,
+			Page:      0,
+			PerPage:   60,
+			UserId:    th.BasicUser.Id,
+		})
+		require.Nil(t, appErr)
+		require.Contains(t, postList.Posts, membershipPost.Id)
+	})
+
+	t.Run("get single post returns not found when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		_, appErr := th.App.GetSinglePost(th.Context, membershipPost.Id, false)
+		require.NotNil(t, appErr)
+		require.Equal(t, "app.post.get.app_error", appErr.Id)
+	})
+
+	t.Run("membership posts remain in database when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		stored, err := th.App.Srv().Store().Post().GetSingle(th.Context, membershipPost.Id, false)
+		require.NoError(t, err)
+		require.Equal(t, model.PostTypeJoinChannel, stored.Type)
+	})
+}
+
+func TestGetPostsSinceSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	membershipPost := createMembershipSystemPost(t, th, channel)
+	normalPost := th.CreatePost(t, channel)
+
+	setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+	// Use Time: 0 to avoid the localcachelayer short-circuit, which compares
+	// the cached last-post-time against options.Time and would return empty if
+	// the cache pre-dates posts created during the test.
+	postList, appErr := th.App.GetPostsSince(th.Context, model.GetPostsSinceOptions{
+		ChannelId: channel.Id,
+		Time:      0,
+		UserId:    th.BasicUser.Id,
+	})
+	require.Nil(t, appErr)
+	require.NotContains(t, postList.Posts, membershipPost.Id)
+	require.Contains(t, postList.Posts, normalPost.Id)
+}
+
+func TestFlaggedPostsSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	membershipPost := createMembershipSystemPost(t, th, channel)
+
+	preference := model.Preference{
+		UserId:   th.BasicUser.Id,
+		Category: model.PreferenceCategoryFlaggedPost,
+		Name:     membershipPost.Id,
+		Value:    "true",
+	}
+	err := th.App.Srv().Store().Preference().Save(model.Preferences{preference})
+	require.NoError(t, err)
+
+	t.Run("excluded from flagged posts when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		flagged, appErr := th.App.GetFlaggedPosts(th.Context, th.BasicUser.Id, 0, 10)
+		require.Nil(t, appErr)
+		require.NotContains(t, flagged.Order, membershipPost.Id)
+	})
+
+	t.Run("visible in flagged posts when re-enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		flagged, appErr := th.App.GetFlaggedPosts(th.Context, th.BasicUser.Id, 0, 10)
+		require.Nil(t, appErr)
+		require.Contains(t, flagged.Order, membershipPost.Id)
+	})
+}
+
+func TestWebSocketSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	normalPost := th.CreatePost(t, channel)
+	membershipPost := createMembershipSystemPost(t, th, channel)
+
+	t.Run("suppresses membership post websocket when disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		ch, appErr := th.App.GetChannel(th.Context, channel.Id)
+		require.Nil(t, appErr)
+
+		require.True(t, th.App.shouldSuppressMembershipSystemPostWebSocket(th.Context, ch, membershipPost))
+		require.False(t, th.App.shouldSuppressMembershipSystemPostWebSocket(th.Context, ch, normalPost))
+	})
+
+	t.Run("does not suppress when enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		ch, appErr := th.App.GetChannel(th.Context, channel.Id)
+		require.Nil(t, appErr)
+
+		require.False(t, th.App.shouldSuppressMembershipSystemPostWebSocket(th.Context, ch, membershipPost))
+	})
+}
+
+func TestChannelExcludesMembershipSystemPostsModel(t *testing.T) {
+	t.Parallel()
+
+	disabled := &model.Channel{
+		Type:                     model.ChannelTypeOpen,
+		DisableJoinLeaveMessages: true,
+	}
+	require.True(t, model.ChannelExcludesMembershipSystemPosts(disabled))
+
+	enabled := &model.Channel{
+		Type:                     model.ChannelTypeOpen,
+		DisableJoinLeaveMessages: false,
+	}
+	require.False(t, model.ChannelExcludesMembershipSystemPosts(enabled))
+
+	sharedDisabled := &model.Channel{
+		Type:                     model.ChannelTypeOpen,
+		DisableJoinLeaveMessages: true,
+		Shared:                   model.NewPointer(true),
+	}
+	require.True(t, model.ChannelExcludesMembershipSystemPosts(sharedDisabled))
+
+	sharedEnabled := &model.Channel{
+		Type:                     model.ChannelTypeOpen,
+		DisableJoinLeaveMessages: false,
+		Shared:                   model.NewPointer(true),
+	}
+	require.False(t, model.ChannelExcludesMembershipSystemPosts(sharedEnabled))
+
+	direct := &model.Channel{
+		Type:                     model.ChannelTypeDirect,
+		DisableJoinLeaveMessages: true,
+	}
+	require.False(t, model.ChannelExcludesMembershipSystemPosts(direct))
+}

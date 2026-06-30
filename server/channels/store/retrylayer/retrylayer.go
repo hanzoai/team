@@ -8802,11 +8802,11 @@ func (s *RetryLayerPostStore) GetPostAfterTime(channelID string, timestamp int64
 
 }
 
-func (s *RetryLayerPostStore) GetPostIdAfterTime(channelID string, timestamp int64, collapsedThreads bool) (string, error) {
+func (s *RetryLayerPostStore) GetPostIdAfterTime(channelID string, timestamp int64, collapsedThreads bool, excludeMembershipSystemPosts bool) (string, error) {
 
 	tries := 0
 	for {
-		result, err := s.PostStore.GetPostIdAfterTime(channelID, timestamp, collapsedThreads)
+		result, err := s.PostStore.GetPostIdAfterTime(channelID, timestamp, collapsedThreads, excludeMembershipSystemPosts)
 		if err == nil {
 			return result, nil
 		}
@@ -8823,11 +8823,11 @@ func (s *RetryLayerPostStore) GetPostIdAfterTime(channelID string, timestamp int
 
 }
 
-func (s *RetryLayerPostStore) GetPostIdBeforeTime(channelID string, timestamp int64, collapsedThreads bool) (string, error) {
+func (s *RetryLayerPostStore) GetPostIdBeforeTime(channelID string, timestamp int64, collapsedThreads bool, excludeMembershipSystemPosts bool) (string, error) {
 
 	tries := 0
 	for {
-		result, err := s.PostStore.GetPostIdBeforeTime(channelID, timestamp, collapsedThreads)
+		result, err := s.PostStore.GetPostIdBeforeTime(channelID, timestamp, collapsedThreads, excludeMembershipSystemPosts)
 		if err == nil {
 			return result, nil
 		}

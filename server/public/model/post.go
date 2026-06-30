@@ -12,6 +12,7 @@ import (
 	"maps"
 	"net/http"
 	"regexp"
+	"slices"
 	"sort"
 	"strconv"
 	"strings"
@@ -416,13 +417,14 @@ type CreatePostFlags struct {
 }
 
 type GetPostsSinceOptions struct {
-	UserId                   string
-	ChannelId                string
-	Time                     int64
-	SkipFetchThreads         bool
-	CollapsedThreads         bool
-	CollapsedThreadsExtended bool
-	SortAscending            bool
+	UserId                       string
+	ChannelId                    string
+	Time                         int64
+	SkipFetchThreads             bool
+	CollapsedThreads             bool
+	CollapsedThreadsExtended     bool
+	SortAscending                bool
+	ExcludeMembershipSystemPosts bool
 }
 
 type GetPostsSinceForSyncCursor struct {
@@ -446,21 +448,22 @@ type GetPostsSinceForSyncOptions struct {
 }
 
 type GetPostsOptions struct {
-	UserId                   string
-	ChannelId                string
-	PostId                   string
-	Page                     int
-	PerPage                  int
-	SkipFetchThreads         bool
-	CollapsedThreads         bool
-	CollapsedThreadsExtended bool
-	FromPost                 string // PostId after which to send the items
-	FromCreateAt             int64  // CreateAt after which to send the items
-	FromUpdateAt             int64  // UpdateAt after which to send the items. This cannot be used with FromCreateAt.
-	Direction                string // Only accepts up|down. Indicates the order in which to send the items.
-	UpdatesOnly              bool   // This flag is used to make the API work with the updateAt value.
-	IncludeDeleted           bool
-	IncludePostPriority      bool
+	UserId                       string
+	ChannelId                    string
+	PostId                       string
+	Page                         int
+	PerPage                      int
+	SkipFetchThreads             bool
+	CollapsedThreads             bool
+	CollapsedThreadsExtended     bool
+	FromPost                     string // PostId after which to send the items
+	FromCreateAt                 int64  // CreateAt after which to send the items
+	FromUpdateAt                 int64  // UpdateAt after which to send the items. This cannot be used with FromCreateAt.
+	Direction                    string // Only accepts up|down. Indicates the order in which to send the items.
+	UpdatesOnly                  bool   // This flag is used to make the API work with the updateAt value.
+	IncludeDeleted               bool
+	IncludePostPriority          bool
+	ExcludeMembershipSystemPosts bool
 }
 
 type PostCountOptions struct {
@@ -1011,6 +1014,27 @@ func (o *Post) IsJoinLeaveMessage() bool {
 		o.Type == PostTypeRemoveFromChannel ||
 		o.Type == PostTypeAddToTeam ||
 		o.Type == PostTypeRemoveFromTeam
+}
+
+func MembershipSystemPostTypes() []string {
+	return []string{
+		PostTypeJoinLeave,
+		PostTypeAddRemove,
+		PostTypeJoinChannel,
+		PostTypeGuestJoinChannel,
+		PostTypeLeaveChannel,
+		PostTypeJoinTeam,
+		PostTypeLeaveTeam,
+		PostTypeAddToChannel,
+		PostTypeAddGuestToChannel,
+		PostTypeRemoveFromChannel,
+		PostTypeAddToTeam,
+		PostTypeRemoveFromTeam,
+	}
+}
+
+func IsMembershipSystemPost(post *Post) bool {
+	return post != nil && slices.Contains(MembershipSystemPostTypes(), post.Type)
 }
 
 func (o *Post) Patch(patch *PostPatch) {

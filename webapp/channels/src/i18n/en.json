@@ -4480,6 +4480,8 @@
   "channel_switch_modal.unreadMentions": "{count, number} {count, plural, one {unread notification} other {unread notifications}}",
   "channel_toggle_button.private": "Private",
   "channel_toggle_button.public": "Public",
+  "channel_settings.join_leave_messages.label.name": "Join/Leave System Messages",
+  "channel_settings.join_leave_messages.label.subtext": "When enabled, join and leave system messages are shown in this channel for all users. When disabled, they are hidden regardless of account-wide Advanced settings. Stored messages reappear if you turn this back on.",
   "channel_translation.label.name": "Auto-translation",
   "channel_translation.label.subtext": "When enabled, messages in this channel will be translated to members' own languages. Members can opt-out of this from the channel menu to view the original message instead.",
   "channelHeader.addToFavorites": "Add to Favorites",
