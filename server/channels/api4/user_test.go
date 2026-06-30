@@ -5896,19 +5896,16 @@ func TestCreateUserAccessToken(t *testing.T) {
 		})
 	})
 
-	t.Run("create token with empty description", func(t *testing.T) {
+	t.Run("create token with invalid value", func(t *testing.T) {
 		mainHelper.Parallel(t)
 		th := Setup(t).InitBasic(t)
 
 		th.App.UpdateConfig(func(cfg *model.Config) { *cfg.ServiceSettings.EnableUserAccessTokens = true })
-		_, appErr := th.App.UpdateUserRoles(th.Context, th.BasicUser.Id, model.SystemUserRoleId+" "+model.SystemUserAccessTokenRoleId, false)
-		require.Nil(t, appErr)
 
 		th.TestForAllClients(t, func(t *testing.T, client *model.Client4) {
-			rtoken, resp, err := client.CreateUserAccessToken(context.Background(), th.BasicUser.Id, "", 0)
-			require.NoError(t, err)
-			CheckCreatedStatus(t, resp)
-			assert.Equal(t, "", rtoken.Description, "description should be empty")
+			_, resp, err := client.CreateUserAccessToken(context.Background(), th.BasicUser.Id, "", 0)
+			require.Error(t, err)
+			CheckBadRequestStatus(t, resp)
 		})
 	})
 

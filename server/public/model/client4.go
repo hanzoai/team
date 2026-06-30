@@ -1910,7 +1910,7 @@ func (c *Client4) SetProfileImage(ctx context.Context, userId string, data []byt
 // CreateUserAccessToken will generate a user access token that can be used in place
 // of a session token to access the REST API. Must have the 'create_user_access_token'
 // permission and if generating for another user, must have the 'edit_other_users'
-// permission. Description is optional and may be empty.
+// permission. A non-blank description is required.
 //
 // expiresAt is the Unix-millis expiry for the token; 0 means the token does not
 // expire, subject to server policy (ServiceSettings.MaximumPersonalAccessTokenLifetimeDays:

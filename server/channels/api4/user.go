@@ -2965,6 +2965,11 @@ func createUserAccessToken(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if accessToken.Description == "" {
+		c.SetInvalidParam("description")
+		return
+	}
+
 	c.LogAudit("")
 
 	if !c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionCreateUserAccessToken) {

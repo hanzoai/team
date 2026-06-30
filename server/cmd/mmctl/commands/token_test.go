@@ -163,37 +163,6 @@ func (s *MmctlUnitTestSuite) TestGenerateTokenForAUserCmd() {
 		s.Require().NoError(err)
 	})
 
-	s.Run("Should generate a token without description", func() {
-		printer.Clean()
-
-		userArg := "userId1"
-		mockUser := model.User{Id: "userId1", Email: "user1@example.com", Username: "user1"}
-		mockToken := model.UserAccessToken{Token: "token-id", Description: ""}
-
-		s.client.
-			EXPECT().
-			GetUserByUsername(context.TODO(), userArg, "").
-			Return(nil, &model.Response{}, errors.New("no user found with the given username")).
-			Times(1)
-
-		s.client.
-			EXPECT().
-			GetUser(context.TODO(), userArg, "").
-			Return(&mockUser, &model.Response{}, nil).
-			Times(1)
-
-		s.client.
-			EXPECT().
-			CreateUserAccessToken(context.TODO(), mockUser.Id, "", int64(0)).
-			Return(&mockToken, &model.Response{}, nil).
-			Times(1)
-
-		err := generateTokenForAUserCmdF(s.client, &cobra.Command{}, []string{mockUser.Id})
-		s.Require().Nil(err)
-		s.Require().Len(printer.GetLines(), 1)
-		s.Require().Equal(&mockToken, printer.GetLines()[0])
-	})
-
 	s.Run("Should reject invalid --expires-in", func() {
 		printer.Clean()
 
