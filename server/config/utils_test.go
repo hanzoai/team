@@ -109,6 +109,72 @@ func TestDesanitize(t *testing.T) {
 	assert.Equal(t, actual.PluginSettings.Plugins, target.PluginSettings.Plugins)
 }
 
+func TestDesanitizeDeliveryTrackingSettings(t *testing.T) {
+	t.Run("restores fake data source and equal-length replicas", func(t *testing.T) {
+		actual := &model.Config{}
+		actual.SetDefaults()
+		actual.DeliveryTrackingSettings.DataSource = new("postgres://real")
+		actual.DeliveryTrackingSettings.DataSourceReplicas = []string{"replica0", "replica1"}
+		actual.DeliveryTrackingSettings.DataSourceSearchReplicas = []string{"search0"}
+
+		target := &model.Config{}
+		target.SetDefaults()
+		target.DeliveryTrackingSettings.DataSource = model.NewPointer(model.FakeSetting)
+		target.DeliveryTrackingSettings.DataSourceReplicas = []string{model.FakeSetting, model.FakeSetting}
+		target.DeliveryTrackingSettings.DataSourceSearchReplicas = []string{model.FakeSetting}
+
+		Desanitize(actual, target)
+
+		assert.Equal(t, "postgres://real", *target.DeliveryTrackingSettings.DataSource)
+		assert.Equal(t, actual.DeliveryTrackingSettings.DataSourceReplicas, target.DeliveryTrackingSettings.DataSourceReplicas)
+		assert.Equal(t, actual.DeliveryTrackingSettings.DataSourceSearchReplicas, target.DeliveryTrackingSettings.DataSourceSearchReplicas)
+	})
+
+	t.Run("does not restore replicas when the lengths differ", func(t *testing.T) {
+		actual := &model.Config{}
+		actual.SetDefaults()
+		actual.DeliveryTrackingSettings.DataSourceReplicas = []string{"replica0", "replica1"}
+
+		target := &model.Config{}
+		target.SetDefaults()
+		// One entry vs two: the length guard skips desanitize, so FakeSetting is preserved.
+		target.DeliveryTrackingSettings.DataSourceReplicas = []string{model.FakeSetting}
+
+		Desanitize(actual, target)
+
+		assert.Equal(t, []string{model.FakeSetting}, target.DeliveryTrackingSettings.DataSourceReplicas)
+	})
+
+	t.Run("only fake entries within equal-length replicas are restored", func(t *testing.T) {
+		actual := &model.Config{}
+		actual.SetDefaults()
+		actual.DeliveryTrackingSettings.DataSourceReplicas = []string{"replica0", "replica1"}
+
+		target := &model.Config{}
+		target.SetDefaults()
+		// Mixed: the FakeSetting entry is restored, an explicitly-set value is left as-is.
+		target.DeliveryTrackingSettings.DataSourceReplicas = []string{model.FakeSetting, "explicit"}
+
+		Desanitize(actual, target)
+
+		assert.Equal(t, []string{"replica0", "explicit"}, target.DeliveryTrackingSettings.DataSourceReplicas)
+	})
+
+	t.Run("a non-fake data source is left untouched", func(t *testing.T) {
+		actual := &model.Config{}
+		actual.SetDefaults()
+		actual.DeliveryTrackingSettings.DataSource = new("postgres://real")
+
+		target := &model.Config{}
+		target.SetDefaults()
+		target.DeliveryTrackingSettings.DataSource = new("postgres://explicitly-set")
+
+		Desanitize(actual, target)
+
+		assert.Equal(t, "postgres://explicitly-set", *target.DeliveryTrackingSettings.DataSource)
+	})
+}
+
 // TestDesanitizeRemovesAllFakeSettings verifies that every field masked by
 // Sanitize has a corresponding entry in desanitize, so FakeSetting is never
 // written back to stored config. No manual field listing is required: all

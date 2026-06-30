@@ -3487,3 +3487,44 @@ func TestConfigPostDeliveryTrackingEnabled(t *testing.T) {
 		require.False(t, c.PostDeliveryTrackingEnabled())
 	})
 }
+
+func TestDeliveryTrackingSettingsSanitize(t *testing.T) {
+	t.Run("masks the data source, replicas and search replicas", func(t *testing.T) {
+		c := Config{}
+		c.SetDefaults()
+		*c.DeliveryTrackingSettings.DataSource = "postgres://mmuser:secret@localhost:5432/delivery"
+		c.DeliveryTrackingSettings.DataSourceReplicas = []string{"postgres://replica0", "postgres://replica1"}
+		c.DeliveryTrackingSettings.DataSourceSearchReplicas = []string{"postgres://search0"}
+
+		c.Sanitize(nil, nil)
+
+		assert.Equal(t, FakeSetting, *c.DeliveryTrackingSettings.DataSource)
+		for _, r := range c.DeliveryTrackingSettings.DataSourceReplicas {
+			assert.Equal(t, FakeSetting, r)
+		}
+		for _, r := range c.DeliveryTrackingSettings.DataSourceSearchReplicas {
+			assert.Equal(t, FakeSetting, r)
+		}
+	})
+
+	t.Run("empty (primary-DB fallback) data source is still masked", func(t *testing.T) {
+		c := Config{}
+		c.SetDefaults() // DataSource defaults to ""
+
+		c.Sanitize(nil, nil)
+
+		assert.Equal(t, FakeSetting, *c.DeliveryTrackingSettings.DataSource)
+	})
+
+	t.Run("partially redacts the data source when requested", func(t *testing.T) {
+		c := Config{}
+		c.SetDefaults()
+		*c.SqlSettings.DriverName = DatabaseDriverPostgres
+		*c.DeliveryTrackingSettings.DataSource = "postgres://mmuser:mostest@localhost:5432/delivery?sslmode=disable"
+
+		c.Sanitize(nil, &SanitizeOptions{PartiallyRedactDataSources: true})
+
+		expectedURL := "postgres://" + SanitizedPassword + ":" + SanitizedPassword + "@localhost:5432/delivery?sslmode=disable"
+		assert.Equal(t, expectedURL, *c.DeliveryTrackingSettings.DataSource)
+	})
+}
