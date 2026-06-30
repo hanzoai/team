@@ -1102,9 +1102,7 @@ func getPinnedPosts(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !channel.IsGroupOrDirect() {
-		c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
-	}
+	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
 
 	w.Header().Set(model.HeaderEtagServer, clientPostList.Etag())
 	if err := clientPostList.EncodeJSON(w); err != nil {

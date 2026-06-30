@@ -1185,7 +1185,7 @@ func TestTriggerWebhookRecordsDelivery(t *testing.T) {
 		require.Equal(t, model.DeliveryMechanismOutgoingWebhook, int16(records[0]["mechanism"].(float64)))
 	})
 
-	t.Run("no record for a direct message channel", func(t *testing.T) {
+	t.Run("records a webhook delivery for a direct message channel", func(t *testing.T) {
 		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {}))
 		defer ts.Close()
 
@@ -1205,7 +1205,11 @@ func TestTriggerWebhookRecordsDelivery(t *testing.T) {
 			th.App.TriggerWebhook(th.Context, payloadFor(hook, dm), hook, dmPost, dm)
 		})
 
-		require.Empty(t, records)
+		require.Len(t, records, 1)
+		require.Equal(t, dmPost.Id, records[0]["post_id"])
+		require.Equal(t, hook.Id, records[0]["target_id"])
+		require.Equal(t, model.DeliveryTargetWebhook, records[0]["target_type"])
+		require.Equal(t, model.DeliveryMechanismOutgoingWebhook, int16(records[0]["mechanism"].(float64)))
 	})
 }
 

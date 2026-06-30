@@ -247,7 +247,10 @@ func (a *App) runGuardedMessageWillBeUpdated(rctx request.CTX, newPost, oldPost 
 		if replacement != nil {
 			newPost = replacement
 		}
-		if trackPluginDelivery {
+		// Only record delivery for claimants that actually implemented the hook
+		// and received the post content. A (nil, "", nil) result means the plugin
+		// had no opinion / did not implement it, so nothing was delivered to it.
+		if trackPluginDelivery && replacement != nil {
 			deliveredPluginIDs = append(deliveredPluginIDs, g.PluginId)
 		}
 	}

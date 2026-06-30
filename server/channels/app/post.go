@@ -3020,7 +3020,9 @@ func (a *App) applyPostWillBeConsumedHook(rctx request.CTX, post **model.Post) {
 		return true
 	}, plugin.MessagesWillBeConsumedWithContextID)
 
-	if len(consumerIDs) > 0 {
+	// Re-check the post type: a consume hook may have replaced the post with a
+	// system message, which the other delivery paths intentionally skip.
+	if len(consumerIDs) > 0 && !(*post).IsSystemMessage() {
 		pluginIDs := make([]string, 0, len(consumerIDs))
 		for id := range consumerIDs {
 			pluginIDs = append(pluginIDs, id)

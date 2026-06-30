@@ -38,19 +38,23 @@ func captureDeliveryRecords(t *testing.T, th *TestHelper, fn func()) []map[strin
 	filePath := filepath.Join(t.TempDir(), "delivery_audit.log")
 	adt := &audit.Audit{}
 	adt.Init(audit.DefMaxQueueSize)
+	options, err := json.Marshal(map[string]string{"filename": filePath})
+	require.NoError(t, err)
 	require.NoError(t, adt.Configure(mlog.LoggerConfiguration{
 		"delivery_capture": {
 			Type:    "file",
 			Format:  "json",
-			Options: json.RawMessage(fmt.Sprintf(`{"filename": "%s"}`, filePath)),
+			Options: json.RawMessage(options),
 			Levels:  []mlog.Level{mlog.LvlAuditPostDelivery},
 		},
 	}))
 
 	old := th.Server.Audit
 	th.Server.Audit = adt
+	// Restore the original audit logger even if fn() aborts via require.FailNow,
+	// so a failing assertion doesn't leak the swapped logger into later tests.
+	defer func() { th.Server.Audit = old }()
 	fn()
-	th.Server.Audit = old
 	require.NoError(t, adt.Shutdown()) // flushes queued records and closes the file
 
 	data, err := os.ReadFile(filePath)
@@ -190,12 +194,12 @@ func TestShouldTrackDelivery(t *testing.T) {
 		require.False(t, th.App.shouldTrackDelivery(openChannel, nil))
 	})
 
-	t.Run("false for a direct message channel", func(t *testing.T) {
-		require.False(t, th.App.shouldTrackDelivery(dmChannel, normalPost))
+	t.Run("true for a direct message channel", func(t *testing.T) {
+		require.True(t, th.App.shouldTrackDelivery(dmChannel, normalPost))
 	})
 
-	t.Run("false for a group message channel", func(t *testing.T) {
-		require.False(t, th.App.shouldTrackDelivery(gmChannel, normalPost))
+	t.Run("true for a group message channel", func(t *testing.T) {
+		require.True(t, th.App.shouldTrackDelivery(gmChannel, normalPost))
 	})
 
 	t.Run("false for a system message", func(t *testing.T) {
@@ -252,10 +256,10 @@ func TestShouldTrackPushDelivery(t *testing.T) {
 		require.False(t, th.App.shouldTrackPushDelivery(fullMsg()))
 	})
 
-	t.Run("false for a DM/GM channel push", func(t *testing.T) {
+	t.Run("true for a DM/GM channel push", func(t *testing.T) {
 		msg := fullMsg()
 		msg.ChannelType = model.ChannelTypeDirect
-		require.False(t, th.App.shouldTrackPushDelivery(msg))
+		require.True(t, th.App.shouldTrackPushDelivery(msg))
 	})
 
 	t.Run("false for a system message push", func(t *testing.T) {

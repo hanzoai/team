@@ -21,7 +21,7 @@ func (a *App) deliveryTrackingEnabled() bool {
 
 func (a *App) shouldTrackDelivery(channel *model.Channel, post *model.Post) bool {
 	return a.deliveryTrackingEnabled() &&
-		channel != nil && !channel.IsGroupOrDirect() &&
+		channel != nil &&
 		post != nil && !post.IsSystemMessage()
 }
 
