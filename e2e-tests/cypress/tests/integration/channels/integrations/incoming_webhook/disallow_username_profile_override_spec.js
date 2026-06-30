@@ -99,7 +99,7 @@ describe('Incoming webhook', () => {
             cy.get('.post__header').find('.user-popover').should('have.text', systemBot.username);
 
             // * Verify that the user icon shown is the System Bot's since override is not allowed.
-            cy.get('.profile-icon > img').should('have.attr', 'src', `${Cypress.config('baseUrl')}/api/v4/users/${systemBot.id}/image?_=${systemBot.last_picture_update}`);
+            cy.get('.profile-icon > img').should('have.attr', 'src', `${Cypress.config('baseUrl')}/api/v4/users/${systemBot.id}/image?_=${systemBot.last_picture_update || 0}`);
         });
 
         // * Verify previous webhook message if new setting is respected.
@@ -111,7 +111,7 @@ describe('Incoming webhook', () => {
             cy.get('.post__header').find('.user-popover').should('have.text', systemBot.username);
 
             // * Verify that the user icon shown is updated to the System Bot's and override didn't take effect.
-            cy.get('.profile-icon > img').should('have.attr', 'src', `${Cypress.config('baseUrl')}/api/v4/users/${systemBot.id}/image?_=${systemBot.last_picture_update}`);
+            cy.get('.profile-icon > img').should('have.attr', 'src', `${Cypress.config('baseUrl')}/api/v4/users/${systemBot.id}/image?_=${systemBot.last_picture_update || 0}`);
         });
     });
 });
