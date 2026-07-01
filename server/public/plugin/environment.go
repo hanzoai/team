@@ -35,6 +35,12 @@ type registeredPlugin struct {
 	Error      string
 
 	supervisor *supervisor
+
+	// mu guards RPC hook dispatch against concurrent teardown. Writers (Deactivate/Shutdown)
+	// hold it for the duration of OnDeactivate+Shutdown so that once teardown begins, readers
+	// (RunMultiPluginHook*) fail fast via TryRLock instead of queuing behind the closing
+	// connection.
+	mu *sync.RWMutex
 }
 
 // PrepackagedPlugin is a plugin prepackaged with the server and found on startup.
@@ -61,16 +67,31 @@ type Environment struct {
 	prepackagedPlugins               []*PrepackagedPlugin
 	transitionallyPrepackagedPlugins []*PrepackagedPlugin
 	prepackagedPluginsLock           sync.RWMutex
+
+	// teardownGuardEnabled gates the per-plugin RPC dispatch/teardown race guard, backed by the
+	// PluginRPCTeardownGuard feature flag. Fixed for the lifetime of the Environment; set via
+	// WithTeardownGuardEnabled, defaulting to enabled.
+	teardownGuardEnabled bool
 }
 
 // EnvironmentOption configures optional Environment behavior at construction time. See
-// WithMetrics.
+// WithMetrics and WithTeardownGuardEnabled.
 type EnvironmentOption func(*Environment) error
 
 // WithMetrics records plugin hook and lifecycle metrics via the given implementation.
 func WithMetrics(metrics metricsInterface) EnvironmentOption {
 	return func(env *Environment) error {
 		env.metrics = metrics
+		return nil
+	}
+}
+
+// WithTeardownGuardEnabled toggles the RPC dispatch/teardown race guard used by
+// RunMultiPluginHook*, Deactivate, and Shutdown. Backed by the PluginRPCTeardownGuard feature
+// flag; enabled by default if this option is not supplied.
+func WithTeardownGuardEnabled(enabled bool) EnvironmentOption {
+	return func(env *Environment) error {
+		env.teardownGuardEnabled = enabled
 		return nil
 	}
 }
@@ -89,6 +110,9 @@ func NewEnvironment(
 		dbDriver:        dbDriver,
 		pluginDir:       pluginDir,
 		webappPluginDir: webappPluginDir,
+		// Defaults to enabled so callers (tests included) get the race guard for free; pass
+		// WithTeardownGuardEnabled(false) to opt out, e.g. to mirror a disabled feature flag.
+		teardownGuardEnabled: true,
 	}
 
 	for _, opt := range opts {
@@ -471,6 +495,7 @@ func (env *Environment) Deactivate(id string) bool {
 	if !ok {
 		return false
 	}
+	rp := p.(registeredPlugin)
 
 	isActive := env.IsActive(id)
 
@@ -480,10 +505,20 @@ func (env *Environment) Deactivate(id string) bool {
 		return false
 	}
 
-	rp := p.(registeredPlugin)
 	if rp.supervisor != nil {
+		// OnDeactivate runs with the connection still fully live, so a plugin is free to call
+		// back into the API (e.g. CreatePost), which may dispatch further hooks to itself;
+		// don't hold the lock across it.
 		if err := rp.supervisor.Hooks().OnDeactivate(); err != nil {
 			env.logger.Error("Plugin OnDeactivate() error", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id), mlog.Err(err))
+		}
+
+		if env.teardownGuardEnabled {
+			// Blocks until any in-flight RunMultiPluginHook* dispatches release their RLock,
+			// and causes new dispatches to fail fast via TryRLock rather than racing the RPC
+			// connection close below.
+			rp.mu.Lock()
+			defer rp.mu.Unlock()
 		}
 		rp.supervisor.Shutdown()
 	}
@@ -515,6 +550,9 @@ func (env *Environment) Shutdown() {
 		done := make(chan bool)
 		go func() {
 			defer close(done)
+			// OnDeactivate runs with the connection still fully live, so a plugin is free to
+			// call back into the API, which may dispatch further hooks to itself; don't hold
+			// the lock across it.
 			if err := rp.supervisor.Hooks().OnDeactivate(); err != nil {
 				env.logger.Error("Plugin OnDeactivate() error", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id), mlog.Err(err))
 			}
@@ -529,6 +567,13 @@ func (env *Environment) Shutdown() {
 			case <-done:
 			}
 
+			if env.teardownGuardEnabled {
+				// Blocks until any in-flight RunMultiPluginHook* dispatches release their
+				// RLock, and causes new dispatches to fail fast via TryRLock rather than
+				// racing the RPC connection close below.
+				rp.mu.Lock()
+				defer rp.mu.Unlock()
+			}
 			rp.supervisor.Shutdown()
 		}()
 
@@ -658,6 +703,15 @@ func (env *Environment) RunMultiPluginHook(hookRunnerFunc func(hooks Hooks, mani
 			return true
 		}
 
+		if env.teardownGuardEnabled {
+			// TryRLock fails fast instead of queuing if the plugin is concurrently tearing
+			// down, avoiding a call into an RPC connection that's mid-close.
+			if !rp.mu.TryRLock() {
+				return true
+			}
+			defer rp.mu.RUnlock()
+		}
+
 		hookStartTime := time.Now()
 		result := hookRunnerFunc(rp.supervisor.Hooks(), rp.BundleInfo.Manifest)
 
@@ -696,6 +750,13 @@ func (env *Environment) RunMultiPluginHookExcluding(
 			return true
 		}
 
+		if env.teardownGuardEnabled {
+			if !rp.mu.TryRLock() {
+				return true
+			}
+			defer rp.mu.RUnlock()
+		}
+
 		hookStartTime := time.Now()
 		cont := hookRunnerFunc(rp.supervisor.Hooks(), rp.BundleInfo.Manifest)
 
@@ -725,6 +786,13 @@ func (env *Environment) RunMultiPluginHookWithRPCErr(hookRunnerFunc func(hooks H
 
 		if rp.supervisor == nil || !rp.supervisor.Implements(hookId) || !env.IsActive(rp.BundleInfo.Manifest.Id) {
 			return true
+		}
+
+		if env.teardownGuardEnabled {
+			if !rp.mu.TryRLock() {
+				return true
+			}
+			defer rp.mu.RUnlock()
 		}
 
 		hookStartTime := time.Now()
@@ -774,7 +842,7 @@ func (env *Environment) SetPrepackagedPlugins(plugins, transitionalPlugins []*Pr
 
 func newRegisteredPlugin(bundle *model.BundleInfo) registeredPlugin {
 	state := model.PluginStateNotRunning
-	return registeredPlugin{State: state, BundleInfo: bundle}
+	return registeredPlugin{State: state, BundleInfo: bundle, mu: &sync.RWMutex{}}
 }
 
 // TogglePluginHealthCheckJob starts a new job if one is not running and is set to enabled, or kills an existing one if set to disabled.

@@ -209,6 +209,7 @@ func (ch *Channels) initPlugins(rctx request.CTX, pluginDir, webappPluginDir str
 		webappPluginDir,
 		ch.srv.Log(),
 		plugin.WithMetrics(ch.srv.GetMetrics()),
+		plugin.WithTeardownGuardEnabled(ch.cfgSvc.Config().FeatureFlags.PluginRPCTeardownGuard),
 	)
 	if err != nil {
 		ch.srv.Log().Error("Failed to start up plugins", mlog.Err(err))

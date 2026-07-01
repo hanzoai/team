@@ -143,6 +143,10 @@ type FeatureFlags struct {
 
 	// Enable the new mm_blocks Interactive Messages framework
 	MmBlocksEnabled bool
+
+	// Guard plugin RPC hook dispatch against a concurrently deactivating plugin, avoiding
+	// "connection is shut down" errors during plugin/pod restarts.
+	PluginRPCTeardownGuard bool
 }
 
 func (f *FeatureFlags) SetDefaults() {
@@ -203,6 +207,8 @@ func (f *FeatureFlags) SetDefaults() {
 	f.PropertyFieldRank = true
 
 	f.MmBlocksEnabled = true
+
+	f.PluginRPCTeardownGuard = true
 }
 
 // IsChannelPermissionPoliciesEnabled reports whether channel-scope
