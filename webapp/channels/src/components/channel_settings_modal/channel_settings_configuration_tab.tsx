@@ -529,8 +529,6 @@ function ChannelSettingsConfigurationTab({
         return true;
     }, [
         canManageSharedChannels,
-        channel,
-        canManageSharedChannels,
         canManageJoinLeaveMessages,
         channel,
         classification.channelField,
@@ -833,7 +831,7 @@ function ChannelSettingsConfigurationTab({
                 </>
             )}
 
-            {(canManageSharedChannels || canManageBanner) && canManageJoinLeaveMessages && (
+            {(canManageSharedChannels || canManageClassification || canManageBanner) && canManageJoinLeaveMessages && (
                 <div className='ChannelSettingsModal__configurationTab__configurationDivider'/>
             )}
 

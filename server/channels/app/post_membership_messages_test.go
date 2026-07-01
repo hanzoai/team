@@ -268,6 +268,15 @@ func TestGetPostsByIdsSuppression(t *testing.T) {
 		require.Len(t, posts, 1)
 		require.Equal(t, membershipPost.Id, posts[0].Id)
 	})
+
+	t.Run("partial suppression: returns only regular post when both IDs requested with suppression enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		posts, _, appErr := th.App.GetPostsByIds([]string{membershipPost.Id, normalPost.Id})
+		require.Nil(t, appErr)
+		require.Len(t, posts, 1, "only the regular post should survive")
+		require.Equal(t, normalPost.Id, posts[0].Id)
+	})
 }
 
 func TestChannelExcludesMembershipSystemPostsModel(t *testing.T) {

@@ -13,6 +13,9 @@ import (
 func (a *App) channelExcludeMembershipSystemPostsByID(rctx request.CTX, channelID string) (bool, *model.AppError) {
 	channel, appErr := a.GetChannel(rctx, channelID)
 	if appErr != nil {
+		if appErr.StatusCode == http.StatusNotFound {
+			return false, nil
+		}
 		return false, appErr
 	}
 	return model.ChannelExcludesMembershipSystemPosts(channel), nil
