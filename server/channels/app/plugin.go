@@ -208,7 +208,7 @@ func (ch *Channels) initPlugins(rctx request.CTX, pluginDir, webappPluginDir str
 		pluginDir,
 		webappPluginDir,
 		ch.srv.Log(),
-		ch.srv.GetMetrics(),
+		plugin.WithMetrics(ch.srv.GetMetrics()),
 	)
 	if err != nil {
 		ch.srv.Log().Error("Failed to start up plugins", mlog.Err(err))

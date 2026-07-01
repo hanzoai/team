@@ -1865,7 +1865,7 @@ func activatePluginFromTemplate(t *testing.T, th *TestHelper, pluginID, template
 	newPluginAPI := func(manifest *model.Manifest) plugin.API {
 		return th.App.NewPluginAPI(th.Context, manifest)
 	}
-	env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(th.App.Srv()), pluginDir, webappPluginDir, th.App.Log(), nil)
+	env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(th.App.Srv()), pluginDir, webappPluginDir, th.App.Log())
 	require.NoError(t, err)
 
 	th.App.ch.SetPluginsEnvironment(env)

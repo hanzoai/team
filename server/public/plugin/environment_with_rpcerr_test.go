@@ -66,7 +66,7 @@ func TestRunMultiPluginHookWithRPCErr(t *testing.T) {
 
 	logger := mlog.CreateConsoleTestLogger(t)
 	apiImpl := func(*model.Manifest) API { return nil }
-	env, err := NewEnvironment(apiImpl, nil, pluginDir, webappPluginDir, logger, nil)
+	env, err := NewEnvironment(apiImpl, nil, pluginDir, webappPluginDir, logger)
 	require.NoError(t, err)
 	t.Cleanup(env.Shutdown)
 

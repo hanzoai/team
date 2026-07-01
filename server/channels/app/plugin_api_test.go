@@ -93,7 +93,7 @@ func setupMultiPluginAPITest(t *testing.T, pluginCodes []string, pluginManifests
 		return app.NewPluginAPI(rctx, manifest)
 	}
 
-	env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(app.Srv()), pluginDir, webappPluginDir, app.Log(), nil)
+	env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(app.Srv()), pluginDir, webappPluginDir, app.Log())
 	require.NoError(t, err)
 
 	require.Equal(t, len(pluginCodes), len(pluginIDs))
@@ -1126,7 +1126,7 @@ func TestPluginAPIGetPlugins(t *testing.T) {
 	defer os.RemoveAll(pluginDir)
 	defer os.RemoveAll(webappPluginDir)
 
-	env, err := plugin.NewEnvironment(th.NewPluginAPI, NewDriverImpl(th.Server), pluginDir, webappPluginDir, th.App.Log(), nil)
+	env, err := plugin.NewEnvironment(th.NewPluginAPI, NewDriverImpl(th.Server), pluginDir, webappPluginDir, th.App.Log())
 	require.NoError(t, err)
 
 	pluginIDs := []string{"pluginid1", "pluginid2", "pluginid3"}
@@ -1216,7 +1216,7 @@ func TestInstallPlugin(t *testing.T) {
 			return app.NewPluginAPI(rctx, manifest)
 		}
 
-		env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(app.Srv()), pluginDir, webappPluginDir, app.Log(), nil)
+		env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(app.Srv()), pluginDir, webappPluginDir, app.Log())
 		require.NoError(t, err)
 
 		app.ch.SetPluginsEnvironment(env)
@@ -2321,7 +2321,7 @@ func TestAPIMetrics(t *testing.T) {
 		defer os.RemoveAll(pluginDir)
 		defer os.RemoveAll(webappPluginDir)
 
-		env, err := plugin.NewEnvironment(th.NewPluginAPI, NewDriverImpl(th.Server), pluginDir, webappPluginDir, th.App.Log(), metricsMock)
+		env, err := plugin.NewEnvironment(th.NewPluginAPI, NewDriverImpl(th.Server), pluginDir, webappPluginDir, th.App.Log(), plugin.WithMetrics(metricsMock))
 		require.NoError(t, err)
 
 		th.App.ch.SetPluginsEnvironment(env)
@@ -2888,7 +2888,7 @@ func TestPluginUploadsAPI(t *testing.T) {
 	newPluginAPI := func(manifest *model.Manifest) plugin.API {
 		return th.App.NewPluginAPI(th.Context, manifest)
 	}
-	env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(th.App.Srv()), pluginDir, webappPluginDir, th.App.Log(), nil)
+	env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(th.App.Srv()), pluginDir, webappPluginDir, th.App.Log())
 	require.NoError(t, err)
 
 	th.App.ch.SetPluginsEnvironment(env)
@@ -2928,7 +2928,7 @@ func TestConfigurationWillBeSavedHook(t *testing.T) {
 		newPluginAPI := func(manifest *model.Manifest) plugin.API {
 			return th.App.NewPluginAPI(th.Context, manifest)
 		}
-		env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(th.App.Srv()), pluginDir, webappPluginDir, th.App.Log(), nil)
+		env, err := plugin.NewEnvironment(newPluginAPI, NewDriverImpl(th.App.Srv()), pluginDir, webappPluginDir, th.App.Log())
 		require.NoError(t, err)
 
 		th.App.ch.SetPluginsEnvironment(env)

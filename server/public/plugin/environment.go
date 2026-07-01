@@ -63,22 +63,41 @@ type Environment struct {
 	prepackagedPluginsLock           sync.RWMutex
 }
 
+// EnvironmentOption configures optional Environment behavior at construction time. See
+// WithMetrics.
+type EnvironmentOption func(*Environment) error
+
+// WithMetrics records plugin hook and lifecycle metrics via the given implementation.
+func WithMetrics(metrics metricsInterface) EnvironmentOption {
+	return func(env *Environment) error {
+		env.metrics = metrics
+		return nil
+	}
+}
+
 func NewEnvironment(
 	newAPIImpl apiImplCreatorFunc,
 	dbDriver AppDriver,
 	pluginDir string,
 	webappPluginDir string,
 	logger *mlog.Logger,
-	metrics metricsInterface,
+	opts ...EnvironmentOption,
 ) (*Environment, error) {
-	return &Environment{
+	env := &Environment{
 		logger:          logger,
-		metrics:         metrics,
 		newAPIImpl:      newAPIImpl,
 		dbDriver:        dbDriver,
 		pluginDir:       pluginDir,
 		webappPluginDir: webappPluginDir,
-	}, nil
+	}
+
+	for _, opt := range opts {
+		if err := opt(env); err != nil {
+			return nil, errors.Wrap(err, "failed to apply environment option")
+		}
+	}
+
+	return env, nil
 }
 
 // Performs a full scan of the given path.
