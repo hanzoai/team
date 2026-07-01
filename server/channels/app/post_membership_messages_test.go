@@ -279,6 +279,124 @@ func TestGetPostsByIdsSuppression(t *testing.T) {
 	})
 }
 
+func TestGetPostThreadSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	rootPost := createMembershipSystemPost(t, th, channel)
+	replyPost := th.CreatePost(t, channel)
+
+	t.Run("membership root post excluded from thread when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		list, appErr := th.App.GetPostThread(th.Context, rootPost.Id, model.GetPostsOptions{}, th.BasicUser.Id)
+		require.Nil(t, appErr)
+		require.NotContains(t, list.Posts, rootPost.Id)
+	})
+
+	t.Run("regular post thread visible when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		list, appErr := th.App.GetPostThread(th.Context, replyPost.Id, model.GetPostsOptions{}, th.BasicUser.Id)
+		require.Nil(t, appErr)
+		require.Contains(t, list.Posts, replyPost.Id)
+	})
+
+	t.Run("membership post visible in thread when suppression disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		list, appErr := th.App.GetPostThread(th.Context, rootPost.Id, model.GetPostsOptions{}, th.BasicUser.Id)
+		require.Nil(t, appErr)
+		require.Contains(t, list.Posts, rootPost.Id)
+	})
+}
+
+func TestGetPostsBeforeAfterSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	normalPost1 := th.CreatePost(t, channel)
+	membershipPost := createMembershipSystemPost(t, th, channel)
+	normalPost2 := th.CreatePost(t, channel)
+
+	t.Run("GetPostsBeforePost excludes membership posts when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		postList, appErr := th.App.GetPostsBeforePost(th.Context, model.GetPostsOptions{
+			ChannelId: channel.Id,
+			PostId:    normalPost2.Id,
+			Page:      0,
+			PerPage:   10,
+			UserId:    th.BasicUser.Id,
+		})
+		require.Nil(t, appErr)
+		require.NotContains(t, postList.Posts, membershipPost.Id)
+		require.Contains(t, postList.Posts, normalPost1.Id)
+	})
+
+	t.Run("GetPostsAfterPost excludes membership posts when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		postList, appErr := th.App.GetPostsAfterPost(th.Context, model.GetPostsOptions{
+			ChannelId: channel.Id,
+			PostId:    normalPost1.Id,
+			Page:      0,
+			PerPage:   10,
+			UserId:    th.BasicUser.Id,
+		})
+		require.Nil(t, appErr)
+		require.NotContains(t, postList.Posts, membershipPost.Id)
+		require.Contains(t, postList.Posts, normalPost2.Id)
+	})
+
+}
+
+func TestGetPermalinkPostSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	membershipPost := createMembershipSystemPost(t, th, channel)
+	normalPost := th.CreatePost(t, channel)
+
+	t.Run("membership post permalink returns not found when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		_, appErr := th.App.GetPermalinkPost(th.Context, membershipPost.Id, th.BasicUser.Id)
+		require.NotNil(t, appErr)
+		require.Equal(t, "app.post.get.app_error", appErr.Id)
+	})
+
+	t.Run("regular post permalink visible when suppressed", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		perma, appErr := th.App.GetPermalinkPost(th.Context, normalPost.Id, th.BasicUser.Id)
+		require.Nil(t, appErr)
+		require.NotNil(t, perma)
+	})
+
+	t.Run("membership post permalink visible when suppression disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		perma, appErr := th.App.GetPermalinkPost(th.Context, membershipPost.Id, th.BasicUser.Id)
+		require.Nil(t, appErr)
+		require.NotNil(t, perma)
+	})
+}
+
+func TestRemovePostIDFromOrder(t *testing.T) {
+	t.Parallel()
+
+	require.Equal(t, []string{"b", "c"}, removePostIDFromOrder([]string{"a", "b", "c"}, "a"))
+	require.Equal(t, []string{"a", "c"}, removePostIDFromOrder([]string{"a", "b", "c"}, "b"))
+	require.Equal(t, []string{"a", "b"}, removePostIDFromOrder([]string{"a", "b", "c"}, "c"))
+	require.Equal(t, []string{"a", "b", "c"}, removePostIDFromOrder([]string{"a", "b", "c"}, "x"))
+	require.Empty(t, removePostIDFromOrder([]string{}, "a"))
+	require.Empty(t, removePostIDFromOrder(nil, "a"))
+}
+
 func TestChannelExcludesMembershipSystemPostsModel(t *testing.T) {
 	t.Parallel()
 
