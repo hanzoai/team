@@ -31,11 +31,11 @@ Options
 
 ::
 
-  -h, --help                         help for modify
-      --disable-join-leave-messages  Hide join/leave system messages in the channel timeline
-      --enable-join-leave-messages   Show join/leave system messages in the channel timeline
-      --private                      Convert the channel to a private channel
-      --public                       Convert the channel to a public channel
+      --disable-join-leave-messages   Hide join/leave system messages in the channel timeline
+      --enable-join-leave-messages    Show join/leave system messages in the channel timeline
+  -h, --help                          help for modify
+      --private                       Convert the channel to a private channel
+      --public                        Convert the channel to a public channel
 
 Options inherited from parent commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

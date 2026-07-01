@@ -41,7 +41,7 @@ SEE ALSO
 * `mmctl channel create <mmctl_channel_create.rst>`_ 	 - Create a channel
 * `mmctl channel delete <mmctl_channel_delete.rst>`_ 	 - Delete channels
 * `mmctl channel list <mmctl_channel_list.rst>`_ 	 - List all channels on specified teams.
-* `mmctl channel modify <mmctl_channel_modify.rst>`_ 	 - Modify a channel's public/private type
+* `mmctl channel modify <mmctl_channel_modify.rst>`_ 	 - Modify a channel's public/private type or join/leave message visibility
 * `mmctl channel move <mmctl_channel_move.rst>`_ 	 - Moves channels to the specified team
 * `mmctl channel rename <mmctl_channel_rename.rst>`_ 	 - Rename channel
 * `mmctl channel search <mmctl_channel_search.rst>`_ 	 - Search a channel

@@ -104,6 +104,7 @@ func (a *App) filterSuppressedMembershipPostsFromSlice(rctx request.CTX, posts [
 	for _, post := range posts {
 		if post != nil {
 			postList.AddPost(post)
+			postList.Order = append(postList.Order, post.Id)
 		}
 	}
 

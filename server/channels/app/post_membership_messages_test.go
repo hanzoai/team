@@ -182,6 +182,94 @@ func TestWebSocketSuppression(t *testing.T) {
 	})
 }
 
+func TestFilterSuppressedMembershipPostsFromSlice(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	membershipPost := createMembershipSystemPost(t, th, channel)
+	normalPost := th.CreatePost(t, channel)
+
+	t.Run("regular posts are returned intact when suppression is disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		filtered, appErr := th.App.filterSuppressedMembershipPostsFromSlice(th.Context, []*model.Post{normalPost})
+		require.Nil(t, appErr)
+		require.Len(t, filtered, 1, "regular posts must not be dropped")
+		require.Equal(t, normalPost.Id, filtered[0].Id)
+	})
+
+	t.Run("regular posts are returned intact when suppression is enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		filtered, appErr := th.App.filterSuppressedMembershipPostsFromSlice(th.Context, []*model.Post{normalPost})
+		require.Nil(t, appErr)
+		require.Len(t, filtered, 1, "regular posts must not be dropped even when suppression is on")
+		require.Equal(t, normalPost.Id, filtered[0].Id)
+	})
+
+	t.Run("membership posts are removed when suppression is enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		filtered, appErr := th.App.filterSuppressedMembershipPostsFromSlice(th.Context, []*model.Post{membershipPost, normalPost})
+		require.Nil(t, appErr)
+		require.Len(t, filtered, 1)
+		require.Equal(t, normalPost.Id, filtered[0].Id)
+	})
+
+	t.Run("membership posts are kept when suppression is disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		filtered, appErr := th.App.filterSuppressedMembershipPostsFromSlice(th.Context, []*model.Post{membershipPost, normalPost})
+		require.Nil(t, appErr)
+		require.Len(t, filtered, 2)
+	})
+}
+
+func TestGetPostsByIdsSuppression(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	channel := th.BasicChannel
+	membershipPost := createMembershipSystemPost(t, th, channel)
+	normalPost := th.CreatePost(t, channel)
+
+	t.Run("returns regular posts when suppression is enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		posts, _, appErr := th.App.GetPostsByIds([]string{normalPost.Id})
+		require.Nil(t, appErr)
+		require.Len(t, posts, 1, "regular posts must survive GetPostsByIds when suppression is on")
+		require.Equal(t, normalPost.Id, posts[0].Id)
+	})
+
+	t.Run("returns regular posts when suppression is disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		posts, _, appErr := th.App.GetPostsByIds([]string{normalPost.Id})
+		require.Nil(t, appErr)
+		require.Len(t, posts, 1)
+		require.Equal(t, normalPost.Id, posts[0].Id)
+	})
+
+	t.Run("suppresses membership post from GetPostsByIds when enabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, true)
+
+		posts, _, appErr := th.App.GetPostsByIds([]string{membershipPost.Id})
+		require.Nil(t, appErr)
+		require.Len(t, posts, 0, "membership post must be suppressed")
+	})
+
+	t.Run("returns membership post from GetPostsByIds when suppression is disabled", func(t *testing.T) {
+		setChannelDisableJoinLeaveMessages(t, th, channel, false)
+
+		posts, _, appErr := th.App.GetPostsByIds([]string{membershipPost.Id})
+		require.Nil(t, appErr)
+		require.Len(t, posts, 1)
+		require.Equal(t, membershipPost.Id, posts[0].Id)
+	})
+}
+
 func TestChannelExcludesMembershipSystemPostsModel(t *testing.T) {
 	t.Parallel()
 

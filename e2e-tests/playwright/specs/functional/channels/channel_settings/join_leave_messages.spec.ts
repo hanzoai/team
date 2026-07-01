@@ -16,6 +16,10 @@
 import {ChannelsPage, expect, test} from '@mattermost/playwright-lib';
 
 test.describe('Channel Settings Modal - Join/Leave System Messages', () => {
+    /**
+     * @objective Verify the join/leave messages toggle is visible in Channel Settings
+     * Configuration tab and defaults to ON (messages shown).
+     */
     test('toggle is visible and defaults to ON (messages shown)', {tag: '@channel_settings'}, async ({pw}) => {
         // # Initialize test setup
         const {adminUser, adminClient, team} = await pw.initSetup();
@@ -48,6 +52,10 @@ test.describe('Channel Settings Modal - Join/Leave System Messages', () => {
         await channelSettings.close();
     });
 
+    /**
+     * @objective Verify that disabling the join/leave messages toggle hides join system
+     * posts from the channel timeline while keeping regular messages visible.
+     */
     test(
         'disabling the toggle hides join system posts from the channel timeline',
         {tag: '@channel_settings'},
@@ -112,6 +120,10 @@ test.describe('Channel Settings Modal - Join/Leave System Messages', () => {
         },
     );
 
+    /**
+     * @objective Verify that re-enabling the join/leave messages toggle restores
+     * previously hidden join system posts (two-way door behavior).
+     */
     test(
         're-enabling the toggle restores hidden join system posts (two-way door)',
         {tag: '@channel_settings'},
