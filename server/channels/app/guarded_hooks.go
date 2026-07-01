@@ -122,7 +122,9 @@ func (a *App) runGuardedMessageWillBePosted(rctx request.CTX, post *model.Post) 
 		metadata = post.Metadata.Copy()
 	}
 
-	trackPluginDelivery := a.deliveryTrackingEnabled()
+	// The actual recording happens in CreatePost (after the post gets an ID), gated again by
+	// shouldTrackDelivery; scoping collection here avoids threading out IDs for untracked channels.
+	trackPluginDelivery := a.deliveryTrackingEnabledForChannel(post.ChannelId)
 	var deliveredPluginIDs []string
 
 	// Phase A: fan out to non-guard plugins, fail-open. With empty guards the exclude list is
@@ -210,7 +212,7 @@ func (a *App) runGuardedMessageWillBeUpdated(rctx request.CTX, newPost, oldPost 
 		return model.NewAppError("UpdatePost", id, nil, "", http.StatusBadRequest)
 	}
 
-	trackPluginDelivery := a.deliveryTrackingEnabled()
+	trackPluginDelivery := a.deliveryTrackingEnabledForChannel(oldPost.ChannelId)
 	var deliveredPluginIDs []string
 
 	// Phase A: fan out to non-guard plugins, fail-open. With empty guards the exclude list is

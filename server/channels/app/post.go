@@ -2975,6 +2975,11 @@ func (a *App) applyPostsWillBeConsumedHook(rctx request.CTX, posts map[string]*m
 			if post == nil || post.IsSystemMessage() {
 				continue
 			}
+			// posts can span multiple channels here, so apply the per-channel scope
+			// per post (RecordPostDeliveryFanIn takes IDs and is channel-blind).
+			if !a.deliveryTrackingEnabledForChannel(post.ChannelId) {
+				continue
+			}
 			postIDs = append(postIDs, id)
 		}
 		for pluginID := range consumerIDs {
@@ -2993,7 +2998,7 @@ func (a *App) applyPostWillBeConsumedHook(rctx request.CTX, post **model.Post) {
 		return
 	}
 
-	trackPluginDelivery := a.deliveryTrackingEnabled() && !(*post).IsSystemMessage()
+	trackPluginDelivery := a.deliveryTrackingEnabledForChannel((*post).ChannelId) && !(*post).IsSystemMessage()
 	consumerIDs := make(map[string]struct{})
 
 	ps := []*model.Post{*post}

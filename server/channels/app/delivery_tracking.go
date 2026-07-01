@@ -19,10 +19,25 @@ func (a *App) deliveryTrackingEnabled() bool {
 	return a.Config().PostDeliveryTrackingEnabled()
 }
 
+// deliveryTrackingEnabledForChannel is the per-channel gate used across all
+// emission paths. The feature flag + master Enable must be on, and either
+// all-channels mode is enabled (the common case — a pure in-memory config read,
+// the snapshot is never consulted) or the channel is in the selected-channel
+// snapshot (a lock-free atomic load + map lookup).
+func (a *App) deliveryTrackingEnabledForChannel(channelID string) bool {
+	if !a.deliveryTrackingEnabled() {
+		return false
+	}
+	if model.SafeDereference(a.Config().DeliveryTrackingSettings.EnableForAllChannels) {
+		return true
+	}
+	return a.Channels().isChannelDeliveryTracked(channelID)
+}
+
 func (a *App) shouldTrackDelivery(channel *model.Channel, post *model.Post) bool {
-	return a.deliveryTrackingEnabled() &&
-		channel != nil &&
-		post != nil && !post.IsSystemMessage()
+	return channel != nil &&
+		post != nil && !post.IsSystemMessage() &&
+		a.deliveryTrackingEnabledForChannel(channel.Id)
 }
 
 func (a *App) shouldTrackPushDelivery(msg *model.PushNotification) bool {
@@ -32,8 +47,10 @@ func (a *App) shouldTrackPushDelivery(msg *model.PushNotification) bool {
 		*a.Config().EmailSettings.PushNotificationContents != model.FullNotification {
 		return false
 	}
+	// msg.ChannelId carries the real channel so the per-channel gate works in
+	// selected-channels mode; the fake Channel only ever needs Id + Type here.
 	return a.shouldTrackDelivery(
-		&model.Channel{Type: msg.ChannelType},
+		&model.Channel{Id: msg.ChannelId, Type: msg.ChannelType},
 		&model.Post{Type: msg.PostType},
 	)
 }
@@ -110,7 +127,11 @@ func (a *App) recordPostListDelivery(targetID string, list *model.PostList, targ
 	}
 	postIDs := make([]string, 0, len(list.Order))
 	for _, id := range list.Order {
-		if p := list.Posts[id]; p == nil || p.IsSystemMessage() {
+		p := list.Posts[id]
+		if p == nil || p.IsSystemMessage() {
+			continue
+		}
+		if !a.deliveryTrackingEnabledForChannel(p.ChannelId) {
 			continue
 		}
 		postIDs = append(postIDs, id)
@@ -128,6 +149,9 @@ func (a *App) recordPostsDelivery(targetID string, posts []*model.Post, targetTy
 	postIDs := make([]string, 0, len(posts))
 	for _, p := range posts {
 		if p == nil || p.Id == "" || p.IsSystemMessage() {
+			continue
+		}
+		if !a.deliveryTrackingEnabledForChannel(p.ChannelId) {
 			continue
 		}
 		postIDs = append(postIDs, p.Id)

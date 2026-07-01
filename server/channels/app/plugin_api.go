@@ -849,7 +849,7 @@ func (api *PluginAPI) GetPost(postID string) (*model.Post, *model.AppError) {
 	post, appErr := api.app.GetSinglePost(api.ctx, postID, false)
 	if post != nil {
 		post = post.ForPlugin()
-		if !post.IsSystemMessage() {
+		if !post.IsSystemMessage() && api.app.deliveryTrackingEnabledForChannel(post.ChannelId) {
 			api.app.RecordPostDelivery(api.id, post.Id, model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin)
 		}
 	}

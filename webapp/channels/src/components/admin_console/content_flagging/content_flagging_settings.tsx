@@ -4,25 +4,32 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage, defineMessages} from 'react-intl';
+import {useSelector} from 'react-redux';
 
 import type {
     ContentFlaggingAdditionalSettings,
     ContentFlaggingNotificationSettings,
     ContentFlaggingSettings as TypeContentFlaggingSettings,
-    ContentFlaggingReviewerSetting} from '@mattermost/types/config';
+    ContentFlaggingReviewerSetting,
+    DeliveryTrackingConfig} from '@mattermost/types/config';
 import type {ServerError} from '@mattermost/types/errors';
 
 import {Client4} from 'mattermost-redux/client';
+import {getConfig} from 'mattermost-redux/selectors/entities/general';
 
 import BooleanSetting from 'components/admin_console/boolean_setting';
 import ContentFlaggingAdditionalSettingsSection
     from 'components/admin_console/content_flagging/additional_settings/additional_settings';
 import ContentFlaggingContentReviewers
     from 'components/admin_console/content_flagging/content_reviewers/content_reviewers';
+import DeliveryTrackingSection
+    from 'components/admin_console/content_flagging/delivery_tracking/delivery_tracking_section';
 import ContentFlaggingNotificationSettingsSection
     from 'components/admin_console/content_flagging/notificatin_settings/notification_settings';
 import SaveChangesPanel from 'components/admin_console/save_changes_panel';
 import AdminHeader from 'components/widgets/admin_console/admin_header';
+
+import type {GlobalState} from 'types/store';
 
 import './content_flagging_settings.scss';
 
@@ -43,6 +50,9 @@ export default function ContentFlaggingSettings() {
     const [saveNeeded, setSaveNeeded] = useState(false);
     const [serverError, setServerError] = useState('');
     const [contentFlaggingSettings, setContentFlaggingSettings] = useState<TypeContentFlaggingSettings>();
+    const [deliveryTrackingConfig, setDeliveryTrackingConfig] = useState<DeliveryTrackingConfig>();
+
+    const deliveryTrackingFeatureEnabled = useSelector((state: GlobalState) => getConfig(state).FeatureFlagPostDeliveryTracking === 'true');
 
     useEffect(() => {
         const fetchConfig = async () => {
@@ -60,6 +70,23 @@ export default function ContentFlaggingSettings() {
             fetchConfig();
         }
     }, [contentFlaggingSettings]);
+
+    useEffect(() => {
+        const fetchDeliveryTrackingConfig = async () => {
+            try {
+                const config = await Client4.getDeliveryTrackingConfig();
+                if (config) {
+                    setDeliveryTrackingConfig(config);
+                }
+            } catch (error) {
+                console.error(error); // eslint-disable-line no-console
+            }
+        };
+
+        if (deliveryTrackingFeatureEnabled && !deliveryTrackingConfig) {
+            fetchDeliveryTrackingConfig();
+        }
+    }, [deliveryTrackingFeatureEnabled, deliveryTrackingConfig]);
 
     const handleSettingsChange = useCallback((id: string, value: unknown) => {
         const newValue = {...contentFlaggingSettings};
@@ -83,6 +110,11 @@ export default function ContentFlaggingSettings() {
         setSaveNeeded(true);
     }, [contentFlaggingSettings]);
 
+    const handleDeliveryTrackingChange = useCallback((config: DeliveryTrackingConfig) => {
+        setDeliveryTrackingConfig(config);
+        setSaveNeeded(true);
+    }, []);
+
     const onSave = useCallback(async () => {
         if (!contentFlaggingSettings) {
             return;
@@ -92,6 +124,13 @@ export default function ContentFlaggingSettings() {
 
         try {
             await Client4.saveContentFlaggingConfig(contentFlaggingSettings);
+
+            // Delivery tracking is gated behind its own feature flag and a separate
+            // endpoint, but shares this page's single Save button.
+            if (deliveryTrackingFeatureEnabled && deliveryTrackingConfig) {
+                await Client4.saveDeliveryTrackingConfig(deliveryTrackingConfig);
+            }
+
             setSaveNeeded(false);
             setServerError('');
         } catch (error) {
@@ -103,7 +142,7 @@ export default function ContentFlaggingSettings() {
         } finally {
             setSaving(false);
         }
-    }, [contentFlaggingSettings]);
+    }, [contentFlaggingSettings, deliveryTrackingFeatureEnabled, deliveryTrackingConfig]);
 
     if (!contentFlaggingSettings) {
         return null;
@@ -155,6 +194,12 @@ export default function ContentFlaggingSettings() {
                         value={contentFlaggingSettings!.AdditionalSettings}
                         disabled={!contentFlaggingSettings.EnableContentFlagging}
                     />
+                    {deliveryTrackingFeatureEnabled && deliveryTrackingConfig &&
+                        <DeliveryTrackingSection
+                            config={deliveryTrackingConfig}
+                            onChange={handleDeliveryTrackingChange}
+                        />
+                    }
                 </div>
             </div>
 

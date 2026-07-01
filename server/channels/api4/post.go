@@ -577,9 +577,9 @@ func getPost(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if !post.IsSystemMessage() {
-		c.App.RecordPostDelivery(c.AppContext.Session().UserId, post.Id, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
-	}
+	// Routed through the slice helper so the per-channel tracking scope is applied
+	// (it also skips system messages).
+	c.App.RecordPostsDelivery(c.AppContext.Session().UserId, []*model.Post{post}, model.DeliveryMechanismProduct)
 
 	if c.HandleEtag(post.Etag(), "Get Post", w, r) {
 		return

@@ -682,3 +682,61 @@ func TestCreatePostRecordsPluginDelivery(t *testing.T) {
 	require.Equal(t, model.DeliveryMechanismPlugin, int16(pluginRecords[0]["mechanism"].(float64)))
 	require.Contains(t, deliveryStrings(t, pluginRecords[0]["target_ids"]), pluginIDs[0])
 }
+
+func TestDeliveryTrackingEnabledForChannel(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+
+	t.Run("false when the feature is disabled", func(t *testing.T) {
+		require.False(t, th.App.deliveryTrackingEnabledForChannel("channel1"))
+	})
+
+	enableDeliveryTracking(th)
+
+	t.Run("true for any channel in all-channels mode (default)", func(t *testing.T) {
+		require.True(t, th.App.deliveryTrackingEnabledForChannel("channel1"))
+		require.True(t, th.App.deliveryTrackingEnabledForChannel(""))
+	})
+
+	t.Run("selected-channels mode tracks only the channels in the snapshot", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			cfg.DeliveryTrackingSettings.EnableForAllChannels = model.NewPointer(false)
+		})
+		defer th.App.UpdateConfig(func(cfg *model.Config) {
+			cfg.DeliveryTrackingSettings.EnableForAllChannels = model.NewPointer(true)
+		})
+
+		tracked := map[string]struct{}{"channel1": {}}
+		th.App.Channels().deliveryTrackedChannels.Store(&tracked)
+
+		require.True(t, th.App.deliveryTrackingEnabledForChannel("channel1"))
+		require.False(t, th.App.deliveryTrackingEnabledForChannel("channel2"))
+		require.False(t, th.App.deliveryTrackingEnabledForChannel(""))
+	})
+}
+
+// TestRecordPostsDeliverySelectedChannels verifies the multi-channel list helper
+// filters out posts whose channel is not in the selected-channel snapshot.
+func TestRecordPostsDeliverySelectedChannels(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t)
+	enableDeliveryTracking(th)
+
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		cfg.DeliveryTrackingSettings.EnableForAllChannels = model.NewPointer(false)
+	})
+	tracked := map[string]struct{}{"trackedchannel": {}}
+	th.App.Channels().deliveryTrackedChannels.Store(&tracked)
+
+	posts := []*model.Post{
+		{Id: "p1", ChannelId: "trackedchannel", Type: model.PostTypeDefault},
+		{Id: "p2", ChannelId: "untrackedchannel", Type: model.PostTypeDefault},
+	}
+
+	records := captureDeliveryRecords(t, th, func() {
+		th.App.RecordPostsDelivery("user1", posts, model.DeliveryMechanismProduct)
+	})
+
+	require.Len(t, records, 1)
+	require.ElementsMatch(t, []string{"p1"}, deliveryStrings(t, records[0]["post_ids"]))
+}

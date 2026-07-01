@@ -58,6 +58,15 @@ type Channels struct {
 	// See scheduleGuardCacheReloadRetry.
 	guardCacheRetryInFlight atomic.Bool
 
+	// deliveryTrackedChannels is the in-memory snapshot of channels with post-delivery
+	// tracking enabled (the "selected channels" scope). Swapped wholesale; read lock-free
+	// on the delivery hot path. See reloadDeliveryTrackedChannels.
+	deliveryTrackedChannels atomic.Pointer[map[string]struct{}]
+
+	// deliveryTrackedChannelsRetryInFlight collapses concurrent snapshot reload retries to a
+	// single goroutine. See scheduleDeliveryTrackedChannelsReloadRetry.
+	deliveryTrackedChannelsRetryInFlight atomic.Bool
+
 	imageProxy *imageproxy.ImageProxy
 
 	agentsBridge AgentsBridge
@@ -116,6 +125,8 @@ func NewChannels(s *Server) (*Channels, error) {
 		interruptQuitChan: make(chan struct{}),
 	}
 	ch.guardCache.Store(&sync.Map{})
+	emptyDeliveryTrackedChannels := map[string]struct{}{}
+	ch.deliveryTrackedChannels.Store(&emptyDeliveryTrackedChannels)
 
 	if s.agentsBridgeOverride != nil {
 		ch.agentsBridge = s.agentsBridgeOverride
@@ -247,6 +258,15 @@ func NewChannels(s *Server) (*Channels, error) {
 			mlog.Err(err),
 		)
 		ch.scheduleGuardCacheReloadRetry()
+	}
+
+	if err := ch.reloadDeliveryTrackedChannels(request.EmptyContext(s.Log()), s.Store()); err != nil {
+		s.Log().Warn(
+			"Failed to load post-delivery tracking channel snapshot at startup; retry scheduled",
+			mlog.Bool("clustered", s.platform.Cluster() != nil),
+			mlog.Err(err),
+		)
+		ch.scheduleDeliveryTrackedChannelsReloadRetry()
 	}
 
 	return ch, nil

@@ -121,6 +121,7 @@ type SqlStoreStores struct {
 	temporaryPost              store.TemporaryPostStore
 	channelJoinRequest         store.ChannelJoinRequestStore
 	userPostDelivery           store.UserPostDeliveryStore
+	deliveryTracking           store.DeliveryTrackingStore
 }
 
 type SqlStore struct {
@@ -345,6 +346,7 @@ func New(settings model.SqlSettings, logger mlog.LoggerIFace, metrics einterface
 	store.stores.temporaryPost = newSqlTemporaryPostStore(store, metrics)
 	store.stores.channelJoinRequest = newSqlChannelJoinRequestStore(store)
 	store.stores.userPostDelivery = newSqlUserPostDeliveryStore(store)
+	store.stores.deliveryTracking = newSqlDeliveryTrackingStore(store)
 
 	store.stores.preference.(*SqlPreferenceStore).deleteUnusedFeatures()
 
@@ -1048,6 +1050,10 @@ func (ss *SqlStore) ChannelJoinRequest() store.ChannelJoinRequestStore {
 
 func (ss *SqlStore) UserPostDelivery() store.UserPostDeliveryStore {
 	return ss.stores.userPostDelivery
+}
+
+func (ss *SqlStore) DeliveryTracking() store.DeliveryTrackingStore {
+	return ss.stores.deliveryTracking
 }
 
 func (ss *SqlStore) DropAllTables() {

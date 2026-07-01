@@ -1608,7 +1608,14 @@ func (s *SqlSettings) SetDefaults(isUpdate bool) {
 // Disabled by default. DataSource defaults to empty: when Enable is true but
 // DataSource is left unset, the sub-store falls back to the primary DB.
 type DeliveryTrackingSettings struct {
-	Enable                      *bool    `access:"environment_database,write_restrictable,cloud_restrictable"`
+	Enable *bool `access:"environment_database,write_restrictable,cloud_restrictable"`
+	// EnableForAllChannels selects the tracking scope when Enable is true:
+	// true (default) tracks deliveries in every channel; false tracks only the
+	// channels in the PostDeliveryTrackingChannels table (managed via the Data
+	// Spillage Handling admin page). Kept in config so the emission hot path can
+	// read it in-memory and short-circuit the all-channels case without touching
+	// the selected-channel snapshot.
+	EnableForAllChannels        *bool    `access:"environment_database,write_restrictable,cloud_restrictable"`
 	DriverName                  *string  `access:"environment_database,write_restrictable,cloud_restrictable"`
 	DataSource                  *string  `access:"environment_database,write_restrictable,cloud_restrictable"` // telemetry: none
 	DataSourceReplicas          []string `access:"environment_database,write_restrictable,cloud_restrictable"`
@@ -1624,6 +1631,12 @@ type DeliveryTrackingSettings struct {
 func (s *DeliveryTrackingSettings) SetDefaults() {
 	if s.Enable == nil {
 		s.Enable = new(false)
+	}
+
+	if s.EnableForAllChannels == nil {
+		// Default to tracking every channel, preserving the behavior from before
+		// per-channel scoping existed.
+		s.EnableForAllChannels = new(true)
 	}
 
 	if s.DriverName == nil {

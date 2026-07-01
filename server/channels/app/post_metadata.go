@@ -351,10 +351,11 @@ func (a *App) SanitizePostMetadataForUser(rctx request.CTX, post *model.Post, us
 					removePermalinkMetadataFromPost(post)
 					// Since we remove the permalink metadata, we return true for isMember
 					isMemberForPreviews = true
-				} else if !previewPost.Post.IsSystemMessage() {
-					// The previewed post's content is delivered to this user via the
-					// permalink embed, even if it lives in a channel not otherwise tracked.
-					// TODO - https://mattermost.atlassian.net/browse/MM-69493 Track previewed post only when feature is enabled in the previewer post's channel
+				} else if !previewPost.Post.IsSystemMessage() && a.deliveryTrackingEnabledForChannel(previewPost.Post.ChannelId) {
+					// The previewed post's content is delivered to this user via the permalink
+					// embed. Tracking is gated on the previewed post's own channel. The
+					// cross-channel case (tracking because the previewer's channel is tracked
+					// even when the previewed channel is not) is intentionally deferred.
 					a.RecordPostDelivery(userID, previewPost.Post.Id, model.DeliveryTargetUser, model.DeliveryMechanismProduct)
 				}
 			}

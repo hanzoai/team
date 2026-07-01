@@ -2190,6 +2190,10 @@
     "translation": "Failed to read the flagged post report file information."
   },
   {
+    "id": "api.delivery_tracking.error.license",
+    "translation": "Post delivery tracking is available on Mattermost Enterprise Advanced."
+  },
+  {
     "id": "api.draft.create_draft.can_not_draft_to_deleted.error",
     "translation": "Can not save draft to deleted channel"
   },
@@ -6463,6 +6467,14 @@
   {
     "id": "app.delete_scheduled_post.get_scheduled_post.error",
     "translation": "Unable to fetch existing scheduled post from database."
+  },
+  {
+    "id": "app.delivery_tracking.get_channels.app_error",
+    "translation": "Unable to retrieve the post delivery tracking channel settings."
+  },
+  {
+    "id": "app.delivery_tracking.save_channels.app_error",
+    "translation": "Unable to save the post delivery tracking channel settings."
   },
   {
     "id": "app.desktop_token.generateServerToken.invalid_or_expired",
@@ -12253,6 +12265,10 @@
   {
     "id": "model.dcr.is_valid.unsupported_auth_method.app_error",
     "translation": "Unsupported token_endpoint_auth_method supplied."
+  },
+  {
+    "id": "model.delivery_tracking.is_valid.channel_id.app_error",
+    "translation": "Invalid channel ID provided in the post delivery tracking settings."
   },
   {
     "id": "model.draft.is_valid.channel_id.app_error",
