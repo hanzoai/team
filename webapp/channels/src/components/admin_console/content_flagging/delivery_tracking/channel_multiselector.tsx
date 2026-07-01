@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
-import type {MultiValue} from 'react-select';
+import type {MultiValue, MultiValueProps, OptionProps} from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 import type {Channel, ChannelWithTeamData} from '@mattermost/types/channels';
@@ -14,11 +14,15 @@ import {searchAllChannels} from 'mattermost-redux/actions/channels';
 import {debounce} from 'mattermost-redux/actions/helpers';
 import {Client4} from 'mattermost-redux/client';
 
+import ChannelIcon from 'components/channel_type_icon/channel_icon';
+import CloseCircleSolidIcon from 'components/widgets/icons/close_circle_solid_icon';
+
 import './channel_multiselector.scss';
 
 type ChannelOption = {
     label: string;
     value: string;
+    raw?: Channel;
 };
 
 type Props = {
@@ -34,6 +38,52 @@ type Props = {
 function channelLabel(channel: ChannelWithTeamData | Channel): string {
     const teamName = (channel as ChannelWithTeamData).team_display_name;
     return teamName ? `${channel.display_name} (${teamName})` : channel.display_name;
+}
+
+function Remove(props: React.ComponentProps<'div'>) {
+    return (
+        <div
+            className='Remove'
+            {...props}
+        >
+            <CloseCircleSolidIcon/>
+        </div>
+    );
+}
+
+function ChannelSelectorPill(props: MultiValueProps<ChannelOption, true>) {
+    const {data, innerProps, removeProps} = props;
+
+    return (
+        <div
+            className='ChannelSelectorPill'
+            {...innerProps}
+        >
+            <ChannelIcon
+                channel={data.raw}
+                size={16}
+            />
+            {data.label}
+            <Remove {...removeProps}/>
+        </div>
+    );
+}
+
+function ChannelSelectorOption(props: OptionProps<ChannelOption, true>) {
+    const {data, innerProps} = props;
+
+    return (
+        <div
+            className='ChannelSelectorOption'
+            {...innerProps}
+        >
+            <ChannelIcon
+                channel={data.raw}
+                size={16}
+            />
+            {data.label}
+        </div>
+    );
 }
 
 export default function ChannelMultiSelector({id, channelIds, onChange, disabled = false, hasError = false}: Props) {
@@ -78,6 +128,7 @@ export default function ChannelMultiSelector({id, channelIds, onChange, disabled
             setSelected(channels.map((c) => ({
                 value: c.id,
                 label: channelLabel({...c, team_display_name: teamDisplayNames[c.team_id] || ''} as ChannelWithTeamData),
+                raw: c,
             })));
         };
         resolve();
@@ -93,7 +144,7 @@ export default function ChannelMultiSelector({id, channelIds, onChange, disabled
             // ChannelWithTeamData[] (team_display_name included) rather than a paged result.
             const result = await dispatch(searchAllChannels(term, {exclude_default_channels: false}));
             const channels = (result?.data || []) as ChannelWithTeamData[];
-            callback(channels.map((c) => ({value: c.id, label: channelLabel(c)})));
+            callback(channels.map((c) => ({value: c.id, label: channelLabel(c), raw: c})));
         } catch {
             callback([]);
         }
@@ -136,6 +187,8 @@ export default function ChannelMultiSelector({id, channelIds, onChange, disabled
                 components={{
                     DropdownIndicator: () => null,
                     IndicatorSeparator: () => null,
+                    Option: ChannelSelectorOption,
+                    MultiValue: ChannelSelectorPill,
                 }}
             />
         </div>
