@@ -4,6 +4,7 @@
 import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
+import {Link} from 'react-router-dom';
 
 import {Button} from '@mattermost/shared/components/button';
 import type {Role} from '@mattermost/types/roles';
@@ -194,7 +195,7 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
         }
 
         return (
-            <div className='member-row--padded'>
+            <div className='manage-roles-modal__delegated-roles'>
                 <p>
                     <strong>
                         <FormattedMessage
@@ -206,7 +207,17 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
                 <p className='light'>
                     <FormattedMessage
                         id='admin.manage_roles.delegatedAdminRolesDescription'
-                        defaultMessage='Grant access to specific areas of the System Console without making this account a full System Admin.'
+                        defaultMessage='Grant access to specific areas of the System Console without making this account a full System Admin. <link>Learn more about each role</link>.'
+                        values={{
+                            link: (msg: React.ReactNode) => (
+                                <Link
+                                    to='/admin_console/user_management/system_roles'
+                                    onClick={this.onHide}
+                                >
+                                    {msg}
+                                </Link>
+                            ),
+                        }}
                     />
                 </p>
                 {availableRoles.map((name) => (
@@ -223,9 +234,6 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
                             <strong>
                                 <FormattedMessage {...rolesStrings[name].name}/>
                             </strong>
-                            <span className='d-block pt-2 pb-2 light'>
-                                <FormattedMessage {...rolesStrings[name].description}/>
-                            </span>
                         </label>
                     </div>
                 ))}

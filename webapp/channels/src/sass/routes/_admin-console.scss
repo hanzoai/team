@@ -992,10 +992,22 @@
     }
 
     .manage-row--inner {
-        padding: 15px 0 4px;
+        padding: 15px 0 20px;
 
         & + div {
             border-top: variables.$border-gray;
+        }
+    }
+
+    .manage-roles-modal__delegated-roles {
+        padding-top: 20px;
+
+        strong {
+            margin-right: 10px;
+        }
+
+        p strong {
+            margin-right: 5px;
         }
     }
 
