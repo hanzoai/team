@@ -116,6 +116,9 @@ func NewEnvironment(
 	}
 
 	for _, opt := range opts {
+		if opt == nil {
+			continue
+		}
 		if err := opt(env); err != nil {
 			return nil, errors.Wrap(err, "failed to apply environment option")
 		}
