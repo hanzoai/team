@@ -37,9 +37,9 @@ type registeredPlugin struct {
 	supervisor *supervisor
 
 	// mu guards RPC hook dispatch against concurrent teardown. Writers (Deactivate/Shutdown)
-	// hold it for the duration of OnDeactivate+Shutdown so that once teardown begins, readers
-	// (RunMultiPluginHook*) fail fast via TryRLock instead of queuing behind the closing
-	// connection.
+	// hold it only for the supervisor Shutdown call, after OnDeactivate has already run with
+	// the connection live, so that once teardown begins, readers (RunMultiPluginHook*) fail
+	// fast via TryRLock instead of queuing behind the closing connection.
 	mu *sync.RWMutex
 }
 
