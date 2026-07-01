@@ -80,7 +80,6 @@ type Store struct {
 	ViewStore                       mocks.ViewStore
 	ChannelJoinRequestStore         mocks.ChannelJoinRequestStore
 	UserPostDeliveryStore           mocks.UserPostDeliveryStore
-	DeliveryTrackingStore           mocks.DeliveryTrackingStore
 }
 
 func (s *Store) Logger() mlog.LoggerIFace                      { return s.logger }
@@ -196,9 +195,6 @@ func (s *Store) ChannelJoinRequest() store.ChannelJoinRequestStore {
 func (s *Store) UserPostDelivery() store.UserPostDeliveryStore {
 	return &s.UserPostDeliveryStore
 }
-func (s *Store) DeliveryTracking() store.DeliveryTrackingStore {
-	return &s.DeliveryTrackingStore
-}
 func (s *Store) View() store.ViewStore {
 	return &s.ViewStore
 }
@@ -266,6 +262,5 @@ func (s *Store) AssertExpectations(t mock.TestingT) bool {
 		&s.ViewStore,
 		&s.ChannelJoinRequestStore,
 		&s.UserPostDeliveryStore,
-		&s.DeliveryTrackingStore,
 	)
 }

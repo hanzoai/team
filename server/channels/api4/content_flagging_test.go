@@ -29,8 +29,8 @@ func setBasicCommonReviewerConfig(th *TestHelper) *model.AppError {
 			},
 		},
 	}
-	config.SetDefaults()
-	return th.App.SaveContentFlaggingConfig(config)
+	config.SetDefaults(false)
+	return th.App.SaveContentFlaggingConfig(th.Context, config)
 }
 
 func setNonReviewerConfig(th *TestHelper) *model.AppError {
@@ -52,8 +52,8 @@ func setNonReviewerConfig(th *TestHelper) *model.AppError {
 			},
 		},
 	}
-	config.SetDefaults()
-	return th.App.SaveContentFlaggingConfig(config)
+	config.SetDefaults(false)
+	return th.App.SaveContentFlaggingConfig(th.Context, config)
 }
 
 func setBasicTeamReviewerConfig(th *TestHelper, extraReviewerIds ...string) *model.AppError {
@@ -77,8 +77,8 @@ func setBasicTeamReviewerConfig(th *TestHelper, extraReviewerIds ...string) *mod
 			},
 		},
 	}
-	config.SetDefaults()
-	return th.App.SaveContentFlaggingConfig(config)
+	config.SetDefaults(false)
+	return th.App.SaveContentFlaggingConfig(th.Context, config)
 }
 
 func setCommonReviewerWithRequiredCommentConfig(th *TestHelper) *model.AppError {
@@ -98,8 +98,8 @@ func setCommonReviewerWithRequiredCommentConfig(th *TestHelper) *model.AppError 
 			},
 		},
 	}
-	config.SetDefaults()
-	return th.App.SaveContentFlaggingConfig(config)
+	config.SetDefaults(false)
+	return th.App.SaveContentFlaggingConfig(th.Context, config)
 }
 
 func flagPostViaAPI(t *testing.T, client *model.Client4, postId string) {
@@ -321,7 +321,7 @@ func TestSaveContentFlaggingSettings(t *testing.T) {
 				},
 			},
 		}
-		config.SetDefaults()
+		config.SetDefaults(false)
 
 		th.LoginSystemAdmin(t)
 		resp, err := th.SystemAdminClient.SaveContentFlaggingSettings(context.Background(), &config)
@@ -592,8 +592,8 @@ func TestFlagPost(t *testing.T) {
 				},
 			},
 		}
-		config.SetDefaults()
-		appErr := th.App.SaveContentFlaggingConfig(config)
+		config.SetDefaults(false)
+		appErr := th.App.SaveContentFlaggingConfig(th.Context, config)
 		require.Nil(t, appErr)
 
 		post := th.CreatePost(t)
@@ -693,8 +693,8 @@ func TestGetTeamPostReportingFeatureStatus(t *testing.T) {
 				},
 			},
 		}
-		config.SetDefaults()
-		appErr := th.App.SaveContentFlaggingConfig(config)
+		config.SetDefaults(false)
+		appErr := th.App.SaveContentFlaggingConfig(th.Context, config)
 		require.Nil(t, appErr)
 
 		// using basic user because the default user is a system admin, and they have
@@ -846,8 +846,8 @@ func TestAssignContentFlaggingReviewer(t *testing.T) {
 				},
 			},
 		}
-		config.SetDefaults()
-		appErr := th.App.SaveContentFlaggingConfig(config)
+		config.SetDefaults(false)
+		appErr := th.App.SaveContentFlaggingConfig(th.Context, config)
 		require.Nil(t, appErr)
 
 		post := th.CreatePost(t)
@@ -882,8 +882,8 @@ func TestAssignContentFlaggingReviewer(t *testing.T) {
 				},
 			},
 		}
-		config.SetDefaults()
-		appErr = th.App.SaveContentFlaggingConfig(config)
+		config.SetDefaults(false)
+		appErr = th.App.SaveContentFlaggingConfig(th.Context, config)
 		require.Nil(t, appErr)
 
 		post := th.CreatePost(t)

@@ -286,9 +286,9 @@ func TestContentFlaggingSettings_SetDefault(t *testing.T) {
 				EnableContentFlagging: &enabled,
 			},
 		}
-		settings.SetDefaults()
+		settings.SetDefaults(false)
 
-		require.Nil(t, settings.IsValid())
+		require.Nil(t, settings.IsValid(false))
 		require.True(t, *settings.EnableContentFlagging)
 	})
 }
@@ -314,7 +314,7 @@ func TestContentFlaggingSettings_IsValid(t *testing.T) {
 			},
 		}
 
-		err := settings.IsValid()
+		err := settings.IsValid(false)
 		require.NotNil(t, err)
 		require.Contains(t, err.Id, "notification_settings")
 	})
@@ -340,7 +340,7 @@ func TestContentFlaggingSettings_IsValid(t *testing.T) {
 		settings.NotificationSettings.SetDefaults()
 		settings.AdditionalSettings.SetDefaults()
 
-		err := settings.IsValid()
+		err := settings.IsValid(false)
 		require.NotNil(t, err)
 		require.Contains(t, err.Id, "common_reviewers_not_set")
 	})
@@ -355,9 +355,9 @@ func TestContentFlaggingSettings_IsValid(t *testing.T) {
 			},
 		}
 
-		settings.SetDefaults()
+		settings.SetDefaults(false)
 
-		err := settings.IsValid()
+		err := settings.IsValid(false)
 		require.NotNil(t, err)
 		require.Contains(t, err.Id, "reasons_not_set")
 	})

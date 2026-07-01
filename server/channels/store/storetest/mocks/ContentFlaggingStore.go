@@ -6,6 +6,7 @@ package mocks
 
 import (
 	model "github.com/mattermost/mattermost/server/public/model"
+	request "github.com/mattermost/mattermost/server/public/shared/request"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -19,24 +20,24 @@ func (_m *ContentFlaggingStore) ClearCaches() {
 	_m.Called()
 }
 
-// GetReviewerSettings provides a mock function with no fields
-func (_m *ContentFlaggingStore) GetReviewerSettings() (*model.ReviewerIDsSettings, error) {
+// GetSettings provides a mock function with no fields
+func (_m *ContentFlaggingStore) GetSettings() (*model.ContentFlaggingSettingsRequest, error) {
 	ret := _m.Called()
 
 	if len(ret) == 0 {
-		panic("no return value specified for GetReviewerSettings")
+		panic("no return value specified for GetSettings")
 	}
 
-	var r0 *model.ReviewerIDsSettings
+	var r0 *model.ContentFlaggingSettingsRequest
 	var r1 error
-	if rf, ok := ret.Get(0).(func() (*model.ReviewerIDsSettings, error)); ok {
+	if rf, ok := ret.Get(0).(func() (*model.ContentFlaggingSettingsRequest, error)); ok {
 		return rf()
 	}
-	if rf, ok := ret.Get(0).(func() *model.ReviewerIDsSettings); ok {
+	if rf, ok := ret.Get(0).(func() *model.ContentFlaggingSettingsRequest); ok {
 		r0 = rf()
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*model.ReviewerIDsSettings)
+			r0 = ret.Get(0).(*model.ContentFlaggingSettingsRequest)
 		}
 	}
 
@@ -49,17 +50,47 @@ func (_m *ContentFlaggingStore) GetReviewerSettings() (*model.ReviewerIDsSetting
 	return r0, r1
 }
 
-// SaveReviewerSettings provides a mock function with given fields: reviewerSettings
-func (_m *ContentFlaggingStore) SaveReviewerSettings(reviewerSettings model.ReviewerIDsSettings) error {
-	ret := _m.Called(reviewerSettings)
+// GetTrackedChannelIDs provides a mock function with given fields: rctx
+func (_m *ContentFlaggingStore) GetTrackedChannelIDs(rctx request.CTX) ([]string, error) {
+	ret := _m.Called(rctx)
 
 	if len(ret) == 0 {
-		panic("no return value specified for SaveReviewerSettings")
+		panic("no return value specified for GetTrackedChannelIDs")
+	}
+
+	var r0 []string
+	var r1 error
+	if rf, ok := ret.Get(0).(func(request.CTX) ([]string, error)); ok {
+		return rf(rctx)
+	}
+	if rf, ok := ret.Get(0).(func(request.CTX) []string); ok {
+		r0 = rf(rctx)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]string)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(request.CTX) error); ok {
+		r1 = rf(rctx)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// SaveSettings provides a mock function with given fields: config
+func (_m *ContentFlaggingStore) SaveSettings(config model.ContentFlaggingSettingsRequest) error {
+	ret := _m.Called(config)
+
+	if len(ret) == 0 {
+		panic("no return value specified for SaveSettings")
 	}
 
 	var r0 error
-	if rf, ok := ret.Get(0).(func(model.ReviewerIDsSettings) error); ok {
-		r0 = rf(reviewerSettings)
+	if rf, ok := ret.Get(0).(func(model.ContentFlaggingSettingsRequest) error); ok {
+		r0 = rf(config)
 	} else {
 		r0 = ret.Error(0)
 	}

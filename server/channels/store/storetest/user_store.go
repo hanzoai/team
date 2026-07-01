@@ -7714,7 +7714,7 @@ func testUserStoreSearchCommonContentFlaggingReviewers(t *testing.T, rctx reques
 		TeamReviewersSetting: map[string]*model.TeamReviewerSetting{},
 	}
 
-	saveErr = ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+	saveErr = saveContentFlaggingReviewers(ss, reviewerSettings)
 	require.NoError(t, saveErr)
 
 	t.Run("search with empty term returns all common reviewers", func(t *testing.T) {
@@ -7793,7 +7793,7 @@ func testUserStoreSearchTeamContentFlaggingReviewers(t *testing.T, rctx request.
 		},
 	}
 
-	saveErr = ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+	saveErr = saveContentFlaggingReviewers(ss, reviewerSettings)
 	require.NoError(t, saveErr)
 
 	t.Run("search with empty term returns all team reviewers", func(t *testing.T) {
@@ -7817,7 +7817,7 @@ func testUserStoreSearchTeamContentFlaggingReviewers(t *testing.T, rctx request.
 		// Add inactive user as team reviewer
 		reviewerSettings.TeamReviewersSetting[teamId].ReviewerIds = append(
 			reviewerSettings.TeamReviewersSetting[teamId].ReviewerIds, u3.Id)
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		require.NoError(t, err)
 
 		users, err := ss.User().SearchTeamContentFlaggingReviewers(teamId, "inactiveteamreviewer")

@@ -477,32 +477,17 @@ func saveContentFlaggingSettings(c *Context, w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	config.SetDefaults()
-	if appErr := config.IsValid(); appErr != nil {
+	deliveryTrackingEnabled := c.App.Config().FeatureFlags.PostDeliveryTracking
+	config.SetDefaults(deliveryTrackingEnabled)
+	if appErr := config.IsValid(deliveryTrackingEnabled); appErr != nil {
 		c.Err = appErr
 		return
 	}
 
-	deliveryTrackingEnabled := c.App.Config().FeatureFlags.PostDeliveryTracking && config.DeliveryTracking != nil
-	if deliveryTrackingEnabled {
-		config.DeliveryTracking.SetDefaults()
-		if appErr := config.DeliveryTracking.IsValid(); appErr != nil {
-			c.Err = appErr
-			return
-		}
-	}
-
-	appErr := c.App.SaveContentFlaggingConfig(config)
+	appErr := c.App.SaveContentFlaggingConfig(c.AppContext, config)
 	if appErr != nil {
 		c.Err = appErr
 		return
-	}
-
-	if deliveryTrackingEnabled {
-		if appErr := c.App.SaveDeliveryTrackingConfig(c.AppContext, *config.DeliveryTracking); appErr != nil {
-			c.Err = appErr
-			return
-		}
 	}
 
 	auditRec.Success()
@@ -520,33 +505,10 @@ func getContentFlaggingSettings(c *Context, w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	reviewerIDs, appErr := c.App.GetContentFlaggingConfigReviewerIDs()
+	fullConfig, appErr := c.App.GetContentFlaggingSettings()
 	if appErr != nil {
 		c.Err = appErr
 		return
-	}
-
-	config := c.App.Config().ContentFlaggingSettings
-
-	fullConfig := model.ContentFlaggingSettingsRequest{
-		ReviewerSettings: &model.ReviewSettingsRequest{
-			ReviewerSettings:    *config.ReviewerSettings,
-			ReviewerIDsSettings: *reviewerIDs,
-		},
-		ContentFlaggingSettingsBase: model.ContentFlaggingSettingsBase{
-			EnableContentFlagging: config.EnableContentFlagging,
-			NotificationSettings:  config.NotificationSettings,
-			AdditionalSettings:    config.AdditionalSettings,
-		},
-	}
-
-	if c.App.Config().FeatureFlags.PostDeliveryTracking {
-		deliveryTrackingConfig, appErr := c.App.GetDeliveryTrackingConfig(c.AppContext)
-		if appErr != nil {
-			c.Err = appErr
-			return
-		}
-		fullConfig.DeliveryTracking = deliveryTrackingConfig
 	}
 
 	if err := json.NewEncoder(w).Encode(fullConfig); err != nil {

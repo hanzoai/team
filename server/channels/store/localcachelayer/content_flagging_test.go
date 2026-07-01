@@ -18,15 +18,19 @@ func TestContentFlaggingStore(t *testing.T) {
 	StoreTestWithSqlStore(t, storetest.TestContentFlaggingStore)
 }
 
-func TestContentFlaggingStoreGetReviewerSettingsCache(t *testing.T) {
+func TestContentFlaggingStoreGetSettingsCache(t *testing.T) {
 	logger := mlog.CreateConsoleTestLogger(t)
 
 	setBasicMock := func(mockStore *mocks.Store, cachedStore LocalCacheStore) {
-		reviewerSettings := &model.ReviewerIDsSettings{
-			CommonReviewerIds: []string{"user1", "user2", "user3"},
+		settings := &model.ContentFlaggingSettingsRequest{
+			ReviewerSettings: &model.ReviewSettingsRequest{
+				ReviewerIDsSettings: model.ReviewerIDsSettings{
+					CommonReviewerIds: []string{"user1", "user2", "user3"},
+				},
+			},
 		}
 		mockContentFlaggingStore := mockStore.ContentFlagging().(*mocks.ContentFlaggingStore)
-		mockContentFlaggingStore.On("GetReviewerSettings").Return(reviewerSettings, nil)
+		mockContentFlaggingStore.On("GetSettings").Return(settings, nil)
 		cachedStore.contentFlagging.ContentFlaggingStore = mockContentFlaggingStore
 	}
 
@@ -37,22 +41,22 @@ func TestContentFlaggingStoreGetReviewerSettingsCache(t *testing.T) {
 		require.NoError(t, err)
 		setBasicMock(mockStore, cachedStore)
 
-		settings, err := cachedStore.ContentFlagging().GetReviewerSettings()
+		settings, err := cachedStore.ContentFlagging().GetSettings()
 		require.NoError(t, err)
-		require.Len(t, settings.CommonReviewerIds, 3)
-		require.Contains(t, settings.CommonReviewerIds, "user1")
-		require.Contains(t, settings.CommonReviewerIds, "user2")
-		require.Contains(t, settings.CommonReviewerIds, "user3")
+		require.Len(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, 3)
+		require.Contains(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, "user1")
+		require.Contains(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, "user2")
+		require.Contains(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, "user3")
 
-		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetReviewerSettings", 1)
+		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetSettings", 1)
 
-		settings, err = cachedStore.ContentFlagging().GetReviewerSettings()
+		settings, err = cachedStore.ContentFlagging().GetSettings()
 		require.NoError(t, err)
-		require.Len(t, settings.CommonReviewerIds, 3)
-		require.Contains(t, settings.CommonReviewerIds, "user1")
-		require.Contains(t, settings.CommonReviewerIds, "user2")
-		require.Contains(t, settings.CommonReviewerIds, "user3")
-		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetReviewerSettings", 1)
+		require.Len(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, 3)
+		require.Contains(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, "user1")
+		require.Contains(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, "user2")
+		require.Contains(t, settings.ReviewerSettings.ReviewerIDsSettings.CommonReviewerIds, "user3")
+		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetSettings", 1)
 	})
 
 	t.Run("first call not cached, clear cache, second call not cached", func(t *testing.T) {
@@ -62,15 +66,15 @@ func TestContentFlaggingStoreGetReviewerSettingsCache(t *testing.T) {
 		require.NoError(t, err)
 		setBasicMock(mockStore, cachedStore)
 
-		_, err = cachedStore.ContentFlagging().GetReviewerSettings()
+		_, err = cachedStore.ContentFlagging().GetSettings()
 		require.NoError(t, err)
-		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetReviewerSettings", 1)
+		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetSettings", 1)
 
 		cachedStore.ContentFlagging().ClearCaches()
 
-		_, err = cachedStore.ContentFlagging().GetReviewerSettings()
+		_, err = cachedStore.ContentFlagging().GetSettings()
 		require.NoError(t, err)
-		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetReviewerSettings", 2)
+		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetSettings", 2)
 	})
 
 	t.Run("cluster invalidation clears cache", func(t *testing.T) {
@@ -81,9 +85,9 @@ func TestContentFlaggingStoreGetReviewerSettingsCache(t *testing.T) {
 		setBasicMock(mockStore, cachedStore)
 
 		// First call to populate cache
-		_, err = cachedStore.ContentFlagging().GetReviewerSettings()
+		_, err = cachedStore.ContentFlagging().GetSettings()
 		require.NoError(t, err)
-		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetReviewerSettings", 1)
+		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetSettings", 1)
 
 		// Simulate cluster invalidation message
 		msg := &model.ClusterMessage{
@@ -92,8 +96,8 @@ func TestContentFlaggingStoreGetReviewerSettingsCache(t *testing.T) {
 		cachedStore.contentFlagging.handleClusterInvalidateContentFlagging(msg)
 
 		// Next call should hit the store again
-		_, err = cachedStore.ContentFlagging().GetReviewerSettings()
+		_, err = cachedStore.ContentFlagging().GetSettings()
 		require.NoError(t, err)
-		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetReviewerSettings", 2)
+		mockStore.ContentFlagging().(*mocks.ContentFlaggingStore).AssertNumberOfCalls(t, "GetSettings", 2)
 	})
 }

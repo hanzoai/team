@@ -6465,14 +6465,6 @@
     "translation": "Unable to fetch existing scheduled post from database."
   },
   {
-    "id": "app.delivery_tracking.get_channels.app_error",
-    "translation": "Unable to retrieve the post delivery tracking channel settings."
-  },
-  {
-    "id": "app.delivery_tracking.save_channels.app_error",
-    "translation": "Unable to save the post delivery tracking channel settings."
-  },
-  {
     "id": "app.desktop_token.generateServerToken.invalid_or_expired",
     "translation": "Token does not exist or is expired"
   },

@@ -42,7 +42,7 @@ type ContentFlaggingSettingsRequest struct {
 	DeliveryTracking *DeliveryTrackingConfig `json:"DeliveryTracking,omitempty"`
 }
 
-func (cfs *ContentFlaggingSettingsRequest) SetDefaults() {
+func (cfs *ContentFlaggingSettingsRequest) SetDefaults(postDeliveryTrackingEnabled bool) {
 	cfs.ContentFlaggingSettingsBase.SetDefaults()
 
 	if cfs.EnableContentFlagging == nil {
@@ -66,15 +66,23 @@ func (cfs *ContentFlaggingSettingsRequest) SetDefaults() {
 	cfs.NotificationSettings.SetDefaults()
 	cfs.ReviewerSettings.SetDefaults()
 	cfs.AdditionalSettings.SetDefaults()
+
+	if postDeliveryTrackingEnabled && cfs.DeliveryTracking != nil {
+		cfs.DeliveryTracking.SetDefaults()
+	}
 }
 
-func (cfs *ContentFlaggingSettingsRequest) IsValid() *AppError {
+func (cfs *ContentFlaggingSettingsRequest) IsValid(postDeliveryTrackingEnabled bool) *AppError {
 	if appErr := cfs.ContentFlaggingSettingsBase.IsValid(); appErr != nil {
 		return appErr
 	}
 
 	if appErr := cfs.ReviewerSettings.IsValid(); appErr != nil {
 		return appErr
+	}
+
+	if postDeliveryTrackingEnabled && cfs.DeliveryTracking != nil {
+		return cfs.DeliveryTracking.IsValid()
 	}
 
 	return nil

@@ -31,10 +31,11 @@ const (
 )
 
 func (a *App) ContentFlaggingEnabledForTeam(teamId string) (bool, *model.AppError) {
-	reviewerIDs, appErr := a.GetContentFlaggingConfigReviewerIDs()
+	settings, appErr := a.GetContentFlaggingSettings()
 	if appErr != nil {
 		return false, appErr
 	}
+	reviewerIDs := settings.ReviewerSettings.ReviewerIDsSettings
 
 	reviewerSettings := a.Config().ContentFlaggingSettings.ReviewerSettings
 	commonReviewersEnabled := reviewerSettings.CommonReviewers != nil && *reviewerSettings.CommonReviewers
@@ -423,10 +424,11 @@ func (a *App) getContentReviewBot(rctx request.CTX) (*model.Bot, *model.AppError
 }
 
 func (a *App) getReviewersForTeam(teamId string, includeAdditionalReviewers bool) ([]string, *model.AppError) {
-	reviewerIDs, appErr := a.GetContentFlaggingConfigReviewerIDs()
+	settings, appErr := a.GetContentFlaggingSettings()
 	if appErr != nil {
 		return nil, appErr
 	}
+	reviewerIDs := settings.ReviewerSettings.ReviewerIDsSettings
 
 	reviewerUserIDMap := map[string]bool{}
 
@@ -1032,9 +1034,16 @@ func (a *App) publishContentFlaggingReportUpdateEvent(targetId, teamId string, p
 	return nil
 }
 
-func (a *App) SaveContentFlaggingConfig(config model.ContentFlaggingSettingsRequest) *model.AppError {
-	err := a.Srv().Store().ContentFlagging().SaveReviewerSettings(config.ReviewerSettings.ReviewerIDsSettings)
-	if err != nil {
+func (a *App) SaveContentFlaggingConfig(rctx request.CTX, config model.ContentFlaggingSettingsRequest) *model.AppError {
+	deliveryTrackingActive := a.Config().FeatureFlags.PostDeliveryTracking && config.DeliveryTracking != nil
+
+	// When feature flag is off, setting this to nil ensures the store layer
+	// doesn't update the value
+	if !deliveryTrackingActive {
+		config.DeliveryTracking = nil
+	}
+
+	if err := a.Srv().Store().ContentFlagging().SaveSettings(config); err != nil {
 		return model.NewAppError("SaveContentFlaggingConfig", "app.data_spillage.save_reviewer_settings.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
 	}
 
@@ -1048,9 +1057,27 @@ func (a *App) SaveContentFlaggingConfig(config model.ContentFlaggingSettingsRequ
 			SystemAdminsAsReviewers: config.ReviewerSettings.SystemAdminsAsReviewers,
 			TeamAdminsAsReviewers:   config.ReviewerSettings.TeamAdminsAsReviewers,
 		}
+
+		if deliveryTrackingActive {
+			cfg.DeliveryTrackingSettings.Enable = config.DeliveryTracking.Enable
+			cfg.DeliveryTrackingSettings.EnableForAllChannels = config.DeliveryTracking.EnableForAllChannels
+		}
 	})
 
 	a.clearContentFlaggingConfigCache()
+
+	if deliveryTrackingActive {
+		ch := a.Channels()
+		if err := ch.reloadDeliveryTrackedChannels(rctx, a.Srv().Store()); err != nil {
+			a.Srv().Log().Warn(
+				"Failed to reload post-delivery tracking channel snapshot after save; retry scheduled",
+				mlog.Err(err),
+			)
+			ch.scheduleDeliveryTrackedChannelsReloadRetry()
+		}
+		ch.broadcastDeliveryTrackedChannelsInvalidation()
+	}
+
 	return nil
 }
 
@@ -1065,13 +1092,43 @@ func (a *App) clearContentFlaggingConfigCache() {
 	}
 }
 
-func (a *App) GetContentFlaggingConfigReviewerIDs() (*model.ReviewerIDsSettings, *model.AppError) {
-	reviewerSettings, err := a.Srv().Store().ContentFlagging().GetReviewerSettings()
+func (a *App) GetContentFlaggingSettings() (*model.ContentFlaggingSettingsRequest, *model.AppError) {
+	stored, err := a.Srv().Store().ContentFlagging().GetSettings()
 	if err != nil {
-		return nil, model.NewAppError("GetContentFlaggingConfigReviewerIDs", "app.data_spillage.get_reviewer_settings.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
+		return nil, model.NewAppError("GetContentFlaggingSettings", "app.data_spillage.get_reviewer_settings.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
 	}
 
-	return reviewerSettings, nil
+	cfSettings := a.Config().ContentFlaggingSettings
+
+	// Build a fresh request so we never mutate the (possibly cached) object the store
+	// returns. The store supplies the DB-backed fields (reviewer IDs, tracked channels);
+	// the toggles/flags come from config.
+	fullConfig := &model.ContentFlaggingSettingsRequest{
+		ContentFlaggingSettingsBase: model.ContentFlaggingSettingsBase{
+			EnableContentFlagging: cfSettings.EnableContentFlagging,
+			NotificationSettings:  cfSettings.NotificationSettings,
+			AdditionalSettings:    cfSettings.AdditionalSettings,
+		},
+		ReviewerSettings: &model.ReviewSettingsRequest{
+			ReviewerSettings:    *cfSettings.ReviewerSettings,
+			ReviewerIDsSettings: stored.ReviewerSettings.ReviewerIDsSettings,
+		},
+	}
+
+	if a.Config().FeatureFlags.PostDeliveryTracking {
+		dtSettings := a.Config().DeliveryTrackingSettings
+		var channelIDs []string
+		if stored.DeliveryTracking != nil {
+			channelIDs = stored.DeliveryTracking.ChannelIds
+		}
+		fullConfig.DeliveryTracking = &model.DeliveryTrackingConfig{
+			Enable:               dtSettings.Enable,
+			EnableForAllChannels: dtSettings.EnableForAllChannels,
+			ChannelIds:           channelIDs,
+		}
+	}
+
+	return fullConfig, nil
 }
 
 func (a *App) SearchReviewers(rctx request.CTX, term string, teamId string) ([]*model.User, *model.AppError) {

@@ -13,10 +13,25 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func saveContentFlaggingReviewers(ss store.Store, reviewerSettings model.ReviewerIDsSettings) error {
+	return ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{
+		ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: reviewerSettings},
+	})
+}
+
+func getContentFlaggingReviewers(ss store.Store) (*model.ReviewerIDsSettings, error) {
+	settings, err := ss.ContentFlagging().GetSettings()
+	if err != nil {
+		return nil, err
+	}
+	return &settings.ReviewerSettings.ReviewerIDsSettings, nil
+}
+
 func TestContentFlaggingStore(t *testing.T, rctx request.CTX, ss store.Store, s SqlStore) {
 	t.Run("SaveReviewerSettings", func(t *testing.T) { testSaveReviewerSettings(t, rctx, ss, s) })
 	t.Run("GetReviewerSettings", func(t *testing.T) { testGetReviewerSettings(t, rctx, ss, s) })
 	t.Run("SaveAndGetReviewerSettings", func(t *testing.T) { testSaveAndGetReviewerSettings(t, rctx, ss, s) })
+	t.Run("TrackedChannels", func(t *testing.T) { testContentFlaggingTrackedChannels(t, rctx, ss, s) })
 }
 
 func testSaveReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s SqlStore) {
@@ -31,11 +46,11 @@ func testSaveReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s 
 			TeamReviewersSetting: teamSettings,
 		}
 
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		assert.NoError(t, err)
 
 		// Verify settings were saved (should be empty)
-		settings, err := ss.ContentFlagging().GetReviewerSettings()
+		settings, err := getContentFlaggingReviewers(ss)
 		assert.NoError(t, err)
 		assert.Equal(t, 0, len(settings.CommonReviewerIds))
 		assert.Equal(t, 0, len(settings.TeamReviewersSetting))
@@ -54,11 +69,11 @@ func testSaveReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s 
 			TeamReviewersSetting: teamSettings,
 		}
 
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		assert.NoError(t, err)
 
 		// Verify settings were saved
-		settings, err := ss.ContentFlagging().GetReviewerSettings()
+		settings, err := getContentFlaggingReviewers(ss)
 		assert.NoError(t, err)
 		assert.NotNil(t, settings.CommonReviewerIds)
 		assert.Equal(t, 2, len(settings.CommonReviewerIds))
@@ -91,11 +106,11 @@ func testSaveReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s 
 			TeamReviewersSetting: teamSettings,
 		}
 
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		assert.NoError(t, err)
 
 		// Verify settings were saved
-		settings, err := ss.ContentFlagging().GetReviewerSettings()
+		settings, err := getContentFlaggingReviewers(ss)
 		assert.NoError(t, err)
 		assert.NotNil(t, settings.TeamReviewersSetting)
 		assert.Equal(t, 2, len(settings.TeamReviewersSetting))
@@ -132,11 +147,11 @@ func testSaveReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s 
 			TeamReviewersSetting: teamSettings,
 		}
 
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		assert.NoError(t, err)
 
 		// Verify settings were saved
-		settings, err := ss.ContentFlagging().GetReviewerSettings()
+		settings, err := getContentFlaggingReviewers(ss)
 		assert.NoError(t, err)
 		assert.NotNil(t, settings.TeamReviewersSetting)
 
@@ -169,7 +184,7 @@ func testSaveReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s 
 			TeamReviewersSetting: teamSettings,
 		}
 
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		assert.NoError(t, err)
 
 		// Now update with different settings
@@ -191,11 +206,11 @@ func testSaveReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s 
 			TeamReviewersSetting: newTeamSettings,
 		}
 
-		err = ss.ContentFlagging().SaveReviewerSettings(newReviewerSettings)
+		err = saveContentFlaggingReviewers(ss, newReviewerSettings)
 		assert.NoError(t, err)
 
 		// Verify old settings were replaced
-		settings, err := ss.ContentFlagging().GetReviewerSettings()
+		settings, err := getContentFlaggingReviewers(ss)
 		assert.NoError(t, err)
 
 		// Common reviewers should be updated
@@ -232,10 +247,10 @@ func testGetReviewerSettings(t *testing.T, rctx request.CTX, ss store.Store, s S
 			TeamReviewersSetting: emptyTeamSettings,
 		}
 
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		assert.NoError(t, err)
 
-		settings, err := ss.ContentFlagging().GetReviewerSettings()
+		settings, err := getContentFlaggingReviewers(ss)
 		assert.NoError(t, err)
 		assert.NotNil(t, settings)
 		assert.Equal(t, 0, len(settings.CommonReviewerIds))
@@ -286,11 +301,11 @@ func testSaveAndGetReviewerSettings(t *testing.T, rctx request.CTX, ss store.Sto
 		}
 
 		// Save the settings
-		err := ss.ContentFlagging().SaveReviewerSettings(reviewerSettings)
+		err := saveContentFlaggingReviewers(ss, reviewerSettings)
 		assert.NoError(t, err)
 
 		// Get the settings back
-		retrievedSettings, err := ss.ContentFlagging().GetReviewerSettings()
+		retrievedSettings, err := getContentFlaggingReviewers(ss)
 		assert.NoError(t, err)
 		require.NotNil(t, retrievedSettings)
 
@@ -331,5 +346,81 @@ func testSaveAndGetReviewerSettings(t *testing.T, rctx request.CTX, ss store.Sto
 		assert.True(t, *team3Setting.Enabled)
 		assert.NotNil(t, team3Setting.ReviewerIds)
 		assert.Equal(t, 0, len(team3Setting.ReviewerIds))
+	})
+}
+
+func testContentFlaggingTrackedChannels(t *testing.T, rctx request.CTX, ss store.Store, s SqlStore) {
+	emptyReviewers := model.ReviewerIDsSettings{
+		CommonReviewerIds:    []string{},
+		TeamReviewersSetting: map[string]*model.TeamReviewerSetting{},
+	}
+
+	t.Run("save and get tracked channels", func(t *testing.T) {
+		ss.ContentFlagging().ClearCaches()
+
+		channels := []string{model.NewId(), model.NewId()}
+		require.NoError(t, ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: emptyReviewers}, DeliveryTracking: &model.DeliveryTrackingConfig{ChannelIds: channels}}))
+
+		tracked, err := ss.ContentFlagging().GetTrackedChannelIDs(rctx)
+		require.NoError(t, err)
+		assert.ElementsMatch(t, channels, tracked)
+
+		settingsResp, err := ss.ContentFlagging().GetSettings()
+		require.NoError(t, err)
+		assert.ElementsMatch(t, channels, settingsResp.DeliveryTracking.ChannelIds)
+	})
+
+	t.Run("replaces existing tracked channels", func(t *testing.T) {
+		ss.ContentFlagging().ClearCaches()
+
+		initial := []string{model.NewId(), model.NewId()}
+		require.NoError(t, ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: emptyReviewers}, DeliveryTracking: &model.DeliveryTrackingConfig{ChannelIds: initial}}))
+
+		replacement := []string{model.NewId()}
+		require.NoError(t, ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: emptyReviewers}, DeliveryTracking: &model.DeliveryTrackingConfig{ChannelIds: replacement}}))
+
+		tracked, err := ss.ContentFlagging().GetTrackedChannelIDs(rctx)
+		require.NoError(t, err)
+		assert.ElementsMatch(t, replacement, tracked)
+	})
+
+	t.Run("deduplicates and skips empty ids", func(t *testing.T) {
+		ss.ContentFlagging().ClearCaches()
+
+		channelID := model.NewId()
+		channels := []string{channelID, channelID, ""}
+		require.NoError(t, ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: emptyReviewers}, DeliveryTracking: &model.DeliveryTrackingConfig{ChannelIds: channels}}))
+
+		tracked, err := ss.ContentFlagging().GetTrackedChannelIDs(rctx)
+		require.NoError(t, err)
+		assert.Equal(t, []string{channelID}, tracked)
+	})
+
+	t.Run("empty slice clears tracked channels", func(t *testing.T) {
+		ss.ContentFlagging().ClearCaches()
+
+		channels := []string{model.NewId()}
+		require.NoError(t, ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: emptyReviewers}, DeliveryTracking: &model.DeliveryTrackingConfig{ChannelIds: channels}}))
+
+		empty := []string{}
+		require.NoError(t, ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: emptyReviewers}, DeliveryTracking: &model.DeliveryTrackingConfig{ChannelIds: empty}}))
+
+		tracked, err := ss.ContentFlagging().GetTrackedChannelIDs(rctx)
+		require.NoError(t, err)
+		assert.Empty(t, tracked)
+	})
+
+	t.Run("nil leaves tracked channels untouched", func(t *testing.T) {
+		ss.ContentFlagging().ClearCaches()
+
+		channels := []string{model.NewId(), model.NewId()}
+		require.NoError(t, ss.ContentFlagging().SaveSettings(model.ContentFlaggingSettingsRequest{ReviewerSettings: &model.ReviewSettingsRequest{ReviewerIDsSettings: emptyReviewers}, DeliveryTracking: &model.DeliveryTrackingConfig{ChannelIds: channels}}))
+
+		// A content-flagging-only save (nil tracked channels) must not clear the set.
+		require.NoError(t, saveContentFlaggingReviewers(ss, emptyReviewers))
+
+		tracked, err := ss.ContentFlagging().GetTrackedChannelIDs(rctx)
+		require.NoError(t, err)
+		assert.ElementsMatch(t, channels, tracked)
 	})
 }

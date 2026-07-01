@@ -107,7 +107,6 @@ type Store interface {
 	TemporaryPost() TemporaryPostStore
 	ChannelJoinRequest() ChannelJoinRequestStore
 	UserPostDelivery() UserPostDeliveryStore
-	DeliveryTracking() DeliveryTrackingStore
 }
 
 type RetentionPolicyStore interface {
@@ -1102,15 +1101,6 @@ type ChannelGuardStore interface {
 	GetAll(rctx request.CTX) ([]*ChannelGuard, error)
 }
 
-// DeliveryTrackingStore persists the set of channels with post-delivery
-// tracking enabled (the "selected channels" scope). It is backed by the
-// primary DB; the in-memory snapshot used on the emission hot path is
-// hydrated from GetTrackedChannelIDs.
-type DeliveryTrackingStore interface {
-	SaveTrackedChannels(rctx request.CTX, channelIDs []string) error
-	GetTrackedChannelIDs(rctx request.CTX) ([]string, error)
-}
-
 type DraftStore interface {
 	Upsert(d *model.Draft) (*model.Draft, error)
 	Get(userID, channelID, rootID string, includeDeleted bool) (*model.Draft, error)
@@ -1284,8 +1274,9 @@ type AutoTranslationStore interface {
 }
 
 type ContentFlaggingStore interface {
-	SaveReviewerSettings(reviewerSettings model.ReviewerIDsSettings) error
-	GetReviewerSettings() (*model.ReviewerIDsSettings, error)
+	SaveSettings(config model.ContentFlaggingSettingsRequest) error
+	GetSettings() (*model.ContentFlaggingSettingsRequest, error)
+	GetTrackedChannelIDs(rctx request.CTX) ([]string, error)
 	ClearCaches()
 }
 

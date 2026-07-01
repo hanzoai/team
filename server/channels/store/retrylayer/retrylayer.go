@@ -35,7 +35,6 @@ type RetryLayer struct {
 	CommandWebhookStore             store.CommandWebhookStore
 	ComplianceStore                 store.ComplianceStore
 	ContentFlaggingStore            store.ContentFlaggingStore
-	DeliveryTrackingStore           store.DeliveryTrackingStore
 	DesktopTokensStore              store.DesktopTokensStore
 	DraftStore                      store.DraftStore
 	EmojiStore                      store.EmojiStore
@@ -142,10 +141,6 @@ func (s *RetryLayer) Compliance() store.ComplianceStore {
 
 func (s *RetryLayer) ContentFlagging() store.ContentFlaggingStore {
 	return s.ContentFlaggingStore
-}
-
-func (s *RetryLayer) DeliveryTracking() store.DeliveryTrackingStore {
-	return s.DeliveryTrackingStore
 }
 
 func (s *RetryLayer) DesktopTokens() store.DesktopTokensStore {
@@ -404,11 +399,6 @@ type RetryLayerComplianceStore struct {
 
 type RetryLayerContentFlaggingStore struct {
 	store.ContentFlaggingStore
-	Root *RetryLayer
-}
-
-type RetryLayerDeliveryTrackingStore struct {
-	store.DeliveryTrackingStore
 	Root *RetryLayer
 }
 
@@ -4970,11 +4960,11 @@ func (s *RetryLayerContentFlaggingStore) ClearCaches() {
 
 }
 
-func (s *RetryLayerContentFlaggingStore) GetReviewerSettings() (*model.ReviewerIDsSettings, error) {
+func (s *RetryLayerContentFlaggingStore) GetSettings() (*model.ContentFlaggingSettingsRequest, error) {
 
 	tries := 0
 	for {
-		result, err := s.ContentFlaggingStore.GetReviewerSettings()
+		result, err := s.ContentFlaggingStore.GetSettings()
 		if err == nil {
 			return result, nil
 		}
@@ -4991,32 +4981,11 @@ func (s *RetryLayerContentFlaggingStore) GetReviewerSettings() (*model.ReviewerI
 
 }
 
-func (s *RetryLayerContentFlaggingStore) SaveReviewerSettings(reviewerSettings model.ReviewerIDsSettings) error {
+func (s *RetryLayerContentFlaggingStore) GetTrackedChannelIDs(rctx request.CTX) ([]string, error) {
 
 	tries := 0
 	for {
-		err := s.ContentFlaggingStore.SaveReviewerSettings(reviewerSettings)
-		if err == nil {
-			return nil
-		}
-		if !isRepeatableError(err) {
-			return err
-		}
-		tries++
-		if tries >= 3 {
-			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
-			return err
-		}
-		timepkg.Sleep(100 * timepkg.Millisecond)
-	}
-
-}
-
-func (s *RetryLayerDeliveryTrackingStore) GetTrackedChannelIDs(rctx request.CTX) ([]string, error) {
-
-	tries := 0
-	for {
-		result, err := s.DeliveryTrackingStore.GetTrackedChannelIDs(rctx)
+		result, err := s.ContentFlaggingStore.GetTrackedChannelIDs(rctx)
 		if err == nil {
 			return result, nil
 		}
@@ -5033,11 +5002,11 @@ func (s *RetryLayerDeliveryTrackingStore) GetTrackedChannelIDs(rctx request.CTX)
 
 }
 
-func (s *RetryLayerDeliveryTrackingStore) SaveTrackedChannels(rctx request.CTX, channelIDs []string) error {
+func (s *RetryLayerContentFlaggingStore) SaveSettings(config model.ContentFlaggingSettingsRequest) error {
 
 	tries := 0
 	for {
-		err := s.DeliveryTrackingStore.SaveTrackedChannels(rctx, channelIDs)
+		err := s.ContentFlaggingStore.SaveSettings(config)
 		if err == nil {
 			return nil
 		}
@@ -19197,7 +19166,6 @@ func New(childStore store.Store) *RetryLayer {
 	newStore.CommandWebhookStore = &RetryLayerCommandWebhookStore{CommandWebhookStore: childStore.CommandWebhook(), Root: &newStore}
 	newStore.ComplianceStore = &RetryLayerComplianceStore{ComplianceStore: childStore.Compliance(), Root: &newStore}
 	newStore.ContentFlaggingStore = &RetryLayerContentFlaggingStore{ContentFlaggingStore: childStore.ContentFlagging(), Root: &newStore}
-	newStore.DeliveryTrackingStore = &RetryLayerDeliveryTrackingStore{DeliveryTrackingStore: childStore.DeliveryTracking(), Root: &newStore}
 	newStore.DesktopTokensStore = &RetryLayerDesktopTokensStore{DesktopTokensStore: childStore.DesktopTokens(), Root: &newStore}
 	newStore.DraftStore = &RetryLayerDraftStore{DraftStore: childStore.Draft(), Root: &newStore}
 	newStore.EmojiStore = &RetryLayerEmojiStore{EmojiStore: childStore.Emoji(), Root: &newStore}

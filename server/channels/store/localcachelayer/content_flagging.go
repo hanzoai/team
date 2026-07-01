@@ -34,21 +34,22 @@ func (s LocalCacheContentFlaggingStore) ClearCaches() {
 	}
 }
 
-func (s LocalCacheContentFlaggingStore) GetReviewerSettings() (*model.ReviewerIDsSettings, error) {
-	var reviewerSettings *model.ReviewerIDsSettings
+func (s LocalCacheContentFlaggingStore) GetSettings() (*model.ContentFlaggingSettingsRequest, error) {
+	var cached *model.ContentFlaggingSettingsRequest
 
-	err := s.rootStore.doStandardReadCache(s.rootStore.contentFlaggingCache, CACHE_KEY_REVIEWER_SETTINGS, &reviewerSettings)
+	err := s.rootStore.doStandardReadCache(s.rootStore.contentFlaggingCache, CACHE_KEY_REVIEWER_SETTINGS, &cached)
 	if err == nil {
-		return reviewerSettings, nil
+		return cached, nil
 	}
 
-	reviewerSettings, err = s.ContentFlaggingStore.GetReviewerSettings()
+	settings, err := s.ContentFlaggingStore.GetSettings()
 	if err != nil {
 		return nil, err
 	}
 
-	if reviewerSettings != nil {
-		s.rootStore.doStandardAddToCache(s.rootStore.contentFlaggingCache, CACHE_KEY_REVIEWER_SETTINGS, reviewerSettings)
+	if settings != nil {
+		s.rootStore.doStandardAddToCache(s.rootStore.contentFlaggingCache, CACHE_KEY_REVIEWER_SETTINGS, settings)
 	}
-	return reviewerSettings, nil
+
+	return settings, nil
 }

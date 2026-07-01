@@ -5,6 +5,7 @@ package sqlstore
 
 import (
 	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/request"
 	"github.com/pkg/errors"
 )
 
@@ -16,27 +17,39 @@ func newContentFlaggingStore(sqlStore *SqlStore) *SqlContentFlaggingStore {
 	return &SqlContentFlaggingStore{SqlStore: sqlStore}
 }
 
-func (s *SqlContentFlaggingStore) SaveReviewerSettings(reviewerSettings model.ReviewerIDsSettings) error {
+func (s *SqlContentFlaggingStore) SaveSettings(config model.ContentFlaggingSettingsRequest) error {
 	tx, err := s.GetMaster().Begin()
 	if err != nil {
-		return errors.Wrap(err, "SqlContentFlaggingStore.SaveReviewerSettings failed to begin transaction")
+		return errors.Wrap(err, "SqlContentFlaggingStore.SaveSettings failed to begin transaction")
 	}
 	defer finalizeTransactionX(tx, &err)
 
-	if err := s.saveCommonReviewers(tx, reviewerSettings.CommonReviewerIds); err != nil {
-		return err
+	if config.ReviewerSettings != nil {
+		reviewerSettings := config.ReviewerSettings.ReviewerIDsSettings
+
+		if err := s.saveCommonReviewers(tx, reviewerSettings.CommonReviewerIds); err != nil {
+			return err
+		}
+
+		if err := s.saveTeamSettings(tx, reviewerSettings.TeamReviewersSetting); err != nil {
+			return err
+		}
+
+		if err := s.saveTeamReviewers(tx, reviewerSettings.TeamReviewersSetting); err != nil {
+			return err
+		}
 	}
 
-	if err := s.saveTeamSettings(tx, reviewerSettings.TeamReviewersSetting); err != nil {
-		return err
-	}
-
-	if err := s.saveTeamReviewers(tx, reviewerSettings.TeamReviewersSetting); err != nil {
-		return err
+	// A nil DeliveryTracking means the caller isn't updating delivery tracking, so
+	// the channels table is left untouched; a non-nil value replaces it (empty clears).
+	if config.DeliveryTracking != nil {
+		if err := s.saveTrackedChannels(tx, config.DeliveryTracking.ChannelIds); err != nil {
+			return err
+		}
 	}
 
 	if err := tx.Commit(); err != nil {
-		return errors.Wrap(err, "SqlContentFlaggingStore.SaveReviewerSettings failed to commit transaction")
+		return errors.Wrap(err, "SqlContentFlaggingStore.SaveSettings failed to commit transaction")
 	}
 
 	return nil
@@ -134,26 +147,38 @@ func (s *SqlContentFlaggingStore) saveTeamReviewers(tx *sqlxTxWrapper, teamSetti
 	return nil
 }
 
-func (s *SqlContentFlaggingStore) GetReviewerSettings() (*model.ReviewerIDsSettings, error) {
+func (s *SqlContentFlaggingStore) GetSettings() (*model.ContentFlaggingSettingsRequest, error) {
 	commonReviewers, err := s.getCommonReviewers()
 	if err != nil {
-		return nil, errors.Wrap(err, "SqlContentFlaggingStore.GetReviewerSettings failed to get common reviewers")
+		return nil, errors.Wrap(err, "SqlContentFlaggingStore.GetSettings failed to get common reviewers")
 	}
 
 	teamSettings := make(map[string]*model.TeamReviewerSetting)
 	teamSettings, err = s.getTeamSettings(teamSettings)
 	if err != nil {
-		return nil, errors.Wrap(err, "SqlContentFlaggingStore.GetReviewerSettings failed to get team settings")
+		return nil, errors.Wrap(err, "SqlContentFlaggingStore.GetSettings failed to get team settings")
 	}
 
 	teamSettings, err = s.getTeamReviewers(teamSettings)
 	if err != nil {
-		return nil, errors.Wrap(err, "SqlContentFlaggingStore.GetReviewerSettings failed to get team reviewers")
+		return nil, errors.Wrap(err, "SqlContentFlaggingStore.GetSettings failed to get team reviewers")
 	}
 
-	return &model.ReviewerIDsSettings{
-		CommonReviewerIds:    commonReviewers,
-		TeamReviewersSetting: teamSettings,
+	trackedChannelIDs, err := s.getTrackedChannelIDs(s.GetReplica())
+	if err != nil {
+		return nil, errors.Wrap(err, "SqlContentFlaggingStore.GetSettings failed to get tracked channels")
+	}
+
+	return &model.ContentFlaggingSettingsRequest{
+		ReviewerSettings: &model.ReviewSettingsRequest{
+			ReviewerIDsSettings: model.ReviewerIDsSettings{
+				CommonReviewerIds:    commonReviewers,
+				TeamReviewersSetting: teamSettings,
+			},
+		},
+		DeliveryTracking: &model.DeliveryTrackingConfig{
+			ChannelIds: trackedChannelIDs,
+		},
 	}, nil
 }
 
@@ -224,3 +249,52 @@ func (s *SqlContentFlaggingStore) getTeamReviewers(teamSettings map[string]*mode
 }
 
 func (s *SqlContentFlaggingStore) ClearCaches() {}
+
+func (s *SqlContentFlaggingStore) saveTrackedChannels(tx *sqlxTxWrapper, channelIDs []string) error {
+	deleteBuilder := s.getQueryBuilder().Delete("PostDeliveryTrackingChannels")
+	if _, err := tx.ExecBuilder(deleteBuilder); err != nil {
+		return errors.Wrap(err, "SqlContentFlaggingStore.saveTrackedChannels failed to delete existing tracked channels")
+	}
+
+	seen := make(map[string]struct{}, len(channelIDs))
+	insertBuilder := s.getQueryBuilder().
+		Insert("PostDeliveryTrackingChannels").
+		Columns("ChannelId")
+	hasRows := false
+	for _, channelID := range channelIDs {
+		if channelID == "" {
+			continue
+		}
+		if _, ok := seen[channelID]; ok {
+			continue
+		}
+		seen[channelID] = struct{}{}
+		insertBuilder = insertBuilder.Values(channelID)
+		hasRows = true
+	}
+
+	if hasRows {
+		if _, err := tx.ExecBuilder(insertBuilder); err != nil {
+			return errors.Wrap(err, "SqlContentFlaggingStore.saveTrackedChannels failed to insert new tracked channels")
+		}
+	}
+
+	return nil
+}
+
+func (s *SqlContentFlaggingStore) getTrackedChannelIDs(db *sqlxDBWrapper) ([]string, error) {
+	query := s.getQueryBuilder().
+		Select("ChannelId").
+		From("PostDeliveryTrackingChannels")
+
+	channelIDs := []string{}
+	if err := db.SelectBuilder(&channelIDs, query); err != nil {
+		return nil, errors.Wrap(err, "SqlContentFlaggingStore.getTrackedChannelIDs failed to select tracked channels")
+	}
+
+	return channelIDs, nil
+}
+
+func (s *SqlContentFlaggingStore) GetTrackedChannelIDs(rctx request.CTX) ([]string, error) {
+	return s.getTrackedChannelIDs(s.DBXFromContext(rctx.Context()))
+}
