@@ -1074,6 +1074,7 @@ export type ContentFlaggingSettings = {
     NotificationSettings: ContentFlaggingNotificationSettings;
     ReviewerSettings: ContentFlaggingReviewerSetting;
     AdditionalSettings: ContentFlaggingAdditionalSettings;
+    DeliveryTracking?: DeliveryTrackingConfig;
 };
 
 // DeliveryTrackingConfig is the admin-facing post-delivery-tracking config.

@@ -39,6 +39,7 @@ func (rs *ReviewSettingsRequest) IsValid() *AppError {
 type ContentFlaggingSettingsRequest struct {
 	ContentFlaggingSettingsBase
 	ReviewerSettings *ReviewSettingsRequest
+	DeliveryTracking *DeliveryTrackingConfig `json:"DeliveryTracking,omitempty"`
 }
 
 func (cfs *ContentFlaggingSettingsRequest) SetDefaults() {

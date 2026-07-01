@@ -13,6 +13,11 @@ import {
     SectionContent,
     SectionHeader,
 } from 'components/admin_console/system_properties/controls';
+import ExternalLink from 'components/external_link';
+
+import {DocLinks} from 'utils/constants';
+
+import '../content_flagging_section_base.scss';
 
 type Props = {
     config: DeliveryTrackingConfig;
@@ -20,8 +25,6 @@ type Props = {
 };
 
 export default function DeliveryTrackingSection({config, onChange}: Props) {
-    const scopeDisabled = !config.enable;
-
     const handleEnableChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({...config, enable: e.target.value === 'true'});
     }, [config, onChange]);
@@ -37,20 +40,33 @@ export default function DeliveryTrackingSection({config, onChange}: Props) {
     return (
         <AdminSection data-testid='deliveryTrackingSection'>
             <SectionHeader>
-                <hgroup>
-                    <h1 className='content-flagging-section-title'>
+                <div className='content-flagging-section-header'>
+                    <hgroup>
+                        <h1 className='content-flagging-section-title'>
+                            <FormattedMessage
+                                id='admin.deliveryTracking.title'
+                                defaultMessage='Delivered to'
+                            />
+                        </h1>
+                        <h5 className='content-flagging-section-description'>
+                            <FormattedMessage
+                                id='admin.deliveryTracking.description'
+                                defaultMessage="Let Reviewers see who a quarantined message reached before it was removed, to support spillage cleanup. Tracking delivery adds storage and processing cost, so enable it only where it's needed."
+                            />
+                        </h5>
+                    </hgroup>
+
+                    <ExternalLink
+                        location='admin_console_delivery_tracking'
+                        href={DocLinks.CONTENT_FLAGGING}
+                        className='btn btn-tertiary'
+                    >
                         <FormattedMessage
-                            id='admin.deliveryTracking.title'
-                            defaultMessage='Post Delivery Tracking'
+                            id='admin.deliveryTracking.learnMore'
+                            defaultMessage='Learn more'
                         />
-                    </h1>
-                    <h5 className='content-flagging-section-description'>
-                        <FormattedMessage
-                            id='admin.deliveryTracking.description'
-                            defaultMessage='Record which users a flagged post was delivered to. Tracking can be limited to specific channels to control the load it generates.'
-                        />
-                    </h5>
-                </hgroup>
+                    </ExternalLink>
+                </div>
             </SectionHeader>
 
             <SectionContent>
@@ -59,59 +75,19 @@ export default function DeliveryTrackingSection({config, onChange}: Props) {
                         <div className='setting-title'>
                             <FormattedMessage
                                 id='admin.deliveryTracking.enable'
-                                defaultMessage='Enable post delivery tracking:'
+                                defaultMessage='Enable delivered-to user list'
                             />
                         </div>
 
-                        <div className='setting-content'>
-                            <Label isDisabled={false}>
-                                <input
-                                    data-testid='deliveryTrackingEnable_true'
-                                    type='radio'
-                                    value='true'
-                                    checked={config.enable}
-                                    onChange={handleEnableChange}
-                                />
-                                <FormattedMessage
-                                    id='admin.true'
-                                    defaultMessage='True'
-                                />
-                            </Label>
-
-                            <Label isDisabled={false}>
-                                <input
-                                    data-testid='deliveryTrackingEnable_false'
-                                    type='radio'
-                                    value='false'
-                                    checked={!config.enable}
-                                    onChange={handleEnableChange}
-                                />
-                                <FormattedMessage
-                                    id='admin.false'
-                                    defaultMessage='False'
-                                />
-                            </Label>
-                        </div>
-                    </div>
-
-                    {config.enable &&
-                        <div className='content-flagging-section-setting'>
-                            <div className='setting-title'>
-                                <FormattedMessage
-                                    id='admin.deliveryTracking.allChannels'
-                                    defaultMessage='Track delivery in all channels:'
-                                />
-                            </div>
-
+                        <div className='setting-content-wrapper'>
                             <div className='setting-content'>
-                                <Label isDisabled={scopeDisabled}>
+                                <Label isDisabled={false}>
                                     <input
-                                        data-testid='deliveryTrackingAllChannels_true'
+                                        data-testid='deliveryTrackingEnable_true'
                                         type='radio'
                                         value='true'
-                                        checked={config.enable_for_all_channels}
-                                        onChange={handleAllChannelsChange}
-                                        disabled={scopeDisabled}
+                                        checked={config.enable}
+                                        onChange={handleEnableChange}
                                     />
                                     <FormattedMessage
                                         id='admin.true'
@@ -119,14 +95,13 @@ export default function DeliveryTrackingSection({config, onChange}: Props) {
                                     />
                                 </Label>
 
-                                <Label isDisabled={scopeDisabled}>
+                                <Label isDisabled={false}>
                                     <input
-                                        data-testid='deliveryTrackingAllChannels_false'
+                                        data-testid='deliveryTrackingEnable_false'
                                         type='radio'
                                         value='false'
-                                        checked={!config.enable_for_all_channels}
-                                        onChange={handleAllChannelsChange}
-                                        disabled={scopeDisabled}
+                                        checked={!config.enable}
+                                        onChange={handleEnableChange}
                                     />
                                     <FormattedMessage
                                         id='admin.false'
@@ -134,28 +109,97 @@ export default function DeliveryTrackingSection({config, onChange}: Props) {
                                     />
                                 </Label>
                             </div>
-                        </div>
-                    }
 
-                    {config.enable &&
+                            <div className='helpText'>
+                                <FormattedMessage
+                                    id='admin.deliveryTracking.enable.help'
+                                    defaultMessage='When true, post deliveries to users are tracked. This data can be used by content reviewers to determine which users received a quarantined post.'
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {config.enable && (
+                        <div className='content-flagging-section-setting'>
+                            <div className='setting-title'>
+                                <FormattedMessage
+                                    id='admin.deliveryTracking.trackIn'
+                                    defaultMessage='Track delivery in'
+                                />
+                            </div>
+
+                            <div className='setting-content-wrapper'>
+                                <div className='setting-content'>
+                                    <Label isDisabled={false}>
+                                        <input
+                                            data-testid='deliveryTrackingAllChannels_true'
+                                            type='radio'
+                                            value='true'
+                                            checked={
+                                                config.enable_for_all_channels
+                                            }
+                                            onChange={handleAllChannelsChange}
+                                        />
+                                        <FormattedMessage
+                                            id='admin.deliveryTracking.trackIn.allChannels'
+                                            defaultMessage='All channels'
+                                        />
+                                    </Label>
+
+                                    <Label isDisabled={false}>
+                                        <input
+                                            data-testid='deliveryTrackingAllChannels_false'
+                                            type='radio'
+                                            value='false'
+                                            checked={
+                                                !config.enable_for_all_channels
+                                            }
+                                            onChange={handleAllChannelsChange}
+                                        />
+                                        <FormattedMessage
+                                            id='admin.deliveryTracking.trackIn.selectedChannels'
+                                            defaultMessage='Selected channels'
+                                        />
+                                    </Label>
+                                </div>
+
+                                <div className='helpText'>
+                                    <FormattedMessage
+                                        id='admin.deliveryTracking.trackIn.help'
+                                        defaultMessage='Enabling delivery tracking for quarantined messages in all channels is the most complete but the most expensive. Limit it to the channels where spillage matters to keep storage and performance in check.'
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {config.enable && !config.enable_for_all_channels && (
                         <div className='content-flagging-section-setting'>
                             <div className='setting-title'>
                                 <FormattedMessage
                                     id='admin.deliveryTracking.channels'
-                                    defaultMessage='Select channels for delivery tracking:'
+                                    defaultMessage='Select channels for delivery tracking'
                                 />
                             </div>
 
-                            <div className='setting-content'>
-                                <ChannelMultiSelector
-                                    id='delivery_tracking_channels'
-                                    channelIds={config.channel_ids}
-                                    onChange={handleChannelsChange}
-                                    disabled={config.enable_for_all_channels}
-                                />
+                            <div className='setting-content-wrapper'>
+                                <div className='setting-content'>
+                                    <ChannelMultiSelector
+                                        id='delivery_tracking_channels'
+                                        channelIds={config.channel_ids}
+                                        onChange={handleChannelsChange}
+                                    />
+                                </div>
+
+                                <div className='helpText'>
+                                    <FormattedMessage
+                                        id='admin.deliveryTracking.channels.help'
+                                        defaultMessage='Delivery is tracked only in these channels. Tracking starts when you save, and applies to messages quarantined from then on.'
+                                    />
+                                </div>
                             </div>
                         </div>
-                    }
+                    )}
                 </div>
             </SectionContent>
         </AdminSection>

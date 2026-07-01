@@ -163,7 +163,7 @@ export default function ChannelMultiSelector({id, channelIds, onChange, disabled
         return formatMessage({id: 'admin.deliveryTracking.channelSelector.noChannels', defaultMessage: 'No channels found'});
     }, [formatMessage]);
 
-    const placeholder = formatMessage({id: 'admin.deliveryTracking.channelSelector.placeholder', defaultMessage: 'Search and add channels'});
+    const placeholder = formatMessage({id: 'admin.deliveryTracking.channelSelector.placeholder', defaultMessage: 'Add channels...'});
 
     return (
         <div className={classNames('DeliveryTrackingChannelSelector', {error: hasError})}>

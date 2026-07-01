@@ -2190,10 +2190,6 @@
     "translation": "Failed to read the flagged post report file information."
   },
   {
-    "id": "api.delivery_tracking.error.license",
-    "translation": "Post delivery tracking is available on Mattermost Enterprise Advanced."
-  },
-  {
     "id": "api.draft.create_draft.can_not_draft_to_deleted.error",
     "translation": "Can not save draft to deleted channel"
   },

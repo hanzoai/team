@@ -60,6 +60,9 @@ export default function ContentFlaggingSettings() {
                 const config = await Client4.getAdminContentFlaggingConfig();
                 if (config) {
                     setContentFlaggingSettings(config);
+                    if (config.DeliveryTracking) {
+                        setDeliveryTrackingConfig(config.DeliveryTracking);
+                    }
                 }
             } catch (error) {
                 console.error(error); // eslint-disable-line no-console
@@ -70,23 +73,6 @@ export default function ContentFlaggingSettings() {
             fetchConfig();
         }
     }, [contentFlaggingSettings]);
-
-    useEffect(() => {
-        const fetchDeliveryTrackingConfig = async () => {
-            try {
-                const config = await Client4.getDeliveryTrackingConfig();
-                if (config) {
-                    setDeliveryTrackingConfig(config);
-                }
-            } catch (error) {
-                console.error(error); // eslint-disable-line no-console
-            }
-        };
-
-        if (deliveryTrackingFeatureEnabled && !deliveryTrackingConfig) {
-            fetchDeliveryTrackingConfig();
-        }
-    }, [deliveryTrackingFeatureEnabled, deliveryTrackingConfig]);
 
     const handleSettingsChange = useCallback((id: string, value: unknown) => {
         const newValue = {...contentFlaggingSettings};
@@ -123,13 +109,11 @@ export default function ContentFlaggingSettings() {
         setSaving(true);
 
         try {
-            await Client4.saveContentFlaggingConfig(contentFlaggingSettings);
-
-            // Delivery tracking is gated behind its own feature flag and a separate
-            // endpoint, but shares this page's single Save button.
+            const payload: TypeContentFlaggingSettings = {...contentFlaggingSettings};
             if (deliveryTrackingFeatureEnabled && deliveryTrackingConfig) {
-                await Client4.saveDeliveryTrackingConfig(deliveryTrackingConfig);
+                payload.DeliveryTracking = deliveryTrackingConfig;
             }
+            await Client4.saveContentFlaggingConfig(payload);
 
             setSaveNeeded(false);
             setServerError('');

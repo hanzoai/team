@@ -16,11 +16,19 @@
     font-size: 16px;
 }
 
+.content-flagging-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
 .content-flagging-section-description, .helpText {
     color: var(--center-channel-color-72);
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
+    line-height: unset;
 }
 
 .content-flagging-section-setting {

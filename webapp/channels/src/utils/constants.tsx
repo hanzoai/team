@@ -1057,6 +1057,7 @@ export const DocLinks = {
     CONFIGURE_OVERRIDE_SAML_BIND_DATA_WITH_LDAP: 'https://mattermost.com/pl/configure-override-saml-bind-data-with-ldap',
     COMPILANCE_EXPORT: 'https://mattermost.com/pl/compliance-export',
     COMPILANCE_MONITORING: 'https://mattermost.com/pl/compliance-monitoring',
+    CONTENT_FLAGGING: 'https://mattermost.com/pl/content-flagging',
     DATA_RETENTION_POLICY: 'https://mattermost.com/pl/data-retention-policy',
     DEFAULT_LDAP_GROUP_SYNC: 'https://mattermost.com/pl/default-ldap-group-sync',
     DESKTOP_MANAGED_RESOURCES: 'https://mattermost.com/pl/desktop-managed-resources',
