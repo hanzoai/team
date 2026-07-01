@@ -1535,7 +1535,6 @@ func TestIsMembershipSystemPost(t *testing.T) {
 	})
 
 	for _, postType := range MembershipSystemPostTypes() {
-		postType := postType
 		t.Run("returns true for "+postType, func(t *testing.T) {
 			require.True(t, IsMembershipSystemPost(&Post{Type: postType}))
 		})

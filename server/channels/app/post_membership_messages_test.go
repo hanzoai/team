@@ -350,7 +350,6 @@ func TestGetPostsBeforeAfterSuppression(t *testing.T) {
 		require.NotContains(t, postList.Posts, membershipPost.Id)
 		require.Contains(t, postList.Posts, normalPost2.Id)
 	})
-
 }
 
 func TestGetPermalinkPostSuppression(t *testing.T) {
