@@ -5,13 +5,6 @@ package model
 
 import "net/http"
 
-// DeliveryTrackingConfig is the admin-facing post-delivery-tracking
-// configuration surfaced on the Data Spillage Handling System Console page.
-//
-// Enable and EnableForAllChannels are persisted to DeliveryTrackingSettings
-// (config.json); ChannelIds is persisted to the PostDeliveryTrackingChannels
-// table. The API merges the two sources into this single shape. ChannelIds is
-// only meaningful when EnableForAllChannels is false.
 type DeliveryTrackingConfig struct {
 	Enable               *bool    `json:"enable"`
 	EnableForAllChannels *bool    `json:"enable_for_all_channels"`

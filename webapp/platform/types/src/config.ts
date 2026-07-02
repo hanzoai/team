@@ -1077,9 +1077,6 @@ export type ContentFlaggingSettings = {
     DeliveryTracking?: DeliveryTrackingConfig;
 };
 
-// DeliveryTrackingConfig is the admin-facing post-delivery-tracking config.
-// enable + enable_for_all_channels are persisted to config; channel_ids (used
-// only when enable_for_all_channels is false) is persisted to the DB.
 export type DeliveryTrackingConfig = {
     enable: boolean;
     enable_for_all_channels: boolean;

@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	CACHE_KEY_REVIEWER_SETTINGS = "reviewer_settings"
+	CACHE_KEY_DATA_SPILLAGE_HANDLING_SETTINGS = "data_spillage_handling_settings"
 )
 
 type LocalCacheContentFlaggingStore struct {
@@ -37,7 +37,7 @@ func (s LocalCacheContentFlaggingStore) ClearCaches() {
 func (s LocalCacheContentFlaggingStore) GetSettings() (*model.ContentFlaggingSettingsRequest, error) {
 	var cached *model.ContentFlaggingSettingsRequest
 
-	err := s.rootStore.doStandardReadCache(s.rootStore.contentFlaggingCache, CACHE_KEY_REVIEWER_SETTINGS, &cached)
+	err := s.rootStore.doStandardReadCache(s.rootStore.contentFlaggingCache, CACHE_KEY_DATA_SPILLAGE_HANDLING_SETTINGS, &cached)
 	if err == nil {
 		return cached, nil
 	}
@@ -48,7 +48,7 @@ func (s LocalCacheContentFlaggingStore) GetSettings() (*model.ContentFlaggingSet
 	}
 
 	if settings != nil {
-		s.rootStore.doStandardAddToCache(s.rootStore.contentFlaggingCache, CACHE_KEY_REVIEWER_SETTINGS, settings)
+		s.rootStore.doStandardAddToCache(s.rootStore.contentFlaggingCache, CACHE_KEY_DATA_SPILLAGE_HANDLING_SETTINGS, settings)
 	}
 
 	return settings, nil

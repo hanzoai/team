@@ -19,18 +19,15 @@ func (a *App) deliveryTrackingEnabled() bool {
 	return a.Config().PostDeliveryTrackingEnabled()
 }
 
-// deliveryTrackingEnabledForChannel is the per-channel gate used across all
-// emission paths. The feature flag + master Enable must be on, and either
-// all-channels mode is enabled (the common case — a pure in-memory config read,
-// the snapshot is never consulted) or the channel is in the selected-channel
-// snapshot (a lock-free atomic load + map lookup).
+func (a *App) deliveryTrackingEnabledForAllChannels() bool {
+	return model.SafeDereference(a.Config().DeliveryTrackingSettings.EnableForAllChannels)
+}
+
 func (a *App) deliveryTrackingEnabledForChannel(channelID string) bool {
-	if !a.deliveryTrackingEnabled() {
-		return false
-	}
-	if model.SafeDereference(a.Config().DeliveryTrackingSettings.EnableForAllChannels) {
+	if a.deliveryTrackingEnabledForAllChannels() {
 		return true
 	}
+
 	return a.Channels().isChannelDeliveryTracked(channelID)
 }
 
@@ -47,8 +44,7 @@ func (a *App) shouldTrackPushDelivery(msg *model.PushNotification) bool {
 		*a.Config().EmailSettings.PushNotificationContents != model.FullNotification {
 		return false
 	}
-	// msg.ChannelId carries the real channel so the per-channel gate works in
-	// selected-channels mode; the fake Channel only ever needs Id + Type here.
+
 	return a.shouldTrackDelivery(
 		&model.Channel{Id: msg.ChannelId, Type: msg.ChannelType},
 		&model.Post{Type: msg.PostType},
@@ -106,7 +102,11 @@ func (a *App) RecordPostDeliveryFanOut(postID string, targetIDs []string, target
 }
 
 func (a *App) RecordPostListDelivery(userID string, list *model.PostList, mechanism int16) {
-	a.recordPostListDelivery(userID, list, model.DeliveryTargetUser, mechanism)
+	a.recordPostListDelivery(userID, list, model.DeliveryTargetUser, mechanism, "")
+}
+
+func (a *App) RecordPostListDeliveryWithChannel(userID string, list *model.PostList, mechanism int16, channelId string) {
+	a.recordPostListDelivery(userID, list, model.DeliveryTargetUser, mechanism, channelId)
 }
 
 func (a *App) RecordPostsDelivery(userID string, posts []*model.Post, mechanism int16) {
@@ -114,32 +114,48 @@ func (a *App) RecordPostsDelivery(userID string, posts []*model.Post, mechanism 
 }
 
 func (a *App) RecordPostListDeliveryToPlugin(pluginID string, list *model.PostList) {
-	a.recordPostListDelivery(pluginID, list, model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin)
+	a.recordPostListDelivery(pluginID, list, model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin, "")
 }
 
 func (a *App) RecordPostsDeliveryToPlugin(pluginID string, posts []*model.Post) {
 	a.recordPostsDelivery(pluginID, posts, model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin)
 }
 
-func (a *App) recordPostListDelivery(targetID string, list *model.PostList, targetType string, mechanism int16) {
+func (a *App) recordPostListDelivery(targetID string, list *model.PostList, targetType string, mechanism int16, commonChannelId string) {
 	if !a.deliveryTrackingEnabled() || targetID == "" || list == nil || len(list.Order) == 0 {
 		return
 	}
-	postIDs := make([]string, 0, len(list.Order))
-	for _, id := range list.Order {
-		p := list.Posts[id]
-		if p == nil || p.IsSystemMessage() {
-			continue
-		}
-		if !a.deliveryTrackingEnabledForChannel(p.ChannelId) {
-			continue
-		}
-		postIDs = append(postIDs, id)
-	}
-	if len(postIDs) == 0 {
+
+	if commonChannelId != "" && !a.deliveryTrackingEnabledForChannel(commonChannelId) {
 		return
 	}
-	a.RecordPostDeliveryFanIn(targetID, postIDs, targetType, mechanism)
+
+	var filteredPostIDs []string
+	for i, postId := range list.Order {
+		post := list.Posts[postId]
+
+		filterOut := post == nil || post.IsSystemMessage() || (commonChannelId == "" && !a.deliveryTrackingEnabledForChannel(post.ChannelId))
+		if filterOut {
+			// Only allocate memory for the filter array of post IDs if something gets filtered out
+			if filteredPostIDs == nil {
+				filteredPostIDs = make([]string, i, len(list.Order))
+				// fill up all elements until current elements into the filtered array
+				copy(filteredPostIDs, list.Order[:i])
+			}
+
+			continue
+		}
+
+		if filteredPostIDs != nil {
+			filteredPostIDs = append(filteredPostIDs, postId)
+		}
+	}
+
+	if len(filteredPostIDs) > 0 {
+		a.RecordPostDeliveryFanIn(targetID, filteredPostIDs, targetType, mechanism)
+	} else if len(list.Order) > 0 {
+		a.RecordPostDeliveryFanIn(targetID, list.Order, targetType, mechanism)
+	}
 }
 
 func (a *App) recordPostsDelivery(targetID string, posts []*model.Post, targetType string, mechanism int16) {
@@ -147,14 +163,14 @@ func (a *App) recordPostsDelivery(targetID string, posts []*model.Post, targetTy
 		return
 	}
 	postIDs := make([]string, 0, len(posts))
-	for _, p := range posts {
-		if p == nil || p.Id == "" || p.IsSystemMessage() {
+	for _, post := range posts {
+		if post == nil || post.Id == "" || post.IsSystemMessage() {
 			continue
 		}
-		if !a.deliveryTrackingEnabledForChannel(p.ChannelId) {
+		if !a.deliveryTrackingEnabledForChannel(post.ChannelId) {
 			continue
 		}
-		postIDs = append(postIDs, p.Id)
+		postIDs = append(postIDs, post.Id)
 	}
 	if len(postIDs) == 0 {
 		return

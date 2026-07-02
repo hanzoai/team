@@ -41,8 +41,6 @@ func (ch *Channels) reloadDeliveryTrackedChannels(rctx request.CTX, s store.Stor
 	return nil
 }
 
-// isChannelDeliveryTracked reports whether channelID is in the selected-channel
-// snapshot. Lock-free: a single atomic pointer load plus a map lookup.
 func (ch *Channels) isChannelDeliveryTracked(channelID string) bool {
 	m := ch.deliveryTrackedChannels.Load()
 	if m == nil {
@@ -52,9 +50,6 @@ func (ch *Channels) isChannelDeliveryTracked(channelID string) bool {
 	return ok
 }
 
-// clusterInvalidateDeliveryTrackedChannelsHandler is the receive-side handler
-// for clusterEventInvalidateDeliveryTrackedChannels. It refetches the entire
-// set (the payload is intentionally empty).
 func (ch *Channels) clusterInvalidateDeliveryTrackedChannelsHandler(msg *model.ClusterMessage) {
 	rctx := request.EmptyContext(ch.srv.Log())
 	if err := ch.reloadDeliveryTrackedChannels(rctx, ch.srv.Store()); err != nil {
@@ -67,8 +62,6 @@ func (ch *Channels) clusterInvalidateDeliveryTrackedChannelsHandler(msg *model.C
 	}
 }
 
-// broadcastDeliveryTrackedChannelsInvalidation tells the rest of the cluster to
-// refetch their snapshots. The payload is intentionally empty.
 func (ch *Channels) broadcastDeliveryTrackedChannelsInvalidation() {
 	cluster := ch.srv.platform.Cluster()
 	if cluster == nil {

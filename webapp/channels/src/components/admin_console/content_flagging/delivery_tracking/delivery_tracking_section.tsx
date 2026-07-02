@@ -135,9 +135,7 @@ export default function DeliveryTrackingSection({config, onChange}: Props) {
                                             data-testid='deliveryTrackingAllChannels_true'
                                             type='radio'
                                             value='true'
-                                            checked={
-                                                config.enable_for_all_channels
-                                            }
+                                            checked={config.enable_for_all_channels}
                                             onChange={handleAllChannelsChange}
                                         />
                                         <FormattedMessage
@@ -151,9 +149,7 @@ export default function DeliveryTrackingSection({config, onChange}: Props) {
                                             data-testid='deliveryTrackingAllChannels_false'
                                             type='radio'
                                             value='false'
-                                            checked={
-                                                !config.enable_for_all_channels
-                                            }
+                                            checked={!config.enable_for_all_channels}
                                             onChange={handleAllChannelsChange}
                                         />
                                         <FormattedMessage

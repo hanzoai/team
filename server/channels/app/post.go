@@ -2975,8 +2975,7 @@ func (a *App) applyPostsWillBeConsumedHook(rctx request.CTX, posts map[string]*m
 			if post == nil || post.IsSystemMessage() {
 				continue
 			}
-			// posts can span multiple channels here, so apply the per-channel scope
-			// per post (RecordPostDeliveryFanIn takes IDs and is channel-blind).
+
 			if !a.deliveryTrackingEnabledForChannel(post.ChannelId) {
 				continue
 			}

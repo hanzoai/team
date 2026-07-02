@@ -40,8 +40,6 @@ func (s *SqlContentFlaggingStore) SaveSettings(config model.ContentFlaggingSetti
 		}
 	}
 
-	// A nil DeliveryTracking means the caller isn't updating delivery tracking, so
-	// the channels table is left untouched; a non-nil value replaces it (empty clears).
 	if config.DeliveryTracking != nil {
 		if err := s.saveTrackedChannels(tx, config.DeliveryTracking.ChannelIds); err != nil {
 			return err
@@ -256,27 +254,13 @@ func (s *SqlContentFlaggingStore) saveTrackedChannels(tx *sqlxTxWrapper, channel
 		return errors.Wrap(err, "SqlContentFlaggingStore.saveTrackedChannels failed to delete existing tracked channels")
 	}
 
-	seen := make(map[string]struct{}, len(channelIDs))
 	insertBuilder := s.getQueryBuilder().
 		Insert("PostDeliveryTrackingChannels").
-		Columns("ChannelId")
-	hasRows := false
-	for _, channelID := range channelIDs {
-		if channelID == "" {
-			continue
-		}
-		if _, ok := seen[channelID]; ok {
-			continue
-		}
-		seen[channelID] = struct{}{}
-		insertBuilder = insertBuilder.Values(channelID)
-		hasRows = true
-	}
+		Columns("ChannelId").
+		Values(channelIDs)
 
-	if hasRows {
-		if _, err := tx.ExecBuilder(insertBuilder); err != nil {
-			return errors.Wrap(err, "SqlContentFlaggingStore.saveTrackedChannels failed to insert new tracked channels")
-		}
+	if _, err := tx.ExecBuilder(insertBuilder); err != nil {
+		return errors.Wrap(err, "SqlContentFlaggingStore.saveTrackedChannels failed to insert new tracked channels")
 	}
 
 	return nil

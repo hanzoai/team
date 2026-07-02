@@ -1037,11 +1037,12 @@ func (a *App) publishContentFlaggingReportUpdateEvent(targetId, teamId string, p
 func (a *App) SaveContentFlaggingConfig(rctx request.CTX, config model.ContentFlaggingSettingsRequest) *model.AppError {
 	deliveryTrackingActive := a.Config().FeatureFlags.PostDeliveryTracking && config.DeliveryTracking != nil
 
-	// When feature flag is off, setting this to nil ensures the store layer
-	// doesn't update the value
+	// setting this to nil ensures the store layer doesn't update the value
 	if !deliveryTrackingActive {
 		config.DeliveryTracking = nil
 	}
+
+	model.RemoveDuplicateStrings(config.DeliveryTracking.ChannelIds)
 
 	if err := a.Srv().Store().ContentFlagging().SaveSettings(config); err != nil {
 		return model.NewAppError("SaveContentFlaggingConfig", "app.data_spillage.save_reviewer_settings.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
@@ -1100,9 +1101,6 @@ func (a *App) GetContentFlaggingSettings() (*model.ContentFlaggingSettingsReques
 
 	cfSettings := a.Config().ContentFlaggingSettings
 
-	// Build a fresh request so we never mutate the (possibly cached) object the store
-	// returns. The store supplies the DB-backed fields (reviewer IDs, tracked channels);
-	// the toggles/flags come from config.
 	fullConfig := &model.ContentFlaggingSettingsRequest{
 		ContentFlaggingSettingsBase: model.ContentFlaggingSettingsBase{
 			EnableContentFlagging: cfSettings.EnableContentFlagging,
@@ -1116,14 +1114,13 @@ func (a *App) GetContentFlaggingSettings() (*model.ContentFlaggingSettingsReques
 	}
 
 	if a.Config().FeatureFlags.PostDeliveryTracking {
-		dtSettings := a.Config().DeliveryTrackingSettings
 		var channelIDs []string
 		if stored.DeliveryTracking != nil {
 			channelIDs = stored.DeliveryTracking.ChannelIds
 		}
 		fullConfig.DeliveryTracking = &model.DeliveryTrackingConfig{
-			Enable:               dtSettings.Enable,
-			EnableForAllChannels: dtSettings.EnableForAllChannels,
+			Enable:               a.Config().DeliveryTrackingSettings.Enable,
+			EnableForAllChannels: a.Config().DeliveryTrackingSettings.EnableForAllChannels,
 			ChannelIds:           channelIDs,
 		}
 	}
