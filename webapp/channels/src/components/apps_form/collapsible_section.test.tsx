@@ -105,8 +105,20 @@ describe('CollapsibleSection', () => {
         expect(screen.getByTestId(childTestId)).toBeInTheDocument();
     });
 
-    // Silence unused-import lints until the stubs above are implemented.
-    void renderSection;
-    void screen;
-    void userEvent;
+    it('applies the bordered modifier by default and when bordered=true', () => {
+        const {container, unmount} = renderSection();
+        expect(container.querySelector('.apps-form-collapsible-section')).toHaveClass('apps-form-collapsible-section--bordered');
+        unmount();
+
+        const {container: explicitContainer} = renderSection({bordered: true});
+        expect(explicitContainer.querySelector('.apps-form-collapsible-section')).toHaveClass('apps-form-collapsible-section--bordered');
+    });
+
+    it('omits the bordered modifier when bordered=false', () => {
+        const {container} = renderSection({bordered: false});
+
+        const section = container.querySelector('.apps-form-collapsible-section');
+        expect(section).toBeInTheDocument();
+        expect(section).not.toHaveClass('apps-form-collapsible-section--bordered');
+    });
 });

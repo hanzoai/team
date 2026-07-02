@@ -702,6 +702,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
                     key={originalField.name}
                     label={originalField.label || originalField.name}
                     expanded={originalField.expanded ?? true}
+                    bordered={originalField.bordered ?? true}
                     depth={depth}
                 >
                     {childFields.map((child) => this.renderField(child, false, depth + 1))}

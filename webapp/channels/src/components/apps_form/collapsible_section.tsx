@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import classNames from 'classnames';
 import React, {useState} from 'react';
 
 type Props = {
@@ -10,19 +11,22 @@ type Props = {
     // Nesting level (0 = top level); each level adds a small left indent.
     depth?: number;
     children: React.ReactNode;
+    bordered?: boolean;
 };
 
 const INDENT_PER_LEVEL_PX = 12;
 
 // Title + caret toggle; children unmount when collapsed.
-const CollapsibleSection = ({label, expanded, depth = 0, children}: Props) => {
+const CollapsibleSection = ({label, expanded, depth = 0, children, bordered = true}: Props) => {
     const [open, setOpen] = useState(expanded);
 
     const style = depth > 0 ? {marginLeft: depth * INDENT_PER_LEVEL_PX} : undefined;
 
+    const collapsibleSectionClass = classNames('apps-form-collapsible-section', {'apps-form-collapsible-section--bordered': bordered});
+
     return (
         <div
-            className='apps-form-collapsible-section'
+            className={collapsibleSectionClass}
             style={style}
         >
             <button

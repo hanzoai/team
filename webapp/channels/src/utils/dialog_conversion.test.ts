@@ -2132,12 +2132,12 @@ describe('dialog_conversion - collapsible', () => {
     const enhancedOptions: ConversionOptions = {enhanced: true};
 
     // collapsible builds a collapsible DialogElement with the given children.
-    const collapsible = (name: string, elements: DialogElement[], isExpanded?: boolean): DialogElement => ({
+    const collapsible = (name: string, elements: DialogElement[], collapsed?: boolean): DialogElement => ({
         name,
         display_name: 'Section ' + name,
         type: DialogElementTypes.COLLAPSIBLE,
         elements,
-        is_expanded: isExpanded,
+        collapsed,
     } as DialogElement);
 
     const textEl = (name: string): DialogElement => ({
@@ -2174,7 +2174,7 @@ describe('dialog_conversion - collapsible', () => {
             
         });
 
-        it('defaults expanded to true when is_expanded is undefined', () => {
+        it('defaults expanded to true when collapsed is undefined', () => {
             // create a test collapsible object and check the expanded attribute's value
             const testCollapsible = collapsible("a", []);
             const {field, errors} = convertElement(testCollapsible, legacyOptions);
@@ -2182,13 +2182,13 @@ describe('dialog_conversion - collapsible', () => {
             // make sure no errors are present
             expect(errors).toHaveLength(0);
 
-            // right now, collapsible shouldn't have a set expanded value
+            // right now, collapsible shouldn't have a set collapsed value
             expect(field?.expanded).toBe(true);
         });
 
-        it('honors is_expanded=false', () => {
-            // create a test collapsible object and set expanded to false
-            const testCollapsible = collapsible("a", [textEl("b")], false);
+        it('honors collapsed=true', () => {
+            // create a test collapsible object and mark it collapsed
+            const testCollapsible = collapsible("a", [textEl("b")], true);
             const {field, errors} = convertElement(testCollapsible, legacyOptions);
 
             // make sure no errors are present

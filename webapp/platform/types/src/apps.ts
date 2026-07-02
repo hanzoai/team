@@ -497,6 +497,7 @@ export type AppField = {
     // fields behind an expandable title and contributes no value of its own.
     fields?: AppField[];
     expanded?: boolean;
+    bordered?: boolean;
 };
 
 /**

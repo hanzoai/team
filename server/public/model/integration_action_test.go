@@ -2473,16 +2473,16 @@ func TestDialogElement_Collapsible_IsValid(t *testing.T) {
 		assert.Contains(t, err.Error(), "child element is not valid")
 	})
 
-	t.Run("is_expanded nil/true/false all validate", func(t *testing.T) {
-		isExpandedNil := collapsible("s1", validText("a"))
-		assert.NoError(t, isExpandedNil.IsValid(), "collapsible with nil IsExpanded should be valid")
+	t.Run("collapsed/borderless default and explicit values validate", func(t *testing.T) {
+		defaults := collapsible("s1", validText("a"))
+		assert.NoError(t, defaults.IsValid(), "collapsible with default Collapsed/Borderless should be valid")
 
-		isExpandedTrue := collapsible("s2", validText("b"))
-		isExpandedTrue.IsExpanded = NewPointer(true)
-		assert.NoError(t, isExpandedTrue.IsValid(), "collapsible with IsExpanded=true should be valid")
+		collapsed := collapsible("s2", validText("b"))
+		collapsed.Collapsed = true
+		assert.NoError(t, collapsed.IsValid(), "collapsible with Collapsed=true should be valid")
 
-		isExpandedFalse := collapsible("s3", validText("c"))
-		isExpandedFalse.IsExpanded = NewPointer(false)
-		assert.NoError(t, isExpandedFalse.IsValid(), "collapsible with IsExpanded=false should be valid")
+		borderless := collapsible("s3", validText("c"))
+		borderless.Borderless = true
+		assert.NoError(t, borderless.IsValid(), "collapsible with Borderless=true should be valid")
 	})
 }

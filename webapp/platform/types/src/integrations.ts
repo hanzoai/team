@@ -222,7 +222,10 @@ export type DialogElement = {
     // Collapsible section configuration. A "collapsible" element groups child
     // elements behind an expandable title and contributes no value of its own.
     elements?: DialogElement[];
-    is_expanded?: boolean;
+    // Initial open/closed state. Omitted/false means the section starts expanded.
+    collapsed?: boolean;
+    // Whether the section renders without a box outline. Omitted/false means bordered.
+    borderless?: boolean;
 };
 
 export type SubmitDialogResponse = {

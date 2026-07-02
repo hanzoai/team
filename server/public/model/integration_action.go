@@ -391,8 +391,12 @@ type DialogElement struct {
 
 	// Collapsible section children; only used when Type is "collapsible".
 	Elements []DialogElement `json:"elements,omitempty"`
-	// IsExpanded controls initial open/closed state; nil means expanded.
-	IsExpanded *bool `json:"is_expanded,omitempty"`
+	// Collapsed controls the initial open/closed state. The zero value (false)
+	// means the section starts expanded.
+	Collapsed bool `json:"collapsed,omitempty"`
+	// Borderless controls whether the section renders without a box outline. The
+	// zero value (false) means the section is bordered.
+	Borderless bool `json:"borderless,omitempty"`
 
 	// Date/datetime field configuration
 	DateTimeConfig *DialogDateTimeConfig `json:"datetime_config,omitempty"`

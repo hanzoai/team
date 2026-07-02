@@ -67,8 +67,13 @@
 
 .apps-form-collapsible-section {
     margin-bottom: 16px;
-    border: 1px solid rgba(var(--center-channel-color-rgb), 0.16);
-    border-radius: 4px;
+    border: none;
+
+    // Optional box outline, toggled by the field's `bordered` prop.
+    &--bordered {
+        border: 1px solid rgba(var(--center-channel-color-rgb), 0.16);
+        border-radius: 4px;
+    }
 
     &__toggle {
         display: flex;
