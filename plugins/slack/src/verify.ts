@@ -80,11 +80,21 @@ export function signOAuthState (secret: string, workspace: string, now?: number)
   return `${payload}.${mac}`
 }
 
+/** Verified OAuth state: the bound workspace, its expiry, and the single-use nonce. */
+export interface OAuthState {
+  workspace: string
+  exp: number
+  nonce: string
+}
+
 /**
- * Verify a signed OAuth `state`. Returns the bound workspace on success, or
- * undefined if the MAC is invalid or the state has expired. Constant-time MAC.
+ * Verify a signed OAuth `state`. Returns the bound workspace, expiry and nonce
+ * on success, or undefined if the MAC is invalid or the state has expired.
+ * Constant-time MAC. The `nonce` lets the caller enforce single-use (the MAC and
+ * expiry alone do not — a valid state is replayable within its TTL until the
+ * caller records the nonce as consumed).
  */
-export function verifyOAuthState (secret: string, state: string, now?: number): string | undefined {
+export function verifyOAuthState (secret: string, state: string, now?: number): OAuthState | undefined {
   const dot = state.lastIndexOf('.')
   if (dot <= 0) return undefined
   const payload = state.slice(0, dot)
@@ -96,9 +106,10 @@ export function verifyOAuthState (secret: string, state: string, now?: number): 
   const macOk: boolean = timingSafeEqual(a, b)
   if (!macOk) return undefined
   const decoded = Buffer.from(payload, 'base64url').toString('utf8')
-  const [workspace, expStr] = decoded.split('.')
+  const [workspace, expStr, nonce] = decoded.split('.')
   const exp = Number(expStr)
   if (workspace === undefined || workspace === '' || !Number.isFinite(exp)) return undefined
+  if (nonce === undefined || nonce === '') return undefined
   if ((now ?? Math.floor(Date.now() / 1000)) > exp) return undefined
-  return workspace
+  return { workspace, exp, nonce }
 }

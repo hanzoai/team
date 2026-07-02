@@ -19,6 +19,7 @@ import core, {
   type Doc,
   generateId,
   type MeasureContext,
+  type PersonId,
   type Ref,
   type Space,
   TxOperations,
@@ -29,10 +30,11 @@ import { generateToken, decodeToken } from '@hanzoteam/server-token'
 import { KmsKeyWrapper } from '@hanzoteam/kms-client'
 import { IamClient } from '@hanzoteam/iam-client'
 import contact from '@hanzoteam/contact'
-import slack, { signOAuthState, type SlackRouteDecision, verifyOAuthState } from '@hanzoteam/slack'
+import slack, { OAUTH_STATE_TTL_SEC, signOAuthState, type SlackRouteDecision, verifyOAuthState } from '@hanzoteam/slack'
 import type { AccountClient } from '@hanzoteam/account-client'
 
 import config from './config'
+import { SeenSet } from './dedupe'
 import { SlackTokenStorage } from './tokens'
 import { SlackRelay } from './relay'
 import { exchangeCode } from './slackapi'
@@ -77,6 +79,9 @@ export interface MapChannelRequest {
 export class SlackController {
   private readonly wrapper: KmsKeyWrapper
   private readonly workspaces = new Map<WorkspaceUuid, WsCtx>()
+  // Single-use OAuth-state nonces. Same age-based test-and-set primitive as the
+  // Slack event dedupe; TTL matches the state lifetime so entries self-expire.
+  private readonly usedStates = new SeenSet(OAUTH_STATE_TTL_SEC * 1000)
 
   constructor (private readonly ctx: MeasureContext) {
     this.wrapper = new KmsKeyWrapper({ url: config.KmsURL, token: config.KmsToken, keyId: config.KmsKeyId })
@@ -163,10 +168,16 @@ export class SlackController {
    * state MAC is the authorization proof that an admin started this flow.
    */
   async connectWorkspace (code: string, state: string): Promise<void> {
-    const workspace = verifyOAuthState(config.Secret, state)
-    if (workspace === undefined) {
+    const verified = verifyOAuthState(config.Secret, state)
+    if (verified === undefined) {
       throw new Error('invalid or expired oauth state')
     }
+    // Single-use: a valid state may be redeemed exactly once (defense in depth
+    // on top of Slack's single-use `code`), blocking state replay within its TTL.
+    if (this.usedStates.seenAndAdd(verified.nonce)) {
+      throw new Error('oauth state already used')
+    }
+    const workspace = verified.workspace
     const ws = await this.openWorkspace(workspace as WorkspaceUuid)
     const token = await exchangeCode({
       clientId: config.SlackClientId,
@@ -182,6 +193,14 @@ export class SlackController {
   async mapChannel (userToken: string, req: MapChannelRequest): Promise<void> {
     const workspace = await this.assertAdmin(userToken)
     const ws = await this.openWorkspace(workspace)
+    // The workspace may only map a Slack team it actually connected. The stored
+    // OAuth token is AAD-bound to (kind|workspace|team), so a successful decrypt
+    // under req.slackTeamId is proof of ownership — this blocks a workspace admin
+    // from hijacking inbound messages of a team they do not own (cross-tenant).
+    const owned = await ws.tokens.get(ws.botSocialId as PersonId, req.slackTeamId).catch(() => null)
+    if (owned === null || owned.teamId !== req.slackTeamId) {
+      throw new Error('slack team not connected to this workspace')
+    }
     await ws.ops.addCollection(
       slack.class.SlackChannelMapping,
       req.hulyChannel as Ref<Space>,
@@ -222,12 +241,14 @@ export class SlackController {
 
   // --- Bot-member admin surface (IAM-authenticated) ---
 
-  /** List the persistent bot members of the caller's workspace. */
+  /** List the persistent bot members of the caller's workspace (admin only). */
   async listBotMembers (userToken: string): Promise<BotMemberInfo[]> {
-    const { workspace } = decodeToken(userToken)
+    const workspace = await this.assertAdmin(userToken)
     const org = this.orgOf(userToken)
     const ws = await this.openWorkspace(workspace, org)
-    const bots = await ws.ops.findAll(contact.mixin.ServiceAccount, {})
+    // Scope to the caller's org so the SA topology of other orgs sharing the
+    // workspace is never exposed.
+    const bots = await ws.ops.findAll(contact.mixin.ServiceAccount, { organization: org })
     return bots.map((b) => ({
       serviceAccountId: b.serviceAccountId,
       accountUuid: String(b.personUuid ?? ''),

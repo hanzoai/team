@@ -15,33 +15,14 @@
 
 import { type MeasureContext } from '@hanzoteam/core'
 import { extractToken } from '@hanzoteam/server-client'
-import { routeSlackEvent, slackEventKey, verifySlackSignature } from '@hanzoteam/slack'
+import { MAX_TIMESTAMP_SKEW_SEC, routeSlackEvent, slackEventKey, verifySlackSignature } from '@hanzoteam/slack'
 import cors from 'cors'
 import express, { type Express, type Request, type Response } from 'express'
 import { type Server } from 'http'
 
 import config from './config'
 import { type SlackController } from './controller'
-
-/** Bounded LRU-ish set for Slack retry de-duplication (event_id). */
-class SeenSet {
-  private readonly set = new Set<string>()
-  private readonly order: string[] = []
-  constructor (private readonly max = 5000) {}
-  has (k: string): boolean {
-    return k !== '' && this.set.has(k)
-  }
-
-  add (k: string): void {
-    if (k === '' || this.set.has(k)) return
-    this.set.add(k)
-    this.order.push(k)
-    if (this.order.length > this.max) {
-      const evicted = this.order.shift()
-      if (evicted !== undefined) this.set.delete(evicted)
-    }
-  }
-}
+import { SeenSet } from './dedupe'
 
 export function createServer (ctx: MeasureContext, controller: SlackController): Express {
   const app = express()
@@ -54,7 +35,10 @@ export function createServer (ctx: MeasureContext, controller: SlackController):
     }
   })
 
-  const seen = new SeenSet()
+  // Dedupe TTL == the signature freshness window: an event_id is retained at
+  // least as long as its request signature stays valid, so a replayed request
+  // is either caught here or rejected by verifySlackSignature (stale timestamp).
+  const seen = new SeenSet(MAX_TIMESTAMP_SKEW_SEC * 1000)
 
   app.get('/v1/health', (_req, res) => {
     res.json({ status: 'ok' })
@@ -82,9 +66,10 @@ export function createServer (ctx: MeasureContext, controller: SlackController):
         case 'relay': {
           // Ack Slack immediately (3s budget), relay asynchronously & idempotently.
           res.status(200).end()
+          // Test-and-set dedupe synchronously BEFORE the await so two concurrent
+          // Slack retries of the same event_id cannot both proceed to relay.
           const key = slackEventKey(req.body)
-          if (seen.has(key)) return
-          seen.add(key)
+          if (seen.seenAndAdd(key)) return
           try {
             await controller.relayIncoming(decision)
           } catch (err) {

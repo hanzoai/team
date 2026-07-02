@@ -75,9 +75,12 @@ describe('verifySlackSignature', () => {
 describe('OAuth state (CSRF)', () => {
   const now = 1_700_000_000
 
-  it('round-trips the bound workspace', () => {
+  it('round-trips the bound workspace with a single-use nonce', () => {
     const state = signOAuthState(SECRET, 'ws-42', now)
-    expect(verifyOAuthState(SECRET, state, now)).toBe('ws-42')
+    const verified = verifyOAuthState(SECRET, state, now)
+    expect(verified?.workspace).toBe('ws-42')
+    expect(verified?.nonce).toMatch(/^[0-9a-f]{32}$/)
+    expect(verified?.exp).toBe(now + OAUTH_STATE_TTL_SEC)
   })
 
   it('rejects a forged/wrong-secret state', () => {
