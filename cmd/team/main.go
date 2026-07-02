@@ -23,9 +23,12 @@ import (
 	teamauth "github.com/hanzoai/team-go/pkg/auth"
 	teambilling "github.com/hanzoai/team-go/pkg/billing"
 	teambot "github.com/hanzoai/team-go/pkg/bot"
+	teambots "github.com/hanzoai/team-go/pkg/bots"
+	teamchat "github.com/hanzoai/team-go/pkg/chat"
 	teamfiles "github.com/hanzoai/team-go/pkg/files"
 	teamiam "github.com/hanzoai/team-go/pkg/iam"
 	teammetrics "github.com/hanzoai/team-go/pkg/metrics"
+	teamslack "github.com/hanzoai/team-go/pkg/slack"
 	teamsubscribe "github.com/hanzoai/team-go/pkg/subscribe"
 	teamtransactor "github.com/hanzoai/team-go/pkg/transactor"
 )
@@ -79,12 +82,15 @@ func main() {
 		},
 	})
 
-	teamiam.Register(app)       // /v1/iam/*      → IAM_ENDPOINT (transparent OIDC reverse proxy)
-	teamaccount.Register(app)   // /v1/account/*  → the account API (login, workspaces) over IAM
-	teamauth.Register(app)      // /v1/me, /v1/logout
-	teambilling.Register(app)   // /v1/billing/*  → commerce.hanzo.ai
-	teambot.Register(app)       // /v1/bot/*      → hanzo.bot (chat agent in-app)
-	teamfiles.Register(app)     // /v1/files/*    → 307 alias for Base /v1/base/files/*
+	teamiam.Register(app)        // /v1/iam/*      → IAM_ENDPOINT (transparent OIDC reverse proxy)
+	teamaccount.Register(app)    // /v1/account/*  → the account API (login, workspaces) over IAM
+	teamauth.Register(app)       // /v1/me, /v1/logout
+	teambilling.Register(app)    // /v1/billing/*  → commerce.hanzo.ai
+	teambot.Register(app)        // /v1/bot/*      → hanzo.bot (chat agent in-app)
+	teamchat.Register(app)       // /v1/chat/*     → REST chunter (channels/messages/presence)
+	teambots.Register(app)       // /v1/bots/*     → bots-as-members (IAM SAs + cloud agents), admin
+	teamslack.Register(app)      // /v1/slack/*    → bidirectional Slack relay, admin + HMAC webhook
+	teamfiles.Register(app)      // /v1/files/*    → 307 alias for Base /v1/base/files/*
 	teamsubscribe.Register(app)  // /v1/subscribe  → WS record-change stream
 	teamtransactor.Register(app) // /transactor/*  → the workspace data plane over ZAP (WS)
 	// metrics middleware MUST register before app.Start so its wrap

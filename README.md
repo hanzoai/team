@@ -13,12 +13,22 @@ hanzo-team (one Go process, one port)
 ├── @hanzo/base               # SQLite + admin UI + JSVM + plugin system
 ├── platform plugin           # Hanzo IAM auth, KMS, multi-tenant
 ├── jsvm plugin               # Goja runtime, .fn.ts handlers in goroutines
+├── pkg/iam                   # /v1/iam/*     → IAM_ENDPOINT (OIDC reverse proxy)
+├── pkg/account               # /v1/account/* → login + workspace select (Huly front)
 ├── pkg/auth                  # /v1/me, /v1/logout
 ├── pkg/billing               # /v1/billing/* → commerce.hanzo.ai
 ├── pkg/bot                   # /v1/bot/*     → hanzo.bot
+├── pkg/chat                  # /v1/chat/*    → REST chunter (channels/msgs/presence)
+├── pkg/bots                  # /v1/bots/*    → bots-as-members (IAM SAs + agents)
+├── pkg/slack                 # /v1/slack/*   → bidirectional Slack relay
+├── pkg/files                 # /v1/files/*   → 307 alias for Base blob API
+├── pkg/subscribe             # /v1/subscribe → member-scoped WS record stream
+├── pkg/transactor            # /transactor   → Huly data plane over ZAP (WS)
+├── pkg/wsauth                # ONE place: workspace resolve + admin gate
 ├── functions/*.fn.ts         # ai, notify, calendar, github, … (one
 │                             #   .fn.ts per legacy TS pod)
-└── migrations/*.js           # workspaces, projects, tasks
+└── migrations/*.js           # workspaces, members, channels, messages,
+                              #   presence, slack_mappings, …
 ```
 
 Auth: ALL social federation (Google / GitHub / SAML / OIDC) is
@@ -27,10 +37,34 @@ an OAuth client.
 
 Billing: Commerce (`commerce.hanzo.ai`) is the single source of truth.
 The `/v1/billing/*` surface here is a thin proxy that re-mints the
-identity headers from the JWT-validated auth context.
+identity headers from the JWT-validated auth context. Chat + files are
+storage (not per-call metered here); metered AI/agent runs debit credits
+in Commerce (fail-closed 402) on the `/v1/bot` + `/v1/agents` paths.
 
 AI: `/v1/bot/*` proxies to `hanzo.bot`. `/v1/ai/complete` (in
 `functions/ai.fn.ts`) is a one-shot completion helper.
+
+Chat: `/v1/chat/*` is the clean REST surface for chunter over the
+`channels`/`messages`/`presence` collections (member-scoped). It is
+orthogonal to the ZAP transactor the Huly SPA uses. Realtime = clients
+`GET /v1/subscribe?collection=messages`; the REST layer is the req/resp
+half (structured to later ride the cloud ZAP duplex).
+
+Bots as members: `/v1/bots/*` (admin-gated) reconciles a workspace's
+persistent bot members against Hanzo IAM agent service-accounts
+(`GET /v1/iam/service-accounts?organization=`) ∪ the cloud agent
+registry (`GET /v1/agents`). A bot is a `members` row whose account is
+the **deterministic** `uuid v5("iam:sa:<id>")`, so re-sync never dupes.
+A cron reconciles every workspace on `BOTS_SYNC_INTERVAL` (default 15m).
+
+Slack (bidirectional): `/v1/slack/events` is the HMAC-verified webhook
+(constant-time, 5-min replay window, event_id dedupe); `/v1/slack/connect`
++ `/v1/slack/oauth` are the admin OAuth flow (single-use, workspace-bound
+signed `state`); `/v1/slack/mappings` bridges a Hanzo channel to a Slack
+channel (admin, and only for a Slack team the workspace actually connected
+— proven by a KMS token fetch). Slack bot tokens are stored via the
+**canonical KMS secrets API** (`POST /v1/kms/orgs/{org}/secrets`; KMS
+encrypts at rest — no wrap/unwrap, no DB column, never logged).
 
 ## Run locally
 
