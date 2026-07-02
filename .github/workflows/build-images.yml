@@ -53,15 +53,12 @@ jobs:
         if: contains(github.event.inputs.platform || 'linux/amd64', 'arm64')
         uses: docker/setup-qemu-action@v4
 
-      - name: Configure docker
-        uses: docker/setup-docker-action@v5
-        with:
-          daemon-config: |
-            {
-              "features": {
-                "containerd-snapshotter": true
-              }
-            }
+      # The hanzo-build-linux-amd64 ARC pool provides Docker natively (same as the
+      # docker-build job in main.yml). docker/setup-docker-action starts a SECOND
+      # daemon with containerd-snapshotter, which fails to initialize its network
+      # controller inside the ARC pod ("failed to find iptables") and aborts the
+      # whole run. Multi-arch manifests come from QEMU + buildx above, not a
+      # bespoke daemon config, so this step is both harmful and unnecessary here.
 
       - name: Login to GHCR
         uses: docker/login-action@v4
