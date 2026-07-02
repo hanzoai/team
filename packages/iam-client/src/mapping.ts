@@ -13,9 +13,26 @@
 // limitations under the License.
 //
 
-import type { ServiceAccount } from './types'
+import type { IamUser, ServiceAccount } from './types'
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+/**
+ * Map a raw IAM (Casdoor) user record to the {@link ServiceAccount} shape this
+ * package works in. Casdoor's `owner` is the organization; a SA is disabled if
+ * it is forbidden OR soft-deleted. This is the single point that reconciles the
+ * IAM wire shape with our domain model — everything downstream is Casdoor-free.
+ */
+export function mapIamUser (u: IamUser): ServiceAccount {
+  return {
+    id: u.id,
+    name: u.name,
+    organization: u.owner,
+    ...(u.displayName !== undefined ? { displayName: u.displayName } : {}),
+    ...(u.agentModel !== undefined ? { agentModel: u.agentModel } : {}),
+    disabled: u.isForbidden === true || u.isDeleted === true
+  }
+}
 
 /**
  * True if a service-account id is a canonical UUID that can be used directly as

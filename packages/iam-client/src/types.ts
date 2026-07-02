@@ -29,6 +29,30 @@ export interface ServiceAccount {
   disabled?: boolean
 }
 
-export interface ListServiceAccountsResponse {
-  serviceAccounts: ServiceAccount[]
+/**
+ * A raw IAM (Casdoor) user record for a service-account principal, as it appears
+ * inside the {@link IamEnvelope} `data` array. Field names are Casdoor's own:
+ * `owner` is the organization, `isForbidden`/`isDeleted` are the disable flags.
+ * `accessKey`/`accessSecret` are masked by the server and never consumed here.
+ */
+export interface IamUser {
+  id: string
+  name: string
+  owner: string
+  type: string
+  displayName?: string
+  agentModel?: string
+  isForbidden?: boolean
+  isDeleted?: boolean
+}
+
+/**
+ * The canonical Casdoor response envelope. `GET /v1/iam/service-accounts`
+ * returns the SA list directly in `data` (there is no `{serviceAccounts}` key).
+ */
+export interface IamEnvelope<T> {
+  status: 'ok' | 'error'
+  msg?: string
+  data: T
+  data2?: unknown
 }

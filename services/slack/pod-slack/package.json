@@ -20,8 +20,13 @@
     "_phase:test": "jest --passWithNoTests --silent",
     "_phase:format": "format src",
     "_phase:validate": "compile validate",
+    "_phase:bundle": "rushx bundle",
+    "_phase:docker-build": "rushx docker:build",
+    "_phase:docker-staging": "rushx docker:staging",
     "bundle": "node ../../../common/scripts/esbuild.js --keep-names --external:*.node",
     "docker:build": "node ../../../common/scripts/run-docker-build.js hanzoai/slack",
+    "docker:staging": "../../../common/scripts/docker_tag.sh hanzoai/slack staging",
+    "docker:push": "../../../common/scripts/docker_tag.sh hanzoai/slack",
     "run-local": "cross-env ts-node src/index.ts"
   },
   "devDependencies": {

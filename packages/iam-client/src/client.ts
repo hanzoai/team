@@ -13,7 +13,8 @@
 // limitations under the License.
 //
 
-import type { ListServiceAccountsResponse, ServiceAccount } from './types'
+import { mapIamUser } from './mapping'
+import type { IamEnvelope, IamUser, ServiceAccount } from './types'
 
 export interface IamConfig {
   /** Base URL, e.g. https://hanzo.id */
@@ -44,7 +45,12 @@ export class IamClient {
     if (!res.ok) {
       throw new Error(`IAM listServiceAccounts failed: ${res.status}`)
     }
-    const body = (await res.json()) as ListServiceAccountsResponse
-    return body.serviceAccounts ?? []
+    // IAM speaks the Casdoor envelope: { status, msg, data: IamUser[] }. A 200
+    // with status:"error" (e.g. unauthorized) is still an error to us.
+    const body = (await res.json()) as IamEnvelope<IamUser[] | null>
+    if (body.status !== 'ok') {
+      throw new Error(`IAM listServiceAccounts error: ${body.msg ?? 'unknown'}`)
+    }
+    return (body.data ?? []).map(mapIamUser)
   }
 }

@@ -8,11 +8,12 @@
 
 import {
   isDirectAccountUuid,
+  mapIamUser,
   serviceAccountSocialValue,
   serviceAccountName,
   reconcileBotMembers
 } from '../mapping'
-import type { ServiceAccount } from '../types'
+import type { IamUser, ServiceAccount } from '../types'
 
 const sa = (over: Partial<ServiceAccount> = {}): ServiceAccount => ({
   id: '11111111-2222-3333-4444-555555555555',
@@ -100,5 +101,45 @@ describe('reconcileBotMembers', () => {
     })
     expect(plan.toAdd).toEqual([])
     expect(plan.toRemove).toEqual([])
+  })
+})
+
+describe('mapIamUser', () => {
+  const user = (over: Partial<IamUser> = {}): IamUser => ({
+    id: '11111111-2222-3333-4444-555555555555',
+    name: 'hanzo-support',
+    owner: 'hanzo',
+    type: 'service-account',
+    ...over
+  })
+
+  it('maps casdoor owner -> organization', () => {
+    expect(mapIamUser(user()).organization).toBe('hanzo')
+  })
+
+  it('carries id, name, displayName and agentModel through', () => {
+    const sa = mapIamUser(user({ displayName: 'hanzo-triage', agentModel: 'zen-coder' }))
+    expect(sa.id).toBe('11111111-2222-3333-4444-555555555555')
+    expect(sa.name).toBe('hanzo-support')
+    expect(sa.displayName).toBe('hanzo-triage')
+    expect(sa.agentModel).toBe('zen-coder')
+  })
+
+  it('is enabled by default', () => {
+    expect(mapIamUser(user()).disabled).toBe(false)
+  })
+
+  it('treats a forbidden SA as disabled', () => {
+    expect(mapIamUser(user({ isForbidden: true })).disabled).toBe(true)
+  })
+
+  it('treats a soft-deleted SA as disabled', () => {
+    expect(mapIamUser(user({ isDeleted: true })).disabled).toBe(true)
+  })
+
+  it('omits optional fields that IAM did not send', () => {
+    const sa = mapIamUser(user())
+    expect('displayName' in sa).toBe(false)
+    expect('agentModel' in sa).toBe(false)
   })
 })

@@ -157,6 +157,7 @@ jobs:
             hanzoai/inbound-mail
             hanzoai/telegram
             hanzoai/telegram-bot
+            hanzoai/slack
             hanzoai/github
             hanzoai/gmail
             hanzoai/calendar
