@@ -193,6 +193,76 @@ describe('components/integrations/bots/Bots', () => {
         expect(getUser).toHaveBeenCalledWith(newestBot.user_id);
     });
 
+    it('requests one more page when the final data page is exactly full', async () => {
+        const makeFullPage = (start: number): Bot[] => {
+            const page: Bot[] = [];
+            for (let i = start; i < start + 200; i++) {
+                page.push(TestHelper.getBotMock({user_id: String(i), username: `bot${i}`, delete_at: 0}));
+            }
+            return page;
+        };
+
+        // Both data pages are exactly full, so termination requires a trailing empty page.
+        const secondPage = makeFullPage(200);
+        const lastBot = TestHelper.getBotMock({user_id: '400', username: 'bot400', delete_at: 0});
+        secondPage[secondPage.length - 1] = lastBot;
+
+        const loadBots = jest.fn((page: number) => {
+            if (page === 0) {
+                return Promise.resolve({data: makeFullPage(0)});
+            }
+            if (page === 1) {
+                return Promise.resolve({data: secondPage});
+            }
+            return Promise.resolve({data: []});
+        });
+        const getUser = jest.fn();
+
+        renderWithContext(
+            <Bots
+                bots={{}}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={{}}
+                actions={{...actions, loadBots, getUser}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        await waitFor(() => expect(loadBots).toHaveBeenCalledTimes(3));
+        expect(loadBots).toHaveBeenNthCalledWith(1, 0, 200);
+        expect(loadBots).toHaveBeenNthCalledWith(2, 1, 200);
+        expect(loadBots).toHaveBeenNthCalledWith(3, 2, 200);
+        expect(getUser).toHaveBeenCalledWith('400');
+    });
+
+    it('stops after a single request when there are no bots', async () => {
+        const loadBots = jest.fn(() => Promise.resolve({data: []}));
+        const getUser = jest.fn();
+
+        renderWithContext(
+            <Bots
+                bots={{}}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={{}}
+                actions={{...actions, loadBots, getUser}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText('No bot accounts found')).toBeInTheDocument();
+        });
+        expect(loadBots).toHaveBeenCalledTimes(1);
+        expect(loadBots).toHaveBeenCalledWith(0, 200);
+        expect(getUser).not.toHaveBeenCalled();
+    });
+
     it('bot owner tokens', async () => {
         const bot1 = TestHelper.getBotMock({user_id: '1', owner_id: '1', username: 'bot1', display_name: 'Bot 1', delete_at: 0});
         const bots = {
