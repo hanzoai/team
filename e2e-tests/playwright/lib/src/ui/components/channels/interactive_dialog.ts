@@ -1,0 +1,47 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import type {Locator, Page} from '@playwright/test';
+import {expect} from '@playwright/test';
+
+export default class InteractiveDialog {
+    readonly container: Locator;
+    readonly page: Page;
+
+    constructor(page: Page, container?: Locator) {
+        this.page = page;
+        this.container = container ?? page.getByRole('dialog');
+    }
+
+    async toBeVisible() {
+        await expect(this.container).toBeVisible();
+    }
+
+    getFieldByTestId(testId: string) {
+        return this.container.getByTestId(testId);
+    }
+
+    getSelectControl(nth: 'first' | 'last' = 'first') {
+        const selector = '[class*="Select__control"], [class*="react-select__control"]';
+        return nth === 'first'
+            ? this.container.locator(selector).first()
+            : this.container.locator(selector).last();
+    }
+
+    async selectOption(name: string) {
+        await this.page.getByRole('option', {name}).click();
+    }
+
+    get datePickerButton() {
+        return this.container.locator('.dateTime__date').getByRole('button');
+    }
+
+    async selectDate(day: string) {
+        await expect(this.page.getByRole('grid')).toBeVisible();
+        await this.page.getByRole('grid').getByText(day, {exact: true}).click();
+    }
+
+    async selectTime(time: string) {
+        await this.page.getByRole('menuitem', {name: time}).click();
+    }
+}
