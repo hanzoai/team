@@ -30,6 +30,7 @@ import { desktopDownloadsId, createModel as desktopDownloadsModel } from '@hanzo
 import { desktopPreferencesId, createModel as desktopPreferencesModel } from '@hanzoteam/model-desktop-preferences'
 import { driveId, createModel as driveModel } from '@hanzoteam/model-drive'
 import gmail, { gmailId, createModel as gmailModel } from '@hanzoteam/model-gmail'
+import { slackId, createModel as slackModel } from '@hanzoteam/model-slack'
 import { guestId, createModel as guestModel } from '@hanzoteam/model-guest'
 import hr, { hrId, createModel as hrModel } from '@hanzoteam/model-hr'
 import inventory, { inventoryId, createModel as inventoryModel } from '@hanzoteam/model-inventory'
@@ -272,6 +273,7 @@ export default function buildModel (): Builder {
         classFilter: defaultFilter
       }
     ],
+    [slackModel, slackId],
     [
       inventoryModel,
       inventoryId,

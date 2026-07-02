@@ -31,6 +31,7 @@ import {
   type Organization,
   type Person,
   type PersonSpace,
+  type ServiceAccount,
   type SocialIdentity,
   type Status,
   type SocialIdentityProvider,
@@ -273,6 +274,21 @@ export class TEmployee extends TPerson implements Employee {
   declare personUuid?: AccountUuid
 }
 
+@Mixin(contact.mixin.ServiceAccount, contact.class.Person)
+@UX(contact.string.ServiceAccount, contact.icon.Person, 'BOT', 'name')
+export class TServiceAccount extends TEmployee implements ServiceAccount {
+  @Prop(TypeString(), contact.string.ServiceAccountId)
+  @ReadOnly()
+    serviceAccountId!: string
+
+  @Prop(TypeString(), contact.string.BotOrganization)
+  @ReadOnly()
+    organization!: string
+
+  @Prop(TypeString(), contact.string.AgentModel)
+    agentModel?: string
+}
+
 @Model(contact.class.ContactsTab, core.class.Doc, DOMAIN_MODEL)
 export class TContactsTab extends TDoc implements ContactsTab {
   label!: IntlString
@@ -311,6 +327,7 @@ export function createModel (builder: Builder): void {
     TSocialIdentity,
     TOrganization,
     TEmployee,
+    TServiceAccount,
     TChannel,
     TStatus,
     TMember,

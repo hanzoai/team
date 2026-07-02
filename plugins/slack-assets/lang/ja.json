@@ -1,0 +1,9 @@
+{
+  "string": {
+    "Slack": "Slack",
+    "ConnectSlack": "Connect Slack workspace",
+    "SlackWorkspace": "Slack workspace",
+    "MapChannel": "Map channel",
+    "SlackIntegrationDesc": "Connect a Slack workspace so bot activity appears in Slack and Slack messages route back to your channels"
+  }
+}

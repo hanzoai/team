@@ -193,6 +193,22 @@ export interface Employee extends Person {
 }
 
 /**
+ * Mixin applied to an Employee whose account is a Hanzo IAM agent service-account
+ * (a persistent bot member) rather than a human. Presence, badge and admin
+ * surfaces key off this mixin. The Employee.personUuid still holds the bot's
+ * AccountUuid so it participates in Space.members[] exactly like a human.
+ * @public
+ */
+export interface ServiceAccount extends Employee {
+  // Stable IAM service-account id (<org>-<agent>). Source of the AccountUuid.
+  serviceAccountId: string
+  // Owning organization (IAM `owner` claim) the bot is scoped to.
+  organization: string
+  // Optional model/agent descriptor for display.
+  agentModel?: string
+}
+
+/**
  * @public
  */
 export interface ContactsTab extends Doc {
@@ -239,7 +255,8 @@ export const contactPlugin = plugin(contactId, {
     Translation: '' as Ref<Class<Translation>>
   },
   mixin: {
-    Employee: '' as Ref<Class<Employee>>
+    Employee: '' as Ref<Class<Employee>>,
+    ServiceAccount: '' as Ref<Class<ServiceAccount>>
   },
   component: {
     SocialEditor: '' as AnyComponent,
@@ -349,6 +366,10 @@ export const contactPlugin = plugin(contactId, {
     PersonAlreadyExists: '' as IntlString,
     Person: '' as IntlString,
     Employee: '' as IntlString,
+    ServiceAccount: '' as IntlString,
+    ServiceAccountId: '' as IntlString,
+    BotOrganization: '' as IntlString,
+    AgentModel: '' as IntlString,
     CreateOrganization: '' as IntlString,
     UseImage: '' as IntlString,
     UseGravatar: '' as IntlString,

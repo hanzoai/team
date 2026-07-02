@@ -1176,6 +1176,36 @@
       "shouldPublish": false
     },
     {
+      "packageName": "@hanzoteam/kms-client",
+      "projectFolder": "packages/kms-client",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@hanzoteam/iam-client",
+      "projectFolder": "packages/iam-client",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@hanzoteam/slack",
+      "projectFolder": "plugins/slack",
+      "shouldPublish": true
+    },
+    {
+      "packageName": "@hanzoteam/slack-assets",
+      "projectFolder": "plugins/slack-assets",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@hanzoteam/model-slack",
+      "projectFolder": "models/slack",
+      "shouldPublish": false
+    },
+    {
+      "packageName": "@hanzoteam/pod-slack",
+      "projectFolder": "services/slack/pod-slack",
+      "shouldPublish": false
+    },
+    {
       "packageName": "@hanzoteam/global-profile",
       "projectFolder": "plugins/global-profile",
       "shouldPublish": true
