@@ -340,7 +340,7 @@ func getPostsForChannel(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	c.App.RecordPostListDeliveryWithChannel(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct, channelId)
 
 	if err := clientPostList.EncodeJSON(w); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))
@@ -423,7 +423,7 @@ func getPostsForChannelAroundLastUnread(c *Context, w http.ResponseWriter, r *ht
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	c.App.RecordPostListDeliveryWithChannel(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct, channelId)
 
 	if etag != "" {
 		w.Header().Set(model.HeaderEtagServer, etag)
@@ -527,7 +527,7 @@ func getFlaggedPostsForUser(c *Context, w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	c.App.RecordPostListDeliveryWithChannel(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct, channelId)
 
 	auditRec := c.MakeAuditRecord(model.AuditEventGetFlaggedPosts, model.AuditStatusSuccess)
 	defer c.LogAuditRec(auditRec)
@@ -909,7 +909,7 @@ func getPostThread(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	c.App.RecordPostListDelivery(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct)
+	c.App.RecordPostListDeliveryWithChannel(c.AppContext.Session().UserId, clientPostList, model.DeliveryMechanismProduct, post.ChannelId)
 
 	w.Header().Set(model.HeaderEtagServer, clientPostList.Etag())
 

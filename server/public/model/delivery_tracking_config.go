@@ -26,7 +26,7 @@ func (c *DeliveryTrackingConfig) SetDefaults() {
 }
 
 func (c *DeliveryTrackingConfig) IsValid() *AppError {
-	if *c.EnableForAllChannels == false && len(c.ChannelIds) == 0 {
+	if !*c.EnableForAllChannels && len(c.ChannelIds) == 0 {
 		return NewAppError("DeliveryTrackingConfig.IsValid", "model.delivery_tracking.is_valid.all_channels.app_error", nil, "", http.StatusBadRequest)
 	}
 
