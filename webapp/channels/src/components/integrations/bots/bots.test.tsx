@@ -155,7 +155,7 @@ describe('components/integrations/bots/Bots', () => {
         allBots[newestBot.user_id] = newestBot;
         allUsers[newestBot.user_id] = TestHelper.getUserMock({id: newestBot.user_id});
 
-        const loadBots = jest.fn((page: number) => {
+        const loadBots = jest.fn((page?: number) => {
             if (page === 0) {
                 return Promise.resolve({data: firstPage});
             }
@@ -207,7 +207,7 @@ describe('components/integrations/bots/Bots', () => {
         const lastBot = TestHelper.getBotMock({user_id: '400', username: 'bot400', delete_at: 0});
         secondPage[secondPage.length - 1] = lastBot;
 
-        const loadBots = jest.fn((page: number) => {
+        const loadBots = jest.fn((page?: number) => {
             if (page === 0) {
                 return Promise.resolve({data: makeFullPage(0)});
             }

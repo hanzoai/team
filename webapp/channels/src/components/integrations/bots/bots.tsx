@@ -134,7 +134,7 @@ export default class Bots extends React.PureComponent<Props, State> {
 
         // Fetch successive pages until one comes back short, since the server
         // caps each request at BOTS_PER_PAGE and never returns every bot at once.
-        for (; ;) {
+        for (;;) {
             // eslint-disable-next-line no-await-in-loop
             const result = await this.props.actions.loadBots(page, BOTS_PER_PAGE);
             if (!result.data) {
