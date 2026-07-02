@@ -10,17 +10,17 @@ export default class ManagedCategorySelector {
     readonly clearButton: Locator;
 
     constructor(container: Locator) {
-        this.container = container;
-        this.control = container.locator('.ManagedCategory__control');
-        this.clearButton = container.locator('.ManagedCategory__clear-indicator');
+        this.container = container.getByTestId('managedCategorySelector');
+        this.control = this.container.getByRole('combobox');
+        this.clearButton = this.container.getByTestId('managedCategorySelectorClear');
     }
 
     get disabledControl() {
-        return this.container.locator('.ManagedCategory__control--is-disabled');
+        return this.container.getByRole('combobox', {disabled: true});
     }
 
     get combobox() {
-        return this.control.getByRole('combobox');
+        return this.control;
     }
 
     async toBeVisible() {

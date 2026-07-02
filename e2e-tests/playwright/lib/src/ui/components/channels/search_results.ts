@@ -12,9 +12,9 @@ export default class SearchResults {
 
     constructor(container: Locator) {
         this.container = container;
-        this.popoutButton = container.locator('.PopoutButton');
+        this.popoutButton = container.getByTestId('popoutButton');
         this.closeButton = container.locator('#searchResultsCloseButton');
-        this.teamSelectorContainer = container.locator('.team-selector-container');
+        this.teamSelectorContainer = container.getByTestId('searchResultsTeamSelector');
     }
 
     static fromPage(page: Page) {

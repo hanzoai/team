@@ -135,7 +135,7 @@ export default class ChannelsPage {
     }
 
     get sidebarCategoryMenu() {
-        return new SidebarCategoryMenu(this.page.locator('.SidebarCategoryMenu'));
+        return new SidebarCategoryMenu(this.page.getByRole('menu', {name: /Edit category menu/i}));
     }
 
     async selectOption(name: string) {

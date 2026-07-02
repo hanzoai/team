@@ -57,9 +57,7 @@ test('should open /dialog date and post submit confirmation after selecting date
     await expect(interactiveDialog.container.getByText('Meeting Date *', {exact: true})).toBeVisible();
     await expect(interactiveDialog.container.getByText('Meeting Date & Time *', {exact: true})).toBeVisible();
     await expect(interactiveDialog.container.getByText('Event Title *', {exact: true})).toBeVisible();
-    await expect(interactiveDialog.container.getByRole('textbox', {name: 'Event Title *'})).toHaveValue(
-        'Team Meeting',
-    );
+    await expect(interactiveDialog.container.getByRole('textbox', {name: 'Event Title *'})).toHaveValue('Team Meeting');
 
     // 7. Select a date using the Meeting Date picker
     await interactiveDialog.container.getByRole('button', {name: /Select a meeting date/i}).click();

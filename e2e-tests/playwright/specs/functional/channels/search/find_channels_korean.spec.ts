@@ -66,7 +66,9 @@ test('Find Channels modal handles Korean IME input correctly', async ({pw, brows
 
     // * Verify that the first channel is still visible but that the second is not
     await expect(channelsPage.findChannelsModal.getOptionByDisplayName(fullMatchChannel.display_name)).toBeVisible();
-    await expect(channelsPage.findChannelsModal.getOptionByDisplayName(partialMatchChannel.display_name)).not.toBeAttached();
+    await expect(
+        channelsPage.findChannelsModal.getOptionByDisplayName(partialMatchChannel.display_name),
+    ).not.toBeAttached();
 });
 
 test('Find Channels autocomplete lists channel after each incomplete Korean character', async ({pw, browserName}) => {

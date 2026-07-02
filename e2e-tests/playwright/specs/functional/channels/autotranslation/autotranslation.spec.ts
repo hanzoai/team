@@ -748,9 +748,7 @@ test.fixme(
         await expect(channelsPage.centerView.getPostContainingText('English only')).toBeVisible({
             timeout: 15000,
         });
-        await expect(
-            channelsPage.centerView.getPostContainingText('Solo español [translated to en]'),
-        ).toBeVisible();
+        await expect(channelsPage.centerView.getPostContainingText('Solo español [translated to en]')).toBeVisible();
 
         // * Verify both messages are present
         const spanishPost = channelsPage.centerView.getPostContainingText('Solo español [translated to en]');
@@ -848,9 +846,7 @@ test.fixme(
         await expect(channelsPage.centerView.getPostContainingText('English only')).toBeVisible({
             timeout: 15000,
         });
-        await expect(
-            channelsPage.centerView.getPostContainingText('Solo español [translated to en]'),
-        ).toBeVisible();
+        await expect(channelsPage.centerView.getPostContainingText('Solo español [translated to en]')).toBeVisible();
 
         // * Verify both messages are present
         const translatedPost = channelsPage.centerView.getPostContainingText('Solo español [translated to en]');

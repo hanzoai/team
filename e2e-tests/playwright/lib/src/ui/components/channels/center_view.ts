@@ -101,7 +101,7 @@ export default class ChannelsCenterView {
 
     getPostWithBodyText(text: string | RegExp) {
         return this.container.locator('[id^="post_"]').filter({
-            has: this.container.locator('.post__body').filter({hasText: text}),
+            has: this.container.getByTestId('post-body').filter({hasText: text}),
         });
     }
 

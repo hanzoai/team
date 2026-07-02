@@ -35,8 +35,8 @@ export default class ChannelsPost {
         this.body = container.getByTestId('post-body');
 
         this.profileIcon = container.getByTestId('profile-icon');
-        this.mmBlocks = container.locator('.mm-blocks');
-        this.userPopover = container.locator('.post__header .user-popover');
+        this.mmBlocks = container.getByTestId('mmBlocks');
+        this.userPopover = container.getByTestId('userPopover');
 
         this.removePostButton = container.getByTestId('post-remove-button');
 
@@ -52,7 +52,7 @@ export default class ChannelsPost {
     }
 
     get collapsible() {
-        return new MmBlocksCollapsible(this.container.locator('.mm-blocks-collapsible'));
+        return new MmBlocksCollapsible(this.container.getByTestId('mmBlocksCollapsible'));
     }
 
     async toBeVisible() {

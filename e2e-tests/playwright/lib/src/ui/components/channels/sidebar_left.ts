@@ -79,7 +79,7 @@ export default class ChannelsSidebarLeft {
     }
 
     getCategorySection(name: string) {
-        return this.container.locator('.SidebarChannelGroup').filter({hasText: name});
+        return this.container.getByTestId('sidebarCategoryGroup').filter({hasText: name});
     }
 
     getChannelItem(channelName: string) {

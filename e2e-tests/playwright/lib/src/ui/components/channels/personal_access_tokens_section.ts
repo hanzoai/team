@@ -28,6 +28,6 @@ export default class PersonalAccessTokensSection {
     }
 
     getTokenRow(description: string) {
-        return this.container.locator('.setting-box__item', {hasText: description});
+        return this.container.getByTestId('personalAccessTokenRow').filter({hasText: description});
     }
 }

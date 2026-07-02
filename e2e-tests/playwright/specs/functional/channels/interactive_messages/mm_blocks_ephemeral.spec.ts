@@ -127,11 +127,15 @@ test.describe('Interactive mm_blocks (ephemeral post)', () => {
             await ephemeralInThread.toBeVisible();
             await ephemeralInThread.container.getByRole('button', {name: 'Ping integration'}).click();
 
-            await expect(channelsPage.sidebarRight.container).toContainText(/Playwright mm_blocks integration OK \(user:/);
+            await expect(channelsPage.sidebarRight.container).toContainText(
+                /Playwright mm_blocks integration OK \(user:/,
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -382,11 +386,15 @@ test.describe('Interactive mm_blocks (ephemeral post)', () => {
             await ephemeralInThread.toBeVisible();
             await ephemeralInThread.container.getByRole('button', {name: 'Run query merge'}).click();
 
-            await channelsPage.sidebarRight.toContainText('Playwright mm_blocks query OK (cli=from_block&srv=from_action)');
+            await channelsPage.sidebarRight.toContainText(
+                'Playwright mm_blocks query OK (cli=from_block&srv=from_action)',
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -556,11 +564,15 @@ test.describe('Interactive mm_blocks (ephemeral post)', () => {
             await regionSelect.fill('Nor');
             await channelsPage.selectOption('North');
 
-            await channelsPage.sidebarRight.toContainText('Playwright mm_blocks query OK (cli=from_block&srv=from_action)');
+            await channelsPage.sidebarRight.toContainText(
+                'Playwright mm_blocks query OK (cli=from_block&srv=from_action)',
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -644,11 +656,15 @@ test.describe('Interactive mm_blocks (ephemeral post)', () => {
             await userSelect.fill(user.username);
             await channelsPage.selectOption(`@${user.username}`);
 
-            await channelsPage.sidebarRight.toContainText(`Playwright mm_blocks static_select OK (selected_option: ${user.id})`);
+            await channelsPage.sidebarRight.toContainText(
+                `Playwright mm_blocks static_select OK (selected_option: ${user.id})`,
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -732,11 +748,15 @@ test.describe('Interactive mm_blocks (ephemeral post)', () => {
             await channelSelect.fill('Town');
             await channelsPage.selectOption('Town Square');
 
-            await channelsPage.sidebarRight.toContainText(`Playwright mm_blocks static_select OK (selected_option: ${townSquare.id})`);
+            await channelsPage.sidebarRight.toContainText(
+                `Playwright mm_blocks static_select OK (selected_option: ${townSquare.id})`,
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -816,11 +836,15 @@ test.describe('Interactive mm_blocks (ephemeral post)', () => {
             await ephemeralInThread.toBeVisible();
             await ephemeralInThread.container.getByRole('button', {name: 'Verify context'}).click();
 
-            await channelsPage.sidebarRight.toContainText(`Playwright mm_blocks context OK (test_marker: ${contextMarker})`);
+            await channelsPage.sidebarRight.toContainText(
+                `Playwright mm_blocks context OK (test_marker: ${contextMarker})`,
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 

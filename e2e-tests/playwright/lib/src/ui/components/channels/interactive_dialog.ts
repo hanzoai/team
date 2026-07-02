@@ -22,10 +22,9 @@ export default class InteractiveDialog {
     }
 
     getSelectControl(nth: 'first' | 'last' = 'first') {
-        const selector = '[class*="Select__control"], [class*="react-select__control"]';
         return nth === 'first'
-            ? this.container.locator(selector).first()
-            : this.container.locator(selector).last();
+            ? this.container.getByRole('combobox').first()
+            : this.container.getByRole('combobox').last();
     }
 
     async selectOption(name: string) {
@@ -33,7 +32,7 @@ export default class InteractiveDialog {
     }
 
     get datePickerButton() {
-        return this.container.locator('.dateTime__date').getByRole('button');
+        return this.container.getByTestId('dateTimeDate').getByRole('button');
     }
 
     async selectDate(day: string) {

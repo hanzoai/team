@@ -11,8 +11,8 @@ export default class MmBlocksCollapsible {
 
     constructor(container: Locator) {
         this.container = container;
-        this.toggle = container.locator('.mm-blocks-collapsible-header__toggle');
-        this.content = container.locator('.mm-blocks-collapsible-content');
+        this.toggle = container.getByTestId('mmBlocksCollapsibleToggle');
+        this.content = container.getByTestId('mmBlocksCollapsibleContent');
     }
 
     async toBeVisible() {

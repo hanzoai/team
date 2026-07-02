@@ -20,11 +20,11 @@ export default class SearchTeamSelector {
     }
 
     get resultsMenuButton() {
-        return this.page.locator('.team-selector-container .search-teams-selector-menu-button');
+        return this.page.locator('#searchContainer').getByTestId('searchTeamsSelectorMenuButton');
     }
 
     get resultsContainer() {
-        return this.page.locator('.team-selector-container');
+        return this.page.locator('#searchContainer').getByTestId('searchResultsTeamSelector');
     }
 
     async toBeVisible() {

@@ -129,7 +129,9 @@ test.describe('Personal Access Tokens expiry @personal_access_tokens', () => {
         await patSection.customExpiryInput.fill(isoPlusDays(60));
 
         // * The over-the-limit error surfaces inline and Save is disabled
-        await expect(channelsPage.profileModal.container.getByText('Expiry can be at most 30 days from now.')).toBeVisible();
+        await expect(
+            channelsPage.profileModal.container.getByText('Expiry can be at most 30 days from now.'),
+        ).toBeVisible();
         await expect(channelsPage.profileModal.saveButton).toBeDisabled();
     });
 
@@ -161,7 +163,9 @@ test.describe('Personal Access Tokens expiry @personal_access_tokens', () => {
 
         // * The token is created (the server accepts the clamped expiry) and revealed
         await expect(channelsPage.profileModal.container.getByText('Access Token:')).toBeVisible();
-        await expect(channelsPage.profileModal.container.getByText('Expiry can be at most 30 days from now.')).toBeHidden();
+        await expect(
+            channelsPage.profileModal.container.getByText('Expiry can be at most 30 days from now.'),
+        ).toBeHidden();
     });
 
     test('shows status and expiry for existing tokens', async ({pw}) => {

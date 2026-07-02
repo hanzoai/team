@@ -298,8 +298,12 @@ test.describe('Interactive mm_blocks (incoming webhook)', () => {
             await channelsPage.sidebarRight.toBeVisible();
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
-            await expect(integrationEphemeral.container.getByText(/Playwright mm_blocks integration OK \(user:/)).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText(/Playwright mm_blocks integration OK \(user:/),
+            ).toBeVisible();
         },
     );
 
@@ -530,11 +534,15 @@ test.describe('Interactive mm_blocks (incoming webhook)', () => {
 
             await channelsPage.selectOption('South');
 
-            await channelsPage.sidebarRight.toContainText('Playwright mm_blocks static_select OK (selected_option: opt_south)');
+            await channelsPage.sidebarRight.toContainText(
+                'Playwright mm_blocks static_select OK (selected_option: opt_south)',
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -617,11 +625,15 @@ test.describe('Interactive mm_blocks (incoming webhook)', () => {
             await userSelect.fill(user.username);
             await channelsPage.selectOption(`@${user.username}`);
 
-            await channelsPage.sidebarRight.toContainText(`Playwright mm_blocks static_select OK (selected_option: ${user.id})`);
+            await channelsPage.sidebarRight.toContainText(
+                `Playwright mm_blocks static_select OK (selected_option: ${user.id})`,
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -704,11 +716,15 @@ test.describe('Interactive mm_blocks (incoming webhook)', () => {
             await channelSelect.fill('Town');
             await channelsPage.selectOption('Town Square');
 
-            await channelsPage.sidebarRight.toContainText(`Playwright mm_blocks static_select OK (selected_option: ${townSquare.id})`);
+            await channelsPage.sidebarRight.toContainText(
+                `Playwright mm_blocks static_select OK (selected_option: ${townSquare.id})`,
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -786,11 +802,15 @@ test.describe('Interactive mm_blocks (incoming webhook)', () => {
             await anchorPost.getByRole('button', {name: 'reply'}).click();
 
             await channelsPage.sidebarRight.toBeVisible();
-            await channelsPage.sidebarRight.toContainText(`Playwright mm_blocks context OK (test_marker: ${contextMarker})`);
+            await channelsPage.sidebarRight.toContainText(
+                `Playwright mm_blocks context OK (test_marker: ${contextMarker})`,
+            );
 
             const integrationEphemeral = await channelsPage.sidebarRight.getLastPost();
             await integrationEphemeral.toBeVisible();
-            await expect(integrationEphemeral.container.getByText('(Only visible to you)', {exact: true})).toBeVisible();
+            await expect(
+                integrationEphemeral.container.getByText('(Only visible to you)', {exact: true}),
+            ).toBeVisible();
         },
     );
 
@@ -928,7 +948,9 @@ test.describe('Interactive mm_blocks (incoming webhook)', () => {
 
             await channelsPage.sidebarRight.toBeVisible();
 
-            await channelsPage.sidebarRight.toContainText('Playwright mm_blocks query OK (cli=from_block&srv=from_action)');
+            await channelsPage.sidebarRight.toContainText(
+                'Playwright mm_blocks query OK (cli=from_block&srv=from_action)',
+            );
             await channelsPage.sidebarRight.toContainText('(Only visible to you)');
         },
     );
@@ -1092,7 +1114,9 @@ test.describe('Interactive mm_blocks (incoming webhook)', () => {
             await regionSelect.fill('Nor');
             await channelsPage.selectOption('North');
 
-            await channelsPage.sidebarRight.toContainText('Playwright mm_blocks query OK (cli=from_block&srv=from_action)');
+            await channelsPage.sidebarRight.toContainText(
+                'Playwright mm_blocks query OK (cli=from_block&srv=from_action)',
+            );
             await channelsPage.sidebarRight.toContainText('(Only visible to you)');
         },
     );
