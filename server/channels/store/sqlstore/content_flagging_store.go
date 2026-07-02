@@ -249,15 +249,35 @@ func (s *SqlContentFlaggingStore) getTeamReviewers(teamSettings map[string]*mode
 func (s *SqlContentFlaggingStore) ClearCaches() {}
 
 func (s *SqlContentFlaggingStore) saveTrackedChannels(tx *sqlxTxWrapper, channelIDs []string) error {
+	// first delete existing tracked channels
 	deleteBuilder := s.getQueryBuilder().Delete("PostDeliveryTrackingChannels")
 	if _, err := tx.ExecBuilder(deleteBuilder); err != nil {
 		return errors.Wrap(err, "SqlContentFlaggingStore.saveTrackedChannels failed to delete existing tracked channels")
 	}
 
+	// dedup and drop empty ids so the unique index isn't violated
+	seen := make(map[string]bool, len(channelIDs))
+	uniqueChannelIDs := make([]string, 0, len(channelIDs))
+	for _, channelID := range channelIDs {
+		if channelID == "" || seen[channelID] {
+			continue
+		}
+		seen[channelID] = true
+		uniqueChannelIDs = append(uniqueChannelIDs, channelID)
+	}
+
+	if len(uniqueChannelIDs) == 0 {
+		return nil
+	}
+
+	// then insert new tracked channels, one row per channel
 	insertBuilder := s.getQueryBuilder().
 		Insert("PostDeliveryTrackingChannels").
-		Columns("ChannelId").
-		Values(channelIDs)
+		Columns("ChannelId")
+
+	for _, channelID := range uniqueChannelIDs {
+		insertBuilder = insertBuilder.Values(channelID)
+	}
 
 	if _, err := tx.ExecBuilder(insertBuilder); err != nil {
 		return errors.Wrap(err, "SqlContentFlaggingStore.saveTrackedChannels failed to insert new tracked channels")

@@ -12259,6 +12259,10 @@
     "translation": "Invalid channel ID provided in the post delivery tracking settings."
   },
   {
+    "id": "model.delivery_tracking.is_valid.all_channels.app_error",
+    "translation": "Select at least one channel to track delivery."
+  },
+  {
     "id": "model.draft.is_valid.channel_id.app_error",
     "translation": "Invalid channel id."
   },

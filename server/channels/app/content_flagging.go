@@ -1042,8 +1042,6 @@ func (a *App) SaveContentFlaggingConfig(rctx request.CTX, config model.ContentFl
 		config.DeliveryTracking = nil
 	}
 
-	model.RemoveDuplicateStrings(config.DeliveryTracking.ChannelIds)
-
 	if err := a.Srv().Store().ContentFlagging().SaveSettings(config); err != nil {
 		return model.NewAppError("SaveContentFlaggingConfig", "app.data_spillage.save_reviewer_settings.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
 	}
