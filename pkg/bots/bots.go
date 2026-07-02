@@ -297,10 +297,11 @@ func (s *service) reconcileAll() {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	for _, ws := range workspaces {
-		org := ws.GetString("owner_org")
-		if org == "" {
-			org = ws.GetString("owner")
-		}
+		// The tenant is owner_org ONLY. A workspace without owner_org is skipped
+		// (never fall back to `owner`, an account UUID: IAM would return an empty
+		// SA set for it, and reconcile would then deactivate EVERY bot in the
+		// workspace — a mass-removal from a mis-derived org).
+		org := wsauth.WorkspaceOrg(ws)
 		if org == "" {
 			continue
 		}

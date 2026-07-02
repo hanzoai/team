@@ -4,8 +4,10 @@
 // Three additive changes, append-only (prod already ran the earlier three):
 //
 //  1. members  — bot columns. A bot member is an ordinary `members` row whose
-//     account (user_id) is the DETERMINISTIC uuid v5 of `iam:sa:<saId>`, so a
-//     re-sync always resolves to the SAME row (never a duplicate). The badge +
+//     account (user_id) is a DETERMINISTIC uuid v5 of the SA id under a
+//     dedicated service-account namespace (distinct from the human-account
+//     namespace, so a bot account can never alias a human's), so a re-sync
+//     always resolves to the SAME row (never a duplicate). The badge +
 //     provenance live inline so the Huly front (and /v1/chat) can render a bot
 //     differently from a human without a second lookup.
 //

@@ -5,9 +5,11 @@
 //   - the cloud agent registry (GET /v1/agents), when AGENTS_ENDPOINT is set
 //
 // A bot is represented as an ordinary `members` row whose account (user_id) is
-// the DETERMINISTIC uuid v5 of `iam:sa:<saId>` (see socialValue/accountUUID),
-// carrying a bot badge + provenance. Because the account uuid is a pure function
-// of the SA id, re-running the sync never creates duplicates.
+// the DETERMINISTIC uuid v5 of the SA id under a DEDICATED service-account
+// namespace (see saNamespace/accountUUID), carrying a bot badge + provenance.
+// Because the account uuid is a pure function of the SA id, re-running the sync
+// never creates duplicates; because the namespace is distinct from the human
+// account namespace, a bot account can never alias a human's.
 //
 // This is the Go port of the TypeScript @hanzoteam/iam-client + pod-slack
 // botmembers, with the SAME security properties: admin-gated endpoints, org
@@ -139,17 +141,25 @@ func (c *iamClient) listServiceAccounts(ctx context.Context, org string) ([]Serv
 
 // ── deterministic identity ─────────────────────────────────────────────────
 
+// saNamespace is a DEDICATED uuid v5 namespace for service-account principals,
+// distinct from the URL namespace the human-account layer uses. Domain
+// separation lives in the NAMESPACE, not in a string prefix: a bot account and a
+// human account can never collide even if a human's IAM sub textually equals a
+// SA id (or "sa:<id>"), because they are hashed under different namespaces.
+// Value: uuid v5(NameSpaceURL, "hanzo:iam:service-account") — a stable constant.
+var saNamespace = uuid.NewSHA1(uuid.NameSpaceURL, []byte("hanzo:iam:service-account"))
+
 // socialValue is the stable social-id VALUE binding an IAM service-account to a
 // workspace account. Deterministic and collision-free per SA (namespaced by the
 // principal id), so re-running the sync always resolves to the SAME account.
 func socialValue(saID string) string { return "iam:sa:" + saID }
 
 // accountUUID is the deterministic AccountUuid for a service-account: uuid v5
-// (SHA-1) over the URL namespace of the social value. Same algorithm the account
-// layer uses to derive a stable account uuid from a non-UUID IAM sub, so a bot's
-// members.user_id is stable across re-syncs and matches nowhere else.
+// (SHA-1) over the DEDICATED SA namespace (not the human URL namespace). This is
+// what makes a bot's members.user_id stable across re-syncs AND provably
+// disjoint from every human account uuid — no shared-namespace prefix aliasing.
 func accountUUID(saID string) string {
-	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(socialValue(saID))).String()
+	return uuid.NewSHA1(saNamespace, []byte(saID)).String()
 }
 
 // nameParts splits "<org>-<agent>" (or displayName) into first/last for display.

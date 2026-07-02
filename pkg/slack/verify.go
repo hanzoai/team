@@ -68,15 +68,21 @@ func verifySignature(signingSecret, signature, timestamp, rawBody string, now in
 // signOAuthState builds a signed OAuth `state` binding the initiating workspace,
 // so the callback cannot be replayed/forged for another workspace (CSRF).
 // Format: base64url("<workspace>.<exp>.<nonce>").base64url(hmac). `now`=0 → time.Now.
-func signOAuthState(secret, workspace string, now int64) string {
+// Returns an error only if the CSPRNG fails — we never emit a weak/predictable
+// nonce (a predictable single-use nonce would let a redeemed state be replayed
+// once the seen-set expires).
+func signOAuthState(secret, workspace string, now int64) (string, error) {
 	if now == 0 {
 		now = time.Now().Unix()
 	}
 	exp := now + oauthStateTTLSec
-	nonce := randHex(16)
+	nonce, err := randHex(16)
+	if err != nil {
+		return "", err
+	}
 	payload := base64.RawURLEncoding.EncodeToString([]byte(workspace + "." + strconv.FormatInt(exp, 10) + "." + nonce))
 	mac := hmacB64URL(secret, payload)
-	return payload + "." + mac
+	return payload + "." + mac, nil
 }
 
 // oauthState is a verified OAuth state: the bound workspace, its expiry, and the
@@ -130,18 +136,16 @@ func hmacB64URL(secret, payload string) string {
 	return base64.RawURLEncoding.EncodeToString(mac.Sum(nil))
 }
 
-func randHex(n int) string {
+// randHex returns n cryptographically-random bytes hex-encoded. It surfaces a
+// CSPRNG failure to the caller rather than degrading to a predictable value —
+// on Linux crypto/rand.Read is effectively infallible, and if it does fail the
+// correct response is to refuse the operation, not to mint a weak nonce.
+func randHex(n int) (string, error) {
 	b := make([]byte, n)
 	if _, err := rand.Read(b); err != nil {
-		// crypto/rand failure is catastrophic; fall back to time-seeded bytes so
-		// a nonce is still unpredictable-enough for single-use (the MAC + TTL are
-		// the real security). In practice rand.Read never fails on Linux.
-		t := time.Now().UnixNano()
-		for i := range b {
-			b[i] = byte(t >> (uint(i%8) * 8))
-		}
+		return "", err
 	}
-	return hex.EncodeToString(b)
+	return hex.EncodeToString(b), nil
 }
 
 func abs64(x int64) int64 {

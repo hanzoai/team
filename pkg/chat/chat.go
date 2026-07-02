@@ -57,7 +57,11 @@ func (c *api) listChannels(re *core.RequestEvent) error {
 	if re.Auth == nil {
 		return re.UnauthorizedError("auth required", nil)
 	}
-	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id)
+	org := wsauth.CallerOrg(re)
+	if org == "" {
+		return re.ForbiddenError("no org context", nil)
+	}
+	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id, org)
 	if err != nil {
 		return err
 	}
@@ -86,7 +90,11 @@ func (c *api) createChannel(re *core.RequestEvent) error {
 	if re.Auth == nil {
 		return re.UnauthorizedError("auth required", nil)
 	}
-	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id)
+	org := wsauth.CallerOrg(re)
+	if org == "" {
+		return re.ForbiddenError("no org context", nil)
+	}
+	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id, org)
 	if err != nil {
 		return err
 	}
@@ -213,7 +221,11 @@ func (c *api) presence(re *core.RequestEvent) error {
 	if re.Auth == nil {
 		return re.UnauthorizedError("auth required", nil)
 	}
-	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id)
+	org := wsauth.CallerOrg(re)
+	if org == "" {
+		return re.ForbiddenError("no org context", nil)
+	}
+	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id, org)
 	if err != nil {
 		return err
 	}

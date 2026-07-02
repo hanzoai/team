@@ -145,7 +145,7 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if org == "" {
 		org = g.cfg.platform.IAMOrg
 	}
-	if err := g.ensureWorkspace(account, name, email); err != nil {
+	if err := g.ensureWorkspace(account, org, name, email); err != nil {
 		g.app.Logger().Error("account: ensure workspace", "err", err)
 	}
 	tok, err := token.Generate(account, "", map[string]any{"org": org}, g.cfg.serverSecret)
@@ -493,8 +493,11 @@ func (g *api) userinfo(access string) (sub, email, name string, err error) {
 }
 
 // ensureWorkspace gives a freshly-logged-in account a personal workspace if it
-// has none, so the workspace picker is never empty.
-func (g *api) ensureWorkspace(account, displayName, email string) error {
+// has none, so the workspace picker is never empty. org is the IAM tenant and is
+// persisted as owner_org — the canonical tenant field every downstream surface
+// (chat scoping, bot sync, Slack KMS token path) reads. `owner` keeps the
+// creating account UUID for provenance only, never as a tenant.
+func (g *api) ensureWorkspace(account, org, displayName, email string) error {
 	if existing := g.workspacesOf(account); len(existing) > 0 {
 		return nil
 	}
@@ -507,6 +510,7 @@ func (g *api) ensureWorkspace(account, displayName, email string) error {
 	ws.Set("slug", slugify(name)+"-"+shortID())
 	ws.Set("name", name)
 	ws.Set("owner", account)
+	ws.Set("owner_org", org)
 	ws.Set("uuid", uuid.NewString())
 	if err := g.app.Save(ws); err != nil {
 		return err

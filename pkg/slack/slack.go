@@ -178,9 +178,13 @@ func (c *controller) onMessageCreated(e *core.RecordEvent) error {
 	if ws == nil {
 		return e.Next()
 	}
-	org := ws.GetString("owner_org")
+	// The org is the workspace's TENANT (owner_org) — the same value the token
+	// was stored under at OAuth time. Never fall back to `owner` (an account
+	// UUID), which would point KMS at a per-user path, not the per-org tenant.
+	org := wsauth.WorkspaceOrg(ws)
 	if org == "" {
-		org = ws.GetString("owner")
+		c.app.Logger().Warn("slack: outgoing skipped, workspace has no owner_org", "workspace", ws.Id)
+		return e.Next()
 	}
 	teamID := mapping.GetString("slack_team_id")
 	body := rec.GetString("body")
@@ -216,7 +220,10 @@ func (c *controller) connect(re *core.RequestEvent) error {
 	}
 	// State binds the workspace UUID (not the record id) so the callback resolves
 	// the same tenant. Signed + single-use (nonce enforced in oauth()).
-	state := signOAuthState(c.cfg.secret, a.Workspace.GetString("uuid"), 0)
+	state, err := signOAuthState(c.cfg.secret, a.Workspace.GetString("uuid"), 0)
+	if err != nil {
+		return re.InternalServerError("oauth state", err)
+	}
 	u, _ := url.Parse("https://slack.com/oauth/v2/authorize")
 	q := u.Query()
 	q.Set("client_id", c.cfg.slackClientID)
@@ -252,9 +259,12 @@ func (c *controller) oauth(re *core.RequestEvent) error {
 	if ws == nil {
 		return re.BadRequestError("workspace not found", nil)
 	}
-	org := ws.GetString("owner_org")
+	// Store the token under the workspace's TENANT (owner_org). This MUST be the
+	// same value mapChannel proves ownership against (a.Org, which AssertAdmin
+	// guarantees == owner_org), so the store-org and prove-org never diverge.
+	org := wsauth.WorkspaceOrg(ws)
 	if org == "" {
-		org = ws.GetString("owner")
+		return re.InternalServerError("workspace has no owner_org", nil)
 	}
 	tok, err := exchangeCode(re.Request.Context(), c.cfg.slackClientID, c.cfg.slackSecret, code, c.cfg.slackRedirect)
 	if err != nil {

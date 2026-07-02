@@ -7,11 +7,19 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/base/tests"
 	"github.com/hanzoai/base/tools/router"
 	"github.com/hanzoai/dbx"
 )
+
+// uuidV5URL derives a uuid v5 over the URL namespace — the same algorithm the
+// account layer (pkg/account) and accountUUID (bots) use, so the tests can
+// reproduce a "human" account uuid for the collision check.
+func uuidV5URL(s string) string {
+	return uuid.NewSHA1(uuid.NameSpaceURL, []byte(s)).String()
+}
 
 // bootApp boots a Base test app with workspaces + members collections and seeds
 // a workspace whose admin is an owner member.
@@ -58,10 +66,16 @@ func bootApp(t *testing.T) (*tests.TestApp, *core.Record, *core.Record) {
 	}
 
 	users, _ := app.FindCollectionByNameOrId("users")
+	if users.Fields.GetByName("org_id") == nil {
+		users.Fields.Add(&core.TextField{Name: "org_id"})
+		if err := app.Save(users); err != nil {
+			t.Fatal(err)
+		}
+	}
 	admin := core.NewRecord(users)
 	admin.Set("email", "admin@acme.test")
 	admin.Set("password", "test12345")
-	admin.Set("owner", "hanzo") // IAM owner claim mirrored onto the auth record
+	admin.Set("org_id", "hanzo") // IAM tenant claim mirrored onto the auth record
 	if err := app.Save(admin); err != nil {
 		t.Fatal(err)
 	}
@@ -149,11 +163,13 @@ func TestBots_ListRequiresAdmin(t *testing.T) {
 	defer iam.Close()
 	svc := &service{app: app, iam: newIAMClient(iam.URL, "hk")}
 
-	// A stranger (no member row) is forbidden.
+	// A stranger (valid org context, but NO member row) is forbidden — proving
+	// the membership/role gate, not just the org gate.
 	users, _ := app.FindCollectionByNameOrId("users")
 	stranger := core.NewRecord(users)
 	stranger.Set("email", "stranger@x.test")
 	stranger.Set("password", "test12345")
+	stranger.Set("org_id", "hanzo")
 	_ = app.Save(stranger)
 
 	rec := callBots(app, "GET", "/v1/bots?workspace=acme", stranger, "", svc.list)
@@ -165,6 +181,71 @@ func TestBots_ListRequiresAdmin(t *testing.T) {
 	rec = callBots(app, "GET", "/v1/bots?workspace=acme", admin, "", svc.list)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("admin list: %d %s", rec.Code, rec.Body.String())
+	}
+}
+
+// TestCron_SkipsWorkspaceWithoutOwnerOrg is the regression for the cron
+// mass-deactivation bug: reconcileAll must NOT run a reconcile for a workspace
+// whose owner_org is empty. If it did, it would derive an empty/garbage org,
+// IAM would return zero SAs, and reconcile would deactivate EVERY existing bot
+// in that workspace. We seed one active bot, run the cron with an IAM that would
+// return [] for any org, and assert the bot survives (workspace was skipped).
+func TestCron_SkipsWorkspaceWithoutOwnerOrg(t *testing.T) {
+	app, ws, _ := bootApp(t)
+	// Blank out the tenant to simulate a legacy row (owner set, owner_org empty).
+	ws.Set("owner_org", "")
+	ws.Set("owner", "acct-uuid-legacy")
+	if err := app.Save(ws); err != nil {
+		t.Fatal(err)
+	}
+	// Seed an active bot member directly.
+	mColl, _ := app.FindCollectionByNameOrId("members")
+	bot := core.NewRecord(mColl)
+	bot.Set("workspace_id", ws.Id)
+	bot.Set("user_id", accountUUID("sa-keep"))
+	bot.Set("role", "member")
+	bot.Set("is_bot", true)
+	bot.Set("service_account_id", "sa-keep")
+	bot.Set("organization", "hanzo")
+	bot.Set("active", true)
+	if err := app.Save(bot); err != nil {
+		t.Fatal(err)
+	}
+
+	// An IAM that returns [] for every org — the mass-deactivation trigger.
+	iam := mockIAM(t, `[]`)
+	defer iam.Close()
+	svc := &service{app: app, iam: newIAMClient(iam.URL, "hk")}
+
+	svc.reconcileAll()
+
+	if n := countBots(app, ws.Id); n != 1 {
+		t.Fatalf("cron deactivated a bot for a workspace with no owner_org (mass-removal bug): active=%d want 1", n)
+	}
+}
+
+// TestBotAccount_NeverCollidesWithHuman proves the uuidv5 DOMAIN separation: a
+// bot member's account (uuidv5 over the dedicated SA namespace) can never equal a
+// human account (uuidv5 over the URL namespace of "iam:<sub>"), so a bot cannot
+// hijack a human's member row and vice versa — regardless of how the human's IAM
+// sub is spelled. This is the regression for the shared-namespace prefix
+// aliasing where a human sub "sa:<id>" collided with SA id "<id>".
+func TestBotAccount_NeverCollidesWithHuman(t *testing.T) {
+	// Human account derivation mirrors pkg/account: uuidv5(URL, "iam:<sub>").
+	human := func(sub string) string {
+		return uuidV5URL("iam:" + sub)
+	}
+	// Probe the exact strings that aliased under the old shared-namespace scheme,
+	// plus a plain id. None may collide now that bot accounts use a separate
+	// namespace.
+	for _, sub := range []string{"collide-me", "sa:collide-me", "iam:sa:collide-me"} {
+		if accountUUID("collide-me") == human(sub) {
+			t.Fatalf("bot account collided with human sub %q (namespace not domain-separated)", sub)
+		}
+	}
+	// Sanity: the bot derivation is still deterministic under the new namespace.
+	if accountUUID("x") != accountUUID("x") {
+		t.Fatal("bot accountUUID no longer deterministic")
 	}
 }
 

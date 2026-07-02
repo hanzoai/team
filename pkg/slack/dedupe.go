@@ -20,6 +20,19 @@ import (
 // temporally (an entry lives at most ttl), not by count — a count cap would
 // drop fresh ids and reopen the replay window. Go port of the TS SeenSet, made
 // concurrency-safe with a mutex (the Go webhook handler is multi-goroutine).
+//
+// SCOPE: this seen-set is per-PROCESS. In a multi-replica deployment its two
+// guarantees weaken to per-replica:
+//   - event_id dedupe: a Slack retry hitting a different replica could relay a
+//     duplicate. Acceptable — a duplicated mirrored message is a cosmetic issue,
+//     not a security one.
+//   - OAuth state single-use: a state redeemed on replica A could be redeemed
+//     again on replica B within its TTL. This is DEFENSE-IN-DEPTH ONLY; the
+//     primary single-use guarantee is Slack's own server-side single-use OAuth
+//     `code` (a second exchange of the same code fails at Slack), plus the
+//     state's HMAC + short TTL. Before scaling /v1/slack past one replica, back
+//     usedStates with a shared store (Valkey SETNX on the nonce) to restore a
+//     cluster-wide single-use. Single-replica (the default) is fully enforced.
 type seenSet struct {
 	mu    sync.Mutex
 	ttl   time.Duration

@@ -26,20 +26,23 @@ func setup(t *testing.T) (*tests.TestApp, *core.Record, *core.Record, *core.Reco
 
 	mustCollections(t, app)
 
-	// A workspace.
+	// A workspace. owner_org is the TENANT (matches the caller's org_id claim);
+	// owner is the creating account UUID (provenance only, never a tenant).
 	wsColl, _ := app.FindCollectionByNameOrId("workspaces")
 	ws := core.NewRecord(wsColl)
 	ws.Set("slug", "acme")
 	ws.Set("name", "Acme")
-	ws.Set("owner", "hanzo")
+	ws.Set("owner", "acct-uuid")
+	ws.Set("owner_org", "hanzo")
 	ws.Set("uuid", "11111111-1111-1111-1111-111111111111")
 	if err := app.Save(ws); err != nil {
 		t.Fatalf("save ws: %v", err)
 	}
 
-	// Two auth records (from the seeded users collection).
-	member := authRecord(t, app, "member@acme.test")
-	stranger := authRecord(t, app, "stranger@acme.test")
+	// Two auth records (from the seeded users collection). org_id is the IAM
+	// tenant claim the platform plugin lands on the validated auth record.
+	member := authRecord(t, app, "member@acme.test", "hanzo")
+	stranger := authRecord(t, app, "stranger@acme.test", "hanzo")
 
 	// member is an owner of the workspace; stranger is not a member.
 	mColl, _ := app.FindCollectionByNameOrId("members")
@@ -117,15 +120,24 @@ func save(t *testing.T, app core.App, c *core.Collection) {
 	}
 }
 
-func authRecord(t *testing.T, app core.App, email string) *core.Record {
+func authRecord(t *testing.T, app core.App, email, org string) *core.Record {
 	t.Helper()
 	users, err := app.FindCollectionByNameOrId("users")
 	if err != nil {
 		t.Fatalf("users collection: %v", err)
 	}
+	// The platform plugin lands the IAM tenant on the auth record's `org_id`
+	// field; ensure it exists so the harness mirrors production.
+	if users.Fields.GetByName("org_id") == nil {
+		users.Fields.Add(&core.TextField{Name: "org_id"})
+		if err := app.Save(users); err != nil {
+			t.Fatalf("add org_id to users: %v", err)
+		}
+	}
 	r := core.NewRecord(users)
 	r.Set("email", email)
 	r.Set("password", "test12345")
+	r.Set("org_id", org)
 	if err := app.Save(r); err != nil {
 		t.Fatalf("save auth record: %v", err)
 	}
@@ -231,7 +243,7 @@ func TestChat_PostListEditDeleteMessage(t *testing.T) {
 	}
 
 	// A different member cannot edit the author's message.
-	other := authRecord(t, app, "other@acme.test")
+	other := authRecord(t, app, "other@acme.test", "hanzo")
 	mColl, _ := app.FindCollectionByNameOrId("members")
 	om := core.NewRecord(mColl)
 	om.Set("workspace_id", ws.Id)

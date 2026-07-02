@@ -80,10 +80,14 @@ func boot(t *testing.T) (*tests.TestApp, *core.Record, *core.Record, *core.Recor
 	must2(t, app, chRec)
 
 	users, _ := app.FindCollectionByNameOrId("users")
+	if users.Fields.GetByName("org_id") == nil {
+		users.Fields.Add(&core.TextField{Name: "org_id"})
+		must(t, app, users)
+	}
 	admin := core.NewRecord(users)
 	admin.Set("email", "a@acme.test")
 	admin.Set("password", "test12345")
-	admin.Set("owner", "hanzo")
+	admin.Set("org_id", "hanzo") // IAM tenant claim (matches ws.owner_org)
 	must2(t, app, admin)
 	m := core.NewRecord(mem)
 	m.Set("workspace_id", wsRec.Id)
@@ -208,6 +212,60 @@ func TestMapChannel_RequiresTeamOwnership(t *testing.T) {
 	}
 	if n, _ := app.CountRecords("slack_mappings"); n != 0 {
 		t.Fatalf("no mapping should be created, got %d", n)
+	}
+}
+
+// TestMapChannel_OwnershipProofUsesWorkspaceOrg is the regression for the
+// store-org/prove-org divergence: a token is stored under the workspace's TENANT
+// (owner_org = "hanzo"), and mapChannel's ownership proof MUST query KMS under
+// that same org. It also asserts the KMS path segment is the org "hanzo" (a
+// tenant), NEVER the workspace `owner` (an account UUID) — which would defeat
+// KMS per-org RBAC.
+func TestMapChannel_OwnershipProofUsesWorkspaceOrg(t *testing.T) {
+	app, _, chRec, admin := boot(t) // admin.org_id == ws.owner_org == "hanzo"
+
+	var seenOrgPaths []string
+	kms := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		seenOrgPaths = append(seenOrgPaths, r.URL.Path)
+		// The token was connected under org "hanzo" for team T-mine only.
+		if strings.Contains(r.URL.Path, "/orgs/hanzo/") && strings.Contains(r.URL.Path, "token-T-mine") {
+			_, _ = w.Write([]byte(`{"secret":{"value":"{\"accessToken\":\"xoxb-x\",\"teamId\":\"T-mine\",\"teamName\":\"Mine\",\"botUserId\":\"B\"}"}}`))
+			return
+		}
+		w.WriteHeader(http.StatusNotFound)
+	}))
+	defer kms.Close()
+
+	c := &controller{
+		app:    app,
+		cfg:    config{secret: "s", kmsEndpoint: kms.URL, kmsBearer: "hk"},
+		tokens: newTokenStore(kms.URL, "hk"),
+	}
+	body, _ := json.Marshal(map[string]any{
+		"slackTeamId": "T-mine", "slackChannelId": "C1", "channelId": chRec.Id,
+	})
+	req := httptest.NewRequest("POST", "/v1/slack/mappings?workspace=acme", strings.NewReader(string(body)))
+	req.Header.Set("Content-Type", "application/json")
+	rec := drive(app, req, admin, c.mapChannel)
+	if rec.Code != http.StatusCreated {
+		t.Fatalf("owner mapping own team should succeed, got %d %s", rec.Code, rec.Body.String())
+	}
+	// The ownership proof must have hit the /orgs/hanzo/ path (the tenant), and
+	// never a per-account-UUID path.
+	sawHanzo := false
+	for _, p := range seenOrgPaths {
+		if strings.Contains(p, "/orgs/hanzo/") {
+			sawHanzo = true
+		}
+		if strings.Contains(p, "/orgs/acct-") || strings.Contains(p, "/orgs/acct-hanzo/") {
+			t.Fatalf("ownership proof queried a per-account path (KMS per-org RBAC defeated): %s", p)
+		}
+	}
+	if !sawHanzo {
+		t.Fatalf("ownership proof never queried the tenant org path, saw: %v", seenOrgPaths)
+	}
+	if n, _ := app.CountRecords("slack_mappings"); n != 1 {
+		t.Fatalf("mapping should be created exactly once, got %d", n)
 	}
 }
 

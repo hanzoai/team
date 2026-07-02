@@ -99,10 +99,21 @@ func TestVerifySignature_BadInput(t *testing.T) {
 
 // ── OAuth state ──────────────────────────────────────────────────────────────
 
+// mustState signs an OAuth state or fails the test (the CSPRNG never fails in
+// practice; this keeps the callers terse while surfacing a genuine failure).
+func mustState(t *testing.T, secret, ws string, now int64) string {
+	t.Helper()
+	s, err := signOAuthState(secret, ws, now)
+	if err != nil {
+		t.Fatalf("signOAuthState: %v", err)
+	}
+	return s
+}
+
 func TestOAuthState_RoundTrip(t *testing.T) {
 	secret := "server-secret"
 	now := int64(1_700_000_000)
-	state := signOAuthState(secret, "ws-uuid-123", now)
+	state := mustState(t, secret, "ws-uuid-123", now)
 	st, ok := verifyOAuthState(secret, state, now)
 	if !ok {
 		t.Fatal("valid state rejected")
@@ -121,7 +132,7 @@ func TestOAuthState_RoundTrip(t *testing.T) {
 func TestOAuthState_Tampered(t *testing.T) {
 	secret := "server-secret"
 	now := int64(1_700_000_000)
-	state := signOAuthState(secret, "ws-a", now)
+	state := mustState(t, secret, "ws-a", now)
 	// Flip the last MAC char.
 	dot := strings.LastIndexByte(state, '.')
 	tampered := state[:dot+1] + flip(state[dot+1:])
@@ -139,7 +150,7 @@ func TestOAuthState_ForgedWorkspace(t *testing.T) {
 	// the payload invalidates the MAC.
 	secret := "server-secret"
 	now := int64(1_700_000_000)
-	state := signOAuthState(secret, "victim-ws", now)
+	state := mustState(t, secret, "victim-ws", now)
 	dot := strings.LastIndexByte(state, '.')
 	// Replace the payload with a forged workspace, keep the old MAC.
 	forgedPayload := base64.RawURLEncoding.EncodeToString([]byte("attacker-ws.9999999999.deadbeef"))
@@ -152,7 +163,7 @@ func TestOAuthState_ForgedWorkspace(t *testing.T) {
 func TestOAuthState_Expired(t *testing.T) {
 	secret := "server-secret"
 	now := int64(1_700_000_000)
-	state := signOAuthState(secret, "ws", now)
+	state := mustState(t, secret, "ws", now)
 	if _, ok := verifyOAuthState(secret, state, now+oauthStateTTLSec+1); ok {
 		t.Fatal("expired state accepted")
 	}
