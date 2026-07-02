@@ -12,6 +12,7 @@ import type {RelationOneToOne} from '@mattermost/types/utilities';
 
 import type {ActionResult} from 'mattermost-redux/types/actions';
 
+import AlertBanner from 'components/alert_banner';
 import BackstageList from 'components/backstage/components/backstage_list';
 import ExternalLink from 'components/external_link';
 
@@ -106,8 +107,13 @@ type Props = {
     team: Team;
 };
 
+// Distinguishes a clean load from a total failure (no bots fetched) and a
+// partial failure (a later page failed, so the list is incomplete).
+type LoadError = 'none' | 'full' | 'partial';
+
 type State = {
     loading: boolean;
+    loadError: LoadError;
 };
 
 export default class Bots extends React.PureComponent<Props, State> {
@@ -116,6 +122,7 @@ export default class Bots extends React.PureComponent<Props, State> {
 
         this.state = {
             loading: true,
+            loadError: 'none',
         };
     }
 
@@ -130,12 +137,22 @@ export default class Bots extends React.PureComponent<Props, State> {
     private async loadAllBots(): Promise<void> {
         const allBots: BotType[] = [];
         let page = Constants.Integrations.START_PAGE_NUM;
+        let loadError: LoadError = 'none';
 
         // Fetch successive pages until one comes back short, since the server
         // caps each request at BOTS_PER_PAGE and never returns every bot at once.
         for (;;) {
             // eslint-disable-next-line no-await-in-loop
             const result = await this.props.actions.loadBots(page, BOTS_PER_PAGE);
+
+            // A failed fetch returns an error rather than data. Surface it so the
+            // user knows the list failed to load (first page) or is incomplete
+            // (a later page), instead of silently showing an empty/truncated list.
+            if (result.error) {
+                loadError = allBots.length > 0 ? 'partial' : 'full';
+                break;
+            }
+
             if (!result.data) {
                 break;
             }
@@ -159,7 +176,39 @@ export default class Bots extends React.PureComponent<Props, State> {
         }
 
         await Promise.all(promises);
-        this.setState({loading: false});
+        this.setState({loading: false, loadError});
+    }
+
+    private renderLoadError(): JSX.Element | null {
+        if (this.state.loadError === 'none') {
+            return null;
+        }
+
+        if (this.state.loadError === 'partial') {
+            return (
+                <AlertBanner
+                    mode='warning'
+                    message={
+                        <FormattedMessage
+                            id='bots.manage.load_error.partial'
+                            defaultMessage='Some bot accounts could not be loaded, so this list may be incomplete. Refresh the page to try again.'
+                        />
+                    }
+                />
+            );
+        }
+
+        return (
+            <AlertBanner
+                mode='danger'
+                message={
+                    <FormattedMessage
+                        id='bots.manage.load_error.full'
+                        defaultMessage='Bot accounts could not be loaded. Refresh the page to try again.'
+                    />
+                }
+            />
+        );
     }
 
     DisabledSection(props: {hasDisabled: boolean; disabledBots: JSX.Element[]; filter?: string}): JSX.Element | null {
@@ -294,6 +343,7 @@ export default class Bots extends React.PureComponent<Props, State> {
                 }
                 searchPlaceholder={Utils.localizeMessage({id: 'bots.manage.search', defaultMessage: 'Search Bot Accounts'})}
                 loading={this.state.loading}
+                error={this.renderLoadError()}
             >
                 {this.bots}
             </BackstageList>

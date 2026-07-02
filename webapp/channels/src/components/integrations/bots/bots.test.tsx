@@ -238,7 +238,7 @@ describe('components/integrations/bots/Bots', () => {
         expect(getUser).toHaveBeenCalledWith('400');
     });
 
-    it('completes loading when the first page fetch fails', async () => {
+    it('surfaces an error and completes loading when the first page fetch fails', async () => {
         const loadBots = jest.fn(() => Promise.resolve({error: {message: 'Failed to load bots'}}));
         const getUser = jest.fn();
 
@@ -256,11 +256,57 @@ describe('components/integrations/bots/Bots', () => {
         );
 
         await waitFor(() => {
-            expect(screen.getByText('No bot accounts found')).toBeInTheDocument();
+            expect(screen.getByText('Bot accounts could not be loaded. Refresh the page to try again.')).toBeInTheDocument();
         });
+        expect(screen.getByText('No bot accounts found')).toBeInTheDocument();
         expect(loadBots).toHaveBeenCalledTimes(1);
         expect(loadBots).toHaveBeenCalledWith(0, 200);
         expect(getUser).not.toHaveBeenCalled();
+    });
+
+    it('surfaces an incomplete-list warning and shows loaded bots when a later page fetch fails', async () => {
+        const firstPage: Bot[] = [];
+        const allBots: Record<string, Bot> = {};
+        const allUsers: Record<string, ReturnType<typeof TestHelper.getUserMock>> = {};
+        for (let i = 1; i <= 200; i++) {
+            const bot = TestHelper.getBotMock({user_id: String(i), username: `bot${i}`, display_name: `Bot ${i}`, delete_at: 0});
+            firstPage.push(bot);
+            allBots[bot.user_id] = bot;
+            allUsers[bot.user_id] = TestHelper.getUserMock({id: bot.user_id});
+        }
+
+        // First page loads fully, but the second page fetch fails.
+        const loadBots = jest.fn((page?: number) => {
+            if (page === 0) {
+                return Promise.resolve({data: firstPage});
+            }
+            return Promise.resolve({error: {message: 'Failed to load bots'}});
+        });
+        const getUser = jest.fn();
+
+        renderWithContext(
+            <Bots
+                bots={allBots}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={allUsers}
+                actions={{...actions, loadBots, getUser}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText('Some bot accounts could not be loaded, so this list may be incomplete. Refresh the page to try again.')).toBeInTheDocument();
+        });
+
+        // The bots that did load are still rendered alongside the warning.
+        expect(screen.getByText(/Bot 1 \(@bot1\)/)).toBeInTheDocument();
+        expect(loadBots).toHaveBeenCalledWith(0, 200);
+        expect(loadBots).toHaveBeenCalledWith(1, 200);
+        expect(loadBots).toHaveBeenCalledTimes(2);
+        expect(getUser).toHaveBeenCalledWith('1');
     });
 
     it('completes loading when the first page fetch returns no data', async () => {
