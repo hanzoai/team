@@ -238,6 +238,56 @@ describe('components/integrations/bots/Bots', () => {
         expect(getUser).toHaveBeenCalledWith('400');
     });
 
+    it('completes loading when the first page fetch fails', async () => {
+        const loadBots = jest.fn(() => Promise.resolve({error: {message: 'Failed to load bots'}}));
+        const getUser = jest.fn();
+
+        renderWithContext(
+            <Bots
+                bots={{}}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={{}}
+                actions={{...actions, loadBots, getUser}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText('No bot accounts found')).toBeInTheDocument();
+        });
+        expect(loadBots).toHaveBeenCalledTimes(1);
+        expect(loadBots).toHaveBeenCalledWith(0, 200);
+        expect(getUser).not.toHaveBeenCalled();
+    });
+
+    it('completes loading when the first page fetch returns no data', async () => {
+        const loadBots = jest.fn(() => Promise.resolve({}));
+        const getUser = jest.fn();
+
+        renderWithContext(
+            <Bots
+                bots={{}}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={{}}
+                actions={{...actions, loadBots, getUser}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText('No bot accounts found')).toBeInTheDocument();
+        });
+        expect(loadBots).toHaveBeenCalledTimes(1);
+        expect(loadBots).toHaveBeenCalledWith(0, 200);
+        expect(getUser).not.toHaveBeenCalled();
+    });
+
     it('stops after a single request when there are no bots', async () => {
         const loadBots = jest.fn(() => Promise.resolve({data: []}));
         const getUser = jest.fn();

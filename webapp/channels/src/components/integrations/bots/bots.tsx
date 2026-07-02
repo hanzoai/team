@@ -130,7 +130,6 @@ export default class Bots extends React.PureComponent<Props, State> {
     private async loadAllBots(): Promise<void> {
         const allBots: BotType[] = [];
         let page = Constants.Integrations.START_PAGE_NUM;
-        let loaded = false;
 
         // Fetch successive pages until one comes back short, since the server
         // caps each request at BOTS_PER_PAGE and never returns every bot at once.
@@ -141,17 +140,12 @@ export default class Bots extends React.PureComponent<Props, State> {
                 break;
             }
 
-            loaded = true;
             allBots.push(...result.data);
 
             if (result.data.length < BOTS_PER_PAGE) {
                 break;
             }
             page++;
-        }
-
-        if (!loaded) {
-            return;
         }
 
         const promises = [];
