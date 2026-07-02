@@ -139,6 +139,60 @@ describe('components/integrations/bots/Bots', () => {
         });
     });
 
+    it('paginates until a short page and processes bots beyond the first page', async () => {
+        // A full first page forces the component to request the next page.
+        const firstPage: Bot[] = [];
+        const allBots: Record<string, Bot> = {};
+        const allUsers: Record<string, ReturnType<typeof TestHelper.getUserMock>> = {};
+        for (let i = 1; i <= 200; i++) {
+            const bot = TestHelper.getBotMock({user_id: String(i), username: `bot${i}`, display_name: `Bot ${i}`, delete_at: 0});
+            firstPage.push(bot);
+            allBots[bot.user_id] = bot;
+            allUsers[bot.user_id] = TestHelper.getUserMock({id: bot.user_id});
+        }
+
+        const newestBot = TestHelper.getBotMock({user_id: '201', username: 'irisnewbot', display_name: 'Iris Newest Bot', delete_at: 0});
+        allBots[newestBot.user_id] = newestBot;
+        allUsers[newestBot.user_id] = TestHelper.getUserMock({id: newestBot.user_id});
+
+        const loadBots = jest.fn((page: number) => {
+            if (page === 0) {
+                return Promise.resolve({data: firstPage});
+            }
+            if (page === 1) {
+                return Promise.resolve({data: [newestBot]});
+            }
+            return Promise.resolve({data: []});
+        });
+        const getUser = jest.fn();
+
+        renderWithContext(
+            <Bots
+                bots={allBots}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={allUsers}
+                actions={{...actions, loadBots, getUser}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        // The newest bot lives on the second page and is rendered once loading completes.
+        await waitFor(() => {
+            expect(screen.getByText(/Iris Newest Bot \(@irisnewbot\)/)).toBeInTheDocument();
+        });
+
+        // Successive pages are requested with the server's max page size until a short page is returned.
+        expect(loadBots).toHaveBeenCalledWith(0, 200);
+        expect(loadBots).toHaveBeenCalledWith(1, 200);
+        expect(loadBots).toHaveBeenCalledTimes(2);
+
+        // The second-page bot was accumulated and had its user details fetched.
+        expect(getUser).toHaveBeenCalledWith(newestBot.user_id);
+    });
+
     it('bot owner tokens', async () => {
         const bot1 = TestHelper.getBotMock({user_id: '1', owner_id: '1', username: 'bot1', display_name: 'Bot 1', delete_at: 0});
         const bots = {
