@@ -161,9 +161,12 @@ export function ListTable<TableType extends TableMandatoryTypes>(
                 )}
             >
                 <caption className='sr-only'>{tableMeta.tableCaption}</caption>
-                <thead>
+                <thead data-testid='listTableHead'>
                     {props.table.getHeaderGroups().map((headerGroup) => (
-                        <tr key={headerGroup.id}>
+                        <tr
+                            key={headerGroup.id}
+                            data-testid='listTableHeadRow'
+                        >
                             {headerGroup.headers.map((header) => (
                                 <th
                                     key={header.id}
@@ -226,6 +229,7 @@ export function ListTable<TableType extends TableMandatoryTypes>(
                                                 <tr
                                                     id={`${rowIdPrefix}${row.original.id}`}
                                                     key={row.id}
+                                                    data-testid='listTableBodyRow'
                                                     onClick={handleRowClick}
                                                     className={classNames({clickable: Boolean(tableMeta.onRowClick) && !snap.isDraggingOver})}
                                                     ref={provided.innerRef}
@@ -239,6 +243,7 @@ export function ListTable<TableType extends TableMandatoryTypes>(
                                                             className={classNames(`${cell.column.id}`, {
                                                                 [PINNED_CLASS]: cell.column.getCanPin(),
                                                             })}
+                                                            data-testid={cell.column.id}
                                                             style={{width: cell.column.getSize()}}
                                                         >
                                                             {tableMeta.onReorder && i === 0 && (
@@ -324,10 +329,14 @@ export function ListTable<TableType extends TableMandatoryTypes>(
                 </tfoot>
             </table>
             {hasPagination && (
-                <div className='adminConsoleListTabletOptionalFoot'>
-                    {tableMeta.paginationInfo}
+                <div
+                    className='adminConsoleListTabletOptionalFoot'
+                    data-testid='listTableFoot'
+                >
+                    <span data-testid='listTableFoot-paginationInfo'>{tableMeta.paginationInfo}</span>
                     <div
                         className='adminConsoleListTablePageSize'
+                        data-testid='listTableFoot-pageSize'
                         aria-label={formatMessage({id: 'adminConsole.list.table.rowCount.label', defaultMessage: 'Show {count} rows per page'}, {count: selectedPageSize.label})}
                     >
                         <FormattedMessage
