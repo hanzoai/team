@@ -20,6 +20,10 @@ import * as Utils from 'utils/utils';
 
 import Bot, {matchesFilter} from './bot';
 
+// The server clamps per_page to PerPageMaximum (200), so bots must be fetched
+// in pages of that size and accumulated rather than in a single large request.
+const BOTS_PER_PAGE = 200;
+
 type Props = {
 
     /**
@@ -116,32 +120,52 @@ export default class Bots extends React.PureComponent<Props, State> {
     }
 
     public componentDidMount(): void {
-        this.props.actions.loadBots(
-            Constants.Integrations.START_PAGE_NUM,
-            Constants.Integrations.PAGE_SIZE,
-        ).then(
-            (result) => {
-                if (result.data) {
-                    const promises = [];
+        this.loadAllBots();
 
-                    for (const bot of result.data) {
-                        // We don't need to wait for this and we need to accept failure in the case where bot.owner_id is a plugin id
-                        this.props.actions.getUser(bot.owner_id);
-
-                        // We want to wait for these.
-                        promises.push(this.props.actions.getUser(bot.user_id));
-                        promises.push(this.props.actions.getUserAccessTokensForUser(bot.user_id));
-                    }
-
-                    Promise.all(promises).then(() => {
-                        this.setState({loading: false});
-                    });
-                }
-            },
-        );
         if (this.props.appsEnabled) {
             this.props.actions.fetchAppsBotIDs();
         }
+    }
+
+    private async loadAllBots(): Promise<void> {
+        const allBots: BotType[] = [];
+        let page = Constants.Integrations.START_PAGE_NUM;
+        let loaded = false;
+
+        // Fetch successive pages until one comes back short, since the server
+        // caps each request at BOTS_PER_PAGE and never returns every bot at once.
+        for (; ;) {
+            // eslint-disable-next-line no-await-in-loop
+            const result = await this.props.actions.loadBots(page, BOTS_PER_PAGE);
+            if (!result.data) {
+                break;
+            }
+
+            loaded = true;
+            allBots.push(...result.data);
+
+            if (result.data.length < BOTS_PER_PAGE) {
+                break;
+            }
+            page++;
+        }
+
+        if (!loaded) {
+            return;
+        }
+
+        const promises = [];
+        for (const bot of allBots) {
+            // We don't need to wait for this and we need to accept failure in the case where bot.owner_id is a plugin id
+            this.props.actions.getUser(bot.owner_id);
+
+            // We want to wait for these.
+            promises.push(this.props.actions.getUser(bot.user_id));
+            promises.push(this.props.actions.getUserAccessTokensForUser(bot.user_id));
+        }
+
+        await Promise.all(promises);
+        this.setState({loading: false});
     }
 
     DisabledSection(props: {hasDisabled: boolean; disabledBots: JSX.Element[]; filter?: string}): JSX.Element | null {
