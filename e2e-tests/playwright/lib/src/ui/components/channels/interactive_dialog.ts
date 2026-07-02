@@ -21,10 +21,14 @@ export default class InteractiveDialog {
         return this.container.getByTestId(testId);
     }
 
-    getSelectControl(nth: 'first' | 'last' = 'first') {
-        return nth === 'first'
-            ? this.container.getByRole('combobox').first()
-            : this.container.getByRole('combobox').last();
+    getSelectControl(nthOrFieldTestId: 'first' | 'last' | string = 'first') {
+        if (nthOrFieldTestId === 'first' || nthOrFieldTestId === 'last') {
+            return nthOrFieldTestId === 'first'
+                ? this.container.getByRole('combobox').first()
+                : this.container.getByRole('combobox').last();
+        }
+
+        return this.container.getByTestId(nthOrFieldTestId).getByRole('combobox');
     }
 
     async selectOption(name: string) {

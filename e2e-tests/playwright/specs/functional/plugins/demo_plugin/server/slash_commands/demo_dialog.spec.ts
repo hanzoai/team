@@ -62,8 +62,8 @@ test('should open /dialog and post submit confirmation on submit', async ({pw}) 
     // Number is required
     await interactiveDialog.getFieldByTestId('somenumbernumber').fill('42');
 
-    // Option Selector — required, no default (3rd combobox: User Selector, Channel Selector, Option Selector)
-    await interactiveDialog.getSelectControl('last').click();
+    // Option Selector — required, no default
+    await interactiveDialog.getSelectControl('someoptionselector').click();
     await interactiveDialog.selectOption('Option1');
 
     // Required checkboxes
