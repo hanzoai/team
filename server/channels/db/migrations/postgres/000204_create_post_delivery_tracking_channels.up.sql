@@ -1,5 +1,4 @@
 CREATE TABLE IF NOT EXISTS PostDeliveryTrackingChannels (
-    ChannelId VARCHAR(26) NOT NULL
+    ChannelId VARCHAR(26) NOT NULL,
+	UNIQUE(ChannelId)
 );
-
-CREATE UNIQUE INDEX IF NOT EXISTS idx_postdeliverytrackingchannels_channelid ON PostDeliveryTrackingChannels (ChannelId);
