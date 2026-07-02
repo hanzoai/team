@@ -21,7 +21,7 @@ export default class DraftsPage {
 
         this.draftsHeader = page.getByTestId('drafts-header');
         this.tab = page.getByRole('tab', {name: 'Drafts'});
-        this.badge = this.tab.getByTestId('tab-counter-badge');
+        this.badge = this.tab.getByTestId('drafts-tab-counter-badge');
 
         this.noDrafts = page.getByTestId('no-results-wrapper');
 
@@ -42,7 +42,7 @@ export default class DraftsPage {
 
     async getBadgeCountOnTab() {
         await expect(this.tab).toBeVisible();
-        const badge = this.tab.getByTestId('tab-counter-badge');
+        const badge = this.tab.getByTestId('drafts-tab-counter-badge');
         await expect(badge).toBeVisible();
         return badge.textContent();
     }

@@ -23,7 +23,7 @@ export default class ScheduledPostsPage {
 
         this.draftsHeader = page.getByTestId('drafts-header');
         this.tab = page.getByRole('tab', {name: 'Scheduled'});
-        this.badge = this.tab.getByTestId('tab-counter-badge');
+        this.badge = this.tab.getByTestId('scheduled-posts-tab-counter-badge');
 
         this.noScheduledDrafts = page.getByTestId('no-results-wrapper');
 
@@ -46,7 +46,7 @@ export default class ScheduledPostsPage {
 
     async getBadgeCountOnTab() {
         await expect(this.tab).toBeVisible();
-        const badge = this.tab.getByTestId('tab-counter-badge');
+        const badge = this.tab.getByTestId('scheduled-posts-tab-counter-badge');
         await expect(badge).toBeVisible();
         return badge.textContent();
     }

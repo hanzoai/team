@@ -241,7 +241,10 @@ const RankedSchemaModal = ({field, onSave, onExited}: Props) => {
                 </Droppable>
             </DragDropContext>
             {adding ? (
-                <div className='ranked-schema-modal__row ranked-schema-modal__adding-row' data-testid='rankedSchemaRow'>
+                <div
+                    className='ranked-schema-modal__row ranked-schema-modal__adding-row'
+                    data-testid='rankedSchemaRow'
+                >
                     <span
                         className='ranked-schema-modal__drag-handle ranked-schema-modal__drag-handle--disabled'
                         aria-hidden={true}

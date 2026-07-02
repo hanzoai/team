@@ -275,7 +275,7 @@ const PostOptions = (props: Props): JSX.Element => {
         options = (
             <ul
                 className='col__controls post-menu'
-                data-testid='post-menu'
+                data-testid={`post-menu-${props.post.id}`}
             >
                 {dotMenu}
                 {flagIcon}
