@@ -81,15 +81,15 @@ func mapIamUser(u iamUser) ServiceAccount {
 }
 
 // iamClient is a read-only IAM client for discovering agent service-accounts to
-// sync as bot members. The bearer is a machine identity (from KMS/env), never
-// hardcoded.
+// sync as bot members. The bearer comes from a token PROVIDER (a machine
+// identity that mints/refreshes a client_credentials token), never hardcoded.
 type iamClient struct {
 	base   string
-	token  string
+	token  tokenFunc
 	client *http.Client
 }
 
-func newIAMClient(base, token string) *iamClient {
+func newIAMClient(base string, token tokenFunc) *iamClient {
 	return &iamClient{
 		base:   strings.TrimRight(base, "/"),
 		token:  token,
@@ -109,7 +109,7 @@ func (c *iamClient) listServiceAccounts(ctx context.Context, org string) ([]Serv
 	if err != nil {
 		return nil, fmt.Errorf("bots: build IAM request: %w", err)
 	}
-	req.Header.Set("Authorization", "Bearer "+c.token)
+	req.Header.Set("Authorization", "Bearer "+c.token(ctx))
 	req.Header.Set("Accept", "application/json")
 	resp, err := c.client.Do(req)
 	if err != nil {

@@ -107,7 +107,7 @@ func TestBots_SyncCreatesAndDeactivatesMembers(t *testing.T) {
 	]`)
 	defer iam.Close()
 
-	svc := &service{app: app, iam: newIAMClient(iam.URL, "hk"), agents: nil}
+	svc := &service{app: app, iam: newIAMClient(iam.URL, staticToken("hk")), agents: nil}
 
 	// First sync: both SAs become bot members.
 	added, removed, err := svc.reconcile(t.Context(), ws, "hanzo", "hk", "")
@@ -139,7 +139,7 @@ func TestBots_SyncCreatesAndDeactivatesMembers(t *testing.T) {
 	// sa2 disappears from IAM → its member is deactivated (not deleted).
 	iam2 := mockIAM(t, `[{"id":"sa1","name":"hanzo-triage","owner":"hanzo"}]`)
 	defer iam2.Close()
-	svc.iam = newIAMClient(iam2.URL, "hk")
+	svc.iam = newIAMClient(iam2.URL, staticToken("hk"))
 	added, removed, _ = svc.reconcile(t.Context(), ws, "hanzo", "hk", "")
 	if added != 0 || removed != 1 {
 		t.Fatalf("expected 1 removal, got add=%d remove=%d", added, removed)
@@ -161,7 +161,7 @@ func TestBots_ListRequiresAdmin(t *testing.T) {
 	app, _, admin := bootApp(t)
 	iam := mockIAM(t, `[]`)
 	defer iam.Close()
-	svc := &service{app: app, iam: newIAMClient(iam.URL, "hk")}
+	svc := &service{app: app, iam: newIAMClient(iam.URL, staticToken("hk"))}
 
 	// A stranger (valid org context, but NO member row) is forbidden — proving
 	// the membership/role gate, not just the org gate.
@@ -215,7 +215,7 @@ func TestCron_SkipsWorkspaceWithoutOwnerOrg(t *testing.T) {
 	// An IAM that returns [] for every org — the mass-deactivation trigger.
 	iam := mockIAM(t, `[]`)
 	defer iam.Close()
-	svc := &service{app: app, iam: newIAMClient(iam.URL, "hk")}
+	svc := &service{app: app, iam: newIAMClient(iam.URL, staticToken("hk")), mt: newMachineToken()}
 
 	svc.reconcileAll()
 
