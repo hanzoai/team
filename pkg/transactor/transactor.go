@@ -10,6 +10,7 @@ import (
 
 	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/base/tools/hook"
+	"github.com/hanzoai/team-go/pkg/model"
 	"github.com/hanzoai/team-go/pkg/token"
 	"golang.org/x/net/websocket"
 )
@@ -30,23 +31,21 @@ const (
 // workspace SQLite store (the structured data plane — no KV, no Postgres), the
 // class hierarchy parsed from the embedded model, and the live-broadcast hub.
 type server struct {
-	app     core.App
-	store   *store
-	hier    *hierarchy
-	hub     *hub
-	secret  string
-	version string
+	app    core.App
+	store  *store
+	hier   *hierarchy
+	hub    *hub
+	secret string
 }
 
 // Register binds the ZAP transactor WebSocket on app.
 func Register(app core.App) {
 	srv := &server{
-		app:     app,
-		store:   newStore(filepath.Join(app.DataDir(), "team_workspaces")),
-		hier:    buildHierarchy(modelJSON),
-		hub:     newHub(),
-		secret:  env("SERVER_SECRET", token.DefaultSecret),
-		version: env("TEAM_VERSION", ""),
+		app:    app,
+		store:  newStore(filepath.Join(app.DataDir(), "team_workspaces")),
+		hier:   buildHierarchy(modelJSON),
+		hub:    newHub(),
+		secret: env("SERVER_SECRET", token.DefaultSecret),
 	}
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
@@ -76,7 +75,6 @@ func (srv *server) serve(re *core.RequestEvent) error {
 		account:   t.Account,
 		org:       org,
 		workspace: t.Workspace,
-		version:   srv.version,
 		sessionID: re.Request.URL.Query().Get("sessionId"),
 	}
 	ws := websocket.Server{
@@ -106,7 +104,6 @@ type session struct {
 	account   string
 	org       string // IAM tenant (token extra.org); scopes the data path
 	workspace string
-	version   string
 	sessionID string
 }
 
@@ -283,13 +280,15 @@ func (s *session) domainRequest(id int64, params []json.RawMessage) []byte {
 
 // hello answers the handshake. binary:false forces JSON so no msgpack is ever
 // exchanged; lastHash/account let the client build its model + identity.
+// serverVersion is the Huly MODEL version (model.Version, NOT TEAM_VERSION) —
+// the number the front's version check compares against.
 func (s *session) hello(id int64) []byte {
 	return mustJSON(map[string]any{
 		"id":             id, // -1
 		"result":         "hello",
 		"binary":         false,
 		"useCompression": false,
-		"serverVersion":  s.version,
+		"serverVersion":  model.Version(),
 		"lastHash":       modelHash,
 		"reconnect":      false,
 		"account":        s.accountObj(),

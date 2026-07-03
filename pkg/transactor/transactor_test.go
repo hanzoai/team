@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"os"
 	"testing"
+
+	"github.com/hanzoai/team-go/pkg/model"
 )
 
 func testSession() *session {
@@ -14,7 +16,6 @@ func testSession() *session {
 		hier:      buildHierarchy(modelJSON),
 		account:   "2d4d67ab-30f1-474e-b81f-f60461852259",
 		workspace: "e48f81fd-12be-4bcd-aecb-3eaa9a9b5b18",
-		version:   "test",
 	}
 }
 
@@ -42,6 +43,23 @@ func TestHelloNegotiatesJSON(t *testing.T) {
 	acc, ok := r["account"].(map[string]any)
 	if !ok || acc["uuid"] != "2d4d67ab-30f1-474e-b81f-f60461852259" {
 		t.Fatalf("account = %v", r["account"])
+	}
+}
+
+// TestHelloServesModelVersion is the decouple guard: the front's version
+// handshake reads serverVersion, which MUST be the Huly MODEL version
+// (model.Version) — NOT TEAM_VERSION. Default is the front's 0.6.0.
+func TestHelloServesModelVersion(t *testing.T) {
+	out := testSession().handle([]byte(`{"id":-1,"method":"hello","params":[]}`))
+	var r map[string]any
+	if err := json.Unmarshal(out, &r); err != nil {
+		t.Fatal(err)
+	}
+	if r["serverVersion"] != model.Version() {
+		t.Fatalf("serverVersion = %v, want model.Version() = %v", r["serverVersion"], model.Version())
+	}
+	if r["serverVersion"] != model.DefaultVersion {
+		t.Fatalf("serverVersion = %v, want default %v", r["serverVersion"], model.DefaultVersion)
 	}
 }
 

@@ -16,6 +16,7 @@ import (
 	"github.com/hanzoai/base/plugins/platform"
 	"github.com/hanzoai/base/tools/hook"
 	"github.com/hanzoai/dbx"
+	"github.com/hanzoai/team-go/pkg/model"
 	"github.com/hanzoai/team-go/pkg/token"
 )
 
@@ -544,11 +545,16 @@ func (g *api) fail(re *core.RequestEvent, s Status) error {
 	return re.JSON(http.StatusOK, map[string]any{"error": s})
 }
 
+// toWorkspaceInfo flattens a workspace record for getUserWorkspaces. The
+// version triple is the Huly MODEL version (model.Version) — the SAME source
+// the transactor reports as serverVersion — so the workspace-model version and
+// the server version can never drift.
 func toWorkspaceInfo(ws *core.Record) WorkspaceInfo {
 	return WorkspaceInfo{
 		UUID: ws.GetString("uuid"), Name: ws.GetString("name"), URL: ws.GetString("slug"),
 		DataID: ws.GetString("data_id"), Region: ws.GetString("region"),
-		Mode: "active", VersionMajor: 0, VersionMinor: 7, VersionPatch: 0,
+		Mode:         "active",
+		VersionMajor: model.Major(), VersionMinor: model.Minor(), VersionPatch: model.Patch(),
 	}
 }
 
