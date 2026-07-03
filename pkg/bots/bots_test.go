@@ -309,11 +309,10 @@ func TestBots_CrossOrgIsolation(t *testing.T) {
 	defer agents.Close()
 
 	svc := &service{
-		app:     app,
-		iam:     newIAMClient(iam.URL, staticToken("machine")),
-		agents:  newAgentsClient(agents.URL),
-		mt:      newMachineToken(),
-		homeOrg: "hanzo",
+		app:    app,
+		iam:    newIAMClient(iam.URL, staticToken("machine")),
+		agents: newAgentsClient(agents.URL),
+		mt:     newMachineToken(),
 	}
 
 	added, removed, err := svc.reconcile(t.Context(), maxpower, "maxpower", "machine", "", "hanzo")
@@ -348,11 +347,10 @@ func TestBots_PerOrg_OrgAuthoritativeBearer(t *testing.T) {
 	defer agents.Close()
 
 	svc := &service{
-		app:     app,
-		iam:     newIAMClient(iam.URL, staticToken("machine")),
-		agents:  newAgentsClient(agents.URL),
-		mt:      newMachineToken(),
-		homeOrg: "hanzo",
+		app:    app,
+		iam:    newIAMClient(iam.URL, staticToken("machine")),
+		agents: newAgentsClient(agents.URL),
+		mt:     newMachineToken(),
 	}
 
 	added, _, err := svc.reconcile(t.Context(), maxpower, "maxpower", "dave-bearer", "dave", "maxpower")
@@ -374,6 +372,40 @@ func TestBots_PerOrg_OrgAuthoritativeBearer(t *testing.T) {
 	}
 	if m.GetString("display_name") != "maxpower-assistant" {
 		t.Fatalf("bot display_name=%q want maxpower-assistant", m.GetString("display_name"))
+	}
+}
+
+// TestBots_CronNeverFoldsCloudAgents locks MEDIUM-1: the cron/machine path
+// (identityOrg="") must NEVER fold cloud agents — not even for the home org —
+// because cloud pins org to the forwarded token's verified owner and a shared
+// machine token is not authoritative for any workspace's cloud agents. The cron
+// syncs IAM service-accounts only; cloud agents sync on an admin login.
+func TestBots_CronNeverFoldsCloudAgents(t *testing.T) {
+	app, ws, _ := bootApp(t) // hanzo (home-org) workspace
+	iam := mockIAMOrg(t, "hanzo", `[{"id":"sa-home","name":"hanzo-oncall","owner":"hanzo"}]`)
+	defer iam.Close()
+	agents := mockAgents(t, `[{"id":"home-agent","name":"hanzo-assistant","status":"active"}]`)
+	defer agents.Close()
+	svc := &service{
+		app:    app,
+		iam:    newIAMClient(iam.URL, staticToken("machine")),
+		agents: newAgentsClient(agents.URL),
+		mt:     newMachineToken(),
+	}
+	// Cron path: identityOrg="" (what reconcileAll passes).
+	added, _, err := svc.reconcile(t.Context(), ws, "hanzo", "machine", "", "")
+	if err != nil {
+		t.Fatalf("cron reconcile: %v", err)
+	}
+	if added != 1 {
+		t.Fatalf("cron should add only the IAM SA, add=%d", added)
+	}
+	if m, _ := app.FindFirstRecordByFilter("members", "service_account_id = {:s}", dbx.Params{"s": "sa-home"}); m == nil {
+		t.Fatal("home IAM SA not synced by cron")
+	}
+	if leak, _ := app.FindFirstRecordByFilter("members",
+		"service_account_id = {:s}", dbx.Params{"s": agentIDPrefix + "home-agent"}); leak != nil {
+		t.Fatal("cron folded a cloud agent (MEDIUM-1 regression)")
 	}
 }
 
@@ -405,11 +437,10 @@ func TestBots_FailedSourceDoesNotMassRemoveOtherSubspace(t *testing.T) {
 	defer down.Close()
 
 	svc := &service{
-		app:     app,
-		iam:     newIAMClient(iam.URL, staticToken("machine")),
-		agents:  newAgentsClient(down.URL),
-		mt:      newMachineToken(),
-		homeOrg: "hanzo",
+		app:    app,
+		iam:    newIAMClient(iam.URL, staticToken("machine")),
+		agents: newAgentsClient(down.URL),
+		mt:     newMachineToken(),
 	}
 	_, removed, err := svc.reconcile(t.Context(), ws, "hanzo", "machine", "", "hanzo")
 	if err != nil {
