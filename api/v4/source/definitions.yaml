@@ -5213,12 +5213,14 @@ components:
           type: boolean
           description: Flag to enable or disable content flagging feature
           example: true
-          NotificationSettings:
-            $ref: '#/components/schemas/NotificationSettings'
-          AdditionalSettings:
-            $ref: '#/components/schemas/AdditionalSettings'
-          ReviewerSettings:
-            $ref: '#/components/schemas/ReviewerSettings'
+        NotificationSettings:
+          $ref: '#/components/schemas/NotificationSettings'
+        AdditionalSettings:
+          $ref: '#/components/schemas/AdditionalSettings'
+        ReviewerSettings:
+          $ref: '#/components/schemas/ReviewerSettings'
+        DeliveryTracking:
+          $ref: '#/components/schemas/DeliveryTrackingConfig'
     NotificationSettings:
       type: object
       properties:
@@ -5339,6 +5341,33 @@ components:
       required:
         - Enabled
         - ReviewerIds
+    DeliveryTrackingConfig:
+      type: object
+      description: >-
+        Post-delivery tracking configuration for content flagging. This object is only
+        included in the `GET /content_flagging/config` response and honored in the
+        `PUT /content_flagging/config` request when the `PostDeliveryTracking` feature
+        flag is enabled. When the flag is disabled it is omitted from the response and
+        silently ignored on save.
+      properties:
+        enable:
+          type: boolean
+          description: Whether post-delivery tracking is enabled.
+          example: true
+        enable_for_all_channels:
+          type: boolean
+          description: >-
+            When true, delivery is tracked for every channel. When false, delivery is
+            tracked only for the channels listed in channel_ids.
+          example: false
+        channel_ids:
+          type: array
+          items:
+            type: string
+          description: >-
+            IDs of the channels for which delivery is tracked. Only used when
+            enable_for_all_channels is false.
+          example: [ "onymzj7qcjnz7dcnhtjp1noc3w" ]
     AccessControlPolicyActiveUpdateRequest:
       type: object
       properties:

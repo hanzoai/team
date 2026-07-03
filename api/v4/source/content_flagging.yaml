@@ -270,6 +270,8 @@
       description: |
         Returns the system configuration for content flagging, including settings related to notifications, flagging configurations, etc..
         Only system admins can access this endpoint.
+
+        When the `PostDeliveryTracking` feature flag is enabled, the response also includes the `DeliveryTracking` object; otherwise that field is omitted.
       tags:
         - Content Flagging
       operationId: GetCFConfig
@@ -291,6 +293,8 @@
         description: |
             Updates the system configuration for content flagging, including settings related to notifications, flagging configurations, etc..
             Only system admins can access this endpoint.
+
+            When the `PostDeliveryTracking` feature flag is enabled, the `DeliveryTracking` object in the request body is applied; otherwise it is silently ignored.
         tags:
             - Content Flagging
         operationId: UpdateCFConfig

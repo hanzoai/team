@@ -102,6 +102,14 @@ func setCommonReviewerWithRequiredCommentConfig(th *TestHelper) *model.AppError 
 	return th.App.SaveContentFlaggingConfig(th.Context, config)
 }
 
+func setPostDeliveryTrackingFF(th *TestHelper, enabled bool) {
+	th.App.Srv().Platform().SetConfigReadOnlyFF(false)
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		cfg.FeatureFlags.PostDeliveryTracking = enabled
+		cfg.DeliveryTrackingSettings.Enable = model.NewPointer(enabled)
+	})
+}
+
 func flagPostViaAPI(t *testing.T, client *model.Client4, postId string) {
 	t.Helper()
 	flagRequest := &model.FlagContentRequest{
@@ -352,6 +360,115 @@ func TestSaveContentFlaggingSettings(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode)
 	})
+
+	t.Run("Should persist delivery tracking settings when the feature flag is enabled", func(t *testing.T) {
+		th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+		defer th.RemoveLicense(t)
+
+		setPostDeliveryTrackingFF(th, true)
+		defer setPostDeliveryTrackingFF(th, false)
+
+		config := model.ContentFlaggingSettingsRequest{
+			ContentFlaggingSettingsBase: model.ContentFlaggingSettingsBase{
+				EnableContentFlagging: new(true),
+			},
+			ReviewerSettings: &model.ReviewSettingsRequest{
+				ReviewerSettings: model.ReviewerSettings{
+					CommonReviewers: new(true),
+				},
+				ReviewerIDsSettings: model.ReviewerIDsSettings{
+					CommonReviewerIds: []string{th.BasicUser.Id},
+				},
+			},
+			DeliveryTracking: &model.DeliveryTrackingConfig{
+				Enable:               new(true),
+				EnableForAllChannels: new(false),
+				ChannelIds:           []string{th.BasicChannel.Id},
+			},
+		}
+
+		resp, err := th.SystemAdminClient.SaveContentFlaggingSettings(context.Background(), &config)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+
+		// Read the settings back and verify delivery tracking round-tripped.
+		settings, resp, err := th.SystemAdminClient.GetContentFlaggingSettings(context.Background())
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+		require.NotNil(t, settings.DeliveryTracking)
+		require.True(t, *settings.DeliveryTracking.Enable)
+		require.False(t, *settings.DeliveryTracking.EnableForAllChannels)
+		require.Equal(t, []string{th.BasicChannel.Id}, settings.DeliveryTracking.ChannelIds)
+	})
+
+	t.Run("Should return 400 when delivery tracking is invalid and the feature flag is enabled", func(t *testing.T) {
+		th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+		defer th.RemoveLicense(t)
+
+		setPostDeliveryTrackingFF(th, true)
+		defer setPostDeliveryTrackingFF(th, false)
+
+		config := model.ContentFlaggingSettingsRequest{
+			ContentFlaggingSettingsBase: model.ContentFlaggingSettingsBase{
+				EnableContentFlagging: new(true),
+			},
+			ReviewerSettings: &model.ReviewSettingsRequest{
+				ReviewerSettings: model.ReviewerSettings{
+					CommonReviewers: new(true),
+				},
+				ReviewerIDsSettings: model.ReviewerIDsSettings{
+					CommonReviewerIds: []string{th.BasicUser.Id},
+				},
+			},
+			// Selected-channels mode with no channels is invalid.
+			DeliveryTracking: &model.DeliveryTrackingConfig{
+				Enable:               new(true),
+				EnableForAllChannels: new(false),
+				ChannelIds:           []string{},
+			},
+		}
+
+		resp, err := th.SystemAdminClient.SaveContentFlaggingSettings(context.Background(), &config)
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("Should ignore delivery tracking settings when the feature flag is disabled", func(t *testing.T) {
+		th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+		defer th.RemoveLicense(t)
+
+		// Feature flag defaults to off; set it explicitly to make the intent clear.
+		setPostDeliveryTrackingFF(th, false)
+
+		config := model.ContentFlaggingSettingsRequest{
+			ContentFlaggingSettingsBase: model.ContentFlaggingSettingsBase{
+				EnableContentFlagging: new(true),
+			},
+			ReviewerSettings: &model.ReviewSettingsRequest{
+				ReviewerSettings: model.ReviewerSettings{
+					CommonReviewers: new(true),
+				},
+				ReviewerIDsSettings: model.ReviewerIDsSettings{
+					CommonReviewerIds: []string{th.BasicUser.Id},
+				},
+			},
+			// This payload should be dropped because the feature flag is disabled.
+			DeliveryTracking: &model.DeliveryTrackingConfig{
+				Enable:               new(true),
+				EnableForAllChannels: new(false),
+				ChannelIds:           []string{th.BasicChannel.Id},
+			},
+		}
+
+		resp, err := th.SystemAdminClient.SaveContentFlaggingSettings(context.Background(), &config)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+
+		settings, resp, err := th.SystemAdminClient.GetContentFlaggingSettings(context.Background())
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+		require.Nil(t, settings.DeliveryTracking)
+	})
 }
 
 func TestGetContentFlaggingSettings(t *testing.T) {
@@ -389,6 +506,47 @@ func TestGetContentFlaggingSettings(t *testing.T) {
 		require.True(t, *settings.ReviewerSettings.CommonReviewers)
 		require.NotNil(t, settings.ReviewerSettings.CommonReviewerIds)
 		require.Contains(t, settings.ReviewerSettings.CommonReviewerIds, th.BasicUser.Id)
+
+		// With the PostDeliveryTracking feature flag off, delivery tracking is omitted.
+		require.Nil(t, settings.DeliveryTracking)
+	})
+
+	t.Run("Should include delivery tracking settings when the feature flag is enabled", func(t *testing.T) {
+		th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+		defer th.RemoveLicense(t)
+
+		setPostDeliveryTrackingFF(th, true)
+		defer setPostDeliveryTrackingFF(th, false)
+
+		config := model.ContentFlaggingSettingsRequest{
+			ContentFlaggingSettingsBase: model.ContentFlaggingSettingsBase{
+				EnableContentFlagging: new(true),
+			},
+			ReviewerSettings: &model.ReviewSettingsRequest{
+				ReviewerSettings: model.ReviewerSettings{
+					CommonReviewers: new(true),
+				},
+				ReviewerIDsSettings: model.ReviewerIDsSettings{
+					CommonReviewerIds: []string{th.BasicUser.Id},
+				},
+			},
+			DeliveryTracking: &model.DeliveryTrackingConfig{
+				Enable:               new(true),
+				EnableForAllChannels: new(false),
+				ChannelIds:           []string{th.BasicChannel.Id},
+			},
+		}
+		config.SetDefaults(true)
+		appErr := th.App.SaveContentFlaggingConfig(th.Context, config)
+		require.Nil(t, appErr)
+
+		settings, resp, err := th.SystemAdminClient.GetContentFlaggingSettings(context.Background())
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+		require.NotNil(t, settings.DeliveryTracking)
+		require.True(t, *settings.DeliveryTracking.Enable)
+		require.False(t, *settings.DeliveryTracking.EnableForAllChannels)
+		require.Equal(t, []string{th.BasicChannel.Id}, settings.DeliveryTracking.ChannelIds)
 	})
 }
 
