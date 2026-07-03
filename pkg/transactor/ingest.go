@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"strings"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // live is the process-singleton transactor server. It is set in Register so the
@@ -55,7 +53,18 @@ func (srv *server) ingest(org, workspace, account string, txes ...map[string]any
 	}
 }
 
-// ── typed builders (the Huly-model knowledge, one place) ─────────────────────
+// hasDoc reports whether a doc id already exists in a workspace store. It lets
+// the mirror choose create-vs-update so a re-projection never full-replaces a
+// doc (which would clobber fields the SPA owns — see MemberTxes).
+func hasDoc(org, workspace, id string) bool {
+	if live == nil {
+		return false
+	}
+	d, _ := live.store.get(org, workspace, id)
+	return d != nil
+}
+
+// ── tx builders (the Huly-model knowledge, one place) ────────────────────────
 
 func createTx(objectID, objectClass, space, modifiedBy string, attrs map[string]any) map[string]any {
 	now := time.Now().UnixMilli()
@@ -63,6 +72,17 @@ func createTx(objectID, objectClass, space, modifiedBy string, attrs map[string]
 		"_class": clTxCreate, "objectId": objectID, "objectClass": objectClass,
 		"objectSpace": space, "modifiedBy": modifiedBy, "modifiedOn": now,
 		"createdBy": modifiedBy, "createdOn": now, "attributes": attrs,
+	}
+}
+
+// updateTx sets only the given operations on an existing doc (get→apply→put),
+// preserving every field it does not name — the anti-clobber primitive.
+func updateTx(objectID, objectClass, space, modifiedBy string, ops map[string]any) map[string]any {
+	now := time.Now().UnixMilli()
+	return map[string]any{
+		"_class": clTxUpdate, "objectId": objectID, "objectClass": objectClass,
+		"objectSpace": space, "modifiedBy": modifiedBy, "modifiedOn": now,
+		"operations": ops,
 	}
 }
 
@@ -83,6 +103,14 @@ func mixinTx(objectID, objectClass, space, mixin, modifiedBy string, attrs map[s
 	}
 }
 
+func removeTx(objectID, objectClass, space string) map[string]any {
+	return map[string]any{
+		"_class": clTxRemove, "objectId": objectID, "objectClass": objectClass, "objectSpace": space,
+	}
+}
+
+// ── projections ──────────────────────────────────────────────────────────────
+
 // Member is the projection of a team member (human or bot) the mirror renders as
 // a Person + Employee in the SPA directory.
 type Member struct {
@@ -97,38 +125,41 @@ type Member struct {
 // re-syncs upsert in place (never duplicate a member).
 func PersonRef(userID string) string { return "person-" + userID }
 
-// PersonTxes builds the create(Person) + Employee-mixin + SocialIdentity txes for
-// a member. Applied in order: the Person exists before the mixin/social attach.
-func PersonTxes(m Member) []map[string]any {
+// MemberTxes builds the txes to project a member. When the Person already EXISTS
+// it only UPDATES the mirror-owned name + refreshes the Employee mixin (which
+// merges, never replaces) — so avatar/city/birthday/profile and any SPA-set
+// mixin survive. On first projection it creates the Person + the hanzo social
+// identity. The Employee mixin (active) is what puts the member in the Team list
+// and fires the PersonSpace trigger.
+func MemberTxes(m Member, exists bool) []map[string]any {
 	pid := PersonRef(m.UserID)
 	name := m.Name
 	if name == "" {
 		name = m.UserID
 	}
-	role := strings.ToLower(m.Role)
-	if role == "" {
-		role = "member"
-	}
+	role := strings.ToUpper(pick(m.Role, "member"))
 	position := ""
 	if m.IsBot {
 		position = "Agent"
 	}
-	socialKey := "hanzo:" + m.UserID
-	return []map[string]any{
-		createTx(pid, clPerson, spaceContacts, acctSystem, map[string]any{
+	var txes []map[string]any
+	if exists {
+		txes = append(txes, updateTx(pid, clPerson, spaceContacts, acctSystem, map[string]any{"name": name}))
+	} else {
+		txes = append(txes, createTx(pid, clPerson, spaceContacts, acctSystem, map[string]any{
 			"name": name, "personUuid": m.UserID, "city": "",
-		}),
-		// Employee mixin: active is what puts the member in the Team/Employee list
-		// AND (when true) fires the PersonSpace trigger.
-		mixinTx(pid, clPerson, spaceContacts, mixinEmployee, acctSystem, map[string]any{
-			"active": m.Active, "role": strings.ToUpper(role), "position": position,
-		}),
-		// The social identity lets the account (hanzo:<uuid>) resolve to this
-		// Person — the same key getSocialIds returns.
-		attachedCreateTx(socialKey, clSocialIdentity, spaceContacts, pid, clPerson, "socialIds", acctSystem, map[string]any{
-			"key": socialKey, "type": "hanzo", "value": m.UserID, "verifiedOn": time.Now().UnixMilli(),
-		}),
+		}))
 	}
+	txes = append(txes, mixinTx(pid, clPerson, spaceContacts, mixinEmployee, acctSystem, map[string]any{
+		"active": m.Active, "role": role, "position": position,
+	}))
+	if !exists {
+		socialKey := "hanzo:" + m.UserID
+		txes = append(txes, attachedCreateTx(socialKey, clSocialIdentity, spaceContacts, pid, clPerson, "socialIds", acctSystem, map[string]any{
+			"key": socialKey, "type": "hanzo", "value": m.UserID, "verifiedOn": time.Now().UnixMilli(),
+		}))
+	}
+	return txes
 }
 
 // Channel is the projection of a chat channel.
@@ -137,29 +168,28 @@ type Channel struct {
 	Name      string
 	Topic     string
 	Private   bool
-	CreatedBy string // account uuid
+	CreatedBy string   // account uuid
+	Members   []string // workspace member account uuids (public-channel visibility)
 }
 
 // ChannelRef is the deterministic Channel/space _id for a Base channel id.
 func ChannelRef(channelID string) string { return "channel-" + channelID }
 
-// ChannelTx builds the create(chunter:class:Channel) space tx. A channel IS a
-// space (ChunterSpace→Space); public channels (private=false) are visible to
-// every workspace member.
-func ChannelTx(c Channel) map[string]any {
-	members := []any{}
-	if c.CreatedBy != "" {
-		members = append(members, c.CreatedBy)
-	}
-	name := c.Name
-	if name == "" {
-		name = "channel"
-	}
-	return createTx(ChannelRef(c.ID), clChannel, spaceSpace, acctSystem, map[string]any{
+// ChannelTx builds the create/update for a chunter:class:Channel space. A channel
+// IS a space; a public channel (private=false, autoJoin) is visible to every
+// workspace member. On update it refreshes name/topic/privacy/membership without
+// disturbing anything else.
+func ChannelTx(c Channel, exists bool) map[string]any {
+	members := memberSet(c.CreatedBy, c.Members)
+	name := pick(c.Name, "channel")
+	attrs := map[string]any{
 		"name": name, "description": c.Topic, "topic": c.Topic,
-		"private": c.Private, "archived": false, "members": members,
-		"autoJoin": !c.Private,
-	})
+		"private": c.Private, "archived": false, "members": members, "autoJoin": !c.Private,
+	}
+	if exists {
+		return updateTx(ChannelRef(c.ID), clChannel, spaceSpace, acctSystem, attrs)
+	}
+	return createTx(ChannelRef(c.ID), clChannel, spaceSpace, acctSystem, attrs)
 }
 
 // Message is the projection of a chat message.
@@ -168,24 +198,66 @@ type Message struct {
 	ChannelID string // Base channels.id
 	AuthorID  string // account uuid or synthetic (slack:<uid>)
 	Body      string
+	CreatedAt int64 // original created_at (unix millis); preserves timeline order on backfill
 }
 
 // MessageRef is the deterministic ChatMessage _id for a Base message id.
 func MessageRef(messageID string) string { return "msg-" + messageID }
 
-// MessageTx builds the create(chunter:class:ChatMessage) AttachedDoc tx, attached
-// to the channel space so the SPA renders it in that channel's timeline.
-func MessageTx(m Message) map[string]any {
+// MessageTx builds the create/update for a chunter:class:ChatMessage AttachedDoc,
+// attached to the channel space so the SPA renders it in that channel's timeline.
+// The body is wrapped as Huly markup (ProseMirror JSON) — the front renders a raw
+// string as empty, so a plain body would silently not display.
+func MessageTx(m Message, exists bool) map[string]any {
 	ch := ChannelRef(m.ChannelID)
-	author := m.AuthorID
-	if author == "" {
-		author = acctSystem
+	if exists {
+		return updateTx(MessageRef(m.ID), clChatMessage, ch, pick(m.AuthorID, acctSystem), map[string]any{
+			"message": markup(m.Body),
+		})
 	}
-	return attachedCreateTx(MessageRef(m.ID), clChatMessage, ch, ch, clChannel, "messages", author, map[string]any{
-		"message": m.Body,
+	t := attachedCreateTx(MessageRef(m.ID), clChatMessage, ch, ch, clChannel, "messages", pick(m.AuthorID, acctSystem), map[string]any{
+		"message": markup(m.Body),
 	})
+	// Preserve the original timeline order (the SPA sorts by createdOn); without
+	// this, backfilled history would all cluster at projection time.
+	if m.CreatedAt > 0 {
+		t["createdOn"] = m.CreatedAt
+		t["modifiedOn"] = m.CreatedAt
+	}
+	return t
 }
 
-// newID is a convenience for callers that need a fresh ref (unused by the mirror,
-// which derives deterministic refs — kept for symmetry with future writers).
-func newID() string { return uuid.NewString() }
+// RemoveMessageTx removes a mirrored ChatMessage (Base delete → plane delete).
+func RemoveMessageTx(messageID, channelID string) map[string]any {
+	return removeTx(MessageRef(messageID), clChatMessage, ChannelRef(channelID))
+}
+
+// ── helpers ──────────────────────────────────────────────────────────────────
+
+// markup wraps a plain-text body in the minimal Huly Markup (ProseMirror JSON)
+// the front parses. An empty body becomes an empty paragraph.
+func markup(body string) string {
+	if body == "" {
+		return `{"type":"doc","content":[{"type":"paragraph"}]}`
+	}
+	text, _ := json.Marshal(body) // JSON-escape the text node value
+	return `{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":` + string(text) + `}]}]}`
+}
+
+// memberSet returns the de-duplicated union of the creator and the workspace
+// members as an []any (the stored members array).
+func memberSet(creator string, members []string) []any {
+	seen := map[string]bool{}
+	out := []any{}
+	add := func(id string) {
+		if id != "" && !seen[id] {
+			seen[id] = true
+			out = append(out, id)
+		}
+	}
+	add(creator)
+	for _, m := range members {
+		add(m)
+	}
+	return out
+}
