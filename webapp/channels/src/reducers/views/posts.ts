@@ -5,6 +5,8 @@ import {combineReducers} from 'redux';
 
 import {UserTypes} from 'mattermost-redux/action_types';
 
+import {getSuppressOutOfChannelEphemeralKey} from 'actions/views/out_of_channel_mention';
+
 import {ActionTypes} from 'utils/constants';
 
 import type {MMAction} from 'types/store';
@@ -78,7 +80,7 @@ function suppressOutOfChannelEphemeral(state: ViewsState['posts']['suppressOutOf
     switch (action.type) {
     case ActionTypes.SUPPRESS_OUT_OF_CHANNEL_EPHEMERAL: {
         const {channelId, rootId, expireAt} = action.data;
-        const key = `${channelId}:${rootId || ''}`;
+        const key = getSuppressOutOfChannelEphemeralKey(channelId, rootId);
         const nextState = pruneExpiredSuppressions(state);
 
         nextState[key] = {expireAt};
