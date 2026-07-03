@@ -202,7 +202,7 @@ func (f *FeatureFlags) SetDefaults() {
 
 	f.MobileEphemeralMode = false
 
-	f.PropertyFieldRank = false
+	f.PropertyFieldRank = true
 
 	f.MmBlocksEnabled = true
 
