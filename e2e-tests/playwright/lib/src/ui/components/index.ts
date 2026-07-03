@@ -81,6 +81,9 @@ import SystemConsoleNavbar from './system_console/navbar';
 import SystemConsoleSidebar from './system_console/sidebar';
 import SystemConsoleSidebarHeader from './system_console/sidebar_header';
 import TeamStatistics from './system_console/sections/reporting/team_statistics';
+import SiteStatistics from './system_console/sections/reporting/site_statistics';
+import Posts from './system_console/sections/site_configuration/posts';
+import AddUsersToRoleModal from './system_console/sections/user_management/add_users_to_role_modal';
 import Users from './system_console/sections/user_management/users';
 
 const components = {
@@ -149,6 +152,7 @@ const components = {
     BurnOnReadConfirmationModal,
 
     // System Console
+    AddUsersToRoleModal,
     AdminSectionPanel,
     DelegatedGranularAdministration,
     DropdownSetting,
@@ -156,7 +160,9 @@ const components = {
     MobileSecurity,
     Notifications,
     NumberInputSetting,
+    Posts,
     RadioSetting,
+    SiteStatistics,
     UsersAndTeams,
     SystemConsoleFeatureDiscovery,
     SystemConsoleHeader,
@@ -237,6 +243,7 @@ export {
     BurnOnReadConfirmationModal,
 
     // System Console
+    AddUsersToRoleModal,
     AdminSectionPanel,
     DelegatedGranularAdministration,
     DropdownSetting,
@@ -244,7 +251,9 @@ export {
     MobileSecurity,
     Notifications,
     NumberInputSetting,
+    Posts,
     RadioSetting,
+    SiteStatistics,
     UsersAndTeams,
     SystemConsoleFeatureDiscovery,
     SystemConsoleHeader,

@@ -17,6 +17,8 @@ import Notifications from '@/ui/components/system_console/sections/site_configur
 import UsersAndTeams from '@/ui/components/system_console/sections/site_configuration/users_and_teams';
 import SystemProperties from '@/ui/components/system_console/sections/system_attributes/system_properties';
 import FeatureDiscovery from '@/ui/components/system_console/sections/system_users/feature_discovery';
+import Posts from '@/ui/components/system_console/sections/site_configuration/posts';
+import SiteStatistics from '@/ui/components/system_console/sections/reporting/site_statistics';
 
 export default class SystemConsolePage {
     readonly page: Page;
@@ -51,6 +53,12 @@ export default class SystemConsolePage {
     // Feature Discovery (license-gated features)
     readonly featureDiscovery: FeatureDiscovery;
 
+    // Site Configuration - Posts
+    readonly posts: Posts;
+
+    // Reporting - Site Statistics
+    readonly siteStatistics: SiteStatistics;
+
     constructor(page: Page) {
         this.page = page;
 
@@ -58,7 +66,7 @@ export default class SystemConsolePage {
         this.navbar = new SystemConsoleNavbar(page.getByTestId('backstage-navbar'));
         this.sidebar = new SystemConsoleSidebar(page.getByTestId('admin-sidebar'));
 
-        const adminConsoleWrapper = page.locator('#adminConsoleWrapper');
+        const adminConsoleWrapper = page.getByTestId('adminConsoleWrapper');
         this.header = new SystemConsoleHeader(adminConsoleWrapper);
 
         // About
@@ -85,6 +93,12 @@ export default class SystemConsolePage {
 
         // Feature Discovery
         this.featureDiscovery = new FeatureDiscovery(adminConsoleWrapper);
+
+        // Site Configuration - Posts
+        this.posts = new Posts(adminConsoleWrapper, page);
+
+        // Reporting - Site Statistics
+        this.siteStatistics = new SiteStatistics(adminConsoleWrapper, page);
     }
 
     async toBeVisible() {
@@ -100,6 +114,20 @@ export default class SystemConsolePage {
     /** Notifications settings URL is environment/notifications (sidebar groups under Site Configuration). */
     async gotoNotificationsSettings() {
         await this.page.goto('/admin_console/environment/notifications');
+        await this.page.waitForLoadState('networkidle');
+    }
+
+    async gotoSiteStatistics() {
+        await this.siteStatistics.goto();
+    }
+
+    async gotoPostsSettings() {
+        await this.page.goto('/admin_console/site_config/posts');
+        await this.page.waitForLoadState('networkidle');
+    }
+
+    async gotoEditionAndLicense() {
+        await this.page.goto('/admin_console/about/license');
         await this.page.waitForLoadState('networkidle');
     }
 }

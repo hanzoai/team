@@ -247,6 +247,7 @@ const AdminConsole = (props: Props) => {
             <div
                 className='admin-console__wrapper admin-console'
                 id='adminConsoleWrapper'
+                data-testid='adminConsoleWrapper'
                 ref={handleFocusScroller}
             >
                 <SearchKeywordMarking

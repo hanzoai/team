@@ -31,6 +31,7 @@ const AdminPanel: React.FC<Props> = ({
     <div
         className={'AdminPanel clearfix ' + className}
         id={id}
+        data-testid={id}
     >
         <div
             className='header'
