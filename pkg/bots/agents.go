@@ -26,6 +26,14 @@ type cloudAgentList struct {
 	Agents []cloudAgent `json:"agents"`
 }
 
+// agentIDPrefix namespaces cloud-agent ids in the members table so they never
+// collide with raw IAM service-account ids. It is also the discriminator the
+// reconcile uses to keep the two sources' removal logic in their own lanes.
+const agentIDPrefix = "agent:"
+
+// isAgentID reports whether a service_account_id originated from cloud agents.
+func isAgentID(id string) bool { return strings.HasPrefix(id, agentIDPrefix) }
+
 // agentsClient reads the cloud agent registry over its /v1/agents surface,
 // forwarding the caller's identity so the registry scopes to the caller's org.
 type agentsClient struct {
@@ -76,7 +84,7 @@ func (c *agentsClient) list(ctx context.Context, org, userID, bearer string) ([]
 	sas := make([]ServiceAccount, 0, len(out.Agents))
 	for _, a := range out.Agents {
 		sas = append(sas, ServiceAccount{
-			ID:           "agent:" + a.ID,
+			ID:           agentIDPrefix + a.ID,
 			Name:         a.Name,
 			Organization: org,
 			DisplayName:  a.Name,

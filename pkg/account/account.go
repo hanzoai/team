@@ -1,6 +1,7 @@
 package account
 
 import (
+	"context"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -16,6 +17,7 @@ import (
 	"github.com/hanzoai/base/plugins/platform"
 	"github.com/hanzoai/base/tools/hook"
 	"github.com/hanzoai/dbx"
+	"github.com/hanzoai/team-go/pkg/bots"
 	"github.com/hanzoai/team-go/pkg/model"
 	"github.com/hanzoai/team-go/pkg/token"
 )
@@ -149,6 +151,15 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if err := g.ensureWorkspace(account, org, name, email); err != nil {
 		g.app.Logger().Error("account: ensure workspace", "err", err)
 	}
+	// Bots-as-members: reconcile this tenant's cloud agents into the user's
+	// workspace(s) with the user's OWN org-authoritative IAM token — so each
+	// workspace only ever receives ITS org's agents. Detached + best-effort:
+	// never delays or fails login.
+	go func(bearer, acct, tenant string) {
+		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+		defer cancel()
+		bots.SyncUserWorkspaces(g.app, ctx, bearer, acct, tenant)
+	}(access, account, org)
 	tok, err := token.Generate(account, "", map[string]any{"org": org}, g.cfg.serverSecret)
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "token_failed")

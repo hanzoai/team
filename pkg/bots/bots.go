@@ -2,6 +2,7 @@ package bots
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -12,6 +13,11 @@ import (
 	"github.com/hanzoai/dbx"
 	"github.com/hanzoai/team-go/pkg/wsauth"
 )
+
+// storeKey stashes the singleton bots service in the app runtime store so the
+// login path (pkg/account) can trigger a per-user reconcile through the SAME
+// service instance (shared machine-token cache) without an import cycle.
+const storeKey = "hanzo.bots.service"
 
 // Register binds the bot-member admin surface and the reconcile cron.
 //
@@ -26,6 +32,7 @@ import (
 // (re.Auth owner), so one org can never see or touch another org's SA topology.
 func Register(app core.App) {
 	svc := newService(app)
+	app.Store().Set(storeKey, svc) // reachable by the login-triggered reconcile
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
 			e.Router.GET("/v1/bots", svc.list)
@@ -39,19 +46,21 @@ func Register(app core.App) {
 }
 
 type service struct {
-	app    core.App
-	iam    *iamClient
-	agents *agentsClient
-	mt     *machineToken
+	app     core.App
+	iam     *iamClient
+	agents  *agentsClient
+	mt      *machineToken
+	homeOrg string // the org the machine identity (hanzo-team app) authoritatively represents
 }
 
 func newService(app core.App) *service {
 	mt := newMachineToken()
 	return &service{
-		app:    app,
-		iam:    newIAMClient(env("IAM_ENDPOINT", "https://hanzo.id"), mt.get),
-		agents: newAgentsClient(os.Getenv("AGENTS_ENDPOINT")),
-		mt:     mt,
+		app:     app,
+		iam:     newIAMClient(env("IAM_ENDPOINT", "https://hanzo.id"), mt.get),
+		agents:  newAgentsClient(env("AGENTS_ENDPOINT", "https://api.hanzo.ai")),
+		mt:      mt,
+		homeOrg: env("IAM_ORG", "hanzo"),
 	}
 }
 
@@ -80,7 +89,10 @@ func (s *service) sync(re *core.RequestEvent) error {
 	if err != nil {
 		return err
 	}
-	added, removed, e := s.reconcile(re.Request.Context(), a.Workspace, a.Org, s.callerBearer(re), a.UserID)
+	// The caller's bearer is authoritative for a.Org — AssertAdmin proved the
+	// caller's org equals the workspace's org — so identityOrg == a.Org and the
+	// workspace's own cloud agents fold in safely.
+	added, removed, e := s.reconcile(re.Request.Context(), a.Workspace, a.Org, s.callerBearer(re), a.UserID, a.Org)
 	if e != nil {
 		return re.InternalServerError("bot sync", e)
 	}
@@ -139,21 +151,49 @@ func (s *service) remove(re *core.RequestEvent) error {
 
 // ── sync core ──────────────────────────────────────────────────────────────
 
-// reconcile diffs the desired bot set (IAM SAs ∪ cloud agents) against the
-// workspace's current active bots and applies the plan. Idempotent.
-func (s *service) reconcile(ctx context.Context, ws *core.Record, org, bearer, userID string) (added, removed int, err error) {
-	desired, err := s.iam.listServiceAccounts(ctx, org)
-	if err != nil {
-		return 0, 0, err
+// reconcile diffs the desired bot set against the workspace's current active
+// bots and applies the plan. Idempotent.
+//
+// Two ORTHOGONAL sources, each owning a disjoint service_account_id subspace:
+//
+//   - IAM service-accounts (raw ids)  — read with the machine identity. IAM
+//     enforces org authz server-side (a non-home org yields Unauthorized, never
+//     another org's data), so this read is best-effort and NEVER fatal.
+//   - cloud agents ("agent:<id>" ids) — folded in ONLY when the bearer is
+//     org-authoritative for this workspace (identityOrg == org). Cloud pins the
+//     org to the bearer's verified `owner` claim and IGNORES our requested org,
+//     so reading a maxpower workspace with a hanzo machine token would return
+//     HANZO's agents — a cross-tenant leak. The identityOrg gate is that guard.
+//
+// A source that does not load (auth error, outage, or gated off) contributes
+// NOTHING — neither adds nor removals in its subspace. Only a source that
+// loaded successfully may deactivate bots in its OWN subspace, so a transient
+// failure or a wrong-org identity can never mass-remove a workspace's bots.
+func (s *service) reconcile(ctx context.Context, ws *core.Record, org, bearer, userID, identityOrg string) (added, removed int, err error) {
+	var desired []ServiceAccount
+	iamOK, agentsOK := false, false
+
+	if sas, e := s.iam.listServiceAccounts(ctx, org); e == nil {
+		desired = append(desired, sas...)
+		iamOK = true
+	} else {
+		s.app.Logger().Warn("bots: IAM SA list failed (non-fatal)", "err", e, "org", org)
 	}
-	// Fold in cloud agents when the registry is configured. A registry error is
-	// non-fatal to the IAM sync (agents are additive), but surfaced in logs.
-	if s.agents != nil {
-		if agents, aerr := s.agents.list(ctx, org, userID, bearer); aerr == nil {
+
+	// Fold cloud agents in ONLY with an org-authoritative bearer (see doc above).
+	if s.agents != nil && identityOrg == org {
+		if agents, e := s.agents.list(ctx, org, userID, bearer); e == nil {
 			desired = append(desired, agents...)
+			agentsOK = true
 		} else {
-			s.app.Logger().Warn("bots: cloud agents list failed", "err", aerr, "org", org)
+			s.app.Logger().Warn("bots: cloud agents list failed (non-fatal)", "err", e, "org", org)
 		}
+	}
+
+	// Never diff against a desired set built from ZERO live sources — that would
+	// deactivate every bot in the workspace on a transient/auth failure.
+	if !iamOK && !agentsOK {
+		return 0, 0, fmt.Errorf("bots: no authorized source for org %s (iam+agents both unavailable)", org)
 	}
 
 	current := s.currentBots(ws.Id, org) // service_account_id -> member record
@@ -171,6 +211,14 @@ func (s *service) reconcile(ctx context.Context, ws *core.Record, org, bearer, u
 		added++
 	}
 	for _, saID := range plan.toRemove {
+		// Remove only within a subspace we actually loaded this cycle: an
+		// unloaded source's members are preserved, never mass-removed.
+		if isAgentID(saID) && !agentsOK {
+			continue
+		}
+		if !isAgentID(saID) && !iamOK {
+			continue
+		}
 		if e := s.deactivate(ws, org, saID); e != nil {
 			s.app.Logger().Error("bots: deactivate member", "err", e, "sa", saID)
 			continue
@@ -304,8 +352,62 @@ func (s *service) reconcileAll() {
 			continue
 		}
 		// Machine-identity path: no caller bearer/user (cron acts as the SA).
-		if _, _, e := s.reconcile(ctx, ws, org, s.mt.get(ctx), ""); e != nil {
+		// identityOrg = homeOrg, so cloud agents fold in ONLY for the home org;
+		// a non-home customer org (e.g. maxpower) reconciles on its own admin's
+		// login (SyncUserWorkspaces) with that admin's org-authoritative token —
+		// never with this shared identity, which would leak home-org agents.
+		if _, _, e := s.reconcile(ctx, ws, org, s.mt.get(ctx), "", s.homeOrg); e != nil {
 			s.app.Logger().Warn("bots: cron reconcile", "err", e, "workspace", ws.Id, "org", org)
+		}
+	}
+}
+
+// ── login-triggered per-org reconcile ───────────────────────────────────────
+
+// SyncUserWorkspaces reconciles the bot members of every workspace the account
+// owns or administers, using the caller's OWN org-authoritative IAM bearer.
+// This is the multi-tenant entry point: cloud /v1/agents pins org to the
+// bearer's verified `owner` claim, so a maxpower admin's token makes maxpower's
+// workspace receive maxpower's agents — and ONLY those. Called best-effort at
+// login (pkg/account.authCallback); it never blocks or fails login.
+func SyncUserWorkspaces(app core.App, ctx context.Context, iamBearer, account, org string) {
+	if iamBearer == "" || account == "" || org == "" {
+		return
+	}
+	svc, _ := app.Store().Get(storeKey).(*service)
+	if svc == nil {
+		return
+	}
+	svc.syncUserWorkspaces(ctx, iamBearer, account, org)
+}
+
+func (s *service) syncUserWorkspaces(ctx context.Context, iamBearer, account, org string) {
+	members, err := s.app.FindRecordsByFilter("members", "user_id = {:u}", "", 200, 0, dbx.Params{"u": account})
+	if err != nil {
+		return
+	}
+	seen := map[string]bool{}
+	for _, mem := range members {
+		if role := mem.GetString("role"); role != "owner" && role != "admin" {
+			continue // only an admin's token may drive a workspace's bot set
+		}
+		wsID := mem.GetString("workspace_id")
+		if wsID == "" || seen[wsID] {
+			continue
+		}
+		seen[wsID] = true
+		ws, _ := s.app.FindFirstRecordByFilter("workspaces", "id = {:id}", dbx.Params{"id": wsID})
+		if ws == nil {
+			continue
+		}
+		// The bearer is authoritative for `org` ONLY. Skip a co-administered
+		// workspace owned by a different tenant so this user's org agents are
+		// never attributed to a foreign-tenant workspace.
+		if wsauth.WorkspaceOrg(ws) != org {
+			continue
+		}
+		if _, _, e := s.reconcile(ctx, ws, org, iamBearer, account, org); e != nil {
+			s.app.Logger().Warn("bots: login reconcile", "err", e, "workspace", ws.Id, "org", org)
 		}
 	}
 }
