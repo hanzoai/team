@@ -84,8 +84,8 @@ func TestStripLeadingMention(t *testing.T) {
 // Slash command bodies are urlencoded; parse extracts the fields and requires
 // the identifying ones (team_id, user_id).
 func TestParseSlashCommand(t *testing.T) {
-	form := "team_id=T1&channel_id=C1&user_id=U1&text=what+is+2%2B2&response_url=https%3A%2F%2Fhooks.slack.com%2Fx"
-	team, channel, user, text, ru, ok := parseSlashCommand([]byte(form))
+	form := "team_id=T1&channel_id=C1&user_id=U1&text=what+is+2%2B2&response_url=https%3A%2F%2Fhooks.slack.com%2Fx&trigger_id=13345224609.738474920.abc"
+	team, channel, user, text, ru, trigger, ok := parseSlashCommand([]byte(form))
 	if !ok {
 		t.Fatal("valid slash command not parsed")
 	}
@@ -98,7 +98,10 @@ func TestParseSlashCommand(t *testing.T) {
 	if ru != "https://hooks.slack.com/x" {
 		t.Fatalf("response_url wrong: %q", ru)
 	}
-	if _, _, _, _, _, ok2 := parseSlashCommand([]byte("team_id=T1")); ok2 {
+	if trigger != "13345224609.738474920.abc" {
+		t.Fatalf("trigger_id wrong: %q", trigger)
+	}
+	if _, _, _, _, _, _, ok2 := parseSlashCommand([]byte("team_id=T1")); ok2 {
 		t.Fatal("missing user_id must be not-ok")
 	}
 }

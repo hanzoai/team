@@ -125,58 +125,76 @@ deploy is removed only at P4, after cloud-team is verified live.
 
 ## Slack @hanzo agent bridge (pkg/slack)
 
-`@hanzo` in Slack is the front-door to the whole Hanzo cloud. It is ADDITIVE to
-the existing bidirectional channel-mirror relay — the relay is unchanged.
+`@hanzo` in Slack is the front-door to the whole Hanzo cloud. ADDITIVE to the
+bidirectional channel-mirror relay (unchanged).
 
-**Triggers** (all HMAC-verified with the same `verifySignature`):
-- `app_mention` — `@hanzo …` in a channel (`POST /v1/slack/events`).
-- `message` with `channel_type=="im"` — a DM to the bot (`POST /v1/slack/events`).
-- `POST /v1/slack/commands` — the `/hanzo` slash command (urlencoded body).
+**Triggers** (HMAC-verified): `app_mention` + `message`(channel_type=im) via
+`POST /v1/slack/events`; `POST /v1/slack/commands` (`/hanzo`). Leading `<@BOTID>`
+stripped; reply threads under `thread_ts` (falls back to `ts`).
 
-The leading `<@BOTID>` token is stripped; the reply threads under the triggering
-message (`thread_ts`, falling back to `ts`). Events are deduped on Slack
-`event_id` via the shared `seenEvents` set. `app_mention` and the paired
-`message` event have distinct event_ids, so a mapped-channel @mention still
-mirrors AND runs the agent (no double-handling within either path).
+**On-behalf-of run (the money path).** `installOrg(team)`→tenant org;
+`linkedToken(team,user)` fetches the KMS refresh token (path `slack-user-tokens`,
+name `<team>.<user>`, under the tenant org), mints a fresh access token at IAM
+`/v1/iam/oauth/token` (grant_type=refresh_token, rotates); `runAgent` posts
+`api.hanzo.ai/v1/agents/{ref}/run {"input"}` with ONLY the user Bearer — the
+gateway mints X-Org-Id (HIP-0026); team-go never forges identity headers. Answer
+posted into the same thread with the workspace bot token; slash replies via
+`response_url` (host-pinned to hooks.slack.com).
 
-**On-behalf-of auth (the money path).** The run bills the *Slack user's own*
-Hanzo account, so it is authorized with THAT user's IAM access token:
-1. `installOrg(team)` (`slack_installs`) → the workspace tenant org.
-2. `linkedToken(team, slackUser)`: look up `slack_user_links`; fetch the user's
-   refresh token from KMS (path `slack-user-tokens`, name `<team>.<user>`, under
-   the tenant org); mint a fresh access token at IAM
-   `POST {IAM}/v1/iam/oauth/token` (`grant_type=refresh_token`); rotate the
-   stored refresh token if IAM issued a new one.
-3. `runAgent(api.hanzo.ai, SLACK_AGENT_REF, text, userBearer)`:
-   `POST /v1/agents/{ref}/run {"input":…}` with ONLY `Authorization: Bearer` —
-   the gateway mints `X-Org-Id` (HIP-0026) + principal from the JWT; team-go
-   never forges identity headers. Reads the RunResult `output` (`status=="ok"`).
-4. Post the answer into the SAME thread with the workspace bot token
-   (`postThreadMessage`) — slash replies go to the command's `response_url`.
+**Account link — hijack-hardened (C1).** The Slack subject bound to a Hanzo
+account is proven by a Slack SIGN-IN leg and carried in a browser-bound cookie,
+NEVER taken from a URL/state param:
+1. `GET /v1/slack/link?state=…` (signed (team,user) = provenance only) → redirect
+   to Slack authorize (`user_scope=openid`).
+2. `GET /v1/slack/link/slack` — `oauth.v2.access` returns the Slack-verified
+   `authed_user.id`; set an httpOnly/Secure/SameSite=Lax/path-scoped cookie
+   `hanzo_slack_link` = signLinkState(team, authed_user.id); redirect to hanzo.id
+   OIDC with `state` == cookie.
+3. `GET /v1/slack/link/callback` — bind ONLY from the cookie (no cookie ⇒ refuse;
+   `state`!=cookie ⇒ refuse); exchange the hanzo code; consume the single-use
+   nonce AFTER a successful exchange; store the refresh token KMS-encrypted +
+   the `(team,user)→account` row. A forwarded link carries no cookie, and a
+   login as a different Hanzo subject binds only to the cookie's Slack user.
+   The unlinked prompt is delivered EPHEMERALLY (`chat.postEphemeral` /
+   `response_type:ephemeral`) so a link URL never reaches a channel.
 
-All async after a fast 200/empty ack (Slack's 3s budget). Unlinked users get a
-one-time prompt linking to `GET /v1/slack/link` (see below). Errors are terse,
-never leak internals, never log tokens.
+**Other hardening.**
+- **First-org-wins (M1):** `upsertInstall` refuses to change a team's `owner_org`
+  (`errInstallConflict`); `oauth()` records the install BEFORE storing the token,
+  so a second org cannot capture a team another org connected. Effective
+  ownership is (org, team).
+- **Durable dedupe (M2):** the agent path inserts into `slack_processed_events`
+  (unique `event_key` = Slack event_id / slash trigger_id) before dispatch —
+  survives restart, so a retry never double-runs/double-bills. Fails closed
+  (skip) on a dedupe DB error. The in-process seen-set stays for the (cosmetic)
+  relay path. NOTE: `slack_processed_events` grows unbounded; prune old rows
+  operationally.
+- **Concurrency cap (M3):** `dispatchAgent` bounds simultaneous agent turns
+  (`SLACK_AGENT_CONCURRENCY`, default 32); excess is dropped + logged.
+- **Fail-closed secret (L1):** all signed-state endpoints 503 when `SERVER_SECRET`
+  is empty or `token.DefaultSecret`.
 
-**Per-user link (hanzo.id OIDC, authorization-code, confidential client).**
-- `GET /v1/slack/link?state=…` — reached from a server-minted prompt carrying a
-  signed, single-use `(team,user)` state (itself gated by a verified Slack
-  signature); redirects to `{IAM}/v1/iam/oauth/authorize` (scope
-  `openid profile email offline_access`) with the SAME state.
-- `GET /v1/slack/link/callback` — verifies the single-use state, exchanges the
-  code, resolves identity (`/v1/iam/oauth/userinfo` sub + `owner` claim), stores
-  the refresh token KMS-encrypted + the `(team,user)→account` pointer row.
+**Org-scoped connect (console Integrations).** `GET /v1/slack/connect` accepts an
+org JWT (`wsauth.CallerOrg`) IN ADDITION to workspace-admin; both resolve to an
+org and the OAuth `state` binds that org. Full bot scopes by default
+(app_mentions:read,chat:write,channels:history,channels:read,groups:history,
+im:history,im:read,im:write,users:read,commands). `oauth()` stores the token
+per-org and upserts `slack_installs(team→org)` (first-org-wins).
 
 **Config (env):** `SLACK_AGENT_REF` (default `hanzo`), `SLACK_LINK_REDIRECT_URI`
-(default `https://api.hanzo.ai/v1/slack/link/callback`), reuses `IAM_CLIENT_ID/
-SECRET`, `AGENTS_ENDPOINT`, `KMS_ENDPOINT`/`HANZO_API_KEY`, `SERVER_SECRET`.
-Missing IAM creds → the link endpoints 503; the rest of Slack keeps serving.
+(hanzo callback), `SLACK_LINK_SLACK_REDIRECT_URI` (Slack sign-in callback — a NEW
+Slack redirect URL), `SLACK_AGENT_CONCURRENCY`; reuses `IAM_CLIENT_ID/SECRET`,
+`AGENTS_ENDPOINT`, `KMS_ENDPOINT`/`HANZO_API_KEY`, `SERVER_SECRET`.
 
-**Collections** (`migrations/1747800000_slack_agent_bridge.js`, plugin-owned,
-deny public CRUD): `slack_installs` (team→workspace+owner_org, unique per team),
-`slack_user_links` (team+user→hanzo_subject+hanzo_org, unique per (team,user)).
+**Slack app manifest deltas:** add redirect URL `https://api.hanzo.ai/v1/slack/link/slack`
+(the Slack sign-in leg); add user token scope `openid`; bot scopes as above.
 
-**One-way factoring:** ONE `kmsClient` (tokens.go) underpins both the bot-token
-and user-refresh-token stores; ONE `signSubjectState` primitive (verify.go)
-underpins both the workspace OAuth state and the `(team,user)` link state; ONE
-`agentReply` brain serves the @mention/DM and slash paths.
+**Collections** (`migrations/1747800000_slack_agent_bridge.js`, plugin-owned):
+`slack_installs` (team→owner_org, optional workspace_id, unique per team),
+`slack_user_links` (team+user→hanzo_subject+hanzo_org), `slack_processed_events`
+(unique event_key).
+
+**One-way factoring:** ONE `kmsClient` underpins both token stores; ONE
+`signSubjectState` primitive underpins the org OAuth state, the (team,user) link
+state, and the link cookie; ONE `agentReply` brain serves the mention/DM and
+slash paths (returning a linkPrompt flag so each caller delivers it ephemerally).
