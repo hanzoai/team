@@ -5,8 +5,8 @@ import React, {useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
 import {GenericModal} from '@mattermost/components';
+import {Button} from '@mattermost/shared/components/button';
 import type {UserProfile} from '@mattermost/types/users';
 
 import {addChannelMembers} from 'mattermost-redux/actions/channels';
@@ -97,26 +97,31 @@ function OutOfChannelMentionConfirmModal({
     const isPrivate = channelType === Constants.PRIVATE_CHANNEL;
     const addableCount = addable.length;
 
-    const modalTitle = addableCount > 0 ? (
-        isPrivate ? (
+    let modalTitle;
+    if (addableCount === 0) {
+        modalTitle = (
+            <FormattedMessage
+                id='out_of_channel_mention_confirm_modal.title.fallback'
+                defaultMessage={"People you mentioned aren't in this channel"}
+            />
+        );
+    } else if (isPrivate) {
+        modalTitle = (
             <FormattedMessage
                 id='out_of_channel_mention_confirm_modal.title.private'
                 defaultMessage='{count, plural, one {Add mentioned person to this private channel?} other {Add mentioned people to this private channel?}}'
                 values={{count: addableCount}}
             />
-        ) : (
+        );
+    } else {
+        modalTitle = (
             <FormattedMessage
                 id='out_of_channel_mention_confirm_modal.title.public'
                 defaultMessage='{count, plural, one {Add mentioned person to this channel?} other {Add mentioned people to this channel?}}'
                 values={{count: addableCount}}
             />
-        )
-    ) : (
-        <FormattedMessage
-            id='out_of_channel_mention_confirm_modal.title.fallback'
-            defaultMessage={"People you mentioned aren't in this channel"}
-        />
-    );
+        );
+    }
 
     const footerContent = (
         <>

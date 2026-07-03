@@ -2,14 +2,15 @@
 // See LICENSE.txt for license information.
 
 import type {DeepPartial} from '@mattermost/types/utilities';
+import type {UserProfile} from '@mattermost/types/users';
 
 import {Permissions} from 'mattermost-redux/constants';
 
-import {openModal} from 'actions/views/modals';
 import {onSubmit} from 'actions/views/create_comment';
+import {openModal} from 'actions/views/modals';
 
 import {renderHookWithContext, act, waitFor} from 'tests/react_testing_utils';
-import Constants, {ModalIdentifiers} from 'utils/constants';
+import {ModalIdentifiers} from 'utils/constants';
 import * as OutOfChannelMentions from 'utils/out_of_channel_mentions';
 import {TestHelper} from 'utils/test_helper';
 
@@ -23,7 +24,7 @@ jest.mock('actions/views/modals', () => ({
 }));
 
 jest.mock('actions/views/create_comment', () => ({
-    onSubmit: jest.fn(() => () => Promise.resolve({data: true})),
+    onSubmit: jest.fn(() => async () => ({data: {}})),
 }));
 
 jest.mock('utils/out_of_channel_mentions', () => ({
@@ -67,7 +68,6 @@ describe('useSubmit', () => {
                         channel_id: TestHelper.getChannelMock({
                             id: 'channel_id',
                             team_id: 'team_id',
-                            type: Constants.OPEN_CHANNEL,
                         }),
                     },
                     stats: {
@@ -105,13 +105,27 @@ describe('useSubmit', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.mocked(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).mockResolvedValue(null);
-        jest.mocked(onSubmit).mockImplementation(() => () => Promise.resolve({data: true}));
+        jest.mocked(onSubmit).mockImplementation(() => async () => ({data: {}}));
     });
 
-    function getOutOfChannelModalCall() {
-        return jest.mocked(openModal).mock.calls.find(
+    type OutOfChannelMentionModalDialogProps = {
+        addable: UserProfile[];
+        channelId: string;
+        rootId: string;
+        onSend: () => void;
+        onExited: () => void;
+    };
+
+    function getOutOfChannelModalCall(): {dialogProps: OutOfChannelMentionModalDialogProps} | undefined {
+        const call = jest.mocked(openModal).mock.calls.find(
             ([args]) => args.modalId === ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
         )?.[0];
+
+        if (!call) {
+            return undefined;
+        }
+
+        return call as unknown as {dialogProps: OutOfChannelMentionModalDialogProps};
     }
 
     it('should check priority on non-edit mode', async () => {
@@ -475,6 +489,7 @@ describe('useSubmit', () => {
             await result.current[0]();
 
             const modalCall = getOutOfChannelModalCall();
+            expect(modalCall).toBeDefined();
             await act(async () => {
                 modalCall!.dialogProps.onSend();
             });
@@ -524,6 +539,7 @@ describe('useSubmit', () => {
             await result.current[0]();
 
             const modalCall = getOutOfChannelModalCall();
+            expect(modalCall).toBeDefined();
             modalCall!.dialogProps.onExited();
 
             expect(onSubmit).not.toHaveBeenCalled();

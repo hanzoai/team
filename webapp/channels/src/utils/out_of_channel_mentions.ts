@@ -2,7 +2,6 @@
 // See LICENSE.txt for license information.
 
 import type {Channel} from '@mattermost/types/channels';
-import type {GlobalState} from '@mattermost/types/store';
 import type {UserProfile} from '@mattermost/types/users';
 
 import {autocompleteUsers} from 'mattermost-redux/actions/users';
@@ -14,11 +13,11 @@ import {
     getUsersByUsername,
 } from 'mattermost-redux/selectors/entities/users';
 
-import {groupsMentionedInText} from 'utils/post_utils';
-import Constants from 'utils/constants';
 import {canManageMembers, isMembershipPolicyEnforced} from 'utils/channel_utils';
+import Constants from 'utils/constants';
+import {groupsMentionedInText} from 'utils/post_utils';
 
-import type {DispatchFunc} from 'types/store';
+import type {DispatchFunc, GlobalState} from 'types/store';
 
 export type OutOfChannelMentionResult = {
     addable: UserProfile[];
@@ -47,19 +46,19 @@ function getGroupMentionNamesInMessage(state: GlobalState, channel: Channel, mes
 }
 
 function isUserInChannel(state: GlobalState, channelId: string, userId: string): boolean {
-    return Boolean(getUserIdsInChannels(state)[channelId]?.[userId]);
+    return Boolean(getUserIdsInChannels(state)[channelId]?.has(userId));
 }
 
 function isUserNotInChannelCached(state: GlobalState, channelId: string, userId: string): boolean {
-    return Boolean(getUserIdsNotInChannels(state)[channelId]?.[userId]);
+    return Boolean(getUserIdsNotInChannels(state)[channelId]?.has(userId));
 }
 
 function isUserDefinitelyNotOnTeam(state: GlobalState, teamId: string, userId: string): boolean {
     const teamMembers = getUserIdsInTeams(state)[teamId];
-    if (!teamMembers || Object.keys(teamMembers).length === 0) {
+    if (!teamMembers || teamMembers.size === 0) {
         return false;
     }
-    return !teamMembers[userId];
+    return !teamMembers.has(userId);
 }
 
 function findUserByUsername(users: UserProfile[], username: string): UserProfile | undefined {

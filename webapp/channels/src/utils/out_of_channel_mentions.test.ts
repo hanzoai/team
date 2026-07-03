@@ -5,7 +5,6 @@ import type {DeepPartial} from '@mattermost/types/utilities';
 
 import {Permissions} from 'mattermost-redux/constants';
 
-import Constants from 'utils/constants';
 import {TestHelper} from 'utils/test_helper';
 
 import type {GlobalState} from 'types/store';
@@ -36,7 +35,6 @@ describe('out_of_channel_mentions', () => {
         const channel = TestHelper.getChannelMock({
             id: channelId,
             team_id: teamId,
-            type: Constants.OPEN_CHANNEL,
         });
 
         function getStateWithPermissions(): DeepPartial<GlobalState> {
@@ -69,20 +67,13 @@ describe('out_of_channel_mentions', () => {
                             user1: TestHelper.getUserMock({id: 'user1', username: 'alice'}),
                         },
                         profilesInChannel: {
-                            [channelId]: {
-                                current_user_id: true,
-                            },
+                            [channelId]: new Set(['current_user_id']),
                         },
                         profilesNotInChannel: {
-                            [channelId]: {
-                                user1: true,
-                            },
+                            [channelId]: new Set(['user1']),
                         },
                         profilesInTeam: {
-                            [teamId]: {
-                                user1: true,
-                                current_user_id: true,
-                            },
+                            [teamId]: new Set(['user1', 'current_user_id']),
                         },
                     },
                     roles: {
@@ -170,10 +161,7 @@ describe('out_of_channel_mentions', () => {
             const state = getStateWithPermissions();
             state.entities!.users!.profiles!.user3 = TestHelper.getUserMock({id: 'user3', username: 'carol'});
             state.entities!.users!.profilesInTeam = {
-                [teamId]: {
-                    user1: true,
-                    current_user_id: true,
-                },
+                [teamId]: new Set(['user1', 'current_user_id']),
             };
 
             const result = await getOutOfChannelMentionsFromMessage(

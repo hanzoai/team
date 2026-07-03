@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {GlobalState} from '@mattermost/types/store';
 import type {Post} from '@mattermost/types/posts';
+import type {GlobalState} from 'types/store';
 
 import {isPostEphemeral} from 'mattermost-redux/utils/post_utils';
 
@@ -42,7 +42,7 @@ export function getSuppressOutOfChannelEphemeral(state: GlobalState): SuppressOu
     return suppress;
 }
 
-export function isOutOfChannelMentionEphemeralPost(post: Pick<Post, 'props'>): boolean {
+export function isOutOfChannelMentionEphemeralPost(post: {props?: Post['props']}): boolean {
     return isAddMemberProps(post.props?.add_channel_member);
 }
 

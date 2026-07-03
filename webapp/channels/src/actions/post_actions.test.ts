@@ -14,6 +14,7 @@ import test_helper from 'packages/mattermost-redux/test/test_helper';
 import mockStore from 'tests/test_store';
 import {Constants, ActionTypes, RHSStates} from 'utils/constants';
 import * as PostUtils from 'utils/post_utils';
+import {TestHelper} from 'utils/test_helper';
 
 import type {GlobalState} from 'types/store';
 
@@ -275,12 +276,12 @@ describe('Actions.Posts', () => {
     });
 
     describe('handleNewPost out-of-channel ephemeral suppression', () => {
-        const ephemeralPost = {
+        const ephemeralPost = TestHelper.getPostMock({
             id: 'ephemeral_post_id',
             channel_id: 'current_channel_id',
             root_id: '',
             message: '@alice did not get notified by this mention because they are not in the channel.',
-            type: Constants.PostTypes.EPHEMERAL,
+            type: Posts.POST_TYPES.EPHEMERAL,
             user_id: 'current_user_id',
             create_at: POST_CREATED_TIME,
             props: {
@@ -291,7 +292,7 @@ describe('Actions.Posts', () => {
                     not_in_groups_usernames: [],
                 },
             },
-        } as Post;
+        });
 
         function getStateWithSuppress(overrides: {channelId?: string; rootId?: string; expireAt?: number} = {}) {
             return {
@@ -358,15 +359,15 @@ describe('Actions.Posts', () => {
 
         test('does not suppress unrelated ephemerals when suppress flag is active', async () => {
             const testStore = mockStore(getStateWithSuppress());
-            const unrelatedEphemeral = {
+            const unrelatedEphemeral = TestHelper.getPostMock({
                 id: 'slash_ephemeral_id',
                 channel_id: 'current_channel_id',
                 root_id: '',
                 message: 'Available commands: /away',
-                type: Constants.PostTypes.EPHEMERAL,
+                type: Posts.POST_TYPES.EPHEMERAL,
                 user_id: 'current_user_id',
                 create_at: POST_CREATED_TIME,
-            } as Post;
+            });
 
             await testStore.dispatch(Actions.handleNewPost(unrelatedEphemeral));
 

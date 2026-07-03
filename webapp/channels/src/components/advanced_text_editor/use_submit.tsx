@@ -33,8 +33,8 @@ import OutOfChannelMentionConfirmModal from 'components/out_of_channel_mention_c
 import PostDeletedModal from 'components/post_deleted_modal';
 import ResetStatusModal from 'components/reset_status_modal';
 
-import Constants, {ModalIdentifiers, UserStatuses} from 'utils/constants';
 import {canManageMembers, isMembershipPolicyEnforced} from 'utils/channel_utils';
+import Constants, {ModalIdentifiers, UserStatuses} from 'utils/constants';
 import {getOutOfChannelMentionsFromMessage} from 'utils/out_of_channel_mentions';
 import {isErrorInvalidSlashCommand, isServerError, specialMentionsInText} from 'utils/post_utils';
 

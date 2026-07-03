@@ -21,7 +21,7 @@ describe('out_of_channel_mention actions', () => {
             const now = Date.now();
             jest.spyOn(Date, 'now').mockReturnValue(now);
 
-            suppressOutOfChannelEphemeralPost('channel_id', 'root_id')(dispatch);
+            suppressOutOfChannelEphemeralPost('channel_id', 'root_id')(dispatch, jest.fn(), undefined);
 
             expect(dispatch).toHaveBeenCalledWith({
                 type: ActionTypes.SUPPRESS_OUT_OF_CHANNEL_EPHEMERAL,

@@ -5,6 +5,8 @@ import React from 'react';
 
 import {Preferences} from 'mattermost-redux/constants';
 
+import {suppressOutOfChannelEphemeralPost} from 'actions/views/out_of_channel_mention';
+
 import OutOfChannelMentionConfirmModal from 'components/out_of_channel_mention_confirm_modal/out_of_channel_mention_confirm_modal';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
@@ -18,8 +20,6 @@ jest.mock('mattermost-redux/actions/channels', () => ({
 jest.mock('actions/views/out_of_channel_mention', () => ({
     suppressOutOfChannelEphemeralPost: jest.fn(() => () => ({type: 'SUPPRESS_OUT_OF_CHANNEL_EPHEMERAL'})),
 }));
-
-import {suppressOutOfChannelEphemeralPost} from 'actions/views/out_of_channel_mention';
 
 describe('OutOfChannelMentionConfirmModal', () => {
     const baseProps = {
