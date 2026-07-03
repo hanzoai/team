@@ -18,68 +18,69 @@ import (
 
 type TimerLayer struct {
 	store.Store
-	Metrics                         einterfaces.MetricsInterface
-	AccessControlPolicyStore        store.AccessControlPolicyStore
-	AttributesStore                 store.AttributesStore
-	AuditStore                      store.AuditStore
-	AutoTranslationStore            store.AutoTranslationStore
-	BotStore                        store.BotStore
-	ChannelStore                    store.ChannelStore
-	ChannelBookmarkStore            store.ChannelBookmarkStore
-	ChannelGuardStore               store.ChannelGuardStore
-	ChannelJoinRequestStore         store.ChannelJoinRequestStore
-	ChannelMemberHistoryStore       store.ChannelMemberHistoryStore
-	ClusterDiscoveryStore           store.ClusterDiscoveryStore
-	CommandStore                    store.CommandStore
-	CommandWebhookStore             store.CommandWebhookStore
-	ComplianceStore                 store.ComplianceStore
-	ContentFlaggingStore            store.ContentFlaggingStore
-	DesktopTokensStore              store.DesktopTokensStore
-	DraftStore                      store.DraftStore
-	EmojiStore                      store.EmojiStore
-	FileInfoStore                   store.FileInfoStore
-	GroupStore                      store.GroupStore
-	JobStore                        store.JobStore
-	LicenseStore                    store.LicenseStore
-	LinkMetadataStore               store.LinkMetadataStore
-	NotifyAdminStore                store.NotifyAdminStore
-	OAuthStore                      store.OAuthStore
-	OutgoingOAuthConnectionStore    store.OutgoingOAuthConnectionStore
-	PluginStore                     store.PluginStore
-	PostStore                       store.PostStore
-	PostAcknowledgementStore        store.PostAcknowledgementStore
-	PostPersistentNotificationStore store.PostPersistentNotificationStore
-	PostPriorityStore               store.PostPriorityStore
-	PreferenceStore                 store.PreferenceStore
-	ProductNoticesStore             store.ProductNoticesStore
-	PropertyFieldStore              store.PropertyFieldStore
-	PropertyGroupStore              store.PropertyGroupStore
-	PropertyValueStore              store.PropertyValueStore
-	ReactionStore                   store.ReactionStore
-	ReadReceiptStore                store.ReadReceiptStore
-	RecapStore                      store.RecapStore
-	RemoteClusterStore              store.RemoteClusterStore
-	RetentionPolicyStore            store.RetentionPolicyStore
-	RoleStore                       store.RoleStore
-	ScheduledPostStore              store.ScheduledPostStore
-	SchemeStore                     store.SchemeStore
-	SessionStore                    store.SessionStore
-	SessionAttributeStore           store.SessionAttributeStore
-	SharedChannelStore              store.SharedChannelStore
-	StatusStore                     store.StatusStore
-	SystemStore                     store.SystemStore
-	TeamStore                       store.TeamStore
-	TemporaryPostStore              store.TemporaryPostStore
-	TermsOfServiceStore             store.TermsOfServiceStore
-	ThreadStore                     store.ThreadStore
-	TokenStore                      store.TokenStore
-	UploadSessionStore              store.UploadSessionStore
-	UserStore                       store.UserStore
-	UserAccessTokenStore            store.UserAccessTokenStore
-	UserPostDeliveryStore           store.UserPostDeliveryStore
-	UserTermsOfServiceStore         store.UserTermsOfServiceStore
-	ViewStore                       store.ViewStore
-	WebhookStore                    store.WebhookStore
+	Metrics                            einterfaces.MetricsInterface
+	AccessControlPolicyStore           store.AccessControlPolicyStore
+	AttributesStore                    store.AttributesStore
+	AuditStore                         store.AuditStore
+	AutoTranslationStore               store.AutoTranslationStore
+	BotStore                           store.BotStore
+	ChannelStore                       store.ChannelStore
+	ChannelBookmarkStore               store.ChannelBookmarkStore
+	ChannelGuardStore                  store.ChannelGuardStore
+	ChannelJoinRequestStore            store.ChannelJoinRequestStore
+	ChannelMemberHistoryStore          store.ChannelMemberHistoryStore
+	ClusterDiscoveryStore              store.ClusterDiscoveryStore
+	CommandStore                       store.CommandStore
+	CommandWebhookStore                store.CommandWebhookStore
+	ComplianceStore                    store.ComplianceStore
+	ContentFlaggingStore               store.ContentFlaggingStore
+	DesktopTokensStore                 store.DesktopTokensStore
+	DraftStore                         store.DraftStore
+	EmojiStore                         store.EmojiStore
+	FileInfoStore                      store.FileInfoStore
+	GroupStore                         store.GroupStore
+	JobStore                           store.JobStore
+	LicenseStore                       store.LicenseStore
+	LinkMetadataStore                  store.LinkMetadataStore
+	NotifyAdminStore                   store.NotifyAdminStore
+	OAuthStore                         store.OAuthStore
+	OutgoingOAuthConnectionStore       store.OutgoingOAuthConnectionStore
+	PluginStore                        store.PluginStore
+	PostStore                          store.PostStore
+	PostAcknowledgementStore           store.PostAcknowledgementStore
+	PostPersistentNotificationStore    store.PostPersistentNotificationStore
+	PostPriorityStore                  store.PostPriorityStore
+	PreferenceStore                    store.PreferenceStore
+	ProductNoticesStore                store.ProductNoticesStore
+	PropertyFieldStore                 store.PropertyFieldStore
+	PropertyGroupStore                 store.PropertyGroupStore
+	PropertyValueStore                 store.PropertyValueStore
+	ReactionStore                      store.ReactionStore
+	ReadReceiptStore                   store.ReadReceiptStore
+	RecapStore                         store.RecapStore
+	RemoteClusterStore                 store.RemoteClusterStore
+	RetentionPolicyStore               store.RetentionPolicyStore
+	RoleStore                          store.RoleStore
+	ScheduledPostStore                 store.ScheduledPostStore
+	SchemeStore                        store.SchemeStore
+	SessionStore                       store.SessionStore
+	SessionAttributeStore              store.SessionAttributeStore
+	SharedChannelStore                 store.SharedChannelStore
+	StatusStore                        store.StatusStore
+	SystemStore                        store.SystemStore
+	TeamStore                          store.TeamStore
+	TemporaryPostStore                 store.TemporaryPostStore
+	TermsOfServiceStore                store.TermsOfServiceStore
+	ThreadStore                        store.ThreadStore
+	TokenStore                         store.TokenStore
+	UploadSessionStore                 store.UploadSessionStore
+	UserStore                          store.UserStore
+	UserAccessTokenStore               store.UserAccessTokenStore
+	UserPostDeliveryStore              store.UserPostDeliveryStore
+	UserPostDeliveryContentReviewStore store.UserPostDeliveryContentReviewStore
+	UserTermsOfServiceStore            store.UserTermsOfServiceStore
+	ViewStore                          store.ViewStore
+	WebhookStore                       store.WebhookStore
 }
 
 func (s *TimerLayer) AccessControlPolicy() store.AccessControlPolicyStore {
@@ -312,6 +313,10 @@ func (s *TimerLayer) UserAccessToken() store.UserAccessTokenStore {
 
 func (s *TimerLayer) UserPostDelivery() store.UserPostDeliveryStore {
 	return s.UserPostDeliveryStore
+}
+
+func (s *TimerLayer) UserPostDeliveryContentReview() store.UserPostDeliveryContentReviewStore {
+	return s.UserPostDeliveryContentReviewStore
 }
 
 func (s *TimerLayer) UserTermsOfService() store.UserTermsOfServiceStore {
@@ -613,6 +618,11 @@ type TimerLayerUserAccessTokenStore struct {
 
 type TimerLayerUserPostDeliveryStore struct {
 	store.UserPostDeliveryStore
+	Root *TimerLayer
+}
+
+type TimerLayerUserPostDeliveryContentReviewStore struct {
+	store.UserPostDeliveryContentReviewStore
 	Root *TimerLayer
 }
 
@@ -14507,6 +14517,22 @@ func (s *TimerLayerUserPostDeliveryStore) DeleteByPost(ctx context.Context, post
 	return err
 }
 
+func (s *TimerLayerUserPostDeliveryStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error) {
+	start := time.Now()
+
+	result, err := s.UserPostDeliveryStore.GetByPost(ctx, postID, after, limit)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryStore.GetByPost", success, elapsed)
+	}
+	return result, err
+}
+
 func (s *TimerLayerUserPostDeliveryStore) MarkBulk(ctx context.Context, records []model.UserPostDelivery) error {
 	start := time.Now()
 
@@ -14519,6 +14545,54 @@ func (s *TimerLayerUserPostDeliveryStore) MarkBulk(ctx context.Context, records 
 			success = "true"
 		}
 		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryStore.MarkBulk", success, elapsed)
+	}
+	return err
+}
+
+func (s *TimerLayerUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context, postID string) (int64, error) {
+	start := time.Now()
+
+	result, err := s.UserPostDeliveryContentReviewStore.CountByPost(ctx, postID)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.CountByPost", success, elapsed)
+	}
+	return result, err
+}
+
+func (s *TimerLayerUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, postID string) error {
+	start := time.Now()
+
+	err := s.UserPostDeliveryContentReviewStore.DeleteByPost(ctx, postID)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.DeleteByPost", success, elapsed)
+	}
+	return err
+}
+
+func (s *TimerLayerUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error {
+	start := time.Now()
+
+	err := s.UserPostDeliveryContentReviewStore.SaveBatch(ctx, records, jobID)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.SaveBatch", success, elapsed)
 	}
 	return err
 }
@@ -15225,6 +15299,7 @@ func New(childStore store.Store, metrics einterfaces.MetricsInterface) *TimerLay
 	newStore.UserStore = &TimerLayerUserStore{UserStore: childStore.User(), Root: &newStore}
 	newStore.UserAccessTokenStore = &TimerLayerUserAccessTokenStore{UserAccessTokenStore: childStore.UserAccessToken(), Root: &newStore}
 	newStore.UserPostDeliveryStore = &TimerLayerUserPostDeliveryStore{UserPostDeliveryStore: childStore.UserPostDelivery(), Root: &newStore}
+	newStore.UserPostDeliveryContentReviewStore = &TimerLayerUserPostDeliveryContentReviewStore{UserPostDeliveryContentReviewStore: childStore.UserPostDeliveryContentReview(), Root: &newStore}
 	newStore.UserTermsOfServiceStore = &TimerLayerUserTermsOfServiceStore{UserTermsOfServiceStore: childStore.UserTermsOfService(), Root: &newStore}
 	newStore.ViewStore = &TimerLayerViewStore{ViewStore: childStore.View(), Root: &newStore}
 	newStore.WebhookStore = &TimerLayerWebhookStore{WebhookStore: childStore.Webhook(), Root: &newStore}

@@ -60,67 +60,68 @@ const (
 )
 
 type SqlStoreStores struct {
-	team                       store.TeamStore
-	channel                    store.ChannelStore
-	post                       store.PostStore
-	retentionPolicy            store.RetentionPolicyStore
-	thread                     store.ThreadStore
-	user                       store.UserStore
-	bot                        store.BotStore
-	audit                      store.AuditStore
-	cluster                    store.ClusterDiscoveryStore
-	remoteCluster              store.RemoteClusterStore
-	compliance                 store.ComplianceStore
-	session                    store.SessionStore
-	oauth                      store.OAuthStore
-	outgoingOAuthConnection    store.OutgoingOAuthConnectionStore
-	system                     store.SystemStore
-	webhook                    store.WebhookStore
-	command                    store.CommandStore
-	commandWebhook             store.CommandWebhookStore
-	preference                 store.PreferenceStore
-	license                    store.LicenseStore
-	token                      store.TokenStore
-	emoji                      store.EmojiStore
-	status                     store.StatusStore
-	fileInfo                   store.FileInfoStore
-	uploadSession              store.UploadSessionStore
-	reaction                   store.ReactionStore
-	job                        store.JobStore
-	userAccessToken            store.UserAccessTokenStore
-	plugin                     store.PluginStore
-	channelMemberHistory       store.ChannelMemberHistoryStore
-	role                       store.RoleStore
-	scheme                     store.SchemeStore
-	TermsOfService             store.TermsOfServiceStore
-	productNotices             store.ProductNoticesStore
-	group                      store.GroupStore
-	UserTermsOfService         store.UserTermsOfServiceStore
-	linkMetadata               store.LinkMetadataStore
-	sharedchannel              store.SharedChannelStore
-	draft                      store.DraftStore
-	notifyAdmin                store.NotifyAdminStore
-	postPriority               store.PostPriorityStore
-	postAcknowledgement        store.PostAcknowledgementStore
-	postPersistentNotification store.PostPersistentNotificationStore
-	desktopTokens              store.DesktopTokensStore
-	channelBookmarks           store.ChannelBookmarkStore
-	channelGuard               store.ChannelGuardStore
-	scheduledPost              store.ScheduledPostStore
-	view                       store.ViewStore
-	propertyGroup              store.PropertyGroupStore
-	propertyField              store.PropertyFieldStore
-	propertyValue              store.PropertyValueStore
-	accessControlPolicy        store.AccessControlPolicyStore
-	Attributes                 store.AttributesStore
-	sessionAttribute           store.SessionAttributeStore
-	autotranslation            store.AutoTranslationStore
-	ContentFlagging            store.ContentFlaggingStore
-	recap                      store.RecapStore
-	readReceipt                store.ReadReceiptStore
-	temporaryPost              store.TemporaryPostStore
-	channelJoinRequest         store.ChannelJoinRequestStore
-	userPostDelivery           store.UserPostDeliveryStore
+	team                          store.TeamStore
+	channel                       store.ChannelStore
+	post                          store.PostStore
+	retentionPolicy               store.RetentionPolicyStore
+	thread                        store.ThreadStore
+	user                          store.UserStore
+	bot                           store.BotStore
+	audit                         store.AuditStore
+	cluster                       store.ClusterDiscoveryStore
+	remoteCluster                 store.RemoteClusterStore
+	compliance                    store.ComplianceStore
+	session                       store.SessionStore
+	oauth                         store.OAuthStore
+	outgoingOAuthConnection       store.OutgoingOAuthConnectionStore
+	system                        store.SystemStore
+	webhook                       store.WebhookStore
+	command                       store.CommandStore
+	commandWebhook                store.CommandWebhookStore
+	preference                    store.PreferenceStore
+	license                       store.LicenseStore
+	token                         store.TokenStore
+	emoji                         store.EmojiStore
+	status                        store.StatusStore
+	fileInfo                      store.FileInfoStore
+	uploadSession                 store.UploadSessionStore
+	reaction                      store.ReactionStore
+	job                           store.JobStore
+	userAccessToken               store.UserAccessTokenStore
+	plugin                        store.PluginStore
+	channelMemberHistory          store.ChannelMemberHistoryStore
+	role                          store.RoleStore
+	scheme                        store.SchemeStore
+	TermsOfService                store.TermsOfServiceStore
+	productNotices                store.ProductNoticesStore
+	group                         store.GroupStore
+	UserTermsOfService            store.UserTermsOfServiceStore
+	linkMetadata                  store.LinkMetadataStore
+	sharedchannel                 store.SharedChannelStore
+	draft                         store.DraftStore
+	notifyAdmin                   store.NotifyAdminStore
+	postPriority                  store.PostPriorityStore
+	postAcknowledgement           store.PostAcknowledgementStore
+	postPersistentNotification    store.PostPersistentNotificationStore
+	desktopTokens                 store.DesktopTokensStore
+	channelBookmarks              store.ChannelBookmarkStore
+	channelGuard                  store.ChannelGuardStore
+	scheduledPost                 store.ScheduledPostStore
+	view                          store.ViewStore
+	propertyGroup                 store.PropertyGroupStore
+	propertyField                 store.PropertyFieldStore
+	propertyValue                 store.PropertyValueStore
+	accessControlPolicy           store.AccessControlPolicyStore
+	Attributes                    store.AttributesStore
+	sessionAttribute              store.SessionAttributeStore
+	autotranslation               store.AutoTranslationStore
+	ContentFlagging               store.ContentFlaggingStore
+	recap                         store.RecapStore
+	readReceipt                   store.ReadReceiptStore
+	temporaryPost                 store.TemporaryPostStore
+	channelJoinRequest            store.ChannelJoinRequestStore
+	userPostDelivery              store.UserPostDeliveryStore
+	userPostDeliveryContentReview store.UserPostDeliveryContentReviewStore
 }
 
 type SqlStore struct {
@@ -345,6 +346,7 @@ func New(settings model.SqlSettings, logger mlog.LoggerIFace, metrics einterface
 	store.stores.temporaryPost = newSqlTemporaryPostStore(store, metrics)
 	store.stores.channelJoinRequest = newSqlChannelJoinRequestStore(store)
 	store.stores.userPostDelivery = newSqlUserPostDeliveryStore(store)
+	store.stores.userPostDeliveryContentReview = newSqlUserPostDeliveryContentReviewStore(store)
 
 	store.stores.preference.(*SqlPreferenceStore).deleteUnusedFeatures()
 
@@ -1048,6 +1050,10 @@ func (ss *SqlStore) ChannelJoinRequest() store.ChannelJoinRequestStore {
 
 func (ss *SqlStore) UserPostDelivery() store.UserPostDeliveryStore {
 	return ss.stores.userPostDelivery
+}
+
+func (ss *SqlStore) UserPostDeliveryContentReview() store.UserPostDeliveryContentReviewStore {
+	return ss.stores.userPostDeliveryContentReview
 }
 
 func (ss *SqlStore) DropAllTables() {

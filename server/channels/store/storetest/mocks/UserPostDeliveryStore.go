@@ -34,6 +34,36 @@ func (_m *UserPostDeliveryStore) DeleteByPost(ctx context.Context, postID string
 	return r0
 }
 
+// GetByPost provides a mock function with given fields: ctx, postID, after, limit
+func (_m *UserPostDeliveryStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error) {
+	ret := _m.Called(ctx, postID, after, limit)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetByPost")
+	}
+
+	var r0 []model.UserPostDelivery
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, model.UserPostDeliveryCursor, int) ([]model.UserPostDelivery, error)); ok {
+		return rf(ctx, postID, after, limit)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, string, model.UserPostDeliveryCursor, int) []model.UserPostDelivery); ok {
+		r0 = rf(ctx, postID, after, limit)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]model.UserPostDelivery)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, string, model.UserPostDeliveryCursor, int) error); ok {
+		r1 = rf(ctx, postID, after, limit)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // MarkBulk provides a mock function with given fields: ctx, records
 func (_m *UserPostDeliveryStore) MarkBulk(ctx context.Context, records []model.UserPostDelivery) error {
 	ret := _m.Called(ctx, records)

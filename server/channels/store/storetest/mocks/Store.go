@@ -1554,6 +1554,26 @@ func (_m *Store) UserPostDelivery() store.UserPostDeliveryStore {
 	return r0
 }
 
+// UserPostDeliveryContentReview provides a mock function with no fields
+func (_m *Store) UserPostDeliveryContentReview() store.UserPostDeliveryContentReviewStore {
+	ret := _m.Called()
+
+	if len(ret) == 0 {
+		panic("no return value specified for UserPostDeliveryContentReview")
+	}
+
+	var r0 store.UserPostDeliveryContentReviewStore
+	if rf, ok := ret.Get(0).(func() store.UserPostDeliveryContentReviewStore); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(store.UserPostDeliveryContentReviewStore)
+		}
+	}
+
+	return r0
+}
+
 // UserTermsOfService provides a mock function with no fields
 func (_m *Store) UserTermsOfService() store.UserTermsOfServiceStore {
 	ret := _m.Called()

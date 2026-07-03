@@ -25,3 +25,19 @@ type UserPostDelivery struct {
 	Mechanism  int16  `json:"mechanism" db:"mechanism"`
 	CreatedAt  int64  `json:"created_at" db:"created_at"`
 }
+
+// UserPostDeliveryCursor is a keyset-pagination cursor over the
+// UserPostDelivery unique index (post_id fixed, ordered by
+// target_id, target_type, mechanism). The zero value (empty TargetID) selects
+// the first page; target ids are never empty in practice, so this is an
+// unambiguous sentinel.
+type UserPostDeliveryCursor struct {
+	TargetID   string
+	TargetType string
+	Mechanism  int16
+}
+
+// IsFirstPage reports whether the cursor points at the first page.
+func (c UserPostDeliveryCursor) IsFirstPage() bool {
+	return c.TargetID == ""
+}

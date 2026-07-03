@@ -46,6 +46,10 @@ func (f *fakeUserPostDeliveryStore) MarkBulk(_ context.Context, records []model.
 
 func (f *fakeUserPostDeliveryStore) DeleteByPost(context.Context, string) error { return nil }
 
+func (f *fakeUserPostDeliveryStore) GetByPost(context.Context, string, model.UserPostDeliveryCursor, int) ([]model.UserPostDelivery, error) {
+	return nil, nil
+}
+
 func (f *fakeUserPostDeliveryStore) snapshot() (map[model.UserPostDelivery]int, int) {
 	f.mu.Lock()
 	defer f.mu.Unlock()

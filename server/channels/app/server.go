@@ -46,6 +46,7 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/delete_empty_drafts_migration"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/delete_expired_posts"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/delete_orphan_drafts_migration"
+	"github.com/mattermost/mattermost/server/v8/channels/jobs/delivery_tracking_content_review"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/expirynotify"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/export_delete"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/export_process"
@@ -1637,6 +1638,12 @@ func (s *Server) initJobs() {
 	s.Jobs.RegisterJobType(
 		model.JobTypeImportProcess,
 		import_process.MakeWorker(s.Jobs, New(ServerConnector(s.Channels()))),
+		nil,
+	)
+
+	s.Jobs.RegisterJobType(
+		model.JobTypeDeliveryTrackingContentReview,
+		delivery_tracking_content_review.MakeWorker(s.Jobs, s.Store()),
 		nil,
 	)
 

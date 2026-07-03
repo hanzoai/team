@@ -20,67 +20,68 @@ import (
 
 type RetryLayer struct {
 	store.Store
-	AccessControlPolicyStore        store.AccessControlPolicyStore
-	AttributesStore                 store.AttributesStore
-	AuditStore                      store.AuditStore
-	AutoTranslationStore            store.AutoTranslationStore
-	BotStore                        store.BotStore
-	ChannelStore                    store.ChannelStore
-	ChannelBookmarkStore            store.ChannelBookmarkStore
-	ChannelGuardStore               store.ChannelGuardStore
-	ChannelJoinRequestStore         store.ChannelJoinRequestStore
-	ChannelMemberHistoryStore       store.ChannelMemberHistoryStore
-	ClusterDiscoveryStore           store.ClusterDiscoveryStore
-	CommandStore                    store.CommandStore
-	CommandWebhookStore             store.CommandWebhookStore
-	ComplianceStore                 store.ComplianceStore
-	ContentFlaggingStore            store.ContentFlaggingStore
-	DesktopTokensStore              store.DesktopTokensStore
-	DraftStore                      store.DraftStore
-	EmojiStore                      store.EmojiStore
-	FileInfoStore                   store.FileInfoStore
-	GroupStore                      store.GroupStore
-	JobStore                        store.JobStore
-	LicenseStore                    store.LicenseStore
-	LinkMetadataStore               store.LinkMetadataStore
-	NotifyAdminStore                store.NotifyAdminStore
-	OAuthStore                      store.OAuthStore
-	OutgoingOAuthConnectionStore    store.OutgoingOAuthConnectionStore
-	PluginStore                     store.PluginStore
-	PostStore                       store.PostStore
-	PostAcknowledgementStore        store.PostAcknowledgementStore
-	PostPersistentNotificationStore store.PostPersistentNotificationStore
-	PostPriorityStore               store.PostPriorityStore
-	PreferenceStore                 store.PreferenceStore
-	ProductNoticesStore             store.ProductNoticesStore
-	PropertyFieldStore              store.PropertyFieldStore
-	PropertyGroupStore              store.PropertyGroupStore
-	PropertyValueStore              store.PropertyValueStore
-	ReactionStore                   store.ReactionStore
-	ReadReceiptStore                store.ReadReceiptStore
-	RecapStore                      store.RecapStore
-	RemoteClusterStore              store.RemoteClusterStore
-	RetentionPolicyStore            store.RetentionPolicyStore
-	RoleStore                       store.RoleStore
-	ScheduledPostStore              store.ScheduledPostStore
-	SchemeStore                     store.SchemeStore
-	SessionStore                    store.SessionStore
-	SessionAttributeStore           store.SessionAttributeStore
-	SharedChannelStore              store.SharedChannelStore
-	StatusStore                     store.StatusStore
-	SystemStore                     store.SystemStore
-	TeamStore                       store.TeamStore
-	TemporaryPostStore              store.TemporaryPostStore
-	TermsOfServiceStore             store.TermsOfServiceStore
-	ThreadStore                     store.ThreadStore
-	TokenStore                      store.TokenStore
-	UploadSessionStore              store.UploadSessionStore
-	UserStore                       store.UserStore
-	UserAccessTokenStore            store.UserAccessTokenStore
-	UserPostDeliveryStore           store.UserPostDeliveryStore
-	UserTermsOfServiceStore         store.UserTermsOfServiceStore
-	ViewStore                       store.ViewStore
-	WebhookStore                    store.WebhookStore
+	AccessControlPolicyStore           store.AccessControlPolicyStore
+	AttributesStore                    store.AttributesStore
+	AuditStore                         store.AuditStore
+	AutoTranslationStore               store.AutoTranslationStore
+	BotStore                           store.BotStore
+	ChannelStore                       store.ChannelStore
+	ChannelBookmarkStore               store.ChannelBookmarkStore
+	ChannelGuardStore                  store.ChannelGuardStore
+	ChannelJoinRequestStore            store.ChannelJoinRequestStore
+	ChannelMemberHistoryStore          store.ChannelMemberHistoryStore
+	ClusterDiscoveryStore              store.ClusterDiscoveryStore
+	CommandStore                       store.CommandStore
+	CommandWebhookStore                store.CommandWebhookStore
+	ComplianceStore                    store.ComplianceStore
+	ContentFlaggingStore               store.ContentFlaggingStore
+	DesktopTokensStore                 store.DesktopTokensStore
+	DraftStore                         store.DraftStore
+	EmojiStore                         store.EmojiStore
+	FileInfoStore                      store.FileInfoStore
+	GroupStore                         store.GroupStore
+	JobStore                           store.JobStore
+	LicenseStore                       store.LicenseStore
+	LinkMetadataStore                  store.LinkMetadataStore
+	NotifyAdminStore                   store.NotifyAdminStore
+	OAuthStore                         store.OAuthStore
+	OutgoingOAuthConnectionStore       store.OutgoingOAuthConnectionStore
+	PluginStore                        store.PluginStore
+	PostStore                          store.PostStore
+	PostAcknowledgementStore           store.PostAcknowledgementStore
+	PostPersistentNotificationStore    store.PostPersistentNotificationStore
+	PostPriorityStore                  store.PostPriorityStore
+	PreferenceStore                    store.PreferenceStore
+	ProductNoticesStore                store.ProductNoticesStore
+	PropertyFieldStore                 store.PropertyFieldStore
+	PropertyGroupStore                 store.PropertyGroupStore
+	PropertyValueStore                 store.PropertyValueStore
+	ReactionStore                      store.ReactionStore
+	ReadReceiptStore                   store.ReadReceiptStore
+	RecapStore                         store.RecapStore
+	RemoteClusterStore                 store.RemoteClusterStore
+	RetentionPolicyStore               store.RetentionPolicyStore
+	RoleStore                          store.RoleStore
+	ScheduledPostStore                 store.ScheduledPostStore
+	SchemeStore                        store.SchemeStore
+	SessionStore                       store.SessionStore
+	SessionAttributeStore              store.SessionAttributeStore
+	SharedChannelStore                 store.SharedChannelStore
+	StatusStore                        store.StatusStore
+	SystemStore                        store.SystemStore
+	TeamStore                          store.TeamStore
+	TemporaryPostStore                 store.TemporaryPostStore
+	TermsOfServiceStore                store.TermsOfServiceStore
+	ThreadStore                        store.ThreadStore
+	TokenStore                         store.TokenStore
+	UploadSessionStore                 store.UploadSessionStore
+	UserStore                          store.UserStore
+	UserAccessTokenStore               store.UserAccessTokenStore
+	UserPostDeliveryStore              store.UserPostDeliveryStore
+	UserPostDeliveryContentReviewStore store.UserPostDeliveryContentReviewStore
+	UserTermsOfServiceStore            store.UserTermsOfServiceStore
+	ViewStore                          store.ViewStore
+	WebhookStore                       store.WebhookStore
 }
 
 func (s *RetryLayer) AccessControlPolicy() store.AccessControlPolicyStore {
@@ -313,6 +314,10 @@ func (s *RetryLayer) UserAccessToken() store.UserAccessTokenStore {
 
 func (s *RetryLayer) UserPostDelivery() store.UserPostDeliveryStore {
 	return s.UserPostDeliveryStore
+}
+
+func (s *RetryLayer) UserPostDeliveryContentReview() store.UserPostDeliveryContentReviewStore {
+	return s.UserPostDeliveryContentReviewStore
 }
 
 func (s *RetryLayer) UserTermsOfService() store.UserTermsOfServiceStore {
@@ -614,6 +619,11 @@ type RetryLayerUserAccessTokenStore struct {
 
 type RetryLayerUserPostDeliveryStore struct {
 	store.UserPostDeliveryStore
+	Root *RetryLayer
+}
+
+type RetryLayerUserPostDeliveryContentReviewStore struct {
+	store.UserPostDeliveryContentReviewStore
 	Root *RetryLayer
 }
 
@@ -18367,11 +18377,95 @@ func (s *RetryLayerUserPostDeliveryStore) DeleteByPost(ctx context.Context, post
 
 }
 
+func (s *RetryLayerUserPostDeliveryStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error) {
+
+	tries := 0
+	for {
+		result, err := s.UserPostDeliveryStore.GetByPost(ctx, postID, after, limit)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
 func (s *RetryLayerUserPostDeliveryStore) MarkBulk(ctx context.Context, records []model.UserPostDelivery) error {
 
 	tries := 0
 	for {
 		err := s.UserPostDeliveryStore.MarkBulk(ctx, records)
+		if err == nil {
+			return nil
+		}
+		if !isRepeatableError(err) {
+			return err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
+func (s *RetryLayerUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context, postID string) (int64, error) {
+
+	tries := 0
+	for {
+		result, err := s.UserPostDeliveryContentReviewStore.CountByPost(ctx, postID)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
+func (s *RetryLayerUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, postID string) error {
+
+	tries := 0
+	for {
+		err := s.UserPostDeliveryContentReviewStore.DeleteByPost(ctx, postID)
+		if err == nil {
+			return nil
+		}
+		if !isRepeatableError(err) {
+			return err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
+func (s *RetryLayerUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error {
+
+	tries := 0
+	for {
+		err := s.UserPostDeliveryContentReviewStore.SaveBatch(ctx, records, jobID)
 		if err == nil {
 			return nil
 		}
@@ -19251,6 +19345,7 @@ func New(childStore store.Store) *RetryLayer {
 	newStore.UserStore = &RetryLayerUserStore{UserStore: childStore.User(), Root: &newStore}
 	newStore.UserAccessTokenStore = &RetryLayerUserAccessTokenStore{UserAccessTokenStore: childStore.UserAccessToken(), Root: &newStore}
 	newStore.UserPostDeliveryStore = &RetryLayerUserPostDeliveryStore{UserPostDeliveryStore: childStore.UserPostDelivery(), Root: &newStore}
+	newStore.UserPostDeliveryContentReviewStore = &RetryLayerUserPostDeliveryContentReviewStore{UserPostDeliveryContentReviewStore: childStore.UserPostDeliveryContentReview(), Root: &newStore}
 	newStore.UserTermsOfServiceStore = &RetryLayerUserTermsOfServiceStore{UserTermsOfServiceStore: childStore.UserTermsOfService(), Root: &newStore}
 	newStore.ViewStore = &RetryLayerViewStore{ViewStore: childStore.View(), Root: &newStore}
 	newStore.WebhookStore = &RetryLayerWebhookStore{WebhookStore: childStore.Webhook(), Root: &newStore}

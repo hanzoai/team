@@ -8,12 +8,20 @@ package store
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"time"
 
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 	"github.com/mattermost/mattermost/server/public/shared/request"
 )
+
+// ErrUserPostDeliverySourceUnavailable is returned by UserPostDeliveryStore
+// reads when the delivery-tracking source pool is not configured (feature
+// disabled at boot, i.e. the no-op store). Callers that require the source data
+// (e.g. the content-review copy job) should surface this as a "restart required"
+// condition rather than treating it as an empty result.
+var ErrUserPostDeliverySourceUnavailable = errors.New("store: user post delivery source pool is not configured")
 
 type StoreResult[T any] struct {
 	Data T
@@ -107,6 +115,7 @@ type Store interface {
 	TemporaryPost() TemporaryPostStore
 	ChannelJoinRequest() ChannelJoinRequestStore
 	UserPostDelivery() UserPostDeliveryStore
+	UserPostDeliveryContentReview() UserPostDeliveryContentReviewStore
 }
 
 type RetentionPolicyStore interface {
@@ -1305,6 +1314,25 @@ type TemporaryPostStore interface {
 type UserPostDeliveryStore interface {
 	MarkBulk(ctx context.Context, records []model.UserPostDelivery) error
 	DeleteByPost(ctx context.Context, postID string) error
+	// GetByPost returns up to limit delivery rows for postID, keyset-paginated by
+	// (target_id, target_type, mechanism). Pass the zero cursor for the first
+	// page and the last returned row's key for subsequent pages. Returns
+	// ErrUserPostDeliverySourceUnavailable when the source pool is not configured.
+	GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error)
+}
+
+// UserPostDeliveryContentReviewStore is the primary-DB copy of delivery rows for
+// posts under content review. Rows mirror UserPostDelivery plus copy bookkeeping
+// (copied_at, job_id). It always writes to the primary pool.
+type UserPostDeliveryContentReviewStore interface {
+	// SaveBatch inserts the given source rows into the content-review table,
+	// preserving each row's original created_at and stamping copied_at and jobID.
+	// Duplicates (post_id, target_id, target_type, mechanism) are ignored.
+	SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error
+	// DeleteByPost removes all content-review rows for a post.
+	DeleteByPost(ctx context.Context, postID string) error
+	// CountByPost returns the number of content-review rows stored for a post.
+	CountByPost(ctx context.Context, postID string) (int64, error)
 }
 
 // ChannelSearchOpts contains options for searching channels.

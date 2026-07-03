@@ -34,6 +34,12 @@ func (noopUserPostDeliveryStore) DeleteByPost(context.Context, string) error {
 	return nil
 }
 
+func (noopUserPostDeliveryStore) GetByPost(context.Context, string, model.UserPostDeliveryCursor, int) ([]model.UserPostDelivery, error) {
+	// The feature is disabled (no source pool). Signal loudly rather than
+	// returning an empty result so callers don't mistake it for "no deliveries".
+	return nil, store.ErrUserPostDeliverySourceUnavailable
+}
+
 func newSqlUserPostDeliveryStore(s *SqlStore) store.UserPostDeliveryStore {
 	if s.userPostDeliveryX == nil {
 		return noopUserPostDeliveryStore{}
@@ -85,4 +91,34 @@ func (s *SqlUserPostDeliveryStore) DeleteByPost(ctx context.Context, postID stri
 		return errors.Wrapf(err, "SqlUserPostDeliveryStore.DeleteByPost: failed to delete delivery records for post_id=%s", postID)
 	}
 	return nil
+}
+
+// GetByPost returns up to limit delivery rows for postID, keyset-paginated by the
+// (target_id, target_type, mechanism) columns of the unique index. The first page
+// passes the zero cursor; subsequent pages pass the last returned row's key.
+func (s *SqlUserPostDeliveryStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error) {
+	records := []model.UserPostDelivery{}
+	var err error
+	if after.IsFirstPage() {
+		err = s.userPostDeliveryX.SelectContext(ctx, &records,
+			`SELECT post_id, target_id, target_type, mechanism, created_at
+			 FROM `+userPostDeliveryTableName+`
+			 WHERE post_id = $1
+			 ORDER BY target_id, target_type, mechanism
+			 LIMIT $2`, postID, limit)
+	} else {
+		// Row-value comparison is index-friendly in Postgres and matches the
+		// ORDER BY, so the unique index drives the scan.
+		err = s.userPostDeliveryX.SelectContext(ctx, &records,
+			`SELECT post_id, target_id, target_type, mechanism, created_at
+			 FROM `+userPostDeliveryTableName+`
+			 WHERE post_id = $1
+			   AND (target_id, target_type, mechanism) > ($2, $3, $4)
+			 ORDER BY target_id, target_type, mechanism
+			 LIMIT $5`, postID, after.TargetID, after.TargetType, after.Mechanism, limit)
+	}
+	if err != nil {
+		return nil, errors.Wrapf(err, "SqlUserPostDeliveryStore.GetByPost: failed to fetch delivery records for post_id=%s", postID)
+	}
+	return records, nil
 }

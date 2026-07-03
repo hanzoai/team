@@ -1620,6 +1620,10 @@ type DeliveryTrackingSettings struct {
 	MaxOpenConns                *int     `access:"environment_database,write_restrictable,cloud_restrictable"`
 	Trace                       *bool    `access:"environment_database,write_restrictable,cloud_restrictable"`
 	QueryTimeout                *int     `access:"environment_database,write_restrictable,cloud_restrictable"`
+	// ContentReviewDeliveryReceiptCopyBatchSize is the page size the
+	// content-review copy job uses when reading source rows and writing them into
+	// the primary-DB UserPostDeliveryContentReview table.
+	ContentReviewDeliveryReceiptCopyBatchSize *int `access:"environment_database,write_restrictable,cloud_restrictable"`
 }
 
 func (s *DeliveryTrackingSettings) SetDefaults() {
@@ -1675,6 +1679,10 @@ func (s *DeliveryTrackingSettings) SetDefaults() {
 
 	if s.QueryTimeout == nil {
 		s.QueryTimeout = new(30)
+	}
+
+	if s.ContentReviewDeliveryReceiptCopyBatchSize == nil {
+		s.ContentReviewDeliveryReceiptCopyBatchSize = new(2000)
 	}
 }
 
