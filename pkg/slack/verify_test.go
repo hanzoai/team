@@ -118,8 +118,8 @@ func TestOAuthState_RoundTrip(t *testing.T) {
 	if !ok {
 		t.Fatal("valid state rejected")
 	}
-	if st.Workspace != "ws-uuid-123" {
-		t.Fatalf("workspace not bound: got %q", st.Workspace)
+	if st.Subject != "ws-uuid-123" {
+		t.Fatalf("workspace not bound: got %q", st.Subject)
 	}
 	if st.Nonce == "" {
 		t.Fatal("nonce empty")

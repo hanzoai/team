@@ -16,6 +16,12 @@ import (
 // completion server-side.
 var agentHTTP = &http.Client{Timeout: 100 * time.Second}
 
+// slackResponseHost is the ONLY host a slash-command response_url may target.
+// Slack always issues response_urls under hooks.slack.com; pinning it stops a
+// forged command payload (should the signature ever be bypassed) from turning
+// team-go into an SSRF/exfil client to an attacker host.
+const slackResponseHost = "hooks.slack.com"
+
 // runResult is the subset of the cloud RunResult (clients/agents toRunView) we
 // consume: the run's status and the model's text output. Field names are the
 // authoritative cloud contract (`status` == "ok" on success, text in `output`,
@@ -79,13 +85,18 @@ func runAgent(ctx context.Context, base, ref, input, bearer string) (string, err
 
 // postResponseURL delivers a slash-command reply to Slack's response_url (a
 // short-lived capability URL Slack supplies with the command - no bot token
-// needed). response_type=in_channel so the answer is visible to the channel,
-// matching an @mention reply.
-func postResponseURL(ctx context.Context, responseURL, text string) error {
-	if responseURL == "" {
-		return fmt.Errorf("slack: empty response_url")
+// needed). The host is pinned to hooks.slack.com. responseType is "in_channel"
+// for an answer (visible, like an @mention reply) or "ephemeral" for a link
+// prompt (visible only to the invoking user - never leak a link URL to a channel).
+func postResponseURL(ctx context.Context, responseURL, responseType, text string) error {
+	u, err := url.Parse(responseURL)
+	if err != nil {
+		return fmt.Errorf("slack: bad response_url")
 	}
-	payload, _ := json.Marshal(map[string]string{"response_type": "in_channel", "text": text})
+	if u.Scheme != "https" || u.Hostname() != slackResponseHost {
+		return fmt.Errorf("slack: response_url host not allowed")
+	}
+	payload, _ := json.Marshal(map[string]string{"response_type": responseType, "text": text})
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, responseURL, strings.NewReader(string(payload)))
 	if err != nil {
 		return err

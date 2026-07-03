@@ -2,7 +2,6 @@ package slack
 
 import (
 	"context"
-	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -23,7 +22,7 @@ type oidcClient struct {
 	base         string // ${IAM_ENDPOINT}/v1/iam
 	clientID     string
 	clientSecret string
-	redirect     string // SLACK_LINK_REDIRECT_URI
+	redirect     string // SLACK_LINK_REDIRECT_URI (hanzo.id callback)
 	client       *http.Client
 }
 
@@ -55,8 +54,8 @@ type tokenSet struct {
 }
 
 // authorizeURL builds the IAM authorize redirect for the link flow. offline_access
-// is required for IAM to issue a refresh token. `state` is the signed, single-use
-// link state binding (slack_team_id, slack_user_id).
+// is required for IAM to issue a refresh token. `state` is the signed link state
+// carried through to the callback (also mirrored in a browser-bound cookie).
 func (o *oidcClient) authorizeURL(state string) string {
 	q := url.Values{
 		"client_id":     {o.clientID},
@@ -130,10 +129,12 @@ func (o *oidcClient) token(ctx context.Context, form url.Values) (tokenSet, erro
 	return tokenSet{Access: out.AccessToken, Refresh: out.RefreshToken, IDToken: out.IDToken}, nil
 }
 
-// identity resolves the linked account's IAM subject (sub) and org (owner). The
-// sub comes from the canonical userinfo endpoint (HIP-0111); the org is the
-// `owner` claim on the access token (the Casdoor tenant). Matches the account
-// package's login bridge - one identity model across team-go.
+// identity resolves the linked account's IAM subject (sub) and org (owner) from
+// the AUTHENTICATED userinfo endpoint (HIP-0111) only. It deliberately does NOT
+// fall back to parsing the (unverified) access-token JWT for the org: the org
+// stored on the link is informational (the RUN's org is minted by the gateway
+// from the bearer, never from this value), so an absent userinfo owner yields ""
+// rather than trusting an unverified claim for anything.
 func (o *oidcClient) identity(ctx context.Context, access string) (sub, org string, err error) {
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, o.base+"/oauth/userinfo", nil)
 	if err != nil {
@@ -159,34 +160,5 @@ func (o *oidcClient) identity(ctx context.Context, access string) (sub, org stri
 	if u.Sub == "" {
 		return "", "", fmt.Errorf("slack: IAM userinfo missing sub")
 	}
-	org = u.Owner
-	if org == "" {
-		org = ownerClaim(access)
-	}
-	return u.Sub, org, nil
-}
-
-// ownerClaim reads the Casdoor `owner` (tenant) claim from a JWT access token's
-// payload WITHOUT verifying the signature: the token came to us directly from
-// the IAM token endpoint over TLS, so its issuer is authenticated by the channel
-// (OIDC allows channel validation in place of the id_token signature check for a
-// direct client<->token-endpoint exchange). Returns "" if it cannot be read.
-func ownerClaim(jwtTok string) string {
-	parts := strings.Split(jwtTok, ".")
-	if len(parts) < 2 {
-		return ""
-	}
-	raw, err := base64.RawURLEncoding.DecodeString(parts[1])
-	if err != nil {
-		if raw, err = base64.StdEncoding.DecodeString(parts[1]); err != nil {
-			return ""
-		}
-	}
-	var claims struct {
-		Owner string `json:"owner"`
-	}
-	if json.Unmarshal(raw, &claims) != nil {
-		return ""
-	}
-	return claims.Owner
+	return u.Sub, u.Owner, nil
 }
