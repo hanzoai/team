@@ -9,6 +9,7 @@ import * as PostActions from 'mattermost-redux/actions/posts';
 import {Posts} from 'mattermost-redux/constants';
 
 import * as Actions from 'actions/post_actions';
+import {getSuppressOutOfChannelEphemeralKey} from 'actions/views/out_of_channel_mention';
 
 import test_helper from 'packages/mattermost-redux/test/test_helper';
 import mockStore from 'tests/test_store';
@@ -295,6 +296,10 @@ describe('Actions.Posts', () => {
         });
 
         function getStateWithSuppress(overrides: {channelId?: string; rootId?: string; expireAt?: number} = {}) {
+            const channelId = overrides.channelId ?? 'current_channel_id';
+            const rootId = overrides.rootId ?? '';
+            const expireAt = overrides.expireAt ?? (POST_CREATED_TIME + 10000);
+
             return {
                 ...initialState,
                 views: {
@@ -302,9 +307,9 @@ describe('Actions.Posts', () => {
                     posts: {
                         ...initialState.views.posts,
                         suppressOutOfChannelEphemeral: {
-                            channelId: overrides.channelId ?? 'current_channel_id',
-                            rootId: overrides.rootId ?? '',
-                            expireAt: overrides.expireAt ?? (POST_CREATED_TIME + 10000),
+                            [getSuppressOutOfChannelEphemeralKey(channelId, rootId)]: {
+                                expireAt,
+                            },
                         },
                     },
                 },

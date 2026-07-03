@@ -6151,7 +6151,7 @@
   "out_of_channel_mention_confirm_modal.out_of_team": "{count, plural, one {isn't} other {aren't}} in this channel and won't be notified.",
   "out_of_channel_mention_confirm_modal.out_of_team_note": "They are on this server but not on this team, so they can't be added to the channel.",
   "out_of_channel_mention_confirm_modal.send_without_adding": "Send without adding",
-  "out_of_channel_mention_confirm_modal.title.fallback": "People you mentioned aren't in this channel",
+  "out_of_channel_mention_confirm_modal.title.fallback": "{count, plural, one {Person you mentioned isn't in this channel} other {People you mentioned aren't in this channel}}",
   "out_of_channel_mention_confirm_modal.title.private": "{count, plural, one {Add mentioned person to this private channel?} other {Add mentioned people to this private channel?}}",
   "out_of_channel_mention_confirm_modal.title.public": "{count, plural, one {Add mentioned person to this channel?} other {Add mentioned people to this channel?}}",
   "post_body.check_for_out_of_channel_groups_mentions.message": "did not get notified by this mention because they are not in the channel. They cannot be added to the channel because they are not a member of the linked groups. To add them to this channel, they must be added to the linked groups.",

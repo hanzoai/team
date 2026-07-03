@@ -57,12 +57,33 @@ function menuActions(state: {[postId: string]: {[actionId: string]: {text: strin
     }
 }
 
-const suppressOutOfChannelEphemeralDefaultState: ViewsState['posts']['suppressOutOfChannelEphemeral'] = null;
+const suppressOutOfChannelEphemeralDefaultState: ViewsState['posts']['suppressOutOfChannelEphemeral'] = {};
+
+function pruneExpiredSuppressions(
+    suppressions: ViewsState['posts']['suppressOutOfChannelEphemeral'],
+    now = Date.now(),
+): ViewsState['posts']['suppressOutOfChannelEphemeral'] {
+    const nextState: ViewsState['posts']['suppressOutOfChannelEphemeral'] = {};
+
+    for (const [key, entry] of Object.entries(suppressions)) {
+        if (entry.expireAt > now) {
+            nextState[key] = entry;
+        }
+    }
+
+    return nextState;
+}
 
 function suppressOutOfChannelEphemeral(state: ViewsState['posts']['suppressOutOfChannelEphemeral'] = suppressOutOfChannelEphemeralDefaultState, action: MMAction) {
     switch (action.type) {
-    case ActionTypes.SUPPRESS_OUT_OF_CHANNEL_EPHEMERAL:
-        return action.data;
+    case ActionTypes.SUPPRESS_OUT_OF_CHANNEL_EPHEMERAL: {
+        const {channelId, rootId, expireAt} = action.data;
+        const key = `${channelId}:${rootId || ''}`;
+        const nextState = pruneExpiredSuppressions(state);
+
+        nextState[key] = {expireAt};
+        return nextState;
+    }
     case UserTypes.LOGOUT_SUCCESS:
         return suppressOutOfChannelEphemeralDefaultState;
     default:

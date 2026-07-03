@@ -96,13 +96,15 @@ function OutOfChannelMentionConfirmModal({
 
     const isPrivate = channelType === Constants.PRIVATE_CHANNEL;
     const addableCount = addable.length;
+    const unaddableCount = notAddable.length + outOfTeam.length;
 
     let modalTitle;
     if (addableCount === 0) {
         modalTitle = (
             <FormattedMessage
                 id='out_of_channel_mention_confirm_modal.title.fallback'
-                defaultMessage={"People you mentioned aren't in this channel"}
+                defaultMessage="{count, plural, one {Person you mentioned isn't in this channel} other {People you mentioned aren't in this channel}}"
+                values={{count: unaddableCount}}
             />
         );
     } else if (isPrivate) {

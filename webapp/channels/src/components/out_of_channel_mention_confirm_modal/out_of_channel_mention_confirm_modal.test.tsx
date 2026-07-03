@@ -136,7 +136,7 @@ describe('OutOfChannelMentionConfirmModal', () => {
         );
 
         expect(screen.getByRole('button', {name: /Add to channel and send/})).toBeDisabled();
-        expect(screen.getByText("People you mentioned aren't in this channel")).toBeInTheDocument();
+        expect(screen.getByText("Person you mentioned isn't in this channel")).toBeInTheDocument();
     });
 
     it('does not render cancel button', () => {

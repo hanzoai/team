@@ -3,6 +3,7 @@
 
 import {
     getSuppressOutOfChannelEphemeral,
+    getSuppressOutOfChannelEphemeralKey,
     isOutOfChannelMentionEphemeralPost,
     OUT_OF_CHANNEL_EPHEMERAL_SUPPRESS_TTL_MS,
     shouldSuppressOutOfChannelEphemeralPost,
@@ -35,6 +36,7 @@ describe('out_of_channel_mention actions', () => {
     });
 
     describe('shouldSuppressOutOfChannelEphemeralPost', () => {
+        const suppressExpireAt = Date.now() + 5000;
         const baseState = {
             entities: {
                 users: {
@@ -44,9 +46,9 @@ describe('out_of_channel_mention actions', () => {
             views: {
                 posts: {
                     suppressOutOfChannelEphemeral: {
-                        channelId: 'channel_id',
-                        rootId: 'root_id',
-                        expireAt: Date.now() + 5000,
+                        [getSuppressOutOfChannelEphemeralKey('channel_id', 'root_id')]: {
+                            expireAt: suppressExpireAt,
+                        },
                     },
                 },
             },
@@ -137,9 +139,9 @@ describe('out_of_channel_mention actions', () => {
                 views: {
                     posts: {
                         suppressOutOfChannelEphemeral: {
-                            channelId: 'channel_id',
-                            rootId: 'root_id',
-                            expireAt: Date.now() - 1,
+                            [getSuppressOutOfChannelEphemeralKey('channel_id', 'root_id')]: {
+                                expireAt: Date.now() - 1,
+                            },
                         },
                     },
                 },
@@ -160,7 +162,33 @@ describe('out_of_channel_mention actions', () => {
             });
 
             expect(shouldSuppressOutOfChannelEphemeralPost(state, post)).toBe(false);
-            expect(getSuppressOutOfChannelEphemeral(state)).toBeNull();
+            expect(getSuppressOutOfChannelEphemeral(state, 'channel_id', 'root_id')).toBeNull();
+        });
+
+        it('keeps suppressions for multiple channel and thread keys', () => {
+            const state = {
+                ...baseState,
+                views: {
+                    posts: {
+                        suppressOutOfChannelEphemeral: {
+                            [getSuppressOutOfChannelEphemeralKey('channel_id', 'root_id')]: {
+                                expireAt: suppressExpireAt,
+                            },
+                            [getSuppressOutOfChannelEphemeralKey('channel_id', '')]: {
+                                expireAt: suppressExpireAt,
+                            },
+                            [getSuppressOutOfChannelEphemeralKey('other_channel_id', '')]: {
+                                expireAt: suppressExpireAt,
+                            },
+                        },
+                    },
+                },
+            } as GlobalState;
+
+            expect(getSuppressOutOfChannelEphemeral(state, 'channel_id', 'root_id')).not.toBeNull();
+            expect(getSuppressOutOfChannelEphemeral(state, 'channel_id', '')).not.toBeNull();
+            expect(getSuppressOutOfChannelEphemeral(state, 'other_channel_id', '')).not.toBeNull();
+            expect(getSuppressOutOfChannelEphemeral(state, 'other_channel_id', 'root_id')).toBeNull();
         });
     });
 });

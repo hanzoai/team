@@ -19,6 +19,10 @@ export type SuppressOutOfChannelEphemeral = {
     expireAt: number;
 };
 
+export function getSuppressOutOfChannelEphemeralKey(channelId: string, rootId = ''): string {
+    return `${channelId}:${rootId}`;
+}
+
 export function suppressOutOfChannelEphemeralPost(channelId: string, rootId = ''): ActionFunc {
     return (dispatch) => {
         dispatch({
@@ -33,12 +37,18 @@ export function suppressOutOfChannelEphemeralPost(channelId: string, rootId = ''
     };
 }
 
-export function getSuppressOutOfChannelEphemeral(state: GlobalState): SuppressOutOfChannelEphemeral | null {
-    const suppress = state.views.posts.suppressOutOfChannelEphemeral;
-    if (!suppress || Date.now() >= suppress.expireAt) {
+export function getSuppressOutOfChannelEphemeral(state: GlobalState, channelId: string, rootId = ''): SuppressOutOfChannelEphemeral | null {
+    const key = getSuppressOutOfChannelEphemeralKey(channelId, rootId);
+    const entry = state.views.posts.suppressOutOfChannelEphemeral[key];
+    if (!entry || Date.now() >= entry.expireAt) {
         return null;
     }
-    return suppress;
+
+    return {
+        channelId,
+        rootId,
+        expireAt: entry.expireAt,
+    };
 }
 
 export function isOutOfChannelMentionEphemeralPost(post: {props?: Post['props']}): boolean {
@@ -54,14 +64,5 @@ export function shouldSuppressOutOfChannelEphemeralPost(state: GlobalState, post
         return false;
     }
 
-    const suppress = getSuppressOutOfChannelEphemeral(state);
-    if (!suppress) {
-        return false;
-    }
-
-    if (post.channel_id !== suppress.channelId) {
-        return false;
-    }
-
-    return (post.root_id || '') === suppress.rootId;
+    return getSuppressOutOfChannelEphemeral(state, post.channel_id, post.root_id || '') !== null;
 }

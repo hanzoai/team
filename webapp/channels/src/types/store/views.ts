@@ -122,10 +122,10 @@ export type ViewsState = {
             };
         };
         suppressOutOfChannelEphemeral: {
-            channelId: string;
-            rootId: string;
-            expireAt: number;
-        } | null;
+            [key: string]: {
+                expireAt: number;
+            };
+        };
     };
 
     modals: {
