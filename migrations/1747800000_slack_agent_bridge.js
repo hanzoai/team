@@ -1,23 +1,29 @@
 /// <reference path="../functions/types.d.ts" />
-// Slack <-> Hanzo Cloud AI bridge: team->org install records + per-user account
-// links. Two additive collections, append-only (prod already ran the earlier
-// migrations). Both are PLUGIN-OWNED: no member CRUD rules (null == locked), so
-// all access to the Base collection API is denied; the slack package reads and
-// writes them through the app store (superuser context) and enforces tenant
+// Slack <-> Hanzo Cloud AI bridge: team->org install records, per-user account
+// links, and a durable agent-event dedupe. Additive, append-only. All three are
+// PLUGIN-OWNED: no member CRUD rules (null == locked); the slack package reads
+// and writes them through the app store (superuser context) and enforces tenant
 // scope in the handler.
 //
-//  1. slack_installs   - slack_team_id -> workspace_id + owner_org. Written at
-//     the OAuth callback (after the bot token is stored in KMS), this is the ONE
-//     place that resolves a Slack team to its Hanzo tenant WITHOUT a channel
-//     mapping, so an @mention / DM / slash command can find the org (and thus
-//     the workspace bot token) before any channel is bridged. ONE row per team.
+//  1. slack_installs   - slack_team_id -> owner_org (+ optional workspace_id).
+//     The ONE place that resolves a Slack team to its Hanzo tenant WITHOUT a
+//     channel mapping, so an @mention / DM / slash command finds the org (and
+//     thus the workspace bot token). ONE row per team (first-org-wins is
+//     enforced in oauth(): a second org cannot overwrite an existing team's
+//     install), so the effective ownership is (org, team). workspace_id is
+//     OPTIONAL: the org-scoped console connect flow has no single workspace.
 //
 //  2. slack_user_links - (slack_team_id, slack_user_id) -> the linked Hanzo
-//     account (subject + org). Written at the hanzo.id OIDC link callback. It is
-//     the pointer that lets an @mention run an agent ON BEHALF OF the Slack
-//     user's own Hanzo account (their billing). The refresh token itself is NOT
-//     stored here - it lives KMS-encrypted (path "slack-user-tokens"); this row
-//     only records that the link exists + who it points at. ONE row per user.
+//     account (subject + org). Written at the link callback, where slack_user_id
+//     is proven by a Slack sign-in leg (never taken from a URL param). The
+//     refresh token lives KMS-encrypted; this row is only the pointer. ONE row
+//     per user.
+//
+//  3. slack_processed_events - a DURABLE dedupe for the agent path (an @mention
+//     runs a BILLED agent turn, so a duplicate must never double-run/double-bill).
+//     Keyed by the Slack event_id (or a slash trigger_id); the unique index makes
+//     "insert-or-skip" atomic and it survives a pod restart, unlike the in-process
+//     seen-set (which stays as the cosmetic dedupe for the channel-mirror relay).
 
 migrate((app) => {
   const workspaces = app.findCollectionByNameOrId("workspaces");
@@ -27,17 +33,18 @@ migrate((app) => {
     type: "base",
     name: "slack_installs",
     fields: [
-      { name: "workspace_id", type: "relation", required: true, collectionId: workspaces.id, cascadeDelete: true },
-      // The workspace's owning TENANT (owner_org) - the SAME value the bot token
-      // was stored under in KMS, so the agent path fetches the token under the
-      // tenant, never a per-account path (KMS per-org RBAC).
+      // Optional: the org-scoped connect path has no single workspace. Provenance
+      // only - the agent path routes by owner_org, never by this field.
+      { name: "workspace_id", type: "relation", required: false, collectionId: workspaces.id, cascadeDelete: true },
+      // The owning TENANT (owner_org) - the SAME value the bot token is stored
+      // under in KMS (KMS per-org RBAC).
       { name: "owner_org", type: "text", required: true },
       { name: "slack_team_id", type: "text", required: true },
       { name: "created_at", type: "autodate", onCreate: true },
       { name: "updated_at", type: "autodate", onCreate: true, onUpdate: true },
     ],
     indexes: [
-      // ONE install per Slack team - the org lookup must be unambiguous.
+      // ONE install per Slack team (first-org-wins guarded in oauth()).
       "CREATE UNIQUE INDEX idx_slack_install_team ON slack_installs (slack_team_id)",
     ],
   });
@@ -63,8 +70,24 @@ migrate((app) => {
     ],
   });
   app.save(links);
+
+  // ---- 3. slack_processed_events (plugin-owned; deny all public CRUD) ----
+  const processed = new Collection({
+    type: "base",
+    name: "slack_processed_events",
+    fields: [
+      // Slack event_id (events) or trigger_id (slash). The unique index is the
+      // dedupe: insert-or-skip before dispatching a billed agent turn.
+      { name: "event_key", type: "text", required: true },
+      { name: "created_at", type: "autodate", onCreate: true },
+    ],
+    indexes: [
+      "CREATE UNIQUE INDEX idx_slack_processed_key ON slack_processed_events (event_key)",
+    ],
+  });
+  app.save(processed);
 }, (app) => {
-  ["slack_user_links", "slack_installs"].forEach((name) => {
+  ["slack_processed_events", "slack_user_links", "slack_installs"].forEach((name) => {
     const c = app.findCollectionByNameOrId(name);
     if (c) app.delete(c);
   });

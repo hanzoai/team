@@ -137,27 +137,28 @@ func verifySubjectState(secret, state string, now int64) (subjectState, bool) {
 
 // ── OAuth state (workspace-bound) ───────────────────────────────────────────
 
-// oauthState is a verified OAuth state: the bound workspace, its expiry, and the
-// single-use nonce.
+// oauthState is a verified OAuth state: the bound subject (the connecting ORG's
+// tenant id), its expiry, and the single-use nonce.
 type oauthState struct {
-	Workspace string
-	Exp       int64
-	Nonce     string
+	Subject string
+	Exp     int64
+	Nonce   string
 }
 
-// signOAuthState binds the initiating workspace UUID so the OAuth callback
-// cannot be replayed/forged for another workspace (CSRF).
-func signOAuthState(secret, workspace string, now int64) (string, error) {
-	return signSubjectState(secret, workspace, now)
+// signOAuthState binds the connecting ORG (tenant) so the OAuth callback cannot
+// be replayed/forged for another org (CSRF). Both connect paths (workspace-admin
+// and org-JWT) resolve to an org, so the state subject is always the org.
+func signOAuthState(secret, org string, now int64) (string, error) {
+	return signSubjectState(secret, org, now)
 }
 
-// verifyOAuthState verifies a workspace-bound OAuth state.
+// verifyOAuthState verifies an org-bound OAuth state.
 func verifyOAuthState(secret, state string, now int64) (oauthState, bool) {
 	s, ok := verifySubjectState(secret, state, now)
 	if !ok {
 		return oauthState{}, false
 	}
-	return oauthState{Workspace: s.Subject, Exp: s.Exp, Nonce: s.Nonce}, true
+	return oauthState{Subject: s.Subject, Exp: s.Exp, Nonce: s.Nonce}, true
 }
 
 // ── link state ((team, user)-bound) ─────────────────────────────────────────

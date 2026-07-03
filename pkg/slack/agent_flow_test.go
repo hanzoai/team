@@ -22,7 +22,7 @@ func addAgentCollections(t *testing.T, app core.App, _ *core.Record) {
 		t.Fatalf("workspaces collection: %v", err)
 	}
 	installs := core.NewBaseCollection("slack_installs")
-	installs.Fields.Add(&core.RelationField{Name: "workspace_id", CollectionId: wsColl.Id, Required: true})
+	installs.Fields.Add(&core.RelationField{Name: "workspace_id", CollectionId: wsColl.Id, Required: false})
 	installs.Fields.Add(&core.TextField{Name: "owner_org", Required: true})
 	installs.Fields.Add(&core.TextField{Name: "slack_team_id", Required: true})
 	must(t, app, installs)
@@ -33,6 +33,11 @@ func addAgentCollections(t *testing.T, app core.App, _ *core.Record) {
 	links.Fields.Add(&core.TextField{Name: "hanzo_subject", Required: true})
 	links.Fields.Add(&core.TextField{Name: "hanzo_org"})
 	must(t, app, links)
+
+	processed := core.NewBaseCollection("slack_processed_events")
+	processed.Fields.Add(&core.TextField{Name: "event_key", Required: true})
+	processed.AddIndex("idx_slack_processed_key", true, "event_key", "")
+	must(t, app, processed)
 }
 
 // installOrg resolves team -> tenant org + workspace, and upsert is idempotent.
@@ -74,7 +79,10 @@ func TestAgentReply_UnlinkedPromptsLink(t *testing.T) {
 	if err := c.upsertInstall("T1", wsRec.Id, "hanzo"); err != nil {
 		t.Fatalf("install: %v", err)
 	}
-	reply := c.agentReply(context.Background(), "T1", "U1", "hi")
+	reply, isPrompt := c.agentReply(context.Background(), "T1", "U1", "hi")
+	if !isPrompt {
+		t.Fatal("unlinked reply must be flagged as a link prompt (ephemeral delivery)")
+	}
 	if !strings.Contains(reply, "/v1/slack/link?state=") {
 		t.Fatalf("unlinked user should get a link prompt, got %q", reply)
 	}
@@ -141,7 +149,10 @@ func TestAgentReply_LinkedRunsOnBehalf(t *testing.T) {
 		t.Fatalf("link: %v", err)
 	}
 
-	reply := c.agentReply(context.Background(), "T1", "U1", "what is 6*7")
+	reply, isPrompt := c.agentReply(context.Background(), "T1", "U1", "what is 6*7")
+	if isPrompt {
+		t.Fatal("linked reply must NOT be a link prompt")
+	}
 	if reply != "42" {
 		t.Fatalf("linked run should return the agent answer, got %q", reply)
 	}
