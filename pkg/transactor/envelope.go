@@ -41,9 +41,9 @@ const (
 )
 
 const (
-	zapHeader   = 16            // header size
-	zapRoot     = 16            // root object offset (right after the header)
-	zapData     = 24           // fixed section size: id4+kind1+pad3 + method ptr8 + payload ptr8
+	zapHeader   = 16                // header size
+	zapRoot     = 16                // root object offset (right after the header)
+	zapData     = 24                // fixed section size: id4+kind1+pad3 + method ptr8 + payload ptr8
 	zapFixedEnd = zapRoot + zapData // 40 — where the variable section begins
 )
 
