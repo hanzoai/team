@@ -83,18 +83,19 @@ func main() {
 		},
 	})
 
-	teamiam.Register(app)        // /v1/iam/*      → IAM_ENDPOINT (transparent OIDC reverse proxy)
-	teamaccount.Register(app)    // /v1/account/*  → the account API (login, workspaces) over IAM
-	teamagents.Register(app)     // /v1/agents/*   → api.hanzo.ai/v1/agents (the ONE cloud store); /v1/agent chat UI
-	teamauth.Register(app)       // /v1/me, /v1/logout
-	teambilling.Register(app)    // /v1/billing/*  → commerce.hanzo.ai
-	teambot.Register(app)        // /v1/bot/*      → hanzo.bot (chat agent in-app)
-	teamchat.Register(app)       // /v1/chat/*     → REST chunter (channels/messages/presence)
-	teambots.Register(app)       // /v1/bots/*     → bots-as-members (IAM SAs + cloud agents), admin
-	teamslack.Register(app)      // /v1/slack/*    → bidirectional Slack relay, admin + HMAC webhook
-	teamfiles.Register(app)      // /v1/files/*    → 307 alias for Base /v1/base/files/*
-	teamsubscribe.Register(app)  // /v1/subscribe  → WS record-change stream
-	teamtransactor.Register(app) // /transactor/*  → the workspace data plane over ZAP (WS)
+	teamiam.Register(app)              // /v1/iam/*      → IAM_ENDPOINT (transparent OIDC reverse proxy)
+	teamaccount.Register(app)          // /v1/account/*  → the account API (login, workspaces) over IAM
+	teamagents.Register(app)           // /v1/agents/*   → api.hanzo.ai/v1/agents (the ONE cloud store); /v1/agent chat UI
+	teamauth.Register(app)             // /v1/me, /v1/logout
+	teambilling.Register(app)          // /v1/billing/*  → commerce.hanzo.ai
+	teambot.Register(app)              // /v1/bot/*      → hanzo.bot (chat agent in-app)
+	teamchat.Register(app)             // /v1/chat/*     → REST chunter (channels/messages/presence)
+	teambots.Register(app)             // /v1/bots/*     → bots-as-members (IAM SAs + cloud agents), admin
+	teamslack.Register(app)            // /v1/slack/*    → bidirectional Slack relay, admin + HMAC webhook
+	teamfiles.Register(app)            // /v1/files/*    → 307 alias for Base /v1/base/files/*
+	teamsubscribe.Register(app)        // /v1/subscribe  → WS record-change stream
+	teamtransactor.Register(app)       // /transactor/*  → the workspace data plane over ZAP (WS)
+	teamtransactor.RegisterMirror(app) // Base writes (chat/bots/slack) → the ZAP plane the SPA reads
 	// metrics middleware MUST register before app.Start so its wrap
 	// catches every other registered route.
 	teammetrics.Register(app, envOr("TEAM_VERSION", "dev"))

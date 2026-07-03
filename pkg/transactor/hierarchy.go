@@ -26,8 +26,8 @@ type hierarchy struct {
 	kind        map[string]int
 	extends     map[string]string
 	implements  map[string][]string
-	ancestors   map[string][]string         // class -> transitive closure (incl self)
-	descendants map[string]map[string]bool  // class -> {self ∪ subclasses}
+	ancestors   map[string][]string        // class -> transitive closure (incl self)
+	descendants map[string]map[string]bool // class -> {self ∪ subclasses}
 }
 
 // modelTx is the slice of a Tx we read while building the hierarchy.
