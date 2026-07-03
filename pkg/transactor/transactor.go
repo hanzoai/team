@@ -47,6 +47,9 @@ func Register(app core.App) {
 		hub:    newHub(),
 		secret: env("SERVER_SECRET", token.DefaultSecret),
 	}
+	// Publish the singleton so the mirror can project Base-collection writes into
+	// this workspace store (the ONE plane bridge). One server, one store.
+	live = srv
 	app.OnServe().Bind(&hook.Handler[*core.ServeEvent]{
 		Func: func(e *core.ServeEvent) error {
 			e.Router.GET(mount+"/{token...}", func(re *core.RequestEvent) error {
@@ -85,6 +88,7 @@ func (srv *server) serve(re *core.RequestEvent) error {
 			defer conn.Close()
 			sess.conn = conn
 			sess.seedWorkspace()
+			sess.backfillFromBase() // project existing Base members/channels/messages into the plane
 			srv.hub.add(sess)
 			defer srv.hub.remove(sess)
 			sess.loop(conn)
@@ -241,7 +245,14 @@ func (s *session) queryDocs(class string, query map[string]any) []map[string]any
 		if isMixin && !hasMixin(doc, class) {
 			continue
 		}
-		if query != nil && !matchQuery(doc, query) {
+		// Mixin queries match the mixin's fields as if top-level (Huly `$as`
+		// semantics): overlay the mixin sub-object for matching, but return the
+		// full doc — the client casts it itself.
+		matchDoc := doc
+		if isMixin {
+			matchDoc = mixinView(doc, class)
+		}
+		if query != nil && !matchQuery(matchDoc, query) {
 			continue
 		}
 		matched = append(matched, doc)
@@ -335,6 +346,24 @@ func totalArray(docs []map[string]any, total int) map[string]any {
 func hasMixin(doc map[string]any, mixin string) bool {
 	_, ok := doc[mixin].(map[string]any)
 	return ok
+}
+
+// mixinView overlays a doc's mixin sub-object onto a shallow copy so a mixin
+// query can match the mixin's fields at top level (Huly `$as`). The original doc
+// is never mutated; the caller returns it unchanged.
+func mixinView(doc map[string]any, mixin string) map[string]any {
+	sub, ok := doc[mixin].(map[string]any)
+	if !ok {
+		return doc
+	}
+	merged := make(map[string]any, len(doc)+len(sub))
+	for k, v := range doc {
+		merged[k] = v
+	}
+	for k, v := range sub {
+		merged[k] = v
+	}
+	return merged
 }
 
 func mustJSON(v any) []byte {

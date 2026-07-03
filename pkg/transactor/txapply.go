@@ -7,11 +7,11 @@ import (
 
 // Tx class ids.
 const (
-	clTxUpdate      = "core:class:TxUpdateDoc"
-	clTxRemove      = "core:class:TxRemoveDoc"
-	clTxMixin       = "core:class:TxMixin"
-	clTxApplyIf     = "core:class:TxApplyIf"
-	clTxCollection  = "core:class:TxCollectionCUD"
+	clTxUpdate     = "core:class:TxUpdateDoc"
+	clTxRemove     = "core:class:TxRemoveDoc"
+	clTxMixin      = "core:class:TxMixin"
+	clTxApplyIf    = "core:class:TxApplyIf"
+	clTxCollection = "core:class:TxCollectionCUD"
 )
 
 // applyTx applies one a platform Tx to the workspace store and returns (txResult,

@@ -524,6 +524,9 @@ func (g *api) ensureWorkspace(account, org, displayName, email string) error {
 	m.Set("workspace_id", ws.Id)
 	m.Set("user_id", account)
 	m.Set("role", "owner")
+	// display_name feeds the mirrored contact:class:Person name — set it so the
+	// team directory shows a human name, not the account UUID.
+	m.Set("display_name", name)
 	return g.app.Save(m)
 }
 
