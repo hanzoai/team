@@ -46,21 +46,19 @@ func Register(app core.App) {
 }
 
 type service struct {
-	app     core.App
-	iam     *iamClient
-	agents  *agentsClient
-	mt      *machineToken
-	homeOrg string // the org the machine identity (hanzo-team app) authoritatively represents
+	app    core.App
+	iam    *iamClient
+	agents *agentsClient
+	mt     *machineToken
 }
 
 func newService(app core.App) *service {
 	mt := newMachineToken()
 	return &service{
-		app:     app,
-		iam:     newIAMClient(env("IAM_ENDPOINT", "https://hanzo.id"), mt.get),
-		agents:  newAgentsClient(env("AGENTS_ENDPOINT", "https://api.hanzo.ai")),
-		mt:      mt,
-		homeOrg: env("IAM_ORG", "hanzo"),
+		app:    app,
+		iam:    newIAMClient(env("IAM_ENDPOINT", "https://hanzo.id"), mt.get),
+		agents: newAgentsClient(env("AGENTS_ENDPOINT", "https://api.hanzo.ai")),
+		mt:     mt,
 	}
 }
 
@@ -351,12 +349,15 @@ func (s *service) reconcileAll() {
 		if org == "" {
 			continue
 		}
-		// Machine-identity path: no caller bearer/user (cron acts as the SA).
-		// identityOrg = homeOrg, so cloud agents fold in ONLY for the home org;
-		// a non-home customer org (e.g. maxpower) reconciles on its own admin's
-		// login (SyncUserWorkspaces) with that admin's org-authoritative token —
-		// never with this shared identity, which would leak home-org agents.
-		if _, _, e := s.reconcile(ctx, ws, org, s.mt.get(ctx), "", s.homeOrg); e != nil {
+		// Machine-identity path: the cron acts as the SA (no caller bearer/user).
+		// identityOrg="" so cloud agents are NEVER folded here — cloud pins org to
+		// the forwarded token's verified owner, and a shared machine token is not
+		// authoritative for any workspace's cloud agents (binding to a static env
+		// would silently leak on a misconfig). The cron's lane is the IAM
+		// service-account set (IAM enforces org authz); EVERY org's cloud agents —
+		// including the home org's — sync on an admin login via SyncUserWorkspaces
+		// with that admin's org-authoritative token.
+		if _, _, e := s.reconcile(ctx, ws, org, s.mt.get(ctx), "", ""); e != nil {
 			s.app.Logger().Warn("bots: cron reconcile", "err", e, "workspace", ws.Id, "org", org)
 		}
 	}

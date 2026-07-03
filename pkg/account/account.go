@@ -153,13 +153,20 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	}
 	// Bots-as-members: reconcile this tenant's cloud agents into the user's
 	// workspace(s) with the user's OWN org-authoritative IAM token — so each
-	// workspace only ever receives ITS org's agents. Detached + best-effort:
-	// never delays or fails login.
-	go func(bearer, acct, tenant string) {
+	// workspace only ever receives ITS org's agents. Uses the VERIFIED token org
+	// (orgFromToken, not the home-org login fallback above), self-skipping if the
+	// token carries none, so a mis-derived tenant can never mislabel a bot.
+	// Detached + panic-guarded: never delays, fails, or crashes login.
+	go func(bearer, acct, tokenOrg string) {
+		defer func() {
+			if r := recover(); r != nil {
+				g.app.Logger().Error("account: bot sync panic recovered", "recover", r)
+			}
+		}()
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 		defer cancel()
-		bots.SyncUserWorkspaces(g.app, ctx, bearer, acct, tenant)
-	}(access, account, org)
+		bots.SyncUserWorkspaces(g.app, ctx, bearer, acct, tokenOrg)
+	}(access, account, orgFromToken(access))
 	tok, err := token.Generate(account, "", map[string]any{"org": org}, g.cfg.serverSecret)
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "token_failed")
