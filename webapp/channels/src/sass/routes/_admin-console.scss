@@ -976,15 +976,20 @@
         }
     }
 
-    .member-row--padded {
-        padding-left: 20px;
-
+    %manage-row-strong-spacing {
         strong {
             margin-right: 10px;
         }
+
         p strong {
             margin-right: 5px;
         }
+    }
+
+    .member-row--padded {
+        padding-left: 20px;
+
+        @extend %manage-row-strong-spacing;
     }
 
     .member-row-lone-padding {
@@ -1002,13 +1007,7 @@
     .manage-roles-modal__delegated-roles {
         padding-top: 20px;
 
-        strong {
-            margin-right: 10px;
-        }
-
-        p strong {
-            margin-right: 5px;
-        }
+        @extend %manage-row-strong-spacing;
     }
 
     .manage-teams__info {

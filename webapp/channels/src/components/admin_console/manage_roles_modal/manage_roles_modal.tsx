@@ -40,6 +40,9 @@ export type Props = {
     userAccessTokensEnabled: boolean;
     roles: Record<string, Role>;
 
+    // Delegated administration roles are an Enterprise/Enterprise Advanced feature.
+    isLicensedForDelegatedAdmin: boolean;
+
     // defining custom function type instead of using React.MouseEventHandler
     // to make the event optional
     onSuccess: (roles: string) => void;
@@ -188,6 +191,10 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
     };
 
     renderDelegatedAdminRoles = () => {
+        if (!this.props.isLicensedForDelegatedAdmin) {
+            return null;
+        }
+
         const availableRoles = DELEGATED_ROLE_NAMES.filter((name) => this.props.roles[name] && rolesStrings[name]);
 
         if (availableRoles.length === 0) {
@@ -207,7 +214,7 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
                 <p className='light'>
                     <FormattedMessage
                         id='admin.manage_roles.delegatedAdminRolesDescription'
-                        defaultMessage='Grant access to specific areas of the System Console without making this account a full System Admin. <link>Learn more about each role</link>.'
+                        defaultMessage='Grant targeted System Console access without full System Admin privileges using <link>granular administration roles</link>.'
                         values={{
                             link: (msg: React.ReactNode) => (
                                 <Link
