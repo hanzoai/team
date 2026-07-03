@@ -8,8 +8,11 @@ import {isPostEphemeral} from 'mattermost-redux/utils/post_utils';
 import {isAddMemberProps} from 'components/post_markdown/system_message_helpers';
 
 import {ActionTypes} from 'utils/constants';
+import {getSuppressOutOfChannelEphemeralKey} from 'utils/out_of_channel_mention_ephemeral';
 
 import type {ActionFunc, GlobalState} from 'types/store';
+
+export {getSuppressOutOfChannelEphemeralKey} from 'utils/out_of_channel_mention_ephemeral';
 
 export const OUT_OF_CHANNEL_EPHEMERAL_SUPPRESS_TTL_MS = 10000;
 
@@ -18,10 +21,6 @@ export type SuppressOutOfChannelEphemeral = {
     rootId: string;
     expireAt: number;
 };
-
-export function getSuppressOutOfChannelEphemeralKey(channelId: string, rootId = ''): string {
-    return `${channelId}:${rootId}`;
-}
 
 export function suppressOutOfChannelEphemeralPost(channelId: string, rootId = ''): ActionFunc {
     return (dispatch) => {

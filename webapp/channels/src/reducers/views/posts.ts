@@ -5,7 +5,7 @@ import {combineReducers} from 'redux';
 
 import {UserTypes} from 'mattermost-redux/action_types';
 
-import {getSuppressOutOfChannelEphemeralKey} from 'actions/views/out_of_channel_mention';
+import {getSuppressOutOfChannelEphemeralKey} from 'utils/out_of_channel_mention_ephemeral';
 
 import {ActionTypes} from 'utils/constants';
 
