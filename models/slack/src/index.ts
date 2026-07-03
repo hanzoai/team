@@ -13,8 +13,8 @@
 // limitations under the License.
 //
 
-import { type Class, type Doc, type Domain, type Ref, type Space } from '@hanzoteam/core'
-import { type Builder, Index, IndexKind, Model, Prop, TypeBoolean, TypeRef, TypeString, UX } from '@hanzoteam/model'
+import { IndexKind, type Class, type Doc, type Domain, type Ref, type Space } from '@hanzoteam/core'
+import { type Builder, Index, Model, Prop, TypeBoolean, TypeRef, TypeString, UX } from '@hanzoteam/model'
 import core, { TAttachedDoc } from '@hanzoteam/model-core'
 import setting from '@hanzoteam/setting'
 import { slackIntegrationKind, type SlackChannelMapping } from '@hanzoteam/slack'
