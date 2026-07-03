@@ -169,6 +169,10 @@ describe('admin_console/manage_roles_modal', () => {
         renderWithContext(<ManageRolesModal {...props}/>);
 
         expect(screen.getByText('Delegated Administration Roles')).toBeInTheDocument();
+
+        const link = screen.getByRole('link', {name: 'granular administration roles'});
+        expect(link).toHaveAttribute('href', '/admin_console/user_management/system_roles');
+        expect(screen.getByText(/Grant targeted System Console access without full System Admin privileges using/)).toBeInTheDocument();
     });
 
     test('does not render the delegated roles section when no delegated roles are available', () => {
