@@ -2,7 +2,6 @@
 // See LICENSE.txt for license information.
 
 import type {Post} from '@mattermost/types/posts';
-import type {GlobalState} from 'types/store';
 
 import {isPostEphemeral} from 'mattermost-redux/utils/post_utils';
 
@@ -10,7 +9,7 @@ import {isAddMemberProps} from 'components/post_markdown/system_message_helpers'
 
 import {ActionTypes} from 'utils/constants';
 
-import type {ActionFunc} from 'types/store';
+import type {ActionFunc, GlobalState} from 'types/store';
 
 export const OUT_OF_CHANNEL_EPHEMERAL_SUPPRESS_TTL_MS = 10000;
 
