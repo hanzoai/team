@@ -149,6 +149,10 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if err := g.ensureWorkspace(account, org, name, email); err != nil {
 		g.app.Logger().Error("account: ensure workspace", "err", err)
 	}
+	// Fill a human display name on the member row(s) if missing — the transactor
+	// mirror propagates it to the contact:class:Person, so the team directory
+	// shows a name rather than the account UUID. Idempotent (only fills empty).
+	g.ensureMemberName(account, firstNonEmpty(name, localPart(email)))
 	tok, err := token.Generate(account, "", map[string]any{"org": org}, g.cfg.serverSecret)
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "token_failed")
@@ -396,6 +400,25 @@ func (g *api) workspacesOf(account string) []*core.Record {
 		}
 	}
 	return out
+}
+
+// ensureMemberName fills display_name on the account's member rows when empty.
+// Saving the row fires the transactor mirror's members-update hook, which
+// refreshes the Person name without touching any SPA-owned profile field.
+func (g *api) ensureMemberName(account, name string) {
+	if name == "" {
+		return
+	}
+	members, err := g.app.FindRecordsByFilter("members", "user_id = {:u}", "", 200, 0, dbx.Params{"u": account})
+	if err != nil {
+		return
+	}
+	for _, m := range members {
+		if m.GetString("display_name") == "" {
+			m.Set("display_name", name)
+			_ = g.app.Save(m)
+		}
+	}
 }
 
 func (g *api) membership(account, workspaceID string) Role {
