@@ -151,10 +151,10 @@ func (a *App) recordPostListDelivery(targetID string, list *model.PostList, targ
 		}
 	}
 
-	if len(filteredPostIDs) > 0 {
-		a.RecordPostDeliveryFanIn(targetID, filteredPostIDs, targetType, mechanism)
-	} else if len(list.Order) > 0 {
+	if filteredPostIDs == nil {
 		a.RecordPostDeliveryFanIn(targetID, list.Order, targetType, mechanism)
+	} else if len(filteredPostIDs) > 0 {
+		a.RecordPostDeliveryFanIn(targetID, filteredPostIDs, targetType, mechanism)
 	}
 }
 

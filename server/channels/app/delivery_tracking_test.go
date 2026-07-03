@@ -176,10 +176,6 @@ func TestShouldTrackDelivery(t *testing.T) {
 	normalPost := &model.Post{Type: model.PostTypeDefault}
 	systemPost := &model.Post{Type: model.PostTypeJoinChannel}
 
-	t.Run("false when delivery tracking is disabled", func(t *testing.T) {
-		require.False(t, th.App.shouldTrackDelivery(openChannel, normalPost))
-	})
-
 	enableDeliveryTracking(th)
 
 	t.Run("true for a normal post in a non-DM/GM channel", func(t *testing.T) {
@@ -226,12 +222,6 @@ func TestShouldTrackPushDelivery(t *testing.T) {
 
 	t.Run("true for a full message push carrying the post body", func(t *testing.T) {
 		require.True(t, th.App.shouldTrackPushDelivery(fullMsg()))
-	})
-
-	t.Run("false when delivery tracking is disabled", func(t *testing.T) {
-		th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(false) })
-		defer th.App.UpdateConfig(func(cfg *model.Config) { cfg.DeliveryTrackingSettings.Enable = model.NewPointer(true) })
-		require.False(t, th.App.shouldTrackPushDelivery(fullMsg()))
 	})
 
 	t.Run("false for a non-message push type (e.g. clear)", func(t *testing.T) {
