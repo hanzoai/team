@@ -121,6 +121,11 @@ export type ViewsState = {
                 };
             };
         };
+        suppressOutOfChannelEphemeral: {
+            channelId: string;
+            rootId: string;
+            expireAt: number;
+        } | null;
     };
 
     modals: {

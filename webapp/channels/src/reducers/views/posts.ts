@@ -57,7 +57,21 @@ function menuActions(state: {[postId: string]: {[actionId: string]: {text: strin
     }
 }
 
+const suppressOutOfChannelEphemeralDefaultState: ViewsState['posts']['suppressOutOfChannelEphemeral'] = null;
+
+function suppressOutOfChannelEphemeral(state: ViewsState['posts']['suppressOutOfChannelEphemeral'] = suppressOutOfChannelEphemeralDefaultState, action: MMAction) {
+    switch (action.type) {
+    case ActionTypes.SUPPRESS_OUT_OF_CHANNEL_EPHEMERAL:
+        return action.data;
+    case UserTypes.LOGOUT_SUCCESS:
+        return suppressOutOfChannelEphemeralDefaultState;
+    default:
+        return state;
+    }
+}
+
 export default combineReducers({
     editingPost,
     menuActions,
+    suppressOutOfChannelEphemeral,
 });

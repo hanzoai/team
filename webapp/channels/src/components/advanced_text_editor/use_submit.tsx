@@ -3,7 +3,7 @@
 
 import type React from 'react';
 import {useCallback, useMemo, useRef, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, useStore} from 'react-redux';
 
 import type {ServerError} from '@mattermost/types/errors';
 import type {Post} from '@mattermost/types/posts';
@@ -29,10 +29,13 @@ import {editPost} from 'actions/views/posts';
 import EditChannelHeaderModal from 'components/edit_channel_header_modal';
 import EditChannelPurposeModal from 'components/edit_channel_purpose_modal';
 import NotifyConfirmModal from 'components/notify_confirm_modal';
+import OutOfChannelMentionConfirmModal from 'components/out_of_channel_mention_confirm_modal';
 import PostDeletedModal from 'components/post_deleted_modal';
 import ResetStatusModal from 'components/reset_status_modal';
 
 import Constants, {ModalIdentifiers, UserStatuses} from 'utils/constants';
+import {canManageMembers, isMembershipPolicyEnforced} from 'utils/channel_utils';
+import {getOutOfChannelMentionsFromMessage} from 'utils/out_of_channel_mentions';
 import {isErrorInvalidSlashCommand, isServerError, specialMentionsInText} from 'utils/post_utils';
 
 import type {GlobalState} from 'types/store';
@@ -76,11 +79,13 @@ const useSubmit = (
     const getGroupMentions = useGroups(channelId, draft.message);
 
     const dispatch = useDispatch();
+    const store = useStore<GlobalState>();
 
     const getFilesIdsForPost = useMemo(() => makeGetFileIdsForPost(), []);
     const postFileIds = useSelector((state: GlobalState) => getFilesIdsForPost(state, postId || ''));
 
     const isDraftSubmitting = useRef(false);
+    const outOfChannelModalSendRef = useRef(false);
     const [errorClass, setErrorClass] = useState<string | null>(null);
     const isDirectOrGroup = useSelector((state: GlobalState) => {
         const channel = getChannel(state, channelId);
@@ -271,6 +276,56 @@ const useSubmit = (
         editingPostRefocusId,
     ]);
 
+    const proceedToSubmit = useCallback(async (submittingDraft: PostDraft, schedulingInfo?: SchedulingInfo, createPostOptions?: CreatePostOptions) => {
+        if (!isInEditMode && !schedulingInfo && channel &&
+            (channel.type === Constants.OPEN_CHANNEL || channel.type === Constants.PRIVATE_CHANNEL) &&
+            canManageMembers(store.getState(), channel)) {
+            const mentionResult = await getOutOfChannelMentionsFromMessage(
+                store.getState(),
+                dispatch,
+                channel,
+                submittingDraft.message,
+            );
+
+            if (mentionResult) {
+                dispatch(openModal({
+                    modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+                    dialogType: OutOfChannelMentionConfirmModal,
+                    dialogProps: {
+                        addable: mentionResult.addable,
+                        notAddable: mentionResult.notAddable,
+                        outOfTeam: mentionResult.outOfTeam,
+                        channelId,
+                        channelType: channel.type,
+                        rootId,
+                        isPolicyEnforced: isMembershipPolicyEnforced(channel),
+                        onSend: () => {
+                            outOfChannelModalSendRef.current = true;
+                            doSubmit(submittingDraft, schedulingInfo, createPostOptions);
+                        },
+                        onExited: () => {
+                            if (!outOfChannelModalSendRef.current) {
+                                isDraftSubmitting.current = false;
+                            }
+                            outOfChannelModalSendRef.current = false;
+                        },
+                    },
+                }));
+                return;
+            }
+        }
+
+        await doSubmit(submittingDraft, schedulingInfo, createPostOptions);
+    }, [
+        isInEditMode,
+        channel,
+        store,
+        dispatch,
+        channelId,
+        rootId,
+        doSubmit,
+    ]);
+
     const setUpdatedFileIds = useCallback((draft: PostDraft) => {
         // new object creation is needed here to support sending a draft with files.
         // In case of draft, the PostDraft object is fetched from the redux store, which is immutable.
@@ -333,7 +388,7 @@ const useSubmit = (
             channelTimezoneCount = data ? data.length : 0;
         }
 
-        const onConfirm = () => doSubmit(submittingDraft, schedulingInfo);
+        const onConfirm = () => proceedToSubmit(submittingDraft, schedulingInfo, options);
         if (!isInEditMode && prioritySubmitCheck(onConfirm)) {
             isDraftSubmitting.current = false;
             return;
@@ -399,9 +454,9 @@ const useSubmit = (
             }
         }
 
-        await doSubmit(submittingDraft, schedulingInfo, options);
+        await proceedToSubmit(submittingDraft, schedulingInfo, options);
     }, [
-        doSubmit,
+        proceedToSubmit,
         draft,
         isDirectOrGroup,
         isInEditMode,

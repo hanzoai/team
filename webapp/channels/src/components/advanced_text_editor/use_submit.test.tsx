@@ -6,9 +6,12 @@ import type {DeepPartial} from '@mattermost/types/utilities';
 import {Permissions} from 'mattermost-redux/constants';
 
 import {openModal} from 'actions/views/modals';
+import {onSubmit} from 'actions/views/create_comment';
 
-import {renderHookWithContext} from 'tests/react_testing_utils';
-import {ModalIdentifiers} from 'utils/constants';
+import {renderHookWithContext, act, waitFor} from 'tests/react_testing_utils';
+import Constants, {ModalIdentifiers} from 'utils/constants';
+import * as OutOfChannelMentions from 'utils/out_of_channel_mentions';
+import {TestHelper} from 'utils/test_helper';
 
 import type {GlobalState} from 'types/store';
 import type {PostDraft} from 'types/store/draft';
@@ -17,6 +20,14 @@ import useSubmit from './use_submit';
 
 jest.mock('actions/views/modals', () => ({
     openModal: jest.fn(() => ({type: ''})),
+}));
+
+jest.mock('actions/views/create_comment', () => ({
+    onSubmit: jest.fn(() => () => Promise.resolve({data: true})),
+}));
+
+jest.mock('utils/out_of_channel_mentions', () => ({
+    getOutOfChannelMentionsFromMessage: jest.fn(),
 }));
 
 describe('useSubmit', () => {
@@ -53,7 +64,11 @@ describe('useSubmit', () => {
                 },
                 channels: {
                     channels: {
-                        channel_id: {},
+                        channel_id: TestHelper.getChannelMock({
+                            id: 'channel_id',
+                            team_id: 'team_id',
+                            type: Constants.OPEN_CHANNEL,
+                        }),
                     },
                     stats: {
                         channel_id: {
@@ -73,12 +88,30 @@ describe('useSubmit', () => {
                 roles: {
                     roles: {
                         system_admin: {
-                            permissions: [Permissions.USE_CHANNEL_MENTIONS],
+                            permissions: [
+                                Permissions.USE_CHANNEL_MENTIONS,
+                                Permissions.MANAGE_PUBLIC_CHANNEL_MEMBERS,
+                            ],
+                        },
+                        system_user: {
+                            permissions: [],
                         },
                     },
                 },
             },
         };
+    }
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        jest.mocked(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).mockResolvedValue(null);
+        jest.mocked(onSubmit).mockImplementation(() => () => Promise.resolve({data: true}));
+    });
+
+    function getOutOfChannelModalCall() {
+        return jest.mocked(openModal).mock.calls.find(
+            ([args]) => args.modalId === ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+        )?.[0];
     }
 
     it('should check priority on non-edit mode', async () => {
@@ -264,6 +297,244 @@ describe('useSubmit', () => {
         expect(openModal).not.toHaveBeenCalledWith(expect.objectContaining({
             modalId: ModalIdentifiers.EDIT_CHANNEL_HEADER,
         }));
+    });
+
+    it('should show out of channel mention modal when users are out of channel', async () => {
+        const user = TestHelper.getUserMock({id: 'user1', username: 'alice'});
+        jest.mocked(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).mockResolvedValue({
+            addable: [user],
+            notAddable: [],
+            outOfTeam: [],
+        });
+
+        const draft = {...mockDraft, message: '@alice hello'};
+        const {result} = renderHookWithContext(() => useSubmit(
+            draft,
+            mockPostError,
+            'channel_id',
+            'root_id',
+            mockServerError,
+            mockLastBlurAt,
+            mockFocusTextbox,
+            mockSetServerError,
+            mockSetShowPreview,
+            mockHandleDraftChange,
+            mockPrioritySubmitCheck,
+            mockAfterOptimisticSubmit,
+            mockAfterSubmit,
+            false,
+            false,
+            'post_id',
+        ), getBaseState());
+
+        const [handleSubmit] = result.current;
+        await handleSubmit();
+
+        expect(openModal).toHaveBeenCalledWith(expect.objectContaining({
+            modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+        }));
+    });
+
+    it('should not show out of channel mention modal in edit mode', async () => {
+        jest.mocked(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).mockResolvedValue({
+            addable: [TestHelper.getUserMock({id: 'user1', username: 'alice'})],
+            notAddable: [],
+            outOfTeam: [],
+        });
+
+        const draft = {...mockDraft, message: '@alice hello'};
+        const {result} = renderHookWithContext(() => useSubmit(
+            draft,
+            mockPostError,
+            'channel_id',
+            'root_id',
+            mockServerError,
+            mockLastBlurAt,
+            mockFocusTextbox,
+            mockSetServerError,
+            mockSetShowPreview,
+            mockHandleDraftChange,
+            mockPrioritySubmitCheck,
+            mockAfterOptimisticSubmit,
+            mockAfterSubmit,
+            false,
+            true,
+            'post_id',
+        ), getBaseState());
+
+        const [handleSubmit] = result.current;
+        await handleSubmit();
+
+        expect(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).not.toHaveBeenCalled();
+        expect(openModal).not.toHaveBeenCalledWith(expect.objectContaining({
+            modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+        }));
+    });
+
+    it('should not show out of channel mention modal when user cannot manage members', async () => {
+        const state = getBaseState();
+        state.entities!.users!.profiles!.current_user_id!.roles = 'system_user';
+
+        const draft = {...mockDraft, message: '@alice hello'};
+        const {result} = renderHookWithContext(() => useSubmit(
+            draft,
+            mockPostError,
+            'channel_id',
+            'root_id',
+            mockServerError,
+            mockLastBlurAt,
+            mockFocusTextbox,
+            mockSetServerError,
+            mockSetShowPreview,
+            mockHandleDraftChange,
+            mockPrioritySubmitCheck,
+            mockAfterOptimisticSubmit,
+            mockAfterSubmit,
+            false,
+            false,
+            'post_id',
+        ), state);
+
+        const [handleSubmit] = result.current;
+        await handleSubmit();
+
+        expect(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).not.toHaveBeenCalled();
+        expect(openModal).not.toHaveBeenCalledWith(expect.objectContaining({
+            modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+        }));
+    });
+
+    describe('out of channel mention modal confirm and dismiss', () => {
+        const addableUser = TestHelper.getUserMock({id: 'user1', username: 'alice'});
+
+        beforeEach(() => {
+            jest.mocked(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).mockResolvedValue({
+                addable: [addableUser],
+                notAddable: [],
+                outOfTeam: [],
+            });
+        });
+
+        it('passes mention data and callbacks to the modal', async () => {
+            const draft = {...mockDraft, message: '@alice hello', rootId: ''};
+            const {result} = renderHookWithContext(() => useSubmit(
+                draft,
+                mockPostError,
+                'channel_id',
+                '',
+                mockServerError,
+                mockLastBlurAt,
+                mockFocusTextbox,
+                mockSetServerError,
+                mockSetShowPreview,
+                mockHandleDraftChange,
+                mockPrioritySubmitCheck,
+                mockAfterOptimisticSubmit,
+                mockAfterSubmit,
+                false,
+                false,
+                'post_id',
+            ), getBaseState());
+
+            await result.current[0]();
+
+            const modalCall = getOutOfChannelModalCall();
+            expect(modalCall).toEqual(expect.objectContaining({
+                modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+                dialogProps: expect.objectContaining({
+                    addable: [addableUser],
+                    channelId: 'channel_id',
+                    rootId: '',
+                    onSend: expect.any(Function),
+                    onExited: expect.any(Function),
+                }),
+            }));
+        });
+
+        it('submits the post when the modal confirms send', async () => {
+            const draft = {...mockDraft, message: '@alice hello', rootId: ''};
+            const {result} = renderHookWithContext(() => useSubmit(
+                draft,
+                mockPostError,
+                'channel_id',
+                '',
+                mockServerError,
+                mockLastBlurAt,
+                mockFocusTextbox,
+                mockSetServerError,
+                mockSetShowPreview,
+                mockHandleDraftChange,
+                mockPrioritySubmitCheck,
+                mockAfterOptimisticSubmit,
+                mockAfterSubmit,
+                false,
+                false,
+                'post_id',
+            ), getBaseState());
+
+            await result.current[0]();
+
+            const modalCall = getOutOfChannelModalCall();
+            await act(async () => {
+                modalCall!.dialogProps.onSend();
+            });
+
+            await waitFor(() => {
+                expect(onSubmit).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        message: '@alice hello',
+                        channelId: 'channel_id',
+                        rootId: '',
+                    }),
+                    expect.any(Object),
+                    undefined,
+                );
+            });
+            expect(mockHandleDraftChange).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    message: '',
+                    channelId: 'channel_id',
+                    rootId: '',
+                }),
+                {instant: true},
+            );
+        });
+
+        it('allows another submit after the modal is dismissed without sending', async () => {
+            const draft = {...mockDraft, message: '@alice hello', rootId: ''};
+            const {result} = renderHookWithContext(() => useSubmit(
+                draft,
+                mockPostError,
+                'channel_id',
+                '',
+                mockServerError,
+                mockLastBlurAt,
+                mockFocusTextbox,
+                mockSetServerError,
+                mockSetShowPreview,
+                mockHandleDraftChange,
+                mockPrioritySubmitCheck,
+                mockAfterOptimisticSubmit,
+                mockAfterSubmit,
+                false,
+                false,
+                'post_id',
+            ), getBaseState());
+
+            await result.current[0]();
+
+            const modalCall = getOutOfChannelModalCall();
+            modalCall!.dialogProps.onExited();
+
+            expect(onSubmit).not.toHaveBeenCalled();
+
+            await result.current[0]();
+
+            expect(getOutOfChannelModalCall()).toBeDefined();
+            expect(jest.mocked(openModal).mock.calls.filter(
+                ([args]) => args.modalId === ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+            )).toHaveLength(2);
+        });
     });
 });
 
