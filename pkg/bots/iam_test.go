@@ -48,7 +48,7 @@ func TestListServiceAccounts_ParsesEnvelope(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	c := newIAMClient(srv.URL, "hk-test")
+	c := newIAMClient(srv.URL, staticToken("hk-test"))
 	sas, err := c.listServiceAccounts(context.Background(), "hanzo")
 	if err != nil {
 		t.Fatalf("list failed: %v", err)
@@ -69,7 +69,7 @@ func TestListServiceAccounts_ErrorEnvelopeIsError(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	c := newIAMClient(srv.URL, "hk-test")
+	c := newIAMClient(srv.URL, staticToken("hk-test"))
 	_, err := c.listServiceAccounts(context.Background(), "hanzo")
 	if err == nil {
 		t.Fatal("status:error envelope must surface as an error")
@@ -85,7 +85,7 @@ func TestListServiceAccounts_HTTPError(t *testing.T) {
 		_, _ = w.Write([]byte(`forbidden`))
 	}))
 	defer srv.Close()
-	c := newIAMClient(srv.URL, "hk-test")
+	c := newIAMClient(srv.URL, staticToken("hk-test"))
 	if _, err := c.listServiceAccounts(context.Background(), "hanzo"); err == nil {
 		t.Fatal("HTTP 403 must be an error")
 	}

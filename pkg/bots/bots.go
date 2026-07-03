@@ -42,20 +42,18 @@ type service struct {
 	app    core.App
 	iam    *iamClient
 	agents *agentsClient
+	mt     *machineToken
 }
 
 func newService(app core.App) *service {
+	mt := newMachineToken()
 	return &service{
 		app:    app,
-		iam:    newIAMClient(env("IAM_ENDPOINT", "https://hanzo.id"), botToken()),
+		iam:    newIAMClient(env("IAM_ENDPOINT", "https://hanzo.id"), mt.get),
 		agents: newAgentsClient(os.Getenv("AGENTS_ENDPOINT")),
+		mt:     mt,
 	}
 }
-
-// botToken is the machine-identity bearer used to read IAM service-accounts and
-// the cloud agent registry. It is the KMS-synced HANZO_API_KEY (hk-*) — an IAM
-// service key with the read scope for SA discovery. Never hardcoded.
-func botToken() string { return os.Getenv("HANZO_API_KEY") }
 
 // ── endpoints ──────────────────────────────────────────────────────────────
 
@@ -272,7 +270,7 @@ func (s *service) callerBearer(re *core.RequestEvent) string {
 // 15m); disabled when BOTS_SYNC_INTERVAL=off.
 func (s *service) startCron() {
 	iv := env("BOTS_SYNC_INTERVAL", "15m")
-	if iv == "off" || botToken() == "" {
+	if iv == "off" || !s.mt.configured() {
 		return // no machine identity → cron would 401 every tick; skip cleanly
 	}
 	d, err := time.ParseDuration(iv)
@@ -306,7 +304,7 @@ func (s *service) reconcileAll() {
 			continue
 		}
 		// Machine-identity path: no caller bearer/user (cron acts as the SA).
-		if _, _, e := s.reconcile(ctx, ws, org, botToken(), ""); e != nil {
+		if _, _, e := s.reconcile(ctx, ws, org, s.mt.get(ctx), ""); e != nil {
 			s.app.Logger().Warn("bots: cron reconcile", "err", e, "workspace", ws.Id, "org", org)
 		}
 	}
