@@ -41,8 +41,8 @@ type oauthResult struct {
 var slackHTTP = &http.Client{Timeout: 15 * time.Second}
 
 // exchangeCode exchanges an OAuth `code` for a bot token via oauth.v2.access.
-// The client secret is supplied per-call from KMS-sourced config — never
-// hardcoded. Go port of exchangeCode (slackapi.ts).
+// The client secret is supplied per-call from KMS-sourced config - never
+// hardcoded.
 func exchangeCode(ctx context.Context, clientID, clientSecret, code, redirectURI string) (slackToken, error) {
 	form := url.Values{
 		"client_id":     {clientID},
@@ -83,10 +83,22 @@ func exchangeCode(ctx context.Context, clientID, clientSecret, code, redirectURI
 	}, nil
 }
 
-// postMessage posts to a Slack channel (outgoing: Hanzo activity -> Slack). Go
-// port of postMessage (slackapi.ts). The token is never logged on error.
+// postMessage posts to a Slack channel (top-level, no thread). The token is
+// never logged on error.
 func postMessage(ctx context.Context, tok slackToken, channel, text string) error {
-	payload, _ := json.Marshal(map[string]string{"channel": channel, "text": text})
+	return postThreadMessage(ctx, tok, channel, "", text)
+}
+
+// postThreadMessage posts to a Slack channel, threaded under threadTS when it is
+// non-empty (the agent path replies in the SAME thread as the triggering
+// @mention/DM; the channel-mirror path passes "" for a top-level post). The bot
+// token is never logged on error.
+func postThreadMessage(ctx context.Context, tok slackToken, channel, threadTS, text string) error {
+	fields := map[string]string{"channel": channel, "text": text}
+	if threadTS != "" {
+		fields["thread_ts"] = threadTS
+	}
+	payload, _ := json.Marshal(fields)
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, slackAPI+"/chat.postMessage",
 		strings.NewReader(string(payload)))
 	if err != nil {
