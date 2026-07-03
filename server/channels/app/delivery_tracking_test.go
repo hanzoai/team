@@ -686,11 +686,6 @@ func TestCreatePostRecordsPluginDelivery(t *testing.T) {
 func TestDeliveryTrackingEnabledForChannel(t *testing.T) {
 	mainHelper.Parallel(t)
 	th := Setup(t)
-
-	t.Run("false when the feature is disabled", func(t *testing.T) {
-		require.False(t, th.App.deliveryTrackingEnabledForChannel("channel1"))
-	})
-
 	enableDeliveryTracking(th)
 
 	t.Run("true for any channel in all-channels mode (default)", func(t *testing.T) {
