@@ -20,6 +20,7 @@ import (
 	"github.com/hanzoai/base/tools/hook"
 
 	teamaccount "github.com/hanzoai/team-go/pkg/account"
+	teamagents "github.com/hanzoai/team-go/pkg/agents"
 	teamauth "github.com/hanzoai/team-go/pkg/auth"
 	teambilling "github.com/hanzoai/team-go/pkg/billing"
 	teambot "github.com/hanzoai/team-go/pkg/bot"
@@ -84,6 +85,7 @@ func main() {
 
 	teamiam.Register(app)        // /v1/iam/*      → IAM_ENDPOINT (transparent OIDC reverse proxy)
 	teamaccount.Register(app)    // /v1/account/*  → the account API (login, workspaces) over IAM
+	teamagents.Register(app)     // /v1/agents/*   → api.hanzo.ai/v1/agents (the ONE cloud store); /v1/agent chat UI
 	teamauth.Register(app)       // /v1/me, /v1/logout
 	teambilling.Register(app)    // /v1/billing/*  → commerce.hanzo.ai
 	teambot.Register(app)        // /v1/bot/*      → hanzo.bot (chat agent in-app)

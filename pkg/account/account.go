@@ -153,7 +153,57 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "token_failed")
 	}
+	// Retain the IAM access_token (RS256) in an HttpOnly cookie. The cloud
+	// gateway will not accept team-go's own HS256 session token, so the
+	// same-origin /v1/agents proxy (pkg/agents) forwards THIS as the bearer;
+	// cloud mints X-Org-Id from its verified `owner` claim. Page JS never
+	// reads it — the cookie is HttpOnly.
+	setIAMTokenCookie(re, access)
 	return g.bounce(re, tok, q.Get("state"), "")
+}
+
+// iamTokenCookie carries the caller's IAM access_token (RS256) to the browser
+// so pkg/agents can forward it to the cloud gateway (which rejects the HS256
+// session token minted above). HttpOnly — never exposed to page JS.
+const iamTokenCookie = "hanzo_iam_token"
+
+// setIAMTokenCookie stores the IAM access_token, expiring the cookie with the
+// token itself (from its `exp` claim; falls back to 8h).
+func setIAMTokenCookie(re *core.RequestEvent, access string) {
+	maxAge := 8 * 3600
+	if secs := secondsUntilExp(access); secs > 0 {
+		maxAge = secs
+	}
+	http.SetCookie(re.Response, &http.Cookie{
+		Name: iamTokenCookie, Value: access, Path: "/", HttpOnly: true,
+		Secure: true, SameSite: http.SameSiteLaxMode, MaxAge: maxAge,
+	})
+}
+
+// secondsUntilExp reads a JWT's `exp` (seconds since epoch) and returns the
+// remaining lifetime in seconds, or 0 if absent/expired/unparseable.
+func secondsUntilExp(jwtTok string) int {
+	parts := strings.Split(jwtTok, ".")
+	if len(parts) < 2 {
+		return 0
+	}
+	raw, err := base64.RawURLEncoding.DecodeString(parts[1])
+	if err != nil {
+		if raw, err = base64.StdEncoding.DecodeString(parts[1]); err != nil {
+			return 0
+		}
+	}
+	var claims struct {
+		Exp int64 `json:"exp"`
+	}
+	if json.Unmarshal(raw, &claims) != nil || claims.Exp == 0 {
+		return 0
+	}
+	d := time.Until(time.Unix(claims.Exp, 0))
+	if d <= 0 {
+		return 0
+	}
+	return int(d.Seconds())
 }
 
 // bounce redirects to the frontend with the minted token (or an error).
