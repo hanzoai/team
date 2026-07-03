@@ -110,7 +110,7 @@ func TestBots_SyncCreatesAndDeactivatesMembers(t *testing.T) {
 	svc := &service{app: app, iam: newIAMClient(iam.URL, staticToken("hk")), agents: nil}
 
 	// First sync: both SAs become bot members.
-	added, removed, err := svc.reconcile(t.Context(), ws, "hanzo", "hk", "")
+	added, removed, err := svc.reconcile(t.Context(), ws, "hanzo", "hk", "", "hanzo")
 	if err != nil {
 		t.Fatalf("sync: %v", err)
 	}
@@ -128,7 +128,7 @@ func TestBots_SyncCreatesAndDeactivatesMembers(t *testing.T) {
 	}
 
 	// Re-sync with the same IAM state: idempotent no-op (no dupes).
-	added, removed, _ = svc.reconcile(t.Context(), ws, "hanzo", "hk", "")
+	added, removed, _ = svc.reconcile(t.Context(), ws, "hanzo", "hk", "", "hanzo")
 	if added != 0 || removed != 0 {
 		t.Fatalf("re-sync should be no-op, got add=%d remove=%d", added, removed)
 	}
@@ -140,7 +140,7 @@ func TestBots_SyncCreatesAndDeactivatesMembers(t *testing.T) {
 	iam2 := mockIAM(t, `[{"id":"sa1","name":"hanzo-triage","owner":"hanzo"}]`)
 	defer iam2.Close()
 	svc.iam = newIAMClient(iam2.URL, staticToken("hk"))
-	added, removed, _ = svc.reconcile(t.Context(), ws, "hanzo", "hk", "")
+	added, removed, _ = svc.reconcile(t.Context(), ws, "hanzo", "hk", "", "hanzo")
 	if added != 0 || removed != 1 {
 		t.Fatalf("expected 1 removal, got add=%d remove=%d", added, removed)
 	}
@@ -246,6 +246,182 @@ func TestBotAccount_NeverCollidesWithHuman(t *testing.T) {
 	// Sanity: the bot derivation is still deterministic under the new namespace.
 	if accountUUID("x") != accountUUID("x") {
 		t.Fatal("bot accountUUID no longer deterministic")
+	}
+}
+
+// mkWorkspace seeds a workspace owned by org.
+func mkWorkspace(t *testing.T, app core.App, slug, org string) *core.Record {
+	t.Helper()
+	coll, _ := app.FindCollectionByNameOrId("workspaces")
+	r := core.NewRecord(coll)
+	r.Set("slug", slug)
+	r.Set("name", slug)
+	r.Set("owner", "acct-"+org) // provenance, NOT the tenant
+	r.Set("owner_org", org)
+	r.Set("uuid", uuid.NewString())
+	if err := app.Save(r); err != nil {
+		t.Fatal(err)
+	}
+	return r
+}
+
+// mockIAMOrg serves SAs only for homeOrg; any other ?organization= gets the
+// Casdoor "Unauthorized operation" envelope (HTTP 200, status:"error") — exactly
+// how real IAM refuses a machine identity reading a foreign org's SAs.
+func mockIAMOrg(t *testing.T, homeOrg, sas string) *httptest.Server {
+	t.Helper()
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Query().Get("organization") != homeOrg {
+			_, _ = w.Write([]byte(`{"status":"error","msg":"Unauthorized operation"}`))
+			return
+		}
+		_, _ = w.Write([]byte(`{"status":"ok","data":` + sas + `}`))
+	}))
+}
+
+// mockAgents serves a fixed cloud /v1/agents list to any authenticated caller.
+// The real cloud pins org to the bearer's owner claim; here the discriminator is
+// whether the reconcile CHOOSES to call it (the identityOrg gate), which is what
+// these tests exercise.
+func mockAgents(t *testing.T, agents string) *httptest.Server {
+	t.Helper()
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/v1/agents" {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+		_, _ = w.Write([]byte(`{"agents":` + agents + `}`))
+	}))
+}
+
+// TestBots_CrossOrgIsolation is the blue→red core: the shared hanzo machine
+// identity must NEVER leak hanzo's cloud agents into another org's workspace.
+// Cloud pins org to the token's owner, so a machine reconcile of a maxpower
+// workspace (identityOrg=hanzo != org=maxpower) must SKIP cloud agents entirely,
+// and — with IAM refusing maxpower — end as a safe no-op.
+func TestBots_CrossOrgIsolation(t *testing.T) {
+	app, _, _ := bootApp(t)
+	maxpower := mkWorkspace(t, app, "maxpower-ws", "maxpower")
+
+	iam := mockIAMOrg(t, "hanzo", `[{"id":"sa1","name":"hanzo-triage","owner":"hanzo"}]`)
+	defer iam.Close()
+	agents := mockAgents(t, `[{"id":"hanzo-assistant","name":"hanzo-assistant","status":"active"}]`)
+	defer agents.Close()
+
+	svc := &service{
+		app:     app,
+		iam:     newIAMClient(iam.URL, staticToken("machine")),
+		agents:  newAgentsClient(agents.URL),
+		mt:      newMachineToken(),
+		homeOrg: "hanzo",
+	}
+
+	added, removed, err := svc.reconcile(t.Context(), maxpower, "maxpower", "machine", "", "hanzo")
+	if err == nil {
+		t.Fatal("machine reconcile of a foreign org must error (no authorized source), got nil")
+	}
+	if added != 0 || removed != 0 {
+		t.Fatalf("cross-org leak: add=%d remove=%d want 0,0", added, removed)
+	}
+	if n := countBots(app, maxpower.Id); n != 0 {
+		t.Fatalf("maxpower workspace received a bot it must never see: %d", n)
+	}
+	leak, _ := app.FindFirstRecordByFilter("members",
+		"workspace_id = {:w} && service_account_id = {:s}",
+		dbx.Params{"w": maxpower.Id, "s": agentIDPrefix + "hanzo-assistant"})
+	if leak != nil {
+		t.Fatal("SECURITY: hanzo-assistant leaked into maxpower workspace")
+	}
+}
+
+// TestBots_PerOrg_OrgAuthoritativeBearer is the real-customer path (Dave/login):
+// with an org-authoritative bearer (identityOrg == org == maxpower), the
+// workspace receives ITS OWN cloud agent (maxpower-assistant) — even though IAM
+// refuses maxpower for the machine identity (that read is non-fatal).
+func TestBots_PerOrg_OrgAuthoritativeBearer(t *testing.T) {
+	app, _, _ := bootApp(t)
+	maxpower := mkWorkspace(t, app, "maxpower-ws", "maxpower")
+
+	iam := mockIAMOrg(t, "hanzo", `[]`) // Unauthorized for maxpower → non-fatal
+	defer iam.Close()
+	agents := mockAgents(t, `[{"id":"maxpower-assistant","name":"maxpower-assistant","model":"opus","status":"active"}]`)
+	defer agents.Close()
+
+	svc := &service{
+		app:     app,
+		iam:     newIAMClient(iam.URL, staticToken("machine")),
+		agents:  newAgentsClient(agents.URL),
+		mt:      newMachineToken(),
+		homeOrg: "hanzo",
+	}
+
+	added, _, err := svc.reconcile(t.Context(), maxpower, "maxpower", "dave-bearer", "dave", "maxpower")
+	if err != nil {
+		t.Fatalf("per-org reconcile: %v", err)
+	}
+	if added != 1 {
+		t.Fatalf("expected maxpower-assistant added, add=%d", added)
+	}
+	m, _ := app.FindFirstRecordByFilter("members",
+		"workspace_id = {:w} && service_account_id = {:s}",
+		dbx.Params{"w": maxpower.Id, "s": agentIDPrefix + "maxpower-assistant"})
+	if m == nil {
+		t.Fatal("maxpower-assistant not synced as a member")
+	}
+	if !m.GetBool("is_bot") || m.GetString("organization") != "maxpower" || !m.GetBool("active") {
+		t.Fatalf("bad bot member: is_bot=%v org=%s active=%v",
+			m.GetBool("is_bot"), m.GetString("organization"), m.GetBool("active"))
+	}
+	if m.GetString("display_name") != "maxpower-assistant" {
+		t.Fatalf("bot display_name=%q want maxpower-assistant", m.GetString("display_name"))
+	}
+}
+
+// TestBots_FailedSourceDoesNotMassRemoveOtherSubspace: a source that fails to
+// load (here cloud agents is down) must never cause its subspace's existing bots
+// to be deactivated — removals are gated per successfully-loaded subspace.
+func TestBots_FailedSourceDoesNotMassRemoveOtherSubspace(t *testing.T) {
+	app, ws, _ := bootApp(t) // hanzo workspace
+	mColl, _ := app.FindCollectionByNameOrId("members")
+	for _, sa := range []string{agentIDPrefix + "keep-agent", "keep-iam"} {
+		b := core.NewRecord(mColl)
+		b.Set("workspace_id", ws.Id)
+		b.Set("user_id", accountUUID(sa))
+		b.Set("role", "member")
+		b.Set("is_bot", true)
+		b.Set("service_account_id", sa)
+		b.Set("organization", "hanzo")
+		b.Set("active", true)
+		if err := app.Save(b); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	iam := mockIAMOrg(t, "hanzo", `[{"id":"keep-iam","name":"hanzo-keep","owner":"hanzo"}]`)
+	defer iam.Close()
+	down := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusBadGateway)
+	}))
+	defer down.Close()
+
+	svc := &service{
+		app:     app,
+		iam:     newIAMClient(iam.URL, staticToken("machine")),
+		agents:  newAgentsClient(down.URL),
+		mt:      newMachineToken(),
+		homeOrg: "hanzo",
+	}
+	_, removed, err := svc.reconcile(t.Context(), ws, "hanzo", "machine", "", "hanzo")
+	if err != nil {
+		t.Fatalf("reconcile (iam loaded, must not be fatal): %v", err)
+	}
+	if removed != 0 {
+		t.Fatalf("a down source mass-removed its subspace bots: removed=%d", removed)
+	}
+	keep, _ := app.FindFirstRecordByFilter("members",
+		"service_account_id = {:s}", dbx.Params{"s": agentIDPrefix + "keep-agent"})
+	if keep == nil || !keep.GetBool("active") {
+		t.Fatal("cloud-agent bot removed despite its source being unavailable")
 	}
 }
 
