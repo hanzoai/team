@@ -6,7 +6,7 @@ import (
 	"encoding/hex"
 )
 
-// modelJSON is the prebuilt the platform model — a bare JSON array of 3558
+// modelJSON is the prebuilt platform model — a bare JSON array of
 // Tx (TxCreateDoc/TxMixin) defining every class, mixin and plugin. It is the
 // same artifact the upstream transactor loads (models/all/bundle/model.json);
 // the client builds its Hierarchy/ModelDb from it on connect via loadModel.

@@ -63,8 +63,8 @@ func TestHelloServesModelVersion(t *testing.T) {
 	}
 }
 
-// TestLoadModelServesFullModel proves the embedded 3558-Tx model is returned in
-// full so the client can build its hierarchy.
+// TestLoadModelServesFullModel proves the entire embedded model bundle is
+// returned in full so the client can build its hierarchy.
 func TestLoadModelServesFullModel(t *testing.T) {
 	out := testSession().handle([]byte(`{"id":1,"method":"loadModel","params":[0]}`))
 	var r struct {
@@ -81,8 +81,15 @@ func TestLoadModelServesFullModel(t *testing.T) {
 	if r.ID != 1 || !r.Result.Full {
 		t.Fatalf("id=%d full=%v", r.ID, r.Result.Full)
 	}
-	if len(r.Result.Transactions) != 3558 {
-		t.Fatalf("transactions = %d, want 3558", len(r.Result.Transactions))
+	// Assert against the embedded bundle's own element count so a model-bundle
+	// refresh (e.g. a new plugin/mixin) can never silently drift this test.
+	var embedded []json.RawMessage
+	if err := json.Unmarshal(modelJSON, &embedded); err != nil {
+		t.Fatalf("embedded model.json is not a Tx array: %v", err)
+	}
+	if len(r.Result.Transactions) != len(embedded) {
+		t.Fatalf("transactions = %d, want %d (full embedded model)",
+			len(r.Result.Transactions), len(embedded))
 	}
 	if r.Result.Hash != modelHash {
 		t.Fatalf("hash mismatch")
