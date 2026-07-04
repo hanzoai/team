@@ -161,18 +161,23 @@ func (m *mirror) memberIDs(workspaceRecordID string) []string {
 
 // ── first-connect backfill ───────────────────────────────────────────────────
 
-// backfillFromBase projects a workspace's authoritative Base rows (members →
-// Persons, channels, recent messages) into the store on first connect, so a user
-// always sees the full team directory + existing channels/history — including
-// rows written before the mirror hooks ran. Gated on a per-workspace sentinel so
-// it runs EXACTLY once (never short-circuited by an incremental hook write); the
-// create/update hooks keep the plane current thereafter.
+// backfillFromBase projects a workspace's authoritative Base rows into the store
+// on connect, so a user always sees the full team directory + existing
+// channels/history — including rows written before the mirror hooks ran.
+//
+// The member ROSTER is reconciled on EVERY connect (idempotent): members are
+// added continuously — bot sync, invites — including while the mirror wasn't
+// running (an image without the bridge) or after the one-time history backfill.
+// Gating the roster on the sentinel would strand every member added after the
+// first connect (e.g. bots synced post-sentinel would never become Employees),
+// which is exactly the failure this reconcile-don't-assume-empty pass fixes.
+//
+// The expensive HISTORY (channels + recent messages) is projected EXACTLY once,
+// gated on a per-workspace sentinel; the create/update hooks keep it current
+// thereafter.
 func (s *session) backfillFromBase() {
 	app := s.server.app
 	if app == nil {
-		return
-	}
-	if done, _ := s.store.get(s.org, s.workspace, backfillMarker); done != nil {
 		return
 	}
 	ws, err := app.FindFirstRecordByFilter("workspaces", "uuid = {:u}", dbx.Params{"u": s.workspace})
@@ -181,6 +186,8 @@ func (s *session) backfillFromBase() {
 	}
 	wsID := ws.Id
 
+	// Roster — EVERY connect, idempotent (exists → update name + refresh Employee
+	// mixin; absent → create Person + Employee + social identity).
 	memberIDs := []string{}
 	members, _ := app.FindRecordsByFilter("members", "workspace_id = {:w}", "", 1000, 0, dbx.Params{"w": wsID})
 	for _, mem := range members {
@@ -197,6 +204,11 @@ func (s *session) backfillFromBase() {
 			IsBot:  isBot,
 			Active: !isBot || mem.GetBool("active"),
 		}, s.exists(PersonRef(uid)))...)
+	}
+
+	// History — ONCE per workspace (sentinel-gated); the roster above already ran.
+	if done, _ := s.store.get(s.org, s.workspace, backfillMarker); done != nil {
+		return
 	}
 
 	channels, _ := app.FindRecordsByFilter("channels", "workspace_id = {:w}", "", 1000, 0, dbx.Params{"w": wsID})

@@ -37,8 +37,11 @@ func TestIngestMirrorsMemberToEmployee(t *testing.T) {
 	if len(persons) != 1 {
 		t.Fatalf("contact:class:Person count = %d, want 1", len(persons))
 	}
-	if persons[0]["name"] != "Zeekay" {
-		t.Fatalf("person name = %v, want Zeekay", persons[0]["name"])
+	if persons[0]["name"] != ",Zeekay" { // Huly "last,first"; single token → first-name only
+		t.Fatalf("person name = %v, want ,Zeekay", persons[0]["name"])
+	}
+	if persons[0]["avatarType"] != "color" { // colored placeholder avatar, like a native SPA person
+		t.Fatalf("person avatarType = %v, want color", persons[0]["avatarType"])
 	}
 	if persons[0]["personUuid"] != uid {
 		t.Fatalf("personUuid = %v, want %s", persons[0]["personUuid"], uid)
@@ -92,8 +95,8 @@ func TestMemberUpdatePreservesProfile(t *testing.T) {
 	if after["city"] != "Tokyo" {
 		t.Fatalf("city clobbered: %v (want Tokyo)", after["city"])
 	}
-	if after["name"] != "Zeekay Kanjo" {
-		t.Fatalf("name not updated: %v", after["name"])
+	if after["name"] != "Kanjo,Zeekay" { // "Zeekay Kanjo" → Huly "last,first"
+		t.Fatalf("name not updated: %v (want Kanjo,Zeekay)", after["name"])
 	}
 	if role, _ := after[mixinEmployee].(map[string]any)["role"].(string); role != "ADMIN" {
 		t.Fatalf("employee role not refreshed: %v", after[mixinEmployee])

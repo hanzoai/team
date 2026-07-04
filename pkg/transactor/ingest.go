@@ -133,10 +133,7 @@ func PersonRef(userID string) string { return "person-" + userID }
 // and fires the PersonSpace trigger.
 func MemberTxes(m Member, exists bool) []map[string]any {
 	pid := PersonRef(m.UserID)
-	name := m.Name
-	if name == "" {
-		name = m.UserID
-	}
+	name := hulyName(pick(m.Name, m.UserID))
 	role := strings.ToUpper(pick(m.Role, "member"))
 	position := ""
 	if m.IsBot {
@@ -144,10 +141,14 @@ func MemberTxes(m Member, exists bool) []map[string]any {
 	}
 	var txes []map[string]any
 	if exists {
-		txes = append(txes, updateTx(pid, clPerson, spaceContacts, acctSystem, map[string]any{"name": name}))
+		// Refresh the mirror-owned display fields (name + avatar placeholder) in
+		// place; SPA-owned profile fields (city, avatar upload, …) are untouched.
+		txes = append(txes, updateTx(pid, clPerson, spaceContacts, acctSystem, map[string]any{
+			"name": name, "avatarType": "color",
+		}))
 	} else {
 		txes = append(txes, createTx(pid, clPerson, spaceContacts, acctSystem, map[string]any{
-			"name": name, "personUuid": m.UserID, "city": "",
+			"name": name, "personUuid": m.UserID, "city": "", "avatarType": "color",
 		}))
 	}
 	txes = append(txes, mixinTx(pid, clPerson, spaceContacts, mixinEmployee, acctSystem, map[string]any{
@@ -233,6 +234,21 @@ func RemoveMessageTx(messageID, channelID string) map[string]any {
 }
 
 // ── helpers ──────────────────────────────────────────────────────────────────
+
+// hulyName formats a display name into Huly's canonical Person.name convention
+// "last,first" (the SPA renders it "first last"; a native SPA person stores ","
+// for an empty name). A single-token name (most bots) has no last name, so it
+// becomes the first name (",token") — rendered verbatim. Empty stays ",".
+func hulyName(display string) string {
+	display = strings.TrimSpace(display)
+	if display == "" {
+		return ","
+	}
+	if i := strings.LastIndex(display, " "); i > 0 {
+		return strings.TrimSpace(display[i+1:]) + "," + strings.TrimSpace(display[:i])
+	}
+	return "," + display
+}
 
 // markup wraps a plain-text body in the minimal Huly Markup (ProseMirror JSON)
 // the front parses. An empty body becomes an empty paragraph.
