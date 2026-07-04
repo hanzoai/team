@@ -137,8 +137,12 @@ func loadConfig() config {
 		kmsEndpoint:       env("KMS_ENDPOINT", "https://kms.hanzo.ai"),
 		kmsBearer:         os.Getenv("HANZO_API_KEY"),
 		iamEndpoint:       env("IAM_ENDPOINT", "https://hanzo.id"),
-		iamClientID:       os.Getenv("IAM_CLIENT_ID"),
-		iamClientSecret:   os.Getenv("IAM_CLIENT_SECRET"),
+		// Per-user link uses a DEDICATED IAM client (hanzo-slack) — its
+		// redirect_uris (/v1/slack/link/callback) live on that client, not on
+		// hanzo-team (which team-go's account bridge uses). Falls back to the
+		// account client so single-client deployments still work.
+		iamClientID:       env("SLACK_LINK_IAM_CLIENT_ID", os.Getenv("IAM_CLIENT_ID")),
+		iamClientSecret:   env("SLACK_LINK_IAM_CLIENT_SECRET", os.Getenv("IAM_CLIENT_SECRET")),
 		linkRedirect:      env("SLACK_LINK_REDIRECT_URI", "https://api.hanzo.ai/v1/slack/link/callback"),
 		linkSlackRedirect: env("SLACK_LINK_SLACK_REDIRECT_URI", "https://api.hanzo.ai/v1/slack/link/slack"),
 		agentsBase:        env("AGENTS_ENDPOINT", "https://api.hanzo.ai"),
