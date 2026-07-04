@@ -68,11 +68,20 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout init repository
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
-          curl -fsSL -o ${{ env.INIT_SCRIPTS_BRANCH }}.zip https://github.com/hanzoai/init/archive/refs/heads/${{ env.INIT_SCRIPTS_BRANCH }}.zip
-          unzip ${{ env.INIT_SCRIPTS_BRANCH }}.zip -d pods/workspace
-          mv pods/workspace/init-${{ env.INIT_SCRIPTS_BRANCH }} pods/workspace/init
-          rm -rf ${{ env.INIT_SCRIPTS_BRANCH }}.zip
+          # hanzoai/init is private; authenticate. Non-fatal: only the workspace
+          # pod needs these scripts — the front/transactor/etc images do not.
+          if curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -o ${{ env.INIT_SCRIPTS_BRANCH }}.zip \
+               https://github.com/hanzoai/init/archive/refs/heads/${{ env.INIT_SCRIPTS_BRANCH }}.zip; then
+            unzip -q ${{ env.INIT_SCRIPTS_BRANCH }}.zip -d pods/workspace
+            mv pods/workspace/init-${{ env.INIT_SCRIPTS_BRANCH }} pods/workspace/init
+            rm -rf ${{ env.INIT_SCRIPTS_BRANCH }}.zip
+          else
+            echo "::warning::hanzoai/init unavailable; continuing without workspace init scripts"
+          fi
 
       - uses: actions/setup-node@v6
         with:
