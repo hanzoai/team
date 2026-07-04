@@ -37,12 +37,14 @@ const defaultBotScopes = "app_mentions:read,chat:write,channels:history,channels
 // transplanted /link/slack (attacker's code+state pasted into a victim's browser)
 // carries no matching init cookie, so it is refused — the Slack-code transplant
 // hijack (F1) is closed.
-const linkInitCookieName = "hanzo_slack_init"
+const linkInitCookieName = "__Host-hanzo_slack_init"
 
 // linkCookieName is the browser-bound, httpOnly cookie that carries the
 // SLACK-VERIFIED (team,user) across the hanzo.id OIDC leg. The account binding is
 // read from THIS cookie, never from a URL/state param — the link-hijack defense.
-const linkCookieName = "hanzo_slack_link"
+// The __Host- prefix host-binds it (Secure + no Domain + Path=/), so a sibling
+// *.hanzo.ai origin cannot plant/fixate a same-named cookie into the victim's jar.
+const linkCookieName = "__Host-hanzo_slack_link"
 
 // defaultAgentConcurrency caps simultaneous agent turns (M3) so a workspace
 // insider cannot exhaust FDs by bursting @hanzo.
@@ -552,7 +554,7 @@ const linkedHTML = `<!doctype html><meta charset="utf-8"><title>Hanzo connected<
 // redirect back from hanzo.id; Secure + httpOnly + short-lived + path-scoped.
 func (c *controller) setLinkCookie(re *core.RequestEvent, val string) {
 	http.SetCookie(re.Response, &http.Cookie{
-		Name: linkCookieName, Value: val, Path: "/v1/slack/link",
+		Name: linkCookieName, Value: val, Path: "/",
 		MaxAge: oauthStateTTLSec, HttpOnly: true, Secure: true, SameSite: http.SameSiteLaxMode,
 	})
 }
@@ -567,7 +569,7 @@ func (c *controller) readLinkCookie(re *core.RequestEvent) string {
 
 func (c *controller) clearLinkCookie(re *core.RequestEvent) {
 	http.SetCookie(re.Response, &http.Cookie{
-		Name: linkCookieName, Value: "", Path: "/v1/slack/link",
+		Name: linkCookieName, Value: "", Path: "/",
 		MaxAge: -1, HttpOnly: true, Secure: true, SameSite: http.SameSiteLaxMode,
 	})
 }
@@ -575,7 +577,7 @@ func (c *controller) clearLinkCookie(re *core.RequestEvent) {
 // setInitCookie plants the leg-1->leg-2 continuity nonce (F1).
 func (c *controller) setInitCookie(re *core.RequestEvent, val string) {
 	http.SetCookie(re.Response, &http.Cookie{
-		Name: linkInitCookieName, Value: val, Path: "/v1/slack/link",
+		Name: linkInitCookieName, Value: val, Path: "/",
 		MaxAge: oauthStateTTLSec, HttpOnly: true, Secure: true, SameSite: http.SameSiteLaxMode,
 	})
 }
@@ -590,7 +592,7 @@ func (c *controller) readInitCookie(re *core.RequestEvent) string {
 
 func (c *controller) clearInitCookie(re *core.RequestEvent) {
 	http.SetCookie(re.Response, &http.Cookie{
-		Name: linkInitCookieName, Value: "", Path: "/v1/slack/link",
+		Name: linkInitCookieName, Value: "", Path: "/",
 		MaxAge: -1, HttpOnly: true, Secure: true, SameSite: http.SameSiteLaxMode,
 	})
 }
@@ -665,9 +667,12 @@ func (c *controller) linkSlack(re *core.RequestEvent) error {
 		c.clearInitCookie(re)
 		return re.BadRequestError("link session mismatch; restart from Slack", nil)
 	}
-	// Single-use: consume the slack-signin state's nonce (defense in depth atop
-	// Slack's single-use code).
-	if c.usedStates.seenAndAdd(st.Nonce, time.Time{}) {
+	// Single-use: consume the SAME continuity token the gate above compared
+	// (st.Subject — the leg-1 init nonce, which is ALSO the init cookie value).
+	// Using the subject (not st.Nonce, the state's internal MAC nonce) makes the
+	// gate token and the single-use token ONE value, so a future edit cannot
+	// desync them. It is a fresh 128-bit random per leg 1.
+	if c.usedStates.seenAndAdd(st.Subject, time.Time{}) {
 		c.clearInitCookie(re)
 		return re.BadRequestError("link already used", nil)
 	}
@@ -891,6 +896,12 @@ const processedEventTTL = 24 * time.Hour
 // fire-and-forget: the process lifetime owns the goroutine (as with the other
 // fire-and-forget Slack workers).
 func (c *controller) startEventPrune() {
+	// Only sweep when the events/slash surface is active — it is the only writer
+	// of slack_processed_events. Without a signing secret the webhook 503s and no
+	// dedupe rows are ever created, so a pruner would only log noise.
+	if c.cfg.slackSigning == "" {
+		return
+	}
 	go func() {
 		t := time.NewTicker(time.Hour)
 		defer t.Stop()
@@ -904,6 +915,11 @@ func (c *controller) startEventPrune() {
 // cutoff is formatted in Base's autodate layout so the text comparison on
 // created_at is correct.
 func (c *controller) pruneProcessedEvents() {
+	// If the collection is absent (e.g. migration not yet applied) there is
+	// nothing to prune — return quietly rather than log an error each tick.
+	if _, err := c.app.FindCollectionByNameOrId("slack_processed_events"); err != nil {
+		return
+	}
 	cutoff := time.Now().UTC().Add(-processedEventTTL).Format("2006-01-02 15:04:05.000Z")
 	old, err := c.app.FindRecordsByFilter("slack_processed_events",
 		"created_at < {:t}", "created_at", 5000, 0, dbx.Params{"t": cutoff})
