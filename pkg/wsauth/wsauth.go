@@ -13,6 +13,7 @@ package wsauth
 import (
 	"strings"
 
+	"github.com/google/uuid"
 	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/dbx"
 )
@@ -23,6 +24,40 @@ type Result struct {
 	Org       string       // IAM tenant of the caller AND the workspace (asserted equal)
 	UserID    string       // caller's IAM id
 	Role      string       // caller's role in the workspace
+}
+
+// AccountID is the ONE way to derive team-go's canonical account id from an IAM
+// subject. A sub that is already a UUID is used verbatim; any other sub maps to a
+// stable UUIDv5 (namespace "iam:<sub>"). Both the login path (which stamps
+// members.user_id + workspaces.owner — see pkg/account) and the admin/membership
+// gate (which resolves the caller) MUST derive the id this way, so a member row
+// and its owner resolve to the SAME key. Empty in → empty out.
+func AccountID(sub string) string {
+	sub = strings.TrimSpace(sub)
+	if sub == "" {
+		return ""
+	}
+	if uuid.Validate(sub) != nil {
+		return uuid.NewSHA1(uuid.NameSpaceURL, []byte("iam:"+sub)).String()
+	}
+	return sub
+}
+
+// CallerUID is the ONE way to resolve the caller's canonical account id — the
+// value stored on member rows (members.user_id) and used as the plane's Person
+// key. It is NOT re.Auth.Id: Base's JWKS middleware mangles the raw OIDC sub into
+// a 15-char record id (subToRecordID) for re.Auth.Id, which does not match the
+// raw/normalized sub the account layer stores. The middleware stashes the raw sub
+// at request key "authSub"; derive the canonical id from that. Fall back to
+// re.Auth.Id only when authSub is absent (e.g. a native Base superuser token).
+func CallerUID(re *core.RequestEvent) string {
+	if sub, _ := re.Get("authSub").(string); strings.TrimSpace(sub) != "" {
+		return AccountID(sub)
+	}
+	if re.Auth != nil {
+		return re.Auth.Id
+	}
+	return ""
 }
 
 // CallerOrg is the ONE authoritative source of the caller's IAM tenant. The
@@ -61,7 +96,7 @@ func AssertAdmin(app core.App, re *core.RequestEvent) (Result, error) {
 	if re.Auth == nil {
 		return Result{}, re.UnauthorizedError("auth required", nil)
 	}
-	uid := re.Auth.Id
+	uid := CallerUID(re)
 	org := CallerOrg(re)
 	if org == "" {
 		return Result{}, re.ForbiddenError("no org context", nil)
