@@ -163,8 +163,49 @@ func linkController(t *testing.T, app core.App) *controller {
 	}
 }
 
-// The Slack sign-in leg derives the cookie identity from the Slack-VERIFIED
-// authed_user.id (oauth.v2.access), NOT from any client input.
+// runLinkLeg1 drives leg 1 (link) and returns the init cookie value + the
+// slack-signin state minted for the Slack authorize redirect (the leg1->leg2
+// browser-continuity pair, F1).
+func runLinkLeg1(t *testing.T, c *controller, app core.App) (initCookie, ss string) {
+	t.Helper()
+	entry, _ := signLinkState("strong-secret", "T1", "U1", 0)
+	req := httptest.NewRequest("GET", "/v1/slack/link?state="+url.QueryEscape(entry), nil)
+	rec := drive(app, req, nil, c.link)
+	if rec.Code != http.StatusFound {
+		t.Fatalf("leg1 link should redirect (302), got %d %s", rec.Code, rec.Body.String())
+	}
+	for _, ck := range rec.Result().Cookies() {
+		if ck.Name == linkInitCookieName {
+			initCookie = ck.Value
+		}
+	}
+	if initCookie == "" {
+		t.Fatal("leg1 must set the init cookie")
+	}
+	u, err := url.Parse(rec.Result().Header.Get("Location"))
+	if err != nil {
+		t.Fatalf("leg1 bad Location: %v", err)
+	}
+	if ss = u.Query().Get("state"); ss == "" {
+		t.Fatal("leg1 must carry a slack-signin state")
+	}
+	return initCookie, ss
+}
+
+// Leg 1 binds the init cookie into the slack-signin state's subject (F1).
+func TestLink_InitCookieBoundToState(t *testing.T) {
+	app, wsRec, _, _ := boot(t)
+	addAgentCollections(t, app, wsRec)
+	c := linkController(t, app)
+	initCookie, ss := runLinkLeg1(t, c, app)
+	st, ok := verifySubjectState("strong-secret", ss, 0)
+	if !ok || st.Subject != initCookie {
+		t.Fatalf("slack-signin state subject must equal the init cookie, subject=%q init=%q ok=%v", st.Subject, initCookie, ok)
+	}
+}
+
+// Leg 2 derives the cookie identity from the Slack-VERIFIED authed_user.id, and
+// only when the init cookie from leg 1 matches the state (browser continuity).
 func TestLinkSlack_CookieFromSlackVerifiedID(t *testing.T) {
 	app, wsRec, _, _ := boot(t)
 	addAgentCollections(t, app, wsRec)
@@ -184,11 +225,12 @@ func TestLinkSlack_CookieFromSlackVerifiedID(t *testing.T) {
 		t.Fatalf("install: %v", err)
 	}
 
-	ss, _ := signSubjectState("strong-secret", slackSigninSubject, 0)
+	initCookie, ss := runLinkLeg1(t, c, app)
 	req := httptest.NewRequest("GET", "/v1/slack/link/slack?code=abc&state="+url.QueryEscape(ss), nil)
+	req.AddCookie(&http.Cookie{Name: linkInitCookieName, Value: initCookie})
 	rec := drive(app, req, nil, c.linkSlack)
 	if rec.Code != http.StatusFound {
-		t.Fatalf("linkSlack should redirect (302), got %d %s", rec.Code, rec.Body.String())
+		t.Fatalf("leg2 should redirect (302), got %d %s", rec.Code, rec.Body.String())
 	}
 	var cookie string
 	for _, ck := range rec.Result().Cookies() {
@@ -197,16 +239,70 @@ func TestLinkSlack_CookieFromSlackVerifiedID(t *testing.T) {
 		}
 	}
 	if cookie == "" {
-		t.Fatal("linkSlack must set the browser-bound link cookie")
+		t.Fatal("leg2 must set the browser-bound link cookie")
 	}
 	team, user, _, ok := verifyLinkState("strong-secret", cookie, 0)
 	if !ok || team != "T1" || user != "Uverified" {
 		t.Fatalf("cookie must carry the Slack-VERIFIED (team,user), got team=%q user=%q ok=%v", team, user, ok)
 	}
-	// The hanzo authorize redirect carries state == cookie.
 	loc := rec.Result().Header.Get("Location")
 	if !strings.Contains(loc, "state="+url.QueryEscape(cookie)) {
 		t.Fatalf("authorize state must equal the cookie, Location=%s", loc)
+	}
+}
+
+// F1 transplant: an attacker captures their own valid leg-2 URL and sends it to a
+// victim. The victim's browser has no matching init cookie, so leg 2 is refused
+// BEFORE the Slack code is exchanged — no attacker Slack identity is planted in
+// the victim's browser (no attacker_slack ↔ victim_hanzo binding is possible).
+func TestLinkSlack_TransplantRejected(t *testing.T) {
+	app, wsRec, _, _ := boot(t)
+	addAgentCollections(t, app, wsRec)
+
+	exchanged := false
+	oldAPI := slackAPI
+	slackSrv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		exchanged = true // must NOT fire on a transplant
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"ok": true, "authed_user": map[string]string{"id": "Uattacker"},
+			"team": map[string]string{"id": "T1"},
+		})
+	}))
+	slackAPI = slackSrv.URL
+	t.Cleanup(func() { slackAPI = oldAPI; slackSrv.Close() })
+
+	c := linkController(t, app)
+	_ = c.upsertInstall("T1", wsRec.Id, "hanzo")
+
+	// Attacker runs leg 1 in THEIR browser and captures the leg-2 (code,state).
+	_, ssAttacker := runLinkLeg1(t, c, app)
+
+	// (a) Victim clicks it with NO init cookie → refused, code never exchanged.
+	req := httptest.NewRequest("GET", "/v1/slack/link/slack?code=attacker_code&state="+url.QueryEscape(ssAttacker), nil)
+	rec := drive(app, req, nil, c.linkSlack)
+	if rec.Code != http.StatusBadRequest {
+		t.Fatalf("transplant (no init cookie) must be refused (400), got %d %s", rec.Code, rec.Body.String())
+	}
+	if exchanged {
+		t.Fatal("the attacker's Slack code must NOT be exchanged on a transplant")
+	}
+	for _, ck := range rec.Result().Cookies() {
+		if ck.Name == linkCookieName && ck.Value != "" {
+			t.Fatal("no link cookie may be planted in the victim's browser on a transplant")
+		}
+	}
+
+	// (b) Victim has their OWN init cookie (own leg 1) but clicks the attacker's
+	// state → nonce mismatch → still refused.
+	initVictim, _ := runLinkLeg1(t, c, app)
+	req2 := httptest.NewRequest("GET", "/v1/slack/link/slack?code=attacker_code&state="+url.QueryEscape(ssAttacker), nil)
+	req2.AddCookie(&http.Cookie{Name: linkInitCookieName, Value: initVictim})
+	rec2 := drive(app, req2, nil, c.linkSlack)
+	if rec2.Code != http.StatusBadRequest {
+		t.Fatalf("mismatched init cookie must be refused (400), got %d", rec2.Code)
+	}
+	if exchanged {
+		t.Fatal("mismatched init cookie must not exchange the Slack code")
 	}
 }
 
@@ -364,5 +460,32 @@ func TestPostResponseURL_HostAllowlist(t *testing.T) {
 	}
 	if err := postResponseURL(context.Background(), "http://hooks.slack.com/x", "in_channel", "hi"); err == nil {
 		t.Fatal("a non-https response_url must be rejected")
+	}
+}
+
+// ── F3: durable dedupe table is pruned by age ───────────────────────────────
+
+func TestPruneProcessedEvents(t *testing.T) {
+	app, wsRec, _, _ := boot(t)
+	addAgentCollections(t, app, wsRec)
+	c := &controller{app: app, cfg: config{}}
+	if _, err := c.markProcessed("recent"); err != nil {
+		t.Fatalf("mark recent: %v", err)
+	}
+	if _, err := c.markProcessed("stale"); err != nil {
+		t.Fatalf("mark stale: %v", err)
+	}
+	// Backdate 'stale' beyond the TTL (Base autodate layout).
+	if _, err := app.DB().NewQuery(
+		"UPDATE slack_processed_events SET created_at = '2020-01-01 00:00:00.000Z' WHERE event_key = 'stale'").Execute(); err != nil {
+		t.Fatalf("backdate: %v", err)
+	}
+	c.pruneProcessedEvents()
+	// 'stale' pruned → re-marking is fresh again; 'recent' survives → duplicate.
+	if fresh, _ := c.markProcessed("stale"); !fresh {
+		t.Fatal("stale event should have been pruned")
+	}
+	if fresh, _ := c.markProcessed("recent"); fresh {
+		t.Fatal("recent event must survive the prune")
 	}
 }

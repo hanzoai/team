@@ -36,6 +36,7 @@ func addAgentCollections(t *testing.T, app core.App, _ *core.Record) {
 
 	processed := core.NewBaseCollection("slack_processed_events")
 	processed.Fields.Add(&core.TextField{Name: "event_key", Required: true})
+	processed.Fields.Add(&core.AutodateField{Name: "created_at", OnCreate: true})
 	processed.AddIndex("idx_slack_processed_key", true, "event_key", "")
 	must(t, app, processed)
 }

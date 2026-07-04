@@ -31,10 +31,13 @@ const slackAuthorizeURL = "https://slack.com/oauth/v2/authorize"
 // users, and register the slash command.
 const defaultBotScopes = "app_mentions:read,chat:write,channels:history,channels:read,groups:history,im:history,im:read,im:write,users:read,commands"
 
-// slackSigninSubject is the fixed subject of the CSRF state on the Slack sign-in
-// leg of the account link (it carries no identity — the identity is Slack-proven
-// at the callback via oauth.v2.access authed_user.id).
-const slackSigninSubject = "slack-signin"
+// linkInitCookieName is the httpOnly init cookie that ties leg 1 (link) to leg 2
+// (linkSlack) in ONE browser: its random value is ALSO carried as the subject of
+// the slack-signin state, and leg 2 requires the cookie to equal that subject. A
+// transplanted /link/slack (attacker's code+state pasted into a victim's browser)
+// carries no matching init cookie, so it is refused — the Slack-code transplant
+// hijack (F1) is closed.
+const linkInitCookieName = "hanzo_slack_init"
 
 // linkCookieName is the browser-bound, httpOnly cookie that carries the
 // SLACK-VERIFIED (team,user) across the hanzo.id OIDC leg. The account binding is
@@ -94,6 +97,9 @@ func Register(app core.App) {
 	// Outgoing relay: a new message in a mapped channel mirrors to Slack. Bot-
 	// authored (mirrored-in) messages are skipped to break the loop.
 	app.OnRecordAfterCreateSuccess("messages").BindFunc(c.onMessageCreated)
+	// Bound the durable dedupe table's growth (F3): sweep rows older than the
+	// retry horizon on a cheap hourly ticker.
+	c.startEventPrune()
 }
 
 type config struct {
@@ -433,6 +439,14 @@ func (c *controller) onMessageCreated(e *core.RecordEvent) error {
 // for THEIR OWN org (Slack's own admin-Allow gates the real bot install, and
 // first-org-wins prevents cross-org capture). The org is never taken from the
 // client body — only from the validated token/membership.
+//
+// POLICY DECISION (F2): initiating connect is intentionally NOT restricted to an
+// org owner/admin. The three gates that matter are external: Slack requires a
+// Slack workspace admin to click Allow (so a non-admin cannot actually install a
+// bot), first-org-wins stops cross-org capture, and the org is strictly the
+// caller's own validated tenant. The residual is same-org griefing (a member
+// generating an install URL for their own org), which is acceptable — the console
+// Integrations page is org-authed, and gating harder would block that flow.
 func (c *controller) resolveConnectOrg(re *core.RequestEvent) (string, error) {
 	if re.Auth == nil {
 		return "", re.UnauthorizedError("auth required", nil)
@@ -558,6 +572,29 @@ func (c *controller) clearLinkCookie(re *core.RequestEvent) {
 	})
 }
 
+// setInitCookie plants the leg-1->leg-2 continuity nonce (F1).
+func (c *controller) setInitCookie(re *core.RequestEvent, val string) {
+	http.SetCookie(re.Response, &http.Cookie{
+		Name: linkInitCookieName, Value: val, Path: "/v1/slack/link",
+		MaxAge: oauthStateTTLSec, HttpOnly: true, Secure: true, SameSite: http.SameSiteLaxMode,
+	})
+}
+
+func (c *controller) readInitCookie(re *core.RequestEvent) string {
+	ck, err := re.Request.Cookie(linkInitCookieName)
+	if err != nil || ck == nil {
+		return ""
+	}
+	return ck.Value
+}
+
+func (c *controller) clearInitCookie(re *core.RequestEvent) {
+	http.SetCookie(re.Response, &http.Cookie{
+		Name: linkInitCookieName, Value: "", Path: "/v1/slack/link",
+		MaxAge: -1, HttpOnly: true, Secure: true, SameSite: http.SameSiteLaxMode,
+	})
+}
+
 // link begins the per-user account link. The entry `state` (signed (team,user))
 // is PROVENANCE only — it proves a server-minted prompt. The binding identity is
 // NOT taken from it; the flow first authenticates the Slack user (Slack sign-in
@@ -572,10 +609,18 @@ func (c *controller) link(re *core.RequestEvent) error {
 	if _, _, _, ok := verifyLinkState(c.cfg.secret, re.Request.URL.Query().Get("state"), 0); !ok {
 		return re.BadRequestError("invalid or expired link", nil)
 	}
-	ss, err := signSubjectState(c.cfg.secret, slackSigninSubject, 0)
+	// Browser-continuity nonce (F1): a fresh random bound BOTH into an httpOnly
+	// init cookie AND the slack-signin state's subject. Leg 2 requires the two to
+	// match, forcing legs 1->2->3 into the ONE browser that started here.
+	initNonce, err := randHex(16)
+	if err != nil {
+		return re.InternalServerError("link nonce", err)
+	}
+	ss, err := signSubjectState(c.cfg.secret, initNonce, 0)
 	if err != nil {
 		return re.InternalServerError("link state", err)
 	}
+	c.setInitCookie(re, initNonce)
 	u, _ := url.Parse(slackAuthorizeURL)
 	q := u.Query()
 	q.Set("client_id", c.cfg.slackClientID)
@@ -606,22 +651,45 @@ func (c *controller) linkSlack(re *core.RequestEvent) error {
 	if code == "" || state == "" {
 		return re.BadRequestError("missing code or state", nil)
 	}
-	if _, ok := verifySubjectState(c.cfg.secret, state, 0); !ok {
+	st, ok := verifySubjectState(c.cfg.secret, state, 0)
+	if !ok {
+		c.clearInitCookie(re)
 		return re.BadRequestError("invalid or expired link", nil)
+	}
+	// Browser continuity (F1): the init cookie set in leg 1 MUST equal the nonce
+	// carried in the slack-signin state's subject. A transplanted link (attacker's
+	// code+state opened in a VICTIM's browser) has no matching init cookie, so we
+	// refuse BEFORE exchanging the code or planting any cookie — no attacker Slack
+	// identity is ever bound into the victim's browser.
+	if init := c.readInitCookie(re); init == "" || init != st.Subject {
+		c.clearInitCookie(re)
+		return re.BadRequestError("link session mismatch; restart from Slack", nil)
+	}
+	// Single-use: consume the slack-signin state's nonce (defense in depth atop
+	// Slack's single-use code).
+	if c.usedStates.seenAndAdd(st.Nonce, time.Time{}) {
+		c.clearInitCookie(re)
+		return re.BadRequestError("link already used", nil)
 	}
 	teamID, slackUserID, err := exchangeUserCode(re.Request.Context(),
 		c.cfg.slackClientID, c.cfg.slackSecret, code, c.cfg.linkSlackRedirect)
 	if err != nil {
 		c.app.Logger().Error("slack: user auth exchange", "err", err)
+		c.clearInitCookie(re)
 		return re.BadRequestError("slack sign-in failed", nil)
 	}
 	if _, _, ok := c.installOrg(teamID); !ok {
+		c.clearInitCookie(re)
 		return re.BadRequestError("workspace not connected", nil)
 	}
 	cookieVal, err := signLinkState(c.cfg.secret, teamID, slackUserID, 0)
 	if err != nil {
+		c.clearInitCookie(re)
 		return re.InternalServerError("link state", err)
 	}
+	// The init cookie has done its job; the link cookie now carries the
+	// Slack-verified (team,user) across the hanzo.id leg.
+	c.clearInitCookie(re)
 	c.setLinkCookie(re, cookieVal)
 	// hanzo authorize state == the cookie value (ties this OIDC leg to THIS
 	// browser; the callback requires state == cookie).
@@ -812,4 +880,40 @@ func env(k, def string) string {
 
 func ctxTimeout(d time.Duration) (context.Context, context.CancelFunc) {
 	return context.WithTimeout(context.Background(), d)
+}
+
+// processedEventTTL bounds how long a dedupe row is retained. Slack's event
+// retry horizon is minutes; a day is a wide margin.
+const processedEventTTL = 24 * time.Hour
+
+// startEventPrune sweeps expired slack_processed_events rows on an hourly ticker
+// (F3), so the durable dedupe table cannot grow without bound. Best-effort and
+// fire-and-forget: the process lifetime owns the goroutine (as with the other
+// fire-and-forget Slack workers).
+func (c *controller) startEventPrune() {
+	go func() {
+		t := time.NewTicker(time.Hour)
+		defer t.Stop()
+		for range t.C {
+			c.pruneProcessedEvents()
+		}
+	}()
+}
+
+// pruneProcessedEvents deletes dedupe rows older than processedEventTTL. The
+// cutoff is formatted in Base's autodate layout so the text comparison on
+// created_at is correct.
+func (c *controller) pruneProcessedEvents() {
+	cutoff := time.Now().UTC().Add(-processedEventTTL).Format("2006-01-02 15:04:05.000Z")
+	old, err := c.app.FindRecordsByFilter("slack_processed_events",
+		"created_at < {:t}", "created_at", 5000, 0, dbx.Params{"t": cutoff})
+	if err != nil {
+		c.app.Logger().Warn("slack: prune processed events", "err", err)
+		return
+	}
+	for _, r := range old {
+		if err := c.app.Delete(r); err != nil {
+			c.app.Logger().Warn("slack: prune delete", "err", err)
+		}
+	}
 }
