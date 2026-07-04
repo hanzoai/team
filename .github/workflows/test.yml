@@ -1,0 +1,73 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Hermetic gate: the Go unit + transactor-wire tests, race detector on.
+  go-test:
+    if: github.repository == 'hanzoai/team-go'
+    runs-on: ['hanzo-build-linux-amd64']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      # dbx is the one private module; GH_PAT (the canonical CI bot cred) reads it.
+      - name: Configure private module access
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          go env -w GOPRIVATE=github.com/hanzoai/dbx
+          git config --global url."https://x-access-token:${GH_PAT}@github.com/".insteadOf "https://github.com/"
+      # Prod is pure-Go (CGO_ENABLED=0, modernc sqlite) — keep the build honest.
+      - run: CGO_ENABLED=0 go build ./...
+      # The race detector needs a C toolchain (cgo); the ARC runner image ships
+      # without one. Install gcc the same way the sibling Go repos (commerce) do.
+      - name: Install C toolchain for the race detector
+        run: sudo apt-get update && sudo apt-get install -y gcc
+      # The race detector needs the cgo runtime; enable it just for the test run.
+      - run: CGO_ENABLED=1 go test -race ./...
+
+  # Live visual e2e (Playwright) against the deployment. Non-hermetic by nature —
+  # it needs a real OIDC login — so it runs only when the login secret is present
+  # (configured as a repo/org secret; CI sources it from KMS). Absent it, the job
+  # no-ops cleanly instead of failing the pipeline.
+  e2e:
+    if: github.repository == 'hanzoai/team-go'
+    runs-on: ['hanzo-build-linux-amd64']
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gate on login secret
+        id: gate
+        env:
+          PW: ${{ secrets.TEAM_E2E_PASSWORD }}
+        run: |
+          if [ -n "$PW" ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; echo "TEAM_E2E_PASSWORD not set — skipping live e2e"; fi
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: '20'
+      - name: Install + run Playwright e2e
+        if: steps.gate.outputs.run == 'true'
+        working-directory: e2e
+        env:
+          TEAM_E2E_BASE_URL: ${{ vars.TEAM_E2E_BASE_URL || 'https://hanzo.team' }}
+          TEAM_E2E_EMAIL: ${{ vars.TEAM_E2E_EMAIL || 'z@hanzo.ai' }}
+          TEAM_E2E_PASSWORD: ${{ secrets.TEAM_E2E_PASSWORD }}
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: steps.gate.outputs.run == 'true' && always()
+        with:
+          name: playwright-report
+          path: e2e/playwright-report
+          retention-days: 7
