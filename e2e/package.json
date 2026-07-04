@@ -1,0 +1,13 @@
+{
+  "name": "team-go-e2e",
+  "private": true,
+  "description": "Functional visual Playwright e2e for the hanzo.team backend (team-go) + Huly front.",
+  "scripts": {
+    "test": "playwright test",
+    "test:live": "TEAM_E2E_MODE=live playwright test",
+    "install-browser": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}
