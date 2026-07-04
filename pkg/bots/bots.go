@@ -389,9 +389,6 @@ func (s *service) syncUserWorkspaces(ctx context.Context, iamBearer, account, or
 	}
 	seen := map[string]bool{}
 	for _, mem := range members {
-		if role := mem.GetString("role"); role != "owner" && role != "admin" {
-			continue // only an admin's token may drive a workspace's bot set
-		}
 		wsID := mem.GetString("workspace_id")
 		if wsID == "" || seen[wsID] {
 			continue
@@ -401,10 +398,35 @@ func (s *service) syncUserWorkspaces(ctx context.Context, iamBearer, account, or
 		if ws == nil {
 			continue
 		}
-		// The bearer is authoritative for `org` ONLY. Skip a co-administered
-		// workspace owned by a different tenant so this user's org agents are
-		// never attributed to a foreign-tenant workspace.
+		// Isolation gate FIRST. The bearer is authoritative for `org` ONLY, so a
+		// workspace owned by a different tenant is skipped before we touch its
+		// membership or reconcile its bots — this user's org agents are never
+		// attributed to, nor its owner role repaired in, a foreign-tenant
+		// workspace. (Preserved from the per-org RED review; moved ahead of the
+		// role gate so the backfill below can never fire cross-tenant.)
 		if wsauth.WorkspaceOrg(ws) != org {
+			continue
+		}
+		// Owner-role backfill. ensureWorkspace (pkg/account) stamps role="owner"
+		// only when it CREATES the workspace, so an owner whose member row was
+		// created by any other path (or predates that stamp) is left without the
+		// owner role — which the role gate below would then skip, stranding the
+		// owner with zero bot members and a 403 on /v1/bots. The workspace's
+		// canonical creator is ws.owner (an account UUID); when that is THIS
+		// caller AND the workspace is already org-verified above, repair the role
+		// in place. Idempotent: only promotes the creator to "owner"; never
+		// demotes, never touches a non-owner's row, never fires cross-tenant.
+		role := mem.GetString("role")
+		if role != "owner" && role != "admin" && ws.GetString("owner") == account {
+			mem.Set("role", "owner")
+			if e := s.app.Save(mem); e != nil {
+				s.app.Logger().Warn("bots: owner-role backfill", "err", e, "workspace", ws.Id, "account", account)
+			} else {
+				role = "owner"
+			}
+		}
+		// Role gate: only an owner/admin's token may drive a workspace's bot set.
+		if role != "owner" && role != "admin" {
 			continue
 		}
 		if _, _, e := s.reconcile(ctx, ws, org, iamBearer, account, org); e != nil {
