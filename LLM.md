@@ -145,14 +145,14 @@ posted into the same thread with the workspace bot token; slash replies via
 account is proven by a Slack SIGN-IN leg and carried in a browser-bound cookie,
 NEVER taken from a URL/state param:
 1. `GET /v1/slack/link?state=…` (signed (team,user) = provenance only) → mint a
-   random continuity nonce; set httpOnly init cookie `hanzo_slack_init`=nonce AND
+   random continuity nonce; set the __Host- httpOnly init cookie `__Host-hanzo_slack_init`=nonce AND
    carry the SAME nonce as the subject of the `slack-signin` state; redirect to
    Slack authorize (`user_scope=openid`).
 2. `GET /v1/slack/link/slack` — require the init cookie to EQUAL the state's
    subject (browser continuity, F1) and consume the state nonce (single-use);
    only THEN `oauth.v2.access` returns the Slack-verified `authed_user.id`; clear
-   the init cookie; set the httpOnly/Secure/SameSite=Lax/path-scoped cookie
-   `hanzo_slack_link` = signLinkState(team, authed_user.id); redirect to hanzo.id
+   the init cookie; set the __Host- cookie `__Host-hanzo_slack_link` =
+   signLinkState(team, authed_user.id); redirect to hanzo.id
    OIDC with `state` == cookie. A transplanted leg-2 URL (attacker's code+state
    pasted into a victim's browser) has no matching init cookie → refused BEFORE
    the code is exchanged, so no attacker Slack identity is ever planted.
@@ -163,6 +163,10 @@ NEVER taken from a URL/state param:
    login as a different Hanzo subject binds only to the cookie's Slack user.
    The unlinked prompt is delivered EPHEMERALLY (`chat.postEphemeral` /
    `response_type:ephemeral`) so a link URL never reaches a channel.
+   Both cookies use the `__Host-` prefix (Secure + no Domain + Path=/), so a
+   sibling `*.hanzo.ai` origin cannot plant/fixate a same-named cookie into the
+   victim's jar (cookie-fixation defense). The continuity nonce is ONE value: the
+   init cookie, the slack-signin state subject, and leg-2's single-use key.
 
 **Other hardening.**
 - **First-org-wins (M1):** `upsertInstall` refuses to change a team's `owner_org`
