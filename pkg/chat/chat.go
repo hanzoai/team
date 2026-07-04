@@ -61,11 +61,11 @@ func (c *api) listChannels(re *core.RequestEvent) error {
 	if org == "" {
 		return re.ForbiddenError("no org context", nil)
 	}
-	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id, org)
+	ws, err := wsauth.ResolveWorkspace(c.app, re, wsauth.CallerUID(re), org)
 	if err != nil {
 		return err
 	}
-	if wsauth.Member(c.app, ws.Id, re.Auth.Id) == nil {
+	if wsauth.Member(c.app, ws.Id, wsauth.CallerUID(re)) == nil {
 		return re.ForbiddenError("not a member", nil)
 	}
 	rows, e := c.app.FindRecordsByFilter("channels",
@@ -94,11 +94,11 @@ func (c *api) createChannel(re *core.RequestEvent) error {
 	if org == "" {
 		return re.ForbiddenError("no org context", nil)
 	}
-	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id, org)
+	ws, err := wsauth.ResolveWorkspace(c.app, re, wsauth.CallerUID(re), org)
 	if err != nil {
 		return err
 	}
-	if wsauth.Member(c.app, ws.Id, re.Auth.Id) == nil {
+	if wsauth.Member(c.app, ws.Id, wsauth.CallerUID(re)) == nil {
 		return re.ForbiddenError("not a member", nil)
 	}
 	var req channelReq
@@ -118,7 +118,7 @@ func (c *api) createChannel(re *core.RequestEvent) error {
 	rec.Set("name", strings.TrimSpace(req.Name))
 	rec.Set("topic", req.Topic)
 	rec.Set("kind", kind)
-	rec.Set("created_by", re.Auth.Id)
+	rec.Set("created_by", wsauth.CallerUID(re))
 	if e := c.app.Save(rec); e != nil {
 		return re.BadRequestError("create channel: "+e.Error(), nil)
 	}
@@ -171,7 +171,7 @@ func (c *api) postMessage(re *core.RequestEvent) error {
 	}
 	rec := core.NewRecord(coll)
 	rec.Set("channel_id", ch.Id)
-	rec.Set("author_id", re.Auth.Id)
+	rec.Set("author_id", wsauth.CallerUID(re))
 	rec.Set("body", req.Body)
 	if req.ParentID != "" {
 		rec.Set("parent_id", req.ParentID)
@@ -225,11 +225,11 @@ func (c *api) presence(re *core.RequestEvent) error {
 	if org == "" {
 		return re.ForbiddenError("no org context", nil)
 	}
-	ws, err := wsauth.ResolveWorkspace(c.app, re, re.Auth.Id, org)
+	ws, err := wsauth.ResolveWorkspace(c.app, re, wsauth.CallerUID(re), org)
 	if err != nil {
 		return err
 	}
-	if wsauth.Member(c.app, ws.Id, re.Auth.Id) == nil {
+	if wsauth.Member(c.app, ws.Id, wsauth.CallerUID(re)) == nil {
 		return re.ForbiddenError("not a member", nil)
 	}
 	var req presenceReq
@@ -239,7 +239,7 @@ func (c *api) presence(re *core.RequestEvent) error {
 		status = "online"
 	}
 	existing, _ := c.app.FindFirstRecordByFilter("presence",
-		"workspace_id = {:w} && user_id = {:u}", dbx.Params{"w": ws.Id, "u": re.Auth.Id})
+		"workspace_id = {:w} && user_id = {:u}", dbx.Params{"w": ws.Id, "u": wsauth.CallerUID(re)})
 	if existing != nil {
 		existing.Set("status", status)
 		if e := c.app.Save(existing); e != nil {
@@ -253,7 +253,7 @@ func (c *api) presence(re *core.RequestEvent) error {
 	}
 	rec := core.NewRecord(coll)
 	rec.Set("workspace_id", ws.Id)
-	rec.Set("user_id", re.Auth.Id)
+	rec.Set("user_id", wsauth.CallerUID(re))
 	rec.Set("status", status)
 	if e := c.app.Save(rec); e != nil {
 		return re.InternalServerError("presence", e)
@@ -274,7 +274,7 @@ func (c *api) channelForMember(re *core.RequestEvent) (*core.Record, error) {
 	if ch == nil {
 		return nil, re.NotFoundError("channel not found", nil)
 	}
-	if wsauth.Member(c.app, ch.GetString("workspace_id"), re.Auth.Id) == nil {
+	if wsauth.Member(c.app, ch.GetString("workspace_id"), wsauth.CallerUID(re)) == nil {
 		return nil, re.ForbiddenError("not a member of this channel's workspace", nil)
 	}
 	return ch, nil
@@ -296,10 +296,10 @@ func (c *api) messageForAuthor(re *core.RequestEvent) (*core.Record, error) {
 	if ch == nil {
 		return nil, re.NotFoundError("channel not found", nil)
 	}
-	if wsauth.Member(c.app, ch.GetString("workspace_id"), re.Auth.Id) == nil {
+	if wsauth.Member(c.app, ch.GetString("workspace_id"), wsauth.CallerUID(re)) == nil {
 		return nil, re.ForbiddenError("not a member", nil)
 	}
-	if msg.GetString("author_id") != re.Auth.Id {
+	if msg.GetString("author_id") != wsauth.CallerUID(re) {
 		return nil, re.ForbiddenError("only the author may modify this message", nil)
 	}
 	return msg, nil

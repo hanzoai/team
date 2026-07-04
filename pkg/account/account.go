@@ -20,6 +20,7 @@ import (
 	"github.com/hanzoai/team-go/pkg/bots"
 	"github.com/hanzoai/team-go/pkg/model"
 	"github.com/hanzoai/team-go/pkg/token"
+	"github.com/hanzoai/team-go/pkg/wsauth"
 )
 
 // Mount path. The frontend's ACCOUNTS_URL must point here (e.g.
@@ -135,11 +136,11 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "userinfo_failed")
 	}
-	// AccountUuid = the IAM sub (Casdoor UUID; derive a stable one if not).
-	account := sub
-	if uuid.Validate(account) != nil {
-		account = uuid.NewSHA1(uuid.NameSpaceURL, []byte("iam:"+sub)).String()
-	}
+	// AccountUuid = the IAM sub (Casdoor UUID; derive a stable one if not). The
+	// admin/membership gate resolves the caller with the SAME derivation
+	// (wsauth.AccountID over the JWT's authSub), so a member row and its caller
+	// always resolve to the same key.
+	account := wsauth.AccountID(sub)
 	// Tenant = the IAM org (Casdoor `owner` claim on the access token). It
 	// scopes every workspace + data file — full multitenancy. The account token
 	// carries it as extra.org so getLoginInfoByToken/selectWorkspace and the
