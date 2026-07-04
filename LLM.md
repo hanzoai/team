@@ -144,12 +144,18 @@ posted into the same thread with the workspace bot token; slash replies via
 **Account link — hijack-hardened (C1).** The Slack subject bound to a Hanzo
 account is proven by a Slack SIGN-IN leg and carried in a browser-bound cookie,
 NEVER taken from a URL/state param:
-1. `GET /v1/slack/link?state=…` (signed (team,user) = provenance only) → redirect
-   to Slack authorize (`user_scope=openid`).
-2. `GET /v1/slack/link/slack` — `oauth.v2.access` returns the Slack-verified
-   `authed_user.id`; set an httpOnly/Secure/SameSite=Lax/path-scoped cookie
+1. `GET /v1/slack/link?state=…` (signed (team,user) = provenance only) → mint a
+   random continuity nonce; set httpOnly init cookie `hanzo_slack_init`=nonce AND
+   carry the SAME nonce as the subject of the `slack-signin` state; redirect to
+   Slack authorize (`user_scope=openid`).
+2. `GET /v1/slack/link/slack` — require the init cookie to EQUAL the state's
+   subject (browser continuity, F1) and consume the state nonce (single-use);
+   only THEN `oauth.v2.access` returns the Slack-verified `authed_user.id`; clear
+   the init cookie; set the httpOnly/Secure/SameSite=Lax/path-scoped cookie
    `hanzo_slack_link` = signLinkState(team, authed_user.id); redirect to hanzo.id
-   OIDC with `state` == cookie.
+   OIDC with `state` == cookie. A transplanted leg-2 URL (attacker's code+state
+   pasted into a victim's browser) has no matching init cookie → refused BEFORE
+   the code is exchanged, so no attacker Slack identity is ever planted.
 3. `GET /v1/slack/link/callback` — bind ONLY from the cookie (no cookie ⇒ refuse;
    `state`!=cookie ⇒ refuse); exchange the hanzo code; consume the single-use
    nonce AFTER a successful exchange; store the refresh token KMS-encrypted +
@@ -167,8 +173,8 @@ NEVER taken from a URL/state param:
   (unique `event_key` = Slack event_id / slash trigger_id) before dispatch —
   survives restart, so a retry never double-runs/double-bills. Fails closed
   (skip) on a dedupe DB error. The in-process seen-set stays for the (cosmetic)
-  relay path. NOTE: `slack_processed_events` grows unbounded; prune old rows
-  operationally.
+  relay path. `slack_processed_events` is pruned hourly (rows older than 24h,
+  well past Slack's retry horizon) so it cannot grow unbounded (F3).
 - **Concurrency cap (M3):** `dispatchAgent` bounds simultaneous agent turns
   (`SLACK_AGENT_CONCURRENCY`, default 32); excess is dropped + logged.
 - **Fail-closed secret (L1):** all signed-state endpoints 503 when `SERVER_SECRET`
@@ -176,7 +182,11 @@ NEVER taken from a URL/state param:
 
 **Org-scoped connect (console Integrations).** `GET /v1/slack/connect` accepts an
 org JWT (`wsauth.CallerOrg`) IN ADDITION to workspace-admin; both resolve to an
-org and the OAuth `state` binds that org. Full bot scopes by default
+org and the OAuth `state` binds that org. POLICY (F2): initiating connect is
+intentionally NOT gated to org owner/admin — the real gates are external (Slack
+requires a workspace admin to Allow the install; first-org-wins blocks cross-org
+capture; org is the caller's own validated tenant), leaving only same-org
+griefing as an accepted residual. Full bot scopes by default
 (app_mentions:read,chat:write,channels:history,channels:read,groups:history,
 im:history,im:read,im:write,users:read,commands). `oauth()` stores the token
 per-org and upserts `slack_installs(team→org)` (first-org-wins).
