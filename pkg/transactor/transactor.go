@@ -200,8 +200,9 @@ func (s *session) findAll(id int64, params []json.RawMessage) []byte {
 		_ = json.Unmarshal(params[1], &query)
 	}
 	var opts struct {
-		Sort  json.RawMessage `json:"sort"`
-		Limit *int            `json:"limit"`
+		Sort   json.RawMessage `json:"sort"`
+		Limit  *int            `json:"limit"`
+		Lookup map[string]any  `json:"lookup"`
 	}
 	if len(params) > 2 {
 		_ = json.Unmarshal(params[2], &opts)
@@ -212,6 +213,7 @@ func (s *session) findAll(id int64, params []json.RawMessage) []byte {
 	if opts.Limit != nil && *opts.Limit >= 0 && *opts.Limit < total {
 		matched = matched[:*opts.Limit]
 	}
+	matched = s.applyLookups(matched, opts.Lookup)
 	return s.result(id, totalArray(matched, total))
 }
 
