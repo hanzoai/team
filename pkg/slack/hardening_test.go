@@ -489,3 +489,58 @@ func TestPruneProcessedEvents(t *testing.T) {
 		t.Fatal("recent event must survive the prune")
 	}
 }
+
+// ── MEDIUM: link cookies are __Host- host-bound (cookie-fixation defense) ────
+
+// Both link cookies carry the __Host- prefix and its required attributes
+// (Secure + Path=/ + no Domain), so a sibling *.hanzo.ai origin cannot plant or
+// fixate a same-named cookie into the victim's jar.
+func TestLinkCookies_HostPrefixed(t *testing.T) {
+	app, wsRec, _, _ := boot(t)
+	addAgentCollections(t, app, wsRec)
+
+	oldAPI := slackAPI
+	slackSrv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"ok": true, "authed_user": map[string]string{"id": "Uverified"},
+			"team": map[string]string{"id": "T1"},
+		})
+	}))
+	slackAPI = slackSrv.URL
+	t.Cleanup(func() { slackAPI = oldAPI; slackSrv.Close() })
+
+	c := linkController(t, app)
+	_ = c.upsertInstall("T1", wsRec.Id, "hanzo")
+
+	assertHostCookie := func(cookies []*http.Cookie, name string) {
+		t.Helper()
+		var ck *http.Cookie
+		for _, x := range cookies {
+			if x.Name == name {
+				ck = x
+			}
+		}
+		if ck == nil {
+			t.Fatalf("cookie %s not set", name)
+		}
+		if !strings.HasPrefix(ck.Name, "__Host-") {
+			t.Fatalf("%s must carry the __Host- prefix", name)
+		}
+		if !ck.Secure || !ck.HttpOnly || ck.Path != "/" || ck.Domain != "" {
+			t.Fatalf("%s must be Secure+HttpOnly+Path=/+no-Domain, got %+v", name, ck)
+		}
+	}
+
+	// Leg 1 sets the init cookie.
+	entry, _ := signLinkState("strong-secret", "T1", "U1", 0)
+	req1 := httptest.NewRequest("GET", "/v1/slack/link?state="+url.QueryEscape(entry), nil)
+	rec1 := drive(app, req1, nil, c.link)
+	assertHostCookie(rec1.Result().Cookies(), linkInitCookieName)
+
+	// Leg 2 sets the link cookie (drive with the continuity pair from leg 1).
+	init, ss := runLinkLeg1(t, c, app)
+	req2 := httptest.NewRequest("GET", "/v1/slack/link/slack?code=abc&state="+url.QueryEscape(ss), nil)
+	req2.AddCookie(&http.Cookie{Name: linkInitCookieName, Value: init})
+	rec2 := drive(app, req2, nil, c.linkSlack)
+	assertHostCookie(rec2.Result().Cookies(), linkCookieName)
+}
