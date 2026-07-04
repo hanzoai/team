@@ -101,7 +101,6 @@
     class:antiMention={inlineReference}
     class:transparent
     class:fs-bold={accent}
-    style:text-decoration-color={textDecorationColor + '!important'}
     style:flex-shrink={shrink}
     style:max-width={maxWidth}
     class:select-text={!noSelect}
