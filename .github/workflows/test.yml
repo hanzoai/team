@@ -28,6 +28,10 @@ jobs:
           git config --global url."https://x-access-token:${GH_PAT}@github.com/".insteadOf "https://github.com/"
       # Prod is pure-Go (CGO_ENABLED=0, modernc sqlite) — keep the build honest.
       - run: CGO_ENABLED=0 go build ./...
+      # The race detector needs a C toolchain (cgo); the ARC runner image ships
+      # without one. Install gcc the same way the sibling Go repos (commerce) do.
+      - name: Install C toolchain for the race detector
+        run: sudo apt-get update && sudo apt-get install -y gcc
       # The race detector needs the cgo runtime; enable it just for the test run.
       - run: CGO_ENABLED=1 go test -race ./...
 
