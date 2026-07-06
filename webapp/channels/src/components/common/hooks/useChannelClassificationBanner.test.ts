@@ -218,9 +218,9 @@ describe('useChannelClassificationBanner', () => {
         expect(result.current.classificationBanner).toBeUndefined();
     });
 
-    test('renders for legacy values without attrs (defaults to top placement)', () => {
+    test('renders when the value has no attrs (defaults to top placement)', () => {
         mockClassification();
-        const value = makePropertyValue('lvl1'); // no attrs — pre-refactor data
+        const value = makePropertyValue('lvl1'); // no attrs.actions
 
         const {result} = renderHookWithContext(
             () => useChannelClassificationBanner(CHANNEL_ID),

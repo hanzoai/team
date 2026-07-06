@@ -279,12 +279,11 @@ export async function fetchSystemClassificationValue(linkedFieldId: string): Pro
 
 /**
  * Upserts the system classification property value to the given option ID and
- * banner actions. For classification, the value is the home for actions — new
- * clients read value.attrs.actions. The caller separately mirrors them onto the
- * field as a temporary backwards-compatibility measure, which will be dropped
- * once all clients read actions from the value. Uses the dedicated system values
- * endpoint (sentinel target_id 'system'). Returns the saved values for eager
- * store update.
+ * banner actions. For classification, the value is the home for actions: the
+ * webapp reads them from value.attrs.actions. The caller also mirrors them onto
+ * the field, which mobile reads; that mirror can be removed once every client
+ * reads actions from the value. Uses the dedicated system values endpoint
+ * (sentinel target_id 'system'). Returns the saved values for eager store update.
  */
 export async function saveUpsertSystemValue(linkedFieldId: string, optionId: string, actions: string[]): Promise<Array<PropertyValue<string>>> {
     return Client4.patchSystemPropertyValues<string>(CLASSIFICATIONS_GROUP_NAME, [

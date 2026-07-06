@@ -439,8 +439,8 @@ function ChannelSettingsConfigurationTab({
                 // classification's home for actions. The channel field is shared by
                 // all channels, so actions defined there would apply everywhere;
                 // hence there's no field mirror on this path (unlike the system
-                // banner). Fixed to top today to match prior behavior; a per-channel
-                // UI can vary it later.
+                // banner). The actions are fixed to [top] here; a per-channel UI
+                // could vary them later.
                 try {
                     const values = await Client4.patchPropertyValues(
                         CLASSIFICATIONS_GROUP_NAME,

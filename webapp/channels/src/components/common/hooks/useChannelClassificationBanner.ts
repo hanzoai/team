@@ -89,8 +89,8 @@ export default function useChannelClassificationBanner(channelId: string): Chann
         }
 
         // Per-channel banner placement lives on the value's attrs.actions.
-        // Absent attrs (pre-refactor values) default to showing the top banner,
-        // preserving legacy behavior. An explicit empty actions set hides it.
+        // A value with no attrs.actions defaults to showing the top banner; an
+        // explicit empty actions set hides it.
         const actions = (propertyValue.attrs?.actions as string[] | undefined) ?? [DISPLAY_BANNER_TOP];
         if (!actions.includes(DISPLAY_BANNER_TOP)) {
             return noClassification;

@@ -78,9 +78,10 @@ export default function GlobalClassificationBanner({position}: Props) {
         }
     }, [featureEnabled, linkedField, systemValue, dispatch]);
 
-    // Display conditions are encoded in attrs.actions. Prefer the system
-    // value's actions (new clients); fall back to the linked field's actions
-    // so mobile-era data and pre-refactor installs still render correctly.
+    // Display conditions are encoded in attrs.actions. Prefer the system value's
+    // actions; fall back to the linked field's actions — the field also carries
+    // the actions (mobile reads them there), and this covers a value that has
+    // none of its own.
     const actions = (systemValue?.attrs?.actions as string[] | undefined) ??
         (linkedField?.attrs?.actions as string[] | undefined) ?? [];
     const shouldRenderTop = actions.includes(DISPLAY_BANNER_TOP);

@@ -196,7 +196,7 @@ describe('GlobalClassificationBanner', () => {
         expect(screen.queryByTestId('global-classification-banner-top')).not.toBeInTheDocument();
     });
 
-    test('falls back to field actions when the value has no attrs (legacy/mobile-written data)', () => {
+    test('falls back to field actions when the value has no attrs', () => {
         const options = [{id: 'opt1', name: 'SECRET', color: '#C8102E'}];
         const linked = makeLinkedField([DISPLAY_BANNER_TOP], options);
         const value = makeSystemValue('opt1'); // no attrs on the value
