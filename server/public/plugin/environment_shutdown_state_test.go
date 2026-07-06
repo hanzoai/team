@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/mattermost/mattermost/server/public/model"
@@ -130,4 +131,71 @@ func TestPluginMarksNotRunningAfterOnDeactivate(t *testing.T) {
 			require.False(t, env.IsActive(pluginID))
 		})
 	}
+}
+
+// TestShutdownAfterDeactivateNoOnDeactivateRPC verifies that shutting down the environment after a
+// plugin has already been deactivated does not dispatch a second OnDeactivate over the plugin's
+// already-closed RPC connection. Previously Shutdown ran deactivateAndTeardown unconditionally for
+// every registered plugin, dispatching OnDeactivate to inactive plugins and logging a spurious
+// "connection is shut down" error.
+func TestShutdownAfterDeactivateNoOnDeactivateRPC(t *testing.T) {
+	pluginDir, err := os.MkdirTemp("", "mm-shutdown-after-deactivate-plugin")
+	require.NoError(t, err)
+	t.Cleanup(func() { os.RemoveAll(pluginDir) })
+	webappPluginDir, err := os.MkdirTemp("", "mm-shutdown-after-deactivate-webapp")
+	require.NoError(t, err)
+	t.Cleanup(func() { os.RemoveAll(webappPluginDir) })
+
+	pluginID := "test-shutdown-after-deactivate-plugin"
+	require.NoError(t, os.MkdirAll(filepath.Join(pluginDir, pluginID), 0700))
+	backend := filepath.Join(pluginDir, pluginID, "backend.exe")
+
+	utils.CompileGo(t, `
+		package main
+
+		import (
+			"github.com/mattermost/mattermost/server/public/plugin"
+		)
+
+		type MyPlugin struct {
+			plugin.MattermostPlugin
+		}
+
+		func (p *MyPlugin) OnDeactivate() error {
+			return nil
+		}
+
+		func main() {
+			plugin.ClientMain(&MyPlugin{})
+		}
+	`, backend)
+
+	require.NoError(t, os.WriteFile(
+		filepath.Join(pluginDir, pluginID, "plugin.json"),
+		[]byte(`{"id":"`+pluginID+`","server":{"executable":"backend.exe"}}`),
+		0600,
+	))
+
+	logger := mlog.CreateConsoleTestLogger(t)
+	var buf mlog.Buffer
+	require.NoError(t, mlog.AddWriterTarget(logger, &buf, true, mlog.LvlError))
+
+	apiImpl := func(*model.Manifest) API { return nil }
+	env, err := NewEnvironment(apiImpl, nil, pluginDir, webappPluginDir, logger, nil)
+	require.NoError(t, err)
+
+	_, _, err = env.Activate(pluginID)
+	require.NoError(t, err)
+	require.True(t, env.IsActive(pluginID))
+
+	// Deactivate tears down the RPC connection but leaves the plugin registered.
+	require.True(t, env.Deactivate(pluginID))
+	require.False(t, env.IsActive(pluginID))
+
+	// Shutdown must not dispatch OnDeactivate again to the now-inactive plugin.
+	env.Shutdown()
+
+	require.NoError(t, logger.Flush())
+	assert.NotContains(t, buf.String(), "OnDeactivate",
+		"Shutdown dispatched OnDeactivate to an already-deactivated plugin")
 }

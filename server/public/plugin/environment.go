@@ -449,9 +449,15 @@ func (env *Environment) RemovePlugin(id string) {
 // deactivateAndTeardown runs OnDeactivate (with a 10-second timeout), then marks the plugin
 // as not running and closes its RPC connection. The plugin remains reachable via
 // RunMultiPluginHook* throughout OnDeactivate so it can dispatch hooks back to itself.
+//
+// If the plugin is not currently active, there's nothing to tear down: its state is reconciled
+// to not running and no OnDeactivate is dispatched, avoiding a spurious RPC call to an
+// already-closed connection.
 func (env *Environment) deactivateAndTeardown(rp registeredPlugin) bool {
-	if rp.supervisor == nil {
-		env.setPluginState(rp.BundleInfo.Manifest.Id, model.PluginStateNotRunning)
+	id := rp.BundleInfo.Manifest.Id
+
+	if rp.supervisor == nil || !env.IsActive(id) {
+		env.setPluginState(id, model.PluginStateNotRunning)
 		return false
 	}
 
@@ -459,17 +465,17 @@ func (env *Environment) deactivateAndTeardown(rp registeredPlugin) bool {
 	go func() {
 		defer close(done)
 		if err := rp.supervisor.Hooks().OnDeactivate(); err != nil {
-			env.logger.Error("Plugin OnDeactivate() error", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id), mlog.Err(err))
+			env.logger.Error("Plugin OnDeactivate() error", mlog.String("plugin_id", id), mlog.Err(err))
 		}
 	}()
 
 	select {
 	case <-time.After(10 * time.Second):
-		env.logger.Warn("Plugin OnDeactivate() failed to complete in 10 seconds", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id))
+		env.logger.Warn("Plugin OnDeactivate() failed to complete in 10 seconds", mlog.String("plugin_id", id))
 	case <-done:
 	}
 
-	env.setPluginState(rp.BundleInfo.Manifest.Id, model.PluginStateNotRunning)
+	env.setPluginState(id, model.PluginStateNotRunning)
 	rp.supervisor.Shutdown()
 
 	return true
@@ -482,16 +488,7 @@ func (env *Environment) Deactivate(id string) bool {
 		return false
 	}
 
-	rp := p.(registeredPlugin)
-
-	// If the plugin is already deactivated, there's nothing to tear down. Force the
-	// state to not running to reconcile any drift and avoid re-running teardown.
-	if !env.IsActive(id) {
-		env.setPluginState(id, model.PluginStateNotRunning)
-		return false
-	}
-
-	return env.deactivateAndTeardown(rp)
+	return env.deactivateAndTeardown(p.(registeredPlugin))
 }
 
 // RestartPlugin deactivates, then activates the plugin with the given id.
