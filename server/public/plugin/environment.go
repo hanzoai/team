@@ -446,30 +446,43 @@ func (env *Environment) RemovePlugin(id string) {
 	}
 }
 
-// Deactivates the plugin with the given id.
+// deactivateAndTeardown runs OnDeactivate (with a 10-second timeout), then marks the plugin
+// as not running and closes its RPC connection. The plugin remains reachable via
+// RunMultiPluginHook* throughout OnDeactivate so it can dispatch hooks back to itself.
+func (env *Environment) deactivateAndTeardown(rp registeredPlugin) bool {
+	if rp.supervisor == nil {
+		env.setPluginState(rp.BundleInfo.Manifest.Id, model.PluginStateNotRunning)
+		return false
+	}
+
+	done := make(chan struct{})
+	go func() {
+		defer close(done)
+		if err := rp.supervisor.Hooks().OnDeactivate(); err != nil {
+			env.logger.Error("Plugin OnDeactivate() error", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id), mlog.Err(err))
+		}
+	}()
+
+	select {
+	case <-time.After(10 * time.Second):
+		env.logger.Warn("Plugin OnDeactivate() failed to complete in 10 seconds", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id))
+	case <-done:
+	}
+
+	env.setPluginState(rp.BundleInfo.Manifest.Id, model.PluginStateNotRunning)
+	rp.supervisor.Shutdown()
+
+	return true
+}
+
+// Deactivate the plugin with the given id.
 func (env *Environment) Deactivate(id string) bool {
 	p, ok := env.registeredPlugins.Load(id)
 	if !ok {
 		return false
 	}
 
-	isActive := env.IsActive(id)
-
-	env.setPluginState(id, model.PluginStateNotRunning)
-
-	if !isActive {
-		return false
-	}
-
-	rp := p.(registeredPlugin)
-	if rp.supervisor != nil {
-		if err := rp.supervisor.Hooks().OnDeactivate(); err != nil {
-			env.logger.Error("Plugin OnDeactivate() error", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id), mlog.Err(err))
-		}
-		rp.supervisor.Shutdown()
-	}
-
-	return true
+	return env.deactivateAndTeardown(p.(registeredPlugin))
 }
 
 // RestartPlugin deactivates, then activates the plugin with the given id.
@@ -487,31 +500,7 @@ func (env *Environment) Shutdown() {
 	env.registeredPlugins.Range(func(_, value any) bool {
 		rp := value.(registeredPlugin)
 
-		if rp.supervisor == nil || !env.IsActive(rp.BundleInfo.Manifest.Id) {
-			return true
-		}
-
-		wg.Add(1)
-
-		done := make(chan bool)
-		go func() {
-			defer close(done)
-			if err := rp.supervisor.Hooks().OnDeactivate(); err != nil {
-				env.logger.Error("Plugin OnDeactivate() error", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id), mlog.Err(err))
-			}
-		}()
-
-		go func() {
-			defer wg.Done()
-
-			select {
-			case <-time.After(10 * time.Second):
-				env.logger.Warn("Plugin OnDeactivate() failed to complete in 10 seconds", mlog.String("plugin_id", rp.BundleInfo.Manifest.Id))
-			case <-done:
-			}
-
-			rp.supervisor.Shutdown()
-		}()
+		wg.Go(func() { env.deactivateAndTeardown(rp) })
 
 		return true
 	})
