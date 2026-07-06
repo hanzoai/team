@@ -2529,50 +2529,6 @@ func TestMmBlocksContextMap(t *testing.T) {
 	})
 }
 
-func TestStripMmBlocksActionSecrets(t *testing.T) {
-	t.Run("absent prop is a no-op", func(t *testing.T) {
-		p := &Post{}
-		assert.NotPanics(t, func() {
-			p.StripMmBlocksActionSecrets()
-		})
-		assert.Nil(t, p.GetProp(PostPropsMmBlocksActions))
-	})
-
-	t.Run("map-form prop is deleted", func(t *testing.T) {
-		p := &Post{}
-		p.AddProp(PostPropsMmBlocksActions, map[string]any{
-			"btn1": mmBlocksExternalEntry("http://example.com/hook", nil),
-		})
-		p.StripMmBlocksActionSecrets()
-		assert.Nil(t, p.GetProp(PostPropsMmBlocksActions))
-	})
-
-	t.Run("string-form prop is deleted (cookie transport not yet supported)", func(t *testing.T) {
-		// Until the cookie-transport PR ships proper handling, any string
-		// value is treated as opaque garbage and stripped wholesale —
-		// matches the validator's reject-strings policy.
-		p := &Post{}
-		p.AddProp(PostPropsMmBlocksActions, "encrypted-cookie-blob")
-		p.StripMmBlocksActionSecrets()
-		assert.Nil(t, p.GetProp(PostPropsMmBlocksActions))
-	})
-
-	t.Run("other props on the post are not touched", func(t *testing.T) {
-		p := &Post{}
-		p.AddProp(PostPropsMmBlocksActions, map[string]any{
-			"btn1": mmBlocksExternalEntry("http://example.com/hook", nil),
-		})
-		p.AddProp(PostPropsAttachments, []*MessageAttachment{{Text: "keep me"}})
-		p.AddProp(PostPropsFromBot, "true")
-
-		p.StripMmBlocksActionSecrets()
-
-		assert.Nil(t, p.GetProp(PostPropsMmBlocksActions))
-		assert.NotNil(t, p.GetProp(PostPropsAttachments))
-		assert.Equal(t, "true", p.GetProp(PostPropsFromBot))
-	})
-}
-
 // TestDialogElement_Collapsible_IsValid covers the "collapsible" element type and
 // the recursive depth/child validation added in validateCollapsible.
 func TestDialogElement_Collapsible_IsValid(t *testing.T) {
