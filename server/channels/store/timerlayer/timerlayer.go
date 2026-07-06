@@ -8378,6 +8378,22 @@ func (s *TimerLayerPropertyFieldStore) GetFieldByName(ctx context.Context, group
 	return result, err
 }
 
+func (s *TimerLayerPropertyFieldStore) GetFieldByNameForObjectType(ctx context.Context, groupID string, targetID string, objectType string, name string) (*model.PropertyField, error) {
+	start := time.Now()
+
+	result, err := s.PropertyFieldStore.GetFieldByNameForObjectType(ctx, groupID, targetID, objectType, name)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("PropertyFieldStore.GetFieldByNameForObjectType", success, elapsed)
+	}
+	return result, err
+}
+
 func (s *TimerLayerPropertyFieldStore) GetForGroup(ctx context.Context, groupID string) ([]*model.PropertyField, error) {
 	start := time.Now()
 
@@ -10165,6 +10181,22 @@ func (s *TimerLayerSessionStore) Get(rctx request.CTX, sessionIDOrToken string) 
 			success = "true"
 		}
 		s.Root.Metrics.ObserveStoreMethodDuration("SessionStore.Get", success, elapsed)
+	}
+	return result, err
+}
+
+func (s *TimerLayerSessionStore) GetAllSessionsWithActiveDeviceIds() ([]*model.Session, error) {
+	start := time.Now()
+
+	result, err := s.SessionStore.GetAllSessionsWithActiveDeviceIds()
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("SessionStore.GetAllSessionsWithActiveDeviceIds", success, elapsed)
 	}
 	return result, err
 }
@@ -14209,6 +14241,22 @@ func (s *TimerLayerUserStore) VerifyEmail(userID string, email string) (string, 
 	return result, err
 }
 
+func (s *TimerLayerUserAccessTokenStore) CountNonCompliantExpiry(maxExpiresAt int64) (int64, error) {
+	start := time.Now()
+
+	result, err := s.UserAccessTokenStore.CountNonCompliantExpiry(maxExpiresAt)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("UserAccessTokenStore.CountNonCompliantExpiry", success, elapsed)
+	}
+	return result, err
+}
+
 func (s *TimerLayerUserAccessTokenStore) Delete(tokenID string) error {
 	start := time.Now()
 
@@ -14253,6 +14301,22 @@ func (s *TimerLayerUserAccessTokenStore) DeleteByIds(tokenIDs []string) (int64, 
 			success = "true"
 		}
 		s.Root.Metrics.ObserveStoreMethodDuration("UserAccessTokenStore.DeleteByIds", success, elapsed)
+	}
+	return result, err
+}
+
+func (s *TimerLayerUserAccessTokenStore) DeleteNonCompliantExpiry(maxExpiresAt int64, limit int) ([]string, error) {
+	start := time.Now()
+
+	result, err := s.UserAccessTokenStore.DeleteNonCompliantExpiry(maxExpiresAt, limit)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("UserAccessTokenStore.DeleteNonCompliantExpiry", success, elapsed)
 	}
 	return result, err
 }

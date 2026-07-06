@@ -10509,6 +10509,27 @@ func (s *RetryLayerPropertyFieldStore) GetFieldByName(ctx context.Context, group
 
 }
 
+func (s *RetryLayerPropertyFieldStore) GetFieldByNameForObjectType(ctx context.Context, groupID string, targetID string, objectType string, name string) (*model.PropertyField, error) {
+
+	tries := 0
+	for {
+		result, err := s.PropertyFieldStore.GetFieldByNameForObjectType(ctx, groupID, targetID, objectType, name)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
 func (s *RetryLayerPropertyFieldStore) GetForGroup(ctx context.Context, groupID string) ([]*model.PropertyField, error) {
 
 	tries := 0
@@ -12815,6 +12836,27 @@ func (s *RetryLayerSessionStore) Get(rctx request.CTX, sessionIDOrToken string) 
 	tries := 0
 	for {
 		result, err := s.SessionStore.Get(rctx, sessionIDOrToken)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
+func (s *RetryLayerSessionStore) GetAllSessionsWithActiveDeviceIds() ([]*model.Session, error) {
+
+	tries := 0
+	for {
+		result, err := s.SessionStore.GetAllSessionsWithActiveDeviceIds()
 		if err == nil {
 			return result, nil
 		}
@@ -17979,6 +18021,27 @@ func (s *RetryLayerUserStore) VerifyEmail(userID string, email string) (string, 
 
 }
 
+func (s *RetryLayerUserAccessTokenStore) CountNonCompliantExpiry(maxExpiresAt int64) (int64, error) {
+
+	tries := 0
+	for {
+		result, err := s.UserAccessTokenStore.CountNonCompliantExpiry(maxExpiresAt)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
 func (s *RetryLayerUserAccessTokenStore) Delete(tokenID string) error {
 
 	tries := 0
@@ -18026,6 +18089,27 @@ func (s *RetryLayerUserAccessTokenStore) DeleteByIds(tokenIDs []string) (int64, 
 	tries := 0
 	for {
 		result, err := s.UserAccessTokenStore.DeleteByIds(tokenIDs)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
+func (s *RetryLayerUserAccessTokenStore) DeleteNonCompliantExpiry(maxExpiresAt int64, limit int) ([]string, error) {
+
+	tries := 0
+	for {
+		result, err := s.UserAccessTokenStore.DeleteNonCompliantExpiry(maxExpiresAt, limit)
 		if err == nil {
 			return result, nil
 		}
