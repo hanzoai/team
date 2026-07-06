@@ -1,42 +1,33 @@
-.. _mmctl_job_list:
+.. _mmctl_job_show:
 
-mmctl job list
+mmctl job show
 --------------
 
-List the latest jobs
+Show a job
 
 Synopsis
 ~~~~~~~~
 
 
-List the latest jobs
+Show a job
 
 ::
 
-  mmctl job list [flags]
+  mmctl job show [job] [flags]
 
 Examples
 ~~~~~~~~
 
 ::
 
-    job list
-  	job list --ids jobID1,jobID2
-  	job list --type ldap_sync --status success
-  	job list --type ldap_sync --status success --page 0 --per-page 10
+    job show jobID
 
 Options
 ~~~~~~~
 
 ::
 
-      --all             Fetch all jobs. --page flag will be ignored if provided
-  -h, --help            help for list
-      --ids strings     Comma-separated list of job IDs to which the operation will be applied. All other flags are ignored
-      --page int        Page number to fetch for the list of jobs
-      --per-page int    Number of jobs to be fetched (default 5)
-      --status string   Filter by job status
-      --type string     Filter by job type
+  -h, --help   help for show
 
 Options inherited from parent commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

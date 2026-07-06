@@ -1,42 +1,36 @@
-.. _mmctl_job_list:
+.. _mmctl_job_create:
 
-mmctl job list
---------------
+mmctl job create
+----------------
 
-List the latest jobs
+Create a new job
 
 Synopsis
 ~~~~~~~~
 
 
-List the latest jobs
+Create a new job of the given type. Use --data to pass type-specific options as key=value pairs.
 
 ::
 
-  mmctl job list [flags]
+  mmctl job create [type] [flags]
 
 Examples
 ~~~~~~~~
 
 ::
 
-    job list
-  	job list --ids jobID1,jobID2
-  	job list --type ldap_sync --status success
-  	job list --type ldap_sync --status success --page 0 --per-page 10
+    job create ldap_sync
+  	job create data_retention
+  	job create message_export --data batch_size=1000
 
 Options
 ~~~~~~~
 
 ::
 
-      --all             Fetch all jobs. --page flag will be ignored if provided
-  -h, --help            help for list
-      --ids strings     Comma-separated list of job IDs to which the operation will be applied. All other flags are ignored
-      --page int        Page number to fetch for the list of jobs
-      --per-page int    Number of jobs to be fetched (default 5)
-      --status string   Filter by job status
-      --type string     Filter by job type
+      --data stringToString   Comma-separated list of key=value pairs passed to the job as type-specific options (default [])
+  -h, --help                  help for create
 
 Options inherited from parent commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
