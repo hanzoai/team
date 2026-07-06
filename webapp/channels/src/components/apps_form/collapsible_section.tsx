@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 type Props = {
     label: string;
@@ -19,6 +19,12 @@ const INDENT_PER_LEVEL_PX = 12;
 // Title + caret toggle; children unmount when collapsed.
 const CollapsibleSection = ({label, expanded, depth = 0, children, bordered = true}: Props) => {
     const [open, setOpen] = useState(expanded);
+
+    // Re-sync when the form changes the expanded prop (useState only seeds it
+    // on mount, and this instance is reused across form switches).
+    useEffect(() => {
+        setOpen(expanded);
+    }, [expanded]);
 
     const style = depth > 0 ? {marginLeft: depth * INDENT_PER_LEVEL_PX} : undefined;
 

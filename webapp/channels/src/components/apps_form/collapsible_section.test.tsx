@@ -105,6 +105,36 @@ describe('CollapsibleSection', () => {
         expect(screen.getByTestId(childTestId)).toBeInTheDocument();
     });
 
+    it('re-syncs open state when the expanded prop changes on a reused instance', () => {
+        // AppsForm reuses this instance across form switches (form updates in
+        // place), so a change to expanded must be reflected, not ignored.
+        const {rerender} = renderWithContext(
+            <CollapsibleSection label='My Section' expanded={true}>
+                <div data-testid={childTestId}>{'child content'}</div>
+            </CollapsibleSection>,
+        );
+        expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true');
+        expect(screen.getByTestId(childTestId)).toBeInTheDocument();
+
+        // New form collapses the same section.
+        rerender(
+            <CollapsibleSection label='My Section' expanded={false}>
+                <div data-testid={childTestId}>{'child content'}</div>
+            </CollapsibleSection>,
+        );
+        expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'false');
+        expect(screen.queryByTestId(childTestId)).toBeNull();
+
+        // And back to expanded.
+        rerender(
+            <CollapsibleSection label='My Section' expanded={true}>
+                <div data-testid={childTestId}>{'child content'}</div>
+            </CollapsibleSection>,
+        );
+        expect(screen.getByRole('button')).toHaveAttribute('aria-expanded', 'true');
+        expect(screen.getByTestId(childTestId)).toBeInTheDocument();
+    });
+
     it('applies the bordered modifier by default and when bordered=true', () => {
         const {container, unmount} = renderSection();
         expect(container.querySelector('.apps-form-collapsible-section')).toHaveClass('apps-form-collapsible-section--bordered');

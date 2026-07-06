@@ -705,7 +705,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
                     bordered={originalField.bordered ?? true}
                     depth={depth}
                 >
-                    {childFields.map((child) => this.renderField(child, false, depth + 1))}
+                    {childFields.map((child, i) => this.renderField(child, autoFocus && i === 0, depth + 1))}
                 </CollapsibleSection>
             );
         }

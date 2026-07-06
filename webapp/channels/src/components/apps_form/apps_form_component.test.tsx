@@ -1951,5 +1951,23 @@ describe('AppsFormComponent', () => {
 
             expect(screen.getByTestId("topinput")).toHaveFocus();
         });
+
+        it('forwards autoFocus to the first child when the first top-level field is a collapsible', () => {
+            const form: Props['form'] = {
+                ...baseProps.form,
+                fields: [
+                    {name: 'sec', type: 'collapsible', label: 'Section', expanded: true, fields: [
+                        {name: 'inner', type: 'text', label: 'inner'},
+                        {name: 'innerSecond', type: 'text', label: 'innerSecond'},
+                    ]},
+                ],
+            };
+
+            renderWithContext(
+                <AppsForm {...baseProps} form={form}/>,
+            );
+
+            expect(screen.getByTestId("innerinput")).toHaveFocus();
+        });
     });
 });
