@@ -450,9 +450,11 @@ func (env *Environment) RemovePlugin(id string) {
 // as not running and closes its RPC connection. The plugin remains reachable via
 // RunMultiPluginHook* throughout OnDeactivate so it can dispatch hooks back to itself.
 //
-// If the plugin is not currently active, there's nothing to tear down: its state is reconciled
-// to not running and no OnDeactivate is dispatched, avoiding a spurious RPC call to an
-// already-closed connection.
+// If the plugin is not currently active, there's nothing to tear down: its state is reset to
+// PluginStateNotRunning and no OnDeactivate is dispatched, avoiding a spurious RPC call to an
+// already-closed connection. This intentionally clears error states such as
+// PluginStateFailedToStayRunning — those are transient observability signals, and once a
+// deactivation is explicitly requested the plugin is simply not running.
 func (env *Environment) deactivateAndTeardown(rp registeredPlugin) bool {
 	id := rp.BundleInfo.Manifest.Id
 

@@ -133,6 +133,96 @@ func TestPluginMarksNotRunningAfterOnDeactivate(t *testing.T) {
 	}
 }
 
+// TestDeactivateAndShutdownAfterFailedToStayRunning verifies that when a plugin is in
+// FailedToStayRunning state (simulating the health-check path in health_check.go), calling
+// Deactivate or Shutdown does not dispatch a second OnDeactivate to the already-closed RPC
+// connection, and resets the state to PluginStateNotRunning.
+func TestDeactivateAndShutdownAfterFailedToStayRunning(t *testing.T) {
+	testCases := []struct {
+		name     string
+		teardown func(env *Environment, pluginID string)
+	}{
+		{
+			name:     "Shutdown",
+			teardown: func(env *Environment, _ string) { env.Shutdown() },
+		},
+		{
+			name:     "Deactivate",
+			teardown: func(env *Environment, pluginID string) { env.Deactivate(pluginID) },
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			pluginDir, err := os.MkdirTemp("", "mm-failed-stay-running-plugin")
+			require.NoError(t, err)
+			t.Cleanup(func() { os.RemoveAll(pluginDir) })
+			webappPluginDir, err := os.MkdirTemp("", "mm-failed-stay-running-webapp")
+			require.NoError(t, err)
+			t.Cleanup(func() { os.RemoveAll(webappPluginDir) })
+
+			pluginID := "test-failed-stay-running-plugin"
+			require.NoError(t, os.MkdirAll(filepath.Join(pluginDir, pluginID), 0700))
+			backend := filepath.Join(pluginDir, pluginID, "backend.exe")
+
+			utils.CompileGo(t, `
+				package main
+
+				import (
+					"github.com/mattermost/mattermost/server/public/plugin"
+				)
+
+				type MyPlugin struct {
+					plugin.MattermostPlugin
+				}
+
+				func (p *MyPlugin) OnDeactivate() error {
+					return nil
+				}
+
+				func main() {
+					plugin.ClientMain(&MyPlugin{})
+				}
+			`, backend)
+
+			require.NoError(t, os.WriteFile(
+				filepath.Join(pluginDir, pluginID, "plugin.json"),
+				[]byte(`{"id":"`+pluginID+`","server":{"executable":"backend.exe"}}`),
+				0600,
+			))
+
+			logger := mlog.CreateConsoleTestLogger(t)
+			var buf mlog.Buffer
+			require.NoError(t, mlog.AddWriterTarget(logger, &buf, true, mlog.LvlError))
+
+			apiImpl := func(*model.Manifest) API { return nil }
+			env, err := NewEnvironment(apiImpl, nil, pluginDir, webappPluginDir, logger, nil)
+			require.NoError(t, err)
+
+			_, _, err = env.Activate(pluginID)
+			require.NoError(t, err)
+			require.True(t, env.IsActive(pluginID))
+
+			// Simulate the health-check path: Deactivate while running (tears down the
+			// supervisor), then override state to FailedToStayRunning.
+			require.True(t, env.Deactivate(pluginID))
+			env.setPluginState(pluginID, model.PluginStateFailedToStayRunning)
+			require.Equal(t, model.PluginStateFailedToStayRunning, env.GetPluginState(pluginID))
+
+			// Deactivating or shutting down a FailedToStayRunning plugin must not dispatch
+			// OnDeactivate to the already-closed RPC connection, and must reset state to
+			// PluginStateNotRunning.
+			tc.teardown(env, pluginID)
+
+			require.NoError(t, logger.Flush())
+			assert.NotContains(t, buf.String(), "OnDeactivate",
+				"%s dispatched OnDeactivate to a FailedToStayRunning plugin", tc.name)
+			assert.Equal(t, model.PluginStateNotRunning, env.GetPluginState(pluginID),
+				"%s should reset FailedToStayRunning to PluginStateNotRunning", tc.name)
+		})
+	}
+}
+
 // TestShutdownAfterDeactivateNoOnDeactivateRPC verifies that shutting down the environment after a
 // plugin has already been deactivated does not dispatch a second OnDeactivate over the plugin's
 // already-closed RPC connection. Previously Shutdown ran deactivateAndTeardown unconditionally for
