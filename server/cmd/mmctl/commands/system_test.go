@@ -215,6 +215,8 @@ func (s *MmctlUnitTestSuite) TestServerVersionCmd() {
 	})
 }
 
+var systemPingOpts = model.SystemPingOptions{FullStatus: true, RESTSemantics: true}
+
 func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 	s.Run("Print server status - all healthy", func() {
 		printer.Clean()
@@ -226,10 +228,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 		}
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(expectedStatus, &model.Response{}, nil).
 			Times(1)
 
@@ -246,10 +245,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 		expectedStatus := map[string]any{"status": "OK"}
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(expectedStatus, &model.Response{}, nil).
 			Times(1)
 
@@ -265,10 +261,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(nil, &model.Response{}, errors.New("mock error")).
 			Times(1)
 
@@ -287,10 +280,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 		}
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(emptyDbStatus, &model.Response{}, nil).
 			Times(1)
 
@@ -309,10 +299,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 		}
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(emptyDbStatus, &model.Response{}, nil).
 			Times(1)
 
@@ -332,10 +319,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 		}
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(unhealthyStatus, &model.Response{}, nil).
 			Times(1)
 
@@ -357,10 +341,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 		}
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(unhealthyStatus, &model.Response{}, nil).
 			Times(1)
 
@@ -382,10 +363,7 @@ func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
 		}
 		s.client.
 			EXPECT().
-			GetPingWithOptions(gomock.Any(), model.SystemPingOptions{
-				FullStatus:    true,
-				RESTSemantics: true,
-			}).
+			GetPingWithOptions(gomock.Any(), systemPingOpts).
 			Return(unhealthyStatus, &model.Response{}, nil).
 			Times(1)
 
