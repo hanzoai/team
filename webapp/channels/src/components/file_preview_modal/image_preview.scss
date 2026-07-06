@@ -13,7 +13,10 @@
     user-select: none;
 
     &__image {
-        max-width: none;
+        // Override the global `img { max-width: 100% }` (which caps to the
+        // wrapper) so images fill the modal, but bound both axes to the padded
+        // content area so tall/large SVGs scale to fit instead of overflowing.
+        max-width: calc(100vw - 96px);
         max-height: calc(100vh - 168px);
         border-radius: 8px;
         animation: image_preview-zoom-in 250ms ease-in-out;
