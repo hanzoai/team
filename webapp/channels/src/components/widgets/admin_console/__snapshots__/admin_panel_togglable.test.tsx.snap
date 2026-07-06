@@ -4,7 +4,6 @@ exports[`components/widgets/admin_console/AdminPanelTogglable should match snaps
 <div>
   <div
     class="AdminPanel clearfix AdminPanelTogglable test-class-name"
-    data-testid="test-id"
     id="test-id"
   >
     <div
@@ -94,7 +93,6 @@ exports[`components/widgets/admin_console/AdminPanelTogglable should match snaps
 <div>
   <div
     class="AdminPanel clearfix AdminPanelTogglable test-class-name closed"
-    data-testid="test-id"
     id="test-id"
   >
     <div
