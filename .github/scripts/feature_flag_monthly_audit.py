@@ -33,7 +33,9 @@ import urllib.parse
 import urllib.request
 from datetime import date, datetime, timezone
  
-FLAG_FILE = "server/public/model/feature_flags.go"
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+FLAG_FILE_REL = "server/public/model/feature_flags.go"
+FLAG_FILE = os.path.join(REPO_ROOT, FLAG_FILE_REL)
 JIRA_LABEL = "feature-flag-cleanup"
  
 # ESR schedule constants — only the anchor date ever needs to change,
@@ -67,6 +69,7 @@ def git_log_patches(filepath: str) -> list[dict]:
     log_output = subprocess.check_output(
         ["git", "log", "--follow", "--format=%H %aI", "-p", "--", filepath],
         text=True,
+        cwd=REPO_ROOT,
     )
     commits = []
     current = None
@@ -116,6 +119,7 @@ def get_release_tags() -> list[tuple[str, datetime]]:
             "--format=%(refname:short)\t%(creatordate:iso-strict)",
         ],
         text=True,
+        cwd=REPO_ROOT,
     ).strip()
  
     tags = []
@@ -295,7 +299,7 @@ def create_jira_ticket(entry: dict, project_key: str, auth: str, base_url: str) 
                     {
                         "type": "inlineCard",
                         "attrs": {
-                            "url": f"https://github.com/mattermost/mattermost/blob/master/{FLAG_FILE}"
+                            "url": f"https://github.com/mattermost/mattermost/blob/master/{FLAG_FILE_REL}"
                         },
                     },
                 ],
