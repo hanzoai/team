@@ -482,7 +482,7 @@ test.describe('System Console > Self-Deleting Messages', () => {
         await receiverChannelsPage.toBeVisible();
 
         // # Wait for the concealed placeholder to be visible and enabled (not loading)
-        const concealedPlaceholder = receiverPage.getByRole('button', {name: /view message/i}).first();
+        const concealedPlaceholder = receiverPage.getByTestId(/^burn-on-read-concealed-/).first();
         await expect(concealedPlaceholder).toBeVisible({timeout: 10000});
         await expect(concealedPlaceholder).toBeEnabled({timeout: 15000});
 
@@ -507,10 +507,10 @@ test.describe('System Console > Self-Deleting Messages', () => {
         }
 
         // * Verify timer chip shows approximately 5 minutes (between 4:10 and 5:00)
-        const timerChip = receiverPage.getByRole('button', {name: /\d+:\d{2}/}).first();
+        const timerChip = receiverPage.getByTestId('burn-on-read-timer-chip').first();
         await expect(timerChip).toBeVisible({timeout: 15000});
 
-        const timerText = await timerChip.textContent();
+        const timerText = await timerChip.getByText(/\d+:\d{2}/).textContent();
         // Timer format is "M:SS" or "MM:SS", should be close to 5:00
         const match = timerText?.match(/(\d+):(\d{2})/);
         expect(match).not.toBeNull();
