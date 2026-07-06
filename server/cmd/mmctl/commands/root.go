@@ -67,13 +67,27 @@ func Run(args []string) error {
 	}()
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-ctx.Done()
+		// Restore default signal handling as soon as the context is canceled (i.e. on
+		// the first Ctrl+C/SIGTERM), not just after ExecuteContext returns, so a second
+		// Ctrl+C/SIGTERM kills the process immediately even if the command is blocked on
+		// something that doesn't observe context cancellation (e.g. an interactive
+		// stdin prompt).
+		stop()
+	}()
 
 	err := RootCmd.ExecuteContext(ctx)
-	// Restore default signal handling before flushing so a second Ctrl+C kills immediately.
 	stop()
-	// Flush the printer first before printing any error
+
+	return finishExecute(err)
+}
+
+// finishExecute flushes the printer and prints any error other than a graceful
+// cancellation, returning err unchanged so the caller can still act on it.
+func finishExecute(err error) error {
 	_ = printer.Flush()
-	if err != nil && !errors.Is(err, context.Canceled) {
+	if err != nil && !errors.Is(err, context.Canceled) && !errors.Is(err, context.DeadlineExceeded) {
 		_, _ = fmt.Fprintf(os.Stderr, "Error: %s\n", err.Error())
 	}
 

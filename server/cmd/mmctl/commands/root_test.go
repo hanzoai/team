@@ -54,17 +54,13 @@ func captureStderr(t *testing.T, fn func()) string {
 	return buf.String()
 }
 
-// executeRoot runs RootCmd with the given args and replicates Run()'s
-// stderr-printing behavior without re-registering persistent flags (which
-// would panic on a second call in the same test binary).
+// executeRoot runs RootCmd with the given args and reuses Run()'s
+// finishExecute logic without re-registering persistent flags (which would
+// panic on a second call in the same test binary).
 func executeRoot(args []string) error {
 	RootCmd.SetArgs(args)
 	err := RootCmd.ExecuteContext(context.Background())
-	_ = printer.Flush()
-	if err != nil && !errors.Is(err, context.Canceled) {
-		_, _ = fmt.Fprintf(os.Stderr, "Error: %s\n", err.Error())
-	}
-	return err
+	return finishExecute(err)
 }
 
 func TestRunContextCanceledSuppressed(t *testing.T) {

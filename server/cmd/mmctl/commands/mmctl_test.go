@@ -17,6 +17,7 @@ import (
 	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/mocks"
 	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
@@ -28,12 +29,26 @@ var EnableEnterpriseTests string
 // lifetime, mirroring the context cobra assigns to a command during real
 // execution (see Command.ExecuteContext). Pass one of the package's real
 // command vars (e.g. SystemSupportPacketCmd) to reuse its already-registered
-// flags instead of re-declaring them on a bare command; omit it for a command
-// with no flags.
-func newTestCmd(t *testing.T, base ...*cobra.Command) *cobra.Command {
-	cmd := &cobra.Command{}
-	if len(base) > 0 {
-		cmd = base[0]
+// flags instead of re-declaring them on a bare command; pass nil for a
+// command with no flags.
+//
+// When base is non-nil, its context and flag values are restored once the
+// test completes, so mutating the shared command in one test (e.g. via
+// cmd.Flags().Set(...)) can't leak into a later test or into a real dispatch
+// through cobra's Execute/ExecuteContext, which only assigns a fresh context
+// when one isn't already set.
+func newTestCmd(t *testing.T, base *cobra.Command) *cobra.Command {
+	cmd := base
+	if cmd == nil {
+		cmd = &cobra.Command{}
+	} else {
+		t.Cleanup(func() {
+			cmd.SetContext(nil)
+			cmd.Flags().VisitAll(func(f *pflag.Flag) {
+				_ = f.Value.Set(f.DefValue)
+				f.Changed = false
+			})
+		})
 	}
 	cmd.SetContext(t.Context())
 	return cmd
