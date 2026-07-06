@@ -21,6 +21,7 @@ import {ColorSwatch, LevelOptionLabel} from 'components/admin_console/classifica
 import {
     CLASSIFICATIONS_CHANNEL_OBJECT_TYPE,
     CLASSIFICATIONS_GROUP_NAME,
+    DISPLAY_BANNER_TOP,
 } from 'components/admin_console/classification_markings/utils';
 import {classificationPresetDropdownStyles} from 'components/admin_console/classification_markings/utils/preset_dropdown_styles';
 import ColorInput from 'components/color_input';
@@ -439,7 +440,11 @@ function ChannelSettingsConfigurationTab({
                         CLASSIFICATIONS_GROUP_NAME,
                         CLASSIFICATIONS_CHANNEL_OBJECT_TYPE,
                         channel.id,
-                        [{field_id: classification.channelField.id, value: selectedClassificationId}],
+                        // Per-channel banner placement lives on the value's attrs.
+                        // A single shared channel field is used for all channels, so
+                        // placement cannot live on the field. Fixed to top today
+                        // (matches prior behavior); per-channel UI can vary it later.
+                        [{field_id: classification.channelField.id, value: selectedClassificationId, attrs: {actions: [DISPLAY_BANNER_TOP]}}],
                     );
                     dispatch({type: PropertyTypes.RECEIVED_PROPERTY_VALUES, data: {values}});
                 } catch (err) {

@@ -278,13 +278,15 @@ export async function fetchSystemClassificationValue(linkedFieldId: string): Pro
 }
 
 /**
- * Upserts the system classification property value to the given option ID.
- * Uses the dedicated system values endpoint (sentinel target_id 'system').
- * Returns the saved property values so callers can eagerly update the store.
+ * Upserts the system classification property value to the given option ID and
+ * banner actions. The actions are written to the value's attrs (new clients
+ * read value.attrs.actions); the caller separately mirrors them onto the field
+ * for mobile backwards-compatibility. Uses the dedicated system values endpoint
+ * (sentinel target_id 'system'). Returns the saved values for eager store update.
  */
-export async function saveUpsertSystemValue(linkedFieldId: string, optionId: string): Promise<Array<PropertyValue<string>>> {
+export async function saveUpsertSystemValue(linkedFieldId: string, optionId: string, actions: string[]): Promise<Array<PropertyValue<string>>> {
     return Client4.patchSystemPropertyValues<string>(CLASSIFICATIONS_GROUP_NAME, [
-        {field_id: linkedFieldId, value: optionId},
+        {field_id: linkedFieldId, value: optionId, attrs: {actions}},
     ]);
 }
 

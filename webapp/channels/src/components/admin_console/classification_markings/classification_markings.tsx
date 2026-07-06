@@ -37,6 +37,7 @@ import {
     DEFAULT_GLOBAL_BANNER,
     DISPLAY_BANNER_TOP,
     actionsToGlobalBanner,
+    placementToActions,
     fetchChannelClassificationField,
     fetchClassificationField,
     fetchLinkedClassificationField,
@@ -404,10 +405,16 @@ export default function ClassificationMarkings({disabled}: Props) {
                 savedLinked = await saveCreateLinkedField(savedTemplate.id, disabledBanner);
             }
 
-            if (resolvedBanner.enabled && resolvedBanner.level_id) {
-                const savedValues = await saveUpsertSystemValue(savedLinked.id, resolvedBanner.level_id);
-                dispatch({type: PropertyTypes.RECEIVED_PROPERTY_VALUES, data: {values: savedValues}});
+            // Always upsert the system value carrying the resolved actions (empty
+            // when the banner is off) and level so value.attrs.actions and
+            // field.attrs.actions never diverge. New clients read value.attrs.actions;
+            // mobile keeps reading field.attrs.actions (mirrored below).
+            const resolvedLevelId = resolvedBanner.enabled ? resolvedBanner.level_id : '';
+            const savedValues = await saveUpsertSystemValue(savedLinked.id, resolvedLevelId, placementToActions(resolvedBanner));
+            dispatch({type: PropertyTypes.RECEIVED_PROPERTY_VALUES, data: {values: savedValues}});
 
+            // Mirror the resolved actions onto the field last (mobile compat path).
+            if (resolvedBanner.enabled) {
                 savedLinked = await savePatchLinkedField(savedLinked.id, resolvedBanner);
             }
 
