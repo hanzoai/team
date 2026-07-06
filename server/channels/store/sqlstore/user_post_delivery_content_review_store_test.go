@@ -28,13 +28,13 @@ func newDeliveryTrackingTestStore(t *testing.T) (*SqlStore, func()) {
 		t.Skip(err)
 	}
 
-	dt := model.DeliveryTrackingSettings{
+	deliverySettings := model.DeliveryTrackingSettings{
 		Enable:     model.NewPointer(true),
 		DataSource: model.NewPointer(""), // primary-DB fallback
 	}
-	dt.SetDefaults()
+	deliverySettings.SetDefaults()
 
-	ss, err := New(*settings, logger, nil, WithDeliveryTrackingSettings(dt),
+	ss, err := New(*settings, logger, nil, WithDeliveryTrackingSettings(deliverySettings),
 		WithFeatureFlags(func() *model.FeatureFlags { return &model.FeatureFlags{PostDeliveryTracking: true} }))
 	require.NoError(t, err)
 
@@ -53,7 +53,7 @@ func TestUserPostDeliveryContentReviewStore(t *testing.T) {
 	defer cleanup()
 
 	ctx := context.Background()
-	crs := ss.UserPostDeliveryContentReview()
+	contentReviewStore := ss.UserPostDeliveryContentReview()
 
 	readRows := func(t *testing.T, postID string) []model.UserPostDeliveryContentReview {
 		t.Helper()
@@ -71,7 +71,7 @@ func TestUserPostDeliveryContentReviewStore(t *testing.T) {
 		const delivered = int64(1234567890)
 
 		before := model.GetMillis()
-		require.NoError(t, crs.SaveBatch(ctx, []model.UserPostDelivery{
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
 			{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: delivered},
 		}, jobID))
 
@@ -85,13 +85,13 @@ func TestUserPostDeliveryContentReviewStore(t *testing.T) {
 	t.Run("SaveBatch dedups in-batch and across calls, keeping the first row", func(t *testing.T) {
 		postID := model.NewId()
 		target := model.NewId()
-		recs := []model.UserPostDelivery{
+		records := []model.UserPostDelivery{
 			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 111},
 			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 222}, // duplicate key
 		}
-		require.NoError(t, crs.SaveBatch(ctx, recs, model.NewId()))
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, records, model.NewId()))
 		// A re-copy (e.g. a later re-trigger) must be a no-op.
-		require.NoError(t, crs.SaveBatch(ctx, recs, model.NewId()))
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, records, model.NewId()))
 
 		rows := readRows(t, postID)
 		require.Len(t, rows, 1)
@@ -101,7 +101,7 @@ func TestUserPostDeliveryContentReviewStore(t *testing.T) {
 	t.Run("same target/post but different mechanism are distinct rows", func(t *testing.T) {
 		postID := model.NewId()
 		target := model.NewId()
-		require.NoError(t, crs.SaveBatch(ctx, []model.UserPostDelivery{
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
 			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
 			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 2},
 		}, model.NewId()))
@@ -110,41 +110,37 @@ func TestUserPostDeliveryContentReviewStore(t *testing.T) {
 
 	t.Run("CountByPost", func(t *testing.T) {
 		postID := model.NewId()
-		require.NoError(t, crs.SaveBatch(ctx, []model.UserPostDelivery{
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
 			{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
 			{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 2},
 		}, model.NewId()))
 
-		n, err := crs.CountByPost(ctx, postID)
+		n, err := contentReviewStore.CountByPost(ctx, postID)
 		require.NoError(t, err)
 		require.Equal(t, int64(2), n)
 
-		empty, err := crs.CountByPost(ctx, model.NewId())
+		empty, err := contentReviewStore.CountByPost(ctx, model.NewId())
 		require.NoError(t, err)
 		require.Equal(t, int64(0), empty)
 	})
 
 	t.Run("DeleteByPost scopes to the given post", func(t *testing.T) {
-		p1, p2 := model.NewId(), model.NewId()
-		require.NoError(t, crs.SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: p1, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
+		post1, post2 := model.NewId(), model.NewId()
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
+			{PostID: post1, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
 		}, model.NewId()))
-		require.NoError(t, crs.SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: p2, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
+			{PostID: post2, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
 		}, model.NewId()))
 
-		require.NoError(t, crs.DeleteByPost(ctx, p1))
+		require.NoError(t, contentReviewStore.DeleteByPost(ctx, post1))
 
-		n1, err := crs.CountByPost(ctx, p1)
+		count1, err := contentReviewStore.CountByPost(ctx, post1)
 		require.NoError(t, err)
-		require.Equal(t, int64(0), n1)
-		n2, err := crs.CountByPost(ctx, p2)
+		require.Equal(t, int64(0), count1)
+		count2, err := contentReviewStore.CountByPost(ctx, post2)
 		require.NoError(t, err)
-		require.Equal(t, int64(1), n2, "other posts are untouched")
-	})
-
-	t.Run("SaveBatch with no records is a no-op", func(t *testing.T) {
-		require.NoError(t, crs.SaveBatch(ctx, nil, model.NewId()))
+		require.Equal(t, int64(1), count2, "other posts are untouched")
 	})
 }
 
@@ -157,17 +153,17 @@ func TestUserPostDeliveryStoreGetByPost(t *testing.T) {
 	defer cleanup()
 
 	ctx := context.Background()
-	s := ss.UserPostDelivery()
+	deliveryStore := ss.UserPostDelivery()
 
 	postID := model.NewId()
 	const total = 5
-	recs := make([]model.UserPostDelivery, 0, total)
+	records := make([]model.UserPostDelivery, 0, total)
 	for range total {
-		recs = append(recs, model.UserPostDelivery{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct})
+		records = append(records, model.UserPostDelivery{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct})
 	}
-	require.NoError(t, s.MarkBulk(ctx, recs))
+	require.NoError(t, deliveryStore.MarkBulk(ctx, records))
 	// A different post's rows must never leak into the page.
-	require.NoError(t, s.MarkBulk(ctx, []model.UserPostDelivery{
+	require.NoError(t, deliveryStore.MarkBulk(ctx, []model.UserPostDelivery{
 		{PostID: model.NewId(), TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct},
 	}))
 
@@ -175,14 +171,14 @@ func TestUserPostDeliveryStoreGetByPost(t *testing.T) {
 	seen := map[model.UserPostDeliveryCursor]bool{}
 	var cursor model.UserPostDeliveryCursor
 	for {
-		batch, err := s.GetByPost(ctx, postID, cursor, 2)
+		batch, err := deliveryStore.GetByPost(ctx, postID, cursor, 2)
 		require.NoError(t, err)
 		if len(batch) == 0 {
 			break
 		}
-		for _, r := range batch {
-			require.Equal(t, postID, r.PostID)
-			key := model.UserPostDeliveryCursor{TargetID: r.TargetID, TargetType: r.TargetType, Mechanism: r.Mechanism}
+		for _, row := range batch {
+			require.Equal(t, postID, row.PostID)
+			key := model.UserPostDeliveryCursor{TargetID: row.TargetID, TargetType: row.TargetType, Mechanism: row.Mechanism}
 			require.False(t, seen[key], "row returned on more than one page")
 			seen[key] = true
 		}

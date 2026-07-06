@@ -17,16 +17,12 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/store"
 )
 
-// defaultBatchSize is used when the configured copy batch size is missing or
-// non-positive.
 const defaultBatchSize = 2000
 
-// sourceReader reads a post's delivery rows from the source store.
 type sourceReader interface {
 	GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error)
 }
 
-// reviewWriter writes copied rows into the content-review store.
 type reviewWriter interface {
 	SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error
 }
@@ -129,9 +125,9 @@ func (worker *Worker) DoJob(job *model.Job) {
 	}
 
 	batchSize := defaultBatchSize
-	cfgSize := model.SafeDereference(worker.jobServer.Config().DeliveryTrackingSettings.ContentReviewDeliveryReceiptCopyBatchSize)
-	if cfgSize > 0 {
-		batchSize = cfgSize
+	configuredBatchSize := model.SafeDereference(worker.jobServer.Config().DeliveryTrackingSettings.ContentReviewDeliveryReceiptCopyBatchSize)
+	if configuredBatchSize > 0 {
+		batchSize = configuredBatchSize
 	}
 
 	var cancelContext request.CTX = request.EmptyContext(worker.logger)
@@ -141,8 +137,6 @@ func (worker *Worker) DoJob(job *model.Job) {
 	go worker.jobServer.CancellationWatcher(cancelContext, job.Id, cancelWatcherChan)
 	defer cancelCancelWatcher()
 
-	// shouldStop is polled between batches so cancellation / shutdown is honored
-	// promptly for large audiences.
 	shouldStop := func() bool {
 		select {
 		case <-cancelWatcherChan:

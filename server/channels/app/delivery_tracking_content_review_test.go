@@ -4,6 +4,7 @@
 package app
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 	"testing"
@@ -21,14 +22,14 @@ func TestCreateDeliveryTrackingContentReviewJob(t *testing.T) {
 
 	// Enable content flagging with BasicUser as a common reviewer so posts can be
 	// flagged (which sets the "Pending" status the trigger requires).
-	cfCfg := model.ContentFlaggingSettingsRequest{}
-	cfCfg.SetDefaults(false)
-	cfCfg.ReviewerSettings.CommonReviewers = model.NewPointer(true)
-	cfCfg.ReviewerSettings.CommonReviewerIds = []string{th.BasicUser.Id}
-	cfCfg.AdditionalSettings.ReporterCommentRequired = model.NewPointer(false)
-	cfCfg.AdditionalSettings.HideFlaggedContent = model.NewPointer(false)
-	cfCfg.AdditionalSettings.Reasons = &[]string{"spam", "harassment", "inappropriate"}
-	require.Nil(t, th.App.SaveContentFlaggingConfig(th.Context, cfCfg))
+	contentFlaggingConfig := model.ContentFlaggingSettingsRequest{}
+	contentFlaggingConfig.SetDefaults(false)
+	contentFlaggingConfig.ReviewerSettings.CommonReviewers = model.NewPointer(true)
+	contentFlaggingConfig.ReviewerSettings.CommonReviewerIds = []string{th.BasicUser.Id}
+	contentFlaggingConfig.AdditionalSettings.ReporterCommentRequired = model.NewPointer(false)
+	contentFlaggingConfig.AdditionalSettings.HideFlaggedContent = model.NewPointer(false)
+	contentFlaggingConfig.AdditionalSettings.Reasons = &[]string{"spam", "harassment", "inappropriate"}
+	require.Nil(t, th.App.SaveContentFlaggingConfig(th.Context, contentFlaggingConfig))
 
 	t.Run("returns forbidden when the feature is disabled", func(t *testing.T) {
 		_, appErr := th.App.CreateDeliveryTrackingContentReviewJob(th.Context, model.NewId(), th.BasicTeam.Id, th.BasicUser.Id)
@@ -41,6 +42,24 @@ func TestCreateDeliveryTrackingContentReviewJob(t *testing.T) {
 	t.Run("rejects a post that is not flagged", func(t *testing.T) {
 		post := th.CreatePost(t, th.BasicChannel)
 		_, appErr := th.App.CreateDeliveryTrackingContentReviewJob(th.Context, post.Id, th.BasicTeam.Id, th.BasicUser.Id)
+		require.NotNil(t, appErr)
+		require.Equal(t, http.StatusBadRequest, appErr.StatusCode)
+	})
+
+	t.Run("rejects a flagged post that is no longer under review", func(t *testing.T) {
+		post := setupFlaggedPost(t, th)
+
+		// Move the post to a terminal status so it is flagged but no longer in a
+		// reviewable (Pending/Assigned) state.
+		groupID, appErr := th.App.ContentFlaggingGroupId()
+		require.Nil(t, appErr)
+		statusValue, appErr := th.App.GetPostContentFlaggingPropertyValue(post.Id, ContentFlaggingPropertyNameStatus)
+		require.Nil(t, appErr)
+		statusValue.Value = json.RawMessage(`"` + model.ContentFlaggingStatusRemoved + `"`)
+		_, appErr = th.App.UpdatePropertyValue(th.Context, groupID, statusValue)
+		require.Nil(t, appErr)
+
+		_, appErr = th.App.CreateDeliveryTrackingContentReviewJob(th.Context, post.Id, th.BasicTeam.Id, th.BasicUser.Id)
 		require.NotNil(t, appErr)
 		require.Equal(t, http.StatusBadRequest, appErr.StatusCode)
 	})

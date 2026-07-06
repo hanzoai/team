@@ -65,7 +65,6 @@ func (s *SqlUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, r
 	return nil
 }
 
-// DeleteByPost removes all content-review rows for a post.
 func (s *SqlUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, postID string) error {
 	query, args, err := s.getQueryBuilder().
 		Delete(userPostDeliveryContentReviewTableName).
@@ -81,7 +80,6 @@ func (s *SqlUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context
 	return nil
 }
 
-// CountByPost returns the number of content-review rows stored for a post.
 func (s *SqlUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context, postID string) (int64, error) {
 	query, args, err := s.getQueryBuilder().
 		Select("COUNT(*)").

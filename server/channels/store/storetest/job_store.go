@@ -115,7 +115,7 @@ func testJobSaveOnceWithData(t *testing.T, rctx request.CTX, ss store.Store) {
 	postA := model.NewId()
 	postB := model.NewId()
 
-	mkJob := func(postID string) *model.Job {
+	newJobForPost := func(postID string) *model.Job {
 		return &model.Job{
 			Id:     model.NewId(),
 			Type:   jobType,
@@ -125,17 +125,17 @@ func testJobSaveOnceWithData(t *testing.T, rctx request.CTX, ss store.Store) {
 		}
 	}
 
-	j1, err := ss.Job().SaveOnce(mkJob(postA), map[string]string{"post_id": postA})
+	firstJob, err := ss.Job().SaveOnce(newJobForPost(postA), map[string]string{"post_id": postA})
 	require.NoError(t, err)
-	require.NotNil(t, j1, "first job for a post is inserted")
+	require.NotNil(t, firstJob, "first job for a post is inserted")
 
-	j2, err := ss.Job().SaveOnce(mkJob(postA), map[string]string{"post_id": postA})
+	dedupedJob, err := ss.Job().SaveOnce(newJobForPost(postA), map[string]string{"post_id": postA})
 	require.NoError(t, err)
-	require.Nil(t, j2, "a second job for the same post is deduped even with different Data")
+	require.Nil(t, dedupedJob, "a second job for the same post is deduped even with different Data")
 
-	j3, err := ss.Job().SaveOnce(mkJob(postB), map[string]string{"post_id": postB})
+	otherPostJob, err := ss.Job().SaveOnce(newJobForPost(postB), map[string]string{"post_id": postB})
 	require.NoError(t, err)
-	require.NotNil(t, j3, "a job for a different post is not deduped")
+	require.NotNil(t, otherPostJob, "a job for a different post is not deduped")
 
 	for _, postID := range []string{postA, postB} {
 		jobs, err := ss.Job().GetByTypeAndData(rctx, jobType, map[string]string{"post_id": postID}, true, model.JobStatusPending)
@@ -143,8 +143,8 @@ func testJobSaveOnceWithData(t *testing.T, rctx request.CTX, ss store.Store) {
 		require.Len(t, jobs, 1, "exactly one pending job per post")
 	}
 
-	ss.Job().Delete(j1.Id)
-	ss.Job().Delete(j3.Id)
+	ss.Job().Delete(firstJob.Id)
+	ss.Job().Delete(otherPostJob.Id)
 }
 
 // testJobAppendToJobDataCSV verifies the atomic comma-separated-set append.

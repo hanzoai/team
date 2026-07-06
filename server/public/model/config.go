@@ -1620,9 +1620,7 @@ type DeliveryTrackingSettings struct {
 	MaxOpenConns                *int     `access:"environment_database,write_restrictable,cloud_restrictable"`
 	Trace                       *bool    `access:"environment_database,write_restrictable,cloud_restrictable"`
 	QueryTimeout                *int     `access:"environment_database,write_restrictable,cloud_restrictable"`
-	// ContentReviewDeliveryReceiptCopyBatchSize is the page size the
-	// content-review copy job uses when reading source rows and writing them into
-	// the primary-DB UserPostDeliveryContentReview table.
+	// Page size for the content-review delivery-receipt copy job.
 	ContentReviewDeliveryReceiptCopyBatchSize *int `access:"environment_database,write_restrictable,cloud_restrictable"`
 }
 

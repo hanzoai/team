@@ -23,7 +23,6 @@ func (a *App) CreateDeliveryTrackingContentReviewJob(rctx request.CTX, postID, t
 		return nil, model.NewAppError("CreateDeliveryTrackingContentReviewJob", "app.job.error", nil, "post delivery tracking is not enabled", http.StatusForbidden)
 	}
 
-	// The post must be flagged and still under review
 	status, appErr := a.GetPostContentFlaggingPropertyValue(postID, ContentFlaggingPropertyNameStatus)
 	if appErr != nil {
 		if appErr.StatusCode == http.StatusNotFound {

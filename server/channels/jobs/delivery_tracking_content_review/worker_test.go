@@ -15,8 +15,8 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/store"
 )
 
-func rowCursor(r model.UserPostDelivery) model.UserPostDeliveryCursor {
-	return model.UserPostDeliveryCursor{TargetID: r.TargetID, TargetType: r.TargetType, Mechanism: r.Mechanism}
+func rowCursor(row model.UserPostDelivery) model.UserPostDeliveryCursor {
+	return model.UserPostDeliveryCursor{TargetID: row.TargetID, TargetType: row.TargetType, Mechanism: row.Mechanism}
 }
 
 func cursorLess(a, b model.UserPostDeliveryCursor) bool {
@@ -54,12 +54,12 @@ func (f *fakeSource) GetByPost(_ context.Context, postID string, after model.Use
 		return nil, f.err
 	}
 	out := []model.UserPostDelivery{}
-	for _, r := range f.rows {
-		if r.PostID != postID {
+	for _, row := range f.rows {
+		if row.PostID != postID {
 			continue
 		}
-		if after.IsFirstPage() || cursorLess(after, rowCursor(r)) {
-			out = append(out, r)
+		if after.IsFirstPage() || cursorLess(after, rowCursor(row)) {
+			out = append(out, row)
 			if len(out) == limit {
 				break
 			}
@@ -108,84 +108,84 @@ func TestCopyPostDeliveries(t *testing.T) {
 
 	t.Run("post with zero deliveries copies nothing and succeeds", func(t *testing.T) {
 		postID := model.NewId()
-		src := newFakeSource(nil)
-		dst := &fakeTarget{}
+		source := newFakeSource(nil)
+		target := &fakeTarget{}
 
-		copied, canceled, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 2, neverStop, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, nil)
 		require.NoError(t, err)
 		require.False(t, canceled)
 		require.Equal(t, 0, copied)
-		require.Equal(t, 0, dst.calls, "no SaveBatch calls for an empty post")
-		require.Equal(t, 1, src.calls, "one read returns the empty page")
+		require.Equal(t, 0, target.calls, "no SaveBatch calls for an empty post")
+		require.Equal(t, 1, source.calls, "one read returns the empty page")
 	})
 
 	t.Run("multi-page copy returns every row exactly once", func(t *testing.T) {
 		postID := model.NewId()
 		rows := makeRows(postID, 5)
-		src := newFakeSource(rows)
-		dst := &fakeTarget{}
+		source := newFakeSource(rows)
+		target := &fakeTarget{}
 
 		var progress []int
 		onProgress := func(copied int) error { progress = append(progress, copied); return nil }
 
-		copied, canceled, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 2, neverStop, onProgress)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, onProgress)
 		require.NoError(t, err)
 		require.False(t, canceled)
 		require.Equal(t, 5, copied)
 
 		// All rows saved exactly once (dedup by key), and jobID threaded through.
-		require.Len(t, dst.saved, 5)
+		require.Len(t, target.saved, 5)
 		seen := map[model.UserPostDeliveryCursor]bool{}
-		for _, r := range dst.saved {
-			require.False(t, seen[rowCursor(r)], "row saved more than once")
-			seen[rowCursor(r)] = true
+		for _, row := range target.saved {
+			require.False(t, seen[rowCursor(row)], "row saved more than once")
+			seen[rowCursor(row)] = true
 		}
-		for _, jid := range dst.jobIDs {
-			require.Equal(t, jobID, jid)
+		for _, savedJobID := range target.jobIDs {
+			require.Equal(t, jobID, savedJobID)
 		}
 		require.Equal(t, []int{2, 4, 5}, progress, "cumulative progress reported per batch")
 	})
 
 	t.Run("full final page triggers one more empty read", func(t *testing.T) {
 		postID := model.NewId()
-		src := newFakeSource(makeRows(postID, 4))
-		dst := &fakeTarget{}
+		source := newFakeSource(makeRows(postID, 4))
+		target := &fakeTarget{}
 
-		copied, _, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 2, neverStop, nil)
+		copied, _, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, nil)
 		require.NoError(t, err)
 		require.Equal(t, 4, copied)
-		require.Equal(t, 3, src.calls, "2 full pages + 1 empty page")
-		require.Equal(t, 2, dst.calls, "empty page is not saved")
+		require.Equal(t, 3, source.calls, "2 full pages + 1 empty page")
+		require.Equal(t, 2, target.calls, "empty page is not saved")
 	})
 
 	t.Run("source unavailable surfaces the sentinel error", func(t *testing.T) {
-		src := newFakeSource(nil)
-		src.err = store.ErrUserPostDeliverySourceUnavailable
-		dst := &fakeTarget{}
+		source := newFakeSource(nil)
+		source.err = store.ErrUserPostDeliverySourceUnavailable
+		target := &fakeTarget{}
 
-		copied, canceled, err := copyPostDeliveries(ctx, src, dst, model.NewId(), jobID, 2, neverStop, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, model.NewId(), jobID, 2, neverStop, nil)
 		require.ErrorIs(t, err, store.ErrUserPostDeliverySourceUnavailable)
 		require.False(t, canceled)
 		require.Equal(t, 0, copied)
-		require.Equal(t, 0, dst.calls)
+		require.Equal(t, 0, target.calls)
 	})
 
 	t.Run("stop before first batch cancels immediately", func(t *testing.T) {
 		postID := model.NewId()
-		src := newFakeSource(makeRows(postID, 5))
-		dst := &fakeTarget{}
+		source := newFakeSource(makeRows(postID, 5))
+		target := &fakeTarget{}
 
-		copied, canceled, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 2, func() bool { return true }, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, func() bool { return true }, nil)
 		require.NoError(t, err)
 		require.True(t, canceled)
 		require.Equal(t, 0, copied)
-		require.Equal(t, 0, src.calls, "no reads once stopped")
+		require.Equal(t, 0, source.calls, "no reads once stopped")
 	})
 
 	t.Run("stop between batches cancels with partial progress", func(t *testing.T) {
 		postID := model.NewId()
-		src := newFakeSource(makeRows(postID, 6))
-		dst := &fakeTarget{}
+		source := newFakeSource(makeRows(postID, 6))
+		target := &fakeTarget{}
 
 		calls := 0
 		shouldStop := func() bool {
@@ -193,7 +193,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 			return calls > 1 // allow the first batch, stop before the second
 		}
 
-		copied, canceled, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 2, shouldStop, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, shouldStop, nil)
 		require.NoError(t, err)
 		require.True(t, canceled)
 		require.Equal(t, 2, copied, "one batch copied before cancellation")
@@ -201,11 +201,11 @@ func TestCopyPostDeliveries(t *testing.T) {
 
 	t.Run("SaveBatch error propagates and stops the copy", func(t *testing.T) {
 		postID := model.NewId()
-		src := newFakeSource(makeRows(postID, 4))
+		source := newFakeSource(makeRows(postID, 4))
 		wantErr := errors.New("write failed")
-		dst := &fakeTarget{err: wantErr}
+		target := &fakeTarget{err: wantErr}
 
-		copied, canceled, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 2, neverStop, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, nil)
 		require.ErrorIs(t, err, wantErr)
 		require.False(t, canceled)
 		require.Equal(t, 0, copied)
@@ -213,11 +213,11 @@ func TestCopyPostDeliveries(t *testing.T) {
 
 	t.Run("onProgress error propagates", func(t *testing.T) {
 		postID := model.NewId()
-		src := newFakeSource(makeRows(postID, 4))
-		dst := &fakeTarget{}
+		source := newFakeSource(makeRows(postID, 4))
+		target := &fakeTarget{}
 		wantErr := errors.New("progress failed")
 
-		copied, canceled, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 2, neverStop, func(int) error { return wantErr })
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, func(int) error { return wantErr })
 		require.ErrorIs(t, err, wantErr)
 		require.False(t, canceled)
 		require.Equal(t, 2, copied, "the first batch was written before progress failed")
@@ -225,12 +225,12 @@ func TestCopyPostDeliveries(t *testing.T) {
 
 	t.Run("non-positive batch size falls back to the default", func(t *testing.T) {
 		postID := model.NewId()
-		src := newFakeSource(makeRows(postID, 3))
-		dst := &fakeTarget{}
+		source := newFakeSource(makeRows(postID, 3))
+		target := &fakeTarget{}
 
-		copied, _, err := copyPostDeliveries(ctx, src, dst, postID, jobID, 0, neverStop, nil)
+		copied, _, err := copyPostDeliveries(ctx, source, target, postID, jobID, 0, neverStop, nil)
 		require.NoError(t, err)
 		require.Equal(t, 3, copied)
-		require.Equal(t, 1, dst.calls, "default batch size is large, so a single page suffices")
+		require.Equal(t, 1, target.calls, "default batch size is large, so a single page suffices")
 	})
 }
