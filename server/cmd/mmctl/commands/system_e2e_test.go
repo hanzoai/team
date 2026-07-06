@@ -48,9 +48,8 @@ func (s *MmctlE2ETestSuite) TestNukeUsersCmd() {
 	s.Run("Delete all users as unprivileged user should not work", func() {
 		printer.Clean()
 
-		cmd := newTestCmd(s.T())
-		confirm := true
-		cmd.Flags().BoolVar(&confirm, "confirm", confirm, "confirm")
+		cmd := newTestCmd(s.T(), SystemNukeUsersCmd)
+		s.Require().NoError(cmd.Flags().Set("confirm", "true"))
 
 		err := nukeUsersCmdF(s.th.Client, cmd, []string{})
 		s.Require().NotNil(err)
@@ -69,9 +68,8 @@ func (s *MmctlE2ETestSuite) TestNukeUsersCmd() {
 	s.Run("Delete all users as system admin through the port API should not work", func() {
 		printer.Clean()
 
-		cmd := newTestCmd(s.T())
-		confirm := true
-		cmd.Flags().BoolVar(&confirm, "confirm", confirm, "confirm")
+		cmd := newTestCmd(s.T(), SystemNukeUsersCmd)
+		s.Require().NoError(cmd.Flags().Set("confirm", "true"))
 
 		err := nukeUsersCmdF(s.th.SystemAdminClient, cmd, []string{})
 		s.Require().NotNil(err)
@@ -101,9 +99,8 @@ func (s *MmctlE2ETestSuite) TestNukeUsersCmd() {
 			s.Require().Nil(err)
 		}
 
-		cmd := newTestCmd(s.T())
-		confirm := true
-		cmd.Flags().BoolVar(&confirm, "confirm", confirm, "confirm")
+		cmd := newTestCmd(s.T(), SystemNukeUsersCmd)
+		s.Require().NoError(cmd.Flags().Set("confirm", "true"))
 
 		// delete all users only works on local mode
 		err := nukeUsersCmdF(s.th.LocalClient, cmd, []string{})
@@ -126,8 +123,8 @@ func (s *MmctlE2ETestSuite) TestSetBusyCmd() {
 	s.SetupEnterpriseTestHelper().InitBasic(s.T())
 
 	s.th.App.Srv().Platform().Busy.Clear()
-	cmd := newTestCmd(s.T())
-	cmd.Flags().Uint("seconds", 60, "")
+	cmd := newTestCmd(s.T(), SystemSetBusyCmd)
+	s.Require().NoError(cmd.Flags().Set("seconds", "60"))
 
 	s.Run("MM-T3980 Should fail when regular user attempts to set server busy status", func() {
 		printer.Clean()
@@ -194,8 +191,7 @@ func (s *MmctlE2ETestSuite) TestSupportPacketCmdF() {
 	s.Run("Download Support Packet with default filename", func() {
 		printer.Clean()
 
-		cmd := newTestCmd(s.T())
-		cmd.Flags().StringP("output-file", "o", "", "Define the output file name")
+		cmd := newTestCmd(s.T(), SystemSupportPacketCmd)
 		err := systemSupportPacketCmdF(s.th.SystemAdminClient, cmd, []string{})
 		s.Require().NoError(err)
 		s.Require().Len(printer.GetLines(), 2)
@@ -228,16 +224,15 @@ func (s *MmctlE2ETestSuite) TestSupportPacketCmdF() {
 	s.Run("Download Support Packet with custom filename", func() {
 		printer.Clean()
 
-		systemSupportPacketCmd := newTestCmd(s.T())
-		systemSupportPacketCmd.Flags().StringP("output-file", "o", "", "Define the output file name")
-		err := systemSupportPacketCmd.ParseFlags([]string{"-o", "foo.zip"})
-		s.Require().NoError(err)
+		cmd := newTestCmd(s.T(), SystemSupportPacketCmd)
+		s.Require().NoError(cmd.Flags().Set("output-file", "foo.zip"))
 
 		defer func() {
+			s.Require().NoError(cmd.Flags().Set("output-file", ""))
 			s.Require().NoError(os.Remove("foo.zip"))
 		}()
 
-		err = systemSupportPacketCmdF(s.th.SystemAdminClient, systemSupportPacketCmd, []string{})
+		err := systemSupportPacketCmdF(s.th.SystemAdminClient, cmd, []string{})
 		s.Require().NoError(err)
 		s.Require().Len(printer.GetErrorLines(), 0)
 		s.Require().Len(printer.GetLines(), 2)

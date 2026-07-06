@@ -26,9 +26,15 @@ var EnableEnterpriseTests string
 
 // newTestCmd returns a cobra.Command whose context is bound to the test's
 // lifetime, mirroring the context cobra assigns to a command during real
-// execution (see Command.ExecuteContext).
-func newTestCmd(t *testing.T) *cobra.Command {
+// execution (see Command.ExecuteContext). Pass one of the package's real
+// command vars (e.g. SystemSupportPacketCmd) to reuse its already-registered
+// flags instead of re-declaring them on a bare command; omit it for a command
+// with no flags.
+func newTestCmd(t *testing.T, base ...*cobra.Command) *cobra.Command {
 	cmd := &cobra.Command{}
+	if len(base) > 0 {
+		cmd = base[0]
+	}
 	cmd.SetContext(t.Context())
 	return cmd
 }

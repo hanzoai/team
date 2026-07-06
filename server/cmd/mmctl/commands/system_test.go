@@ -21,8 +21,8 @@ import (
 func (s *MmctlUnitTestSuite) TestNukeUsersCmd() {
 	s.Run("Delete all users", func() {
 		printer.Clean()
-		cmd := newTestCmd(s.T())
-		cmd.Flags().Bool("confirm", true, "")
+		cmd := newTestCmd(s.T(), SystemNukeUsersCmd)
+		s.Require().NoError(cmd.Flags().Set("confirm", "true"))
 
 		s.client.
 			EXPECT().
@@ -39,8 +39,8 @@ func (s *MmctlUnitTestSuite) TestNukeUsersCmd() {
 
 	s.Run("Delete all users call fails", func() {
 		printer.Clean()
-		cmd := newTestCmd(s.T())
-		cmd.Flags().Bool("confirm", true, "")
+		cmd := newTestCmd(s.T(), SystemNukeUsersCmd)
+		s.Require().NoError(cmd.Flags().Set("confirm", "true"))
 
 		s.client.
 			EXPECT().
@@ -112,8 +112,8 @@ func (s *MmctlUnitTestSuite) TestSetBusyCmd() {
 		printer.Clean()
 		const minutes = 15
 
-		cmd := newTestCmd(s.T())
-		cmd.Flags().Uint("seconds", minutes*60, "")
+		cmd := newTestCmd(s.T(), SystemSetBusyCmd)
+		s.Require().NoError(cmd.Flags().Set("seconds", strconv.Itoa(minutes*60)))
 
 		s.client.
 			EXPECT().
@@ -140,8 +140,8 @@ func (s *MmctlUnitTestSuite) TestSetBusyCmd() {
 	s.Run("SetBusy zero seconds", func() {
 		printer.Clean()
 
-		cmd := newTestCmd(s.T())
-		cmd.Flags().Uint("seconds", 0, "")
+		cmd := newTestCmd(s.T(), SystemSetBusyCmd)
+		s.Require().NoError(cmd.Flags().Set("seconds", "0"))
 
 		err := setBusyCmdF(s.client, cmd, []string{strconv.Itoa(0)})
 		s.Require().Error(err)
@@ -417,8 +417,7 @@ func (s *MmctlUnitTestSuite) TestSupportPacketCmdF() {
 			s.NoError(err)
 		}()
 
-		cmd := newTestCmd(s.T())
-		cmd.Flags().StringP("output-file", "o", "", "Define the output file name")
+		cmd := newTestCmd(s.T(), SystemSupportPacketCmd)
 		err := systemSupportPacketCmdF(s.client, cmd, []string{})
 		s.Require().NoError(err)
 		s.Require().Len(printer.GetErrorLines(), 0)
@@ -441,17 +440,16 @@ func (s *MmctlUnitTestSuite) TestSupportPacketCmdF() {
 			Return(reader, "mm_support_packet.zip", &model.Response{}, nil).
 			Times(1)
 
-		systemSupportPacketCmd := newTestCmd(s.T())
-		systemSupportPacketCmd.Flags().StringP("output-file", "o", "", "Define the output file name")
-		err := systemSupportPacketCmd.ParseFlags([]string{"-o", "foo.zip"})
-		s.Require().NoError(err)
+		cmd := newTestCmd(s.T(), SystemSupportPacketCmd)
+		s.Require().NoError(cmd.Flags().Set("output-file", "foo.zip"))
 
 		defer func() {
-			err = os.Remove("foo.zip")
+			s.Require().NoError(cmd.Flags().Set("output-file", ""))
+			err := os.Remove("foo.zip")
 			s.Require().NoError(err)
 		}()
 
-		err = systemSupportPacketCmdF(s.client, systemSupportPacketCmd, []string{})
+		err := systemSupportPacketCmdF(s.client, cmd, []string{})
 		s.Require().NoError(err)
 		s.Require().Len(printer.GetErrorLines(), 0)
 		s.Require().Len(printer.GetLines(), 2)
@@ -472,8 +470,7 @@ func (s *MmctlUnitTestSuite) TestSupportPacketCmdF() {
 			Return(nil, "", &model.Response{}, errors.New("mock error")).
 			Times(1)
 
-		cmd := newTestCmd(s.T())
-		cmd.Flags().StringP("output-file", "o", "", "Define the output file name")
+		cmd := newTestCmd(s.T(), SystemSupportPacketCmd)
 		err := systemSupportPacketCmdF(s.client, cmd, []string{})
 		s.Require().Error(err)
 		s.Require().Len(printer.GetErrorLines(), 0)
