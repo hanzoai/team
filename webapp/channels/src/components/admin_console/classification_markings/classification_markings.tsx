@@ -405,15 +405,18 @@ export default function ClassificationMarkings({disabled}: Props) {
                 savedLinked = await saveCreateLinkedField(savedTemplate.id, disabledBanner);
             }
 
-            // Always upsert the system value carrying the resolved actions (empty
-            // when the banner is off) and level so value.attrs.actions and
-            // field.attrs.actions never diverge. New clients read value.attrs.actions;
-            // mobile keeps reading field.attrs.actions (mirrored below).
+            // The value is classification's home for actions: always upsert the
+            // system value with the resolved actions (empty when the banner is off)
+            // and level. New clients read value.attrs.actions. We also mirror the
+            // actions onto the field below, so the two never diverge while older
+            // clients still read the field.
             const resolvedLevelId = resolvedBanner.enabled ? resolvedBanner.level_id : '';
             const savedValues = await saveUpsertSystemValue(savedLinked.id, resolvedLevelId, placementToActions(resolvedBanner));
             dispatch({type: PropertyTypes.RECEIVED_PROPERTY_VALUES, data: {values: savedValues}});
 
-            // Mirror the resolved actions onto the field last (mobile compat path).
+            // Temporary back-compat mirror: also write the actions to the field for
+            // clients that still read field.attrs.actions. Dropped once every client
+            // reads from the value.
             if (resolvedBanner.enabled) {
                 savedLinked = await savePatchLinkedField(savedLinked.id, resolvedBanner);
             }

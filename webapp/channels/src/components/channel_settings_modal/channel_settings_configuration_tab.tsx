@@ -435,10 +435,12 @@ function ChannelSettingsConfigurationTab({
 
         if (hasClassificationChanges && classification.channelField) {
             if (classificationEnabled && selectedClassificationId) {
-                // Per-channel banner placement lives on the value's attrs. A single
-                // shared channel field is used for all channels, so placement cannot
-                // live on the field. Fixed to top today (matches prior behavior);
-                // per-channel UI can vary it later.
+                // Per-channel banner actions live on the value — the value is
+                // classification's home for actions. The channel field is shared by
+                // all channels, so actions defined there would apply everywhere;
+                // hence there's no field mirror on this path (unlike the system
+                // banner). Fixed to top today to match prior behavior; a per-channel
+                // UI can vary it later.
                 try {
                     const values = await Client4.patchPropertyValues(
                         CLASSIFICATIONS_GROUP_NAME,
