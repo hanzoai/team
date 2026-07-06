@@ -21,6 +21,7 @@ Set in workflow env (no secret needed):
   JIRA_PROJECT_KEY — e.g. MM
 """
  
+import argparse
 import base64
 import json
 import os
@@ -343,16 +344,27 @@ def create_jira_ticket(entry: dict, project_key: str, auth: str, base_url: str) 
 # ---------------------------------------------------------------------------
  
 def main():
-    jira_email = os.environ.get("JIRA_USER_EMAIL")
-    jira_token = os.environ.get("JIRA_API_TOKEN")
+    parser = argparse.ArgumentParser(description="Feature flag monthly audit")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print what would happen without creating Jira tickets",
+    )
+    args = parser.parse_args()
+
     jira_base_url = os.environ.get("JIRA_BASE_URL", "https://mattermost.atlassian.net")
     project_key = os.environ.get("JIRA_PROJECT_KEY", "MM")
- 
+
+    if args.dry_run:
+        print("DRY RUN — no Jira tickets will be created.")
+
+    jira_email = os.environ.get("JIRA_USER_EMAIL")
+    jira_token = os.environ.get("JIRA_API_TOKEN")
     if not all([jira_email, jira_token]):
         print("ERROR: JIRA_USER_EMAIL and JIRA_API_TOKEN must be set.")
         sys.exit(1)
- 
     auth = jira_auth_header(jira_email, jira_token)
+
     today = date.today()
  
     print(f"Parsing {FLAG_FILE}...")
@@ -430,6 +442,9 @@ def main():
         if existing:
             print(f"  {flag}: open ticket already exists ({existing}) — skipping")
             deduped.append((flag, existing))
+        elif args.dry_run:
+            print(f"  {flag}: would create Jira ticket (dry run)")
+            created.append((flag, "<dry-run>"))
         else:
             key = create_jira_ticket(entry, project_key, auth, jira_base_url)
             print(f"  {flag}: created {key} — {jira_base_url}/browse/{key}")
