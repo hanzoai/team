@@ -435,15 +435,15 @@ function ChannelSettingsConfigurationTab({
 
         if (hasClassificationChanges && classification.channelField) {
             if (classificationEnabled && selectedClassificationId) {
+                // Per-channel banner placement lives on the value's attrs. A single
+                // shared channel field is used for all channels, so placement cannot
+                // live on the field. Fixed to top today (matches prior behavior);
+                // per-channel UI can vary it later.
                 try {
                     const values = await Client4.patchPropertyValues(
                         CLASSIFICATIONS_GROUP_NAME,
                         CLASSIFICATIONS_CHANNEL_OBJECT_TYPE,
                         channel.id,
-                        // Per-channel banner placement lives on the value's attrs.
-                        // A single shared channel field is used for all channels, so
-                        // placement cannot live on the field. Fixed to top today
-                        // (matches prior behavior); per-channel UI can vary it later.
                         [{field_id: classification.channelField.id, value: selectedClassificationId, attrs: {actions: [DISPLAY_BANNER_TOP]}}],
                     );
                     dispatch({type: PropertyTypes.RECEIVED_PROPERTY_VALUES, data: {values}});
