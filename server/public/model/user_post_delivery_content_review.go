@@ -3,11 +3,6 @@
 
 package model
 
-// UserPostDeliveryContentReview is a row in the primary-DB content-review table.
-// It mirrors a UserPostDelivery source row (post_id/target_id/target_type/
-// mechanism/created_at, where created_at is the original delivery time) plus
-// bookkeeping about the copy: CopiedAt (when the row was copied into the
-// content-review table) and JobID (the job that produced it).
 type UserPostDeliveryContentReview struct {
 	PostID     string `json:"post_id" db:"post_id"`
 	TargetID   string `json:"target_id" db:"target_id"`

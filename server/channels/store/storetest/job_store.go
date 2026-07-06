@@ -20,6 +20,8 @@ import (
 func TestJobStore(t *testing.T, rctx request.CTX, ss store.Store) {
 	t.Run("JobSaveGet", func(t *testing.T) { testJobSaveGet(t, rctx, ss) })
 	t.Run("JobSaveOnce", func(t *testing.T) { testJobSaveOnce(t, rctx, ss) })
+	t.Run("JobSaveOnceWithData", func(t *testing.T) { testJobSaveOnceWithData(t, rctx, ss) })
+	t.Run("JobAppendToJobDataCSV", func(t *testing.T) { testJobAppendToJobDataCSV(t, rctx, ss) })
 	t.Run("JobGetAllByType", func(t *testing.T) { testJobGetAllByType(t, rctx, ss) })
 	t.Run("JobGetAllByTypeAndStatus", func(t *testing.T) { testJobGetAllByTypeAndStatus(t, rctx, ss) })
 	t.Run("JobGetAllByTypePage", func(t *testing.T) { testJobGetAllByTypePage(t, rctx, ss) })
@@ -79,7 +81,7 @@ func testJobSaveOnce(t *testing.T, rctx request.CTX, ss store.Store) {
 				},
 			}
 
-			job, err := ss.Job().SaveOnce(job)
+			job, err := ss.Job().SaveOnce(job, nil)
 			if err != nil {
 				var pqErr *pq.Error
 				if errors.As(err, &pqErr) {
@@ -103,6 +105,91 @@ func testJobSaveOnce(t *testing.T, rctx request.CTX, ss store.Store) {
 	for _, id := range ids {
 		ss.Job().Delete(id)
 	}
+}
+
+// testJobSaveOnceWithData verifies dedupeData narrows SaveOnce's dedup scope: two
+// jobs of the same type but for different post_ids both insert, while a second
+// job for the same post_id is deduped.
+func testJobSaveOnceWithData(t *testing.T, rctx request.CTX, ss store.Store) {
+	jobType := model.NewId()
+	postA := model.NewId()
+	postB := model.NewId()
+
+	mkJob := func(postID string) *model.Job {
+		return &model.Job{
+			Id:     model.NewId(),
+			Type:   jobType,
+			Status: model.JobStatusPending,
+			// requested_by differs per call to prove only post_id gates dedup.
+			Data: map[string]string{"post_id": postID, "requested_by": model.NewId()},
+		}
+	}
+
+	j1, err := ss.Job().SaveOnce(mkJob(postA), map[string]string{"post_id": postA})
+	require.NoError(t, err)
+	require.NotNil(t, j1, "first job for a post is inserted")
+
+	j2, err := ss.Job().SaveOnce(mkJob(postA), map[string]string{"post_id": postA})
+	require.NoError(t, err)
+	require.Nil(t, j2, "a second job for the same post is deduped even with different Data")
+
+	j3, err := ss.Job().SaveOnce(mkJob(postB), map[string]string{"post_id": postB})
+	require.NoError(t, err)
+	require.NotNil(t, j3, "a job for a different post is not deduped")
+
+	for _, postID := range []string{postA, postB} {
+		jobs, err := ss.Job().GetByTypeAndData(rctx, jobType, map[string]string{"post_id": postID}, true, model.JobStatusPending)
+		require.NoError(t, err)
+		require.Len(t, jobs, 1, "exactly one pending job per post")
+	}
+
+	ss.Job().Delete(j1.Id)
+	ss.Job().Delete(j3.Id)
+}
+
+// testJobAppendToJobDataCSV verifies the atomic comma-separated-set append.
+func testJobAppendToJobDataCSV(t *testing.T, rctx request.CTX, ss store.Store) {
+	save := func(status string, data map[string]string) *model.Job {
+		job := &model.Job{Id: model.NewId(), Type: model.NewId(), Status: status, CreateAt: model.GetMillis(), Data: data}
+		_, err := ss.Job().Save(job)
+		require.NoError(t, err)
+		return job
+	}
+	get := func(id string) *model.Job {
+		j, err := ss.Job().Get(rctx, id)
+		require.NoError(t, err)
+		return j
+	}
+
+	t.Run("appends a new value", func(t *testing.T) {
+		job := save(model.JobStatusPending, map[string]string{"requested_by": "userA"})
+		defer ss.Job().Delete(job.Id)
+		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB"))
+		require.Equal(t, "userA,userB", get(job.Id).Data["requested_by"])
+	})
+
+	t.Run("dedupes an already-present value (no substring false match)", func(t *testing.T) {
+		job := save(model.JobStatusInProgress, map[string]string{"requested_by": "userA"})
+		defer ss.Job().Delete(job.Id)
+		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB"))
+		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB")) // duplicate
+		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "user"))  // substring of userA/userB
+		require.Equal(t, "userA,userB,user", get(job.Id).Data["requested_by"])
+	})
+
+	t.Run("sets the value when the key is absent", func(t *testing.T) {
+		job := save(model.JobStatusPending, map[string]string{})
+		defer ss.Job().Delete(job.Id)
+		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userA"))
+		require.Equal(t, "userA", get(job.Id).Data["requested_by"])
+	})
+
+	t.Run("is a no-op for a non-pending/in-progress job", func(t *testing.T) {
+		job := save(model.JobStatusSuccess, map[string]string{"requested_by": "userA"})
+		defer ss.Job().Delete(job.Id)
+		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB"))
+		require.Equal(t, "userA", get(job.Id).Data["requested_by"], "finished jobs are not modified")
+	})
 }
 
 func testJobGetAllByType(t *testing.T, rctx request.CTX, ss store.Store) {

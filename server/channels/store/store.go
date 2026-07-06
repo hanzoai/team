@@ -16,11 +16,6 @@ import (
 	"github.com/mattermost/mattermost/server/public/shared/request"
 )
 
-// ErrUserPostDeliverySourceUnavailable is returned by UserPostDeliveryStore
-// reads when the delivery-tracking source pool is not configured (feature
-// disabled at boot, i.e. the no-op store). Callers that require the source data
-// (e.g. the content-review copy job) should surface this as a "restart required"
-// condition rather than treating it as an empty result.
 var ErrUserPostDeliverySourceUnavailable = errors.New("store: user post delivery source pool is not configured")
 
 type StoreResult[T any] struct {
@@ -830,10 +825,18 @@ type ReactionStore interface {
 
 type JobStore interface {
 	Save(job *model.Job) (*model.Job, error)
-	// SaveOnce will only insert the job with the same category once.
-	// If this method is called concurrently with another job of the same type,
-	// then nil, nil is returned.
-	SaveOnce(job *model.Job) (*model.Job, error)
+	// SaveOnce inserts the job only if no other pending/in-progress job matches
+	// the same Type and the given dedupeData (a subset of job.Data, matched by
+	// exact value). Pass nil/empty dedupeData to dedupe on Type alone. If a
+	// matching job already exists (or a concurrent insert wins the serializable
+	// transaction), nil, nil is returned.
+	SaveOnce(job *model.Job, dedupeData map[string]string) (*model.Job, error)
+	// AppendToJobDataCSV atomically adds value to the comma-separated set stored
+	// at Data[key] of the pending/in-progress job with the given id, deduping so
+	// the value appears at most once. It is a no-op when the value is already
+	// present or the job is not pending/in-progress. Done in a single UPDATE, so
+	// there is no read-modify-write race between concurrent callers.
+	AppendToJobDataCSV(jobID, key, value string) error
 	UpdateOptimistically(job *model.Job, currentStatus string) (bool, error)
 	UpdateStatus(id string, status string) (*model.Job, error)
 	UpdateStatusOptimistically(id string, currentStatus string, newStatus string) (*model.Job, error)
@@ -1314,24 +1317,12 @@ type TemporaryPostStore interface {
 type UserPostDeliveryStore interface {
 	MarkBulk(ctx context.Context, records []model.UserPostDelivery) error
 	DeleteByPost(ctx context.Context, postID string) error
-	// GetByPost returns up to limit delivery rows for postID, keyset-paginated by
-	// (target_id, target_type, mechanism). Pass the zero cursor for the first
-	// page and the last returned row's key for subsequent pages. Returns
-	// ErrUserPostDeliverySourceUnavailable when the source pool is not configured.
 	GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error)
 }
 
-// UserPostDeliveryContentReviewStore is the primary-DB copy of delivery rows for
-// posts under content review. Rows mirror UserPostDelivery plus copy bookkeeping
-// (copied_at, job_id). It always writes to the primary pool.
 type UserPostDeliveryContentReviewStore interface {
-	// SaveBatch inserts the given source rows into the content-review table,
-	// preserving each row's original created_at and stamping copied_at and jobID.
-	// Duplicates (post_id, target_id, target_type, mechanism) are ignored.
 	SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error
-	// DeleteByPost removes all content-review rows for a post.
 	DeleteByPost(ctx context.Context, postID string) error
-	// CountByPost returns the number of content-review rows stored for a post.
 	CountByPost(ctx context.Context, postID string) (int64, error)
 }
 

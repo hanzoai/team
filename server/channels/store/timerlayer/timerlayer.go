@@ -5776,6 +5776,22 @@ func (s *TimerLayerGroupStore) UpsertMembers(groupID string, userIDs []string) (
 	return result, err
 }
 
+func (s *TimerLayerJobStore) AppendToJobDataCSV(jobID string, key string, value string) error {
+	start := time.Now()
+
+	err := s.JobStore.AppendToJobDataCSV(jobID, key, value)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("JobStore.AppendToJobDataCSV", success, elapsed)
+	}
+	return err
+}
+
 func (s *TimerLayerJobStore) Cleanup(expiryTime int64, batchSize int) error {
 	start := time.Now()
 
@@ -6000,10 +6016,10 @@ func (s *TimerLayerJobStore) Save(job *model.Job) (*model.Job, error) {
 	return result, err
 }
 
-func (s *TimerLayerJobStore) SaveOnce(job *model.Job) (*model.Job, error) {
+func (s *TimerLayerJobStore) SaveOnce(job *model.Job, dedupeData map[string]string) (*model.Job, error) {
 	start := time.Now()
 
-	result, err := s.JobStore.SaveOnce(job)
+	result, err := s.JobStore.SaveOnce(job, dedupeData)
 
 	elapsed := float64(time.Since(start)) / float64(time.Second)
 	if s.Root.Metrics != nil {

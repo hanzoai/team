@@ -7145,6 +7145,27 @@ func (s *RetryLayerGroupStore) UpsertMembers(groupID string, userIDs []string) (
 
 }
 
+func (s *RetryLayerJobStore) AppendToJobDataCSV(jobID string, key string, value string) error {
+
+	tries := 0
+	for {
+		err := s.JobStore.AppendToJobDataCSV(jobID, key, value)
+		if err == nil {
+			return nil
+		}
+		if !isRepeatableError(err) {
+			return err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
 func (s *RetryLayerJobStore) Cleanup(expiryTime int64, batchSize int) error {
 
 	tries := 0
@@ -7439,11 +7460,11 @@ func (s *RetryLayerJobStore) Save(job *model.Job) (*model.Job, error) {
 
 }
 
-func (s *RetryLayerJobStore) SaveOnce(job *model.Job) (*model.Job, error) {
+func (s *RetryLayerJobStore) SaveOnce(job *model.Job, dedupeData map[string]string) (*model.Job, error) {
 
 	tries := 0
 	for {
-		result, err := s.JobStore.SaveOnce(job)
+		result, err := s.JobStore.SaveOnce(job, dedupeData)
 		if err == nil {
 			return result, nil
 		}

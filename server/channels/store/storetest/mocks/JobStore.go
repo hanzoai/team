@@ -15,6 +15,24 @@ type JobStore struct {
 	mock.Mock
 }
 
+// AppendToJobDataCSV provides a mock function with given fields: jobID, key, value
+func (_m *JobStore) AppendToJobDataCSV(jobID string, key string, value string) error {
+	ret := _m.Called(jobID, key, value)
+
+	if len(ret) == 0 {
+		panic("no return value specified for AppendToJobDataCSV")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(string, string, string) error); ok {
+		r0 = rf(jobID, key, value)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // Cleanup provides a mock function with given fields: expiryTime, batchSize
 func (_m *JobStore) Cleanup(expiryTime int64, batchSize int) error {
 	ret := _m.Called(expiryTime, batchSize)
@@ -426,9 +444,9 @@ func (_m *JobStore) Save(job *model.Job) (*model.Job, error) {
 	return r0, r1
 }
 
-// SaveOnce provides a mock function with given fields: job
-func (_m *JobStore) SaveOnce(job *model.Job) (*model.Job, error) {
-	ret := _m.Called(job)
+// SaveOnce provides a mock function with given fields: job, dedupeData
+func (_m *JobStore) SaveOnce(job *model.Job, dedupeData map[string]string) (*model.Job, error) {
+	ret := _m.Called(job, dedupeData)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SaveOnce")
@@ -436,19 +454,19 @@ func (_m *JobStore) SaveOnce(job *model.Job) (*model.Job, error) {
 
 	var r0 *model.Job
 	var r1 error
-	if rf, ok := ret.Get(0).(func(*model.Job) (*model.Job, error)); ok {
-		return rf(job)
+	if rf, ok := ret.Get(0).(func(*model.Job, map[string]string) (*model.Job, error)); ok {
+		return rf(job, dedupeData)
 	}
-	if rf, ok := ret.Get(0).(func(*model.Job) *model.Job); ok {
-		r0 = rf(job)
+	if rf, ok := ret.Get(0).(func(*model.Job, map[string]string) *model.Job); ok {
+		r0 = rf(job, dedupeData)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*model.Job)
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(*model.Job) error); ok {
-		r1 = rf(job)
+	if rf, ok := ret.Get(1).(func(*model.Job, map[string]string) error); ok {
+		r1 = rf(job, dedupeData)
 	} else {
 		r1 = ret.Error(1)
 	}

@@ -7,6 +7,7 @@ import (
 	"context"
 
 	"github.com/lib/pq"
+	sq "github.com/mattermost/squirrel"
 	"github.com/pkg/errors"
 
 	"github.com/mattermost/mattermost/server/public/model"
@@ -53,8 +54,8 @@ func (s *SqlUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, r
 
 	if _, err := s.GetMaster().ExecContext(ctx,
 		`INSERT INTO `+userPostDeliveryContentReviewTableName+` (post_id, target_id, target_type, mechanism, created_at, copied_at, job_id)
-		 SELECT p, t, ty, m, c, $6, $7
-		 FROM unnest($1::text[], $2::text[], $3::text[], $4::smallint[], $5::bigint[]) AS u(p, t, ty, m, c)
+		 SELECT post_id, target_id, target_type, mechanism, created_at, $6, $7
+		 FROM unnest($1::text[], $2::text[], $3::text[], $4::smallint[], $5::bigint[]) AS u(post_id, target_id, target_type, mechanism, created_at)
 		 ON CONFLICT (post_id, target_id, target_type, mechanism) DO NOTHING`,
 		pq.Array(postIDs), pq.Array(targetIDs), pq.Array(targetTypes), pq.Array(mechanisms), pq.Array(createdAts),
 		model.GetMillis(), jobID); err != nil {
@@ -66,8 +67,15 @@ func (s *SqlUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, r
 
 // DeleteByPost removes all content-review rows for a post.
 func (s *SqlUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, postID string) error {
-	if _, err := s.GetMaster().ExecContext(ctx,
-		`DELETE FROM `+userPostDeliveryContentReviewTableName+` WHERE post_id = $1`, postID); err != nil {
+	query, args, err := s.getQueryBuilder().
+		Delete(userPostDeliveryContentReviewTableName).
+		Where(sq.Eq{"post_id": postID}).
+		ToSql()
+	if err != nil {
+		return errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.DeleteByPost: failed to build query for post_id=%s", postID)
+	}
+
+	if _, err := s.GetMaster().ExecContext(ctx, query, args...); err != nil {
 		return errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.DeleteByPost: failed to delete content-review records for post_id=%s", postID)
 	}
 	return nil
@@ -75,9 +83,17 @@ func (s *SqlUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context
 
 // CountByPost returns the number of content-review rows stored for a post.
 func (s *SqlUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context, postID string) (int64, error) {
+	query, args, err := s.getQueryBuilder().
+		Select("COUNT(*)").
+		From(userPostDeliveryContentReviewTableName).
+		Where(sq.Eq{"post_id": postID}).
+		ToSql()
+	if err != nil {
+		return 0, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.CountByPost: failed to build query for post_id=%s", postID)
+	}
+
 	var count int64
-	if err := s.GetMaster().QueryRowContext(ctx,
-		`SELECT COUNT(*) FROM `+userPostDeliveryContentReviewTableName+` WHERE post_id = $1`, postID).Scan(&count); err != nil {
+	if err := s.GetMaster().QueryRowContext(ctx, query, args...).Scan(&count); err != nil {
 		return 0, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.CountByPost: failed to count content-review records for post_id=%s", postID)
 	}
 	return count, nil

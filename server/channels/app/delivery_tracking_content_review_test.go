@@ -5,6 +5,7 @@ package app
 
 import (
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -60,5 +61,18 @@ func TestCreateDeliveryTrackingContentReviewJob(t *testing.T) {
 		job2, appErr := th.App.CreateDeliveryTrackingContentReviewJob(th.Context, post.Id, th.BasicTeam.Id, th.BasicUser2.Id)
 		require.Nil(t, appErr)
 		require.Equal(t, job.Id, job2.Id, "concurrent triggers should reuse the in-flight job")
+
+		// Both reviewers are accumulated in requested_by (comma-separated, deduped)
+		// so the completion notification can reach everyone who asked.
+		refetched, err := th.App.Srv().Store().Job().Get(th.Context, job.Id)
+		require.NoError(t, err)
+		require.ElementsMatch(t, []string{th.BasicUser.Id, th.BasicUser2.Id}, strings.Split(refetched.Data["requested_by"], ","))
+
+		// A repeat trigger by an existing requester does not duplicate the entry.
+		_, appErr = th.App.CreateDeliveryTrackingContentReviewJob(th.Context, post.Id, th.BasicTeam.Id, th.BasicUser2.Id)
+		require.Nil(t, appErr)
+		refetched, err = th.App.Srv().Store().Job().Get(th.Context, job.Id)
+		require.NoError(t, err)
+		require.ElementsMatch(t, []string{th.BasicUser.Id, th.BasicUser2.Id}, strings.Split(refetched.Data["requested_by"], ","))
 	})
 }

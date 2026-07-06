@@ -78,7 +78,7 @@ func (jss SqlJobStore) Save(job *model.Job) (*model.Job, error) {
 	return job, nil
 }
 
-func (jss SqlJobStore) SaveOnce(job *model.Job) (*model.Job, error) {
+func (jss SqlJobStore) SaveOnce(job *model.Job, dedupeData map[string]string) (*model.Job, error) {
 	jsonData, err := json.Marshal(job.Data)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed marshalling job data")
@@ -95,13 +95,21 @@ func (jss SqlJobStore) SaveOnce(job *model.Job) (*model.Job, error) {
 	}
 	defer finalizeTransactionX(tx, &err)
 
-	query, args, err := jss.getQueryBuilder().
+	countBuilder := jss.getQueryBuilder().
 		Select("COUNT(*)").
 		From("Jobs").
 		Where(sq.Eq{
 			"Status": []string{model.JobStatusPending, model.JobStatusInProgress},
 			"Type":   job.Type,
-		}).ToSql()
+		})
+	// Narrow the dedupe scope to jobs whose Data matches every dedupeData entry,
+	// so callers can be one-job-per-entity (e.g. per post) instead of
+	// one-job-per-type. Mirrors GetByTypeAndData's JSON predicate.
+	for key, value := range dedupeData {
+		countBuilder = countBuilder.Where(sq.Expr("Data->? = ?", key, fmt.Sprintf(`"%s"`, value)))
+	}
+
+	query, args, err := countBuilder.ToSql()
 	if err != nil {
 		return nil, errors.Wrap(err, "job_tosql")
 	}
@@ -139,6 +147,28 @@ func (jss SqlJobStore) SaveOnce(job *model.Job) (*model.Job, error) {
 	}
 
 	return job, nil
+}
+
+// AppendToJobDataCSV atomically adds value to the comma-separated set at
+// Data[key] of the pending/in-progress job. The membership guard in the WHERE
+// clause makes it a no-op when value is already present (array containment, not
+// substring, so "ab" never matches "abc"); jsonb_set writes the appended CSV
+// otherwise. A single UPDATE, so concurrent callers cannot lose an append.
+func (jss SqlJobStore) AppendToJobDataCSV(jobID, key, value string) error {
+	if _, err := jss.GetMaster().Exec(
+		`UPDATE Jobs
+		 SET Data = jsonb_set(
+		     COALESCE(Data, '{}'::jsonb),
+		     ARRAY[$1],
+		     to_jsonb(CASE WHEN COALESCE(Data->>$1, '') = '' THEN $2::text
+		                   ELSE (Data->>$1) || ',' || $2 END))
+		 WHERE Id = $3
+		   AND Status IN ($4, $5)
+		   AND NOT (string_to_array(COALESCE(Data->>$1, ''), ',') @> ARRAY[$2]::text[])`,
+		key, value, jobID, model.JobStatusPending, model.JobStatusInProgress); err != nil {
+		return errors.Wrapf(err, "failed to append to job Data CSV for job_id=%s key=%s", jobID, key)
+	}
+	return nil
 }
 
 func (jss SqlJobStore) UpdateOptimistically(job *model.Job, currentStatus string) (bool, error) {

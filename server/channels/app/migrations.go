@@ -1135,7 +1135,7 @@ func (s *Server) doCloudS3PathMigrations(rctx request.CTX) error {
 		return nil
 	}
 
-	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeS3PathMigration, nil); appErr != nil {
+	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeS3PathMigration, nil, nil); appErr != nil {
 		return fmt.Errorf("failed to start job for migrating s3 file paths: %w", appErr)
 	}
 
@@ -1156,7 +1156,7 @@ func (s *Server) doDeleteEmptyDraftsMigration(rctx request.CTX) error {
 		return nil
 	}
 
-	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeDeleteEmptyDraftsMigration, nil); appErr != nil {
+	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeDeleteEmptyDraftsMigration, nil, nil); appErr != nil {
 		return fmt.Errorf("failed to start job for deleting empty drafts: %w", appErr)
 	}
 
@@ -1177,7 +1177,7 @@ func (s *Server) doDeleteOrphanDraftsMigration(rctx request.CTX) error {
 		return nil
 	}
 
-	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeDeleteOrphanDraftsMigration, nil); appErr != nil {
+	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeDeleteOrphanDraftsMigration, nil, nil); appErr != nil {
 		return fmt.Errorf("failed to start job for deleting orphan drafts: %w", appErr)
 	}
 
@@ -1198,7 +1198,7 @@ func (s *Server) doDeleteDmsPreferencesMigration(rctx request.CTX) error {
 		return nil
 	}
 
-	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeDeleteDmsPreferencesMigration, nil); appErr != nil {
+	if _, appErr := s.Jobs.CreateJobOnce(rctx, model.JobTypeDeleteDmsPreferencesMigration, nil, nil); appErr != nil {
 		return fmt.Errorf("failed to start job for deleting dm preferences: %w", appErr)
 	}
 

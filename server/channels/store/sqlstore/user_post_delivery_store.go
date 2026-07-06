@@ -7,6 +7,7 @@ import (
 	"context"
 
 	"github.com/lib/pq"
+	sq "github.com/mattermost/squirrel"
 	"github.com/pkg/errors"
 
 	"github.com/mattermost/mattermost/server/public/model"
@@ -97,27 +98,22 @@ func (s *SqlUserPostDeliveryStore) DeleteByPost(ctx context.Context, postID stri
 // (target_id, target_type, mechanism) columns of the unique index. The first page
 // passes the zero cursor; subsequent pages pass the last returned row's key.
 func (s *SqlUserPostDeliveryStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDelivery, error) {
-	records := []model.UserPostDelivery{}
-	var err error
-	if after.IsFirstPage() {
-		err = s.userPostDeliveryX.SelectContext(ctx, &records,
-			`SELECT post_id, target_id, target_type, mechanism, created_at
-			 FROM `+userPostDeliveryTableName+`
-			 WHERE post_id = $1
-			 ORDER BY target_id, target_type, mechanism
-			 LIMIT $2`, postID, limit)
-	} else {
+	query := s.getQueryBuilder().
+		Select("post_id", "target_id", "target_type", "mechanism", "created_at").
+		From(userPostDeliveryTableName).
+		Where(sq.Eq{"post_id": postID}).
+		OrderBy("target_id", "target_type", "mechanism").
+		Limit(uint64(limit))
+
+	if !after.IsFirstPage() {
 		// Row-value comparison is index-friendly in Postgres and matches the
 		// ORDER BY, so the unique index drives the scan.
-		err = s.userPostDeliveryX.SelectContext(ctx, &records,
-			`SELECT post_id, target_id, target_type, mechanism, created_at
-			 FROM `+userPostDeliveryTableName+`
-			 WHERE post_id = $1
-			   AND (target_id, target_type, mechanism) > ($2, $3, $4)
-			 ORDER BY target_id, target_type, mechanism
-			 LIMIT $5`, postID, after.TargetID, after.TargetType, after.Mechanism, limit)
+		query = query.Where(sq.Expr("(target_id, target_type, mechanism) > (?, ?, ?)",
+			after.TargetID, after.TargetType, after.Mechanism))
 	}
-	if err != nil {
+
+	records := []model.UserPostDelivery{}
+	if err := s.userPostDeliveryX.SelectBuilderCtx(ctx, &records, query); err != nil {
 		return nil, errors.Wrapf(err, "SqlUserPostDeliveryStore.GetByPost: failed to fetch delivery records for post_id=%s", postID)
 	}
 	return records, nil

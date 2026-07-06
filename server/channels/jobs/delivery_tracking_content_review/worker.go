@@ -129,7 +129,8 @@ func (worker *Worker) DoJob(job *model.Job) {
 	}
 
 	batchSize := defaultBatchSize
-	if cfgSize := model.SafeDereference(worker.jobServer.Config().DeliveryTrackingSettings.ContentReviewDeliveryReceiptCopyBatchSize); cfgSize > 0 {
+	cfgSize := model.SafeDereference(worker.jobServer.Config().DeliveryTrackingSettings.ContentReviewDeliveryReceiptCopyBatchSize)
+	if cfgSize > 0 {
 		batchSize = cfgSize
 	}
 
