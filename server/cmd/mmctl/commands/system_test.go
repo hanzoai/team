@@ -215,9 +215,9 @@ func (s *MmctlUnitTestSuite) TestServerVersionCmd() {
 	})
 }
 
-var systemPingOpts = model.SystemPingOptions{FullStatus: true, RESTSemantics: true}
-
 func (s *MmctlUnitTestSuite) TestServerStatusCmd() {
+	systemPingOpts := model.SystemPingOptions{FullStatus: true, RESTSemantics: true}
+
 	s.Run("Print server status - all healthy", func() {
 		printer.Clean()
 
