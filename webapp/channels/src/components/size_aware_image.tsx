@@ -19,9 +19,7 @@ import {getFileMiniPreviewUrl} from 'mattermost-redux/utils/file_utils';
 
 import LoadingImagePreview from 'components/loading_image_preview';
 
-import {FileTypes} from 'utils/constants';
-import {resolveSvgWithViewBox} from 'utils/svg_preview';
-import {copyToClipboard, getFileType} from 'utils/utils';
+import {copyToClipboard} from 'utils/utils';
 
 const MIN_IMAGE_SIZE = 48;
 const MIN_IMAGE_SIZE_FOR_INTERNAL_BUTTONS = 100;
@@ -109,7 +107,6 @@ type State = {
     linkCopyInProgress: boolean;
     error: boolean;
     imageWidth: number;
-    svgObjectUrl: string | null;
 };
 
 // SizeAwareImage is a component used for rendering images where the dimensions of the image are important for
@@ -131,7 +128,6 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
             linkCopyInProgress: false,
             error: false,
             imageWidth: 0,
-            svgObjectUrl: null,
         };
 
         this.heightTimeout = 0;
@@ -139,61 +135,11 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
 
     componentDidMount() {
         this.mounted = true;
-        this.maybeResolveSvgPreview();
-    }
-
-    componentDidUpdate(prevProps: Props) {
-        if (prevProps.src !== this.props.src ||
-            prevProps.fileInfo?.extension !== this.props.fileInfo?.extension ||
-            this.dimensionsAvailable(prevProps.dimensions) !== this.dimensionsAvailable(this.props.dimensions)) {
-            this.maybeResolveSvgPreview();
-        }
     }
 
     componentWillUnmount() {
         this.mounted = false;
-        this.revokeSvgObjectUrl();
     }
-
-    isSvgWithoutDimensions = () => {
-        return getFileType(this.props.fileInfo?.extension ?? '') === FileTypes.SVG && !this.dimensionsAvailable(this.props.dimensions);
-    };
-
-    revokeSvgObjectUrl = () => {
-        if (this.state.svgObjectUrl) {
-            URL.revokeObjectURL(this.state.svgObjectUrl);
-        }
-    };
-
-    // maybeResolveSvgPreview injects a viewBox into SVGs that lack usable sizing
-    // information so they scale to fill the preview instead of being clipped.
-    maybeResolveSvgPreview = () => {
-        if (!this.isSvgWithoutDimensions()) {
-            if (this.state.svgObjectUrl) {
-                this.revokeSvgObjectUrl();
-                this.setState({svgObjectUrl: null});
-            }
-            return;
-        }
-
-        const requestedSrc = this.props.src;
-
-        if (this.state.svgObjectUrl) {
-            this.revokeSvgObjectUrl();
-            this.setState({svgObjectUrl: null});
-        }
-
-        resolveSvgWithViewBox(requestedSrc).then((url) => {
-            if (!this.mounted || this.props.src !== requestedSrc) {
-                if (url) {
-                    URL.revokeObjectURL(url);
-                }
-                return;
-            }
-            this.revokeSvgObjectUrl();
-            this.setState({svgObjectUrl: url});
-        });
-    };
 
     dimensionsAvailable = (dimensions?: Partial<PostImage>) => {
         return dimensions && dimensions.width && dimensions.height;
@@ -280,25 +226,6 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
             ariaLabelImage += ` ${fileInfo.name}`.toLowerCase();
         }
 
-        const fileType = getFileType(fileInfo?.extension ?? '');
-
-        const svgWithoutDimensions = fileType === FileTypes.SVG && !this.dimensionsAvailable(dimensions);
-
-        let conditionalSVGStyleAttribute: CSSProperties | undefined;
-        if (fileType === FileTypes.SVG) {
-            conditionalSVGStyleAttribute = {
-                width: dimensions?.width || '100%',
-                height: 'auto',
-            };
-        }
-
-        const imageSrc = (svgWithoutDimensions && this.state.svgObjectUrl) ? this.state.svgObjectUrl : src;
-
-        let mergedImgStyle: CSSProperties | undefined = this.props.style;
-        if (conditionalSVGStyleAttribute) {
-            mergedImgStyle = {...conditionalSVGStyleAttribute, ...this.props.style};
-        }
-
         const image = (
             <img
                 {...props}
@@ -309,11 +236,11 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
                 className={
                     this.props.className +
                     (this.props.handleSmallImageContainer &&
-                        this.state.isSmallImage && !svgWithoutDimensions ? ' small-image--inside-container' : '')}
-                src={imageSrc}
+                        this.state.isSmallImage ? ' small-image--inside-container' : '')}
+                src={src}
                 onError={this.handleError}
                 onLoad={this.handleLoad}
-                style={mergedImgStyle}
+                style={this.props.style}
             />
         );
 
@@ -385,7 +312,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
             </WithTooltip>
         );
 
-        if (this.props.handleSmallImageContainer && this.state.isSmallImage && !svgWithoutDimensions) {
+        if (this.props.handleSmallImageContainer && this.state.isSmallImage) {
             let className = 'small-image__container cursor--pointer a11y--active';
             if (this.state.imageWidth < MIN_IMAGE_SIZE) {
                 className += ' small-image__container--min-width';
@@ -520,7 +447,7 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
                 {fallback}
                 <div
                     className='file-preview__button'
-                    style={{display: shouldShowImg ? 'inline-block' : 'none'}}
+                    style={{display: shouldShowImg ? 'block' : 'none'}}
                 >
                     {this.renderImageWithContainerIfNeeded()}
                 </div>

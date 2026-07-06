@@ -13,7 +13,7 @@
     user-select: none;
 
     &__image {
-        display: block;
+        max-width: none;
         max-height: calc(100vh - 168px);
         border-radius: 8px;
         animation: image_preview-zoom-in 250ms ease-in-out;
