@@ -6,6 +6,7 @@ package commands
 import (
 	"context"
 	"fmt"
+	"testing"
 	"time"
 
 	"github.com/golang/mock/gomock"
@@ -15,12 +16,22 @@ import (
 	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/client"
 	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/mocks"
 	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 )
 
 var EnableEnterpriseTests string
+
+// newTestCmd returns a cobra.Command whose context is bound to the test's
+// lifetime, mirroring the context cobra assigns to a command during real
+// execution (see Command.ExecuteContext).
+func newTestCmd(t *testing.T) *cobra.Command {
+	cmd := &cobra.Command{}
+	cmd.SetContext(t.Context())
+	return cmd
+}
 
 type MmctlUnitTestSuite struct {
 	suite.Suite

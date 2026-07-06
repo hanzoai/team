@@ -69,17 +69,6 @@ func CheckVersionMatch(version, serverVersion string) (bool, error) {
 	return true, nil
 }
 
-// cmdContext returns cmd's context, falling back to context.Background() when
-// cmd is nil or was never assigned a context (e.g. in unit tests).
-func cmdContext(cmd *cobra.Command) context.Context {
-	if cmd != nil {
-		if ctx := cmd.Context(); ctx != nil {
-			return ctx
-		}
-	}
-	return context.Background()
-}
-
 func getClient(ctx context.Context, cmd *cobra.Command) (*model.Client4, string, bool, error) {
 	useLocal := viper.GetBool("local")
 
@@ -115,7 +104,7 @@ func getClient(ctx context.Context, cmd *cobra.Command) (*model.Client4, string,
 
 func withClient(fn func(c client.Client, cmd *cobra.Command, args []string) error) func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
-		ctx := cmdContext(cmd)
+		ctx := cmd.Context()
 		c, serverVersion, local, err := getClient(ctx, cmd)
 		if err != nil {
 			return fmt.Errorf("failed to create client: %w", err)
