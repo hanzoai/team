@@ -482,7 +482,16 @@ func (env *Environment) Deactivate(id string) bool {
 		return false
 	}
 
-	return env.deactivateAndTeardown(p.(registeredPlugin))
+	rp := p.(registeredPlugin)
+
+	// If the plugin is already deactivated and its supervisor has been torn down,
+	// there's nothing to do beyond reconciling any drift in the plugin state.
+	if !env.IsActive(id) && rp.supervisor == nil {
+		env.setPluginState(id, model.PluginStateNotRunning)
+		return false
+	}
+
+	return env.deactivateAndTeardown(rp)
 }
 
 // RestartPlugin deactivates, then activates the plugin with the given id.
