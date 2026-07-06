@@ -201,7 +201,6 @@ export class SizeAwareImage extends React.PureComponent<Props, State> {
     renderImageWithContainerIfNeeded = () => {
         const {
             fileInfo,
-            dimensions,
             src,
             fileURL,
             enablePublicLink,
