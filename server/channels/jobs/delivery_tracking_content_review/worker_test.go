@@ -9,10 +9,15 @@ import (
 	"sort"
 	"testing"
 
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
 	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/v8/channels/jobs"
 	"github.com/mattermost/mattermost/server/v8/channels/store"
+	"github.com/mattermost/mattermost/server/v8/channels/store/storetest"
+	"github.com/mattermost/mattermost/server/v8/channels/utils/testutils"
 )
 
 func rowCursor(row model.UserPostDelivery) model.UserPostDeliveryCursor {
@@ -232,5 +237,122 @@ func TestCopyPostDeliveries(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, 3, copied)
 		require.Equal(t, 1, target.calls, "default batch size is large, so a single page suffices")
+	})
+}
+
+// newWorkerWithMockStore builds a Worker backed by a mock store and a real
+// JobServer (with nil metrics) so DoJob's full lifecycle — claim, copy, progress
+// persistence, and terminal status — can be exercised without a database.
+func newWorkerWithMockStore(t *testing.T) (*Worker, *storetest.Store) {
+	t.Helper()
+
+	cfg := &model.Config{}
+	cfg.SetDefaults()
+	cfgSvc := &testutils.StaticConfigService{Cfg: cfg}
+
+	mockStore := &storetest.Store{}
+	jobServer := jobs.NewJobServer(cfgSvc, mockStore, nil, mlog.CreateConsoleTestLogger(t))
+
+	return MakeWorker(jobServer, mockStore), mockStore
+}
+
+func TestDoJob(t *testing.T) {
+	const postID = "post-under-review"
+
+	newJob := func() *model.Job {
+		return &model.Job{
+			Id:   model.NewId(),
+			Type: model.JobTypeDeliveryTrackingContentReview,
+			Data: map[string]string{"post_id": postID},
+		}
+	}
+
+	t.Run("copies the post's deliveries and marks the job successful", func(t *testing.T) {
+		worker, mockStore := newWorkerWithMockStore(t)
+		job := newJob()
+
+		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+
+		rows := makeRows(postID, 3)
+		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, postID, mock.Anything, mock.Anything).Return(rows, nil).Once()
+		mockStore.UserPostDeliveryContentReviewStore.On("SaveBatch", mock.Anything, mock.Anything, job.Id).Return(nil).Once()
+
+		// onProgress persists the running count via UpdateInProgressJobData.
+		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(true, nil)
+		mockStore.JobStore.On("UpdateStatus", job.Id, model.JobStatusSuccess).Return(job, nil).Once()
+		// The cancellation watcher polls Get only after a multi-second interval, so
+		// a fast job usually never reads it; allow it for slow CI runs.
+		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
+
+		worker.DoJob(job)
+
+		require.Equal(t, "3", job.Data["records_copied"], "the final copied count is persisted on the job")
+		mockStore.JobStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryContentReviewStore.AssertExpectations(t)
+	})
+
+	t.Run("a job missing its post_id is failed", func(t *testing.T) {
+		worker, mockStore := newWorkerWithMockStore(t)
+		job := &model.Job{Id: model.NewId(), Type: model.JobTypeDeliveryTrackingContentReview, Data: map[string]string{}}
+
+		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(true, nil).Once()
+		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
+
+		worker.DoJob(job)
+
+		require.Contains(t, job.Data["error"], "missing post_id", "the failure reason is recorded on the job")
+		mockStore.JobStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
+	})
+
+	t.Run("a job already claimed elsewhere is skipped without side effects", func(t *testing.T) {
+		worker, mockStore := newWorkerWithMockStore(t)
+		job := newJob()
+
+		// A nil return from UpdateStatusOptimistically means the row was not in the
+		// expected Pending state (another node claimed it); DoJob must bail out.
+		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(nil, nil).Once()
+
+		worker.DoJob(job)
+
+		mockStore.JobStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
+	})
+
+	t.Run("an unavailable source pool fails the job", func(t *testing.T) {
+		worker, mockStore := newWorkerWithMockStore(t)
+		job := newJob()
+
+		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, postID, mock.Anything, mock.Anything).Return(nil, store.ErrUserPostDeliverySourceUnavailable).Once()
+		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(true, nil).Once()
+		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
+
+		worker.DoJob(job)
+
+		require.Contains(t, job.Data["error"], "source pool", "the source-unavailable reason is recorded on the job")
+		mockStore.JobStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryContentReviewStore.AssertNotCalled(t, "SaveBatch")
+	})
+
+	t.Run("a stopped worker cancels the job before reading the source", func(t *testing.T) {
+		worker, mockStore := newWorkerWithMockStore(t)
+		job := newJob()
+
+		// A stopped worker makes shouldStop() fire on the first loop iteration,
+		// before any source read, so the copy is abandoned and the job is canceled.
+		close(worker.stop)
+
+		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.JobStore.On("UpdateStatus", job.Id, model.JobStatusCanceled).Return(job, nil).Once()
+		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
+
+		worker.DoJob(job)
+
+		mockStore.JobStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
 	})
 }
