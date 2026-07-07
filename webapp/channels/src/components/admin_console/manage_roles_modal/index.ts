@@ -10,7 +10,7 @@ import {updateUserRoles} from 'mattermost-redux/actions/users';
 import {getLicense} from 'mattermost-redux/selectors/entities/general';
 import {getRoles} from 'mattermost-redux/selectors/entities/roles_helpers';
 
-import {isEnterpriseLicense} from 'utils/license_utils';
+import {isLicensedForDelegatedAdministration} from 'utils/license_utils';
 
 import type {GlobalState} from 'types/store';
 
@@ -20,7 +20,7 @@ function mapStateToProps(state: GlobalState) {
     return {
         userAccessTokensEnabled: state.entities.admin.config.ServiceSettings!.EnableUserAccessTokens,
         roles: getRoles(state),
-        isLicensedForDelegatedAdmin: isEnterpriseLicense(getLicense(state)),
+        isLicensedForDelegatedAdmin: isLicensedForDelegatedAdministration(getLicense(state)),
     };
 }
 

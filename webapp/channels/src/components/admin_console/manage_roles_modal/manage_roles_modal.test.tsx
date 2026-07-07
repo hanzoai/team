@@ -116,7 +116,7 @@ describe('admin_console/manage_roles_modal', () => {
         });
     });
 
-    test('saves delegated roles alongside the System Admin role', async () => {
+    test('does not save delegated roles when the account is set to System Admin', async () => {
         const props = getBaseProps({roles: 'system_user system_manager'});
         renderWithContext(<ManageRolesModal {...props}/>);
 
@@ -124,8 +124,34 @@ describe('admin_console/manage_roles_modal', () => {
         await clickSave();
 
         await waitFor(() => {
-            expect(props.actions.updateUserRoles).toHaveBeenCalledWith('user_id', 'system_user system_admin system_manager');
+            expect(props.actions.updateUserRoles).toHaveBeenCalledWith('user_id', 'system_user system_admin');
         });
+    });
+
+    test('hides the delegated roles section when the account is a System Admin', () => {
+        const props = getBaseProps({roles: 'system_user system_admin system_manager'});
+        renderWithContext(<ManageRolesModal {...props}/>);
+
+        expect(screen.queryByText('Delegated Administration Roles')).not.toBeInTheDocument();
+        expect(screen.queryByRole('checkbox', {name: /System Manager/})).not.toBeInTheDocument();
+    });
+
+    test('hides the delegated roles section when toggling to System Admin', async () => {
+        const props = getBaseProps({roles: 'system_user'});
+        renderWithContext(<ManageRolesModal {...props}/>);
+
+        expect(screen.getByText('Delegated Administration Roles')).toBeInTheDocument();
+
+        await userEvent.click(screen.getByRole('radio', {name: 'System Admin'}));
+
+        expect(screen.queryByText('Delegated Administration Roles')).not.toBeInTheDocument();
+    });
+
+    test('renders the Personal Access Tokens section heading when tokens are enabled', () => {
+        const props = {...getBaseProps({roles: 'system_user'}), userAccessTokensEnabled: true};
+        renderWithContext(<ManageRolesModal {...props}/>);
+
+        expect(screen.getByText('Personal Access Tokens')).toBeInTheDocument();
     });
 
     test('appends multiple selected delegated roles in a stable order', async () => {

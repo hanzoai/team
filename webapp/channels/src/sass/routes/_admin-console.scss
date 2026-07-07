@@ -1010,6 +1010,16 @@
         @extend %manage-row-strong-spacing;
     }
 
+    .manage-roles-modal__access-tokens {
+        padding-top: 20px;
+
+        @extend %manage-row-strong-spacing;
+    }
+
+    .manage-roles-modal__delegated-roles + .manage-roles-modal__access-tokens {
+        border-top: variables.$border-gray;
+    }
+
     .manage-teams__info {
         overflow: hidden;
         flex: 1;

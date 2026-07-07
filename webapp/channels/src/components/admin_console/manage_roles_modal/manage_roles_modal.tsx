@@ -160,18 +160,20 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
 
         if (this.state.isSystemAdmin) {
             roles += ' ' + General.SYSTEM_ADMIN_ROLE;
-        } else if (this.state.hasUserAccessTokenRole) {
-            roles += ' ' + General.SYSTEM_USER_ACCESS_TOKEN_ROLE;
-            if (this.state.hasPostAllRole) {
-                roles += ' ' + General.SYSTEM_POST_ALL_ROLE;
-            } else if (this.state.hasPostAllPublicRole) {
-                roles += ' ' + General.SYSTEM_POST_ALL_PUBLIC_ROLE;
+        } else {
+            if (this.state.hasUserAccessTokenRole) {
+                roles += ' ' + General.SYSTEM_USER_ACCESS_TOKEN_ROLE;
+                if (this.state.hasPostAllRole) {
+                    roles += ' ' + General.SYSTEM_POST_ALL_ROLE;
+                } else if (this.state.hasPostAllPublicRole) {
+                    roles += ' ' + General.SYSTEM_POST_ALL_PUBLIC_ROLE;
+                }
             }
-        }
 
-        for (const roleName of DELEGATED_ROLE_NAMES) {
-            if (this.state.delegatedRoles[roleName]) {
-                roles += ' ' + roleName;
+            for (const roleName of DELEGATED_ROLE_NAMES) {
+                if (this.state.delegatedRoles[roleName]) {
+                    roles += ' ' + roleName;
+                }
             }
         }
 
@@ -192,6 +194,11 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
 
     renderDelegatedAdminRoles = () => {
         if (!this.props.isLicensedForDelegatedAdmin) {
+            return null;
+        }
+
+        // System Admins already have access to all System Console areas, so the delegated roles are irrelevant.
+        if (this.state.isSystemAdmin) {
             return null;
         }
 
@@ -348,7 +355,15 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
                 );
             } else {
                 userAccessTokenContent = (
-                    <div>
+                    <div className='manage-roles-modal__access-tokens'>
+                        <p>
+                            <strong>
+                                <FormattedMessage
+                                    id='admin.manage_roles.personalAccessTokensTitle'
+                                    defaultMessage='Personal Access Tokens'
+                                />
+                            </strong>
+                        </p>
                         <div className='checkbox'>
                             <label>
                                 <input
