@@ -946,7 +946,7 @@ type GroupStore interface {
 	GetByRemoteID(remoteID string, groupSource model.GroupSource) (*model.Group, error)
 	GetAllBySource(groupSource model.GroupSource) ([]*model.Group, error)
 	GetByUser(userID string, opts model.GroupSearchOpts) ([]*model.Group, error)
-	GetMembershipsByUser(userID string, since int64) (*model.InitialLoadGroupMembershipList, error)
+	GetMembershipsByUser(userID string, since int64) (*model.ExperienceGroupMembershipList, error)
 	Update(group *model.Group) (*model.Group, error)
 	Delete(groupID string) (*model.Group, error)
 	Restore(groupID string) (*model.Group, error)

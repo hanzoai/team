@@ -383,7 +383,7 @@ func (s *SqlGroupStore) GetByUser(userID string, opts model.GroupSearchOpts) ([]
 	return groups, nil
 }
 
-func (s *SqlGroupStore) GetMembershipsByUser(userID string, since int64) (*model.InitialLoadGroupMembershipList, error) {
+func (s *SqlGroupStore) GetMembershipsByUser(userID string, since int64) (*model.ExperienceGroupMembershipList, error) {
 	type membershipRow struct {
 		GroupId  string
 		UserId   string
@@ -417,12 +417,12 @@ func (s *SqlGroupStore) GetMembershipsByUser(userID string, since int64) (*model
 		return nil, errors.Wrapf(err, "failed to get group memberships for userId=%s", userID)
 	}
 
-	result := &model.InitialLoadGroupMembershipList{}
+	result := &model.ExperienceGroupMembershipList{}
 	for _, r := range rows {
 		if r.DeleteAt > 0 {
 			result.RemovedGroupIds = append(result.RemovedGroupIds, r.GroupId)
 		} else {
-			result.Members = append(result.Members, &model.InitialLoadGroupMembership{
+			result.Members = append(result.Members, &model.ExperienceGroupMembership{
 				GroupId:  r.GroupId,
 				UserId:   r.UserId,
 				CreateAt: r.CreateAt,

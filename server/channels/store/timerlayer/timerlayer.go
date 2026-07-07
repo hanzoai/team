@@ -5516,7 +5516,7 @@ func (s *TimerLayerGroupStore) GetMemberUsersSortedPage(groupID string, page int
 	return result, err
 }
 
-func (s *TimerLayerGroupStore) GetMembershipsByUser(userID string, since int64) (*model.InitialLoadGroupMembershipList, error) {
+func (s *TimerLayerGroupStore) GetMembershipsByUser(userID string, since int64) (*model.ExperienceGroupMembershipList, error) {
 	start := time.Now()
 
 	result, err := s.GroupStore.GetMembershipsByUser(userID, since)

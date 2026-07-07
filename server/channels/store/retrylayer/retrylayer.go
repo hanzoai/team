@@ -6810,7 +6810,7 @@ func (s *RetryLayerGroupStore) GetMemberUsersSortedPage(groupID string, page int
 
 }
 
-func (s *RetryLayerGroupStore) GetMembershipsByUser(userID string, since int64) (*model.InitialLoadGroupMembershipList, error) {
+func (s *RetryLayerGroupStore) GetMembershipsByUser(userID string, since int64) (*model.ExperienceGroupMembershipList, error) {
 
 	tries := 0
 	for {

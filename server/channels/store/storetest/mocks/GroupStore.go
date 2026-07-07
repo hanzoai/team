@@ -1139,23 +1139,23 @@ func (_m *GroupStore) GetMemberUsersSortedPage(groupID string, page int, perPage
 }
 
 // GetMembershipsByUser provides a mock function with given fields: userID, since
-func (_m *GroupStore) GetMembershipsByUser(userID string, since int64) (*model.InitialLoadGroupMembershipList, error) {
+func (_m *GroupStore) GetMembershipsByUser(userID string, since int64) (*model.ExperienceGroupMembershipList, error) {
 	ret := _m.Called(userID, since)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetMembershipsByUser")
 	}
 
-	var r0 *model.InitialLoadGroupMembershipList
+	var r0 *model.ExperienceGroupMembershipList
 	var r1 error
-	if rf, ok := ret.Get(0).(func(string, int64) (*model.InitialLoadGroupMembershipList, error)); ok {
+	if rf, ok := ret.Get(0).(func(string, int64) (*model.ExperienceGroupMembershipList, error)); ok {
 		return rf(userID, since)
 	}
-	if rf, ok := ret.Get(0).(func(string, int64) *model.InitialLoadGroupMembershipList); ok {
+	if rf, ok := ret.Get(0).(func(string, int64) *model.ExperienceGroupMembershipList); ok {
 		r0 = rf(userID, since)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*model.InitialLoadGroupMembershipList)
+			r0 = ret.Get(0).(*model.ExperienceGroupMembershipList)
 		}
 	}
 

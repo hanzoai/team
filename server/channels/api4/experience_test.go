@@ -114,9 +114,6 @@ func TestGetInitialLoad(t *testing.T) {
 		// SidebarCategories
 		assert.NotNil(t, r.ActiveTeam.SidebarCategories)
 
-		// Threads removed — not present in active_team
-		// (counts are in InitialLoadTeam fields instead)
-
 		// Roles — every role name referenced by Me/TeamMembers/ChannelMembers must be present
 		returnedRoles := make(map[string]struct{}, len(r.Roles))
 		for _, role := range r.Roles {
@@ -130,9 +127,9 @@ func TestGetInitialLoad(t *testing.T) {
 				"role %q referenced but not returned", name)
 		}
 
-		// PriorityHints
-		require.NotNil(t, r.PriorityHints)
-		assert.Equal(t, th.BasicTeam.Id, r.PriorityHints.ActiveTeamID)
+		// Active team resolved correctly
+		require.NotNil(t, r.ActiveTeam)
+		assert.Equal(t, th.BasicTeam.Id, r.ActiveTeam.Team.Id)
 	})
 
 	t.Run("explicit team_id selects correct active team", func(t *testing.T) {
@@ -261,7 +258,7 @@ func TestGetInitialLoad(t *testing.T) {
 		var r model.InitialLoadResponse
 		require.NoError(t, json.NewDecoder(resp.Body).Decode(&r))
 
-		var found *model.ChannelLoadItem
+		var found *model.ExperienceChannel
 		for _, ch := range r.ActiveTeam.Channels {
 			if ch.Id == dm.Id {
 				found = ch
@@ -290,7 +287,7 @@ func TestGetInitialLoad(t *testing.T) {
 		var r model.InitialLoadResponse
 		require.NoError(t, json.NewDecoder(resp.Body).Decode(&r))
 
-		var found *model.ChannelLoadItem
+		var found *model.ExperienceChannel
 		for _, ch := range r.ActiveTeam.Channels {
 			if ch.Id == gm.Id {
 				found = ch
@@ -357,10 +354,16 @@ func TestGetInitialLoad(t *testing.T) {
 		var r model.InitialLoadResponse
 		require.NoError(t, json.NewDecoder(resp.Body).Decode(&r))
 
-		// Every team entry must have the count fields present (zero is valid)
+		// TeamUnreads must carry mention counts for each team (zero is valid)
+		teamUnreadByID := make(map[string]*model.ExperienceUnreads, len(r.TeamUnreads))
+		for _, u := range r.TeamUnreads {
+			teamUnreadByID[u.TeamID] = u
+		}
 		for _, team := range r.Teams {
-			assert.GreaterOrEqual(t, team.MentionCount, int64(0))
-			assert.GreaterOrEqual(t, team.ThreadMentionCount, int64(0))
+			u, ok := teamUnreadByID[team.Id]
+			require.True(t, ok, "team_unreads missing entry for team %s", team.Id)
+			assert.GreaterOrEqual(t, u.MentionCount, int64(0))
+			assert.GreaterOrEqual(t, u.ThreadMentionCount, int64(0))
 		}
 	})
 
@@ -474,7 +477,7 @@ func TestGetInitialLoad(t *testing.T) {
 		// LastPostAt but NOT Channel.UpdateAt.  When BasicUser then views the channel,
 		// UpdateLastViewedAt sets LastUpdateAt = greatest(LastViewedAt, LastPostAt) which
 		// is > since.  The member therefore appears in the delta but the channel does not.
-		// The server must include a slim ChannelLoadItem so the client can recompute
+		// The server must include a slim ExperienceChannel so the client can recompute
 		// unread counts from total_msg_count without a schema change.
 		//
 		// Steps:
@@ -526,7 +529,7 @@ func TestGetInitialLoad(t *testing.T) {
 		}
 		require.True(t, memberFound, "BasicChannel member must be in delta channel_members")
 
-		// A slim ChannelLoadItem for BasicChannel must accompany the member so
+		// A slim ExperienceChannel for BasicChannel must accompany the member so
 		// the client has total_msg_count to recompute the unread count.
 		var slimFound bool
 		for _, ch := range r.ActiveTeam.Channels {
@@ -540,7 +543,7 @@ func TestGetInitialLoad(t *testing.T) {
 			}
 		}
 		assert.True(t, slimFound,
-			"a slim ChannelLoadItem must accompany the BasicChannel member in the delta")
+			"a slim ExperienceChannel must accompany the BasicChannel member in the delta")
 	})
 
 	t.Run("archived team appears in RemovedTeamIds", func(t *testing.T) {
@@ -1015,7 +1018,7 @@ func TestGetTeamLoad(t *testing.T) {
 		// LastPostAt but NOT Channel.UpdateAt.  When BasicUser then views the channel,
 		// UpdateLastViewedAt sets LastUpdateAt = greatest(LastViewedAt, LastPostAt) > since.
 		// The member therefore appears in the delta but the channel does not.
-		// The server must include a slim ChannelLoadItem so the client can recompute
+		// The server must include a slim ExperienceChannel so the client can recompute
 		// unread counts from total_msg_count without a schema change.
 		//
 		// Steps:
@@ -1062,7 +1065,7 @@ func TestGetTeamLoad(t *testing.T) {
 		}
 		require.True(t, memberFound, "BasicChannel member must be in delta channel_members")
 
-		// A slim ChannelLoadItem for BasicChannel must accompany the member.
+		// A slim ExperienceChannel for BasicChannel must accompany the member.
 		var slimFound bool
 		for _, ch := range r.Channels {
 			if ch.Id == th.BasicChannel.Id {
@@ -1075,7 +1078,7 @@ func TestGetTeamLoad(t *testing.T) {
 			}
 		}
 		assert.True(t, slimFound,
-			"a slim ChannelLoadItem must accompany the BasicChannel member in the delta")
+			"a slim ExperienceChannel must accompany the BasicChannel member in the delta")
 	})
 
 	t.Run("tombstone: left channel appears in removed_channel_ids", func(t *testing.T) {
@@ -1348,7 +1351,7 @@ func TestReconnectSync(t *testing.T) {
 
 		// teams_unreads must carry the badge data for this team regardless of metadata change
 		require.NotEmpty(t, r.TeamsUnreads, "teams_unreads should always be present")
-		var teamUnread *model.SyncTeamUnread
+		var teamUnread *model.ExperienceUnreads
 		for _, u := range r.TeamsUnreads {
 			if u.TeamID == th.BasicTeam.Id {
 				teamUnread = u

@@ -93,6 +93,27 @@ func (a *App) GetRolesByNames(names []string) ([]*model.Role, *model.AppError) {
 	return roles, nil
 }
 
+func (a *App) getRolesSince(me *model.User, teamMembers []*model.TeamMember, channelMembers model.ChannelMembersWithTeamData, since int64) ([]*model.Role, *model.AppError) {
+	roleNames := collectRoleNames(me, teamMembers, channelMembers)
+	roles, appErr := a.GetRolesByNames(roleNames)
+	if appErr != nil {
+		return nil, appErr
+	}
+
+	if since <= 0 {
+		return roles, nil
+	}
+
+	filtered := roles[:0]
+	for _, r := range roles {
+		if r.UpdateAt > since {
+			filtered = append(filtered, r)
+		}
+	}
+
+	return filtered, nil
+}
+
 func (a *App) DeleteRole(id string) (*model.Role, *model.AppError) {
 	role, err := a.Srv().Store().Role().Delete(id)
 	if err != nil {
