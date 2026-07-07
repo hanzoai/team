@@ -2832,19 +2832,7 @@ func (s SqlChannelStore) CountUrgentPostsAfter(channelId string, timestamp int64
 
 // CountPostsAfter returns the number of posts in the given channel created after but not including the given timestamp. If given a non-empty user ID, only counts posts made by any other user.
 func (s SqlChannelStore) CountPostsAfter(channelId string, timestamp int64, excludedUserID string) (int, int, error) {
-	joinLeavePostTypes := []string{
-		// These types correspond to the ones checked by Post.IsJoinLeaveMessage
-		model.PostTypeJoinLeave,
-		model.PostTypeAddRemove,
-		model.PostTypeJoinChannel,
-		model.PostTypeLeaveChannel,
-		model.PostTypeJoinTeam,
-		model.PostTypeLeaveTeam,
-		model.PostTypeAddToChannel,
-		model.PostTypeRemoveFromChannel,
-		model.PostTypeAddToTeam,
-		model.PostTypeRemoveFromTeam,
-	}
+	joinLeavePostTypes := model.JoinLeaveMessagePostTypes()
 	query := s.getQueryBuilder().
 		Select("count(*)").
 		From("Posts").

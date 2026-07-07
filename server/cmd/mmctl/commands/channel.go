@@ -79,13 +79,11 @@ Private channels the user is a member of or has access to are appended with ' (p
 
 var ModifyChannelCmd = &cobra.Command{
 	Use:   "modify [channel] [flags]",
-	Short: "Modify a channel's public/private type or join/leave message visibility",
-	Long: `Change the Public/Private type of a channel, or hide/show join/leave system messages in the channel timeline.
+	Short: "Modify a channel's public/private type",
+	Long: `Change the Public/Private type of a channel.
 Channel can be specified by [team]:[channel]. ie. myteam:mychannel or by channel ID.`,
 	Example: `  channel modify myteam:mychannel --private
-  channel modify channelId --public
-  channel modify myteam:mychannel --disable-join-leave-messages
-  channel modify channelId --enable-join-leave-messages`,
+  channel modify channelId --public`,
 	Args: cobra.ExactArgs(1),
 	RunE: withClient(modifyChannelCmdF),
 }
@@ -131,8 +129,6 @@ func init() {
 
 	ModifyChannelCmd.Flags().Bool("private", false, "Convert the channel to a private channel")
 	ModifyChannelCmd.Flags().Bool("public", false, "Convert the channel to a public channel")
-	ModifyChannelCmd.Flags().Bool("disable-join-leave-messages", false, "Hide join/leave system messages in the channel timeline")
-	ModifyChannelCmd.Flags().Bool("enable-join-leave-messages", false, "Show join/leave system messages in the channel timeline")
 
 	ChannelRenameCmd.Flags().String("name", "", "Channel Name")
 	ChannelRenameCmd.Flags().String("display-name", "", "Channel Display Name")
@@ -350,26 +346,9 @@ func unarchiveChannelsCmdF(c client.Client, cmd *cobra.Command, args []string) e
 func modifyChannelCmdF(c client.Client, cmd *cobra.Command, args []string) error {
 	public, _ := cmd.Flags().GetBool("public")
 	private, _ := cmd.Flags().GetBool("private")
-	disableJoinLeaveMessages, _ := cmd.Flags().GetBool("disable-join-leave-messages")
-	enableJoinLeaveMessages, _ := cmd.Flags().GetBool("enable-join-leave-messages")
 
-	updatingPrivacy := public || private
-	updatingJoinLeaveMessages := disableJoinLeaveMessages || enableJoinLeaveMessages
-
-	if !updatingPrivacy && !updatingJoinLeaveMessages {
-		return errors.New("you must specify one of --public, --private, --disable-join-leave-messages, or --enable-join-leave-messages")
-	}
-
-	if updatingPrivacy && public == private {
+	if public == private {
 		return errors.New("you must specify only one of --public or --private")
-	}
-
-	if updatingJoinLeaveMessages && disableJoinLeaveMessages == enableJoinLeaveMessages {
-		return errors.New("you must specify only one of --disable-join-leave-messages or --enable-join-leave-messages")
-	}
-
-	if updatingPrivacy && updatingJoinLeaveMessages {
-		return errors.New("cannot change channel privacy and join/leave message settings in the same command")
 	}
 
 	channel := getChannelFromChannelArg(c, args[0])
@@ -378,28 +357,16 @@ func modifyChannelCmdF(c client.Client, cmd *cobra.Command, args []string) error
 	}
 
 	if !(channel.Type == model.ChannelTypeOpen || channel.Type == model.ChannelTypePrivate) {
-		if updatingPrivacy {
-			return errors.New("you can only change the type of public/private channels")
-		}
-		return errors.New("you can only change join/leave message settings on public/private channels")
+		return errors.New("you can only change the type of public/private channels")
 	}
 
-	if updatingPrivacy {
-		privacy := model.ChannelTypeOpen
-		if private {
-			privacy = model.ChannelTypePrivate
-		}
-
-		if _, _, err := c.UpdateChannelPrivacy(context.TODO(), channel.Id, privacy); err != nil {
-			return errors.Errorf("failed to update channel (%q) privacy: %s", args[0], err.Error())
-		}
+	privacy := model.ChannelTypeOpen
+	if private {
+		privacy = model.ChannelTypePrivate
 	}
 
-	if updatingJoinLeaveMessages {
-		patch := &model.ChannelPatch{DisableJoinLeaveMessages: &disableJoinLeaveMessages}
-		if _, _, err := c.PatchChannel(context.TODO(), channel.Id, patch); err != nil {
-			return errors.Errorf("failed to update channel (%q) join/leave message settings: %s", args[0], err.Error())
-		}
+	if _, _, err := c.UpdateChannelPrivacy(context.TODO(), channel.Id, privacy); err != nil {
+		return errors.Errorf("failed to update channel (%q) privacy: %s", args[0], err.Error())
 	}
 
 	return nil

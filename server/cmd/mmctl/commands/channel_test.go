@@ -162,7 +162,7 @@ func (s *MmctlUnitTestSuite) TestModifyChannelCmdF() {
 		cmd.Flags().Bool("private", false, "")
 
 		err := modifyChannelCmdF(s.client, cmd, []string{})
-		s.Require().EqualError(err, "you must specify one of --public, --private, --disable-join-leave-messages, or --enable-join-leave-messages")
+		s.Require().EqualError(err, "you must specify only one of --public or --private")
 		s.Len(printer.GetLines(), 0)
 		s.Len(printer.GetErrorLines(), 0)
 	})
@@ -384,117 +384,6 @@ func (s *MmctlUnitTestSuite) TestModifyChannelCmdF() {
 		s.Len(printer.GetErrorLines(), 0)
 	})
 
-	s.Run("Disable join/leave messages", func() {
-		printer.Clean()
-		channel := &model.Channel{
-			Id:   channelID,
-			Type: model.ChannelTypeOpen,
-		}
-		args := []string{channel.Id}
-		disableJoinLeave := true
-
-		cmd := &cobra.Command{}
-		cmd.Flags().Bool("public", false, "")
-		cmd.Flags().Bool("private", false, "")
-		cmd.Flags().Bool("disable-join-leave-messages", true, "")
-		cmd.Flags().Bool("enable-join-leave-messages", false, "")
-
-		s.client.
-			EXPECT().
-			GetChannel(context.TODO(), args[0]).
-			Return(channel, &model.Response{}, nil).
-			Times(1)
-
-		s.client.
-			EXPECT().
-			PatchChannel(context.TODO(), channel.Id, &model.ChannelPatch{DisableJoinLeaveMessages: &disableJoinLeave}).
-			Return(channel, &model.Response{}, nil).
-			Times(1)
-
-		err := modifyChannelCmdF(s.client, cmd, args)
-		s.Require().NoError(err)
-	})
-
-	s.Run("Enable join/leave messages", func() {
-		printer.Clean()
-		channel := &model.Channel{
-			Id:   channelID,
-			Type: model.ChannelTypeOpen,
-		}
-		args := []string{channel.Id}
-		disableJoinLeave := false
-
-		cmd := &cobra.Command{}
-		cmd.Flags().Bool("public", false, "")
-		cmd.Flags().Bool("private", false, "")
-		cmd.Flags().Bool("disable-join-leave-messages", false, "")
-		cmd.Flags().Bool("enable-join-leave-messages", true, "")
-
-		s.client.
-			EXPECT().
-			GetChannel(context.TODO(), args[0]).
-			Return(channel, &model.Response{}, nil).
-			Times(1)
-
-		s.client.
-			EXPECT().
-			PatchChannel(context.TODO(), channel.Id, &model.ChannelPatch{DisableJoinLeaveMessages: &disableJoinLeave}).
-			Return(channel, &model.Response{}, nil).
-			Times(1)
-
-		err := modifyChannelCmdF(s.client, cmd, args)
-		s.Require().NoError(err)
-	})
-
-	s.Run("Both disable and enable flags returns error", func() {
-		printer.Clean()
-
-		cmd := &cobra.Command{}
-		cmd.Flags().Bool("public", false, "")
-		cmd.Flags().Bool("private", false, "")
-		cmd.Flags().Bool("disable-join-leave-messages", true, "")
-		cmd.Flags().Bool("enable-join-leave-messages", true, "")
-
-		err := modifyChannelCmdF(s.client, cmd, []string{})
-		s.Require().EqualError(err, "you must specify only one of --disable-join-leave-messages or --enable-join-leave-messages")
-	})
-
-	s.Run("Cannot change join/leave messages on DM channel", func() {
-		printer.Clean()
-		dmChannel := &model.Channel{
-			Id:   channelID,
-			Type: model.ChannelTypeDirect,
-		}
-		args := []string{dmChannel.Id}
-
-		cmd := &cobra.Command{}
-		cmd.Flags().Bool("public", false, "")
-		cmd.Flags().Bool("private", false, "")
-		cmd.Flags().Bool("disable-join-leave-messages", true, "")
-		cmd.Flags().Bool("enable-join-leave-messages", false, "")
-
-		s.client.
-			EXPECT().
-			GetChannel(context.TODO(), args[0]).
-			Return(dmChannel, &model.Response{}, nil).
-			Times(1)
-
-		err := modifyChannelCmdF(s.client, cmd, args)
-		s.Require().EqualError(err, "you can only change join/leave message settings on public/private channels")
-	})
-
-	s.Run("Cannot combine privacy and join/leave flags", func() {
-		printer.Clean()
-
-		cmd := &cobra.Command{}
-		cmd.Flags().Bool("public", true, "")
-		cmd.Flags().Bool("private", false, "")
-		cmd.Flags().Bool("disable-join-leave-messages", true, "")
-		cmd.Flags().Bool("enable-join-leave-messages", false, "")
-
-		err := modifyChannelCmdF(s.client, cmd, []string{})
-		s.Require().EqualError(err, "cannot change channel privacy and join/leave message settings in the same command")
-	})
 }
 
 func (s *MmctlUnitTestSuite) TestArchiveChannelCmdF() {

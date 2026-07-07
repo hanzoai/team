@@ -18,7 +18,7 @@ func (a *App) channelExcludeMembershipSystemPostsByID(rctx request.CTX, channelI
 		}
 		return false, appErr
 	}
-	return model.ChannelExcludesMembershipSystemPosts(channel), nil
+	return model.ShouldChannelExcludeMembershipSystemPosts(channel), nil
 }
 
 func (a *App) populateGetPostsOptionsMembershipFilter(rctx request.CTX, options *model.GetPostsOptions) *model.AppError {
@@ -57,7 +57,7 @@ func (a *App) shouldSuppressMembershipSystemPostWebSocket(rctx request.CTX, chan
 	if !model.IsMembershipSystemPost(post) {
 		return false
 	}
-	return model.ChannelExcludesMembershipSystemPosts(channel)
+	return model.ShouldChannelExcludeMembershipSystemPosts(channel)
 }
 
 func (a *App) filterSuppressedMembershipPosts(rctx request.CTX, postList *model.PostList) *model.AppError {
@@ -85,7 +85,7 @@ func (a *App) filterSuppressedMembershipPosts(rctx request.CTX, postList *model.
 				channelCache[post.ChannelId] = channel
 			}
 
-			exclude = model.ChannelExcludesMembershipSystemPosts(channel)
+			exclude = model.ShouldChannelExcludeMembershipSystemPosts(channel)
 			channelExclude[post.ChannelId] = exclude
 		}
 
@@ -136,23 +136,4 @@ func removePostIDFromOrder(order []string, postID string) []string {
 		}
 	}
 	return filtered
-}
-
-func (a *App) membershipSystemPostNotFoundIfSuppressed(rctx request.CTX, post *model.Post) *model.AppError {
-	if post == nil || !model.IsMembershipSystemPost(post) {
-		return nil
-	}
-
-	channel, appErr := a.GetChannel(rctx, post.ChannelId)
-	if appErr != nil {
-		return appErr
-	}
-
-	if model.ChannelExcludesMembershipSystemPosts(channel) {
-		// Reuse the same error ID as a genuine missing post so suppressed posts
-		// are indistinguishable from non-existent ones to API clients.
-		return model.NewAppError("membershipSystemPostNotFoundIfSuppressed", "app.post.get.app_error", nil, "", http.StatusNotFound)
-	}
-
-	return nil
 }

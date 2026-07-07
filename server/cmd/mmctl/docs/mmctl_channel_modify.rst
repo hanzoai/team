@@ -3,13 +3,13 @@
 mmctl channel modify
 --------------------
 
-Modify a channel's public/private type or join/leave message visibility
+Modify a channel's public/private type
 
 Synopsis
 ~~~~~~~~
 
 
-Change the Public/Private type of a channel, or hide/show join/leave system messages in the channel timeline.
+Change the Public/Private type of a channel.
 Channel can be specified by [team]:[channel]. ie. myteam:mychannel or by channel ID.
 
 ::
@@ -23,19 +23,15 @@ Examples
 
     channel modify myteam:mychannel --private
     channel modify channelId --public
-    channel modify myteam:mychannel --disable-join-leave-messages
-    channel modify channelId --enable-join-leave-messages
 
 Options
 ~~~~~~~
 
 ::
 
-      --disable-join-leave-messages   Hide join/leave system messages in the channel timeline
-      --enable-join-leave-messages    Show join/leave system messages in the channel timeline
-  -h, --help                          help for modify
-      --private                       Convert the channel to a private channel
-      --public                        Convert the channel to a public channel
+  -h, --help      help for modify
+      --private   Convert the channel to a private channel
+      --public    Convert the channel to a public channel
 
 Options inherited from parent commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

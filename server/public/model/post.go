@@ -1003,34 +1003,31 @@ func (o *Post) GetRemoteID() string {
 	return ""
 }
 
-func (o *Post) IsJoinLeaveMessage() bool {
-	return o.Type == PostTypeJoinLeave ||
-		o.Type == PostTypeAddRemove ||
-		o.Type == PostTypeJoinChannel ||
-		o.Type == PostTypeLeaveChannel ||
-		o.Type == PostTypeJoinTeam ||
-		o.Type == PostTypeLeaveTeam ||
-		o.Type == PostTypeAddToChannel ||
-		o.Type == PostTypeRemoveFromChannel ||
-		o.Type == PostTypeAddToTeam ||
-		o.Type == PostTypeRemoveFromTeam
-}
-
-func MembershipSystemPostTypes() []string {
+// JoinLeaveMessagePostTypes returns the post types checked by IsJoinLeaveMessage.
+func JoinLeaveMessagePostTypes() []string {
 	return []string{
 		PostTypeJoinLeave,
 		PostTypeAddRemove,
 		PostTypeJoinChannel,
-		PostTypeGuestJoinChannel,
 		PostTypeLeaveChannel,
 		PostTypeJoinTeam,
 		PostTypeLeaveTeam,
 		PostTypeAddToChannel,
-		PostTypeAddGuestToChannel,
 		PostTypeRemoveFromChannel,
 		PostTypeAddToTeam,
 		PostTypeRemoveFromTeam,
 	}
+}
+
+func (o *Post) IsJoinLeaveMessage() bool {
+	return slices.Contains(JoinLeaveMessagePostTypes(), o.Type)
+}
+
+// MembershipSystemPostTypes is the superset of JoinLeaveMessagePostTypes that
+// additionally includes guest join/add types, used by the per-channel
+// disable-join-leave-messages read filter.
+func MembershipSystemPostTypes() []string {
+	return append(JoinLeaveMessagePostTypes(), PostTypeGuestJoinChannel, PostTypeAddGuestToChannel)
 }
 
 func IsMembershipSystemPost(post *Post) bool {

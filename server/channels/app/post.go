@@ -1466,11 +1466,16 @@ func (a *App) GetSinglePost(rctx request.CTX, postID string, includeDeleted bool
 		return nil, model.NewAppError("GetSinglePost", "app.post.cloud.get.app_error", nil, "", http.StatusForbidden)
 	}
 
-	a.applyPostWillBeConsumedHook(rctx, &post)
-
-	if appErr := a.membershipSystemPostNotFoundIfSuppressed(rctx, post); appErr != nil {
+	filtered, appErr := a.filterSuppressedMembershipPostsFromSlice(rctx, []*model.Post{post})
+	if appErr != nil {
 		return nil, appErr
 	}
+	if len(filtered) == 0 {
+		return nil, model.NewAppError("GetSinglePost", "app.post.get.app_error", nil, "", http.StatusNotFound)
+	}
+	post = filtered[0]
+
+	a.applyPostWillBeConsumedHook(rctx, &post)
 
 	return post, nil
 }
@@ -1616,14 +1621,14 @@ func (a *App) GetPermalinkPost(rctx request.CTX, postID string, userID string) (
 		return nil, appErr
 	}
 
+	if appErr := a.filterSuppressedMembershipPosts(rctx, list); appErr != nil {
+		return nil, appErr
+	}
+
 	if len(list.Order) != 1 {
 		return nil, model.NewAppError("getPermalinkTmp", "api.post_get_post_by_id.get.app_error", nil, "", http.StatusNotFound)
 	}
 	post := list.Posts[list.Order[0]]
-
-	if appErr := a.membershipSystemPostNotFoundIfSuppressed(rctx, post); appErr != nil {
-		return nil, appErr
-	}
 
 	channel, err := a.GetChannel(rctx, post.ChannelId)
 	if err != nil {

@@ -519,9 +519,9 @@ func (o *Channel) Patch(patch *ChannelPatch) {
 	}
 }
 
-// ChannelExcludesMembershipSystemPosts reports whether membership system posts should be
+// ShouldChannelExcludeMembershipSystemPosts reports whether membership system posts should be
 // hidden on end-user read paths for channel.
-func ChannelExcludesMembershipSystemPosts(channel *Channel) bool {
+func ShouldChannelExcludeMembershipSystemPosts(channel *Channel) bool {
 	if channel == nil || channel.IsGroupOrDirect() {
 		return false
 	}

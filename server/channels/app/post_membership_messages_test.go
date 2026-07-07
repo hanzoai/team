@@ -365,7 +365,7 @@ func TestGetPermalinkPostSuppression(t *testing.T) {
 
 		_, appErr := th.App.GetPermalinkPost(th.Context, membershipPost.Id, th.BasicUser.Id)
 		require.NotNil(t, appErr)
-		require.Equal(t, "app.post.get.app_error", appErr.Id)
+		require.Equal(t, "api.post_get_post_by_id.get.app_error", appErr.Id)
 	})
 
 	t.Run("regular post permalink visible when suppressed", func(t *testing.T) {
@@ -396,38 +396,38 @@ func TestRemovePostIDFromOrder(t *testing.T) {
 	require.Empty(t, removePostIDFromOrder(nil, "a"))
 }
 
-func TestChannelExcludesMembershipSystemPostsModel(t *testing.T) {
+func TestShouldChannelExcludeMembershipSystemPostsModel(t *testing.T) {
 	t.Parallel()
 
 	disabled := &model.Channel{
 		Type:                     model.ChannelTypeOpen,
 		DisableJoinLeaveMessages: true,
 	}
-	require.True(t, model.ChannelExcludesMembershipSystemPosts(disabled))
+	require.True(t, model.ShouldChannelExcludeMembershipSystemPosts(disabled))
 
 	enabled := &model.Channel{
 		Type:                     model.ChannelTypeOpen,
 		DisableJoinLeaveMessages: false,
 	}
-	require.False(t, model.ChannelExcludesMembershipSystemPosts(enabled))
+	require.False(t, model.ShouldChannelExcludeMembershipSystemPosts(enabled))
 
 	sharedDisabled := &model.Channel{
 		Type:                     model.ChannelTypeOpen,
 		DisableJoinLeaveMessages: true,
 		Shared:                   model.NewPointer(true),
 	}
-	require.True(t, model.ChannelExcludesMembershipSystemPosts(sharedDisabled))
+	require.True(t, model.ShouldChannelExcludeMembershipSystemPosts(sharedDisabled))
 
 	sharedEnabled := &model.Channel{
 		Type:                     model.ChannelTypeOpen,
 		DisableJoinLeaveMessages: false,
 		Shared:                   model.NewPointer(true),
 	}
-	require.False(t, model.ChannelExcludesMembershipSystemPosts(sharedEnabled))
+	require.False(t, model.ShouldChannelExcludeMembershipSystemPosts(sharedEnabled))
 
 	direct := &model.Channel{
 		Type:                     model.ChannelTypeDirect,
 		DisableJoinLeaveMessages: true,
 	}
-	require.False(t, model.ChannelExcludesMembershipSystemPosts(direct))
+	require.False(t, model.ShouldChannelExcludeMembershipSystemPosts(direct))
 }

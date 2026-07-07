@@ -362,34 +362,34 @@ func TestSanitize(t *testing.T) {
 	require.Equal(t, int64(0), s.LastRootPostAt)
 }
 
-func TestChannelExcludesMembershipSystemPosts(t *testing.T) {
+func TestShouldChannelExcludeMembershipSystemPosts(t *testing.T) {
 	t.Run("nil channel returns false", func(t *testing.T) {
-		require.False(t, ChannelExcludesMembershipSystemPosts(nil))
+		require.False(t, ShouldChannelExcludeMembershipSystemPosts(nil))
 	})
 
 	t.Run("DM channel returns false even when flag is set", func(t *testing.T) {
 		ch := &Channel{Type: ChannelTypeDirect, DisableJoinLeaveMessages: true}
-		require.False(t, ChannelExcludesMembershipSystemPosts(ch))
+		require.False(t, ShouldChannelExcludeMembershipSystemPosts(ch))
 	})
 
 	t.Run("GM channel returns false even when flag is set", func(t *testing.T) {
 		ch := &Channel{Type: ChannelTypeGroup, DisableJoinLeaveMessages: true}
-		require.False(t, ChannelExcludesMembershipSystemPosts(ch))
+		require.False(t, ShouldChannelExcludeMembershipSystemPosts(ch))
 	})
 
 	t.Run("open channel returns false when flag is off", func(t *testing.T) {
 		ch := &Channel{Type: ChannelTypeOpen, DisableJoinLeaveMessages: false}
-		require.False(t, ChannelExcludesMembershipSystemPosts(ch))
+		require.False(t, ShouldChannelExcludeMembershipSystemPosts(ch))
 	})
 
 	t.Run("open channel returns true when flag is on", func(t *testing.T) {
 		ch := &Channel{Type: ChannelTypeOpen, DisableJoinLeaveMessages: true}
-		require.True(t, ChannelExcludesMembershipSystemPosts(ch))
+		require.True(t, ShouldChannelExcludeMembershipSystemPosts(ch))
 	})
 
 	t.Run("private channel returns true when flag is on", func(t *testing.T) {
 		ch := &Channel{Type: ChannelTypePrivate, DisableJoinLeaveMessages: true}
-		require.True(t, ChannelExcludesMembershipSystemPosts(ch))
+		require.True(t, ShouldChannelExcludeMembershipSystemPosts(ch))
 	})
 }
 
