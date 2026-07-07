@@ -1,22 +1,37 @@
-.. _mmctl_channel_users:
+.. _mmctl_channel_users_list:
 
-mmctl channel users
--------------------
+mmctl channel users list
+------------------------
 
-Management of channel users
+List users of a channel
 
 Synopsis
 ~~~~~~~~
 
 
-Management of channel users
+List the users belonging to a channel, printing each member's id, username, email and roles
+
+::
+
+  mmctl channel users list [channel] [flags]
+
+Examples
+~~~~~~~~
+
+::
+
+    channel users list myteam:mychannel
+    channel users list myteam:mychannel --all
 
 Options
 ~~~~~~~
 
 ::
 
-  -h, --help   help for users
+      --all            Fetch all channel users. --page flag will be ignored if provided
+  -h, --help           help for list
+      --page int       Page number to fetch for the list of channel users
+      --per-page int   Number of channel users to be fetched (default 200)
 
 Options inherited from parent commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,8 +51,5 @@ Options inherited from parent commands
 SEE ALSO
 ~~~~~~~~
 
-* `mmctl channel <mmctl_channel.rst>`_ 	 - Management of channels
-* `mmctl channel users add <mmctl_channel_users_add.rst>`_ 	 - Add users to channel
-* `mmctl channel users list <mmctl_channel_users_list.rst>`_ 	 - List users of a channel
-* `mmctl channel users remove <mmctl_channel_users_remove.rst>`_ 	 - Remove users from channel
+* `mmctl channel users <mmctl_channel_users.rst>`_ 	 - Management of channel users
 
