@@ -2341,7 +2341,7 @@ func (a *App) BuildAccessControlSubject(rctx request.CTX, userID string, roles s
 		return nil, model.NewAppError("BuildAccessControlSubject", "app.access_control.build_subject.group_id.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
 	}
 
-	subject, storeErr := a.Srv().Store().Attributes().GetSubject(rctx, userID, group.ID)
+	subject, storeErr := a.Srv().Store().Attributes().GetSubject(rctx, userID, group.ID, model.PropertyFieldObjectTypeUser)
 	if storeErr != nil {
 		var nfErr *store.ErrNotFound
 		if errors.As(storeErr, &nfErr) {
