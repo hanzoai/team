@@ -21,23 +21,38 @@ const (
 	replicaLagPrefix = "replica-lag"
 )
 
+type connectionPoolSettings struct {
+	maxIdleConns                int
+	maxOpenConns                int
+	connMaxLifetimeMilliseconds int
+	connMaxIdleTimeMilliseconds int
+}
+
 // SetupConnection sets up the connection to the database and pings it to make sure it's alive.
 // It also applies any database configuration settings that are required.
 func SetupConnection(logger mlog.LoggerIFace, connType string, dataSource string, settings *model.SqlSettings, attempts int) (*dbsql.DB, error) {
-	return setupConnection(logger, connType, dataSource, *settings.DriverName,
-		*settings.MaxIdleConns, *settings.MaxOpenConns,
-		*settings.ConnMaxLifetimeMilliseconds, *settings.ConnMaxIdleTimeMilliseconds,
-		attempts)
+	poolSettings := connectionPoolSettings{
+		maxIdleConns:                *settings.MaxIdleConns,
+		maxOpenConns:                *settings.MaxOpenConns,
+		connMaxLifetimeMilliseconds: *settings.ConnMaxLifetimeMilliseconds,
+		connMaxIdleTimeMilliseconds: *settings.ConnMaxIdleTimeMilliseconds,
+	}
+
+	return setupConnection(logger, connType, dataSource, *settings.DriverName, poolSettings, attempts)
 }
 
 func SetupDeliveryTrackingConnection(logger mlog.LoggerIFace, connType string, dataSource string, settings *model.DeliveryTrackingSettings, attempts int) (*dbsql.DB, error) {
-	return setupConnection(logger, connType, dataSource, *settings.DriverName,
-		*settings.MaxIdleConns, *settings.MaxOpenConns,
-		*settings.ConnMaxLifetimeMilliseconds, *settings.ConnMaxIdleTimeMilliseconds,
-		attempts)
+	poolSettings := connectionPoolSettings{
+		maxIdleConns:                *settings.MaxIdleConns,
+		maxOpenConns:                *settings.MaxOpenConns,
+		connMaxLifetimeMilliseconds: *settings.ConnMaxLifetimeMilliseconds,
+		connMaxIdleTimeMilliseconds: *settings.ConnMaxIdleTimeMilliseconds,
+	}
+
+	return setupConnection(logger, connType, dataSource, *settings.DriverName, poolSettings, attempts)
 }
 
-func setupConnection(logger mlog.LoggerIFace, connType, dataSource, driverName string, maxIdle, maxOpen, lifetimeMs, idleMs, attempts int) (*dbsql.DB, error) {
+func setupConnection(logger mlog.LoggerIFace, connType, dataSource, driverName string, pool connectionPoolSettings, attempts int) (*dbsql.DB, error) {
 	db, err := dbsql.Open(driverName, dataSource)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to open SQL connection")
@@ -81,11 +96,11 @@ func setupConnection(logger mlog.LoggerIFace, connType, dataSource, driverName s
 		db.SetMaxOpenConns(1)
 		db.SetMaxIdleConns(1)
 	} else {
-		db.SetMaxIdleConns(maxIdle)
-		db.SetMaxOpenConns(maxOpen)
+		db.SetMaxIdleConns(pool.maxIdleConns)
+		db.SetMaxOpenConns(pool.maxOpenConns)
 	}
-	db.SetConnMaxLifetime(time.Duration(lifetimeMs) * time.Millisecond)
-	db.SetConnMaxIdleTime(time.Duration(idleMs) * time.Millisecond)
+	db.SetConnMaxLifetime(time.Duration(pool.connMaxLifetimeMilliseconds) * time.Millisecond)
+	db.SetConnMaxIdleTime(time.Duration(pool.connMaxIdleTimeMilliseconds) * time.Millisecond)
 
 	return db, nil
 }
