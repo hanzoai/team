@@ -32,7 +32,9 @@ describe('Forward Message', () => {
     const replyMessage = 'Forward this reply';
 
     before(() => {
-        cy.apiGetConfig().then(({config}) => {
+        // MaxPostSize is a computed value only present in the client config,
+        // so request that (old format) rather than the admin config.
+        cy.apiGetConfig(true).then(({config}) => {
             maxMessageLength = parseInt(config.MaxPostSize, 10);
         });
 

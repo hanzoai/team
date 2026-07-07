@@ -16,7 +16,9 @@ describe('Message Reply too long', () => {
     let maxReplyLength;
 
     before(() => {
-        cy.apiGetConfig().then(({config}) => {
+        // MaxPostSize is a computed value only present in the client config,
+        // so request that (old format) rather than the admin config.
+        cy.apiGetConfig(true).then(({config}) => {
             maxReplyLength = parseInt(config.MaxPostSize, 10);
         });
 
