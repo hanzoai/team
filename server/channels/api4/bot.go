@@ -156,6 +156,7 @@ func getBot(c *Context, w http.ResponseWriter, r *http.Request) {
 func getBots(c *Context, w http.ResponseWriter, r *http.Request) {
 	includeDeleted, _ := strconv.ParseBool(r.URL.Query().Get("include_deleted"))
 	onlyOrphaned, _ := strconv.ParseBool(r.URL.Query().Get("only_orphaned"))
+	term := r.URL.Query().Get("q")
 
 	var OwnerId string
 	if c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionReadOthersBots) {
@@ -175,6 +176,7 @@ func getBots(c *Context, w http.ResponseWriter, r *http.Request) {
 		OwnerId:        OwnerId,
 		IncludeDeleted: includeDeleted,
 		OnlyOrphaned:   onlyOrphaned,
+		Term:           term,
 	})
 	if appErr != nil {
 		c.Err = appErr

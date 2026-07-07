@@ -313,6 +313,89 @@ func testBotStoreGetAll(t *testing.T, rctx request.CTX, ss store.Store, s SqlSto
 			b4,
 		}, bots)
 	})
+
+	namedBot, _ := makeBotWithUser(t, rctx, ss, &model.Bot{
+		Username:    "searchable_bot",
+		DisplayName: "Fancy Display Name",
+		Description: "A bot for search tests",
+		OwnerId:     OwnerID1,
+	})
+	defer func() { require.NoError(t, ss.Bot().PermanentDelete(namedBot.UserId)) }()
+	defer func() { require.NoError(t, ss.User().PermanentDelete(rctx, namedBot.UserId)) }()
+
+	// Create a real owner user so we can search bots by owner username.
+	knownOwner := model.User{
+		Email:    MakeEmail(),
+		Username: "known_owner_" + model.NewId()[:8],
+		Roles:    model.SystemUserRoleId,
+	}
+	_, ownerErr := ss.User().Save(rctx, &knownOwner)
+	require.NoError(t, ownerErr)
+	defer func() { require.NoError(t, ss.User().PermanentDelete(rctx, knownOwner.Id)) }()
+
+	ownedBot, _ := makeBotWithUser(t, rctx, ss, &model.Bot{
+		Username:    "owned_by_known_owner",
+		DisplayName: "Owned Bot",
+		Description: "unique_description_xyz",
+		OwnerId:     knownOwner.Id,
+	})
+	defer func() { require.NoError(t, ss.Bot().PermanentDelete(ownedBot.UserId)) }()
+	defer func() { require.NoError(t, ss.User().PermanentDelete(rctx, ownedBot.UserId)) }()
+
+	t.Run("search by username substring", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: "searchable"})
+		require.NoError(t, err)
+		require.Len(t, bots, 1)
+		require.Equal(t, namedBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search by username case insensitive", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: "SEARCHABLE"})
+		require.NoError(t, err)
+		require.Len(t, bots, 1)
+		require.Equal(t, namedBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search by display name substring", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: "Fancy"})
+		require.NoError(t, err)
+		require.Len(t, bots, 1)
+		require.Equal(t, namedBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search by display name case insensitive", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: "fancy display"})
+		require.NoError(t, err)
+		require.Len(t, bots, 1)
+		require.Equal(t, namedBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search by description substring", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: "unique_description_xyz"})
+		require.NoError(t, err)
+		require.Len(t, bots, 1)
+		require.Equal(t, ownedBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search by owner username", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: knownOwner.Username})
+		require.NoError(t, err)
+		require.Len(t, bots, 1)
+		require.Equal(t, ownedBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search returns no results for unknown term", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: "zzznomatch"})
+		require.NoError(t, err)
+		require.Empty(t, bots)
+	})
+
+	t.Run("search term combined with include_deleted", func(t *testing.T) {
+		bots, err := ss.Bot().GetAll(&model.BotGetOptions{Page: 0, PerPage: 10, Term: "deleted", IncludeDeleted: true})
+		require.NoError(t, err)
+		require.Len(t, bots, 1)
+		require.Equal(t, deletedBot.UserId, bots[0].UserId)
+	})
 }
 
 func testBotStoreSave(t *testing.T, rctx request.CTX, ss store.Store) {

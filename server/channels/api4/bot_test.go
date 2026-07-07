@@ -1064,6 +1064,75 @@ func TestGetBots(t *testing.T) {
 	})
 }
 
+func TestSearchBots(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t).DeleteBots(t)
+
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		*cfg.ServiceSettings.EnableBotAccountCreation = true
+	})
+
+	alphaBot, resp, err := th.SystemAdminClient.CreateBot(context.Background(), &model.Bot{
+		Username:    GenerateTestUsername(),
+		DisplayName: "Alpha Bot",
+		Description: "first search target",
+	})
+	require.NoError(t, err)
+	CheckCreatedStatus(t, resp)
+	defer func() {
+		appErr := th.App.PermanentDeleteBot(th.Context, alphaBot.UserId)
+		assert.Nil(t, appErr)
+	}()
+
+	betaBot, resp, err := th.SystemAdminClient.CreateBot(context.Background(), &model.Bot{
+		Username:    "beta_search_bot_" + GenerateTestUsername(),
+		DisplayName: "Beta Bot",
+		Description: "second search target",
+	})
+	require.NoError(t, err)
+	CheckCreatedStatus(t, resp)
+	defer func() {
+		appErr := th.App.PermanentDeleteBot(th.Context, betaBot.UserId)
+		assert.Nil(t, appErr)
+	}()
+
+	t.Run("search by username substring returns matching bot", func(t *testing.T) {
+		bots, resp, err := th.SystemAdminClient.SearchBots(context.Background(), "beta_search", 0, 200, false, "")
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		require.Len(t, bots, 1)
+		assert.Equal(t, betaBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search is case insensitive", func(t *testing.T) {
+		bots, resp, err := th.SystemAdminClient.SearchBots(context.Background(), "BETA_SEARCH", 0, 200, false, "")
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		require.Len(t, bots, 1)
+		assert.Equal(t, betaBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search by display name substring returns matching bot", func(t *testing.T) {
+		bots, resp, err := th.SystemAdminClient.SearchBots(context.Background(), "Alpha Bot", 0, 200, false, "")
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		require.Len(t, bots, 1)
+		assert.Equal(t, alphaBot.UserId, bots[0].UserId)
+	})
+
+	t.Run("search with no match returns empty list", func(t *testing.T) {
+		bots, resp, err := th.SystemAdminClient.SearchBots(context.Background(), "zzznomatch", 0, 200, false, "")
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		assert.Empty(t, bots)
+	})
+
+	t.Run("search without permission returns error", func(t *testing.T) {
+		_, _, err := th.Client.SearchBots(context.Background(), "beta", 0, 200, false, "")
+		CheckErrorID(t, err, "api.context.permissions.app_error")
+	})
+}
+
 func TestDisableBot(t *testing.T) {
 	mainHelper.Parallel(t)
 	t.Run("disable non-existent bot", func(t *testing.T) {

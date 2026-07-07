@@ -69,6 +69,7 @@ type BotGetOptions struct {
 	OnlyOrphaned   bool
 	Page           int
 	PerPage        int
+	Term           string
 }
 
 // BotList is a list of bots.

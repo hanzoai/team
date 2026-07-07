@@ -2181,6 +2181,23 @@ func (c *Client4) GetBotsOrphaned(ctx context.Context, page, perPage int, etag s
 	return DecodeJSONFromResponse[BotList](r)
 }
 
+// SearchBots returns bots matching the given term, optionally including deleted bots.
+func (c *Client4) SearchBots(ctx context.Context, term string, page, perPage int, includeDeleted bool, etag string) ([]*Bot, *Response, error) {
+	values := url.Values{}
+	values.Set("page", strconv.Itoa(page))
+	values.Set("per_page", strconv.Itoa(perPage))
+	values.Set("q", term)
+	if includeDeleted {
+		values.Set("include_deleted", c.boolString(true))
+	}
+	r, err := c.doAPIGetWithQuery(ctx, c.botsRoute(), values, etag)
+	if err != nil {
+		return nil, BuildResponse(r), err
+	}
+	defer closeBody(r)
+	return DecodeJSONFromResponse[BotList](r)
+}
+
 // DisableBot disables the given bot in the system.
 func (c *Client4) DisableBot(ctx context.Context, botUserId string) (*Bot, *Response, error) {
 	r, err := c.doAPIPost(ctx, c.botRoute(botUserId).Join("disable"), "")

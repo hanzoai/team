@@ -75,6 +75,13 @@
             orphaned if its owner has been deactivated.
           schema:
             type: boolean
+        - name: q
+          in: query
+          description: A search term to filter bots by username, display name, description,
+            or owner username. When provided, the filter is applied server-side before
+            pagination, so bots beyond the page limit are still reachable.
+          schema:
+            type: string
       responses:
         "200":
           description: Bot page retrieval successful
