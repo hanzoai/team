@@ -14,6 +14,7 @@ describe('components/integrations/bots/Bots', () => {
     const team = TestHelper.getTeamMock();
     const actions = {
         loadBots: jest.fn().mockReturnValue(Promise.resolve({data: []})),
+        searchBots: jest.fn().mockReturnValue(Promise.resolve({data: []})),
         getUserAccessTokensForUser: jest.fn(),
         createUserAccessToken: jest.fn(),
         revokeUserAccessToken: jest.fn(),
