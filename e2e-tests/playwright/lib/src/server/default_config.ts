@@ -804,7 +804,6 @@ const defaultServerConfig: AdminConfig = {
         WebSocketEventScope: true,
         NotificationMonitoring: true,
         ExperimentalAuditSettingsSystemConsoleUI: true,
-        CustomProfileAttributes: true,
         AttributeBasedAccessControl: true,
         AttributeValueMasking: false,
         PermissionPolicies: false,

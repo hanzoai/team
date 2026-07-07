@@ -14,7 +14,7 @@ import {
     saveCustomProfileAttribute,
     getCustomProfileAttributeValues,
 } from 'mattermost-redux/actions/users';
-import {getConfig, getCustomProfileAttributes, getFeatureFlagValue, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getConfig, getCustomProfileAttributes, getLicense} from 'mattermost-redux/selectors/entities/general';
 
 import {getIsMobileView} from 'selectors/views/browser';
 
@@ -42,7 +42,7 @@ function mapStateToProps(state: GlobalState) {
 
     const license = getLicense(state);
     const isEnterprise = isEnterpriseLicense(license);
-    const enableCustomProfileAttributes = isEnterprise && getFeatureFlagValue(state, 'CustomProfileAttributes') === 'true';
+    const enableCustomProfileAttributes = isEnterprise;
 
     return {
         isMobileView: getIsMobileView(state),

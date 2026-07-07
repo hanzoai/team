@@ -46,8 +46,6 @@ type FeatureFlags struct {
 
 	ExperimentalAuditSettingsSystemConsoleUI bool
 
-	CustomProfileAttributes bool
-
 	AttributeBasedAccessControl bool
 
 	// Mask non-held attribute values in the policy editor for delegated admins.
@@ -161,7 +159,6 @@ func (f *FeatureFlags) SetDefaults() {
 	f.WebSocketEventScope = true
 	f.NotificationMonitoring = true
 	f.ExperimentalAuditSettingsSystemConsoleUI = true
-	f.CustomProfileAttributes = true
 	f.AttributeBasedAccessControl = true
 	f.AttributeValueMasking = true
 	f.PermissionPolicies = true

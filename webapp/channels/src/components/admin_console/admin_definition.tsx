@@ -635,10 +635,7 @@ const AdminDefinition: AdminDefinitionType = {
                 url: 'system_attributes/user_attributes',
                 title: defineMessage({id: 'admin.sidebar.user_attributes', defaultMessage: 'User Attributes'}),
                 searchableStrings: systemPropertiesSearchableStrings,
-                isHidden: it.not(it.all(
-                    it.minLicenseTier(LicenseSkus.Enterprise),
-                    it.configIsTrue('FeatureFlags', 'CustomProfileAttributes'),
-                )),
+                isHidden: it.not(it.minLicenseTier(LicenseSkus.Enterprise)),
                 schema: {
                     id: 'SystemProperties',
                     component: SystemProperties,
@@ -648,10 +645,7 @@ const AdminDefinition: AdminDefinitionType = {
                 url: 'system_attributes/user_attributes',
                 isDiscovery: true,
                 title: defineMessage({id: 'admin.sidebar.user_attributes', defaultMessage: 'User Attributes'}),
-                isHidden: it.any(
-                    it.minLicenseTier(LicenseSkus.Enterprise),
-                    it.configIsFalse('FeatureFlags', 'CustomProfileAttributes'),
-                ),
+                isHidden: it.minLicenseTier(LicenseSkus.Enterprise),
                 schema: {
                     id: 'SystemProperties',
                     name: defineMessage({id: 'admin.sidebar.user_attributes', defaultMessage: 'User Attributes'}),
@@ -4979,10 +4973,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'custom',
                             key: 'SamlSettings.CustomProfileAttributes',
                             component: CustomProfileAttributes,
-                            isHidden: it.not(it.all(
-                                it.minLicenseTier(LicenseSkus.Enterprise),
-                                it.configIsTrue('FeatureFlags', 'CustomProfileAttributes'),
-                            )),
+                            isHidden: it.not(it.minLicenseTier(LicenseSkus.Enterprise)),
                         },
                         {
                             type: 'text',
