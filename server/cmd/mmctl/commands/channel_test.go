@@ -383,7 +383,6 @@ func (s *MmctlUnitTestSuite) TestModifyChannelCmdF() {
 		s.Len(printer.GetLines(), 0)
 		s.Len(printer.GetErrorLines(), 0)
 	})
-
 }
 
 func (s *MmctlUnitTestSuite) TestArchiveChannelCmdF() {
