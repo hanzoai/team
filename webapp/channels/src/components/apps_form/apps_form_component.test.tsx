@@ -5,11 +5,10 @@ import React from 'react';
 
 import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
 
-import {renderWithContext, screen, waitFor, userEvent, getByDisplayValue} from 'tests/react_testing_utils';
+import {renderWithContext, screen, waitFor, userEvent} from 'tests/react_testing_utils';
 
 import {AppsForm} from './apps_form_component';
 import type {Props} from './apps_form_component';
-import { render } from 'katex';
 
 describe('AppsFormComponent', () => {
     const mockIntl = {
@@ -1829,15 +1828,21 @@ describe('AppsFormComponent', () => {
     describe('collapsible fields', () => {
         // Build props whose form contains a collapsible wrapping leaf fields
 
-        const makeForm = (expanded : boolean): Props['form'] => ({
+        const makeForm = (expanded: boolean): Props['form'] => ({
             ...baseProps.form,
-            fields:[
+            fields: [
                 {name: 'top', type: 'text'},
-                {name: 'sec', type: 'collapsible', label: 'Section', expanded: expanded, fields: [
-                    {name: 'inner', type: 'text', label: 'inner'},
-                    {name: 'innerRequired', type: 'text', label: 'innerRequired', is_required: true},
-                    ]}
-                ]
+                {
+                    name: 'sec',
+                    type: 'collapsible',
+                    label: 'Section',
+                    expanded,
+                    fields: [
+                        {name: 'inner', type: 'text', label: 'inner'},
+                        {name: 'innerRequired', type: 'text', label: 'innerRequired', is_required: true},
+                    ],
+                },
+            ],
         });
 
         it('renders leaf fields inside a collapsible section', () => {
@@ -1851,8 +1856,8 @@ describe('AppsFormComponent', () => {
             );
 
             expect(screen.getByText('Section')).toBeInTheDocument();
-            expect(screen.getByText("inner")).toBeInTheDocument();
-            expect(screen.getByText("innerRequired")).toBeInTheDocument();
+            expect(screen.getByText('inner')).toBeInTheDocument();
+            expect(screen.getByText('innerRequired')).toBeInTheDocument();
         });
 
         it('renders the collapsible toggle and child fields are hidden when collapsed', () => {
@@ -1867,12 +1872,12 @@ describe('AppsFormComponent', () => {
             );
 
             expect(screen.queryByText('Section')).toBeInTheDocument();
-            expect(screen.queryByText("inner")).not.toBeInTheDocument();
-            expect(screen.queryByText("innerRequired")).not.toBeInTheDocument();
+            expect(screen.queryByText('inner')).not.toBeInTheDocument();
+            expect(screen.queryByText('innerRequired')).not.toBeInTheDocument();
         });
 
         it('validates required fields inside a collapsed section on submit', async () => {
-            const submit = jest.fn().mockResolvedValue({data : {type : "ok"}});
+            const submit = jest.fn().mockResolvedValue({data: {type: 'ok'}});
 
             const props: Props = {
                 ...baseProps,
@@ -1899,7 +1904,7 @@ describe('AppsFormComponent', () => {
         });
 
         it('seeds initial values from leaf fields only (no value for the container)', async () => {
-            const submit = jest.fn().mockResolvedValue({data : {type : "ok"}});
+            const submit = jest.fn().mockResolvedValue({data: {type: 'ok'}});
 
             const formExpanded = makeForm(true);
 
@@ -1907,7 +1912,11 @@ describe('AppsFormComponent', () => {
             formExpanded.fields![1].fields![1].value = 'filled';
 
             renderWithContext(
-                <AppsForm {...baseProps} actions={{...baseProps.actions, submit}} form={formExpanded}/>,
+                <AppsForm
+                    {...baseProps}
+                    actions={{...baseProps.actions, submit}}
+                    form={formExpanded}
+                />,
             );
 
             const submitButton = screen.getByRole('button', {name: /submit/i});
@@ -1929,45 +1938,59 @@ describe('AppsFormComponent', () => {
             const formExpanded = makeForm(true);
 
             renderWithContext(
-                <AppsForm {...baseProps} form={formExpanded}/>,
+                <AppsForm
+                    {...baseProps}
+                    form={formExpanded}
+                />,
             );
 
             // grab the nested text field to put input
-            const formFieldInput = screen.getByTestId("innerinput");
+            const formFieldInput = screen.getByTestId('innerinput');
 
-            await userEvent.type(formFieldInput, "test text");
+            await userEvent.type(formFieldInput, 'test text');
 
             // assert that the value we put in really made it in
-            expect(formFieldInput).toHaveValue("test text");
-
+            expect(formFieldInput).toHaveValue('test text');
         });
 
         it('keeps autoFocus on the first top-level field when a collapsible is present', () => {
             const formExpanded = makeForm(true);
 
             renderWithContext(
-                <AppsForm {...baseProps} form={formExpanded}/>,
+                <AppsForm
+                    {...baseProps}
+                    form={formExpanded}
+                />,
             );
 
-            expect(screen.getByTestId("topinput")).toHaveFocus();
+            expect(screen.getByTestId('topinput')).toHaveFocus();
         });
 
         it('forwards autoFocus to the first child when the first top-level field is a collapsible', () => {
             const form: Props['form'] = {
                 ...baseProps.form,
                 fields: [
-                    {name: 'sec', type: 'collapsible', label: 'Section', expanded: true, fields: [
-                        {name: 'inner', type: 'text', label: 'inner'},
-                        {name: 'innerSecond', type: 'text', label: 'innerSecond'},
-                    ]},
+                    {
+                        name: 'sec',
+                        type: 'collapsible',
+                        label: 'Section',
+                        expanded: true,
+                        fields: [
+                            {name: 'inner', type: 'text', label: 'inner'},
+                            {name: 'innerSecond', type: 'text', label: 'innerSecond'},
+                        ],
+                    },
                 ],
             };
 
             renderWithContext(
-                <AppsForm {...baseProps} form={form}/>,
+                <AppsForm
+                    {...baseProps}
+                    form={form}
+                />,
             );
 
-            expect(screen.getByTestId("innerinput")).toHaveFocus();
+            expect(screen.getByTestId('innerinput')).toHaveFocus();
         });
     });
 });

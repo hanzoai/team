@@ -2148,35 +2148,34 @@ describe('dialog_conversion - collapsible', () => {
 
     describe('getFieldType', () => {
         it('maps collapsible to the collapsible AppFieldType', () => {
-            expect(getFieldType(collapsible('s', [textEl('a')]))).toBe("collapsible");
+            expect(getFieldType(collapsible('s', [textEl('a')]))).toBe('collapsible');
         });
     });
 
     describe('convertElement', () => {
         it('produces a COLLAPSIBLE AppField with converted child fields and no value', () => {
             // create a good object and make sure all the attributes made it in
-            const testCollapsible = collapsible("a", [textEl("b")]);
+            const testCollapsible = collapsible('a', [textEl('b')]);
             const {field, errors} = convertElement(testCollapsible, legacyOptions);
             expect(errors).toHaveLength(0);
 
             // check fields
-            expect(field?.name).toBe("a");
-            expect(field?.type).toBe("collapsible");
-            expect(field?.label).toBe("Section a");
+            expect(field?.name).toBe('a');
+            expect(field?.type).toBe('collapsible');
+            expect(field?.label).toBe('Section a');
 
             // make sure parent container has no value
             expect(field?.value).toBeUndefined();
 
             // check child element
-            expect(field?.fields?.[0].name).toBe("b");
-            expect(field?.fields?.[0].type).toBe("text");
-            expect(field?.fields?.[0].label).toBe("Text b");
-            
+            expect(field?.fields?.[0].name).toBe('b');
+            expect(field?.fields?.[0].type).toBe('text');
+            expect(field?.fields?.[0].label).toBe('Text b');
         });
 
         it('defaults expanded to true when collapsed is undefined', () => {
             // create a test collapsible object and check the expanded attribute's value
-            const testCollapsible = collapsible("a", []);
+            const testCollapsible = collapsible('a', []);
             const {field, errors} = convertElement(testCollapsible, legacyOptions);
 
             // make sure no errors are present
@@ -2188,7 +2187,7 @@ describe('dialog_conversion - collapsible', () => {
 
         it('honors collapsed=true', () => {
             // create a test collapsible object and mark it collapsed
-            const testCollapsible = collapsible("a", [textEl("b")], true);
+            const testCollapsible = collapsible('a', [textEl('b')], true);
             const {field, errors} = convertElement(testCollapsible, legacyOptions);
 
             // make sure no errors are present
@@ -2201,15 +2200,15 @@ describe('dialog_conversion - collapsible', () => {
             // make an invalid child that is to be put into the collapsible element
 
             const invalidChild = {
-                name: "bad",
-                type: "not real"
+                name: 'bad',
+                type: 'not real',
             } as DialogElement;
 
             // create a test collapsible object
-            const testCollapsible = collapsible("a", [invalidChild]);
+            const testCollapsible = collapsible('a', [invalidChild]);
 
             // convert the element using the invalid child
-            const {field, errors} = convertElement(testCollapsible, legacyOptions);
+            const {errors} = convertElement(testCollapsible, legacyOptions);
 
             // assert that we should have seen errors during conversion
             expect(errors.length).toBeGreaterThan(0);
@@ -2219,40 +2218,40 @@ describe('dialog_conversion - collapsible', () => {
     describe('flattenDialogElements', () => {
         it('returns a flat list unchanged', () => {
             // create flat list
-            const elementList = [textEl("a"), textEl("b")];
+            const elementList = [textEl('a'), textEl('b')];
 
             // call flattenList and check value
             expect(flattenDialogElements(elementList)).toHaveLength(2);
-            expect(flattenDialogElements(elementList)).toEqual([textEl("a"), textEl("b")])
+            expect(flattenDialogElements(elementList)).toEqual([textEl('a'), textEl('b')]);
         });
 
         it('expands a single collapsible into its children', () => {
-            const testCollapsible = collapsible("s", [textEl("a"), textEl("b")]);
-            expect(flattenDialogElements([testCollapsible])).toEqual([textEl("a"), textEl("b")]);
+            const testCollapsible = collapsible('s', [textEl('a'), textEl('b')]);
+            expect(flattenDialogElements([testCollapsible])).toEqual([textEl('a'), textEl('b')]);
         });
 
         it('recursively flattens nested collapsibles', () => {
             // create a nested collapsible element
-            const testNestedCollapsible = collapsible("a", [collapsible("b", [textEl("a"), textEl("b")])]);
+            const testNestedCollapsible = collapsible('a', [collapsible('b', [textEl('a'), textEl('b')])]);
 
             // expect that elements are flattened and we only get the children
-            expect(flattenDialogElements([testNestedCollapsible])).toEqual([textEl("a"), textEl("b")]);
+            expect(flattenDialogElements([testNestedCollapsible])).toEqual([textEl('a'), textEl('b')]);
         });
 
         it('returns [] for a collapsible with no elements', () => {
             // create a collapsible element with no child elements
-            const testCollapsibleNoChildren = collapsible("a", []);
-            
-            // flatten it and make sure we return an empty array 
+            const testCollapsibleNoChildren = collapsible('a', []);
+
+            // flatten it and make sure we return an empty array
             expect(flattenDialogElements([testCollapsibleNoChildren])).toHaveLength(0);
         });
     });
 
     describe('convertAppFormValuesToDialogSubmission', () => {
         it('collects child values and excludes the collapsible container', () => {
-            const testCollapsibleWithChildren = collapsible("a", [textEl("b"), textEl("c")]);
-            const values = {"b" : "b val", "c" : "c val"};
-            
+            const testCollapsibleWithChildren = collapsible('a', [textEl('b'), textEl('c')]);
+            const values = {b: 'b val', c: 'c val'};
+
             const ret = convertAppFormValuesToDialogSubmission(values, [testCollapsibleWithChildren], legacyOptions);
 
             // there shouldn't be any errors here
@@ -2261,17 +2260,17 @@ describe('dialog_conversion - collapsible', () => {
             // check values that are returned by function call
             const decon = ret.submission;
 
-            expect(decon.b).toEqual("b val");
-            expect(decon.c).toEqual("c val");
+            expect(decon.b).toEqual('b val');
+            expect(decon.c).toEqual('c val');
 
             // this makes sure that a does not have a value, since the base collapsible element does not have a value of its own
-            expect(decon).not.toHaveProperty("a");
+            expect(decon).not.toHaveProperty('a');
         });
 
         it('collects values from deeply nested collapsibles', () => {
-            const deeplyNested = collapsible("level1", [collapsible("level2", [collapsible("level3", [textEl("deep"), textEl("deep2"), textEl("deep3")])])]);
+            const deeplyNested = collapsible('level1', [collapsible('level2', [collapsible('level3', [textEl('deep'), textEl('deep2'), textEl('deep3')])])]);
 
-            const values = {"deep" : "deep val", "deep2" : "deep val2", "deep3" : "deep val3"}
+            const values = {deep: 'deep val', deep2: 'deep val2', deep3: 'deep val3'};
 
             const ret = convertAppFormValuesToDialogSubmission(values, [deeplyNested], legacyOptions);
 
@@ -2281,16 +2280,16 @@ describe('dialog_conversion - collapsible', () => {
             // check values returned by call
             const decon = ret.submission;
 
-            expect(decon.deep).toEqual("deep val");
-            expect(decon.deep2).toEqual("deep val2");
-            expect(decon.deep3).toEqual("deep val3");
+            expect(decon.deep).toEqual('deep val');
+            expect(decon.deep2).toEqual('deep val2');
+            expect(decon.deep3).toEqual('deep val3');
         });
     });
 
     describe('validateDialogElement', () => {
         it('does not produce errors for a well-formed collapsible', () => {
             // a collapsible has name, display_name, and type set, so it should validate cleanly
-            const errors = validateDialogElement(collapsible("a", [textEl("b")]), 0, enhancedOptions);
+            const errors = validateDialogElement(collapsible('a', [textEl('b')]), 0, enhancedOptions);
             expect(errors).toHaveLength(0);
         });
     });
@@ -2298,39 +2297,39 @@ describe('dialog_conversion - collapsible', () => {
     describe('convertElement nested', () => {
         it('recursively converts a collapsible nested inside a collapsible', () => {
             // collapsible "outer" wraps collapsible "inner" wraps a single leaf field
-            const nested = collapsible("outer", [collapsible("inner", [textEl("leaf")])]);
+            const nested = collapsible('outer', [collapsible('inner', [textEl('leaf')])]);
             const {field, errors} = convertElement(nested, legacyOptions);
 
             expect(errors).toHaveLength(0);
 
             // outer container
-            expect(field?.type).toBe("collapsible");
+            expect(field?.type).toBe('collapsible');
             expect(field?.value).toBeUndefined();
 
             // inner container, nested under outer's fields
             const inner = field?.fields?.[0];
-            expect(inner?.name).toBe("inner");
-            expect(inner?.type).toBe("collapsible");
+            expect(inner?.name).toBe('inner');
+            expect(inner?.type).toBe('collapsible');
             expect(inner?.value).toBeUndefined();
 
             // leaf field at the bottom
-            expect(inner?.fields?.[0].name).toBe("leaf");
-            expect(inner?.fields?.[0].type).toBe("text");
+            expect(inner?.fields?.[0].name).toBe('leaf');
+            expect(inner?.fields?.[0].type).toBe('text');
         });
     });
 
     describe('convertDialogToAppForm', () => {
         it('includes a collapsible field with its converted children in form.fields', () => {
-            const elements = [collapsible("section", [textEl("child")])];
+            const elements = [collapsible('section', [textEl('child')])];
 
             const {form, errors} = convertDialogToAppForm(
                 elements,
-                "Test Dialog",
+                'Test Dialog',
                 undefined,
                 undefined,
                 undefined,
-                "",
-                "",
+                '',
+                '',
                 legacyOptions,
             );
 
@@ -2338,25 +2337,25 @@ describe('dialog_conversion - collapsible', () => {
             expect(form.fields).toHaveLength(1);
 
             // the collapsible container is preserved as a field (not flattened) for rendering
-            expect(form.fields?.[0].name).toBe("section");
-            expect(form.fields?.[0].type).toBe("collapsible");
+            expect(form.fields?.[0].name).toBe('section');
+            expect(form.fields?.[0].type).toBe('collapsible');
 
             // and its child is converted and nested underneath
-            expect(form.fields?.[0].fields?.[0].name).toBe("child");
-            expect(form.fields?.[0].fields?.[0].type).toBe("text");
+            expect(form.fields?.[0].fields?.[0].name).toBe('child');
+            expect(form.fields?.[0].fields?.[0].type).toBe('text');
         });
 
         it('handles a collapsible alongside flat top-level fields', () => {
-            const elements = [textEl("top"), collapsible("section", [textEl("child")])];
+            const elements = [textEl('top'), collapsible('section', [textEl('child')])];
 
             const {form, errors} = convertDialogToAppForm(
                 elements,
-                "Test Dialog",
+                'Test Dialog',
                 undefined,
                 undefined,
                 undefined,
-                "",
-                "",
+                '',
+                '',
                 legacyOptions,
             );
 
@@ -2364,10 +2363,10 @@ describe('dialog_conversion - collapsible', () => {
             expect(form.fields).toHaveLength(2);
 
             // order is preserved: flat field first, then the collapsible
-            expect(form.fields?.[0].name).toBe("top");
-            expect(form.fields?.[0].type).toBe("text");
-            expect(form.fields?.[1].name).toBe("section");
-            expect(form.fields?.[1].type).toBe("collapsible");
+            expect(form.fields?.[0].name).toBe('top');
+            expect(form.fields?.[0].type).toBe('text');
+            expect(form.fields?.[1].name).toBe('section');
+            expect(form.fields?.[1].type).toBe('collapsible');
         });
     });
 });
