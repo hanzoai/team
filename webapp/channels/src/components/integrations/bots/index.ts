@@ -8,7 +8,7 @@ import type {Dispatch} from 'redux';
 import type {Bot as BotType} from '@mattermost/types/bots';
 import type {UserProfile} from '@mattermost/types/users';
 
-import {loadBots, disableBot, enableBot} from 'mattermost-redux/actions/bots';
+import {loadBots, searchBots, disableBot, enableBot} from 'mattermost-redux/actions/bots';
 import {getAppsBotIDs as fetchAppsBotIDs} from 'mattermost-redux/actions/integrations';
 import {createUserAccessToken, revokeUserAccessToken, enableUserAccessToken, disableUserAccessToken, getUserAccessTokensForUser, getUser} from 'mattermost-redux/actions/users';
 import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
@@ -61,6 +61,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
         actions: bindActionCreators({
             fetchAppsBotIDs,
             loadBots,
+            searchBots,
             getUserAccessTokensForUser,
             createUserAccessToken,
             revokeUserAccessToken,

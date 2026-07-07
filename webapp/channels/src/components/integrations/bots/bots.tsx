@@ -67,6 +67,11 @@ type Props = {
         loadBots: (page?: number, perPage?: number) => Promise<ActionResult<BotType[]>>;
 
         /**
+         * Server-side search for bot accounts by username or display name
+         */
+        searchBots: (term: string) => Promise<ActionResult<BotType[]>>;
+
+        /**
         * Load access tokens for bot accounts
         */
         getUserAccessTokensForUser: (userId: string, page?: number, perPage?: number) => void;
@@ -117,6 +122,9 @@ type State = {
 };
 
 export default class Bots extends React.PureComponent<Props, State> {
+    private lastFilter: string | undefined;
+    private searchTimer: ReturnType<typeof setTimeout> | null = null;
+
     public constructor(props: Props) {
         super(props);
 
@@ -124,6 +132,12 @@ export default class Bots extends React.PureComponent<Props, State> {
             loading: true,
             loadError: 'none',
         };
+    }
+
+    public componentWillUnmount(): void {
+        if (this.searchTimer) {
+            clearTimeout(this.searchTimer);
+        }
     }
 
     public componentDidMount(): void {
@@ -260,7 +274,33 @@ export default class Bots extends React.PureComponent<Props, State> {
         );
     };
 
+    private scheduleServerSearch(filter: string): void {
+        if (this.searchTimer) {
+            clearTimeout(this.searchTimer);
+        }
+        this.searchTimer = setTimeout(async () => {
+            const result = await this.props.actions.searchBots(filter);
+            if (result.data) {
+                for (const bot of result.data) {
+                    this.props.actions.getUser(bot.owner_id);
+                    this.props.actions.getUser(bot.user_id);
+                    this.props.actions.getUserAccessTokensForUser(bot.user_id);
+                }
+            }
+        }, 300);
+    }
+
     bots = (filter?: string): [JSX.Element[], boolean] => {
+        if (filter !== this.lastFilter) {
+            this.lastFilter = filter;
+            if (filter) {
+                this.scheduleServerSearch(filter);
+            } else if (this.searchTimer) {
+                clearTimeout(this.searchTimer);
+                this.searchTimer = null;
+            }
+        }
+
         const bots = Object.values(this.props.bots).sort((a, b) => a.username.localeCompare(b.username));
         const match = (bot: BotType) => matchesFilter(bot, filter, this.props.owners[bot.user_id]);
         const enabledBots = bots.filter((bot) => bot.delete_at === 0).filter(match).map(this.botToJSX);

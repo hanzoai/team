@@ -52,6 +52,14 @@ export function loadBots(page = 0, perPage = BOTS_PER_PAGE_DEFAULT) {
     });
 }
 
+export function searchBots(term: string) {
+    return bindClientFunc({
+        clientFunc: Client4.searchBots,
+        onSuccess: BotTypes.RECEIVED_BOT_ACCOUNTS,
+        params: [term],
+    });
+}
+
 export function disableBot(botUserId: string) {
     return bindClientFunc({
         clientFunc: Client4.disableBot,

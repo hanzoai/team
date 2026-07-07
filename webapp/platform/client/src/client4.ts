@@ -4431,6 +4431,13 @@ export default class Client4 {
         );
     };
 
+    searchBots = (term: string, includeDeleted = true, page = 0, perPage = PER_PAGE_DEFAULT) => {
+        return this.doFetch<Bot[]>(
+            `${this.getBotsRoute()}${buildQueryString({q: term, include_deleted: includeDeleted, page, per_page: perPage})}`,
+            {method: 'get'},
+        );
+    };
+
     disableBot = (botUserId: string) => {
         return this.doFetch<Bot>(
             `${this.getBotRoute(botUserId)}/disable`,
