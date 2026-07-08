@@ -43,7 +43,10 @@ func newTestCmd(t *testing.T, base *cobra.Command) *cobra.Command {
 		cmd = &cobra.Command{}
 	} else {
 		t.Cleanup(func() {
-			cmd.SetContext(nil)
+			// A nil context is intentional here: it restores cobra's own "no
+			// context assigned yet" sentinel (see Command.ExecuteC), so the next
+			// real dispatch gets a fresh context instead of this test's.
+			cmd.SetContext(nil) //nolint:staticcheck
 			cmd.Flags().VisitAll(func(f *pflag.Flag) {
 				_ = f.Value.Set(f.DefValue)
 				f.Changed = false
