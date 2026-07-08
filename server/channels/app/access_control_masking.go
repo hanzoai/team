@@ -105,19 +105,82 @@ func newMaskingResolver(a *App, rctx request.CTX, callerID string) (*appMaskingR
 	}, nil
 }
 
-func (r *appMaskingResolver) Resolve(fieldName string) (*model.MaskingFieldInfo, error) {
-	if info, ok := r.cache[fieldName]; ok {
+func (r *appMaskingResolver) Resolve(objectType, fieldName string) (*model.MaskingFieldInfo, error) {
+	// The cache key includes the object type: a user field and a channel field
+	// can share a name yet have different visibility.
+	cacheKey := objectType + "/" + fieldName
+	if info, ok := r.cache[cacheKey]; ok {
 		return info, nil
 	}
-	// Scope to user CPA fields so a name shared across object types in this
-	// group resolves deterministically.
-	field, appErr := r.app.GetPropertyFieldByNameForObjectType(r.rctxWithCaller, r.cpaGroupID, "", model.PropertyFieldObjectTypeUser, fieldName)
+
+	var (
+		info   *model.MaskingFieldInfo
+		appErr *model.AppError
+	)
+	if objectType == model.PropertyFieldObjectTypeChannel {
+		info, appErr = r.resolveChannelField(fieldName)
+	} else {
+		// User (and any unexpected object type) resolves against the user CPA
+		// schema.
+		field, err := r.app.GetPropertyFieldByNameForObjectType(r.rctxWithCaller, r.cpaGroupID, "", model.PropertyFieldObjectTypeUser, fieldName)
+		if err != nil {
+			return nil, err
+		}
+		info = r.fieldToMaskingInfo(field)
+	}
 	if appErr != nil {
 		return nil, appErr
 	}
-	info := r.fieldToMaskingInfo(field)
-	r.cache[fieldName] = info
+	r.cache[cacheKey] = info
 	return info, nil
+}
+
+// resolveChannelField builds masking info for a resource.attributes.<fieldName>
+// reference. A channel attribute is masked by whether the caller holds the
+// value, but users never hold channel-side values directly. User and channel
+// CPA fields that link to the same template share identical option IDs and an
+// inherited access mode, so the caller's holdings come from the user-side field
+// linked to the same template. We resolve that sibling and reuse its per-caller
+// masking info. When the channel field is unlinked or has no user sibling we
+// fall back to its own info, which for shared_only yields no visible values
+// (the caller holds nothing channel-side) — the fail-closed direction.
+func (r *appMaskingResolver) resolveChannelField(fieldName string) (*model.MaskingFieldInfo, *model.AppError) {
+	chField, appErr := r.app.GetPropertyFieldByNameForObjectType(r.rctxWithCaller, r.cpaGroupID, "", model.PropertyFieldObjectTypeChannel, fieldName)
+	if appErr != nil {
+		return nil, appErr
+	}
+
+	if chField.LinkedFieldID != nil && *chField.LinkedFieldID != "" {
+		sibling, appErr := r.userSiblingField(*chField.LinkedFieldID)
+		if appErr != nil {
+			return nil, appErr
+		}
+		if sibling != nil {
+			return r.fieldToMaskingInfo(sibling), nil
+		}
+	}
+	return r.fieldToMaskingInfo(chField), nil
+}
+
+// userSiblingField returns the user-object-type CPA field linked to the same
+// template (linkedFieldID), fetched with caller context so its options are
+// already filtered to the caller's holdings. Returns nil when no such field
+// exists.
+func (r *appMaskingResolver) userSiblingField(linkedFieldID string) (*model.PropertyField, *model.AppError) {
+	fields, appErr := r.app.SearchPropertyFields(r.rctxWithCaller, r.cpaGroupID, model.PropertyFieldSearchOpts{
+		ObjectTypes:   []string{model.PropertyFieldObjectTypeUser},
+		LinkedFieldID: linkedFieldID,
+		PerPage:       2,
+	})
+	if appErr != nil {
+		return nil, appErr
+	}
+	for _, f := range fields {
+		if f != nil {
+			return f, nil
+		}
+	}
+	return nil, nil
 }
 
 func (r *appMaskingResolver) fieldToMaskingInfo(field *model.PropertyField) *model.MaskingFieldInfo {
@@ -187,6 +250,27 @@ func (a *App) maskConditionValues(rctx request.CTX, callerID string, condition *
 		condition.Value = nil
 		condition.HasMaskedValues = true
 	}
+}
+
+// cpaAttributeRoots maps a CEL attribute-path prefix to the PropertyField
+// object type whose CPA schema backs it: user.attributes.* is the requesting
+// user, resource.attributes.* is the accessed channel.
+var cpaAttributeRoots = []struct{ prefix, objectType string }{
+	{"user.attributes.", model.PropertyFieldObjectTypeUser},
+	{"resource.attributes.", model.PropertyFieldObjectTypeChannel},
+}
+
+// splitCPAAttribute splits a CEL attribute path into its CPA object type and
+// field name. ok is false for any path that is not a non-empty custom-attribute
+// selector (native selectors such as user.email or resource.id carry no
+// ".attributes." segment and own no maskable literal).
+func splitCPAAttribute(attribute string) (objectType, fieldName string, ok bool) {
+	for _, r := range cpaAttributeRoots {
+		if name, found := strings.CutPrefix(attribute, r.prefix); found && name != "" {
+			return r.objectType, name, true
+		}
+	}
+	return "", "", false
 }
 
 // extractFieldName strips the "user.attributes." prefix from a CEL attribute
@@ -589,11 +673,11 @@ func (a *App) maskSimulationEvaluationTree(node *model.PolicySimulationEvaluatio
 // caller cannot see that value. Uses mc.resolver so field info is cached across
 // all leaves in the trace — no per-leaf DB calls. Fails closed on resolver error.
 func (a *App) maskLeafActualValue(node *model.PolicySimulationEvaluationNode, mc *simulationMaskContext) {
-	fieldName := extractFieldName(node.Attribute)
-	if fieldName == "" {
+	objectType, fieldName, ok := splitCPAAttribute(node.Attribute)
+	if !ok {
 		return
 	}
-	info, err := mc.resolver.Resolve(fieldName)
+	info, err := mc.resolver.Resolve(objectType, fieldName)
 	if err != nil {
 		node.ActualValue = maskedTokenValue
 		return

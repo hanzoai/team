@@ -1254,3 +1254,124 @@ func TestMaskSimulationPolicyLiteralsForCaller_CompoundOrPreserved(t *testing.T)
 	assert.Equal(t, blame.EvaluationTree.Expression, blame.Expression)
 	mockACS.AssertExpectations(t)
 }
+
+// TestSplitCPAAttribute pins the CPA attribute-path splitter that routes a leaf
+// to the right object type. user.attributes.* → user, resource.attributes.* →
+// channel; everything else (native selectors, empty suffix) is not a CPA leaf.
+func TestSplitCPAAttribute(t *testing.T) {
+	mainHelper.Parallel(t)
+
+	cases := []struct {
+		path       string
+		wantObject string
+		wantField  string
+		wantOK     bool
+	}{
+		{"user.attributes.Clearance", model.PropertyFieldObjectTypeUser, "Clearance", true},
+		{"resource.attributes.Sensitivity", model.PropertyFieldObjectTypeChannel, "Sensitivity", true},
+		{"user.email", "", "", false},
+		{"resource.id", "", "", false},
+		{"session.network_status", "", "", false},
+		{"user.attributes.", "", "", false},
+		{"resource.attributes.", "", "", false},
+		{"", "", "", false},
+	}
+	for _, c := range cases {
+		objectType, fieldName, ok := splitCPAAttribute(c.path)
+		assert.Equal(t, c.wantOK, ok, "ok mismatch for %q", c.path)
+		assert.Equal(t, c.wantObject, objectType, "objectType mismatch for %q", c.path)
+		assert.Equal(t, c.wantField, fieldName, "fieldName mismatch for %q", c.path)
+	}
+}
+
+// TestAppMaskingResolver_ChannelFieldUsesUserHoldings verifies the shared-template
+// bridge: a resource.attributes.<field> reference is masked by the caller's own
+// USER-side holdings for the linked template, since users never hold channel
+// values directly. A shared_only channel field whose user sibling the caller
+// partially holds must expose only the held option values.
+func TestAppMaskingResolver_ChannelFieldUsesUserHoldings(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+	th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterprise))
+	rctx := request.TestContext(t)
+
+	cpaGroup, gErr := th.App.GetPropertyGroup(rctx, model.AccessControlPropertyGroupName)
+	require.Nil(t, gErr)
+	groupID := cpaGroup.ID
+
+	callerID := model.NewId()
+
+	optA := model.NewId()
+	optB := model.NewId()
+	options := []any{
+		map[string]any{"id": optA, "name": "A"},
+		map[string]any{"id": optB, "name": "B"},
+	}
+
+	// Template select field that both the user and channel fields link to.
+	tmpl, sErr := th.Store.PropertyField().Create(&model.PropertyField{
+		GroupID:    groupID,
+		Name:       celSafeName(),
+		Type:       model.PropertyFieldTypeSelect,
+		ObjectType: model.PropertyFieldObjectTypeTemplate,
+		TargetType: string(model.PropertyFieldTargetLevelSystem),
+		Attrs:      model.StringInterface{model.PropertyFieldAttributeOptions: options},
+	})
+	require.NoError(t, sErr)
+
+	linkedAttrs := func() model.StringInterface {
+		return model.StringInterface{
+			model.PropertyFieldAttributeOptions: options,
+			model.PropertyAttrsProtected:        true,
+			model.PropertyAttrsAccessMode:       model.PropertyAccessModeSharedOnly,
+			model.PropertyAttrsSourcePluginID:   "com.mattermost.uas-plugin",
+		}
+	}
+
+	// Store-level Create bypasses the CPA access-control layer so protected /
+	// shared_only linked fields can be written directly (the same shortcut the
+	// other shared_only masking tests take). Reads still filter per caller.
+	userField, sErr := th.Store.PropertyField().Create(&model.PropertyField{
+		GroupID:       groupID,
+		Name:          celSafeName(),
+		Type:          model.PropertyFieldTypeSelect,
+		ObjectType:    model.PropertyFieldObjectTypeUser,
+		TargetType:    string(model.PropertyFieldTargetLevelSystem),
+		LinkedFieldID: &tmpl.ID,
+		Attrs:         linkedAttrs(),
+	})
+	require.NoError(t, sErr)
+
+	channelFieldName := celSafeName()
+	_, sErr = th.Store.PropertyField().Create(&model.PropertyField{
+		GroupID:       groupID,
+		Name:          channelFieldName,
+		Type:          model.PropertyFieldTypeSelect,
+		ObjectType:    model.PropertyFieldObjectTypeChannel,
+		TargetType:    string(model.PropertyFieldTargetLevelSystem),
+		LinkedFieldID: &tmpl.ID,
+		Attrs:         linkedAttrs(),
+	})
+	require.NoError(t, sErr)
+
+	// Caller holds option A on the USER field (users never hold channel values).
+	// Written store-level because the field is protected (app-layer writes to
+	// protected fields are plugin-only).
+	_, vErr := th.Store.PropertyValue().Create(&model.PropertyValue{
+		TargetID:   callerID,
+		TargetType: model.PropertyValueTargetTypeUser,
+		GroupID:    groupID,
+		FieldID:    userField.ID,
+		Value:      json.RawMessage(`"` + optA + `"`),
+	})
+	require.NoError(t, vErr)
+
+	resolver, rErr := newMaskingResolver(th.App, rctx, callerID)
+	require.Nil(t, rErr)
+
+	info, err := resolver.Resolve(model.PropertyFieldObjectTypeChannel, channelFieldName)
+	require.NoError(t, err)
+	require.Equal(t, model.MaskingFieldAccessSharedOnly, info.Access)
+	assert.False(t, info.IsValueHidden("A"), "value the caller holds user-side must be visible on the channel field")
+	assert.True(t, info.IsValueHidden("B"), "value the caller does not hold must be hidden on the channel field")
+}
