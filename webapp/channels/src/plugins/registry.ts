@@ -39,6 +39,7 @@ import {reArg} from 'utils/func';
 import {registerRHSPluginPopoutListener, type PopoutListeners} from 'utils/popouts/popout_windows';
 import {generateId} from 'utils/utils';
 
+import type {ChannelSettingsTab} from 'types/plugins/channel_settings';
 import type {
     PluginsState,
     ProductComponent,
@@ -77,6 +78,7 @@ import type {
     ChannelIconOverrideRegistration,
     ChannelIntroRegistration,
     ComposerPlaceholderRegistration,
+    ProductSwitcherMenuItemRegistration,
 } from 'types/store/plugins';
 
 const defaultShouldRender = () => true;
@@ -524,6 +526,41 @@ export default class PluginRegistry {
             text: resolveReactElement(text),
             action,
             shouldRender,
+        });
+
+        return id;
+    });
+
+    /**
+     * Register a tab for the channel settings modal. A registration is either:
+     *
+     * - A declarative `schema` (`sections` + `onSave`): the host renders the
+     *   controls, tracks changes, and owns the save bar. On save the host
+     *   collects the values and calls the plugin's `onSave(values, channel)`.
+     *   The plugin owns persistence; reject in `onSave` to keep the tab dirty.
+     * - A custom `component`: the plugin renders the whole tab body. It receives
+     *   the current `channel`, `setUnsaved`, and `registerHandlers` so the
+     *   host-owned save bar can delegate Save/Reset to plugin logic.
+     *
+     * Both branches accept `uiName`, `icon`, and `shouldRender(state, channel)`.
+     * Returns a unique identifier.
+     */
+    registerChannelSettingsTab = reArg([
+        'uiName',
+        'icon',
+        'shouldRender',
+        'sections',
+        'onSave',
+        'loadValues',
+        'component',
+    ], (registration: ChannelSettingsTab) => {
+        const id = generateId();
+
+        // The raw registration is validated and normalized in the plugins
+        // reducer (see `extractChannelSettingsTab`), mirroring user settings.
+        store.dispatch({
+            type: ActionTypes.RECEIVED_PLUGIN_CHANNEL_SETTINGS_TAB,
+            data: {...registration, id, pluginId: this.id},
         });
 
         return id;
@@ -1094,6 +1131,7 @@ export default class PluginRegistry {
      * Accepts the following:
      * - component - A react component to display in the Right-Hand Sidebar.
      * - title - A string or JSX element to display as a title for the RHS.
+     * - showPopout - Optional boolean (default: true). Set to false to hide the "Open in new window" button in the RHS header.
      * Returns:
      * - id: a unique identifier
      * - showRHSPlugin: the action to dispatch that will open the RHS.
@@ -1103,12 +1141,15 @@ export default class PluginRegistry {
     registerRightHandSidebarComponent = reArg([
         'component',
         'title',
+        'showPopout',
     ], ({
         component,
         title,
+        showPopout = true,
     }: {
         component: RightHandSidebarComponent['component'];
         title: ReactResolvable;
+        showPopout?: boolean;
     }) => {
         const id = generateId();
 
@@ -1117,6 +1158,7 @@ export default class PluginRegistry {
             pluginId: this.id,
             component,
             title: resolveReactElement(title),
+            showPopout,
         });
 
         return {id, showRHSPlugin: showRHSPlugin(id), hideRHSPlugin: hideRHSPlugin(id), toggleRHSPlugin: toggleRHSPlugin(id)};
@@ -1332,6 +1374,7 @@ export default class PluginRegistry {
         'isAvailable',
         'extraContent',
         'onCreate',
+        'createButtonText',
     ], ({
         label,
         description,
@@ -1339,6 +1382,7 @@ export default class PluginRegistry {
         isAvailable,
         extraContent,
         onCreate,
+        createButtonText,
     }: {
         label: ReactResolvable;
         description: ReactResolvable;
@@ -1346,6 +1390,7 @@ export default class PluginRegistry {
         isAvailable: ChannelTypeOptionComponent['isAvailable'];
         extraContent?: ChannelTypeOptionComponent['extraContent'];
         onCreate: ChannelTypeOptionComponent['onCreate'];
+        createButtonText?: ReactResolvable;
     }) => {
         const id = generateId();
         dispatchPluginComponentWithData('ChannelTypeOption', {
@@ -1357,6 +1402,7 @@ export default class PluginRegistry {
             isAvailable,
             extraContent,
             onCreate,
+            createButtonText: createButtonText === undefined ? undefined : resolveReactElement(createButtonText),
         });
 
         return id;
@@ -1430,6 +1476,22 @@ export default class PluginRegistry {
     });
 
     /**
+     * Register a React component rendered in the header of every post, after the timestamp and
+     * alongside any other registered post-header components. The component receives the post as a
+     * prop and should return null for posts it has nothing to show for (e.g., read its own
+     * plugin-scoped Redux state to decide).
+     *
+     * The component is suppressed on consecutive posts where the server hides the post timestamp.
+     *
+     * Registrations are cleaned up automatically when the plugin is removed.
+     *
+     * @returns Auto-generated unique id for this registration.
+     */
+    registerPostHeaderComponent = reArg(['component'], ({component}: DPluginComponentProp) => {
+        return dispatchPluginComponentAction('PostHeader', this.id, component);
+    });
+
+    /**
      * Register a transform applied to the composer placeholder for the current channel.
      *
      * `transform` receives (placeholder, channel, state, intl) and returns the placeholder to show —
@@ -1449,6 +1511,48 @@ export default class PluginRegistry {
             id,
             pluginId: this.id,
             transform,
+        });
+        return id;
+    });
+
+    /**
+     * Register a clickable menu item in the product-switcher dropdown.
+     *
+     * Use this instead of `registerProduct` when your plugin only needs a menu entry point
+     * (e.g., opens a modal or navigates to a route) and does not need full product routing or
+     * header components.
+     *
+     * `isHidden` receives the full Redux `GlobalState` — do not project or narrow the state
+     * type. This lets plugins read `state['plugins-<pluginId>']` to gate visibility on plugin-owned
+     * data. Return `true` to hide the item. If `isHidden` is omitted the item is always visible.
+     *
+     * `action` is called when the user clicks the item. It typically dispatches a route push or
+     * opens a modal. The menu will close automatically after `action` is invoked.
+     *
+     * Items from multiple plugins are sorted alphabetically by `pluginId` in the menu.
+     * Cleaned up automatically when the plugin is removed.
+     *
+     * @returns Auto-generated unique id for this registration.
+     */
+    registerProductSwitcherMenuItem = reArg(['text', 'icon', 'action', 'isHidden'], ({
+        text,
+        icon,
+        action,
+        isHidden,
+    }: {
+        text: ProductSwitcherMenuItemRegistration['text'];
+        icon: ReactResolvable;
+        action: ProductSwitcherMenuItemRegistration['action'];
+        isHidden?: ProductSwitcherMenuItemRegistration['isHidden'];
+    }) => {
+        const id = generateId();
+        dispatchPluginComponentWithData('ProductSwitcherMenuItem', {
+            id,
+            pluginId: this.id,
+            text,
+            icon: resolveReactElement(icon),
+            action,
+            isHidden,
         });
         return id;
     });

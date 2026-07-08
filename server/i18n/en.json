@@ -1970,6 +1970,10 @@
     "translation": "Unable to get user from session UserID."
   },
   {
+    "id": "api.context.invalid_body.app_error",
+    "translation": "Invalid post props."
+  },
+  {
     "id": "api.context.invalid_body_param.app_error",
     "translation": "Invalid or missing {{.Name}} in request body."
   },
@@ -2677,6 +2681,14 @@
     "translation": "This license only supports {{.Users}} users, when your system has {{.Count}} unique users. Unique users are counted distinctly by email address. You can see total user count under Site Reports -> View Statistics."
   },
   {
+    "id": "api.license.add_license.wrong_environment_production.app_error",
+    "translation": "This is a production license, but this server is running in a test or development environment. Production licenses can only be used on production servers."
+  },
+  {
+    "id": "api.license.add_license.wrong_environment_test.app_error",
+    "translation": "This is a test or development license, but this server is running in a production environment. Test or development licenses can only be used on test or development servers."
+  },
+  {
     "id": "api.license.client.old_format.app_error",
     "translation": "New format for the client license is not supported yet. Please specify format=old in the query string."
   },
@@ -3033,10 +3045,6 @@
     "translation": "Action integration error."
   },
   {
-    "id": "api.post.do_action.merge_query.app_error",
-    "translation": "Failed to merge query into action URL."
-  },
-  {
     "id": "api.post.do_action.query.app_error",
     "translation": "Invalid action query."
   },
@@ -3283,12 +3291,28 @@
     "translation": "You do not have permission to delete this property field."
   },
   {
+    "id": "api.property_field.get.invalid_opts.app_error",
+    "translation": "Invalid property field search options."
+  },
+  {
     "id": "api.property_field.get.invalid_target_type.app_error",
     "translation": "A valid target_type (system, team, or channel) is required."
   },
   {
+    "id": "api.property_field.get.scope_conflict.app_error",
+    "translation": "channel_id/team_id cannot be combined with target_type/target_id."
+  },
+  {
+    "id": "api.property_field.get.scope_required.app_error",
+    "translation": "A scope parameter (channel_id, team_id, or target_type) is required."
+  },
+  {
     "id": "api.property_field.get.target_id_required.app_error",
     "translation": "A target_id is required when querying by channel or team target_type."
+  },
+  {
+    "id": "api.property_field.get.target_type_required.app_error",
+    "translation": "A target_type is required when target_id is provided."
   },
   {
     "id": "api.property_field.invalid_patch.app_error",
@@ -3309,6 +3333,10 @@
   {
     "id": "api.property_field.update.no_options_permission.app_error",
     "translation": "You do not have permission to manage options for this property field."
+  },
+  {
+    "id": "api.property_value.get.invalid_opts.app_error",
+    "translation": "Invalid property value search options."
   },
   {
     "id": "api.property_value.invalid_object_type.app_error",
@@ -7745,6 +7773,10 @@
     "translation": "Could not get team members to remove."
   },
   {
+    "id": "app.pap.has_masked_values.app_error",
+    "translation": "Could not determine masked values for policy expression."
+  },
+  {
     "id": "app.pap.hydrate_actions.app_error",
     "translation": "Could not load the action set declared by the channel's access control policy."
   },
@@ -7757,8 +7789,12 @@
     "translation": "Access control service is not ready."
   },
   {
+    "id": "app.pap.mask_expression.app_error",
+    "translation": "Could not mask policy expression."
+  },
+  {
     "id": "app.pap.merge_expression.app_error",
-    "translation": "Could not merge policy expression."
+    "translation": "Could not merge policy expression with stored masked values."
   },
   {
     "id": "app.pap.missing_attribute.app_error",
@@ -7773,6 +7809,10 @@
     "translation": "Could not query for expression."
   },
   {
+    "id": "app.pap.rehydrate_rank.app_error",
+    "translation": "Could not restore ranked operators in policy expression."
+  },
+  {
     "id": "app.pap.save_policy.app_error",
     "translation": "Unable to save access control policy."
   },
@@ -7782,11 +7822,23 @@
   },
   {
     "id": "app.pap.save_policy.invalid_value",
-    "translation": "Invalid value."
+    "translation": "The policy expression contains a value that is not permitted."
+  },
+  {
+    "id": "app.pap.save_policy.masked_condition_deleted",
+    "translation": "A condition containing masked values was deleted. Please reload the policy and try again."
+  },
+  {
+    "id": "app.pap.save_policy.masked_token_in_expression",
+    "translation": "The policy expression contains a placeholder value that could not be resolved. Please reload the policy and try again."
   },
   {
     "id": "app.pap.save_policy.name_exists.app_error",
     "translation": "A policy with this name already exists. Please choose a different name."
+  },
+  {
+    "id": "app.pap.save_policy.resolver_error",
+    "translation": "Could not initialise attribute resolver for policy save."
   },
   {
     "id": "app.pap.save_policy.rule_name_unique.app_error",
@@ -7833,6 +7885,10 @@
     "translation": "At least one user is required for simulation."
   },
   {
+    "id": "app.pap.simulate.resolver_error",
+    "translation": "Could not initialise attribute resolver for policy simulation."
+  },
+  {
     "id": "app.pap.simulate.too_many_users",
     "translation": "Too many users requested. Maximum allowed is {{.Max}}."
   },
@@ -7855,10 +7911,6 @@
   {
     "id": "app.pap.update_access_control_policies_active.app_error",
     "translation": "Could not update active status of access control policies."
-  },
-  {
-    "id": "app.pap.validate_expression_values.app_error",
-    "translation": "Could not validate policy expression values."
   },
   {
     "id": "app.pdp.access_evaluation.app_error",
@@ -8443,6 +8495,10 @@
   {
     "id": "app.property_field.not_found.app_error",
     "translation": "The specified property field does not exist."
+  },
+  {
+    "id": "app.property_field.rank_disabled.app_error",
+    "translation": "Rank property fields are not enabled."
   },
   {
     "id": "app.property_field.search.app_error",
@@ -9607,6 +9663,10 @@
     "translation": "Unable to update verify email field."
   },
   {
+    "id": "app.user_access_token.count_non_compliant.app_error",
+    "translation": "Unable to count the personal access tokens that violate the maximum lifetime policy."
+  },
+  {
     "id": "app.user_access_token.delete.app_error",
     "translation": "Unable to delete the personal access token."
   },
@@ -9641,6 +9701,14 @@
   {
     "id": "app.user_access_token.invalid_or_missing",
     "translation": "Invalid or missing token."
+  },
+  {
+    "id": "app.user_access_token.revoke_non_compliant.no_policy.app_error",
+    "translation": "No maximum personal access token lifetime is configured, so there are no non-compliant tokens to revoke."
+  },
+  {
+    "id": "app.user_access_token.revoke_non_compliant.partial.app_error",
+    "translation": "The batch limit was reached before all non-compliant tokens could be revoked. Run the operation again to continue."
   },
   {
     "id": "app.user_access_token.save.app_error",

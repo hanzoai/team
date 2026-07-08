@@ -22,6 +22,7 @@ import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
 
 import type {NewPostMessageProps} from 'actions/new_post';
 
+import type {ChannelSettingsSchema, ChannelSettingsTabBodyProps, ChannelSettingsTabShouldRender} from 'types/plugins/channel_settings';
 import type {PluginConfiguration} from 'types/plugins/user_settings';
 import type {GlobalState} from 'types/store';
 import type {PostDraft} from 'types/store/draft';
@@ -75,7 +76,9 @@ export type PluginsState = {
         ChannelIconOverride: ChannelIconOverrideRegistration[];
         ChannelComposerBanner: ChannelComposerBannerComponent[];
         ChannelIntro: ChannelIntroRegistration[];
+        PostHeader: PostHeaderComponent[];
         ComposerPlaceholder: ComposerPlaceholderRegistration[];
+        ProductSwitcherMenuItem: ProductSwitcherMenuItemRegistration[];
         FilesWillUploadHook: FilesWillUploadHook[];
         DesktopNotificationHooks: DesktopNotificationHook[];
         MessageWillFormat: MessageWillFormatHook[];
@@ -116,6 +119,8 @@ export type PluginsState = {
     userSettings: {
         [pluginId: string]: PluginConfiguration;
     };
+
+    channelSettingsTabs: ChannelSettingsTabComponent[];
 };
 
 export type Menu = {
@@ -206,6 +211,24 @@ export type ChannelIntroButtonAction = PluginComponent & {
     action: (channel: Channel, member: ChannelMembership) => void;
     icon: React.ReactNode;
 };
+
+type ChannelSettingsTabBaseComponent = PluginComponent & {
+    uiName: string;
+    icon?: string;
+    shouldRender: ChannelSettingsTabShouldRender;
+};
+
+export type ChannelSettingsSchemaTabComponent = ChannelSettingsTabBaseComponent & {
+    kind: 'schema';
+    schema: ChannelSettingsSchema;
+};
+
+export type ChannelSettingsCustomTabComponent = ChannelSettingsTabBaseComponent & {
+    kind: 'custom';
+    component: React.ComponentType<ChannelSettingsTabBodyProps>;
+};
+
+export type ChannelSettingsTabComponent = ChannelSettingsSchemaTabComponent | ChannelSettingsCustomTabComponent;
 
 export type UserGuideDropdownAction = PluginComponent & {
     text: PluggableText;
@@ -348,6 +371,7 @@ export type PostDropdownMenuItemComponent = PluginComponent & {
 export type RightHandSidebarComponent = PluginComponent & {
     title: PluggableText;
     component: React.ComponentType<BasePluggableProps>;
+    showPopout?: boolean;
 };
 
 export type SearchHintsComponent = PluginComponent & {
@@ -440,14 +464,26 @@ export type ChannelIntroRegistration = PluginComponent & {
     component: React.ComponentType<{channel: Channel}>;
 };
 
+export type PostHeaderComponent = PluginComponent & {
+    component: React.ComponentType<BasePluggableProps & {post: Post}>;
+};
+
 export type ComposerPlaceholderRegistration = PluginComponent & {
     transform: (placeholder: string, channel: Channel, state: GlobalState, intl: IntlShape) => string;
+};
+
+export type ProductSwitcherMenuItemRegistration = PluginComponent & {
+    text: string;
+    icon: IconGlyphTypes | React.ReactNode;
+    action: () => void;
+    isHidden?: (state: GlobalState) => boolean;
 };
 
 export type ChannelTypeOptionComponent = PluginComponent & {
     label: PluggableText;
     description: PluggableText;
     icon: React.ReactNode;
+    createButtonText?: PluggableText;
 
     /** Called with the full Redux state so plugins can read their own plugin-scoped state. */
     isAvailable: (state: GlobalState) => boolean;
