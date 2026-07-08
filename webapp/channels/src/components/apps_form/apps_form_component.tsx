@@ -540,7 +540,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
                     const errorResponse = res.error;
                     const errorMsg = errorResponse.text;
                     const errors = errorResponse.data?.errors;
-                    const elements = fieldsAsElements(this.props.form.fields);
+                    const elements = fieldsAsElements(flattenFields(this.props.form.fields));
                     this.updateErrors(elements, errors, errorMsg);
                     return;
                 }
