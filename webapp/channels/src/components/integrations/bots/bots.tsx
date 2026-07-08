@@ -16,7 +16,6 @@ import AlertBanner from 'components/alert_banner';
 import BackstageList from 'components/backstage/components/backstage_list';
 import ExternalLink from 'components/external_link';
 
-import Constants from 'utils/constants';
 import * as Utils from 'utils/utils';
 
 import Bot, {matchesFilter} from './bot';
@@ -112,13 +111,11 @@ type Props = {
     team: Team;
 };
 
-// Distinguishes a clean load from a total failure (no bots fetched) and a
-// partial failure (a later page failed, so the list is incomplete).
-type LoadError = 'none' | 'full' | 'partial';
-
 type State = {
     loading: boolean;
-    loadError: LoadError;
+    loadError: boolean;
+    page: number;
+    hasMore: boolean;
 };
 
 export default class Bots extends React.PureComponent<Props, State> {
@@ -130,7 +127,9 @@ export default class Bots extends React.PureComponent<Props, State> {
 
         this.state = {
             loading: true,
-            loadError: 'none',
+            loadError: false,
+            page: 0,
+            hasMore: false,
         };
     }
 
@@ -141,46 +140,24 @@ export default class Bots extends React.PureComponent<Props, State> {
     }
 
     public componentDidMount(): void {
-        this.loadAllBots();
+        this.loadPage(0);
 
         if (this.props.appsEnabled) {
             this.props.actions.fetchAppsBotIDs();
         }
     }
 
-    private async loadAllBots(): Promise<void> {
-        const allBots: BotType[] = [];
-        let page = Constants.Integrations.START_PAGE_NUM;
-        let loadError: LoadError = 'none';
+    private async loadPage(page: number): Promise<void> {
+        this.setState({loading: true, loadError: false});
+        const result = await this.props.actions.loadBots(page, BOTS_PER_PAGE);
 
-        // Fetch successive pages until one comes back short, since the server
-        // caps each request at BOTS_PER_PAGE and never returns every bot at once.
-        for (;;) {
-            // eslint-disable-next-line no-await-in-loop
-            const result = await this.props.actions.loadBots(page, BOTS_PER_PAGE);
-
-            // A failed fetch returns an error rather than data. Surface it so the
-            // user knows the list failed to load (first page) or is incomplete
-            // (a later page), instead of silently showing an empty/truncated list.
-            if (result.error) {
-                loadError = allBots.length > 0 ? 'partial' : 'full';
-                break;
-            }
-
-            if (!result.data) {
-                break;
-            }
-
-            allBots.push(...result.data);
-
-            if (result.data.length < BOTS_PER_PAGE) {
-                break;
-            }
-            page++;
+        if (result.error || !result.data) {
+            this.setState({loading: false, loadError: true});
+            return;
         }
 
         const promises = [];
-        for (const bot of allBots) {
+        for (const bot of result.data) {
             // We don't need to wait for this and we need to accept failure in the case where bot.owner_id is a plugin id
             this.props.actions.getUser(bot.owner_id);
 
@@ -190,26 +167,30 @@ export default class Bots extends React.PureComponent<Props, State> {
         }
 
         await Promise.all(promises);
-        this.setState({loading: false, loadError});
+        this.setState({
+            loading: false,
+            loadError: false,
+            page,
+            hasMore: result.data.length >= BOTS_PER_PAGE,
+        });
     }
 
-    private renderLoadError(): JSX.Element | null {
-        if (this.state.loadError === 'none') {
-            return null;
+    private handleNextPage = async (): Promise<void> => {
+        const nextPage = this.state.page + 1;
+        if (Object.values(this.props.bots).length > nextPage * BOTS_PER_PAGE) {
+            this.setState({page: nextPage});
+        } else {
+            await this.loadPage(nextPage);
         }
+    };
 
-        if (this.state.loadError === 'partial') {
-            return (
-                <AlertBanner
-                    mode='warning'
-                    message={
-                        <FormattedMessage
-                            id='bots.manage.load_error.partial'
-                            defaultMessage='Some bot accounts could not be loaded, so this list may be incomplete. Refresh the page to try again.'
-                        />
-                    }
-                />
-            );
+    private handlePreviousPage = (): void => {
+        this.setState((prev) => ({page: Math.max(0, prev.page - 1), loadError: false}));
+    };
+
+    private renderLoadError(): JSX.Element | null {
+        if (!this.state.loadError) {
+            return null;
         }
 
         return (
@@ -301,7 +282,12 @@ export default class Bots extends React.PureComponent<Props, State> {
             }
         }
 
-        const bots = Object.values(this.props.bots).sort((a, b) => a.username.localeCompare(b.username));
+        const sorted = Object.values(this.props.bots).sort((a, b) => a.username.localeCompare(b.username));
+
+        // When browsing (no filter), show only the current page. When searching,
+        // show all accumulated results so the server search response is fully visible.
+        const bots = filter ? sorted : sorted.slice(this.state.page * BOTS_PER_PAGE, (this.state.page + 1) * BOTS_PER_PAGE);
+
         const match = (bot: BotType) => matchesFilter(bot, filter, this.props.owners[bot.user_id]);
         const enabledBots = bots.filter((bot) => bot.delete_at === 0).filter(match).map(this.botToJSX);
         const disabledBots = bots.filter((bot) => bot.delete_at > 0).filter(match).map(this.botToJSX);
@@ -321,6 +307,10 @@ export default class Bots extends React.PureComponent<Props, State> {
     };
 
     public render(): JSX.Element {
+        const accumulatedCount = Object.values(this.props.bots).length;
+        const canGoNext = this.state.hasMore || accumulatedCount > (this.state.page + 1) * BOTS_PER_PAGE;
+        const canGoPrev = this.state.page > 0;
+
         return (
             <BackstageList
                 header={
@@ -384,6 +374,10 @@ export default class Bots extends React.PureComponent<Props, State> {
                 searchPlaceholder={Utils.localizeMessage({id: 'bots.manage.search', defaultMessage: 'Search Bot Accounts'})}
                 loading={this.state.loading}
                 error={this.renderLoadError()}
+                nextPage={this.handleNextPage}
+                previousPage={this.handlePreviousPage}
+                hasNextPage={canGoNext}
+                hasPreviousPage={canGoPrev}
             >
                 {this.bots}
             </BackstageList>

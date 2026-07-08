@@ -32,6 +32,8 @@ type Props = {
     page?: number;
     pageSize?: number;
     total?: number;
+    hasNextPage?: boolean;
+    hasPreviousPage?: boolean;
 };
 
 const getPaging = (remainingProps: Props, childCount: number, hasFilter: boolean) => {
@@ -139,10 +141,12 @@ const BackstageList = (remainingProps: Props) => {
 
     let previousPageFn = remainingProps.previousPage;
     let nextPageFn = remainingProps.nextPage;
-    if (isFirstPage) {
+    const prevDisabled = remainingProps.hasPreviousPage !== undefined ? !remainingProps.hasPreviousPage : isFirstPage;
+    if (prevDisabled) {
         previousPageFn = () => {};
     }
-    if (isLastPage) {
+    const nextDisabled = remainingProps.hasNextPage !== undefined ? !remainingProps.hasNextPage : isLastPage;
+    if (nextDisabled) {
         nextPageFn = () => {};
     }
 

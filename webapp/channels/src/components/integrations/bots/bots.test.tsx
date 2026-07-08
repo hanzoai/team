@@ -5,7 +5,7 @@ import React from 'react';
 
 import type {Bot} from '@mattermost/types/bots';
 
-import {renderWithContext, screen, waitFor} from 'tests/react_testing_utils';
+import {fireEvent, renderWithContext, screen, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
 
 import Bots from './bots';
@@ -140,8 +140,7 @@ describe('components/integrations/bots/Bots', () => {
         });
     });
 
-    it('paginates until a short page and processes bots beyond the first page', async () => {
-        // A full first page forces the component to request the next page.
+    it('loads only the first page on mount', async () => {
         const firstPage: Bot[] = [];
         const allBots: Record<string, Bot> = {};
         const allUsers: Record<string, ReturnType<typeof TestHelper.getUserMock>> = {};
@@ -152,20 +151,12 @@ describe('components/integrations/bots/Bots', () => {
             allUsers[bot.user_id] = TestHelper.getUserMock({id: bot.user_id});
         }
 
-        const newestBot = TestHelper.getBotMock({user_id: '201', username: 'irisnewbot', display_name: 'Iris Newest Bot', delete_at: 0});
-        allBots[newestBot.user_id] = newestBot;
-        allUsers[newestBot.user_id] = TestHelper.getUserMock({id: newestBot.user_id});
-
         const loadBots = jest.fn((page?: number) => {
             if (page === 0) {
                 return Promise.resolve({data: firstPage});
             }
-            if (page === 1) {
-                return Promise.resolve({data: [newestBot]});
-            }
             return Promise.resolve({data: []});
         });
-        const getUser = jest.fn();
 
         renderWithContext(
             <Bots
@@ -174,69 +165,123 @@ describe('components/integrations/bots/Bots', () => {
                 accessTokens={{}}
                 owners={{}}
                 users={allUsers}
-                actions={{...actions, loadBots, getUser}}
+                actions={{...actions, loadBots}}
                 appsEnabled={false}
                 appsBotIDs={[]}
             />,
         );
 
-        // The newest bot lives on the second page and is rendered once loading completes.
         await waitFor(() => {
-            expect(screen.getByText(/Iris Newest Bot \(@irisnewbot\)/)).toBeInTheDocument();
+            expect(screen.getByText(/Bot 1 \(@bot1\)/)).toBeInTheDocument();
         });
 
-        // Successive pages are requested with the server's max page size until a short page is returned.
+        expect(loadBots).toHaveBeenCalledTimes(1);
         expect(loadBots).toHaveBeenCalledWith(0, 200);
-        expect(loadBots).toHaveBeenCalledWith(1, 200);
-        expect(loadBots).toHaveBeenCalledTimes(2);
-
-        // The second-page bot was accumulated and had its user details fetched.
-        expect(getUser).toHaveBeenCalledWith(newestBot.user_id);
     });
 
-    it('requests one more page when the final data page is exactly full', async () => {
-        const makeFullPage = (start: number): Bot[] => {
-            const page: Bot[] = [];
-            for (let i = start; i < start + 200; i++) {
-                page.push(TestHelper.getBotMock({user_id: String(i), username: `bot${i}`, delete_at: 0}));
-            }
-            return page;
-        };
-
-        // Both data pages are exactly full, so termination requires a trailing empty page.
-        const secondPage = makeFullPage(200);
-        const lastBot = TestHelper.getBotMock({user_id: '400', username: 'bot400', delete_at: 0});
-        secondPage[secondPage.length - 1] = lastBot;
+    it('calls loadBots for the next page when it has not been fetched yet', async () => {
+        // Only 200 bots in props (page 0); page 1 has not been fetched yet.
+        const {bots: page0Bots, users: page0Users, loadBots: loadPage0} = createBotsAndUsers(200);
+        const newestBot = TestHelper.getBotMock({user_id: '201', username: 'irisnewbot', display_name: 'Iris Newest Bot', delete_at: 0});
 
         const loadBots = jest.fn((page?: number) => {
             if (page === 0) {
-                return Promise.resolve({data: makeFullPage(0)});
+                return Promise.resolve({data: Object.values(page0Bots)});
             }
-            if (page === 1) {
-                return Promise.resolve({data: secondPage});
-            }
-            return Promise.resolve({data: []});
+            return Promise.resolve({data: [newestBot]});
         });
         const getUser = jest.fn();
 
         renderWithContext(
             <Bots
-                bots={{}}
+                bots={page0Bots}
                 team={team}
                 accessTokens={{}}
                 owners={{}}
-                users={{}}
+                users={page0Users}
                 actions={{...actions, loadBots, getUser}}
                 appsEnabled={false}
                 appsBotIDs={[]}
             />,
         );
 
-        await waitFor(() => expect(loadBots).toHaveBeenCalledTimes(3));
-        expect(loadBots).toHaveBeenNthCalledWith(1, 0, 200);
-        expect(loadBots).toHaveBeenNthCalledWith(2, 1, 200);
-        expect(loadBots).toHaveBeenNthCalledWith(3, 2, 200);
-        expect(getUser).toHaveBeenCalledWith('400');
+        await waitFor(() => {
+            expect(screen.getByText(/Bot 1 \(@bot1\)/)).toBeInTheDocument();
+        });
+
+        fireEvent.click(screen.getByRole('button', {name: 'Next'}));
+
+        await waitFor(() => {
+            expect(loadBots).toHaveBeenCalledWith(1, 200);
+        });
+        expect(loadBots).toHaveBeenCalledTimes(2);
+        expect(getUser).toHaveBeenCalledWith(newestBot.user_id);
+    });
+
+    it('shows page 1 bots when navigating to the next page with already-fetched data', async () => {
+        // All 201 bots already in props (simulating Redux state after both pages loaded).
+        const {bots: page0Bots, users: page0Users} = createBotsAndUsers(200);
+        const newestBot = TestHelper.getBotMock({user_id: '201', username: 'irisnewbot', display_name: 'Iris Newest Bot', delete_at: 0});
+        const allBots = {...page0Bots, [newestBot.user_id]: newestBot};
+        const allUsers = {...page0Users, [newestBot.user_id]: TestHelper.getUserMock({id: newestBot.user_id})};
+
+        // Page 0 returns a full page so canGoNext is true on mount.
+        const loadBots = jest.fn((page?: number) => {
+            if (page === 0) {
+                return Promise.resolve({data: Object.values(page0Bots)});
+            }
+            return Promise.resolve({data: []});
+        });
+
+        renderWithContext(
+            <Bots
+                bots={allBots}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={allUsers}
+                actions={{...actions, loadBots}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText(/Bot 1 \(@bot1\)/)).toBeInTheDocument();
+        });
+
+        // Iris is on page 1 (alphabetically after all the bot... entries); she should
+        // not be visible on page 0.
+        expect(screen.queryByText(/Iris Newest Bot/)).not.toBeInTheDocument();
+
+        fireEvent.click(screen.getByRole('button', {name: 'Next'}));
+
+        await waitFor(() => {
+            expect(screen.getByText(/Iris Newest Bot \(@irisnewbot\)/)).toBeInTheDocument();
+        });
+    });
+
+    it('disables the Next button when the returned page has fewer than 200 bots', async () => {
+        const {bots, users, loadBots} = createBotsAndUsers(3);
+
+        renderWithContext(
+            <Bots
+                bots={bots}
+                team={team}
+                accessTokens={{}}
+                owners={{}}
+                users={users}
+                actions={{...actions, loadBots}}
+                appsEnabled={false}
+                appsBotIDs={[]}
+            />,
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText(/Bot 1 \(@bot1\)/)).toBeInTheDocument();
+        });
+
+        expect(screen.getByRole('button', {name: 'Next'})).toHaveClass('disabled');
     });
 
     it('surfaces an error and completes loading when the first page fetch fails', async () => {
@@ -265,7 +310,7 @@ describe('components/integrations/bots/Bots', () => {
         expect(getUser).not.toHaveBeenCalled();
     });
 
-    it('surfaces an incomplete-list warning and shows loaded bots when a later page fetch fails', async () => {
+    it('shows an error and stays on the current page when a next-page fetch fails', async () => {
         const firstPage: Bot[] = [];
         const allBots: Record<string, Bot> = {};
         const allUsers: Record<string, ReturnType<typeof TestHelper.getUserMock>> = {};
@@ -276,14 +321,12 @@ describe('components/integrations/bots/Bots', () => {
             allUsers[bot.user_id] = TestHelper.getUserMock({id: bot.user_id});
         }
 
-        // First page loads fully, but the second page fetch fails.
         const loadBots = jest.fn((page?: number) => {
             if (page === 0) {
                 return Promise.resolve({data: firstPage});
             }
             return Promise.resolve({error: {message: 'Failed to load bots'}});
         });
-        const getUser = jest.fn();
 
         renderWithContext(
             <Bots
@@ -292,22 +335,25 @@ describe('components/integrations/bots/Bots', () => {
                 accessTokens={{}}
                 owners={{}}
                 users={allUsers}
-                actions={{...actions, loadBots, getUser}}
+                actions={{...actions, loadBots}}
                 appsEnabled={false}
                 appsBotIDs={[]}
             />,
         );
 
         await waitFor(() => {
-            expect(screen.getByText('Some bot accounts could not be loaded, so this list may be incomplete. Refresh the page to try again.')).toBeInTheDocument();
+            expect(screen.getByText(/Bot 1 \(@bot1\)/)).toBeInTheDocument();
         });
 
-        // The bots that did load are still rendered alongside the warning.
+        fireEvent.click(screen.getByRole('button', {name: 'Next'}));
+
+        await waitFor(() => {
+            expect(screen.getByText('Bot accounts could not be loaded. Refresh the page to try again.')).toBeInTheDocument();
+        });
+
+        // Page 0 bots are still rendered alongside the error.
         expect(screen.getByText(/Bot 1 \(@bot1\)/)).toBeInTheDocument();
-        expect(loadBots).toHaveBeenCalledWith(0, 200);
         expect(loadBots).toHaveBeenCalledWith(1, 200);
-        expect(loadBots).toHaveBeenCalledTimes(2);
-        expect(getUser).toHaveBeenCalledWith('1');
     });
 
     it('completes loading when the first page fetch returns no data', async () => {
