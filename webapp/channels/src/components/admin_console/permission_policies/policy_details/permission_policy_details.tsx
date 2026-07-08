@@ -11,6 +11,7 @@ import {buttonClassNames} from '@mattermost/shared/components/button';
 import type {AccessControlPolicy, AccessControlPolicyRule} from '@mattermost/types/access_control';
 import type {AccessControlSettings} from '@mattermost/types/config';
 import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {CHANNEL_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
 
 import {isPolicySimulationEnabled} from 'mattermost-redux/selectors/entities/general';
 import type {ActionResult} from 'mattermost-redux/types/actions';
@@ -142,9 +143,27 @@ function PermissionPolicyDetails({
     // the channel-settings Permissions Policy tab.
     const policySimulationEnabled = useSelector(isPolicySimulationEnabled);
 
+    // The autocomplete mixes the requesting user's attributes (user.attributes.*)
+    // and the accessed channel's attributes (resource.attributes.*), tagged by
+    // object_type. Permission policies are channel-scoped, so they may reference
+    // resource.attributes.*; split so user fields drive rules and channel fields
+    // are comparison targets.
+    const {userFields, resourceFields} = useMemo(() => {
+        const uf: UserPropertyField[] = [];
+        const rf: UserPropertyField[] = [];
+        for (const f of autocompleteResult) {
+            if (f.object_type === CHANNEL_ATTRIBUTES_OBJECT_TYPE) {
+                rf.push(f);
+            } else {
+                uf.push(f);
+            }
+        }
+        return {userFields: uf, resourceFields: rf};
+    }, [autocompleteResult]);
+
     // Permission policies can reference session attributes (e.g. user.session.ip_address),
     // so the editor stays usable even without any configured user attributes when SessionAttributes is on.
-    const noUsableAttributes = attributesLoaded && !sessionAttributesEnabled && !hasUsableAttributes(autocompleteResult, accessControlSettings.EnableUserManagedAttributes);
+    const noUsableAttributes = attributesLoaded && !sessionAttributesEnabled && !hasUsableAttributes(userFields, accessControlSettings.EnableUserManagedAttributes);
 
     useEffect(() => {
         loadPage().finally(() => setPageLoaded(true));
@@ -153,7 +172,9 @@ function PermissionPolicyDetails({
     // isSimpleExpression imported from ../../access_control/editors/shared
 
     const loadPage = async (): Promise<void> => {
-        const fieldsPromise = abacActions.getAccessControlFields('', 100).then((result) => {
+        // Permission policies can reference resource.attributes.* (the accessed
+        // channel), so request channel fields too.
+        const fieldsPromise = abacActions.getAccessControlFields('', 100, true).then((result) => {
             if (result.data) {
                 setAutocompleteResult(result.data);
             }
@@ -294,7 +315,7 @@ function PermissionPolicyDetails({
     );
 
     const filteredAttributes = useMemo(() => {
-        return autocompleteResult.filter((attr) => {
+        return userFields.filter((attr) => {
             if (accessControlSettings.EnableUserManagedAttributes) {
                 return true;
             }
@@ -303,7 +324,7 @@ function PermissionPolicyDetails({
             const isProtected = attr.attrs?.protected;
             return isSynced || isAdminManaged || isProtected;
         });
-    }, [autocompleteResult, accessControlSettings.EnableUserManagedAttributes]);
+    }, [userFields, accessControlSettings.EnableUserManagedAttributes]);
 
     return (
         <div className='wrapper--fixed PermissionPolicySettings'>
@@ -542,6 +563,10 @@ function PermissionPolicyDetails({
                                             onValidate={() => {}}
                                             disabled={noUsableAttributes}
                                             userAttributes={filteredAttributes.map((attr) => ({
+                                                attribute: attr.name,
+                                                values: [],
+                                            }))}
+                                            resourceAttributes={resourceFields.map((attr) => ({
                                                 attribute: attr.name,
                                                 values: [],
                                             }))}

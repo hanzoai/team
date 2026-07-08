@@ -13,6 +13,7 @@ import type {ChannelSearchOpts, ChannelWithTeamData} from '@mattermost/types/cha
 import type {AccessControlSettings} from '@mattermost/types/config';
 import type {JobTypeBase} from '@mattermost/types/jobs';
 import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {CHANNEL_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
 
 import type {ActionResult} from 'mattermost-redux/types/actions';
 
@@ -127,8 +128,26 @@ function PolicyDetails({
         </div>
     ), []);
 
-    // Check if there are any usable attributes for ABAC
-    const noUsableAttributes = attributesLoaded && !hasUsableAttributes(autocompleteResult, accessControlSettings.EnableUserManagedAttributes);
+    // The autocomplete mixes the requesting user's attributes (user.attributes.*)
+    // and the accessed channel's attributes (resource.attributes.*), tagged by
+    // object_type. Split them: user fields drive the left picker and the
+    // user.attributes.* autocomplete; channel fields back resource.attributes.*.
+    const {userFields, resourceFields} = useMemo(() => {
+        const uf: UserPropertyField[] = [];
+        const rf: UserPropertyField[] = [];
+        for (const f of autocompleteResult) {
+            if (f.object_type === CHANNEL_ATTRIBUTES_OBJECT_TYPE) {
+                rf.push(f);
+            } else {
+                uf.push(f);
+            }
+        }
+        return {userFields: uf, resourceFields: rf};
+    }, [autocompleteResult]);
+
+    // Check if there are any usable user attributes for ABAC (channel fields
+    // are comparison targets, not standalone rules, so they don't count).
+    const noUsableAttributes = attributesLoaded && !hasUsableAttributes(userFields, accessControlSettings.EnableUserManagedAttributes);
 
     useEffect(() => {
         loadPage();
@@ -138,7 +157,8 @@ function PolicyDetails({
 
     const loadPage = async (): Promise<void> => {
         // Fetch autocomplete fields first, as they are general and needed for both new and existing policies.
-        const fieldsPromise = abacActions.getAccessControlFields('', 100).then((result) => {
+        // Parent policies reference resource.attributes.* against many channels, so request channel fields too.
+        const fieldsPromise = abacActions.getAccessControlFields('', 100, true).then((result) => {
             if (result.data) {
                 setAutocompleteResult(result.data);
             }
@@ -550,7 +570,7 @@ function PolicyDetails({
                                     onValidate={() => {}}
                                     disabled={noUsableAttributes}
                                     hasMaskedRows={hasMaskedRows}
-                                    userAttributes={autocompleteResult.
+                                    userAttributes={userFields.
                                         filter((attr) => {
                                             if (accessControlSettings.EnableUserManagedAttributes) {
                                                 return true;
@@ -564,6 +584,10 @@ function PolicyDetails({
                                             attribute: attr.name,
                                             values: [],
                                         }))}
+                                    resourceAttributes={resourceFields.map((attr) => ({
+                                        attribute: attr.name,
+                                        values: [],
+                                    }))}
                                 />
                             ) : (
                                 <TableEditor
