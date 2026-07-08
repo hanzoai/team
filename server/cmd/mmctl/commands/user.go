@@ -289,6 +289,7 @@ Arguments:
 
   migration-options (email):
     Requires --users <file> or --all.
+    Uses POST /api/v4/users/migrate_auth/email on the server.
     users_file:
       A JSON array of user emails, usernames, or IDs to demote to email/password auth.
 

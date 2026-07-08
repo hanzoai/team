@@ -9,7 +9,7 @@ Synopsis
 ~~~~~~~~
 
 
-Migrates accounts from one authentication provider to either LDAP or SAML. For example, you can upgrade your authentication provider from Email to LDAP.
+Migrates accounts from one authentication provider to LDAP, SAML, or email/password.
 
 Arguments:
   from_auth:
@@ -18,7 +18,7 @@ Arguments:
 
   to_auth:
     The authentication service to migrate users to.
-    Supported options: ldap, saml.
+    Supported options: ldap, saml, email.
 
   migration-options (ldap):
     match_field:
@@ -35,6 +35,19 @@ Arguments:
           "usr2@email.com": "usr.two"
         }
 
+  migration-options (email):
+    Requires --users <file> or --all.
+    Uses POST /api/v4/users/migrate_auth/email on the server.
+    users_file:
+      A JSON array of user emails, usernames, or IDs to demote to email/password auth.
+
+      Example json content:
+        [
+          "user@example.com",
+          "username",
+          "userid"
+        ]
+
 
 ::
 
@@ -46,16 +59,22 @@ Examples
 ::
 
   user migrate-auth email saml users.json
+  user migrate-auth ldap email --users users.json --send-reset-email --confirm
+  user migrate-auth saml email --all --dry-run
 
 Options
 ~~~~~~~
 
 ::
 
-      --auto      Automatically migrate all users. Assumes the usernames and emails are identical between Mattermost and SAML services. (saml only)
-      --confirm   Confirm you really want to proceed with auto migration. (saml only)
-      --force     Force the migration to occur even if there are duplicates on the LDAP server. Duplicates will not be migrated. (ldap only)
-  -h, --help      help for migrate-auth
+      --all               Migrate all non-bot users matching from_auth (email destination only; mutually exclusive with --users)
+      --auto              Automatically migrate all users. Assumes the usernames and emails are identical between Mattermost and SAML services. (saml only)
+      --confirm           Confirm you really want to proceed without an interactive prompt
+      --dry-run           List users that would be migrated without making changes (email destination only)
+      --force             Force the migration to occur even if there are duplicates on the LDAP server. Duplicates will not be migrated. (ldap only)
+  -h, --help              help for migrate-auth
+      --send-reset-email  Send a password reset email to each migrated user (email destination only)
+      --users string      Path to a JSON file listing user emails, usernames, or IDs to migrate (email destination only)
 
 Options inherited from parent commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,4 +95,3 @@ SEE ALSO
 ~~~~~~~~
 
 * `mmctl user <mmctl_user.rst>`_ 	 - Management of users
-

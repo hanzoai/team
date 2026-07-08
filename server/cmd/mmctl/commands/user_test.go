@@ -2719,6 +2719,161 @@ func (s *MmctlUnitTestSuite) TestMigrateAuthCmd() {
 		s.Require().Error(err)
 		s.Require().Len(printer.GetLines(), 0)
 	})
+
+	s.Run("Email migration requires --users or --all", func() {
+		printer.Clean()
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", "", "")
+		cmd.Flags().Bool("all", false, "")
+
+		err := migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
+		s.Require().EqualError(err, "migrate-auth to email requires --users <file> or --all")
+	})
+
+	s.Run("Email migration rejects --users and --all together", func() {
+		printer.Clean()
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", "users.json", "")
+		cmd.Flags().Bool("all", true, "")
+
+		err := migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
+		s.Require().EqualError(err, "cannot use --users and --all together")
+	})
+
+	s.Run("Successfully migrate auth to email with users file", func() {
+		printer.Clean()
+
+		ldapUser := &model.User{
+			Id:          "user-id",
+			Username:    "ldapuser",
+			Email:       "ldap@example.com",
+			AuthService: model.UserAuthServiceLdap,
+		}
+
+		file, err := os.CreateTemp("", "users.json")
+		s.Require().NoError(err)
+		defer os.Remove(file.Name())
+
+		usersFile := file.Name()
+		_, err = file.Write([]byte(`["ldap@example.com"]`))
+		s.Require().NoError(err)
+		s.Require().NoError(file.Close())
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", usersFile, "")
+		cmd.Flags().Bool("all", false, "")
+		cmd.Flags().Bool("send-reset-email", false, "")
+		cmd.Flags().Bool("dry-run", false, "")
+		cmd.Flags().Bool("confirm", true, "")
+
+		s.client.
+			EXPECT().
+			GetUserByEmail(context.TODO(), ldapUser.Email, "").
+			Return(ldapUser, &model.Response{}, nil).
+			Times(1)
+
+		s.client.
+			EXPECT().
+			MigrateAuthToEmail(context.TODO(), "ldap", []string{ldapUser.Id}, false, false, false).
+			Return(int64(1), &model.Response{StatusCode: http.StatusOK}, nil).
+			Times(1)
+
+		err = migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
+		s.Require().NoError(err)
+		s.Require().Len(printer.GetLines(), 1)
+		s.Require().Equal("Successfully migrated 1 account(s).", printer.GetLines()[0])
+	})
+
+	s.Run("Successfully migrate auth to email with --all", func() {
+		printer.Clean()
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", "", "")
+		cmd.Flags().Bool("all", true, "")
+		cmd.Flags().Bool("send-reset-email", true, "")
+		cmd.Flags().Bool("dry-run", false, "")
+		cmd.Flags().Bool("confirm", true, "")
+
+		s.client.
+			EXPECT().
+			MigrateAuthToEmail(context.TODO(), "ldap", []string(nil), true, true, false).
+			Return(int64(1), &model.Response{StatusCode: http.StatusOK}, nil).
+			Times(1)
+
+		err := migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
+		s.Require().NoError(err)
+		s.Require().Len(printer.GetLines(), 1)
+		s.Require().Equal("Successfully migrated 1 account(s).", printer.GetLines()[0])
+	})
+
+	s.Run("Successfully migrate auth to email with --all dry-run", func() {
+		printer.Clean()
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", "", "")
+		cmd.Flags().Bool("all", true, "")
+		cmd.Flags().Bool("dry-run", true, "")
+
+		s.client.
+			EXPECT().
+			MigrateAuthToEmail(context.TODO(), "ldap", []string(nil), true, false, true).
+			Return(int64(2), &model.Response{StatusCode: http.StatusOK}, nil).
+			Times(1)
+
+		err := migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
+		s.Require().NoError(err)
+		s.Require().Len(printer.GetLines(), 1)
+		s.Require().Equal("2 user(s) would be migrated from ldap to email.", printer.GetLines()[0])
+	})
+
+	s.Run("Email migration dry-run does not update users", func() {
+		printer.Clean()
+
+		ldapUser := &model.User{
+			Id:          "user-id",
+			Username:    "ldapuser",
+			Email:       "ldap@example.com",
+			AuthService: model.UserAuthServiceLdap,
+		}
+
+		file, err := os.CreateTemp("", "users.json")
+		s.Require().NoError(err)
+		defer os.Remove(file.Name())
+
+		usersFile := file.Name()
+		_, err = file.Write([]byte(`["ldap@example.com"]`))
+		s.Require().NoError(err)
+		s.Require().NoError(file.Close())
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", usersFile, "")
+		cmd.Flags().Bool("all", false, "")
+		cmd.Flags().Bool("dry-run", true, "")
+
+		s.client.
+			EXPECT().
+			GetUserByEmail(context.TODO(), ldapUser.Email, "").
+			Return(ldapUser, &model.Response{}, nil).
+			Times(1)
+
+		err = migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
+		s.Require().NoError(err)
+		s.Require().Len(printer.GetLines(), 2)
+		s.Require().Equal("1 user(s) would be migrated from ldap to email.", printer.GetLines()[1])
+	})
+
+	s.Run("Invalid from auth type for email migration", func() {
+		printer.Clean()
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", "users.json", "")
+		cmd.Flags().Bool("all", false, "")
+
+		err := migrateAuthCmdF(s.client, cmd, []string{"email", "email"})
+		s.Require().EqualError(err, "invalid from_auth argument")
+	})
 }
 
 func (s *MmctlUnitTestSuite) TestPromoteGuestToUserCmd() {

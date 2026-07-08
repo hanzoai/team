@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/hashicorp/go-multierror"
@@ -1073,6 +1074,41 @@ func (s *MmctlE2ETestSuite) TestMigrateAuthCmd() {
 		updatedUser, appErr := s.th.App.GetUser(samlUser.Id)
 		s.Require().Nil(appErr)
 		s.Require().Equal(model.UserAuthServiceLdap, updatedUser.AuthService)
+	})
+
+	s.RunForSystemAdminAndLocal("Migrate from ldap to email", func(c client.Client) {
+		printer.Clean()
+
+		file, err := os.CreateTemp("", "users.json")
+		s.Require().NoError(err)
+		defer os.Remove(file.Name())
+
+		_, err = file.Write([]byte(fmt.Sprintf(`["%s"]`, ldapUser.Email)))
+		s.Require().NoError(err)
+		s.Require().NoError(file.Close())
+
+		cmd := &cobra.Command{}
+		cmd.Flags().String("users", file.Name(), "")
+		cmd.Flags().Bool("all", false, "")
+		cmd.Flags().Bool("confirm", true, "")
+
+		err = migrateAuthCmdF(c, cmd, []string{"ldap", "email"})
+		s.Require().NoError(err)
+		defer func() {
+			_, appErr := s.th.App.UpdateUserAuth(s.th.Context, ldapUser.Id, &model.UserAuth{
+				AuthData:    new("test.user.1"),
+				AuthService: model.UserAuthServiceLdap,
+			})
+			s.Require().Nil(appErr)
+		}()
+
+		s.Require().Len(printer.GetLines(), 1)
+		s.Require().Equal("Successfully migrated 1 account(s).", printer.GetLines()[0])
+
+		updatedUser, appErr := s.th.App.GetUser(ldapUser.Id)
+		s.Require().Nil(appErr)
+		s.Require().Empty(updatedUser.AuthService)
+		s.Require().Nil(updatedUser.AuthData)
 	})
 }
 
