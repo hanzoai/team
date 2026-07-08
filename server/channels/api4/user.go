@@ -3854,7 +3854,7 @@ func migrateAuthToEmail(c *Context, w http.ResponseWriter, r *http.Request) {
 	auditRec.AddMeta("num_affected", numAffected)
 
 	if err := json.NewEncoder(w).Encode(struct {
-		NumAffected int `json:"num_affected"`
+		NumAffected int64 `json:"num_affected"`
 	}{
 		NumAffected: numAffected,
 	}); err != nil {

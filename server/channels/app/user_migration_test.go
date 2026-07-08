@@ -29,25 +29,25 @@ func TestMigrateAuthToEmail(t *testing.T) {
 	t.Run("invalid from auth", func(t *testing.T) {
 		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, "email", nil, true, false, false)
 		require.NotNil(t, appErr)
-		require.Equal(t, 0, numAffected)
+		require.Equal(t, int64(0), numAffected)
 	})
 
 	t.Run("missing users scope", func(t *testing.T) {
 		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, model.UserAuthServiceLdap, nil, false, false, false)
 		require.NotNil(t, appErr)
-		require.Equal(t, 0, numAffected)
+		require.Equal(t, int64(0), numAffected)
 	})
 
 	t.Run("conflicting users scope", func(t *testing.T) {
 		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, model.UserAuthServiceLdap, []string{ldapUser.Id}, true, false, false)
 		require.NotNil(t, appErr)
-		require.Equal(t, 0, numAffected)
+		require.Equal(t, int64(0), numAffected)
 	})
 
 	t.Run("dry run with user ids", func(t *testing.T) {
 		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, model.UserAuthServiceLdap, []string{ldapUser.Id, emailUser.Id}, false, false, true)
 		require.Nil(t, appErr)
-		require.Equal(t, 1, numAffected)
+		require.Equal(t, int64(1), numAffected)
 
 		storedUser, err := th.App.GetUser(ldapUser.Id)
 		require.Nil(t, err)
@@ -57,7 +57,7 @@ func TestMigrateAuthToEmail(t *testing.T) {
 	t.Run("migrate user by id", func(t *testing.T) {
 		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, model.UserAuthServiceLdap, []string{ldapUser.Id}, false, false, false)
 		require.Nil(t, appErr)
-		require.Equal(t, 1, numAffected)
+		require.Equal(t, int64(1), numAffected)
 
 		storedUser, err := th.App.GetUser(ldapUser.Id)
 		require.Nil(t, err)
@@ -76,9 +76,29 @@ func TestMigrateAuthToEmail(t *testing.T) {
 
 		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, model.UserAuthServiceSaml, nil, true, false, false)
 		require.Nil(t, appErr)
-		require.Equal(t, 1, numAffected)
+		require.Equal(t, int64(1), numAffected)
 
 		storedUser, err := th.App.GetUser(samlUser.Id)
+		require.Nil(t, err)
+		require.Empty(t, storedUser.AuthService)
+		require.Nil(t, storedUser.AuthData)
+	})
+
+	t.Run("counts migrated user when password reset email fails", func(t *testing.T) {
+		remoteLdapUser, appErr := th.App.CreateUser(th.Context, &model.User{
+			Email:       strings.ToLower(model.NewId()) + "success+test@example.com",
+			Username:    model.NewId(),
+			AuthData:    new("ldap-auth-data"),
+			AuthService: model.UserAuthServiceLdap,
+		})
+		require.Nil(t, appErr)
+		th.SetUserRemoteID(t, remoteLdapUser.Id, model.NewId())
+
+		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, model.UserAuthServiceLdap, []string{remoteLdapUser.Id}, false, true, false)
+		require.Nil(t, appErr)
+		require.Equal(t, int64(1), numAffected)
+
+		storedUser, err := th.App.GetUser(remoteLdapUser.Id)
 		require.Nil(t, err)
 		require.Empty(t, storedUser.AuthService)
 		require.Nil(t, storedUser.AuthData)
@@ -100,6 +120,6 @@ func TestMigrateAuthToEmail(t *testing.T) {
 
 		numAffected, appErr := th.App.MigrateAuthToEmail(th.Context, model.UserAuthServiceLdap, []string{bot.UserId}, false, false, true)
 		require.Nil(t, appErr)
-		require.Equal(t, 0, numAffected)
+		require.Equal(t, int64(0), numAffected)
 	})
 }

@@ -1468,7 +1468,7 @@ func (a *App) usersForMigrateAuthToEmail(fromAuth string, userIDs []string, allU
 	return users, nil
 }
 
-func (a *App) MigrateAuthToEmail(rctx request.CTX, fromAuth string, userIDs []string, allUsers bool, sendResetEmail bool, dryRun bool) (int, *model.AppError) {
+func (a *App) MigrateAuthToEmail(rctx request.CTX, fromAuth string, userIDs []string, allUsers bool, sendResetEmail bool, dryRun bool) (int64, *model.AppError) {
 	if fromAuth == model.UserAuthServiceEmail || !isValidMigrateAuthToEmailFrom(fromAuth) {
 		return 0, model.NewAppError("MigrateAuthToEmail", "app.user.migrate_auth_to_email.invalid_from.app_error", nil, "", http.StatusBadRequest)
 	}
@@ -1485,11 +1485,11 @@ func (a *App) MigrateAuthToEmail(rctx request.CTX, fromAuth string, userIDs []st
 	}
 
 	if dryRun {
-		return len(users), nil
+		return int64(len(users)), nil
 	}
 
 	userAuth := &model.UserAuth{AuthService: ""}
-	numAffected := 0
+	numAffected := int64(0)
 	for _, user := range users {
 		if _, err := a.UpdateUserAuth(rctx, user.Id, userAuth); err != nil {
 			rctx.Logger().Warn("Failed to migrate user auth to email", mlog.String("user_id", user.Id), mlog.Err(err))
@@ -1499,7 +1499,6 @@ func (a *App) MigrateAuthToEmail(rctx request.CTX, fromAuth string, userIDs []st
 		if sendResetEmail {
 			if _, err := a.SendPasswordReset(rctx, user.Email, a.GetSiteURL()); err != nil {
 				rctx.Logger().Warn("Failed to send password reset email after migrating user to email auth", mlog.String("user_id", user.Id), mlog.Err(err))
-				continue
 			}
 		}
 
