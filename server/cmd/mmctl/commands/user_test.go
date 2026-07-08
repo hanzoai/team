@@ -2777,13 +2777,13 @@ func (s *MmctlUnitTestSuite) TestMigrateAuthCmd() {
 		s.client.
 			EXPECT().
 			MigrateAuthToEmail(context.TODO(), "ldap", []string{ldapUser.Id}, false, false, false).
-			Return(int64(1), &model.Response{StatusCode: http.StatusOK}, nil).
+			Return(&model.Response{StatusCode: http.StatusOK}, nil).
 			Times(1)
 
 		err = migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
 		s.Require().NoError(err)
 		s.Require().Len(printer.GetLines(), 1)
-		s.Require().Equal("Successfully migrated 1 account(s).", printer.GetLines()[0])
+		s.Require().Equal("Successfully migrated accounts.", printer.GetLines()[0])
 	})
 
 	s.Run("Successfully migrate auth to email with --all", func() {
@@ -2799,13 +2799,13 @@ func (s *MmctlUnitTestSuite) TestMigrateAuthCmd() {
 		s.client.
 			EXPECT().
 			MigrateAuthToEmail(context.TODO(), "ldap", []string(nil), true, true, false).
-			Return(int64(1), &model.Response{StatusCode: http.StatusOK}, nil).
+			Return(&model.Response{StatusCode: http.StatusOK}, nil).
 			Times(1)
 
 		err := migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
 		s.Require().NoError(err)
 		s.Require().Len(printer.GetLines(), 1)
-		s.Require().Equal("Successfully migrated 1 account(s).", printer.GetLines()[0])
+		s.Require().Equal("Successfully migrated accounts.", printer.GetLines()[0])
 	})
 
 	s.Run("Successfully migrate auth to email with --all dry-run", func() {
@@ -2819,13 +2819,13 @@ func (s *MmctlUnitTestSuite) TestMigrateAuthCmd() {
 		s.client.
 			EXPECT().
 			MigrateAuthToEmail(context.TODO(), "ldap", []string(nil), true, false, true).
-			Return(int64(2), &model.Response{StatusCode: http.StatusOK}, nil).
+			Return(&model.Response{StatusCode: http.StatusOK}, nil).
 			Times(1)
 
 		err := migrateAuthCmdF(s.client, cmd, []string{"ldap", "email"})
 		s.Require().NoError(err)
 		s.Require().Len(printer.GetLines(), 1)
-		s.Require().Equal("2 user(s) would be migrated from ldap to email.", printer.GetLines()[0])
+		s.Require().Equal("Dry run complete for all ldap users.", printer.GetLines()[0])
 	})
 
 	s.Run("Email migration dry-run does not update users", func() {

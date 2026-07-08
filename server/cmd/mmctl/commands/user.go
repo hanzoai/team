@@ -1157,29 +1157,24 @@ func migrateAuthToEmailCmdF(c client.Client, cmd *cobra.Command, userArgs []stri
 			}
 		}
 	} else if dryRun {
-		numAffected, _, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, nil, true, false, true)
-		if err != nil {
+		if _, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, nil, true, false, true); err != nil {
 			return err
 		}
-		printer.Print(fmt.Sprintf("%d user(s) would be migrated from %s to email.", numAffected, fromAuth))
+		printer.Print(fmt.Sprintf("Dry run complete for all %s users.", fromAuth))
 		return nil
 	} else if !confirm {
-		numAffected, _, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, nil, true, false, true)
-		if err != nil {
-			return err
-		}
-		confirmationMsg := fmt.Sprintf("You are about to migrate ALL %s users to email auth. This will affect %d users.\n\nDo you want to proceed?", fromAuth, numAffected)
+		confirmationMsg := fmt.Sprintf("You are about to migrate ALL %s users to email auth.\n\nDo you want to proceed?", fromAuth)
 		if err := getConfirmation(confirmationMsg, false); err != nil {
 			return err
 		}
 	}
 
-	numAffected, resp, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, userIDs, allUsers, sendResetEmail, false)
+	resp, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, userIDs, allUsers, sendResetEmail, false)
 	if err != nil {
 		return err
 	}
-	if resp != nil && resp.StatusCode == http.StatusOK && numAffected > 0 {
-		printer.Print(fmt.Sprintf("Successfully migrated %d account(s).", numAffected))
+	if resp != nil && resp.StatusCode == http.StatusOK {
+		printer.Print("Successfully migrated accounts.")
 	}
 
 	return nil

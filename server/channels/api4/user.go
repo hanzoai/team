@@ -3853,13 +3853,7 @@ func migrateAuthToEmail(c *Context, w http.ResponseWriter, r *http.Request) {
 	auditRec.Success()
 	auditRec.AddMeta("num_affected", numAffected)
 
-	if err := json.NewEncoder(w).Encode(struct {
-		NumAffected int64 `json:"num_affected"`
-	}{
-		NumAffected: numAffected,
-	}); err != nil {
-		c.Logger.Warn("Error while writing response", mlog.Err(err))
-	}
+	ReturnStatusOK(w)
 }
 
 func getThreadForUser(c *Context, w http.ResponseWriter, r *http.Request) {

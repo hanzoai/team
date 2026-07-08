@@ -5355,7 +5355,7 @@ func (c *Client4) MigrateAuthToSaml(ctx context.Context, fromAuthService string,
 	return BuildResponse(r), nil
 }
 
-func (c *Client4) MigrateAuthToEmail(ctx context.Context, fromAuthService string, userIDs []string, allUsers bool, sendResetEmail bool, dryRun bool) (int64, *Response, error) {
+func (c *Client4) MigrateAuthToEmail(ctx context.Context, fromAuthService string, userIDs []string, allUsers bool, sendResetEmail bool, dryRun bool) (*Response, error) {
 	r, err := c.doAPIPostJSON(ctx, c.usersRoute().Join("migrate_auth", "email"), map[string]any{
 		"from":               fromAuthService,
 		"user_ids":           userIDs,
@@ -5364,17 +5364,10 @@ func (c *Client4) MigrateAuthToEmail(ctx context.Context, fromAuthService string
 		"dry_run":            dryRun,
 	})
 	if err != nil {
-		return 0, BuildResponse(r), err
+		return BuildResponse(r), err
 	}
 	defer closeBody(r)
-
-	var result struct {
-		NumAffected int64 `json:"num_affected"`
-	}
-	if err := json.NewDecoder(r.Body).Decode(&result); err != nil {
-		return 0, BuildResponse(r), NewAppError("MigrateAuthToEmail", "api.unmarshal_error", nil, "", http.StatusInternalServerError).Wrap(err)
-	}
-	return result.NumAffected, BuildResponse(r), nil
+	return BuildResponse(r), nil
 }
 
 // UploadLdapPublicCertificate will upload a public certificate for LDAP and set the config to use it.

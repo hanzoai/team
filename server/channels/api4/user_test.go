@@ -8060,7 +8060,7 @@ func TestMigrateAuthToEmail(t *testing.T) {
 	mainHelper.Parallel(t)
 	th := Setup(t).InitBasic(t)
 
-	_, resp, err := th.Client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{model.NewId()}, false, false, false)
+	resp, err := th.Client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{model.NewId()}, false, false, false)
 	require.Error(t, err)
 	CheckForbiddenStatus(t, resp)
 
@@ -8074,22 +8074,21 @@ func TestMigrateAuthToEmail(t *testing.T) {
 		require.Nil(t, appErr)
 
 		t.Run("missing users scope", func(t *testing.T) {
-			_, resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, nil, false, false, false)
+			resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, nil, false, false, false)
 			require.Error(t, err)
 			CheckBadRequestStatus(t, resp)
 		})
 
 		t.Run("conflicting users scope", func(t *testing.T) {
-			_, resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{ldapUser.Id}, true, false, false)
+			resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{ldapUser.Id}, true, false, false)
 			require.Error(t, err)
 			CheckBadRequestStatus(t, resp)
 		})
 
 		t.Run("dry run", func(t *testing.T) {
-			numAffected, resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{ldapUser.Id}, false, false, true)
+			resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{ldapUser.Id}, false, false, true)
 			require.NoError(t, err)
 			CheckOKStatus(t, resp)
-			require.Equal(t, int64(1), numAffected)
 
 			storedUser, appErr := th.App.GetUser(ldapUser.Id)
 			require.Nil(t, appErr)
@@ -8097,10 +8096,9 @@ func TestMigrateAuthToEmail(t *testing.T) {
 		})
 
 		t.Run("migrate user by id", func(t *testing.T) {
-			numAffected, resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{ldapUser.Id}, false, false, false)
+			resp, err := client.MigrateAuthToEmail(context.Background(), model.UserAuthServiceLdap, []string{ldapUser.Id}, false, false, false)
 			require.NoError(t, err)
 			CheckOKStatus(t, resp)
-			require.Equal(t, int64(1), numAffected)
 
 			storedUser, appErr := th.App.GetUser(ldapUser.Id)
 			require.Nil(t, appErr)

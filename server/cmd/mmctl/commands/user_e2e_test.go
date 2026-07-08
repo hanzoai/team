@@ -1103,7 +1103,7 @@ func (s *MmctlE2ETestSuite) TestMigrateAuthCmd() {
 		}()
 
 		s.Require().Len(printer.GetLines(), 1)
-		s.Require().Equal("Successfully migrated 1 account(s).", printer.GetLines()[0])
+		s.Require().Equal("Successfully migrated accounts.", printer.GetLines()[0])
 
 		updatedUser, appErr := s.th.App.GetUser(ldapUser.Id)
 		s.Require().Nil(appErr)

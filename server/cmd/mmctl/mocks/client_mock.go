@@ -1804,13 +1804,12 @@ func (mr *MockClientMockRecorder) ListImports(arg0 interface{}) *gomock.Call {
 }
 
 // MigrateAuthToEmail mocks base method.
-func (m *MockClient) MigrateAuthToEmail(arg0 context.Context, arg1 string, arg2 []string, arg3, arg4, arg5 bool) (int64, *model.Response, error) {
+func (m *MockClient) MigrateAuthToEmail(arg0 context.Context, arg1 string, arg2 []string, arg3, arg4, arg5 bool) (*model.Response, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "MigrateAuthToEmail", arg0, arg1, arg2, arg3, arg4, arg5)
-	ret0, _ := ret[0].(int64)
-	ret1, _ := ret[1].(*model.Response)
-	ret2, _ := ret[2].(error)
-	return ret0, ret1, ret2
+	ret0, _ := ret[0].(*model.Response)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // MigrateAuthToEmail indicates an expected call of MigrateAuthToEmail.
