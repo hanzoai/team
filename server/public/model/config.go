@@ -1715,6 +1715,12 @@ func (s *DeliveryTrackingSettings) isValid() *AppError {
 		return NewAppError("Config.IsValid", "model.config.is_valid.delivery_tracking_query_timeout.app_error", nil, "", http.StatusBadRequest)
 	}
 
+	// A non-negative batch size is required; the worker treats 0 (and the default)
+	// as "use the built-in batch size", so only negative values are rejected.
+	if *s.ContentReviewDeliveryReceiptCopyBatchSize < 0 {
+		return NewAppError("Config.IsValid", "model.config.is_valid.delivery_tracking_copy_batch_size.app_error", nil, "", http.StatusBadRequest)
+	}
+
 	return nil
 }
 

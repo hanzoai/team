@@ -87,4 +87,15 @@ func TestDeliveryTrackingSettingsIsValid(t *testing.T) {
 		s.ConnMaxIdleTimeMilliseconds = NewPointer(-1)
 		require.NotNil(t, s.isValid())
 	})
+
+	t.Run("negative copy batch size is invalid; zero uses the default", func(t *testing.T) {
+		s := valid()
+		s.ContentReviewDeliveryReceiptCopyBatchSize = NewPointer(-1)
+		require.NotNil(t, s.isValid())
+
+		// Zero is allowed: the worker falls back to the built-in default.
+		s = valid()
+		s.ContentReviewDeliveryReceiptCopyBatchSize = NewPointer(0)
+		require.Nil(t, s.isValid())
+	})
 }

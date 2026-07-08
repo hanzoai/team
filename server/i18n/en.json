@@ -11651,6 +11651,10 @@
     "translation": "Invalid connection maximum lifetime for delivery tracking settings. Must be a non-negative number."
   },
   {
+    "id": "model.config.is_valid.delivery_tracking_copy_batch_size.app_error",
+    "translation": "Invalid copy batch size for delivery tracking settings. Must be a non-negative number."
+  },
+  {
     "id": "model.config.is_valid.delivery_tracking_driver.app_error",
     "translation": "Invalid driver name for delivery tracking settings. Must be set to 'postgres'."
   },
