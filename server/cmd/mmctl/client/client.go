@@ -131,6 +131,7 @@ type Client interface {
 	GetMarketplacePlugins(context.Context, *model.MarketplacePluginFilter) ([]*model.MarketplacePlugin, *model.Response, error)
 	MigrateAuthToLdap(ctx context.Context, fromAuthService string, matchField string, force bool) (*model.Response, error)
 	MigrateAuthToSaml(ctx context.Context, fromAuthService string, usersMap map[string]string, auto bool) (*model.Response, error)
+	MigrateAuthToEmail(ctx context.Context, fromAuthService string, userIDs []string, allUsers bool, sendResetEmail bool, dryRun bool) (int64, *model.Response, error)
 	GetPing(ctx context.Context) (string, *model.Response, error)
 	GetPingWithFullServerStatus(ctx context.Context) (map[string]any, *model.Response, error)
 	GetPingWithOptions(ctx context.Context, options model.SystemPingOptions) (map[string]any, *model.Response, error)

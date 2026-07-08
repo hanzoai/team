@@ -261,7 +261,7 @@ var UserConvertCmd = &cobra.Command{
 	Args: cobra.MinimumNArgs(1),
 }
 
-const migrateAuthCmdDoc = `Migrates accounts from one authentication provider to either LDAP or SAML. For example, you can upgrade your authentication provider from Email to LDAP.
+const migrateAuthCmdDoc = `Migrates accounts from one authentication provider to LDAP, SAML, or email/password.
 
 Arguments:
   from_auth:
@@ -270,7 +270,7 @@ Arguments:
 
   to_auth:
     The authentication service to migrate users to.
-    Supported options: ldap, saml.
+    Supported options: ldap, saml, email.
 
   migration-options (ldap):
     match_field:
@@ -286,6 +286,18 @@ Arguments:
           "usr1@email.com": "usr.one",
           "usr2@email.com": "usr.two"
         }
+
+  migration-options (email):
+    Requires --users <file> or --all.
+    users_file:
+      A JSON array of user emails, usernames, or IDs to demote to email/password auth.
+
+      Example json content:
+        [
+          "user@example.com",
+          "username",
+          "userid"
+        ]
 `
 
 var MigrateAuthCmd = &cobra.Command{
@@ -301,8 +313,18 @@ var MigrateAuthCmd = &cobra.Command{
 
 		toAuth := args[1]
 
-		if toAuth != "ldap" && toAuth != "saml" { // nolint: goconst
-			return errors.New("invalid to_auth parameter, must be saml or ldap")
+		if toAuth != "ldap" && toAuth != "saml" && toAuth != "email" { // nolint: goconst
+			return errors.New("invalid to_auth parameter, must be saml, ldap, or email")
+		}
+
+		if toAuth == "email" {
+			if len(args) != 2 {
+				return errors.New("email migration requires 2 arguments")
+			}
+			if args[0] == "email" {
+				return errors.New("invalid from_auth argument")
+			}
+			return nil
 		}
 
 		if toAuth == "ldap" && len(args) != 3 {
@@ -412,7 +434,11 @@ func init() {
 
 	MigrateAuthCmd.Flags().Bool("force", false, "Force the migration to occur even if there are duplicates on the LDAP server. Duplicates will not be migrated. (ldap only)")
 	MigrateAuthCmd.Flags().Bool("auto", false, "Automatically migrate all users. Assumes the usernames and emails are identical between Mattermost and SAML services. (saml only)")
-	MigrateAuthCmd.Flags().Bool("confirm", false, "Confirm you really want to proceed with auto migration. (saml only)")
+	MigrateAuthCmd.Flags().Bool("confirm", false, "Confirm you really want to proceed without an interactive prompt")
+	MigrateAuthCmd.Flags().String("users", "", "Path to a JSON file listing user emails, usernames, or IDs to migrate (email destination only)")
+	MigrateAuthCmd.Flags().Bool("all", false, "Migrate all non-bot users matching from_auth (email destination only; mutually exclusive with --users)")
+	MigrateAuthCmd.Flags().Bool("send-reset-email", false, "Send a password reset email to each migrated user (email destination only)")
+	MigrateAuthCmd.Flags().Bool("dry-run", false, "List users that would be migrated without making changes (email destination only)")
 	MigrateAuthCmd.SetHelpTemplate(`Usage:
   mmctl user migrate-auth [from_auth] [to_auth] [migration-options] [flags]
 
@@ -1003,10 +1029,14 @@ func convertBotToUser(c client.Client, cmd *cobra.Command, userArgs []string) er
 }
 
 func migrateAuthCmdF(c client.Client, cmd *cobra.Command, userArgs []string) error {
-	if userArgs[1] == "saml" {
+	switch userArgs[1] {
+	case "saml":
 		return migrateAuthToSamlCmdF(c, cmd, userArgs)
+	case "email":
+		return migrateAuthToEmailCmdF(c, cmd, userArgs)
+	default:
+		return migrateAuthToLdapCmdF(c, cmd, userArgs)
 	}
-	return migrateAuthToLdapCmdF(c, cmd, userArgs)
 }
 
 func migrateAuthToSamlCmdF(c client.Client, cmd *cobra.Command, userArgs []string) error {
@@ -1067,6 +1097,123 @@ func migrateAuthToLdapCmdF(c client.Client, cmd *cobra.Command, userArgs []strin
 	}
 
 	return nil
+}
+
+func isValidEmailMigrationFromAuth(fromAuth string) bool {
+	switch fromAuth {
+	case "ldap", "saml", "gitlab", "google", "office365":
+		return true
+	default:
+		return false
+	}
+}
+
+func migrateAuthToEmailCmdF(c client.Client, cmd *cobra.Command, userArgs []string) error {
+	fromAuth := userArgs[0]
+	if fromAuth == "email" || !isValidEmailMigrationFromAuth(fromAuth) {
+		return errors.New("invalid from_auth argument")
+	}
+
+	usersFile, _ := cmd.Flags().GetString("users")
+	allUsers, _ := cmd.Flags().GetBool("all")
+	sendResetEmail, _ := cmd.Flags().GetBool("send-reset-email")
+	dryRun, _ := cmd.Flags().GetBool("dry-run")
+	confirm, _ := cmd.Flags().GetBool("confirm")
+
+	if usersFile != "" && allUsers {
+		return errors.New("cannot use --users and --all together")
+	}
+	if usersFile == "" && !allUsers {
+		return errors.New("migrate-auth to email requires --users <file> or --all")
+	}
+
+	var userIDs []string
+	if usersFile != "" {
+		users, err := getUsersFromEmailMigrationFile(c, fromAuth, usersFile)
+		if err != nil {
+			return err
+		}
+		if len(users) == 0 {
+			return errors.New("no users matched the migration criteria")
+		}
+		userIDs = make([]string, 0, len(users))
+		for _, user := range users {
+			userIDs = append(userIDs, user.Id)
+		}
+
+		if dryRun {
+			for _, user := range users {
+				printer.PrintT("{{.Username}} ({{.Email}})", user)
+			}
+			printer.Print(fmt.Sprintf("%d user(s) would be migrated from %s to email.", len(users), fromAuth))
+			return nil
+		}
+
+		if !confirm {
+			confirmationMsg := fmt.Sprintf("You are about to migrate %d user(s) from %s to email auth.\n\nDo you want to proceed?", len(users), fromAuth)
+			if err := getConfirmation(confirmationMsg, false); err != nil {
+				return err
+			}
+		}
+	} else if dryRun {
+		numAffected, _, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, nil, true, false, true)
+		if err != nil {
+			return err
+		}
+		printer.Print(fmt.Sprintf("%d user(s) would be migrated from %s to email.", numAffected, fromAuth))
+		return nil
+	} else if !confirm {
+		numAffected, _, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, nil, true, false, true)
+		if err != nil {
+			return err
+		}
+		confirmationMsg := fmt.Sprintf("You are about to migrate ALL %s users to email auth. This will affect %d users.\n\nDo you want to proceed?", fromAuth, numAffected)
+		if err := getConfirmation(confirmationMsg, false); err != nil {
+			return err
+		}
+	}
+
+	numAffected, resp, err := c.MigrateAuthToEmail(context.TODO(), fromAuth, userIDs, allUsers, sendResetEmail, false)
+	if err != nil {
+		return err
+	}
+	if resp != nil && resp.StatusCode == http.StatusOK && numAffected > 0 {
+		printer.Print(fmt.Sprintf("Successfully migrated %d account(s).", numAffected))
+	}
+
+	return nil
+}
+
+func getUsersFromEmailMigrationFile(c client.Client, fromAuth, usersFile string) ([]*model.User, error) {
+	file, err := os.ReadFile(usersFile)
+	if err != nil {
+		return nil, fmt.Errorf("could not read file: %w", err)
+	}
+
+	var userArgs []string
+	if err := json.Unmarshal(file, &userArgs); err != nil {
+		return nil, fmt.Errorf("invalid json: %w", err)
+	}
+
+	users := make([]*model.User, 0, len(userArgs))
+	for _, userArg := range userArgs {
+		user, err := getUserFromArg(c, userArg)
+		if err != nil {
+			printer.PrintError(err.Error())
+			continue
+		}
+		if user.IsBot {
+			printer.PrintError(fmt.Sprintf("skipping bot user %s", user.Username))
+			continue
+		}
+		if user.AuthService != fromAuth {
+			printer.PrintError(fmt.Sprintf("skipping user %s: auth service is %q, expected %q", user.Username, user.AuthService, fromAuth))
+			continue
+		}
+		users = append(users, user)
+	}
+
+	return users, nil
 }
 
 func promoteGuestToUserCmdF(c client.Client, _ *cobra.Command, userArgs []string) error {

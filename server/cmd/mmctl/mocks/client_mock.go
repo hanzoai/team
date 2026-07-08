@@ -1803,6 +1803,22 @@ func (mr *MockClientMockRecorder) ListImports(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListImports", reflect.TypeOf((*MockClient)(nil).ListImports), arg0)
 }
 
+// MigrateAuthToEmail mocks base method.
+func (m *MockClient) MigrateAuthToEmail(arg0 context.Context, arg1 string, arg2 []string, arg3, arg4, arg5 bool) (int64, *model.Response, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "MigrateAuthToEmail", arg0, arg1, arg2, arg3, arg4, arg5)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(*model.Response)
+	ret2, _ := ret[2].(error)
+	return ret0, ret1, ret2
+}
+
+// MigrateAuthToEmail indicates an expected call of MigrateAuthToEmail.
+func (mr *MockClientMockRecorder) MigrateAuthToEmail(arg0, arg1, arg2, arg3, arg4, arg5 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MigrateAuthToEmail", reflect.TypeOf((*MockClient)(nil).MigrateAuthToEmail), arg0, arg1, arg2, arg3, arg4, arg5)
+}
+
 // MigrateAuthToLdap mocks base method.
 func (m *MockClient) MigrateAuthToLdap(arg0 context.Context, arg1, arg2 string, arg3 bool) (*model.Response, error) {
 	m.ctrl.T.Helper()
