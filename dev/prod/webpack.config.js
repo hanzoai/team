@@ -113,28 +113,22 @@ const devProxyTest = {
 const devHanzoProxy = {
   '/account': {
     target: 'https://account.hanzo.team/',
-const devHanzoProxy = {
-  '/account': {
-    target: 'https://account.hanzo.team/',
     changeOrigin: true,
     pathRewrite: { '^/account': '' },
     logLevel: 'debug'
   },
   '/api/v1': {
     target: 'http://hanzo.team',
-    target: 'http://hanzo.team',
     changeOrigin: true,
     logLevel: 'debug'
   },
   '/files': {
-    target: 'https://hanzo.team/files',
     target: 'https://hanzo.team/files',
     changeOrigin: true,
     pathRewrite: { '^/files': '' },
     logLevel: 'debug'
   },
   '/rekoni/recognize': {
-    target: 'https://rekoni.hanzo.team',
     target: 'https://rekoni.hanzo.team',
     changeOrigin: true,
     pathRewrite: { '^/rekoni/recognize': '/recognize' },
@@ -171,13 +165,11 @@ const devBoldProxy = {
 const devFrontProxy = {
   '/account': {
     target: 'https://account.hanzo.team/',
-    target: 'https://account.hanzo.team/',
     changeOrigin: true,
     pathRewrite: { '^/account': '' },
     logLevel: 'debug'
   },
   '/files': {
-    target: 'https://hanzo.team/files',
     target: 'https://hanzo.team/files',
     changeOrigin: true,
     pathRewrite: { '^/files': '' },
@@ -198,7 +190,6 @@ const proxy = {
   'dev-server-test': devProxyTest,
   'dev-production': devFrontProxy,
   'dev-bold': devBoldProxy,
-  'dev-hanzoai': devHanzoProxy
   'dev-hanzoai': devHanzoProxy
 }
 
