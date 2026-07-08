@@ -43,6 +43,11 @@ func TestTokenStore_SaveHitsCanonicalKMS(t *testing.T) {
 	if body["path"] != slackSecretPath || body["name"] != secretName("T99") {
 		t.Fatalf("wrong secret scope: %+v", body)
 	}
+	// env MUST be on the write body — KMS now rejects omitted env on writes.
+	// These tokens stay in their historical "default" bucket, sent explicitly.
+	if body["env"] != kmsEnv {
+		t.Fatalf("write must send explicit env=%q, got %q", kmsEnv, body["env"])
+	}
 	// The value must be the token JSON — and the access token must appear ONLY
 	// inside the KMS value (proves we don't stash it elsewhere in the request).
 	if !strings.Contains(body["value"], "xoxb-secret") {
