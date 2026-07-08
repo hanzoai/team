@@ -23,6 +23,12 @@ export type UserPropertyFieldGroupID = 'custom_profile_attributes' | 'session_at
 export const SESSION_ATTRIBUTES_GROUP_ID: UserPropertyFieldGroupID = 'session_attributes';
 export const SESSION_ATTRIBUTES_OBJECT_TYPE = 'session';
 
+// object_type values on the autocomplete PropertyFields. Channel fields back
+// resource.attributes.* references in ABAC policies; everything else is the
+// requesting user (user.attributes.*), including native user attributes.
+export const USER_ATTRIBUTES_OBJECT_TYPE = 'user';
+export const CHANNEL_ATTRIBUTES_OBJECT_TYPE = 'channel';
+
 export type UserPropertyValueType = 'phone' | 'url' | '';
 
 export type UserPropertyField = PropertyField & {
