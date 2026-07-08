@@ -1425,6 +1425,90 @@ func (a *App) UpdateUserAuth(rctx request.CTX, userID string, userAuth *model.Us
 	return userAuth, nil
 }
 
+func isValidMigrateAuthToEmailFrom(fromAuth string) bool {
+	switch fromAuth {
+	case model.UserAuthServiceLdap, model.UserAuthServiceSaml, model.UserAuthServiceGitlab, model.ServiceGoogle, model.ServiceOffice365:
+		return true
+	default:
+		return false
+	}
+}
+
+func (a *App) usersForMigrateAuthToEmail(fromAuth string, userIDs []string, allUsers bool) ([]*model.User, *model.AppError) {
+	if allUsers {
+		users, err := a.Srv().Store().User().GetAllUsingAuthService(fromAuth)
+		if err != nil {
+			return nil, model.NewAppError("MigrateAuthToEmail", "app.user.migrate_auth_to_email.get_users.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
+		}
+		filtered := make([]*model.User, 0, len(users))
+		for _, user := range users {
+			if user.IsBot || user.DeleteAt != 0 {
+				continue
+			}
+			filtered = append(filtered, user)
+		}
+		return filtered, nil
+	}
+
+	users := make([]*model.User, 0, len(userIDs))
+	for _, userID := range userIDs {
+		user, err := a.GetUser(userID)
+		if err != nil {
+			var nfErr *store.ErrNotFound
+			if errors.As(err, &nfErr) {
+				continue
+			}
+			return nil, err
+		}
+		if user.IsBot || user.DeleteAt != 0 || user.AuthService != fromAuth {
+			continue
+		}
+		users = append(users, user)
+	}
+	return users, nil
+}
+
+func (a *App) MigrateAuthToEmail(rctx request.CTX, fromAuth string, userIDs []string, allUsers bool, sendResetEmail bool, dryRun bool) (int, *model.AppError) {
+	if fromAuth == model.UserAuthServiceEmail || !isValidMigrateAuthToEmailFrom(fromAuth) {
+		return 0, model.NewAppError("MigrateAuthToEmail", "app.user.migrate_auth_to_email.invalid_from.app_error", nil, "", http.StatusBadRequest)
+	}
+	if !allUsers && len(userIDs) == 0 {
+		return 0, model.NewAppError("MigrateAuthToEmail", "app.user.migrate_auth_to_email.missing_users.app_error", nil, "", http.StatusBadRequest)
+	}
+	if allUsers && len(userIDs) > 0 {
+		return 0, model.NewAppError("MigrateAuthToEmail", "app.user.migrate_auth_to_email.conflicting_users.app_error", nil, "", http.StatusBadRequest)
+	}
+
+	users, appErr := a.usersForMigrateAuthToEmail(fromAuth, userIDs, allUsers)
+	if appErr != nil {
+		return 0, appErr
+	}
+
+	if dryRun {
+		return len(users), nil
+	}
+
+	userAuth := &model.UserAuth{AuthService: ""}
+	numAffected := 0
+	for _, user := range users {
+		if _, err := a.UpdateUserAuth(rctx, user.Id, userAuth); err != nil {
+			rctx.Logger().Warn("Failed to migrate user auth to email", mlog.String("user_id", user.Id), mlog.Err(err))
+			continue
+		}
+
+		if sendResetEmail {
+			if _, err := a.SendPasswordReset(rctx, user.Email, a.GetSiteURL()); err != nil {
+				rctx.Logger().Warn("Failed to send password reset email after migrating user to email auth", mlog.String("user_id", user.Id), mlog.Err(err))
+				continue
+			}
+		}
+
+		numAffected++
+	}
+
+	return numAffected, nil
+}
+
 func (a *App) sendUpdatedUserEvent(user *model.User) {
 	// exclude event creator user from admin, member user broadcast
 	omitUsers := make(map[string]bool, 1)
