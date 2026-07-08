@@ -15,6 +15,16 @@ import './shared.scss';
 // Sentinel emitted by the server in masked CEL expressions for values the caller cannot see.
 export const MASKED_VALUE_TOKEN_LITERAL = '"--------"';
 
+// CEL attribute-path prefixes. The requesting user is user.attributes.*; the
+// accessed channel (resource) is resource.attributes.*.
+export const USER_ATTRIBUTES_PREFIX = 'user.attributes.';
+export const RESOURCE_ATTRIBUTES_PREFIX = 'resource.attributes.';
+
+// value_type on a visual-AST condition. Matches model.ValueType: 0 = literal,
+// 1 = attribute reference (the RHS is another attribute path, e.g. a
+// resource.attributes.* selector rather than a quoted constant).
+export const VISUAL_AST_ATTRIBUTE_VALUE_TYPE = 1;
+
 // CEL operator constants
 export enum CELOperator {
     EQUALS = '==',
@@ -113,10 +123,12 @@ export function isSimpleCondition(s: string): boolean {
     const trimmed = s.trim();
 
     // The first pattern accepts ==, != and the ranked ordinal operators
-    // (>=, <=, >, <) against a quoted value. >= / <= precede > / < in the
-    // alternation so the two-char forms match before the one-char ones.
+    // (>=, <=, >, <) against either a quoted value or a resource.attributes.*
+    // selector (comparing the user attribute to the accessed channel's). >= /
+    // <= precede > / < in the alternation so the two-char forms match before
+    // the one-char ones.
     return Boolean(
-        trimmed.match(/^user\.attributes\.\w+\s*(==|!=|>=|<=|>|<)\s*['"][^'"]*['"]$/) ||
+        trimmed.match(/^user\.attributes\.\w+\s*(==|!=|>=|<=|>|<)\s*(?:['"][^'"]*['"]|resource\.attributes\.\w+)$/) ||
         trimmed.match(/^user\.attributes\.\w+\s+in\s+\[.*?\]$/) ||
         trimmed.match(/^((\[.*?\])|['"][^'"]*['"])\s+in\s+user\.attributes\.\w+$/) ||
         trimmed.match(/^user\.attributes\.\w+\.startsWith\(['"][^'"]*['"].*?\)$/) ||

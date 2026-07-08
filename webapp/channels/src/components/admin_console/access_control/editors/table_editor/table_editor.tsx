@@ -1,14 +1,19 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import classNames from 'classnames';
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
+import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
 import type {AccessControlVisualAST} from '@mattermost/types/access_control';
 import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {CHANNEL_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
 
 import {searchUsersForExpression} from 'mattermost-redux/actions/access_control';
 import type {ActionResult} from 'mattermost-redux/types/actions';
+
+import * as Menu from 'components/menu';
 
 import {CPA_FIELD_NAME_PATTERN} from 'utils/properties';
 
@@ -19,7 +24,7 @@ import ValueSelectorMenu from './value_selector_menu';
 
 import CELHelpModal from '../../modals/cel_help/cel_help_modal';
 import TestResultsModal from '../../modals/policy_test/test_modal';
-import {AddAttributeButton, TestButton, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator, isMultiselectOperator, isRankOperator} from '../shared';
+import {AddAttributeButton, TestButton, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator, isMultiselectOperator, isRankOperator, USER_ATTRIBUTES_PREFIX, RESOURCE_ATTRIBUTES_PREFIX, VISUAL_AST_ATTRIBUTE_VALUE_TYPE} from '../shared';
 
 import './table_editor.scss';
 
@@ -34,12 +39,19 @@ export function rowToCEL(row: TableRow): string {
     // Without this guard the condition would be filtered out by updateExpression,
     // the empty expression would be sent to the server, and buildCELFromConditions
     // would return "true" — making the policy wide-open (security regression).
-    if (row.hasMaskedValues && row.values.length === 0) {
+    if (row.hasMaskedValues && row.values.length === 0 && !row.targetAttribute) {
         return `user.attributes.${row.attribute} in []`;
     }
 
     const attributeExpr = `user.attributes.${row.attribute}`;
     const config = OPERATOR_CONFIG[row.operator];
+
+    // Right-hand side is the accessed channel's attribute, not a literal:
+    // user.attributes.X <op> resource.attributes.Y. Only comparison operators
+    // (is / is not / the ranked ordinals) take an attribute target.
+    if (row.targetAttribute && config && config.type === 'comparison') {
+        return `${attributeExpr} ${config.celOp} resource.attributes.${row.targetAttribute}`;
+    }
 
     if (!config) {
         if (row.attribute_type === 'multiselect') {
@@ -174,9 +186,10 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
     for (const node of visualAST.conditions) {
         let attr;
 
-        // Extracts the attribute name, removing the 'user.attributes.' prefix.
-        if (node.attribute.startsWith('user.attributes.')) {
-            attr = node.attribute.slice(16); // Length of 'user.attributes.'
+        // The left side is always the requesting user's attribute; strip the
+        // 'user.attributes.' prefix.
+        if (node.attribute.startsWith(USER_ATTRIBUTES_PREFIX)) {
+            attr = node.attribute.slice(USER_ATTRIBUTES_PREFIX.length);
         } else {
             throw new Error(`Unknown attribute: ${node.attribute}`);
         }
@@ -193,8 +206,18 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
             op = OperatorLabel.IS_EXACTLY;
         }
 
-        let values;
-        if (Array.isArray(node.value)) {
+        // A value_type of "attribute" whose RHS is a resource.attributes.*
+        // selector means the condition compares the user attribute to the
+        // accessed channel's attribute. Capture the target field; values are
+        // unused in that case.
+        let targetAttribute: string | undefined;
+        let values: string[];
+        if (node.value_type === VISUAL_AST_ATTRIBUTE_VALUE_TYPE &&
+            typeof node.value === 'string' &&
+            node.value.startsWith(RESOURCE_ATTRIBUTES_PREFIX)) {
+            targetAttribute = node.value.slice(RESOURCE_ATTRIBUTES_PREFIX.length);
+            values = [];
+        } else if (Array.isArray(node.value)) {
             values = node.value;
         } else if (node.value !== null && node.value !== undefined) {
             values = [node.value];
@@ -208,10 +231,70 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
             values,
             attribute_type: node.attribute_type,
             hasMaskedValues: node.has_masked_values === true,
+            targetAttribute,
         });
     }
 
     return tableRows;
+};
+
+// Right-hand-side kind toggle: compare the user attribute against a literal
+// value or against the accessed channel's attribute. Shown only when a
+// comparable channel attribute exists for the row.
+const RhsKindMenu = ({isAttribute, disabled, buttonId, menuId, onSelectValue, onSelectAttribute}: {
+    isAttribute: boolean;
+    disabled: boolean;
+    buttonId: string;
+    menuId: string;
+    onSelectValue: () => void;
+    onSelectAttribute: () => void;
+}) => {
+    const {formatMessage} = useIntl();
+    const valueLabel = formatMessage({id: 'admin.access_control.table_editor.rhs.value', defaultMessage: 'Value'});
+    const attributeLabel = formatMessage({id: 'admin.access_control.table_editor.rhs.channel_attribute', defaultMessage: 'Channel attribute'});
+
+    return (
+        <Menu.Container
+            menuButton={{
+                id: buttonId,
+                class: classNames('btn btn-transparent field-selector-menu-button table-editor__rhs-kind-button', {disabled}),
+                children: (
+                    <>
+                        {isAttribute ? attributeLabel : valueLabel}
+                        <ChevronDownIcon
+                            size={16}
+                            color='rgba(var(--center-channel-color-rgb), 0.5)'
+                        />
+                    </>
+                ),
+                dataTestId: 'rhsKindMenuButton',
+                disabled,
+            }}
+            menu={{
+                id: menuId,
+                'aria-label': formatMessage({id: 'admin.access_control.table_editor.rhs.aria', defaultMessage: 'Select comparison target kind'}),
+            }}
+        >
+            <Menu.Item
+                id={`${menuId}-value`}
+                role='menuitemradio'
+                forceCloseOnSelect={true}
+                aria-checked={!isAttribute}
+                onClick={onSelectValue}
+                labels={<span>{valueLabel}</span>}
+                trailingElements={!isAttribute && <CheckIcon/>}
+            />
+            <Menu.Item
+                id={`${menuId}-attribute`}
+                role='menuitemradio'
+                forceCloseOnSelect={true}
+                aria-checked={isAttribute}
+                onClick={onSelectAttribute}
+                labels={<span>{attributeLabel}</span>}
+                trailingElements={isAttribute && <CheckIcon/>}
+            />
+        </Menu.Container>
+    );
 };
 
 // TableEditor provides a user-friendly table interface for constructing and editing
@@ -250,6 +333,44 @@ function TableEditor({
 
     // Derived state: whether any row has masked values
     const hasMaskedRows = useMemo(() => rows.some((r) => r.hasMaskedValues), [rows]);
+
+    // The autocomplete returns both the requesting user's attributes and the
+    // accessed channel's (resource) attributes, tagged by object_type. The left
+    // picker only ever offers user attributes; channel attributes are offered
+    // as comparison targets on the right side (resource.attributes.*).
+    const {userFields, resourceAttributes} = useMemo(() => {
+        const uf: UserPropertyField[] = [];
+        const ra: UserPropertyField[] = [];
+        for (const f of userAttributes) {
+            if (f.object_type === CHANNEL_ATTRIBUTES_OBJECT_TYPE) {
+                ra.push(f);
+            } else {
+                uf.push(f);
+            }
+        }
+        return {userFields: uf, resourceAttributes: ra};
+    }, [userAttributes]);
+
+    // Channel attributes the given user attribute may be compared against.
+    // Same field type is required; for option-based types (select/multiselect/
+    // rank) the two must also share an option scale, enforced structurally by
+    // linking to the same template field (equal, non-null linked_field_id).
+    // Non-comparable pairs are also rejected server-side at save/check.
+    const comparableChannelFields = useCallback((userField?: UserPropertyField): UserPropertyField[] => {
+        if (!userField) {
+            return [];
+        }
+        const optionBased = userField.type === 'select' || userField.type === 'multiselect' || userField.type === 'rank';
+        return resourceAttributes.filter((cf) => {
+            if (cf.type !== userField.type) {
+                return false;
+            }
+            if (optionBased) {
+                return Boolean(userField.linked_field_id) && userField.linked_field_id === cf.linked_field_id;
+            }
+            return true;
+        });
+    }, [resourceAttributes]);
 
     // Prevents getVisualAST re-parse when expression change is from internal row editing.
     const isInternalChange = React.useRef(false);
@@ -315,7 +436,8 @@ function TableEditor({
     const updateExpression = useCallback((newRows: TableRow[]) => {
         // Include masked rows with no visible values: rowToCEL will emit an "in []"
         // placeholder so the backend merge can restore the hidden values on save.
-        const rowsThatCanFormExpressions = newRows.filter((row) => row.attribute && (row.values.length > 0 || row.hasMaskedValues));
+        // A resource-target row is complete without literal values.
+        const rowsThatCanFormExpressions = newRows.filter((row) => row.attribute && (row.values.length > 0 || row.hasMaskedValues || row.targetAttribute));
 
         const expr = rowsThatCanFormExpressions.map((row) => rowToCEL(row)).join(' && ');
 
@@ -327,11 +449,11 @@ function TableEditor({
     }, [onChange, onValidate]);
 
     const findFirstAvailableAttribute = useCallback(() => {
-        return findFirstAvailableAttributeFromList(userAttributes, enableUserManagedAttributes);
-    }, [userAttributes, enableUserManagedAttributes]);
+        return findFirstAvailableAttributeFromList(userFields, enableUserManagedAttributes);
+    }, [userFields, enableUserManagedAttributes]);
 
     const addRow = useCallback(() => {
-        if (userAttributes.length === 0) {
+        if (userFields.length === 0) {
             onParseError('No user attributes available. Please ensure ABAC is properly configured and you have the necessary permissions.');
             return;
         }
@@ -355,7 +477,7 @@ function TableEditor({
             setAutoOpenAttributeMenuForRow(newRows.length - 1); // Set for the new row
             return newRows;
         });
-    }, [userAttributes, updateExpression, findFirstAvailableAttribute]);
+    }, [userFields, updateExpression, findFirstAvailableAttribute]);
 
     const removeRow = useCallback((index: number) => {
         setRows((currentRows) => {
@@ -380,7 +502,10 @@ function TableEditor({
             if (oldAttribute !== attribute) {
                 newRows[index].values = [];
 
-                const newAttributeObj = userAttributes.find((attr) => attr.name === attribute);
+                // A resource target is type-specific to the old attribute; drop it.
+                newRows[index].targetAttribute = undefined;
+
+                const newAttributeObj = userFields.find((attr) => attr.name === attribute);
                 const newType = newAttributeObj?.type || '';
                 newRows[index].attribute_type = newType;
 
@@ -399,7 +524,7 @@ function TableEditor({
             updateExpression(newRows);
             return newRows;
         });
-    }, [updateExpression, userAttributes]);
+    }, [updateExpression, userFields]);
 
     const updateRowOperator = useCallback((index: number, newOperator: string) => {
         setRows((currentRows) => {
@@ -426,6 +551,12 @@ function TableEditor({
                 values: newValues,
             };
 
+            // A resource target is only valid for comparison operators; drop it
+            // when moving to a list/method operator (e.g. "in", "starts with").
+            if (OPERATOR_CONFIG[newOperator]?.type !== 'comparison') {
+                newRows[index].targetAttribute = undefined;
+            }
+
             updateExpression(newRows);
             return newRows;
         });
@@ -435,6 +566,28 @@ function TableEditor({
         setRows((currentRows) => {
             const newRows = [...currentRows];
             newRows[index] = {...newRows[index], values};
+            updateExpression(newRows);
+            return newRows;
+        });
+    }, [updateExpression]);
+
+    // Switch the row's right-hand side to the accessed channel's attribute
+    // (resource.attributes.*). Literal values are cleared — the two are
+    // mutually exclusive.
+    const updateRowTarget = useCallback((index: number, targetAttribute: string) => {
+        setRows((currentRows) => {
+            const newRows = [...currentRows];
+            newRows[index] = {...newRows[index], targetAttribute, values: []};
+            updateExpression(newRows);
+            return newRows;
+        });
+    }, [updateExpression]);
+
+    // Switch the row's right-hand side back to literal value(s).
+    const clearRowTarget = useCallback((index: number) => {
+        setRows((currentRows) => {
+            const newRows = [...currentRows];
+            newRows[index] = {...newRows[index], targetAttribute: undefined};
             updateExpression(newRows);
             return newRows;
         });
@@ -492,7 +645,7 @@ function TableEditor({
                                 <td className='table-editor__cell'>
                                     <AttributeSelectorMenu
                                         currentAttribute={row.attribute}
-                                        availableAttributes={userAttributes}
+                                        availableAttributes={userFields}
                                         disabled={disabled || row.hasMaskedValues}
                                         onChange={(attribute) => updateRowAttribute(index, attribute)}
                                         menuId={`attribute-selector-menu-${index}`}
@@ -507,16 +660,50 @@ function TableEditor({
                                         currentOperator={row.operator}
                                         disabled={disabled || row.hasMaskedValues}
                                         onChange={(operator) => updateRowOperator(index, operator)}
-                                        attributeType={userAttributes.find((attr) => attr.name === row.attribute)?.type}
+                                        attributeType={userFields.find((attr) => attr.name === row.attribute)?.type}
                                     />
                                 </td>
                                 <td className='table-editor__cell'>
-                                    <ValueSelectorMenu
-                                        row={row}
-                                        disabled={disabled || row.hasMaskedValues}
-                                        updateValues={(values: string[]) => updateRowValues(index, values)}
-                                        options={row.attribute ? userAttributes.find((attr) => attr.name === row.attribute)?.attrs?.options || [] : []}
-                                    />
+                                    {(() => {
+                                        const userField = userFields.find((attr) => attr.name === row.attribute);
+                                        const targets = comparableChannelFields(userField);
+                                        const isTargetMode = Boolean(row.targetAttribute);
+                                        const supportsTarget = OPERATOR_CONFIG[row.operator]?.type === 'comparison' && targets.length > 0;
+                                        const cellDisabled = disabled || row.hasMaskedValues;
+
+                                        return (
+                                            <div className='table-editor__value-cell'>
+                                                {supportsTarget && (
+                                                    <RhsKindMenu
+                                                        isAttribute={isTargetMode}
+                                                        disabled={cellDisabled}
+                                                        buttonId={`rhs-kind-button-${index}`}
+                                                        menuId={`rhs-kind-menu-${index}`}
+                                                        onSelectValue={() => clearRowTarget(index)}
+                                                        onSelectAttribute={() => updateRowTarget(index, row.targetAttribute || targets[0].name)}
+                                                    />
+                                                )}
+                                                {isTargetMode ? (
+                                                    <AttributeSelectorMenu
+                                                        currentAttribute={row.targetAttribute || ''}
+                                                        availableAttributes={targets}
+                                                        disabled={cellDisabled}
+                                                        onChange={(attribute) => updateRowTarget(index, attribute)}
+                                                        menuId={`target-selector-menu-${index}`}
+                                                        buttonId={`target-selector-button-${index}`}
+                                                        enableUserManagedAttributes={true}
+                                                    />
+                                                ) : (
+                                                    <ValueSelectorMenu
+                                                        row={row}
+                                                        disabled={cellDisabled}
+                                                        updateValues={(values: string[]) => updateRowValues(index, values)}
+                                                        options={userField?.attrs?.options || []}
+                                                    />
+                                                )}
+                                            </div>
+                                        );
+                                    })()}
                                 </td>
                                 <td className='table-editor__cell-actions'>
                                     <button
@@ -541,7 +728,7 @@ function TableEditor({
                         >
                             <AddAttributeButton
                                 onClick={addRow}
-                                disabled={disabled || userAttributes.length === 0}
+                                disabled={disabled || userFields.length === 0}
                             />
                         </td>
                     </tr>

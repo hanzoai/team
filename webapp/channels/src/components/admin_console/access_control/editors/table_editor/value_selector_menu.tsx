@@ -16,6 +16,12 @@ export interface TableRow {
     values: string[];
     attribute_type: string;
     hasMaskedValues: boolean;
+
+    // When set, the right-hand side of the condition is the accessed channel's
+    // attribute (resource.attributes.<targetAttribute>) rather than a literal
+    // value; `values` is then ignored. Only meaningful for comparison
+    // operators. The left side stays the requesting user's attribute.
+    targetAttribute?: string;
 }
 
 export interface ValueSelectorMenuProps {

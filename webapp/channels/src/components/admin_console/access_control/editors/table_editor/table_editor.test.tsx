@@ -64,6 +64,57 @@ describe('parseExpression', () => {
         ]);
     });
 
+    test('maps a resource-attribute RHS to a targetAttribute row', () => {
+        const ast: AccessControlVisualAST = {
+            conditions: [
+                {
+                    attribute: 'user.attributes.clearance',
+                    operator: '>=',
+                    value: 'resource.attributes.minClearance',
+                    value_type: 1, // attribute reference, not a literal
+                    attribute_type: 'rank',
+                },
+            ],
+        };
+
+        expect(parseExpression(ast)).toEqual([
+            {
+                attribute: 'clearance',
+                operator: 'is at least',
+                values: [],
+                attribute_type: 'rank',
+                hasMaskedValues: false,
+                targetAttribute: 'minClearance',
+            },
+        ]);
+    });
+
+    test('a literal RHS that looks like a path stays a literal value', () => {
+        // value_type 0 (literal) must not be treated as a resource target even
+        // if the string happens to start with resource.attributes.
+        const ast: AccessControlVisualAST = {
+            conditions: [
+                {
+                    attribute: 'user.attributes.note',
+                    operator: '==',
+                    value: 'resource.attributes.minClearance',
+                    value_type: 0,
+                    attribute_type: 'text',
+                },
+            ],
+        };
+
+        expect(parseExpression(ast)).toEqual([
+            {
+                attribute: 'note',
+                operator: 'is',
+                values: ['resource.attributes.minClearance'],
+                attribute_type: 'text',
+                hasMaskedValues: false,
+            },
+        ]);
+    });
+
     test('handles "in" operator with multiple values', () => {
         const ast: AccessControlVisualAST = {
             conditions: [
@@ -488,6 +539,44 @@ describe('rowToCEL', () => {
         expect(cel).toBe('user.attributes.clearance == "TopSecret"');
     });
 
+    test('resource target on "is" compares user attr to the channel attr', () => {
+        const cel = rowToCEL({
+            attribute: 'team',
+            operator: 'is',
+            values: [],
+            attribute_type: 'select',
+            hasMaskedValues: false,
+            targetAttribute: 'owningTeam',
+        });
+        expect(cel).toBe('user.attributes.team == resource.attributes.owningTeam');
+    });
+
+    test('resource target on a ranked operator preserves the ordinal comparison', () => {
+        const cel = rowToCEL({
+            attribute: 'clearance',
+            operator: 'is at least',
+            values: [],
+            attribute_type: 'rank',
+            hasMaskedValues: false,
+            targetAttribute: 'minClearance',
+        });
+        expect(cel).toBe('user.attributes.clearance >= resource.attributes.minClearance');
+    });
+
+    test('resource target is ignored for non-comparison operators', () => {
+        // "in" is a list operator; a resource target has no meaning there, so
+        // the literal-value path is used instead.
+        const cel = rowToCEL({
+            attribute: 'department',
+            operator: 'in',
+            values: ['Eng'],
+            attribute_type: 'select',
+            hasMaskedValues: false,
+            targetAttribute: 'shouldBeIgnored',
+        });
+        expect(cel).toBe('user.attributes.department in ["Eng"]');
+    });
+
     test('"contains" operator produces method call', () => {
         const cel = rowToCEL({
             attribute: 'email',
@@ -660,6 +749,15 @@ describe('isSimpleCondition', () => {
 
     test.each(['>=', '>', '<=', '<'])('ranked comparison %s against a quoted value is simple', (op) => {
         expect(isSimpleCondition(`user.attributes.clearance ${op} "Secret"`)).toBe(true);
+    });
+
+    test.each(['==', '!=', '>=', '>', '<=', '<'])('comparison %s against a resource attribute is simple', (op) => {
+        expect(isSimpleCondition(`user.attributes.clearance ${op} resource.attributes.minClearance`)).toBe(true);
+    });
+
+    test('rejects a resource attribute on the left side', () => {
+        // The left side must always be the requesting user's attribute.
+        expect(isSimpleCondition('resource.attributes.minClearance == "Secret"')).toBe(false);
     });
 
     test('rejects function calls', () => {

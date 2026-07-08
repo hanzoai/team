@@ -66,4 +66,17 @@
     &__add-button-container {
         padding: 8px;
     }
+
+    // Value cell holds an optional right-hand-side kind toggle (literal value
+    // vs. channel attribute) next to the value/attribute selector.
+    &__value-cell {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    &__rhs-kind-button {
+        flex: none;
+        white-space: nowrap;
+    }
 }
