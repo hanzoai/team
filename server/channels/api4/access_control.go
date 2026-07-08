@@ -1229,6 +1229,13 @@ func getFieldsAutocomplete(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	teamID := r.URL.Query().Get("team_id")
 
+	// The parent-policy editor authors resource.attributes.* against many
+	// channels, so it has no single channel to scope by; it sets this flag to
+	// pull channel-object-type CPA fields. Only meaningful without a channelId
+	// (a channel scope already includes them), and the permission check below
+	// requires ManageSystem in that case.
+	includeResourceFields := r.URL.Query().Get("include_resource_fields") == "true"
+
 	hasSystemPermission := c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem)
 	if !hasSystemPermission {
 		if !teamAdminCELContextOK(c, channelId, teamID) {
@@ -1267,7 +1274,7 @@ func getFieldsAutocomplete(c *Context, w http.ResponseWriter, r *http.Request) {
 	var ac []*model.PropertyField
 	var appErr *model.AppError
 
-	ac, appErr = c.App.GetAccessControlFieldsAutocomplete(c.AppContext, channelId, after, limit, c.AppContext.Session().UserId)
+	ac, appErr = c.App.GetAccessControlFieldsAutocomplete(c.AppContext, channelId, includeResourceFields, after, limit, c.AppContext.Session().UserId)
 
 	if appErr != nil {
 		c.Err = appErr

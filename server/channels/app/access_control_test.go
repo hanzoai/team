@@ -5350,7 +5350,7 @@ func TestGetAccessControlFieldsAutocomplete_ExcludesNonUserFields(t *testing.T) 
 		require.NoError(t, err)
 	}
 
-	fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", strings.Repeat("0", 26), 100, th.BasicUser.Id)
+	fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", false, strings.Repeat("0", 26), 100, th.BasicUser.Id)
 	require.Nil(t, appErr)
 
 	for _, f := range fields {
@@ -5395,7 +5395,7 @@ func TestGetAccessControlFieldsAutocomplete_IncludesChannelFieldsWhenScoped(t *t
 	}, false, "")
 	require.Nil(t, appErr)
 
-	fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, th.BasicChannel.Id, strings.Repeat("0", 26), 100, th.BasicUser.Id)
+	fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, th.BasicChannel.Id, false, strings.Repeat("0", 26), 100, th.BasicUser.Id)
 	require.Nil(t, appErr)
 
 	byID := make(map[string]*model.PropertyField, len(fields))
@@ -5406,6 +5406,48 @@ func TestGetAccessControlFieldsAutocomplete_IncludesChannelFieldsWhenScoped(t *t
 	require.Contains(t, byID, channelField.ID, "channel CPA field must appear when scoped to a channel")
 	assert.Equal(t, model.PropertyFieldObjectTypeChannel, byID[channelField.ID].ObjectType,
 		"channel field must be tagged with its ObjectType")
+}
+
+// The parent-policy editor authors resource.attributes.* with no channel to
+// scope by, so it passes includeResourceFields=true to pull channel-object-type
+// fields. Verify the flag alone (channelID="") surfaces channel fields, and that
+// without it channel fields are excluded.
+func TestGetAccessControlFieldsAutocomplete_IncludeResourceFieldsFlag(t *testing.T) {
+	th := Setup(t).InitBasic(t)
+	th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterprise))
+
+	rctx := request.TestContext(t)
+
+	cpaGroup, cErr := th.App.GetPropertyGroup(rctx, model.AccessControlPropertyGroupName)
+	require.Nil(t, cErr)
+
+	channelField, appErr := th.App.CreatePropertyField(rctx, &model.PropertyField{
+		GroupID:    cpaGroup.ID,
+		Name:       celSafeName(),
+		Type:       model.PropertyFieldTypeSelect,
+		ObjectType: model.PropertyFieldObjectTypeChannel,
+		TargetType: string(model.PropertyFieldTargetLevelSystem),
+	}, false, "")
+	require.Nil(t, appErr)
+
+	contains := func(fields []*model.PropertyField, id string) bool {
+		for _, f := range fields {
+			if f.ID == id {
+				return true
+			}
+		}
+		return false
+	}
+
+	withFlag, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", true, strings.Repeat("0", 26), 100, th.BasicUser.Id)
+	require.Nil(t, appErr)
+	assert.True(t, contains(withFlag, channelField.ID),
+		"channel field must appear when includeResourceFields=true even with no channel scope")
+
+	withoutFlag, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", false, strings.Repeat("0", 26), 100, th.BasicUser.Id)
+	require.Nil(t, appErr)
+	assert.False(t, contains(withoutFlag, channelField.ID),
+		"channel field must not appear without a channel scope or the flag")
 }
 
 // Verify that the team join path (channelID="") produces a subject with no
@@ -5456,7 +5498,7 @@ func TestGetAccessControlFieldsAutocompleteNativeAttributes(t *testing.T) {
 
 	t.Run("first page prepends native attributes", func(t *testing.T) {
 		// The API maps an empty first page to a 26-zero sentinel cursor.
-		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", strings.Repeat("0", 26), 50, anonymousCallerId)
+		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", false, strings.Repeat("0", 26), 50, anonymousCallerId)
 		require.Nil(t, appErr)
 
 		seen := map[string]bool{}
@@ -5474,7 +5516,7 @@ func TestGetAccessControlFieldsAutocompleteNativeAttributes(t *testing.T) {
 	})
 
 	t.Run("subsequent pages omit native attributes", func(t *testing.T) {
-		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", cpaField.ID, 50, anonymousCallerId)
+		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", false, cpaField.ID, 50, anonymousCallerId)
 		require.Nil(t, appErr)
 		for _, f := range fields {
 			isNative, _ := f.Attrs[model.NativeAttributeAttrMarker].(bool)
