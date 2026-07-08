@@ -6394,12 +6394,17 @@ func testPostStoreGetPostsExcludeMembershipSystemPosts(t *testing.T, rctx reques
 	require.NoError(t, err)
 
 	userID := model.NewId()
+	now := model.GetMillis()
 
+	// Explicit, strictly increasing CreateAt values so GetPostsBefore's
+	// "CreateAt < anchor's CreateAt" predicate is deterministic even when
+	// the saves land in the same millisecond on fast hardware.
 	membershipPost, err := ss.Post().Save(rctx, &model.Post{
 		ChannelId: channel.Id,
 		UserId:    userID,
 		Message:   "joined",
 		Type:      model.PostTypeJoinChannel,
+		CreateAt:  now,
 	})
 	require.NoError(t, err)
 
@@ -6407,6 +6412,7 @@ func testPostStoreGetPostsExcludeMembershipSystemPosts(t *testing.T, rctx reques
 		ChannelId: channel.Id,
 		UserId:    userID,
 		Message:   "hello",
+		CreateAt:  now + 1,
 	})
 	require.NoError(t, err)
 
