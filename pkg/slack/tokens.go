@@ -19,9 +19,9 @@ import (
 // per-workspace Slack bot token, the per-user refresh token) compose this - one
 // HTTP path, two subjects.
 //
-//	PUT    POST   /v1/kms/orgs/{org}/secrets            {path,name,value}
-//	GET    GET    /v1/kms/orgs/{org}/secrets/{path}/{name}
-//	DELETE DELETE /v1/kms/orgs/{org}/secrets/{path}/{name}
+//	PUT    POST   /v1/kms/orgs/{org}/secrets            {path,name,env,value}
+//	GET    GET    /v1/kms/orgs/{org}/secrets/{path}/{name}?env=
+//	DELETE DELETE /v1/kms/orgs/{org}/secrets/{path}/{name}?env=
 //
 // Tenant isolation is the {org} in the path - the KMS bearer (team-go's machine
 // identity) is authorized per-org by KMS's own RBAC.
@@ -39,12 +39,20 @@ func newKMS(base, bearer string) *kmsClient {
 	}
 }
 
+// kmsEnv is the KMS environment these Slack tokens live under. KMS keys every
+// record by {path}/{env}/{name} and now REQUIRES env on writes (a silent
+// default is refused). These tokens were historically written/read with env
+// omitted — i.e. the server's old "default" bucket — so we pin the explicit
+// "default" here to keep reading the exact same records (no data move) while
+// satisfying the required-env write contract. Both put and get pass it.
+const kmsEnv = "default"
+
 // put upserts a secret value under (org, path, name).
 func (k *kmsClient) put(ctx context.Context, org, path, name, value string) error {
 	if k.base == "" || k.bearer == "" {
 		return fmt.Errorf("slack: KMS not configured (KMS_ENDPOINT/HANZO_API_KEY)")
 	}
-	body, _ := json.Marshal(map[string]string{"path": path, "name": name, "value": value})
+	body, _ := json.Marshal(map[string]string{"path": path, "name": name, "env": kmsEnv, "value": value})
 	u := k.base + "/v1/kms/orgs/" + url.PathEscape(org) + "/secrets"
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, u, bytes.NewReader(body))
 	if err != nil {
@@ -71,7 +79,7 @@ func (k *kmsClient) get(ctx context.Context, org, path, name string) (string, bo
 		return "", false, fmt.Errorf("slack: KMS not configured")
 	}
 	u := k.base + "/v1/kms/orgs/" + url.PathEscape(org) + "/secrets/" +
-		url.PathEscape(path) + "/" + url.PathEscape(name)
+		url.PathEscape(path) + "/" + url.PathEscape(name) + "?env=" + url.QueryEscape(kmsEnv)
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u, nil)
 	if err != nil {
 		return "", false, err
@@ -115,7 +123,7 @@ func (k *kmsClient) del(ctx context.Context, org, path, name string) error {
 		return fmt.Errorf("slack: KMS not configured")
 	}
 	u := k.base + "/v1/kms/orgs/" + url.PathEscape(org) + "/secrets/" +
-		url.PathEscape(path) + "/" + url.PathEscape(name)
+		url.PathEscape(path) + "/" + url.PathEscape(name) + "?env=" + url.QueryEscape(kmsEnv)
 	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, u, nil)
 	if err != nil {
 		return err
