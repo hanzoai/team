@@ -9547,6 +9547,22 @@
     "translation": "Unable to get the users batch for indexing."
   },
   {
+    "id": "app.user.migrate_auth_to_email.conflicting_users.app_error",
+    "translation": "Cannot specify both all users and a list of user IDs."
+  },
+  {
+    "id": "app.user.migrate_auth_to_email.get_users.app_error",
+    "translation": "Unable to get users for auth migration."
+  },
+  {
+    "id": "app.user.migrate_auth_to_email.invalid_from.app_error",
+    "translation": "Invalid authentication service to migrate from."
+  },
+  {
+    "id": "app.user.migrate_auth_to_email.missing_users.app_error",
+    "translation": "Must specify either all users or a list of user IDs."
+  },
+  {
     "id": "app.user.missing_account.const",
     "translation": "Unable to find the user."
   },

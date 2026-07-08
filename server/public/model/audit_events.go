@@ -470,6 +470,7 @@ const (
 	AuditEventMarkTeamRead                       = "markFullTeamRead"                   // user marked an entire team as read
 	AuditEventMigrateAuthToLdap                  = "migrateAuthToLdap"                  // migrate user authentication method to LDAP
 	AuditEventMigrateAuthToSaml                  = "migrateAuthToSaml"                  // migrate user authentication method to SAML
+	AuditEventMigrateAuthToEmail                 = "migrateAuthToEmail"                 // migrate user authentication method to email
 	AuditEventPatchUser                          = "patchUser"                          // update user properties
 	AuditEventPromoteGuestToUser                 = "promoteGuestToUser"                 // promote guest account to regular user
 	AuditEventResetPassword                      = "resetPassword"                      // reset user password

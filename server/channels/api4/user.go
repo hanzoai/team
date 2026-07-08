@@ -101,6 +101,7 @@ func (api *API) InitUser() {
 
 	api.BaseRoutes.Users.Handle("/migrate_auth/ldap", api.APISessionRequired(migrateAuthToLDAP)).Methods(http.MethodPost)
 	api.BaseRoutes.Users.Handle("/migrate_auth/saml", api.APISessionRequired(migrateAuthToSaml)).Methods(http.MethodPost)
+	api.BaseRoutes.Users.Handle("/migrate_auth/email", api.APISessionRequired(migrateAuthToEmail)).Methods(http.MethodPost)
 
 	api.BaseRoutes.User.Handle("/uploads", api.APISessionRequired(getUploadsForUser)).Methods(http.MethodGet)
 	api.BaseRoutes.User.Handle("/channel_members", api.APISessionRequired(getChannelMembersForUser)).Methods(http.MethodGet)
@@ -3813,6 +3814,52 @@ func migrateAuthToSaml(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	auditRec.Success()
 	ReturnStatusOK(w)
+}
+
+func migrateAuthToEmail(c *Context, w http.ResponseWriter, r *http.Request) {
+	type MigrateAuthToEmailParams struct {
+		From             string   `json:"from"`
+		UserIDs          []string `json:"user_ids"`
+		All              bool     `json:"all"`
+		SendResetEmail   bool     `json:"send_reset_email"`
+		DryRun           bool     `json:"dry_run"`
+	}
+
+	var params MigrateAuthToEmailParams
+	if jsonErr := json.NewDecoder(r.Body).Decode(&params); jsonErr != nil {
+		c.SetInvalidParamWithErr("body", jsonErr)
+		return
+	}
+
+	auditRec := c.MakeAuditRecord(model.AuditEventMigrateAuthToEmail, model.AuditStatusFail)
+	defer c.LogAuditRec(auditRec)
+	model.AddEventParameterToAuditRec(auditRec, "from", params.From)
+	model.AddEventParameterToAuditRec(auditRec, "user_ids", params.UserIDs)
+	model.AddEventParameterToAuditRec(auditRec, "all", params.All)
+	model.AddEventParameterToAuditRec(auditRec, "send_reset_email", params.SendResetEmail)
+	model.AddEventParameterToAuditRec(auditRec, "dry_run", params.DryRun)
+
+	if !c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionManageSystem) {
+		c.SetPermissionError(model.PermissionManageSystem)
+		return
+	}
+
+	numAffected, appErr := c.App.MigrateAuthToEmail(c.AppContext, params.From, params.UserIDs, params.All, params.SendResetEmail, params.DryRun)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	auditRec.Success()
+	auditRec.AddMeta("num_affected", numAffected)
+
+	if err := json.NewEncoder(w).Encode(struct {
+		NumAffected int `json:"num_affected"`
+	}{
+		NumAffected: numAffected,
+	}); err != nil {
+		c.Logger.Warn("Error while writing response", mlog.Err(err))
+	}
 }
 
 func getThreadForUser(c *Context, w http.ResponseWriter, r *http.Request) {

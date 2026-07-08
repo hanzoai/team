@@ -48,6 +48,7 @@ func (api *API) InitUserLocal() {
 
 	api.BaseRoutes.Users.Handle("/migrate_auth/ldap", api.APILocal(migrateAuthToLDAP)).Methods(http.MethodPost)
 	api.BaseRoutes.Users.Handle("/migrate_auth/saml", api.APILocal(migrateAuthToSaml)).Methods(http.MethodPost)
+	api.BaseRoutes.Users.Handle("/migrate_auth/email", api.APILocal(migrateAuthToEmail)).Methods(http.MethodPost)
 
 	api.BaseRoutes.User.Handle("/uploads", api.APILocal(localGetUploadsForUser)).Methods(http.MethodGet)
 }
