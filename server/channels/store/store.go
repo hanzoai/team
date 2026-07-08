@@ -831,12 +831,15 @@ type JobStore interface {
 	// matching job already exists (or a concurrent insert wins the serializable
 	// transaction), nil, nil is returned.
 	SaveOnce(job *model.Job, dedupeData map[string]string) (*model.Job, error)
-	// AppendToJobDataCSV atomically adds value to the comma-separated set stored
-	// at Data[key] of the pending/in-progress job with the given id, deduping so
-	// the value appears at most once. It is a no-op when the value is already
-	// present or the job is not pending/in-progress. Done in a single UPDATE, so
-	// there is no read-modify-write race between concurrent callers.
-	AppendToJobDataCSV(jobID, key, value string) error
+	// PatchJobData atomically merges data into a job's Data map. Within a
+	// serializable transaction it reads the current Data, calls mergeFn(existing,
+	// patch) to compute the new Data, and writes the result back. Concurrent
+	// patches to the same job surface as serialization failures and are retried by
+	// the retry layer rather than lost, so mergeFn MUST be a pure function of its
+	// inputs (it may be re-invoked on retry). The patch is applied regardless of
+	// the job's status. Returns the persisted Data, or nil if the job does not
+	// exist (a no-op).
+	PatchJobData(jobID string, patch model.StringMap, mergeFn model.StringMapMerger) (model.StringMap, error)
 	UpdateOptimistically(job *model.Job, currentStatus string) (bool, error)
 	UpdateStatus(id string, status string) (*model.Job, error)
 	UpdateStatusOptimistically(id string, currentStatus string, newStatus string) (*model.Job, error)

@@ -15,24 +15,6 @@ type JobStore struct {
 	mock.Mock
 }
 
-// AppendToJobDataCSV provides a mock function with given fields: jobID, key, value
-func (_m *JobStore) AppendToJobDataCSV(jobID string, key string, value string) error {
-	ret := _m.Called(jobID, key, value)
-
-	if len(ret) == 0 {
-		panic("no return value specified for AppendToJobDataCSV")
-	}
-
-	var r0 error
-	if rf, ok := ret.Get(0).(func(string, string, string) error); ok {
-		r0 = rf(jobID, key, value)
-	} else {
-		r0 = ret.Error(0)
-	}
-
-	return r0
-}
-
 // Cleanup provides a mock function with given fields: expiryTime, batchSize
 func (_m *JobStore) Cleanup(expiryTime int64, batchSize int) error {
 	ret := _m.Called(expiryTime, batchSize)
@@ -407,6 +389,36 @@ func (_m *JobStore) GetNewestJobByStatusesAndType(statuses []string, jobType str
 
 	if rf, ok := ret.Get(1).(func([]string, string) error); ok {
 		r1 = rf(statuses, jobType)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// PatchJobData provides a mock function with given fields: jobID, patch, mergeFn
+func (_m *JobStore) PatchJobData(jobID string, patch model.StringMap, mergeFn model.StringMapMerger) (model.StringMap, error) {
+	ret := _m.Called(jobID, patch, mergeFn)
+
+	if len(ret) == 0 {
+		panic("no return value specified for PatchJobData")
+	}
+
+	var r0 model.StringMap
+	var r1 error
+	if rf, ok := ret.Get(0).(func(string, model.StringMap, model.StringMapMerger) (model.StringMap, error)); ok {
+		return rf(jobID, patch, mergeFn)
+	}
+	if rf, ok := ret.Get(0).(func(string, model.StringMap, model.StringMapMerger) model.StringMap); ok {
+		r0 = rf(jobID, patch, mergeFn)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(model.StringMap)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(string, model.StringMap, model.StringMapMerger) error); ok {
+		r1 = rf(jobID, patch, mergeFn)
 	} else {
 		r1 = ret.Error(1)
 	}

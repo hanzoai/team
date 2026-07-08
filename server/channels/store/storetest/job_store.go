@@ -5,6 +5,9 @@ package storetest
 
 import (
 	"errors"
+	"maps"
+	"slices"
+	"strings"
 	"sync"
 	"testing"
 	"time"
@@ -21,7 +24,7 @@ func TestJobStore(t *testing.T, rctx request.CTX, ss store.Store) {
 	t.Run("JobSaveGet", func(t *testing.T) { testJobSaveGet(t, rctx, ss) })
 	t.Run("JobSaveOnce", func(t *testing.T) { testJobSaveOnce(t, rctx, ss) })
 	t.Run("JobSaveOnceWithData", func(t *testing.T) { testJobSaveOnceWithData(t, rctx, ss) })
-	t.Run("JobAppendToJobDataCSV", func(t *testing.T) { testJobAppendToJobDataCSV(t, rctx, ss) })
+	t.Run("JobPatchJobData", func(t *testing.T) { testJobPatchJobData(t, rctx, ss) })
 	t.Run("JobGetAllByType", func(t *testing.T) { testJobGetAllByType(t, rctx, ss) })
 	t.Run("JobGetAllByTypeAndStatus", func(t *testing.T) { testJobGetAllByTypeAndStatus(t, rctx, ss) })
 	t.Run("JobGetAllByTypePage", func(t *testing.T) { testJobGetAllByTypePage(t, rctx, ss) })
@@ -147,9 +150,11 @@ func testJobSaveOnceWithData(t *testing.T, rctx request.CTX, ss store.Store) {
 	ss.Job().Delete(otherPostJob.Id)
 }
 
-// testJobAppendToJobDataCSV verifies the atomic comma-separated-set append.
-func testJobAppendToJobDataCSV(t *testing.T, rctx request.CTX, ss store.Store) {
-	save := func(status string, data map[string]string) *model.Job {
+// testJobPatchJobData verifies PatchJobData's read-merge-write contract: the merge
+// callback sees the job's current Data and its result is persisted, the patch applies
+// regardless of job status, and a missing job is a no-op.
+func testJobPatchJobData(t *testing.T, rctx request.CTX, ss store.Store) {
+	save := func(status string, data model.StringMap) *model.Job {
 		job := &model.Job{Id: model.NewId(), Type: model.NewId(), Status: status, CreateAt: model.GetMillis(), Data: data}
 		_, err := ss.Job().Save(job)
 		require.NoError(t, err)
@@ -161,34 +166,66 @@ func testJobAppendToJobDataCSV(t *testing.T, rctx request.CTX, ss store.Store) {
 		return j
 	}
 
-	t.Run("appends a new value", func(t *testing.T) {
-		job := save(model.JobStatusPending, map[string]string{"requested_by": "userA"})
+	// overwrite copies every patch key onto existing (the progress-update merge).
+	overwrite := func(existing, patch model.StringMap) model.StringMap {
+		maps.Copy(existing, patch)
+		return existing
+	}
+	// unionCSV appends patch["requested_by"] to existing's comma-separated set,
+	// deduped by whole entry (the requester-accumulation merge).
+	unionCSV := func(existing, patch model.StringMap) model.StringMap {
+		cur, add := existing["requested_by"], patch["requested_by"]
+		switch {
+		case add == "":
+		case cur == "":
+			existing["requested_by"] = add
+		case !slices.Contains(strings.Split(cur, ","), add):
+			existing["requested_by"] = cur + "," + add
+		}
+		return existing
+	}
+
+	t.Run("merge sees existing data and persists the result", func(t *testing.T) {
+		job := save(model.JobStatusInProgress, model.StringMap{"post_id": "p1"})
 		defer ss.Job().Delete(job.Id)
-		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB"))
-		require.Equal(t, "userA,userB", get(job.Id).Data["requested_by"])
+
+		merged, err := ss.Job().PatchJobData(job.Id, model.StringMap{"records_copied": "5"}, overwrite)
+		require.NoError(t, err)
+		require.Equal(t, "5", merged["records_copied"])
+		require.Equal(t, "p1", merged["post_id"], "untouched keys are preserved")
+
+		got := get(job.Id)
+		require.Equal(t, "5", got.Data["records_copied"])
+		require.Equal(t, "p1", got.Data["post_id"])
 	})
 
-	t.Run("dedupes an already-present value (no substring false match)", func(t *testing.T) {
-		job := save(model.JobStatusInProgress, map[string]string{"requested_by": "userA"})
+	t.Run("CSV-union merge accumulates and dedupes by whole entry", func(t *testing.T) {
+		job := save(model.JobStatusPending, model.StringMap{"requested_by": "userA"})
 		defer ss.Job().Delete(job.Id)
-		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB"))
-		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB")) // duplicate
-		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "user"))  // substring of userA/userB
+
+		_, err := ss.Job().PatchJobData(job.Id, model.StringMap{"requested_by": "userB"}, unionCSV)
+		require.NoError(t, err)
+		_, err = ss.Job().PatchJobData(job.Id, model.StringMap{"requested_by": "userB"}, unionCSV) // duplicate
+		require.NoError(t, err)
+		_, err = ss.Job().PatchJobData(job.Id, model.StringMap{"requested_by": "user"}, unionCSV) // substring, distinct entry
+		require.NoError(t, err)
+
 		require.Equal(t, "userA,userB,user", get(job.Id).Data["requested_by"])
 	})
 
-	t.Run("sets the value when the key is absent", func(t *testing.T) {
-		job := save(model.JobStatusPending, map[string]string{})
+	t.Run("patches a job regardless of status", func(t *testing.T) {
+		job := save(model.JobStatusSuccess, model.StringMap{"requested_by": "userA"})
 		defer ss.Job().Delete(job.Id)
-		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userA"))
-		require.Equal(t, "userA", get(job.Id).Data["requested_by"])
+
+		_, err := ss.Job().PatchJobData(job.Id, model.StringMap{"requested_by": "userB"}, unionCSV)
+		require.NoError(t, err)
+		require.Equal(t, "userA,userB", get(job.Id).Data["requested_by"], "a finished job is patched too")
 	})
 
-	t.Run("is a no-op for a non-pending/in-progress job", func(t *testing.T) {
-		job := save(model.JobStatusSuccess, map[string]string{"requested_by": "userA"})
-		defer ss.Job().Delete(job.Id)
-		require.NoError(t, ss.Job().AppendToJobDataCSV(job.Id, "requested_by", "userB"))
-		require.Equal(t, "userA", get(job.Id).Data["requested_by"], "finished jobs are not modified")
+	t.Run("a missing job is a no-op", func(t *testing.T) {
+		merged, err := ss.Job().PatchJobData(model.NewId(), model.StringMap{"requested_by": "userA"}, unionCSV)
+		require.NoError(t, err)
+		require.Nil(t, merged)
 	})
 }
 

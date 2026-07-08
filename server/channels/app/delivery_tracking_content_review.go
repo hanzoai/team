@@ -5,6 +5,7 @@ package app
 
 import (
 	"net/http"
+	"slices"
 	"strings"
 
 	"github.com/mattermost/mattermost/server/public/model"
@@ -46,12 +47,34 @@ func (a *App) CreateDeliveryTrackingContentReviewJob(rctx request.CTX, postID, t
 		return nil, appErr
 	}
 
-	if !strings.Contains(job.Data[jobDataKeyRequestedBy], requestedBy) {
-		if err := a.Srv().Store().Job().AppendToJobDataCSV(job.Id, jobDataKeyRequestedBy, requestedBy); err != nil {
-			rctx.Logger().Warn("Failed to record content-review requester on job",
-				mlog.String("job_id", job.Id), mlog.String("user_id", requestedBy), mlog.Err(err))
-		}
+	merged, err := a.Srv().Store().Job().PatchJobData(job.Id, model.StringMap{jobDataKeyRequestedBy: requestedBy}, mergeRequestedBy)
+	if err != nil {
+		rctx.Logger().Warn("Failed to record content-review requester on job",
+			mlog.String("job_id", job.Id), mlog.String("user_id", requestedBy), mlog.Err(err))
+	} else if merged != nil {
+		job.Data = merged
 	}
 
 	return job, nil
+}
+
+// mergeRequestedBy adds the requester carried in patch to the requested_by CSV set
+// of existing. It is a pure function of its inputs so it is safe to re-run on a
+// serializable-transaction retry.
+func mergeRequestedBy(existing, patch model.StringMap) model.StringMap {
+	existing[jobDataKeyRequestedBy] = appendToCSVSet(existing[jobDataKeyRequestedBy], patch[jobDataKeyRequestedBy])
+	return existing
+}
+
+func appendToCSVSet(csv, value string) string {
+	if value == "" {
+		return csv
+	}
+	if csv == "" {
+		return value
+	}
+	if slices.Contains(strings.Split(csv, ","), value) {
+		return csv
+	}
+	return csv + "," + value
 }

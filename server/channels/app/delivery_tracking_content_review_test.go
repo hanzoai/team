@@ -95,3 +95,39 @@ func TestCreateDeliveryTrackingContentReviewJob(t *testing.T) {
 		require.ElementsMatch(t, []string{th.BasicUser.Id, th.BasicUser2.Id}, strings.Split(refetched.Data["requested_by"], ","))
 	})
 }
+
+func TestAppendToCSVSet(t *testing.T) {
+	tests := []struct {
+		name       string
+		csv, value string
+		want       string
+	}{
+		{"empty csv seeds the value", "", "userA", "userA"},
+		{"appends a new value", "userA", "userB", "userA,userB"},
+		{"dedupes an existing value", "userA,userB", "userB", "userA,userB"},
+		{"a substring is a distinct entry", "userA,userB", "user", "userA,userB,user"},
+		{"empty value is a no-op", "userA", "", "userA"},
+		{"empty value and empty csv", "", "", ""},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			require.Equal(t, tc.want, appendToCSVSet(tc.csv, tc.value))
+		})
+	}
+}
+
+func TestMergeRequestedBy(t *testing.T) {
+	// The requester in patch is folded into existing's requested_by set; other keys
+	// are preserved.
+	merged := mergeRequestedBy(
+		model.StringMap{"post_id": "p1", jobDataKeyRequestedBy: "userA"},
+		model.StringMap{jobDataKeyRequestedBy: "userB"},
+	)
+	require.Equal(t, "userA,userB", merged[jobDataKeyRequestedBy])
+	require.Equal(t, "p1", merged["post_id"], "unrelated keys are preserved")
+
+	// Re-running with an already-present requester is a no-op, so it is safe for the
+	// serializable transaction to retry the merge.
+	merged = mergeRequestedBy(merged, model.StringMap{jobDataKeyRequestedBy: "userB"})
+	require.Equal(t, "userA,userB", merged[jobDataKeyRequestedBy])
+}

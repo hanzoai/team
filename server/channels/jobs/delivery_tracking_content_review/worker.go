@@ -6,6 +6,7 @@ package delivery_tracking_content_review
 import (
 	"context"
 	"errors"
+	"maps"
 	"net/http"
 	"strconv"
 	"sync/atomic"
@@ -148,12 +149,19 @@ func (worker *Worker) DoJob(job *model.Job) {
 		}
 	}
 
-	// onProgress persists the running count. SetJobSuccess only writes status
-	// (not Data), so UpdateInProgressJobData is what makes records_copied durable.
+	// onProgress persists the running count. SetJobSuccess only writes status (not
+	// Data), so PatchJobData is what makes records_copied durable. Unlike a full-Data
+	// overwrite (UpdateInProgressJobData), PatchJobData merges under a serializable
+	// transaction, so a reviewer appended to requested_by concurrently is preserved
+	// rather than clobbered. The returned map refreshes our snapshot with any such
+	// concurrent additions.
 	onProgress := func(copied int) error {
-		job.Data["records_copied"] = strconv.Itoa(copied)
-		if appErr := worker.jobServer.UpdateInProgressJobData(job); appErr != nil {
-			return appErr
+		merged, err := worker.store.Job().PatchJobData(job.Id, model.StringMap{"records_copied": strconv.Itoa(copied)}, overwriteJobData)
+		if err != nil {
+			return err
+		}
+		if merged != nil {
+			job.Data = merged
 		}
 		return nil
 	}
@@ -188,6 +196,18 @@ func (worker *Worker) DoJob(job *model.Job) {
 
 	logger.Info("Worker: Job is complete", mlog.Int("records_copied", copied))
 	worker.setJobSuccess(logger, job)
+}
+
+// overwriteJobData is the merge used for progress updates: it copies every key of
+// patch onto existing, leaving all other keys (e.g. requested_by) untouched. It is a
+// pure function of its inputs, so PatchJobData may safely re-run it on a
+// serializable-transaction retry.
+func overwriteJobData(existing, patch model.StringMap) model.StringMap {
+	if existing == nil {
+		existing = model.StringMap{}
+	}
+	maps.Copy(existing, patch)
+	return existing
 }
 
 // copyPostDeliveries copies every source delivery row for postID into the review

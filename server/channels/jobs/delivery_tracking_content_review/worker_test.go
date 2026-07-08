@@ -277,8 +277,9 @@ func TestDoJob(t *testing.T) {
 		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, postID, mock.Anything, mock.Anything).Return(rows, nil).Once()
 		mockStore.UserPostDeliveryContentReviewStore.On("SaveBatch", mock.Anything, mock.Anything, job.Id).Return(nil).Once()
 
-		// onProgress persists the running count via UpdateInProgressJobData.
-		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(true, nil)
+		// onProgress persists the running count via PatchJobData; the returned map
+		// (carrying records_copied) refreshes the worker's in-memory job.Data.
+		mockStore.JobStore.On("PatchJobData", job.Id, mock.Anything, mock.Anything).Return(model.StringMap{"post_id": postID, "records_copied": "3"}, nil)
 		mockStore.JobStore.On("UpdateStatus", job.Id, model.JobStatusSuccess).Return(job, nil).Once()
 		// The cancellation watcher polls Get only after a multi-second interval, so
 		// a fast job usually never reads it; allow it for slow CI runs.

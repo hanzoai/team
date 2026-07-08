@@ -7145,27 +7145,6 @@ func (s *RetryLayerGroupStore) UpsertMembers(groupID string, userIDs []string) (
 
 }
 
-func (s *RetryLayerJobStore) AppendToJobDataCSV(jobID string, key string, value string) error {
-
-	tries := 0
-	for {
-		err := s.JobStore.AppendToJobDataCSV(jobID, key, value)
-		if err == nil {
-			return nil
-		}
-		if !isRepeatableError(err) {
-			return err
-		}
-		tries++
-		if tries >= 3 {
-			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
-			return err
-		}
-		timepkg.Sleep(100 * timepkg.Millisecond)
-	}
-
-}
-
 func (s *RetryLayerJobStore) Cleanup(expiryTime int64, batchSize int) error {
 
 	tries := 0
@@ -7423,6 +7402,27 @@ func (s *RetryLayerJobStore) GetNewestJobByStatusesAndType(statuses []string, jo
 	tries := 0
 	for {
 		result, err := s.JobStore.GetNewestJobByStatusesAndType(statuses, jobType)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
+func (s *RetryLayerJobStore) PatchJobData(jobID string, patch model.StringMap, mergeFn model.StringMapMerger) (model.StringMap, error) {
+
+	tries := 0
+	for {
+		result, err := s.JobStore.PatchJobData(jobID, patch, mergeFn)
 		if err == nil {
 			return result, nil
 		}

@@ -133,6 +133,12 @@ func (sa *StringArray) Scan(value any) error {
 	return errors.New("received value is neither a byte slice nor string")
 }
 
+// StringMapMerger computes a new StringMap from an existing map and a patch. It lets
+// callers of JobStore.PatchJobData control how patch data is combined with a job's
+// current Data. Implementations MUST be pure functions of their inputs, as they may be
+// re-invoked when a serializable transaction is retried.
+type StringMapMerger func(existing, patch StringMap) StringMap
+
 // Scan converts database column value to StringMap
 func (m *StringMap) Scan(value any) error {
 	if value == nil {

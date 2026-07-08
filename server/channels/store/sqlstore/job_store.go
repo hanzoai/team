@@ -149,26 +149,75 @@ func (jss SqlJobStore) SaveOnce(job *model.Job, dedupeData map[string]string) (*
 	return job, nil
 }
 
-// AppendToJobDataCSV atomically adds value to the comma-separated set at
-// Data[key] of the pending/in-progress job. The membership guard in the WHERE
-// clause makes it a no-op when value is already present (array containment, not
-// substring, so "ab" never matches "abc"); jsonb_set writes the appended CSV
-// otherwise. A single UPDATE, so concurrent callers cannot lose an append.
-func (jss SqlJobStore) AppendToJobDataCSV(jobID, key, value string) error {
-	if _, err := jss.GetMaster().Exec(
-		`UPDATE Jobs
-		 SET Data = jsonb_set(
-		     COALESCE(Data, '{}'::jsonb),
-		     ARRAY[$1],
-		     to_jsonb(CASE WHEN COALESCE(Data->>$1, '') = '' THEN $2::text
-		                   ELSE (Data->>$1) || ',' || $2 END))
-		 WHERE Id = $3
-		   AND Status IN ($4, $5)
-		   AND NOT (string_to_array(COALESCE(Data->>$1, ''), ',') @> ARRAY[$2]::text[])`,
-		key, value, jobID, model.JobStatusPending, model.JobStatusInProgress); err != nil {
-		return errors.Wrapf(err, "failed to append to job Data CSV for job_id=%s key=%s", jobID, key)
+// PatchJobData merges data into a job's Data map under a serializable transaction:
+// it reads the current Data, calls mergeFn(existing, patch) to compute the new Data,
+// and writes the result back (also bumping LastActivityAt). Because the transaction is
+// serializable, a concurrent patch to the same row aborts with a serialization error
+// that the retry layer re-runs against the committed value rather than silently losing
+// an update; mergeFn must therefore be a pure function of its inputs. It returns the
+// persisted Data, or nil if the job does not exist (a no-op).
+func (jss SqlJobStore) PatchJobData(jobID string, patch model.StringMap, mergeFn model.StringMapMerger) (model.StringMap, error) {
+	tx, err := jss.GetMaster().BeginWithIsolation(&sql.TxOptions{
+		Isolation: sql.LevelSerializable,
+	})
+	if err != nil {
+		return nil, errors.Wrap(err, "begin_transaction")
 	}
-	return nil
+	defer finalizeTransactionX(tx, &err)
+
+	query, args, err := jss.getQueryBuilder().
+		Select("Data").
+		From("Jobs").
+		Where(sq.Eq{"Id": jobID}).
+		ToSql()
+	if err != nil {
+		return nil, errors.Wrap(err, "job_tosql")
+	}
+
+	existing := model.StringMap{}
+	if err = tx.Get(&existing, query, args...); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			// No such job: nothing to patch. The deferred finalize rolls back the
+			// read-only transaction.
+			return nil, nil
+		}
+		return nil, errors.Wrapf(err, "failed to get data for job_id=%s", jobID)
+	}
+	if existing == nil {
+		// The job's Data column was JSON null; start from an empty map so mergeFn
+		// can write into it without panicking.
+		existing = model.StringMap{}
+	}
+
+	merged := mergeFn(existing, patch)
+
+	jsonData, err := json.Marshal(merged)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed marshalling merged job data")
+	}
+	if jss.IsBinaryParamEnabled() {
+		jsonData = AppendBinaryFlag(jsonData)
+	}
+
+	query, args, err = jss.getQueryBuilder().
+		Update("Jobs").
+		Set("Data", jsonData).
+		Set("LastActivityAt", model.GetMillis()).
+		Where(sq.Eq{"Id": jobID}).
+		ToSql()
+	if err != nil {
+		return nil, errors.Wrap(err, "job_tosql")
+	}
+
+	if _, err = tx.Exec(query, args...); err != nil {
+		return nil, errors.Wrapf(err, "failed to patch data for job_id=%s", jobID)
+	}
+
+	if err = tx.Commit(); err != nil {
+		return nil, errors.Wrap(err, "commit_transaction")
+	}
+
+	return merged, nil
 }
 
 func (jss SqlJobStore) UpdateOptimistically(job *model.Job, currentStatus string) (bool, error) {
