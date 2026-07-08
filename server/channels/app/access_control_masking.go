@@ -39,44 +39,48 @@ func (a *App) GetMaskedVisualAST(rctx request.CTX, expression string, callerID s
 	// Embed callerID in context so GetPropertyFieldByName applies per-caller option filtering.
 	rctxWithCaller := RequestContextWithCallerID(rctx, callerID)
 
-	// Pre-fetch all referenced fields once to avoid N+1 DB queries across conditions.
-	fieldsByName := a.fetchConditionFields(rctxWithCaller, visualAST.Conditions, cpaGroupID)
+	// Pre-fetch the holdings-bearing field for each referenced condition once to
+	// avoid N+1 DB queries across conditions.
+	fieldsByKey := a.fetchConditionFields(rctxWithCaller, visualAST.Conditions, cpaGroupID)
 
 	for i := range visualAST.Conditions {
-		a.maskConditionValues(rctxWithCaller, callerID, &visualAST.Conditions[i], cpaGroupID, fieldsByName)
+		a.maskConditionValues(rctxWithCaller, callerID, &visualAST.Conditions[i], cpaGroupID, fieldsByKey)
 	}
 
 	return visualAST, nil
 }
 
-// fetchConditionFields collects unique field names from conditions and fetches each once.
-// Lookup failures are logged and omitted from the returned map; read-path callers treat
-// missing entries as fail-closed (mask the value). Write-path callers should additionally
-// call requireAllFieldsResolved to refuse to proceed when any referenced field is missing.
+// fetchConditionFields collects the unique CPA references from conditions and
+// fetches, for each, the field whose per-caller holdings determine its
+// visibility (the user field itself, or a channel field's user-side sibling —
+// see holdingsFieldFor). The map is keyed by "<objectType>/<fieldName>" so a
+// user and a channel reference sharing a name resolve independently. Lookup
+// failures are logged and omitted; read-path callers treat missing entries as
+// fail-closed (mask the value).
 func (a *App) fetchConditionFields(rctx request.CTX, conditions []model.Condition, cpaGroupID string) map[string]*model.PropertyField {
-	seen := make(map[string]bool)
+	type ref struct{ objectType, fieldName string }
+	seen := make(map[ref]struct{})
 	for _, c := range conditions {
 		if c.ValueType == model.AttrValue {
 			continue
 		}
-		if name := extractFieldName(c.Attribute); name != "" {
-			seen[name] = true
+		if objectType, fieldName, ok := splitCPAAttribute(c.Attribute); ok {
+			seen[ref{objectType, fieldName}] = struct{}{}
 		}
 	}
 
 	fields := make(map[string]*model.PropertyField, len(seen))
-	for name := range seen {
-		// Scope to user CPA fields so a name shared across object types in this
-		// group resolves deterministically.
-		field, appErr := a.GetPropertyFieldByNameForObjectType(rctx, cpaGroupID, "", model.PropertyFieldObjectTypeUser, name)
+	for r := range seen {
+		field, appErr := a.holdingsFieldFor(rctx, cpaGroupID, r.objectType, r.fieldName)
 		if appErr != nil {
 			rctx.Logger().Warn("Failed to look up field for masking, failing closed",
-				mlog.String("field_name", name),
+				mlog.String("object_type", r.objectType),
+				mlog.String("field_name", r.fieldName),
 				mlog.Err(appErr),
 			)
 			continue
 		}
-		fields[name] = field
+		fields[r.objectType+"/"+r.fieldName] = field
 	}
 	return fields
 }
@@ -113,61 +117,58 @@ func (r *appMaskingResolver) Resolve(objectType, fieldName string) (*model.Maski
 		return info, nil
 	}
 
-	var (
-		info   *model.MaskingFieldInfo
-		appErr *model.AppError
-	)
-	if objectType == model.PropertyFieldObjectTypeChannel {
-		info, appErr = r.resolveChannelField(fieldName)
-	} else {
-		// User (and any unexpected object type) resolves against the user CPA
-		// schema.
-		field, err := r.app.GetPropertyFieldByNameForObjectType(r.rctxWithCaller, r.cpaGroupID, "", model.PropertyFieldObjectTypeUser, fieldName)
-		if err != nil {
-			return nil, err
-		}
-		info = r.fieldToMaskingInfo(field)
-	}
+	field, appErr := r.app.holdingsFieldFor(r.rctxWithCaller, r.cpaGroupID, objectType, fieldName)
 	if appErr != nil {
 		return nil, appErr
 	}
+	info := r.fieldToMaskingInfo(field)
 	r.cache[cacheKey] = info
 	return info, nil
 }
 
-// resolveChannelField builds masking info for a resource.attributes.<fieldName>
-// reference. A channel attribute is masked by whether the caller holds the
-// value, but users never hold channel-side values directly. User and channel
-// CPA fields that link to the same template share identical option IDs and an
-// inherited access mode, so the caller's holdings come from the user-side field
-// linked to the same template. We resolve that sibling and reuse its per-caller
-// masking info. When the channel field is unlinked or has no user sibling we
-// fall back to its own info, which for shared_only yields no visible values
-// (the caller holds nothing channel-side) — the fail-closed direction.
-func (r *appMaskingResolver) resolveChannelField(fieldName string) (*model.MaskingFieldInfo, *model.AppError) {
-	chField, appErr := r.app.GetPropertyFieldByNameForObjectType(r.rctxWithCaller, r.cpaGroupID, "", model.PropertyFieldObjectTypeChannel, fieldName)
+// holdingsFieldFor returns the CPA field whose per-caller values determine the
+// visibility of a reference to (objectType, fieldName), fetched with caller
+// context so its options are already filtered to the caller's holdings.
+//
+// For a user field that is the field itself. For a channel field it is the
+// user-side field linked to the same template: a channel attribute is masked by
+// whether the caller holds the value, but users never hold channel-side values
+// directly, and linked fields share option IDs and an inherited access mode. An
+// unexpected object type is treated as user. When a channel field is unlinked or
+// has no user sibling, its own (caller-filtered) field is returned — for
+// shared_only that yields no visible values (the caller holds nothing
+// channel-side), the fail-closed direction.
+func (a *App) holdingsFieldFor(rctx request.CTX, groupID, objectType, fieldName string) (*model.PropertyField, *model.AppError) {
+	lookupType := objectType
+	if lookupType != model.PropertyFieldObjectTypeChannel {
+		lookupType = model.PropertyFieldObjectTypeUser
+	}
+
+	field, appErr := a.GetPropertyFieldByNameForObjectType(rctx, groupID, "", lookupType, fieldName)
 	if appErr != nil {
 		return nil, appErr
 	}
+	if lookupType != model.PropertyFieldObjectTypeChannel {
+		return field, nil
+	}
 
-	if chField.LinkedFieldID != nil && *chField.LinkedFieldID != "" {
-		sibling, appErr := r.userSiblingField(*chField.LinkedFieldID)
+	if field.LinkedFieldID != nil && *field.LinkedFieldID != "" {
+		sibling, appErr := a.userSiblingField(rctx, groupID, *field.LinkedFieldID)
 		if appErr != nil {
 			return nil, appErr
 		}
 		if sibling != nil {
-			return r.fieldToMaskingInfo(sibling), nil
+			return sibling, nil
 		}
 	}
-	return r.fieldToMaskingInfo(chField), nil
+	return field, nil
 }
 
 // userSiblingField returns the user-object-type CPA field linked to the same
-// template (linkedFieldID), fetched with caller context so its options are
-// already filtered to the caller's holdings. Returns nil when no such field
-// exists.
-func (r *appMaskingResolver) userSiblingField(linkedFieldID string) (*model.PropertyField, *model.AppError) {
-	fields, appErr := r.app.SearchPropertyFields(r.rctxWithCaller, r.cpaGroupID, model.PropertyFieldSearchOpts{
+// template (linkedFieldID), fetched through rctx so its options are filtered to
+// that caller's holdings. Returns nil when no such field exists.
+func (a *App) userSiblingField(rctx request.CTX, groupID, linkedFieldID string) (*model.PropertyField, *model.AppError) {
+	fields, appErr := a.SearchPropertyFields(rctx, groupID, model.PropertyFieldSearchOpts{
 		ObjectTypes:   []string{model.PropertyFieldObjectTypeUser},
 		LinkedFieldID: linkedFieldID,
 		PerPage:       2,
@@ -214,18 +215,21 @@ func (r *appMaskingResolver) fieldToMaskingInfo(field *model.PropertyField) *mod
 //     The condition's value is either visible in full (the caller's stored
 //     text value matches it exactly) or fully masked. No partial chip behavior
 //     is possible because there's no multi-value list to filter.
-func (a *App) maskConditionValues(rctx request.CTX, callerID string, condition *model.Condition, cpaGroupID string, fieldsByName map[string]*model.PropertyField) {
+func (a *App) maskConditionValues(rctx request.CTX, callerID string, condition *model.Condition, cpaGroupID string, fieldsByKey map[string]*model.PropertyField) {
 	// AttrValue conditions compare two attributes (e.g. user.attr1 == user.attr2) — no literal values to mask.
 	if condition.ValueType == model.AttrValue {
 		return
 	}
 
-	fieldName := extractFieldName(condition.Attribute)
-	if fieldName == "" {
+	objectType, fieldName, ok := splitCPAAttribute(condition.Attribute)
+	if !ok {
 		return
 	}
 
-	field, ok := fieldsByName[fieldName]
+	// field is the holdings-bearing field for this reference (the user sibling
+	// for a channel attribute), keyed by object type so a shared name does not
+	// collide across roots.
+	field, ok := fieldsByKey[objectType+"/"+fieldName]
 	if !ok {
 		// Fail closed: field lookup failed at prefetch time.
 		condition.Value = nil
@@ -271,18 +275,6 @@ func splitCPAAttribute(attribute string) (objectType, fieldName string, ok bool)
 		}
 	}
 	return "", "", false
-}
-
-// extractFieldName strips the "user.attributes." prefix from a CEL attribute
-// reference, returning just the property field name. Returns the empty string
-// if the attribute is not a user-attribute reference.
-func extractFieldName(attribute string) string {
-	const prefix = "user.attributes."
-	name := strings.TrimPrefix(attribute, prefix)
-	if name == attribute || name == "" {
-		return ""
-	}
-	return name
 }
 
 // extractVisibleOptionNames pulls option names from a pre-filtered PropertyField's

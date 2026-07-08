@@ -17,28 +17,6 @@ import (
 	"github.com/mattermost/mattermost/server/v8/einterfaces/mocks"
 )
 
-func TestExtractFieldName(t *testing.T) {
-	tests := []struct {
-		name      string
-		attribute string
-		expected  string
-	}{
-		{"standard attribute path", "user.attributes.Program", "Program"},
-		{"multi-word field", "user.attributes.Clearance Level", "Clearance Level"},
-		{"no prefix", "Program", ""},
-		{"partial prefix", "user.attributes.", ""},
-		{"empty string", "", ""},
-		{"different prefix", "team.attributes.Program", ""},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			result := extractFieldName(tc.attribute)
-			assert.Equal(t, tc.expected, result)
-		})
-	}
-}
-
 // Note: tests for field.GetAccessMode() live in model/property_access_test.go,
 // where the method is defined (TestPropertyFieldGetAccessMode).
 
@@ -434,7 +412,7 @@ func TestMaskConditionValues(t *testing.T) {
 			ValueType: model.LiteralValue,
 		}
 		fields := map[string]*model.PropertyField{
-			"Program": makeField(model.PropertyAccessModePublic, model.PropertyFieldTypeSelect, options),
+			"user/Program": makeField(model.PropertyAccessModePublic, model.PropertyFieldTypeSelect, options),
 		}
 		a.maskConditionValues(rctx, "caller", condition, "", fields)
 		assert.Equal(t, "Alpha", condition.Value)
@@ -448,7 +426,7 @@ func TestMaskConditionValues(t *testing.T) {
 			ValueType: model.LiteralValue,
 		}
 		fields := map[string]*model.PropertyField{
-			"Clearance": makeField(model.PropertyAccessModeSourceOnly, model.PropertyFieldTypeSelect, options),
+			"user/Clearance": makeField(model.PropertyAccessModeSourceOnly, model.PropertyFieldTypeSelect, options),
 		}
 		a.maskConditionValues(rctx, "caller", condition, "", fields)
 		assert.Nil(t, condition.Value)
@@ -462,7 +440,7 @@ func TestMaskConditionValues(t *testing.T) {
 			ValueType: model.LiteralValue,
 		}
 		fields := map[string]*model.PropertyField{
-			"Location": makeField(model.PropertyAccessModeSharedOnly, model.PropertyFieldTypeSelect, options),
+			"user/Location": makeField(model.PropertyAccessModeSharedOnly, model.PropertyFieldTypeSelect, options),
 		}
 		a.maskConditionValues(rctx, "caller", condition, "", fields)
 		// "Alpha" is in the field options so it is visible
@@ -477,7 +455,7 @@ func TestMaskConditionValues(t *testing.T) {
 			ValueType: model.LiteralValue,
 		}
 		fields := map[string]*model.PropertyField{
-			"Location": makeField(model.PropertyAccessModeSharedOnly, model.PropertyFieldTypeSelect, options),
+			"user/Location": makeField(model.PropertyAccessModeSharedOnly, model.PropertyFieldTypeSelect, options),
 		}
 		a.maskConditionValues(rctx, "caller", condition, "", fields)
 		assert.Nil(t, condition.Value)
@@ -491,7 +469,7 @@ func TestMaskConditionValues(t *testing.T) {
 			ValueType: model.LiteralValue,
 		}
 		fields := map[string]*model.PropertyField{
-			"Programs": makeField(model.PropertyAccessModeSharedOnly, model.PropertyFieldTypeMultiselect, options),
+			"user/Programs": makeField(model.PropertyAccessModeSharedOnly, model.PropertyFieldTypeMultiselect, options),
 		}
 		a.maskConditionValues(rctx, "caller", condition, "", fields)
 		values, ok := condition.Value.([]any)
@@ -507,12 +485,53 @@ func TestMaskConditionValues(t *testing.T) {
 			ValueType: model.LiteralValue,
 		}
 		fields := map[string]*model.PropertyField{
-			"Program": {
+			"user/Program": {
 				Type:  model.PropertyFieldTypeSelect,
 				Attrs: model.StringInterface{model.PropertyAttrsAccessMode: "future_unknown_mode"},
 			},
 		}
 		a.maskConditionValues(rctx, "caller", condition, "", fields)
+		assert.Nil(t, condition.Value)
+		assert.True(t, condition.HasMaskedValues)
+	})
+
+	t.Run("resource attribute: keyed by channel object type, public passes through", func(t *testing.T) {
+		condition := &model.Condition{
+			Attribute: "resource.attributes.Sensitivity",
+			Value:     "Alpha",
+			ValueType: model.LiteralValue,
+		}
+		fields := map[string]*model.PropertyField{
+			"channel/Sensitivity": makeField(model.PropertyAccessModePublic, model.PropertyFieldTypeSelect, options),
+		}
+		a.maskConditionValues(rctx, "caller", condition, "", fields)
+		assert.Equal(t, "Alpha", condition.Value)
+		assert.False(t, condition.HasMaskedValues)
+	})
+
+	t.Run("resource attribute: shared_only value the caller does not hold is masked", func(t *testing.T) {
+		condition := &model.Condition{
+			Attribute: "resource.attributes.Sensitivity",
+			Value:     "secret",
+			ValueType: model.LiteralValue,
+		}
+		// The prefetched field is the holdings-bearing sibling; "secret" is not
+		// among the caller's visible options, so it masks.
+		fields := map[string]*model.PropertyField{
+			"channel/Sensitivity": makeField(model.PropertyAccessModeSharedOnly, model.PropertyFieldTypeSelect, options),
+		}
+		a.maskConditionValues(rctx, "caller", condition, "", fields)
+		assert.Nil(t, condition.Value)
+		assert.True(t, condition.HasMaskedValues)
+	})
+
+	t.Run("resource attribute missing from prefetch map: fail-closed", func(t *testing.T) {
+		condition := &model.Condition{
+			Attribute: "resource.attributes.Sensitivity",
+			Value:     "Alpha",
+			ValueType: model.LiteralValue,
+		}
+		a.maskConditionValues(rctx, "caller", condition, "", map[string]*model.PropertyField{})
 		assert.Nil(t, condition.Value)
 		assert.True(t, condition.HasMaskedValues)
 	})
@@ -564,7 +583,7 @@ func TestMaskConditionValues_SharedOnlyText(t *testing.T) {
 	})
 	require.Nil(t, appErr)
 
-	fieldsByName := map[string]*model.PropertyField{createdField.Name: createdField}
+	fieldsByName := map[string]*model.PropertyField{model.PropertyFieldObjectTypeUser + "/" + createdField.Name: createdField}
 
 	t.Run("caller's own value passes through", func(t *testing.T) {
 		condition := &model.Condition{
