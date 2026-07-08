@@ -5309,7 +5309,7 @@ func TestGetAccessControlFieldsAutocomplete_ExcludesNonUserFields(t *testing.T) 
 		require.NoError(t, err)
 	}
 
-	fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, strings.Repeat("0", 26), 100, th.BasicUser.Id)
+	fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", strings.Repeat("0", 26), 100, th.BasicUser.Id)
 	require.Nil(t, appErr)
 
 	for _, f := range fields {
@@ -5322,6 +5322,49 @@ func TestGetAccessControlFieldsAutocomplete_ExcludesNonUserFields(t *testing.T) 
 		fieldIDs[i] = f.ID
 	}
 	assert.Contains(t, fieldIDs, userField.ID, "user CPA field must appear in autocomplete results")
+}
+
+// When scoped to a channel, autocomplete additionally returns channel-object-type
+// CPA fields (resource.attributes.*), each tagged with its ObjectType, alongside
+// the user fields.
+func TestGetAccessControlFieldsAutocomplete_IncludesChannelFieldsWhenScoped(t *testing.T) {
+	th := Setup(t).InitBasic(t)
+	th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterprise))
+
+	rctx := request.TestContext(t)
+
+	cpaGroup, cErr := th.App.GetPropertyGroup(rctx, model.AccessControlPropertyGroupName)
+	require.Nil(t, cErr)
+
+	userField, appErr := th.App.CreatePropertyField(rctx, &model.PropertyField{
+		GroupID:    cpaGroup.ID,
+		Name:       celSafeName(),
+		Type:       model.PropertyFieldTypeSelect,
+		ObjectType: model.PropertyFieldObjectTypeUser,
+		TargetType: string(model.PropertyFieldTargetLevelSystem),
+	}, false, "")
+	require.Nil(t, appErr)
+
+	channelField, appErr := th.App.CreatePropertyField(rctx, &model.PropertyField{
+		GroupID:    cpaGroup.ID,
+		Name:       celSafeName(),
+		Type:       model.PropertyFieldTypeSelect,
+		ObjectType: model.PropertyFieldObjectTypeChannel,
+		TargetType: string(model.PropertyFieldTargetLevelSystem),
+	}, false, "")
+	require.Nil(t, appErr)
+
+	fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, th.BasicChannel.Id, strings.Repeat("0", 26), 100, th.BasicUser.Id)
+	require.Nil(t, appErr)
+
+	byID := make(map[string]*model.PropertyField, len(fields))
+	for _, f := range fields {
+		byID[f.ID] = f
+	}
+	require.Contains(t, byID, userField.ID, "user CPA field must appear when scoped to a channel")
+	require.Contains(t, byID, channelField.ID, "channel CPA field must appear when scoped to a channel")
+	assert.Equal(t, model.PropertyFieldObjectTypeChannel, byID[channelField.ID].ObjectType,
+		"channel field must be tagged with its ObjectType")
 }
 
 // Verify that the team join path (channelID="") produces a subject with no
@@ -5372,7 +5415,7 @@ func TestGetAccessControlFieldsAutocompleteNativeAttributes(t *testing.T) {
 
 	t.Run("first page prepends native attributes", func(t *testing.T) {
 		// The API maps an empty first page to a 26-zero sentinel cursor.
-		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, strings.Repeat("0", 26), 50, anonymousCallerId)
+		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", strings.Repeat("0", 26), 50, anonymousCallerId)
 		require.Nil(t, appErr)
 
 		seen := map[string]bool{}
@@ -5390,7 +5433,7 @@ func TestGetAccessControlFieldsAutocompleteNativeAttributes(t *testing.T) {
 	})
 
 	t.Run("subsequent pages omit native attributes", func(t *testing.T) {
-		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, cpaField.ID, 50, anonymousCallerId)
+		fields, appErr := th.App.GetAccessControlFieldsAutocomplete(rctx, "", cpaField.ID, 50, anonymousCallerId)
 		require.Nil(t, appErr)
 		for _, f := range fields {
 			isNative, _ := f.Attrs[model.NativeAttributeAttrMarker].(bool)
