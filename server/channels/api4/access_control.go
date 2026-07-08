@@ -364,6 +364,9 @@ func testExpression(c *Context, w http.ResponseWriter, r *http.Request) {
 		Cursor: model.SubjectCursor{
 			TargetID: checkExpressionRequest.After,
 		},
+		// Carry the channel so a resource.attributes.* expression resolves
+		// against that channel's values; ignored for resource-free expressions.
+		ResourceID: channelId,
 	}
 
 	// Only system admins see ALL matching users (unrestricted).
