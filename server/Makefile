@@ -882,11 +882,10 @@ ifeq ($(BUILD_ENTERPRISE_READY),true)
   endif
 endif
 
-vet-api: setup-go-work
 vet-api: export GO := $(GO)
 vet-api: export GOBIN := $(GOBIN)
 vet-api: export ROOT := $(ROOT)
-vet-api: install-govet ## Run mattermost go vet to verify api4 documentation, currently not passing
+vet-api: setup-go-work install-govet ## Run mattermost go vet to verify api4 documentation, currently not passing
 	make -C ../api build
 	./scripts/vet-api-check.sh
 
