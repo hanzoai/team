@@ -50,14 +50,24 @@ func (a *App) GetMaskedVisualAST(rctx request.CTX, expression string, callerID s
 	return visualAST, nil
 }
 
+// maskingHoldings pairs the field whose per-caller values determine which
+// literals are visible (holdings) with the access mode that governs the
+// reference. For a channel attribute these come from different fields: the
+// access mode is the channel field's own (it defines whether the attribute is
+// protected), while holdings are read from the user-side sibling — see
+// holdingsFieldFor.
+type maskingHoldings struct {
+	field      *model.PropertyField
+	accessMode string
+}
+
 // fetchConditionFields collects the unique CPA references from conditions and
-// fetches, for each, the field whose per-caller holdings determine its
-// visibility (the user field itself, or a channel field's user-side sibling —
-// see holdingsFieldFor). The map is keyed by "<objectType>/<fieldName>" so a
-// user and a channel reference sharing a name resolve independently. Lookup
-// failures are logged and omitted; read-path callers treat missing entries as
-// fail-closed (mask the value).
-func (a *App) fetchConditionFields(rctx request.CTX, conditions []model.Condition, cpaGroupID string) map[string]*model.PropertyField {
+// fetches, for each, the holdings/access-mode pair that determines its
+// visibility (see holdingsFieldFor). The map is keyed by
+// "<objectType>/<fieldName>" so a user and a channel reference sharing a name
+// resolve independently. Lookup failures are logged and omitted; read-path
+// callers treat missing entries as fail-closed (mask the value).
+func (a *App) fetchConditionFields(rctx request.CTX, conditions []model.Condition, cpaGroupID string) map[string]*maskingHoldings {
 	type ref struct{ objectType, fieldName string }
 	seen := make(map[ref]struct{})
 	for _, c := range conditions {
@@ -69,9 +79,9 @@ func (a *App) fetchConditionFields(rctx request.CTX, conditions []model.Conditio
 		}
 	}
 
-	fields := make(map[string]*model.PropertyField, len(seen))
+	fields := make(map[string]*maskingHoldings, len(seen))
 	for r := range seen {
-		field, appErr := a.holdingsFieldFor(rctx, cpaGroupID, r.objectType, r.fieldName)
+		h, appErr := a.holdingsFieldFor(rctx, cpaGroupID, r.objectType, r.fieldName)
 		if appErr != nil {
 			rctx.Logger().Warn("Failed to look up field for masking, failing closed",
 				mlog.String("object_type", r.objectType),
@@ -80,7 +90,7 @@ func (a *App) fetchConditionFields(rctx request.CTX, conditions []model.Conditio
 			)
 			continue
 		}
-		fields[r.objectType+"/"+r.fieldName] = field
+		fields[r.objectType+"/"+r.fieldName] = h
 	}
 	return fields
 }
@@ -117,28 +127,36 @@ func (r *appMaskingResolver) Resolve(objectType, fieldName string) (*model.Maski
 		return info, nil
 	}
 
-	field, appErr := r.app.holdingsFieldFor(r.rctxWithCaller, r.cpaGroupID, objectType, fieldName)
+	h, appErr := r.app.holdingsFieldFor(r.rctxWithCaller, r.cpaGroupID, objectType, fieldName)
 	if appErr != nil {
 		return nil, appErr
 	}
-	info := r.fieldToMaskingInfo(field)
+	info := r.fieldToMaskingInfo(h)
 	r.cache[cacheKey] = info
 	return info, nil
 }
 
-// holdingsFieldFor returns the CPA field whose per-caller values determine the
-// visibility of a reference to (objectType, fieldName), fetched with caller
-// context so its options are already filtered to the caller's holdings.
+// holdingsFieldFor returns the holdings-bearing field plus the access mode that
+// governs a reference to (objectType, fieldName). The field is fetched with
+// caller context so its options are already filtered to the caller's holdings.
 //
-// For a user field that is the field itself. For a channel field it is the
-// user-side field linked to the same template: a channel attribute is masked by
-// whether the caller holds the value, but users never hold channel-side values
-// directly, and linked fields share option IDs and an inherited access mode. An
-// unexpected object type is treated as user. When a channel field is unlinked or
-// has no user sibling, its own (caller-filtered) field is returned — for
-// shared_only that yields no visible values (the caller holds nothing
-// channel-side), the fail-closed direction.
-func (a *App) holdingsFieldFor(rctx request.CTX, groupID, objectType, fieldName string) (*model.PropertyField, *model.AppError) {
+// For a user reference both come from the field itself. For a channel reference
+// they come from different fields: the access mode is the CHANNEL field's own —
+// whether the attribute is protected is a property of the channel field, and a
+// linked field does NOT inherit access mode from its template at creation, so
+// reading it off the user sibling can silently under-protect. Holdings, by
+// contrast, must come from the user-side sibling linked to the same template,
+// because users never hold channel-side values directly.
+//
+// A caller's held option names are only pre-filtered onto the sibling by the
+// read path when the sibling is itself shared_only. If the channel field is
+// shared_only but the sibling is not, the sibling's option list is unfiltered,
+// so its options are dropped (fail closed); text holdings are queried directly
+// and are unaffected. When a channel field is unlinked or has no user sibling,
+// its own (caller-filtered) field is used — for shared_only that yields no
+// visible values (the caller holds nothing channel-side), the fail-closed
+// direction.
+func (a *App) holdingsFieldFor(rctx request.CTX, groupID, objectType, fieldName string) (*maskingHoldings, *model.AppError) {
 	lookupType := objectType
 	if lookupType != model.PropertyFieldObjectTypeChannel {
 		lookupType = model.PropertyFieldObjectTypeUser
@@ -149,19 +167,44 @@ func (a *App) holdingsFieldFor(rctx request.CTX, groupID, objectType, fieldName 
 		return nil, appErr
 	}
 	if lookupType != model.PropertyFieldObjectTypeChannel {
-		return field, nil
+		return &maskingHoldings{field: field, accessMode: field.GetAccessMode()}, nil
 	}
 
+	accessMode := field.GetAccessMode()
 	if field.LinkedFieldID != nil && *field.LinkedFieldID != "" {
 		sibling, appErr := a.userSiblingField(rctx, groupID, *field.LinkedFieldID)
 		if appErr != nil {
 			return nil, appErr
 		}
 		if sibling != nil {
-			return sibling, nil
+			// The sibling supplies the caller's held values, but its options are
+			// only held-filtered by the read path when the sibling is itself
+			// shared_only. If the channel field is protected but the sibling is
+			// not, the sibling's option list is unfiltered — drop it so no
+			// unheld option name leaks (text holdings query the caller directly
+			// and are unaffected).
+			if accessMode == model.PropertyAccessModeSharedOnly &&
+				sibling.GetAccessMode() != model.PropertyAccessModeSharedOnly &&
+				sibling.Type.SupportsOptions() {
+				sibling = fieldWithEmptyOptions(sibling)
+			}
+			return &maskingHoldings{field: sibling, accessMode: accessMode}, nil
 		}
 	}
-	return field, nil
+	return &maskingHoldings{field: field, accessMode: accessMode}, nil
+}
+
+// fieldWithEmptyOptions returns a shallow copy of f with an empty options list,
+// so extractVisibleOptionNames yields nothing. Used to fail closed without
+// mutating the (possibly cached) source field.
+func fieldWithEmptyOptions(f *model.PropertyField) *model.PropertyField {
+	cp := *f
+	cp.Attrs = make(model.StringInterface, len(f.Attrs)+1)
+	for k, v := range f.Attrs {
+		cp.Attrs[k] = v
+	}
+	cp.Attrs[model.PropertyFieldAttributeOptions] = []any{}
+	return &cp
 }
 
 // userSiblingField returns the user-object-type CPA field linked to the same
@@ -184,19 +227,21 @@ func (a *App) userSiblingField(rctx request.CTX, groupID, linkedFieldID string) 
 	return nil, nil
 }
 
-func (r *appMaskingResolver) fieldToMaskingInfo(field *model.PropertyField) *model.MaskingFieldInfo {
+func (r *appMaskingResolver) fieldToMaskingInfo(h *maskingHoldings) *model.MaskingFieldInfo {
 	info := &model.MaskingFieldInfo{}
-	switch field.GetAccessMode() {
+	// h.accessMode is authoritative (the channel field's own for a channel
+	// reference); h.field supplies the caller's held values.
+	switch h.accessMode {
 	case model.PropertyAccessModePublic:
 		info.Access = model.MaskingFieldAccessPublic
 	case model.PropertyAccessModeSourceOnly:
 		info.Access = model.MaskingFieldAccessSourceOnly
 	case model.PropertyAccessModeSharedOnly:
 		info.Access = model.MaskingFieldAccessSharedOnly
-		if field.Type == model.PropertyFieldTypeSelect || field.Type == model.PropertyFieldTypeMultiselect {
-			info.VisibleValues = extractVisibleOptionNames(field)
+		if h.field.Type == model.PropertyFieldTypeSelect || h.field.Type == model.PropertyFieldTypeMultiselect {
+			info.VisibleValues = extractVisibleOptionNames(h.field)
 		} else {
-			info.VisibleValues = r.app.getCallerTextValues(r.rctxWithCaller, r.callerID, field, r.cpaGroupID)
+			info.VisibleValues = r.app.getCallerTextValues(r.rctxWithCaller, r.callerID, h.field, r.cpaGroupID)
 		}
 	default:
 		info.Access = model.MaskingFieldAccessUnknown
@@ -215,7 +260,7 @@ func (r *appMaskingResolver) fieldToMaskingInfo(field *model.PropertyField) *mod
 //     The condition's value is either visible in full (the caller's stored
 //     text value matches it exactly) or fully masked. No partial chip behavior
 //     is possible because there's no multi-value list to filter.
-func (a *App) maskConditionValues(rctx request.CTX, callerID string, condition *model.Condition, cpaGroupID string, fieldsByKey map[string]*model.PropertyField) {
+func (a *App) maskConditionValues(rctx request.CTX, callerID string, condition *model.Condition, cpaGroupID string, fieldsByKey map[string]*maskingHoldings) {
 	// AttrValue conditions compare two attributes (e.g. user.attr1 == user.attr2) — no literal values to mask.
 	if condition.ValueType == model.AttrValue {
 		return
@@ -226,10 +271,10 @@ func (a *App) maskConditionValues(rctx request.CTX, callerID string, condition *
 		return
 	}
 
-	// field is the holdings-bearing field for this reference (the user sibling
-	// for a channel attribute), keyed by object type so a shared name does not
-	// collide across roots.
-	field, ok := fieldsByKey[objectType+"/"+fieldName]
+	// h pairs the holdings-bearing field (the user sibling for a channel
+	// attribute) with the authoritative access mode (the channel field's own),
+	// keyed by object type so a shared name does not collide across roots.
+	h, ok := fieldsByKey[objectType+"/"+fieldName]
 	if !ok {
 		// Fail closed: field lookup failed at prefetch time.
 		condition.Value = nil
@@ -237,17 +282,17 @@ func (a *App) maskConditionValues(rctx request.CTX, callerID string, condition *
 		return
 	}
 
-	switch field.GetAccessMode() {
+	switch h.accessMode {
 	case model.PropertyAccessModePublic:
 		// no-op
 	case model.PropertyAccessModeSourceOnly:
 		condition.Value = nil
 		condition.HasMaskedValues = true
 	case model.PropertyAccessModeSharedOnly:
-		if field.Type.SupportsOptions() {
-			filterConditionValues(condition, extractVisibleOptionNames(field))
+		if h.field.Type.SupportsOptions() {
+			filterConditionValues(condition, extractVisibleOptionNames(h.field))
 		} else {
-			filterConditionValues(condition, a.getCallerTextValues(rctx, callerID, field, cpaGroupID))
+			filterConditionValues(condition, a.getCallerTextValues(rctx, callerID, h.field, cpaGroupID))
 		}
 	default:
 		// Unknown access mode: fail closed.
