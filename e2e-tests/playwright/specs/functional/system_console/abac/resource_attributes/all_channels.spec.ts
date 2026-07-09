@@ -67,8 +67,19 @@ test.describe('ABAC resource.attributes - all-channels scope', {tag: ['@abac', '
             // Enforcement gate: the channel has no own policy, but the active
             // all-channels parent makes it access-controlled. The matching user
             // is admitted; the non-matching user is rejected.
-            await adminClient.addToChannel(matchingUser.id, channel.id);
-            expect(await verifyUserInChannel(adminClient, matchingUser.id, channel.id)).toBe(true);
+            //
+            // The runtime PDP reads channel/user values from a materialized view
+            // refreshed on a throttled (~30s) cadence, so the values set just
+            // above may not be visible immediately — the join would then hit
+            // deny-on-miss. Retry the matching-user join until the view catches up.
+            await expect(async () => {
+                try {
+                    await adminClient.addToChannel(matchingUser.id, channel.id);
+                } catch {
+                    // matview not yet refreshed; retry
+                }
+                expect(await verifyUserInChannel(adminClient, matchingUser.id, channel.id)).toBe(true);
+            }).toPass({timeout: 90000, intervals: [3000]});
 
             try {
                 await adminClient.addToChannel(nonMatchingUser.id, channel.id);

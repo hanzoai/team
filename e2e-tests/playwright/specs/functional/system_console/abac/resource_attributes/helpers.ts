@@ -90,7 +90,18 @@ export async function assignChannelsToPolicy(
     policyId: string,
     channelIds: string[],
 ): Promise<void> {
-    await adminClient.assignChannelsToAccessControlPolicy(policyId, channelIds);
+    // The /assign endpoint returns 200 with an empty body but a JSON content
+    // type, which Client4.doFetch chokes on ("Unexpected end of JSON input").
+    // Use a raw request and check status, matching the pattern the rest of the
+    // ABAC e2e helpers use for these no-body endpoints.
+    const res = await fetch(`${adminClient.getBaseRoute()}/access_control_policies/${policyId}/assign`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', Authorization: `Bearer ${adminClient.getToken()}`},
+        body: JSON.stringify({channel_ids: channelIds}),
+    });
+    if (!res.ok) {
+        throw new Error(`assign channels failed: ${res.status} ${await res.text()}`);
+    }
 }
 
 /**
