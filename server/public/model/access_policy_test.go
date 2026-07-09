@@ -282,6 +282,15 @@ func TestAccessControlPolicyAppliesToAllChannels(t *testing.T) {
 		require.Nil(t, base(AccessControlPolicyTypeParent).IsValid())
 	})
 
+	t.Run("flag on team-scoped parent — invalid", func(t *testing.T) {
+		p := base(AccessControlPolicyTypeParent)
+		p.Scope = AccessControlPolicyScopeTeam
+		p.ScopeID = NewId()
+		err := p.IsValid()
+		require.NotNil(t, err)
+		require.Equal(t, "model.access_policy.is_valid.applies_to_all_channels.app_error", err.Id)
+	})
+
 	for _, typ := range []string{AccessControlPolicyTypeChannel, AccessControlPolicyTypeTeam, AccessControlPolicyTypePermission} {
 		t.Run("flag on "+typ+" — invalid", func(t *testing.T) {
 			err := base(typ).IsValid()

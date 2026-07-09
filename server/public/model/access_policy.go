@@ -209,12 +209,15 @@ func (p *AccessControlPolicy) IsValid() *AppError {
 		}
 	}
 
-	// The all-channels virtual scope only makes sense for a parent policy: it is
-	// the reusable rule-carrier merged into every private channel. A channel
-	// policy is already bound to one channel; team/permission target a different
-	// resource. Reject the flag anywhere else regardless of version.
-	if p.AppliesToAllChannels && p.Type != AccessControlPolicyTypeParent {
-		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.applies_to_all_channels.app_error", nil, "applies_to_all_channels is only valid on parent policies", 400)
+	// The all-channels virtual scope only makes sense for a system-scoped parent
+	// policy: it is the reusable rule-carrier merged into every private channel
+	// install-wide. A channel policy is already bound to one channel;
+	// team/permission target a different resource; and a team-scoped parent is
+	// confined to its team, which the install-wide merge does not honor — so the
+	// flag must not be combined with a scope. Reject anywhere else regardless of
+	// version.
+	if p.AppliesToAllChannels && (p.Type != AccessControlPolicyTypeParent || p.Scope != "") {
+		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.applies_to_all_channels.app_error", nil, "applies_to_all_channels is only valid on unscoped parent policies", 400)
 	}
 
 	switch p.Version {
