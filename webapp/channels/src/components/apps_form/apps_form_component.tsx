@@ -269,12 +269,15 @@ export class AppsForm extends React.PureComponent<Props, State> {
     // causing AppsFormSelectField to remount its AsyncSelect (via refreshNonce),
     // which re-triggers dynamic select lookups on every keystroke in any field.
     private sanitizedFieldCache = new Map<AppField, AppField>();
+    private flattenedFields: AppField[];
 
     constructor(props: Props) {
         super(props);
 
         const {form, timezone} = props;
         const values = initFormValues(form, timezone);
+
+        this.flattenedFields = flattenFields(form.fields);
 
         this.state = {
             loading: false,
@@ -305,10 +308,9 @@ export class AppsForm extends React.PureComponent<Props, State> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        // Clear sanitized field cache when the form changes (e.g., refresh or multistep)
-        // so stale entries don't accumulate.
         if (prevProps.form !== this.props.form) {
             this.sanitizedFieldCache.clear();
+            this.flattenedFields = flattenFields(this.props.form.fields);
         }
     }
 
@@ -350,7 +352,6 @@ export class AppsForm extends React.PureComponent<Props, State> {
     handleSubmit = async (e: React.FormEvent, submitName?: string, value?: string) => {
         e.preventDefault();
 
-        const {fields} = this.props.form;
         const values = this.state.values;
         if (submitName && value) {
             values[submitName] = value;
@@ -358,8 +359,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
 
         const fieldErrors: {[name: string]: React.ReactNode} = {};
 
-        // Flatten so required children inside collapsed sections are still validated.
-        const elements = fieldsAsElements(flattenFields(fields));
+        const elements = fieldsAsElements(this.flattenedFields);
         elements?.forEach((element) => {
             const error = checkDialogElementForError( // TODO: make sure all required values are present in `element`
                 element,
@@ -438,7 +438,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
 
     performLookup = async (name: string, userInput: string): Promise<AppSelectOption[]> => {
         const intl = this.props.intl;
-        const field = this.props.form.fields?.find((f) => f.name === name);
+        const field = this.flattenedFields.find((f) => f.name === name);
         if (!field) {
             return [];
         }
@@ -525,7 +525,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
     };
 
     onChange = (name: string, value: any) => {
-        const field = flattenFields(this.props.form.fields).find((f) => f.name === name);
+        const field = this.flattenedFields.find((f) => f.name === name);
         if (!field) {
             return;
         }
@@ -540,7 +540,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
                     const errorResponse = res.error;
                     const errorMsg = errorResponse.text;
                     const errors = errorResponse.data?.errors;
-                    const elements = fieldsAsElements(flattenFields(this.props.form.fields));
+                    const elements = fieldsAsElements(this.flattenedFields);
                     this.updateErrors(elements, errors, errorMsg);
                     return;
                 }
