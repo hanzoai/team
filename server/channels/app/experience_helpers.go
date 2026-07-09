@@ -23,6 +23,8 @@ const (
 	preferenceTeamsOrder                 = "teams_order"
 	preferenceChannelApproximateViewTime = "channel_approximate_view_time"
 	preferenceChannelOpenTime            = "channel_open_time"
+	preferenceAgents                     = "agents"
+	preferenceSelectedAgent              = "selected_agent"
 )
 
 // experiencePreferenceCategories lists the preference categories sent by all experience
@@ -44,6 +46,9 @@ var experiencePreferenceCategories = []string{
 	// filterAutoclosedDMs which uses these as a fallback for lastViewedAt).
 	preferenceChannelApproximateViewTime,
 	preferenceChannelOpenTime,
+
+	preferenceAgents,
+	preferenceSelectedAgent,
 }
 
 type experienceLoadSnapshot struct {
