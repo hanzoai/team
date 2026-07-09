@@ -742,7 +742,11 @@ func (d *Dialog) IsValid() error {
 }
 
 func (e *DialogElement) IsValid() error {
-	return e.isValid(make(map[string]bool))
+	seen := make(map[string]bool)
+	if e.Name != "" {
+		seen[e.Name] = true
+	}
+	return e.isValid(seen)
 }
 
 // isValid validates the element, threading a shared seen-name set through
