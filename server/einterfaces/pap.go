@@ -52,6 +52,17 @@ type PolicyAdministrationPointInterface interface {
 	// System Console and Channel Settings.
 	SimulatePolicyForUsers(rctx request.CTX, params model.PolicySimulationByUsersParams) (*model.PolicySimulationResponse, *model.AppError)
 
+	// HasActiveAllChannelsPolicy reports whether any active parent policy carries
+	// the all-channels virtual scope. Used by the enforcement gate to treat a
+	// private channel with no own policy as access-controlled between sync sweeps.
+	// Fails safe (returns false) when the engine is not ready.
+	HasActiveAllChannelsPolicy(rctx request.CTX) bool
+
+	// InvalidateAllChannelsCache forces the cached active-all-channels set to be
+	// rebuilt, locally and cluster-wide. Called on the active-status toggle path,
+	// which mutates the store directly and would otherwise leave the set stale.
+	InvalidateAllChannelsCache(rctx request.CTX)
+
 	// OnPropertyFieldOptionsChanged signals the access control service that
 	// a property field's options changed (e.g. an admin re-ranked or
 	// renamed options on a rank-typed field). The service invalidates any

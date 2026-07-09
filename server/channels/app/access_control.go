@@ -1811,6 +1811,7 @@ func (a *App) UpdateAccessControlPoliciesActive(rctx request.CTX, updates []mode
 		return nil, model.NewAppError("UpdateAccessControlPoliciesActive", "app.pap.update_access_control_policies_active.app_error", nil, err.Error(), http.StatusInternalServerError)
 	}
 
+	toggledParent := false
 	for _, policy := range policies {
 		switch policy.Type {
 		case model.AccessControlPolicyTypeChannel:
@@ -1820,7 +1821,16 @@ func (a *App) UpdateAccessControlPoliciesActive(rctx request.CTX, updates []mode
 		case model.AccessControlPolicyTypeParent:
 			a.publishChannelPolicyEnforcedForChannelPoliciesWithImport(rctx, policy.ID)
 			a.publishTeamPolicyEnforcedForTeamPoliciesWithImport(rctx, policy.ID)
+			toggledParent = true
 		}
+	}
+
+	// The all-channels set is Active-sensitive and this path writes the flag
+	// straight to the store, bypassing the engine. Only a parent can carry the
+	// all-channels flag, so a parent toggle must refresh the cached set (locally
+	// and cluster-wide).
+	if toggledParent {
+		acs.InvalidateAllChannelsCache(rctx)
 	}
 
 	return policies, nil

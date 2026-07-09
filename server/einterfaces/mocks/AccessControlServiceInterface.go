@@ -438,6 +438,29 @@ func (_m *AccessControlServiceInterface) NormalizePolicy(rctx request.CTX, polic
 	return r0, r1
 }
 
+// HasActiveAllChannelsPolicy provides a mock function with given fields: rctx
+func (_m *AccessControlServiceInterface) HasActiveAllChannelsPolicy(rctx request.CTX) bool {
+	ret := _m.Called(rctx)
+
+	if len(ret) == 0 {
+		panic("no return value specified for HasActiveAllChannelsPolicy")
+	}
+
+	var r0 bool
+	if rf, ok := ret.Get(0).(func(request.CTX) bool); ok {
+		r0 = rf(rctx)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+
+	return r0
+}
+
+// InvalidateAllChannelsCache provides a mock function with given fields: rctx
+func (_m *AccessControlServiceInterface) InvalidateAllChannelsCache(rctx request.CTX) {
+	_m.Called(rctx)
+}
+
 // OnPropertyFieldOptionsChanged provides a mock function with given fields: rctx, fieldID
 func (_m *AccessControlServiceInterface) OnPropertyFieldOptionsChanged(rctx request.CTX, fieldID string) {
 	_m.Called(rctx, fieldID)
