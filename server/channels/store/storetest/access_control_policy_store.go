@@ -26,6 +26,7 @@ func TestAccessControlPolicyStore(t *testing.T, rctx request.CTX, ss store.Store
 	t.Run("SearchByActions", func(t *testing.T) { testAccessControlPolicyStoreSearchByActions(t, rctx, ss) })
 	t.Run("GetPoliciesByFieldID", func(t *testing.T) { testAccessControlPolicyStoreGetPoliciesByFieldID(t, rctx, ss) })
 	t.Run("ScopeRoundtrip", func(t *testing.T) { testAccessControlPolicyStoreScopeRoundtrip(t, rctx, ss) })
+	t.Run("AppliesToAllChannels", func(t *testing.T) { testAccessControlPolicyStoreAppliesToAllChannels(t, rctx, ss) })
 	t.Run("SearchByTeamIDWithScope", func(t *testing.T) { testAccessControlPolicyStoreSearchByTeamIDWithScope(t, rctx, ss) })
 	t.Run("GetActionsForPolicy", func(t *testing.T) { testAccessControlPolicyStoreGetActionsForPolicy(t, rctx, ss) })
 	t.Run("GetActionsForPolicies", func(t *testing.T) { testAccessControlPolicyStoreGetActionsForPolicies(t, rctx, ss) })
@@ -1282,6 +1283,61 @@ func testAccessControlPolicyStoreScopeRoundtrip(t *testing.T, rctx request.CTX, 
 		require.NoError(t, err)
 		require.Empty(t, updated.Scope)
 		require.Empty(t, updated.ScopeID)
+	})
+}
+
+func testAccessControlPolicyStoreAppliesToAllChannels(t *testing.T, rctx request.CTX, ss store.Store) {
+	newParent := func(name string, active, allChannels bool) *model.AccessControlPolicy {
+		return &model.AccessControlPolicy{
+			ID:                   model.NewId(),
+			Name:                 name + " " + model.NewId(),
+			Type:                 model.AccessControlPolicyTypeParent,
+			Active:               active,
+			Revision:             1,
+			Version:              model.AccessControlPolicyVersionV0_2,
+			Imports:              []string{},
+			Rules:                []model.AccessControlPolicyRule{{Actions: []string{"*"}, Expression: "true"}},
+			AppliesToAllChannels: allChannels,
+		}
+	}
+
+	t.Run("flag roundtrips through save and get", func(t *testing.T) {
+		p := newParent("AllChannels Roundtrip", true, true)
+		saved, err := ss.AccessControlPolicy().Save(rctx, p)
+		require.NoError(t, err)
+		require.True(t, saved.AppliesToAllChannels)
+		t.Cleanup(func() { _ = ss.AccessControlPolicy().Delete(rctx, p.ID) })
+
+		got, err := ss.AccessControlPolicy().Get(rctx, p.ID)
+		require.NoError(t, err)
+		require.True(t, got.AppliesToAllChannels)
+	})
+
+	t.Run("search returns only active all-channels parents", func(t *testing.T) {
+		on := newParent("AllChannels On", true, true)
+		off := newParent("AllChannels Off", true, false)
+		inactive := newParent("AllChannels Inactive", false, true)
+		for _, p := range []*model.AccessControlPolicy{on, off, inactive} {
+			_, err := ss.AccessControlPolicy().Save(rctx, p)
+			require.NoError(t, err)
+			t.Cleanup(func() { _ = ss.AccessControlPolicy().Delete(rctx, p.ID) })
+		}
+
+		policies, _, err := ss.AccessControlPolicy().SearchPolicies(rctx, model.AccessControlPolicySearch{
+			Type:                 model.AccessControlPolicyTypeParent,
+			Active:               true,
+			AppliesToAllChannels: true,
+			Limit:                100,
+		})
+		require.NoError(t, err)
+
+		ids := make(map[string]bool, len(policies))
+		for _, p := range policies {
+			ids[p.ID] = true
+		}
+		require.True(t, ids[on.ID], "active all-channels parent must be returned")
+		require.False(t, ids[off.ID], "parent without the flag must be excluded")
+		require.False(t, ids[inactive.ID], "inactive all-channels parent must be excluded")
 	})
 }
 

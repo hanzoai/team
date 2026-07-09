@@ -10951,6 +10951,10 @@
     "translation": "Permission action rules are only allowed on channel policies."
   },
   {
+    "id": "model.access_policy.is_valid.applies_to_all_channels.app_error",
+    "translation": "The all-channels flag is only valid on parent policies."
+  },
+  {
     "id": "model.access_policy.is_valid.id.app_error",
     "translation": "Invalid policy id."
   },

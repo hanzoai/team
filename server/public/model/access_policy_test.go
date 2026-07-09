@@ -265,6 +265,40 @@ func TestAccessControlPolicyValidateScope(t *testing.T) {
 	})
 }
 
+func TestAccessControlPolicyAppliesToAllChannels(t *testing.T) {
+	base := func(policyType string) *AccessControlPolicy {
+		return &AccessControlPolicy{
+			ID:                   NewId(),
+			Type:                 policyType,
+			Name:                 "Test Policy",
+			Revision:             1,
+			Version:              AccessControlPolicyVersionV0_1,
+			Rules:                []AccessControlPolicyRule{{Actions: []string{"*"}, Expression: "true"}},
+			AppliesToAllChannels: true,
+		}
+	}
+
+	t.Run("flag on parent — valid", func(t *testing.T) {
+		require.Nil(t, base(AccessControlPolicyTypeParent).IsValid())
+	})
+
+	for _, typ := range []string{AccessControlPolicyTypeChannel, AccessControlPolicyTypeTeam, AccessControlPolicyTypePermission} {
+		t.Run("flag on "+typ+" — invalid", func(t *testing.T) {
+			err := base(typ).IsValid()
+			require.NotNil(t, err)
+			require.Equal(t, "model.access_policy.is_valid.applies_to_all_channels.app_error", err.Id)
+		})
+	}
+
+	t.Run("flag unset on channel — no all-channels error", func(t *testing.T) {
+		p := base(AccessControlPolicyTypeChannel)
+		p.AppliesToAllChannels = false
+		if err := p.IsValid(); err != nil {
+			require.NotEqual(t, "model.access_policy.is_valid.applies_to_all_channels.app_error", err.Id)
+		}
+	})
+}
+
 func TestAccessPolicyVersionV0_3(t *testing.T) {
 	validRule := AccessControlPolicyRule{
 		Actions:    []string{AccessControlPolicyActionMembership},

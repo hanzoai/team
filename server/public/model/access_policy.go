@@ -110,6 +110,9 @@ type AccessControlPolicySearch struct {
 	Scope           string                    `json:"scope,omitempty"`
 	ScopeID         string                    `json:"scope_id,omitempty"`
 	Actions         []string                  `json:"actions"`
+	// AppliesToAllChannels, when true, restricts results to policies carrying the
+	// all-channels virtual scope flag in their Data jsonb.
+	AppliesToAllChannels bool `json:"applies_to_all_channels,omitempty"`
 }
 
 type AccessControlPolicyCursor struct {
@@ -137,6 +140,13 @@ type AccessControlPolicy struct {
 
 	Scope   string `json:"scope,omitempty"`    // "" (system) or "team"
 	ScopeID string `json:"scope_id,omitempty"` // team ID when scope="team"
+
+	// AppliesToAllChannels makes a parent policy govern every eligible private
+	// channel directly, with no explicit per-channel assignment or import. Only
+	// valid on parent-type policies. The engine AND-merges such a parent into
+	// every private channel's resolved rule; membership sync enumerates private
+	// channels directly rather than from an assignment list.
+	AppliesToAllChannels bool `json:"applies_to_all_channels,omitempty"`
 
 	Props map[string]any `json:"props"` // add auto-sync property here, also maybe the attributes being used in the expression
 }
@@ -197,6 +207,14 @@ func (p *AccessControlPolicy) IsValid() *AppError {
 		if appErr := p.validateScope(); appErr != nil {
 			return appErr
 		}
+	}
+
+	// The all-channels virtual scope only makes sense for a parent policy: it is
+	// the reusable rule-carrier merged into every private channel. A channel
+	// policy is already bound to one channel; team/permission target a different
+	// resource. Reject the flag anywhere else regardless of version.
+	if p.AppliesToAllChannels && p.Type != AccessControlPolicyTypeParent {
+		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.applies_to_all_channels.app_error", nil, "applies_to_all_channels is only valid on parent policies", 400)
 	}
 
 	switch p.Version {

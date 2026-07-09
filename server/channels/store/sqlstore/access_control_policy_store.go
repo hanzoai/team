@@ -29,6 +29,9 @@ type accessControlPolicyV0_1 struct {
 	Roles   []string                        `json:"roles,omitempty"`
 	Scope   string                          `json:"scope,omitempty"`
 	ScopeID string                          `json:"scope_id,omitempty"`
+	// AppliesToAllChannels rides in the Data jsonb; queried via containment
+	// (Data @> '{"applies_to_all_channels": true}') to list all-channels parents.
+	AppliesToAllChannels bool `json:"applies_to_all_channels,omitempty"`
 }
 
 // These are the fields that meant to be unchanged with the policy versions.
@@ -67,6 +70,7 @@ func (s *storeAccessControlPolicy) toModel() (*model.AccessControlPolicy, error)
 		policy.Roles = p.Roles
 		policy.Scope = p.Scope
 		policy.ScopeID = p.ScopeID
+		policy.AppliesToAllChannels = p.AppliesToAllChannels
 	}
 
 	if len(s.Props) > 0 {
@@ -84,11 +88,12 @@ func fromModel(policy *model.AccessControlPolicy) (*storeAccessControlPolicy, er
 		imports = []string{}
 	}
 	data, err := json.Marshal(&accessControlPolicyV0_1{
-		Imports: imports,
-		Rules:   policy.Rules,
-		Roles:   policy.Roles,
-		Scope:   policy.Scope,
-		ScopeID: policy.ScopeID,
+		Imports:              imports,
+		Rules:                policy.Rules,
+		Roles:                policy.Roles,
+		Scope:                policy.Scope,
+		ScopeID:              policy.ScopeID,
+		AppliesToAllChannels: policy.AppliesToAllChannels,
 	})
 	if err != nil {
 		return nil, err
@@ -682,6 +687,12 @@ func (s *SqlAccessControlPolicyStore) SearchPolicies(rctx request.CTX, opts mode
 	if opts.Active {
 		query = query.Where(sq.Eq{"Active": true})
 		count = count.Where(sq.Eq{"Active": true})
+	}
+
+	if opts.AppliesToAllChannels {
+		condition := sq.Expr(`Data @> '{"applies_to_all_channels": true}'`)
+		query = query.Where(condition)
+		count = count.Where(condition)
 	}
 
 	if len(opts.IDs) > 0 {
