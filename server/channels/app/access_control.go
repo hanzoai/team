@@ -167,6 +167,8 @@ func (a *App) CreateOrUpdateAccessControlPolicy(rctx request.CTX, policy *model.
 		return nil, appErr
 	}
 
+	a.auditAllChannelsPolicyBlastRadius(rctx, policy)
+
 	switch policy.Type {
 	case model.AccessControlPolicyTypeChannel:
 		a.publishChannelPolicyEnforcedUpdate(rctx, policy.ID)
@@ -1831,9 +1833,39 @@ func (a *App) UpdateAccessControlPoliciesActive(rctx request.CTX, updates []mode
 	// and cluster-wide).
 	if toggledParent {
 		acs.InvalidateAllChannelsCache(rctx)
+		for _, policy := range policies {
+			a.auditAllChannelsPolicyBlastRadius(rctx, policy)
+		}
 	}
 
 	return policies, nil
+}
+
+// auditAllChannelsPolicyBlastRadius records, when an all-channels parent policy
+// becomes active, how many private channels it now governs. Activating such a
+// policy makes every eligible private channel PDP-gated at once (deny-on-miss is
+// fail-secure but high blast radius), so the count is logged for operators.
+// No-op for any other policy or an inactive one.
+func (a *App) auditAllChannelsPolicyBlastRadius(rctx request.CTX, policy *model.AccessControlPolicy) {
+	if policy == nil || !policy.AppliesToAllChannels || !policy.Active {
+		return
+	}
+	_, total, appErr := a.SearchAllChannels(rctx, "", model.ChannelSearchOpts{
+		Private:                 true,
+		ExcludeGroupConstrained: true,
+		ExcludeRemote:           true,
+		IncludeDeleted:          false,
+		Page:                    model.NewPointer(0),
+		PerPage:                 model.NewPointer(1),
+	})
+	if appErr != nil {
+		rctx.Logger().Warn("Failed to compute all-channels policy blast radius for audit",
+			mlog.String("policy_id", policy.ID), mlog.Err(appErr))
+		return
+	}
+	rctx.Logger().Info("Active all-channels access control policy governs all eligible private channels",
+		mlog.String("policy_id", policy.ID),
+		mlog.Int("private_channels_affected", total))
 }
 
 func (a *App) ExpressionToVisualAST(rctx request.CTX, expression string) (*model.VisualExpression, *model.AppError) {

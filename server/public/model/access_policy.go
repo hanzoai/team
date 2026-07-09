@@ -627,8 +627,9 @@ func (c *AccessControlPolicyCursor) IsValid() error {
 
 func (p *AccessControlPolicy) Auditable() map[string]any {
 	return map[string]any{
-		"id":       p.ID,
-		"type":     p.Type,
-		"revision": p.Revision,
+		"id":                      p.ID,
+		"type":                    p.Type,
+		"revision":                p.Revision,
+		"applies_to_all_channels": p.AppliesToAllChannels,
 	}
 }
