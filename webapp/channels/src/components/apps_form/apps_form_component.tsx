@@ -24,6 +24,7 @@ import LoadingSpinner from 'components/widgets/loading/loading_spinner';
 
 import {filterEmptyOptions} from 'utils/apps';
 import {momentToString, stringToMoment, resolveRelativeDate} from 'utils/date_utils';
+import {flattenCollapsible} from 'utils/dialog_conversion';
 
 import type {DoAppCallResult} from 'types/apps';
 
@@ -843,15 +844,11 @@ export class AppsForm extends React.PureComponent<Props, State> {
 
 // Returns all leaf fields, expanding collapsible sections.
 function flattenFields(fields?: AppField[]): AppField[] {
-    if (!fields) {
-        return [];
-    }
-    return fields.flatMap((field) => {
-        if (field.type === AppFieldTypes.COLLAPSIBLE) {
-            return flattenFields(field.fields);
-        }
-        return [field];
-    });
+    return flattenCollapsible(
+        fields || [],
+        (field) => field.type === AppFieldTypes.COLLAPSIBLE,
+        (field) => field.fields,
+    );
 }
 
 function fieldsAsElements(fields?: AppField[]): DialogElement[] {

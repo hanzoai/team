@@ -693,15 +693,27 @@ export function convertServerDialogResponseToAppForm(
 }
 
 /**
+ * Flatten a tree of items, expanding collapsible containers into their children.
+ * Shared by flattenDialogElements (DialogElement) and flattenFields (AppField)
+ * so the two stay in sync.
+ */
+export function flattenCollapsible<T>(
+    items: T[],
+    isCollapsible: (item: T) => boolean,
+    getChildren: (item: T) => T[] | undefined,
+): T[] {
+    return items.flatMap((item) => (isCollapsible(item) ? flattenCollapsible(getChildren(item) || [], isCollapsible, getChildren) : [item]));
+}
+
+/**
  * Flatten elements, expanding collapsible sections into their children.
  */
 export function flattenDialogElements(elements: DialogElement[]): DialogElement[] {
-    return elements.flatMap((element) => {
-        if (element.type === DialogElementTypes.COLLAPSIBLE) {
-            return flattenDialogElements(element.elements || []);
-        }
-        return [element];
-    });
+    return flattenCollapsible(
+        elements,
+        (element) => element.type === DialogElementTypes.COLLAPSIBLE,
+        (element) => element.elements,
+    );
 }
 
 /**
