@@ -619,7 +619,7 @@ func TestOpenDialogRequestIsValid(t *testing.T) {
 		request.Dialog.Elements[0].MaxLength = 9
 		err := request.IsValid()
 		assert.ErrorContains(t, err, "field is not valid")
-		assert.ErrorContains(t, err, "min length should be less then max length")
+		assert.ErrorContains(t, err, "min length should be less than max length")
 	})
 
 	t.Run("should fail on wrong element type", func(t *testing.T) {
