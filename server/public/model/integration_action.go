@@ -863,7 +863,7 @@ func (e *DialogElement) validateCommon() error {
 		multiErr = multierror.Append(multiErr, errors.Errorf("min length cannot be a negative number, got %d", e.MinLength))
 	}
 	if e.MinLength > e.MaxLength {
-		multiErr = multierror.Append(multiErr, errors.Errorf("min length should be less then max length, got %d > %d", e.MinLength, e.MaxLength))
+		multiErr = multierror.Append(multiErr, errors.Errorf("min length should be less than max length, got %d > %d", e.MinLength, e.MaxLength))
 	}
 
 	multiErr = multierror.Append(multiErr, checkMaxLength("DisplayName", e.DisplayName, DialogElementDisplayNameMaxLength))
