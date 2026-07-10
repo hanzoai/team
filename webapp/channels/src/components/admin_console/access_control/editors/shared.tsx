@@ -1,14 +1,23 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import React, {useCallback, useState} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {useDispatch} from 'react-redux';
+import AsyncSelect from 'react-select/async';
 
 import {Button} from '@mattermost/shared/components/button';
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import type {ChannelWithTeamData} from '@mattermost/types/channels';
 import type {UserPropertyField} from '@mattermost/types/properties_user';
 
+import {searchUsersForExpression} from 'mattermost-redux/actions/access_control';
+import {searchAllChannels} from 'mattermost-redux/actions/channels';
+import type {ActionResult} from 'mattermost-redux/types/actions';
+
 import Markdown from 'components/markdown';
+
+import TestResultsModal from '../modals/policy_test/test_modal';
 
 import './shared.scss';
 
@@ -224,6 +233,93 @@ export function TestButton({onClick, disabled, disabledTooltip, label}: TestButt
     }
 
     return button;
+}
+
+// True when an expression compares against the accessed channel's attributes.
+// Such a rule can only be tested against a concrete channel's values, so the
+// editor must supply one (its own scope, or the inline TestChannelSelect).
+export function referencesResourceAttributes(expression: string): boolean {
+    return expression.includes(RESOURCE_ATTRIBUTES_PREFIX);
+}
+
+type ChannelOption = {label: string; value: string};
+
+interface TestChannelSelectProps {
+    onChange: (channelId: string) => void;
+    disabled?: boolean;
+}
+
+// Inline single-channel picker for testing a resource.attributes.* rule when
+// the editor has no channel of its own (the system-console parent-policy
+// editor). Searches private channels only — that's all access policies apply
+// to for now — via the same admin all-channels search the assignment modal
+// uses. Reports the chosen id through onChange; the editor feeds it into the
+// test/simulate call.
+export function TestChannelSelect({onChange, disabled}: TestChannelSelectProps): JSX.Element {
+    const {formatMessage} = useIntl();
+    const dispatch = useDispatch();
+    const [selected, setSelected] = useState<ChannelOption | null>(null);
+
+    const placeholder = formatMessage({id: 'admin.access_control.test.channel_select.placeholder', defaultMessage: 'Select a channel to test against'});
+
+    const loadOptions = useCallback(async (term: string) => {
+        const action = await dispatch(searchAllChannels(term, {
+            private: true,
+            exclude_group_constrained: true,
+            exclude_remote: true,
+            exclude_default_channels: true,
+        }));
+        const channels = (action as ActionResult<ChannelWithTeamData[]>).data ?? [];
+        return channels.map((c): ChannelOption => ({
+            value: c.id,
+            label: c.team_display_name ? `${c.display_name} (${c.team_display_name})` : c.display_name,
+        }));
+    }, [dispatch]);
+
+    return (
+        <AsyncSelect<ChannelOption, false>
+            classNamePrefix='access-control-test-channel'
+            className='access-control-test-channel-select'
+            value={selected}
+            isDisabled={disabled}
+            isClearable={false}
+            defaultOptions={true}
+            cacheOptions={true}
+            loadOptions={loadOptions}
+            placeholder={placeholder}
+            aria-label={placeholder}
+            onChange={(option) => {
+                setSelected(option);
+                onChange(option ? option.value : '');
+            }}
+        />
+    );
+}
+
+interface TestResultsProps {
+    expression: string;
+
+    /** Channel to resolve resource.attributes.* against: the editor's own
+     *  scope (channel settings) or the one picked via TestChannelSelect. */
+    channelId?: string;
+    teamId?: string;
+    isStacked?: boolean;
+    onExited: () => void;
+}
+
+// The built-in expression test/simulate results modal.
+export function TestResults({expression, channelId, teamId, isStacked, onExited}: TestResultsProps): JSX.Element {
+    return (
+        <TestResultsModal
+            onExited={onExited}
+            isStacked={isStacked}
+            actions={{
+                openModal: () => {},
+                searchUsers: (term: string, after: string, limit: number) =>
+                    searchUsersForExpression(expression, term, after, limit, channelId, teamId),
+            }}
+        />
+    );
 }
 
 export function AddAttributeButton({onClick, disabled}: AddAttributeButtonProps): JSX.Element {

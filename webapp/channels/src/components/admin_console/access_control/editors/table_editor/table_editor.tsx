@@ -10,7 +10,6 @@ import type {AccessControlVisualAST} from '@mattermost/types/access_control';
 import type {UserPropertyField} from '@mattermost/types/properties_user';
 import {CHANNEL_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
 
-import {searchUsersForExpression} from 'mattermost-redux/actions/access_control';
 import type {ActionResult} from 'mattermost-redux/types/actions';
 
 import * as Menu from 'components/menu';
@@ -23,8 +22,7 @@ import type {TableRow} from './value_selector_menu';
 import ValueSelectorMenu from './value_selector_menu';
 
 import CELHelpModal from '../../modals/cel_help/cel_help_modal';
-import TestResultsModal from '../../modals/policy_test/test_modal';
-import {AddAttributeButton, TestButton, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator, isMultiselectOperator, isRankOperator, USER_ATTRIBUTES_PREFIX, RESOURCE_ATTRIBUTES_PREFIX, VISUAL_AST_ATTRIBUTE_VALUE_TYPE} from '../shared';
+import {AddAttributeButton, TestButton, TestChannelSelect, TestResults, referencesResourceAttributes, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator, isMultiselectOperator, isRankOperator, USER_ATTRIBUTES_PREFIX, RESOURCE_ATTRIBUTES_PREFIX, VISUAL_AST_ATTRIBUTE_VALUE_TYPE} from '../shared';
 
 import './table_editor.scss';
 
@@ -325,6 +323,10 @@ function TableEditor({
 
     const [rows, setRows] = useState<TableRow[]>([]);
     const [showTestResults, setShowTestResults] = useState(false);
+
+    // Channel picked via the inline selector to test a resource.attributes.*
+    // rule against, when this editor has no channel scope of its own.
+    const [testChannelId, setTestChannelId] = useState('');
     const [showHelpModal, setShowHelpModal] = useState(false);
     const [autoOpenAttributeMenuForRow, setAutoOpenAttributeMenuForRow] = useState<number | null>(null);
 
@@ -593,6 +595,12 @@ function TableEditor({
         });
     }, [updateExpression]);
 
+    // A rule comparing against the accessed channel's attributes needs a
+    // concrete channel to resolve those values. When this editor has no
+    // channel scope, the admin picks one inline to test against.
+    const needsTestChannel = !channelId && referencesResourceAttributes(value);
+    const effectiveTestChannelId = channelId || testChannelId;
+
     return (
         <div className='table-editor'>
             <table className='table-editor__table'>
@@ -742,46 +750,56 @@ function TableEditor({
                         defaultMessage: 'Each row is a single condition that must be met for a user to comply with the policy. All rules are combined with logical AND operator (`&&`).',
                     })}
                 />
-                <TestButton
-                    onClick={onTestClick ?? (() => setShowTestResults(true))}
-                    disabled={(testButtonDisabled ?? false) || disabled || (!onTestClick && !value) || userWouldBeExcluded || hasMaskedRows}
-                    disabledTooltip={
+                <div className='access-control-test-controls'>
+                    {needsTestChannel && (
+                        <TestChannelSelect
+                            onChange={setTestChannelId}
+                            disabled={disabled}
+                        />
+                    )}
+                    <TestButton
+                        onClick={onTestClick ?? (() => setShowTestResults(true))}
+                        disabled={(testButtonDisabled ?? false) || disabled || (!onTestClick && !value) || userWouldBeExcluded || hasMaskedRows || (needsTestChannel && !testChannelId)}
+                        disabledTooltip={
 
-                        // Precedence: an explicit parent-supplied
-                        // tooltip paired with `testButtonDisabled`
-                        // wins (the parent already chose what the
-                        // user should see and why), then the
-                        // user-excluded message, then any other
-                        // testButtonTooltip the parent passed
-                        // alongside other disable reasons. The
-                        // earlier `userWouldBeExcluded ? … : tooltip`
-                        // ternary silenced parent hints whenever the
-                        // self-exclusion check happened to also
-                        // be true.
-                        (testButtonDisabled && testButtonTooltip) ||
-                        (userWouldBeExcluded ? formatMessage({
-                            id: 'admin.access_control.table_editor.user_excluded_tooltip',
-                            defaultMessage: 'You cannot test access rules that would exclude you from the channel',
-                        }) : testButtonTooltip)
-                    }
-                    label={testButtonLabel}
-                />
+                            // Precedence: no-channel hint first (the test
+                            // literally can't run without one), then an
+                            // explicit parent-supplied tooltip paired with
+                            // `testButtonDisabled` (the parent already chose
+                            // what the user should see and why), then the
+                            // user-excluded message, then any other
+                            // testButtonTooltip the parent passed alongside
+                            // other disable reasons. The earlier
+                            // `userWouldBeExcluded ? … : tooltip` ternary
+                            // silenced parent hints whenever the self-exclusion
+                            // check happened to also be true.
+                            (needsTestChannel && !testChannelId ? formatMessage({
+                                id: 'admin.access_control.test.select_channel_tooltip',
+                                defaultMessage: 'Select a channel to test this rule against',
+                            }) : undefined) ||
+                            (testButtonDisabled && testButtonTooltip) ||
+                            (userWouldBeExcluded ? formatMessage({
+                                id: 'admin.access_control.table_editor.user_excluded_tooltip',
+                                defaultMessage: 'You cannot test access rules that would exclude you from the channel',
+                            }) : testButtonTooltip)
+                        }
+                        label={testButtonLabel}
+                    />
+                </div>
             </div>
 
             {/* Built-in expression-only modal. Suppressed when the parent
               * provided an `onTestClick` override (used by the permission-rule
-              * editor, which renders its own dual-lane simulation modal). */}
+              * editor, which renders its own dual-lane simulation modal).
+              * effectiveTestChannelId resolves resource.attributes.* rules
+              * against this editor's channel or the one picked inline. */}
             {!onTestClick && showTestResults && (
-                <TestResultsModal
-                    onExited={() => setShowTestResults(false)}
+                <TestResults
+                    expression={value}
+                    channelId={effectiveTestChannelId}
+                    teamId={teamId}
                     isStacked={true}
-                    actions={{
-                        openModal: () => {},
-                        searchUsers: (term: string, after: string, limit: number) => {
-                            // Return the action for the modal to dispatch
-                            return searchUsersForExpression(value, term, after, limit, channelId, teamId);
-                        },
-                    }}
+                    onExited={() => setShowTestResults(false)}
                 />
             )}
             {showHelpModal && (
