@@ -859,6 +859,7 @@ type UserAccessTokenStore interface {
 	Search(term string) ([]*model.UserAccessToken, error)
 	UpdateTokenEnable(tokenID string) error
 	UpdateTokenDisable(tokenID string) error
+	UpdateTokenRotate(tokenID, newToken string, expiresAt int64) error
 	UpdateLastNotifiedAt(tokenID string, notifiedAt int64) error
 }
 
