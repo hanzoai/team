@@ -1836,11 +1836,13 @@ describe('AppsFormComponent', () => {
                     name: 'sec',
                     type: 'collapsible',
                     label: 'Section',
-                    expanded,
-                    fields: [
-                        {name: 'inner', type: 'text', label: 'inner'},
-                        {name: 'innerRequired', type: 'text', label: 'innerRequired', is_required: true},
-                    ],
+                    collapsible_config: {
+                        expanded,
+                        fields: [
+                            {name: 'inner', type: 'text', label: 'inner'},
+                            {name: 'innerRequired', type: 'text', label: 'innerRequired', is_required: true},
+                        ],
+                    },
                 },
             ],
         });
@@ -1909,7 +1911,7 @@ describe('AppsFormComponent', () => {
             const formExpanded = makeForm(true);
 
             // Pre-fill the required child so validation doesn't block submit.
-            formExpanded.fields![1].fields![1].value = 'filled';
+            formExpanded.fields![1].collapsible_config!.fields![1].value = 'filled';
 
             renderWithContext(
                 <AppsForm
@@ -1974,11 +1976,13 @@ describe('AppsFormComponent', () => {
                         name: 'sec',
                         type: 'collapsible',
                         label: 'Section',
-                        expanded: true,
-                        fields: [
-                            {name: 'inner', type: 'text', label: 'inner'},
-                            {name: 'innerSecond', type: 'text', label: 'innerSecond'},
-                        ],
+                        collapsible_config: {
+                            expanded: true,
+                            fields: [
+                                {name: 'inner', type: 'text', label: 'inner'},
+                                {name: 'innerSecond', type: 'text', label: 'innerSecond'},
+                            ],
+                        },
                     },
                 ],
             };

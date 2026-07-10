@@ -2168,9 +2168,9 @@ describe('dialog_conversion - collapsible', () => {
             expect(field?.value).toBeUndefined();
 
             // check child element
-            expect(field?.fields?.[0].name).toBe('b');
-            expect(field?.fields?.[0].type).toBe('text');
-            expect(field?.fields?.[0].label).toBe('Text b');
+            expect(field?.collapsible_config?.fields?.[0].name).toBe('b');
+            expect(field?.collapsible_config?.fields?.[0].type).toBe('text');
+            expect(field?.collapsible_config?.fields?.[0].label).toBe('Text b');
         });
 
         it('defaults expanded to true when collapsed is undefined', () => {
@@ -2182,7 +2182,7 @@ describe('dialog_conversion - collapsible', () => {
             expect(errors).toHaveLength(0);
 
             // right now, collapsible shouldn't have a set collapsed value
-            expect(field?.expanded).toBe(true);
+            expect(field?.collapsible_config?.expanded).toBe(true);
         });
 
         it('honors collapsed=true', () => {
@@ -2193,7 +2193,7 @@ describe('dialog_conversion - collapsible', () => {
             // make sure no errors are present
             expect(errors).toHaveLength(0);
 
-            expect(field?.expanded).toBe(false);
+            expect(field?.collapsible_config?.expanded).toBe(false);
         });
 
         it('propagates child conversion errors', () => {
@@ -2307,14 +2307,14 @@ describe('dialog_conversion - collapsible', () => {
             expect(field?.value).toBeUndefined();
 
             // inner container, nested under outer's fields
-            const inner = field?.fields?.[0];
+            const inner = field?.collapsible_config?.fields?.[0];
             expect(inner?.name).toBe('inner');
             expect(inner?.type).toBe('collapsible');
             expect(inner?.value).toBeUndefined();
 
             // leaf field at the bottom
-            expect(inner?.fields?.[0].name).toBe('leaf');
-            expect(inner?.fields?.[0].type).toBe('text');
+            expect(inner?.collapsible_config?.fields?.[0].name).toBe('leaf');
+            expect(inner?.collapsible_config?.fields?.[0].type).toBe('text');
         });
     });
 
@@ -2341,8 +2341,8 @@ describe('dialog_conversion - collapsible', () => {
             expect(form.fields?.[0].type).toBe('collapsible');
 
             // and its child is converted and nested underneath
-            expect(form.fields?.[0].fields?.[0].name).toBe('child');
-            expect(form.fields?.[0].fields?.[0].type).toBe('text');
+            expect(form.fields?.[0].collapsible_config?.fields?.[0].name).toBe('child');
+            expect(form.fields?.[0].collapsible_config?.fields?.[0].type).toBe('text');
         });
 
         it('handles a collapsible alongside flat top-level fields', () => {

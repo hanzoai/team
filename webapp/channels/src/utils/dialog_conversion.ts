@@ -415,9 +415,11 @@ export function convertElement(element: DialogElement, options: ConversionOption
             name: String(element.name),
             type: AppFieldTypes.COLLAPSIBLE,
             label: String(element.display_name),
-            fields: childFields,
-            expanded: !element.collapsed,
-            bordered: !element.borderless,
+            collapsible_config: {
+                fields: childFields,
+                expanded: !element.collapsed,
+                bordered: !element.borderless,
+            },
         };
         return {field: collapsibleField, errors};
     }

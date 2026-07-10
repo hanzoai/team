@@ -697,13 +697,13 @@ export class AppsForm extends React.PureComponent<Props, State> {
         const {isEmbedded} = this.props;
 
         if (originalField.type === AppFieldTypes.COLLAPSIBLE) {
-            const childFields = originalField.fields || [];
+            const childFields = originalField.collapsible_config?.fields || [];
             return (
                 <CollapsibleSection
                     key={originalField.name}
                     label={originalField.label || originalField.name}
-                    expanded={originalField.expanded ?? true}
-                    bordered={originalField.bordered ?? true}
+                    expanded={originalField.collapsible_config?.expanded ?? true}
+                    bordered={originalField.collapsible_config?.bordered ?? true}
                     depth={depth}
                 >
                     {childFields.map((child, i) => this.renderField(child, autoFocus && i === 0, depth + 1))}
@@ -847,7 +847,7 @@ function flattenFields(fields?: AppField[]): AppField[] {
     return flattenCollapsible(
         fields || [],
         (field) => field.type === AppFieldTypes.COLLAPSIBLE,
-        (field) => field.fields,
+        (field) => field.collapsible_config?.fields,
     );
 }
 
