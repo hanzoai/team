@@ -6,9 +6,9 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/hanzoai/base v0.39.10
 	github.com/hanzoai/dbx v1.15.0
-	github.com/luxfi/metric v1.5.1
+	github.com/hanzoai/sqlite v0.2.4
+	github.com/luxfi/metric v1.5.7
 	golang.org/x/net v0.55.0
-	modernc.org/sqlite v1.48.1
 )
 
 require (
@@ -41,11 +41,12 @@ require (
 	github.com/jackc/pgx/v5 v5.9.1 // indirect
 	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/luxfi/cache v1.2.1 // indirect
-	github.com/luxfi/crypto v1.19.17 // indirect
-	github.com/luxfi/math v1.4.0 // indirect
+	github.com/luxfi/crypto v1.19.26 // indirect
+	github.com/luxfi/math v1.4.1 // indirect
 	github.com/luxfi/math/big v0.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
-	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mattn/go-isatty v0.0.21 // indirect
+	github.com/mattn/go-sqlite3 v1.14.47 // indirect
 	github.com/ncruces/go-strftime v1.0.0 // indirect
 	github.com/nexus-rpc/sdk-go v0.6.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
@@ -78,4 +79,5 @@ require (
 	modernc.org/libc v1.70.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
+	modernc.org/sqlite v1.48.1 // indirect
 )

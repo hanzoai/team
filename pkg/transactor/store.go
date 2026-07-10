@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"sync"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/hanzoai/sqlite"
 )
 
 // store keeps ONE SQLite database per (org, workspace) — the data plane is
