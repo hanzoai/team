@@ -18378,6 +18378,27 @@ func (s *RetryLayerUserAccessTokenStore) UpdateTokenEnable(tokenID string) error
 
 }
 
+func (s *RetryLayerUserAccessTokenStore) UpdateTokenRotate(tokenID string, newToken string, expiresAt int64) error {
+
+	tries := 0
+	for {
+		err := s.UserAccessTokenStore.UpdateTokenRotate(tokenID, newToken, expiresAt)
+		if err == nil {
+			return nil
+		}
+		if !isRepeatableError(err) {
+			return err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
 func (s *RetryLayerUserTermsOfServiceStore) Delete(userID string, termsOfServiceID string) error {
 
 	tries := 0

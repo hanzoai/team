@@ -14513,6 +14513,22 @@ func (s *TimerLayerUserAccessTokenStore) UpdateTokenEnable(tokenID string) error
 	return err
 }
 
+func (s *TimerLayerUserAccessTokenStore) UpdateTokenRotate(tokenID string, newToken string, expiresAt int64) error {
+	start := time.Now()
+
+	err := s.UserAccessTokenStore.UpdateTokenRotate(tokenID, newToken, expiresAt)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("UserAccessTokenStore.UpdateTokenRotate", success, elapsed)
+	}
+	return err
+}
+
 func (s *TimerLayerUserTermsOfServiceStore) Delete(userID string, termsOfServiceID string) error {
 	start := time.Now()
 
