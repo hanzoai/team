@@ -61,6 +61,34 @@ func TestHandlerServeHTTPErrors(t *testing.T) {
 	}
 }
 
+func TestHandlerRejectsJSONRequestOnHTMLEndpoint(t *testing.T) {
+	th := SetupWithStoreMock(t)
+
+	web := New(th.Server)
+	handler := web.HTMLHandler(func(c *Context, w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	request := httptest.NewRequest(http.MethodGet, "http://localhost:8065/login/sso/saml", nil)
+	request.Header.Set("Accept", "application/json")
+	response := httptest.NewRecorder()
+	handler.ServeHTTP(response, request)
+
+	assert.Equal(t, http.StatusNotAcceptable, response.Code)
+	assert.Equal(t, "application/json", response.Header().Get("Content-Type"))
+
+	var errorResponse struct {
+		Id         string `json:"id"`
+		Message    string `json:"message"`
+		BaseURL    string `json:"base_url"`
+		StatusCode int    `json:"status_code"`
+	}
+	require.NoError(t, json.Unmarshal(response.Body.Bytes(), &errorResponse))
+	assert.Equal(t, "api.context.html_endpoint_json_request.app_error", errorResponse.Id)
+	assert.Equal(t, "http://localhost:8065", errorResponse.BaseURL)
+	assert.Contains(t, errorResponse.Message, "http://localhost:8065")
+}
+
 func handlerForServeDefaultSecurityHeaders(c *Context, w http.ResponseWriter, r *http.Request) {
 }
 
