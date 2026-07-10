@@ -2551,8 +2551,6 @@ func TestDialogElement_Collapsible_IsValid(t *testing.T) {
 		}
 	}
 
-	// Discard helpers until the stub bodies below use them (Go fails on unused locals).
-	_, _ = validText, collapsible
 
 	t.Run("valid collapsible with one child passes", func(t *testing.T) {
 		oneChildEx := collapsible("s1", validText("a"))
