@@ -11,7 +11,7 @@ import type {Channel, ChannelModeration as ChannelPermissions, ChannelModeration
 import {SyncableType} from '@mattermost/types/groups';
 import type {SyncablePatch, Group} from '@mattermost/types/groups';
 import type {JobTypeBase} from '@mattermost/types/jobs';
-import type {UserPropertyField} from '@mattermost/types/properties';
+import type {UserPropertyField} from '@mattermost/types/properties_user';
 import type {Scheme} from '@mattermost/types/schemes';
 import type {Team} from '@mattermost/types/teams';
 import type {UserProfile} from '@mattermost/types/users';
@@ -1174,7 +1174,7 @@ export default class ChannelDetails extends React.PureComponent<ChannelDetailsPr
                     });
                 }
             }
-        } catch (error) {
+        } catch {
             // No channel policy exists, continue with empty rules
         }
     };
