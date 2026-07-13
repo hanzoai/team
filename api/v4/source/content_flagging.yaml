@@ -395,6 +395,51 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
+  /api/v4/content_flagging/post/{post_id}/delivery_tracking:
+    post:
+      summary: Trigger delivery tracking for a flagged post
+      description: |
+        Triggers the background job that copies the post's delivery-tracking records into the content-review store so a reviewer can see who the post was delivered to. The user must be a content reviewer of the team to which the post belongs, and the post must be flagged and in a pending or assigned status.
+        Post delivery tracking must be enabled, and an enterprise advanced license is required.
+      tags:
+        - Content Flagging
+      parameters:
+        - in: path
+          name: post_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the flagged post to trigger delivery tracking for
+      operationId: TriggerCFDeliveryTracking
+      responses:
+        '200':
+          description: Delivery-tracking data has already been generated and is ready to view.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusOK"
+        '201':
+          description: A new delivery-tracking job was created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusOK"
+        '202':
+          description: A delivery-tracking job is already queued or in progress for this post.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusOK"
+        '400':
+          description: The post is not flagged, is not in a pending/assigned status, belongs to a direct or group message, or its channel does not have delivery tracking enabled.
+        '403':
+          description: Forbidden - the user is not a content reviewer of the post's team.
+        '404':
+          description: Post not found, or the content flagging feature is disabled via the feature flag.
+        '500':
+          description: Internal server error.
+        '501':
+          description: Post delivery tracking is disabled, content flagging is disabled, or an Enterprise Advanced license is not available.
   /api/v4/content_flagging/post/{post_id}/report:
     post:
       summary: Generate and download a flagged post report
