@@ -3,7 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {configureOpenLdap, duration, expect, test} from '@mattermost/playwright-lib';
+import {duration, expect, initializeOpenLdap, test} from '@mattermost/playwright-lib';
 
 import {getActiveSessions, getSession, updateSessionExpiration} from './session_db';
 
@@ -17,10 +17,14 @@ test.describe('LDAP session extension', () => {
         await pw.ensureLicense();
         await pw.skipIfNoLicense();
         const {adminClient, adminUser} = await pw.getAdminClient();
-        await configureOpenLdap(adminClient);
-        await adminClient.testLdap();
-        await adminClient.syncLdap();
-        const {user} = await pw.makeClient(ldapAccount);
+        await initializeOpenLdap(adminClient);
+        const existingUser = await adminClient.getUserByUsername(ldapAccount.username);
+        await adminClient.updateUserRoles(existingUser.id, 'system_user');
+        await adminClient.revokeAllSessionsForUser(existingUser.id);
+        for (const existingTeam of await adminClient.getTeamsForUser(existingUser.id)) {
+            await adminClient.removeFromTeam(existingTeam.id, existingUser.id);
+        }
+        const {user} = await pw.makeClient(ldapAccount, {useCache: false});
         if (!user) {
             throw new Error(`Unable to create LDAP user ${ldapAccount.username}`);
         }
@@ -90,31 +94,25 @@ test.describe('LDAP session extension', () => {
         'MM-T4046_2 LDAP user session should not extend even with user activity when disabled',
         {tag: '@ldap'},
         async ({pw}) => {
+            // # Create user activity, then move the session close to expiration
             const {adminClient, channelsPage, ldapUser, page} = await setup(pw, false);
             const [initialSession] = await getActiveSessions(ldapUser.id);
             expect(initialSession).toBeTruthy();
-            const nearExpiry = Date.now() + duration.two_sec;
+            const nearExpiry = Date.now() + duration.ten_sec;
             await channelsPage.postMessage(`now: ${Date.now()}`);
             const updated = await updateSessionExpiration(initialSession.id, nearExpiry);
             expect(Number(updated.expiresat)).toBe(nearExpiry);
             await adminClient.invalidateCaches();
 
-            // # Reload and generate activity with session extension disabled
-            await page.reload();
-
             // * Verify the session expiration does not change
             expect(Number((await getSession(initialSession.id)).expiresat)).toBe(nearExpiry);
 
             // * Verify the user is redirected to login after expiration
-            await expect
-                .poll(
-                    async () => {
-                        await page.reload();
-                        return new URL(page.url()).pathname;
-                    },
-                    {timeout: duration.half_min},
-                )
-                .toMatch(/\/login/);
+            await expect.poll(() => Date.now(), {timeout: duration.half_min}).toBeGreaterThan(nearExpiry);
+            await page.goto('/');
+            await expect(page.getByRole('heading', {name: 'Log in to your account', exact: true})).toBeVisible({
+                timeout: duration.half_min,
+            });
             expect(await getActiveSessions(ldapUser.id)).toHaveLength(0);
             expect(Number((await getSession(initialSession.id)).expiresat)).toBe(nearExpiry);
         },

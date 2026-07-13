@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {EnterpriseSystemConsolePage, expect, initializeOpenLdap, test} from '@mattermost/playwright-lib';
+import {duration, EnterpriseSystemConsolePage, expect, initializeOpenLdap, test} from '@mattermost/playwright-lib';
 
 test.describe('LDAP channel management modes', () => {
     async function setup(pw: any) {
@@ -32,7 +32,9 @@ test.describe('LDAP channel management modes', () => {
             await consolePage.saveConfiguration(true);
 
             // * Verify private mode is persisted
-            expect((await adminClient.getChannel(channel.id)).type).toBe('P');
+            await expect
+                .poll(async () => (await adminClient.getChannel(channel.id)).type, {timeout: duration.half_min})
+                .toBe('P');
 
             // # Change and save the private channel as public
             await consolePage.gotoChannelConfiguration(channel.id);
@@ -40,7 +42,9 @@ test.describe('LDAP channel management modes', () => {
             await consolePage.saveConfiguration(true);
 
             // * Verify public mode is persisted
-            expect((await adminClient.getChannel(channel.id)).type).toBe('O');
+            await expect
+                .poll(async () => (await adminClient.getChannel(channel.id)).type, {timeout: duration.half_min})
+                .toBe('O');
         },
     );
 

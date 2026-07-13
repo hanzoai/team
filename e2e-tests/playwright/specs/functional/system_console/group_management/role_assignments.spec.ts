@@ -7,6 +7,7 @@ import {
     expect,
     getOrLinkLdapGroup,
     initializeOpenLdap,
+    resetLdapGroup,
     test,
 } from '@mattermost/playwright-lib';
 
@@ -17,6 +18,7 @@ test.describe('LDAP group role assignments', () => {
         const {adminClient, adminUser} = await pw.getAdminClient();
         await initializeOpenLdap(adminClient);
         const group = await getOrLinkLdapGroup(adminClient, groupName);
+        await resetLdapGroup(adminClient, group.id);
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser.id);
         const channel = await adminClient.createPublicChannel(team.id, 'Role Assignment Channel');
@@ -29,7 +31,7 @@ test.describe('LDAP group role assignments', () => {
      * @precondition MM-21789 is consolidated here because its Team Admin persistence assertion is already an intermediate verification in MM-20059.
      */
     test('MM-20059 MM-21789 maps and persists group roles from Team Configuration', {tag: '@ldap'}, async ({pw}) => {
-        const {consolePage, group, team} = await setup(pw);
+        const {adminClient, consolePage, group, team} = await setup(pw);
 
         // # Find the team and add the linked LDAP group
         await consolePage.gotoTeamsList();
@@ -40,6 +42,13 @@ test.describe('LDAP group role assignments', () => {
         // # Promote the group to Team Admin and save
         await consolePage.changeGroupRole('Member', 'Team Admin');
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () =>
+                    (await adminClient.getGroupSyncableIncludingDeleted(group.id, team.id, 'team')).scheme_admin,
+                {timeout: duration.half_min},
+            )
+            .toBe(true);
         await consolePage.gotoTeamsList();
         await consolePage.searchManagementList(team.display_name);
         await consolePage.openOnlyManagementResult();
@@ -50,6 +59,13 @@ test.describe('LDAP group role assignments', () => {
         // # Revert the role to Member and save
         await consolePage.changeGroupRole('Team Admin', 'Member');
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () =>
+                    (await adminClient.getGroupSyncableIncludingDeleted(group.id, team.id, 'team')).scheme_admin,
+                {timeout: duration.half_min},
+            )
+            .toBe(false);
         await consolePage.gotoTeamsList();
         await consolePage.searchManagementList(team.display_name);
         await consolePage.openOnlyManagementResult();
@@ -60,6 +76,12 @@ test.describe('LDAP group role assignments', () => {
         // # Remove the group and save
         await consolePage.removeGroup(group.display_name);
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () => (await adminClient.getGroupSyncableIncludingDeleted(group.id, team.id, 'team')).delete_at,
+                {timeout: duration.half_min},
+            )
+            .not.toBe(0);
         await consolePage.gotoTeamsList();
         await consolePage.searchManagementList(team.display_name);
         await consolePage.openOnlyManagementResult();
@@ -73,7 +95,7 @@ test.describe('LDAP group role assignments', () => {
      * @precondition MM-21789 is consolidated here because its Channel Admin persistence assertion is already an intermediate verification in MM-20646.
      */
     test('MM-20646 MM-21789 maps and persists group roles from Channel Configuration', {tag: '@ldap'}, async ({pw}) => {
-        const {channel, consolePage, group} = await setup(pw);
+        const {adminClient, channel, consolePage, group} = await setup(pw);
 
         // # Find the channel and add the linked LDAP group
         await consolePage.gotoChannelsList();
@@ -84,6 +106,13 @@ test.describe('LDAP group role assignments', () => {
         // # Promote the group to Channel Admin and save
         await consolePage.changeGroupRole('Member', 'Channel Admin');
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () =>
+                    (await adminClient.getGroupSyncableIncludingDeleted(group.id, channel.id, 'channel')).scheme_admin,
+                {timeout: duration.half_min},
+            )
+            .toBe(true);
         await consolePage.gotoChannelsList();
         await consolePage.searchManagementList(channel.display_name);
         await consolePage.openOnlyManagementResult();
@@ -94,6 +123,13 @@ test.describe('LDAP group role assignments', () => {
         // # Revert the role to Member and save
         await consolePage.changeGroupRole('Channel Admin', 'Member');
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () =>
+                    (await adminClient.getGroupSyncableIncludingDeleted(group.id, channel.id, 'channel')).scheme_admin,
+                {timeout: duration.half_min},
+            )
+            .toBe(false);
         await consolePage.gotoChannelsList();
         await consolePage.searchManagementList(channel.display_name);
         await consolePage.openOnlyManagementResult();
@@ -107,19 +143,17 @@ test.describe('LDAP group role assignments', () => {
      */
     test('MM-T2668 saves an administrator role for a group membership', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, channel, consolePage, group, team} = await setup(pw, 'developers');
-        const teamLinks = await adminClient.getGroupSyncables(group.id, 'team');
-        const channelLinks = await adminClient.getGroupSyncables(group.id, 'channel');
-        for (const link of channelLinks as Array<{channel_id: string}>) {
-            await adminClient.unlinkGroupSyncable(group.id, link.channel_id, 'channel');
-        }
-        for (const link of teamLinks as Array<{team_id: string}>) {
-            await adminClient.unlinkGroupSyncable(group.id, link.team_id, 'team');
-        }
 
         // # Add and save the team before its channel so their implied team links are not created concurrently
         await consolePage.gotoGroupConfiguration(group.id);
         await consolePage.addTeamOrChannel('Team', team.display_name);
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () => (await adminClient.getGroupSyncableIncludingDeleted(group.id, team.id, 'team')).delete_at,
+                {timeout: duration.half_min},
+            )
+            .toBe(0);
         await consolePage.addTeamOrChannel('Channel', channel.display_name);
 
         // * Verify each membership starts with the Member role

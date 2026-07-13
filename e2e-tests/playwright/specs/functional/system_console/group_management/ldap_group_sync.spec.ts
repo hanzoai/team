@@ -1,7 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {configureOpenLdap, EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
+import {
+    duration,
+    EnterpriseSystemConsolePage,
+    expect,
+    initializeOpenLdap,
+    resetLdapGroup,
+    test,
+} from '@mattermost/playwright-lib';
 
 test.describe('LDAP group-synchronized team and channel management', () => {
     test.describe.configure({mode: 'serial'});
@@ -10,9 +17,7 @@ test.describe('LDAP group-synchronized team and channel management', () => {
         await pw.ensureLicense();
         await pw.skipIfNoLicense();
         const {adminClient} = await pw.getAdminClient();
-        await configureOpenLdap(adminClient);
-        await adminClient.testLdap();
-        await adminClient.syncLdap();
+        await initializeOpenLdap(adminClient);
     });
 
     async function setup(pw: any) {
@@ -40,6 +45,8 @@ test.describe('LDAP group-synchronized team and channel management', () => {
         const developers = linkedGroups.find((group: {display_name: string}) => group.display_name === 'developers');
         expect(board).toBeTruthy();
         expect(developers).toBeTruthy();
+        await resetLdapGroup(adminClient, board.id);
+        await resetLdapGroup(adminClient, developers.id);
         return {adminClient, adminUser, user, team, channel, board, developers};
     }
 
@@ -58,6 +65,16 @@ test.describe('LDAP group-synchronized team and channel management', () => {
         await expect(page.getByText('board', {exact: true})).toBeVisible();
         await page.getByRole('link', {name: 'Remove'}).first().click();
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () =>
+                    (await adminClient.getGroupSyncableIncludingDeleted(board.id, channel.id, 'channel')).delete_at,
+                {timeout: duration.half_min},
+            )
+            .not.toBe(0);
+        expect(
+            (await adminClient.getGroupSyncableIncludingDeleted(developers.id, channel.id, 'channel')).delete_at,
+        ).toBe(0);
         await consolePage.gotoChannelConfiguration(channel.id);
 
         // * Verify only the developers group remains

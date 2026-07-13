@@ -177,7 +177,7 @@ export async function configureOpenLdap(client: PlaywrightClient4) {
 export async function initializeOpenLdap(client: PlaywrightClient4) {
     await configureOpenLdap(client);
     await client.testLdap();
-    await client.syncLdap();
+    await runLdapSync(client);
 }
 
 /**
@@ -193,4 +193,19 @@ export async function getOrLinkLdapGroup(client: PlaywrightClient4, name: string
     return ldapGroup.mattermost_group_id
         ? client.getGroup(ldapGroup.mattermost_group_id)
         : client.linkLdapGroup(ldapGroup.primary_key);
+}
+
+/**
+ * Restores mutable Mattermost state attached to a shared LDAP group.
+ */
+export async function resetLdapGroup(client: PlaywrightClient4, groupId: string) {
+    await client.patchGroup(groupId, {allow_reference: false});
+    for (const link of (await client.getGroupSyncables(groupId, 'channel')) as unknown as Array<{
+        channel_id: string;
+    }>) {
+        await client.unlinkGroupSyncable(groupId, link.channel_id, 'channel');
+    }
+    for (const link of (await client.getGroupSyncables(groupId, 'team')) as unknown as Array<{team_id: string}>) {
+        await client.unlinkGroupSyncable(groupId, link.team_id, 'team');
+    }
 }

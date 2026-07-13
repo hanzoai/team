@@ -12,6 +12,7 @@ export {
     getOrLinkLdapGroup,
     initializeOpenLdap,
     OpenLdapClient,
+    resetLdapGroup,
     runLdapSync,
 } from './ldap';
 export type {LdapUser} from './ldap';

@@ -1,0 +1,144 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import type {UserProfile} from '@mattermost/types/users';
+
+import {EnterpriseSystemConsolePage, expect, runLdapSync, test} from '@mattermost/playwright-lib';
+
+import {getLdapUser, ldapUsers, loginFromPage, removeFromAllTeams, setupLdap} from './support';
+
+test.describe('LDAP authentication and guest filters', () => {
+    test.describe.configure({mode: 'serial'});
+
+    test.beforeEach(async ({pw}) => {
+        await setupLdap(pw);
+    });
+
+    /**
+     * @objective Verify the LDAP guest filter demotes matching users and preserves their guest role when cleared
+     */
+    test('MM-T1422 LDAP Guest Filter', {tag: '@ldap'}, async ({pw}) => {
+        const {adminClient, adminUser} = await pw.getAdminClient();
+        await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}});
+        const userOne = await getLdapUser(pw, adminClient, ldapUsers.guestFilterOne);
+        const userTwo = await getLdapUser(pw, adminClient, ldapUsers.guestFilterTwo);
+        await adminClient.promoteGuestToUser(userOne.id).catch(() => undefined);
+        await adminClient.promoteGuestToUser(userTwo.id).catch(() => undefined);
+        await removeFromAllTeams(adminClient, userOne);
+        await removeFromAllTeams(adminClient, userTwo);
+        const {page} = await pw.testBrowser.login(adminUser!);
+        const consolePage = new EnterpriseSystemConsolePage(page);
+
+        // # Set the LDAP guest filter to the first user and synchronize
+        await consolePage.gotoLdap();
+        await consolePage.expandAdditionalFilters();
+        await consolePage.setGuestFilter(`(uid=${ldapUsers.guestFilterOne.username})`);
+        await runLdapSync(adminClient);
+        await pw.makeClient(ldapUsers.guestFilterOne, {useCache: false});
+
+        // * Verify only the matching account becomes a guest
+        expect((await adminClient.getUser(userOne.id)).roles).toContain('system_guest');
+        expect((await adminClient.getUser(userTwo.id)).roles).not.toContain('system_guest');
+
+        // # Clear the guest filter and synchronize again
+        await consolePage.setGuestFilter('');
+        await runLdapSync(adminClient);
+
+        // * Verify the existing guest remains a guest
+        expect((await adminClient.getUser(userOne.id)).roles).toContain('system_guest');
+    });
+
+    /**
+     * @objective Verify LDAP and SAML guest filters are disabled and ignored when guest access is disabled
+     */
+    test('MM-T1424 LDAP Guest Filter behavior when Guest Access is disabled', {tag: '@ldap'}, async ({pw}) => {
+        const {adminClient, adminUser} = await pw.getAdminClient();
+        const user = await getLdapUser(pw, adminClient, ldapUsers.guestFilterOne);
+        const {page} = await pw.testBrowser.login(adminUser!);
+        const consolePage = new EnterpriseSystemConsolePage(page);
+
+        // # Enable guests and restore the LDAP account as a regular member
+        await consolePage.gotoGuestAccess();
+        await consolePage.setGuestAccess(true);
+        await runLdapSync(adminClient);
+        await adminClient.promoteGuestToUser(user.id).catch(() => undefined);
+
+        // # Configure a guest filter, then disable guest access
+        await consolePage.gotoLdap();
+        await consolePage.expandAdditionalFilters();
+        await consolePage.setGuestFilter(`(uid=${ldapUsers.guestFilterOne.username})`);
+        await consolePage.gotoGuestAccess();
+        await consolePage.setGuestAccess(false);
+
+        // * Verify LDAP and SAML guest filter controls are disabled
+        await consolePage.gotoLdap();
+        await expect(page.getByTestId('LdapSettings.GuestFilterinput')).toBeDisabled();
+        await consolePage.gotoSaml();
+        await expect(page.getByTestId('SamlSettings.GuestAttributeinput')).toBeDisabled();
+
+        // # Log in again after disabling guest access
+        await loginFromPage(pw, ldapUsers.guestFilterOne);
+
+        // * Verify the disabled guest filter does not demote the LDAP user
+        expect((await adminClient.getUser(user.id)).roles).not.toContain('system_guest');
+    });
+
+    /**
+     * @objective Verify manually demoting an LDAP member persists after the user logs in again
+     */
+    test('MM-T1425 LDAP Guest Filter Change', {tag: '@ldap'}, async ({pw}) => {
+        const {adminClient} = await pw.getAdminClient();
+        await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}, LdapSettings: {GuestFilter: ''}});
+        const user = await getLdapUser(pw, adminClient, ldapUsers.guestFilterTwo);
+        await adminClient.demoteUserToGuest(user.id);
+
+        // # Log in again after demotion
+        await loginFromPage(pw, ldapUsers.guestFilterTwo);
+
+        // * Verify the account remains a guest
+        expect((await adminClient.getUser(user.id)).roles).toContain('system_guest');
+    });
+
+    /**
+     * @objective Verify a guest in a group-synchronized team cannot invite another guest
+     */
+    test('MM-T1427 Prevent Invite Guest for LDAP Group Synced Teams', {tag: '@ldap'}, async ({pw}) => {
+        const {adminClient, adminUser} = await pw.getAdminClient();
+        await adminClient.patchConfig({
+            GuestAccountsSettings: {Enable: true},
+            LdapSettings: {GuestFilter: '(cn=board*)'},
+        });
+        await runLdapSync(adminClient);
+        const team = await adminClient.createTeam(await pw.random.team());
+        await adminClient.addToTeam(team.id, adminUser!.id);
+        const {groups} = await adminClient.getLdapGroups();
+        const board = groups.find((group: {name: string}) => group.name === 'board');
+        expect(board).toBeTruthy();
+        const linked = board!.mattermost_group_id
+            ? await adminClient.getGroup(board!.mattermost_group_id)
+            : await adminClient.linkLdapGroup(board!.primary_key);
+        expect(linked).toBeTruthy();
+        await adminClient.linkGroupSyncable(linked!.id, team.id, 'team', {auto_add: true});
+        await runLdapSync(adminClient);
+        const {user: authenticatedMember} = await pw.makeClient(ldapUsers.guest, {useCache: false});
+        if (!authenticatedMember) {
+            throw new Error(`Unable to authenticate LDAP member ${ldapUsers.guest.username}`);
+        }
+        await adminClient.promoteGuestToUser(authenticatedMember.id).catch(() => undefined);
+        const member = {...authenticatedMember, password: ldapUsers.guest.password} as UserProfile;
+        await adminClient.createGroupTeamsAndChannels(member.id);
+        await adminClient.getTeamMember(team.id, member.id).catch(() => adminClient.addToTeam(team.id, member.id));
+        const townSquare = await adminClient.getChannelByName(team.id, 'town-square');
+        await adminClient
+            .getChannelMember(townSquare.id, member.id)
+            .catch(() => adminClient.addToChannel(member.id, townSquare.id));
+
+        // # Log in as the synchronized member and open the team menu
+        const {channelsPage} = await pw.testBrowser.login(member);
+        await channelsPage.goto(team.name, 'town-square');
+        const teamMenu = await channelsPage.openTeamMenu();
+
+        // * Verify inviting people is unavailable for the group-synchronized team
+        await expect(teamMenu.invitePeople).not.toBeVisible();
+    });
+});

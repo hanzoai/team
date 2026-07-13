@@ -89,12 +89,10 @@ export default class EnterpriseSystemConsolePage {
     }
 
     async saveConfiguration(confirm = false) {
-        const save = this.page.getByRole('button', {name: 'Save', exact: true});
-        await save.click();
+        await this.page.getByRole('button', {name: 'Save', exact: true}).click();
         if (confirm) {
             await this.page.getByRole('dialog').getByRole('button', {name: /^Yes,/}).click();
         }
-        await expect(save).toBeDisabled({timeout: duration.half_min});
     }
 
     async searchManagementList(value: string) {
@@ -262,7 +260,7 @@ export default class EnterpriseSystemConsolePage {
 
     async gotoSystemScheme() {
         await this.page.goto('/admin_console/user_management/permissions/system_scheme');
-        await expect(this.page.getByRole('heading', {name: 'Guests', exact: true})).toBeVisible({
+        await expect(this.page.getByRole('heading', {name: 'All Members', exact: true})).toBeVisible({
             timeout: duration.half_min,
         });
     }

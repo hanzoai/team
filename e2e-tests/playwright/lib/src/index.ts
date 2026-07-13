@@ -24,6 +24,7 @@ export {
     initializeOpenLdap,
     KeycloakAdminClient,
     OpenLdapClient,
+    resetLdapGroup,
     runLdapSync,
 } from './server';
 export type {KeycloakUser, LdapUser} from './server';
