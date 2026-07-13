@@ -624,6 +624,10 @@ func setProfileImage(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if c.Err = checkProfilePictureLock(c); c.Err != nil {
+		return
+	}
+
 	if *c.App.Config().FileSettings.DriverName == "" {
 		c.Err = model.NewAppError("uploadProfileImage", "api.user.upload_profile_user.storage.app_error", nil, "", http.StatusNotImplemented)
 		return
@@ -692,6 +696,10 @@ func setDefaultProfileImage(c *Context, w http.ResponseWriter, r *http.Request) 
 
 	if !c.App.SessionHasPermissionToUserOrBot(c.AppContext, *c.AppContext.Session(), c.Params.UserId) {
 		c.SetPermissionError(model.PermissionEditOtherUsers)
+		return
+	}
+
+	if c.Err = checkProfilePictureLock(c); c.Err != nil {
 		return
 	}
 
@@ -1464,6 +1472,46 @@ func autocompleteUsers(c *Context, w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// checkLockedProfileFields returns a conflict error when the patch changes profile fields
+// locked by TeamSettings.LockProfileFieldsForEmailUsers. Sessions that may edit other users
+// (admins) are exempt.
+func checkLockedProfileFields(c *Context, user *model.User, patch *model.UserPatch) *model.AppError {
+	if c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionEditOtherUsers) {
+		return nil
+	}
+
+	lockedField := c.App.CheckLockedProfileFields(user, patch)
+	if lockedField == "" {
+		return nil
+	}
+
+	return model.NewAppError(
+		"checkLockedProfileFields", "api.user.update_user.profile_field_locked.app_error",
+		map[string]any{"Field": lockedField}, "", http.StatusConflict)
+}
+
+// checkProfilePictureLock returns a conflict error when the profile picture of the user in
+// the request is locked by TeamSettings.LockProfileFieldsForEmailUsers. Sessions that may
+// edit other users (admins) are exempt.
+func checkProfilePictureLock(c *Context) *model.AppError {
+	if c.App.SessionHasPermissionTo(*c.AppContext.Session(), model.PermissionEditOtherUsers) {
+		return nil
+	}
+
+	user, err := c.App.GetUser(c.Params.UserId)
+	if err != nil {
+		return err
+	}
+
+	if !c.App.IsProfilePictureLockedForUser(user) {
+		return nil
+	}
+
+	return model.NewAppError(
+		"checkProfilePictureLock", "api.user.update_user.profile_field_locked.app_error",
+		map[string]any{"Field": "profile picture"}, "", http.StatusConflict)
+}
+
 func updateUser(c *Context, w http.ResponseWriter, r *http.Request) {
 	c.RequireUserId()
 	if c.Err != nil {
@@ -1520,6 +1568,10 @@ func updateUser(c *Context, w http.ResponseWriter, r *http.Request) {
 		c.Err = model.NewAppError(
 			"updateUser", "api.user.update_user.login_provider_attribute_set.app_error",
 			map[string]any{"Field": conflictField}, "", http.StatusConflict)
+		return
+	}
+
+	if c.Err = checkLockedProfileFields(c, ouser, user.ToPatch()); c.Err != nil {
 		return
 	}
 
@@ -1598,6 +1650,10 @@ func patchUser(c *Context, w http.ResponseWriter, r *http.Request) {
 		c.Err = model.NewAppError(
 			"patchUser", "api.user.patch_user.login_provider_attribute_set.app_error",
 			map[string]any{"Field": conflictField}, "", http.StatusConflict)
+		return
+	}
+
+	if c.Err = checkLockedProfileFields(c, ouser, &patch); c.Err != nil {
 		return
 	}
 

@@ -858,6 +858,21 @@ func TestTeamSettingsIsValidSiteNameEmpty(t *testing.T) {
 	require.Nil(t, c1.TeamSettings.isValid())
 }
 
+func TestTeamSettingsIsValidLockProfileFieldsForEmailUsers(t *testing.T) {
+	c1 := Config{}
+	c1.SetDefaults()
+
+	require.Equal(t, LockProfileFieldsNone, *c1.TeamSettings.LockProfileFieldsForEmailUsers)
+
+	for _, valid := range []string{LockProfileFieldsNone, LockProfileFieldsNameAndUsername, LockProfileFieldsAll} {
+		c1.TeamSettings.LockProfileFieldsForEmailUsers = new(valid)
+		require.Nil(t, c1.TeamSettings.isValid())
+	}
+
+	c1.TeamSettings.LockProfileFieldsForEmailUsers = new("invalid")
+	require.NotNil(t, c1.TeamSettings.isValid())
+}
+
 func TestTeamSettingsDefaultJoinLeaveMessage(t *testing.T) {
 	c1 := Config{}
 	c1.SetDefaults()

@@ -1393,6 +1393,51 @@ func (a *App) CheckProviderAttributes(rctx request.CTX, user *model.User, patch 
 	return conflictField
 }
 
+// CheckLockedProfileFields returns the empty string if the patch can be applied without
+// changing profile fields locked by TeamSettings.LockProfileFieldsForEmailUsers; otherwise,
+// the name of the offending field is returned. The lock only applies to email/password users,
+// requires at least an Enterprise license, and is meant for self-service updates - callers
+// should skip it for sessions allowed to edit other users.
+func (a *App) CheckLockedProfileFields(user *model.User, patch *model.UserPatch) string {
+	lock := *a.Config().TeamSettings.LockProfileFieldsForEmailUsers
+	if lock == model.LockProfileFieldsNone || user.AuthService != "" || !model.MinimumEnterpriseLicense(a.License()) {
+		return ""
+	}
+
+	tryingToChange := func(userValue *string, patchValue *string) bool {
+		return patchValue != nil && *patchValue != *userValue
+	}
+
+	if tryingToChange(&user.Username, patch.Username) {
+		return "username"
+	}
+
+	// Signup doesn't collect names, so an empty full name may still be filled in once.
+	nameAlreadySet := user.FirstName != "" || user.LastName != ""
+	if nameAlreadySet && (tryingToChange(&user.FirstName, patch.FirstName) || tryingToChange(&user.LastName, patch.LastName)) {
+		return "full name"
+	}
+
+	if lock == model.LockProfileFieldsAll {
+		if tryingToChange(&user.Nickname, patch.Nickname) {
+			return "nickname"
+		}
+		if tryingToChange(&user.Position, patch.Position) {
+			return "position"
+		}
+	}
+
+	return ""
+}
+
+// IsProfilePictureLockedForUser reports whether the profile picture of the given user is
+// locked by TeamSettings.LockProfileFieldsForEmailUsers for self-service updates.
+func (a *App) IsProfilePictureLockedForUser(user *model.User) bool {
+	return *a.Config().TeamSettings.LockProfileFieldsForEmailUsers == model.LockProfileFieldsAll &&
+		user.AuthService == "" &&
+		model.MinimumEnterpriseLicense(a.License())
+}
+
 func (a *App) PatchUser(rctx request.CTX, userID string, patch *model.UserPatch, asAdmin bool) (*model.User, *model.AppError) {
 	user, err := a.GetUser(userID)
 	if err != nil {

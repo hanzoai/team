@@ -84,6 +84,10 @@ const (
 	ShowNicknameFullName = "nickname_full_name"
 	ShowFullName         = "full_name"
 
+	LockProfileFieldsNone            = "none"
+	LockProfileFieldsNameAndUsername = "name_and_username"
+	LockProfileFieldsAll             = "all"
+
 	PermissionsAll          = "all"
 	PermissionsChannelAdmin = "channel_admin"
 	PermissionsTeamAdmin    = "team_admin"
@@ -2559,6 +2563,7 @@ type TeamSettings struct {
 	ExperimentalViewArchivedChannels   *bool    `access:"experimental_features,site_users_and_teams"`
 	ExperimentalEnableAutomaticReplies *bool    `access:"experimental_features"`
 	LockTeammateNameDisplay            *bool    `access:"site_users_and_teams"`
+	LockProfileFieldsForEmailUsers     *string  `access:"site_users_and_teams"`
 	ExperimentalPrimaryTeam            *string  `access:"experimental_features"`
 	ExperimentalDefaultChannels        []string `access:"experimental_features"`
 }
@@ -2658,6 +2663,10 @@ func (s *TeamSettings) SetDefaults() {
 
 	if s.LockTeammateNameDisplay == nil {
 		s.LockTeammateNameDisplay = new(false)
+	}
+
+	if s.LockProfileFieldsForEmailUsers == nil {
+		s.LockProfileFieldsForEmailUsers = new(LockProfileFieldsNone)
 	}
 }
 
@@ -4529,6 +4538,10 @@ func (s *TeamSettings) isValid() *AppError {
 
 	if !(*s.TeammateNameDisplay == ShowFullName || *s.TeammateNameDisplay == ShowNicknameFullName || *s.TeammateNameDisplay == ShowUsername) {
 		return NewAppError("Config.IsValid", "model.config.is_valid.teammate_name_display.app_error", nil, "", http.StatusBadRequest)
+	}
+
+	if !(*s.LockProfileFieldsForEmailUsers == LockProfileFieldsNone || *s.LockProfileFieldsForEmailUsers == LockProfileFieldsNameAndUsername || *s.LockProfileFieldsForEmailUsers == LockProfileFieldsAll) {
+		return NewAppError("Config.IsValid", "model.config.is_valid.lock_profile_fields_for_email_users.app_error", nil, "", http.StatusBadRequest)
 	}
 
 	if len(*s.SiteName) > SitenameMaxLength {

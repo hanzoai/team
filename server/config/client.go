@@ -111,6 +111,7 @@ func GenerateClientConfig(c *model.Config, telemetryID string, license *model.Li
 
 	// Set default values for all options that require a license.
 	props["ExperimentalEnableAuthenticationTransfer"] = "true"
+	props["LockProfileFieldsForEmailUsers"] = model.LockProfileFieldsNone
 	props["LdapNicknameAttributeSet"] = "false"
 	props["LdapFirstNameAttributeSet"] = "false"
 	props["LdapLastNameAttributeSet"] = "false"
@@ -172,6 +173,10 @@ func GenerateClientConfig(c *model.Config, telemetryID string, license *model.Li
 
 	if license != nil {
 		props["ExperimentalEnableAuthenticationTransfer"] = strconv.FormatBool(*c.ServiceSettings.ExperimentalEnableAuthenticationTransfer)
+
+		if model.MinimumEnterpriseLicense(license) {
+			props["LockProfileFieldsForEmailUsers"] = *c.TeamSettings.LockProfileFieldsForEmailUsers
+		}
 
 		if *license.Features.LDAP {
 			props["LdapNicknameAttributeSet"] = strconv.FormatBool(*c.LdapSettings.NicknameAttribute != "")
