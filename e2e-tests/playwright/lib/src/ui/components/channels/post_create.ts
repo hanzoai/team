@@ -253,8 +253,12 @@ export default class ChannelsPostCreate {
                 const details = this.filePreview.getByTestId('post-image-details');
 
                 const [previewsCount, detailsCount] = await Promise.all([previews.count(), details.count()]);
+                if (previewsCount !== files.length || detailsCount !== files.length) {
+                    return false;
+                }
 
-                return previewsCount === files.length && detailsCount === files.length;
+                const previewTexts = await previews.allTextContents();
+                return files.every((file) => previewTexts.some((text) => text.includes(file)));
             },
             {timeout},
         );
