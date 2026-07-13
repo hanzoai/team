@@ -2551,7 +2551,6 @@ func TestDialogElement_Collapsible_IsValid(t *testing.T) {
 		}
 	}
 
-
 	t.Run("valid collapsible with one child passes", func(t *testing.T) {
 		oneChildEx := collapsible("s1", validText("a"))
 		assert.NoError(t, oneChildEx.IsValid(), "collapsible with one child should be valid")
