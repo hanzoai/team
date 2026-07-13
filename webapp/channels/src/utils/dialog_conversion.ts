@@ -764,7 +764,6 @@ export function convertAppFormValuesToDialogSubmission(
             return;
         }
 
-
         const value = values[element.name];
 
         if (value === null || value === undefined) {
