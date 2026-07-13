@@ -679,8 +679,8 @@ func TestDeliveryTrackingEnabledForChannel(t *testing.T) {
 	enableDeliveryTracking(th)
 
 	t.Run("true for any channel in all-channels mode (default)", func(t *testing.T) {
-		require.True(t, th.App.deliveryTrackingEnabledForChannel("channel1"))
-		require.True(t, th.App.deliveryTrackingEnabledForChannel(""))
+		require.True(t, th.App.DeliveryTrackingEnabledForChannel("channel1"))
+		require.True(t, th.App.DeliveryTrackingEnabledForChannel(""))
 	})
 
 	t.Run("selected-channels mode tracks only the channels in the snapshot", func(t *testing.T) {
@@ -694,9 +694,9 @@ func TestDeliveryTrackingEnabledForChannel(t *testing.T) {
 		tracked := map[string]struct{}{"channel1": {}}
 		th.App.Channels().deliveryTrackedChannels.Store(&tracked)
 
-		require.True(t, th.App.deliveryTrackingEnabledForChannel("channel1"))
-		require.False(t, th.App.deliveryTrackingEnabledForChannel("channel2"))
-		require.False(t, th.App.deliveryTrackingEnabledForChannel(""))
+		require.True(t, th.App.DeliveryTrackingEnabledForChannel("channel1"))
+		require.False(t, th.App.DeliveryTrackingEnabledForChannel("channel2"))
+		require.False(t, th.App.DeliveryTrackingEnabledForChannel(""))
 	})
 }
 

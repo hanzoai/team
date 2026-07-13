@@ -2146,12 +2146,24 @@
     "translation": "Failed to update the custom status. Please add either emoji or custom text status or both."
   },
   {
+    "id": "api.data_spillage.delivery_tracking.dm_gm_not_supported",
+    "translation": "Delivery tracking is not supported for direct or group messages."
+  },
+  {
+    "id": "api.data_spillage.delivery_tracking.not_enabled_for_channel",
+    "translation": "Delivery tracking is not enabled for this post’s channel."
+  },
+  {
     "id": "api.data_spillage.error.comment_required",
     "translation": "Please add a comment explaining why you’re flagging this message."
   },
   {
     "id": "api.data_spillage.error.comment_too_long",
     "translation": "Message quarantine reason cannot be longer than {{.MaxLength}} characters."
+  },
+  {
+    "id": "api.data_spillage.error.delivery_tracking_disabled",
+    "translation": "Post delivery tracking is disabled."
   },
   {
     "id": "api.data_spillage.error.disabled",

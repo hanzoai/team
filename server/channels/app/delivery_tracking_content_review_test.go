@@ -96,6 +96,38 @@ func TestCreateDeliveryTrackingContentReviewJob(t *testing.T) {
 	})
 }
 
+func TestDeliveryTrackingContentReviewJobExists(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	postID := model.NewId()
+
+	t.Run("returns false when no job exists for the post", func(t *testing.T) {
+		exists, appErr := th.App.DeliveryTrackingContentReviewJobExists(th.Context, postID, model.JobStatusPending, model.JobStatusInProgress, model.JobStatusSuccess)
+		require.Nil(t, appErr)
+		require.False(t, exists)
+	})
+
+	t.Run("matches an existing job only for the queried statuses", func(t *testing.T) {
+		_, err := th.App.Srv().Store().Job().Save(&model.Job{
+			Id:       model.NewId(),
+			Type:     model.JobTypeDeliveryTrackingContentReview,
+			Status:   model.JobStatusPending,
+			CreateAt: model.GetMillis(),
+			Data:     model.StringMap{jobDataKeyPostId: postID},
+		})
+		require.NoError(t, err)
+
+		exists, appErr := th.App.DeliveryTrackingContentReviewJobExists(th.Context, postID, model.JobStatusPending)
+		require.Nil(t, appErr)
+		require.True(t, exists)
+
+		exists, appErr = th.App.DeliveryTrackingContentReviewJobExists(th.Context, postID, model.JobStatusSuccess)
+		require.Nil(t, appErr)
+		require.False(t, exists)
+	})
+}
+
 func TestAppendToCSVSet(t *testing.T) {
 	tests := []struct {
 		name       string

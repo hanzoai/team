@@ -23,7 +23,7 @@ func (a *App) deliveryTrackingEnabledForAllChannels() bool {
 	return model.SafeDereference(a.Config().DeliveryTrackingSettings.EnableForAllChannels)
 }
 
-func (a *App) deliveryTrackingEnabledForChannel(channelID string) bool {
+func (a *App) DeliveryTrackingEnabledForChannel(channelID string) bool {
 	if a.deliveryTrackingEnabledForAllChannels() {
 		return true
 	}
@@ -34,7 +34,7 @@ func (a *App) deliveryTrackingEnabledForChannel(channelID string) bool {
 func (a *App) shouldTrackDelivery(channel *model.Channel, post *model.Post) bool {
 	return channel != nil &&
 		post != nil && !post.IsSystemMessage() &&
-		a.deliveryTrackingEnabledForChannel(channel.Id)
+		a.DeliveryTrackingEnabledForChannel(channel.Id)
 }
 
 func (a *App) shouldTrackPushDelivery(msg *model.PushNotification) bool {
@@ -126,7 +126,7 @@ func (a *App) recordPostListDelivery(targetID string, list *model.PostList, targ
 		return
 	}
 
-	if commonChannelId != "" && !a.deliveryTrackingEnabledForChannel(commonChannelId) {
+	if commonChannelId != "" && !a.DeliveryTrackingEnabledForChannel(commonChannelId) {
 		return
 	}
 
@@ -134,7 +134,7 @@ func (a *App) recordPostListDelivery(targetID string, list *model.PostList, targ
 	for i, postId := range list.Order {
 		post := list.Posts[postId]
 
-		filterOut := post == nil || post.IsSystemMessage() || (commonChannelId == "" && !a.deliveryTrackingEnabledForChannel(post.ChannelId))
+		filterOut := post == nil || post.IsSystemMessage() || (commonChannelId == "" && !a.DeliveryTrackingEnabledForChannel(post.ChannelId))
 		if filterOut {
 			// Only allocate memory for the filter array of post IDs if something gets filtered out
 			if filteredPostIDs == nil {
@@ -167,7 +167,7 @@ func (a *App) recordPostsDelivery(targetID string, posts []*model.Post, targetTy
 		if post == nil || post.Id == "" || post.IsSystemMessage() {
 			continue
 		}
-		if !a.deliveryTrackingEnabledForChannel(post.ChannelId) {
+		if !a.DeliveryTrackingEnabledForChannel(post.ChannelId) {
 			continue
 		}
 		postIDs = append(postIDs, post.Id)

@@ -58,6 +58,17 @@ func (a *App) CreateDeliveryTrackingContentReviewJob(rctx request.CTX, postID, t
 	return job, nil
 }
 
+// DeliveryTrackingContentReviewJobExists reports whether a delivery-tracking
+// content-review job for the given post exists in any of the provided statuses.
+func (a *App) DeliveryTrackingContentReviewJobExists(rctx request.CTX, postID string, statuses ...string) (bool, *model.AppError) {
+	jobs, err := a.Srv().Store().Job().GetByTypeAndData(rctx, model.JobTypeDeliveryTrackingContentReview, map[string]string{jobDataKeyPostId: postID}, true, statuses...)
+	if err != nil {
+		return false, model.NewAppError("DeliveryTrackingContentReviewJobExists", "app.job.get.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
+	}
+
+	return len(jobs) > 0, nil
+}
+
 // mergeRequestedBy adds the requester carried in patch to the requested_by CSV set
 // of existing. It is a pure function of its inputs so it is safe to re-run on a
 // serializable-transaction retry.

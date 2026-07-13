@@ -2954,7 +2954,7 @@ func (a *App) applyPostsWillBeConsumedHook(rctx request.CTX, posts map[string]*m
 				continue
 			}
 
-			if !a.deliveryTrackingEnabledForChannel(post.ChannelId) {
+			if !a.DeliveryTrackingEnabledForChannel(post.ChannelId) {
 				continue
 			}
 			postIDs = append(postIDs, id)
@@ -2975,7 +2975,7 @@ func (a *App) applyPostWillBeConsumedHook(rctx request.CTX, post **model.Post) {
 		return
 	}
 
-	trackPluginDelivery := a.deliveryTrackingEnabledForChannel((*post).ChannelId) && !(*post).IsSystemMessage()
+	trackPluginDelivery := a.DeliveryTrackingEnabledForChannel((*post).ChannelId) && !(*post).IsSystemMessage()
 	consumerIDs := make(map[string]struct{})
 
 	ps := []*model.Post{*post}

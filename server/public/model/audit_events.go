@@ -518,4 +518,5 @@ const (
 	AuditEventUpdateContentFlaggingConfig  = "updateContentFlaggingConfig"  // update content flagging configuration
 	AuditEventSetReviewer                  = "setFlaggedPostReviewer"       // assign reviewer for flagged post
 	AuditEventGenerateFlaggedPostReport    = "generateFlaggedPostReport"    // generate flagged post data report
+	AuditEventTriggerDeliveryTracking      = "triggerDeliveryTracking"      // trigger delivery-tracking content-review job
 )

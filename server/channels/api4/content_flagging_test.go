@@ -1468,3 +1468,224 @@ func TestKeepFlaggedPost(t *testing.T) {
 		}
 	})
 }
+
+func setupDeliveryTrackingReviewer(t *testing.T, th *TestHelper) {
+	t.Helper()
+	th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+	appErr := setBasicCommonReviewerConfig(th)
+	require.Nil(t, appErr)
+	// Enable delivery tracking last so the feature flag / Enable toggle is not
+	// clobbered by the content-flagging config save above. Reset EnableForAllChannels
+	// to its default so per-channel state does not leak between shared-th subtests.
+	setPostDeliveryTrackingFF(th, true)
+	th.App.UpdateConfig(func(cfg *model.Config) {
+		cfg.DeliveryTrackingSettings.EnableForAllChannels = model.NewPointer(true)
+	})
+}
+
+func seedDeliveryTrackingJob(t *testing.T, th *TestHelper, postId, status string) {
+	t.Helper()
+	_, err := th.App.Srv().Store().Job().Save(&model.Job{
+		Id:       model.NewId(),
+		Type:     model.JobTypeDeliveryTrackingContentReview,
+		Status:   status,
+		CreateAt: model.GetMillis(),
+		Data:     model.StringMap{"post_id": postId},
+	})
+	require.NoError(t, err)
+}
+
+func TestTriggerDeliveryTracking(t *testing.T) {
+	th := Setup(t).InitBasic(t)
+	client := th.Client
+
+	t.Run("Should return 501 when delivery tracking is disabled", func(t *testing.T) {
+		th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+		defer th.RemoveLicense(t)
+
+		appErr := setBasicCommonReviewerConfig(th)
+		require.Nil(t, appErr)
+		setPostDeliveryTrackingFF(th, false)
+
+		post := th.CreatePost(t)
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotImplemented, resp.StatusCode)
+	})
+
+	t.Run("Should return 403 when user is not a content reviewer", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+
+		nonReviewerClient := th.CreateClient()
+		th.LoginBasic2WithClient(t, nonReviewerClient)
+
+		resp, err := nonReviewerClient.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusForbidden, resp.StatusCode)
+	})
+
+	t.Run("Should return 400 for a direct message post", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		dmChannel := th.CreateDmChannel(t, th.BasicUser2)
+		dmPost, _, err := client.CreatePost(context.Background(), &model.Post{ChannelId: dmChannel.Id, Message: "dm message"})
+		require.NoError(t, err)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), dmPost.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("Should return 400 when post is not flagged", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("Should return 400 when post is in a terminal status", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+
+		removeResp, err := client.RemoveFlaggedPost(context.Background(), post.Id, &model.FlagContentActionRequest{Comment: "removing"})
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, removeResp.StatusCode)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("Should return 400 when the post's channel is not tracked", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			cfg.DeliveryTrackingSettings.EnableForAllChannels = model.NewPointer(false)
+		})
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("Should return 404 when the post does not exist", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), model.NewId())
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
+
+	t.Run("Should return 201 and create a job on the happy path", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusCreated, resp.StatusCode)
+
+		exists, appErr := th.App.DeliveryTrackingContentReviewJobExists(th.Context, post.Id, model.JobStatusPending, model.JobStatusInProgress)
+		require.Nil(t, appErr)
+		require.True(t, exists)
+	})
+
+	t.Run("Should return 200 when data is already available, without a new job", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusSuccess)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+
+		exists, appErr := th.App.DeliveryTrackingContentReviewJobExists(th.Context, post.Id, model.JobStatusPending, model.JobStatusInProgress)
+		require.Nil(t, appErr)
+		require.False(t, exists)
+	})
+
+	t.Run("Should return 200 for available data even when the channel is no longer tracked", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			cfg.DeliveryTrackingSettings.EnableForAllChannels = model.NewPointer(false)
+		})
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusSuccess)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+	})
+
+	t.Run("Should return 202 when a job is already in progress, without a duplicate", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusPending)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusAccepted, resp.StatusCode)
+
+		jobs, err := th.App.Srv().Store().Job().GetByTypeAndData(th.Context, model.JobTypeDeliveryTrackingContentReview, map[string]string{"post_id": post.Id}, true, model.JobStatusPending, model.JobStatusInProgress)
+		require.NoError(t, err)
+		require.Len(t, jobs, 1)
+		require.Contains(t, jobs[0].Data["requested_by"], th.BasicUser.Id)
+	})
+
+	t.Run("Should deduplicate to a single job across two reviewers, recording both", func(t *testing.T) {
+		th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+		defer th.RemoveLicense(t)
+
+		appErr := setBasicTeamReviewerConfig(th, th.BasicUser2.Id)
+		require.Nil(t, appErr)
+		setPostDeliveryTrackingFF(th, true)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+
+		resp, err := client.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusCreated, resp.StatusCode)
+
+		secondReviewerClient := th.CreateClient()
+		th.LoginBasic2WithClient(t, secondReviewerClient)
+
+		resp, err = secondReviewerClient.TriggerDeliveryTracking(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusAccepted, resp.StatusCode)
+
+		jobs, err := th.App.Srv().Store().Job().GetByTypeAndData(th.Context, model.JobTypeDeliveryTrackingContentReview, map[string]string{"post_id": post.Id}, true, model.JobStatusPending, model.JobStatusInProgress)
+		require.NoError(t, err)
+		require.Len(t, jobs, 1)
+		require.Contains(t, jobs[0].Data["requested_by"], th.BasicUser.Id)
+		require.Contains(t, jobs[0].Data["requested_by"], th.BasicUser2.Id)
+	})
+}

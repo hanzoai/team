@@ -3996,6 +3996,18 @@ func (c *Client4) AssignContentFlaggingReviewer(ctx context.Context, postId, rev
 	return BuildResponse(r), nil
 }
 
+// TriggerDeliveryTracking triggers the delivery-tracking content-review job for a
+// flagged post. Returns 200 if the data is already available, 202 if a job is
+// already in progress, or 201 if a new job was created.
+func (c *Client4) TriggerDeliveryTracking(ctx context.Context, postId string) (*Response, error) {
+	r, err := c.doAPIPost(ctx, c.contentFlaggingRoute().Join("post", postId, "delivery_tracking"), "")
+	if err != nil {
+		return BuildResponse(r), err
+	}
+	defer closeBody(r)
+	return BuildResponse(r), nil
+}
+
 func (c *Client4) SearchContentFlaggingReviewers(ctx context.Context, teamID, term string) ([]*User, *Response, error) {
 	values := url.Values{}
 	values.Set("term", term)

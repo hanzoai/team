@@ -31,6 +31,7 @@ func (api *API) InitContentFlagging() {
 	api.BaseRoutes.ContentFlagging.Handle("/post/{post_id:[A-Za-z0-9]+}/report", api.APISessionRequired(contentFlaggingRequired(generateFlaggedPostReport))).Methods(http.MethodPost)
 	api.BaseRoutes.ContentFlagging.Handle("/team/{team_id:[A-Za-z0-9]+}/reviewers/search", api.APISessionRequired(contentFlaggingRequired(searchReviewers))).Methods(http.MethodGet)
 	api.BaseRoutes.ContentFlagging.Handle("/post/{post_id:[A-Za-z0-9]+}/assign/{content_reviewer_id:[A-Za-z0-9]+}", api.APISessionRequired(contentFlaggingRequired(assignFlaggedPostReviewer))).Methods(http.MethodPost)
+	api.BaseRoutes.ContentFlagging.Handle("/post/{post_id:[A-Za-z0-9]+}/delivery_tracking", api.APISessionRequired(contentFlaggingRequired(triggerDeliveryTracking))).Methods(http.MethodPost)
 
 	api.BaseRoutes.ContentFlagging.Handle("/config", api.APISessionRequired(saveContentFlaggingSettings)).Methods(http.MethodPut)
 	api.BaseRoutes.ContentFlagging.Handle("/config", api.APISessionRequired(getContentFlaggingSettings)).Methods(http.MethodGet)
@@ -90,6 +91,12 @@ func requireFlaggedPost(c *Context, postId string) {
 	if appErr != nil {
 		c.Err = appErr
 		return
+	}
+}
+
+func requireDeliveryTrackingEnabled(c *Context) {
+	if !c.App.Config().PostDeliveryTrackingEnabled() {
+		c.Err = model.NewAppError("requireDeliveryTrackingEnabled", "api.data_spillage.error.delivery_tracking_disabled", nil, "", http.StatusNotImplemented)
 	}
 }
 
@@ -601,6 +608,90 @@ func assignFlaggedPostReviewer(c *Context, w http.ResponseWriter, r *http.Reques
 
 	auditRec.Success()
 	writeOKResponse(w)
+}
+
+func triggerDeliveryTracking(c *Context, w http.ResponseWriter, r *http.Request) {
+	if c.Err != nil {
+		return
+	}
+
+	requireDeliveryTrackingEnabled(c)
+	if c.Err != nil {
+		return
+	}
+
+	c.RequirePostId()
+	if c.Err != nil {
+		return
+	}
+
+	postId := c.Params.PostId
+	userId := c.AppContext.Session().UserId
+
+	auditRec := c.MakeAuditRecord(model.AuditEventTriggerDeliveryTracking, model.AuditStatusFail)
+	defer c.LogAuditRecWithLevel(auditRec, app.LevelContent)
+	model.AddEventParameterToAuditRec(auditRec, "postId", postId)
+	model.AddEventParameterToAuditRec(auditRec, "userId", userId)
+
+	post, appErr := c.App.GetSinglePost(c.AppContext, postId, true)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	channel, appErr := c.App.GetChannel(c.AppContext, post.ChannelId)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	// Only a content reviewer of the post's team may trigger delivery tracking.
+	requireTeamContentReviewer(c, userId, channel.TeamId)
+	if c.Err != nil {
+		return
+	}
+
+	if channel.IsGroupOrDirect() {
+		c.Err = model.NewAppError("triggerDeliveryTracking", "api.data_spillage.delivery_tracking.dm_gm_not_supported", nil, "", http.StatusBadRequest)
+		return
+	}
+
+	// If a successful copy job already produced the data, it is ready to view.
+	// Existing data wins regardless of the channel's current per-channel setting.
+	dataReady, appErr := c.App.DeliveryTrackingContentReviewJobExists(c.AppContext, postId, model.JobStatusSuccess)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+	if dataReady {
+		auditRec.Success()
+		ReturnStatusOK(w)
+		return
+	}
+
+	inFlight, appErr := c.App.DeliveryTrackingContentReviewJobExists(c.AppContext, postId, model.JobStatusPending, model.JobStatusInProgress)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	if !inFlight && !c.App.DeliveryTrackingEnabledForChannel(channel.Id) {
+		c.Err = model.NewAppError("triggerDeliveryTracking", "api.data_spillage.delivery_tracking.not_enabled_for_channel", nil, "", http.StatusBadRequest)
+		return
+	}
+
+	if _, appErr = c.App.CreateDeliveryTrackingContentReviewJob(c.AppContext, postId, channel.TeamId, userId); appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	auditRec.Success()
+	if inFlight {
+		w.WriteHeader(http.StatusAccepted)
+	} else {
+		w.WriteHeader(http.StatusCreated)
+	}
+	ReturnStatusOK(w)
 }
 
 func checkPostTypeFlaggable(c *Context, post *model.Post) {
