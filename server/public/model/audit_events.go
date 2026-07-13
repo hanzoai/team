@@ -511,12 +511,13 @@ const (
 
 // Content Flagging
 const (
-	AuditEventFlagPost                     = "flagPost"                     // flag post for review
-	AuditEventGetFlaggedPost               = "getFlaggedPost"               // get flagged post details
-	AuditEventPermanentlyRemoveFlaggedPost = "permanentlyRemoveFlaggedPost" // permanently remove flagged post
-	AuditEventKeepFlaggedPost              = "keepFlaggedPost"              // keep flagged post
-	AuditEventUpdateContentFlaggingConfig  = "updateContentFlaggingConfig"  // update content flagging configuration
-	AuditEventSetReviewer                  = "setFlaggedPostReviewer"       // assign reviewer for flagged post
-	AuditEventGenerateFlaggedPostReport    = "generateFlaggedPostReport"    // generate flagged post data report
-	AuditEventTriggerDeliveryTracking      = "triggerDeliveryTracking"      // trigger delivery-tracking content-review job
+	AuditEventFlagPost                        = "flagPost"                        // flag post for review
+	AuditEventGetFlaggedPost                  = "getFlaggedPost"                  // get flagged post details
+	AuditEventPermanentlyRemoveFlaggedPost    = "permanentlyRemoveFlaggedPost"    // permanently remove flagged post
+	AuditEventKeepFlaggedPost                 = "keepFlaggedPost"                 // keep flagged post
+	AuditEventUpdateContentFlaggingConfig     = "updateContentFlaggingConfig"     // update content flagging configuration
+	AuditEventSetReviewer                     = "setFlaggedPostReviewer"          // assign reviewer for flagged post
+	AuditEventGenerateFlaggedPostReport       = "generateFlaggedPostReport"       // generate flagged post data report
+	AuditEventTriggerDeliveryTracking         = "triggerDeliveryTracking"         // trigger delivery-tracking content-review job
+	AuditEventGenerateDeliveryTrackingReceipt = "generateDeliveryTrackingReceipt" // download delivery-tracking receipt report
 )

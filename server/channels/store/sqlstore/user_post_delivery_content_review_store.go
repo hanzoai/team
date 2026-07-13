@@ -96,3 +96,23 @@ func (s *SqlUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context,
 	}
 	return count, nil
 }
+
+func (s *SqlUserPostDeliveryContentReviewStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
+	query := s.getQueryBuilder().
+		Select("post_id", "target_id", "target_type", "mechanism", "created_at", "copied_at", "job_id").
+		From(userPostDeliveryContentReviewTableName).
+		Where(sq.Eq{"post_id": postID}).
+		OrderBy("target_id", "target_type", "mechanism").
+		Limit(uint64(limit))
+
+	if !after.IsFirstPage() {
+		query = query.Where(sq.Expr("(target_id, target_type, mechanism) > (?, ?, ?)",
+			after.TargetID, after.TargetType, after.Mechanism))
+	}
+
+	records := []model.UserPostDeliveryContentReview{}
+	if err := s.GetMaster().SelectBuilderCtx(ctx, &records, query); err != nil {
+		return nil, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.GetByPost: failed to fetch content-review records for post_id=%s", postID)
+	}
+	return records, nil
+}

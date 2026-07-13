@@ -4,9 +4,12 @@
 package api4
 
 import (
+	"bytes"
 	"context"
+	"encoding/csv"
 	"encoding/json"
 	"net/http"
+	"strings"
 	"testing"
 	"time"
 
@@ -1687,5 +1690,200 @@ func TestTriggerDeliveryTracking(t *testing.T) {
 		require.Len(t, jobs, 1)
 		require.Contains(t, jobs[0].Data["requested_by"], th.BasicUser.Id)
 		require.Contains(t, jobs[0].Data["requested_by"], th.BasicUser2.Id)
+	})
+}
+
+func seedContentReviewRows(t *testing.T, th *TestHelper, records []model.UserPostDelivery) {
+	t.Helper()
+	require.NoError(t, th.App.Srv().Store().UserPostDeliveryContentReview().SaveBatch(context.Background(), records, model.NewId()))
+}
+
+func findReceiptRow(t *testing.T, rows [][]string, targetID string) []string {
+	t.Helper()
+	for _, row := range rows {
+		if len(row) == 7 && row[1] == targetID {
+			return row
+		}
+	}
+	require.FailNowf(t, "receipt row not found", "no row for target %s", targetID)
+	return nil
+}
+
+func TestGenerateDeliveryTrackingReceipt(t *testing.T) {
+	th := Setup(t).InitBasic(t)
+	client := th.Client
+
+	t.Run("Should return 501 when delivery tracking is disabled", func(t *testing.T) {
+		th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+		defer th.RemoveLicense(t)
+
+		appErr := setBasicCommonReviewerConfig(th)
+		require.Nil(t, appErr)
+		setPostDeliveryTrackingFF(th, false)
+
+		post := th.CreatePost(t)
+		_, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotImplemented, resp.StatusCode)
+	})
+
+	t.Run("Should return 403 when user is not a content reviewer", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+
+		nonReviewerClient := th.CreateClient()
+		th.LoginBasic2WithClient(t, nonReviewerClient)
+
+		_, resp, err := nonReviewerClient.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusForbidden, resp.StatusCode)
+	})
+
+	t.Run("Should return 400 for a direct message post", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		dmChannel := th.CreateDmChannel(t, th.BasicUser2)
+		dmPost, _, err := client.CreatePost(context.Background(), &model.Post{ChannelId: dmChannel.Id, Message: "dm message"})
+		require.NoError(t, err)
+
+		_, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), dmPost.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("Should return 404 when the post is not flagged", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		_, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
+
+	t.Run("Should return 400 when the post is in a terminal status", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+
+		removeResp, err := client.RemoveFlaggedPost(context.Background(), post.Id, &model.FlagContentActionRequest{Comment: "removing"})
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, removeResp.StatusCode)
+
+		_, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
+	})
+
+	t.Run("Should return 404 when no successful job has produced data", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusInProgress)
+
+		_, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
+
+	t.Run("Should return 404 when the post does not exist", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		_, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), model.NewId())
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotFound, resp.StatusCode)
+	})
+
+	t.Run("Should stream the CSV receipt on the happy path", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusSuccess)
+
+		// 1704067200000ms == 2024-01-01T00:00:00Z (asserted below).
+		const productAt = int64(1704067200000)
+		const emailAt = int64(1704067260000)
+		deletedUserID := model.NewId()
+		seedContentReviewRows(t, th, []model.UserPostDelivery{
+			{PostID: post.Id, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: productAt},
+			{PostID: post.Id, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: emailAt},
+			{PostID: post.Id, TargetID: "com.example.plugin", TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechanismPlugin, CreatedAt: emailAt},
+			{PostID: post.Id, TargetID: deletedUserID, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: emailAt},
+		})
+
+		data, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+		require.Contains(t, resp.Header.Get("Content-Type"), "text/csv")
+		require.Contains(t, resp.Header.Get("Content-Disposition"), "attachment")
+		require.Contains(t, resp.Header.Get("Content-Disposition"), "delivery-receipt-"+post.Id)
+
+		reader := csv.NewReader(bytes.NewReader(data))
+		reader.FieldsPerRecord = -1 // metadata block + table have different widths
+		rows, err := reader.ReadAll()
+		require.NoError(t, err)
+
+		var sawPostID, sawTotal bool
+		for _, row := range rows {
+			if len(row) == 2 && row[0] == "Post ID" && row[1] == post.Id {
+				sawPostID = true
+			}
+			if len(row) == 2 && row[0] == "Total delivery records" && row[1] == "4" {
+				sawTotal = true
+			}
+		}
+		require.True(t, sawPostID, "metadata block should contain the post ID")
+		require.True(t, sawTotal, "metadata block should report the total delivery records")
+
+		userRow := findReceiptRow(t, rows, th.BasicUser2.Id)
+		require.Equal(t, "User", userRow[0])
+		require.Equal(t, th.BasicUser2.Username, userRow[2])
+		require.Equal(t, th.BasicUser2.Email, userRow[3])
+		require.Contains(t, userRow[5], "In-product")
+		require.Contains(t, userRow[5], "Email notification")
+		require.Equal(t, "2024-01-01T00:00:00Z", userRow[6])
+
+		pluginRow := findReceiptRow(t, rows, "com.example.plugin")
+		require.Equal(t, "Plugin", pluginRow[0])
+		require.Empty(t, pluginRow[2])
+		require.Empty(t, pluginRow[3])
+		require.Contains(t, pluginRow[5], "Plugin")
+
+		deletedRow := findReceiptRow(t, rows, deletedUserID)
+		require.Equal(t, "User", deletedRow[0])
+		require.Equal(t, "(unknown or deleted user)", deletedRow[2])
+		require.Empty(t, deletedRow[3])
+	})
+
+	t.Run("Should return the receipt even when the channel is no longer tracked", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusSuccess)
+		seedContentReviewRows(t, th, []model.UserPostDelivery{
+			{PostID: post.Id, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1704067200000},
+		})
+
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			cfg.DeliveryTrackingSettings.EnableForAllChannels = model.NewPointer(false)
+		})
+
+		data, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.NoError(t, err)
+		require.Equal(t, http.StatusOK, resp.StatusCode)
+		require.True(t, strings.Contains(string(data), th.BasicUser2.Username))
 	})
 }

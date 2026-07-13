@@ -196,6 +196,69 @@ func TestUserPostDeliveryStoreGetByPost(t *testing.T) {
 	}
 }
 
+func TestUserPostDeliveryContentReviewStoreGetByPost(t *testing.T) {
+	if testing.Short() {
+		t.Skip("requires live database")
+	}
+
+	ss, cleanup := newDeliveryTrackingTestStore(t)
+	defer cleanup()
+
+	ctx := context.Background()
+	contentReviewStore := ss.UserPostDeliveryContentReview()
+
+	postID := model.NewId()
+	// targetA is delivered via two mechanisms, so a recipient spans multiple rows.
+	targetA, targetB, targetC := model.NewId(), model.NewId(), model.NewId()
+	records := []model.UserPostDelivery{
+		{PostID: postID, TargetID: targetA, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 10},
+		{PostID: postID, TargetID: targetA, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 20},
+		{PostID: postID, TargetID: targetB, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 30},
+		{PostID: postID, TargetID: targetC, TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechanismPlugin, CreatedAt: 40},
+	}
+	require.NoError(t, contentReviewStore.SaveBatch(ctx, records, model.NewId()))
+	// A different post's rows must never leak into the page.
+	require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
+		{PostID: model.NewId(), TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
+	}, model.NewId()))
+
+	var got []model.UserPostDeliveryContentReview
+	seen := map[model.UserPostDeliveryCursor]bool{}
+	var cursor model.UserPostDeliveryCursor
+	for {
+		batch, err := contentReviewStore.GetByPost(ctx, postID, cursor, 2)
+		require.NoError(t, err)
+		if len(batch) == 0 {
+			break
+		}
+		for _, row := range batch {
+			require.Equal(t, postID, row.PostID)
+			key := model.UserPostDeliveryCursor{TargetID: row.TargetID, TargetType: row.TargetType, Mechanism: row.Mechanism}
+			require.False(t, seen[key], "row returned on more than one page")
+			seen[key] = true
+		}
+		got = append(got, batch...)
+		last := batch[len(batch)-1]
+		cursor = model.UserPostDeliveryCursor{TargetID: last.TargetID, TargetType: last.TargetType, Mechanism: last.Mechanism}
+		if len(batch) < 2 {
+			break
+		}
+	}
+
+	require.Len(t, got, len(records), "keyset paging returns every row exactly once")
+	for i := 1; i < len(got); i++ {
+		prev, cur := got[i-1], got[i]
+		require.LessOrEqual(t, prev.TargetID, cur.TargetID, "rows come back in ascending target order")
+		if prev.TargetID == cur.TargetID && prev.TargetType == cur.TargetType {
+			require.Less(t, prev.Mechanism, cur.Mechanism, "a recipient's rows are ordered by mechanism and stay contiguous")
+		}
+	}
+
+	empty, err := contentReviewStore.GetByPost(ctx, model.NewId(), model.UserPostDeliveryCursor{}, 10)
+	require.NoError(t, err)
+	require.Empty(t, empty)
+}
+
 func TestUserPostDeliveryFeatureDisabled(t *testing.T) {
 	if testing.Short() {
 		t.Skip("requires live database")

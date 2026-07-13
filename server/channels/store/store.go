@@ -1327,6 +1327,7 @@ type UserPostDeliveryContentReviewStore interface {
 	SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error
 	DeleteByPost(ctx context.Context, postID string) error
 	CountByPost(ctx context.Context, postID string) (int64, error)
+	GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error)
 }
 
 // ChannelSearchOpts contains options for searching channels.

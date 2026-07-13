@@ -18482,6 +18482,27 @@ func (s *RetryLayerUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.
 
 }
 
+func (s *RetryLayerUserPostDeliveryContentReviewStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
+
+	tries := 0
+	for {
+		result, err := s.UserPostDeliveryContentReviewStore.GetByPost(ctx, postID, after, limit)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
 func (s *RetryLayerUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error {
 
 	tries := 0

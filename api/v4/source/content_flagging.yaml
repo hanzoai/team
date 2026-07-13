@@ -440,6 +440,46 @@
           description: Internal server error.
         '501':
           description: Post delivery tracking is disabled, content flagging is disabled, or an Enterprise Advanced license is not available.
+  /api/v4/content_flagging/post/{post_id}/delivery_tracking/report:
+    get:
+      summary: Download the delivery-tracking receipt for a flagged post
+      description: |
+        Generates and streams a CSV receipt listing the recipients a flagged post was delivered to, aggregated to one row per recipient along with the delivery mechanisms and the first delivery time. A leading metadata block (post, channel, team, generated-by, generated-at, total delivery records) precedes the recipient table. The receipt is only available after a delivery-tracking copy job has successfully completed for the post.
+        The user must be a content reviewer of the team to which the post belongs, and the post must be flagged and in a pending or assigned status.
+        Post delivery tracking must be enabled, and an enterprise advanced license is required.
+      tags:
+        - Content Flagging
+      parameters:
+        - in: path
+          name: post_id
+          required: true
+          schema:
+            type: string
+          description: The ID of the flagged post to download the delivery receipt for
+      operationId: GetCFDeliveryTrackingReceipt
+      responses:
+        '200':
+          description: The delivery receipt CSV file.
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+              description: 'attachment; filename="delivery-receipt-<post_id>-<timestamp>.csv"'
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: The post is not flagged, is not in a pending/assigned status, or belongs to a direct or group message.
+        '403':
+          description: Forbidden - the user is not a content reviewer of the post's team.
+        '404':
+          description: Post not found, the content flagging feature is disabled via the feature flag, or the delivery receipt has not been generated yet.
+        '500':
+          description: Internal server error.
+        '501':
+          description: Post delivery tracking is disabled, content flagging is disabled, or an Enterprise Advanced license is not available.
   /api/v4/content_flagging/post/{post_id}/report:
     post:
       summary: Generate and download a flagged post report

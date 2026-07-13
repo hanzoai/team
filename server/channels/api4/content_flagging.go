@@ -5,7 +5,9 @@ package api4
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"os"
 	"slices"
 	"strings"
 
@@ -32,6 +34,7 @@ func (api *API) InitContentFlagging() {
 	api.BaseRoutes.ContentFlagging.Handle("/team/{team_id:[A-Za-z0-9]+}/reviewers/search", api.APISessionRequired(contentFlaggingRequired(searchReviewers))).Methods(http.MethodGet)
 	api.BaseRoutes.ContentFlagging.Handle("/post/{post_id:[A-Za-z0-9]+}/assign/{content_reviewer_id:[A-Za-z0-9]+}", api.APISessionRequired(contentFlaggingRequired(assignFlaggedPostReviewer))).Methods(http.MethodPost)
 	api.BaseRoutes.ContentFlagging.Handle("/post/{post_id:[A-Za-z0-9]+}/delivery_tracking", api.APISessionRequired(contentFlaggingRequired(triggerDeliveryTracking))).Methods(http.MethodPost)
+	api.BaseRoutes.ContentFlagging.Handle("/post/{post_id:[A-Za-z0-9]+}/delivery_tracking/report", api.APISessionRequired(contentFlaggingRequired(generateDeliveryTrackingReceipt))).Methods(http.MethodGet)
 
 	api.BaseRoutes.ContentFlagging.Handle("/config", api.APISessionRequired(saveContentFlaggingSettings)).Methods(http.MethodPut)
 	api.BaseRoutes.ContentFlagging.Handle("/config", api.APISessionRequired(getContentFlaggingSettings)).Methods(http.MethodGet)
@@ -81,22 +84,41 @@ func requireTeamContentReviewer(c *Context, userId, teamId string) {
 	}
 }
 
-func requireFlaggedPost(c *Context, postId string) {
+// requireFlaggedPost verifies the post is flagged and returns its status property
+// value; it returns nil (and sets c.Err) when the post is missing or not flagged.
+func requireFlaggedPost(c *Context, postId string) *model.PropertyValue {
 	if postId == "" {
 		c.SetInvalidParam("flagged_post_id")
-		return
+		return nil
 	}
 
-	_, appErr := c.App.GetPostContentFlaggingPropertyValue(postId, app.ContentFlaggingPropertyNameStatus)
+	status, appErr := c.App.GetPostContentFlaggingPropertyValue(postId, app.ContentFlaggingPropertyNameStatus)
 	if appErr != nil {
 		c.Err = appErr
-		return
+		return nil
 	}
+
+	return status
 }
 
 func requireDeliveryTrackingEnabled(c *Context) {
 	if !c.App.Config().PostDeliveryTrackingEnabled() {
 		c.Err = model.NewAppError("requireDeliveryTrackingEnabled", "api.data_spillage.error.delivery_tracking_disabled", nil, "", http.StatusNotImplemented)
+	}
+}
+
+// requirePostUnderReview requires the post to be flagged and under review
+// (Pending/Assigned); it mirrors the check in CreateDeliveryTrackingContentReviewJob.
+func requirePostUnderReview(c *Context, postId string) {
+	status := requireFlaggedPost(c, postId)
+	if c.Err != nil {
+		return
+	}
+
+	reviewStatus := strings.Trim(string(status.Value), `"`)
+	if reviewStatus != model.ContentFlaggingStatusPending && reviewStatus != model.ContentFlaggingStatusAssigned {
+		c.Err = model.NewAppError("requirePostUnderReview", "api.data_spillage.delivery_tracking.receipt.not_under_review", nil, "", http.StatusBadRequest)
+		return
 	}
 }
 
@@ -698,4 +720,98 @@ func checkPostTypeFlaggable(c *Context, post *model.Post) {
 	if post.Type == model.PostTypeBurnOnRead || strings.HasPrefix(post.Type, model.PostSystemMessagePrefix) {
 		c.Err = model.NewAppError("checkPostTypeFlaggable", "api.data_spillage.error.invalid_post_type", map[string]any{"PostType": post.Type}, "", http.StatusBadRequest)
 	}
+}
+
+func generateDeliveryTrackingReceipt(c *Context, w http.ResponseWriter, r *http.Request) {
+	if c.Err != nil {
+		return
+	}
+
+	requireDeliveryTrackingEnabled(c)
+	if c.Err != nil {
+		return
+	}
+
+	c.RequirePostId()
+	if c.Err != nil {
+		return
+	}
+
+	postId := c.Params.PostId
+	userId := c.AppContext.Session().UserId
+
+	auditRec := c.MakeAuditRecord(model.AuditEventGenerateDeliveryTrackingReceipt, model.AuditStatusFail)
+	defer c.LogAuditRecWithLevel(auditRec, app.LevelContent)
+	model.AddEventParameterToAuditRec(auditRec, "postId", postId)
+	model.AddEventParameterToAuditRec(auditRec, "userId", userId)
+
+	post, appErr := c.App.GetSinglePost(c.AppContext, postId, true)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	channel, appErr := c.App.GetChannel(c.AppContext, post.ChannelId)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+
+	requireTeamContentReviewer(c, userId, channel.TeamId)
+	if c.Err != nil {
+		return
+	}
+
+	if channel.IsGroupOrDirect() {
+		c.Err = model.NewAppError("generateDeliveryTrackingReceipt", "api.data_spillage.delivery_tracking.dm_gm_not_supported", nil, "", http.StatusBadRequest)
+		return
+	}
+
+	requirePostUnderReview(c, postId)
+	if c.Err != nil {
+		return
+	}
+
+	// Unlike the trigger endpoint, this does not re-check the channel's per-channel
+	// setting, so already-generated data can always be read back.
+	dataReady, appErr := c.App.DeliveryTrackingContentReviewJobExists(c.AppContext, postId, model.JobStatusSuccess)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+	if !dataReady {
+		c.Err = model.NewAppError("generateDeliveryTrackingReceipt", "api.data_spillage.delivery_tracking.receipt.not_generated", nil, "", http.StatusNotFound)
+		return
+	}
+
+	reportPath, appErr := c.App.GenerateDeliveryTrackingReceipt(c.AppContext, postId, userId)
+	if appErr != nil {
+		c.Err = appErr
+		return
+	}
+	defer func() {
+		if err := os.Remove(reportPath); err != nil && !os.IsNotExist(err) {
+			c.Logger.Warn("Failed to remove delivery tracking receipt temp file", mlog.String("path", reportPath), mlog.Err(err))
+		}
+	}()
+
+	f, err := os.Open(reportPath)
+	if err != nil {
+		c.Err = model.NewAppError("generateDeliveryTrackingReceipt", "api.data_spillage.delivery_tracking.receipt.open.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
+		return
+	}
+	defer f.Close()
+
+	stat, err := f.Stat()
+	if err != nil {
+		c.Err = model.NewAppError("generateDeliveryTrackingReceipt", "api.data_spillage.delivery_tracking.receipt.stat.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
+		return
+	}
+
+	filename := fmt.Sprintf("delivery-receipt-%s-%d.csv", postId, model.GetMillis())
+	w.Header().Set("Content-Type", "text/csv; charset=utf-8")
+	w.Header().Set("Content-Disposition", fmt.Sprintf(`attachment; filename="%s"`, filename))
+	http.ServeContent(w, r, filename, stat.ModTime(), f)
+
+	auditRec.Success()
 }

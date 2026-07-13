@@ -4008,6 +4008,15 @@ func (c *Client4) TriggerDeliveryTracking(ctx context.Context, postId string) (*
 	return BuildResponse(r), nil
 }
 
+func (c *Client4) GetDeliveryTrackingReceipt(ctx context.Context, postId string) ([]byte, *Response, error) {
+	r, err := c.doAPIGet(ctx, c.contentFlaggingRoute().Join("post", postId, "delivery_tracking", "report"), "")
+	if err != nil {
+		return nil, BuildResponse(r), err
+	}
+	defer closeBody(r)
+	return ReadBytesFromResponse(r)
+}
+
 func (c *Client4) SearchContentFlaggingReviewers(ctx context.Context, teamID, term string) ([]*User, *Response, error) {
 	values := url.Values{}
 	values.Set("term", term)

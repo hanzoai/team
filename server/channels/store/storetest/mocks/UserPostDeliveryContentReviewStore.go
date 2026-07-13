@@ -62,6 +62,36 @@ func (_m *UserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, 
 	return r0
 }
 
+// GetByPost provides a mock function with given fields: ctx, postID, after, limit
+func (_m *UserPostDeliveryContentReviewStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
+	ret := _m.Called(ctx, postID, after, limit)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetByPost")
+	}
+
+	var r0 []model.UserPostDeliveryContentReview
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, model.UserPostDeliveryCursor, int) ([]model.UserPostDeliveryContentReview, error)); ok {
+		return rf(ctx, postID, after, limit)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, string, model.UserPostDeliveryCursor, int) []model.UserPostDeliveryContentReview); ok {
+		r0 = rf(ctx, postID, after, limit)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).([]model.UserPostDeliveryContentReview)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, string, model.UserPostDeliveryCursor, int) error); ok {
+		r1 = rf(ctx, postID, after, limit)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // SaveBatch provides a mock function with given fields: ctx, records, jobID
 func (_m *UserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error {
 	ret := _m.Called(ctx, records, jobID)
