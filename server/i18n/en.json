@@ -6163,14 +6163,6 @@
     "translation": "Unable to save property values for the flagged post."
   },
   {
-    "id": "app.data_spillage.delivery_tracking.completion_failure.message",
-    "translation": "We couldn't generate the delivery receipt list you requested for this quarantined message. Please try requesting it again."
-  },
-  {
-    "id": "app.data_spillage.delivery_tracking.completion_success.message",
-    "translation": "The delivery receipt list you requested for this quarantined message is ready to view."
-  },
-  {
     "id": "app.data_spillage.delivery_tracking.receipt.close.app_error",
     "translation": "Failed to finalize the delivery receipt file."
   },

@@ -105,7 +105,7 @@ func requestedBySet(csv string) map[string]bool {
 	}
 
 	set := make(map[string]bool)
-	for _, id := range strings.Split(csv, ",") {
+	for id := range strings.SplitSeq(csv, ",") {
 		if id != "" {
 			set[id] = true
 		}
