@@ -53,13 +53,12 @@ test.describe('LDAP session extension', () => {
             const {adminClient, channelsPage, ldapUser, page} = await setup(pw, true);
             const [initialSession] = await getActiveSessions(ldapUser.id);
             expect(initialSession).toBeTruthy();
-            const nearExpiry = Date.now() + duration.two_sec;
+            const nearExpiry = Date.now() + duration.ten_sec;
             const updated = await updateSessionExpiration(initialSession.id, nearExpiry);
             expect(Number(updated.expiresat)).toBe(nearExpiry);
             await adminClient.invalidateCaches();
 
             // # Generate user activity after making the session expire soon
-            await page.reload();
             await channelsPage.postMessage(`extend ${Date.now()}`);
 
             // * Verify the same session is extended by approximately one hour

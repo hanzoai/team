@@ -3,7 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {configureOpenLdap, EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
+import {configureOpenLdap, duration, EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 const ldapUsers = {
     admin: {username: 'dev.one', password: 'Password1', email: 'success+devone@simulator.amazonses.com'},
@@ -45,10 +45,10 @@ test.describe('LDAP authentication and guest filters', () => {
         await Promise.all(teams.map((team: {id: string}) => adminClient.removeFromTeam(team.id, user.id)));
     }
 
-    async function loginFromPage(pw: any, account: (typeof ldapUsers)[keyof typeof ldapUsers], succeeds = true) {
+    async function loginFromPage(pw: any, account: (typeof ldapUsers)[keyof typeof ldapUsers]) {
         await pw.hasSeenLandingPage();
         await pw.loginPage.goto();
-        await pw.loginPage.loginWithLdap(account.username, account.password, succeeds);
+        await pw.loginPage.loginWithLdap(account.username, account.password);
     }
 
     /**
@@ -91,7 +91,7 @@ test.describe('LDAP authentication and guest filters', () => {
         await adminClient.patchConfig({LdapSettings: {UserFilter: '(cn=no_users)'}});
 
         // # Attempt LDAP login with a filtered member
-        await loginFromPage(pw, ldapUsers.member, false);
+        await loginFromPage(pw, ldapUsers.member);
 
         // * Verify login is rejected
         await expect(pw.loginPage.loginErrorMessage).toBeVisible();
@@ -123,7 +123,7 @@ test.describe('LDAP authentication and guest filters', () => {
         });
 
         // # Attempt LDAP login with a filtered guest
-        await loginFromPage(pw, ldapUsers.guest, false);
+        await loginFromPage(pw, ldapUsers.guest);
 
         // * Verify login is rejected
         await expect(pw.loginPage.loginErrorMessage).toBeVisible();
@@ -138,6 +138,7 @@ test.describe('LDAP authentication and guest filters', () => {
             GuestAccountsSettings: {Enable: true},
             LdapSettings: {UserFilter: '(cn=no_users)', GuestFilter: '(cn=board*)'},
         });
+        await adminClient.syncLdap();
         const user = await getLdapUser(pw, adminClient, ldapUsers.guest);
         await removeFromAllTeams(adminClient, user);
 
@@ -148,8 +149,9 @@ test.describe('LDAP authentication and guest filters', () => {
         await expect(
             pw.loginPage.page.getByText(
                 'Your guest account has no channels assigned. Please contact an administrator.',
+                {exact: true},
             ),
-        ).toBeVisible();
+        ).toBeVisible({timeout: duration.half_min});
     });
 
     /**

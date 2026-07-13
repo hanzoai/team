@@ -26,14 +26,14 @@ export default class EnterpriseSystemConsolePage {
 
     async gotoGuestAccess() {
         await this.page.goto('/admin_console/authentication/guest_access');
-        await expect(this.page.getByRole('heading', {name: 'Guest Access', exact: true})).toBeVisible({
+        await expect(this.page.getByRole('group', {name: 'Enable Guest Access:', exact: true})).toBeVisible({
             timeout: duration.half_min,
         });
     }
 
     async gotoSaml() {
         await this.page.goto('/admin_console/authentication/saml');
-        await expect(this.page.getByRole('heading', {name: 'SAML 2.0', exact: true})).toBeVisible({
+        await expect(this.page.getByRole('group', {name: 'Enable Login With SAML 2.0:', exact: true})).toBeVisible({
             timeout: duration.half_min,
         });
     }
@@ -89,10 +89,12 @@ export default class EnterpriseSystemConsolePage {
     }
 
     async saveConfiguration(confirm = false) {
-        await this.page.getByRole('button', {name: 'Save', exact: true}).click();
+        const save = this.page.getByRole('button', {name: 'Save', exact: true});
+        await save.click();
         if (confirm) {
             await this.page.getByRole('dialog').getByRole('button', {name: /^Yes,/}).click();
         }
+        await expect(save).toBeDisabled({timeout: duration.half_min});
     }
 
     async searchManagementList(value: string) {

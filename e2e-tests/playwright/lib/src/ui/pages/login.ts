@@ -73,13 +73,9 @@ export default class LoginPage {
         await Promise.all([this.page.waitForNavigation(), this.signInButton.click()]);
     }
 
-    async loginWithLdap(username: string, password: string, waitForNavigation = true) {
+    async loginWithLdap(username: string, password: string) {
         await this.loginInput.fill(username);
         await this.passwordInput.fill(password);
-        if (waitForNavigation) {
-            await Promise.all([this.page.waitForNavigation(), this.signInButton.click()]);
-            return;
-        }
         await this.signInButton.click();
     }
 }

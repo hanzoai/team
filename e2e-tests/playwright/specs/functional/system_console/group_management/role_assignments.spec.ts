@@ -1,7 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {EnterpriseSystemConsolePage, getOrLinkLdapGroup, initializeOpenLdap, test} from '@mattermost/playwright-lib';
+import {
+    duration,
+    EnterpriseSystemConsolePage,
+    expect,
+    getOrLinkLdapGroup,
+    initializeOpenLdap,
+    test,
+} from '@mattermost/playwright-lib';
 
 test.describe('LDAP group role assignments', () => {
     async function setup(pw: any, groupName = 'board') {
@@ -109,9 +116,10 @@ test.describe('LDAP group role assignments', () => {
             await adminClient.unlinkGroupSyncable(group.id, link.team_id, 'team');
         }
 
-        // # Add a team and channel from the LDAP group configuration
+        // # Add and save the team before its channel so their implied team links are not created concurrently
         await consolePage.gotoGroupConfiguration(group.id);
         await consolePage.addTeamOrChannel('Team', team.display_name);
+        await consolePage.saveConfiguration();
         await consolePage.addTeamOrChannel('Channel', channel.display_name);
 
         // * Verify each membership starts with the Member role
@@ -120,6 +128,13 @@ test.describe('LDAP group role assignments', () => {
         // # Promote the team membership and save
         await consolePage.changeMembershipRole(team.display_name, 'Member', 'Team Admin');
         await consolePage.saveConfiguration();
+        await expect
+            .poll(
+                async () =>
+                    (await adminClient.getGroupSyncableIncludingDeleted(group.id, team.id, 'team')).scheme_admin,
+                {timeout: duration.half_min},
+            )
+            .toBe(true);
         await consolePage.gotoGroupConfiguration(group.id);
 
         // * Verify the administrator role persisted
