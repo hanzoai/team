@@ -15,7 +15,7 @@ func ExpectsJSON(r *http.Request) bool {
 		return false
 	}
 
-	for _, part := range strings.Split(accept, ",") {
+	for part := range strings.SplitSeq(accept, ",") {
 		mediaType := strings.TrimSpace(strings.Split(part, ";")[0])
 		if strings.EqualFold(mediaType, "application/json") {
 			return true

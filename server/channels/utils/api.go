@@ -49,17 +49,15 @@ func CheckEmbeddedCookie(r *http.Request) bool {
 	return cookie.Value == "1"
 }
 
-func WriteHTMLEndpointJSONRequestError(w http.ResponseWriter, translate i18n.TranslateFunc, baseURL string) {
-	const errorID = "api.context.html_endpoint_json_request.app_error"
-
+func WriteHTMLEndpointJSONRequestError(w http.ResponseWriter, translateFunc i18n.TranslateFunc, baseURL string) {
 	response := struct {
 		Id         string `json:"id"`
 		Message    string `json:"message"`
 		StatusCode int    `json:"status_code,omitempty"`
 		BaseURL    string `json:"base_url"`
 	}{
-		Id:         errorID,
-		Message:    translate(errorID, map[string]any{"BaseURL": baseURL}),
+		Id:         "api.context.html_endpoint_json_request.app_error",
+		Message:    translateFunc("api.context.html_endpoint_json_request.app_error", map[string]any{"BaseURL": baseURL}),
 		StatusCode: http.StatusNotAcceptable,
 		BaseURL:    baseURL,
 	}
