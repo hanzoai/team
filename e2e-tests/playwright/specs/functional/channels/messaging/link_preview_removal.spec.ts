@@ -54,7 +54,7 @@ test('MM-T199 Removing a link preview removes it from the views of other users',
     await expect(adminPreviewImage).toBeVisible();
 
     // # Collapse the preview as the test user
-    const collapseButton = userPreview.getByRole('button');
+    const collapseButton = userPreview.getByRole('button', {name: 'Hide image preview'});
     await collapseButton.click();
 
     // * Verify the preview image is collapsed for the test user

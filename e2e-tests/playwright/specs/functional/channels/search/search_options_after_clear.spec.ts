@@ -22,6 +22,7 @@ test('MM-T353 displays search options after clearing the query', {tag: '@search'
     await channelsPage.globalHeader.openSearch();
     await expect(channelsPage.searchBox.searchInput).toHaveValue(searchWord);
     await channelsPage.searchBox.clearIfPossible();
+    await expect(channelsPage.searchBox.searchInput).toHaveValue('');
 
     // * Verify search options appear and the existing results remain visible
     await expect(channelsPage.searchBox.searchHints).toBeVisible();

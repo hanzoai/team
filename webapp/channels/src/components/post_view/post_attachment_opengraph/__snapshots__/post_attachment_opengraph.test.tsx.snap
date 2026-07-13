@@ -39,6 +39,7 @@ exports[`PostAttachmentOpenGraph should match snapshot 1`] = `
       >
         <div>
           <button
+            aria-label="Hide image preview"
             class="preview-toggle style--none"
           >
             <svg
@@ -121,6 +122,7 @@ exports[`PostAttachmentOpenGraphImage should match snapshot 1`] = `
     >
       <div>
         <button
+          aria-label="Hide image preview"
           class="preview-toggle style--none"
         >
           <svg

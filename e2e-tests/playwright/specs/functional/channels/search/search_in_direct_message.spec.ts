@@ -11,8 +11,10 @@ test('MM-T358 searches for a message in a direct message channel', {tag: '@searc
     const {user, team, adminClient} = await pw.initSetup();
     const [otherUser] = await adminClient.createUsers(team.id, 1, 'dm-user');
     const dmChannel = await adminClient.createDirectChannel([user.id, otherUser.id]);
+    const townSquare = await adminClient.getChannelByName(team.id, 'town-square');
     const message = `Hello${pw.random.id()}`;
     await adminClient.createPost({channel_id: dmChannel.id, user_id: user.id, message});
+    await adminClient.createPost({channel_id: townSquare.id, user_id: user.id, message});
 
     const {channelsPage} = await pw.testBrowser.login(user);
     await channelsPage.goto(team.name, 'town-square');

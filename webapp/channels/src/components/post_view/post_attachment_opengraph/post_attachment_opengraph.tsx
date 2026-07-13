@@ -207,11 +207,13 @@ export const PostAttachmentOpenGraphImage = memo(({imageMetadata, isInPermalink,
     };
 
     const collapsedLabel = formatMessage({id: 'link_preview.image_preview', defaultMessage: 'Show image preview'});
+    const expandedLabel = formatMessage({id: 'link_preview.hide_image_preview', defaultMessage: 'Hide image preview'});
 
     const imageCollapseButton = (
         <button
             className='preview-toggle style--none'
             onClick={toggleImagePreview}
+            aria-label={isEmbedVisible ? expandedLabel : collapsedLabel}
         >
             {isEmbedVisible ? (
                 <MenuDownIcon

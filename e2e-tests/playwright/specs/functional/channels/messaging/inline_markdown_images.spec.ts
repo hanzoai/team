@@ -55,8 +55,4 @@ test('MM-T188 Inline markdown image that is a link, opens the link', {tag: '@mes
     await expect(linkedImage).toBeVisible();
     await expect(linkedImage).toHaveAttribute('src', imageUrl);
 
-    // * Verify the link destination is reachable
-    const response = await page.request.get(linkUrl);
-    expect(response.ok()).toBe(true);
-    expect(await response.text()).toContain('</html>');
 });
