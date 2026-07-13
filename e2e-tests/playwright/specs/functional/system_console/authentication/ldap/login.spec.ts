@@ -23,11 +23,16 @@ test.describe('LDAP authentication and guest filters', () => {
         const user = await getLdapUser(adminClient, ldapUsers.admin);
         await adminClient.updateUserRoles(user.id, 'system_user system_admin');
         await adminClient.revokeAllSessionsForUser(user.id);
+        const team = await adminClient.createTeam(await pw.random.team());
+        await adminClient.addToTeam(team.id, user.id);
+        const townSquare = await adminClient.getChannelByName(team.id, 'town-square');
+        await adminClient.addToChannel(user.id, townSquare.id);
 
         // # Log in as the existing LDAP administrator
         await loginFromPage(pw, ldapUsers.admin);
 
-        // * Verify the authenticated user account menu is available
+        // * Verify the authenticated channel and user account controls are available
+        await expect(pw.loginPage.page.getByText('Town Square', {exact: true}).first()).toBeVisible();
         await expect(pw.loginPage.page.getByRole('button', {name: "User's account menu"})).toBeVisible();
     });
 

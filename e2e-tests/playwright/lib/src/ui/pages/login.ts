@@ -43,7 +43,7 @@ export default class LoginPage {
         this.forgotPasswordLink = page.getByText('Forgot your password?');
         this.userErrorLabel = page.getByText('Please enter your email or username');
         this.loginRejectionMessage = page.getByText(
-            /^Enter a valid (?:email(?: or username)?|username) and\/or password(?:, or sign in using another method)?\.?$/,
+            /^(?:We couldn't find an account matching your login credentials\.|Your password is incorrect\.|The email\/username or password is invalid\.|Enter a valid (?:email(?: or username)?|username) and\/or password(?:, or sign in using another method)?\.?)$/,
         );
 
         this.header = new components.MainHeader(page.getByTestId('hfroute-header'));
