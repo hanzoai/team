@@ -12,7 +12,7 @@ test('MM-T187 Inline markdown images open preview window', {tag: '@messaging'}, 
         'https://raw.githubusercontent.com/mattermost/mattermost/master/e2e-tests/cypress/tests/fixtures/image-small-height.png';
 
     // # Log in and post an inline Markdown image
-    const {channelsPage, page} = await pw.testBrowser.login(user);
+    const {channelsPage} = await pw.testBrowser.login(user);
     await channelsPage.goto(team.name, 'off-topic');
     await channelsPage.toBeVisible();
     await channelsPage.postMessage(`Hello ![test image](${imageUrl})`);
@@ -26,7 +26,7 @@ test('MM-T187 Inline markdown images open preview window', {tag: '@messaging'}, 
     await inlineImage.click();
 
     // * Verify the image opens in the preview
-    await expect(page.getByAltText('preview url image')).toBeVisible();
+    await channelsPage.imagePreviewModal.toBeVisible();
 });
 
 /**

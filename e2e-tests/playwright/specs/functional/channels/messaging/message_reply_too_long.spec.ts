@@ -25,23 +25,18 @@ test('MM-T106 Webapp: Message too long warning text', {tag: '@messaging'}, async
     await channelsPage.sidebarRight.postMessage(validReply);
 
     // * Verify no overlong-message warning is shown
-    const warningPattern = /Your message is too long\. Character count:/;
-    await expect(channelsPage.sidebarRight.postCreate.container.getByText(warningPattern)).not.toBeVisible();
+    await channelsPage.sidebarRight.postCreate.toNotHaveMessageTooLongWarning();
 
     // # Enter an overlong reply and try to send it
     await channelsPage.sidebarRight.postCreate.input.fill(tooLongReply);
-    const warning = channelsPage.sidebarRight.postCreate.container.getByText(
-        `Your message is too long. Character count: ${tooLongReply.length}/${maxReplyLength}`,
-        {exact: true},
-    );
 
     // * Verify the character-count warning is visible without replacing the reply textbox
-    await expect(warning).toBeVisible();
+    await channelsPage.sidebarRight.postCreate.toHaveMessageTooLongWarning(tooLongReply.length, maxReplyLength);
     await expect(channelsPage.sidebarRight.postCreate.input).toBeVisible();
     await channelsPage.sidebarRight.postCreate.input.press('Enter');
 
     // * Verify the warning remains and the last posted reply is still the valid reply
-    await expect(warning).toBeVisible();
+    await channelsPage.sidebarRight.postCreate.toHaveMessageTooLongWarning(tooLongReply.length, maxReplyLength);
     const lastReply = await channelsPage.sidebarRight.getLastPost();
     await lastReply.toContainText(validReply);
 });

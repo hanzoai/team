@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {expect, test} from '@mattermost/playwright-lib';
+import {test} from '@mattermost/playwright-lib';
 import type {PlaywrightExtended} from '@mattermost/playwright-lib';
 
 /**
@@ -42,7 +42,5 @@ async function verifySystemMessageHasNoStatus(pw: PlaywrightExtended, messageDis
     const systemPost = await channelsPage.getLastPost();
 
     // * Verify the post is styled only as a system message and has no availability status icon
-    await expect(systemPost.container).toHaveClass(/post--system/);
-    await expect(systemPost.container).not.toHaveClass(/same--root|other--root|current--user|post--comment|post--root/);
-    await expect(systemPost.container.locator('.status-wrapper .status svg')).not.toBeVisible();
+    await systemPost.toBeSystemMessageContaining(newHeader);
 }

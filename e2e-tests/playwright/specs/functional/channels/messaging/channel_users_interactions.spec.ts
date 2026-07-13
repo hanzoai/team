@@ -33,8 +33,7 @@ test('MM-T216 scrolls to the bottom when sending a message', {tag: '@messaging'}
     await channelsPage.sidebarLeft.goToItem(testChannel.name);
 
     // * Verify the new-message separator is visible
-    await expect(channelsPage.centerView.notificationSeparator).toBeVisible();
-    await expect(channelsPage.centerView.notificationSeparator).toContainText('New Messages');
+    await channelsPage.centerView.toHaveNewMessagesSeparator();
 
     // # Send a message in the current channel
     await channelsPage.postMessage('message123');

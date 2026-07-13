@@ -127,6 +127,7 @@ const PostAttachmentOpenGraph = ({openGraphData, post, actions, link, isInPermal
             href={safeLink}
             title={openGraphData?.title || openGraphData?.url || link}
             location='post_attachment_opengraph'
+            data-testid='link-preview'
         >
             {rest.currentUserId === post.user_id && !isInPermalink && (
                 <WithTooltip

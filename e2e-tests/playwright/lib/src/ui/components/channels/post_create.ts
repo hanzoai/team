@@ -23,6 +23,10 @@ export default class ChannelsPostCreate {
     readonly suggestionOptions;
     readonly selectedSuggestion;
     readonly filePreview;
+    readonly filePreviewItems;
+    readonly filePreviewRemoveButtons;
+    readonly filePreviewThumbnails;
+    readonly messageTooLongWarning;
 
     // Burn-on-Read elements
     readonly burnOnReadButton;
@@ -46,6 +50,10 @@ export default class ChannelsPostCreate {
         this.suggestionOptions = this.suggestionList.getByRole('option');
         this.selectedSuggestion = this.suggestionList.getByTestId('suggestion-selected');
         this.filePreview = container.getByTestId('file-preview-container');
+        this.filePreviewItems = this.filePreview.getByTestId('file-preview-item');
+        this.filePreviewRemoveButtons = this.filePreview.getByTestId('file-preview-remove');
+        this.filePreviewThumbnails = this.filePreview.getByLabel(/file thumbnail/i);
+        this.messageTooLongWarning = container.getByText(/Your message is too long\. Character count:/);
 
         // Burn-on-Read elements
         // Use a flexible locator that matches the aria-label pattern
@@ -190,6 +198,52 @@ export default class ChannelsPostCreate {
     async openEmojiPicker() {
         await expect(this.emojiButton).toBeVisible();
         await this.emojiButton.click();
+    }
+
+    async selectFiles(files: File | File[]) {
+        const selectedFiles = Array.isArray(files) ? files : [files];
+        const fileChooserPromise = this.container.page().waitForEvent('filechooser');
+        await this.attachmentButton.click();
+        const fileChooser = await fileChooserPromise;
+        const payloads = await Promise.all(
+            selectedFiles.map(async (file) => ({
+                name: file.name,
+                mimeType: file.type,
+                buffer: Buffer.from(await file.arrayBuffer()),
+            })),
+        );
+        await fileChooser.setFiles(payloads);
+        await this.waitUntilFilePreviewContains(selectedFiles.map((file) => file.name));
+    }
+
+    getFilePreviewItem(fileName: string) {
+        return this.filePreviewItems.filter({hasText: fileName});
+    }
+
+    async toHaveFilePreview(fileName: string) {
+        const item = this.getFilePreviewItem(fileName);
+        await expect(item).toBeVisible();
+        await expect(item.getByLabel(/file thumbnail/i)).toBeVisible();
+    }
+
+    async removeFilePreview(fileName: string) {
+        await this.getFilePreviewItem(fileName).getByTestId('file-preview-remove').click();
+    }
+
+    async toHaveFilePreviewCount(count: number) {
+        await expect(this.filePreviewItems).toHaveCount(count);
+    }
+
+    async toNotHaveMessageTooLongWarning() {
+        await expect(this.messageTooLongWarning).not.toBeVisible();
+    }
+
+    async toHaveMessageTooLongWarning(characterCount: number, maximum: number) {
+        await expect(
+            this.container.getByText(`Your message is too long. Character count: ${characterCount}/${maximum}`, {
+                exact: true,
+            }),
+        ).toBeVisible();
     }
 
     async waitUntilFilePreviewContains(files: string[], timeout = duration.ten_sec) {

@@ -39,6 +39,7 @@ export default class ChannelsPage {
     readonly browseChannelsModal;
     readonly directChannelsModal;
     readonly keyboardShortcutsModal;
+    readonly imagePreviewModal;
     public invitePeopleModal: InvitePeopleModal | undefined;
     public membersInvitedModal: MembersInvitedModal | undefined;
     readonly profileModal;
@@ -82,6 +83,9 @@ export default class ChannelsPage {
             page.getByRole('dialog', {name: 'Notification Preferences'}),
         );
         this.keyboardShortcutsModal = page.getByRole('dialog', {name: /Keyboard shortcuts/});
+        this.imagePreviewModal = new components.ImagePreviewModal(
+            page.getByRole('dialog').filter({has: page.getByAltText('preview url image')}),
+        );
         this.createTeamForm = new CreateTeamForm(page.getByTestId('create-team-form'));
         this.deletePostModal = new components.DeletePostModal(page.locator('#deletePostModal'));
         this.findChannelsModal = new components.FindChannelsModal(page.getByRole('dialog', {name: 'Find Channels'}));

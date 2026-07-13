@@ -22,7 +22,7 @@ test(
         await channelsPage.centerView.postCreate.input.press('ArrowUp');
         await channelsPage.centerView.postEdit.toBeVisible();
         const editInput = channelsPage.centerView.postEdit.input;
-        const suggestions = channelsPage.centerView.postEdit.container.getByRole('listbox', {name: 'Suggestions'});
+        const suggestions = channelsPage.centerView.postEdit.suggestionList;
 
         // # Type one tilde at the start of the message
         await editInput.press('Home');
@@ -84,7 +84,7 @@ test('MM-T174 Autocomplete should close if tildes are deleted using backspace', 
     await channelsPage.centerView.postCreate.input.press('ArrowUp');
     await channelsPage.centerView.postEdit.toBeVisible();
     const editInput = channelsPage.centerView.postEdit.input;
-    const suggestions = channelsPage.centerView.postEdit.container.getByRole('listbox', {name: 'Suggestions'});
+    const suggestions = channelsPage.centerView.postEdit.suggestionList;
 
     // # Insert a tilde at the start of the message
     await editInput.press('Home');

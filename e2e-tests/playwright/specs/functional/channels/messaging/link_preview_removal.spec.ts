@@ -8,9 +8,6 @@ import {expect, test} from '@mattermost/playwright-lib';
  */
 test('MM-T199 Removing a link preview removes it from the views of other users', {tag: '@messaging'}, async ({pw}) => {
     const {adminClient, adminUser, userClient, team, user} = await pw.initSetup();
-    if (!adminUser) {
-        throw new Error('Failed to create admin user');
-    }
 
     await Promise.all([
         userClient.savePreferences(user.id, [
@@ -34,54 +31,51 @@ test('MM-T199 Removing a link preview removes it from the views of other users',
     await userChannelsPage.postMessage(message);
     const postId = ((await (await postResponsePromise).json()) as {id: string}).id;
     const userPost = await userChannelsPage.centerView.getPostById(postId);
-    const userPreview = userPost.body.getByRole('link').nth(1);
-    const userPreviewImage = userPreview.getByRole('img', {name: /.+/});
+    const userPreview = userPost.getLinkPreview();
 
     // * Verify the link preview and its image are shown
-    await expect(userPreview).toBeVisible({timeout: pw.duration.half_min});
-    await expect(userPreviewImage).toBeVisible();
+    await expect(userPreview.container).toBeVisible({timeout: pw.duration.half_min});
+    await expect(userPreview.image).toBeVisible();
 
     // # Log in as the other user and visit the same channel
     const {channelsPage: adminChannelsPage, page: adminPage} = await pw.testBrowser.login(adminUser);
     await adminChannelsPage.goto(team.name, 'off-topic');
     await adminChannelsPage.toBeVisible();
     const adminPost = await adminChannelsPage.centerView.getPostById(postId);
-    const adminPreview = adminPost.body.getByRole('link').nth(1);
-    const adminPreviewImage = adminPreview.getByRole('img', {name: /.+/});
+    const adminPreview = adminPost.getLinkPreview();
 
     // * Verify the other user also sees the expanded preview
-    await expect(adminPreview).toBeVisible({timeout: pw.duration.half_min});
-    await expect(adminPreviewImage).toBeVisible();
+    await expect(adminPreview.container).toBeVisible({timeout: pw.duration.half_min});
+    await expect(adminPreview.image).toBeVisible();
 
     // # Collapse the preview as the test user
-    const collapseButton = userPreview.getByRole('button', {name: 'Hide image preview'});
-    await collapseButton.click();
+    await userPreview.hideImageButton.click();
 
     // * Verify the preview image is collapsed for the test user
-    await expect(userPreview.getByRole('button', {name: 'Show image preview'})).toBeVisible();
-    await expect(userPreviewImage).not.toBeVisible();
+    await expect(userPreview.showImageButton).toBeVisible();
+    await expect(userPreview.image).not.toBeVisible();
 
     // # Reload the channel as the other user
     await adminPage.reload();
     await adminChannelsPage.toBeVisible();
 
     // * Verify the preview remains expanded for the other user
-    await expect(adminPreview).toBeVisible();
-    await expect(adminPreviewImage).toBeVisible();
+    await expect(adminPreview.container).toBeVisible();
+    await expect(adminPreview.image).toBeVisible();
 
     // # Remove the link preview as the test user
     await userPage.reload();
     await userChannelsPage.toBeVisible();
-    await userPreview.hover();
-    await userPreview.getByRole('button', {name: 'Remove'}).click();
+    await userPreview.container.hover();
+    await userPreview.removeButton.click();
 
     // * Verify the preview is removed for the test user
-    await expect(userPreview).not.toBeVisible();
+    await expect(userPreview.container).not.toBeVisible();
 
     // # Reload the channel as the other user
     await adminPage.reload();
     await adminChannelsPage.toBeVisible();
 
     // * Verify the preview is also removed for the other user
-    await expect(adminPreview).not.toBeVisible();
+    await expect(adminPreview.container).not.toBeVisible();
 });
