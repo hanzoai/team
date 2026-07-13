@@ -18,32 +18,70 @@ const maxActionSearchActions = 16
 const RenderDecisionReasonRestrictedByPolicy = "restricted_by_policy"
 
 // RenderPermissionDecision is a non-authoritative, render-time ABAC decision for
-// a single action. It is used by the client to decide whether to show a control;
-// it MUST NOT be used to authorize an action. Enforcement always re-evaluates the
-// PDP live on the server.
+// a single action. MUST NOT be used to authorize — enforcement always re-evaluates
+// the PDP live on the server.
 type RenderPermissionDecision struct {
-	// Allowed reports whether the action is permitted for rendering purposes.
-	Allowed bool `json:"allowed"`
-	// Evaluated reports whether the server intentionally computed this decision.
-	Evaluated bool `json:"evaluated"`
-	// Reason is a generic, non-sensitive denial reason (e.g. "restricted_by_policy").
-	// It MUST NOT contain policy names, expressions, attribute names, or values.
-	Reason string `json:"reason,omitempty"`
+	Allowed   bool   `json:"allowed"`
+	Evaluated bool   `json:"evaluated"`
+	Reason    string `json:"reason,omitempty"`
+}
+
+// ActionSearchResult is the AuthZEN-canonical permitted-action entry.
+// Only PERMITTED actions appear in the results list; denial is expressed by omission.
+type ActionSearchResult struct {
+	Name string `json:"name"`
+}
+
+// ActionSearchSubject is RESERVED for Phase 3 cross-subject evaluation.
+// In Phase 2, any Subject.ID that does not match the authenticated session user is
+// rejected with 403. The field is present in the contract to make Phase 3 a
+// non-breaking extension of this endpoint.
+type ActionSearchSubject struct {
+	ID   string `json:"id"`
+	Type string `json:"type,omitempty"`
+}
+
+// ActionSearchPage is RESERVED for Phase 3 pagination.
+// Accepted in requests but always ignored; next_token is never emitted in responses.
+type ActionSearchPage struct {
+	NextToken string `json:"next_token,omitempty"`
 }
 
 // ActionSearchRequest asks "for the current session user, on this resource,
-// which of these actions are allowed?". The subject is always the authenticated
-// session user; there is intentionally no subject field so callers cannot probe
-// other users' decisions.
+// which actions are allowed?".
+//
+// Actions is optional:
+//   - nil or empty → discovery mode: the server evaluates all renderable actions
+//     registered for the resource type and returns the permitted set.
+//   - non-empty → targeted mode: the server evaluates exactly those actions
+//     (max 16; all must be registered for the resource type).
+//
+// Subject is RESERVED. If provided, its ID must equal the authenticated session
+// user ID; mismatches are rejected with 403.
+//
+// Page is RESERVED. Accepted but always ignored.
 type ActionSearchRequest struct {
-	Resource Resource `json:"resource"`
-	Actions  []string `json:"actions"`
+	Resource Resource             `json:"resource"`
+	Actions  []string             `json:"actions,omitempty"` // optional; nil/empty = discovery
+	Subject  *ActionSearchSubject `json:"subject,omitempty"` // reserved
+	Page     *ActionSearchPage    `json:"page,omitempty"`    // reserved
 }
 
-// ActionSearchResponse returns a render-time decision per requested action.
+// ActionSearchResponse returns render-time ABAC decisions for the requested resource.
+//
+// Results is the AuthZEN-canonical list: only actions the server evaluated as
+// PERMITTED appear here. An empty Results ([]) is meaningful — all evaluated actions
+// were denied — and is always present (never null).
+//
+// Decisions is the Mattermost extension: all evaluated actions appear here with full
+// decision detail (Allowed, Evaluated, Reason), including denied ones. Always present.
+//
+// Page is RESERVED; always absent in the current implementation.
 type ActionSearchResponse struct {
-	Resource Resource                            `json:"resource"`
-	Actions  map[string]RenderPermissionDecision `json:"actions"`
+	Resource  Resource                            `json:"resource"`
+	Results   []ActionSearchResult                `json:"results"`   // no omitempty — [] is meaningful
+	Decisions map[string]RenderPermissionDecision `json:"decisions"` // no omitempty — {} is meaningful
+	Page      *ActionSearchPage                   `json:"page,omitempty"`
 }
 
 // IsValid validates the shape of an Action Search request. It does not validate
@@ -56,14 +94,16 @@ func (r *ActionSearchRequest) IsValid() *AppError {
 	if !IsValidId(r.Resource.ID) {
 		return NewAppError("ActionSearchRequest.IsValid", "model.access_control_decision.is_valid.resource_id.app_error", nil, "", http.StatusBadRequest)
 	}
-	if len(r.Actions) == 0 {
-		return NewAppError("ActionSearchRequest.IsValid", "model.access_control_decision.is_valid.actions_empty.app_error", nil, "", http.StatusBadRequest)
-	}
+	// nil/empty Actions = discovery mode (valid). Validate bounds only when non-empty.
 	if len(r.Actions) > maxActionSearchActions {
 		return NewAppError("ActionSearchRequest.IsValid", "model.access_control_decision.is_valid.actions_too_many.app_error", map[string]any{"Max": maxActionSearchActions}, "", http.StatusBadRequest)
 	}
 	if slices.Contains(r.Actions, "") {
 		return NewAppError("ActionSearchRequest.IsValid", "model.access_control_decision.is_valid.action_empty.app_error", nil, "", http.StatusBadRequest)
+	}
+	// Subject shape validation. Identity check (must match session user) is in the app layer.
+	if r.Subject != nil && !IsValidId(r.Subject.ID) {
+		return NewAppError("ActionSearchRequest.IsValid", "model.access_control_decision.is_valid.subject_id.app_error", nil, "", http.StatusBadRequest)
 	}
 	return nil
 }

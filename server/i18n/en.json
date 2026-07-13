@@ -5387,6 +5387,10 @@
     "translation": "You do not have permission to manage this access control policy."
   },
   {
+    "id": "app.access_control_decision.subject_mismatch.app_error",
+    "translation": "Subject does not match the authenticated session user."
+  },
+  {
     "id": "app.access_control_decision.unsupported_action.app_error",
     "translation": "Unsupported action for render decisions: {{.Action}}"
   },
@@ -11021,6 +11025,10 @@
   {
     "id": "model.access_control_decision.is_valid.resource_type.app_error",
     "translation": "Resource type is required."
+  },
+  {
+    "id": "model.access_control_decision.is_valid.subject_id.app_error",
+    "translation": "Invalid subject id."
   },
   {
     "id": "model.access_policy.inherit.already_imported.app_error",

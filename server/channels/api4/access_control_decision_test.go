@@ -15,7 +15,6 @@ import (
 
 func TestSearchAccessControlDecisionActions(t *testing.T) {
 	th := SetupConfig(t, func(cfg *model.Config) {
-		cfg.FeatureFlags.AttributeBasedAccessControl = true
 		cfg.FeatureFlags.PermissionPolicies = true
 	}).InitBasic(t)
 
@@ -60,9 +59,9 @@ func TestSearchAccessControlDecisionActions(t *testing.T) {
 		})
 		require.NoError(t, err)
 		CheckOKStatus(t, resp)
-		require.Len(t, out.Actions, 2)
-		require.True(t, out.Actions[model.AccessControlPolicyActionUploadFileAttachment].Allowed)
-		require.True(t, out.Actions[model.AccessControlPolicyActionUploadFileAttachment].Evaluated)
+		require.Len(t, out.Decisions, 2)
+		require.True(t, out.Decisions[model.AccessControlPolicyActionUploadFileAttachment].Allowed)
+		require.True(t, out.Decisions[model.AccessControlPolicyActionUploadFileAttachment].Evaluated)
 	})
 
 	t.Run("returns PDP deny for the session user", func(t *testing.T) {
@@ -84,7 +83,62 @@ func TestSearchAccessControlDecisionActions(t *testing.T) {
 		})
 		require.NoError(t, err)
 		CheckOKStatus(t, resp)
-		require.False(t, out.Actions[model.AccessControlPolicyActionUploadFileAttachment].Allowed)
-		require.True(t, out.Actions[model.AccessControlPolicyActionUploadFileAttachment].Evaluated)
+		require.False(t, out.Decisions[model.AccessControlPolicyActionUploadFileAttachment].Allowed)
+		require.True(t, out.Decisions[model.AccessControlPolicyActionUploadFileAttachment].Evaluated)
+		require.Empty(t, out.Results) // denied actions must not appear in the AuthZEN results list
+	})
+
+	t.Run("discovery mode returns all actions when ABAC inactive", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			*cfg.AccessControlSettings.EnableAttributeBasedAccessControl = false
+		})
+
+		out, resp, err := th.Client.SearchAccessControlDecisionActions(context.Background(), model.ActionSearchRequest{
+			Resource: channelResource,
+		})
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		require.Len(t, out.Decisions, 2)
+		require.Len(t, out.Results, 2)
+	})
+
+	t.Run("subject not matching session user returns 403", func(t *testing.T) {
+		_, resp, err := th.Client.SearchAccessControlDecisionActions(context.Background(), model.ActionSearchRequest{
+			Resource: channelResource,
+			Actions:  []string{model.AccessControlPolicyActionUploadFileAttachment},
+			Subject:  &model.ActionSearchSubject{ID: model.NewId()},
+		})
+		require.Error(t, err)
+		CheckForbiddenStatus(t, resp)
+	})
+
+	t.Run("subject matching session user is accepted", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			*cfg.AccessControlSettings.EnableAttributeBasedAccessControl = false
+		})
+
+		out, resp, err := th.Client.SearchAccessControlDecisionActions(context.Background(), model.ActionSearchRequest{
+			Resource: channelResource,
+			Actions:  []string{model.AccessControlPolicyActionUploadFileAttachment},
+			Subject:  &model.ActionSearchSubject{ID: th.BasicUser.Id},
+		})
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		require.True(t, out.Decisions[model.AccessControlPolicyActionUploadFileAttachment].Allowed)
+	})
+
+	t.Run("page field accepted and ignored", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			*cfg.AccessControlSettings.EnableAttributeBasedAccessControl = false
+		})
+
+		out, resp, err := th.Client.SearchAccessControlDecisionActions(context.Background(), model.ActionSearchRequest{
+			Resource: channelResource,
+			Actions:  []string{model.AccessControlPolicyActionUploadFileAttachment},
+			Page:     &model.ActionSearchPage{NextToken: "tok"},
+		})
+		require.NoError(t, err)
+		CheckOKStatus(t, resp)
+		require.Nil(t, out.Page)
 	})
 }

@@ -45,14 +45,18 @@ func (api *API) InitAccessControlPolicy() {
 }
 
 // searchAccessControlDecisionActions returns non-authoritative, render-time ABAC
-// decisions for the current session user on a single resource. The subject is
-// always the authenticated session user; there is no subject field in the
-// request body, so a caller cannot probe another user's decisions. Results are
-// for rendering only — protected endpoints always re-evaluate the PDP live.
+// decisions for the current session user on a single resource. If Subject is
+// provided in the request it must match the authenticated session user ID — any
+// other value is rejected with 403. Results are for rendering only; protected
+// endpoints always re-evaluate the PDP live.
 func searchAccessControlDecisionActions(c *Context, w http.ResponseWriter, r *http.Request) {
 	var req model.ActionSearchRequest
 	if jsonErr := json.NewDecoder(r.Body).Decode(&req); jsonErr != nil {
 		c.SetInvalidParamWithErr("action_search", jsonErr)
+		return
+	}
+	if appErr := req.IsValid(); appErr != nil {
+		c.Err = appErr
 		return
 	}
 
@@ -62,7 +66,12 @@ func searchAccessControlDecisionActions(c *Context, w http.ResponseWriter, r *ht
 		return
 	}
 
-	if err := json.NewEncoder(w).Encode(resp); err != nil {
+	js, err := json.Marshal(resp)
+	if err != nil {
+		c.Err = model.NewAppError("searchAccessControlDecisionActions", "api.marshal_error", nil, "", http.StatusInternalServerError).Wrap(err)
+		return
+	}
+	if _, err := w.Write(js); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))
 	}
 }

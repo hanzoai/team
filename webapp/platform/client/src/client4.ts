@@ -117,7 +117,7 @@ import type {UserPropertyField, UserPropertyFieldPatch} from '@mattermost/types/
 import type {Reaction} from '@mattermost/types/reactions';
 import type {Recap, CreateRecapRequest} from '@mattermost/types/recaps';
 import type {RemoteCluster, RemoteClusterAcceptInvite, RemoteClusterPatch, RemoteClusterWithPassword} from '@mattermost/types/remote_clusters';
-import type {ActionSearchResponse} from '@mattermost/types/render_permissions';
+import type {ActionSearchRequest, ActionSearchResponse} from '@mattermost/types/render_permissions';
 import type {UserReport, UserReportFilter, UserReportOptions} from '@mattermost/types/reports';
 import type {Role} from '@mattermost/types/roles';
 import type {SamlCertificateStatus, SamlMetadataResponse} from '@mattermost/types/saml';
@@ -4960,10 +4960,14 @@ export default class Client4 {
         );
     };
 
-    searchAccessControlDecisionActions = (resourceType: string, resourceId: string, actions: string[]) => {
+    searchAccessControlDecisionActions = (resourceType: string, resourceId: string, actions?: string[]) => {
+        const body: ActionSearchRequest = {resource: {type: resourceType, id: resourceId}};
+        if (actions && actions.length > 0) {
+            body.actions = actions;
+        }
         return this.doFetch<ActionSearchResponse>(
             `${this.getBaseRoute()}/access_control/decisions/actions/search`,
-            {method: 'post', body: JSON.stringify({resource: {type: resourceType, id: resourceId}, actions})},
+            {method: 'post', body: JSON.stringify(body)},
         );
     };
 

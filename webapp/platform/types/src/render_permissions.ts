@@ -10,12 +10,23 @@ export type RenderPermissionDecision = {
     reason?: string;
 };
 
+export type ActionSearchResult = {name: string};
+
+export type ActionSearchSubject = {
+    id: string;
+    type?: string;
+};
+
+export type ActionSearchPage = {next_token?: string};
+
 export type ActionSearchRequest = {
     resource: {
         type: string;
         id: string;
     };
-    actions: string[];
+    actions?: string[];             // optional; omit for discovery mode
+    subject?: ActionSearchSubject;  // reserved
+    page?: ActionSearchPage;        // reserved
 };
 
 export type ActionSearchResponse = {
@@ -23,7 +34,9 @@ export type ActionSearchResponse = {
         type: string;
         id: string;
     };
-    actions: Record<string, RenderPermissionDecision>;
+    results: ActionSearchResult[];
+    decisions: Record<string, RenderPermissionDecision>;
+    page?: ActionSearchPage;
 };
 
 // RenderPermissionsState is the client-only cache of render decisions, keyed by

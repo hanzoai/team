@@ -36,7 +36,7 @@ export function fetchRenderActionsForResource(resourceType: string, resourceId: 
             data: {
                 resourceType: data.resource.type,
                 resourceId: data.resource.id,
-                actions: data.actions,
+                actions: data.decisions,
                 generation,
                 receivedAt: Date.now(),
             },
