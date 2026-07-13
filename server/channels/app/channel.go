@@ -4430,25 +4430,7 @@ func (a *App) ChannelAccessControlled(rctx request.CTX, channelID string) (bool,
 		return false, appErr
 	}
 
-	if channel.HasMembershipPolicyAction() {
-		return true, nil
-	}
-
-	// A private channel with no per-channel policy row is still access
-	// controlled when an active all-channels policy exists: that virtual scope
-	// governs every eligible private channel directly (no PolicyEnforced flag is
-	// set), so join/add enforcement must fire here between the hourly sync
-	// sweeps. Group-constrained and shared channels are excluded — they are
-	// ineligible for ABAC (ValidateChannelEligibilityForAccessControl) and are
-	// not enumerated by the all-channels sweep, so enforcing here would gate
-	// joins the sweep never reconciles (e.g. blocking group-synced adds).
-	if channel.Type == model.ChannelTypePrivate && !channel.IsGroupConstrained() && !channel.IsShared() {
-		if acs := a.Srv().Channels().AccessControl; acs != nil && acs.HasActiveAllChannelsPolicy(rctx) {
-			return true, nil
-		}
-	}
-
-	return false, nil
+	return channel.HasMembershipPolicyAction(), nil
 }
 
 // cleanupChannelAccessControlPolicy removes the channel-scope ABAC policy row,

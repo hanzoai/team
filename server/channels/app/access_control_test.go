@@ -4577,65 +4577,6 @@ func TestChannelAccessControlled(t *testing.T) {
 		require.Nil(t, appErr)
 		require.False(t, controlled)
 	})
-
-	t.Run("private channel with no policy is controlled under an active all-channels policy", func(t *testing.T) {
-		orig := th.App.Srv().ch.AccessControl
-		mockACS := &mocks.AccessControlServiceInterface{}
-		th.App.Srv().ch.AccessControl = mockACS
-		t.Cleanup(func() { th.App.Srv().ch.AccessControl = orig })
-		mockACS.On("HasActiveAllChannelsPolicy", mock.Anything).Return(true)
-
-		channel := th.CreatePrivateChannel(t, th.BasicTeam)
-		controlled, appErr := th.App.ChannelAccessControlled(th.Context, channel.Id)
-		require.Nil(t, appErr)
-		require.True(t, controlled, "active all-channels policy must control an unowned private channel")
-	})
-
-	t.Run("public channel is NOT controlled by an all-channels policy", func(t *testing.T) {
-		orig := th.App.Srv().ch.AccessControl
-		mockACS := &mocks.AccessControlServiceInterface{}
-		th.App.Srv().ch.AccessControl = mockACS
-		t.Cleanup(func() { th.App.Srv().ch.AccessControl = orig })
-		// The gate must not even ask about all-channels for a public channel.
-		mockACS.On("HasActiveAllChannelsPolicy", mock.Anything).Return(true).Maybe()
-
-		channel := th.CreateChannel(t, th.BasicTeam)
-		controlled, appErr := th.App.ChannelAccessControlled(th.Context, channel.Id)
-		require.Nil(t, appErr)
-		require.False(t, controlled, "all-channels scope covers private channels only")
-	})
-
-	t.Run("private channel not controlled when no all-channels policy is active", func(t *testing.T) {
-		orig := th.App.Srv().ch.AccessControl
-		mockACS := &mocks.AccessControlServiceInterface{}
-		th.App.Srv().ch.AccessControl = mockACS
-		t.Cleanup(func() { th.App.Srv().ch.AccessControl = orig })
-		mockACS.On("HasActiveAllChannelsPolicy", mock.Anything).Return(false)
-
-		channel := th.CreatePrivateChannel(t, th.BasicTeam)
-		controlled, appErr := th.App.ChannelAccessControlled(th.Context, channel.Id)
-		require.Nil(t, appErr)
-		require.False(t, controlled)
-	})
-
-	t.Run("group-constrained private channel is NOT controlled by an all-channels policy", func(t *testing.T) {
-		orig := th.App.Srv().ch.AccessControl
-		mockACS := &mocks.AccessControlServiceInterface{}
-		th.App.Srv().ch.AccessControl = mockACS
-		t.Cleanup(func() { th.App.Srv().ch.AccessControl = orig })
-		// Group-constrained channels are ineligible for ABAC and are not swept,
-		// so the gate must not enforce here (it would break group-synced adds).
-		mockACS.On("HasActiveAllChannelsPolicy", mock.Anything).Return(true).Maybe()
-
-		channel := th.CreatePrivateChannel(t, th.BasicTeam)
-		channel.GroupConstrained = model.NewPointer(true)
-		_, appErr := th.App.UpdateChannel(th.Context, channel)
-		require.Nil(t, appErr)
-
-		controlled, appErr := th.App.ChannelAccessControlled(th.Context, channel.Id)
-		require.Nil(t, appErr)
-		require.False(t, controlled, "group-constrained private channels are ineligible for the all-channels scope")
-	})
 }
 
 func TestPublishChannelPolicyEnforcedUpdateHydratesBroadcastPayload(t *testing.T) {

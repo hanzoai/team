@@ -1827,12 +1827,11 @@ func (a *App) UpdateAccessControlPoliciesActive(rctx request.CTX, updates []mode
 		}
 	}
 
-	// The all-channels set is Active-sensitive and this path writes the flag
-	// straight to the store, bypassing the engine. Only a parent can carry the
-	// all-channels flag, so a parent toggle must refresh the cached set (locally
-	// and cluster-wide).
+	// Activating an all-channels parent PDP-gates every eligible private channel
+	// at once, so log the blast radius for operators. Only a parent can carry the
+	// flag; auditAllChannelsPolicyBlastRadius no-ops for anything that is not an
+	// active all-channels parent.
 	if toggledParent {
-		acs.InvalidateAllChannelsCache(rctx)
 		for _, policy := range policies {
 			a.auditAllChannelsPolicyBlastRadius(rctx, policy)
 		}
