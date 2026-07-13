@@ -1,0 +1,69 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import type {Page} from '@playwright/test';
+
+import {expect} from '@mattermost/playwright-lib';
+
+export class MultiformDialog {
+    constructor(private readonly page: Page) {}
+
+    async expectStepOne() {
+        await expect(this.page.getByRole('heading', {name: 'Step 1 - Personal Info'})).toBeVisible();
+        await expect(this.page.getByRole('textbox', {name: /First Name/})).toBeVisible();
+        await expect(this.page.getByRole('textbox', {name: /Email/})).toBeVisible();
+        await expect(this.page.getByRole('button', {name: 'Next Step'})).toBeVisible();
+    }
+
+    async completeStepOne(firstName: string, email: string) {
+        await this.page.getByRole('textbox', {name: /First Name/}).fill(firstName);
+        await this.page.getByRole('textbox', {name: /Email/}).fill(email);
+        await this.page.getByRole('button', {name: 'Next Step'}).click();
+    }
+
+    async expectStepTwo() {
+        const dialog = this.page.getByRole('dialog', {name: 'Step 2 - Work Info'});
+        await expect(dialog).toBeVisible();
+        await expect(dialog.getByRole('combobox')).toBeVisible();
+        await expect(dialog.getByRole('radio', {name: 'Senior'})).toBeVisible();
+        await expect(this.page.getByRole('textbox', {name: /First Name/})).toHaveCount(0);
+        await expect(this.page.getByRole('textbox', {name: /Email/})).toHaveCount(0);
+    }
+
+    async completeStepTwo() {
+        const dialog = this.page.getByRole('dialog', {name: 'Step 2 - Work Info'});
+        await dialog.getByRole('combobox').click();
+        await this.page.getByRole('option', {name: 'Engineering'}).click();
+        await this.page.getByRole('radio', {name: 'Senior'}).check();
+        await this.page.getByRole('button', {name: 'Next Step'}).click();
+    }
+
+    async expectStepThree() {
+        await expect(this.page.getByRole('heading', {name: 'Step 3 - Final Details'})).toBeVisible();
+        await expect(this.page.getByRole('textbox', {name: /Comments/})).toBeVisible();
+        await expect(this.page.getByRole('checkbox', {name: /Terms & Conditions/})).toBeVisible();
+        await expect(this.page.getByRole('button', {name: 'Complete Registration'})).toBeVisible();
+    }
+
+    async completeStepThree(comments: string) {
+        await this.page.getByRole('textbox', {name: /Comments/}).fill(comments);
+        await this.page.getByRole('checkbox', {name: /Terms & Conditions/}).check();
+        await this.page.getByRole('button', {name: 'Complete Registration'}).click();
+    }
+
+    async cancel() {
+        await this.page.getByRole('button', {name: 'Cancel'}).click();
+    }
+
+    async close() {
+        await this.page.getByRole('button', {name: 'Close'}).click();
+    }
+
+    async expectClosed() {
+        await expect(
+            this.page.getByRole('heading', {
+                name: /Step [123] - (Personal Info|Work Info|Final Details)/,
+            }),
+        ).toHaveCount(0);
+    }
+}

@@ -123,3 +123,32 @@ test('MM-T1260 UP arrow edits the previous post', async ({pw}) => {
     await editedPost.toContainText('Edit Test');
     await expect(channelsPage.centerView.editedPostIcon(postId)).toContainText('Edited');
 });
+
+/**
+ * @objective Verify Ctrl/Cmd+Shift+K opens and closes the Direct Messages modal.
+ *
+ * MM-T1278 duplicates MM-T1276 and is covered by the same test.
+ */
+test(
+    'MM-T1276 MM-T1278 CTRL/CMD+SHIFT+K opens and closes Direct Messages',
+    {tag: '@keyboard_shortcuts'},
+    async ({pw}) => {
+        const {user, team} = await pw.initSetup();
+
+        // # Focus the center-channel textbox and press Ctrl/Cmd+Shift+K
+        const {channelsPage, page} = await pw.testBrowser.login(user);
+        await channelsPage.goto(team.name, 'town-square');
+        await channelsPage.toBeVisible();
+        await channelsPage.centerView.postCreate.input.focus();
+        await page.keyboard.press('ControlOrMeta+Shift+K');
+
+        // * Verify the Direct Messages modal opens
+        await channelsPage.directChannelsModal.toBeVisible();
+
+        // # Press Ctrl/Cmd+Shift+K again
+        await page.keyboard.press('ControlOrMeta+Shift+K');
+
+        // * Verify the Direct Messages modal closes
+        await expect(channelsPage.directChannelsModal.container).not.toBeVisible();
+    },
+);
