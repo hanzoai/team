@@ -33,6 +33,7 @@ const mockedUsePost = require('components/common/hooks/usePost').usePost as jest
 const mockGetPost = require('mattermost-redux/actions/posts').getPost as jest.MockedFunction<any>;
 const useContentFlaggingFields = require('components/common/hooks/useContentFlaggingFields').useContentFlaggingFields as jest.MockedFunction<any>;
 const usePostContentFlaggingValues = require('components/common/hooks/useContentFlaggingFields').usePostContentFlaggingValues as jest.MockedFunction<any>;
+const useContentFlaggingConfig = require('components/common/hooks/useContentFlaggingFields').useContentFlaggingConfig as jest.MockedFunction<any>;
 const usePropertyCardViewChannelLoader = require('components/common/hooks/usePropertyCardViewChannelLoader').usePropertyCardViewChannelLoader as jest.MockedFunction<any>;
 const usePropertyCardViewTeamLoader = require('components/common/hooks/usePropertyCardViewTeamLoader').usePropertyCardViewTeamLoader as jest.MockedFunction<any>;
 const usePropertyCardViewPostLoader = require('components/common/hooks/usePropertyCardViewPostLoader').usePropertyCardViewPostLoader as jest.MockedFunction<any>;
@@ -430,6 +431,29 @@ describe('components/post_view/data_spillage_report/DataSpillageReport', () => {
         expect(screen.queryByTestId('data-spillage-action')).toBeVisible();
         expect(screen.queryByTestId('data-spillage-action-remove-message')).toBeVisible();
         expect(screen.queryByTestId('data-spillage-action-keep-message')).toBeVisible();
+
+        // The Delivered to row is hidden unless delivery tracking is enabled.
+        expect(screen.queryByTestId('data-spillage-delivered-to')).not.toBeInTheDocument();
+    });
+
+    it('should render the Delivered to row when delivery tracking is enabled', async () => {
+        useContentFlaggingConfig.mockReturnValue({delivery_tracking_enabled: true});
+
+        renderWithContext(
+            <DataSpillageReport
+                post={post}
+                isRHS={true}
+            />,
+            baseState,
+        );
+
+        await act(async () => {});
+
+        expect(screen.getByTestId('data-spillage-delivered-to')).toBeVisible();
+        expect(screen.getByText('Delivered to')).toBeVisible();
+
+        // No prior job → the reviewer can generate the list.
+        expect(screen.getByTestId('data-spillage-delivered-to-generate')).toBeVisible();
     });
 
     it('should render in short mode in the global threads view even when isRHS is true', async () => {

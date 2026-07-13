@@ -19,6 +19,11 @@ export type ContentFlaggingConfig = {
     reviewer_comment_required: boolean;
     notify_reporter_on_dismissal?: boolean;
     notify_reporter_on_removal?: boolean;
+
+    // Reviewer-only: whether the post delivery tracking ("Delivered to"
+    // recipient list) feature is enabled. Present only when the config is
+    // fetched as a content reviewer.
+    delivery_tracking_enabled?: boolean;
 };
 
 export type ContentFlaggingState = {
@@ -35,4 +40,14 @@ export enum ContentFlaggingStatus {
     Assigned = 'Assigned',
     Removed = 'Removed',
     Retained = 'Retained',
+}
+
+// DeliveryTrackingStatus mirrors the server's delivery_tracking_status property
+// value (model.DeliveryTrackingStatus*), tracking the "Delivered to" recipient
+// list copy-job state for a flagged post.
+export enum DeliveryTrackingStatus {
+    NotStarted = 'not_started',
+    InProgress = 'in_progress',
+    Completed = 'completed',
+    Failed = 'failed',
 }

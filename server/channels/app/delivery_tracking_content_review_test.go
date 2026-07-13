@@ -96,6 +96,27 @@ func TestCreateDeliveryTrackingContentReviewJob(t *testing.T) {
 		require.NoError(t, err)
 		require.ElementsMatch(t, []string{th.BasicUser.Id, th.BasicUser2.Id}, strings.Split(refetched.Data["requested_by"], ","))
 	})
+
+	t.Run("marks the flagged post's delivery tracking status in_progress", func(t *testing.T) {
+		post := setupFlaggedPost(t, th)
+
+		// A freshly flagged post starts at not_started.
+		require.Equal(t, model.DeliveryTrackingStatusNotStarted, deliveryTrackingStatusValue(t, th, post.Id))
+
+		_, appErr := th.App.CreateDeliveryTrackingContentReviewJob(th.Context, post.Id, th.BasicTeam.Id, th.BasicUser.Id)
+		require.Nil(t, appErr)
+
+		require.Equal(t, model.DeliveryTrackingStatusInProgress, deliveryTrackingStatusValue(t, th, post.Id))
+	})
+}
+
+// deliveryTrackingStatusValue returns the current delivery_tracking_status property
+// value for a flagged post, with the JSON quoting stripped.
+func deliveryTrackingStatusValue(t *testing.T, th *TestHelper, postID string) string {
+	t.Helper()
+	value, appErr := th.App.GetPostContentFlaggingPropertyValue(postID, contentFlaggingPropertyNameDeliveryTrackingStatus)
+	require.Nil(t, appErr)
+	return strings.Trim(string(value.Value), `"`)
 }
 
 func TestDeliveryTrackingContentReviewJobExists(t *testing.T) {
@@ -294,5 +315,26 @@ func TestNotifyDeliveryTrackingContentReviewRequesters(t *testing.T) {
 			Data: model.StringMap{jobDataKeyRequestedBy: th.BasicUser.Id},
 		}
 		require.Nil(t, th.App.NotifyDeliveryTrackingContentReviewRequesters(th.Context, job, true))
+	})
+
+	t.Run("sets the delivery tracking status to completed then failed", func(t *testing.T) {
+		post := flagPost()
+		require.Equal(t, model.DeliveryTrackingStatusNotStarted, deliveryTrackingStatusValue(t, th, post.Id))
+
+		successJob := &model.Job{
+			Id:   model.NewId(),
+			Type: model.JobTypeDeliveryTrackingContentReview,
+			Data: model.StringMap{jobDataKeyPostId: post.Id, jobDataKeyTeamId: th.BasicTeam.Id, jobDataKeyRequestedBy: th.BasicUser.Id},
+		}
+		require.Nil(t, th.App.NotifyDeliveryTrackingContentReviewRequesters(th.Context, successJob, true))
+		require.Equal(t, model.DeliveryTrackingStatusCompleted, deliveryTrackingStatusValue(t, th, post.Id))
+
+		failJob := &model.Job{
+			Id:   model.NewId(),
+			Type: model.JobTypeDeliveryTrackingContentReview,
+			Data: model.StringMap{jobDataKeyPostId: post.Id, jobDataKeyTeamId: th.BasicTeam.Id, jobDataKeyRequestedBy: th.BasicUser.Id},
+		}
+		require.Nil(t, th.App.NotifyDeliveryTrackingContentReviewRequesters(th.Context, failJob, false))
+		require.Equal(t, model.DeliveryTrackingStatusFailed, deliveryTrackingStatusValue(t, th, post.Id))
 	})
 }

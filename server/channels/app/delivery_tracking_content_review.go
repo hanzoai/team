@@ -4,6 +4,8 @@
 package app
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"slices"
 	"strings"
@@ -20,9 +22,9 @@ const (
 	jobDataKeyRequestedBy = "requested_by"
 )
 
-const (
-	deliveryTrackingCompletionSuccessMessageKey = "app.data_spillage.delivery_tracking.completion_success.message"
-	deliveryTrackingCompletionFailureMessageKey = "app.data_spillage.delivery_tracking.completion_failure.message"
+var (
+	deliveryTrackingCompletionSuccessMessageKey = i18n.TranslationId("app.data_spillage.delivery_tracking.completion_success.message")
+	deliveryTrackingCompletionFailureMessageKey = i18n.TranslationId("app.data_spillage.delivery_tracking.completion_failure.message")
 )
 
 func (a *App) CreateDeliveryTrackingContentReviewJob(rctx request.CTX, postID, teamID, requestedBy string) (*model.Job, *model.AppError) {
@@ -61,7 +63,52 @@ func (a *App) CreateDeliveryTrackingContentReviewJob(rctx request.CTX, postID, t
 		job.Data = merged
 	}
 
+	if appErr := a.setDeliveryTrackingStatus(rctx, postID, teamID, model.DeliveryTrackingStatusInProgress); appErr != nil {
+		rctx.Logger().Warn("Failed to set delivery tracking status to in_progress",
+			mlog.String("post_id", postID), mlog.Err(appErr))
+	}
+
 	return job, nil
+}
+
+func (a *App) setDeliveryTrackingStatus(rctx request.CTX, postID, teamID, status string) *model.AppError {
+	groupID, appErr := a.ContentFlaggingGroupId()
+	if appErr != nil {
+		return appErr
+	}
+
+	mappedFields, appErr := a.GetContentFlaggingMappedFields(groupID)
+	if appErr != nil {
+		return appErr
+	}
+
+	field, ok := mappedFields[contentFlaggingPropertyNameDeliveryTrackingStatus]
+	if !ok {
+		return model.NewAppError("setDeliveryTrackingStatus", "app.data_spillage.delivery_tracking.status_field_missing.app_error", nil, "", http.StatusInternalServerError)
+	}
+
+	value := &model.PropertyValue{
+		TargetID:   postID,
+		TargetType: model.PropertyValueTargetTypePost,
+		GroupID:    groupID,
+		FieldID:    field.ID,
+		Value:      json.RawMessage(fmt.Sprintf(`"%s"`, status)),
+	}
+
+	if _, appErr = a.UpsertPropertyValue(rctx, value); appErr != nil {
+		return appErr
+	}
+
+	// Notify the team's reviewers over websocket so the RHS updates live. Mirrors
+	// the other content-flagging status-change sites, which publish off the
+	// request path.
+	a.Srv().Go(func() {
+		if err := a.publishContentFlaggingReportUpdateEvent(postID, teamID, []*model.PropertyValue{value}); err != nil {
+			rctx.Logger().Error("Failed to publish delivery tracking status change", mlog.Err(err), mlog.String("post_id", postID))
+		}
+	})
+
+	return nil
 }
 
 // DeliveryTrackingContentReviewJobExists reports whether a delivery-tracking
@@ -77,8 +124,21 @@ func (a *App) DeliveryTrackingContentReviewJobExists(rctx request.CTX, postID st
 
 func (a *App) NotifyDeliveryTrackingContentReviewRequesters(rctx request.CTX, job *model.Job, succeeded bool) *model.AppError {
 	postID := job.Data[jobDataKeyPostId]
+	if postID == "" {
+		return nil
+	}
+
+	deliveryStatus := model.DeliveryTrackingStatusCompleted
+	if !succeeded {
+		deliveryStatus = model.DeliveryTrackingStatusFailed
+	}
+	if appErr := a.setDeliveryTrackingStatus(rctx, postID, job.Data[jobDataKeyTeamId], deliveryStatus); appErr != nil {
+		rctx.Logger().Warn("Failed to set delivery tracking status on job completion",
+			mlog.String("post_id", postID), mlog.Err(appErr))
+	}
+
 	requesters := requestedBySet(job.Data[jobDataKeyRequestedBy])
-	if postID == "" || len(requesters) == 0 {
+	if len(requesters) == 0 {
 		return nil
 	}
 

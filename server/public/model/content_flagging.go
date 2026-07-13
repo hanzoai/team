@@ -26,6 +26,15 @@ const (
 	ContentFlaggingStatusRetained = "Retained"
 )
 
+// Delivery tracking ("Delivered to" recipient list) job states, stored as the
+// value of the content-flagging "delivery_tracking_status" property.
+const (
+	DeliveryTrackingStatusNotStarted = "not_started"
+	DeliveryTrackingStatusInProgress = "in_progress"
+	DeliveryTrackingStatusCompleted  = "completed"
+	DeliveryTrackingStatusFailed     = "failed"
+)
+
 const (
 	ContentFlaggingActionKeep   = "keep"
 	ContentFlaggingActionRemove = "remove"

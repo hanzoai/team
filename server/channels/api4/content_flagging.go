@@ -144,7 +144,7 @@ func getFlaggingConfiguration(c *Context, w http.ResponseWriter, r *http.Request
 		asReviewer = true
 	}
 
-	config := getFlaggingConfig(c.App.Config().ContentFlaggingSettings, asReviewer)
+	config := getFlaggingConfig(c.App.Config(), asReviewer)
 
 	if err := json.NewEncoder(w).Encode(config); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))
@@ -248,20 +248,23 @@ func flagPost(c *Context, w http.ResponseWriter, r *http.Request) {
 	writeOKResponse(w)
 }
 
-func getFlaggingConfig(contentFlaggingSettings model.ContentFlaggingSettings, asReviewer bool) *model.ContentFlaggingReportingConfig {
-	config := &model.ContentFlaggingReportingConfig{
+func getFlaggingConfig(config *model.Config, asReviewer bool) *model.ContentFlaggingReportingConfig {
+	contentFlaggingSettings := config.ContentFlaggingSettings
+	reportingConfig := &model.ContentFlaggingReportingConfig{
 		Reasons:                 contentFlaggingSettings.AdditionalSettings.Reasons,
 		ReporterCommentRequired: contentFlaggingSettings.AdditionalSettings.ReporterCommentRequired,
 		ReviewerCommentRequired: contentFlaggingSettings.AdditionalSettings.ReviewerCommentRequired,
 	}
 
 	if asReviewer {
-		config.NotifyReporterOnRemoval = new(slices.Contains(contentFlaggingSettings.NotificationSettings.EventTargetMapping[model.EventContentRemoved], model.TargetReporter))
+		reportingConfig.NotifyReporterOnRemoval = new(slices.Contains(contentFlaggingSettings.NotificationSettings.EventTargetMapping[model.EventContentRemoved], model.TargetReporter))
 
-		config.NotifyReporterOnDismissal = new(slices.Contains(contentFlaggingSettings.NotificationSettings.EventTargetMapping[model.EventContentDismissed], model.TargetReporter))
+		reportingConfig.NotifyReporterOnDismissal = new(slices.Contains(contentFlaggingSettings.NotificationSettings.EventTargetMapping[model.EventContentDismissed], model.TargetReporter))
+
+		reportingConfig.DeliveryTrackingEnabled = new(config.PostDeliveryTrackingEnabled())
 	}
 
-	return config
+	return reportingConfig
 }
 
 func getContentFlaggingFields(c *Context, w http.ResponseWriter, r *http.Request) {

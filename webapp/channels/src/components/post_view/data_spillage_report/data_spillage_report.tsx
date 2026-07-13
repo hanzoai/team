@@ -14,9 +14,10 @@ import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
 
 import AtMention from 'components/at_mention';
 import {useGetContentFlaggingChannel, useGetContentFlaggingTeam, useGetFlaggedPost} from 'components/common/hooks/content_flagging';
-import {useContentFlaggingFields, usePostContentFlaggingValues} from 'components/common/hooks/useContentFlaggingFields';
+import {useContentFlaggingConfig, useContentFlaggingFields, usePostContentFlaggingValues} from 'components/common/hooks/useContentFlaggingFields';
 import {useUser} from 'components/common/hooks/useUser';
 import DataSpillageAction from 'components/post_view/data_spillage_report/data_spillage_actions/data_spillage_actions';
+import DataSpillageDeliveredTo from 'components/post_view/data_spillage_report/data_spillage_delivered_to/data_spillage_delivered_to';
 import DataSpillageDownloadReport from 'components/post_view/data_spillage_report/data_spillage_download_report/data_spillage_download_report';
 import type {ActionRow, PropertiesCardViewMetadata} from 'components/properties_card_view/properties_card_view';
 import PropertiesCardView from 'components/properties_card_view/properties_card_view';
@@ -105,6 +106,9 @@ export function DataSpillageReport({post, isRHS}: Props) {
     const reportingUserId = reportingUserIdValue ? reportingUserIdValue.value as string : '';
     const reportingUser = useUser(reportingUserId);
 
+    const contentFlaggingReviewerConfig = useContentFlaggingConfig(team?.id || '');
+    const deliveryTrackingEnabled = Boolean(contentFlaggingReviewerConfig?.delivery_tracking_enabled);
+
     const title = formatMessage({
         id: 'data_spillage_report_post.title',
         defaultMessage: '{user} submitted a message for review',
@@ -169,6 +173,30 @@ export function DataSpillageReport({post, isRHS}: Props) {
 
         const rows: ActionRow[] = [];
 
+        const statusFieldId = propertyFields.status?.id;
+        const status = statusFieldId ? (propertyValues.find((value) => value.field_id === statusFieldId)?.value as string | undefined) : undefined;
+
+        const deliveryStatusFieldId = propertyFields[DataSpillagePropertyNames.DeliveryTrackingStatus]?.id;
+        const deliveryStatus = deliveryStatusFieldId ? (propertyValues.find((value) => value.field_id === deliveryStatusFieldId)?.value as string | undefined) : undefined;
+
+        if (deliveryTrackingEnabled) {
+            rows.push({
+                label: (
+                    <FormattedMessage
+                        id='data_spillage_report.row.delivered_to.label'
+                        defaultMessage='Delivered to'
+                    />
+                ),
+                content: (
+                    <DataSpillageDeliveredTo
+                        flaggedPostId={reportedPost.id}
+                        deliveryStatus={deliveryStatus}
+                        reviewStatus={status}
+                    />
+                ),
+            });
+        }
+
         rows.push({
             label: (
                 <FormattedMessage
@@ -178,9 +206,6 @@ export function DataSpillageReport({post, isRHS}: Props) {
             ),
             content: <DataSpillageDownloadReport flaggedPostId={reportedPost.id}/>,
         });
-
-        const statusFieldId = propertyFields.status?.id;
-        const status = statusFieldId ? (propertyValues.find((value) => value.field_id === statusFieldId)?.value as string | undefined) : undefined;
 
         if (reportingUser && (status === ContentFlaggingStatus.Pending || status === ContentFlaggingStatus.Assigned)) {
             rows.push({
@@ -200,7 +225,7 @@ export function DataSpillageReport({post, isRHS}: Props) {
         }
 
         return rows;
-    }, [propertyFields, propertyValues, reportedPost, reportingUser]);
+    }, [deliveryTrackingEnabled, propertyFields, propertyValues, reportedPost, reportingUser]);
 
     return (
         <div

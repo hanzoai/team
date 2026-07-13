@@ -155,6 +155,13 @@ func (a *App) FlagPost(rctx request.CTX, post *model.Post, teamId, reportingUser
 			FieldID:    mappedFields[contentFlaggingPropertyNameReportingTime].ID,
 			Value:      json.RawMessage(fmt.Sprintf("%d", model.GetMillis())),
 		},
+		{
+			TargetID:   post.Id,
+			TargetType: model.PropertyValueTargetTypePost,
+			GroupID:    groupId,
+			FieldID:    mappedFields[contentFlaggingPropertyNameDeliveryTrackingStatus].ID,
+			Value:      json.RawMessage(fmt.Sprintf(`"%s"`, model.DeliveryTrackingStatusNotStarted)),
+		},
 	}
 
 	if *a.Config().ContentFlaggingSettings.AdditionalSettings.HideFlaggedContent {

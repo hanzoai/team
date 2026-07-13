@@ -4693,7 +4693,7 @@ export default class Client4 {
                 const text = await response.text();
                 const objects = text.trim().split('\n');
                 data = objects.map((obj) => JSON.parse(obj));
-            } else if (contentType === 'application/zip') {
+            } else if (contentType === 'application/zip' || contentType?.startsWith('text/csv')) {
                 data = await response.blob();
             } else {
                 data = await response.text();
@@ -5215,6 +5215,24 @@ export default class Client4 {
                 body: JSON.stringify({comment, action}),
                 signal,
             },
+        );
+    };
+
+    triggerDeliveryTracking = (postId: string) => {
+        return this.doFetch<StatusOK>(
+            `${this.getContentFlaggingRoute()}/post/${postId}/delivery_tracking`,
+            {method: 'post'},
+        );
+    };
+
+    getDeliveryTrackingReceiptUrl = (postId: string) => {
+        return `${this.getContentFlaggingRoute()}/post/${postId}/delivery_tracking/report`;
+    };
+
+    getDeliveryTrackingReceipt = (postId: string, signal?: AbortSignal): Promise<Blob> => {
+        return this.doFetch<Blob>(
+            this.getDeliveryTrackingReceiptUrl(postId),
+            {method: 'get', signal},
         );
     };
 }

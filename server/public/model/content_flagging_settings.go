@@ -217,6 +217,10 @@ type ContentFlaggingReportingConfig struct {
 	ReviewerCommentRequired   *bool     `json:"reviewer_comment_required"`
 	NotifyReporterOnDismissal *bool     `json:"notify_reporter_on_dismissal,omitempty"`
 	NotifyReporterOnRemoval   *bool     `json:"notify_reporter_on_removal,omitempty"`
+	// DeliveryTrackingEnabled reports whether the post delivery tracking
+	// ("Delivered to" recipient list) feature is enabled. Reviewer-only; drives
+	// visibility of the reviewer UI's "Delivered to" row and delete warning.
+	DeliveryTrackingEnabled *bool `json:"delivery_tracking_enabled,omitempty"`
 }
 
 type ReviewerIDsSettings struct {

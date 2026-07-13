@@ -32,7 +32,7 @@ const (
 	remainingSchemaMigrationsKey                   = "RemainingSchemaMigrations"
 	postPriorityConfigDefaultTrueMigrationKey      = "PostPriorityConfigDefaultTrueMigrationComplete"
 	contentFlaggingSetupDoneKey                    = "content_flagging_setup_done"
-	contentFlaggingMigrationVersion                = "v5"
+	contentFlaggingMigrationVersion                = "v6"
 	managedCategorySetupDoneKey                    = "managed_category_setup_done"
 	managedCategoryMigrationVersion                = "v2"
 	boardsPropertySetupDoneKey                     = "boards_property_setup_done"
@@ -50,6 +50,8 @@ const (
 	contentFlaggingPropertyNameActorComment        = "actor_comment"
 	contentFlaggingPropertyNameActionTime          = "action_time"
 	contentFlaggingPropertyManageByContentFlagging = "content_flagging_managed"
+
+	contentFlaggingPropertyNameDeliveryTrackingStatus = "delivery_tracking_status"
 
 	contentFlaggingPropertySubTypeTimestamp = "timestamp"
 )
@@ -724,6 +726,11 @@ func (s *Server) doSetupContentFlaggingProperties() error {
 		contentFlaggingPropertyManageByContentFlagging: {
 			GroupID: group.ID,
 			Name:    contentFlaggingPropertyManageByContentFlagging,
+			Type:    model.PropertyFieldTypeText,
+		},
+		contentFlaggingPropertyNameDeliveryTrackingStatus: {
+			GroupID: group.ID,
+			Name:    contentFlaggingPropertyNameDeliveryTrackingStatus,
 			Type:    model.PropertyFieldTypeText,
 		},
 	}

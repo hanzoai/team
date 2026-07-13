@@ -648,4 +648,84 @@ describe('KeepRemoveFlaggedMessageConfirmationModal', () => {
             expect(onExited).not.toHaveBeenCalled();
         });
     });
+
+    describe('delivery tracking delete warning', () => {
+        const enabledConfig = {
+            ...defaultContentFlaggingConfig,
+            delivery_tracking_enabled: true,
+        };
+
+        // State where the recipient list has already been generated (completed).
+        const generatedState = {
+            entities: {
+                contentFlagging: {
+                    fields: {
+                        delivery_tracking_status: {id: 'delivery_status_field_id', name: 'delivery_tracking_status'},
+                    },
+                    postValues: {
+                        [flaggedPost.id]: [{field_id: 'delivery_status_field_id', value: 'completed'}],
+                    },
+                },
+            },
+        } as any;
+
+        test('shows the warning on remove when enabled and not yet generated', () => {
+            mockedUseContentFlaggingConfig.mockReturnValue(enabledConfig);
+
+            renderWithContext(
+                <KeepRemoveFlaggedMessageConfirmationModal
+                    action='remove'
+                    onExited={onExited}
+                    flaggedPost={flaggedPost}
+                    reportingUser={reportingUser}
+                />,
+            );
+
+            expect(screen.getByTestId('delivery-tracking-delete-warning')).toBeVisible();
+        });
+
+        test('hides the warning once the list has been generated', () => {
+            mockedUseContentFlaggingConfig.mockReturnValue(enabledConfig);
+
+            renderWithContext(
+                <KeepRemoveFlaggedMessageConfirmationModal
+                    action='remove'
+                    onExited={onExited}
+                    flaggedPost={flaggedPost}
+                    reportingUser={reportingUser}
+                />,
+                generatedState,
+            );
+
+            expect(screen.queryByTestId('delivery-tracking-delete-warning')).not.toBeInTheDocument();
+        });
+
+        test('does not show the warning when delivery tracking is disabled', () => {
+            renderWithContext(
+                <KeepRemoveFlaggedMessageConfirmationModal
+                    action='remove'
+                    onExited={onExited}
+                    flaggedPost={flaggedPost}
+                    reportingUser={reportingUser}
+                />,
+            );
+
+            expect(screen.queryByTestId('delivery-tracking-delete-warning')).not.toBeInTheDocument();
+        });
+
+        test('does not show the warning for the keep action', () => {
+            mockedUseContentFlaggingConfig.mockReturnValue(enabledConfig);
+
+            renderWithContext(
+                <KeepRemoveFlaggedMessageConfirmationModal
+                    action='keep'
+                    onExited={onExited}
+                    flaggedPost={flaggedPost}
+                    reportingUser={reportingUser}
+                />,
+            );
+
+            expect(screen.queryByTestId('delivery-tracking-delete-warning')).not.toBeInTheDocument();
+        });
+    });
 });

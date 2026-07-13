@@ -1498,6 +1498,35 @@ func seedDeliveryTrackingJob(t *testing.T, th *TestHelper, postId, status string
 	require.NoError(t, err)
 }
 
+func TestGetFlaggingConfigDeliveryTracking(t *testing.T) {
+	// makeConfig returns a defaulted config with delivery tracking enabled iff
+	// deliveryEnabled (feature flag AND the settings toggle).
+	makeConfig := func(deliveryEnabled bool) *model.Config {
+		cfg := &model.Config{}
+		cfg.SetDefaults()
+		cfg.FeatureFlags.PostDeliveryTracking = deliveryEnabled
+		cfg.DeliveryTrackingSettings.Enable = model.NewPointer(deliveryEnabled)
+		return cfg
+	}
+
+	t.Run("reviewer receives the delivery tracking enabled flag when enabled", func(t *testing.T) {
+		cfg := getFlaggingConfig(makeConfig(true), true)
+		require.NotNil(t, cfg.DeliveryTrackingEnabled)
+		require.True(t, *cfg.DeliveryTrackingEnabled)
+	})
+
+	t.Run("reviewer receives the delivery tracking enabled flag when disabled", func(t *testing.T) {
+		cfg := getFlaggingConfig(makeConfig(false), true)
+		require.NotNil(t, cfg.DeliveryTrackingEnabled)
+		require.False(t, *cfg.DeliveryTrackingEnabled)
+	})
+
+	t.Run("non-reviewer does not receive the delivery tracking enabled flag", func(t *testing.T) {
+		cfg := getFlaggingConfig(makeConfig(true), false)
+		require.Nil(t, cfg.DeliveryTrackingEnabled)
+	})
+}
+
 func TestTriggerDeliveryTracking(t *testing.T) {
 	th := Setup(t).InitBasic(t)
 	client := th.Client
@@ -1885,5 +1914,22 @@ func TestGenerateDeliveryTrackingReceipt(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode)
 		require.True(t, strings.Contains(string(data), th.BasicUser2.Username))
+	})
+
+	t.Run("Should return 501 when the feature is disabled even if data exists", func(t *testing.T) {
+		setupDeliveryTrackingReviewer(t, th)
+		defer th.RemoveLicense(t)
+
+		post := th.CreatePost(t)
+		flagPostViaAPI(t, client, post.Id)
+		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusSuccess)
+
+		// The receipt API requires the feature flag; disabling it makes the endpoint
+		// unavailable regardless of any already-generated data.
+		setPostDeliveryTrackingFF(th, false)
+
+		_, resp, err := client.GetDeliveryTrackingReceipt(context.Background(), post.Id)
+		require.Error(t, err)
+		require.Equal(t, http.StatusNotImplemented, resp.StatusCode)
 	})
 }

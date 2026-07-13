@@ -6163,6 +6163,14 @@
     "translation": "Unable to save property values for the flagged post."
   },
   {
+    "id": "app.data_spillage.delivery_tracking.completion_failure.message",
+    "translation": "We couldn't generate the recipient list you requested. Please try again from the flagged message's review details."
+  },
+  {
+    "id": "app.data_spillage.delivery_tracking.completion_success.message",
+    "translation": "The recipient list you requested is ready. You can download it from the flagged message's review details."
+  },
+  {
     "id": "app.data_spillage.delivery_tracking.receipt.close.app_error",
     "translation": "Failed to finalize the delivery receipt file."
   },
@@ -6281,6 +6289,10 @@
   {
     "id": "app.data_spillage.delivery_tracking.receipt.write.app_error",
     "translation": "Failed to write the delivery receipt."
+  },
+  {
+    "id": "app.data_spillage.delivery_tracking.status_field_missing.app_error",
+    "translation": "The delivery tracking status field is not registered."
   },
   {
     "id": "app.data_spillage.flag_post.marshal_comment.app_error",

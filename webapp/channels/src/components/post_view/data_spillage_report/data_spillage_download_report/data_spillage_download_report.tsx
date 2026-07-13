@@ -2,12 +2,14 @@
 // See LICENSE.txt for license information.
 
 import classNames from 'classnames';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 import {Client4} from 'mattermost-redux/client';
 
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';
+
+import {useBlobDownload} from '../use_blob_download';
 
 import './data_spillage_download_report.scss';
 
@@ -15,63 +17,19 @@ type Props = {
     flaggedPostId: string;
 };
 
-type Status = 'idle' | 'generating' | 'error';
-
 export default function DataSpillageDownloadReport({flaggedPostId}: Props) {
-    const [status, setStatus] = useState<Status>('idle');
-    const abortControllerRef = useRef<AbortController | null>(null);
+    const {status, download} = useBlobDownload();
 
-    useEffect(() => {
-        // Cleanup function to cancel in-progress API calls
-        return () => {
-            abortControllerRef.current?.abort();
-        };
-    }, []);
-
-    const handleClick = useCallback(async () => {
+    const handleClick = useCallback(() => {
         if (status === 'generating') {
             return;
         }
 
-        const controller = new AbortController();
-        abortControllerRef.current?.abort();
-        abortControllerRef.current = controller;
-
-        setStatus('generating');
-
-        let blob: Blob | undefined;
-
-        try {
-            blob = await Client4.generateFlaggedPostReport(flaggedPostId, '', undefined, controller.signal);
-            if (controller.signal.aborted) {
-                return;
-            }
-        } catch (err) {
-            if (controller.signal.aborted) {
-                return;
-            }
-
-            // eslint-disable-next-line no-console
-            console.error(err);
-            setStatus('error');
-            return;
-        }
-
-        if (controller.signal.aborted || !blob) {
-            return;
-        }
-
-        const downloadUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = `flagged-post-${flaggedPostId}-${Date.now()}.zip`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(downloadUrl);
-
-        setStatus('idle');
-    }, [flaggedPostId, status]);
+        download(
+            (signal) => Client4.generateFlaggedPostReport(flaggedPostId, '', undefined, signal),
+            `flagged-post-${flaggedPostId}-${Date.now()}.zip`,
+        );
+    }, [download, flaggedPostId, status]);
 
     let icon;
     let label;

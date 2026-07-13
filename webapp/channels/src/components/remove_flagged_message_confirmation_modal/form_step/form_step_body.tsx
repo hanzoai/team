@@ -3,13 +3,21 @@
 
 import React from 'react';
 import {useIntl} from 'react-intl';
+import {useSelector} from 'react-redux';
 
+import {DeliveryTrackingStatus} from '@mattermost/types/content_flagging';
 import type {ContentFlaggingConfig} from '@mattermost/types/content_flagging';
 import type {Post} from '@mattermost/types/posts';
+import type {GlobalState} from '@mattermost/types/store';
 import type {UserProfile} from '@mattermost/types/users';
 
+import {contentFlaggingFields, postContentFlaggingValues} from 'mattermost-redux/selectors/entities/content_flagging';
+
+import SectionNotice from 'components/section_notice';
 import type {TextboxElement} from 'components/textbox';
 import AdvancedTextbox from 'components/widgets/advanced_textbox/advanced_textbox';
+
+import {DataSpillagePropertyNames} from 'utils/constants';
 
 import FlaggedMessageBody from '../flagged_message_body';
 
@@ -46,6 +54,11 @@ export function FormStepBody({
 
     const commentPlaceholder = formatMessage({id: 'keep_remove_quarantined_content_modal.comment.placeholder', defaultMessage: 'Add your comment here'});
 
+    const deliveryStatusFieldId = useSelector((state: GlobalState) => contentFlaggingFields(state)?.[DataSpillagePropertyNames.DeliveryTrackingStatus]?.id);
+    const deliveryValues = useSelector((state: GlobalState) => postContentFlaggingValues(state, flaggedPost.id));
+    const deliveryStatus = deliveryStatusFieldId ? (deliveryValues?.find((value) => value.field_id === deliveryStatusFieldId)?.value as string | undefined) : undefined;
+    const showDeliveryTrackingWarning = action === 'remove' && Boolean(contentFlaggingConfig?.delivery_tracking_enabled) && deliveryStatus !== DeliveryTrackingStatus.Completed;
+
     return (
         <>
             <FlaggedMessageBody
@@ -54,6 +67,19 @@ export function FormStepBody({
                 reportingUser={reportingUser}
                 contentFlaggingConfig={contentFlaggingConfig}
             />
+
+            {showDeliveryTrackingWarning && (
+                <div
+                    className='section delivery_tracking_warning_section'
+                    data-testid='delivery-tracking-delete-warning'
+                >
+                    <SectionNotice
+                        type='warning'
+                        title={formatMessage({id: 'data_spillage_report.delivered_to.delete_warning.title', defaultMessage: 'The “Delivered to” list hasn’t been generated'})}
+                        text={formatMessage({id: 'data_spillage_report.delivered_to.delete_warning.body', defaultMessage: 'It can’t be generated once the message is removed since all information related to the message will be permanently deleted from Mattermost.'})}
+                    />
+                </div>
+            )}
 
             <div className='section comment_section'>
                 <div
