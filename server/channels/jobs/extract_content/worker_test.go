@@ -44,6 +44,7 @@ func makeTestJobServer(t *testing.T) (*jobs.JobServer, *storetest.Store) {
 		mockStore,
 		nil,
 		mlog.CreateConsoleTestLogger(t),
+		nil,
 	)
 
 	return jobServer, mockStore
