@@ -317,14 +317,6 @@ export default class EnterpriseSystemConsolePage {
         await expect(this.page.getByText(displayName, {exact: true}).first()).toBeVisible();
     }
 
-    async changeFirstMembershipRole(toRole: 'Team Admin' | 'Channel Admin') {
-        const currentRole = this.page.getByText('Member', {exact: true}).first();
-        await expect(currentRole).toBeVisible();
-        await currentRole.click();
-        await this.page.getByRole('menu').last().getByRole('menuitem', {name: toRole}).click();
-        await expect(this.page.getByText(toRole, {exact: true})).toBeVisible();
-    }
-
     async assertNoTeamOrChannelMemberships() {
         await expect(this.page.getByText('No teams or channels specified yet', {exact: true})).toBeVisible({
             timeout: duration.half_min,
@@ -341,8 +333,19 @@ export default class EnterpriseSystemConsolePage {
     }
 
     async removeTeamOrChannel(displayName: string) {
-        const row = this.page.getByRole('row').filter({hasText: displayName});
+        await this.requestRemoveTeamOrChannel(displayName);
+        await this.confirmRemoveTeamOrChannel();
+    }
+
+    async requestRemoveTeamOrChannel(displayName: string) {
+        const row = this.page
+            .getByRole('row')
+            .filter({has: this.page.getByText(displayName, {exact: true})})
+            .filter({has: this.page.getByText(/^(Member|Team Admin|Channel Admin)$/)});
         await row.getByRole('button', {name: 'Remove', exact: true}).click();
+    }
+
+    async confirmRemoveTeamOrChannel() {
         await this.page.getByRole('dialog').getByRole('button', {name: 'Yes, Remove', exact: true}).click();
     }
 
@@ -351,13 +354,17 @@ export default class EnterpriseSystemConsolePage {
         currentRole: 'Member' | 'Team Admin' | 'Channel Admin',
         newRole: 'Member' | 'Team Admin' | 'Channel Admin',
     ) {
-        const row = this.page.getByRole('row').filter({hasText: displayName});
+        const row = this.page
+            .getByRole('row')
+            .filter({has: this.page.getByText(displayName, {exact: true})})
+            .filter({has: this.page.getByText(currentRole, {exact: true})});
         await row.getByText(currentRole, {exact: true}).click();
         await this.page.getByRole('menu').last().getByRole('menuitem', {name: newRole, exact: true}).click();
+        await expect(row.getByText(newRole, {exact: true})).toBeVisible({timeout: duration.half_min});
     }
 
     async assertMembershipRole(displayName: string, role: 'Member' | 'Team Admin' | 'Channel Admin') {
-        const row = this.page.getByRole('row').filter({hasText: displayName});
+        const row = this.page.getByRole('row').filter({has: this.page.getByText(displayName, {exact: true})});
         await expect(row.getByText(role, {exact: true})).toBeVisible({timeout: duration.half_min});
     }
 

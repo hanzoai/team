@@ -75,13 +75,14 @@ test.describe('LDAP group-synchronized team and channel management', () => {
             const {adminClient, adminUser, team, board} = await setup(pw);
             await adminClient.linkGroupSyncable(board.id, team.id, 'team', {auto_add: true});
             const {page} = await pw.testBrowser.login(adminUser);
+            const consolePage = new EnterpriseSystemConsolePage(page);
 
             // # Open the board group and remove its synchronized team
             await page.goto('/admin_console/user_management/groups');
             await expect(page.getByText('AD/LDAP Groups', {exact: true})).toBeVisible();
             await page.getByRole('link', {name: 'Edit', exact: true}).first().click();
             await expect(page.getByText(team.display_name, {exact: true})).toBeVisible();
-            await page.getByRole('button', {name: 'Remove', exact: true}).click();
+            await consolePage.requestRemoveTeamOrChannel(team.display_name);
 
             // * Verify the removal warning identifies the team
             await expect(
@@ -91,7 +92,7 @@ test.describe('LDAP group-synchronized team and channel management', () => {
             ).toBeVisible();
 
             // # Confirm and save
-            await page.getByRole('button', {name: 'Yes, Remove', exact: true}).click();
+            await consolePage.confirmRemoveTeamOrChannel();
             await page.getByRole('button', {name: 'Save', exact: true}).click();
         },
     );

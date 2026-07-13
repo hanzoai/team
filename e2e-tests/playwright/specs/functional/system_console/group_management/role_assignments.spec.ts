@@ -117,12 +117,12 @@ test.describe('LDAP group role assignments', () => {
         // * Verify each membership starts with the Member role
         await consolePage.assertGroupRole('Member');
 
-        // # Promote the first membership and save
-        await consolePage.changeFirstMembershipRole('Team Admin');
+        // # Promote the team membership and save
+        await consolePage.changeMembershipRole(team.display_name, 'Member', 'Team Admin');
         await consolePage.saveConfiguration();
         await consolePage.gotoGroupConfiguration(group.id);
 
         // * Verify the administrator role persisted
-        await consolePage.assertGroupRole('Team Admin');
+        await consolePage.assertMembershipRole(team.display_name, 'Team Admin');
     });
 });

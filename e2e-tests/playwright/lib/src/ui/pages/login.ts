@@ -22,6 +22,7 @@ export default class LoginPage {
     readonly createAccountLink;
     readonly forgotPasswordLink;
     readonly userErrorLabel;
+    readonly loginErrorMessage;
 
     readonly header;
     readonly footer;
@@ -41,6 +42,10 @@ export default class LoginPage {
         this.createAccountLink = page.getByRole('link', {name: "Don't have an account?"});
         this.forgotPasswordLink = page.getByText('Forgot your password?');
         this.userErrorLabel = page.getByText('Please enter your email or username');
+        this.loginErrorMessage = page.getByText(
+            'Enter a valid email or username and/or password, or sign in using another method.',
+            {exact: true},
+        );
 
         this.header = new components.MainHeader(page.getByTestId('hfroute-header'));
         this.footer = new components.Footer(page.getByTestId('hfroute-footer'));
