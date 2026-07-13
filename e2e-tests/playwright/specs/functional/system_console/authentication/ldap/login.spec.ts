@@ -19,6 +19,11 @@ test.describe('LDAP authentication and guest filters', () => {
      * The LDAP administrator has already synchronized into Mattermost
      */
     test('LDAP login existing MM admin', {tag: '@ldap'}, async ({pw}) => {
+        const {adminClient} = await pw.getAdminClient();
+        const user = await getLdapUser(adminClient, ldapUsers.admin);
+        await adminClient.updateUserRoles(user.id, 'system_user system_admin');
+        await adminClient.revokeAllSessionsForUser(user.id);
+
         // # Log in as the existing LDAP administrator
         await loginFromPage(pw, ldapUsers.admin);
 

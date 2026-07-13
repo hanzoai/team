@@ -10,6 +10,7 @@ export {
     configureOpenLdap,
     createLdapUser,
     getOrCreateLdapUser,
+    getOrCreateLdapUserWithStatus,
     getOrLinkLdapGroup,
     initializeOpenLdap,
     OpenLdapClient,

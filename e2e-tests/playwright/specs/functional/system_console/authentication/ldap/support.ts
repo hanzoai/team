@@ -42,5 +42,10 @@ export async function removeFromAllTeams(adminClient: any, user: UserProfile) {
 export async function loginFromPage(pw: any, account: LdapAccount) {
     await pw.hasSeenLandingPage();
     await pw.loginPage.goto();
+    const loginResponse = pw.loginPage.page.waitForResponse(
+        (response: {url: () => string; request: () => {method: () => string}}) =>
+            response.request().method() === 'POST' && response.url().endsWith('/api/v4/users/login'),
+    );
     await pw.loginPage.loginWithLdap(account.username, account.password);
+    return loginResponse;
 }

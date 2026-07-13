@@ -3,7 +3,7 @@
 
 import {EnterpriseSystemConsolePage, getRandomId, test} from '@mattermost/playwright-lib';
 
-import {assertMentionDisabled, assertMentionEnabled, boardAccount, setup} from './support';
+import {assertMentionDisabled, assertMentionEnabled, boardAccount, resetMentionPermissions, setup} from './support';
 
 test.describe('LDAP group mentions', () => {
     /**
@@ -40,13 +40,9 @@ test.describe('LDAP group mentions', () => {
         const groupName = `board-test-${getRandomId()}`;
         await adminClient.patchGroup(boardGroup.id, {allow_reference: true, name: groupName});
 
-        const {page} = await pw.testBrowser.login(adminUser);
-        const consolePage = new EnterpriseSystemConsolePage(page);
-
         try {
-            // # Reset the System Scheme to defaults
-            await consolePage.gotoSystemScheme();
-            await consolePage.resetSystemScheme();
+            // # Restore the group mention permission default
+            await resetMentionPermissions(adminClient);
 
             // * Verify a regular member can mention the enabled group
             await assertMentionEnabled(pw, regularUser, boardUser, team.name, groupName);
@@ -60,10 +56,7 @@ test.describe('LDAP group mentions', () => {
             // * Verify the regular member can no longer mention the group
             await assertMentionDisabled(pw, regularUser, boardUser, team.name, groupName);
         } finally {
-            const {page: cleanupPage} = await pw.testBrowser.login(adminUser);
-            const cleanupConsolePage = new EnterpriseSystemConsolePage(cleanupPage);
-            await cleanupConsolePage.gotoSystemScheme();
-            await cleanupConsolePage.resetSystemScheme();
+            await resetMentionPermissions(adminClient);
         }
     });
 });

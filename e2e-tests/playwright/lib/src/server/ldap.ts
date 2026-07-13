@@ -205,8 +205,15 @@ export async function getOrLinkLdapGroup(client: PlaywrightClient4, name: string
  * Only a user-not-found response is treated as the expected fresh-server case.
  */
 export async function getOrCreateLdapUser(client: PlaywrightClient4, account: LdapAccount): Promise<UserProfile> {
+    return (await getOrCreateLdapUserWithStatus(client, account)).user;
+}
+
+export async function getOrCreateLdapUserWithStatus(
+    client: PlaywrightClient4,
+    account: LdapAccount,
+): Promise<{user: UserProfile; created: boolean}> {
     try {
-        return await client.getUserByUsername(account.username);
+        return {user: await client.getUserByUsername(account.username), created: false};
     } catch (error) {
         if (!isNotFoundError(error)) {
             throw error;
@@ -215,7 +222,7 @@ export async function getOrCreateLdapUser(client: PlaywrightClient4, account: Ld
 
     const jitClient = new JitClient();
     jitClient.setUrl(testConfig.baseURL);
-    return jitClient.login(account.username, account.password);
+    return {user: await jitClient.login(account.username, account.password), created: true};
 }
 
 /**

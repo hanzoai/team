@@ -5,7 +5,7 @@ import type {UserProfile} from '@mattermost/types/users';
 
 import {getRandomId, test} from '@mattermost/playwright-lib';
 
-import {configureMentionPermissions, enableMention, openChannel, resetMentionPermissions, setup} from './support';
+import {enableMention, openChannel, resetMentionPermissions, setup} from './support';
 
 test.describe('LDAP group mentions', () => {
     /**
@@ -61,7 +61,7 @@ test.describe('LDAP group mentions', () => {
      * @objective Verify Guests cannot invite out-of-channel LDAP group members from a group mention warning
      */
     test('MM-T2458 hides the add-member option from Guests using group mentions', {tag: '@ldap'}, async ({pw}) => {
-        const {adminClient, adminUser, boardGroup, boardUser, team} = await setup(pw);
+        const {adminClient, boardGroup, boardUser, team} = await setup(pw);
         await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}});
         const groupName = `board-test-${getRandomId()}`;
         await enableMention(adminClient, boardGroup.id, groupName);
@@ -76,10 +76,7 @@ test.describe('LDAP group mentions', () => {
         await adminClient.demoteUserToGuest(guest.id);
 
         try {
-            await resetMentionPermissions(pw, adminUser);
-            await configureMentionPermissions(pw, adminUser, [
-                {id: 'guests-guest_use_group_mentions-checkbox', enabled: true},
-            ]);
+            await resetMentionPermissions(adminClient);
             const channelsPage = await openChannel(pw, guest, team.name, channel.name);
 
             // # Mention the group as a Guest
@@ -88,7 +85,7 @@ test.describe('LDAP group mentions', () => {
             // * Verify the warning is shown without an add-member link
             await channelsPage.assertOutOfChannelMentionMessage(boardUser.username, false);
         } finally {
-            await resetMentionPermissions(pw, adminUser);
+            await resetMentionPermissions(adminClient);
         }
     });
 

@@ -43,9 +43,10 @@ test.describe('LDAP authentication and guest filters', () => {
             .toBe('(cn=no_users)');
 
         // # Attempt LDAP login with a filtered member
-        await loginFromPage(pw, ldapUsers.member);
+        const response = await loginFromPage(pw, ldapUsers.member);
 
         // * Verify login is rejected
+        expect(response.status()).toBe(401);
         await expect(pw.loginPage.loginRejectionMessage).toBeVisible({timeout: duration.half_min});
     });
 
@@ -68,9 +69,10 @@ test.describe('LDAP authentication and guest filters', () => {
             .toEqual(['(cn=no_users)', '(cn=no_guests)']);
 
         // # Attempt LDAP login with a filtered guest
-        await loginFromPage(pw, ldapUsers.guest);
+        const response = await loginFromPage(pw, ldapUsers.guest);
 
         // * Verify login is rejected
+        expect(response.status()).toBe(401);
         await expect(pw.loginPage.loginRejectionMessage).toBeVisible({timeout: duration.half_min});
     });
 

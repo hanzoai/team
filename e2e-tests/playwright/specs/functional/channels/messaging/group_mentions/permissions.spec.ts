@@ -20,7 +20,7 @@ test.describe('LDAP group mentions', () => {
 
         try {
             // # Disable group mentions for members and Channel Admins
-            await resetMentionPermissions(pw, adminUser);
+            await resetMentionPermissions(adminClient);
             await configureMentionPermissions(pw, adminUser, [
                 {id: 'all_users-posts-use_group_mentions-checkbox', enabled: false},
                 {id: 'channel_admin-posts-use_group_mentions-checkbox', enabled: false},
@@ -43,7 +43,7 @@ test.describe('LDAP group mentions', () => {
             // * Verify the enabled mention offers to add the out-of-channel group member
             await channelsPage.assertOutOfChannelMentionMessage(boardUser.username, true);
         } finally {
-            await resetMentionPermissions(pw, adminUser);
+            await resetMentionPermissions(adminClient);
         }
     });
 
@@ -60,7 +60,7 @@ test.describe('LDAP group mentions', () => {
 
         try {
             // # Disable group mentions for members, Channel Admins, and Team Admins
-            await resetMentionPermissions(pw, adminUser);
+            await resetMentionPermissions(adminClient);
             await configureMentionPermissions(pw, adminUser, [
                 {id: 'all_users-posts-use_group_mentions-checkbox', enabled: false},
                 {id: 'channel_admin-posts-use_group_mentions-checkbox', enabled: false},
@@ -86,7 +86,7 @@ test.describe('LDAP group mentions', () => {
             await channelsPage.assertMentionIsLinked(groupName);
             await channelsPage.assertMentionIsNotHighlighted(groupName);
         } finally {
-            await resetMentionPermissions(pw, adminUser);
+            await resetMentionPermissions(adminClient);
         }
     });
 
@@ -110,7 +110,7 @@ test.describe('LDAP group mentions', () => {
 
         try {
             // # Verify member and Guest group mentions are disabled
-            await resetMentionPermissions(pw, adminUser);
+            await resetMentionPermissions(adminClient);
             const {page} = await pw.testBrowser.login(adminUser);
             const consolePage = new EnterpriseSystemConsolePage(page);
             await consolePage.gotoSystemScheme();
@@ -140,7 +140,7 @@ test.describe('LDAP group mentions', () => {
             // * Verify the Guest sees the warning without an option to invite the group member
             await channelsPage.assertOutOfChannelMentionMessage(boardUser.username, false);
         } finally {
-            await resetMentionPermissions(pw, adminUser);
+            await resetMentionPermissions(adminClient);
         }
     });
 });

@@ -6,9 +6,9 @@ import type {UserProfile} from '@mattermost/types/users';
 import {
     EnterpriseChannelsPage,
     EnterpriseSystemConsolePage,
-    getOrCreateLdapUser,
+    configureOpenLdap,
+    getOrCreateLdapUserWithStatus,
     getOrLinkLdapGroup,
-    initializeOpenLdap,
     resetLdapGroup,
     runLdapSync,
 } from '@mattermost/playwright-lib';
@@ -23,11 +23,11 @@ export async function setup(pw: any) {
     await pw.ensureLicense();
     await pw.skipIfNoLicense();
     const {adminClient, adminUser} = await pw.getAdminClient();
-    await initializeOpenLdap(adminClient);
+    await configureOpenLdap(adminClient);
     const boardGroup = await getOrLinkLdapGroup(adminClient, 'board');
     await resetLdapGroup(adminClient, boardGroup.id);
     await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}});
-    await resetMentionPermissions(pw, adminUser);
+    await resetMentionPermissions(adminClient);
 
     const team = await adminClient.createTeam(await pw.random.team());
     await adminClient.addToTeam(team.id, adminUser.id);
@@ -40,8 +40,10 @@ export async function setup(pw: any) {
     await adminClient.addToTeam(team.id, regularUser.id);
     await adminClient.addToChannel(regularUser.id, offTopic.id);
 
-    const existingBoardUser = await getOrCreateLdapUser(adminClient, boardAccount);
-    await runLdapSync(adminClient);
+    const {user: existingBoardUser, created} = await getOrCreateLdapUserWithStatus(adminClient, boardAccount);
+    if (created || !boardGroup.member_count) {
+        await runLdapSync(adminClient);
+    }
     await adminClient.updateUserRoles(existingBoardUser.id, 'system_user');
     await adminClient.revokeAllSessionsForUser(existingBoardUser.id);
     for (const existingTeam of await adminClient.getTeamsForUser(existingBoardUser.id)) {
@@ -135,9 +137,20 @@ export async function configureMentionPermissions(
     await consolePage.setGroupMentionPermissions(permissions);
 }
 
-export async function resetMentionPermissions(pw: any, adminUser: UserProfile) {
-    const {page} = await pw.testBrowser.login(adminUser);
-    const consolePage = new EnterpriseSystemConsolePage(page);
-    await consolePage.gotoSystemScheme();
-    await consolePage.resetSystemScheme();
+export async function resetMentionPermissions(adminClient: any) {
+    const permission = 'use_group_mentions';
+    const enabledRoles = new Set(['channel_user', 'channel_admin', 'team_admin', 'channel_guest']);
+    const roles = await adminClient.getRolesByNames([...enabledRoles]);
+    if (roles.length !== enabledRoles.size) {
+        throw new Error('Unable to restore all group mention permission roles');
+    }
+
+    await Promise.all(
+        roles.map((role: {id: string; name: string; permissions: string[]}) => {
+            const permissions = [...new Set([...role.permissions, permission])];
+            return permissions.length === role.permissions.length
+                ? Promise.resolve()
+                : adminClient.patchRole(role.id, {permissions});
+        }),
+    );
 }
