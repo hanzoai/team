@@ -39,10 +39,13 @@ export class MultiformDialog {
     }
 
     async expectStepThree() {
-        await expect(this.page.getByRole('heading', {name: 'Step 3 - Final Details'})).toBeVisible();
-        await expect(this.page.getByRole('textbox', {name: /Comments/})).toBeVisible();
-        await expect(this.page.getByRole('checkbox', {name: /Terms & Conditions/})).toBeVisible();
-        await expect(this.page.getByRole('button', {name: 'Complete Registration'})).toBeVisible();
+        const dialog = this.page.getByRole('dialog', {name: 'Step 3 - Final Details'});
+        await expect(dialog).toBeVisible();
+        await expect(dialog.getByRole('textbox', {name: /Comments/})).toBeVisible();
+        await expect(dialog.getByRole('checkbox', {name: /Terms & Conditions/})).toBeVisible();
+        await expect(dialog.getByRole('button', {name: 'Complete Registration'})).toBeVisible();
+        await expect(dialog.getByRole('combobox')).toHaveCount(0);
+        await expect(dialog.getByRole('radio', {name: 'Senior'})).toHaveCount(0);
     }
 
     async completeStepThree(comments: string) {
@@ -61,9 +64,7 @@ export class MultiformDialog {
 
     async expectClosed() {
         await expect(
-            this.page.getByRole('heading', {
-                name: /Step [123] - (Personal Info|Work Info|Final Details)/,
-            }),
+            this.page.getByRole('dialog', {name: /Step [123] - (Personal Info|Work Info|Final Details)/}),
         ).toHaveCount(0);
     }
 }

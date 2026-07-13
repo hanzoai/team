@@ -25,11 +25,12 @@ test('MM-T3307 keeps focus in the RHS textbox after replying', {tag: '@messaging
 
     // # Enter a reply, toggle its preview, and send it
     const replyInput = channelsPage.sidebarRight.postCreate.input;
-    await replyInput.fill('Reply while preserving focus');
+    const replyMessage = `Reply while preserving focus ${pw.random.id()}`;
+    await replyInput.fill(replyMessage);
     await channelsPage.sidebarRight.postCreate.container.getByRole('button', {name: 'preview'}).click();
     await channelsPage.sidebarRight.postCreate.container.getByRole('button', {name: 'Send Now'}).click();
 
     // * Verify keyboard focus remains in the RHS reply textbox
     await expect(replyInput).toBeFocused();
-    await expect(page.getByText('Reply while preserving focus', {exact: true}).last()).toBeVisible();
+    await expect(page.getByText(replyMessage, {exact: true}).last()).toBeVisible();
 });
