@@ -200,7 +200,7 @@ func TestSearchAllowedActionsForCurrentUser(t *testing.T) {
 		require.Len(t, resp.Results, 2)
 		resultNames := make(map[string]bool, len(resp.Results))
 		for _, r := range resp.Results {
-			resultNames[r.Name] = true
+			resultNames[r.Action.Name] = true
 		}
 		require.True(t, resultNames[model.AccessControlPolicyActionUploadFileAttachment])
 		require.True(t, resultNames[model.AccessControlPolicyActionDownloadFileAttachment])
@@ -223,7 +223,7 @@ func TestSearchAllowedActionsForCurrentUser(t *testing.T) {
 		require.Nil(t, appErr)
 		require.Len(t, resp.Decisions, 2)
 		require.Len(t, resp.Results, 1)
-		require.Equal(t, model.AccessControlPolicyActionUploadFileAttachment, resp.Results[0].Name)
+		require.Equal(t, model.AccessControlPolicyActionUploadFileAttachment, resp.Results[0].Action.Name)
 	})
 
 	t.Run("discovery mode wrong resource type returns empty candidates without error", func(t *testing.T) {
@@ -249,7 +249,7 @@ func TestSearchAllowedActionsForCurrentUser(t *testing.T) {
 			require.Nil(t, appErr)
 			names := make([]string, len(resp.Results))
 			for j, r := range resp.Results {
-				names[j] = r.Name
+				names[j] = r.Action.Name
 			}
 			if i == 0 {
 				firstOrder = names

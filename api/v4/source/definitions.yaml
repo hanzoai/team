@@ -5470,11 +5470,16 @@ components:
     ActionSearchResult:
       type: object
       required:
-        - name
+        - action
       properties:
-        name:
-          type: string
-          description: Name of a permitted action. Denial is expressed by omission from the results list.
+        action:
+          type: object
+          required:
+            - name
+          properties:
+            name:
+              type: string
+              description: Name of a permitted action. Denial is expressed by omission from the results list.
     ActionSearchSubject:
       type: object
       description: >

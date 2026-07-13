@@ -10,7 +10,7 @@ export type RenderPermissionDecision = {
     reason?: string;
 };
 
-export type ActionSearchResult = {name: string};
+export type ActionSearchResult = {action: {name: string}};
 
 export type ActionSearchSubject = {
     id: string;

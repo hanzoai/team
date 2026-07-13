@@ -93,7 +93,7 @@ func (a *App) SearchAllowedActionsForCurrentUser(rctx request.CTX, req model.Act
 	record := func(action string, d model.RenderPermissionDecision) {
 		resp.Decisions[action] = d
 		if d.Allowed {
-			resp.Results = append(resp.Results, model.ActionSearchResult{Name: action})
+			resp.Results = append(resp.Results, model.ActionSearchResult{Action: model.ActionSearchResultAction{Name: action}})
 		}
 	}
 

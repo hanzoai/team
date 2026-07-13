@@ -26,10 +26,15 @@ type RenderPermissionDecision struct {
 	Reason    string `json:"reason,omitempty"`
 }
 
+// ActionSearchResultAction is the action identity inside an AuthZEN result entry.
+type ActionSearchResultAction struct {
+	Name string `json:"name"`
+}
+
 // ActionSearchResult is the AuthZEN-canonical permitted-action entry.
 // Only PERMITTED actions appear in the results list; denial is expressed by omission.
 type ActionSearchResult struct {
-	Name string `json:"name"`
+	Action ActionSearchResultAction `json:"action"`
 }
 
 // ActionSearchSubject is RESERVED for Phase 3 cross-subject evaluation.
