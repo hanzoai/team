@@ -21,7 +21,10 @@ test.describe('System Console role changes', {tag: '@system_console'}, () => {
         await adminClient.updateUserRoles(user.id, 'system_user');
 
         // * Verify the active session is redirected to Town Square and no longer displays the System Console
-        await expect(page).toHaveURL(new RegExp(`/${team.name}/channels/town-square`), {timeout: duration.half_min});
+        const escapedTeamName = team.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        await expect(page).toHaveURL(new RegExp(`/${escapedTeamName}/channels/town-square(?:[?#].*)?$`), {
+            timeout: duration.half_min,
+        });
         await channelsPage.toBeVisible();
         await expect(systemConsolePage.navbar.container).not.toBeVisible();
     });

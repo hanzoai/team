@@ -161,7 +161,7 @@ test('MM-T604 Use "on:" to return only results from the selected day', async ({p
     const posts = [
         {message: `before ${identifier}`, create_at: Date.UTC(2018, 11, 24, 23, 59)},
         {message: `target AM ${identifier}`, create_at: Date.UTC(2018, 11, 25, 0, 0)},
-        {message: `target PM ${identifier}`, create_at: Date.UTC(2018, 11, 25, 23, 59)},
+        {message: `target PM ${identifier}`, create_at: Date.UTC(2018, 11, 25, 23, 59, 59, 999)},
         {message: `after ${identifier}`, create_at: Date.UTC(2018, 11, 26, 0, 0)},
     ];
 

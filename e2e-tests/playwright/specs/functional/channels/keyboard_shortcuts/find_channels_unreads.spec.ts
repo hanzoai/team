@@ -100,6 +100,7 @@ test(
                 exact: true,
             }),
         ).toBeVisible();
+        await expect(findChannelsModal.container.getByRole('option')).toHaveCount(1);
         for (const channel of firstTeamChannels) {
             await expect(
                 findChannelsModal.container.getByRole('option', {name: channel.display_name, exact: true}),

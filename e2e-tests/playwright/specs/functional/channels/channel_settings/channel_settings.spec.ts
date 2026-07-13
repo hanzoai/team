@@ -25,9 +25,9 @@ test('MM-T856_1 adds existing users to a public channel from the channel members
     await searchInput.fill(newMember.username);
 
     // * Verify the available user is shown with their status indicator
-    const userOption = addPeopleDialog.getByText(newMember.username, {exact: true});
+    const userOption = addPeopleDialog.getByRole('option', {name: newMember.username, exact: true});
     await expect(userOption).toBeVisible();
-    await expect(addPeopleDialog.getByRole('img', {name: 'user profile image'})).toBeVisible();
+    await expect(userOption.getByRole('img', {name: 'user profile image'})).toBeVisible();
 
     // # Select the user and add them to the channel
     await userOption.click();
