@@ -151,6 +151,44 @@ test('MM-T599 Edit date and search again', async ({pw}) => {
     await expect(channelsPage.searchResultItems).toHaveCount(0);
 });
 
+/**
+ * @objective Verify an on: date filter includes posts at both boundaries of the selected day and excludes adjacent days.
+ */
+test('MM-T604 Use "on:" to return only results from the selected day', async ({pw}) => {
+    const {adminClient, team, user} = await pw.initSetup();
+    const channel = await adminClient.getChannelByName(team.id, 'off-topic');
+    const identifier = `date-boundary-${pw.random.id()}`;
+    const posts = [
+        {message: `before ${identifier}`, create_at: Date.UTC(2018, 11, 24, 23, 59)},
+        {message: `target AM ${identifier}`, create_at: Date.UTC(2018, 11, 25, 0, 0)},
+        {message: `target PM ${identifier}`, create_at: Date.UTC(2018, 11, 25, 23, 59)},
+        {message: `after ${identifier}`, create_at: Date.UTC(2018, 11, 26, 0, 0)},
+    ];
+
+    // # Create posts immediately before, at both ends of, and immediately after the selected day
+    for (const post of posts) {
+        await adminClient.createPost({
+            channel_id: channel.id,
+            user_id: user.id,
+            message: post.message,
+            create_at: post.create_at,
+        });
+    }
+
+    // # Search for the unique identifier on the selected date
+    const {channelsPage} = await pw.testBrowser.login(user);
+    await channelsPage.goto(team.name, channel.name);
+    await channelsPage.toBeVisible();
+    await submitSearch(channelsPage, `on:2018-12-25 ${identifier}`);
+
+    // * Verify only the two posts created on the selected day are returned
+    await expect(channelsPage.searchResultItems).toHaveCount(2);
+    await expect(channelsPage.getSearchResultItem(`target AM ${identifier}`)).toBeVisible();
+    await expect(channelsPage.getSearchResultItem(`target PM ${identifier}`)).toBeVisible();
+    await expectNoSearchResult(channelsPage, `before ${identifier}`);
+    await expectNoSearchResult(channelsPage, `after ${identifier}`);
+});
+
 async function submitSearch(channelsPage: ChannelsPage, query: string) {
     await channelsPage.globalHeader.openSearch();
     await channelsPage.searchBox.clearIfPossible();

@@ -36,12 +36,7 @@ test.describe('Silent notification webhook delivery', () => {
     test(
         'incoming webhook silent post is visible without unread or desktop notification',
         {tag: ['@notifications']},
-        async ({pw, headless, browserName}) => {
-            test.skip(
-                headless && browserName !== 'firefox' && browserName !== 'webkit',
-                'In headless mode, Notification stubbing is only reliable in Firefox (and WebKit when configured). Use npm run playwright-ui (headed), --project=firefox, or PW_HEADLESS=false.',
-            );
-
+        async ({pw}) => {
             const {team, user, adminClient} = await pw.initSetup();
 
             const channel = await adminClient.createChannel(
@@ -131,12 +126,7 @@ test.describe('Silent notification webhook delivery', () => {
     test(
         'silent webhook @mention does not desktop-notify the mentioned user',
         {tag: ['@notifications']},
-        async ({pw, headless, browserName}) => {
-            test.skip(
-                headless && browserName !== 'firefox' && browserName !== 'webkit',
-                'Desktop notification stubbing is only reliable in headless Firefox and WebKit.',
-            );
-
+        async ({pw}) => {
             const {team, user, adminClient} = await pw.initSetup();
 
             const mentionedUser = await pw.createNewUserProfile(adminClient);
