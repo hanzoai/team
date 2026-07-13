@@ -1,0 +1,66 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import type {UserProfile} from '@mattermost/types/users';
+
+import {
+    EnterpriseChannelsPage,
+    getOrLinkLdapGroup,
+    getRandomId,
+    initializeOpenLdap,
+    test,
+} from '@mattermost/playwright-lib';
+
+const ldapMember = {
+    username: 'test.one',
+    password: 'Password1',
+    email: 'success+testone@simulator.amazonses.com',
+};
+
+test.describe('Group-synchronized team bot membership', () => {
+    /**
+     * @objective Verify an LDAP group-synchronized team administrator can invite and remove a bot
+     */
+    test('MM-21793 invites and removes a bot from a group-synchronized team', {tag: '@ldap'}, async ({pw}) => {
+        await pw.ensureLicense();
+        await pw.skipIfNoLicense();
+        const {adminClient, adminUser} = await pw.getAdminClient();
+        await adminClient.patchConfig({ServiceSettings: {EnableBotAccountCreation: true}});
+        await initializeOpenLdap(adminClient);
+        const ldapGroup = await getOrLinkLdapGroup(adminClient, 'tgroup');
+        const team = await adminClient.createTeam(await pw.random.team());
+        await adminClient.addToTeam(team.id, adminUser!.id);
+        await adminClient.linkGroupSyncable(ldapGroup.id, team.id, 'team', {auto_add: true});
+        await adminClient.syncLdap();
+
+        const {user: authenticatedUser} = await pw.makeClient(ldapMember, {useCache: false});
+        if (!authenticatedUser) {
+            throw new Error(`Unable to authenticate LDAP user ${ldapMember.username}`);
+        }
+        const user = {...authenticatedUser, password: ldapMember.password} as UserProfile;
+        await adminClient.createGroupTeamsAndChannels(user.id);
+        await adminClient.getTeamMember(team.id, user.id).catch(() => adminClient.addToTeam(team.id, user.id));
+        await adminClient.updateTeamMemberSchemeRoles(team.id, user.id, true, true);
+        const bot = await adminClient.createBot({
+            username: `ldap-bot-${getRandomId()}`,
+            display_name: 'LDAP Group Bot',
+        });
+
+        // # Log in as the synchronized team administrator and open the team
+        const {page} = await pw.testBrowser.login(user);
+        const channelsPage = new EnterpriseChannelsPage(page);
+        await channelsPage.goto(team.name, 'town-square');
+
+        // # Invite the bot from the team invitation dialog
+        await channelsPage.inviteBot(team.display_name, bot.username);
+
+        // * Verify the bot was added to the group-synchronized team
+        await adminClient.getTeamMember(team.id, bot.user_id);
+
+        // # Remove the bot from Manage Members
+        await channelsPage.goto(team.name, 'town-square');
+
+        // * Verify the bot is no longer listed in team members
+        await channelsPage.removeTeamMember(team.display_name, bot.username);
+    });
+});

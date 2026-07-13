@@ -32,11 +32,11 @@ export default class LoginPage {
         this.title = page.getByRole('heading', {name: 'Log in to your account'});
         this.subtitle = page.getByText('Collaborate with your team in real-time');
         this.bodyCard = page.getByTestId('login-body-card');
-        this.loginInput = page.locator('#input_loginId');
+        this.loginInput = page.getByRole('textbox', {name: /Email|Username|AD\/LDAP Username/});
         this.loginPlaceholder = page.getByPlaceholder('Email or Username');
         this.loginWithAdLdapPlaceholder = page.getByPlaceholder('Email, Username or AD/LDAP Username');
-        this.passwordInput = page.locator('#input_password-input');
-        this.passwordToggleButton = page.locator('#password_toggle');
+        this.passwordInput = page.getByRole('textbox', {name: 'Password', exact: true});
+        this.passwordToggleButton = page.getByRole('button', {name: /password/i});
         this.signInButton = page.getByRole('button', {name: 'Log in'});
         this.createAccountLink = page.getByRole('link', {name: "Don't have an account?"});
         this.forgotPasswordLink = page.getByText('Forgot your password?');
@@ -55,11 +55,26 @@ export default class LoginPage {
 
     async goto() {
         await this.page.goto('/login');
+        const viewInBrowser = this.page.getByRole('link', {name: 'View in Browser'});
+        if (await viewInBrowser.isVisible()) {
+            await this.page.getByRole('checkbox', {name: 'Remember my preference'}).check();
+            await viewInBrowser.click();
+        }
     }
 
     async login(user: UserProfile, useUsername = true) {
         await this.loginInput.fill(useUsername ? user.username : user.email);
         await this.passwordInput.fill(user.password);
         await Promise.all([this.page.waitForNavigation(), this.signInButton.click()]);
+    }
+
+    async loginWithLdap(username: string, password: string, waitForNavigation = true) {
+        await this.loginInput.fill(username);
+        await this.passwordInput.fill(password);
+        if (waitForNavigation) {
+            await Promise.all([this.page.waitForNavigation(), this.signInButton.click()]);
+            return;
+        }
+        await this.signInButton.click();
     }
 }

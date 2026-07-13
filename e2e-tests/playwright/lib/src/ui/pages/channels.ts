@@ -154,6 +154,20 @@ export default class ChannelsPage {
         return this.invitePeopleModal;
     }
 
+    async openTeamMenu() {
+        await this.sidebarLeft.teamMenuButton.click();
+        await this.teamMenu.toBeVisible();
+        return this.teamMenu;
+    }
+
+    async openInvitePeopleModal(teamDisplayName: string) {
+        await this.openTeamMenu();
+        await this.teamMenu.invitePeople.click();
+        const modal = await this.getInvitePeopleModal(teamDisplayName);
+        await modal.toBeVisible();
+        return modal;
+    }
+
     async getMembersInvitedModal(teamDisplayName: string) {
         this.membersInvitedModal = new components.MembersInvitedModal(
             this.page.getByRole('dialog', {name: `invited to ${teamDisplayName}`}),

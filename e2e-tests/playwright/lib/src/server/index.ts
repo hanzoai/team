@@ -6,6 +6,18 @@ export {PlaywrightClient4} from './playwright_client';
 export {createRandomChannel} from './channel';
 export {getOnPremServerConfig, mergeWithOnPremServerConfig} from './default_config';
 export {initSetup, getAdminClient} from './init';
+export {
+    configureOpenLdap,
+    createLdapUser,
+    getOrLinkLdapGroup,
+    initializeOpenLdap,
+    OpenLdapClient,
+    runLdapSync,
+} from './ldap';
+export type {LdapUser} from './ldap';
+export {KeycloakAdminClient} from './keycloak';
+export type {KeycloakUser} from './keycloak';
+export {configureSamlWithKeycloak} from './saml';
 export {createRandomPost} from './post';
 export {createNewTeam, createRandomTeam} from './team';
 export {createNewUserProfile, createRandomUser, getDefaultAdminUser, isOutsideRemoteUserHour} from './user';

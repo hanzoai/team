@@ -12,6 +12,9 @@ import ScheduledPostsPage from './scheduled_posts';
 import DraftsPage from './drafts';
 import ThreadsPage from './threads';
 import ContentReviewPage from './content_review_dm';
+import EnterpriseChannelsPage from './enterprise_channels';
+import EnterpriseSystemConsolePage from './enterprise_system_console';
+import SamlLoginPage from './saml_login';
 
 const pages = {
     ChannelsPage,
@@ -25,6 +28,9 @@ const pages = {
     SystemConsolePage,
     DraftsPage,
     ThreadsPage,
+    EnterpriseChannelsPage,
+    EnterpriseSystemConsolePage,
+    SamlLoginPage,
 };
 
 export {
@@ -39,4 +45,7 @@ export {
     SignupPage,
     ScheduledPostsPage,
     SystemConsolePage,
+    EnterpriseChannelsPage,
+    EnterpriseSystemConsolePage,
+    SamlLoginPage,
 };

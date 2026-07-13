@@ -17,7 +17,16 @@ export {
     isWebhookTestServerReachable,
     setupWebhookTestServer,
     PlaywrightClient4,
+    configureOpenLdap,
+    configureSamlWithKeycloak,
+    createLdapUser,
+    getOrLinkLdapGroup,
+    initializeOpenLdap,
+    KeycloakAdminClient,
+    OpenLdapClient,
+    runLdapSync,
 } from './server';
+export type {KeycloakUser, LdapUser} from './server';
 
 export {
     ChannelsPage,
@@ -28,6 +37,9 @@ export {
     SignupPage,
     ScheduledPostsPage,
     SystemConsolePage,
+    EnterpriseChannelsPage,
+    EnterpriseSystemConsolePage,
+    SamlLoginPage,
     DraftsPage,
 } from './ui/pages';
 

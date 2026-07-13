@@ -47,4 +47,22 @@ export class PlaywrightClient4 extends Client4 {
         }
         return users;
     }
+
+    async migrateUserAuthToSaml(email: string, username: string) {
+        return this.doFetch(`${this.getUsersRoute()}/migrate_auth/saml`, {
+            method: 'post',
+            body: JSON.stringify({
+                from: 'email',
+                auto: false,
+                matches: {[email]: username},
+            }),
+        });
+    }
+
+    async getGroupSyncableIncludingDeleted(groupId: string, syncableId: string, syncableType: 'team' | 'channel') {
+        return this.doFetch<{delete_at: number; scheme_admin: boolean}>(
+            `${this.getGroupRoute(groupId)}/${syncableType}s/${syncableId}`,
+            {method: 'get'},
+        );
+    }
 }

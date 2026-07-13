@@ -1,0 +1,72 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import fs from 'node:fs';
+import path from 'node:path';
+
+import type {PlaywrightClient4} from './playwright_client';
+
+import {configureOpenLdap} from '@/server/ldap';
+
+type SamlLdapOptions = {
+    baseURL: string;
+    enableSyncWithLdap: boolean;
+    keycloakBaseURL?: string;
+    idpCertificate?: string;
+};
+
+/**
+ * Configures Mattermost SAML against the Keycloak realm supplied by E2E Docker.
+ */
+export async function configureSamlWithKeycloak(client: PlaywrightClient4, options: SamlLdapOptions) {
+    const keycloakBaseURL = (
+        options.keycloakBaseURL ||
+        process.env.PW_KEYCLOAK_BASE_URL ||
+        'http://localhost:8080'
+    ).replace(/\/$/, '');
+    const mattermostBaseURL = options.baseURL.replace(/\/$/, '');
+    const descriptorURL = `${keycloakBaseURL}/realms/mattermost`;
+
+    await configureOpenLdap(client);
+    await client.uploadIdpSamlCertificate(readKeycloakCertificate(options.idpCertificate));
+    await client.patchConfig({
+        SamlSettings: {
+            Enable: true,
+            Encrypt: false,
+            IdpURL: `${descriptorURL}/protocol/saml`,
+            IdpDescriptorURL: descriptorURL,
+            ServiceProviderIdentifier: 'mattermost',
+            AssertionConsumerServiceURL: `${mattermostBaseURL}/login/sso/saml`,
+            SignatureAlgorithm: 'RSAwithSHA256',
+            PublicCertificateFile: '',
+            PrivateKeyFile: '',
+            FirstNameAttribute: 'urn:oid:2.5.4.42',
+            LastNameAttribute: 'urn:oid:2.5.4.4',
+            EmailAttribute: 'urn:oid:1.2.840.113549.1.9.1',
+            UsernameAttribute: 'username',
+            IdAttribute: 'username',
+            EnableSyncWithLdap: options.enableSyncWithLdap,
+            EnableSyncWithLdapIncludeAuth: options.enableSyncWithLdap,
+        },
+        LdapSettings: {
+            EnableSync: true,
+            BaseDN: 'ou=e2etest,dc=mm,dc=test,dc=com',
+        },
+    });
+}
+
+function readKeycloakCertificate(certificate?: string) {
+    if (certificate) {
+        const lines = certificate.match(/.{1,64}/g)?.join('\n');
+        return new File([`-----BEGIN CERTIFICATE-----\n${lines}\n-----END CERTIFICATE-----\n`], 'keycloak.crt');
+    }
+    const candidates = [
+        path.resolve(process.cwd(), '../../server/build/docker/keycloak/keycloak.crt'),
+        path.resolve(process.cwd(), 'server/build/docker/keycloak/keycloak.crt'),
+    ];
+    const certificatePath = candidates.find((candidate) => fs.existsSync(candidate));
+    if (!certificatePath) {
+        throw new Error(`Keycloak certificate was not found in: ${candidates.join(', ')}`);
+    }
+    return new File([fs.readFileSync(certificatePath)], path.basename(certificatePath));
+}
