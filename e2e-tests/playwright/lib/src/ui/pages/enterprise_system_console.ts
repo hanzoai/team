@@ -152,6 +152,12 @@ export default class EnterpriseSystemConsolePage {
         });
     }
 
+    async assertTeamManagementLabel(teamName: string, label: 'Anyone Can Join' | 'Invite Only') {
+        await expect(this.page.getByTestId(`${teamName}Management`).getByText(label, {exact: true})).toBeVisible({
+            timeout: duration.half_min,
+        });
+    }
+
     async assertPagination(text: string) {
         await expect(this.page.getByText(text, {exact: true})).toBeVisible({timeout: duration.half_min});
     }
@@ -385,7 +391,10 @@ export default class EnterpriseSystemConsolePage {
         const status = dialog.getByRole('status');
         await expect(status).toContainText(/results? found/);
         expect(Number.parseInt((await status.textContent()) ?? '0', 10)).toBeGreaterThan(1);
-        await expect(dialog.getByText(new RegExp(`Off-Topic\\(${teamDisplayName}\\)`), {exact: true})).toBeVisible();
+        const defaultChannel = dialog.getByText(
+            new RegExp(`^Off-Topic\\s*\\(\\s*${escapeRegExp(teamDisplayName)}\\s*\\)$`),
+        );
+        await expect(defaultChannel).toBeVisible({timeout: duration.half_min});
     }
 
     async gotoUsers() {
@@ -404,4 +413,8 @@ export default class EnterpriseSystemConsolePage {
         await expect(this.page.getByTestId('authenticationMethodValue')).toContainText(expectedMethod);
         await this.page.getByTestId('adminHeader-backLink').click();
     }
+}
+
+function escapeRegExp(value: string) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }

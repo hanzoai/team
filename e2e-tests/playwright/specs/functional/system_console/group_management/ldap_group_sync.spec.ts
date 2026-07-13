@@ -112,13 +112,13 @@ test.describe('LDAP group-synchronized team and channel management', () => {
         await consolePage.searchManagementList(team.display_name);
 
         // * Verify it is labeled Anyone Can Join
-        await expect(page.getByText('Anyone Can Join', {exact: true})).toBeVisible();
+        await consolePage.assertTeamManagementLabel(team.name, 'Anyone Can Join');
 
         // # Search for the invite-only team
         await consolePage.searchManagementList(inviteOnlyTeam.display_name);
 
         // * Verify it is labeled Invite Only
-        await expect(page.getByText('Invite Only', {exact: true})).toBeVisible();
+        await consolePage.assertTeamManagementLabel(inviteOnlyTeam.name, 'Invite Only');
     });
 
     /**

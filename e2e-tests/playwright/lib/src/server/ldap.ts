@@ -100,19 +100,30 @@ export class OpenLdapClient {
  * Starts an LDAP synchronization job and waits for its terminal status.
  */
 export async function runLdapSync(client: PlaywrightClient4) {
-    const job = await client.createJob({type: 'ldap_sync'});
-    const deadline = Date.now() + duration.half_min;
-    while (Date.now() < deadline) {
+    const pendingJobs = (await client.getJobsByType('ldap_sync', 0, 100))
+        .filter((candidate) => candidate.status === 'pending')
+        .sort((a, b) => a.create_at - b.create_at);
+    // A pending sync reads LDAP when it starts, so reuse it instead of joining the back of a busy queue.
+    const job = pendingJobs[0] ?? (await client.createJob({type: 'ldap_sync'}));
+    let phase: 'queued' | 'running' = 'queued';
+    let phaseDeadline = Date.now() + duration.half_min;
+
+    while (Date.now() < phaseDeadline) {
         const current = await client.getJob(job.id);
         if (current.status === 'success') {
             return current;
         }
-        if (current.status === 'error' || current.status === 'canceled') {
+        if (current.status === 'error' || current.status === 'canceled' || current.status === 'warning') {
             throw new Error(`LDAP synchronization ${current.id} finished with status ${current.status}`);
+        }
+        // Queueing and execution each get an independent, bounded window.
+        if (current.status === 'in_progress' && phase === 'queued') {
+            phase = 'running';
+            phaseDeadline = Date.now() + duration.half_min;
         }
         await wait(duration.half_sec);
     }
-    throw new Error(`LDAP synchronization ${job.id} did not finish within ${duration.half_min}ms`);
+    throw new Error(`LDAP synchronization ${job.id} did not finish its ${phase} phase within ${duration.half_min}ms`);
 }
 
 /**

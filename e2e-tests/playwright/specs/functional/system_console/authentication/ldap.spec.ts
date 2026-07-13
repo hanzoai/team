@@ -126,7 +126,7 @@ test.describe('LDAP authentication and guest filters', () => {
         await loginFromPage(pw, ldapUsers.guest, false);
 
         // * Verify login is rejected
-        await expect(pw.loginPage.page.getByText(/invalid|incorrect|unable to log in/i)).toBeVisible();
+        await expect(pw.loginPage.loginErrorMessage).toBeVisible();
     });
 
     /**

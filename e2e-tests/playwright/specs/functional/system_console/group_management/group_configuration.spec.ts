@@ -11,7 +11,7 @@ import {
 } from '@mattermost/playwright-lib';
 
 test.describe('LDAP group configuration', () => {
-    async function setup(pw: any) {
+    async function setup(pw: any, teamDisplayName = `AAA Test ${getRandomId()}`) {
         await pw.ensureLicense();
         await pw.skipIfNoLicense();
         const {adminClient, adminUser} = await pw.getAdminClient();
@@ -19,7 +19,7 @@ test.describe('LDAP group configuration', () => {
         const group = await getOrLinkLdapGroup(adminClient, 'board');
         const team = await adminClient.createTeam({
             ...(await pw.random.team()),
-            display_name: `AAA Test ${getRandomId()}`,
+            display_name: teamDisplayName,
         });
         await adminClient.addToTeam(team.id, adminUser.id);
         const channel = await adminClient.createPublicChannel(team.id, `Group Config ${getRandomId()}`);
@@ -91,7 +91,7 @@ test.describe('LDAP group configuration', () => {
      * @objective Verify the channel selector lists default channels and identifies their team
      */
     test('shows default channels', {tag: '@ldap'}, async ({pw}) => {
-        const {consolePage, team} = await setup(pw);
+        const {consolePage, team} = await setup(pw, `000 Default Channel ${getRandomId()}`);
 
         // # Search the add-channel selector for default off-topic channels
         // * Verify matching default channels and their team are shown
