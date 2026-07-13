@@ -20,6 +20,7 @@ export {
     configureOpenLdap,
     configureSamlWithKeycloak,
     createLdapUser,
+    getOrCreateLdapUser,
     getOrLinkLdapGroup,
     initializeOpenLdap,
     KeycloakAdminClient,

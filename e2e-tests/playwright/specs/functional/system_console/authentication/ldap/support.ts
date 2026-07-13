@@ -3,7 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {configureOpenLdap, runLdapSync} from '@mattermost/playwright-lib';
+import {configureOpenLdap, getOrCreateLdapUser, runLdapSync} from '@mattermost/playwright-lib';
 
 export const ldapUsers = {
     admin: {username: 'dev.one', password: 'Password1', email: 'success+devone@simulator.amazonses.com'},
@@ -29,14 +29,8 @@ export async function setupLdap(pw: any) {
     await runLdapSync(adminClient);
 }
 
-export async function getLdapUser(pw: any, adminClient: any, account: LdapAccount) {
-    const user = await adminClient.getUserByUsername(account.username).catch(async () => {
-        const result = await pw.makeClient(account);
-        if (!result.user) {
-            throw new Error(`Unable to create LDAP user ${account.username}`);
-        }
-        return result.user;
-    });
+export async function getLdapUser(adminClient: any, account: LdapAccount) {
+    const user = await getOrCreateLdapUser(adminClient, account);
     return {...user, password: account.password} as UserProfile;
 }
 

@@ -2,9 +2,12 @@
 // See LICENSE.txt for license information.
 
 import {Attribute, Change, Client} from 'ldapts';
+import type {UserProfile} from '@mattermost/types/users';
 
 import type {PlaywrightClient4} from './playwright_client';
+import {PlaywrightClient4 as JitClient} from './playwright_client';
 
+import {testConfig} from '@/test_config';
 import {duration, getRandomId, wait} from '@/util';
 
 export type LdapUser = {
@@ -14,6 +17,8 @@ export type LdapUser = {
     firstName: string;
     lastName: string;
 };
+
+type LdapAccount = Pick<LdapUser, 'username' | 'password'> & Partial<Pick<LdapUser, 'email'>>;
 
 const ldapBaseDN = 'ou=e2etest,dc=mm,dc=test,dc=com';
 const ldapBindDN = 'cn=admin,dc=mm,dc=test,dc=com';
@@ -196,6 +201,24 @@ export async function getOrLinkLdapGroup(client: PlaywrightClient4, name: string
 }
 
 /**
+ * Returns an existing Mattermost LDAP user or creates it through LDAP login.
+ * Only a user-not-found response is treated as the expected fresh-server case.
+ */
+export async function getOrCreateLdapUser(client: PlaywrightClient4, account: LdapAccount): Promise<UserProfile> {
+    try {
+        return await client.getUserByUsername(account.username);
+    } catch (error) {
+        if (!isNotFoundError(error)) {
+            throw error;
+        }
+    }
+
+    const jitClient = new JitClient();
+    jitClient.setUrl(testConfig.baseURL);
+    return jitClient.login(account.username, account.password);
+}
+
+/**
  * Restores mutable Mattermost state attached to a shared LDAP group.
  */
 export async function resetLdapGroup(client: PlaywrightClient4, groupId: string) {
@@ -208,4 +231,8 @@ export async function resetLdapGroup(client: PlaywrightClient4, groupId: string)
     for (const link of (await client.getGroupSyncables(groupId, 'team')) as unknown as Array<{team_id: string}>) {
         await client.unlinkGroupSyncable(groupId, link.team_id, 'team');
     }
+}
+
+function isNotFoundError(error: unknown) {
+    return typeof error === 'object' && error !== null && 'status_code' in error && error.status_code === 404;
 }

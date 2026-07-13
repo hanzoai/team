@@ -6,9 +6,11 @@ import type {UserProfile} from '@mattermost/types/users';
 import {
     EnterpriseChannelsPage,
     EnterpriseSystemConsolePage,
+    getOrCreateLdapUser,
     getOrLinkLdapGroup,
     initializeOpenLdap,
     resetLdapGroup,
+    runLdapSync,
 } from '@mattermost/playwright-lib';
 
 export const boardAccount = {
@@ -38,7 +40,8 @@ export async function setup(pw: any) {
     await adminClient.addToTeam(team.id, regularUser.id);
     await adminClient.addToChannel(regularUser.id, offTopic.id);
 
-    const existingBoardUser = await adminClient.getUserByUsername(boardAccount.username);
+    const existingBoardUser = await getOrCreateLdapUser(adminClient, boardAccount);
+    await runLdapSync(adminClient);
     await adminClient.updateUserRoles(existingBoardUser.id, 'system_user');
     await adminClient.revokeAllSessionsForUser(existingBoardUser.id);
     for (const existingTeam of await adminClient.getTeamsForUser(existingBoardUser.id)) {

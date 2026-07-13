@@ -20,8 +20,8 @@ test.describe('LDAP authentication and guest filters', () => {
     test('MM-T1422 LDAP Guest Filter', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, adminUser} = await pw.getAdminClient();
         await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}});
-        const userOne = await getLdapUser(pw, adminClient, ldapUsers.guestFilterOne);
-        const userTwo = await getLdapUser(pw, adminClient, ldapUsers.guestFilterTwo);
+        const userOne = await getLdapUser(adminClient, ldapUsers.guestFilterOne);
+        const userTwo = await getLdapUser(adminClient, ldapUsers.guestFilterTwo);
         await adminClient.promoteGuestToUser(userOne.id).catch(() => undefined);
         await adminClient.promoteGuestToUser(userTwo.id).catch(() => undefined);
         await removeFromAllTeams(adminClient, userOne);
@@ -53,7 +53,7 @@ test.describe('LDAP authentication and guest filters', () => {
      */
     test('MM-T1424 LDAP Guest Filter behavior when Guest Access is disabled', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, adminUser} = await pw.getAdminClient();
-        const user = await getLdapUser(pw, adminClient, ldapUsers.guestFilterOne);
+        const user = await getLdapUser(adminClient, ldapUsers.guestFilterOne);
         const {page} = await pw.testBrowser.login(adminUser!);
         const consolePage = new EnterpriseSystemConsolePage(page);
 
@@ -89,7 +89,7 @@ test.describe('LDAP authentication and guest filters', () => {
     test('MM-T1425 LDAP Guest Filter Change', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient} = await pw.getAdminClient();
         await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}, LdapSettings: {GuestFilter: ''}});
-        const user = await getLdapUser(pw, adminClient, ldapUsers.guestFilterTwo);
+        const user = await getLdapUser(adminClient, ldapUsers.guestFilterTwo);
         await adminClient.demoteUserToGuest(user.id);
 
         // # Log in again after demotion

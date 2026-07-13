@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
+import {duration, EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 import {ldapUsers, loginFromPage, setupLdap} from './support';
 
@@ -36,12 +36,17 @@ test.describe('LDAP authentication and guest filters', () => {
     test('Invalid login with user filter', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient} = await pw.getAdminClient();
         await adminClient.patchConfig({LdapSettings: {UserFilter: '(cn=no_users)'}});
+        await expect
+            .poll(async () => (await adminClient.getConfig()).LdapSettings.UserFilter, {
+                timeout: duration.half_min,
+            })
+            .toBe('(cn=no_users)');
 
         // # Attempt LDAP login with a filtered member
         await loginFromPage(pw, ldapUsers.member);
 
         // * Verify login is rejected
-        await expect(pw.loginPage.loginErrorMessage).toBeVisible();
+        await expect(pw.loginPage.loginRejectionMessage).toBeVisible({timeout: duration.half_min});
     });
 
     /**
@@ -52,12 +57,21 @@ test.describe('LDAP authentication and guest filters', () => {
         await adminClient.patchConfig({
             LdapSettings: {UserFilter: '(cn=no_users)', GuestFilter: '(cn=no_guests)'},
         });
+        await expect
+            .poll(
+                async () => {
+                    const config = await adminClient.getConfig();
+                    return [config.LdapSettings.UserFilter, config.LdapSettings.GuestFilter];
+                },
+                {timeout: duration.half_min},
+            )
+            .toEqual(['(cn=no_users)', '(cn=no_guests)']);
 
         // # Attempt LDAP login with a filtered guest
         await loginFromPage(pw, ldapUsers.guest);
 
         // * Verify login is rejected
-        await expect(pw.loginPage.loginErrorMessage).toBeVisible();
+        await expect(pw.loginPage.loginRejectionMessage).toBeVisible({timeout: duration.half_min});
     });
 
     /**

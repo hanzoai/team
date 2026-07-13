@@ -9,6 +9,7 @@ export {initSetup, getAdminClient} from './init';
 export {
     configureOpenLdap,
     createLdapUser,
+    getOrCreateLdapUser,
     getOrLinkLdapGroup,
     initializeOpenLdap,
     OpenLdapClient,

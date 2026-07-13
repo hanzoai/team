@@ -5,6 +5,7 @@ import type {UserProfile} from '@mattermost/types/users';
 
 import {
     EnterpriseChannelsPage,
+    getOrCreateLdapUser,
     getOrLinkLdapGroup,
     getRandomId,
     initializeOpenLdap,
@@ -31,7 +32,7 @@ test.describe('Group-synchronized team bot membership', () => {
         await initializeOpenLdap(adminClient);
         const ldapGroup = await getOrLinkLdapGroup(adminClient, 'tgroup');
         await resetLdapGroup(adminClient, ldapGroup.id);
-        const existingUser = await adminClient.getUserByUsername(ldapMember.username);
+        const existingUser = await getOrCreateLdapUser(adminClient, ldapMember);
         await adminClient.updateUserRoles(existingUser.id, 'system_user');
         await adminClient.revokeAllSessionsForUser(existingUser.id);
         for (const existingTeam of await adminClient.getTeamsForUser(existingUser.id)) {

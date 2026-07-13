@@ -3,7 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {duration, expect, initializeOpenLdap, test} from '@mattermost/playwright-lib';
+import {duration, expect, getOrCreateLdapUser, initializeOpenLdap, test} from '@mattermost/playwright-lib';
 
 import {getActiveSessions, getSession, updateSessionExpiration} from './session_db';
 
@@ -18,7 +18,7 @@ test.describe('LDAP session extension', () => {
         await pw.skipIfNoLicense();
         const {adminClient, adminUser} = await pw.getAdminClient();
         await initializeOpenLdap(adminClient);
-        const existingUser = await adminClient.getUserByUsername(ldapAccount.username);
+        const existingUser = await getOrCreateLdapUser(adminClient, ldapAccount);
         await adminClient.updateUserRoles(existingUser.id, 'system_user');
         await adminClient.revokeAllSessionsForUser(existingUser.id);
         for (const existingTeam of await adminClient.getTeamsForUser(existingUser.id)) {

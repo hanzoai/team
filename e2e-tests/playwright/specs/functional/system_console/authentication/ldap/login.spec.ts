@@ -32,7 +32,7 @@ test.describe('LDAP authentication and guest filters', () => {
     test('LDAP login, new MM user, no channels', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient} = await pw.getAdminClient();
         await adminClient.patchConfig({LdapSettings: {UserFilter: '(cn=test*)'}});
-        const user = await getLdapUser(pw, adminClient, ldapUsers.member);
+        const user = await getLdapUser(adminClient, ldapUsers.member);
         await removeFromAllTeams(adminClient, user);
 
         // # Log in as the LDAP member without a team
@@ -52,7 +52,7 @@ test.describe('LDAP authentication and guest filters', () => {
             LdapSettings: {UserFilter: '(cn=no_users)', GuestFilter: '(cn=board*)'},
         });
         await runLdapSync(adminClient);
-        const user = await getLdapUser(pw, adminClient, ldapUsers.guest);
+        const user = await getLdapUser(adminClient, ldapUsers.guest);
         await adminClient.updateUserRoles(user.id, 'system_user');
         await adminClient.revokeAllSessionsForUser(user.id);
         await removeFromAllTeams(adminClient, user);
@@ -75,7 +75,7 @@ test.describe('LDAP authentication and guest filters', () => {
     test('LDAP Member login with team invite', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, adminUser} = await pw.getAdminClient();
         await adminClient.patchConfig({LdapSettings: {UserFilter: '(cn=test*)'}});
-        const user = await getLdapUser(pw, adminClient, ldapUsers.member);
+        const user = await getLdapUser(adminClient, ldapUsers.member);
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser!.id);
         await adminClient.addToTeam(team.id, user.id);
@@ -95,7 +95,7 @@ test.describe('LDAP authentication and guest filters', () => {
         await adminClient.patchConfig({
             GuestAccountsSettings: {Enable: true},
         });
-        const user = await getLdapUser(pw, adminClient, ldapUsers.guest);
+        const user = await getLdapUser(adminClient, ldapUsers.guest);
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser!.id);
         await adminClient.addToTeam(team.id, user.id);
