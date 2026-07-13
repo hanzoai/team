@@ -39,7 +39,7 @@ test('MM-T188 Inline markdown image that is a link, opens the link', {tag: '@mes
     const label = 'Build Status';
 
     // # Log in and post a linked inline Markdown image
-    const {channelsPage, page} = await pw.testBrowser.login(user);
+    const {channelsPage} = await pw.testBrowser.login(user);
     await channelsPage.goto(team.name, 'off-topic');
     await channelsPage.toBeVisible();
     await channelsPage.postMessage(`[![${label}](${imageUrl})](${linkUrl})`);
@@ -54,5 +54,4 @@ test('MM-T188 Inline markdown image that is a link, opens the link', {tag: '@mes
     const linkedImage = imageLink.getByAltText(label);
     await expect(linkedImage).toBeVisible();
     await expect(linkedImage).toHaveAttribute('src', imageUrl);
-
 });
