@@ -242,7 +242,7 @@ func TestSearchAllowedActionsForCurrentUser(t *testing.T) {
 		disableABAC(t)
 
 		var firstOrder []string
-		for i := 0; i < 5; i++ {
+		for i := range 5 {
 			resp, appErr := th.App.SearchAllowedActionsForCurrentUser(rctx, model.ActionSearchRequest{
 				Resource: channelResource,
 			})

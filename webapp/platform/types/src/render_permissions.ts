@@ -24,9 +24,9 @@ export type ActionSearchRequest = {
         type: string;
         id: string;
     };
-    actions?: string[];             // optional; omit for discovery mode
-    subject?: ActionSearchSubject;  // reserved
-    page?: ActionSearchPage;        // reserved
+    actions?: string[]; // optional; omit for discovery mode
+    subject?: ActionSearchSubject; // reserved
+    page?: ActionSearchPage; // reserved
 };
 
 export type ActionSearchResponse = {

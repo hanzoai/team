@@ -11011,10 +11011,6 @@
     "translation": "Action names cannot be empty."
   },
   {
-    "id": "model.access_control_decision.is_valid.actions_empty.app_error",
-    "translation": "At least one action must be requested."
-  },
-  {
     "id": "model.access_control_decision.is_valid.actions_too_many.app_error",
     "translation": "Too many actions requested."
   },
