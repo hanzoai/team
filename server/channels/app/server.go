@@ -1643,7 +1643,7 @@ func (s *Server) initJobs() {
 
 	s.Jobs.RegisterJobType(
 		model.JobTypeDeliveryTrackingContentReview,
-		delivery_tracking_content_review.MakeWorker(s.Jobs, s.Store()),
+		delivery_tracking_content_review.MakeWorker(s.Jobs, s.Store(), New(ServerConnector(s.Channels()))),
 		nil,
 	)
 

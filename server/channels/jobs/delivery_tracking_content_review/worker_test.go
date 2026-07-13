@@ -14,6 +14,7 @@ import (
 
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/public/shared/request"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs"
 	"github.com/mattermost/mattermost/server/v8/channels/store"
 	"github.com/mattermost/mattermost/server/v8/channels/store/storetest"
@@ -89,6 +90,16 @@ func (f *fakeTarget) SaveBatch(_ context.Context, records []model.UserPostDelive
 	f.saved = append(f.saved, records...)
 	f.jobIDs = append(f.jobIDs, jobID)
 	return nil
+}
+
+type fakeApp struct {
+	calls []bool
+	err   *model.AppError
+}
+
+func (f *fakeApp) NotifyDeliveryTrackingContentReviewRequesters(_ request.CTX, _ *model.Job, succeeded bool) *model.AppError {
+	f.calls = append(f.calls, succeeded)
+	return f.err
 }
 
 func makeRows(postID string, n int) []model.UserPostDelivery {
@@ -243,7 +254,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 // newWorkerWithMockStore builds a Worker backed by a mock store and a real
 // JobServer (with nil metrics) so DoJob's full lifecycle — claim, copy, progress
 // persistence, and terminal status — can be exercised without a database.
-func newWorkerWithMockStore(t *testing.T) (*Worker, *storetest.Store) {
+func newWorkerWithMockStore(t *testing.T) (*Worker, *storetest.Store, *fakeApp) {
 	t.Helper()
 
 	cfg := &model.Config{}
@@ -253,7 +264,8 @@ func newWorkerWithMockStore(t *testing.T) (*Worker, *storetest.Store) {
 	mockStore := &storetest.Store{}
 	jobServer := jobs.NewJobServer(cfgSvc, mockStore, nil, mlog.CreateConsoleTestLogger(t))
 
-	return MakeWorker(jobServer, mockStore), mockStore
+	app := &fakeApp{}
+	return MakeWorker(jobServer, mockStore, app), mockStore, app
 }
 
 func TestDoJob(t *testing.T) {
@@ -268,7 +280,7 @@ func TestDoJob(t *testing.T) {
 	}
 
 	t.Run("copies the post's deliveries and marks the job successful", func(t *testing.T) {
-		worker, mockStore := newWorkerWithMockStore(t)
+		worker, mockStore, app := newWorkerWithMockStore(t)
 		job := newJob()
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
@@ -288,13 +300,14 @@ func TestDoJob(t *testing.T) {
 		worker.DoJob(job)
 
 		require.Equal(t, "3", job.Data["records_copied"], "the final copied count is persisted on the job")
+		require.Equal(t, []bool{true}, app.calls, "requesters are notified of the successful completion")
 		mockStore.JobStore.AssertExpectations(t)
 		mockStore.UserPostDeliveryStore.AssertExpectations(t)
 		mockStore.UserPostDeliveryContentReviewStore.AssertExpectations(t)
 	})
 
 	t.Run("a job missing its post_id is failed", func(t *testing.T) {
-		worker, mockStore := newWorkerWithMockStore(t)
+		worker, mockStore, app := newWorkerWithMockStore(t)
 		job := &model.Job{Id: model.NewId(), Type: model.JobTypeDeliveryTrackingContentReview, Data: map[string]string{}}
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
@@ -304,12 +317,13 @@ func TestDoJob(t *testing.T) {
 		worker.DoJob(job)
 
 		require.Contains(t, job.Data["error"], "missing post_id", "the failure reason is recorded on the job")
+		require.Equal(t, []bool{false}, app.calls, "a failed job notifies requesters of the failure")
 		mockStore.JobStore.AssertExpectations(t)
 		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
 	})
 
 	t.Run("a job already claimed elsewhere is skipped without side effects", func(t *testing.T) {
-		worker, mockStore := newWorkerWithMockStore(t)
+		worker, mockStore, app := newWorkerWithMockStore(t)
 		job := newJob()
 
 		// A nil return from UpdateStatusOptimistically means the row was not in the
@@ -318,12 +332,13 @@ func TestDoJob(t *testing.T) {
 
 		worker.DoJob(job)
 
+		require.Empty(t, app.calls, "a job claimed by another node notifies no one")
 		mockStore.JobStore.AssertExpectations(t)
 		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
 	})
 
 	t.Run("an unavailable source pool fails the job", func(t *testing.T) {
-		worker, mockStore := newWorkerWithMockStore(t)
+		worker, mockStore, app := newWorkerWithMockStore(t)
 		job := newJob()
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
@@ -334,13 +349,14 @@ func TestDoJob(t *testing.T) {
 		worker.DoJob(job)
 
 		require.Contains(t, job.Data["error"], "source pool", "the source-unavailable reason is recorded on the job")
+		require.Equal(t, []bool{false}, app.calls, "a failed job notifies requesters of the failure")
 		mockStore.JobStore.AssertExpectations(t)
 		mockStore.UserPostDeliveryStore.AssertExpectations(t)
 		mockStore.UserPostDeliveryContentReviewStore.AssertNotCalled(t, "SaveBatch")
 	})
 
 	t.Run("a stopped worker cancels the job before reading the source", func(t *testing.T) {
-		worker, mockStore := newWorkerWithMockStore(t)
+		worker, mockStore, app := newWorkerWithMockStore(t)
 		job := newJob()
 
 		// A stopped worker makes shouldStop() fire on the first loop iteration,
@@ -353,6 +369,7 @@ func TestDoJob(t *testing.T) {
 
 		worker.DoJob(job)
 
+		require.Empty(t, app.calls, "a canceled job notifies no one")
 		mockStore.JobStore.AssertExpectations(t)
 		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
 	})

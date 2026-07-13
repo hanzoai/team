@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/i18n"
 	"github.com/stretchr/testify/require"
 )
 
@@ -1752,7 +1753,7 @@ func TestPostReviewerMessage(t *testing.T) {
 		require.Nil(t, err)
 
 		testMessage := "Test reviewer message"
-		_, appErr := th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil, "")
+		_, appErr := th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil)
 		require.Nil(t, appErr)
 
 		// Verify message was posted to the reviewer thread
@@ -1809,7 +1810,7 @@ func TestPostReviewerMessage(t *testing.T) {
 		require.Nil(t, err)
 
 		testMessage := "Test message for multiple reviewers"
-		_, appErr = th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil, "")
+		_, appErr = th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil)
 		require.Nil(t, appErr)
 
 		// Verify message was posted to both reviewer threads
@@ -1874,7 +1875,7 @@ func TestPostReviewerMessage(t *testing.T) {
 		report.AddStep("app.data_spillage.report.step.file_attachments", model.StepFailed, "app.data_spillage.report.detail.failed", []string{"file not found"})
 
 		reportFileName := "deletion_report.md"
-		createdPosts, appErr := th.App.postReviewerMessage(th.Context, "", groupId, post.Id, report, reportFileName)
+		createdPosts, appErr := th.App.postReviewerMessage(th.Context, "", groupId, post.Id, &reviewerMessageOptions{report: report, reportFileName: reportFileName})
 		require.Nil(t, appErr)
 		require.NotEmpty(t, createdPosts)
 
@@ -1893,6 +1894,39 @@ func TestPostReviewerMessage(t *testing.T) {
 		require.Equal(t, reportFileName, fileInfo.Name)
 	})
 
+	t.Run("posts only to reviewers named by the recipient filter, localized per reviewer", func(t *testing.T) {
+		config := getBaseConfig(th)
+		config.ReviewerSettings.CommonReviewerIds = []string{th.BasicUser.Id, th.BasicUser2.Id}
+		require.Nil(t, th.App.SaveContentFlaggingConfig(th.Context, config))
+
+		post := th.CreatePost(t, th.BasicChannel)
+		appErr := th.App.FlagPost(th.Context, post, th.BasicTeam.Id, th.SystemAdminUser.Id, model.FlagContentRequest{Reason: "spam", Comment: "This is spam content"})
+		require.Nil(t, appErr)
+		time.Sleep(2 * time.Second)
+
+		groupId, err := th.App.ContentFlaggingGroupId()
+		require.Nil(t, err)
+
+		contentReviewBot, appErr := th.App.getContentReviewBot(th.Context)
+		require.Nil(t, appErr)
+
+		const localized = "localized reviewer message"
+		filter := map[string]bool{th.BasicUser.Id: true}
+		createdPosts, appErr := th.App.postReviewerMessage(th.Context, "unused static message", groupId, post.Id, &reviewerMessageOptions{recipientFilter: filter, localizeMessage: func(i18n.TranslateFunc) string { return localized }})
+		require.Nil(t, appErr)
+		require.Len(t, createdPosts, 1, "only the reviewer in the filter is messaged")
+		require.Equal(t, localized, createdPosts[0].Message, "the per-reviewer builder overrides the static message")
+		require.Equal(t, contentReviewBot.UserId, createdPosts[0].UserId)
+
+		dmChannel2, appErr := th.App.GetOrCreateDirectChannel(th.Context, th.BasicUser2.Id, contentReviewBot.UserId)
+		require.Nil(t, appErr)
+		posts2, appErr := th.App.GetPostsPage(th.Context, model.GetPostsOptions{ChannelId: dmChannel2.Id, Page: 0, PerPage: 10})
+		require.Nil(t, appErr)
+		for _, p := range posts2.Posts {
+			require.NotEqual(t, localized, p.Message, "a reviewer excluded by the filter is not messaged")
+		}
+	})
+
 	t.Run("should handle case when no reviewer posts exist", func(t *testing.T) {
 		require.Nil(t, setBaseConfig(th))
 		post := th.CreatePost(t, th.BasicChannel)
@@ -1901,7 +1935,7 @@ func TestPostReviewerMessage(t *testing.T) {
 		require.Nil(t, err)
 
 		testMessage := "Test message for non-flagged post"
-		_, appErr := th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil, "")
+		_, appErr := th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil)
 		require.Nil(t, appErr)
 	})
 
@@ -1914,7 +1948,7 @@ func TestPostReviewerMessage(t *testing.T) {
 		require.Nil(t, err)
 
 		testMessage := "Test message with special chars: @user #channel ~team & <script>alert('xss')</script>"
-		_, appErr := th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil, "")
+		_, appErr := th.App.postReviewerMessage(th.Context, testMessage, groupId, post.Id, nil)
 		require.Nil(t, appErr)
 
 		// Verify message was posted correctly with special characters preserved

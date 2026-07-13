@@ -28,6 +28,10 @@ type reviewWriter interface {
 	SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error
 }
 
+type AppIface interface {
+	NotifyDeliveryTrackingContentReviewRequesters(rctx request.CTX, job *model.Job, succeeded bool) *model.AppError
+}
+
 // Worker copies a flagged post's delivery-tracking rows from the source
 // UserPostDelivery table (which may live in a dedicated second DB) into the
 // primary-DB UserPostDeliveryContentReview table so content reviewers can read
@@ -42,10 +46,11 @@ type Worker struct {
 	jobServer *jobs.JobServer
 	logger    mlog.LoggerIFace
 	store     store.Store
+	app       AppIface
 	closed    atomic.Int32
 }
 
-func MakeWorker(jobServer *jobs.JobServer, store store.Store) *Worker {
+func MakeWorker(jobServer *jobs.JobServer, store store.Store, app AppIface) *Worker {
 	const workerName = "DeliveryTrackingContentReview"
 	worker := Worker{
 		name:      workerName,
@@ -55,6 +60,7 @@ func MakeWorker(jobServer *jobs.JobServer, store store.Store) *Worker {
 		jobServer: jobServer,
 		logger:    jobServer.Logger().With(mlog.String("worker_name", workerName)),
 		store:     store,
+		app:       app,
 	}
 
 	return &worker
@@ -260,17 +266,32 @@ func (worker *Worker) setJobSuccess(logger mlog.LoggerIFace, job *model.Job) {
 	if err := worker.jobServer.SetJobSuccess(job); err != nil {
 		logger.Error("Worker: Failed to set success for job", mlog.Err(err))
 		worker.setJobError(logger, job, err)
+		return
 	}
+	worker.notifyRequesters(logger, job, true)
 }
 
 func (worker *Worker) setJobError(logger mlog.LoggerIFace, job *model.Job, appError *model.AppError) {
 	if err := worker.jobServer.SetJobError(job, appError); err != nil {
 		logger.Error("Worker: Failed to set job error", mlog.Err(err))
 	}
+	worker.notifyRequesters(logger, job, false)
 }
 
+// Canceled jobs are transient (shutdown/redeploy) and will rerun, so requesters are not notified.
 func (worker *Worker) setJobCanceled(logger mlog.LoggerIFace, job *model.Job) {
 	if err := worker.jobServer.SetJobCanceled(job); err != nil {
 		logger.Error("Worker: Failed to mark job as canceled", mlog.Err(err))
+	}
+}
+
+func (worker *Worker) notifyRequesters(logger mlog.LoggerIFace, job *model.Job, succeeded bool) {
+	if worker.app == nil {
+		return
+	}
+
+	rctx := request.EmptyContext(worker.logger)
+	if appErr := worker.app.NotifyDeliveryTrackingContentReviewRequesters(rctx, job, succeeded); appErr != nil {
+		logger.Error("Worker: Failed to notify delivery-tracking requesters of job completion", mlog.Err(appErr), mlog.Bool("succeeded", succeeded))
 	}
 }

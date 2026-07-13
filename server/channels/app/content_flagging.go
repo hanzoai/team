@@ -30,6 +30,13 @@ const (
 	CONTENT_FLAGGING_REVIEWER_SEARCH_INDIVIDUAL_LIMIT = 50
 )
 
+type reviewerMessageOptions struct {
+	localizeMessage func(i18n.TranslateFunc) string
+	recipientFilter map[string]bool
+	report          *model.PostDeletionReport
+	reportFileName  string
+}
+
 func (a *App) ContentFlaggingEnabledForTeam(teamId string) (bool, *model.AppError) {
 	settings, appErr := a.GetContentFlaggingSettings()
 	if appErr != nil {
@@ -680,7 +687,7 @@ func (a *App) PermanentDeleteFlaggedPost(rctx request.CTX, actionRequest *model.
 func (a *App) sendDeletionReportToReviewers(rctx request.CTX, flaggedPostId string, report *model.PostDeletionReport, contentFlaggingGroupId string) {
 	reportFileName := fmt.Sprintf("deletion_report_%s.md", flaggedPostId)
 
-	_, appErr := a.postReviewerMessage(rctx, "", contentFlaggingGroupId, flaggedPostId, report, reportFileName)
+	_, appErr := a.postReviewerMessage(rctx, "", contentFlaggingGroupId, flaggedPostId, &reviewerMessageOptions{report: report, reportFileName: reportFileName})
 	if appErr != nil {
 		rctx.Logger().Error("Failed to send deletion report to reviewers", mlog.Err(appErr), mlog.String("post_id", flaggedPostId))
 	}
@@ -1280,7 +1287,7 @@ func (a *App) postAssignReviewerMessage(rctx request.CTX, contentFlaggingGroupId
 	}
 
 	message := fmt.Sprintf("@%s was assigned as a reviewer by @%s", reviewerUser.Username, assignedByUser.Username)
-	return a.postReviewerMessage(rctx, message, contentFlaggingGroupId, flaggedPostId, nil, "")
+	return a.postReviewerMessage(rctx, message, contentFlaggingGroupId, flaggedPostId, nil)
 }
 
 func (a *App) postDeletePostReviewerMessage(rctx request.CTX, flaggedPostId, actorUserId, comment, contentFlaggingGroupId string) ([]*model.Post, *model.AppError) {
@@ -1294,7 +1301,7 @@ func (a *App) postDeletePostReviewerMessage(rctx request.CTX, flaggedPostId, act
 		message = fmt.Sprintf("%s\n\nWith comment:\n\n> %s", message, comment)
 	}
 
-	return a.postReviewerMessage(rctx, message, contentFlaggingGroupId, flaggedPostId, nil, "")
+	return a.postReviewerMessage(rctx, message, contentFlaggingGroupId, flaggedPostId, nil)
 }
 
 func (a *App) postKeepPostReviewerMessage(rctx request.CTX, flaggedPostId, actorUserId, comment, contentFlaggingGroupId string) ([]*model.Post, *model.AppError) {
@@ -1308,7 +1315,7 @@ func (a *App) postKeepPostReviewerMessage(rctx request.CTX, flaggedPostId, actor
 		message = fmt.Sprintf("%s\n\nWith comment:\n\n> %s", message, comment)
 	}
 
-	return a.postReviewerMessage(rctx, message, contentFlaggingGroupId, flaggedPostId, nil, "")
+	return a.postReviewerMessage(rctx, message, contentFlaggingGroupId, flaggedPostId, nil)
 }
 
 func (a *App) getReporterUserId(flaggedPostId, contentFlaggingGroupId string) (string, *model.AppError) {
@@ -1377,7 +1384,11 @@ func (a *App) postMessageToReporter(rctx request.CTX, contentFlaggingGroupId str
 	return a.postContentReviewBotMessage(rctx, message, userId)
 }
 
-func (a *App) postReviewerMessage(rctx request.CTX, message, contentFlaggingGroupId, flaggedPostId string, report *model.PostDeletionReport, reportFileName string) ([]*model.Post, *model.AppError) {
+func (a *App) postReviewerMessage(rctx request.CTX, message, contentFlaggingGroupId, flaggedPostId string, opts *reviewerMessageOptions) ([]*model.Post, *model.AppError) {
+	if opts == nil {
+		opts = &reviewerMessageOptions{}
+	}
+
 	mappedFields, appErr := a.GetContentFlaggingMappedFields(contentFlaggingGroupId)
 	if appErr != nil {
 		return nil, appErr
@@ -1402,35 +1413,45 @@ func (a *App) postReviewerMessage(rctx request.CTX, message, contentFlaggingGrou
 	for _, postId := range postIds {
 		reviewerPost, appErr := a.GetSinglePost(rctx, postId, false)
 		if appErr != nil {
-			rctx.Logger().Error("Failed to get reviewer post while posting assign reviewer message", mlog.Err(appErr), mlog.String("post_id", postId))
+			rctx.Logger().Error("Failed to get reviewer post while posting reviewer message", mlog.Err(appErr), mlog.String("post_id", postId))
 			continue
 		}
 
 		channel, appErr := a.GetChannel(rctx, reviewerPost.ChannelId)
 		if appErr != nil {
-			rctx.Logger().Error("Failed to get channel for reviewer post while posting assign reviewer message", mlog.Err(appErr), mlog.String("post_id", postId), mlog.String("channel_id", reviewerPost.ChannelId))
+			rctx.Logger().Error("Failed to get channel for reviewer post while posting reviewer message", mlog.Err(appErr), mlog.String("post_id", postId), mlog.String("channel_id", reviewerPost.ChannelId))
 			continue
 		}
 
-		// Determine the post message and file data, localizing per-reviewer if a report is provided
+		reviewerUserId := channel.GetOtherUserIdForDM(reviewerPost.UserId)
+
+		if opts.recipientFilter != nil && !opts.recipientFilter[reviewerUserId] {
+			continue
+		}
+
 		postMessage := message
 		var postFileData []byte
 		var postFileName string
 
-		if report != nil {
+		if opts.report != nil || opts.localizeMessage != nil {
 			T := i18n.GetUserTranslations("")
 			// Fetch reviewer user to get their locale
-			reviewerUserId := channel.GetOtherUserIdForDM(reviewerPost.UserId)
 			reviewer, userErr := a.GetUser(reviewerUserId)
 			if userErr != nil {
-				rctx.Logger().Error("Failed to get reviewer user for localization, falling back to default locale", mlog.Err(userErr), mlog.String("user_id", reviewerPost.UserId))
+				rctx.Logger().Error("Failed to get reviewer user for localization, falling back to default locale", mlog.Err(userErr), mlog.String("user_id", reviewerUserId))
 			} else {
 				T = i18n.GetUserTranslations(reviewer.Locale)
 			}
 
-			postMessage = report.RenderSummary(T)
-			postFileData = []byte(report.Render(T))
-			postFileName = reportFileName
+			if opts.localizeMessage != nil {
+				postMessage = opts.localizeMessage(T)
+			}
+
+			if opts.report != nil {
+				postMessage = opts.report.RenderSummary(T)
+				postFileData = []byte(opts.report.Render(T))
+				postFileName = opts.reportFileName
+			}
 		}
 
 		post := &model.Post{
@@ -1453,7 +1474,7 @@ func (a *App) postReviewerMessage(rctx request.CTX, message, contentFlaggingGrou
 
 		createdPost, _, appErr := a.CreatePost(rctx, post, channel, model.CreatePostFlags{})
 		if appErr != nil {
-			rctx.Logger().Error("Failed to create assign reviewer post in one of the channels", mlog.Err(appErr), mlog.String("channel_id", channel.Id), mlog.String("post_id", postId))
+			rctx.Logger().Error("Failed to create reviewer post in one of the channels", mlog.Err(appErr), mlog.String("channel_id", channel.Id), mlog.String("post_id", postId))
 			continue
 		}
 		createdPosts = append(createdPosts, createdPost)

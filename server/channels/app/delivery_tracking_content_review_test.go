@@ -8,10 +8,12 @@ import (
 	"net/http"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/require"
 
 	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/i18n"
 )
 
 func TestCreateDeliveryTrackingContentReviewJob(t *testing.T) {
@@ -162,4 +164,135 @@ func TestMergeRequestedBy(t *testing.T) {
 	// serializable transaction to retry the merge.
 	merged = mergeRequestedBy(merged, model.StringMap{jobDataKeyRequestedBy: "userB"})
 	require.Equal(t, "userA,userB", merged[jobDataKeyRequestedBy])
+}
+
+func TestRequestedBySet(t *testing.T) {
+	require.Nil(t, requestedBySet(""), "an empty CSV yields no requesters")
+	require.Equal(t, map[string]bool{"userA": true}, requestedBySet("userA"))
+	require.Equal(t, map[string]bool{"userA": true, "userB": true}, requestedBySet("userA,userB"))
+	require.Equal(t, map[string]bool{"userA": true, "userB": true}, requestedBySet("userA,,userB,"), "empty entries are ignored")
+}
+
+func TestNotifyDeliveryTrackingContentReviewRequesters(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	th.App.Srv().SetLicense(model.NewTestLicenseSKU(model.LicenseShortSkuEnterpriseAdvanced))
+
+	config := getBaseConfig(th)
+	config.ReviewerSettings.CommonReviewerIds = []string{th.BasicUser.Id, th.BasicUser2.Id}
+	require.Nil(t, th.App.SaveContentFlaggingConfig(th.Context, config))
+
+	contentReviewBot, appErr := th.App.getContentReviewBot(th.Context)
+	require.Nil(t, appErr)
+
+	reviewerThreads := func(flaggedPostID string) map[string]string {
+		groupID, appErr := th.App.ContentFlaggingGroupId()
+		require.Nil(t, appErr)
+		mappedFields, appErr := th.App.GetContentFlaggingMappedFields(groupID)
+		require.Nil(t, appErr)
+		fieldID := mappedFields[contentFlaggingPropertyNameFlaggedPostId].ID
+
+		reviewerPostIDs, appErr := th.App.getReviewerPostsForFlaggedPost(groupID, flaggedPostID, fieldID)
+		require.Nil(t, appErr)
+
+		threads := make(map[string]string, len(reviewerPostIDs))
+		for _, reviewerPostID := range reviewerPostIDs {
+			reviewerPost, appErr := th.App.GetSinglePost(th.Context, reviewerPostID, false)
+			require.Nil(t, appErr)
+			channel, appErr := th.App.GetChannel(th.Context, reviewerPost.ChannelId)
+			require.Nil(t, appErr)
+			threads[channel.GetOtherUserIdForDM(contentReviewBot.UserId)] = reviewerPostID
+		}
+		return threads
+	}
+
+	botReplies := func(reviewerPostID string) []*model.Post {
+		reviewerPost, appErr := th.App.GetSinglePost(th.Context, reviewerPostID, false)
+		require.Nil(t, appErr)
+		posts, appErr := th.App.GetPostsPage(th.Context, model.GetPostsOptions{ChannelId: reviewerPost.ChannelId, Page: 0, PerPage: 50})
+		require.Nil(t, appErr)
+
+		var replies []*model.Post
+		for _, p := range posts.Posts {
+			if p.RootId == reviewerPostID && p.UserId == contentReviewBot.UserId {
+				replies = append(replies, p)
+			}
+		}
+		return replies
+	}
+
+	localizedMessage := func(userID, key string) string {
+		user, appErr := th.App.GetUser(userID)
+		require.Nil(t, appErr)
+		return i18n.GetUserTranslations(user.Locale)(key)
+	}
+
+	flagPost := func() *model.Post {
+		post := th.CreatePost(t, th.BasicChannel)
+		require.Nil(t, th.App.FlagPost(th.Context, post, th.BasicTeam.Id, th.SystemAdminUser.Id, model.FlagContentRequest{Reason: "spam", Comment: "This is spam content"}))
+		time.Sleep(2 * time.Second)
+		return post
+	}
+
+	t.Run("notifies only the reviewers who requested the job", func(t *testing.T) {
+		post := flagPost()
+		threads := reviewerThreads(post.Id)
+		require.Len(t, threads, 2)
+
+		job := &model.Job{
+			Id:   model.NewId(),
+			Type: model.JobTypeDeliveryTrackingContentReview,
+			Data: model.StringMap{jobDataKeyPostId: post.Id, jobDataKeyRequestedBy: th.BasicUser.Id},
+		}
+		require.Nil(t, th.App.NotifyDeliveryTrackingContentReviewRequesters(th.Context, job, true))
+
+		requesterReplies := botReplies(threads[th.BasicUser.Id])
+		require.Len(t, requesterReplies, 1, "the requester is notified in their review thread")
+		require.Equal(t, localizedMessage(th.BasicUser.Id, deliveryTrackingCompletionSuccessMessageKey), requesterReplies[0].Message)
+		require.Empty(t, botReplies(threads[th.BasicUser2.Id]), "a reviewer who did not request the job is not notified")
+	})
+
+	t.Run("notifies every reviewer who requested the job", func(t *testing.T) {
+		post := flagPost()
+		threads := reviewerThreads(post.Id)
+		require.Len(t, threads, 2)
+
+		job := &model.Job{
+			Id:   model.NewId(),
+			Type: model.JobTypeDeliveryTrackingContentReview,
+			Data: model.StringMap{jobDataKeyPostId: post.Id, jobDataKeyRequestedBy: th.BasicUser.Id + "," + th.BasicUser2.Id},
+		}
+		require.Nil(t, th.App.NotifyDeliveryTrackingContentReviewRequesters(th.Context, job, false))
+
+		user1Replies := botReplies(threads[th.BasicUser.Id])
+		require.Len(t, user1Replies, 1)
+		require.Equal(t, localizedMessage(th.BasicUser.Id, deliveryTrackingCompletionFailureMessageKey), user1Replies[0].Message)
+		require.Len(t, botReplies(threads[th.BasicUser2.Id]), 1)
+	})
+
+	t.Run("is a no-op when no reviewer requested the job", func(t *testing.T) {
+		post := flagPost()
+		threads := reviewerThreads(post.Id)
+
+		job := &model.Job{
+			Id:   model.NewId(),
+			Type: model.JobTypeDeliveryTrackingContentReview,
+			Data: model.StringMap{jobDataKeyPostId: post.Id},
+		}
+		require.Nil(t, th.App.NotifyDeliveryTrackingContentReviewRequesters(th.Context, job, true))
+
+		for _, reviewerPostID := range threads {
+			require.Empty(t, botReplies(reviewerPostID))
+		}
+	})
+
+	t.Run("is a no-op when post_id is missing", func(t *testing.T) {
+		job := &model.Job{
+			Id:   model.NewId(),
+			Type: model.JobTypeDeliveryTrackingContentReview,
+			Data: model.StringMap{jobDataKeyRequestedBy: th.BasicUser.Id},
+		}
+		require.Nil(t, th.App.NotifyDeliveryTrackingContentReviewRequesters(th.Context, job, true))
+	})
 }

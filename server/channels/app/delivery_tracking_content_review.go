@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/i18n"
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 	"github.com/mattermost/mattermost/server/public/shared/request"
 )
@@ -17,6 +18,11 @@ const (
 	jobDataKeyPostId      = "post_id"
 	jobDataKeyTeamId      = "team_id"
 	jobDataKeyRequestedBy = "requested_by"
+)
+
+const (
+	deliveryTrackingCompletionSuccessMessageKey = "app.data_spillage.delivery_tracking.completion_success.message"
+	deliveryTrackingCompletionFailureMessageKey = "app.data_spillage.delivery_tracking.completion_failure.message"
 )
 
 func (a *App) CreateDeliveryTrackingContentReviewJob(rctx request.CTX, postID, teamID, requestedBy string) (*model.Job, *model.AppError) {
@@ -67,6 +73,44 @@ func (a *App) DeliveryTrackingContentReviewJobExists(rctx request.CTX, postID st
 	}
 
 	return len(jobs) > 0, nil
+}
+
+func (a *App) NotifyDeliveryTrackingContentReviewRequesters(rctx request.CTX, job *model.Job, succeeded bool) *model.AppError {
+	postID := job.Data[jobDataKeyPostId]
+	requesters := requestedBySet(job.Data[jobDataKeyRequestedBy])
+	if postID == "" || len(requesters) == 0 {
+		return nil
+	}
+
+	groupID, appErr := a.ContentFlaggingGroupId()
+	if appErr != nil {
+		return appErr
+	}
+
+	messageKey := deliveryTrackingCompletionSuccessMessageKey
+	if !succeeded {
+		messageKey = deliveryTrackingCompletionFailureMessageKey
+	}
+	localizeMessage := func(t i18n.TranslateFunc) string {
+		return t(messageKey)
+	}
+
+	_, appErr = a.postReviewerMessage(rctx, "", groupID, postID, &reviewerMessageOptions{recipientFilter: requesters, localizeMessage: localizeMessage})
+	return appErr
+}
+
+func requestedBySet(csv string) map[string]bool {
+	if csv == "" {
+		return nil
+	}
+
+	set := make(map[string]bool)
+	for _, id := range strings.Split(csv, ",") {
+		if id != "" {
+			set[id] = true
+		}
+	}
+	return set
 }
 
 // mergeRequestedBy adds the requester carried in patch to the requested_by CSV set
