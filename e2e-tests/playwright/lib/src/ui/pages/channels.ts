@@ -50,6 +50,10 @@ export default class ChannelsPage {
     readonly burnOnReadConfirmationModal;
     readonly searchResultsPanel;
     readonly marketplaceModal;
+    readonly channelBookmarksBar;
+    readonly bookmarkCreateModal;
+    readonly userGroupsModal;
+    readonly leaveTeamModal;
     readonly archivedChannelMessage;
 
     readonly postContainer;
@@ -104,6 +108,12 @@ export default class ChannelsPage {
         );
         this.searchResultsPanel = new components.SearchResultsPanel(page.locator('#searchContainer'));
         this.marketplaceModal = new components.MarketplaceModal(page.getByRole('dialog', {name: 'App Marketplace'}));
+        this.channelBookmarksBar = page.getByTestId('channel-bookmarks-container');
+        this.bookmarkCreateModal = new components.ChannelBookmarksCreateModal(
+            page.getByRole('dialog', {name: 'Add a bookmark'}),
+        );
+        this.userGroupsModal = new components.UserGroupsModal(page.locator('#userGroupsModal'));
+        this.leaveTeamModal = new components.LeaveTeamModal(page.getByRole('dialog', {name: 'Leave the team?'}));
 
         // Menus
         // The channel header dropdown menu's accessible name is "<channel> Channel Menu".
@@ -165,6 +175,10 @@ export default class ChannelsPage {
 
     getAddPeopleToChannelModal() {
         return new components.AddPeopleToChannelModal(this.page.getByRole('dialog', {name: /Add people to/}));
+    }
+
+    getViewUserGroupModal(groupDisplayName: string) {
+        return new components.ViewUserGroupModal(this.page.getByRole('dialog', {name: groupDisplayName, exact: true}));
     }
 
     async getMembersInvitedModal(teamDisplayName: string) {
