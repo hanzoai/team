@@ -24,8 +24,6 @@ export default class ChannelsPostCreate {
     readonly selectedSuggestion;
     readonly filePreview;
     readonly filePreviewItems;
-    readonly filePreviewRemoveButtons;
-    readonly filePreviewThumbnails;
     readonly messageTooLongWarning;
 
     // Burn-on-Read elements
@@ -51,8 +49,6 @@ export default class ChannelsPostCreate {
         this.selectedSuggestion = this.suggestionList.getByTestId('suggestion-selected');
         this.filePreview = container.getByTestId('file-preview-container');
         this.filePreviewItems = this.filePreview.getByTestId('file-preview-item');
-        this.filePreviewRemoveButtons = this.filePreview.getByTestId('file-preview-remove');
-        this.filePreviewThumbnails = this.filePreview.getByLabel(/file thumbnail/i);
         this.messageTooLongWarning = container.getByText(/Your message is too long\. Character count:/);
 
         // Burn-on-Read elements

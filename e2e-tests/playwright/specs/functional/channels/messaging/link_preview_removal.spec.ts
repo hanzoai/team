@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {expect, test} from '@mattermost/playwright-lib';
+import {test} from '@mattermost/playwright-lib';
 
 /**
  * @objective Verify collapsing a link preview is user-specific while removing it removes the preview for other users.
@@ -34,8 +34,8 @@ test('MM-T199 Removing a link preview removes it from the views of other users',
     const userPreview = userPost.getLinkPreview();
 
     // * Verify the link preview and its image are shown
-    await expect(userPreview.container).toBeVisible({timeout: pw.duration.half_min});
-    await expect(userPreview.image).toBeVisible();
+    await userPreview.toBeVisible(pw.duration.half_min);
+    await userPreview.toHaveExpandedImage();
 
     // # Log in as the other user and visit the same channel
     const {channelsPage: adminChannelsPage, page: adminPage} = await pw.testBrowser.login(adminUser);
@@ -45,37 +45,28 @@ test('MM-T199 Removing a link preview removes it from the views of other users',
     const adminPreview = adminPost.getLinkPreview();
 
     // * Verify the other user also sees the expanded preview
-    await expect(adminPreview.container).toBeVisible({timeout: pw.duration.half_min});
-    await expect(adminPreview.image).toBeVisible();
+    await adminPreview.toBeVisible(pw.duration.half_min);
+    await adminPreview.toHaveExpandedImage();
 
     // # Collapse the preview as the test user
-    await userPreview.hideImageButton.click();
-
-    // * Verify the preview image is collapsed for the test user
-    await expect(userPreview.showImageButton).toBeVisible();
-    await expect(userPreview.image).not.toBeVisible();
+    await userPreview.hideImage();
 
     // # Reload the channel as the other user
     await adminPage.reload();
     await adminChannelsPage.toBeVisible();
 
     // * Verify the preview remains expanded for the other user
-    await expect(adminPreview.container).toBeVisible();
-    await expect(adminPreview.image).toBeVisible();
+    await adminPreview.toHaveExpandedImage();
 
     // # Remove the link preview as the test user
     await userPage.reload();
     await userChannelsPage.toBeVisible();
-    await userPreview.container.hover();
-    await userPreview.removeButton.click();
-
-    // * Verify the preview is removed for the test user
-    await expect(userPreview.container).not.toBeVisible();
+    await userPreview.remove();
 
     // # Reload the channel as the other user
     await adminPage.reload();
     await adminChannelsPage.toBeVisible();
 
     // * Verify the preview is also removed for the other user
-    await expect(adminPreview.container).not.toBeVisible();
+    await adminPreview.toNotBeVisible();
 });

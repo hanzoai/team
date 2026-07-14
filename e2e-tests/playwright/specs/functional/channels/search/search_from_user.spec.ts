@@ -30,7 +30,7 @@ test('MM-T376 MM-T377 completes a from: user search from the autocomplete', {tag
     await searchInput.fill('from:');
 
     // # Select the author from the autocomplete suggestions
-    await channelsPage.searchBox.container.getByText(author.username, {exact: false}).first().click();
+    await channelsPage.searchBox.selectSuggestionMatching(author.username);
 
     // * Verify the username is placed into the query without the leading @
     expect(await searchInput.inputValue()).toContain(`from:${author.username}`);

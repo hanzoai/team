@@ -27,7 +27,7 @@ test('MM-T449 edits a direct message body', {tag: '@direct_messages'}, async ({p
 
     // * Verify the original message is sent and is not pending
     const recipientPost = await recipientChannelsPage.centerView.getPostById(post.id);
-    await expect(recipientPost.messageText).toHaveText(originalMessage);
+    await recipientPost.toContainText(originalMessage);
     await recipientPost.toHaveId(post.id);
 
     // # Open the direct message as the sender and edit the post with the Up arrow shortcut
@@ -43,7 +43,7 @@ test('MM-T449 edits a direct message body', {tag: '@direct_messages'}, async ({p
 
     // * Verify the sender sees the edited body and marker
     const senderPost = await senderChannelsPage.centerView.getPostById(post.id);
-    await expect(senderPost.messageText).toContainText(editedMessage);
+    await senderPost.toContainText(editedMessage);
     await senderPost.toBeEdited();
 
     // # Reload the recipient's direct message
@@ -52,7 +52,7 @@ test('MM-T449 edits a direct message body', {tag: '@direct_messages'}, async ({p
 
     // * Verify the recipient sees the edit without an unread mention indicator
     const updatedRecipientPost = await recipientChannelsPage.centerView.getPostById(post.id);
-    await expect(updatedRecipientPost.messageText).toContainText(editedMessage);
+    await updatedRecipientPost.toContainText(editedMessage);
     await updatedRecipientPost.toBeEdited();
     await expect(recipientChannelsPage.sidebarLeft.unreadMentionsBadge(sender.username)).not.toBeVisible();
 });

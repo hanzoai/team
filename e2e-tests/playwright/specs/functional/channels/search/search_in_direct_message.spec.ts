@@ -24,7 +24,7 @@ test('MM-T358 searches for a message in a direct message channel', {tag: '@searc
     await channelsPage.globalHeader.openSearch();
     const {searchInput} = channelsPage.searchBox;
     await searchInput.fill('in:');
-    await channelsPage.searchBox.container.getByText(`@${otherUser.username}`, {exact: false}).first().click();
+    await channelsPage.searchBox.selectSuggestionMatching(`@${otherUser.username}`);
 
     // * Verify the direct-message user is placed into the query
     await expect(searchInput).toHaveValue(`in:@${otherUser.username} `);

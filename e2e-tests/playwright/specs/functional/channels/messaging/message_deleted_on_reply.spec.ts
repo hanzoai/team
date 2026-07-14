@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {expect, test} from '@mattermost/playwright-lib';
+import {test} from '@mattermost/playwright-lib';
 
 /**
  * @objective Verify deleting a root post while another user drafts a reply removes the original message and does not send the draft.
@@ -33,10 +33,8 @@ test(
         await adminClient.deletePost(root.id);
 
         // * Verify the other user sees a deleted-message placeholder without the original message
-        await expect(centerRoot.container).toContainText('(message deleted)');
-        await expect(centerRoot.container).not.toContainText(message);
-        await expect(rhsRoot.container).toContainText('(message deleted)');
-        await expect(rhsRoot.container).not.toContainText(message);
+        await centerRoot.toBeDeleted(message);
+        await rhsRoot.toBeDeleted(message);
 
         // * Verify the draft was not sent as a reply
         const lastRhsPost = await channelsPage.sidebarRight.getLastPost();
@@ -48,6 +46,6 @@ test(
         await authorChannelsPage.toBeVisible();
 
         // * Verify the deleted post's original message is absent
-        await expect(authorChannelsPage.centerView.container.getByText(message, {exact: true})).not.toBeVisible();
+        await authorChannelsPage.toNotContainText(message);
     },
 );

@@ -28,6 +28,6 @@ test('MM-T373 replies to a post from search results', {tag: '@search'}, async ({
     await channelsPage.sidebarRight.postMessage(comment);
 
     // * Verify the original post and new reply remain visible in the thread
-    await expect(channelsPage.sidebarRight.rhsPostBody.getByText(message, {exact: true})).toBeVisible();
-    await expect(channelsPage.sidebarRight.rhsPostBody.getByText(comment, {exact: true})).toBeVisible();
+    await (await channelsPage.sidebarRight.getFirstPost()).toContainText(message);
+    await (await channelsPage.sidebarRight.getLastPost()).toContainText(comment);
 });

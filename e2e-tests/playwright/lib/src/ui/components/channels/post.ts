@@ -108,6 +108,31 @@ export default class ChannelsPost {
         return this.container.getByRole('link', {name});
     }
 
+    getInlineImage(altText: string) {
+        return this.body.getByAltText(altText);
+    }
+
+    getInlineImageLink(altText: string) {
+        return this.body.getByRole('link').filter({has: this.container.page().getByAltText(altText)});
+    }
+
+    async openInlineImagePreview(altText: string) {
+        await this.getInlineImage(altText).click();
+    }
+
+    async toHaveStrikethroughText(text: string) {
+        const strikethrough = this.body.getByText(text, {exact: true});
+        await expect(strikethrough).toBeVisible();
+        await expect(strikethrough).toHaveJSProperty('tagName', 'DEL');
+    }
+
+    async toBeDeleted(originalMessage?: string) {
+        await expect(this.container).toContainText('(message deleted)');
+        if (originalMessage) {
+            await expect(this.container).not.toContainText(originalMessage);
+        }
+    }
+
     getLinkPreview() {
         return new LinkPreview(this.body.getByTestId('link-preview'));
     }

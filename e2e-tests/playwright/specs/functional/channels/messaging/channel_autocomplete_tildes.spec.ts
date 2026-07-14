@@ -63,9 +63,7 @@ test(
 
         // * Verify the original message is rendered as strikethrough
         const editedPost = await channelsPage.getLastPost();
-        const strikethroughText = editedPost.body.getByText(message, {exact: true});
-        await expect(strikethroughText).toBeVisible();
-        await expect(strikethroughText).toHaveJSProperty('tagName', 'DEL');
+        await editedPost.toHaveStrikethroughText(message);
     },
 );
 

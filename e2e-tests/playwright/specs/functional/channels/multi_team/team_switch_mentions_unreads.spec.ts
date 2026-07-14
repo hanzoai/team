@@ -34,10 +34,7 @@ test(
         await channelsPage.toBeVisible();
         await channelsPage.goto(team.name, `@${firstTeamUser.username}`);
         await channelsPage.toBeVisible();
-        const secondTeamButton = page.getByRole('button', {
-            name: new RegExp(`^${secondTeam.display_name.toLowerCase()} team`),
-        });
-        await secondTeamButton.click();
+        await channelsPage.switchToTeamByDisplayName(secondTeam.display_name);
 
         // * Verify the second team opens at the top of its channel list and both DMs remain available
         await expect
@@ -51,10 +48,7 @@ test(
         await channelsPage.sidebarLeft.goToItem('off-topic');
         await channelsPage.postMessage('Hello World');
         await (await channelsPage.getLastPost()).toContainText('Hello World');
-        const firstTeamButton = page.getByRole('button', {
-            name: new RegExp(`^${team.display_name.toLowerCase()} team`),
-        });
-        await firstTeamButton.click();
+        await channelsPage.switchToTeamByDisplayName(team.display_name);
 
         // * Verify team data does not cross-contaminate and the first team's last DM is restored
         await channelsPage.sidebarLeft.assertItemRead('off-topic');
@@ -76,16 +70,14 @@ test(
         });
 
         // * Verify the second team's semantic label reports two mentions
-        await expect(secondTeamButton).toHaveAccessibleName(
-            `${secondTeam.display_name.toLowerCase()} team, 2 mentions`,
-        );
+        await channelsPage.toHaveTeamMentionCount(secondTeam.display_name, 2);
 
         // # Switch to the second team to read its mentions
-        await secondTeamButton.click();
+        await channelsPage.switchToTeamByDisplayName(secondTeam.display_name);
         await channelsPage.sidebarLeft.goToItem('off-topic');
 
         // * Verify the second team's mention badge clears
-        await expect(secondTeamButton).toHaveAccessibleName(`${secondTeam.display_name.toLowerCase()} team`);
+        await channelsPage.toHaveTeamNoUnread(secondTeam.display_name);
 
         // # Have the shared user post an ordinary message on the first team while it is in the background
         const firstTeamOffTopic = await adminClient.getChannelByName(team.id, 'off-topic');
@@ -95,8 +87,6 @@ test(
         });
 
         // * Verify the first team reports unread activity without a mention count
-        await expect(firstTeamButton).toHaveAccessibleName(`${team.display_name.toLowerCase()} team unread`);
-        await expect(firstTeamButton.getByTestId(`team-badge-${team.id}`)).toBeVisible();
-        await expect(firstTeamButton.getByTestId(`team-badge-${team.id}`)).toHaveText('');
+        await channelsPage.toHaveTeamUnread(team.display_name, team.id);
     },
 );

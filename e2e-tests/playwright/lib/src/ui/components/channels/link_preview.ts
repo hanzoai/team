@@ -2,6 +2,7 @@
 // See LICENSE.txt for license information.
 
 import type {Locator} from '@playwright/test';
+import {expect} from '@playwright/test';
 
 export default class LinkPreview {
     readonly container: Locator;
@@ -16,5 +17,35 @@ export default class LinkPreview {
         this.hideImageButton = container.getByRole('button', {name: 'Hide image preview'});
         this.showImageButton = container.getByRole('button', {name: 'Show image preview'});
         this.removeButton = container.getByRole('button', {name: 'Remove'});
+    }
+
+    async toBeVisible(timeout?: number) {
+        await expect(this.container).toBeVisible({timeout});
+    }
+
+    async toHaveExpandedImage() {
+        await expect(this.image).toBeVisible();
+        await expect(this.hideImageButton).toBeVisible();
+    }
+
+    async hideImage() {
+        await this.hideImageButton.click();
+        await expect(this.showImageButton).toBeVisible();
+        await expect(this.image).not.toBeVisible();
+    }
+
+    async showImage() {
+        await this.showImageButton.click();
+        await expect(this.image).toBeVisible();
+    }
+
+    async remove() {
+        await this.container.hover();
+        await this.removeButton.click();
+        await this.toNotBeVisible();
+    }
+
+    async toNotBeVisible() {
+        await expect(this.container).not.toBeVisible();
     }
 }

@@ -19,11 +19,10 @@ test('MM-T187 Inline markdown images open preview window', {tag: '@messaging'}, 
 
     // * Verify the inline image is visible
     const imagePost = await channelsPage.getLastPost();
-    const inlineImage = imagePost.body.getByAltText('test image');
-    await expect(inlineImage).toBeVisible();
+    await expect(imagePost.getInlineImage('test image')).toBeVisible();
 
     // # Click the inline image
-    await inlineImage.click();
+    await imagePost.openInlineImagePreview('test image');
 
     // * Verify the image opens in the preview
     await channelsPage.imagePreviewModal.toBeVisible();
@@ -46,12 +45,12 @@ test('MM-T188 Inline markdown image that is a link, opens the link', {tag: '@mes
 
     // * Verify the image link has the correct destination and opens in a new tab
     const imagePost = await channelsPage.getLastPost();
-    const imageLink = imagePost.body.getByRole('link');
+    const imageLink = imagePost.getInlineImageLink(label);
     await expect(imageLink).toHaveAttribute('href', linkUrl);
     await expect(imageLink).toHaveAttribute('target', '_blank');
 
     // * Verify the linked image is visible with the expected source and alt text
-    const linkedImage = imageLink.getByAltText(label);
+    const linkedImage = imagePost.getInlineImage(label);
     await expect(linkedImage).toBeVisible();
     await expect(linkedImage).toHaveAttribute('src', imageUrl);
 });
