@@ -51,7 +51,7 @@ test('MM-T468 Group Messaging: Add member to existing GM', {tag: '@direct_messag
     await channelsPage.sidebarRight.toBeVisible();
 
     // * Verify the new member and every original member remain in the conversation
-    for (const member of members) {
+    for (const member of [...members, newMember]) {
         await channelsPage.sidebarRight.toContainText(member.username);
     }
 });
