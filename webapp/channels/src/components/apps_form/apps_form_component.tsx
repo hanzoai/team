@@ -764,6 +764,7 @@ export class AppsForm extends React.PureComponent<Props, State> {
                 performLookup={this.performLookup}
                 onChange={this.onChange}
                 setIsInteracting={this.setIsInteracting}
+                setFieldUploading={this.setFieldUploading}
                 listComponent={isEmbedded ? SuggestionList : ModalSuggestionList}
             />
         );
