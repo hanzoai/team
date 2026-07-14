@@ -163,7 +163,7 @@ func (o ChannelMemberWithTeamData) MarshalJSON() ([]byte, error) {
 	}
 
 	fields := map[string]json.RawMessage{}
-	if err := json.Unmarshal(memberData, &fields); err != nil {
+	if err = json.Unmarshal(memberData, &fields); err != nil {
 		return nil, err
 	}
 
@@ -175,7 +175,7 @@ func (o ChannelMemberWithTeamData) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	if err := json.Unmarshal(teamData, &fields); err != nil {
+	if err = json.Unmarshal(teamData, &fields); err != nil {
 		return nil, err
 	}
 
