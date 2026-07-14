@@ -396,7 +396,6 @@ var specialSearchChars = []string{
 	"<",
 	">",
 	"+",
-	"-",
 	"(",
 	")",
 	"~",

@@ -34,6 +34,7 @@ export {
     type PostRemoteClusterConfirmInviteFromPeerResult,
     isWebhookTestServerReachable,
     setupWebhookTestServer,
+    PlaywrightClient4,
 } from './server';
 
 export {
