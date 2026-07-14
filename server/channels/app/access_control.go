@@ -1657,6 +1657,11 @@ func (a *App) ensureAllChannelsChildrenForChannel(rctx request.CTX, channel *mod
 // governed it implicitly. Inactive all-channels parents are included — a
 // deactivated parent still leaves a child row to tear down. No-op when the
 // engine is absent.
+//
+// Materialized and explicitly-assigned imports are indistinguishable here, so a
+// hand-assigned all-channels parent is also dropped on conversion. Accepted for
+// the same reason as removeAllChannelsChildren: an all-channels parent is not
+// expected to be hand-assigned.
 func (a *App) removeAllChannelsChildrenFromChannel(rctx request.CTX, channel *model.Channel) *model.AppError {
 	if a.Srv().ch.AccessControl == nil || channel == nil {
 		return nil
@@ -1678,6 +1683,12 @@ func (a *App) removeAllChannelsChildrenFromChannel(rctx request.CTX, channel *mo
 // all-channels parent: import-less child rows are deleted and children that
 // still carry other imports (or their own rules) keep those, losing only the
 // parent's import. Backs the flag-off and parent-delete teardown.
+//
+// A materialized child is structurally identical to an explicitly-assigned one
+// (both just import the parent), so this cannot tell them apart: if an admin
+// also manually assigned this parent to a channel, flag-off / delete drops that
+// assignment too. Accepted — an all-channels parent is not expected to be
+// hand-assigned, and removal is the safe direction.
 //
 // UnassignPoliciesFromChannels resolves the parent's children in bounded pages,
 // so drive it until no channel policy still imports the parent — a single call
@@ -2148,6 +2159,26 @@ func (a *App) UpdateAccessControlPoliciesActive(rctx request.CTX, updates []mode
 			if policy.Type == model.AccessControlPolicyTypeParent && policy.AppliesToAllChannels {
 				if appErr := a.cascadeActiveToAllChannelsChildren(rctx, policy); appErr != nil {
 					return nil, appErr
+				}
+				// Cascade only flips the Active bit on children that already
+				// exist; it never creates one. But an all-channels parent is
+				// commonly saved inactive with the flag set and activated by a
+				// separate call (the create-then-activate flow the policy editor
+				// uses), so at this point it may have no children at all — the
+				// enable-on-save backfill fires only when the flag and Active are
+				// set in the same save. Without enqueuing here, such a parent
+				// would govern nothing until the drift reconcile amortized its
+				// way to each channel (a fail-open window on the very channels the
+				// admin just restricted). Enqueue the same backfill the enable
+				// path uses so activation always materializes children up front;
+				// the job is idempotent (existing children are skipped), so
+				// reactivating an already-materialized parent is a cheap no-op.
+				// Non-fatal on failure — the reconcile remains the backstop.
+				if policy.Active {
+					if _, jobErr := a.CreateAccessControlSyncJob(rctx, map[string]string{"policy_id": policy.ID}); jobErr != nil {
+						rctx.Logger().Warn("Failed to enqueue all-channels materialization sync job on activation",
+							mlog.String("policy_id", policy.ID), mlog.Err(jobErr))
+					}
 				}
 			}
 		}

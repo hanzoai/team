@@ -915,9 +915,17 @@ func (a *App) UpdateChannelPrivacy(rctx request.CTX, oldChannel *model.Channel, 
 	// channel is now in scope for active all-channels parents, so materialize
 	// their children and enforce immediately. private→public: all-channels
 	// scope is private-only, so drop the children sourced from all-channels
-	// parents. On failure the error is surfaced; the periodic reconcile
-	// repairs any gap (a converted-to-public channel is ineligible and its
-	// stale child is removed on the next pass).
+	// parents. On failure the error is surfaced but the privacy change is NOT
+	// rolled back — unlike CreateChannel, which permanently deletes the channel
+	// on materialization failure. The asymmetry is deliberate: reverting a
+	// privacy conversion here would also have to undo the already-sent system
+	// message and cancelled join requests, so instead we lean on the periodic
+	// reconcile to repair the gap (a converted-to-public channel is ineligible
+	// and its stale child is removed next pass; a converted-to-private channel
+	// missing its child is re-materialized). The tradeoff is a fail-open window
+	// on public→private if this ensure fails: the channel is private but
+	// ungoverned until the reconcile reaches it, which on a large install can be
+	// several amortized sweeps away.
 	if channel.Type == model.ChannelTypePrivate {
 		if appErr := a.ensureAllChannelsChildrenForChannel(rctx, channel); appErr != nil {
 			return channel, appErr
