@@ -326,6 +326,22 @@ func (a *App) CreateChannel(rctx request.CTX, channel *model.Channel, addMember 
 		}
 	}
 
+	// An active "applies to all channels" parent policy must govern every
+	// eligible private channel the instant it exists, or there is a window in
+	// which a supposedly-restricted private channel is ungoverned (a membership
+	// leak). Materialize the child synchronously. The channel row is already
+	// committed and cannot join this call's failure, so on failure permanently
+	// delete the just-created channel and surface the error; the periodic
+	// reconcile is the backstop if the rollback itself ever fails. No-op for
+	// non-private channels and when no all-channels parent is active.
+	if appErr := a.ensureAllChannelsChildrenForChannel(rctx, sc); appErr != nil {
+		if delErr := a.PermanentDeleteChannel(rctx, sc); delErr != nil {
+			rctx.Logger().Error("Failed to roll back channel after all-channels materialization failed",
+				mlog.String("channel_id", sc.Id), mlog.Err(delErr))
+		}
+		return nil, appErr
+	}
+
 	a.Srv().Go(func() {
 		pluginContext := pluginContext(rctx)
 		a.ch.RunMultiHook(func(hooks plugin.Hooks, _ *model.Manifest) bool {
@@ -892,6 +908,22 @@ func (a *App) UpdateChannelPrivacy(rctx request.CTX, oldChannel *model.Channel, 
 		a.Srv().Go(func() {
 			a.CancelPendingChannelJoinRequestsOnConvert(rctx, channel)
 		})
+	}
+
+	// Keep all-channels materialized children in step with the new privacy.
+	// channel.Type here is the post-conversion type. public→private: the
+	// channel is now in scope for active all-channels parents, so materialize
+	// their children and enforce immediately. private→public: all-channels
+	// scope is private-only, so drop the children sourced from all-channels
+	// parents. On failure the error is surfaced; the periodic reconcile
+	// repairs any gap (a converted-to-public channel is ineligible and its
+	// stale child is removed on the next pass).
+	if channel.Type == model.ChannelTypePrivate {
+		if appErr := a.ensureAllChannelsChildrenForChannel(rctx, channel); appErr != nil {
+			return channel, appErr
+		}
+	} else if appErr := a.removeAllChannelsChildrenFromChannel(rctx, channel); appErr != nil {
+		return channel, appErr
 	}
 
 	a.Srv().Platform().InvalidateCacheForChannel(channel)

@@ -1014,6 +1014,183 @@ func TestEnsureAllChannelsChildren(t *testing.T) {
 	})
 }
 
+// saveActiveAllChannelsParent persists an active all-channels parent row through
+// the store — where the channel lifecycle hooks' gate query reads it — and
+// registers its cleanup.
+func saveActiveAllChannelsParent(t *testing.T, th *TestHelper) *model.AccessControlPolicy {
+	t.Helper()
+	parent := &model.AccessControlPolicy{
+		ID:                   model.NewId(),
+		Name:                 "allChannelsParent " + model.NewId(),
+		Type:                 model.AccessControlPolicyTypeParent,
+		Active:               true,
+		Revision:             1,
+		Version:              model.AccessControlPolicyVersionV0_3,
+		Imports:              []string{},
+		Rules:                []model.AccessControlPolicyRule{{Actions: []string{model.AccessControlPolicyActionMembership}, Expression: "true"}},
+		AppliesToAllChannels: true,
+	}
+	_, err := th.App.Srv().Store().AccessControlPolicy().Save(th.Context, parent)
+	require.NoError(t, err)
+	t.Cleanup(func() { _ = th.App.Srv().Store().AccessControlPolicy().Delete(th.Context, parent.ID) })
+	return parent
+}
+
+// wireWriteThroughAllChannelsACS installs a mock access control service whose
+// GetPolicy / SavePolicy / DeletePolicy proxy straight to the policy store, so
+// the app-layer all-channels lifecycle hooks can be exercised end-to-end against
+// real child-policy rows. The remove path (UnassignPoliciesFromChannels) reads
+// children back via the store, so an in-memory fake would not surface them.
+func wireWriteThroughAllChannelsACS(t *testing.T, th *TestHelper) {
+	t.Helper()
+	m := &mocks.AccessControlServiceInterface{}
+	th.App.Srv().ch.AccessControl = m
+	t.Cleanup(func() { th.App.Srv().ch.AccessControl = nil })
+	pol := th.App.Srv().Store().AccessControlPolicy()
+
+	m.On("GetPolicy", mock.Anything, mock.AnythingOfType("string")).Return(
+		func(rctx request.CTX, id string) *model.AccessControlPolicy {
+			p, err := pol.Get(rctx, id)
+			if err != nil {
+				return nil
+			}
+			return p
+		},
+		func(rctx request.CTX, id string) *model.AppError {
+			if _, err := pol.Get(rctx, id); err != nil {
+				var nfErr *store.ErrNotFound
+				if errors.As(err, &nfErr) {
+					return model.NewAppError("GetPolicy", "app.pap.get_policy.app_error", nil, "", http.StatusNotFound)
+				}
+				return model.NewAppError("GetPolicy", "app.pap.get_policy.app_error", nil, err.Error(), http.StatusInternalServerError)
+			}
+			return nil
+		}).Maybe()
+	m.On("SavePolicy", mock.Anything, mock.AnythingOfType("*model.AccessControlPolicy")).Return(
+		func(rctx request.CTX, p *model.AccessControlPolicy) *model.AccessControlPolicy {
+			saved, err := pol.Save(rctx, p)
+			require.NoError(t, err)
+			return saved
+		},
+		func(_ request.CTX, _ *model.AccessControlPolicy) *model.AppError { return nil }).Maybe()
+	m.On("DeletePolicy", mock.Anything, mock.AnythingOfType("string")).Return(
+		func(rctx request.CTX, id string) *model.AppError {
+			if err := pol.Delete(rctx, id); err != nil {
+				return model.NewAppError("DeletePolicy", "app.pap.delete_policy.app_error", nil, err.Error(), http.StatusInternalServerError)
+			}
+			return nil
+		}).Maybe()
+}
+
+func TestCreateChannelMaterializesAllChannelsChild(t *testing.T) {
+	t.Run("materializes a child for a new private channel under an active parent", func(t *testing.T) {
+		th := Setup(t).InitBasic(t)
+		parent := saveActiveAllChannelsParent(t, th)
+		wireWriteThroughAllChannelsACS(t, th)
+
+		ch := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() { require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch)) })
+
+		child, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, ch.Id)
+		require.NoError(t, err)
+		assert.Equal(t, model.AccessControlPolicyTypeChannel, child.Type)
+		assert.Contains(t, child.Imports, parent.ID)
+	})
+
+	t.Run("no active all-channels parent leaves the new channel ungoverned", func(t *testing.T) {
+		th := Setup(t).InitBasic(t)
+		// Engine present, but no all-channels parent exists: the gate query
+		// returns nothing and no child is materialized.
+		wireWriteThroughAllChannelsACS(t, th)
+
+		ch := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() { require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch)) })
+
+		_, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, ch.Id)
+		var nfErr *store.ErrNotFound
+		require.True(t, errors.As(err, &nfErr), "expected no child policy for the new channel")
+	})
+
+	t.Run("create-hook failure rolls the channel back", func(t *testing.T) {
+		th := Setup(t).InitBasic(t)
+		saveActiveAllChannelsParent(t, th)
+
+		// An engine whose SavePolicy fails makes materialization fail; the
+		// create hook must then delete the just-created channel and surface the
+		// error rather than leave an ungoverned private channel behind.
+		m := &mocks.AccessControlServiceInterface{}
+		th.App.Srv().ch.AccessControl = m
+		t.Cleanup(func() { th.App.Srv().ch.AccessControl = nil })
+		m.On("GetPolicy", mock.Anything, mock.AnythingOfType("string")).
+			Return(nil, model.NewAppError("GetPolicy", "not_found", nil, "", http.StatusNotFound)).Maybe()
+		m.On("SavePolicy", mock.Anything, mock.AnythingOfType("*model.AccessControlPolicy")).
+			Return(nil, model.NewAppError("SavePolicy", "boom", nil, "", http.StatusInternalServerError)).Maybe()
+		m.On("DeletePolicy", mock.Anything, mock.AnythingOfType("string")).Return(nil).Maybe()
+
+		channel := &model.Channel{
+			Id:          model.NewId(),
+			DisplayName: "dn_" + model.NewId(),
+			Name:        "name_" + model.NewId(),
+			Type:        model.ChannelTypePrivate,
+			TeamId:      th.BasicTeam.Id,
+			CreatorId:   th.BasicUser.Id,
+		}
+		created, appErr := th.App.CreateChannel(th.Context, channel, true)
+		require.NotNil(t, appErr)
+		require.Nil(t, created)
+
+		_, getErr := th.App.GetChannel(th.Context, channel.Id)
+		require.NotNil(t, getErr, "channel should have been rolled back")
+	})
+}
+
+func TestUpdateChannelPrivacyAllChannelsChildren(t *testing.T) {
+	t.Run("public to private materializes the child", func(t *testing.T) {
+		th := Setup(t).InitBasic(t)
+		parent := saveActiveAllChannelsParent(t, th)
+		wireWriteThroughAllChannelsACS(t, th)
+
+		pub := th.CreateChannel(t, th.BasicTeam)
+		t.Cleanup(func() { require.Nil(t, th.App.PermanentDeleteChannel(th.Context, pub)) })
+
+		// A public channel is out of scope, so no child exists yet.
+		_, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, pub.Id)
+		var nfErr *store.ErrNotFound
+		require.True(t, errors.As(err, &nfErr))
+
+		pub.Type = model.ChannelTypePrivate
+		_, appErr := th.App.UpdateChannelPrivacy(th.Context, pub, th.BasicUser)
+		require.Nil(t, appErr)
+
+		child, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, pub.Id)
+		require.NoError(t, err)
+		assert.Contains(t, child.Imports, parent.ID)
+	})
+
+	t.Run("private to public removes the child", func(t *testing.T) {
+		th := Setup(t).InitBasic(t)
+		parent := saveActiveAllChannelsParent(t, th)
+		wireWriteThroughAllChannelsACS(t, th)
+
+		priv := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() { require.Nil(t, th.App.PermanentDeleteChannel(th.Context, priv)) })
+
+		// The create hook materialized the child.
+		child, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, priv.Id)
+		require.NoError(t, err)
+		require.Contains(t, child.Imports, parent.ID)
+
+		priv.Type = model.ChannelTypeOpen
+		_, appErr := th.App.UpdateChannelPrivacy(th.Context, priv, th.BasicUser)
+		require.Nil(t, appErr)
+
+		// The all-channels import was the child's only import, so the row is gone.
+		_, err = th.App.Srv().Store().AccessControlPolicy().Get(th.Context, priv.Id)
+		var nfErr *store.ErrNotFound
+		require.True(t, errors.As(err, &nfErr), "child policy should be removed after converting to public")
+	})
+}
+
 func TestChannelDeleteCleansUpAccessControlPolicy(t *testing.T) {
 	th := Setup(t).InitBasic(t)
 

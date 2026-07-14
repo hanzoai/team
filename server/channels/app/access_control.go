@@ -1546,6 +1546,87 @@ func (a *App) EnsureAllChannelsChildren(rctx request.CTX, parent *model.AccessCo
 	return children, nil
 }
 
+// allChannelsParents returns the parent policies carrying the all-channels flag.
+// With activeOnly=true only active parents are returned — the set that governs
+// channels right now, used when materializing children. With activeOnly=false
+// inactive parents are included too, needed when tearing a channel out of
+// all-channels scope: a deactivated parent still leaves child rows that must be
+// removed. Returns an empty slice in the common case where no all-channels
+// parent exists, so callers can gate cheaply on len()==0.
+func (a *App) allChannelsParents(rctx request.CTX, activeOnly bool) ([]*model.AccessControlPolicy, *model.AppError) {
+	var parents []*model.AccessControlPolicy
+	var cursor model.AccessControlPolicyCursor
+	for {
+		batch, _, err := a.Srv().Store().AccessControlPolicy().SearchPolicies(rctx, model.AccessControlPolicySearch{
+			Type:                 model.AccessControlPolicyTypeParent,
+			AppliesToAllChannels: true,
+			Active:               activeOnly,
+			Cursor:               cursor,
+			Limit:                accessControlChildPolicySearchLimit,
+		})
+		if err != nil {
+			return nil, model.NewAppError("allChannelsParents", "app.pap.search_access_control_policies.app_error", nil, err.Error(), http.StatusInternalServerError)
+		}
+		parents = append(parents, batch...)
+		if len(batch) < accessControlChildPolicySearchLimit {
+			break
+		}
+		cursor.ID = batch[len(batch)-1].ID
+	}
+	return parents, nil
+}
+
+// ensureAllChannelsChildrenForChannel materializes a child policy on the given
+// channel for every active all-channels parent, provided the channel is an
+// eligible private channel. It backs the channel-create and public→private
+// conversion hooks: an active all-channels parent must govern every eligible
+// private channel, and a materialized child is how that governance is enforced.
+//
+// No-op (a single nil check) when the access control engine is absent or the
+// channel is not private; a single store query returns nothing in the common
+// case where no all-channels parent is active. Any failure is returned so the
+// caller can fail-secure (roll back the channel create / surface the error).
+func (a *App) ensureAllChannelsChildrenForChannel(rctx request.CTX, channel *model.Channel) *model.AppError {
+	if a.Srv().ch.AccessControl == nil || channel == nil || channel.Type != model.ChannelTypePrivate {
+		return nil
+	}
+
+	parents, appErr := a.allChannelsParents(rctx, true)
+	if appErr != nil {
+		return appErr
+	}
+	for _, parent := range parents {
+		if _, appErr := a.EnsureAllChannelsChildren(rctx, parent, []*model.Channel{channel}); appErr != nil {
+			return appErr
+		}
+	}
+	return nil
+}
+
+// removeAllChannelsChildrenFromChannel drops any all-channels-sourced imports
+// from the channel's materialized child policy, deleting the child row once it
+// becomes import-less. It backs the private→public conversion hook: all-channels
+// scope is private-only, so a channel leaving private must shed the parents that
+// governed it implicitly. Inactive all-channels parents are included — a
+// deactivated parent still leaves a child row to tear down. No-op when the
+// engine is absent.
+func (a *App) removeAllChannelsChildrenFromChannel(rctx request.CTX, channel *model.Channel) *model.AppError {
+	if a.Srv().ch.AccessControl == nil || channel == nil {
+		return nil
+	}
+
+	parents, appErr := a.allChannelsParents(rctx, false)
+	if appErr != nil {
+		return appErr
+	}
+	for _, parent := range parents {
+		if appErr := a.UnassignPoliciesFromChannels(rctx, parent.ID, []string{channel.Id}); appErr != nil {
+			return appErr
+		}
+	}
+	return nil
+}
+
 func (a *App) AssignAccessControlPolicyToChannels(rctx request.CTX, parentID string, channelIDs []string) ([]*model.AccessControlPolicy, *model.AppError) {
 	acs := a.Srv().ch.AccessControl
 	if acs == nil {
