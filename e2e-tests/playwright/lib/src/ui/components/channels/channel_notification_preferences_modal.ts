@@ -19,9 +19,10 @@ export default class ChannelNotificationPreferencesModal {
         this.ignoreMentionsCheckbox = container.getByRole('checkbox', {
             name: 'Ignore mentions for @channel, @here and @all',
         });
-        this.mentionsOnlyRadio = container.getByRole('radio', {
-            name: /Mentions, direct messages, and keywords only/,
-        });
+        this.mentionsOnlyRadio = container
+            .getByRole('group', {name: 'Notify me about…'})
+            .first()
+            .getByRole('radio', {name: /Mentions, direct messages, and keywords only/});
         this.saveButton = container.getByRole('button', {name: 'Save'});
     }
 
@@ -32,5 +33,11 @@ export default class ChannelNotificationPreferencesModal {
 
     async save() {
         await this.saveButton.click();
+        await expect(this.container).not.toBeVisible();
+    }
+
+    async selectMentionsOnly() {
+        await this.mentionsOnlyRadio.check();
+        await expect(this.mentionsOnlyRadio).toBeChecked();
     }
 }

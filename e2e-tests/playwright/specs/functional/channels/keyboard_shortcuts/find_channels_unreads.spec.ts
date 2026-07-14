@@ -59,52 +59,30 @@ test(
 
         const secondTeamChannels = teamsAndChannels[1].channels;
         const firstTeamChannels = teamsAndChannels[0].channels;
-        const newestOption = findChannelsModal.container.getByRole('option', {
-            name: secondTeamChannels[2].display_name,
-            exact: true,
-        });
 
         // * Verify the newest current-team channel is selected and shows one unread plus one mention
-        await expect(newestOption).toHaveClass(/suggestion--selected/);
-        await expect(newestOption).toHaveAccessibleDescription(/2 unread notifications/);
+        await findChannelsModal.toHaveOptionSelected(secondTeamChannels[2].display_name, /2 unread notifications/);
 
         // # Move to the next unread channel
         await findChannelsModal.input.press('ArrowDown');
-        const middleOption = findChannelsModal.container.getByRole('option', {
-            name: secondTeamChannels[1].display_name,
-            exact: true,
-        });
 
         // * Verify the middle channel is selected and shows one unread without a mention
-        await expect(middleOption).toHaveClass(/suggestion--selected/);
-        await expect(middleOption).toHaveAccessibleDescription(/1 unread notification/);
+        await findChannelsModal.toHaveOptionSelected(secondTeamChannels[1].display_name, /1 unread notification/);
 
         // # Move to the oldest unread channel
         await findChannelsModal.input.press('ArrowDown');
-        const oldestOption = findChannelsModal.container.getByRole('option', {
-            name: secondTeamChannels[0].display_name,
-            exact: true,
-        });
 
         // * Verify the oldest channel is selected and shows one unread plus one mention
-        await expect(oldestOption).toHaveClass(/suggestion--selected/);
-        await expect(oldestOption).toHaveAccessibleDescription(/2 unread notifications/);
+        await findChannelsModal.toHaveOptionSelected(secondTeamChannels[0].display_name, /2 unread notifications/);
 
         // # Type the middle channel's display name to filter the list
         await findChannelsModal.input.fill(secondTeamChannels[1].display_name);
 
         // * Verify only the matching channel from the current team is displayed
-        await expect(
-            findChannelsModal.container.getByRole('option', {
-                name: secondTeamChannels[1].display_name,
-                exact: true,
-            }),
-        ).toBeVisible();
-        await expect(findChannelsModal.container.getByRole('option')).toHaveCount(1);
+        await expect(findChannelsModal.getOption(secondTeamChannels[1].display_name)).toBeVisible();
+        await expect(findChannelsModal.searchList).toHaveCount(1);
         for (const channel of firstTeamChannels) {
-            await expect(
-                findChannelsModal.container.getByRole('option', {name: channel.display_name, exact: true}),
-            ).toHaveCount(0);
+            await expect(findChannelsModal.getOption(channel.display_name)).toHaveCount(0);
         }
     },
 );

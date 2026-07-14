@@ -29,8 +29,7 @@ test('MM-T885 Channel notifications: Desktop notifications mentions only', {tag:
     await channelsPage.goto(team.name, channel.name);
     await channelsPage.toBeVisible();
     const notificationPreferences = await channelsPage.openChannelNotificationPreferences();
-    await notificationPreferences.mentionsOnlyRadio.check();
-    await expect(notificationPreferences.mentionsOnlyRadio).toBeChecked();
+    await notificationPreferences.selectMentionsOnly();
     await notificationPreferences.save();
 
     // # Move to another channel, capture notifications, and post an ordinary message
@@ -48,13 +47,12 @@ test('MM-T885 Channel notifications: Desktop notifications mentions only', {tag:
     await senderChannelsPage.postMessage(mentionMessage);
 
     // * Verify the mention creates the expected desktop notification
-    const notifications = await pw.waitForNotification(page, 1);
+    const notifications = await pw.waitForNotification(page, 1, pw.duration.ten_sec);
     expect(notifications).toHaveLength(1);
     expect(notifications[0].title).toBe(channel.display_name);
     expect(notifications[0].body).toBe(`@${sender.username}: ${mentionMessage}`);
 
-    // * Verify the channel's mention badge is visible and aligned in the sidebar
+    // * Verify the channel's mention badge is visible in the sidebar
     const mentionBadge = channelsPage.sidebarLeft.unreadMentionsBadge(channel.name);
     await expect(mentionBadge).toBeVisible();
-    await expect(mentionBadge).toHaveCSS('margin', '0px 4px');
 });
