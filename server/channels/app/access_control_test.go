@@ -724,7 +724,11 @@ func TestAssignAccessControlPolicyToChannels(t *testing.T) {
 		ID:       parentID,
 		Name:     "parentPolicy",
 		Revision: 1,
-		Version:  model.AccessControlPolicyVersionV0_2,
+		// v0.3: AssignAccessControlPolicyToChannels forces new children to v0.3,
+		// and Inherit's v0.3 branch requires the parent to be v0.3 too. Real
+		// parents are always v0.3 (CreateOrUpdateAccessControlPolicy forces it),
+		// so a v0.2 parent here no longer reflects any reachable state.
+		Version: model.AccessControlPolicyVersionV0_3,
 		Rules: []model.AccessControlPolicyRule{
 			{
 				Actions:    []string{"membership"},
