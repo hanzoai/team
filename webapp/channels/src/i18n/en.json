@@ -5877,6 +5877,8 @@
   "more_channels.count_one": "1 Result",
   "more_channels.count_zero": "0 Results",
   "more_channels.create": "Create New Channel",
+  "more_channels.hide_archived": "Hide Archived",
+  "more_channels.hide_archived_channels": "Hide archived channels",
   "more_channels.hide_joined": "Hide Joined",
   "more_channels.hide_joined_channels": "Hide joined channels",
   "more_channels.joined": "Joined",

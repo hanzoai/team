@@ -80,6 +80,7 @@ export type Props = {
     channelsRequestStarted?: boolean;
     myChannelMemberships: RelationOneToOne<Channel, ChannelMembership>;
     shouldHideJoinedChannels: boolean;
+    shouldHideArchivedChannels: boolean;
     rhsState?: RhsState;
     rhsOpen?: boolean;
     channelsMemberCount?: Record<string, number>;
@@ -283,6 +284,9 @@ export default class BrowseChannels extends React.PureComponent<Props, State> {
             const recommendedIds = new Set(this.state.recommendedChannels.map((c) => c.id));
             searchedChannels = channels.filter((c) => recommendedIds.has(c.id));
         }
+        if (this.state.filter !== Filter.Archived && this.props.shouldHideArchivedChannels) {
+            searchedChannels = this.getChannelsWithoutArchived(searchedChannels);
+        }
         if (this.props.shouldHideJoinedChannels) {
             searchedChannels = this.getChannelsWithoutJoined(searchedChannels);
         }
@@ -326,13 +330,24 @@ export default class BrowseChannels extends React.PureComponent<Props, State> {
         this.props.actions.setGlobalItem(StoragePrefixes.HIDE_JOINED_CHANNELS, shouldHideJoinedChannels.toString());
     };
 
+    handleShowArchivedChannelsPreference = (shouldHideArchivedChannels: boolean) => {
+        // search again when toggling to update search results
+        this.search(this.state.searchTerm);
+        this.props.actions.setGlobalItem(StoragePrefixes.HIDE_ARCHIVED_CHANNELS, shouldHideArchivedChannels.toString());
+    };
+
     getChannelsWithoutJoined = (channelList: Channel[]) => channelList.filter((channel) => !this.isMemberOfChannel(channel.id));
 
+    getChannelsWithoutArchived = (channelList: Channel[]) => channelList.filter((channel) => channel.delete_at === 0);
+
     getActiveChannels = () => {
-        const {channels, archivedChannels, shouldHideJoinedChannels, privateChannels} = this.props;
+        const {channels, archivedChannels, shouldHideJoinedChannels, shouldHideArchivedChannels, privateChannels} = this.props;
         const {search, searchedChannels, filter, recommendedChannels} = this.state;
 
-        const allChannels = channels.concat(privateChannels).sort((a, b) => a.display_name.localeCompare(b.display_name));
+        const allChannels = channels.
+            concat(privateChannels).
+            concat(shouldHideArchivedChannels ? [] : archivedChannels).
+            sort((a, b) => a.display_name.localeCompare(b.display_name));
         const allChannelsWithoutJoined = this.getChannelsWithoutJoined(allChannels);
         const publicChannelsWithoutJoined = this.getChannelsWithoutJoined(channels);
         const archivedChannelsWithoutJoined = this.getChannelsWithoutJoined(archivedChannels);
@@ -359,7 +374,7 @@ export default class BrowseChannels extends React.PureComponent<Props, State> {
     };
 
     render() {
-        const {teamId, channelsRequestStarted, shouldHideJoinedChannels} = this.props;
+        const {teamId, channelsRequestStarted, shouldHideJoinedChannels, shouldHideArchivedChannels} = this.props;
         const {search, serverError: serverErrorState, searching} = this.state;
 
         this.activeChannels = this.getActiveChannels();
@@ -423,6 +438,8 @@ export default class BrowseChannels extends React.PureComponent<Props, State> {
                     closeModal={this.props.actions.closeModal}
                     hideJoinedChannelsPreference={this.handleShowJoinedChannelsPreference}
                     rememberHideJoinedChannelsChecked={shouldHideJoinedChannels}
+                    hideArchivedChannelsPreference={this.handleShowArchivedChannelsPreference}
+                    rememberHideArchivedChannelsChecked={shouldHideArchivedChannels}
                     channelsMemberCount={this.props.channelsMemberCount}
                 />
                 {serverError}

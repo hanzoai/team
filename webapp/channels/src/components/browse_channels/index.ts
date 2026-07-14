@@ -48,6 +48,7 @@ const getPrivateChannelsSelector = createSelector(
 function mapStateToProps(state: GlobalState) {
     const team = getCurrentTeam(state);
     const getGlobalItem = makeGetGlobalItem(StoragePrefixes.HIDE_JOINED_CHANNELS, 'false');
+    const getHideArchivedItem = makeGetGlobalItem(StoragePrefixes.HIDE_ARCHIVED_CHANNELS, 'true');
 
     return {
         channels: getChannelsWithoutArchived(state) || [],
@@ -59,6 +60,7 @@ function mapStateToProps(state: GlobalState) {
         channelsRequestStarted: state.requests.channels.getChannels.status === RequestStatus.STARTED,
         myChannelMemberships: getMyChannelMemberships(state) || {},
         shouldHideJoinedChannels: getGlobalItem(state) === 'true',
+        shouldHideArchivedChannels: getHideArchivedItem(state) === 'true',
         rhsState: getRhsState(state),
         rhsOpen: getIsRhsOpen(state),
         channelsMemberCount: getChannelsMemberCountSelector(state),
