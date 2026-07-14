@@ -728,12 +728,40 @@ describe('components/BrowseChannels', () => {
             await Promise.resolve();
         });
 
-        // The active public channel is shown, but the archived channel returned
-        // by the search is filtered out under the default "All" filter.
+        // The active public and private channels are shown, but the archived
+        // channel returned by the search is filtered out under the default
+        // "All" filter — proving only archived rows are removed.
         await waitFor(() => {
             expect(screen.getByText('Channel 1')).toBeInTheDocument();
+            expect(screen.getByText('Private')).toBeInTheDocument();
         });
         expect(screen.queryByText('Archived')).not.toBeInTheDocument();
+    });
+
+    test('hides archived channels from the browse list by default (no search)', async () => {
+        renderWithContext(<BrowseChannels {...baseProps}/>);
+
+        await act(async () => {
+            await Promise.resolve();
+        });
+
+        // baseProps.shouldHideArchivedChannels is true, so the archived channel
+        // ('channel-2') is absent from the default All browse list.
+        expect(screen.getByText('Default Channel')).toBeInTheDocument();
+        expect(screen.queryByText('channel-2')).not.toBeInTheDocument();
+    });
+
+    test('shows archived channels in the browse list when shouldHideArchivedChannels is false (no search)', async () => {
+        const props = {...baseProps, shouldHideArchivedChannels: false};
+        renderWithContext(<BrowseChannels {...props}/>);
+
+        await act(async () => {
+            await Promise.resolve();
+        });
+
+        // With the toggle off, the archived channel is mixed into the All list.
+        expect(screen.getByText('Default Channel')).toBeInTheDocument();
+        expect(screen.getByText('channel-2')).toBeInTheDocument();
     });
 
     test('shows archived channels in All search results when shouldHideArchivedChannels is false', async () => {

@@ -125,7 +125,7 @@ describe('components/SearchableChannelList', () => {
 
     test('clicking the Hide Archived checkbox toggles the preference', async () => {
         const hideArchivedChannelsPreference = jest.fn();
-        const {container} = renderWithContext(
+        renderWithContext(
             <SearchableChannelList
                 {...baseProps}
                 rememberHideArchivedChannelsChecked={false}
@@ -134,7 +134,7 @@ describe('components/SearchableChannelList', () => {
             initialState,
         );
 
-        const hideArchived = container.querySelector('#hideArchivedPreferenceCheckbox') as HTMLElement;
+        const hideArchived = screen.getByLabelText('Hide archived channels');
         expect(hideArchived).toHaveAttribute('aria-checked', 'false');
 
         await userEvent.click(hideArchived);
