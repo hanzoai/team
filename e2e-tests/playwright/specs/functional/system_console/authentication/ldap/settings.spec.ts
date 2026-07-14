@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {duration, EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
+import {duration, SystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 import {ldapUsers, loginFromPage, setupLdap} from './support';
 
@@ -82,8 +82,8 @@ test.describe('LDAP authentication and guest filters', () => {
     test('MM-T2699 Connection test button - Successful', {tag: '@ldap'}, async ({pw}) => {
         const {adminUser} = await pw.getAdminClient();
         const {page} = await pw.testBrowser.login(adminUser!);
-        const consolePage = new EnterpriseSystemConsolePage(page);
-        await consolePage.gotoLdap();
+        const consolePage = new SystemConsolePage(page);
+        await consolePage.ldap.goto();
 
         // # Test the configured LDAP connection
         await page.getByRole('button', {name: /test connection/i}).click();
@@ -99,8 +99,8 @@ test.describe('LDAP authentication and guest filters', () => {
     test('MM-T2700 LDAP username required', {tag: '@ldap'}, async ({pw}) => {
         const {adminUser} = await pw.getAdminClient();
         const {page} = await pw.testBrowser.login(adminUser!);
-        const consolePage = new EnterpriseSystemConsolePage(page);
-        await consolePage.gotoLdap();
+        const consolePage = new SystemConsolePage(page);
+        await consolePage.ldap.goto();
 
         // # Clear Username Attribute and save
         await page.getByLabel(/username attribute:/i).fill('');
@@ -120,8 +120,8 @@ test.describe('LDAP authentication and guest filters', () => {
     test('MM-T2701 LDAP LoginidAttribute required', {tag: '@ldap'}, async ({pw}) => {
         const {adminUser} = await pw.getAdminClient();
         const {page} = await pw.testBrowser.login(adminUser!);
-        const consolePage = new EnterpriseSystemConsolePage(page);
-        await consolePage.gotoLdap();
+        const consolePage = new SystemConsolePage(page);
+        await consolePage.ldap.goto();
 
         // # Clear Login ID Attribute and save
         await page.getByTestId('LdapSettings.LoginIdAttributeinput').fill('');

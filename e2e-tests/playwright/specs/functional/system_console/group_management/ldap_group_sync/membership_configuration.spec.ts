@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {duration, EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
+import {duration, SystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 import {initializeLdapGroupSync, setupLdapGroupSync} from './support';
 
@@ -20,13 +20,13 @@ test.describe('LDAP group membership and configuration', () => {
         await adminClient.linkGroupSyncable(board.id, channel.id, 'channel', {auto_add: true});
         await adminClient.linkGroupSyncable(developers.id, channel.id, 'channel', {auto_add: true});
         const {page} = await pw.testBrowser.login(adminUser);
-        const consolePage = new EnterpriseSystemConsolePage(page);
+        const consolePage = new SystemConsolePage(page);
 
         // # Open channel configuration and remove the board group
-        await consolePage.gotoChannelConfiguration(channel.id);
+        await consolePage.channelConfiguration.goto(channel.id);
         await expect(page.getByText('board', {exact: true})).toBeVisible();
         await page.getByRole('link', {name: 'Remove'}).first().click();
-        await consolePage.saveConfiguration();
+        await consolePage.channelConfiguration.save();
         await expect
             .poll(
                 async () =>
@@ -37,7 +37,7 @@ test.describe('LDAP group membership and configuration', () => {
         expect(
             (await adminClient.getGroupSyncableIncludingDeleted(developers.id, channel.id, 'channel')).delete_at,
         ).toBe(0);
-        await consolePage.gotoChannelConfiguration(channel.id);
+        await consolePage.channelConfiguration.goto(channel.id);
 
         // * Verify only the developers group remains
         await expect(page.getByText('developers', {exact: true})).toBeVisible();
@@ -54,14 +54,14 @@ test.describe('LDAP group membership and configuration', () => {
             const {adminClient, adminUser, team, board} = await setupLdapGroupSync(pw);
             await adminClient.linkGroupSyncable(board.id, team.id, 'team', {auto_add: true});
             const {page} = await pw.testBrowser.login(adminUser);
-            const consolePage = new EnterpriseSystemConsolePage(page);
+            const consolePage = new SystemConsolePage(page);
 
             // # Open the board group and remove its synchronized team
             await page.goto('/admin_console/user_management/groups');
             await expect(page.getByText('AD/LDAP Groups', {exact: true})).toBeVisible();
             await page.getByRole('link', {name: 'Edit', exact: true}).first().click();
             await expect(page.getByText(team.display_name, {exact: true})).toBeVisible();
-            await consolePage.requestRemoveTeamOrChannel(team.display_name);
+            await consolePage.groupConfiguration.requestRemoveTeamOrChannel(team.display_name);
 
             // * Verify the removal warning identifies the team
             await expect(
@@ -71,7 +71,7 @@ test.describe('LDAP group membership and configuration', () => {
             ).toBeVisible();
 
             // # Confirm and save
-            await consolePage.confirmRemoveTeamOrChannel();
+            await consolePage.groupConfiguration.confirmRemoveTeamOrChannel();
             await page.getByRole('button', {name: 'Save', exact: true}).click();
         },
     );
@@ -84,19 +84,19 @@ test.describe('LDAP group membership and configuration', () => {
         const inviteOnlyTeam = await adminClient.createTeam({...(await pw.random.team()), type: 'I'});
         await adminClient.updateTeam({...team, allow_open_invite: true});
         const {page} = await pw.testBrowser.login(adminUser);
-        const consolePage = new EnterpriseSystemConsolePage(page);
+        const consolePage = new SystemConsolePage(page);
         await page.goto('/admin_console/user_management/teams');
 
         // # Search for the open team
-        await consolePage.searchManagementList(team.display_name);
+        await consolePage.managementLists.search(team.display_name);
 
         // * Verify it is labeled Anyone Can Join
-        await consolePage.assertTeamManagementLabel(team.name, 'Anyone Can Join');
+        await consolePage.managementLists.expectTeamManagementLabel(team.name, 'Anyone Can Join');
 
         // # Search for the invite-only team
-        await consolePage.searchManagementList(inviteOnlyTeam.display_name);
+        await consolePage.managementLists.search(inviteOnlyTeam.display_name);
 
         // * Verify it is labeled Invite Only
-        await consolePage.assertTeamManagementLabel(inviteOnlyTeam.name, 'Invite Only');
+        await consolePage.managementLists.expectTeamManagementLabel(inviteOnlyTeam.name, 'Invite Only');
     });
 });

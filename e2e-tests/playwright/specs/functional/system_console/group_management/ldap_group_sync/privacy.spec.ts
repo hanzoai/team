@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {EnterpriseSystemConsolePage, expect, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 import {initializeLdapGroupSync, setupLdapGroupSync} from './support';
 
@@ -18,21 +18,21 @@ test.describe('LDAP group-synchronized channel privacy', () => {
     test('MM-T2628 - List of Channels', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, adminUser, team, channel} = await setupLdapGroupSync(pw);
         const {page} = await pw.testBrowser.login(adminUser);
-        const consolePage = new EnterpriseSystemConsolePage(page);
+        const consolePage = new SystemConsolePage(page);
 
         // # Change the channel to private, cancel, and discard changes
-        await consolePage.gotoChannelConfiguration(channel.id);
-        await consolePage.setChannelPublic(false);
+        await consolePage.channelConfiguration.goto(channel.id);
+        await consolePage.channelConfiguration.setPublic(false);
         await page.getByRole('link', {name: 'Cancel', exact: true}).click();
         await page.getByRole('button', {name: /Discard|Yes/}).click();
-        await consolePage.gotoChannelConfiguration(channel.id);
+        await consolePage.channelConfiguration.goto(channel.id);
 
         // * Verify the channel is still public
         await expect(page.getByRole('button', {name: 'Public', exact: true})).toBeVisible();
 
         // # Save the channel as private
-        await consolePage.setChannelPublic(false);
-        await consolePage.saveConfiguration(true);
+        await consolePage.channelConfiguration.setPublic(false);
+        await consolePage.channelConfiguration.save(true);
 
         // * Verify the server persisted private channel state
         expect((await adminClient.getChannel(channel.id)).type).toBe('P');
@@ -55,19 +55,19 @@ test.describe('LDAP group-synchronized channel privacy', () => {
         const channel = await adminClient.createPrivateChannel(team.id, 'Private Channel');
         await adminClient.addToChannel(adminUser.id, channel.id);
         const {page} = await pw.testBrowser.login(adminUser);
-        const consolePage = new EnterpriseSystemConsolePage(page);
+        const consolePage = new SystemConsolePage(page);
 
         // # Change to public, cancel, and discard
-        await consolePage.gotoChannelConfiguration(channel.id);
-        await consolePage.setChannelPublic(true);
+        await consolePage.channelConfiguration.goto(channel.id);
+        await consolePage.channelConfiguration.setPublic(true);
         await page.getByRole('link', {name: 'Cancel', exact: true}).click();
         await page.getByRole('button', {name: /Discard|Yes/}).click();
         expect((await adminClient.getChannel(channel.id)).type).toBe('P');
 
         // # Change to public and save
-        await consolePage.gotoChannelConfiguration(channel.id);
-        await consolePage.setChannelPublic(true);
-        await consolePage.saveConfiguration(true);
+        await consolePage.channelConfiguration.goto(channel.id);
+        await consolePage.channelConfiguration.setPublic(true);
+        await consolePage.channelConfiguration.save(true);
 
         // * Verify public state persists
         expect((await adminClient.getChannel(channel.id)).type).toBe('O');
@@ -92,13 +92,13 @@ test.describe('LDAP group-synchronized channel privacy', () => {
             const {adminClient, adminUser, team} = await setupLdapGroupSync(pw);
             const townSquare = await adminClient.getChannelByName(team.id, 'town-square');
             const {page} = await pw.testBrowser.login(adminUser);
-            const consolePage = new EnterpriseSystemConsolePage(page);
+            const consolePage = new SystemConsolePage(page);
 
             // # Open Town Square channel configuration
-            await consolePage.gotoChannelConfiguration(townSquare.id);
+            await consolePage.channelConfiguration.goto(townSquare.id);
 
             // * Verify its group synchronization and public/private controls are disabled
-            await consolePage.assertDefaultChannelTogglesDisabled();
+            await consolePage.channelConfiguration.expectDefaultChannelTogglesToBeDisabled();
         },
     );
 });

@@ -40,9 +40,7 @@ export {
     SignupPage,
     ScheduledPostsPage,
     SystemConsolePage,
-    EnterpriseChannelsPage,
-    EnterpriseSystemConsolePage,
-    SamlLoginPage,
+    KeycloakLoginPage,
     DraftsPage,
 } from './ui/pages';
 

@@ -4,8 +4,7 @@
 import type {UserProfile} from '@mattermost/types/users';
 
 import {
-    EnterpriseChannelsPage,
-    EnterpriseSystemConsolePage,
+    SystemConsolePage,
     configureOpenLdap,
     getOrCreateLdapUserWithStatus,
     getOrLinkLdapGroup,
@@ -70,17 +69,17 @@ export async function assertMentionEnabled(
     teamName: string,
     groupName: string,
 ) {
-    const {page} = await pw.testBrowser.login(user);
-    const channelsPage = new EnterpriseChannelsPage(page);
-    await channelsPage.goto(teamName);
-    await channelsPage.typeGroupMentionPrefix(groupName.slice(0, -1));
-    await channelsPage.assertGroupMentionSuggested(groupName);
+    const {channelsPage} = await pw.testBrowser.login(user);
+    await channelsPage.goto(teamName, 'off-topic');
+    await channelsPage.toBeVisible();
+    await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName.slice(0, -1));
+    await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
     await channelsPage.postGroupMention(groupName);
     await channelsPage.assertMentionIsLinked(groupName);
 
-    const {page: boardPage} = await pw.testBrowser.login(boardUser);
-    const boardChannelsPage = new EnterpriseChannelsPage(boardPage);
-    await boardChannelsPage.goto(teamName);
+    const {channelsPage: boardChannelsPage} = await pw.testBrowser.login(boardUser);
+    await boardChannelsPage.goto(teamName, 'off-topic');
+    await boardChannelsPage.toBeVisible();
     await boardChannelsPage.assertMentionIsHighlighted(groupName);
 }
 
@@ -91,17 +90,17 @@ export async function assertMentionDisabled(
     teamName: string,
     groupName: string,
 ) {
-    const {page} = await pw.testBrowser.login(user);
-    const channelsPage = new EnterpriseChannelsPage(page);
-    await channelsPage.goto(teamName);
-    await channelsPage.typeGroupMentionPrefix(groupName.slice(0, -1));
-    await channelsPage.assertGroupMentionNotSuggested();
+    const {channelsPage} = await pw.testBrowser.login(user);
+    await channelsPage.goto(teamName, 'off-topic');
+    await channelsPage.toBeVisible();
+    await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName.slice(0, -1));
+    await channelsPage.centerView.postCreate.assertGroupMentionNotSuggested();
     await channelsPage.postGroupMention(groupName);
     await channelsPage.assertMentionIsPlainText(groupName);
 
-    const {page: boardPage} = await pw.testBrowser.login(boardUser);
-    const boardChannelsPage = new EnterpriseChannelsPage(boardPage);
-    await boardChannelsPage.goto(teamName);
+    const {channelsPage: boardChannelsPage} = await pw.testBrowser.login(boardUser);
+    await boardChannelsPage.goto(teamName, 'off-topic');
+    await boardChannelsPage.toBeVisible();
     await boardChannelsPage.assertMentionIsPlainText(groupName);
 }
 
@@ -116,25 +115,25 @@ export async function openChannel(
     channelName: string,
     messageRoute = false,
 ) {
-    const {page} = await pw.testBrowser.login(user);
-    const channelsPage = new EnterpriseChannelsPage(page);
+    const {channelsPage} = await pw.testBrowser.login(user);
     if (messageRoute) {
         await channelsPage.gotoMessage(teamName, channelName);
     } else {
         await channelsPage.goto(teamName, channelName);
     }
+    await channelsPage.toBeVisible();
     return channelsPage;
 }
 
 export async function configureMentionPermissions(
     pw: any,
     adminUser: UserProfile,
-    permissions: Parameters<EnterpriseSystemConsolePage['setGroupMentionPermissions']>[0],
+    permissions: Parameters<SystemConsolePage['permissionsSystemScheme']['setGroupMentionPermissions']>[0],
 ) {
     const {page} = await pw.testBrowser.login(adminUser);
-    const consolePage = new EnterpriseSystemConsolePage(page);
-    await consolePage.gotoSystemScheme();
-    await consolePage.setGroupMentionPermissions(permissions);
+    const consolePage = new SystemConsolePage(page);
+    await consolePage.permissionsSystemScheme.goto();
+    await consolePage.permissionsSystemScheme.setGroupMentionPermissions(permissions);
 }
 
 export async function resetMentionPermissions(adminClient: any) {

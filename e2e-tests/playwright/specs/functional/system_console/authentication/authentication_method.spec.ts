@@ -5,7 +5,7 @@ import {createHmac} from 'node:crypto';
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {EnterpriseSystemConsolePage, initializeOpenLdap, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, initializeOpenLdap, test} from '@mattermost/playwright-lib';
 
 const ldapAccount = {
     username: 'test.one',
@@ -82,14 +82,14 @@ test.describe('User authentication methods', () => {
         await adminClient.updateUserMfa(mfaUser.id, true, generateTotp(mfaSecret.secret));
 
         const {page} = await pw.testBrowser.login(adminUser);
-        const consolePage = new EnterpriseSystemConsolePage(page);
-        await consolePage.gotoUsers();
+        const consolePage = new SystemConsolePage(page);
+        await consolePage.users.goto();
 
         // # Search for each configured account in the System Console
         // * Verify every account reports its expected authentication method
-        await consolePage.assertUserAuthenticationMethod(adminUser.username, 'Email');
-        await consolePage.assertUserAuthenticationMethod(samlUser.username, 'SAML');
-        await consolePage.assertUserAuthenticationMethod(authenticatedLdapUser.username, 'LDAP');
-        await consolePage.assertUserAuthenticationMethod(mfaUser.username, 'MFA');
+        await consolePage.users.expectAuthenticationMethod(adminUser.username, 'Email');
+        await consolePage.users.expectAuthenticationMethod(samlUser.username, 'SAML');
+        await consolePage.users.expectAuthenticationMethod(authenticatedLdapUser.username, 'LDAP');
+        await consolePage.users.expectAuthenticationMethod(mfaUser.username, 'MFA');
     });
 });

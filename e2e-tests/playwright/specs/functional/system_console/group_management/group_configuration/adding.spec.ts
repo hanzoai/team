@@ -14,7 +14,7 @@ test.describe('LDAP group configuration', () => {
 
         // # Visit a group configuration URL with an invalid group identifier
         // * Verify the LDAP groups listing is displayed
-        await consolePage.gotoInvalidGroupConfiguration('invalid');
+        await consolePage.groupConfiguration.gotoInvalid('invalid');
     });
 
     /**
@@ -24,11 +24,11 @@ test.describe('LDAP group configuration', () => {
         const {consolePage, group, team} = await setup(pw);
 
         // # Add a team and leave the page without saving
-        await consolePage.addTeamOrChannel('Team', team.display_name);
+        await consolePage.groupConfiguration.addTeamOrChannel('Team', team.display_name);
         await discardAndReload(consolePage, group.id);
 
         // * Verify the team membership was discarded
-        await consolePage.assertNoTeamOrChannelMemberships();
+        await consolePage.groupConfiguration.expectNoTeamOrChannelMemberships();
     });
 
     /**
@@ -38,11 +38,11 @@ test.describe('LDAP group configuration', () => {
         const {consolePage, group, team} = await setup(pw);
 
         // # Add a team and save the group configuration
-        await consolePage.addTeamOrChannel('Team', team.display_name);
+        await consolePage.groupConfiguration.addTeamOrChannel('Team', team.display_name);
         await saveAndReload(consolePage, group.id);
 
         // * Verify the team membership persisted
-        await consolePage.assertTeamOrChannelMembership(team.display_name);
+        await consolePage.groupConfiguration.expectTeamOrChannelMembership(team.display_name);
     });
 
     /**
@@ -53,7 +53,7 @@ test.describe('LDAP group configuration', () => {
 
         // # Search the add-channel selector for default off-topic channels
         // * Verify matching default channels and their team are shown
-        await consolePage.assertDefaultChannelsAvailable(team.display_name);
+        await consolePage.groupConfiguration.expectDefaultChannelsAvailable(team.display_name);
     });
 
     /**
@@ -63,11 +63,11 @@ test.describe('LDAP group configuration', () => {
         const {channel, consolePage, group} = await setup(pw);
 
         // # Add a channel and leave the page without saving
-        await consolePage.addTeamOrChannel('Channel', channel.display_name);
+        await consolePage.groupConfiguration.addTeamOrChannel('Channel', channel.display_name);
         await discardAndReload(consolePage, group.id);
 
         // * Verify the channel membership was discarded
-        await consolePage.assertNoTeamOrChannelMemberships();
+        await consolePage.groupConfiguration.expectNoTeamOrChannelMemberships();
     });
 
     /**
@@ -77,10 +77,10 @@ test.describe('LDAP group configuration', () => {
         const {channel, consolePage, group} = await setup(pw);
 
         // # Add a channel and save the group configuration
-        await consolePage.addTeamOrChannel('Channel', channel.display_name);
+        await consolePage.groupConfiguration.addTeamOrChannel('Channel', channel.display_name);
         await saveAndReload(consolePage, group.id);
 
         // * Verify the channel membership persisted
-        await consolePage.assertTeamOrChannelMembership(channel.display_name);
+        await consolePage.groupConfiguration.expectTeamOrChannelMembership(channel.display_name);
     });
 });

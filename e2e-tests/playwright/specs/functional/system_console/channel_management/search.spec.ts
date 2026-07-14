@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {EnterpriseSystemConsolePage, configureOpenLdap, getRandomId, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, configureOpenLdap, getRandomId, test} from '@mattermost/playwright-lib';
 
 const PAGE_SIZE = 10;
 
@@ -14,8 +14,8 @@ test.describe('System Console channel search', () => {
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser.id);
         const {page} = await pw.testBrowser.login(adminUser);
-        const consolePage = new EnterpriseSystemConsolePage(page);
-        await consolePage.gotoChannelsList();
+        const consolePage = new SystemConsolePage(page);
+        await consolePage.managementLists.gotoChannels();
         return {adminClient, consolePage, team};
     }
 
@@ -28,7 +28,7 @@ test.describe('System Console channel search', () => {
         // # Open channel management without entering a search term
 
         // * Verify the search input starts empty
-        await consolePage.assertSearchIsEmpty();
+        await consolePage.managementLists.expectSearchToBeEmpty();
     });
 
     /**
@@ -40,10 +40,10 @@ test.describe('System Console channel search', () => {
         const channel = await adminClient.createPublicChannel(team.id, displayName);
 
         // # Search for the created channel
-        await consolePage.searchManagementList(displayName);
+        await consolePage.managementLists.search(displayName);
 
         // * Verify the matching channel is returned
-        await consolePage.assertManagementResult(channel.display_name);
+        await consolePage.managementLists.expectChannelResult(channel.display_name);
     });
 
     /**
@@ -57,17 +57,17 @@ test.describe('System Console channel search', () => {
         }
 
         // # Search for the shared channel prefix
-        await consolePage.searchManagementList(prefix);
+        await consolePage.managementLists.search(prefix);
 
         // * Verify the first page is full and reports twelve total results
-        await consolePage.assertManagementRowCount(PAGE_SIZE);
-        await consolePage.assertPagination('1 - 10 of 12');
+        await consolePage.managementLists.expectRowCount(PAGE_SIZE);
+        await consolePage.managementLists.expectPagination('1 - 10 of 12');
 
         // # Advance to the second page
-        await consolePage.goToNextPage();
+        await consolePage.managementLists.goToNextPage();
 
         // * Verify the second page contains the remaining two results
-        await consolePage.assertManagementRowCount(2);
+        await consolePage.managementLists.expectRowCount(2);
     });
 
     /**
@@ -77,15 +77,15 @@ test.describe('System Console channel search', () => {
         const {adminClient, consolePage, team} = await setup(pw);
         const displayName = `Clear ${getRandomId()}`;
         await adminClient.createPublicChannel(team.id, displayName);
-        await consolePage.searchManagementList(displayName);
-        await consolePage.assertManagementRowCount(1);
+        await consolePage.managementLists.search(displayName);
+        await consolePage.managementLists.expectRowCount(1);
 
         // # Clear the search with its visible clear control
-        await consolePage.clearManagementSearch();
+        await consolePage.managementLists.clearSearch();
 
         // * Verify the field and default ten-row list are restored
-        await consolePage.assertSearchIsEmpty();
-        await consolePage.assertManagementRowCount(PAGE_SIZE);
+        await consolePage.managementLists.expectSearchToBeEmpty();
+        await consolePage.managementLists.expectRowCount(PAGE_SIZE);
     });
 
     /**
@@ -95,13 +95,13 @@ test.describe('System Console channel search', () => {
         const {adminClient, consolePage, team} = await setup(pw);
         const displayName = `Delete ${getRandomId()}`;
         await adminClient.createPublicChannel(team.id, displayName);
-        await consolePage.searchManagementList(displayName);
-        await consolePage.assertManagementRowCount(1);
+        await consolePage.managementLists.search(displayName);
+        await consolePage.managementLists.expectRowCount(1);
 
         // # Delete all text from the search field
-        await consolePage.clearManagementSearchWithKeyboard();
+        await consolePage.managementLists.clearSearchWithKeyboard();
 
         // * Verify the default ten-row list is restored
-        await consolePage.assertManagementRowCount(PAGE_SIZE);
+        await consolePage.managementLists.expectRowCount(PAGE_SIZE);
     });
 });

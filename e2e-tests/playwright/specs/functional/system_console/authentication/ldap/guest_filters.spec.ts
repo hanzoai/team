@@ -3,7 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {EnterpriseSystemConsolePage, expect, runLdapSync, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, expect, runLdapSync, test} from '@mattermost/playwright-lib';
 
 import {getLdapUser, ldapUsers, loginFromPage, removeFromAllTeams, setupLdap} from './support';
 
@@ -27,12 +27,12 @@ test.describe('LDAP authentication and guest filters', () => {
         await removeFromAllTeams(adminClient, userOne);
         await removeFromAllTeams(adminClient, userTwo);
         const {page} = await pw.testBrowser.login(adminUser!);
-        const consolePage = new EnterpriseSystemConsolePage(page);
+        const consolePage = new SystemConsolePage(page);
 
         // # Set the LDAP guest filter to the first user and synchronize
-        await consolePage.gotoLdap();
-        await consolePage.expandAdditionalFilters();
-        await consolePage.setGuestFilter(`(uid=${ldapUsers.guestFilterOne.username})`);
+        await consolePage.ldap.goto();
+        await consolePage.ldap.expandAdditionalFilters();
+        await consolePage.ldap.setGuestFilter(`(uid=${ldapUsers.guestFilterOne.username})`);
         await runLdapSync(adminClient);
         await pw.makeClient(ldapUsers.guestFilterOne, {useCache: false});
 
@@ -41,7 +41,7 @@ test.describe('LDAP authentication and guest filters', () => {
         expect((await adminClient.getUser(userTwo.id)).roles).not.toContain('system_guest');
 
         // # Clear the guest filter and synchronize again
-        await consolePage.setGuestFilter('');
+        await consolePage.ldap.setGuestFilter('');
         await runLdapSync(adminClient);
 
         // * Verify the existing guest remains a guest
@@ -55,25 +55,25 @@ test.describe('LDAP authentication and guest filters', () => {
         const {adminClient, adminUser} = await pw.getAdminClient();
         const user = await getLdapUser(adminClient, ldapUsers.guestFilterOne);
         const {page} = await pw.testBrowser.login(adminUser!);
-        const consolePage = new EnterpriseSystemConsolePage(page);
+        const consolePage = new SystemConsolePage(page);
 
         // # Enable guests and restore the LDAP account as a regular member
-        await consolePage.gotoGuestAccess();
-        await consolePage.setGuestAccess(true);
+        await consolePage.guestAccess.goto();
+        await consolePage.guestAccess.setEnabled(true);
         await runLdapSync(adminClient);
         await adminClient.promoteGuestToUser(user.id).catch(() => undefined);
 
         // # Configure a guest filter, then disable guest access
-        await consolePage.gotoLdap();
-        await consolePage.expandAdditionalFilters();
-        await consolePage.setGuestFilter(`(uid=${ldapUsers.guestFilterOne.username})`);
-        await consolePage.gotoGuestAccess();
-        await consolePage.setGuestAccess(false);
+        await consolePage.ldap.goto();
+        await consolePage.ldap.expandAdditionalFilters();
+        await consolePage.ldap.setGuestFilter(`(uid=${ldapUsers.guestFilterOne.username})`);
+        await consolePage.guestAccess.goto();
+        await consolePage.guestAccess.setEnabled(false);
 
         // * Verify LDAP and SAML guest filter controls are disabled
-        await consolePage.gotoLdap();
+        await consolePage.ldap.goto();
         await expect(page.getByTestId('LdapSettings.GuestFilterinput')).toBeDisabled();
-        await consolePage.gotoSaml();
+        await consolePage.saml.goto();
         await expect(page.getByTestId('SamlSettings.GuestAttributeinput')).toBeDisabled();
 
         // # Log in again after disabling guest access

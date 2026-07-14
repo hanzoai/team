@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {duration, EnterpriseSystemConsolePage, expect, initializeOpenLdap, test} from '@mattermost/playwright-lib';
+import {duration, SystemConsolePage, expect, initializeOpenLdap, test} from '@mattermost/playwright-lib';
 
 test.describe('LDAP channel management modes', () => {
     async function setup(pw: any) {
@@ -13,7 +13,7 @@ test.describe('LDAP channel management modes', () => {
         await adminClient.addToTeam(team.id, adminUser.id);
         const channel = await adminClient.createPublicChannel(team.id, 'Test Channel');
         const {page} = await pw.testBrowser.login(adminUser);
-        return {adminClient, channel, consolePage: new EnterpriseSystemConsolePage(page)};
+        return {adminClient, channel, consolePage: new SystemConsolePage(page)};
     }
 
     /**
@@ -27,9 +27,9 @@ test.describe('LDAP channel management modes', () => {
             expect(channel.type).toBe('O');
 
             // # Change and save the public channel as private
-            await consolePage.gotoChannelConfiguration(channel.id);
-            await consolePage.setChannelPublic(false);
-            await consolePage.saveConfiguration(true);
+            await consolePage.channelConfiguration.goto(channel.id);
+            await consolePage.channelConfiguration.setPublic(false);
+            await consolePage.channelConfiguration.save(true);
 
             // * Verify private mode is persisted
             await expect
@@ -37,9 +37,9 @@ test.describe('LDAP channel management modes', () => {
                 .toBe('P');
 
             // # Change and save the private channel as public
-            await consolePage.gotoChannelConfiguration(channel.id);
-            await consolePage.setChannelPublic(true);
-            await consolePage.saveConfiguration(true);
+            await consolePage.channelConfiguration.goto(channel.id);
+            await consolePage.channelConfiguration.setPublic(true);
+            await consolePage.channelConfiguration.save(true);
 
             // * Verify public mode is persisted
             await expect
@@ -56,22 +56,22 @@ test.describe('LDAP channel management modes', () => {
         {tag: '@ldap'},
         async ({pw}) => {
             const {channel, consolePage} = await setup(pw);
-            await consolePage.gotoChannelConfiguration(channel.id);
+            await consolePage.channelConfiguration.goto(channel.id);
 
             // # Enable and disable group synchronization
-            await consolePage.toggleSyncGroupMembers();
-            await consolePage.toggleSyncGroupMembers();
+            await consolePage.channelConfiguration.toggleSyncGroupMembers();
+            await consolePage.channelConfiguration.toggleSyncGroupMembers();
 
             // * Verify the channel remains public
-            await consolePage.assertChannelMode('Public');
+            await consolePage.channelConfiguration.expectMode('Public');
 
             // # Select private mode, then enable and disable group synchronization again
-            await consolePage.setChannelPublic(false);
-            await consolePage.toggleSyncGroupMembers();
-            await consolePage.toggleSyncGroupMembers();
+            await consolePage.channelConfiguration.setPublic(false);
+            await consolePage.channelConfiguration.toggleSyncGroupMembers();
+            await consolePage.channelConfiguration.toggleSyncGroupMembers();
 
             // * Verify the unsaved private selection remains selected
-            await consolePage.assertChannelMode('Private');
+            await consolePage.channelConfiguration.expectMode('Private');
         },
     );
 });

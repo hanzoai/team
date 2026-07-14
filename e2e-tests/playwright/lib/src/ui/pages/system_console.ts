@@ -18,6 +18,13 @@ import UsersAndTeams from '@/ui/components/system_console/sections/site_configur
 import BoardAttributes from '@/ui/components/system_console/sections/system_attributes/board_attributes';
 import SystemProperties from '@/ui/components/system_console/sections/system_attributes/system_properties';
 import FeatureDiscovery from '@/ui/components/system_console/sections/system_users/feature_discovery';
+import Ldap from '@/ui/components/system_console/sections/authentication/ldap';
+import GuestAccess from '@/ui/components/system_console/sections/authentication/guest_access';
+import Saml from '@/ui/components/system_console/sections/authentication/saml';
+import ManagementLists from '@/ui/components/system_console/sections/user_management/management_lists';
+import TeamConfiguration from '@/ui/components/system_console/sections/user_management/team_configuration';
+import ChannelConfiguration from '@/ui/components/system_console/sections/user_management/channel_configuration';
+import GroupConfiguration from '@/ui/components/system_console/sections/user_management/group_configuration';
 
 export default class SystemConsolePage {
     readonly page: Page;
@@ -37,6 +44,15 @@ export default class SystemConsolePage {
     readonly users: Users;
     readonly delegatedGranularAdministration: DelegatedGranularAdministration;
     readonly permissionsSystemScheme: PermissionsSystemScheme;
+    readonly managementLists: ManagementLists;
+    readonly teamConfiguration: TeamConfiguration;
+    readonly channelConfiguration: ChannelConfiguration;
+    readonly groupConfiguration: GroupConfiguration;
+
+    // Authentication
+    readonly ldap: Ldap;
+    readonly guestAccess: GuestAccess;
+    readonly saml: Saml;
 
     // Environment
     readonly mobileSecurity: MobileSecurity;
@@ -73,6 +89,15 @@ export default class SystemConsolePage {
         this.users = new Users(adminConsoleWrapper);
         this.delegatedGranularAdministration = new DelegatedGranularAdministration(adminConsoleWrapper);
         this.permissionsSystemScheme = new PermissionsSystemScheme(adminConsoleWrapper);
+        this.managementLists = new ManagementLists(page);
+        this.teamConfiguration = new TeamConfiguration(page);
+        this.channelConfiguration = new ChannelConfiguration(page);
+        this.groupConfiguration = new GroupConfiguration(page);
+
+        // Authentication
+        this.ldap = new Ldap(page);
+        this.guestAccess = new GuestAccess(page);
+        this.saml = new Saml(page);
 
         // Environment
         this.mobileSecurity = new MobileSecurity(adminConsoleWrapper);

@@ -13,14 +13,14 @@ test.describe('LDAP group configuration channel roles', () => {
         const {channel, consolePage, group} = await setup(pw);
 
         // # Add a channel, promote it, cancel navigation, and save
-        await consolePage.addTeamOrChannel('Channel', channel.display_name);
-        await consolePage.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
-        await consolePage.attemptToLeaveGroupConfiguration();
-        await consolePage.cancelLeavingGroupConfiguration();
+        await consolePage.groupConfiguration.addTeamOrChannel('Channel', channel.display_name);
+        await consolePage.groupConfiguration.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
+        await consolePage.groupConfiguration.attemptToLeave();
+        await consolePage.groupConfiguration.cancelLeaving();
         await saveAndReload(consolePage, group.id);
 
         // * Verify Channel Admin persisted
-        await consolePage.assertMembershipRole(channel.display_name, 'Channel Admin');
+        await consolePage.groupConfiguration.expectMembershipRole(channel.display_name, 'Channel Admin');
     });
 
     /**
@@ -29,16 +29,16 @@ test.describe('LDAP group configuration channel roles', () => {
     test('updates the role for an existing channel', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, channel, consolePage, group} = await setup(pw);
         await adminClient.linkGroupSyncable(group.id, channel.id, 'channel', {auto_add: true});
-        await consolePage.gotoGroupConfiguration(group.id);
+        await consolePage.groupConfiguration.goto(group.id);
 
         // # Promote the existing channel, cancel navigation, and save
-        await consolePage.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
-        await consolePage.attemptToLeaveGroupConfiguration();
-        await consolePage.cancelLeavingGroupConfiguration();
+        await consolePage.groupConfiguration.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
+        await consolePage.groupConfiguration.attemptToLeave();
+        await consolePage.groupConfiguration.cancelLeaving();
         await saveAndReload(consolePage, group.id);
 
         // * Verify Channel Admin persisted
-        await consolePage.assertMembershipRole(channel.display_name, 'Channel Admin');
+        await consolePage.groupConfiguration.expectMembershipRole(channel.display_name, 'Channel Admin');
     });
 
     /**
@@ -47,16 +47,16 @@ test.describe('LDAP group configuration channel roles', () => {
     test('does not update the channel role if not saved', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, channel, consolePage, group} = await setup(pw);
         await adminClient.linkGroupSyncable(group.id, channel.id, 'channel', {auto_add: true});
-        await consolePage.gotoGroupConfiguration(group.id);
+        await consolePage.groupConfiguration.goto(group.id);
 
         // # Promote the channel and reload after canceling the navigation warning
-        await consolePage.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
-        await consolePage.attemptToLeaveGroupConfiguration();
-        await consolePage.cancelLeavingGroupConfiguration();
-        await consolePage.gotoGroupConfiguration(group.id);
+        await consolePage.groupConfiguration.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
+        await consolePage.groupConfiguration.attemptToLeave();
+        await consolePage.groupConfiguration.cancelLeaving();
+        await consolePage.groupConfiguration.goto(group.id);
 
         // * Verify the unsaved role change was discarded
-        await consolePage.assertMembershipRole(channel.display_name, 'Member');
+        await consolePage.groupConfiguration.expectMembershipRole(channel.display_name, 'Member');
     });
 
     /**
@@ -65,14 +65,14 @@ test.describe('LDAP group configuration channel roles', () => {
     test('does not update the role of a removed channel', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, channel, consolePage, group} = await setup(pw);
         await adminClient.linkGroupSyncable(group.id, channel.id, 'channel', {auto_add: true});
-        await consolePage.gotoGroupConfiguration(group.id);
+        await consolePage.groupConfiguration.goto(group.id);
 
         // # Promote and remove the channel, then save
-        await consolePage.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
-        await consolePage.removeTeamOrChannel(channel.display_name);
-        await consolePage.attemptToLeaveGroupConfiguration();
-        await consolePage.cancelLeavingGroupConfiguration();
-        await consolePage.saveConfiguration();
+        await consolePage.groupConfiguration.changeMembershipRole(channel.display_name, 'Member', 'Channel Admin');
+        await consolePage.groupConfiguration.removeTeamOrChannel(channel.display_name);
+        await consolePage.groupConfiguration.attemptToLeave();
+        await consolePage.groupConfiguration.cancelLeaving();
+        await consolePage.groupConfiguration.save();
 
         // * Verify the deleted membership did not retain the administrator role
         const link = await adminClient.getGroupSyncableIncludingDeleted(group.id, channel.id, 'channel');

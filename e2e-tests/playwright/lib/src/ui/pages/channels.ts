@@ -237,6 +237,95 @@ export default class ChannelsPage {
         await this.centerView.postMessage(message, files);
     }
 
+    async postGroupMention(groupName: string) {
+        await this.centerView.postCreate.postMessage(`@${groupName}`);
+        await expect(this.page.getByText(`@${groupName}`, {exact: true}).last()).toBeVisible({
+            timeout: duration.half_min,
+        });
+    }
+
+    async assertMentionIsLinked(groupName: string) {
+        await expect(this.page.getByRole('button', {name: `@${groupName}`, exact: true}).last()).toBeVisible();
+    }
+
+    async assertMentionIsPlainText(groupName: string) {
+        await expect(this.page.getByText(`@${groupName}`, {exact: true}).last()).toBeVisible();
+        await expect(this.page.getByRole('link', {name: `@${groupName}`, exact: true})).toHaveCount(0);
+    }
+
+    async assertMentionIsHighlighted(groupName: string) {
+        await this.assertMentionHighlightState(groupName, true);
+    }
+
+    async assertMentionIsNotHighlighted(groupName: string) {
+        await this.assertMentionHighlightState(groupName, false);
+    }
+
+    private async assertMentionHighlightState(groupName: string, expected: boolean) {
+        const mention = this.page.getByRole('button', {name: `@${groupName}`, exact: true}).last();
+        await expect(mention).toBeVisible();
+        expect(
+            await mention.evaluate((element) => {
+                let current: Element | null = element;
+                while (current) {
+                    if (current.classList.contains('mention--highlight')) {
+                        return true;
+                    }
+                    current = current.parentElement;
+                }
+                return false;
+            }),
+        ).toBe(expected);
+    }
+
+    async assertOutOfChannelMentionMessage(username: string, canInvite: boolean) {
+        await expect(
+            this.page
+                .getByText(
+                    new RegExp(
+                        `@${username} did not get notified by this mention because they are not in the channel\\.`,
+                    ),
+                )
+                .last(),
+        ).toBeVisible({timeout: duration.half_min});
+        const inviteLink = this.page.getByText(/add them to (this private channel|the channel)/i, {exact: true}).last();
+        if (canInvite) {
+            await expect(inviteLink).toBeVisible();
+        } else {
+            await expect(inviteLink).toHaveCount(0);
+        }
+    }
+
+    async assertGroupHasNoTeamMembers(groupName: string) {
+        await expect(
+            this.page.getByText(`@${groupName} has no members on this team`, {exact: false}).last(),
+        ).toBeVisible({timeout: duration.half_min});
+    }
+
+    async assertNoGroupMentionSystemMessage() {
+        await expect(
+            this.page.getByText(/did not get notified by this mention|has no members on this team/),
+        ).toHaveCount(0);
+    }
+
+    async inviteBot(teamDisplayName: string, botUsername: string) {
+        const modal = await this.openInvitePeopleModal(teamDisplayName);
+        await modal.inviteByUsername(botUsername);
+        await expect(this.page.getByText(/Error/)).toHaveCount(0);
+    }
+
+    async removeTeamMember(teamDisplayName: string, username: string) {
+        const teamMenu = await this.openTeamMenu();
+        await teamMenu.clickManageMembers();
+        const dialog = this.page.getByRole('dialog', {name: `${teamDisplayName} Members`});
+        await expect(dialog).toBeVisible({timeout: duration.half_min});
+        await dialog.getByRole('textbox', {name: 'Search users'}).fill(username);
+        await expect(dialog.getByText(`@${username}`, {exact: true})).toBeVisible();
+        await dialog.getByRole('button', {name: /^Member/}).click();
+        await this.page.getByRole('menuitem', {name: 'Remove from Team', exact: true}).click();
+        await expect(dialog.getByText('No users found', {exact: true})).toBeVisible({timeout: duration.half_min});
+    }
+
     async replyToLastPost(message: string) {
         const rootPost = await this.getLastPost();
         await rootPost.reply();

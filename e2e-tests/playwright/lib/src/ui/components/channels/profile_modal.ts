@@ -4,6 +4,8 @@
 import type {Locator} from '@playwright/test';
 import {expect} from '@playwright/test';
 
+import {duration} from '@/util';
+
 export default class ProfileModal {
     readonly container: Locator;
 
@@ -58,6 +60,12 @@ export default class ProfileModal {
     async closeModal() {
         await this.closeButton.click();
         await expect(this.container).not.toBeVisible();
+    }
+
+    async assertFullName(firstName: string, lastName: string) {
+        await expect(this.container.getByText(`${firstName} ${lastName}`, {exact: true})).toBeVisible({
+            timeout: duration.half_min,
+        });
     }
 
     getAttributeSection(label: string) {

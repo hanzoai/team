@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import {
-    EnterpriseSystemConsolePage,
+    SystemConsolePage,
     getOrLinkLdapGroup,
     getRandomId,
     initializeOpenLdap,
@@ -25,18 +25,18 @@ export async function setup(pw: any, teamDisplayName = `AAA Test ${getRandomId()
     await resetLdapGroup(adminClient, group.id);
 
     const {page} = await pw.testBrowser.login(adminUser);
-    const consolePage = new EnterpriseSystemConsolePage(page);
-    await consolePage.gotoGroupConfiguration(group.id);
-    await consolePage.assertNoTeamOrChannelMemberships();
+    const consolePage = new SystemConsolePage(page);
+    await consolePage.groupConfiguration.goto(group.id);
+    await consolePage.groupConfiguration.expectNoTeamOrChannelMemberships();
     return {adminClient, channel, consolePage, group, team};
 }
 
-export async function saveAndReload(consolePage: EnterpriseSystemConsolePage, groupId: string) {
-    await consolePage.saveConfiguration();
-    await consolePage.gotoGroupConfiguration(groupId);
+export async function saveAndReload(consolePage: SystemConsolePage, groupId: string) {
+    await consolePage.groupConfiguration.save();
+    await consolePage.groupConfiguration.goto(groupId);
 }
 
-export async function discardAndReload(consolePage: EnterpriseSystemConsolePage, groupId: string) {
-    await consolePage.attemptToLeaveGroupConfiguration();
-    await consolePage.gotoGroupConfiguration(groupId);
+export async function discardAndReload(consolePage: SystemConsolePage, groupId: string) {
+    await consolePage.groupConfiguration.attemptToLeave();
+    await consolePage.groupConfiguration.goto(groupId);
 }

@@ -6,6 +6,7 @@ import {expect} from '@playwright/test';
 import type {UserProfile} from '@mattermost/types/users';
 
 import {components} from '@/ui/components';
+import {duration} from '@/util';
 
 export default class LoginPage {
     readonly page: Page;
@@ -76,5 +77,9 @@ export default class LoginPage {
         await this.loginInput.fill(username);
         await this.passwordInput.fill(password);
         await this.signInButton.click();
+    }
+
+    async assertError(message: string) {
+        await expect(this.page.getByText(message, {exact: true})).toBeVisible({timeout: duration.half_min});
     }
 }

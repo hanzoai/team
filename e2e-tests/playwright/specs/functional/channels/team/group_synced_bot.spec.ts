@@ -4,7 +4,6 @@
 import type {UserProfile} from '@mattermost/types/users';
 
 import {
-    EnterpriseChannelsPage,
     getOrCreateLdapUser,
     getOrLinkLdapGroup,
     getRandomId,
@@ -57,9 +56,9 @@ test.describe('Group-synchronized team bot membership', () => {
         });
 
         // # Log in as the synchronized team administrator and open the team
-        const {page} = await pw.testBrowser.login(user);
-        const channelsPage = new EnterpriseChannelsPage(page);
+        const {channelsPage} = await pw.testBrowser.login(user);
         await channelsPage.goto(team.name, 'town-square');
+        await channelsPage.toBeVisible();
 
         // # Invite the bot from the team invitation dialog
         await channelsPage.inviteBot(team.display_name, bot.username);

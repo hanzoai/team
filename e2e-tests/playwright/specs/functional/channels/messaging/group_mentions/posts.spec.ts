@@ -19,8 +19,8 @@ test.describe('LDAP group mentions', () => {
         const channelsPage = await openChannel(pw, regularUser, team.name, channel.name);
 
         // # Type and post the former group mention after unlinking the LDAP group
-        await channelsPage.typeGroupMentionPrefix(groupName);
-        await channelsPage.assertGroupMentionNotSuggested();
+        await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
+        await channelsPage.centerView.postCreate.assertGroupMentionNotSuggested();
         await channelsPage.postGroupMention(groupName);
 
         // * Verify the unlinked mention remains plain text
@@ -39,8 +39,8 @@ test.describe('LDAP group mentions', () => {
         const channelsPage = await openChannel(pw, regularUser, team.name, directChannel.name, true);
 
         // # Suggest and post the group mention in a direct message
-        await channelsPage.typeGroupMentionPrefix(groupName);
-        await channelsPage.assertGroupMentionSuggested(groupName);
+        await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
+        await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
         await channelsPage.postGroupMention(groupName);
 
         // * Verify the mention is linked and no membership warning is displayed
@@ -61,8 +61,8 @@ test.describe('LDAP group mentions', () => {
         const channelsPage = await openChannel(pw, regularUser, team.name, groupChannel.name, true);
 
         // # Suggest and post the group mention in a group message
-        await channelsPage.typeGroupMentionPrefix(groupName);
-        await channelsPage.assertGroupMentionSuggested(groupName);
+        await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
+        await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
         await channelsPage.postGroupMention(groupName);
 
         // * Verify the mention is linked and no membership warning is displayed

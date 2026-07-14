@@ -3,7 +3,7 @@
 
 import {
     duration,
-    EnterpriseSystemConsolePage,
+    SystemConsolePage,
     expect,
     getOrLinkLdapGroup,
     initializeOpenLdap,
@@ -23,7 +23,7 @@ test.describe('LDAP group role assignments', () => {
         await adminClient.addToTeam(team.id, adminUser.id);
         const channel = await adminClient.createPublicChannel(team.id, 'Role Assignment Channel');
         const {page} = await pw.testBrowser.login(adminUser);
-        return {adminClient, channel, consolePage: new EnterpriseSystemConsolePage(page), group, team};
+        return {adminClient, channel, consolePage: new SystemConsolePage(page), group, team};
     }
 
     /**
@@ -34,14 +34,14 @@ test.describe('LDAP group role assignments', () => {
         const {adminClient, consolePage, group, team} = await setup(pw);
 
         // # Find the team and add the linked LDAP group
-        await consolePage.gotoTeamsList();
-        await consolePage.searchManagementList(team.display_name);
-        await consolePage.openOnlyManagementResult();
-        await consolePage.addGroup(group.display_name);
+        await consolePage.managementLists.gotoTeams();
+        await consolePage.managementLists.search(team.display_name);
+        await consolePage.managementLists.openOnlyResult();
+        await consolePage.teamConfiguration.addGroup(group.display_name);
 
         // # Promote the group to Team Admin and save
-        await consolePage.changeGroupRole('Member', 'Team Admin');
-        await consolePage.saveConfiguration();
+        await consolePage.teamConfiguration.changeGroupRole('Member', 'Team Admin');
+        await consolePage.teamConfiguration.save();
         await expect
             .poll(
                 async () =>
@@ -49,16 +49,16 @@ test.describe('LDAP group role assignments', () => {
                 {timeout: duration.half_min},
             )
             .toBe(true);
-        await consolePage.gotoTeamsList();
-        await consolePage.searchManagementList(team.display_name);
-        await consolePage.openOnlyManagementResult();
+        await consolePage.managementLists.gotoTeams();
+        await consolePage.managementLists.search(team.display_name);
+        await consolePage.managementLists.openOnlyResult();
 
         // * Verify the Team Admin role persisted
-        await consolePage.assertGroupRole('Team Admin');
+        await consolePage.teamConfiguration.expectGroupRole('Team Admin');
 
         // # Revert the role to Member and save
-        await consolePage.changeGroupRole('Team Admin', 'Member');
-        await consolePage.saveConfiguration();
+        await consolePage.teamConfiguration.changeGroupRole('Team Admin', 'Member');
+        await consolePage.teamConfiguration.save();
         await expect
             .poll(
                 async () =>
@@ -66,28 +66,28 @@ test.describe('LDAP group role assignments', () => {
                 {timeout: duration.half_min},
             )
             .toBe(false);
-        await consolePage.gotoTeamsList();
-        await consolePage.searchManagementList(team.display_name);
-        await consolePage.openOnlyManagementResult();
+        await consolePage.managementLists.gotoTeams();
+        await consolePage.managementLists.search(team.display_name);
+        await consolePage.managementLists.openOnlyResult();
 
         // * Verify the Member role persisted
-        await consolePage.assertGroupRole('Member');
+        await consolePage.teamConfiguration.expectGroupRole('Member');
 
         // # Remove the group and save
-        await consolePage.removeGroup(group.display_name);
-        await consolePage.saveConfiguration();
+        await consolePage.teamConfiguration.removeGroup(group.display_name);
+        await consolePage.teamConfiguration.save();
         await expect
             .poll(
                 async () => (await adminClient.getGroupSyncableIncludingDeleted(group.id, team.id, 'team')).delete_at,
                 {timeout: duration.half_min},
             )
             .not.toBe(0);
-        await consolePage.gotoTeamsList();
-        await consolePage.searchManagementList(team.display_name);
-        await consolePage.openOnlyManagementResult();
+        await consolePage.managementLists.gotoTeams();
+        await consolePage.managementLists.search(team.display_name);
+        await consolePage.managementLists.openOnlyResult();
 
         // * Verify the group remains removed
-        await consolePage.assertNoGroups();
+        await consolePage.teamConfiguration.expectNoGroups();
     });
 
     /**
@@ -98,14 +98,14 @@ test.describe('LDAP group role assignments', () => {
         const {adminClient, channel, consolePage, group} = await setup(pw);
 
         // # Find the channel and add the linked LDAP group
-        await consolePage.gotoChannelsList();
-        await consolePage.searchManagementList(channel.display_name);
-        await consolePage.openOnlyManagementResult();
-        await consolePage.addGroup(group.display_name);
+        await consolePage.managementLists.gotoChannels();
+        await consolePage.managementLists.search(channel.display_name);
+        await consolePage.managementLists.openOnlyResult();
+        await consolePage.channelConfiguration.addGroup(group.display_name);
 
         // # Promote the group to Channel Admin and save
-        await consolePage.changeGroupRole('Member', 'Channel Admin');
-        await consolePage.saveConfiguration();
+        await consolePage.channelConfiguration.changeGroupRole('Member', 'Channel Admin');
+        await consolePage.channelConfiguration.save();
         await expect
             .poll(
                 async () =>
@@ -113,16 +113,16 @@ test.describe('LDAP group role assignments', () => {
                 {timeout: duration.half_min},
             )
             .toBe(true);
-        await consolePage.gotoChannelsList();
-        await consolePage.searchManagementList(channel.display_name);
-        await consolePage.openOnlyManagementResult();
+        await consolePage.managementLists.gotoChannels();
+        await consolePage.managementLists.search(channel.display_name);
+        await consolePage.managementLists.openOnlyResult();
 
         // * Verify the Channel Admin role persisted
-        await consolePage.assertGroupRole('Channel Admin');
+        await consolePage.channelConfiguration.expectGroupRole('Channel Admin');
 
         // # Revert the role to Member and save
-        await consolePage.changeGroupRole('Channel Admin', 'Member');
-        await consolePage.saveConfiguration();
+        await consolePage.channelConfiguration.changeGroupRole('Channel Admin', 'Member');
+        await consolePage.channelConfiguration.save();
         await expect
             .poll(
                 async () =>
@@ -130,12 +130,12 @@ test.describe('LDAP group role assignments', () => {
                 {timeout: duration.half_min},
             )
             .toBe(false);
-        await consolePage.gotoChannelsList();
-        await consolePage.searchManagementList(channel.display_name);
-        await consolePage.openOnlyManagementResult();
+        await consolePage.managementLists.gotoChannels();
+        await consolePage.managementLists.search(channel.display_name);
+        await consolePage.managementLists.openOnlyResult();
 
         // * Verify the Member role persisted
-        await consolePage.assertGroupRole('Member');
+        await consolePage.channelConfiguration.expectGroupRole('Member');
     });
 
     /**
@@ -145,23 +145,23 @@ test.describe('LDAP group role assignments', () => {
         const {adminClient, channel, consolePage, group, team} = await setup(pw, 'developers');
 
         // # Add and save the team before its channel so their implied team links are not created concurrently
-        await consolePage.gotoGroupConfiguration(group.id);
-        await consolePage.addTeamOrChannel('Team', team.display_name);
-        await consolePage.saveConfiguration();
+        await consolePage.groupConfiguration.goto(group.id);
+        await consolePage.groupConfiguration.addTeamOrChannel('Team', team.display_name);
+        await consolePage.groupConfiguration.save();
         await expect
             .poll(
                 async () => (await adminClient.getGroupSyncableIncludingDeleted(group.id, team.id, 'team')).delete_at,
                 {timeout: duration.half_min},
             )
             .toBe(0);
-        await consolePage.addTeamOrChannel('Channel', channel.display_name);
+        await consolePage.groupConfiguration.addTeamOrChannel('Channel', channel.display_name);
 
         // * Verify each membership starts with the Member role
-        await consolePage.assertGroupRole('Member');
+        await consolePage.groupConfiguration.expectMembershipRole(channel.display_name, 'Member');
 
         // # Promote the team membership and save
-        await consolePage.changeMembershipRole(team.display_name, 'Member', 'Team Admin');
-        await consolePage.saveConfiguration();
+        await consolePage.groupConfiguration.changeMembershipRole(team.display_name, 'Member', 'Team Admin');
+        await consolePage.groupConfiguration.save();
         await expect
             .poll(
                 async () =>
@@ -169,9 +169,9 @@ test.describe('LDAP group role assignments', () => {
                 {timeout: duration.half_min},
             )
             .toBe(true);
-        await consolePage.gotoGroupConfiguration(group.id);
+        await consolePage.groupConfiguration.goto(group.id);
 
         // * Verify the administrator role persisted
-        await consolePage.assertMembershipRole(team.display_name, 'Team Admin');
+        await consolePage.groupConfiguration.expectMembershipRole(team.display_name, 'Team Admin');
     });
 });

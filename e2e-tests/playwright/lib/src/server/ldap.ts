@@ -41,7 +41,7 @@ export function createLdapUser(prefix = 'ldap'): LdapUser {
 export class OpenLdapClient {
     private readonly client: Client;
 
-    constructor(url = process.env.PW_LDAP_URL || 'ldap://localhost:389') {
+    constructor(url = testConfig.ldapUrl) {
         this.client = new Client({url, timeout: duration.half_min, connectTimeout: duration.half_min});
     }
 
@@ -88,7 +88,7 @@ export class OpenLdapClient {
     }
 
     private async withBinding(action: () => Promise<void>) {
-        await this.client.bind(ldapBindDN, process.env.PW_LDAP_BIND_PASSWORD || 'mostest');
+        await this.client.bind(ldapBindDN, testConfig.ldapBindPassword);
         try {
             await action();
         } finally {
@@ -140,12 +140,12 @@ export async function configureOpenLdap(client: PlaywrightClient4) {
         LdapSettings: {
             Enable: true,
             EnableSync: true,
-            LdapServer: 'localhost',
-            LdapPort: 389,
+            LdapServer: testConfig.ldapServer,
+            LdapPort: testConfig.ldapPort,
             ConnectionSecurity: '',
             BaseDN: 'dc=mm,dc=test,dc=com',
             BindUsername: 'cn=admin,dc=mm,dc=test,dc=com',
-            BindPassword: 'mostest',
+            BindPassword: testConfig.ldapBindPassword,
             UserFilter: '',
             GroupFilter: '',
             GuestFilter: '',
