@@ -16,7 +16,7 @@ test('MM-T3307 keeps focus in the RHS textbox after replying', {tag: '@messaging
     });
 
     // # Open the root post's reply thread
-    const {channelsPage, page} = await pw.testBrowser.login(user);
+    const {channelsPage} = await pw.testBrowser.login(user);
     await channelsPage.goto(team.name, channel.name);
     await channelsPage.toBeVisible();
     const rootPost = await channelsPage.centerView.getPostById(root.id);
@@ -27,10 +27,10 @@ test('MM-T3307 keeps focus in the RHS textbox after replying', {tag: '@messaging
     const replyInput = channelsPage.sidebarRight.postCreate.input;
     const replyMessage = `Reply while preserving focus ${pw.random.id()}`;
     await replyInput.fill(replyMessage);
-    await channelsPage.sidebarRight.postCreate.container.getByRole('button', {name: 'preview'}).click();
-    await channelsPage.sidebarRight.postCreate.container.getByRole('button', {name: 'Send Now'}).click();
+    await channelsPage.sidebarRight.postCreate.previewButton.click();
+    await channelsPage.sidebarRight.postCreate.sendMessageButton.click();
 
     // * Verify keyboard focus remains in the RHS reply textbox
     await expect(replyInput).toBeFocused();
-    await expect(page.getByText(replyMessage, {exact: true}).last()).toBeVisible();
+    await (await channelsPage.sidebarRight.getLastPost()).toContainText(replyMessage);
 });

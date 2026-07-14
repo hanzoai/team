@@ -20,19 +20,15 @@ test('MM-T1697 MM-T1703 browses and opens an archived public channel', {tag: '@c
 
     // # Open Browse Channels and choose the archived-channel filter
     const dialog = await channelsPage.openBrowseChannelsModal();
-    await dialog.container.getByRole('button', {name: 'Channel type filter'}).click();
-    await page.getByRole('menuitem', {name: 'Archived channels'}).click();
+    await dialog.filterByArchivedChannels();
 
     // * Verify the filter changes to Archived and the archived channel is listed
-    await expect(dialog.container.getByRole('button', {name: 'Channel type filter'})).toContainText(
-        'Channel Type: Archived',
-    );
     await dialog.fillSearchInput(channel.display_name);
     await dialog.toBeDoneLoading();
-    await expect(dialog.results.getByText(channel.display_name, {exact: true})).toBeVisible();
+    await expect(dialog.getChannel(channel.display_name)).toBeVisible();
 
     // # Open the archived channel from the results
-    await dialog.results.getByText(channel.display_name, {exact: true}).click();
+    await dialog.getChannel(channel.display_name).click();
 
     // * Verify the archived channel opens
     await expect(page).toHaveURL(new RegExp(`/${team.name}/channels/${channel.name}$`));

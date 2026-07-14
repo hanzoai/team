@@ -18,21 +18,20 @@ test('MM-T1536 mutes and unmutes a direct message', {tag: '@direct_messages'}, a
     });
 
     // # Log in, open the direct message, and mute it from the channel menu
-    const {channelsPage, page} = await pw.testBrowser.login(user);
+    const {channelsPage} = await pw.testBrowser.login(user);
     await channelsPage.goto(team.name, `@${otherUser.username}`);
     await channelsPage.toBeVisible();
-    await channelsPage.centerView.header.openChannelMenu();
-    await page.getByRole('menuitem', {name: 'Mute', exact: true}).click();
+    let channelMenu = await channelsPage.openChannelMenu();
+    await channelMenu.muteToggle.click();
 
     // * Verify the direct message is muted in the sidebar and the header offers to unmute it
-    const directMessageLink = page.getByRole('link', {name: new RegExp(otherUser.username, 'i')});
-    await expect(directMessageLink).toHaveClass(/muted/);
-    await expect(page.getByRole('button', {name: 'Unmute', exact: true})).toBeVisible();
+    await channelsPage.sidebarLeft.assertItemMuted(otherUser.username);
+    await expect(channelsPage.centerView.header.unmuteButton).toBeVisible();
 
     // # Unmute the direct message from the channel menu
-    await channelsPage.centerView.header.openChannelMenu();
-    await page.getByRole('menuitem', {name: 'Unmute', exact: true}).click();
+    channelMenu = await channelsPage.openChannelMenu();
+    await channelMenu.muteToggle.click();
 
     // * Verify the direct message is no longer muted in the sidebar
-    await expect(directMessageLink).not.toHaveClass(/muted/);
+    await channelsPage.sidebarLeft.assertItemNotMuted(otherUser.username);
 });

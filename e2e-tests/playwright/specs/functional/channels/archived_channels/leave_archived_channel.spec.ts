@@ -19,10 +19,11 @@ test('MM-T1685 leaves an archived public channel', {tag: '@channels'}, async ({p
     await channelsPage.archiveChannel();
 
     // # Leave the archived channel from the channel menu
-    await channelsPage.centerView.header.openChannelMenu();
-    await page.getByRole('menuitem', {name: 'Leave Channel'}).click();
+    const channelMenu = await channelsPage.openChannelMenu();
+    await channelMenu.leaveChannel.click();
 
     // * Verify the user is redirected to Town Square
     await expect(page).toHaveURL(new RegExp(`/${team.name}/channels/town-square$`));
     await channelsPage.centerView.header.toHaveTitle('Town Square');
+    await expect(channelsPage.sidebarLeft.item(channel.name)).not.toBeVisible();
 });

@@ -47,7 +47,7 @@ test('MM-T1718 hides reaction actions for archived channel posts', {tag: '@chann
     await searchResult.hover();
 
     // * Verify the reaction action is unavailable in search results
-    await expect(searchResult.getByRole('button', {name: 'Add Reaction'})).toHaveCount(0);
+    await expect(channelsPage.searchResultsPanel.getAddReactionButton(message)).toHaveCount(0);
 });
 
 /**
@@ -68,34 +68,29 @@ test('MM-T1720 cannot add to existing reactions in an archived channel', {tag: '
     const postId = await post.getId();
     await post.openReactionPicker();
     await channelsPage.reactionEmojiPicker.searchEmoji('slightly_frowning_face');
-    await channelsPage.reactionEmojiPicker.container
-        .getByRole('button', {name: 'slightly frowning face emoji', exact: true})
-        .click();
+    await channelsPage.reactionEmojiPicker.clickEmoji('slightly frowning face');
 
     // * Verify the reaction count is one and another reaction can be added
-    const reaction = post.container.getByRole('button', {name: /:slightly_frowning_face:/});
-    await expect(reaction).toContainText('1');
-    await expect(post.container.getByRole('button', {name: 'Add a reaction', includeHidden: true})).toHaveCount(1);
+    await post.toHaveReactionCount('slightly_frowning_face', 1);
+    await expect(post.postMenu.addReactionButton).toHaveCount(1);
 
     // # Archive the channel and click the existing reaction
     await channelsPage.archiveChannel();
     const archivedPost = await channelsPage.centerView.getPostById(postId);
-    const archivedReaction = archivedPost.container.getByRole('button', {name: /:slightly_frowning_face:/});
+    const archivedReaction = archivedPost.getReaction('slightly_frowning_face');
     await archivedReaction.click();
 
     // * Verify adding reactions is unavailable and the existing count remains one
-    await expect(archivedPost.container.getByRole('button', {name: 'Add a reaction', includeHidden: true})).toHaveCount(
-        0,
-    );
-    await expect(archivedReaction).toContainText('1');
+    await expect(archivedPost.postMenu.addReactionButton).toHaveCount(0);
+    await archivedPost.toHaveReactionCount('slightly_frowning_face', 1);
 
     // # Open the archived post's thread and click its existing reaction
     await archivedPost.reply();
     const rhsPost = await channelsPage.sidebarRight.getPostById(postId);
-    const rhsReaction = rhsPost.container.getByRole('button', {name: /:slightly_frowning_face:/});
+    const rhsReaction = rhsPost.getReaction('slightly_frowning_face');
     await rhsReaction.click();
 
     // * Verify the thread cannot add reactions and its existing count remains one
-    await expect(rhsPost.container.getByRole('button', {name: 'Add a reaction', includeHidden: true})).toHaveCount(0);
-    await expect(rhsReaction).toContainText('1');
+    await expect(rhsPost.postMenu.addReactionButton).toHaveCount(0);
+    await rhsPost.toHaveReactionCount('slightly_frowning_face', 1);
 });

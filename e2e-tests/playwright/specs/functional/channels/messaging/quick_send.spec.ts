@@ -17,7 +17,7 @@ test('MM-T3309 keeps rapidly sent posts in order', {tag: '@messaging'}, async ({
 
     // # Send ten single-character messages as quickly as the UI accepts them
     const input = channelsPage.centerView.postCreate.input;
-    const sendButton = channelsPage.centerView.postCreate.container.getByRole('button', {name: 'Send Now'});
+    const sendButton = channelsPage.centerView.postCreate.sendMessageButton;
     const expectedMessages = Array.from({length: 10}, (_, index) => String(9 - index));
     for (const message of expectedMessages) {
         await input.fill(message);

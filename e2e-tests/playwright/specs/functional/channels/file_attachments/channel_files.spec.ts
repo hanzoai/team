@@ -5,21 +5,15 @@ import type {ChannelsPage} from '@mattermost/playwright-lib';
 import {expect, test} from '@mattermost/playwright-lib';
 
 async function expectFiles(channelsPage: ChannelsPage, files: string[]) {
-    await expect(channelsPage.searchResultItems).toHaveCount(files.length);
-    for (const [index, file] of files.entries()) {
-        await expect(channelsPage.searchResultItems.nth(index).getByText(file, {exact: true})).toBeVisible();
-    }
+    await channelsPage.searchResultsPanel.toHaveFiles(files);
 }
 
 async function filterFiles(channelsPage: ChannelsPage, option: string, expectedFiles: string[]) {
-    const filesPanel = channelsPage.page.getByRole('region', {name: /^Files /});
-    const filterButton = filesPanel.getByRole('button').filter({has: channelsPage.page.getByRole('img')});
-    await filterButton.click();
-    await filesPanel.getByRole('menu').getByRole('menuitem', {name: option, exact: true}).click();
+    await channelsPage.searchResultsPanel.filterFilesBy(option);
 
     await expectFiles(channelsPage, expectedFiles);
     if (expectedFiles.length === 0) {
-        await expect(channelsPage.page.getByText('No files found', {exact: true})).toBeVisible();
+        await expect(channelsPage.searchResultsPanel.noFilesFound).toBeVisible();
     }
 }
 
@@ -38,7 +32,7 @@ test('MM-T4418 filters channel files by type', {tag: '@file_attachments'}, async
     await channelsPage.postMessage('Image attachment', ['vector_image.svg']);
 
     // # Open the channel files panel
-    await channelsPage.page.getByRole('button', {name: 'Channel files'}).click();
+    await channelsPage.centerView.header.openChannelFiles();
 
     // * Verify all files appear in reverse chronological order by default
     await expectFiles(channelsPage, ['vector_image.svg', 'sample_text_file.txt']);

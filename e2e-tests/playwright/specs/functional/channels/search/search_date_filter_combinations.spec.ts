@@ -5,15 +5,10 @@ import type {ChannelsPage} from '@mattermost/playwright-lib';
 import {expect, test} from '@mattermost/playwright-lib';
 
 async function searchAndExpect(channelsPage: ChannelsPage, query: string, expectedMessages: string[]) {
-    await channelsPage.globalHeader.openSearch();
-    await channelsPage.searchBox.clearIfPossible();
-    await channelsPage.searchBox.searchInput.fill(query);
-    await channelsPage.searchBox.searchInput.press('Enter');
-
-    await expect(channelsPage.searchResultsContainer).toBeVisible();
-    await expect(channelsPage.searchResultItems).toHaveCount(expectedMessages.length);
+    await channelsPage.searchFor(query);
+    await expect(channelsPage.searchResultsPanel.getResultItems()).toHaveCount(expectedMessages.length);
     for (const message of expectedMessages) {
-        await expect(channelsPage.getSearchResultItem(message)).toBeVisible();
+        await expect(channelsPage.searchResultsPanel.getResultByText(message)).toBeVisible();
     }
 }
 

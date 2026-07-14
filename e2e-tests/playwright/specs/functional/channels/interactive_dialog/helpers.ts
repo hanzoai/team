@@ -1,9 +1,56 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Page} from '@playwright/test';
+import type {APIRequestContext, Page} from '@playwright/test';
+import type {Command} from '@mattermost/types/integrations';
 
-import {expect} from '@mattermost/playwright-lib';
+import {
+    expect,
+    isWebhookTestServerReachable,
+    type ChannelsPage,
+    type PlaywrightExtended,
+    setupWebhookTestServer,
+    testConfig,
+} from '@mattermost/playwright-lib';
+
+const commandTrigger = 'multiform_dialog';
+
+export async function setupMultiform(pw: PlaywrightExtended, request: APIRequestContext) {
+    expect(
+        await isWebhookTestServerReachable(request),
+        `Webhook test server must be reachable at ${testConfig.webhookBaseUrl}`,
+    ).toBe(true);
+    await setupWebhookTestServer(request, {
+        mattermostBaseUrl: testConfig.baseURL,
+        adminUsername: testConfig.adminUsername,
+        adminPassword: testConfig.adminPassword,
+    });
+
+    const {adminClient, team, user} = await pw.initSetup();
+    await adminClient.addCommand({
+        team_id: team.id,
+        trigger: commandTrigger,
+        method: 'P',
+        username: '',
+        icon_url: '',
+        auto_complete: false,
+        auto_complete_desc: '',
+        auto_complete_hint: '',
+        display_name: 'Multiform Dialog Test',
+        description: 'Step-by-step form submission test',
+        url: `${testConfig.webhookBaseUrl}/dialog/multistep`,
+    } as Command);
+
+    const {channelsPage, page} = await pw.testBrowser.login(user);
+    await channelsPage.goto(team.name, 'off-topic');
+    await channelsPage.toBeVisible();
+
+    return {channelsPage, dialog: new MultiformDialog(page)};
+}
+
+export async function openMultiform(channelsPage: ChannelsPage) {
+    await channelsPage.postMessage(`/${commandTrigger}`);
+}
 
 export class MultiformDialog {
     constructor(private readonly page: Page) {}
@@ -19,6 +66,14 @@ export class MultiformDialog {
         await this.page.getByRole('textbox', {name: /First Name/}).fill(firstName);
         await this.page.getByRole('textbox', {name: /Email/}).fill(email);
         await this.page.getByRole('button', {name: 'Next Step'}).click();
+    }
+
+    async submitEmptyStepOne() {
+        await this.page.getByRole('button', {name: 'Next Step'}).click();
+    }
+
+    async expectRequiredFieldErrors(count: number) {
+        await expect(this.page.getByText('This field is required.', {exact: true})).toHaveCount(count);
     }
 
     async expectStepTwo() {

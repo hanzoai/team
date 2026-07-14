@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {expect, test} from '@mattermost/playwright-lib';
+import {test} from '@mattermost/playwright-lib';
 
 /**
  * @objective Verify a deactivated user without a previous conversation is omitted from the Direct Messages modal.
@@ -20,10 +20,10 @@ test(
         await channelsPage.goto(team.name, 'town-square');
         await channelsPage.toBeVisible();
         const modal = await channelsPage.openDirectChannelsModal();
-        await modal.searchInput.fill(deactivatedUser.email);
+        await modal.fillSearchInput(deactivatedUser.email);
 
         // * Verify the modal reports no matching results
-        await expect(modal.container.getByText(/No results found matching/)).toContainText(deactivatedUser.email);
+        await modal.toHaveNoResultsFor(deactivatedUser.email);
     },
 );
 
@@ -50,10 +50,9 @@ test(
         await channelsPage.goto(team.name, 'town-square');
         await channelsPage.toBeVisible();
         const modal = await channelsPage.openDirectChannelsModal();
-        await modal.searchInput.fill(deactivatedUser.email);
+        await modal.fillSearchInput(deactivatedUser.email);
 
         // * Verify the previous conversation is listed with the username and deactivated status
-        await expect(modal.container.getByText(new RegExp(`@${deactivatedUser.username}.*Deactivated`))).toBeVisible();
-        await expect(modal.container.getByText(deactivatedUser.email, {exact: true})).toBeVisible();
+        await modal.toHaveDeactivatedConversation(deactivatedUser.username, deactivatedUser.email);
     },
 );
