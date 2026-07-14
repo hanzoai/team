@@ -142,10 +142,11 @@ type AccessControlPolicy struct {
 	ScopeID string `json:"scope_id,omitempty"` // team ID when scope="team"
 
 	// AppliesToAllChannels makes a parent policy govern every eligible private
-	// channel directly, with no explicit per-channel assignment or import. Only
-	// valid on parent-type policies. The engine AND-merges such a parent into
-	// every private channel's resolved rule; membership sync enumerates private
-	// channels directly rather than from an assignment list.
+	// channel without an explicit per-channel assignment list. Only valid on
+	// parent-type policies. Enabling it materializes a channel-type child policy
+	// importing this parent on every eligible private channel (backfilled by the
+	// membership sync job, kept current by the channel-create hook and the
+	// periodic reconcile); each child then resolves and enforces like any other.
 	AppliesToAllChannels bool `json:"applies_to_all_channels,omitempty"`
 
 	Props map[string]any `json:"props"` // add auto-sync property here, also maybe the attributes being used in the expression
@@ -209,13 +210,13 @@ func (p *AccessControlPolicy) IsValid() *AppError {
 		}
 	}
 
-	// The all-channels virtual scope only makes sense for a system-scoped parent
-	// policy: it is the reusable rule-carrier merged into every private channel
-	// install-wide. A channel policy is already bound to one channel;
-	// team/permission target a different resource; and a team-scoped parent is
-	// confined to its team, which the install-wide merge does not honor — so the
-	// flag must not be combined with a scope. Reject anywhere else regardless of
-	// version.
+	// The all-channels flag only makes sense on a system-scoped parent policy:
+	// it is the reusable rule-carrier that gets materialized as a child policy on
+	// every eligible private channel install-wide. A channel policy is already
+	// bound to one channel; team/permission target a different resource; and a
+	// team-scoped parent is confined to its team, which the install-wide
+	// materialization does not honor — so the flag must not be combined with a
+	// scope. Reject anywhere else regardless of version.
 	if p.AppliesToAllChannels && (p.Type != AccessControlPolicyTypeParent || p.Scope != "") {
 		return NewAppError("AccessControlPolicy.IsValid", "model.access_policy.is_valid.applies_to_all_channels.app_error", nil, "applies_to_all_channels is only valid on unscoped parent policies", 400)
 	}

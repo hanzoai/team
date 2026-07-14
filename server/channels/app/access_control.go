@@ -161,6 +161,19 @@ func (a *App) CreateOrUpdateAccessControlPolicy(rctx request.CTX, policy *model.
 		}
 	}
 
+	// Only an active all-channels parent triggers the materialization backfill.
+	// When the incoming save is one, look up its prior state so the one-time
+	// backfill is kicked only on the enabling transition — not on every later
+	// edit of an already-enabled parent (which would re-scan every private
+	// channel for nothing). Any other save skips this lookup entirely.
+	enablingAllChannels := false
+	if policy.Type == model.AccessControlPolicyTypeParent && policy.AppliesToAllChannels && policy.Active {
+		enablingAllChannels = true
+		if existing, getErr := acs.GetPolicy(rctx, policy.ID); getErr == nil && existing != nil && existing.AppliesToAllChannels && existing.Active {
+			enablingAllChannels = false
+		}
+	}
+
 	var appErr *model.AppError
 	policy, appErr = acs.SavePolicy(rctx, policy)
 	if appErr != nil {
@@ -168,6 +181,18 @@ func (a *App) CreateOrUpdateAccessControlPolicy(rctx request.CTX, policy *model.
 	}
 
 	a.auditAllChannelsPolicyBlastRadius(rctx, policy)
+
+	// Enabling all-channels on a parent makes it govern every eligible private
+	// channel. Materialize a child policy per channel via a background membership
+	// sync job (the enable-time backfill); the sync enumerates private channels
+	// and creates the children. Failure here is non-fatal — the periodic reconcile
+	// is the backstop — so log and continue rather than failing the save.
+	if enablingAllChannels {
+		if _, jobErr := a.CreateAccessControlSyncJob(rctx, map[string]string{"policy_id": policy.ID}); jobErr != nil {
+			rctx.Logger().Warn("Failed to enqueue all-channels materialization sync job",
+				mlog.String("policy_id", policy.ID), mlog.Err(jobErr))
+		}
+	}
 
 	switch policy.Type {
 	case model.AccessControlPolicyTypeChannel:
@@ -1444,6 +1469,81 @@ func filterBlameToEditingRuleScope(blame []model.PolicySimulationBlame, editingR
 		return nil
 	}
 	return out
+}
+
+// EnsureAllChannelsChildren materializes a channel-type child policy that
+// imports the given all-channels parent for each supplied channel, unless the
+// channel's child already imports it. Channels whose child already imports the
+// parent are skipped, so the call is idempotent and safe to re-run — it backs
+// the enable-time backfill, the channel-create hook, and the drift reconcile.
+//
+// Ineligible channels (group-constrained / shared / team-default) are skipped
+// rather than failing the whole batch: an enumerator may include a channel that
+// changed eligibility between listing and materialization. Callers restrict the
+// set to eligible private channels; this re-validation is a defensive backstop.
+//
+// The new child's version tracks the parent's so Inherit's same-version rule is
+// always satisfied (a v0.3 child requires a v0.3 parent; a v0.4 child accepts
+// either). An existing own-policy child keeps its own version so it is not
+// downgraded when the parent import is added.
+//
+// Returns the resulting child policies (created or already-present) so the
+// caller can sync their membership through the normal per-channel path.
+func (a *App) EnsureAllChannelsChildren(rctx request.CTX, parent *model.AccessControlPolicy, channels []*model.Channel) ([]*model.AccessControlPolicy, *model.AppError) {
+	acs := a.Srv().ch.AccessControl
+	if acs == nil {
+		return nil, model.NewAppError("EnsureAllChannelsChildren", "app.pap.assign_access_control_policy_to_channels.app_error", nil, "Policy Administration Point is not initialized", http.StatusNotImplemented)
+	}
+
+	if parent == nil || parent.Type != model.AccessControlPolicyTypeParent {
+		return nil, model.NewAppError("EnsureAllChannelsChildren", "app.pap.assign_access_control_policy_to_channels.app_error", nil, "Policy is not of type parent", http.StatusBadRequest)
+	}
+
+	children := make([]*model.AccessControlPolicy, 0, len(channels))
+	for _, channel := range channels {
+		if appErr := a.ValidateChannelEligibilityForAccessControl(rctx, channel); appErr != nil {
+			rctx.Logger().Debug("Skipping ineligible channel during all-channels materialization",
+				mlog.String("channel_id", channel.Id),
+				mlog.String("parent_policy_id", parent.ID))
+			continue
+		}
+
+		child, err := acs.GetPolicy(rctx, channel.Id)
+		if err != nil && err.StatusCode != http.StatusNotFound {
+			return nil, model.NewAppError("EnsureAllChannelsChildren", "app.pap.assign_access_control_policy_to_channels.app_error", nil, err.Error(), http.StatusInternalServerError)
+		}
+
+		if child != nil && slices.Contains(child.Imports, parent.ID) {
+			// Idempotency skip: the child already imports this parent. Inherit
+			// would otherwise reject the duplicate with already_imported (400).
+			children = append(children, child)
+			continue
+		}
+
+		if child == nil {
+			child = &model.AccessControlPolicy{
+				ID:       channel.Id,
+				Type:     model.AccessControlPolicyTypeChannel,
+				Active:   parent.Active,
+				CreateAt: model.GetMillis(),
+				Props:    map[string]any{},
+				Version:  parent.Version,
+			}
+		}
+
+		if appErr := child.Inherit(parent); appErr != nil {
+			return nil, appErr
+		}
+
+		child, appErr := acs.SavePolicy(rctx, child)
+		if appErr != nil {
+			return nil, appErr
+		}
+		a.publishChannelPolicyEnforcedUpdate(rctx, child.ID)
+		children = append(children, child)
+	}
+
+	return children, nil
 }
 
 func (a *App) AssignAccessControlPolicyToChannels(rctx request.CTX, parentID string, channelIDs []string) ([]*model.AccessControlPolicy, *model.AppError) {

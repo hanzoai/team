@@ -6,6 +6,7 @@ package app
 import (
 	"errors"
 	"net/http"
+	"slices"
 	"strings"
 	"testing"
 
@@ -876,6 +877,136 @@ func TestAssignAccessControlPolicyToChannels(t *testing.T) {
 		require.Len(t, policies, 2)
 		assert.ElementsMatch(t, []string{ch1.Id, ch2.Id}, []string{policies[0].ID, policies[1].ID})
 		mockAccessControl.AssertCalled(t, "SavePolicy", th.Context, mock.AnythingOfType("*model.AccessControlPolicy"))
+	})
+}
+
+func TestEnsureAllChannelsChildren(t *testing.T) {
+	th := Setup(t).InitBasic(t)
+
+	parentID := model.NewId()
+	parentPolicy := &model.AccessControlPolicy{
+		Type:                 model.AccessControlPolicyTypeParent,
+		ID:                   parentID,
+		Name:                 "allChannelsParent",
+		Revision:             1,
+		Version:              model.AccessControlPolicyVersionV0_3,
+		AppliesToAllChannels: true,
+		Active:               true,
+		Rules: []model.AccessControlPolicyRule{
+			{
+				Actions:    []string{"membership"},
+				Expression: "user.attributes.program == \"Dragon Spacecraft\"",
+			},
+		},
+	}
+
+	t.Run("materializes exactly one child per eligible private channel", func(t *testing.T) {
+		ch1 := th.CreatePrivateChannel(t, th.BasicTeam)
+		ch2 := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() {
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch1))
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch2))
+		})
+
+		mockACS := &mocks.AccessControlServiceInterface{}
+		th.App.Srv().ch.AccessControl = mockACS
+		t.Cleanup(func() { th.App.Srv().ch.AccessControl = nil })
+
+		mockACS.On("GetPolicy", th.Context, ch1.Id).Return(nil, nil)
+		mockACS.On("GetPolicy", th.Context, ch2.Id).Return(nil, nil)
+		mockACS.On("SavePolicy", th.Context, mock.MatchedBy(func(p *model.AccessControlPolicy) bool {
+			return p.ID == ch1.Id && p.Type == model.AccessControlPolicyTypeChannel && slices.Contains(p.Imports, parentID)
+		})).Return(&model.AccessControlPolicy{ID: ch1.Id, Type: model.AccessControlPolicyTypeChannel, Imports: []string{parentID}}, nil)
+		mockACS.On("SavePolicy", th.Context, mock.MatchedBy(func(p *model.AccessControlPolicy) bool {
+			return p.ID == ch2.Id && p.Type == model.AccessControlPolicyTypeChannel && slices.Contains(p.Imports, parentID)
+		})).Return(&model.AccessControlPolicy{ID: ch2.Id, Type: model.AccessControlPolicyTypeChannel, Imports: []string{parentID}}, nil)
+
+		children, appErr := th.App.EnsureAllChannelsChildren(th.Context, parentPolicy, []*model.Channel{ch1, ch2})
+		require.Nil(t, appErr)
+		require.Len(t, children, 2)
+		assert.ElementsMatch(t, []string{ch1.Id, ch2.Id}, []string{children[0].ID, children[1].ID})
+		mockACS.AssertNumberOfCalls(t, "SavePolicy", 2)
+	})
+
+	t.Run("re-running is a no-op when the child already imports the parent", func(t *testing.T) {
+		ch := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() { require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch)) })
+
+		existingChild := &model.AccessControlPolicy{
+			ID:      ch.Id,
+			Type:    model.AccessControlPolicyTypeChannel,
+			Version: model.AccessControlPolicyVersionV0_3,
+			Imports: []string{parentID},
+		}
+
+		mockACS := &mocks.AccessControlServiceInterface{}
+		th.App.Srv().ch.AccessControl = mockACS
+		t.Cleanup(func() { th.App.Srv().ch.AccessControl = nil })
+
+		mockACS.On("GetPolicy", th.Context, ch.Id).Return(existingChild, nil)
+
+		children, appErr := th.App.EnsureAllChannelsChildren(th.Context, parentPolicy, []*model.Channel{ch})
+		require.Nil(t, appErr)
+		require.Len(t, children, 1)
+		assert.Equal(t, ch.Id, children[0].ID)
+		// Idempotency: the parent is already imported, so nothing is written.
+		mockACS.AssertNotCalled(t, "SavePolicy", mock.Anything, mock.Anything)
+	})
+
+	t.Run("adds the import additively to a channel with a pre-existing own policy", func(t *testing.T) {
+		ch := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() { require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch)) })
+
+		otherParentID := model.NewId()
+		existingChild := &model.AccessControlPolicy{
+			ID:      ch.Id,
+			Type:    model.AccessControlPolicyTypeChannel,
+			Version: model.AccessControlPolicyVersionV0_3,
+			Imports: []string{otherParentID},
+		}
+
+		mockACS := &mocks.AccessControlServiceInterface{}
+		th.App.Srv().ch.AccessControl = mockACS
+		t.Cleanup(func() { th.App.Srv().ch.AccessControl = nil })
+
+		mockACS.On("GetPolicy", th.Context, ch.Id).Return(existingChild, nil)
+		mockACS.On("SavePolicy", th.Context, mock.MatchedBy(func(p *model.AccessControlPolicy) bool {
+			// The pre-existing import is kept and the parent is appended.
+			return p.ID == ch.Id && slices.Contains(p.Imports, otherParentID) && slices.Contains(p.Imports, parentID)
+		})).Return(existingChild, nil)
+
+		children, appErr := th.App.EnsureAllChannelsChildren(th.Context, parentPolicy, []*model.Channel{ch})
+		require.Nil(t, appErr)
+		require.Len(t, children, 1)
+		mockACS.AssertNumberOfCalls(t, "SavePolicy", 1)
+	})
+
+	t.Run("skips ineligible channels without materializing a child", func(t *testing.T) {
+		private := th.CreatePrivateChannel(t, th.BasicTeam)
+		shared := th.CreatePrivateChannel(t, th.BasicTeam)
+		shared.Shared = model.NewPointer(true)
+		_, err := th.App.Srv().Store().Channel().Update(th.Context, shared)
+		require.NoError(t, err)
+		t.Cleanup(func() {
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, private))
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, shared))
+		})
+
+		mockACS := &mocks.AccessControlServiceInterface{}
+		th.App.Srv().ch.AccessControl = mockACS
+		t.Cleanup(func() { th.App.Srv().ch.AccessControl = nil })
+
+		mockACS.On("GetPolicy", th.Context, private.Id).Return(nil, nil)
+		mockACS.On("SavePolicy", th.Context, mock.MatchedBy(func(p *model.AccessControlPolicy) bool {
+			return p.ID == private.Id
+		})).Return(&model.AccessControlPolicy{ID: private.Id, Type: model.AccessControlPolicyTypeChannel, Imports: []string{parentID}}, nil)
+
+		children, appErr := th.App.EnsureAllChannelsChildren(th.Context, parentPolicy, []*model.Channel{private, shared})
+		require.Nil(t, appErr)
+		require.Len(t, children, 1)
+		assert.Equal(t, private.Id, children[0].ID)
+		// The shared channel is skipped before any policy read/write.
+		mockACS.AssertNotCalled(t, "GetPolicy", th.Context, shared.Id)
 	})
 }
 
