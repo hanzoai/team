@@ -292,8 +292,8 @@ describe('SharedChannelInvitationsPanel', () => {
             makeInvitation({
                 id: 'inv-c',
                 channel_id: 'channel-in-store',
-                direction: 'sent',
-                status: 'rejected',
+                direction: 'received',
+                status: 'pending',
             }),
         ]);
 
@@ -305,11 +305,10 @@ describe('SharedChannelInvitationsPanel', () => {
         });
 
         expect(screen.getAllByText('Channel In Store')).toHaveLength(3);
-        expect(screen.getAllByText('Sent')).toHaveLength(2);
-        expect(screen.getByText('Received')).toBeInTheDocument();
-        expect(screen.getByText('Pending')).toBeInTheDocument();
+        expect(screen.getAllByText('Sent')).toHaveLength(1);
+        expect(screen.getAllByText('Received')).toHaveLength(2);
+        expect(screen.getAllByText('Pending')).toHaveLength(2);
         expect(screen.getByText('Failed')).toBeInTheDocument();
-        expect(screen.getByText('Rejected')).toBeInTheDocument();
         expect(screen.getByText('boom')).toBeInTheDocument();
         expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(1);
     });
@@ -375,7 +374,6 @@ describe('SharedChannelInvitationsPanel', () => {
         getInvitations.mockResolvedValue([
             makeInvitation({id: 'inv-p', status: 'pending'}),
             makeInvitation({id: 'inv-f', status: 'failed'}),
-            makeInvitation({id: 'inv-r', status: 'rejected'}),
             makeInvitation({id: 'inv-u', status: 'weird' as unknown as SharedChannelInvitation['status']}),
         ]);
 
@@ -383,7 +381,7 @@ describe('SharedChannelInvitationsPanel', () => {
         await toggleInvitationsActivity();
 
         await waitFor(() => {
-            expect(screen.getAllByRole('button', {name: 'Remove'})).toHaveLength(3);
+            expect(screen.getAllByRole('button', {name: 'Remove'})).toHaveLength(2);
         });
 
         expect(screen.getByText('Unknown status (weird)')).toBeInTheDocument();

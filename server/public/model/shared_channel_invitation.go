@@ -12,16 +12,15 @@ const (
 	SharedChannelInvitationDirectionSent     = "sent"
 	SharedChannelInvitationDirectionReceived = "received"
 
-	SharedChannelInvitationStatusPending  = "pending"
-	SharedChannelInvitationStatusRejected = "rejected"
-	SharedChannelInvitationStatusFailed   = "failed"
+	SharedChannelInvitationStatusPending = "pending"
+	SharedChannelInvitationStatusFailed  = "failed"
 
 	SharedChannelInvitationErrMsgMaxRunes = 255
 )
 
 // SharedChannelInvitation records a channel-share invitation on this server (outgoing or incoming).
 // Rows are removed once an outgoing invite is fully confirmed (SharedChannelRemote is authoritative)
-// or once an incoming invite is processed successfully. Failed or rejected invites are retained for the UI.
+// or once an incoming invite is processed successfully. Failed invites are retained for the UI.
 type SharedChannelInvitation struct {
 	Id        string `json:"id"`
 	ChannelId string `json:"channel_id"`
@@ -52,7 +51,6 @@ func (i *SharedChannelInvitation) IsValid() *AppError {
 	}
 
 	if i.Status != SharedChannelInvitationStatusPending &&
-		i.Status != SharedChannelInvitationStatusRejected &&
 		i.Status != SharedChannelInvitationStatusFailed {
 		return NewAppError("SharedChannelInvitation.IsValid", "model.shared_channel_invitation.is_valid.status.app_error", nil, "Status="+i.Status, http.StatusBadRequest)
 	}

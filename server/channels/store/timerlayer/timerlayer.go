@@ -10979,22 +10979,6 @@ func (s *TimerLayerSharedChannelInvitationStore) DeleteByChannelId(channelID str
 	return err
 }
 
-func (s *TimerLayerSharedChannelInvitationStore) DeleteByChannelIdAndRemoteId(channelID string, remoteID string) error {
-	start := time.Now()
-
-	err := s.SharedChannelInvitationStore.DeleteByChannelIdAndRemoteId(channelID, remoteID)
-
-	elapsed := float64(time.Since(start)) / float64(time.Second)
-	if s.Root.Metrics != nil {
-		success := "false"
-		if err == nil {
-			success = "true"
-		}
-		s.Root.Metrics.ObserveStoreMethodDuration("SharedChannelInvitationStore.DeleteByChannelIdAndRemoteId", success, elapsed)
-	}
-	return err
-}
-
 func (s *TimerLayerSharedChannelInvitationStore) DeleteByRemoteId(remoteID string) error {
 	start := time.Now()
 
@@ -11007,6 +10991,22 @@ func (s *TimerLayerSharedChannelInvitationStore) DeleteByRemoteId(remoteID strin
 			success = "true"
 		}
 		s.Root.Metrics.ObserveStoreMethodDuration("SharedChannelInvitationStore.DeleteByRemoteId", success, elapsed)
+	}
+	return err
+}
+
+func (s *TimerLayerSharedChannelInvitationStore) DeletePendingByChannelIdAndRemoteId(channelID string, remoteID string) error {
+	start := time.Now()
+
+	err := s.SharedChannelInvitationStore.DeletePendingByChannelIdAndRemoteId(channelID, remoteID)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("SharedChannelInvitationStore.DeletePendingByChannelIdAndRemoteId", success, elapsed)
 	}
 	return err
 }
@@ -11071,6 +11071,22 @@ func (s *TimerLayerSharedChannelInvitationStore) GetAllFromMaster(opts model.Sha
 			success = "true"
 		}
 		s.Root.Metrics.ObserveStoreMethodDuration("SharedChannelInvitationStore.GetAllFromMaster", success, elapsed)
+	}
+	return result, err
+}
+
+func (s *TimerLayerSharedChannelInvitationStore) GetFromMaster(id string) (*model.SharedChannelInvitation, error) {
+	start := time.Now()
+
+	result, err := s.SharedChannelInvitationStore.GetFromMaster(id)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("SharedChannelInvitationStore.GetFromMaster", success, elapsed)
 	}
 	return result, err
 }

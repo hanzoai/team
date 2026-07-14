@@ -124,7 +124,7 @@
       summary: Get shared channel invitations by remote cluster.
       description: |
         Returns invitation records for channel sharing with the given remote cluster
-        (outgoing and incoming), including pending, failed, and rejected invitations.
+        (outgoing and incoming), including pending and failed invitations.
 
         ##### Permissions
         `manage_secure_connections` or `manage_shared_channels`
@@ -174,7 +174,7 @@
       description: |
         Removes a stored invitation for the given remote cluster.
 
-        For **failed** or **rejected** invitations, the row is deleted.
+        For **failed** invitations, the row is deleted.
 
         For **pending** invitations, behavior depends on direction: a pending **sent**
         invitation withdraws the share (same as uninvite) when applicable; a **received**
@@ -222,7 +222,7 @@
       summary: Get shared channel invitations for a channel.
       description: |
         Returns invitation records for the given channel (all remotes), including
-        pending, failed, and rejected invitations.
+        pending and failed invitations.
 
         ##### Permissions
         `manage_shared_channels`

@@ -38,7 +38,7 @@ export type SharedChannelInvitation = {
     channel_id: string;
     remote_id: string;
     direction: 'sent' | 'received';
-    status: 'pending' | 'rejected' | 'failed';
+    status: 'pending' | 'failed';
     error?: string;
     creator_id: string;
     create_at: number;

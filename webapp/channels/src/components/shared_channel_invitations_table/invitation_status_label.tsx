@@ -34,17 +34,6 @@ export function InvitationStatusLabel({status}: {status: SharedChannelInvitation
                 })}
             />
         );
-    case 'rejected':
-        return (
-            <Tag
-                size='sm'
-                variant='warning'
-                text={formatMessage({
-                    id: 'admin.secure_connections.shared_channels.invitations.status.rejected',
-                    defaultMessage: 'Rejected',
-                })}
-            />
-        );
     default:
         return (
             <Tag

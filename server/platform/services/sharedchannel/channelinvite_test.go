@@ -122,7 +122,7 @@ func registerSharedChannelInvitationStoreMocks(inv *mocks.SharedChannelInvitatio
 		},
 	).Maybe()
 	inv.On("DeleteByChannelId", mock.AnythingOfType("string")).Return(nil).Maybe()
-	inv.On("DeleteByChannelIdAndRemoteId", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil).Maybe()
+	inv.On("DeletePendingByChannelIdAndRemoteId", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil).Maybe()
 }
 
 // stubRemoteClusterService is a minimal remotecluster.RemoteClusterServiceIFace for SendChannelInvite tests.

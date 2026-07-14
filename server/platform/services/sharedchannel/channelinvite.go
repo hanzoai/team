@@ -196,7 +196,7 @@ func (scs *Service) SendChannelInvite(channel *model.Channel, userId string, rc 
 		}
 
 		if invitationID != "" {
-			if _, invErr := scs.server.GetStore().SharedChannelInvitation().Get(invitationID); invErr != nil {
+			if _, invErr := scs.server.GetStore().SharedChannelInvitation().GetFromMaster(invitationID); invErr != nil {
 				if isNotFoundError(invErr) {
 					return
 				}

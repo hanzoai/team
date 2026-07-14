@@ -143,6 +143,10 @@ func (s SqlSharedChannelInvitationStore) Get(id string) (*model.SharedChannelInv
 	return s.getInvitation(id, false)
 }
 
+func (s SqlSharedChannelInvitationStore) GetFromMaster(id string) (*model.SharedChannelInvitation, error) {
+	return s.getInvitation(id, true)
+}
+
 func (s SqlSharedChannelInvitationStore) getAll(opts model.SharedChannelInvitationFilterOpts, offset, limit int, fromMaster bool) ([]*model.SharedChannelInvitation, error) {
 	query := s.getQueryBuilder().
 		Select(sharedChannelInvitationColumns()...).
@@ -224,13 +228,17 @@ func (s SqlSharedChannelInvitationStore) DeleteByChannelId(channelID string) err
 	return nil
 }
 
-func (s SqlSharedChannelInvitationStore) DeleteByChannelIdAndRemoteId(channelID, remoteID string) error {
+func (s SqlSharedChannelInvitationStore) DeletePendingByChannelIdAndRemoteId(channelID, remoteID string) error {
 	query := s.getQueryBuilder().
 		Delete("SharedChannelInvitations").
-		Where(sq.Eq{"ChannelId": channelID, "RemoteId": remoteID})
+		Where(sq.Eq{
+			"ChannelId": channelID,
+			"RemoteId":  remoteID,
+			"Status":    model.SharedChannelInvitationStatusPending,
+		})
 
 	if _, err := s.GetMaster().ExecBuilder(query); err != nil {
-		return errors.Wrap(err, "failed to delete SharedChannelInvitations by channel and remote")
+		return errors.Wrap(err, "failed to delete pending SharedChannelInvitations by channel and remote")
 	}
 	return nil
 }

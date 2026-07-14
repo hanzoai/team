@@ -208,7 +208,7 @@ func (a *App) GetSharedChannelInvitationsByChannel(channelID string, page, perPa
 }
 
 // RemoveSharedChannelInvitation removes a stored invitation for the given remote.
-// Failed or rejected rows are deleted from the database only.
+// Failed rows are deleted from the database only.
 // Pending rows withdraw the share for that remote (same as uninvite) when a link exists; otherwise the orphan row is deleted.
 func (a *App) RemoveSharedChannelInvitation(remoteID, invitationID string) error {
 	inv, err := a.Srv().Store().SharedChannelInvitation().Get(invitationID)
@@ -223,7 +223,7 @@ func (a *App) RemoveSharedChannelInvitation(remoteID, invitationID string) error
 	}
 
 	switch inv.Status {
-	case model.SharedChannelInvitationStatusFailed, model.SharedChannelInvitationStatusRejected:
+	case model.SharedChannelInvitationStatusFailed:
 		if err := a.Srv().Store().SharedChannelInvitation().Delete(invitationID); err != nil {
 			return model.NewAppError("RemoveSharedChannelInvitation", "api.shared_channel.delete_invitation.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
 		}

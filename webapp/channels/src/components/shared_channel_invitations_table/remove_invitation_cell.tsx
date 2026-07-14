@@ -16,7 +16,7 @@ const BusyInline = styled.span`
 `;
 
 function invitationIsRemovable(status: SharedChannelInvitation['status']) {
-    return status === 'pending' || status === 'failed' || status === 'rejected';
+    return status === 'pending' || status === 'failed';
 }
 
 type RemoveInvitationCellProps = {

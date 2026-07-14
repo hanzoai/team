@@ -262,7 +262,7 @@ func (scs *Service) UninviteRemoteFromChannel(channelID, remoteID string) error 
 			map[string]any{"RemoteId": remoteID, "Error": err.Error()}, "", code)
 	}
 
-	if err := scs.server.GetStore().SharedChannelInvitation().DeleteByChannelIdAndRemoteId(channelID, remoteID); err != nil {
+	if err := scs.server.GetStore().SharedChannelInvitation().DeletePendingByChannelIdAndRemoteId(channelID, remoteID); err != nil {
 		scs.server.Log().LogM(mlog.MlvlSharedChannelServiceError, "Failed to delete shared channel invitations after uninvite",
 			mlog.String("channel_id", channelID),
 			mlog.String("remote_id", remoteID),

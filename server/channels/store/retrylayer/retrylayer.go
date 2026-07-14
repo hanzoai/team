@@ -13891,11 +13891,11 @@ func (s *RetryLayerSharedChannelInvitationStore) DeleteByChannelId(channelID str
 
 }
 
-func (s *RetryLayerSharedChannelInvitationStore) DeleteByChannelIdAndRemoteId(channelID string, remoteID string) error {
+func (s *RetryLayerSharedChannelInvitationStore) DeleteByRemoteId(remoteID string) error {
 
 	tries := 0
 	for {
-		err := s.SharedChannelInvitationStore.DeleteByChannelIdAndRemoteId(channelID, remoteID)
+		err := s.SharedChannelInvitationStore.DeleteByRemoteId(remoteID)
 		if err == nil {
 			return nil
 		}
@@ -13912,11 +13912,11 @@ func (s *RetryLayerSharedChannelInvitationStore) DeleteByChannelIdAndRemoteId(ch
 
 }
 
-func (s *RetryLayerSharedChannelInvitationStore) DeleteByRemoteId(remoteID string) error {
+func (s *RetryLayerSharedChannelInvitationStore) DeletePendingByChannelIdAndRemoteId(channelID string, remoteID string) error {
 
 	tries := 0
 	for {
-		err := s.SharedChannelInvitationStore.DeleteByRemoteId(remoteID)
+		err := s.SharedChannelInvitationStore.DeletePendingByChannelIdAndRemoteId(channelID, remoteID)
 		if err == nil {
 			return nil
 		}
@@ -14001,6 +14001,27 @@ func (s *RetryLayerSharedChannelInvitationStore) GetAllFromMaster(opts model.Sha
 	tries := 0
 	for {
 		result, err := s.SharedChannelInvitationStore.GetAllFromMaster(opts, offset, limit)
+		if err == nil {
+			return result, nil
+		}
+		if !isRepeatableError(err) {
+			return result, err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return result, err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
+func (s *RetryLayerSharedChannelInvitationStore) GetFromMaster(id string) (*model.SharedChannelInvitation, error) {
+
+	tries := 0
+	for {
+		result, err := s.SharedChannelInvitationStore.GetFromMaster(id)
 		if err == nil {
 			return result, nil
 		}

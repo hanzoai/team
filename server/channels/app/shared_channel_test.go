@@ -882,7 +882,7 @@ func TestGetSharedChannelInvitations(t *testing.T) {
 		ChannelId: channelA.Id,
 		RemoteId:  remoteB,
 		Direction: model.SharedChannelInvitationDirectionSent,
-		Status:    model.SharedChannelInvitationStatusRejected,
+		Status:    model.SharedChannelInvitationStatusFailed,
 		CreatorId: th.BasicUser.Id,
 	})
 	require.NoError(t, err)
@@ -1035,6 +1035,54 @@ func TestRemoveSharedChannelInvitation(t *testing.T) {
 
 		_, err = ss.SharedChannelInvitation().Get(inv.Id)
 		require.Error(t, err, "invitation row should be deleted by uninvite path")
+	})
+
+	t.Run("pending sent invitation uninvite preserves failed history", func(t *testing.T) {
+		channel := th.CreateChannel(t, th.BasicTeam)
+		shareChannel(channel)
+
+		rc := newRemoteCluster("remove-invitation-preserve-failed")
+		otherRc := newRemoteCluster("remove-invitation-preserve-failed-other")
+		saveRemoteLink(channel.Id, rc.RemoteId)
+		saveRemoteLink(channel.Id, otherRc.RemoteId)
+
+		failedInv, err := ss.SharedChannelInvitation().Save(&model.SharedChannelInvitation{
+			ChannelId: channel.Id,
+			RemoteId:  rc.RemoteId,
+			Direction: model.SharedChannelInvitationDirectionSent,
+			Status:    model.SharedChannelInvitationStatusFailed,
+			ErrMsg:    "previous attempt failed",
+			CreatorId: th.BasicUser.Id,
+		})
+		require.NoError(t, err)
+
+		pendingInv, err := ss.SharedChannelInvitation().Save(&model.SharedChannelInvitation{
+			ChannelId: channel.Id,
+			RemoteId:  rc.RemoteId,
+			Direction: model.SharedChannelInvitationDirectionSent,
+			Status:    model.SharedChannelInvitationStatusPending,
+			CreatorId: th.BasicUser.Id,
+		})
+		require.NoError(t, err)
+
+		err = th.App.RemoveSharedChannelInvitation(rc.RemoteId, pendingInv.Id)
+		require.NoError(t, err)
+
+		hasRemote, err := ss.SharedChannel().HasRemote(channel.Id, rc.RemoteId)
+		require.NoError(t, err)
+		require.False(t, hasRemote)
+
+		hasOtherRemote, err := ss.SharedChannel().HasRemote(channel.Id, otherRc.RemoteId)
+		require.NoError(t, err)
+		require.True(t, hasOtherRemote, "channel should remain shared with other remote")
+
+		_, err = ss.SharedChannelInvitation().Get(pendingInv.Id)
+		require.Error(t, err, "pending invitation should be deleted")
+
+		remainingFailed, err := ss.SharedChannelInvitation().Get(failedInv.Id)
+		require.NoError(t, err, "failed invitation history should be preserved")
+		require.Equal(t, model.SharedChannelInvitationStatusFailed, remainingFailed.Status)
+		require.Equal(t, "previous attempt failed", remainingFailed.ErrMsg)
 	})
 
 	t.Run("pending sent invitation without remote link deletes orphan row", func(t *testing.T) {

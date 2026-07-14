@@ -4279,7 +4279,6 @@ components:
           type: string
           enum:
             - pending
-            - rejected
             - failed
         error:
           description: Error message when status is failed (omitted when empty)

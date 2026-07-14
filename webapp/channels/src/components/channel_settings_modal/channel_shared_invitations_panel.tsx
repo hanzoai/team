@@ -129,7 +129,7 @@ export default function ChannelSharedInvitationsPanel({
             <EmptyHint>
                 <FormattedMessage
                     id='channel_settings.shared_channel_invitations.empty'
-                    defaultMessage='There are no stored invitation records for this channel. Pending rows clear after success; failed or rejected invitations appear here.'
+                    defaultMessage='There are no stored invitation records for this channel. Pending rows clear after success; failed invitations appear here.'
                 />
             </EmptyHint>
         );

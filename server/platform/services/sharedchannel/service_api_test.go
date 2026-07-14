@@ -235,7 +235,7 @@ func TestUninviteRemoteFromChannel_postsUnsharedSystemMessage(t *testing.T) {
 
 	mockSharedChannelStore.On("GetRemoteByIds", channelID, remoteID).Return(scr, nil).Once()
 	mockSharedChannelStore.On("DeleteRemote", scrID).Return(true, nil).Once()
-	mockInvStore.On("DeleteByChannelIdAndRemoteId", channelID, remoteID).Return(nil).Once()
+	mockInvStore.On("DeletePendingByChannelIdAndRemoteId", channelID, remoteID).Return(nil).Once()
 	mockChannelStore.On("Get", channelID, true).Return(channel, nil).Once()
 	mockRemoteClusterStore.On("Get", remoteID, false).Return(rc, nil).Once()
 	mockSharedChannelStore.On("GetRemotes", 0, 1, model.SharedChannelRemoteFilterOpts{
@@ -300,7 +300,7 @@ func TestUninviteRemoteFromChannel_whenLastRemoteUnsharesChannel(t *testing.T) {
 
 	mockSharedChannelStore.On("GetRemoteByIds", channelID, remoteID).Return(scr, nil).Once()
 	mockSharedChannelStore.On("DeleteRemote", scrID).Return(true, nil).Once()
-	mockInvStore.On("DeleteByChannelIdAndRemoteId", channelID, remoteID).Return(nil).Once()
+	mockInvStore.On("DeletePendingByChannelIdAndRemoteId", channelID, remoteID).Return(nil).Once()
 	mockInvStore.On("DeleteByChannelId", channelID).Return(nil).Once()
 	// Channel load for uninvite system post, then UnshareChannel initial get, then UnshareChannel post-delete get.
 	mockChannelStore.On("Get", channelID, true).Return(channel, nil).Times(2)

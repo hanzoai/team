@@ -23,7 +23,7 @@ func TestSharedChannelInvitationStore(t *testing.T, rctx request.CTX, ss store.S
 	t.Run("UpdateStatus", func(t *testing.T) { testSharedChannelInvitationUpdateStatus(t, rctx, ss) })
 	t.Run("Delete", func(t *testing.T) { testSharedChannelInvitationDelete(t, rctx, ss) })
 	t.Run("DeleteByChannelId", func(t *testing.T) { testSharedChannelInvitationDeleteByChannelId(t, rctx, ss) })
-	t.Run("DeleteByChannelIdAndRemoteId", func(t *testing.T) { testSharedChannelInvitationDeleteByChannelIdAndRemoteId(t, rctx, ss) })
+	t.Run("DeletePendingByChannelIdAndRemoteId", func(t *testing.T) { testSharedChannelInvitationDeletePendingByChannelIdAndRemoteId(t, rctx, ss) })
 	t.Run("DeleteByRemoteId", func(t *testing.T) { testSharedChannelInvitationDeleteByRemoteId(t, rctx, ss) })
 }
 
@@ -117,7 +117,7 @@ func testSharedChannelInvitationGetAll(t *testing.T, rctx request.CTX, ss store.
 		ChannelId: ch.Id,
 		RemoteId:  remoteB,
 		Direction: model.SharedChannelInvitationDirectionSent,
-		Status:    model.SharedChannelInvitationStatusRejected,
+		Status:    model.SharedChannelInvitationStatusFailed,
 		CreatorId: creatorID,
 	}
 	_, err = ss.SharedChannelInvitation().Save(invB)
@@ -211,30 +211,49 @@ func testSharedChannelInvitationDeleteByChannelId(t *testing.T, rctx request.CTX
 	require.Empty(t, list)
 }
 
-func testSharedChannelInvitationDeleteByChannelIdAndRemoteId(t *testing.T, rctx request.CTX, ss store.Store) {
+func testSharedChannelInvitationDeletePendingByChannelIdAndRemoteId(t *testing.T, rctx request.CTX, ss store.Store) {
 	ch, err := createTestChannel(ss, rctx, "inv_del_pair")
 	require.NoError(t, err)
 	remoteID := model.NewId()
+	otherRemoteID := model.NewId()
 
-	_, err = ss.SharedChannelInvitation().Save(&model.SharedChannelInvitation{
+	pending, err := ss.SharedChannelInvitation().Save(&model.SharedChannelInvitation{
 		ChannelId: ch.Id,
 		RemoteId:  remoteID,
 		Direction: model.SharedChannelInvitationDirectionSent,
+		Status:    model.SharedChannelInvitationStatusPending,
+		CreatorId: model.NewId(),
+	})
+	require.NoError(t, err)
+	failed, err := ss.SharedChannelInvitation().Save(&model.SharedChannelInvitation{
+		ChannelId: ch.Id,
+		RemoteId:  remoteID,
+		Direction: model.SharedChannelInvitationDirectionSent,
+		Status:    model.SharedChannelInvitationStatusFailed,
 		CreatorId: model.NewId(),
 	})
 	require.NoError(t, err)
 	_, err = ss.SharedChannelInvitation().Save(&model.SharedChannelInvitation{
 		ChannelId: ch.Id,
-		RemoteId:  model.NewId(),
+		RemoteId:  otherRemoteID,
 		Direction: model.SharedChannelInvitationDirectionSent,
+		Status:    model.SharedChannelInvitationStatusPending,
 		CreatorId: model.NewId(),
 	})
 	require.NoError(t, err)
 
-	require.NoError(t, ss.SharedChannelInvitation().DeleteByChannelIdAndRemoteId(ch.Id, remoteID))
+	require.NoError(t, ss.SharedChannelInvitation().DeletePendingByChannelIdAndRemoteId(ch.Id, remoteID))
+
+	_, err = ss.SharedChannelInvitation().Get(pending.Id)
+	require.Error(t, err, "pending invitation should be deleted")
+
+	remainingFailed, err := ss.SharedChannelInvitation().Get(failed.Id)
+	require.NoError(t, err, "failed invitation history should be preserved")
+	require.Equal(t, model.SharedChannelInvitationStatusFailed, remainingFailed.Status)
+
 	list, err := ss.SharedChannelInvitation().GetAll(model.SharedChannelInvitationFilterOpts{ChannelId: ch.Id}, 0, 10)
 	require.NoError(t, err)
-	require.Len(t, list, 1)
+	require.Len(t, list, 2)
 	require.NotEqual(t, remoteID, list[0].RemoteId)
 }
 
