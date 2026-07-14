@@ -15,14 +15,9 @@ test('MM-T457 Self direct message', {tag: '@direct_messages'}, async ({pw}) => {
     await channelsPage.toBeVisible();
     await pw.stubNotification(page, 'granted');
     const modal = await channelsPage.openDirectChannelsModal();
-    await modal.fillSearchInput(user.username);
 
-    // * Verify the current user appears in the search results
-    await expect(modal.results.getByText(`@${user.username}`, {exact: false})).toBeVisible();
-
-    // # Select the current user, which immediately opens the self direct message
-    await modal.results.getByText(`@${user.username}`, {exact: false}).click();
-    await expect(modal.container).not.toBeAttached();
+    // * Verify the current user appears, then select them to immediately open the self direct message
+    await modal.openSelfDirectMessage(user.username);
 
     // * Verify the channel header identifies the current user
     await channelsPage.centerView.header.toHaveTitle(`${user.username} (you)`);
@@ -48,29 +43,19 @@ test('MM-T458 Edit direct message channel header', {tag: '@direct_messages'}, as
     const {channelsPage, page} = await pw.testBrowser.login(user);
     await channelsPage.goto(team.name, `@${otherUser.username}`);
     await channelsPage.toBeVisible();
-    const addHeaderButton = channelsPage.centerView.header.container.getByRole('button', {
-        name: 'Add a channel header',
-    });
-    await channelsPage.centerView.header.container.hover();
-    await addHeaderButton.click();
+    await channelsPage.centerView.header.openAddChannelHeader();
 
     // # Enter and save a multiline channel header
-    const modalHeading = page.getByRole('heading', {name: /^Edit Header(?: for)?/});
-    await expect(modalHeading).toBeVisible();
-    const headerInput = page.getByRole('textbox', {
-        name: 'Edit the text appearing next to the channel name in the header.',
-    });
     const expectedHeader = 'This is a line\n\nThis is another line';
-    await headerInput.fill(expectedHeader);
-    await headerInput.press('Enter');
-    await expect(modalHeading).not.toBeVisible();
+    await channelsPage.editChannelHeaderModal.setHeaderWithEnter(expectedHeader);
 
     // # Hover over the saved header text
     await page.mouse.move(0, 0);
-    await expect(page.getByRole('tooltip').filter({hasText: 'This is a line'})).not.toBeVisible();
-    const headerText = channelsPage.centerView.header.container.getByText('This is a line', {exact: false});
+    const tooltip = channelsPage.centerView.header.getHeaderTooltip('This is a line');
+    await expect(tooltip).not.toBeVisible();
+    const headerText = channelsPage.centerView.header.getHeaderText('This is a line');
     await headerText.hover({force: true});
 
     // * Verify the popover displays the complete multiline header
-    await expect(page.getByRole('tooltip').filter({hasText: 'This is a line'})).toHaveText(expectedHeader);
+    await expect(tooltip).toHaveText(expectedHeader);
 });

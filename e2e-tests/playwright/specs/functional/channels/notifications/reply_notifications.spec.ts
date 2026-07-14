@@ -8,6 +8,7 @@ import type {Team} from '@mattermost/types/teams';
 import type {UserProfile, UserNotifyProps} from '@mattermost/types/users';
 
 import {
+    duration,
     expect,
     test,
     type ChannelsPage,
@@ -89,7 +90,7 @@ test.describe('Reply notifications', () => {
         });
 
         // * Verify the reply triggers a desktop notification and unread-mention badge
-        const notifications = await playwright.waitForNotification(receiverPage);
+        const notifications = await playwright.waitForNotification(receiverPage, 1, duration.ten_sec);
         expect(notifications.length).toBeGreaterThanOrEqual(1);
         await expect(channelsPage.sidebarLeft.unreadMentionsBadge(channel.name)).toBeVisible();
 
@@ -98,8 +99,7 @@ test.describe('Reply notifications', () => {
 
         // * Verify the exact reply text and reply-notification highlight
         const replyPost = await channelsPage.getLastPost();
-        await expect(replyPost.messageText).toHaveText(message);
-        await expect(replyPost.container).toHaveClass(/mention-comment/);
+        await replyPost.toBeReplyNotification(message);
     }
 
     /**
@@ -169,7 +169,7 @@ test.describe('Reply notifications', () => {
             });
 
             // * Verify the reply triggers a desktop notification and unread-mention badge
-            const notifications = await pw.waitForNotification(receiverPage);
+            const notifications = await pw.waitForNotification(receiverPage, 1, duration.ten_sec);
             expect(notifications.length).toBeGreaterThanOrEqual(1);
             await expect(channelsPage.sidebarLeft.unreadMentionsBadge(channel.name)).toBeVisible();
 
@@ -178,8 +178,7 @@ test.describe('Reply notifications', () => {
 
             // * Verify the exact reply text and reply-notification highlight in the thread
             const replyPost = await channelsPage.sidebarRight.getPostById(senderReply.id);
-            await expect(replyPost.messageText).toHaveText(message);
-            await expect(replyPost.container).toHaveClass(/mention-comment/);
+            await replyPost.toBeReplyNotification(message);
         },
     );
 });

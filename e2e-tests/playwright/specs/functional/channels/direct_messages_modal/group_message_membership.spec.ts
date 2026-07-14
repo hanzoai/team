@@ -29,9 +29,7 @@ test('MM-T468 Group Messaging: Add member to existing GM', {tag: '@direct_messag
     await modal.toBeVisible();
 
     // * Verify the new-conversation warning and all existing members are selected
-    await expect(modal.container).toContainText(
-        "This will start a new conversation. If you're adding a lot of people, consider creating a private channel instead.",
-    );
+    await expect(modal.newConversationWarning).toBeVisible();
     for (const member of members) {
         await expect(modal.getRemoveButton(member.username)).toBeVisible();
     }
