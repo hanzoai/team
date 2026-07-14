@@ -94,8 +94,8 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 		member.SanitizeForCurrentUser(currentUserId)
 
-		assert.Equal(t, int64(-1), member.LastViewedAt, "LastViewedAt should be sanitized for other users")
-		assert.Equal(t, int64(-1), member.LastUpdateAt, "LastUpdateAt should be sanitized for other users")
+		assert.Equal(t, sanitizedTimestamp, member.LastViewedAt, "LastViewedAt should be sanitized for other users")
+		assert.Equal(t, sanitizedTimestamp, member.LastUpdateAt, "LastUpdateAt should be sanitized for other users")
 	})
 
 	t.Run("should preserve other fields when sanitizing", func(t *testing.T) {
@@ -121,8 +121,8 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 		member.SanitizeForCurrentUser(currentUserId)
 
-		assert.Equal(t, int64(-1), member.LastViewedAt, "LastViewedAt should be sanitized")
-		assert.Equal(t, int64(-1), member.LastUpdateAt, "LastUpdateAt should be sanitized")
+		assert.Equal(t, sanitizedTimestamp, member.LastViewedAt, "LastViewedAt should be sanitized")
+		assert.Equal(t, sanitizedTimestamp, member.LastUpdateAt, "LastUpdateAt should be sanitized")
 		assert.Equal(t, originalRoles, member.Roles, "Roles should be preserved")
 		assert.Equal(t, originalMsgCount, member.MsgCount, "MsgCount should be preserved")
 		assert.Equal(t, originalMentionCount, member.MentionCount, "MentionCount should be preserved")

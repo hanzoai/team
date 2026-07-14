@@ -186,6 +186,9 @@ type ChannelMembers []ChannelMember
 
 type ChannelMembersWithTeamData []ChannelMemberWithTeamData
 
+// ChannelMemberForExport is only converted field-by-field for export and is
+// never JSON-marshaled. If that changes, it must define its own MarshalJSON;
+// otherwise ChannelMember's promoted MarshalJSON drops ChannelName and Username.
 type ChannelMemberForExport struct {
 	ChannelMember
 	ChannelName string

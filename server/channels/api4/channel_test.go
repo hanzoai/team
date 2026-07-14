@@ -8,6 +8,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"strings"
 	"testing"
@@ -7475,6 +7476,26 @@ func TestChannelMemberSanitization(t *testing.T) {
 		return members
 	}
 
+	// decodeNDJSONMembers reads a newline-delimited JSON stream, as returned by
+	// getChannelMembersForUser when page=-1.
+	decodeNDJSONMembers := func(resp *http.Response, err error) []map[string]json.RawMessage {
+		require.NoError(t, err)
+		defer resp.Body.Close()
+
+		var members []map[string]json.RawMessage
+		decoder := json.NewDecoder(resp.Body)
+		for {
+			var member map[string]json.RawMessage
+			decodeErr := decoder.Decode(&member)
+			if decodeErr == io.EOF {
+				break
+			}
+			require.NoError(t, decodeErr)
+			members = append(members, member)
+		}
+		return members
+	}
+
 	userIDOf := func(t *testing.T, member map[string]json.RawMessage) string {
 		t.Helper()
 		var id string
@@ -7482,15 +7503,23 @@ func TestChannelMemberSanitization(t *testing.T) {
 		return id
 	}
 
+	// assertTimestamps verifies that the current user's memberships expose valid
+	// timestamps while other users' timestamps are omitted entirely.
 	assertTimestamps := func(t *testing.T, members []map[string]json.RawMessage) {
 		t.Helper()
 		for _, member := range members {
-			_, hasLastViewedAt := member["last_viewed_at"]
-			_, hasLastUpdateAt := member["last_update_at"]
+			rawLastViewedAt, hasLastViewedAt := member["last_viewed_at"]
+			rawLastUpdateAt, hasLastUpdateAt := member["last_update_at"]
 
 			if userIDOf(t, member) == user.Id {
-				assert.True(t, hasLastViewedAt, "Current user should see their last_viewed_at")
-				assert.True(t, hasLastUpdateAt, "Current user should see their last_update_at")
+				require.True(t, hasLastViewedAt, "Current user should see their last_viewed_at")
+				require.True(t, hasLastUpdateAt, "Current user should see their last_update_at")
+
+				var lastViewedAt, lastUpdateAt int64
+				require.NoError(t, json.Unmarshal(rawLastViewedAt, &lastViewedAt))
+				require.NoError(t, json.Unmarshal(rawLastUpdateAt, &lastUpdateAt))
+				assert.GreaterOrEqual(t, lastViewedAt, int64(0), "Current user's last_viewed_at should be a valid timestamp, not the sentinel")
+				assert.GreaterOrEqual(t, lastUpdateAt, int64(0), "Current user's last_update_at should be a valid timestamp, not the sentinel")
 			} else {
 				assert.False(t, hasLastViewedAt, "Other users' last_viewed_at should be omitted, not returned as an invalid value")
 				assert.False(t, hasLastUpdateAt, "Other users' last_update_at should be omitted, not returned as an invalid value")
@@ -7514,8 +7543,7 @@ func TestChannelMemberSanitization(t *testing.T) {
 
 		currentMembers := decodeRawMembers(client.DoAPIGet(context.Background(), "/channels/"+channel.Id+"/members/"+user.Id, ""))
 		require.Len(t, currentMembers, 1)
-		assert.Contains(t, currentMembers[0], "last_viewed_at", "Current user should see their last_viewed_at")
-		assert.Contains(t, currentMembers[0], "last_update_at", "Current user should see their last_update_at")
+		assertTimestamps(t, currentMembers)
 	})
 
 	t.Run("getChannelMembersByIds omits timestamps for other users", func(t *testing.T) {
@@ -7524,17 +7552,38 @@ func TestChannelMemberSanitization(t *testing.T) {
 		assertTimestamps(t, members)
 	})
 
-	t.Run("getChannelMembersForUser omits timestamps for other users", func(t *testing.T) {
-		// Querying another user's channel members requires the edit_other_users
-		// permission, so use the system admin client.
-		members := decodeRawMembers(th.SystemAdminClient.DoAPIGet(context.Background(), "/users/"+user2.Id+"/channel_members", ""))
+	assertOtherUserMembersOmitted := func(t *testing.T, members []map[string]json.RawMessage, expectTeamData bool) {
+		t.Helper()
 		require.NotEmpty(t, members)
 		for _, member := range members {
 			assert.Equal(t, user2.Id, userIDOf(t, member))
 			assert.NotContains(t, member, "last_viewed_at", "Other user's last_viewed_at should be omitted")
 			assert.NotContains(t, member, "last_update_at", "Other user's last_update_at should be omitted")
-			assert.Contains(t, member, "team_name", "Team data should still be present")
+			if expectTeamData {
+				assert.Contains(t, member, "team_name", "Team data should still be present")
+			}
 		}
+	}
+
+	t.Run("getChannelMembersForUser (paginated) omits timestamps for other users", func(t *testing.T) {
+		// Querying another user's channel members requires the edit_other_users
+		// permission, so use the system admin client.
+		members := decodeRawMembers(th.SystemAdminClient.DoAPIGet(context.Background(), "/users/"+user2.Id+"/channel_members?page=0", ""))
+		assertOtherUserMembersOmitted(t, members, true)
+	})
+
+	t.Run("getChannelMembersForUser (NDJSON stream) omits timestamps for other users", func(t *testing.T) {
+		// page=-1 switches the endpoint to the newline-delimited streaming path,
+		// which sanitizes members through a separate code path.
+		members := decodeNDJSONMembers(th.SystemAdminClient.DoAPIGet(context.Background(), "/users/"+user2.Id+"/channel_members?page=-1", ""))
+		assertOtherUserMembersOmitted(t, members, true)
+	})
+
+	t.Run("getChannelMembersForTeamForUser omits timestamps for other users", func(t *testing.T) {
+		// Querying another user's memberships requires manage_system, so use the
+		// system admin client.
+		members := decodeRawMembers(th.SystemAdminClient.DoAPIGet(context.Background(), "/users/"+user2.Id+"/teams/"+th.BasicTeam.Id+"/channels/members", ""))
+		assertOtherUserMembersOmitted(t, members, false)
 	})
 
 	t.Run("addChannelMember omits timestamps in the returned member data", func(t *testing.T) {
