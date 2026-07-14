@@ -167,16 +167,16 @@ func (o ChannelMemberWithTeamData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 
-	for key, value := range map[string]any{
-		"team_display_name": o.TeamDisplayName,
-		"team_name":         o.TeamName,
-		"team_update_at":    o.TeamUpdateAt,
-	} {
-		encoded, err := json.Marshal(value)
-		if err != nil {
-			return nil, err
-		}
-		fields[key] = encoded
+	teamData, err := json.Marshal(struct {
+		TeamDisplayName string `json:"team_display_name"`
+		TeamName        string `json:"team_name"`
+		TeamUpdateAt    int64  `json:"team_update_at"`
+	}{o.TeamDisplayName, o.TeamName, o.TeamUpdateAt})
+	if err != nil {
+		return nil, err
+	}
+	if err := json.Unmarshal(teamData, &fields); err != nil {
+		return nil, err
 	}
 
 	return json.Marshal(fields)
