@@ -111,7 +111,7 @@ type AccessControlPolicySearch struct {
 	ScopeID         string                    `json:"scope_id,omitempty"`
 	Actions         []string                  `json:"actions"`
 	// AppliesToAllChannels, when true, restricts results to policies carrying the
-	// all-channels virtual scope flag in their Data jsonb.
+	// all-channels flag in their Data jsonb.
 	AppliesToAllChannels bool `json:"applies_to_all_channels,omitempty"`
 }
 

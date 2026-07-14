@@ -1536,6 +1536,51 @@ func filterBlameToEditingRuleScope(blame []model.PolicySimulationBlame, editingR
 //
 // Returns the resulting child policies (created or already-present) so the
 // caller can sync their membership through the normal per-channel path.
+// ChannelEligibleForAllChannels reports whether a channel should currently carry
+// a materialized all-channels child policy. All-channels scope is private-only,
+// so a public channel is excluded even though ValidateChannelEligibilityForAccessControl
+// would admit it, and an archived channel is excluded (a governed channel sheds
+// its child on archive). This is the single gate every materialization path uses
+// — the enumeration filters in callers are only optimizations — so no caller can
+// drift into materializing on a public or archived channel.
+func (a *App) ChannelEligibleForAllChannels(rctx request.CTX, channel *model.Channel) bool {
+	return channel != nil &&
+		channel.Type == model.ChannelTypePrivate &&
+		channel.DeleteAt == 0 &&
+		a.ValidateChannelEligibilityForAccessControl(rctx, channel) == nil
+}
+
+// materializeChild applies the parent import to a channel's child policy and
+// saves it, creating the channel-type row when child is nil (callers pass the
+// existing child, or nil, from a prior GetPolicy). A new child inherits the
+// parent's version and active state; an existing child keeps its own version and
+// only gains the import. It is the shared create/inherit/save/publish core of the
+// explicit-assignment and all-channels-materialization paths — the caller decides
+// eligibility and idempotency first.
+func (a *App) materializeChild(rctx request.CTX, acs einterfaces.AccessControlServiceInterface, parent *model.AccessControlPolicy, channelID string, child *model.AccessControlPolicy) (*model.AccessControlPolicy, *model.AppError) {
+	if child == nil {
+		child = &model.AccessControlPolicy{
+			ID:       channelID,
+			Type:     model.AccessControlPolicyTypeChannel,
+			Active:   parent.Active,
+			CreateAt: model.GetMillis(),
+			Props:    map[string]any{},
+			Version:  parent.Version,
+		}
+	}
+
+	if appErr := child.Inherit(parent); appErr != nil {
+		return nil, appErr
+	}
+
+	child, appErr := acs.SavePolicy(rctx, child)
+	if appErr != nil {
+		return nil, appErr
+	}
+	a.publishChannelPolicyEnforcedUpdate(rctx, child.ID)
+	return child, nil
+}
+
 func (a *App) EnsureAllChannelsChildren(rctx request.CTX, parent *model.AccessControlPolicy, channels []*model.Channel) ([]*model.AccessControlPolicy, *model.AppError) {
 	acs := a.Srv().ch.AccessControl
 	if acs == nil {
@@ -1548,7 +1593,7 @@ func (a *App) EnsureAllChannelsChildren(rctx request.CTX, parent *model.AccessCo
 
 	children := make([]*model.AccessControlPolicy, 0, len(channels))
 	for _, channel := range channels {
-		if appErr := a.ValidateChannelEligibilityForAccessControl(rctx, channel); appErr != nil {
+		if !a.ChannelEligibleForAllChannels(rctx, channel) {
 			rctx.Logger().Debug("Skipping ineligible channel during all-channels materialization",
 				mlog.String("channel_id", channel.Id),
 				mlog.String("parent_policy_id", parent.ID))
@@ -1567,27 +1612,11 @@ func (a *App) EnsureAllChannelsChildren(rctx request.CTX, parent *model.AccessCo
 			continue
 		}
 
-		if child == nil {
-			child = &model.AccessControlPolicy{
-				ID:       channel.Id,
-				Type:     model.AccessControlPolicyTypeChannel,
-				Active:   parent.Active,
-				CreateAt: model.GetMillis(),
-				Props:    map[string]any{},
-				Version:  parent.Version,
-			}
-		}
-
-		if appErr := child.Inherit(parent); appErr != nil {
-			return nil, appErr
-		}
-
-		child, appErr := acs.SavePolicy(rctx, child)
+		saved, appErr := a.materializeChild(rctx, acs, parent, channel.Id, child)
 		if appErr != nil {
 			return nil, appErr
 		}
-		a.publishChannelPolicyEnforcedUpdate(rctx, child.ID)
-		children = append(children, child)
+		children = append(children, saved)
 	}
 
 	return children, nil
@@ -1663,7 +1692,8 @@ func (a *App) ensureAllChannelsChildrenForChannel(rctx request.CTX, channel *mod
 // the same reason as removeAllChannelsChildren: an all-channels parent is not
 // expected to be hand-assigned.
 func (a *App) removeAllChannelsChildrenFromChannel(rctx request.CTX, channel *model.Channel) *model.AppError {
-	if a.Srv().ch.AccessControl == nil || channel == nil {
+	acs := a.Srv().ch.AccessControl
+	if acs == nil || channel == nil {
 		return nil
 	}
 
@@ -1671,8 +1701,31 @@ func (a *App) removeAllChannelsChildrenFromChannel(rctx request.CTX, channel *mo
 	if appErr != nil {
 		return appErr
 	}
+	if len(parents) == 0 {
+		return nil
+	}
+
+	// Read the channel's own child once and unassign only the all-channels
+	// parents it actually imports. Calling UnassignPoliciesFromChannels blindly
+	// per parent would run a full child search and log a spurious "not assigned"
+	// warning for every parent this channel never imported.
+	child, appErr := acs.GetPolicy(rctx, channel.Id)
+	if appErr != nil {
+		if appErr.StatusCode == http.StatusNotFound {
+			return nil
+		}
+		return appErr
+	}
+
+	parentIDs := make(map[string]bool, len(parents))
 	for _, parent := range parents {
-		if appErr := a.UnassignPoliciesFromChannels(rctx, parent.ID, []string{channel.Id}); appErr != nil {
+		parentIDs[parent.ID] = true
+	}
+	for _, importID := range child.Imports {
+		if !parentIDs[importID] {
+			continue
+		}
+		if appErr := a.UnassignPoliciesFromChannels(rctx, importID, []string{channel.Id}); appErr != nil {
 			return appErr
 		}
 	}
@@ -1790,28 +1843,12 @@ func (a *App) AssignAccessControlPolicyToChannels(rctx request.CTX, parentID str
 		if err != nil && err.StatusCode != http.StatusNotFound {
 			return nil, model.NewAppError("AssignAccessControlPolicyToChannels", "app.pap.assign_access_control_policy_to_channels.app_error", nil, err.Error(), http.StatusInternalServerError)
 		}
-		if child == nil {
-			child = &model.AccessControlPolicy{
-				ID:       channel.Id,
-				Type:     model.AccessControlPolicyTypeChannel,
-				Active:   policy.Active,
-				CreateAt: model.GetMillis(),
-				Props:    map[string]any{},
-			}
-		}
-		child.Version = model.AccessControlPolicyVersionV0_3
 
-		appErr := child.Inherit(policy)
+		saved, appErr := a.materializeChild(rctx, acs, policy, channel.Id, child)
 		if appErr != nil {
 			return nil, appErr
 		}
-
-		child, appErr = acs.SavePolicy(rctx, child)
-		if appErr != nil {
-			return nil, appErr
-		}
-		a.publishChannelPolicyEnforcedUpdate(rctx, child.ID)
-		policies = append(policies, child)
+		policies = append(policies, saved)
 	}
 
 	return policies, nil

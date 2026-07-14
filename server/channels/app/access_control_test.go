@@ -1017,6 +1017,46 @@ func TestEnsureAllChannelsChildren(t *testing.T) {
 	})
 }
 
+func TestChannelEligibleForAllChannels(t *testing.T) {
+	th := Setup(t).InitBasic(t)
+
+	priv := th.CreatePrivateChannel(t, th.BasicTeam)
+	pub := th.CreateChannel(t, th.BasicTeam)
+	t.Cleanup(func() {
+		require.Nil(t, th.App.PermanentDeleteChannel(th.Context, priv))
+		require.Nil(t, th.App.PermanentDeleteChannel(th.Context, pub))
+	})
+
+	// Field tweaks on in-memory copies exercise the gate without persisting;
+	// the predicate reads these fields (and the eligibility validator reads
+	// GroupConstrained/Shared/Name), so no store write is needed.
+	archived := *priv
+	archived.DeleteAt = model.GetMillis()
+	groupConstrained := *priv
+	groupConstrained.GroupConstrained = model.NewPointer(true)
+	shared := *priv
+	shared.Shared = model.NewPointer(true)
+
+	tests := []struct {
+		name    string
+		channel *model.Channel
+		want    bool
+	}{
+		{"eligible private channel", priv, true},
+		{"public channel excluded (all-channels scope is private-only)", pub, false},
+		{"archived private channel excluded", &archived, false},
+		{"group-constrained channel excluded", &groupConstrained, false},
+		{"shared channel excluded", &shared, false},
+		{"nil channel", nil, false},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			require.Equal(t, tc.want, th.App.ChannelEligibleForAllChannels(th.Context, tc.channel))
+		})
+	}
+}
+
 // saveActiveAllChannelsParent persists an active all-channels parent row through
 // the store — where the channel lifecycle hooks' gate query reads it — and
 // registers its cleanup.
