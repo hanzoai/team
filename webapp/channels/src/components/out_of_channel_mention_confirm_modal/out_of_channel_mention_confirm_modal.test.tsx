@@ -3,6 +3,8 @@
 
 import React from 'react';
 
+import {addChannelMembers} from 'mattermost-redux/actions/channels';
+import {savePreferences} from 'mattermost-redux/actions/preferences';
 import {Preferences} from 'mattermost-redux/constants';
 
 import {suppressOutOfChannelEphemeralPost} from 'actions/views/out_of_channel_mention';
@@ -15,6 +17,10 @@ import {TestHelper} from 'utils/test_helper';
 
 jest.mock('mattermost-redux/actions/channels', () => ({
     addChannelMembers: jest.fn(() => () => Promise.resolve({data: true})),
+}));
+
+jest.mock('mattermost-redux/actions/preferences', () => ({
+    savePreferences: jest.fn(() => ({type: 'MOCK_SAVE_PREFERENCES'})),
 }));
 
 jest.mock('actions/views/out_of_channel_mention', () => ({
@@ -32,6 +38,17 @@ describe('OutOfChannelMentionConfirmModal', () => {
         isPolicyEnforced: false,
         onSend: jest.fn(),
         onExited: jest.fn(),
+    };
+
+    const currentUserState = {
+        entities: {
+            users: {
+                currentUserId: 'current_user_id',
+                profiles: {
+                    current_user_id: TestHelper.getUserMock({id: 'current_user_id'}),
+                },
+            },
+        },
     };
 
     beforeEach(() => {
@@ -159,5 +176,61 @@ describe('OutOfChannelMentionConfirmModal', () => {
         expect(screen.getByText('carol')).toBeInTheDocument();
         expect(screen.getByText(/isn't in this channel and won't be notified/)).toBeInTheDocument();
         expect(screen.getByText(/not on this team, so they can't be added to the channel/)).toBeInTheDocument();
+    });
+
+    it('renders the do not ask again checkbox unchecked', () => {
+        renderWithContext(
+            <OutOfChannelMentionConfirmModal {...baseProps}/>,
+        );
+
+        expect(screen.getByRole('checkbox', {name: /Don't ask me again/})).not.toBeChecked();
+    });
+
+    it('saves skip preference when send without adding is clicked with checkbox checked', async () => {
+        renderWithContext(
+            <OutOfChannelMentionConfirmModal {...baseProps}/>,
+            currentUserState,
+        );
+
+        await userEvent.click(screen.getByRole('checkbox', {name: /Don't ask me again/}));
+        await userEvent.click(screen.getByText('Send without adding'));
+
+        expect(savePreferences).toHaveBeenCalledWith('current_user_id', [{
+            category: Preferences.CATEGORY_ADVANCED_SETTINGS,
+            name: Preferences.OUT_OF_CHANNEL_MENTION_SKIP_CONFIRM,
+            user_id: 'current_user_id',
+            value: 'true',
+        }]);
+        expect(suppressOutOfChannelEphemeralPost).toHaveBeenCalledWith('channel_id', '');
+        expect(baseProps.onSend).toHaveBeenCalled();
+    });
+
+    it('does not save skip preference when send without adding is clicked without checkbox', async () => {
+        renderWithContext(
+            <OutOfChannelMentionConfirmModal {...baseProps}/>,
+        );
+
+        await userEvent.click(screen.getByText('Send without adding'));
+
+        expect(savePreferences).not.toHaveBeenCalled();
+    });
+
+    it('saves skip preference when add and send is clicked with checkbox checked', async () => {
+        renderWithContext(
+            <OutOfChannelMentionConfirmModal {...baseProps}/>,
+            currentUserState,
+        );
+
+        await userEvent.click(screen.getByRole('checkbox', {name: /Don't ask me again/}));
+        await userEvent.click(screen.getByText('Add to channel and send'));
+
+        expect(addChannelMembers).toHaveBeenCalledWith('channel_id', ['user1'], '');
+        expect(savePreferences).toHaveBeenCalledWith('current_user_id', [{
+            category: Preferences.CATEGORY_ADVANCED_SETTINGS,
+            name: Preferences.OUT_OF_CHANNEL_MENTION_SKIP_CONFIRM,
+            user_id: 'current_user_id',
+            value: 'true',
+        }]);
+        expect(baseProps.onSend).toHaveBeenCalled();
     });
 });

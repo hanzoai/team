@@ -11,8 +11,9 @@ import type {SchedulingInfo} from '@mattermost/types/schedule_post';
 
 import {FileTypes} from 'mattermost-redux/action_types';
 import {getChannelTimezones} from 'mattermost-redux/actions/channels';
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions, Preferences} from 'mattermost-redux/constants';
 import {getChannel, getAllChannelStats} from 'mattermost-redux/selectors/entities/channels';
+import {getBool} from 'mattermost-redux/selectors/entities/preferences';
 import {makeGetFileIdsForPost} from 'mattermost-redux/selectors/entities/files';
 import {getConfig} from 'mattermost-redux/selectors/entities/general';
 import {getPost} from 'mattermost-redux/selectors/entities/posts';
@@ -288,6 +289,17 @@ const useSubmit = (
             );
 
             if (mentionResult) {
+                const skipConfirm = getBool(
+                    store.getState(),
+                    Preferences.CATEGORY_ADVANCED_SETTINGS,
+                    Preferences.OUT_OF_CHANNEL_MENTION_SKIP_CONFIRM,
+                );
+
+                if (skipConfirm) {
+                    await doSubmit(submittingDraft, schedulingInfo, createPostOptions);
+                    return;
+                }
+
                 dispatch(openModal({
                     modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
                     dialogType: OutOfChannelMentionConfirmModal,

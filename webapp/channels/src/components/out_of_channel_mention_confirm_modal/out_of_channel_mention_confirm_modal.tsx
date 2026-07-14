@@ -10,7 +10,10 @@ import {Button} from '@mattermost/shared/components/button';
 import type {UserProfile} from '@mattermost/types/users';
 
 import {addChannelMembers} from 'mattermost-redux/actions/channels';
+import {savePreferences} from 'mattermost-redux/actions/preferences';
+import {Preferences} from 'mattermost-redux/constants';
 import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
+import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
 import {displayUsername} from 'mattermost-redux/utils/user_utils';
 
 import {suppressOutOfChannelEphemeralPost} from 'actions/views/out_of_channel_mention';
@@ -57,11 +60,27 @@ function OutOfChannelMentionConfirmModal({
 }: Props) {
     const dispatch = useDispatch();
     const teammateNameDisplay = useSelector((state: GlobalState) => getTeammateNameDisplaySetting(state));
+    const userId = useSelector(getCurrentUserId);
     const [show, setShow] = useState(true);
     const [saving, setSaving] = useState(false);
     const [submitError, setSubmitError] = useState('');
+    const [dontAskAgain, setDontAskAgain] = useState(false);
+
+    const persistSkipPreference = useCallback(() => {
+        if (!dontAskAgain) {
+            return;
+        }
+
+        dispatch(savePreferences(userId, [{
+            category: Preferences.CATEGORY_ADVANCED_SETTINGS,
+            name: Preferences.OUT_OF_CHANNEL_MENTION_SKIP_CONFIRM,
+            user_id: userId,
+            value: 'true',
+        }]));
+    }, [dispatch, dontAskAgain, userId]);
 
     const handleClose = useCallback(() => {
+        setDontAskAgain(false);
         setShow(false);
     }, []);
 
@@ -72,8 +91,9 @@ function OutOfChannelMentionConfirmModal({
 
     const handleSend = useCallback(() => {
         setShow(false);
+        persistSkipPreference();
         handleConfirmSend();
-    }, [handleConfirmSend]);
+    }, [handleConfirmSend, persistSkipPreference]);
 
     const handleAddAndSend = useCallback(async () => {
         if (addable.length === 0 || saving) {
@@ -91,8 +111,9 @@ function OutOfChannelMentionConfirmModal({
         }
 
         setShow(false);
+        persistSkipPreference();
         handleConfirmSend();
-    }, [addable, saving, dispatch, channelId, rootId, handleConfirmSend]);
+    }, [addable, saving, dispatch, channelId, rootId, handleConfirmSend, persistSkipPreference]);
 
     const isPrivate = channelType === Constants.PRIVATE_CHANNEL;
     const addableCount = addable.length;
@@ -231,6 +252,19 @@ function OutOfChannelMentionConfirmModal({
                         {submitError}
                     </span>
                 )}
+                <div className='OutOfChannelMentionConfirmModal__checkbox checkbox mb-0'>
+                    <label>
+                        <input
+                            type='checkbox'
+                            checked={dontAskAgain}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDontAskAgain(e.target.checked)}
+                        />
+                        <FormattedMessage
+                            id='out_of_channel_mention_confirm_modal.checkbox'
+                            defaultMessage="Don't ask me again"
+                        />
+                    </label>
+                </div>
             </div>
         </GenericModal>
     );

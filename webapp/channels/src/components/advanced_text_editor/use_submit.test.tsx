@@ -4,10 +4,11 @@
 import type {UserProfile} from '@mattermost/types/users';
 import type {DeepPartial} from '@mattermost/types/utilities';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions, Preferences} from 'mattermost-redux/constants';
 
 import {onSubmit} from 'actions/views/create_comment';
 import {openModal} from 'actions/views/modals';
+import {suppressOutOfChannelEphemeralPost} from 'actions/views/out_of_channel_mention';
 
 import {renderHookWithContext, act, waitFor} from 'tests/react_testing_utils';
 import {ModalIdentifiers} from 'utils/constants';
@@ -29,6 +30,10 @@ jest.mock('actions/views/create_comment', () => ({
 
 jest.mock('utils/out_of_channel_mentions', () => ({
     getOutOfChannelMentionsFromMessage: jest.fn(),
+}));
+
+jest.mock('actions/views/out_of_channel_mention', () => ({
+    suppressOutOfChannelEphemeralPost: jest.fn(() => () => ({type: 'SUPPRESS_OUT_OF_CHANNEL_EPHEMERAL'})),
 }));
 
 describe('useSubmit', () => {
@@ -98,8 +103,24 @@ describe('useSubmit', () => {
                         },
                     },
                 },
+                preferences: {
+                    myPreferences: {},
+                },
             },
         };
+    }
+
+    function getStateWithSkipOutOfChannelMentionConfirm(): DeepPartial<GlobalState> {
+        const state = getBaseState();
+        state.entities!.preferences!.myPreferences = {
+            [`${Preferences.CATEGORY_ADVANCED_SETTINGS}--${Preferences.OUT_OF_CHANNEL_MENTION_SKIP_CONFIRM}`]: {
+                category: Preferences.CATEGORY_ADVANCED_SETTINGS,
+                name: Preferences.OUT_OF_CHANNEL_MENTION_SKIP_CONFIRM,
+                user_id: 'current_user_id',
+                value: 'true',
+            },
+        };
+        return state;
     }
 
     beforeEach(() => {
@@ -347,6 +368,53 @@ describe('useSubmit', () => {
         expect(openModal).toHaveBeenCalledWith(expect.objectContaining({
             modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
         }));
+    });
+
+    it('should submit without modal when out of channel mention skip preference is enabled', async () => {
+        const user = TestHelper.getUserMock({id: 'user1', username: 'alice'});
+        jest.mocked(OutOfChannelMentions.getOutOfChannelMentionsFromMessage).mockResolvedValue({
+            addable: [user],
+            notAddable: [],
+            outOfTeam: [],
+        });
+
+        const draft = {...mockDraft, message: '@alice hello', rootId: ''};
+        const {result} = renderHookWithContext(() => useSubmit(
+            draft,
+            mockPostError,
+            'channel_id',
+            '',
+            mockServerError,
+            mockLastBlurAt,
+            mockFocusTextbox,
+            mockSetServerError,
+            mockSetShowPreview,
+            mockHandleDraftChange,
+            mockPrioritySubmitCheck,
+            mockAfterOptimisticSubmit,
+            mockAfterSubmit,
+            false,
+            false,
+            'post_id',
+        ), getStateWithSkipOutOfChannelMentionConfirm());
+
+        await result.current[0]();
+
+        expect(openModal).not.toHaveBeenCalledWith(expect.objectContaining({
+            modalId: ModalIdentifiers.OUT_OF_CHANNEL_MENTION_CONFIRM_MODAL,
+        }));
+        expect(suppressOutOfChannelEphemeralPost).not.toHaveBeenCalled();
+        await waitFor(() => {
+            expect(onSubmit).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    message: '@alice hello',
+                    channelId: 'channel_id',
+                    rootId: '',
+                }),
+                expect.any(Object),
+                undefined,
+            );
+        });
     });
 
     it('should not show out of channel mention modal in edit mode', async () => {
