@@ -128,12 +128,10 @@ export type ClientConfig = {
     FeatureFlagAppsEnabled: string;
     FeatureFlagCallsEnabled: string;
     FeatureFlagCustomProfileAttributes: string;
-    FeatureFlagAttributeBasedAccessControl: string;
     FeatureFlagTeamMembershipAccessControl: string;
     FeatureFlagPermissionPolicies: string;
     FeatureFlagChannelPermissionPolicies: string;
     FeatureFlagPolicySimulation: string;
-    FeatureFlagWebSocketEventScope: string;
     FeatureFlagContentFlagging: string;
     FeatureFlagClassificationMarkings: string;
     FeatureFlagPropertyFieldRank: string;
@@ -585,6 +583,15 @@ export type FileSettings = {
     AmazonS3RequestTimeoutMilliseconds: number;
     AmazonS3UploadPartSizeBytes: number;
     AmazonS3StorageClass: string;
+    AzureStorageAccount: string;
+    AzureAuthMode: string;
+    AzureAccessKey: string;
+    AzureContainer: string;
+    AzurePathPrefix: string;
+    AzureCloud: string;
+    AzureEndpoint: string;
+    AzureSSL: boolean;
+    AzureRequestTimeoutMilliseconds: number;
     DedicatedExportStore: boolean;
     ExportDriverName: string;
     ExportDirectory: string;
@@ -602,6 +609,16 @@ export type FileSettings = {
     ExportAmazonS3PresignExpiresSeconds: number;
     ExportAmazonS3UploadPartSizeBytes: number;
     ExportAmazonS3StorageClass: string;
+    ExportAzureStorageAccount: string;
+    ExportAzureAuthMode: string;
+    ExportAzureAccessKey: string;
+    ExportAzureContainer: string;
+    ExportAzurePathPrefix: string;
+    ExportAzureCloud: string;
+    ExportAzureEndpoint: string;
+    ExportAzureSSL: boolean;
+    ExportAzureRequestTimeoutMilliseconds: number;
+    ExportAzurePresignExpiresSeconds: number;
 };
 
 export type EmailSettings = {

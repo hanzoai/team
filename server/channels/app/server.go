@@ -59,6 +59,7 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/migrations"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/mobile_session_metadata"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/notify_admin"
+	"github.com/mattermost/mattermost/server/v8/channels/jobs/notify_expiring_access_tokens"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/plugins"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/post_persistent_notifications"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/product_notices"
@@ -275,6 +276,7 @@ func NewServer(options ...Option) (*Server, error) {
 		{Name: model.AccessControlPropertyGroupName, Version: model.PropertyGroupVersionV2, SchemaVersion: model.AccessControlPropertyGroupSchemaVersion},
 		{Name: model.SessionAttributesPropertyGroupName, Version: model.PropertyGroupVersionV2},
 		{Name: model.ContentFlaggingGroupName, Version: model.PropertyGroupVersionV1},
+		{Name: model.BoardsPropertyGroupName, Version: model.PropertyGroupVersionV2},
 	}); err != nil {
 		return nil, errors.Wrap(err, "failed to register builtin property groups")
 	}
@@ -886,8 +888,8 @@ func (s *Server) GoBuffered(f func()) {
 
 // GoExtraction submits f to the bounded document extraction worker pool without
 // blocking the caller. It returns false if the pool is saturated and f was not
-// run; skipped files stay unextracted until an admin runs a content extraction
-// job (e.g. mmctl extract).
+// run; skipped files stay unextracted until the scheduled ExtractContent catch-up
+// job or an admin runs a content extraction job (e.g. mmctl extract).
 func (s *Server) GoExtraction(f func()) bool {
 	return s.platform.GoExtraction(f)
 }
@@ -1562,7 +1564,7 @@ func (ch *Channels) ClientConfigHash() string {
 }
 
 func (s *Server) initJobs() {
-	s.Jobs = jobs.NewJobServer(s.platform, s.Store(), s.GetMetrics(), s.Log())
+	s.Jobs = jobs.NewJobServer(s.platform, s.Store(), s.GetMetrics(), s.Log(), s.platform.Publish)
 
 	if jobsDataRetentionJobInterface != nil {
 		builder := jobsDataRetentionJobInterface(s)
@@ -1689,7 +1691,7 @@ func (s *Server) initJobs() {
 	s.Jobs.RegisterJobType(
 		model.JobTypeExtractContent,
 		extract_content.MakeWorker(s.Jobs, New(ServerConnector(s.Channels())), s.Store()),
-		nil,
+		extract_content.MakeScheduler(s.Jobs),
 	)
 
 	s.Jobs.RegisterJobType(
@@ -1742,8 +1744,14 @@ func (s *Server) initJobs() {
 
 	s.Jobs.RegisterJobType(
 		model.JobTypeCleanupExpiredAccessTokens,
-		cleanup_expired_access_tokens.MakeWorker(s.Jobs, s.platform.ClearUserSessionCache),
+		cleanup_expired_access_tokens.MakeWorker(s.Jobs, s.platform.ClearUserSessionCache, New(ServerConnector(s.Channels())).NotifyExpiredAccessTokensDeleted),
 		cleanup_expired_access_tokens.MakeScheduler(s.Jobs),
+	)
+
+	s.Jobs.RegisterJobType(
+		model.JobTypeNotifyExpiringAccessTokens,
+		notify_expiring_access_tokens.MakeWorker(s.Jobs, New(ServerConnector(s.Channels())).NotifyExpiringAccessTokens),
+		notify_expiring_access_tokens.MakeScheduler(s.Jobs),
 	)
 
 	s.Jobs.RegisterJobType(
