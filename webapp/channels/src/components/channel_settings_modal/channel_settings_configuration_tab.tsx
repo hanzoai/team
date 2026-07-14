@@ -39,7 +39,7 @@ import SaveChangesPanel from 'components/widgets/modals/components/save_changes_
 
 import type {GlobalState} from 'types/store';
 
-import ChannelSharedInvitationsPanel from './channel_shared_invitations_panel';
+import ChannelSharedInvitationsPanel, {type ChannelSharedInvitationsPanelHandle} from './channel_shared_invitations_panel';
 import ShareChannelWithWorkspaces from './share_channel_with_workspaces';
 import type {WorkspaceWithStatus} from './share_channel_with_workspaces/types';
 
@@ -264,6 +264,7 @@ function ChannelSettingsConfigurationTab({
     // Shared channels section
     const initialRemotes = useSelector((state: GlobalState) => getRemotesForChannel(state, channel.id));
     const userEditedSharingRef = useRef(false);
+    const sharedInvitationsPanelRef = useRef<ChannelSharedInvitationsPanelHandle>(null);
 
     const [savedSharing, setSavedSharing] = useState<SharingSnapshot>(() => ({
         enabled: (initialRemotes || []).length > 0,
@@ -517,6 +518,7 @@ function ChannelSettingsConfigurationTab({
                 }
             }
             const fetchResult = await dispatch(fetchChannelRemotes(channel.id, true));
+            sharedInvitationsPanelRef.current?.reload();
 
             if (errorCount === 1) {
                 handleServerError(lastError as ServerError);
@@ -662,8 +664,8 @@ function ChannelSettingsConfigurationTab({
                         onToggle={handleSharingToggle}
                     />
                     <ChannelSharedInvitationsPanel
+                        ref={sharedInvitationsPanelRef}
                         channelId={channel.id}
-                        refresh={shareChannelKey}
                     />
                 </>
             )}

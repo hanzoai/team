@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
@@ -19,17 +19,15 @@ import Tag from 'components/widgets/tag/tag';
 
 import type {GlobalState} from 'types/store';
 
-type Props = {
-    channelId: string;
-
-    /** Bump to refetch (e.g. after sharing changes). */
-    refresh?: number;
+export type ChannelSharedInvitationsPanelHandle = {
+    reload: () => void;
 };
 
-export default function ChannelSharedInvitationsPanel({
-    channelId,
-    refresh = 0,
-}: Props) {
+type Props = {
+    channelId: string;
+};
+
+const ChannelSharedInvitationsPanel = forwardRef<ChannelSharedInvitationsPanelHandle, Props>(({channelId}, ref) => {
     const dispatch = useDispatch();
     const intl = useIntl();
     const channelMap = useSelector((state: GlobalState) => getAllChannels(state));
@@ -87,12 +85,18 @@ export default function ChannelSharedInvitationsPanel({
         [load],
     );
 
+    useImperativeHandle(ref, () => ({
+        reload: () => {
+            load();
+        },
+    }), [load]);
+
     useEffect(() => {
         load();
         return () => {
             loadRequestIdRef.current += 1;
         };
-    }, [load, refresh]);
+    }, [load]);
 
     useEffect(() => {
         if (!rows?.length) {
@@ -224,7 +228,9 @@ export default function ChannelSharedInvitationsPanel({
             ) : null}
         </PanelRoot>
     );
-}
+});
+
+export default ChannelSharedInvitationsPanel;
 
 const PanelRoot = styled.div`
     display: flex;

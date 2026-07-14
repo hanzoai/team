@@ -171,7 +171,6 @@ var _ remotecluster.RemoteClusterServiceIFace = (*stubRemoteClusterService)(nil)
 func setupMockServerWithRemoteClusterService(mockServer *MockServerIface, rcs remotecluster.RemoteClusterServiceIFace) {
 	mockConfig := model.Config{}
 	mockConfig.SetDefaults()
-	mockConfig.FeatureFlags.EnableSharedChannelsMemberSync = false
 	mockServer.On("Config").Return(&mockConfig)
 	mockServer.On("GetRemoteClusterService").Return(rcs)
 }
