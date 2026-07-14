@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {test} from '@mattermost/playwright-lib';
+import {expect, test} from '@mattermost/playwright-lib';
 
 import {openMultiform, setupMultiform} from './helpers';
 
@@ -42,10 +42,14 @@ test('MM-T2550D cancels the multiform at different steps', {tag: '@interactive_d
     await openMultiform(channelsPage);
     await dialog.completeStepOne('Jane', 'jane@example.com');
     await dialog.expectStepTwo();
+    const previousLastPostId = await channelsPage.centerView.getLastPostID();
     await dialog.cancel();
 
     // * Verify the second cancellation closes the form and posts a response
     await dialog.expectClosed();
+    await expect
+        .poll(() => channelsPage.centerView.getLastPostID(), {timeout: pw.duration.ten_sec})
+        .not.toBe(previousLastPostId);
     await channelsPage.centerView.waitUntilLastPostContains('Dialog cancelled');
 });
 

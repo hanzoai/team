@@ -86,6 +86,7 @@ test('MM-T1272 Up deletes a reply when its edit is cleared', {tag: '@keyboard_sh
     await channelsPage.sidebarRight.postMessage(reply);
     const replyPost = await channelsPage.sidebarRight.getLastPost();
     await replyPost.toContainText(reply);
+    const stableReplyPost = await channelsPage.sidebarRight.getPostById(await replyPost.getId());
 
     // # Focus the reply textbox, press Up, and clear the reply edit
     await channelsPage.sidebarRight.postCreate.input.focus();
@@ -104,5 +105,5 @@ test('MM-T1272 Up deletes a reply when its edit is cleared', {tag: '@keyboard_sh
 
     // * Verify the reply is removed
     await confirmation.notToBeVisible();
-    await replyPost.toNotContainText(reply);
+    await stableReplyPost.notToBeVisible();
 });

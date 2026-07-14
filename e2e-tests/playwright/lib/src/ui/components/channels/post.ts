@@ -86,8 +86,8 @@ export default class ChannelsPost {
     async getId() {
         const id = await this.container.getAttribute('id');
         expect(id, 'No post ID found.').toBeTruthy();
-        // Remove 'post_' prefix and any timestamp suffix (format: postId:timestamp for combined posts)
-        const postIdWithPossibleTimestamp = (id || '').substring('post_'.length);
+        // Remove the center/RHS prefix and any timestamp suffix (format: postId:timestamp for combined posts)
+        const postIdWithPossibleTimestamp = (id || '').replace(/^(?:post_|rhsPost_)/, '');
         // Return just the post ID (before any colon)
         return postIdWithPossibleTimestamp.split(':')[0];
     }
