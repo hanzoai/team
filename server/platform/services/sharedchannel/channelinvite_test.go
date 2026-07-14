@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -102,22 +103,20 @@ func registerSharedChannelInvitationStoreMocks(inv *mocks.SharedChannelInvitatio
 				id, status, errMsg string
 			}{args.Get(0).(string), args.Get(1).(string), args.Get(2).(string)})
 		}).Maybe()
-	inv.On("Get", mock.AnythingOfType("string")).Return(
-		func(id string) (*model.SharedChannelInvitation, error) {
-			for _, deletedID := range calls.deletedIDs {
-				if deletedID == id {
-					return nil, store.NewErrNotFound("SharedChannelInvitation", id)
-				}
-			}
-			for _, saved := range calls.saved {
-				if saved.Id == id {
-					cp := *saved
-					return &cp, nil
-				}
-			}
+	lookupInvitation := func(id string) (*model.SharedChannelInvitation, error) {
+		if slices.Contains(calls.deletedIDs, id) {
 			return nil, store.NewErrNotFound("SharedChannelInvitation", id)
-		},
-	).Maybe()
+		}
+		for _, saved := range calls.saved {
+			if saved.Id == id {
+				cp := *saved
+				return &cp, nil
+			}
+		}
+		return nil, store.NewErrNotFound("SharedChannelInvitation", id)
+	}
+	inv.On("Get", mock.AnythingOfType("string")).Return(lookupInvitation).Maybe()
+	inv.On("GetFromMaster", mock.AnythingOfType("string")).Return(lookupInvitation).Maybe()
 	inv.On("DeleteByChannelId", mock.AnythingOfType("string")).Return(nil).Maybe()
 	inv.On("DeletePendingByChannelIdAndRemoteId", mock.AnythingOfType("string"), mock.AnythingOfType("string")).Return(nil).Maybe()
 }
@@ -857,7 +856,7 @@ func TestSendChannelInvite_invitationPersistence(t *testing.T) {
 
 		invMock := mocks.NewSharedChannelInvitationStore(t)
 		invMock.On("EnsurePendingSent", channel.Id, rc.RemoteId, userID).Return(pendingInv, nil).Once()
-		invMock.On("Get", invitationID).Return(nil, store.NewErrNotFound("SharedChannelInvitation", invitationID)).Once()
+		invMock.On("GetFromMaster", invitationID).Return(nil, store.NewErrNotFound("SharedChannelInvitation", invitationID)).Once()
 
 		mockSharedChannelStore := mocks.SharedChannelStore{}
 		mockSharedChannelStore.On("Get", channel.Id).Return(sc, nil)
