@@ -127,6 +127,27 @@ func TestSearchAccessControlDecisionActions(t *testing.T) {
 		require.True(t, out.Decisions[model.AccessControlPolicyActionUploadFileAttachment].Allowed)
 	})
 
+	t.Run("non-member of private channel returns 403", func(t *testing.T) {
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			*cfg.AccessControlSettings.EnableAttributeBasedAccessControl = false
+		})
+		// Create a private channel as system admin; BasicUser is not a member.
+		privateCh, _, err := th.SystemAdminClient.CreateChannel(context.Background(), &model.Channel{
+			TeamId:      th.BasicTeam.Id,
+			Name:        model.NewId(),
+			DisplayName: "Private Not Member",
+			Type:        model.ChannelTypePrivate,
+		})
+		require.NoError(t, err)
+
+		_, resp, err := th.Client.SearchAccessControlDecisionActions(context.Background(), model.ActionSearchRequest{
+			Resource: model.Resource{Type: model.AccessControlPolicyTypeChannel, ID: privateCh.Id},
+			Actions:  []string{model.AccessControlPolicyActionUploadFileAttachment},
+		})
+		require.Error(t, err)
+		CheckForbiddenStatus(t, resp)
+	})
+
 	t.Run("page field accepted and ignored", func(t *testing.T) {
 		th.App.UpdateConfig(func(cfg *model.Config) {
 			*cfg.AccessControlSettings.EnableAttributeBasedAccessControl = false

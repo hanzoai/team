@@ -59,6 +59,13 @@ func searchAccessControlDecisionActions(c *Context, w http.ResponseWriter, r *ht
 		c.Err = appErr
 		return
 	}
+	// Verify the caller can access the resource before revealing ABAC decisions for it.
+	if req.Resource.Type == model.AccessControlPolicyTypeChannel {
+		if hasPermission, _ := c.App.SessionHasPermissionToChannel(c.AppContext, *c.AppContext.Session(), req.Resource.ID, model.PermissionReadChannel); !hasPermission {
+			c.SetPermissionError(model.PermissionReadChannel)
+			return
+		}
+	}
 
 	resp, appErr := c.App.SearchAllowedActionsForCurrentUser(c.AppContext, req)
 	if appErr != nil {
