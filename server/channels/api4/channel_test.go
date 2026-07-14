@@ -7456,73 +7456,101 @@ func TestChannelMemberSanitization(t *testing.T) {
 	_, _, err := client.AddChannelMember(context.Background(), channel.Id, user2.Id)
 	require.NoError(t, err)
 
-	t.Run("getChannelMembers sanitizes LastViewedAt and LastUpdateAt for other users", func(t *testing.T) {
-		members, _, err := client.GetChannelMembers(context.Background(), channel.Id, 0, 60, "")
+	// decodeRawMembers reads the raw JSON body of a channel member response so the
+	// test can assert whether the timestamp fields are present or omitted, which a
+	// typed model.ChannelMember cannot distinguish from a zero value.
+	decodeRawMembers := func(resp *http.Response, err error) []map[string]json.RawMessage {
 		require.NoError(t, err)
+		defer resp.Body.Close()
 
+		var raw json.RawMessage
+		require.NoError(t, json.NewDecoder(resp.Body).Decode(&raw))
+
+		var members []map[string]json.RawMessage
+		if decodeErr := json.Unmarshal(raw, &members); decodeErr != nil {
+			var single map[string]json.RawMessage
+			require.NoError(t, json.Unmarshal(raw, &single))
+			members = []map[string]json.RawMessage{single}
+		}
+		return members
+	}
+
+	userIDOf := func(t *testing.T, member map[string]json.RawMessage) string {
+		t.Helper()
+		var id string
+		require.NoError(t, json.Unmarshal(member["user_id"], &id))
+		return id
+	}
+
+	assertTimestamps := func(t *testing.T, members []map[string]json.RawMessage) {
+		t.Helper()
 		for _, member := range members {
-			if member.UserId == user.Id {
-				// Current user should see their own timestamps
-				assert.NotEqual(t, int64(-1), member.LastViewedAt, "Current user should see their LastViewedAt")
-				assert.NotEqual(t, int64(-1), member.LastUpdateAt, "Current user should see their LastUpdateAt")
+			_, hasLastViewedAt := member["last_viewed_at"]
+			_, hasLastUpdateAt := member["last_update_at"]
+
+			if userIDOf(t, member) == user.Id {
+				assert.True(t, hasLastViewedAt, "Current user should see their last_viewed_at")
+				assert.True(t, hasLastUpdateAt, "Current user should see their last_update_at")
 			} else {
-				// Other users' timestamps should be sanitized
-				assert.Equal(t, int64(-1), member.LastViewedAt, "Other users' LastViewedAt should be sanitized")
-				assert.Equal(t, int64(-1), member.LastUpdateAt, "Other users' LastUpdateAt should be sanitized")
+				assert.False(t, hasLastViewedAt, "Other users' last_viewed_at should be omitted, not returned as an invalid value")
+				assert.False(t, hasLastUpdateAt, "Other users' last_update_at should be omitted, not returned as an invalid value")
 			}
 		}
-	})
+	}
 
-	t.Run("getChannelMember sanitizes LastViewedAt and LastUpdateAt for other users", func(t *testing.T) {
-		// Get other user's membership data
-		member, _, err := client.GetChannelMember(context.Background(), channel.Id, user2.Id, "")
-		require.NoError(t, err)
-
-		// Should be sanitized since it's not the current user
-		assert.Equal(t, int64(-1), member.LastViewedAt, "Other user's LastViewedAt should be sanitized")
-		assert.Equal(t, int64(-1), member.LastUpdateAt, "Other user's LastUpdateAt should be sanitized")
-
-		// Get current user's membership data
-		currentMember, _, err := client.GetChannelMember(context.Background(), channel.Id, user.Id, "")
-		require.NoError(t, err)
-
-		// Should not be sanitized since it's the current user
-		assert.NotEqual(t, int64(-1), currentMember.LastViewedAt, "Current user should see their LastViewedAt")
-		assert.NotEqual(t, int64(-1), currentMember.LastUpdateAt, "Current user should see their LastUpdateAt")
-	})
-
-	t.Run("getChannelMembersByIds sanitizes data appropriately", func(t *testing.T) {
-		userIds := []string{user.Id, user2.Id}
-		members, _, err := client.GetChannelMembersByIds(context.Background(), channel.Id, userIds)
-		require.NoError(t, err)
+	t.Run("getChannelMembers omits last_viewed_at and last_update_at for other users", func(t *testing.T) {
+		members := decodeRawMembers(client.DoAPIGet(context.Background(), "/channels/"+channel.Id+"/members?page=0&per_page=60", ""))
 		require.Len(t, members, 2)
+		assertTimestamps(t, members)
+	})
 
+	t.Run("getChannelMember omits timestamps for other users but keeps them for the current user", func(t *testing.T) {
+		otherMembers := decodeRawMembers(client.DoAPIGet(context.Background(), "/channels/"+channel.Id+"/members/"+user2.Id, ""))
+		require.Len(t, otherMembers, 1)
+		_, hasLastViewedAt := otherMembers[0]["last_viewed_at"]
+		_, hasLastUpdateAt := otherMembers[0]["last_update_at"]
+		assert.False(t, hasLastViewedAt, "Other user's last_viewed_at should be omitted")
+		assert.False(t, hasLastUpdateAt, "Other user's last_update_at should be omitted")
+
+		currentMembers := decodeRawMembers(client.DoAPIGet(context.Background(), "/channels/"+channel.Id+"/members/"+user.Id, ""))
+		require.Len(t, currentMembers, 1)
+		assert.Contains(t, currentMembers[0], "last_viewed_at", "Current user should see their last_viewed_at")
+		assert.Contains(t, currentMembers[0], "last_update_at", "Current user should see their last_update_at")
+	})
+
+	t.Run("getChannelMembersByIds omits timestamps for other users", func(t *testing.T) {
+		members := decodeRawMembers(client.DoAPIPostJSON(context.Background(), "/channels/"+channel.Id+"/members/ids", []string{user.Id, user2.Id}))
+		require.Len(t, members, 2)
+		assertTimestamps(t, members)
+	})
+
+	t.Run("getChannelMembersForUser omits timestamps for other users", func(t *testing.T) {
+		// Querying another user's channel members requires the edit_other_users
+		// permission, so use the system admin client.
+		members := decodeRawMembers(th.SystemAdminClient.DoAPIGet(context.Background(), "/users/"+user2.Id+"/channel_members", ""))
+		require.NotEmpty(t, members)
 		for _, member := range members {
-			if member.UserId == user.Id {
-				// Current user should see their own timestamps
-				assert.NotEqual(t, int64(-1), member.LastViewedAt, "Current user should see their LastViewedAt")
-				assert.NotEqual(t, int64(-1), member.LastUpdateAt, "Current user should see their LastUpdateAt")
-			} else {
-				// Other users' timestamps should be sanitized
-				assert.Equal(t, int64(-1), member.LastViewedAt, "Other users' LastViewedAt should be sanitized")
-				assert.Equal(t, int64(-1), member.LastUpdateAt, "Other users' LastUpdateAt should be sanitized")
-			}
+			assert.Equal(t, user2.Id, userIDOf(t, member))
+			assert.NotContains(t, member, "last_viewed_at", "Other user's last_viewed_at should be omitted")
+			assert.NotContains(t, member, "last_update_at", "Other user's last_update_at should be omitted")
+			assert.Contains(t, member, "team_name", "Team data should still be present")
 		}
 	})
 
-	t.Run("addChannelMember sanitizes returned member data", func(t *testing.T) {
+	t.Run("addChannelMember omits timestamps in the returned member data", func(t *testing.T) {
 		newUser := th.CreateUser(t)
 		th.LinkUserToTeam(t, newUser, th.BasicTeam)
 
-		// Add new user and check returned member data
-		returnedMember, _, err := client.AddChannelMember(context.Background(), channel.Id, newUser.Id)
-		require.NoError(t, err)
+		members := decodeRawMembers(client.DoAPIPostJSON(context.Background(), "/channels/"+channel.Id+"/members", map[string]string{"user_id": newUser.Id}))
+		require.Len(t, members, 1)
 
-		// The returned member should be sanitized since it's not the current user
-		assert.Equal(t, int64(-1), returnedMember.LastViewedAt, "Returned member LastViewedAt should be sanitized")
-		assert.Equal(t, int64(-1), returnedMember.LastUpdateAt, "Returned member LastUpdateAt should be sanitized")
-		assert.Equal(t, newUser.Id, returnedMember.UserId, "UserId should be preserved")
-		assert.Equal(t, channel.Id, returnedMember.ChannelId, "ChannelId should be preserved")
+		assert.NotContains(t, members[0], "last_viewed_at", "Returned member last_viewed_at should be omitted")
+		assert.NotContains(t, members[0], "last_update_at", "Returned member last_update_at should be omitted")
+		assert.Equal(t, newUser.Id, userIDOf(t, members[0]), "UserId should be preserved")
+
+		var channelID string
+		require.NoError(t, json.Unmarshal(members[0]["channel_id"], &channelID))
+		assert.Equal(t, channel.Id, channelID, "ChannelId should be preserved")
 	})
 }
 
