@@ -119,6 +119,13 @@ export default class ChannelsPost {
         await this.postMenu.replyButton.click();
     }
 
+    /**
+     * Clicks the "Edited" indicator to open the post's edit history in the right sidebar.
+     */
+    async openEditHistory() {
+        await this.editedIndicator.click();
+    }
+
     async reply() {
         await this.container.hover();
         await this.postMenu.toBeVisible();
