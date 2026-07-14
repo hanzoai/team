@@ -189,6 +189,9 @@ func TestCreateOrUpdateAccessControlPolicy(t *testing.T) {
 		// with no children of either kind, neither search yields a broadcast.
 		mockACPStore := storemocks.AccessControlPolicyStore{}
 		mockStore.On("AccessControlPolicy").Return(&mockACPStore)
+		// The save reads the parent's prior row to detect an all-channels flag
+		// transition; there is no prior row here.
+		mockACPStore.On("Get", thMock.Context, parentID).Return(nil, store.NewErrNotFound("AccessControlPolicy", parentID))
 		mockACPStore.On("SearchPolicies", thMock.Context, mock.MatchedBy(func(s model.AccessControlPolicySearch) bool {
 			return s.Type == model.AccessControlPolicyTypeChannel && s.ParentID == parentID
 		})).Return([]*model.AccessControlPolicy{}, int64(0), nil)
@@ -1188,6 +1191,163 @@ func TestUpdateChannelPrivacyAllChannelsChildren(t *testing.T) {
 		_, err = th.App.Srv().Store().AccessControlPolicy().Get(th.Context, priv.Id)
 		var nfErr *store.ErrNotFound
 		require.True(t, errors.As(err, &nfErr), "child policy should be removed after converting to public")
+	})
+}
+
+// requireChildActive asserts the channel's materialized child policy imports the
+// parent and has the expected Active state.
+func requireChildActive(t *testing.T, th *TestHelper, channelID, parentID string, active bool) {
+	t.Helper()
+	child, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, channelID)
+	require.NoError(t, err)
+	require.Contains(t, child.Imports, parentID)
+	require.Equal(t, active, child.Active)
+}
+
+// requireChildAbsent asserts no policy row exists for the channel.
+func requireChildAbsent(t *testing.T, th *TestHelper, channelID string) {
+	t.Helper()
+	_, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, channelID)
+	var nfErr *store.ErrNotFound
+	require.True(t, errors.As(err, &nfErr), "expected no policy row for channel %s", channelID)
+}
+
+func TestUpdateAccessControlPoliciesActiveAllChannelsCascade(t *testing.T) {
+	th := SetupConfig(t, func(cfg *model.Config) {
+		cfg.FeatureFlags.AttributeValueMasking = false
+	}).InitBasic(t)
+
+	parent := saveActiveAllChannelsParent(t, th)
+	wireWriteThroughAllChannelsACS(t, th)
+
+	// The create hook materializes an active child on each private channel.
+	ch1 := th.CreatePrivateChannel(t, th.BasicTeam)
+	ch2 := th.CreatePrivateChannel(t, th.BasicTeam)
+	t.Cleanup(func() {
+		require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch1))
+		require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch2))
+	})
+	requireChildActive(t, th, ch1.Id, parent.ID, true)
+	requireChildActive(t, th, ch2.Id, parent.ID, true)
+
+	// Deactivating the parent flips every child inactive.
+	_, appErr := th.App.UpdateAccessControlPoliciesActive(th.Context, []model.AccessControlPolicyActiveUpdate{
+		{ID: parent.ID, Active: false},
+	})
+	require.Nil(t, appErr)
+	requireChildActive(t, th, ch1.Id, parent.ID, false)
+	requireChildActive(t, th, ch2.Id, parent.ID, false)
+
+	// Reactivating the parent restores every child.
+	_, appErr = th.App.UpdateAccessControlPoliciesActive(th.Context, []model.AccessControlPolicyActiveUpdate{
+		{ID: parent.ID, Active: true},
+	})
+	require.Nil(t, appErr)
+	requireChildActive(t, th, ch1.Id, parent.ID, true)
+	requireChildActive(t, th, ch2.Id, parent.ID, true)
+}
+
+func TestAllChannelsParentTeardown(t *testing.T) {
+	t.Run("turning the flag off removes every materialized child", func(t *testing.T) {
+		th := SetupConfig(t, func(cfg *model.Config) {
+			cfg.FeatureFlags.AttributeValueMasking = false
+		}).InitBasic(t)
+		parent := saveActiveAllChannelsParent(t, th)
+		wireWriteThroughAllChannelsACS(t, th)
+
+		ch1 := th.CreatePrivateChannel(t, th.BasicTeam)
+		ch2 := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() {
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch1))
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch2))
+		})
+		requireChildActive(t, th, ch1.Id, parent.ID, true)
+		requireChildActive(t, th, ch2.Id, parent.ID, true)
+
+		parent.AppliesToAllChannels = false
+		_, appErr := th.App.CreateOrUpdateAccessControlPolicy(th.Context, parent)
+		require.Nil(t, appErr)
+
+		// Both children imported only this parent, so their rows are gone.
+		requireChildAbsent(t, th, ch1.Id)
+		requireChildAbsent(t, th, ch2.Id)
+
+		// The parent itself survives with the flag cleared.
+		saved, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, parent.ID)
+		require.NoError(t, err)
+		require.False(t, saved.AppliesToAllChannels)
+	})
+
+	t.Run("deleting the parent removes every materialized child", func(t *testing.T) {
+		th := SetupConfig(t, func(cfg *model.Config) {
+			cfg.FeatureFlags.AttributeValueMasking = false
+		}).InitBasic(t)
+		parent := saveActiveAllChannelsParent(t, th)
+		wireWriteThroughAllChannelsACS(t, th)
+
+		ch1 := th.CreatePrivateChannel(t, th.BasicTeam)
+		ch2 := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() {
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch1))
+			require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch2))
+		})
+		requireChildActive(t, th, ch1.Id, parent.ID, true)
+		requireChildActive(t, th, ch2.Id, parent.ID, true)
+
+		require.Nil(t, th.App.DeleteAccessControlPolicy(th.Context, parent.ID))
+
+		requireChildAbsent(t, th, ch1.Id)
+		requireChildAbsent(t, th, ch2.Id)
+		requireChildAbsent(t, th, parent.ID)
+	})
+
+	t.Run("a child that imports another parent survives flag-off", func(t *testing.T) {
+		th := SetupConfig(t, func(cfg *model.Config) {
+			cfg.FeatureFlags.AttributeValueMasking = false
+		}).InitBasic(t)
+		parent := saveActiveAllChannelsParent(t, th)
+
+		// A second, ordinary parent that the child also imports.
+		otherParent := &model.AccessControlPolicy{
+			ID:       model.NewId(),
+			Name:     "otherParent " + model.NewId(),
+			Type:     model.AccessControlPolicyTypeParent,
+			Active:   true,
+			Revision: 1,
+			Version:  model.AccessControlPolicyVersionV0_3,
+			Imports:  []string{},
+			Rules:    []model.AccessControlPolicyRule{{Actions: []string{model.AccessControlPolicyActionMembership}, Expression: "true"}},
+		}
+		_, err := th.App.Srv().Store().AccessControlPolicy().Save(th.Context, otherParent)
+		require.NoError(t, err)
+		t.Cleanup(func() { _ = th.App.Srv().Store().AccessControlPolicy().Delete(th.Context, otherParent.ID) })
+
+		wireWriteThroughAllChannelsACS(t, th)
+
+		ch := th.CreatePrivateChannel(t, th.BasicTeam)
+		t.Cleanup(func() { require.Nil(t, th.App.PermanentDeleteChannel(th.Context, ch)) })
+
+		// The create hook imported the all-channels parent; add the second import.
+		child, err := th.App.Srv().Store().AccessControlPolicy().Get(th.Context, ch.Id)
+		require.NoError(t, err)
+		require.Nil(t, child.Inherit(otherParent))
+		_, err = th.App.Srv().Store().AccessControlPolicy().Save(th.Context, child)
+		require.NoError(t, err)
+
+		child, err = th.App.Srv().Store().AccessControlPolicy().Get(th.Context, ch.Id)
+		require.NoError(t, err)
+		require.Contains(t, child.Imports, parent.ID)
+		require.Contains(t, child.Imports, otherParent.ID)
+
+		parent.AppliesToAllChannels = false
+		_, appErr := th.App.CreateOrUpdateAccessControlPolicy(th.Context, parent)
+		require.Nil(t, appErr)
+
+		// The row survives: only the all-channels import is dropped, the other kept.
+		child, err = th.App.Srv().Store().AccessControlPolicy().Get(th.Context, ch.Id)
+		require.NoError(t, err)
+		require.NotContains(t, child.Imports, parent.ID)
+		require.Contains(t, child.Imports, otherParent.ID)
 	})
 }
 

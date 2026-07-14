@@ -161,16 +161,49 @@ func (a *App) CreateOrUpdateAccessControlPolicy(rctx request.CTX, policy *model.
 		}
 	}
 
-	// Only an active all-channels parent triggers the materialization backfill.
-	// When the incoming save is one, look up its prior state so the one-time
-	// backfill is kicked only on the enabling transition — not on every later
-	// edit of an already-enabled parent (which would re-scan every private
-	// channel for nothing). Any other save skips this lookup entirely.
+	// The all-channels flag transitions drive child materialization. Look up the
+	// parent's prior state once so we can (a) kick the one-time backfill only on
+	// the enabling transition — not on every later edit of an already-enabled
+	// parent, which would re-scan every private channel for nothing — and (b)
+	// tear down the materialized children when the flag is turned off. Any
+	// non-parent save skips this lookup entirely.
+	//
+	// Read the stored row directly (not acs.GetPolicy): only the raw
+	// AppliesToAllChannels / Active flags are needed, so the CEL normalization
+	// acs.GetPolicy performs is unnecessary here. A materialized all-channels
+	// child is indistinguishable from an explicitly-assigned child by structure
+	// alone (both import the parent), so the parent's prior flag is the only way
+	// to tell an all-channels teardown apart from a normal parent edit.
 	enablingAllChannels := false
-	if policy.Type == model.AccessControlPolicyTypeParent && policy.AppliesToAllChannels && policy.Active {
-		enablingAllChannels = true
-		if existing, getErr := acs.GetPolicy(rctx, policy.ID); getErr == nil && existing != nil && existing.AppliesToAllChannels && existing.Active {
-			enablingAllChannels = false
+	disablingAllChannels := false
+	if policy.Type == model.AccessControlPolicyTypeParent {
+		existing, getErr := a.Srv().Store().AccessControlPolicy().Get(rctx, policy.ID)
+		if getErr != nil {
+			var nfErr *store.ErrNotFound
+			if !errors.As(getErr, &nfErr) {
+				return nil, model.NewAppError("CreateOrUpdateAccessControlPolicy", "app.pap.get_policy.app_error", nil, getErr.Error(), http.StatusInternalServerError)
+			}
+		}
+		hadAllChannels := existing != nil && existing.AppliesToAllChannels
+		switch {
+		case policy.AppliesToAllChannels && policy.Active:
+			// Enabling unless it was already an active all-channels parent.
+			enablingAllChannels = !(hadAllChannels && existing.Active)
+		case !policy.AppliesToAllChannels && hadAllChannels:
+			disablingAllChannels = true
+		}
+	}
+
+	// Turning the flag off must remove the child policies it materialized. Do
+	// this BEFORE persisting the flag=false parent: the children still import the
+	// parent here, and if the subsequent save fails the parent keeps the flag on
+	// in the store, so the periodic reconcile (or a retry) re-materializes them —
+	// self-healing. Tearing down after the save would strand the children if
+	// either step failed, since a now-flagless parent is invisible to the
+	// reconcile.
+	if disablingAllChannels {
+		if appErr := a.removeAllChannelsChildren(rctx, policy.ID); appErr != nil {
+			return nil, appErr
 		}
 	}
 
@@ -477,12 +510,26 @@ func (a *App) DeleteAccessControlPolicy(rctx request.CTX, id string) *model.AppE
 		affectedTeamIDs = a.teamPolicyIDsWithImport(rctx, id)
 	}
 
+	// An all-channels parent governs its channels through materialized child
+	// rows, so deleting the parent must remove them too — otherwise the children
+	// dangle importing a policy that no longer exists, and the reconcile (which
+	// only walks all-channels parents) would never revisit them. Remove them
+	// before deleting the parent so a failure leaves parent and children intact
+	// and retryable; affectedChannelIDs was captured above so the post-delete
+	// broadcast still reaches the (now removed) children.
+	if policy != nil && policy.Type == model.AccessControlPolicyTypeParent && policy.AppliesToAllChannels {
+		if appErr := a.removeAllChannelsChildren(rctx, id); appErr != nil {
+			return appErr
+		}
+	}
+
 	if appErr := acs.DeletePolicy(rctx, id); appErr != nil {
 		return appErr
 	}
 
-	// Parent deletes leave child rows in place (their dangling Imports are
-	// reconciled lazily); we only fan out a refresh per affected resource.
+	// A normal parent delete leaves child rows in place (their dangling Imports
+	// are reconciled lazily); an all-channels parent's children were removed
+	// above. Either way we fan out a refresh per affected resource.
 	switch {
 	case policy == nil:
 		// GetPolicy is expected to return a non-nil policy on success, but the
@@ -1627,6 +1674,81 @@ func (a *App) removeAllChannelsChildrenFromChannel(rctx request.CTX, channel *mo
 	return nil
 }
 
+// removeAllChannelsChildren tears down every materialized child of an
+// all-channels parent: import-less child rows are deleted and children that
+// still carry other imports (or their own rules) keep those, losing only the
+// parent's import. Backs the flag-off and parent-delete teardown.
+//
+// UnassignPoliciesFromChannels resolves the parent's children in bounded pages,
+// so drive it until no channel policy still imports the parent — a single call
+// clears only one page when the parent governs more channels than the page size.
+// Each pass drops the processed children out of the ParentID search, so the loop
+// makes progress and terminates.
+func (a *App) removeAllChannelsChildren(rctx request.CTX, parentID string) *model.AppError {
+	for {
+		children, _, err := a.Srv().Store().AccessControlPolicy().SearchPolicies(rctx, model.AccessControlPolicySearch{
+			Type:     model.AccessControlPolicyTypeChannel,
+			ParentID: parentID,
+			Limit:    accessControlChildPolicySearchLimit,
+		})
+		if err != nil {
+			return model.NewAppError("removeAllChannelsChildren", "app.pap.search_access_control_policies.app_error", nil, err.Error(), http.StatusInternalServerError)
+		}
+		if len(children) == 0 {
+			return nil
+		}
+		channelIDs := make([]string, len(children))
+		for i, child := range children {
+			channelIDs[i] = child.ID
+		}
+		if appErr := a.UnassignPoliciesFromChannels(rctx, parentID, channelIDs); appErr != nil {
+			return appErr
+		}
+	}
+}
+
+// cascadeActiveToAllChannelsChildren flips the Active state of every materialized
+// child of an all-channels parent to match the parent. Children are the
+// channel-type policies that import the parent, and they are what actually govern
+// their channels — so a deactivated parent whose children stayed active would
+// keep enforcing, and a reactivated one whose children stayed inactive would not.
+// Runs in bounded pages so a parent governing many private channels never issues
+// one unbounded UPDATE; the Active flip leaves IDs untouched, so the cursor pages
+// forward stably. Children already in sync with the parent are skipped.
+func (a *App) cascadeActiveToAllChannelsChildren(rctx request.CTX, parent *model.AccessControlPolicy) *model.AppError {
+	var cursor model.AccessControlPolicyCursor
+	for {
+		children, _, err := a.Srv().Store().AccessControlPolicy().SearchPolicies(rctx, model.AccessControlPolicySearch{
+			Type:     model.AccessControlPolicyTypeChannel,
+			ParentID: parent.ID,
+			Cursor:   cursor,
+			Limit:    accessControlChildPolicySearchLimit,
+		})
+		if err != nil {
+			return model.NewAppError("cascadeActiveToAllChannelsChildren", "app.pap.search_access_control_policies.app_error", nil, err.Error(), http.StatusInternalServerError)
+		}
+		if len(children) == 0 {
+			return nil
+		}
+		updates := make([]model.AccessControlPolicyActiveUpdate, 0, len(children))
+		for _, child := range children {
+			if child.Active == parent.Active {
+				continue
+			}
+			updates = append(updates, model.AccessControlPolicyActiveUpdate{ID: child.ID, Active: parent.Active})
+		}
+		if len(updates) > 0 {
+			if _, err := a.Srv().Store().AccessControlPolicy().SetActiveStatusMultiple(rctx, updates); err != nil {
+				return model.NewAppError("cascadeActiveToAllChannelsChildren", "app.pap.update_access_control_policies_active.app_error", nil, err.Error(), http.StatusInternalServerError)
+			}
+		}
+		if len(children) < accessControlChildPolicySearchLimit {
+			return nil
+		}
+		cursor.ID = children[len(children)-1].ID
+	}
+}
+
 func (a *App) AssignAccessControlPolicyToChannels(rctx request.CTX, parentID string, channelIDs []string) ([]*model.AccessControlPolicy, *model.AppError) {
 	acs := a.Srv().ch.AccessControl
 	if acs == nil {
@@ -2012,9 +2134,22 @@ func (a *App) UpdateAccessControlPoliciesActive(rctx request.CTX, updates []mode
 	// at once, so log the blast radius for operators. Only a parent can carry the
 	// flag; auditAllChannelsPolicyBlastRadius no-ops for anything that is not an
 	// active all-channels parent.
+	//
+	// A toggled all-channels parent must also carry its Active state to the child
+	// policies it materialized on every eligible private channel: the children are
+	// what actually govern those channels, so a deactivated parent whose children
+	// stayed active would keep enforcing. The websocket fan-out to those children
+	// already happened above via publishChannelPolicyEnforcedForChannelPoliciesWithImport.
+	// The child flip is not atomic with the parent flip; a failed cascade leaves
+	// children stale until the toggle is retried (toggles are rare admin actions).
 	if toggledParent {
 		for _, policy := range policies {
 			a.auditAllChannelsPolicyBlastRadius(rctx, policy)
+			if policy.Type == model.AccessControlPolicyTypeParent && policy.AppliesToAllChannels {
+				if appErr := a.cascadeActiveToAllChannelsChildren(rctx, policy); appErr != nil {
+					return nil, appErr
+				}
+			}
 		}
 	}
 
