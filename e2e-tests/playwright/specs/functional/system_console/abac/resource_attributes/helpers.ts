@@ -106,8 +106,8 @@ export async function assignChannelsToPolicy(
 
 /**
  * Trigger an access_control_sync job. Pass a policyId to target the channels
- * governed by that policy; omit it for a global sweep (needed for the
- * all-channels virtual scope, which no channel imports). Returns the job id.
+ * governed by that policy (for an all-channels parent this backfills and syncs
+ * its materialized children); omit it for a global sweep. Returns the job id.
  */
 export async function triggerSyncJob(adminClient: Client4, policyId?: string): Promise<string> {
     const job = await adminClient.createAccessControlSyncJob(policyId ? {policy_id: policyId} : {});

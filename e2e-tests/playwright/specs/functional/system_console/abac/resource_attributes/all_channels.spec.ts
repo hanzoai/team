@@ -10,24 +10,31 @@ import {createPrivateChannelForABAC, createUserForABAC, enableUserManagedAttribu
 import {createChannelTextField, createParentPolicyViaAPI, setChannelAttributeValue} from './helpers';
 
 /**
- * All-channels virtual scope for a resource.attributes.* parent.
+ * All-channels scope for a resource.attributes.* parent (materialized children).
  *
  * An active parent policy marked applies_to_all_channels governs every eligible
- * private channel with no explicit assignment and no per-channel policy row. We
- * assert the distinctive seam: enforcement fires on a private channel that has
- * NO policy of its own — a matching user can be added, a non-matching one cannot.
+ * private channel by materializing a real per-channel child policy that imports
+ * the parent — a `channel`-type row with id == channelId — instead of a
+ * read-time merge. There is no rowless governed channel: the channel's
+ * PolicyEnforced flag is flipped on, and every downstream reader (join gate,
+ * membership sync, visibility) sees a normal per-channel policy.
  *
- * NOTE: an all-channels policy gates EVERY private channel in the install, so
- * this test is destructive to sibling tests if run concurrently. It deliberately
- * avoids triggering a global sync sweep (which would remove members from
- * unrelated private channels) and asserts only the runtime enforcement gate on
- * its own channel. It must run serially / isolated from other ABAC specs, and
- * deletes the policy in finally to bound the blast radius. The webapp toggle,
- * blast-radius confirmation, and dry-run preview are deferred (Phase 8 webapp
- * chunk) and are not exercised here.
+ * We assert the distinctive seam: creating a private channel while the parent is
+ * active synchronously materializes its child, flips PolicyEnforced on, and the
+ * join gate (which reads PolicyEnforced) then admits a matching user and rejects
+ * a non-matching one.
+ *
+ * NOTE: an active all-channels parent governs EVERY eligible private channel in
+ * the install. Saving one enqueues a backfill that materializes children across
+ * the install and syncs their membership, so this spec is destructive to sibling
+ * ABAC specs if run concurrently — it must run serially / isolated
+ * (@abac_all_channels) and deletes the policy in finally, which cascades removal
+ * of the materialized children. The webapp toggle, blast-radius confirmation,
+ * and dry-run preview are deferred (Phase 8 webapp chunk) and are not exercised
+ * here.
  */
 test.describe('ABAC resource.attributes - all-channels scope', {tag: ['@abac', '@abac_all_channels']}, () => {
-    test('an active all-channels parent enforces on a channel with no own policy', async ({pw}) => {
+    test('an active all-channels parent materializes a child that enforces on a new private channel', async ({pw}) => {
         test.setTimeout(120000);
         await pw.skipIfNoLicense();
 
@@ -51,22 +58,37 @@ test.describe('ABAC resource.attributes - all-channels scope', {tag: ['@abac', '
         await adminClient.addToTeam(team.id, matchingUser.id);
         await adminClient.addToTeam(team.id, nonMatchingUser.id);
 
-        // A private channel with NO policy row of its own — only the all-channels
-        // parent should govern it.
-        const channel = await createPrivateChannelForABAC(adminClient, team.id);
-        await setChannelAttributeValue(adminClient, channel.id, channelFieldId, 'us');
-
         let policyId = '';
         try {
+            // Activate the all-channels parent FIRST, then create the channel: the
+            // synchronous channel-create hook materializes the child under the
+            // active parent, so the test doesn't depend on the async backfill
+            // sweep to govern its own channel.
             policyId = await createParentPolicyViaAPI(adminClient, {
                 name: `AllChannels ${pw.random.id()}`,
                 expression: `user.attributes.${attr} == resource.attributes.${attr}`,
                 appliesToAllChannels: true,
             });
 
-            // Enforcement gate: the channel has no own policy, but the active
-            // all-channels parent makes it access-controlled. The matching user
-            // is admitted; the non-matching user is rejected.
+            const channel = await createPrivateChannelForABAC(adminClient, team.id);
+            await setChannelAttributeValue(adminClient, channel.id, channelFieldId, 'us');
+
+            // Materialization signal: a real per-channel child policy now governs
+            // the channel and its PolicyEnforced flag is flipped on — this is what
+            // the join gate reads (no virtual merge, no rowless private channel).
+            await expect(async () => {
+                const enforcedChannel = await adminClient.getChannel(channel.id);
+                expect(enforcedChannel.policy_enforced).toBe(true);
+            }).toPass({timeout: 30000, intervals: [1000]});
+
+            // The materialized child is a `channel`-type row (id == channelId) that
+            // imports the parent — exactly like an explicitly-assigned channel.
+            const child = await adminClient.getAccessControlPolicy(channel.id);
+            expect(child.type).toBe('channel');
+            expect(child.imports).toContain(policyId);
+
+            // Enforcement gate, driven by PolicyEnforced: the matching user is
+            // admitted; the non-matching user is rejected.
             //
             // The runtime PDP reads channel/user values from a materialized view
             // refreshed on a throttled (~30s) cadence, so the values set just
@@ -84,7 +106,7 @@ test.describe('ABAC resource.attributes - all-channels scope', {tag: ['@abac', '
             try {
                 await adminClient.addToChannel(nonMatchingUser.id, channel.id);
             } catch {
-                // expected: all-channels policy denies the non-matching user
+                // expected: the materialized child denies the non-matching user
             }
             expect(await verifyUserInChannel(adminClient, nonMatchingUser.id, channel.id)).toBe(false);
         } finally {
