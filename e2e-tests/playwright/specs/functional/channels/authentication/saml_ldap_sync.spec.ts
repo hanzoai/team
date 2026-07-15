@@ -6,14 +6,12 @@ import type {Page} from '@playwright/test';
 import {
     ChannelsPage,
     configureSamlWithKeycloak,
-    createLdapUser,
     duration,
     expect,
     KeycloakAdminClient,
     KeycloakLoginPage,
     LoginPage,
     OpenLdapClient,
-    runLdapSync,
     test,
     testConfig,
 } from '@mattermost/playwright-lib';
@@ -55,7 +53,7 @@ test.describe('SAML and LDAP synchronization', () => {
             await assertFullName(setup.channelsPage, setup.samlUser.firstName, setup.samlUser.lastName);
 
             // # Synchronize LDAP while SAML-to-LDAP synchronization remains disabled
-            await runLdapSync(setup.adminClient);
+            await setup.adminClient.runLdapSync();
             await page.reload();
 
             // * Verify LDAP synchronization does not replace the SAML profile attributes
@@ -77,7 +75,7 @@ test.describe('SAML and LDAP synchronization', () => {
             const setup = await setupSamlUser(pw, page, {enableSyncWithLdap: true});
 
             // # Run LDAP synchronization after the initial SAML registration
-            await runLdapSync(setup.adminClient);
+            await setup.adminClient.runLdapSync();
             await page.reload();
 
             // * Verify LDAP attributes are authoritative in the live profile
@@ -87,7 +85,7 @@ test.describe('SAML and LDAP synchronization', () => {
             const firstName = `UpdatedFirst-${pw.random.id()}`;
             const lastName = `UpdatedLast-${pw.random.id()}`;
             await setup.ldap.updateUserNames(setup.ldapUser.username, firstName, lastName);
-            await runLdapSync(setup.adminClient);
+            await setup.adminClient.runLdapSync();
             await page.reload();
 
             // * Verify the live profile displays the updated LDAP attributes
@@ -113,7 +111,7 @@ test.describe('SAML and LDAP synchronization', () => {
         await setup.keycloakLoginPage.login(setup.samlUser);
 
         // # Synchronize the registered account and add it to a team
-        await runLdapSync(setup.adminClient);
+        await setup.adminClient.runLdapSync();
         await addUserToNewTeam(pw, setup.adminClient, setup.ldapUser.email);
 
         // # Log in through SAML again
@@ -124,7 +122,7 @@ test.describe('SAML and LDAP synchronization', () => {
         const message = `SAML LDAP login ${pw.random.id()}`;
         await setup.channelsPage.postMessage(message);
         await expect(page.getByText(message, {exact: true}).last()).toBeVisible({timeout: duration.half_min});
-        await runLdapSync(setup.adminClient);
+        await setup.adminClient.runLdapSync();
         await page.reload();
         await assertFullName(setup.channelsPage, setup.ldapUser.firstName, setup.ldapUser.lastName);
     });
@@ -158,7 +156,7 @@ test.describe('SAML and LDAP synchronization', () => {
             const message = `Reactivated SAML user ${pw.random.id()}`;
             await setup.channelsPage.postMessage(message);
             await expect(page.getByText(message, {exact: true}).last()).toBeVisible({timeout: duration.half_min});
-            await runLdapSync(setup.adminClient);
+            await setup.adminClient.runLdapSync();
             await page.reload();
             await assertFullName(setup.channelsPage, setup.ldapUser.firstName, setup.ldapUser.lastName);
         },
@@ -175,7 +173,7 @@ test.describe('SAML and LDAP synchronization', () => {
         const setup = await setupSamlUser(pw, page, {enableSyncWithLdap: true});
 
         // # Run LDAP synchronization after the initial SAML registration
-        await runLdapSync(setup.adminClient);
+        await setup.adminClient.runLdapSync();
         await page.reload();
 
         // * Verify the initial LDAP profile attributes
@@ -185,7 +183,7 @@ test.describe('SAML and LDAP synchronization', () => {
         const firstName = `IdFirst-${pw.random.id()}`;
         const lastName = `IdLast-${pw.random.id()}`;
         await setup.ldap.updateUserNames(setup.ldapUser.username, firstName, lastName);
-        await runLdapSync(setup.adminClient);
+        await setup.adminClient.runLdapSync();
         await page.reload();
 
         // * Verify synchronization updates the existing SAML user
@@ -203,7 +201,7 @@ async function setupSamlUser(
     const {adminClient} = await pw.getAdminClient();
     const ldap = new OpenLdapClient();
     const keycloak = new KeycloakAdminClient();
-    const ldapUser = createLdapUser('saml');
+    const ldapUser = createOpenLdapUser(pw, 'saml');
     const samlUser = {
         username: ldapUser.username,
         password: ldapUser.password,
@@ -239,8 +237,22 @@ async function setupSamlUser(
 
 async function assertFullName(channelsPage: ChannelsPage, firstName: string, lastName: string) {
     const profileModal = await channelsPage.openProfileModal();
-    await profileModal.assertFullName(firstName, lastName);
+    await expect(profileModal.container.getByText(`${firstName} ${lastName}`, {exact: true})).toBeVisible({
+        timeout: duration.half_min,
+    });
     await profileModal.closeModal();
+}
+
+function createOpenLdapUser(pw: PlaywrightExtended, prefix: string): LdapUser {
+    const id = pw.random.id();
+    const username = `${prefix}user${id}`;
+    return {
+        username,
+        password: 'Password1',
+        email: `${username}@mmtest.com`,
+        firstName: `Firstname-${id}`,
+        lastName: `Lastname-${id}`,
+    };
 }
 
 async function addUserToNewTeam(pw: PlaywrightExtended, adminClient: PlaywrightClient4, email: string) {

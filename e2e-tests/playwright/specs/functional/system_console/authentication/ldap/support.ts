@@ -3,8 +3,6 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {configureOpenLdap, getOrCreateLdapUser, runLdapSync} from '@mattermost/playwright-lib';
-
 export const ldapUsers = {
     admin: {username: 'dev.one', password: 'Password1', email: 'success+devone@simulator.amazonses.com'},
     member: {username: 'test.one', password: 'Password1', email: 'success+testone@simulator.amazonses.com'},
@@ -23,14 +21,23 @@ export async function setupLdap(pw: any) {
     await pw.ensureLicense();
     await pw.skipIfNoLicense();
     const {adminClient} = await pw.getAdminClient();
-    await configureOpenLdap(adminClient);
-    await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}});
+    await adminClient.configureOpenLdap();
+    await adminClient.patchConfig({
+        GuestAccountsSettings: {Enable: true},
+        LdapSettings: {
+            UserFilter: '',
+            GroupFilter: '',
+            GuestFilter: '',
+            EnableAdminFilter: false,
+            AdminFilter: '',
+        },
+    });
     await adminClient.testLdap();
-    await runLdapSync(adminClient);
+    await adminClient.runLdapSync();
 }
 
 export async function getLdapUser(adminClient: any, account: LdapAccount) {
-    const user = await getOrCreateLdapUser(adminClient, account);
+    const user = await adminClient.getOrCreateLdapUser(account);
     return {...user, password: account.password} as UserProfile;
 }
 

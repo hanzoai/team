@@ -6,7 +6,6 @@ import path from 'node:path';
 
 import type {PlaywrightClient4} from './playwright_client';
 
-import {configureOpenLdap} from '@/server/openldap';
 import {testConfig} from '@/test_config';
 
 type SamlOptions = {
@@ -28,7 +27,7 @@ export async function configureSamlWithKeycloak(client: PlaywrightClient4, optio
     const mattermostBaseURL = options.baseURL.replace(/\/$/, '');
     const descriptorURL = `${keycloakUrl}/realms/${keycloakRealm}`;
 
-    await configureOpenLdap(client);
+    await client.configureOpenLdap();
     await client.uploadIdpSamlCertificate(readKeycloakCertificate(options.idpCertificate));
     await client.patchConfig({
         SamlSettings: {

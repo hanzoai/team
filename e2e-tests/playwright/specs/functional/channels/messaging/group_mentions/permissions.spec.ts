@@ -3,7 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {SystemConsolePage, getRandomId, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, duration, expect, getRandomId, test} from '@mattermost/playwright-lib';
 
 import {configureMentionPermissions, enableMention, openChannel, resetMentionPermissions, setup} from './support';
 
@@ -26,8 +26,10 @@ test.describe('LDAP group mentions', () => {
                 {id: 'channel_admin-posts-use_group_mentions-checkbox', enabled: false},
             ]);
             let channelsPage = await openChannel(pw, regularUser, team.name, channel.name);
-            await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-            await channelsPage.centerView.postCreate.assertGroupMentionNotSuggested();
+            await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+            await expect(channelsPage.centerView.postCreate.suggestionList).not.toBeVisible({
+                timeout: duration.two_sec,
+            });
             await channelsPage.postGroupMention(groupName);
             await channelsPage.assertMentionIsPlainText(groupName);
 
@@ -36,8 +38,8 @@ test.describe('LDAP group mentions', () => {
                 {id: 'channel_admin-posts-use_group_mentions-checkbox', enabled: true},
             ]);
             channelsPage = await openChannel(pw, regularUser, team.name, channel.name);
-            await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-            await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
+            await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+            await channelsPage.centerView.postCreate.toHaveGroupMentionSuggested(groupName);
             await channelsPage.postGroupMention(groupName);
 
             // * Verify the enabled mention offers to add the out-of-channel group member
@@ -67,8 +69,10 @@ test.describe('LDAP group mentions', () => {
                 {id: 'team_admin-posts-use_group_mentions-checkbox', enabled: false},
             ]);
             let channelsPage = await openChannel(pw, regularUser, team.name, channel.name);
-            await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-            await channelsPage.centerView.postCreate.assertGroupMentionNotSuggested();
+            await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+            await expect(channelsPage.centerView.postCreate.suggestionList).not.toBeVisible({
+                timeout: duration.two_sec,
+            });
             await channelsPage.postGroupMention(groupName);
             await channelsPage.assertMentionIsPlainText(groupName);
 
@@ -77,8 +81,8 @@ test.describe('LDAP group mentions', () => {
                 {id: 'team_admin-posts-use_group_mentions-checkbox', enabled: true},
             ]);
             channelsPage = await openChannel(pw, regularUser, team.name, channel.name);
-            await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-            await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
+            await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+            await channelsPage.centerView.postCreate.toHaveGroupMentionSuggested(groupName);
             await channelsPage.postGroupMention(groupName);
 
             // * Verify the enabled mention reports that the group has no team members
@@ -123,8 +127,10 @@ test.describe('LDAP group mentions', () => {
                 'guests-guest_use_group_mentions-checkbox',
             );
             let channelsPage = await openChannel(pw, guest, team.name, channel.name);
-            await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-            await channelsPage.centerView.postCreate.assertGroupMentionNotSuggested();
+            await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+            await expect(channelsPage.centerView.postCreate.suggestionList).not.toBeVisible({
+                timeout: duration.two_sec,
+            });
             await channelsPage.postGroupMention(groupName);
             await channelsPage.assertMentionIsPlainText(groupName);
 
@@ -133,8 +139,8 @@ test.describe('LDAP group mentions', () => {
                 {id: 'guests-guest_use_group_mentions-checkbox', enabled: true},
             ]);
             channelsPage = await openChannel(pw, guest, team.name, channel.name);
-            await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-            await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
+            await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+            await channelsPage.centerView.postCreate.toHaveGroupMentionSuggested(groupName);
             await channelsPage.postGroupMention(groupName);
 
             // * Verify the Guest sees the warning without an option to invite the group member

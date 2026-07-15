@@ -7,7 +7,6 @@ import type {UserProfile} from '@mattermost/types/users';
 import {
     ChannelsPage,
     configureSamlWithKeycloak,
-    createLdapUser,
     duration,
     expect,
     KeycloakAdminClient,
@@ -16,7 +15,7 @@ import {
     test,
     testConfig,
 } from '@mattermost/playwright-lib';
-import type {PlaywrightExtended} from '@mattermost/playwright-lib';
+import type {LdapUser, PlaywrightExtended} from '@mattermost/playwright-lib';
 
 import {getActiveSessions, getSession, updateSessionExpiration} from './session_db';
 
@@ -109,7 +108,7 @@ async function setup(pw: PlaywrightExtended, page: Page, extendWithActivity: boo
     const {adminClient} = await pw.getAdminClient();
     const ldap = new OpenLdapClient();
     const keycloak = new KeycloakAdminClient();
-    const ldapUser = createLdapUser('saml-session');
+    const ldapUser = createOpenLdapUser(pw);
     const keycloakLoginPage = new KeycloakLoginPage(page);
     const channelsPage = new ChannelsPage(page);
 
@@ -143,4 +142,16 @@ async function setup(pw: PlaywrightExtended, page: Page, extendWithActivity: boo
     await channelsPage.goto(team.name, offTopic.name);
     await channelsPage.toBeVisible();
     return {adminClient, channelsPage, samlUser};
+}
+
+function createOpenLdapUser(pw: PlaywrightExtended): LdapUser {
+    const id = pw.random.id();
+    const username = `saml-session-user${id}`;
+    return {
+        username,
+        password: 'Password1',
+        email: `${username}@mmtest.com`,
+        firstName: `Firstname-${id}`,
+        lastName: `Lastname-${id}`,
+    };
 }

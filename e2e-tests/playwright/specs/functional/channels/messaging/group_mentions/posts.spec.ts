@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {getOrLinkLdapGroup, getRandomId, test} from '@mattermost/playwright-lib';
+import {duration, expect, getRandomId, test} from '@mattermost/playwright-lib';
 
 import {enableMention, openChannel, setup} from './support';
 
@@ -19,8 +19,8 @@ test.describe('LDAP group mentions', () => {
         const channelsPage = await openChannel(pw, regularUser, team.name, channel.name);
 
         // # Type and post the former group mention after unlinking the LDAP group
-        await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-        await channelsPage.centerView.postCreate.assertGroupMentionNotSuggested();
+        await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+        await expect(channelsPage.centerView.postCreate.suggestionList).not.toBeVisible({timeout: duration.two_sec});
         await channelsPage.postGroupMention(groupName);
 
         // * Verify the unlinked mention remains plain text
@@ -39,8 +39,8 @@ test.describe('LDAP group mentions', () => {
         const channelsPage = await openChannel(pw, regularUser, team.name, directChannel.name, true);
 
         // # Suggest and post the group mention in a direct message
-        await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-        await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
+        await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+        await channelsPage.centerView.postCreate.toHaveGroupMentionSuggested(groupName);
         await channelsPage.postGroupMention(groupName);
 
         // * Verify the mention is linked and no membership warning is displayed
@@ -61,8 +61,8 @@ test.describe('LDAP group mentions', () => {
         const channelsPage = await openChannel(pw, regularUser, team.name, groupChannel.name, true);
 
         // # Suggest and post the group mention in a group message
-        await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName);
-        await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
+        await channelsPage.centerView.postCreate.writeMessage(`@${groupName}`);
+        await channelsPage.centerView.postCreate.toHaveGroupMentionSuggested(groupName);
         await channelsPage.postGroupMention(groupName);
 
         // * Verify the mention is linked and no membership warning is displayed
@@ -76,7 +76,7 @@ test.describe('LDAP group mentions', () => {
      */
     test('MM-T2443 limits group mentions in a group-synchronized channel', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient, boardGroup, boardUser, team} = await setup(pw);
-        const developersGroup = await getOrLinkLdapGroup(adminClient, 'developers');
+        const developersGroup = await adminClient.getOrLinkLdapGroup('developers');
         const boardGroupName = `board-test-${getRandomId()}`;
         const developersGroupName = `developers-test-${getRandomId()}`;
         await enableMention(adminClient, boardGroup.id, boardGroupName);

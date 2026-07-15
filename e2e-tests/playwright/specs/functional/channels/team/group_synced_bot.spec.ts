@@ -3,15 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {
-    getOrCreateLdapUser,
-    getOrLinkLdapGroup,
-    getRandomId,
-    initializeOpenLdap,
-    resetLdapGroup,
-    runLdapSync,
-    test,
-} from '@mattermost/playwright-lib';
+import {getRandomId, test} from '@mattermost/playwright-lib';
 
 const ldapMember = {
     username: 'test.one',
@@ -28,10 +20,10 @@ test.describe('Group-synchronized team bot membership', () => {
         await pw.skipIfNoLicense();
         const {adminClient, adminUser} = await pw.getAdminClient();
         await adminClient.patchConfig({ServiceSettings: {EnableBotAccountCreation: true}});
-        await initializeOpenLdap(adminClient);
-        const ldapGroup = await getOrLinkLdapGroup(adminClient, 'tgroup');
-        await resetLdapGroup(adminClient, ldapGroup.id);
-        const existingUser = await getOrCreateLdapUser(adminClient, ldapMember);
+        await adminClient.initializeOpenLdap();
+        const ldapGroup = await adminClient.getOrLinkLdapGroup('tgroup');
+        await adminClient.resetLdapGroup(ldapGroup.id);
+        const existingUser = await adminClient.getOrCreateLdapUser(ldapMember);
         await adminClient.updateUserRoles(existingUser.id, 'system_user');
         await adminClient.revokeAllSessionsForUser(existingUser.id);
         for (const existingTeam of await adminClient.getTeamsForUser(existingUser.id)) {
@@ -40,7 +32,7 @@ test.describe('Group-synchronized team bot membership', () => {
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser!.id);
         await adminClient.linkGroupSyncable(ldapGroup.id, team.id, 'team', {auto_add: true});
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
 
         const {user: authenticatedUser} = await pw.makeClient(ldapMember, {useCache: false});
         if (!authenticatedUser) {

@@ -1,20 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {
-    SystemConsolePage,
-    getOrLinkLdapGroup,
-    getRandomId,
-    initializeOpenLdap,
-    resetLdapGroup,
-} from '@mattermost/playwright-lib';
+import {SystemConsolePage, getRandomId} from '@mattermost/playwright-lib';
 
 export async function setup(pw: any, teamDisplayName = `AAA Test ${getRandomId()}`) {
     await pw.ensureLicense();
     await pw.skipIfNoLicense();
     const {adminClient, adminUser} = await pw.getAdminClient();
-    await initializeOpenLdap(adminClient);
-    const group = await getOrLinkLdapGroup(adminClient, 'board');
+    await adminClient.initializeOpenLdap();
+    const group = await adminClient.getOrLinkLdapGroup('board');
     const team = await adminClient.createTeam({
         ...(await pw.random.team()),
         display_name: teamDisplayName,
@@ -22,7 +16,7 @@ export async function setup(pw: any, teamDisplayName = `AAA Test ${getRandomId()
     await adminClient.addToTeam(team.id, adminUser.id);
     const channel = await adminClient.createPublicChannel(team.id, `Group Config ${getRandomId()}`);
 
-    await resetLdapGroup(adminClient, group.id);
+    await adminClient.resetLdapGroup(group.id);
 
     const {page} = await pw.testBrowser.login(adminUser);
     const consolePage = new SystemConsolePage(page);
