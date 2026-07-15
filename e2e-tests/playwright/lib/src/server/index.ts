@@ -6,17 +6,7 @@ export {PlaywrightClient4} from './playwright_client';
 export {createRandomChannel} from './channel';
 export {getOnPremServerConfig, mergeWithOnPremServerConfig} from './default_config';
 export {initSetup, getAdminClient} from './init';
-export {
-    configureOpenLdap,
-    createLdapUser,
-    getOrCreateLdapUser,
-    getOrCreateLdapUserWithStatus,
-    getOrLinkLdapGroup,
-    initializeOpenLdap,
-    OpenLdapClient,
-    resetLdapGroup,
-    runLdapSync,
-} from './openldap';
+export {OpenLdapClient} from './openldap';
 export type {LdapUser} from './openldap';
 export {createRandomPost} from './post';
 export {createNewTeam, createRandomTeam} from './team';

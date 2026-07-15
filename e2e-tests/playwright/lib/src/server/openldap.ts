@@ -2,13 +2,9 @@
 // See LICENSE.txt for license information.
 
 import {Attribute, Change, Client} from 'ldapts';
-import type {UserProfile} from '@mattermost/types/users';
-
-import type {PlaywrightClient4} from './playwright_client';
-import {PlaywrightClient4 as JitClient} from './playwright_client';
 
 import {testConfig} from '@/test_config';
-import {duration, getRandomId, wait} from '@/util';
+import {duration} from '@/util';
 
 export type LdapUser = {
     username: string;
@@ -18,22 +14,8 @@ export type LdapUser = {
     lastName: string;
 };
 
-type LdapAccount = Pick<LdapUser, 'username' | 'password'> & Partial<Pick<LdapUser, 'email'>>;
-
 const ldapBaseDN = 'ou=e2etest,dc=mm,dc=test,dc=com';
 const ldapBindDN = 'cn=admin,dc=mm,dc=test,dc=com';
-
-export function createLdapUser(prefix = 'ldap'): LdapUser {
-    const id = getRandomId();
-    const username = `${prefix}user${id}`;
-    return {
-        username,
-        password: 'Password1',
-        email: `${username}@mmtest.com`,
-        firstName: `Firstname-${id}`,
-        lastName: `Lastname-${id}`,
-    };
-}
 
 /**
  * Creates and updates users in the OpenLDAP service supplied by E2E Docker.
@@ -99,147 +81,4 @@ export class OpenLdapClient {
     private userDN(username: string) {
         return `uid=${username},${ldapBaseDN}`;
     }
-}
-
-/**
- * Starts an LDAP synchronization job and waits for its terminal status.
- */
-export async function runLdapSync(client: PlaywrightClient4) {
-    const pendingJobs = (await client.getJobsByType('ldap_sync', 0, 100))
-        .filter((candidate) => candidate.status === 'pending')
-        .sort((a, b) => a.create_at - b.create_at);
-    // A pending sync reads LDAP when it starts, so reuse it instead of joining the back of a busy queue.
-    const job = pendingJobs[0] ?? (await client.createJob({type: 'ldap_sync'}));
-    let phase: 'queued' | 'running' = 'queued';
-    let phaseDeadline = Date.now() + duration.half_min;
-
-    while (Date.now() < phaseDeadline) {
-        const current = await client.getJob(job.id);
-        if (current.status === 'success') {
-            return current;
-        }
-        if (current.status === 'error' || current.status === 'canceled' || current.status === 'warning') {
-            throw new Error(`LDAP synchronization ${current.id} finished with status ${current.status}`);
-        }
-        // Queueing and execution each get an independent, bounded window.
-        if (current.status === 'in_progress' && phase === 'queued') {
-            phase = 'running';
-            phaseDeadline = Date.now() + duration.half_min;
-        }
-        await wait(duration.half_sec);
-    }
-    throw new Error(`LDAP synchronization ${job.id} did not finish its ${phase} phase within ${duration.half_min}ms`);
-}
-
-/**
- * Configures Mattermost for the OpenLDAP service supplied by the E2E Docker
- * environment. A narrow patch avoids resetting unrelated server settings.
- */
-export async function configureOpenLdap(client: PlaywrightClient4) {
-    await client.patchConfig({
-        LdapSettings: {
-            Enable: true,
-            EnableSync: true,
-            LdapServer: testConfig.ldapServer,
-            LdapPort: testConfig.ldapPort,
-            ConnectionSecurity: '',
-            BaseDN: 'dc=mm,dc=test,dc=com',
-            BindUsername: 'cn=admin,dc=mm,dc=test,dc=com',
-            BindPassword: testConfig.ldapBindPassword,
-            UserFilter: '',
-            GroupFilter: '',
-            GuestFilter: '',
-            EnableAdminFilter: false,
-            AdminFilter: '',
-            GroupDisplayNameAttribute: 'cn',
-            GroupIdAttribute: 'entryUUID',
-            FirstNameAttribute: 'cn',
-            LastNameAttribute: 'sn',
-            EmailAttribute: 'mail',
-            UsernameAttribute: 'uid',
-            NicknameAttribute: 'cn',
-            IdAttribute: 'uid',
-            PositionAttribute: 'title',
-            LoginIdAttribute: 'uid',
-            PictureAttribute: '',
-            SyncIntervalMinutes: 60,
-            SkipCertificateVerification: true,
-            PublicCertificateFile: '',
-            PrivateKeyFile: '',
-            QueryTimeout: 60,
-            MaxPageSize: 0,
-            LoginFieldName: '',
-            LoginButtonColor: '#0000',
-            LoginButtonBorderColor: '#2389D7',
-            LoginButtonTextColor: '#2389D7',
-        },
-    });
-}
-
-/**
- * Configures, validates, and synchronizes the E2E OpenLDAP directory.
- */
-export async function initializeOpenLdap(client: PlaywrightClient4) {
-    await configureOpenLdap(client);
-    await client.testLdap();
-    await runLdapSync(client);
-}
-
-/**
- * Returns a linked Mattermost group for a named E2E LDAP group.
- */
-export async function getOrLinkLdapGroup(client: PlaywrightClient4, name: string) {
-    const {groups} = await client.getLdapGroups();
-    const ldapGroup = groups.find((group) => group.name === name);
-    if (!ldapGroup) {
-        throw new Error(`LDAP group ${name} was not found`);
-    }
-
-    return ldapGroup.mattermost_group_id
-        ? client.getGroup(ldapGroup.mattermost_group_id)
-        : client.linkLdapGroup(ldapGroup.primary_key);
-}
-
-/**
- * Returns an existing Mattermost LDAP user or creates it through LDAP login.
- * Only a user-not-found response is treated as the expected fresh-server case.
- */
-export async function getOrCreateLdapUser(client: PlaywrightClient4, account: LdapAccount): Promise<UserProfile> {
-    return (await getOrCreateLdapUserWithStatus(client, account)).user;
-}
-
-export async function getOrCreateLdapUserWithStatus(
-    client: PlaywrightClient4,
-    account: LdapAccount,
-): Promise<{user: UserProfile; created: boolean}> {
-    try {
-        return {user: await client.getUserByUsername(account.username), created: false};
-    } catch (error) {
-        if (!isNotFoundError(error)) {
-            throw error;
-        }
-    }
-
-    const jitClient = new JitClient();
-    jitClient.setUrl(testConfig.baseURL);
-    return {user: await jitClient.login(account.username, account.password), created: true};
-}
-
-/**
- * Restores mutable Mattermost state attached to a shared LDAP group.
- */
-export async function resetLdapGroup(client: PlaywrightClient4, groupId: string) {
-    await client.patchGroup(groupId, {allow_reference: false});
-    for (const link of (await client.getGroupSyncables(groupId, 'channel')) as unknown as Array<{
-        channel_id: string;
-    }>) {
-        await client.unlinkGroupSyncable(groupId, link.channel_id, 'channel');
-    }
-    for (const link of (await client.getGroupSyncables(groupId, 'team')) as unknown as Array<{team_id: string}>) {
-        await client.unlinkGroupSyncable(groupId, link.team_id, 'team');
-    }
-}
-
-function isNotFoundError(error: unknown) {
-    return typeof error === 'object' && error !== null && 'status_code' in error && error.status_code === 404;
 }

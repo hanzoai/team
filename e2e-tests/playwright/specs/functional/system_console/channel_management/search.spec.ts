@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {SystemConsolePage, configureOpenLdap, getRandomId, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, getRandomId, test} from '@mattermost/playwright-lib';
 
 const PAGE_SIZE = 10;
 
@@ -10,7 +10,7 @@ test.describe('System Console channel search', () => {
         await pw.ensureLicense();
         await pw.skipIfNoLicense();
         const {adminClient, adminUser} = await pw.getAdminClient();
-        await configureOpenLdap(adminClient);
+        await adminClient.configureOpenLdap();
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser.id);
         const {page} = await pw.testBrowser.login(adminUser);

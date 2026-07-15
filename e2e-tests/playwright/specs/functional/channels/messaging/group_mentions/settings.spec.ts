@@ -1,9 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {SystemConsolePage, getRandomId, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, duration, expect, getRandomId, test} from '@mattermost/playwright-lib';
 
-import {assertMentionDisabled, assertMentionEnabled, boardAccount, resetMentionPermissions, setup} from './support';
+import {
+    boardAccount,
+    composeGroupMention,
+    resetMentionPermissions,
+    setup,
+    verifyMentionDisabled,
+    verifyMentionEnabled,
+} from './support';
 
 test.describe('LDAP group mentions', () => {
     /**
@@ -20,7 +27,9 @@ test.describe('LDAP group mentions', () => {
         await consolePage.groupConfiguration.setMention(true, groupName);
 
         // * Verify suggestions, links, and member highlighting are enabled
-        await assertMentionEnabled(pw, adminUser, boardUser, team.name, groupName);
+        let channelsPage = await composeGroupMention(pw, adminUser, team.name, groupName);
+        await channelsPage.centerView.postCreate.toHaveGroupMentionSuggested(groupName);
+        await verifyMentionEnabled(pw, channelsPage, boardUser, team.name, groupName);
 
         // # Disable the group mention in Group Configuration
         const {page: adminPage} = await pw.testBrowser.login(adminUser);
@@ -29,7 +38,9 @@ test.describe('LDAP group mentions', () => {
         await adminConsolePage.groupConfiguration.setMention(false);
 
         // * Verify suggestions, links, and member highlighting are disabled
-        await assertMentionDisabled(pw, adminUser, boardUser, team.name, groupName);
+        channelsPage = await composeGroupMention(pw, adminUser, team.name, groupName);
+        await expect(channelsPage.centerView.postCreate.suggestionList).not.toBeVisible({timeout: duration.two_sec});
+        await verifyMentionDisabled(pw, channelsPage, boardUser, team.name, groupName);
     });
 
     /**
@@ -45,7 +56,9 @@ test.describe('LDAP group mentions', () => {
             await resetMentionPermissions(adminClient);
 
             // * Verify a regular member can mention the enabled group
-            await assertMentionEnabled(pw, regularUser, boardUser, team.name, groupName);
+            let channelsPage = await composeGroupMention(pw, regularUser, team.name, groupName);
+            await channelsPage.centerView.postCreate.toHaveGroupMentionSuggested(groupName);
+            await verifyMentionEnabled(pw, channelsPage, boardUser, team.name, groupName);
 
             // # Disable Group Mentions for regular members
             const {page: adminPage} = await pw.testBrowser.login(adminUser);
@@ -54,7 +67,11 @@ test.describe('LDAP group mentions', () => {
             await adminConsolePage.permissionsSystemScheme.disableGroupMentions();
 
             // * Verify the regular member can no longer mention the group
-            await assertMentionDisabled(pw, regularUser, boardUser, team.name, groupName);
+            channelsPage = await composeGroupMention(pw, regularUser, team.name, groupName);
+            await expect(channelsPage.centerView.postCreate.suggestionList).not.toBeVisible({
+                timeout: duration.two_sec,
+            });
+            await verifyMentionDisabled(pw, channelsPage, boardUser, team.name, groupName);
         } finally {
             await resetMentionPermissions(adminClient);
         }

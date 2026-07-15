@@ -1,24 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {
-    duration,
-    SystemConsolePage,
-    expect,
-    getOrLinkLdapGroup,
-    initializeOpenLdap,
-    resetLdapGroup,
-    test,
-} from '@mattermost/playwright-lib';
+import {duration, SystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 test.describe('LDAP group role assignments', () => {
     async function setup(pw: any, groupName = 'board') {
         await pw.ensureLicense();
         await pw.skipIfNoLicense();
         const {adminClient, adminUser} = await pw.getAdminClient();
-        await initializeOpenLdap(adminClient);
-        const group = await getOrLinkLdapGroup(adminClient, groupName);
-        await resetLdapGroup(adminClient, group.id);
+        await adminClient.initializeOpenLdap();
+        const group = await adminClient.getOrLinkLdapGroup(groupName);
+        await adminClient.resetLdapGroup(group.id);
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser.id);
         const channel = await adminClient.createPublicChannel(team.id, 'Role Assignment Channel');

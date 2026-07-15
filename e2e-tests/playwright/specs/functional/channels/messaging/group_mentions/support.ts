@@ -3,14 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {
-    SystemConsolePage,
-    configureOpenLdap,
-    getOrCreateLdapUserWithStatus,
-    getOrLinkLdapGroup,
-    resetLdapGroup,
-    runLdapSync,
-} from '@mattermost/playwright-lib';
+import {SystemConsolePage, type ChannelsPage} from '@mattermost/playwright-lib';
 
 export const boardAccount = {
     username: 'board.one',
@@ -22,9 +15,9 @@ export async function setup(pw: any) {
     await pw.ensureLicense();
     await pw.skipIfNoLicense();
     const {adminClient, adminUser} = await pw.getAdminClient();
-    await configureOpenLdap(adminClient);
-    const boardGroup = await getOrLinkLdapGroup(adminClient, 'board');
-    await resetLdapGroup(adminClient, boardGroup.id);
+    await adminClient.configureOpenLdap();
+    const boardGroup = await adminClient.getOrLinkLdapGroup('board');
+    await adminClient.resetLdapGroup(boardGroup.id);
     await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}});
     await resetMentionPermissions(adminClient);
 
@@ -39,9 +32,9 @@ export async function setup(pw: any) {
     await adminClient.addToTeam(team.id, regularUser.id);
     await adminClient.addToChannel(regularUser.id, offTopic.id);
 
-    const {user: existingBoardUser, created} = await getOrCreateLdapUserWithStatus(adminClient, boardAccount);
+    const {user: existingBoardUser, created} = await adminClient.getOrCreateLdapUserWithStatus(boardAccount);
     if (created || !boardGroup.member_count) {
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
     }
     await adminClient.updateUserRoles(existingBoardUser.id, 'system_user');
     await adminClient.revokeAllSessionsForUser(existingBoardUser.id);
@@ -62,18 +55,21 @@ export async function setup(pw: any) {
     return {adminClient, adminUser, boardGroup, boardUser, regularUser, team};
 }
 
-export async function assertMentionEnabled(
+export async function composeGroupMention(pw: any, user: UserProfile, teamName: string, groupName: string) {
+    const {channelsPage} = await pw.testBrowser.login(user);
+    await channelsPage.goto(teamName, 'off-topic');
+    await channelsPage.toBeVisible();
+    await channelsPage.centerView.postCreate.writeMessage(`@${groupName.slice(0, -1)}`);
+    return channelsPage;
+}
+
+export async function verifyMentionEnabled(
     pw: any,
-    user: UserProfile,
+    channelsPage: ChannelsPage,
     boardUser: UserProfile,
     teamName: string,
     groupName: string,
 ) {
-    const {channelsPage} = await pw.testBrowser.login(user);
-    await channelsPage.goto(teamName, 'off-topic');
-    await channelsPage.toBeVisible();
-    await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName.slice(0, -1));
-    await channelsPage.centerView.postCreate.assertGroupMentionSuggested(groupName);
     await channelsPage.postGroupMention(groupName);
     await channelsPage.assertMentionIsLinked(groupName);
 
@@ -83,18 +79,13 @@ export async function assertMentionEnabled(
     await boardChannelsPage.assertMentionIsHighlighted(groupName);
 }
 
-export async function assertMentionDisabled(
+export async function verifyMentionDisabled(
     pw: any,
-    user: UserProfile,
+    channelsPage: ChannelsPage,
     boardUser: UserProfile,
     teamName: string,
     groupName: string,
 ) {
-    const {channelsPage} = await pw.testBrowser.login(user);
-    await channelsPage.goto(teamName, 'off-topic');
-    await channelsPage.toBeVisible();
-    await channelsPage.centerView.postCreate.typeGroupMentionPrefix(groupName.slice(0, -1));
-    await channelsPage.centerView.postCreate.assertGroupMentionNotSuggested();
     await channelsPage.postGroupMention(groupName);
     await channelsPage.assertMentionIsPlainText(groupName);
 

@@ -5,7 +5,7 @@ import {createHmac} from 'node:crypto';
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {SystemConsolePage, initializeOpenLdap, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, test} from '@mattermost/playwright-lib';
 
 const ldapAccount = {
     username: 'test.one',
@@ -59,7 +59,7 @@ test.describe('User authentication methods', () => {
                 EnableMultifactorAuthentication: true,
             },
         });
-        await initializeOpenLdap(adminClient);
+        await adminClient.initializeOpenLdap();
 
         const randomMfaUser = await pw.random.user();
         const mfaUser = {

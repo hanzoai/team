@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {duration, expect, runLdapSync, test} from '@mattermost/playwright-lib';
+import {duration, expect, test} from '@mattermost/playwright-lib';
 
 import {getLdapUser, ldapUsers, loginFromPage, removeFromAllTeams, setupLdap} from './support';
 
@@ -61,7 +61,7 @@ test.describe('LDAP authentication and guest filters', () => {
             GuestAccountsSettings: {Enable: true},
             LdapSettings: {UserFilter: '(cn=no_users)', GuestFilter: '(cn=board*)'},
         });
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
         const user = await getLdapUser(adminClient, ldapUsers.guest);
         await adminClient.updateUserRoles(user.id, 'system_user');
         await adminClient.revokeAllSessionsForUser(user.id);
@@ -124,7 +124,7 @@ test.describe('LDAP authentication and guest filters', () => {
      */
     test('MM-T2704 Create new LDAP account from login page', {tag: '@ldap'}, async ({pw}) => {
         const {adminClient} = await pw.getAdminClient();
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
 
         // # Log in as a synchronized LDAP account
         await loginFromPage(pw, ldapUsers.guestFilterOne);

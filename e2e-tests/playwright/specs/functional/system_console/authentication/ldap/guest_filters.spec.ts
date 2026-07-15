@@ -3,7 +3,7 @@
 
 import type {UserProfile} from '@mattermost/types/users';
 
-import {SystemConsolePage, expect, runLdapSync, test} from '@mattermost/playwright-lib';
+import {SystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 import {getLdapUser, ldapUsers, loginFromPage, removeFromAllTeams, setupLdap} from './support';
 
@@ -33,7 +33,7 @@ test.describe('LDAP authentication and guest filters', () => {
         await consolePage.ldap.goto();
         await consolePage.ldap.expandAdditionalFilters();
         await consolePage.ldap.setGuestFilter(`(uid=${ldapUsers.guestFilterOne.username})`);
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
         await pw.makeClient(ldapUsers.guestFilterOne, {useCache: false});
 
         // * Verify only the matching account becomes a guest
@@ -42,7 +42,7 @@ test.describe('LDAP authentication and guest filters', () => {
 
         // # Clear the guest filter and synchronize again
         await consolePage.ldap.setGuestFilter('');
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
 
         // * Verify the existing guest remains a guest
         expect((await adminClient.getUser(userOne.id)).roles).toContain('system_guest');
@@ -60,7 +60,7 @@ test.describe('LDAP authentication and guest filters', () => {
         // # Enable guests and restore the LDAP account as a regular member
         await consolePage.guestAccess.goto();
         await consolePage.guestAccess.setEnabled(true);
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
         await adminClient.promoteGuestToUser(user.id).catch(() => undefined);
 
         // # Configure a guest filter, then disable guest access
@@ -108,7 +108,7 @@ test.describe('LDAP authentication and guest filters', () => {
             GuestAccountsSettings: {Enable: true},
             LdapSettings: {GuestFilter: '(cn=board*)'},
         });
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser!.id);
         const {groups} = await adminClient.getLdapGroups();
@@ -119,7 +119,7 @@ test.describe('LDAP authentication and guest filters', () => {
             : await adminClient.linkLdapGroup(board!.primary_key);
         expect(linked).toBeTruthy();
         await adminClient.linkGroupSyncable(linked!.id, team.id, 'team', {auto_add: true});
-        await runLdapSync(adminClient);
+        await adminClient.runLdapSync();
         const {user: authenticatedMember} = await pw.makeClient(ldapUsers.guest, {useCache: false});
         if (!authenticatedMember) {
             throw new Error(`Unable to authenticate LDAP member ${ldapUsers.guest.username}`);

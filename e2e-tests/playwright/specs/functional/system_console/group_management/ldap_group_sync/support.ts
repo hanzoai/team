@@ -1,13 +1,13 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {expect, initializeOpenLdap, resetLdapGroup} from '@mattermost/playwright-lib';
+import {expect} from '@mattermost/playwright-lib';
 
 export async function initializeLdapGroupSync(pw: any) {
     await pw.ensureLicense();
     await pw.skipIfNoLicense();
     const {adminClient} = await pw.getAdminClient();
-    await initializeOpenLdap(adminClient);
+    await adminClient.initializeOpenLdap();
 }
 
 export async function setupLdapGroupSync(pw: any) {
@@ -35,8 +35,8 @@ export async function setupLdapGroupSync(pw: any) {
     const developers = linkedGroups.find((group: {display_name: string}) => group.display_name === 'developers');
     expect(board).toBeTruthy();
     expect(developers).toBeTruthy();
-    await resetLdapGroup(adminClient, board.id);
-    await resetLdapGroup(adminClient, developers.id);
+    await adminClient.resetLdapGroup(board.id);
+    await adminClient.resetLdapGroup(developers.id);
 
     return {adminClient, adminUser, user, team, channel, board, developers};
 }

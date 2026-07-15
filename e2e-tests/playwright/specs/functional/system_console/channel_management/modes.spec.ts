@@ -1,14 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {duration, SystemConsolePage, expect, initializeOpenLdap, test} from '@mattermost/playwright-lib';
+import {duration, SystemConsolePage, expect, test} from '@mattermost/playwright-lib';
 
 test.describe('LDAP channel management modes', () => {
     async function setup(pw: any) {
         await pw.ensureLicense();
         await pw.skipIfNoLicense();
         const {adminClient, adminUser} = await pw.getAdminClient();
-        await initializeOpenLdap(adminClient);
+        await adminClient.initializeOpenLdap();
         const team = await adminClient.createTeam(await pw.random.team());
         await adminClient.addToTeam(team.id, adminUser.id);
         const channel = await adminClient.createPublicChannel(team.id, 'Test Channel');
