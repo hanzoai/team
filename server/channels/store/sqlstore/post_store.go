@@ -1281,6 +1281,9 @@ func (s *SqlPostStore) prepareThreadedResponse(rctx request.CTX, posts []*postWi
 		}
 	} else {
 		for _, userId := range userIds {
+			if userId == "" {
+				continue
+			}
 			usersMap[userId] = &model.User{Id: userId}
 		}
 	}

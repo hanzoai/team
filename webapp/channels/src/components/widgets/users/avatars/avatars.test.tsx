@@ -150,6 +150,21 @@ describe('components/widgets/users/Avatars', () => {
         expect(container.querySelector('[data-content="+2"]')).toBeInTheDocument();
     });
 
+    test('should not render an img with an empty or double-slash src for empty user ids', () => {
+        const {container} = renderWithContext(
+            <Avatars
+                size='xl'
+                userIds={['', '1']}
+            />,
+            state,
+        );
+
+        expect(container.querySelector('img[src=""]')).not.toBeInTheDocument();
+        expect(container.querySelector('img[src*="//image"]')).not.toBeInTheDocument();
+        expect(container.querySelector('img[src="/api/v4/users/1/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelectorAll('img.Avatar')).toHaveLength(1);
+    });
+
     test('should fetch missing users', () => {
         const {container} = renderWithContext(
             <Avatars

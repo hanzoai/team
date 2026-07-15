@@ -396,6 +396,9 @@ func (s *SqlThreadStore) GetThreadsForUser(rctx request.CTX, userId, teamId stri
 		}
 	} else {
 		for _, participantUserId := range participantUserIds {
+			if participantUserId == "" {
+				continue
+			}
 			allParticipants[participantUserId] = &model.User{Id: participantUserId}
 		}
 	}

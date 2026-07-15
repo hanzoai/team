@@ -61,7 +61,7 @@ function ThreadFooter({
         },
     } = thread;
 
-    const participantIds = useMemo(() => (participants || []).map(({id}) => id).reverse(), [participants]);
+    const participantIds = useMemo(() => (participants || []).map(({id}) => id).filter(Boolean).reverse(), [participants]);
 
     const handleReply = useCallback((e: React.MouseEvent) => {
         if (replyClick) {

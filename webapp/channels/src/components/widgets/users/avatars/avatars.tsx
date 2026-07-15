@@ -60,6 +60,10 @@ function UserAvatar({
 
     const profilePictureURL = userId ? imageURLForUser(userId) : '';
 
+    if (!userId) {
+        return null;
+    }
+
     return (
         <ProfilePopover<HTMLButtonElement>
             triggerComponentAs='button'

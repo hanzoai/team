@@ -211,6 +211,20 @@ describe('components/threading/channel_threads/thread_footer', () => {
         expect(capturedAvatarsProps).toHaveProperty('userIds', ['5', '4', '3', '2', '1']);
     });
 
+    test('should filter out empty participant ids', () => {
+        thread.participants = [{id: '1'}, {id: ''}, {id: '2'}] as UserThread['participants'];
+
+        renderWithContext(
+            <ThreadFooter
+                {...props}
+            />,
+            state,
+            {useMockedStore: true},
+        );
+        expect(capturedAvatarsProps.userIds).not.toContain('');
+        expect(capturedAvatarsProps).toHaveProperty('userIds', ['2', '1']);
+    });
+
     test('should have a timestamp', () => {
         renderWithContext(
             <ThreadFooter
