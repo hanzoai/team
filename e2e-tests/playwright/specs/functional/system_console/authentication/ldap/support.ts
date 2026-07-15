@@ -22,15 +22,9 @@ export async function setupLdap(pw: any) {
     await pw.skipIfNoLicense();
     const {adminClient} = await pw.getAdminClient();
     await adminClient.configureOpenLdap();
+    await adminClient.resetOpenLdapTestState();
     await adminClient.patchConfig({
         GuestAccountsSettings: {Enable: true},
-        LdapSettings: {
-            UserFilter: '',
-            GroupFilter: '',
-            GuestFilter: '',
-            EnableAdminFilter: false,
-            AdminFilter: '',
-        },
     });
     await adminClient.testLdap();
     await adminClient.runLdapSync();

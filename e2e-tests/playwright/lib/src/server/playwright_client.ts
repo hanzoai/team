@@ -104,6 +104,21 @@ export class PlaywrightClient4 extends Client4 {
     }
 
     /**
+     * Resets mutable LDAP filters shared by E2E tests to their server defaults.
+     */
+    async resetOpenLdapTestState() {
+        await this.patchConfig({
+            LdapSettings: {
+                UserFilter: '',
+                GroupFilter: '',
+                GuestFilter: '',
+                EnableAdminFilter: false,
+                AdminFilter: '',
+            },
+        });
+    }
+
+    /**
      * Starts an LDAP synchronization job and waits for its terminal status.
      */
     async runLdapSync() {
@@ -140,6 +155,7 @@ export class PlaywrightClient4 extends Client4 {
      */
     async initializeOpenLdap() {
         await this.configureOpenLdap();
+        await this.resetOpenLdapTestState();
         await this.testLdap();
         await this.runLdapSync();
     }
