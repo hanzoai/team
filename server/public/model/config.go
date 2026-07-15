@@ -1645,13 +1645,13 @@ func (s *DeliveryTrackingSettings) SetDefaults() {
 	}
 
 	if s.MaxIdleConns == nil {
-		s.MaxIdleConns = new(50)
+		// One warm idle connection per shard worker (deliveryShards = 8 in the
+		// audit delivery target);
+		s.MaxIdleConns = new(8)
 	}
 
 	if s.MaxOpenConns == nil {
-		// Higher than the main pool: this is a write-heavy workload with many
-		// concurrent batched inserts from the delivery target's shard workers.
-		s.MaxOpenConns = new(200)
+		s.MaxOpenConns = new(16)
 	}
 
 	if s.ConnMaxLifetimeMilliseconds == nil {
