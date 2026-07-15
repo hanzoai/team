@@ -103,18 +103,16 @@ export default class GroupConfiguration {
     }
 
     async changeMembershipRole(displayName: string, currentRole: MembershipRole, newRole: MembershipRole) {
-        const row = this.page
-            .getByRole('row')
-            .filter({has: this.page.getByText(displayName, {exact: true})})
-            .filter({has: this.page.getByText(currentRole, {exact: true})});
-        await row.getByText(currentRole, {exact: true}).click();
+        const roleControl = this.page.getByTestId(`${displayName}_current_role`);
+        await expect(roleControl).toHaveText(currentRole);
+        await roleControl.click();
         await this.page.getByRole('menu').last().getByRole('menuitem', {name: newRole, exact: true}).click();
-        await expect(row.getByText(newRole, {exact: true})).toBeVisible({timeout: duration.half_min});
+        await expect(roleControl).toHaveText(newRole, {timeout: duration.half_min});
     }
 
     async expectMembershipRole(displayName: string, role: MembershipRole) {
-        const row = this.page.getByRole('row').filter({has: this.page.getByText(displayName, {exact: true})});
-        await expect(row.getByText(role, {exact: true})).toBeVisible({timeout: duration.half_min});
+        const roleControl = this.page.getByTestId(`${displayName}_current_role`);
+        await expect(roleControl).toHaveText(role, {timeout: duration.half_min});
     }
 
     async attemptToLeave() {
