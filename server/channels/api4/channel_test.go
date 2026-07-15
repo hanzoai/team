@@ -7457,6 +7457,20 @@ func TestChannelMemberSanitization(t *testing.T) {
 	_, _, err := client.AddChannelMember(context.Background(), channel.Id, user2.Id)
 	require.NoError(t, err)
 
+	// Give the current user a real, non-zero last_viewed_at: user2 posts a
+	// message so the channel is unread for the current user, who then views it.
+	// Without a genuine timestamp, the omitzero tag would legitimately omit a
+	// zero last_viewed_at, which the current-user assertions could not tell
+	// apart from sanitization.
+	user2Client := th.CreateClient()
+	_, _, err = user2Client.Login(context.Background(), user2.Email, user2.Password)
+	require.NoError(t, err)
+	_, _, err = user2Client.CreatePost(context.Background(), &model.Post{ChannelId: channel.Id, Message: "unread message"})
+	require.NoError(t, err)
+
+	_, _, err = client.ViewChannel(context.Background(), user.Id, &model.ChannelView{ChannelId: channel.Id})
+	require.NoError(t, err)
+
 	// decodeRawMembers reads the raw JSON body of a channel member response so the
 	// test can assert whether the timestamp fields are present or omitted, which a
 	// typed model.ChannelMember cannot distinguish from a zero value.
