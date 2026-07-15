@@ -121,8 +121,8 @@ func timestampOrNil(ts int64) *int64 {
 
 // MarshalJSON serializes the channel member in a single pass, omitting
 // last_viewed_at and/or last_update_at when they hold the sanitized sentinel
-// written by SanitizeForCurrentUser. The shadowing pointer fields override the
-// embedded int64 fields, so no marshal/unmarshal round-trip is needed.
+// written by SanitizeForCurrentUser. The shadowing pointer fields allow for a
+// direct marshal with the sanitized values removed if needed.
 func (o ChannelMember) MarshalJSON() ([]byte, error) {
 	type alias ChannelMember
 	return json.Marshal(&struct {
