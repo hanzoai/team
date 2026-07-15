@@ -23,6 +23,7 @@ import '@mattermost/components/dist/index.esm.css';
 declare global {
     interface Window {
         publicPath?: string;
+        enableConcurrentReact?: boolean;
     }
 }
 
