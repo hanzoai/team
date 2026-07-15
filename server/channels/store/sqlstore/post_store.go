@@ -1294,6 +1294,9 @@ func (s *SqlPostStore) prepareThreadedResponse(rctx request.CTX, posts []*postWi
 			p.Post.IsFollowing = new(*p.IsFollowing)
 		}
 		for _, userID := range p.ThreadParticipants {
+			if userID == "" {
+				continue
+			}
 			participant, ok := usersMap[userID]
 			if !ok {
 				return errors.New("cannot find thread participant with id=" + userID)
