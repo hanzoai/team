@@ -16,6 +16,7 @@ export async function setup(pw: any) {
     await pw.skipIfNoLicense();
     const {adminClient, adminUser} = await pw.getAdminClient();
     await adminClient.configureOpenLdap();
+    await adminClient.resetOpenLdapTestState();
     const boardGroup = await adminClient.getOrLinkLdapGroup('board');
     await adminClient.resetLdapGroup(boardGroup.id);
     await adminClient.patchConfig({GuestAccountsSettings: {Enable: true}});
