@@ -263,7 +263,8 @@ type API interface {
 	UpdateUser(user *model.User) (*model.User, *model.AppError)
 
 	// CreatePasswordRecoveryToken creates a password recovery token for the user and
-	// invalidates any existing ones. The token value is Token.Token.
+	// invalidates any existing ones. Returns an error if existing tokens cannot be
+	// invalidated. The token value is Token.Token.
 	//
 	// @tag User
 	// Minimum server version: 11.10

@@ -1883,10 +1883,8 @@ func (a *App) CreatePasswordRecoveryToken(rctx request.CTX, userID, email string
 		return nil, model.NewAppError("CreatePasswordRecoveryToken", "api.user.create_password_token.error", nil, "", http.StatusInternalServerError).Wrap(err)
 	}
 
-	// remove any previously created tokens for user
-	appErr := a.InvalidatePasswordRecoveryTokensForUser(userID)
-	if appErr != nil {
-		rctx.Logger().Warn("Error while deleting additional user tokens.", mlog.Err(appErr))
+	if appErr := a.InvalidatePasswordRecoveryTokensForUser(userID); appErr != nil {
+		return nil, appErr
 	}
 
 	token := model.NewToken(model.TokenTypePasswordRecovery, string(jsonData))
