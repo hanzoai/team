@@ -13,6 +13,9 @@ type SamlOptions = {
     enableSyncWithLdap: boolean;
     enableGuestAccess?: boolean;
     guestAttribute?: string;
+    enableAdminAttribute?: boolean;
+    adminAttribute?: string;
+    signatureAlgorithm?: 'RSAwithSHA256' | 'RSAwithSHA512';
     keycloakUrl?: string;
     keycloakRealm?: string;
     idpCertificate?: string;
@@ -33,11 +36,13 @@ export async function configureSamlWithKeycloak(client: PlaywrightClient4, optio
         SamlSettings: {
             Enable: true,
             Encrypt: false,
+            SignRequest: false,
             IdpURL: `${descriptorURL}/protocol/saml`,
             IdpDescriptorURL: descriptorURL,
             ServiceProviderIdentifier: 'mattermost',
             AssertionConsumerServiceURL: `${mattermostBaseURL}/login/sso/saml`,
             SignatureAlgorithm: 'RSAwithSHA256',
+            CanonicalAlgorithm: 'Canonical1.0',
             PublicCertificateFile: '',
             PrivateKeyFile: '',
             FirstNameAttribute: 'urn:oid:2.5.4.42',
@@ -46,6 +51,9 @@ export async function configureSamlWithKeycloak(client: PlaywrightClient4, optio
             UsernameAttribute: 'username',
             IdAttribute: 'username',
             ...(options.guestAttribute === undefined ? {} : {GuestAttribute: options.guestAttribute}),
+            ...(options.enableAdminAttribute === undefined ? {} : {EnableAdminAttribute: options.enableAdminAttribute}),
+            ...(options.adminAttribute === undefined ? {} : {AdminAttribute: options.adminAttribute}),
+            ...(options.signatureAlgorithm === undefined ? {} : {SignatureAlgorithm: options.signatureAlgorithm}),
             EnableSyncWithLdap: options.enableSyncWithLdap,
             EnableSyncWithLdapIncludeAuth: options.enableSyncWithLdap,
         },
