@@ -21,6 +21,10 @@ export default class KeycloakLoginPage {
         await this.page.goto('about:blank');
         await this.page.context().clearCookies();
         await this.page.goto('/login/sso/saml');
+        await this.submit(user, waitForMattermost);
+    }
+
+    async submit(user: KeycloakUser, waitForMattermost = true) {
         await expect(this.page.getByLabel('Username or email', {exact: true})).toBeVisible({
             timeout: duration.half_min,
         });

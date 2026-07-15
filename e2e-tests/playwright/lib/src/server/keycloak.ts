@@ -9,6 +9,7 @@ export type KeycloakUser = {
     email: string;
     firstName: string;
     lastName: string;
+    attributes?: Record<string, string[]>;
 };
 
 type KeycloakUserRepresentation = {
@@ -19,6 +20,11 @@ type KeycloakClientRepresentation = {
     id: string;
     attributes?: Record<string, string>;
     [key: string]: unknown;
+};
+
+type KeycloakProtocolMapperRepresentation = {
+    id?: string;
+    name: string;
 };
 
 /**
@@ -42,7 +48,7 @@ export class KeycloakAdminClient {
         this.realm = realm;
     }
 
-    async configureSamlClient(mattermostBaseURL: string) {
+    async configureSamlClient(mattermostBaseURL: string, userAttributeNames: string[] = []) {
         const token = await this.getAccessToken();
         const clients = await this.request<KeycloakClientRepresentation[]>(
             `/admin/realms/${this.realm}/clients?clientId=mattermost`,
@@ -70,6 +76,9 @@ export class KeycloakAdminClient {
             },
             expectedStatus: 204,
         });
+        for (const attributeName of userAttributeNames) {
+            await this.configureSamlUserAttributeMapper(token, client.id, attributeName);
+        }
         return this.getRealmSigningCertificate();
     }
 
@@ -92,6 +101,7 @@ export class KeycloakAdminClient {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                attributes: user.attributes,
                 enabled: true,
             },
             expectedStatus: 201,
@@ -109,6 +119,39 @@ export class KeycloakAdminClient {
             expectedStatus: 204,
         });
         return createdUser;
+    }
+
+    private async configureSamlUserAttributeMapper(token: string, clientId: string, attributeName: string) {
+        const mappers = await this.request<KeycloakProtocolMapperRepresentation[]>(
+            `/admin/realms/${this.realm}/clients/${clientId}/protocol-mappers/models`,
+            {method: 'GET', token, expectedStatus: 200},
+        );
+        const mapper = {
+            name: `Mattermost ${attributeName}`,
+            protocol: 'saml',
+            protocolMapper: 'saml-user-attribute-mapper',
+            consentRequired: false,
+            config: {
+                'user.attribute': attributeName,
+                'attribute.name': attributeName,
+                'attribute.nameformat': 'Basic',
+            },
+        };
+        const existingMapper = mappers.find((candidate) => candidate.name === mapper.name);
+        if (existingMapper?.id) {
+            await this.request(
+                `/admin/realms/${this.realm}/clients/${clientId}/protocol-mappers/models/${existingMapper.id}`,
+                {method: 'PUT', token, body: {...mapper, id: existingMapper.id}, expectedStatus: 204},
+            );
+            return;
+        }
+
+        await this.request(`/admin/realms/${this.realm}/clients/${clientId}/protocol-mappers/models`, {
+            method: 'POST',
+            token,
+            body: mapper,
+            expectedStatus: 201,
+        });
     }
 
     async setUserEnabled(email: string, enabled: boolean) {

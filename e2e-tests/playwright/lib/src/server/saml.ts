@@ -9,9 +9,11 @@ import type {PlaywrightClient4} from './playwright_client';
 import {configureOpenLdap} from '@/server/openldap';
 import {testConfig} from '@/test_config';
 
-type SamlLdapOptions = {
+type SamlOptions = {
     baseURL: string;
     enableSyncWithLdap: boolean;
+    enableGuestAccess?: boolean;
+    guestAttribute?: string;
     keycloakUrl?: string;
     keycloakRealm?: string;
     idpCertificate?: string;
@@ -20,7 +22,7 @@ type SamlLdapOptions = {
 /**
  * Configures Mattermost SAML against the Keycloak realm supplied by E2E Docker.
  */
-export async function configureSamlWithKeycloak(client: PlaywrightClient4, options: SamlLdapOptions) {
+export async function configureSamlWithKeycloak(client: PlaywrightClient4, options: SamlOptions) {
     const keycloakUrl = (options.keycloakUrl || testConfig.keycloakUrl).replace(/\/$/, '');
     const keycloakRealm = options.keycloakRealm || testConfig.keycloakRealm;
     const mattermostBaseURL = options.baseURL.replace(/\/$/, '');
@@ -44,9 +46,13 @@ export async function configureSamlWithKeycloak(client: PlaywrightClient4, optio
             EmailAttribute: 'urn:oid:1.2.840.113549.1.9.1',
             UsernameAttribute: 'username',
             IdAttribute: 'username',
+            ...(options.guestAttribute === undefined ? {} : {GuestAttribute: options.guestAttribute}),
             EnableSyncWithLdap: options.enableSyncWithLdap,
             EnableSyncWithLdapIncludeAuth: options.enableSyncWithLdap,
         },
+        ...(options.enableGuestAccess === undefined
+            ? {}
+            : {GuestAccountsSettings: {Enable: options.enableGuestAccess}}),
         LdapSettings: {
             EnableSync: true,
             BaseDN: 'ou=e2etest,dc=mm,dc=test,dc=com',
