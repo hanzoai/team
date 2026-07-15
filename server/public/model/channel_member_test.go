@@ -94,8 +94,8 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 		member.SanitizeForCurrentUser(currentUserId)
 
-		assert.Equal(t, sanitizedTimestamp, member.LastViewedAt, "LastViewedAt should be sanitized for other users")
-		assert.Equal(t, sanitizedTimestamp, member.LastUpdateAt, "LastUpdateAt should be sanitized for other users")
+		assert.Zero(t, member.LastViewedAt, "LastViewedAt should be zeroed for other users")
+		assert.Zero(t, member.LastUpdateAt, "LastUpdateAt should be zeroed for other users")
 	})
 
 	t.Run("should preserve other fields when sanitizing", func(t *testing.T) {
@@ -121,8 +121,8 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 		member.SanitizeForCurrentUser(currentUserId)
 
-		assert.Equal(t, sanitizedTimestamp, member.LastViewedAt, "LastViewedAt should be sanitized")
-		assert.Equal(t, sanitizedTimestamp, member.LastUpdateAt, "LastUpdateAt should be sanitized")
+		assert.Zero(t, member.LastViewedAt, "LastViewedAt should be zeroed")
+		assert.Zero(t, member.LastUpdateAt, "LastUpdateAt should be zeroed")
 		assert.Equal(t, originalRoles, member.Roles, "Roles should be preserved")
 		assert.Equal(t, originalMsgCount, member.MsgCount, "MsgCount should be preserved")
 		assert.Equal(t, originalMentionCount, member.MentionCount, "MentionCount should be preserved")
@@ -166,14 +166,14 @@ func TestChannelMemberMarshalJSON(t *testing.T) {
 		assert.EqualValues(t, 1234567890000, fields["last_update_at"])
 	})
 
-	t.Run("keeps a legitimate zero timestamp for the current user", func(t *testing.T) {
+	t.Run("omits a zero timestamp via omitzero", func(t *testing.T) {
 		member := newMember(currentUserId)
 		member.LastViewedAt = 0
 		member.SanitizeForCurrentUser(currentUserId)
 
 		fields := decode(t, member)
-		require.Contains(t, fields, "last_viewed_at", "a real zero timestamp must remain present")
-		assert.EqualValues(t, 0, fields["last_viewed_at"])
+		assert.NotContains(t, fields, "last_viewed_at", "a zero timestamp is omitted by the omitzero tag")
+		assert.EqualValues(t, 1234567890000, fields["last_update_at"], "a non-zero timestamp is still serialized")
 	})
 
 	t.Run("omits sanitized timestamps for another user's membership", func(t *testing.T) {
