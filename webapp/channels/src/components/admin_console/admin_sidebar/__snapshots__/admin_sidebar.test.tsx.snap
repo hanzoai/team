@@ -866,6 +866,40 @@ exports[`components/AdminSidebar should match snapshot 1`] = `
                               class="nav nav__sub-menu subsections"
                             />
                           </li>
+                          <li
+                            class="sidebar-section"
+                            data-testid="system_attributes.attribute_based_access_control_feature_discovery"
+                          >
+                            <a
+                              class="sidebar-section-title"
+                              href="/admin_console/system_attributes/attribute_based_access_control"
+                              id="system_attributes/attribute_based_access_control"
+                            >
+                              <span
+                                class="sidebar-section-title__text"
+                              >
+                                Attribute-Based Access
+                              </span>
+                              <span
+                                class="sidebar-section-indicator"
+                              >
+                                <span
+                                  class="RestrictedIndicator__icon-tooltip-container"
+                                >
+                                  <div
+                                    class="RestrictedIndicator__content"
+                                  >
+                                    <i
+                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                                    />
+                                  </div>
+                                </span>
+                              </span>
+                            </a>
+                            <ul
+                              class="nav nav__sub-menu subsections"
+                            />
+                          </li>
                         </ul>
                       </li>
                       <li
@@ -6371,6 +6405,40 @@ exports[`components/AdminSidebar should match snapshot with license with profess
                               class="nav nav__sub-menu subsections"
                             />
                           </li>
+                          <li
+                            class="sidebar-section"
+                            data-testid="system_attributes.attribute_based_access_control_feature_discovery"
+                          >
+                            <a
+                              class="sidebar-section-title"
+                              href="/admin_console/system_attributes/attribute_based_access_control"
+                              id="system_attributes/attribute_based_access_control"
+                            >
+                              <span
+                                class="sidebar-section-title__text"
+                              >
+                                Attribute-Based Access
+                              </span>
+                              <span
+                                class="sidebar-section-indicator"
+                              >
+                                <span
+                                  class="RestrictedIndicator__icon-tooltip-container"
+                                >
+                                  <div
+                                    class="RestrictedIndicator__content"
+                                  >
+                                    <i
+                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                                    />
+                                  </div>
+                                </span>
+                              </span>
+                            </a>
+                            <ul
+                              class="nav nav__sub-menu subsections"
+                            />
+                          </li>
                         </ul>
                       </li>
                       <li
@@ -8129,6 +8197,40 @@ exports[`components/AdminSidebar should match snapshot with workspace optimizati
                                 class="sidebar-section-title__text"
                               >
                                 User Attributes
+                              </span>
+                              <span
+                                class="sidebar-section-indicator"
+                              >
+                                <span
+                                  class="RestrictedIndicator__icon-tooltip-container"
+                                >
+                                  <div
+                                    class="RestrictedIndicator__content"
+                                  >
+                                    <i
+                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                                    />
+                                  </div>
+                                </span>
+                              </span>
+                            </a>
+                            <ul
+                              class="nav nav__sub-menu subsections"
+                            />
+                          </li>
+                          <li
+                            class="sidebar-section"
+                            data-testid="system_attributes.attribute_based_access_control_feature_discovery"
+                          >
+                            <a
+                              class="sidebar-section-title"
+                              href="/admin_console/system_attributes/attribute_based_access_control"
+                              id="system_attributes/attribute_based_access_control"
+                            >
+                              <span
+                                class="sidebar-section-title__text"
+                              >
+                                Attribute-Based Access
                               </span>
                               <span
                                 class="sidebar-section-indicator"
@@ -10019,6 +10121,40 @@ exports[`components/AdminSidebar should match snapshot, not prevent the console 
                               class="nav nav__sub-menu subsections"
                             />
                           </li>
+                          <li
+                            class="sidebar-section"
+                            data-testid="system_attributes.attribute_based_access_control_feature_discovery"
+                          >
+                            <a
+                              class="sidebar-section-title"
+                              href="/admin_console/system_attributes/attribute_based_access_control"
+                              id="system_attributes/attribute_based_access_control"
+                            >
+                              <span
+                                class="sidebar-section-title__text"
+                              >
+                                Attribute-Based Access
+                              </span>
+                              <span
+                                class="sidebar-section-indicator"
+                              >
+                                <span
+                                  class="RestrictedIndicator__icon-tooltip-container"
+                                >
+                                  <div
+                                    class="RestrictedIndicator__content"
+                                  >
+                                    <i
+                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                                    />
+                                  </div>
+                                </span>
+                              </span>
+                            </a>
+                            <ul
+                              class="nav nav__sub-menu subsections"
+                            />
+                          </li>
                         </ul>
                       </li>
                       <li
@@ -11779,6 +11915,40 @@ exports[`components/AdminSidebar should match snapshot, render plugins without a
                               class="nav nav__sub-menu subsections"
                             />
                           </li>
+                          <li
+                            class="sidebar-section"
+                            data-testid="system_attributes.attribute_based_access_control_feature_discovery"
+                          >
+                            <a
+                              class="sidebar-section-title"
+                              href="/admin_console/system_attributes/attribute_based_access_control"
+                              id="system_attributes/attribute_based_access_control"
+                            >
+                              <span
+                                class="sidebar-section-title__text"
+                              >
+                                Attribute-Based Access
+                              </span>
+                              <span
+                                class="sidebar-section-indicator"
+                              >
+                                <span
+                                  class="RestrictedIndicator__icon-tooltip-container"
+                                >
+                                  <div
+                                    class="RestrictedIndicator__content"
+                                  >
+                                    <i
+                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                                    />
+                                  </div>
+                                </span>
+                              </span>
+                            </a>
+                            <ul
+                              class="nav nav__sub-menu subsections"
+                            />
+                          </li>
                         </ul>
                       </li>
                       <li
@@ -13509,6 +13679,40 @@ exports[`components/AdminSidebar should match snapshot, with license (with all f
                               class="nav nav__sub-menu subsections"
                             />
                           </li>
+                          <li
+                            class="sidebar-section"
+                            data-testid="system_attributes.attribute_based_access_control_feature_discovery"
+                          >
+                            <a
+                              class="sidebar-section-title"
+                              href="/admin_console/system_attributes/attribute_based_access_control"
+                              id="system_attributes/attribute_based_access_control"
+                            >
+                              <span
+                                class="sidebar-section-title__text"
+                              >
+                                Attribute-Based Access
+                              </span>
+                              <span
+                                class="sidebar-section-indicator"
+                              >
+                                <span
+                                  class="RestrictedIndicator__icon-tooltip-container"
+                                >
+                                  <div
+                                    class="RestrictedIndicator__content"
+                                  >
+                                    <i
+                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                                    />
+                                  </div>
+                                </span>
+                              </span>
+                            </a>
+                            <ul
+                              class="nav nav__sub-menu subsections"
+                            />
+                          </li>
                         </ul>
                       </li>
                       <li
@@ -15189,6 +15393,40 @@ exports[`components/AdminSidebar should match snapshot, with license (without an
                                 class="sidebar-section-title__text"
                               >
                                 User Attributes
+                              </span>
+                              <span
+                                class="sidebar-section-indicator"
+                              >
+                                <span
+                                  class="RestrictedIndicator__icon-tooltip-container"
+                                >
+                                  <div
+                                    class="RestrictedIndicator__content"
+                                  >
+                                    <i
+                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                                    />
+                                  </div>
+                                </span>
+                              </span>
+                            </a>
+                            <ul
+                              class="nav nav__sub-menu subsections"
+                            />
+                          </li>
+                          <li
+                            class="sidebar-section"
+                            data-testid="system_attributes.attribute_based_access_control_feature_discovery"
+                          >
+                            <a
+                              class="sidebar-section-title"
+                              href="/admin_console/system_attributes/attribute_based_access_control"
+                              id="system_attributes/attribute_based_access_control"
+                            >
+                              <span
+                                class="sidebar-section-title__text"
+                              >
+                                Attribute-Based Access
                               </span>
                               <span
                                 class="sidebar-section-indicator"
