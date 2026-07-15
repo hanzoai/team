@@ -730,6 +730,31 @@ func TestPluginAPIUserCustomStatus(t *testing.T) {
 	assert.Equal(t, csClear, userCs)
 }
 
+func TestPluginAPICreatePasswordRecoveryToken(t *testing.T) {
+	mainHelper.Parallel(t)
+	th := Setup(t).InitBasic(t)
+
+	api := th.SetupPluginAPI()
+
+	token, appErr := api.CreatePasswordRecoveryToken(th.BasicUser.Id, th.BasicUser.Email)
+	require.Nil(t, appErr)
+	require.NotNil(t, token)
+	assert.Equal(t, model.TokenTypePasswordRecovery, token.Type)
+	assert.NotEmpty(t, token.Token)
+
+	// A second create invalidates the first token.
+	token2, appErr := api.CreatePasswordRecoveryToken(th.BasicUser.Id, th.BasicUser.Email)
+	require.Nil(t, appErr)
+	require.NotNil(t, token2)
+	assert.NotEqual(t, token.Token, token2.Token)
+
+	appErr = th.App.ResetPasswordFromToken(th.Context, token.Token, model.NewTestPassword())
+	require.NotNil(t, appErr)
+
+	appErr = th.App.ResetPasswordFromToken(th.Context, token2.Token, model.NewTestPassword())
+	require.Nil(t, appErr)
+}
+
 func TestPluginAPIGetFile(t *testing.T) {
 	mainHelper.Parallel(t)
 	th := Setup(t).InitBasic(t)

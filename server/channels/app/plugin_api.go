@@ -370,6 +370,10 @@ func (api *PluginAPI) UpdateUser(user *model.User) (*model.User, *model.AppError
 	return api.app.UpdateUser(api.ctx, user, true)
 }
 
+func (api *PluginAPI) CreatePasswordRecoveryToken(userID, email string) (*model.Token, *model.AppError) {
+	return api.app.CreatePasswordRecoveryToken(api.ctx, userID, email)
+}
+
 func (api *PluginAPI) UpdateUserAuth(userID string, userAuth *model.UserAuth) (*model.UserAuth, *model.AppError) {
 	return api.app.UpdateUserAuth(api.ctx, userID, userAuth)
 }

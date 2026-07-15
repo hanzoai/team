@@ -301,6 +301,13 @@ func (api *apiTimerLayer) UpdateUser(user *model.User) (*model.User, *model.AppE
 	return _returnsA, _returnsB
 }
 
+func (api *apiTimerLayer) CreatePasswordRecoveryToken(userID, email string) (*model.Token, *model.AppError) {
+	startTime := timePkg.Now()
+	_returnsA, _returnsB := api.apiImpl.CreatePasswordRecoveryToken(userID, email)
+	api.recordTime(startTime, "CreatePasswordRecoveryToken", _returnsB == nil)
+	return _returnsA, _returnsB
+}
+
 func (api *apiTimerLayer) GetUserStatus(userID string) (*model.Status, *model.AppError) {
 	startTime := timePkg.Now()
 	_returnsA, _returnsB := api.apiImpl.GetUserStatus(userID)

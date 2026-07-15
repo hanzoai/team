@@ -74,6 +74,7 @@ const (
 	ScheduledPostWillBeCreatedID              = 54
 	DraftWillBeUpsertedID                     = 55
 	MessagesWillBeConsumedWithContextID       = 56
+	UserWillBeUpdatedID                       = 57
 	TotalHooksID                              = iota
 )
 
@@ -521,4 +522,20 @@ type Hooks interface {
 	//
 	// Minimum server version: 11.9
 	DraftWillBeUpserted(c *Context, draft *model.Draft) (*model.Draft, string)
+
+	// UserWillBeUpdated is invoked before a user update is validated and committed, allowing
+	// plugins to modify the user or reject the update.
+	//
+	// To reject the update, return a non-empty string describing why. To modify the user, return
+	// the replacement *model.User and an empty string. To allow the update without modification,
+	// return nil and an empty string.
+	//
+	// Mutations are subject to the same UpdateUser validation as the caller (username uniqueness,
+	// email domain restrictions, etc.). Id and CreateAt are always restored from the stored user.
+	//
+	// Fires from the app-layer UpdateUser path so REST, local API, plugin API, import, and bulk
+	// callers all hit it. Dedicated paths such as UpdateActive / UpdatePassword do not.
+	//
+	// Minimum server version: 11.10
+	UserWillBeUpdated(c *Context, newUser, oldUser *model.User) (*model.User, string)
 }

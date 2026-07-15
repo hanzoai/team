@@ -1492,6 +1492,12 @@ func (a *App) UpdateUser(rctx request.CTX, user *model.User, sendNotifications b
 		user.CreateAt = prev.CreateAt
 	}
 
+	// Plugins run before username/email validation so mutations cannot bypass those checks.
+	user, appErr := a.runUserWillBeUpdated(rctx, user, prev)
+	if appErr != nil {
+		return nil, appErr
+	}
+
 	if user.Username != prev.Username {
 		if err := a.isUniqueToGroupNames(user.Username); err != nil {
 			err.Where = "UpdateUser"

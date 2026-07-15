@@ -123,6 +123,15 @@ func (u *UserService) Update(user *model.User) error {
 	return nil
 }
 
+// CreatePasswordRecoveryToken creates a password recovery token for the user and
+// invalidates any existing ones. The token value is Token.Token.
+//
+// Minimum server version: 11.10
+func (u *UserService) CreatePasswordRecoveryToken(userID, email string) (*model.Token, error) {
+	token, appErr := u.api.CreatePasswordRecoveryToken(userID, email)
+	return token, normalizeAppErr(appErr)
+}
+
 // Delete deletes a user.
 //
 // Minimum server version: 5.2

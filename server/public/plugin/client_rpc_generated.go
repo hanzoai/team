@@ -2188,6 +2188,61 @@ func (s *hooksRPCServer) DraftWillBeUpserted(args *Z_DraftWillBeUpsertedArgs, re
 	return nil
 }
 
+func init() {
+	hookNameToId["UserWillBeUpdated"] = UserWillBeUpdatedID
+}
+
+type Z_UserWillBeUpdatedArgs struct {
+	A *Context
+	B *model.User
+	C *model.User
+}
+
+type Z_UserWillBeUpdatedReturns struct {
+	A *model.User
+	B string
+}
+
+func (g *hooksRPCClient) UserWillBeUpdated(c *Context, newUser, oldUser *model.User) (*model.User, string) {
+	_args := &Z_UserWillBeUpdatedArgs{c, newUser, oldUser}
+	_returns := &Z_UserWillBeUpdatedReturns{}
+	if g.implemented[UserWillBeUpdatedID] {
+		if err := g.client.Call("Plugin.UserWillBeUpdated", _args, _returns); err != nil {
+			g.log.Error("RPC call UserWillBeUpdated to plugin failed.", mlog.Err(err))
+		}
+	}
+	return _returns.A, _returns.B
+}
+
+// UserWillBeUpdatedWithRPCErr returns the same values as UserWillBeUpdated, with an additional trailing error
+// for the RPC transport — always the LAST return slot.
+func (g *hooksRPCClient) UserWillBeUpdatedWithRPCErr(c *Context, newUser, oldUser *model.User) (*model.User, string, error) {
+	_args := &Z_UserWillBeUpdatedArgs{c, newUser, oldUser}
+	_returns := &Z_UserWillBeUpdatedReturns{}
+	var _err error
+	if g.implemented[UserWillBeUpdatedID] {
+		_err = g.client.Call("Plugin.UserWillBeUpdated", _args, _returns)
+		if _err != nil {
+			// Reset _returns so partial gob decoding can't leak non-zero
+			// values past a transport failure (HooksWithRPCErrGenerated contract).
+			_returns = &Z_UserWillBeUpdatedReturns{}
+			g.log.Debug("RPC call UserWillBeUpdated to plugin failed.", mlog.Err(_err))
+		}
+	}
+	return _returns.A, _returns.B, _err
+}
+
+func (s *hooksRPCServer) UserWillBeUpdated(args *Z_UserWillBeUpdatedArgs, returns *Z_UserWillBeUpdatedReturns) error {
+	if hook, ok := s.impl.(interface {
+		UserWillBeUpdated(c *Context, newUser, oldUser *model.User) (*model.User, string)
+	}); ok {
+		returns.A, returns.B = hook.UserWillBeUpdated(args.A, args.B, args.C)
+	} else {
+		return encodableError(fmt.Errorf("Hook UserWillBeUpdated called but not implemented."))
+	}
+	return nil
+}
+
 // HooksWithRPCErrGenerated provides a WithRPCErr variant for every generated hook. The last error return
 // is always the RPC transport error — if non-nil, the plugin's other return values are zero. For
 // hooks whose base signature already returns error, the tuple is (originalReturns..., rpcErr)
@@ -2280,6 +2335,8 @@ type HooksWithRPCErrGenerated interface {
 	ScheduledPostWillBeCreatedWithRPCErr(c *Context, scheduledPost *model.ScheduledPost) (*model.ScheduledPost, string, error)
 
 	DraftWillBeUpsertedWithRPCErr(c *Context, draft *model.Draft) (*model.Draft, string, error)
+
+	UserWillBeUpdatedWithRPCErr(c *Context, newUser, oldUser *model.User) (*model.User, string, error)
 }
 
 type Z_RegisterCommandArgs struct {
@@ -3363,6 +3420,36 @@ func (s *apiRPCServer) UpdateUser(args *Z_UpdateUserArgs, returns *Z_UpdateUserR
 		returns.A, returns.B = hook.UpdateUser(args.A)
 	} else {
 		return encodableError(fmt.Errorf("API UpdateUser called but not implemented."))
+	}
+	return nil
+}
+
+type Z_CreatePasswordRecoveryTokenArgs struct {
+	A string
+	B string
+}
+
+type Z_CreatePasswordRecoveryTokenReturns struct {
+	A *model.Token
+	B *model.AppError
+}
+
+func (g *apiRPCClient) CreatePasswordRecoveryToken(userID, email string) (*model.Token, *model.AppError) {
+	_args := &Z_CreatePasswordRecoveryTokenArgs{userID, email}
+	_returns := &Z_CreatePasswordRecoveryTokenReturns{}
+	if err := g.client.Call("Plugin.CreatePasswordRecoveryToken", _args, _returns); err != nil {
+		log.Printf("RPC call to CreatePasswordRecoveryToken API failed: %s", err.Error())
+	}
+	return _returns.A, _returns.B
+}
+
+func (s *apiRPCServer) CreatePasswordRecoveryToken(args *Z_CreatePasswordRecoveryTokenArgs, returns *Z_CreatePasswordRecoveryTokenReturns) error {
+	if hook, ok := s.impl.(interface {
+		CreatePasswordRecoveryToken(userID, email string) (*model.Token, *model.AppError)
+	}); ok {
+		returns.A, returns.B = hook.CreatePasswordRecoveryToken(args.A, args.B)
+	} else {
+		return encodableError(fmt.Errorf("API CreatePasswordRecoveryToken called but not implemented."))
 	}
 	return nil
 }

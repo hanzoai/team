@@ -840,6 +840,36 @@ func (_m *Hooks) UserHasLoggedIn(c *plugin.Context, user *model.User) {
 	_m.Called(c, user)
 }
 
+// UserWillBeUpdated provides a mock function with given fields: c, newUser, oldUser
+func (_m *Hooks) UserWillBeUpdated(c *plugin.Context, newUser *model.User, oldUser *model.User) (*model.User, string) {
+	ret := _m.Called(c, newUser, oldUser)
+
+	if len(ret) == 0 {
+		panic("no return value specified for UserWillBeUpdated")
+	}
+
+	var r0 *model.User
+	var r1 string
+	if rf, ok := ret.Get(0).(func(*plugin.Context, *model.User, *model.User) (*model.User, string)); ok {
+		return rf(c, newUser, oldUser)
+	}
+	if rf, ok := ret.Get(0).(func(*plugin.Context, *model.User, *model.User) *model.User); ok {
+		r0 = rf(c, newUser, oldUser)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*model.User)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(*plugin.Context, *model.User, *model.User) string); ok {
+		r1 = rf(c, newUser, oldUser)
+	} else {
+		r1 = ret.Get(1).(string)
+	}
+
+	return r0, r1
+}
+
 // UserWillLogIn provides a mock function with given fields: c, user
 func (_m *Hooks) UserWillLogIn(c *plugin.Context, user *model.User) string {
 	ret := _m.Called(c, user)

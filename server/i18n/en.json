@@ -9715,6 +9715,10 @@
     "translation": "Unable to update the date of the last update of the user."
   },
   {
+    "id": "app.user.update_user.rejected_by_plugin",
+    "translation": "User update rejected by plugin: {{.Reason}}"
+  },
+  {
     "id": "app.user.verify_email.app_error",
     "translation": "Unable to update verify email field."
   },

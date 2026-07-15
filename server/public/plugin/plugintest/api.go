@@ -412,6 +412,38 @@ func (_m *API) CreateOAuthApp(app *model.OAuthApp) (*model.OAuthApp, *model.AppE
 	return r0, r1
 }
 
+// CreatePasswordRecoveryToken provides a mock function with given fields: userID, email
+func (_m *API) CreatePasswordRecoveryToken(userID string, email string) (*model.Token, *model.AppError) {
+	ret := _m.Called(userID, email)
+
+	if len(ret) == 0 {
+		panic("no return value specified for CreatePasswordRecoveryToken")
+	}
+
+	var r0 *model.Token
+	var r1 *model.AppError
+	if rf, ok := ret.Get(0).(func(string, string) (*model.Token, *model.AppError)); ok {
+		return rf(userID, email)
+	}
+	if rf, ok := ret.Get(0).(func(string, string) *model.Token); ok {
+		r0 = rf(userID, email)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*model.Token)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(string, string) *model.AppError); ok {
+		r1 = rf(userID, email)
+	} else {
+		if ret.Get(1) != nil {
+			r1 = ret.Get(1).(*model.AppError)
+		}
+	}
+
+	return r0, r1
+}
+
 // CreatePost provides a mock function with given fields: post
 func (_m *API) CreatePost(post *model.Post) (*model.Post, *model.AppError) {
 	ret := _m.Called(post)
