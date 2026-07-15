@@ -7459,9 +7459,8 @@ func TestChannelMemberSanitization(t *testing.T) {
 
 	// Give the current user a real, non-zero last_viewed_at: user2 posts a
 	// message so the channel is unread for the current user, who then views it.
-	// Without a genuine timestamp, the omitzero tag would legitimately omit a
-	// zero last_viewed_at, which the current-user assertions could not tell
-	// apart from sanitization.
+	// This keeps the current-user assertions realistic; the requester's own
+	// timestamps are never sanitized, so a genuine 0 would still be serialized.
 	user2Client := th.CreateClient()
 	_, _, err = user2Client.Login(context.Background(), user2.Email, user2.Password)
 	require.NoError(t, err)

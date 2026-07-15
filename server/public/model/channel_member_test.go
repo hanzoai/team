@@ -94,8 +94,8 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 		member.SanitizeForCurrentUser(currentUserId)
 
-		assert.Zero(t, member.LastViewedAt, "LastViewedAt should be zeroed for other users")
-		assert.Zero(t, member.LastUpdateAt, "LastUpdateAt should be zeroed for other users")
+		assert.Equal(t, sanitizedTimestamp, member.LastViewedAt, "LastViewedAt should be marked sanitized for other users")
+		assert.Equal(t, sanitizedTimestamp, member.LastUpdateAt, "LastUpdateAt should be marked sanitized for other users")
 	})
 
 	t.Run("should preserve other fields when sanitizing", func(t *testing.T) {
@@ -121,8 +121,8 @@ func TestChannelMemberSanitizeForCurrentUser(t *testing.T) {
 
 		member.SanitizeForCurrentUser(currentUserId)
 
-		assert.Zero(t, member.LastViewedAt, "LastViewedAt should be zeroed")
-		assert.Zero(t, member.LastUpdateAt, "LastUpdateAt should be zeroed")
+		assert.Equal(t, sanitizedTimestamp, member.LastViewedAt, "LastViewedAt should be marked sanitized")
+		assert.Equal(t, sanitizedTimestamp, member.LastUpdateAt, "LastUpdateAt should be marked sanitized")
 		assert.Equal(t, originalRoles, member.Roles, "Roles should be preserved")
 		assert.Equal(t, originalMsgCount, member.MsgCount, "MsgCount should be preserved")
 		assert.Equal(t, originalMentionCount, member.MentionCount, "MentionCount should be preserved")
@@ -166,13 +166,14 @@ func TestChannelMemberMarshalJSON(t *testing.T) {
 		assert.EqualValues(t, 1234567890000, fields["last_update_at"])
 	})
 
-	t.Run("omits a zero timestamp via omitzero", func(t *testing.T) {
+	t.Run("keeps a legitimate zero timestamp for the requester", func(t *testing.T) {
 		member := newMember(currentUserId)
 		member.LastViewedAt = 0
 		member.SanitizeForCurrentUser(currentUserId)
 
 		fields := decode(t, member)
-		assert.NotContains(t, fields, "last_viewed_at", "a zero timestamp is omitted by the omitzero tag")
+		assert.Contains(t, fields, "last_viewed_at", "the requester's own last_viewed_at of 0 (never viewed) must be serialized")
+		assert.EqualValues(t, 0, fields["last_viewed_at"])
 		assert.EqualValues(t, 1234567890000, fields["last_update_at"], "a non-zero timestamp is still serialized")
 	})
 
