@@ -16,11 +16,8 @@ export {
     OpenLdapClient,
     resetLdapGroup,
     runLdapSync,
-} from './ldap';
-export type {LdapUser} from './ldap';
-export {KeycloakAdminClient} from './keycloak';
-export type {KeycloakUser} from './keycloak';
-export {configureSamlWithKeycloak} from './saml';
+} from './openldap';
+export type {LdapUser} from './openldap';
 export {createRandomPost} from './post';
 export {createNewTeam, createRandomTeam} from './team';
 export {createNewUserProfile, createRandomUser, getDefaultAdminUser, isOutsideRemoteUserHour} from './user';

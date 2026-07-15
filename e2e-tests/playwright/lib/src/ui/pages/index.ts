@@ -12,7 +12,6 @@ import ScheduledPostsPage from './scheduled_posts';
 import DraftsPage from './drafts';
 import ThreadsPage from './threads';
 import ContentReviewPage from './content_review_dm';
-import KeycloakLoginPage from './keycloak_login';
 
 const pages = {
     ChannelsPage,
@@ -26,7 +25,6 @@ const pages = {
     SystemConsolePage,
     DraftsPage,
     ThreadsPage,
-    KeycloakLoginPage,
 };
 
 export {
@@ -41,5 +39,4 @@ export {
     SignupPage,
     ScheduledPostsPage,
     SystemConsolePage,
-    KeycloakLoginPage,
 };
