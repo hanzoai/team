@@ -31,6 +31,7 @@ export async function configureSamlWithKeycloak(client: PlaywrightClient4, optio
     const descriptorURL = `${keycloakUrl}/realms/${keycloakRealm}`;
 
     await client.configureOpenLdap();
+    await client.resetOpenLdapTestState();
     await client.uploadIdpSamlCertificate(readKeycloakCertificate(options.idpCertificate));
     await client.patchConfig({
         SamlSettings: {
