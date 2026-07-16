@@ -122,6 +122,22 @@ func (a *App) DeliveryTrackingContentReviewJobExists(rctx request.CTX, postID st
 	return len(jobs) > 0, nil
 }
 
+func (a *App) purgeDeliveryTrackingContentReview(rctx request.CTX, postID string) {
+	jobs, err := a.Srv().Store().Job().GetByTypeAndData(rctx, model.JobTypeDeliveryTrackingContentReview, map[string]string{jobDataKeyPostId: postID}, true, model.JobStatusPending, model.JobStatusInProgress)
+	if err != nil {
+		rctx.Logger().Error("purgeDeliveryTrackingContentReview: failed to look up in-flight copy jobs", mlog.String("post_id", postID), mlog.Err(err))
+	}
+	for _, job := range jobs {
+		if appErr := a.Srv().Jobs.RequestCancellation(rctx, job.Id); appErr != nil {
+			rctx.Logger().Warn("purgeDeliveryTrackingContentReview: failed to cancel in-flight copy job", mlog.String("post_id", postID), mlog.String("job_id", job.Id), mlog.Err(appErr))
+		}
+	}
+
+	if err := a.Srv().Store().UserPostDeliveryContentReview().DeleteByPost(rctx.Context(), postID); err != nil {
+		rctx.Logger().Error("purgeDeliveryTrackingContentReview: failed to delete content-review records", mlog.String("post_id", postID), mlog.Err(err))
+	}
+}
+
 func (a *App) NotifyDeliveryTrackingContentReviewRequesters(rctx request.CTX, job *model.Job, succeeded bool) *model.AppError {
 	postID := job.Data[jobDataKeyPostId]
 	if postID == "" {

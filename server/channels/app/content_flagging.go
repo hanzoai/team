@@ -688,6 +688,10 @@ func (a *App) PermanentDeleteFlaggedPost(rctx request.CTX, actionRequest *model.
 		a.sendFlaggedPostRemovalNotification(rctx, flaggedPost, reviewerId, actionRequest.Comment, groupId)
 	})
 
+	a.Srv().Go(func() {
+		a.purgeDeliveryTrackingContentReview(rctx, flaggedPost.Id)
+	})
+
 	return nil
 }
 
@@ -1007,6 +1011,10 @@ func (a *App) KeepFlaggedPost(rctx request.CTX, actionRequest *model.FlagContent
 
 	a.Srv().Go(func() {
 		a.sendKeepFlaggedPostNotification(rctx, flaggedPost, reviewerId, actionRequest.Comment, groupId)
+	})
+
+	a.Srv().Go(func() {
+		a.purgeDeliveryTrackingContentReview(rctx, flaggedPost.Id)
 	})
 
 	return nil
