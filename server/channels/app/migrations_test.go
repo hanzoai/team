@@ -98,7 +98,7 @@ func TestDoSetupContentFlaggingProperties(t *testing.T) {
 
 		data, sysErr := th.Store.System().GetByName(contentFlaggingSetupDoneKey)
 		require.NoError(t, sysErr)
-		require.Equal(t, "v5", data.Value)
+		require.Equal(t, contentFlaggingMigrationVersion, data.Value)
 	})
 
 	t.Run("the migration is idempotent", func(t *testing.T) {
@@ -122,7 +122,7 @@ func TestDoSetupContentFlaggingProperties(t *testing.T) {
 
 		data, sysErr := th.Store.System().GetByName(contentFlaggingSetupDoneKey)
 		require.NoError(t, sysErr)
-		require.Equal(t, "v5", data.Value)
+		require.Equal(t, contentFlaggingMigrationVersion, data.Value)
 	})
 
 	t.Run("concurrent runs tolerate update conflicts", func(t *testing.T) {
