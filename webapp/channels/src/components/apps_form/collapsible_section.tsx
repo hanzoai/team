@@ -41,7 +41,7 @@ const CollapsibleSection = ({label, expanded, depth = 0, children, bordered = tr
                 aria-expanded={open}
                 onClick={() => setOpen((prev) => !prev)}
             >
-                <i className={open ? 'icon icon-chevron-down' : 'icon icon-chevron-right'}/>
+                <i aria-hidden='true' className={open ? 'icon icon-chevron-down' : 'icon icon-chevron-right'}/>
                 <span className='apps-form-collapsible-section__title'>{label}</span>
             </button>
             {open && (
