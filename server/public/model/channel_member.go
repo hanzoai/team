@@ -92,16 +92,13 @@ func (o *ChannelMember) Auditable() map[string]any {
 }
 
 // sanitizedTimestamp marks a LastViewedAt/LastUpdateAt field that belongs to
-// another user and must be hidden. 0 is a legitimate "never viewed" value, so
-// it cannot be used as the sentinel; -1 is not a valid timestamp. MarshalJSON
-// omits any field holding this sentinel rather than serializing an invalid
-// value (e.g. -1 decodes to Dec 31 1969).
+// another user and must be hidden. MarshalJSON omits any field holding this
+// sentinel rather than serializing an invalid value
 const sanitizedTimestamp int64 = -1
 
 // SanitizeForCurrentUser hides another user's private timestamp fields by
 // marking them with the sanitized sentinel, which MarshalJSON then omits from
-// API responses. The requester's own values are left untouched, so a legitimate
-// LastViewedAt of 0 ("never viewed") is still serialized.
+// API responses. The requester's own values are left untouched.
 func (o *ChannelMember) SanitizeForCurrentUser(currentUserId string) {
 	if o.UserId != currentUserId {
 		o.LastViewedAt = sanitizedTimestamp
@@ -138,6 +135,9 @@ func (o ChannelMember) MarshalJSON() ([]byte, error) {
 
 // ChannelMemberWithTeamData contains ChannelMember appended with extra team information
 // as well.
+//
+// Any new non-embedded field added here must also be added to MarshalJSON below,
+// otherwise it will be silently dropped from the JSON output.
 type ChannelMemberWithTeamData struct {
 	ChannelMember
 	TeamDisplayName string `json:"team_display_name"`
