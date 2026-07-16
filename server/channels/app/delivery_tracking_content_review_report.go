@@ -141,6 +141,33 @@ func formatDeliveryReceiptRow(rec deliveryReceiptRecord, user *model.User, T i18
 	}
 }
 
+// sanitizeCSVField neutralizes a value a spreadsheet application (Excel, Google
+// Sheets, LibreOffice) could interpret as a formula. A field beginning with one
+// of these characters is prefixed with a single quote so it renders as literal
+// text, preventing CSV formula injection when the receipt is opened in a
+// spreadsheet. See https://owasp.org/www-community/attacks/CSV_Injection
+func sanitizeCSVField(value string) string {
+	if value == "" {
+		return value
+	}
+	switch value[0] {
+	case '=', '+', '-', '@', '\t', '\r':
+		return "'" + value
+	}
+	return value
+}
+
+// writeDeliveryReceiptRecord writes a CSV record after sanitizing every field, so
+// no user-controlled value (usernames, emails, full names, display names, ...)
+// can smuggle a formula into the generated receipt. It mutates record in place;
+// every caller passes a freshly built slice.
+func writeDeliveryReceiptRecord(w *csv.Writer, record []string) error {
+	for i := range record {
+		record[i] = sanitizeCSVField(record[i])
+	}
+	return w.Write(record)
+}
+
 // GenerateDeliveryTrackingReceipt writes a CSV receipt of a flagged post's
 // recipients to a temp file and returns its path; the caller must remove the file
 // after serving. Rows are streamed and aggregated to one per recipient, so memory
@@ -195,15 +222,15 @@ func (a *App) GenerateDeliveryTrackingReceipt(rctx request.CTX, postID, generate
 
 	// csv.Writer allows variable field counts on write, so the 1-/2-column metadata
 	// rows and the 7-column table can share one file.
-	_ = csvWriter.Write([]string{T("app.data_spillage.delivery_tracking.receipt.title")})
-	_ = csvWriter.Write([]string{T("app.data_spillage.delivery_tracking.receipt.meta.post_id"), postID})
-	_ = csvWriter.Write([]string{T("app.data_spillage.delivery_tracking.receipt.meta.channel"), channel.DisplayName})
-	_ = csvWriter.Write([]string{T("app.data_spillage.delivery_tracking.receipt.meta.team"), teamName})
-	_ = csvWriter.Write([]string{T("app.data_spillage.delivery_tracking.receipt.meta.generated_by"), generatedByUsername})
-	_ = csvWriter.Write([]string{T("app.data_spillage.delivery_tracking.receipt.meta.generated_at"), time.UnixMilli(model.GetMillis()).UTC().Format(time.RFC3339)})
-	_ = csvWriter.Write([]string{T("app.data_spillage.delivery_tracking.receipt.meta.total_records"), strconv.FormatInt(total, 10)})
-	_ = csvWriter.Write([]string{""})
-	_ = csvWriter.Write([]string{
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{T("app.data_spillage.delivery_tracking.receipt.title")})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{T("app.data_spillage.delivery_tracking.receipt.meta.post_id"), postID})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{T("app.data_spillage.delivery_tracking.receipt.meta.channel"), channel.DisplayName})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{T("app.data_spillage.delivery_tracking.receipt.meta.team"), teamName})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{T("app.data_spillage.delivery_tracking.receipt.meta.generated_by"), generatedByUsername})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{T("app.data_spillage.delivery_tracking.receipt.meta.generated_at"), time.UnixMilli(model.GetMillis()).UTC().Format(time.RFC3339)})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{T("app.data_spillage.delivery_tracking.receipt.meta.total_records"), strconv.FormatInt(total, 10)})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{""})
+	_ = writeDeliveryReceiptRecord(csvWriter, []string{
 		T("app.data_spillage.delivery_tracking.receipt.column.type"),
 		T("app.data_spillage.delivery_tracking.receipt.column.target_id"),
 		T("app.data_spillage.delivery_tracking.receipt.column.username"),
@@ -222,7 +249,7 @@ func (a *App) GenerateDeliveryTrackingReceipt(rctx request.CTX, postID, generate
 		}
 		users := a.resolveDeliveryReceiptUsers(rctx, buffer)
 		for _, rec := range buffer {
-			if werr := csvWriter.Write(formatDeliveryReceiptRow(rec, users[rec.TargetID], T)); werr != nil {
+			if werr := writeDeliveryReceiptRecord(csvWriter, formatDeliveryReceiptRow(rec, users[rec.TargetID], T)); werr != nil {
 				return werr
 			}
 		}

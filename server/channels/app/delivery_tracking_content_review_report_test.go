@@ -4,6 +4,8 @@
 package app
 
 import (
+	"bytes"
+	"encoding/csv"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -118,4 +120,50 @@ func TestFormatDeliveryReceiptRow(t *testing.T) {
 		require.Empty(t, row[4])
 		require.Equal(t, "app.data_spillage.delivery_tracking.receipt.mechanism.plugin", row[5])
 	})
+}
+
+func TestSanitizeCSVField(t *testing.T) {
+	t.Run("prefixes values that begin with a formula trigger", func(t *testing.T) {
+		for _, in := range []string{"=1+1", "+1", "-1", "@SUM(A1)", "\tvalue", "\rvalue", "=cmd|'/c calc'!A1"} {
+			require.Equal(t, "'"+in, sanitizeCSVField(in), "input %q", in)
+		}
+	})
+
+	t.Run("leaves safe values untouched", func(t *testing.T) {
+		// Empty, plain text, and values where a trigger char is not leading.
+		for _, in := range []string{"", "alice", "alice@example.com", "Alice Adams", "2024-01-01T00:00:00Z", "user-id", "a=b", "1+1"} {
+			require.Equal(t, in, sanitizeCSVField(in), "input %q", in)
+		}
+	})
+}
+
+func TestWriteDeliveryReceiptRecord(t *testing.T) {
+	// A recipient whose user fields each begin with a distinct formula trigger.
+	rec := deliveryReceiptRecord{
+		TargetID:         "user-id",
+		TargetType:       model.DeliveryTargetUser,
+		Mechanisms:       []int16{model.DeliveryMechanismEmail},
+		FirstDeliveredAt: 1704067200000, // 2024-01-01T00:00:00Z
+	}
+	user := &model.User{Id: "user-id", Username: "=cmd|'/c calc'!A1", Email: "+attacker@evil.com", FirstName: "-Bob", LastName: ""}
+
+	var buf bytes.Buffer
+	w := csv.NewWriter(&buf)
+	require.NoError(t, writeDeliveryReceiptRecord(w, formatDeliveryReceiptRow(rec, user, identityT)))
+	w.Flush()
+	require.NoError(t, w.Error())
+
+	parsed, err := csv.NewReader(&buf).ReadAll()
+	require.NoError(t, err)
+	require.Len(t, parsed, 1)
+	row := parsed[0]
+
+	// Every user-controlled field that begins with a formula trigger is neutralized
+	// with a leading single quote, so opening the receipt in a spreadsheet is safe.
+	require.Equal(t, "'=cmd|'/c calc'!A1", row[2], "username")
+	require.Equal(t, "'+attacker@evil.com", row[3], "email")
+	require.Equal(t, "'-Bob", row[4], "full name")
+	// Non-user-controlled fields are unaffected.
+	require.Equal(t, "user-id", row[1], "target id")
+	require.Equal(t, "2024-01-01T00:00:00Z", row[6], "delivered at")
 }
