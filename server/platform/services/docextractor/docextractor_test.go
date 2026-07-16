@@ -317,6 +317,23 @@ func (be *blockingExtractor) Extract(filename string, r io.ReadSeeker, _ int64) 
 	return "done", nil
 }
 
+// waitForExtractionSlotRelease polls until a detached extraction has released
+// its concurrency slot. be.done fires when the extractor unblocks, but the slot
+// is released in a deferred call that runs only after Extract returns.
+func waitForExtractionSlotRelease(t *testing.T, logger mlog.LoggerIFace, data []byte) {
+	t.Helper()
+	require.Eventually(t, func() bool {
+		text, err := ExtractWithExtraExtractors(
+			logger,
+			"slot-release-check.txt",
+			bytes.NewReader(data),
+			ExtractSettings{Timeout: 0},
+			[]Extractor{&slowExtractor{delay: 0}},
+		)
+		return err == nil && text == "done"
+	}, 2*time.Second, 5*time.Millisecond, "detached extraction did not release its concurrency slot")
+}
+
 func TestExtractReaderCloserOwnership(t *testing.T) {
 	logger := mlog.CreateConsoleTestLogger(t)
 
@@ -472,11 +489,10 @@ func TestExtractConcurrency(t *testing.T) {
 		case <-time.After(2 * time.Second):
 			require.FailNow(t, "detached extraction did not finish within the deadline")
 		}
+		waitForExtractionSlotRelease(t, logger, data)
 	})
 
 	t.Run("a timed-out extraction keeps its slot until the detached goroutine finishes", func(t *testing.T) {
-		resetExtractionConcurrencyForTest(1)
-
 		be := &blockingExtractor{started: make(chan struct{}), release: make(chan struct{}), done: make(chan struct{})}
 		settings := ExtractSettings{Timeout: 50 * time.Millisecond, ReaderCloser: &recordingCloser{}}
 
@@ -500,5 +516,6 @@ func TestExtractConcurrency(t *testing.T) {
 		case <-time.After(2 * time.Second):
 			require.FailNow(t, "detached extraction did not finish within the deadline")
 		}
+		waitForExtractionSlotRelease(t, logger, data)
 	})
 }
