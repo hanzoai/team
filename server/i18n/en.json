@@ -3631,10 +3631,6 @@
     "translation": "Could not remove the shared channel invitation."
   },
   {
-    "id": "api.shared_channel.delete_invitation.invalid_direction",
-    "translation": "This invitation cannot be removed."
-  },
-  {
     "id": "api.shared_channel.delete_invitation.invalid_status",
     "translation": "This invitation cannot be removed."
   },

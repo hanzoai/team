@@ -251,10 +251,21 @@ func testSharedChannelInvitationDeletePendingByChannelIdAndRemoteId(t *testing.T
 	require.NoError(t, err, "failed invitation history should be preserved")
 	require.Equal(t, model.SharedChannelInvitationStatusFailed, remainingFailed.Status)
 
-	list, err := ss.SharedChannelInvitation().GetAll(model.SharedChannelInvitationFilterOpts{ChannelId: ch.Id}, 0, 10)
+	remoteRows, err := ss.SharedChannelInvitation().GetAll(model.SharedChannelInvitationFilterOpts{
+		ChannelId: ch.Id,
+		RemoteId:  remoteID,
+	}, 0, 10)
 	require.NoError(t, err)
-	require.Len(t, list, 2)
-	require.NotEqual(t, remoteID, list[0].RemoteId)
+	require.Len(t, remoteRows, 1)
+	require.Equal(t, model.SharedChannelInvitationStatusFailed, remoteRows[0].Status)
+
+	otherPending, err := ss.SharedChannelInvitation().GetAll(model.SharedChannelInvitationFilterOpts{
+		ChannelId: ch.Id,
+		RemoteId:  otherRemoteID,
+		Status:    model.SharedChannelInvitationStatusPending,
+	}, 0, 10)
+	require.NoError(t, err)
+	require.Len(t, otherPending, 1)
 }
 
 func testSharedChannelInvitationDeleteByRemoteId(t *testing.T, rctx request.CTX, ss store.Store) {
