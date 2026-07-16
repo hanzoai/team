@@ -262,7 +262,7 @@ func newWorkerWithMockStore(t *testing.T) (*Worker, *storetest.Store, *fakeApp) 
 	cfgSvc := &testutils.StaticConfigService{Cfg: cfg}
 
 	mockStore := &storetest.Store{}
-	jobServer := jobs.NewJobServer(cfgSvc, mockStore, nil, mlog.CreateConsoleTestLogger(t))
+	jobServer := jobs.NewJobServer(cfgSvc, mockStore, nil, mlog.CreateConsoleTestLogger(t), nil)
 
 	app := &fakeApp{}
 	return MakeWorker(jobServer, mockStore, app), mockStore, app
@@ -311,7 +311,7 @@ func TestDoJob(t *testing.T) {
 		job := &model.Job{Id: model.NewId(), Type: model.JobTypeDeliveryTrackingContentReview, Data: map[string]string{}}
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
-		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(true, nil).Once()
+		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(job, nil).Once()
 		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
 
 		worker.DoJob(job)
@@ -343,7 +343,7 @@ func TestDoJob(t *testing.T) {
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
 		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, postID, mock.Anything, mock.Anything).Return(nil, store.ErrUserPostDeliverySourceUnavailable).Once()
-		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(true, nil).Once()
+		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(job, nil).Once()
 		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
 
 		worker.DoJob(job)
