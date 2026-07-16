@@ -157,6 +157,7 @@ func (stubRemoteClusterService) ReceiveInviteConfirmation(model.RemoteClusterInv
 	return nil, nil
 }
 func (stubRemoteClusterService) PingNow(*model.RemoteCluster) {}
+func (stubRemoteClusterService) NotifySyncFailed(string)      {}
 
 func (*stubRemoteClusterService) SendMsg(_ context.Context, msg model.RemoteClusterMsg, rc *model.RemoteCluster, f remotecluster.SendMsgResultFunc) error {
 	if f != nil {
