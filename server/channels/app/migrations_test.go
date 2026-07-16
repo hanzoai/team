@@ -94,7 +94,7 @@ func TestDoSetupContentFlaggingProperties(t *testing.T) {
 
 		propertyFields, appErr := th.App.SearchPropertyFields(th.Context, group.ID, model.PropertyFieldSearchOpts{PerPage: 100})
 		require.Nil(t, appErr)
-		require.Len(t, propertyFields, 11)
+		require.Len(t, propertyFields, 12)
 
 		data, sysErr := th.Store.System().GetByName(contentFlaggingSetupDoneKey)
 		require.NoError(t, sysErr)
@@ -118,7 +118,7 @@ func TestDoSetupContentFlaggingProperties(t *testing.T) {
 
 		propertyFields, appErr := th.App.SearchPropertyFields(th.Context, group.ID, model.PropertyFieldSearchOpts{PerPage: 100})
 		require.Nil(t, appErr)
-		require.Len(t, propertyFields, 11)
+		require.Len(t, propertyFields, 12)
 
 		data, sysErr := th.Store.System().GetByName(contentFlaggingSetupDoneKey)
 		require.NoError(t, sysErr)
@@ -157,7 +157,7 @@ func TestDoSetupContentFlaggingProperties(t *testing.T) {
 		require.Nil(t, appErr)
 		propertyFields, appErr := th.App.SearchPropertyFields(th.Context, group.ID, model.PropertyFieldSearchOpts{PerPage: 100})
 		require.Nil(t, appErr)
-		require.Len(t, propertyFields, 11)
+		require.Len(t, propertyFields, 12)
 
 		data, sysErr := th.Store.System().GetByName(contentFlaggingSetupDoneKey)
 		require.NoError(t, sysErr)

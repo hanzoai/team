@@ -599,7 +599,10 @@ func TestGetPostPropertyValues(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, http.StatusOK, resp.StatusCode)
 		require.NotNil(t, propertyValues)
-		require.Len(t, propertyValues, 6)
+		// status, reporting user, reporting reason, reporting comment, reporting
+		// time, delivery_tracking_status, plus manage-by-content-flagging (added
+		// because HideFlaggedContent defaults on).
+		require.Len(t, propertyValues, 7)
 	})
 }
 
