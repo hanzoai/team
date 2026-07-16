@@ -202,6 +202,8 @@ jobs:
         run: npx playwright install chromium
       - name: ci/pack-playwright-deps
         uses: ./.github/actions/pack-playwright-deps
+        with:
+          fips: ${{ inputs.server_edition == 'fips' }}
 
   # Register the Test System IO run AFTER prep-deps so workers reach
   # dispatch-run within Test System IO's inactivity window.
@@ -280,6 +282,8 @@ jobs:
       # Unpack the deps artifact instead of running npm ci.
       - name: ci/reuse-playwright-deps
         uses: ./.github/actions/unpack-playwright-deps
+        with:
+          fips: ${{ inputs.server_edition == 'fips' }}
       - name: ci/cloud-init
         working-directory: e2e-tests
         run: make cloud-init
