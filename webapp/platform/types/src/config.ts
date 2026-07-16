@@ -128,12 +128,10 @@ export type ClientConfig = {
     FeatureFlagAppsEnabled: string;
     FeatureFlagCallsEnabled: string;
     FeatureFlagCustomProfileAttributes: string;
-    FeatureFlagAttributeBasedAccessControl: string;
     FeatureFlagTeamMembershipAccessControl: string;
     FeatureFlagPermissionPolicies: string;
     FeatureFlagChannelPermissionPolicies: string;
     FeatureFlagPolicySimulation: string;
-    FeatureFlagWebSocketEventScope: string;
     FeatureFlagContentFlagging: string;
     FeatureFlagPostDeliveryTracking: string;
     FeatureFlagClassificationMarkings: string;
@@ -248,6 +246,7 @@ export type ClientConfig = {
     // Access Control Settings
     EnableAttributeBasedAccessControl: string;
     EnableUserManagedAttributes: string;
+    EnableChannelPolicyIndicators: string;
 
     // Auto Translation Settings
     AutoTranslationLanguages: string;
@@ -1060,6 +1059,7 @@ export type ExportSettings = {
 export type AccessControlSettings = {
     EnableAttributeBasedAccessControl: boolean;
     EnableUserManagedAttributes: boolean;
+    EnableChannelPolicyIndicators: boolean;
     TrustProxyDeviceIdentityHeader: boolean;
     EnforceDeviceIDConsistency: boolean;
 };

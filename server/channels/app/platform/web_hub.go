@@ -541,6 +541,32 @@ func (h *Hub) recordPostDelivery(postID, userID string) {
 	h.platform.postDeliveryRecorder(postID, userID)
 }
 
+// broadcastToConn delivers msg to a single web connection, if it is still
+// registered and should receive the event. A post delivery is recorded only
+// when the event is actually enqueued onto the connection's send buffer — never
+// before the ShouldSendEvent check, and never on the default branch where the
+// buffer is full and the connection is dropped. Same-user and multi-node
+// duplicates are collapsed by the UserPostDelivery unique index.
+func (h *Hub) broadcastToConn(connIndex *hubConnectionIndex, webConn *WebConn, msg *model.WebSocketEvent, postID string, broadcastHooks []string, broadcastHookArgs []map[string]any) {
+	if !connIndex.Has(webConn) {
+		return
+	}
+	if webConn.ShouldSendEvent(msg) {
+		select {
+		case webConn.send <- h.runBroadcastHooks(msg, webConn, broadcastHooks, broadcastHookArgs):
+			h.recordPostDelivery(postID, webConn.UserId)
+		default:
+			// Don't log the warning if it's an inactive connection.
+			if webConn.Active.Load() {
+				mlog.Error("webhub.broadcast: cannot send, closing websocket for user",
+					mlog.String("user_id", webConn.UserId),
+					mlog.String("conn_id", webConn.GetConnectionID()))
+			}
+			closeAndRemoveConn(connIndex, webConn)
+		}
+	}
+}
+
 func (h *Hub) Start() {
 	var doStart func()
 	var doRecoverableStart func()
@@ -730,23 +756,7 @@ func (h *Hub) Start() {
 				postID := msg.GetBroadcast().RecordPostDeliveryID
 
 				broadcast := func(webConn *WebConn) {
-					h.recordPostDelivery(postID, webConn.UserId)
-					if !connIndex.Has(webConn) {
-						return
-					}
-					if webConn.ShouldSendEvent(msg) {
-						select {
-						case webConn.send <- h.runBroadcastHooks(msg, webConn, broadcastHooks, broadcastHookArgs):
-						default:
-							// Don't log the warning if it's an inactive connection.
-							if webConn.Active.Load() {
-								mlog.Error("webhub.broadcast: cannot send, closing websocket for user",
-									mlog.String("user_id", webConn.UserId),
-									mlog.String("conn_id", webConn.GetConnectionID()))
-							}
-							closeAndRemoveConn(connIndex, webConn)
-						}
-					}
+					h.broadcastToConn(connIndex, webConn, msg, postID, broadcastHooks, broadcastHookArgs)
 				}
 
 				// Quick return for a single connection.

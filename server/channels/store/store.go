@@ -407,6 +407,7 @@ type PostStore interface {
 	GetPostAfterTime(channelID string, timestamp int64, collapsedThreads bool) (*model.Post, error)
 	GetPostIdAfterTime(channelID string, timestamp int64, collapsedThreads bool) (string, error)
 	GetPostIdBeforeTime(channelID string, timestamp int64, collapsedThreads bool) (string, error)
+	GetVisiblePostIdAroundTime(channelID string, timestamp int64, before bool, collapsedThreads bool, userID string) (string, error)
 	GetEtag(channelID string, allowFromCache bool, collapsedThreads bool, includeTranslations bool) string
 	Search(teamID string, userID string, params *model.SearchParams) (*model.PostList, error)
 	AnalyticsUserCountsWithPostsByDay(teamID string) (model.AnalyticsRows, error)
@@ -840,7 +841,7 @@ type JobStore interface {
 	// the job's status. Returns the persisted Data, or nil if the job does not
 	// exist (a no-op).
 	PatchJobData(jobID string, patch model.StringMap, mergeFn model.StringMapMerger) (model.StringMap, error)
-	UpdateOptimistically(job *model.Job, currentStatus string) (bool, error)
+	UpdateOptimistically(job *model.Job, currentStatus string) (*model.Job, error)
 	UpdateStatus(id string, status string) (*model.Job, error)
 	UpdateStatusOptimistically(id string, currentStatus string, newStatus string) (*model.Job, error)
 	Get(rctx request.CTX, id string) (*model.Job, error)
@@ -868,11 +869,14 @@ type UserAccessTokenStore interface {
 	GetByToken(tokenString string) (*model.UserAccessToken, error)
 	GetByUser(userID string, page, perPage int) ([]*model.UserAccessToken, error)
 	GetExpiredBefore(cutoff int64, limit int) ([]*model.UserAccessToken, error)
+	GetExpiringTokens(now int64, thresholds []int, limit int) ([]*model.UserAccessToken, error)
 	CountNonCompliantExpiry(maxExpiresAt int64) (int64, error)
 	DeleteNonCompliantExpiry(maxExpiresAt int64, limit int) ([]string, error)
 	Search(term string) ([]*model.UserAccessToken, error)
 	UpdateTokenEnable(tokenID string) error
 	UpdateTokenDisable(tokenID string) error
+	UpdateTokenRotate(tokenID, newToken string, expiresAt int64) error
+	UpdateLastNotifiedAt(tokenID string, notifiedAt int64) error
 }
 
 type PluginStore interface {
