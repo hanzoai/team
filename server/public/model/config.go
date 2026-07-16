@@ -1652,13 +1652,13 @@ func (s *DeliveryTrackingSettings) SetDefaults() {
 	}
 
 	if s.MaxIdleConns == nil {
-		s.MaxIdleConns = new(50)
+		// One warm idle connection per shard worker (deliveryShards = 8 in the
+		// audit delivery target);
+		s.MaxIdleConns = new(8)
 	}
 
 	if s.MaxOpenConns == nil {
-		// Higher than the main pool: this is a write-heavy workload with many
-		// concurrent batched inserts from the delivery target's shard workers.
-		s.MaxOpenConns = new(200)
+		s.MaxOpenConns = new(16)
 	}
 
 	if s.ConnMaxLifetimeMilliseconds == nil {
@@ -4212,6 +4212,7 @@ func (s *ExportSettings) SetDefaults() {
 type AccessControlSettings struct {
 	EnableAttributeBasedAccessControl *bool
 	EnableUserManagedAttributes       *bool `access:"write_restrictable"`
+	EnableChannelPolicyIndicators     *bool `access:"write_restrictable"`
 	TrustProxyDeviceIdentityHeader    *bool `access:"write_restrictable,cloud_restrictable"`
 	EnforceDeviceIDConsistency        *bool `access:"write_restrictable,cloud_restrictable"`
 }
@@ -4223,6 +4224,12 @@ func (s *AccessControlSettings) SetDefaults() {
 
 	if s.EnableUserManagedAttributes == nil {
 		s.EnableUserManagedAttributes = new(false)
+	}
+
+	// Channel policy indicators are shown by default to preserve existing
+	// behavior; admins may disable them to avoid leaking policy details.
+	if s.EnableChannelPolicyIndicators == nil {
+		s.EnableChannelPolicyIndicators = new(true)
 	}
 
 	if s.TrustProxyDeviceIdentityHeader == nil {
