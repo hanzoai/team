@@ -21,13 +21,14 @@ import (
 )
 
 const (
-	flaggedPostReportPostDir           = "post"
-	flaggedPostReportEditHistoryDir    = "edit_history"
-	flaggedPostReportAttachmentsDir    = "attachments"
-	flaggedPostReportPostYAMLFile      = "post.yaml"
-	flaggedPostReportContentReviewFile = "content_review.yaml"
-	flaggedPostReportMetadataFile      = "report_metadata.yaml"
-	flaggedPostReportTempPattern       = "mm-flag-report-*.zip"
+	flaggedPostReportPostDir             = "post"
+	flaggedPostReportEditHistoryDir      = "edit_history"
+	flaggedPostReportAttachmentsDir      = "attachments"
+	flaggedPostReportPostYAMLFile        = "post.yaml"
+	flaggedPostReportContentReviewFile   = "content_review.yaml"
+	flaggedPostReportMetadataFile        = "report_metadata.yaml"
+	flaggedPostReportDeliveryReceiptFile = "delivery_receipt.csv"
+	flaggedPostReportTempPattern         = "mm-flag-report-*.zip"
 )
 
 // GenerateFlaggedPostReport builds a ZIP archive of a flagged post's data into a
@@ -92,7 +93,43 @@ func (a *App) writeFlaggedPostReport(rctx request.CTX, zw *zip.Writer, postID, g
 		return appErr
 	}
 
+	a.writeDeliveryReceiptEntry(rctx, zw, postID, generatedByUserID)
+
 	return nil
+}
+
+// writeDeliveryReceiptEntry is best-effort: a missing or failed receipt must never fail the report.
+func (a *App) writeDeliveryReceiptEntry(rctx request.CTX, zw *zip.Writer, postID, generatedByUserID string) {
+	if !a.Config().PostDeliveryTrackingEnabled() {
+		return
+	}
+	if ready, appErr := a.DeliveryTrackingContentReviewJobExists(rctx, postID, model.JobStatusSuccess); appErr != nil || !ready {
+		return
+	}
+	if err := a.bundleDeliveryReceipt(rctx, zw, postID, generatedByUserID); err != nil {
+		rctx.Logger().Warn("Omitting delivery receipt from flagged-post report", mlog.String("post_id", postID), mlog.Err(err))
+	}
+}
+
+func (a *App) bundleDeliveryReceipt(rctx request.CTX, zw *zip.Writer, postID, generatedByUserID string) error {
+	receiptPath, appErr := a.GenerateDeliveryTrackingReceipt(rctx, postID, generatedByUserID)
+	if appErr != nil {
+		return appErr
+	}
+	defer func() { _ = os.Remove(receiptPath) }()
+
+	f, err := os.Open(receiptPath)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = f.Close() }()
+
+	w, err := zw.Create(flaggedPostReportDeliveryReceiptFile)
+	if err != nil {
+		return err
+	}
+	_, err = io.Copy(w, f)
+	return err
 }
 
 func (a *App) loadFlaggedPostReportContext(rctx request.CTX, postID string) (*model.FlaggedPostReportContext, *model.AppError) {
