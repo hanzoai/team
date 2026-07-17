@@ -15,8 +15,8 @@ import (
 // SQLite scoped per tenant, no KV and no Postgres. Files nest as
 // <dir>/orgs/<org>/ws/<workspace>.db so an org's data is physically isolated
 // (full multitenancy) and the whole tree can live on one durable mount
-// (a PVC today, SeaweedFS/S3 for scale). The driver is pure-Go modernc.org/
-// sqlite (no cgo), keeping team a clean static binary.
+// (a PVC today, SeaweedFS/S3 for scale). The driver is hanzoai/sqlite —
+// its pure-Go modernc backend (no cgo) keeps team a clean static binary.
 type store struct {
 	dir string
 	mu  sync.Mutex
