@@ -430,6 +430,9 @@ describe('SystemUserDetail', () => {
             await userEvent.click(screen.getByText('Remove Picture'));
 
             expect(await screen.findByText('Server rejected removal')).toBeInTheDocument();
+
+            // The edit control should be usable again after the failure.
+            expect(screen.getByTestId('adminUserCardPictureButton')).toBeEnabled();
         });
 
         test('should not offer picture editing for provider-managed pictures', async () => {
