@@ -74,20 +74,23 @@ func (f *fakeSource) GetByPost(_ context.Context, postID string, after model.Use
 	return out, nil
 }
 
-// fakeTarget implements reviewWriter, recording every saved row and the jobID.
+// fakeTarget implements reviewWriter, recording every saved row, the review post ID,
+// and the jobID.
 type fakeTarget struct {
-	saved  []model.UserPostDelivery
-	jobIDs []string
-	err    error
-	calls  int
+	saved         []model.UserPostDelivery
+	reviewPostIDs []string
+	jobIDs        []string
+	err           error
+	calls         int
 }
 
-func (f *fakeTarget) SaveBatch(_ context.Context, records []model.UserPostDelivery, jobID string) error {
+func (f *fakeTarget) SaveBatch(_ context.Context, reviewPostID string, records []model.UserPostDelivery, jobID string) error {
 	f.calls++
 	if f.err != nil {
 		return f.err
 	}
 	f.saved = append(f.saved, records...)
+	f.reviewPostIDs = append(f.reviewPostIDs, reviewPostID)
 	f.jobIDs = append(f.jobIDs, jobID)
 	return nil
 }
@@ -127,7 +130,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 		source := newFakeSource(nil)
 		target := &fakeTarget{}
 
-		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 2, neverStop, nil)
 		require.NoError(t, err)
 		require.False(t, canceled)
 		require.Equal(t, 0, copied)
@@ -144,7 +147,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 		var progress []int
 		onProgress := func(copied int) error { progress = append(progress, copied); return nil }
 
-		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, onProgress)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 2, neverStop, onProgress)
 		require.NoError(t, err)
 		require.False(t, canceled)
 		require.Equal(t, 5, copied)
@@ -167,7 +170,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 		source := newFakeSource(makeRows(postID, 4))
 		target := &fakeTarget{}
 
-		copied, _, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, nil)
+		copied, _, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 2, neverStop, nil)
 		require.NoError(t, err)
 		require.Equal(t, 4, copied)
 		require.Equal(t, 3, source.calls, "2 full pages + 1 empty page")
@@ -179,7 +182,8 @@ func TestCopyPostDeliveries(t *testing.T) {
 		source.err = store.ErrUserPostDeliverySourceUnavailable
 		target := &fakeTarget{}
 
-		copied, canceled, err := copyPostDeliveries(ctx, source, target, model.NewId(), jobID, 2, neverStop, nil)
+		reviewID := model.NewId()
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, reviewID, []string{reviewID}, jobID, 2, neverStop, nil)
 		require.ErrorIs(t, err, store.ErrUserPostDeliverySourceUnavailable)
 		require.False(t, canceled)
 		require.Equal(t, 0, copied)
@@ -191,7 +195,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 		source := newFakeSource(makeRows(postID, 5))
 		target := &fakeTarget{}
 
-		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, func() bool { return true }, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 2, func() bool { return true }, nil)
 		require.NoError(t, err)
 		require.True(t, canceled)
 		require.Equal(t, 0, copied)
@@ -209,7 +213,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 			return calls > 1 // allow the first batch, stop before the second
 		}
 
-		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, shouldStop, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 2, shouldStop, nil)
 		require.NoError(t, err)
 		require.True(t, canceled)
 		require.Equal(t, 2, copied, "one batch copied before cancellation")
@@ -221,7 +225,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 		wantErr := errors.New("write failed")
 		target := &fakeTarget{err: wantErr}
 
-		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, nil)
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 2, neverStop, nil)
 		require.ErrorIs(t, err, wantErr)
 		require.False(t, canceled)
 		require.Equal(t, 0, copied)
@@ -233,7 +237,7 @@ func TestCopyPostDeliveries(t *testing.T) {
 		target := &fakeTarget{}
 		wantErr := errors.New("progress failed")
 
-		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, jobID, 2, neverStop, func(int) error { return wantErr })
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 2, neverStop, func(int) error { return wantErr })
 		require.ErrorIs(t, err, wantErr)
 		require.False(t, canceled)
 		require.Equal(t, 2, copied, "the first batch was written before progress failed")
@@ -244,10 +248,39 @@ func TestCopyPostDeliveries(t *testing.T) {
 		source := newFakeSource(makeRows(postID, 3))
 		target := &fakeTarget{}
 
-		copied, _, err := copyPostDeliveries(ctx, source, target, postID, jobID, 0, neverStop, nil)
+		copied, _, err := copyPostDeliveries(ctx, source, target, postID, []string{postID}, jobID, 0, neverStop, nil)
 		require.NoError(t, err)
 		require.Equal(t, 3, copied)
 		require.Equal(t, 1, target.calls, "default batch size is large, so a single page suffices")
+	})
+
+	t.Run("copies the reviewed post and its previewing posts under the review id", func(t *testing.T) {
+		reviewPostID := model.NewId()
+		previewer := model.NewId()
+		rows := append(makeRows(reviewPostID, 2), makeRows(previewer, 3)...)
+		source := newFakeSource(rows)
+		target := &fakeTarget{}
+
+		copied, canceled, err := copyPostDeliveries(ctx, source, target, reviewPostID, []string{reviewPostID, previewer}, jobID, 2, neverStop, nil)
+		require.NoError(t, err)
+		require.False(t, canceled)
+		require.Equal(t, 5, copied, "rows from the reviewed post and the previewer are both copied")
+		require.Len(t, target.saved, 5)
+		for _, rid := range target.reviewPostIDs {
+			require.Equal(t, reviewPostID, rid, "every batch is stamped with the review post id")
+		}
+		// Provenance is preserved: copied rows keep their own post_id.
+		var fromReview, fromPreviewer int
+		for _, row := range target.saved {
+			switch row.PostID {
+			case reviewPostID:
+				fromReview++
+			case previewer:
+				fromPreviewer++
+			}
+		}
+		require.Equal(t, 2, fromReview)
+		require.Equal(t, 3, fromPreviewer)
 	})
 }
 
@@ -285,9 +318,11 @@ func TestDoJob(t *testing.T) {
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
 
+		// The reviewed post has no previewing posts, so only its own deliveries are copied.
+		mockStore.PostStore.On("GetSingle", mock.Anything, postID, true).Return(&model.Post{Id: postID}, nil).Once()
 		rows := makeRows(postID, 3)
 		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, postID, mock.Anything, mock.Anything).Return(rows, nil).Once()
-		mockStore.UserPostDeliveryContentReviewStore.On("SaveBatch", mock.Anything, mock.Anything, job.Id).Return(nil).Once()
+		mockStore.UserPostDeliveryContentReviewStore.On("SaveBatch", mock.Anything, postID, mock.Anything, job.Id).Return(nil).Once()
 
 		// onProgress persists the running count via PatchJobData; the returned map
 		// (carrying records_copied) refreshes the worker's in-memory job.Data.
@@ -342,6 +377,7 @@ func TestDoJob(t *testing.T) {
 		job := newJob()
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.PostStore.On("GetSingle", mock.Anything, postID, true).Return(&model.Post{Id: postID}, nil).Once()
 		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, postID, mock.Anything, mock.Anything).Return(nil, store.ErrUserPostDeliverySourceUnavailable).Once()
 		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(job, nil).Once()
 		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
@@ -364,6 +400,7 @@ func TestDoJob(t *testing.T) {
 		close(worker.stop)
 
 		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.PostStore.On("GetSingle", mock.Anything, postID, true).Return(&model.Post{Id: postID}, nil).Once()
 		mockStore.JobStore.On("UpdateStatus", job.Id, model.JobStatusCanceled).Return(job, nil).Once()
 		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
 
@@ -371,6 +408,47 @@ func TestDoJob(t *testing.T) {
 
 		require.Empty(t, app.calls, "a canceled job notifies no one")
 		mockStore.JobStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
+	})
+
+	t.Run("also copies the deliveries of posts that preview the reviewed post", func(t *testing.T) {
+		worker, mockStore, app := newWorkerWithMockStore(t)
+		job := newJob()
+		const previewer = "previewing-post-000000000"
+
+		reviewedPost := &model.Post{Id: postID}
+		reviewedPost.AddProp(model.PostPropsPreviewedIn, []any{previewer})
+
+		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.PostStore.On("GetSingle", mock.Anything, postID, true).Return(reviewedPost, nil).Once()
+		// Both the reviewed post and its previewer are read from the source...
+		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, postID, mock.Anything, mock.Anything).Return(makeRows(postID, 2), nil).Once()
+		mockStore.UserPostDeliveryStore.On("GetByPost", mock.Anything, previewer, mock.Anything, mock.Anything).Return(makeRows(previewer, 1), nil).Once()
+		// ...and both are written under the reviewed post's review id.
+		mockStore.UserPostDeliveryContentReviewStore.On("SaveBatch", mock.Anything, postID, mock.Anything, job.Id).Return(nil).Twice()
+		mockStore.JobStore.On("PatchJobData", job.Id, mock.Anything, mock.Anything).Return(model.StringMap{"post_id": postID, "records_copied": "3"}, nil)
+		mockStore.JobStore.On("UpdateStatus", job.Id, model.JobStatusSuccess).Return(job, nil).Once()
+		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
+
+		worker.DoJob(job)
+
+		require.Equal(t, []bool{true}, app.calls)
+		mockStore.UserPostDeliveryStore.AssertExpectations(t)
+		mockStore.UserPostDeliveryContentReviewStore.AssertExpectations(t)
+	})
+
+	t.Run("a failure loading the reviewed post fails the job", func(t *testing.T) {
+		worker, mockStore, app := newWorkerWithMockStore(t)
+		job := newJob()
+
+		mockStore.JobStore.On("UpdateStatusOptimistically", job.Id, model.JobStatusPending, model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.PostStore.On("GetSingle", mock.Anything, postID, true).Return(nil, store.NewErrNotFound("Post", postID)).Once()
+		mockStore.JobStore.On("UpdateOptimistically", mock.AnythingOfType("*model.Job"), model.JobStatusInProgress).Return(job, nil).Once()
+		mockStore.JobStore.On("Get", mock.Anything, job.Id).Return(job, nil).Maybe()
+
+		worker.DoJob(job)
+
+		require.Equal(t, []bool{false}, app.calls, "a failed job notifies requesters of the failure")
 		mockStore.UserPostDeliveryStore.AssertNotCalled(t, "GetByPost")
 	})
 }

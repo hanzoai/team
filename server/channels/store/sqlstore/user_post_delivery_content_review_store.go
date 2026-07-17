@@ -29,11 +29,14 @@ func newSqlUserPostDeliveryContentReviewStore(s *SqlStore) store.UserPostDeliver
 	return &SqlUserPostDeliveryContentReviewStore{SqlStore: s}
 }
 
-// SaveBatch inserts source rows into the content-review table in a single
+// SaveBatch inserts source rows into the review of reviewPostID in a single
 // round-trip, zipping the per-row columns with unnest and applying the same
-// copied_at/job_id to the whole batch. Each row's original created_at (the
-// delivery time) is preserved; duplicates are dropped via ON CONFLICT DO NOTHING.
-func (s *SqlUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error {
+// review_post_id/copied_at/job_id to the whole batch. Each row keeps its own
+// post_id (the post actually delivered — reviewPostID itself or a post that
+// previews it) and its original created_at (the delivery time). Duplicates within
+// a review are dropped via ON CONFLICT DO NOTHING; the same delivered row can still
+// exist under a different review_post_id.
+func (s *SqlUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, reviewPostID string, records []model.UserPostDelivery, jobID string) error {
 	if len(records) == 0 {
 		return nil
 	}
@@ -53,66 +56,71 @@ func (s *SqlUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, r
 	}
 
 	if _, err := s.GetMaster().ExecContext(ctx,
-		`INSERT INTO `+userPostDeliveryContentReviewTableName+` (post_id, target_id, target_type, mechanism, created_at, copied_at, job_id)
-		 SELECT post_id, target_id, target_type, mechanism, created_at, $6, $7
+		`INSERT INTO `+userPostDeliveryContentReviewTableName+` (review_post_id, post_id, target_id, target_type, mechanism, created_at, copied_at, job_id)
+		 SELECT $6, post_id, target_id, target_type, mechanism, created_at, $7, $8
 		 FROM unnest($1::text[], $2::text[], $3::text[], $4::smallint[], $5::bigint[]) AS u(post_id, target_id, target_type, mechanism, created_at)
-		 ON CONFLICT (post_id, target_id, target_type, mechanism) DO NOTHING`,
+		 ON CONFLICT (review_post_id, post_id, target_id, target_type, mechanism) DO NOTHING`,
 		pq.Array(postIDs), pq.Array(targetIDs), pq.Array(targetTypes), pq.Array(mechanisms), pq.Array(createdAts),
-		model.GetMillis(), jobID); err != nil {
+		reviewPostID, model.GetMillis(), jobID); err != nil {
 		return errors.Wrap(err, "SqlUserPostDeliveryContentReviewStore.SaveBatch: failed to insert content-review records")
 	}
 
 	return nil
 }
 
-func (s *SqlUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, postID string) error {
+func (s *SqlUserPostDeliveryContentReviewStore) DeleteByReviewPost(ctx context.Context, reviewPostID string) error {
 	query, args, err := s.getQueryBuilder().
 		Delete(userPostDeliveryContentReviewTableName).
-		Where(sq.Eq{"post_id": postID}).
+		Where(sq.Eq{"review_post_id": reviewPostID}).
 		ToSql()
 	if err != nil {
-		return errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.DeleteByPost: failed to build query for post_id=%s", postID)
+		return errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.DeleteByReviewPost: failed to build query for review_post_id=%s", reviewPostID)
 	}
 
 	if _, err := s.GetMaster().ExecContext(ctx, query, args...); err != nil {
-		return errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.DeleteByPost: failed to delete content-review records for post_id=%s", postID)
+		return errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.DeleteByReviewPost: failed to delete content-review records for review_post_id=%s", reviewPostID)
 	}
 	return nil
 }
 
-func (s *SqlUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context, postID string) (int64, error) {
+func (s *SqlUserPostDeliveryContentReviewStore) CountByReviewPost(ctx context.Context, reviewPostID string) (int64, error) {
 	query, args, err := s.getQueryBuilder().
 		Select("COUNT(*)").
 		From(userPostDeliveryContentReviewTableName).
-		Where(sq.Eq{"post_id": postID}).
+		Where(sq.Eq{"review_post_id": reviewPostID}).
 		ToSql()
 	if err != nil {
-		return 0, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.CountByPost: failed to build query for post_id=%s", postID)
+		return 0, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.CountByReviewPost: failed to build query for review_post_id=%s", reviewPostID)
 	}
 
 	var count int64
 	if err := s.GetMaster().QueryRowContext(ctx, query, args...).Scan(&count); err != nil {
-		return 0, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.CountByPost: failed to count content-review records for post_id=%s", postID)
+		return 0, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.CountByReviewPost: failed to count content-review records for review_post_id=%s", reviewPostID)
 	}
 	return count, nil
 }
 
-func (s *SqlUserPostDeliveryContentReviewStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
+// GetByReviewPost pages one review's rows ordered by (target_id, target_type,
+// post_id, mechanism). Leading with (target_id, target_type) keeps every row for a
+// recipient contiguous even when they were delivered the post through several
+// previewing posts, so the receipt aggregator can collapse them in one pass while
+// still seeing each source post_id for provenance.
+func (s *SqlUserPostDeliveryContentReviewStore) GetByReviewPost(ctx context.Context, reviewPostID string, after model.UserPostDeliveryReviewCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
 	query := s.getQueryBuilder().
-		Select("post_id", "target_id", "target_type", "mechanism", "created_at", "copied_at", "job_id").
+		Select("review_post_id", "post_id", "target_id", "target_type", "mechanism", "created_at", "copied_at", "job_id").
 		From(userPostDeliveryContentReviewTableName).
-		Where(sq.Eq{"post_id": postID}).
-		OrderBy("target_id", "target_type", "mechanism").
+		Where(sq.Eq{"review_post_id": reviewPostID}).
+		OrderBy("target_id", "target_type", "post_id", "mechanism").
 		Limit(uint64(limit))
 
 	if !after.IsFirstPage() {
-		query = query.Where(sq.Expr("(target_id, target_type, mechanism) > (?, ?, ?)",
-			after.TargetID, after.TargetType, after.Mechanism))
+		query = query.Where(sq.Expr("(target_id, target_type, post_id, mechanism) > (?, ?, ?, ?)",
+			after.TargetID, after.TargetType, after.PostID, after.Mechanism))
 	}
 
 	records := []model.UserPostDeliveryContentReview{}
 	if err := s.GetMaster().SelectBuilderCtx(ctx, &records, query); err != nil {
-		return nil, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.GetByPost: failed to fetch content-review records for post_id=%s", postID)
+		return nil, errors.Wrapf(err, "SqlUserPostDeliveryContentReviewStore.GetByReviewPost: failed to fetch content-review records for review_post_id=%s", reviewPostID)
 	}
 	return records, nil
 }

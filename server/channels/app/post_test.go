@@ -1274,6 +1274,46 @@ func TestCreatePost(t *testing.T) {
 		assert.Equal(t, previewPost.GetProps(), model.StringInterface{"previewed_post": referencedPost.Id})
 	})
 
+	t.Run("Maintains previewed_in on the previewed post as posts permalink-preview it", func(t *testing.T) {
+		mainHelper.Parallel(t)
+		th := Setup(t).InitBasic(t)
+
+		th.AddUserToChannel(t, th.BasicUser, th.BasicChannel)
+		th.Context.Session().UserId = th.BasicUser.Id
+
+		th.App.UpdateConfig(func(cfg *model.Config) {
+			*cfg.ServiceSettings.SiteURL = "http://mymattermost.com"
+		})
+
+		referencedPost, _, err := th.App.CreatePost(th.Context, &model.Post{
+			ChannelId: th.BasicChannel.Id, Message: "hello world", UserId: th.BasicUser.Id,
+		}, th.BasicChannel, model.CreatePostFlags{})
+		require.Nil(t, err)
+
+		permalink := fmt.Sprintf("%s/%s/pl/%s", *th.App.Config().ServiceSettings.SiteURL, th.BasicTeam.Name, referencedPost.Id)
+		channelForPreview := th.CreateChannel(t, th.BasicTeam)
+
+		previewedIn := func() []string {
+			// Read the persisted post directly to avoid any per-viewer prop sanitization.
+			got, nErr := th.App.Srv().Store().Post().GetSingle(th.Context, referencedPost.Id, false)
+			require.NoError(t, nErr)
+			return got.GetPreviewedInProp()
+		}
+
+		previewPost1, _, err := th.App.CreatePost(th.Context, &model.Post{
+			ChannelId: channelForPreview.Id, Message: permalink, UserId: th.BasicUser.Id,
+		}, channelForPreview, model.CreatePostFlags{})
+		require.Nil(t, err)
+		require.Equal(t, []string{previewPost1.Id}, previewedIn(), "the previewing post is recorded on the previewed post")
+
+		// A second post previewing the same post is appended (many-to-one).
+		previewPost2, _, err := th.App.CreatePost(th.Context, &model.Post{
+			ChannelId: channelForPreview.Id, Message: permalink, UserId: th.BasicUser.Id,
+		}, channelForPreview, model.CreatePostFlags{})
+		require.Nil(t, err)
+		require.ElementsMatch(t, []string{previewPost1.Id, previewPost2.Id}, previewedIn())
+	})
+
 	t.Run("creates a single record for a permalink preview post", func(t *testing.T) {
 		mainHelper.Parallel(t)
 		th := Setup(t).InitBasic(t)

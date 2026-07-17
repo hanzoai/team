@@ -19,17 +19,18 @@ import (
 var identityT i18n.TranslateFunc = func(id string, args ...any) string { return id }
 
 func TestDeliveryReceiptAggregator(t *testing.T) {
-	row := func(target, targetType string, mechanism int16, createdAt int64) model.UserPostDeliveryContentReview {
-		return model.UserPostDeliveryContentReview{TargetID: target, TargetType: targetType, Mechanism: mechanism, CreatedAt: createdAt}
+	row := func(target, targetType, postID string, mechanism int16, createdAt int64) model.UserPostDeliveryContentReview {
+		return model.UserPostDeliveryContentReview{PostID: postID, TargetID: target, TargetType: targetType, Mechanism: mechanism, CreatedAt: createdAt}
 	}
 
-	// Rows are contiguous by (target_id, target_type), as GetByPost returns them.
+	// Rows are contiguous by (target_id, target_type), as GetByReviewPost returns them.
+	// Recipient A saw the reviewed post directly (REV) and through a previewing post (PREV).
 	rows := []model.UserPostDeliveryContentReview{
-		row("A", model.DeliveryTargetUser, model.DeliveryMechanismProduct, 30),
-		row("A", model.DeliveryTargetUser, model.DeliveryMechanismEmail, 10),
-		row("A", model.DeliveryTargetUser, model.DeliveryMechanismProduct, 5), // duplicate mechanism, earlier time
-		row("B", model.DeliveryTargetUser, model.DeliveryMechanismProduct, 20),
-		row("C", model.DeliveryTargetPlugin, model.DeliveryMechanismPlugin, 40),
+		row("A", model.DeliveryTargetUser, "REV", model.DeliveryMechanismProduct, 30),
+		row("A", model.DeliveryTargetUser, "REV", model.DeliveryMechanismEmail, 10),
+		row("A", model.DeliveryTargetUser, "PREV", model.DeliveryMechanismProduct, 5), // via preview, earliest time
+		row("B", model.DeliveryTargetUser, "REV", model.DeliveryMechanismProduct, 20),
+		row("C", model.DeliveryTargetPlugin, "PREV", model.DeliveryMechanismPlugin, 40),
 	}
 
 	var got []deliveryReceiptRecord
@@ -53,15 +54,18 @@ func TestDeliveryReceiptAggregator(t *testing.T) {
 	require.Equal(t, "A", got[0].TargetID)
 	require.Equal(t, model.DeliveryTargetUser, got[0].TargetType)
 	require.Equal(t, []int16{model.DeliveryMechanismProduct, model.DeliveryMechanismEmail}, got[0].Mechanisms, "mechanisms deduped, insertion order preserved")
-	require.Equal(t, int64(5), got[0].FirstDeliveredAt, "earliest delivery time across all rows")
+	require.Equal(t, []string{"REV", "PREV"}, got[0].Sources, "distinct source posts, insertion order preserved")
+	require.Equal(t, int64(5), got[0].FirstDeliveredAt, "earliest delivery time across all rows and sources")
 
 	require.Equal(t, "B", got[1].TargetID)
 	require.Equal(t, []int16{model.DeliveryMechanismProduct}, got[1].Mechanisms)
+	require.Equal(t, []string{"REV"}, got[1].Sources)
 	require.Equal(t, int64(20), got[1].FirstDeliveredAt)
 
 	require.Equal(t, "C", got[2].TargetID)
 	require.Equal(t, model.DeliveryTargetPlugin, got[2].TargetType)
 	require.Equal(t, []int16{model.DeliveryMechanismPlugin}, got[2].Mechanisms)
+	require.Equal(t, []string{"PREV"}, got[2].Sources)
 	require.Equal(t, int64(40), got[2].FirstDeliveredAt)
 }
 
@@ -72,20 +76,49 @@ func TestDeliveryReceiptAggregatorEmpty(t *testing.T) {
 	require.False(t, emitted, "flushing with nothing pending emits nothing")
 }
 
+func TestFormatDeliverySources(t *testing.T) {
+	const reviewPostID = "REV"
+
+	t.Run("direct only", func(t *testing.T) {
+		require.Equal(t, "app.data_spillage.delivery_tracking.receipt.source.direct",
+			formatDeliverySources([]string{reviewPostID}, reviewPostID, identityT))
+	})
+
+	t.Run("preview only", func(t *testing.T) {
+		// identityT ignores args, so both preview entries render to the same key; the
+		// point is that no "direct" label appears and both previews are listed.
+		require.Equal(t,
+			"app.data_spillage.delivery_tracking.receipt.source.preview, app.data_spillage.delivery_tracking.receipt.source.preview",
+			formatDeliverySources([]string{"B2", "B1"}, reviewPostID, identityT))
+	})
+
+	t.Run("direct sorts before previews regardless of input order", func(t *testing.T) {
+		require.Equal(t,
+			"app.data_spillage.delivery_tracking.receipt.source.direct, app.data_spillage.delivery_tracking.receipt.source.preview",
+			formatDeliverySources([]string{"B1", reviewPostID}, reviewPostID, identityT))
+	})
+
+	t.Run("no sources yields empty", func(t *testing.T) {
+		require.Empty(t, formatDeliverySources(nil, reviewPostID, identityT))
+	})
+}
+
 func TestFormatDeliveryReceiptRow(t *testing.T) {
 	// 1704067200000ms == 2024-01-01T00:00:00Z.
 	const deliveredMs = int64(1704067200000)
+	const reviewPostID = "REV"
 
-	t.Run("resolved user, mechanisms sorted and joined", func(t *testing.T) {
+	t.Run("resolved user with direct and preview sources", func(t *testing.T) {
 		rec := deliveryReceiptRecord{
 			TargetID:         "user-id",
 			TargetType:       model.DeliveryTargetUser,
 			Mechanisms:       []int16{model.DeliveryMechanismEmail, model.DeliveryMechanismProduct}, // out of order
+			Sources:          []string{reviewPostID, "PREV"},
 			FirstDeliveredAt: deliveredMs,
 		}
 		user := &model.User{Id: "user-id", Username: "alice", Email: "alice@example.com", FirstName: "Alice", LastName: "Adams"}
 
-		row := formatDeliveryReceiptRow(rec, user, identityT)
+		row := formatDeliveryReceiptRow(rec, user, reviewPostID, identityT)
 
 		require.Equal(t, []string{
 			"app.data_spillage.delivery_tracking.receipt.target_type.user",
@@ -94,14 +127,15 @@ func TestFormatDeliveryReceiptRow(t *testing.T) {
 			"alice@example.com",
 			"Alice Adams",
 			"app.data_spillage.delivery_tracking.receipt.mechanism.product, app.data_spillage.delivery_tracking.receipt.mechanism.email",
+			"app.data_spillage.delivery_tracking.receipt.source.direct, app.data_spillage.delivery_tracking.receipt.source.preview",
 			"2024-01-01T00:00:00Z",
 		}, row)
 	})
 
 	t.Run("unresolved user uses placeholder", func(t *testing.T) {
-		rec := deliveryReceiptRecord{TargetID: "gone", TargetType: model.DeliveryTargetUser, Mechanisms: []int16{model.DeliveryMechanismPush}, FirstDeliveredAt: deliveredMs}
+		rec := deliveryReceiptRecord{TargetID: "gone", TargetType: model.DeliveryTargetUser, Mechanisms: []int16{model.DeliveryMechanismPush}, Sources: []string{reviewPostID}, FirstDeliveredAt: deliveredMs}
 
-		row := formatDeliveryReceiptRow(rec, nil, identityT)
+		row := formatDeliveryReceiptRow(rec, nil, reviewPostID, identityT)
 
 		require.Equal(t, "app.data_spillage.delivery_tracking.receipt.unknown_user", row[2])
 		require.Empty(t, row[3])
@@ -109,9 +143,9 @@ func TestFormatDeliveryReceiptRow(t *testing.T) {
 	})
 
 	t.Run("plugin target shows raw id and type, no user fields", func(t *testing.T) {
-		rec := deliveryReceiptRecord{TargetID: "com.example.plugin", TargetType: model.DeliveryTargetPlugin, Mechanisms: []int16{model.DeliveryMechanismPlugin}, FirstDeliveredAt: deliveredMs}
+		rec := deliveryReceiptRecord{TargetID: "com.example.plugin", TargetType: model.DeliveryTargetPlugin, Mechanisms: []int16{model.DeliveryMechanismPlugin}, Sources: []string{reviewPostID}, FirstDeliveredAt: deliveredMs}
 
-		row := formatDeliveryReceiptRow(rec, nil, identityT)
+		row := formatDeliveryReceiptRow(rec, nil, reviewPostID, identityT)
 
 		require.Equal(t, "app.data_spillage.delivery_tracking.receipt.target_type.plugin", row[0])
 		require.Equal(t, "com.example.plugin", row[1])
@@ -149,7 +183,7 @@ func TestWriteDeliveryReceiptRecord(t *testing.T) {
 
 	var buf bytes.Buffer
 	w := csv.NewWriter(&buf)
-	require.NoError(t, writeDeliveryReceiptRecord(w, formatDeliveryReceiptRow(rec, user, identityT)))
+	require.NoError(t, writeDeliveryReceiptRecord(w, formatDeliveryReceiptRow(rec, user, "review-post", identityT)))
 	w.Flush()
 	require.NoError(t, w.Error())
 
@@ -165,5 +199,6 @@ func TestWriteDeliveryReceiptRecord(t *testing.T) {
 	require.Equal(t, "'-Bob", row[4], "full name")
 	// Non-user-controlled fields are unaffected.
 	require.Equal(t, "user-id", row[1], "target id")
-	require.Equal(t, "2024-01-01T00:00:00Z", row[6], "delivered at")
+	require.Empty(t, row[6], "sources (none set on this record)")
+	require.Equal(t, "2024-01-01T00:00:00Z", row[7], "delivered at")
 }

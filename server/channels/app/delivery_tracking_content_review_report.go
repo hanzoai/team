@@ -29,9 +29,13 @@ const deliveryReceiptTempPattern = "mm-delivery-receipt-*.csv"
 // (target_id, target_type) received the post through, plus the earliest delivery
 // time across those mechanisms.
 type deliveryReceiptRecord struct {
-	TargetID         string
-	TargetType       string
-	Mechanisms       []int16
+	TargetID   string
+	TargetType string
+	Mechanisms []int16
+	// Sources are the distinct post IDs whose delivery surfaced the reviewed post's
+	// content to this recipient: the reviewed post itself (rendered "Direct") and/or
+	// posts that permalink-preview it (rendered "Preview in <id>").
+	Sources          []string
 	FirstDeliveredAt int64
 }
 
@@ -60,6 +64,9 @@ func (agg *deliveryReceiptAggregator) add(row model.UserPostDeliveryContentRevie
 	}
 	if !slices.Contains(agg.pending.Mechanisms, row.Mechanism) {
 		agg.pending.Mechanisms = append(agg.pending.Mechanisms, row.Mechanism)
+	}
+	if !slices.Contains(agg.pending.Sources, row.PostID) {
+		agg.pending.Sources = append(agg.pending.Sources, row.PostID)
 	}
 	if row.CreatedAt < agg.pending.FirstDeliveredAt {
 		agg.pending.FirstDeliveredAt = row.CreatedAt
@@ -108,10 +115,37 @@ func deliveryTargetTypeLabel(T i18n.TranslateFunc, targetType string) string {
 	}
 }
 
+// formatDeliverySources renders a recipient's source post IDs into human-readable
+// labels: the reviewed post itself becomes "Direct", every other (previewing) post
+// becomes "Preview in <id>". "Direct" sorts first; previews follow in ID order for
+// deterministic output.
+func formatDeliverySources(sources []string, reviewPostID string, T i18n.TranslateFunc) string {
+	direct := false
+	previews := make([]string, 0, len(sources))
+	for _, src := range sources {
+		if src == reviewPostID {
+			direct = true
+		} else {
+			previews = append(previews, src)
+		}
+	}
+	slices.Sort(previews)
+
+	labels := make([]string, 0, len(sources))
+	if direct {
+		labels = append(labels, T("app.data_spillage.delivery_tracking.receipt.source.direct"))
+	}
+	for _, p := range previews {
+		labels = append(labels, T("app.data_spillage.delivery_tracking.receipt.source.preview", map[string]any{"PostId": p}))
+	}
+	return strings.Join(labels, ", ")
+}
+
 // formatDeliveryReceiptRow renders a recipient as a CSV row. For a user target a
 // nil user yields the "unknown/deleted" placeholder; plugin/webhook targets ignore
-// user and show only their raw ID and type.
-func formatDeliveryReceiptRow(rec deliveryReceiptRecord, user *model.User, T i18n.TranslateFunc) []string {
+// user and show only their raw ID and type. reviewPostID is the post under review,
+// used to label each source as a direct delivery or a preview.
+func formatDeliveryReceiptRow(rec deliveryReceiptRecord, user *model.User, reviewPostID string, T i18n.TranslateFunc) []string {
 	var username, email, fullName string
 	if rec.TargetType == model.DeliveryTargetUser {
 		if user != nil {
@@ -137,6 +171,7 @@ func formatDeliveryReceiptRow(rec deliveryReceiptRecord, user *model.User, T i18
 		email,
 		fullName,
 		strings.Join(labels, ", "),
+		formatDeliverySources(rec.Sources, reviewPostID, T),
 		time.UnixMilli(rec.FirstDeliveredAt).UTC().Format(time.RFC3339),
 	}
 }
@@ -203,7 +238,7 @@ func (a *App) GenerateDeliveryTrackingReceipt(rctx request.CTX, postID, generate
 	}
 	T := i18n.GetUserTranslations(locale)
 
-	total, countErr := a.Srv().Store().UserPostDeliveryContentReview().CountByPost(rctx.Context(), postID)
+	total, countErr := a.Srv().Store().UserPostDeliveryContentReview().CountByReviewPost(rctx.Context(), postID)
 	if countErr != nil {
 		return "", newAppError("app.data_spillage.delivery_tracking.receipt.read.app_error", countErr)
 	}
@@ -237,6 +272,7 @@ func (a *App) GenerateDeliveryTrackingReceipt(rctx request.CTX, postID, generate
 		T("app.data_spillage.delivery_tracking.receipt.column.email"),
 		T("app.data_spillage.delivery_tracking.receipt.column.full_name"),
 		T("app.data_spillage.delivery_tracking.receipt.column.mechanisms"),
+		T("app.data_spillage.delivery_tracking.receipt.column.sources"),
 		T("app.data_spillage.delivery_tracking.receipt.column.first_delivered_at"),
 	})
 
@@ -249,7 +285,7 @@ func (a *App) GenerateDeliveryTrackingReceipt(rctx request.CTX, postID, generate
 		}
 		users := a.resolveDeliveryReceiptUsers(rctx, buffer)
 		for _, rec := range buffer {
-			if werr := writeDeliveryReceiptRecord(csvWriter, formatDeliveryReceiptRow(rec, users[rec.TargetID], T)); werr != nil {
+			if werr := writeDeliveryReceiptRecord(csvWriter, formatDeliveryReceiptRow(rec, users[rec.TargetID], postID, T)); werr != nil {
 				return werr
 			}
 		}
@@ -265,9 +301,9 @@ func (a *App) GenerateDeliveryTrackingReceipt(rctx request.CTX, postID, generate
 		return nil
 	}}
 
-	var cursor model.UserPostDeliveryCursor
+	var cursor model.UserPostDeliveryReviewCursor
 	for {
-		batch, berr := a.Srv().Store().UserPostDeliveryContentReview().GetByPost(rctx.Context(), postID, cursor, deliveryReceiptPageSize)
+		batch, berr := a.Srv().Store().UserPostDeliveryContentReview().GetByReviewPost(rctx.Context(), postID, cursor, deliveryReceiptPageSize)
 		if berr != nil {
 			cleanup()
 			return "", newAppError("app.data_spillage.delivery_tracking.receipt.read.app_error", berr)
@@ -282,7 +318,7 @@ func (a *App) GenerateDeliveryTrackingReceipt(rctx request.CTX, postID, generate
 			}
 		}
 		last := batch[len(batch)-1]
-		cursor = model.UserPostDeliveryCursor{TargetID: last.TargetID, TargetType: last.TargetType, Mechanism: last.Mechanism}
+		cursor = model.UserPostDeliveryReviewCursor{TargetID: last.TargetID, TargetType: last.TargetType, PostID: last.PostID, Mechanism: last.Mechanism}
 		if len(batch) < deliveryReceiptPageSize {
 			break
 		}

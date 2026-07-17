@@ -389,6 +389,10 @@ type PostStore interface {
 	SaveMultiple(rctx request.CTX, posts []*model.Post) ([]*model.Post, int, error)
 	Save(rctx request.CTX, post *model.Post) (*model.Post, error)
 	Update(rctx request.CTX, newPost *model.Post, oldPost *model.Post) (*model.Post, error)
+	// AddPostPreviewReference records that referencingPostID permalink-previews
+	// previewedPostID, by appending referencingPostID to the previewed post's
+	// previewed_in prop. Idempotent and safe under concurrent writers.
+	AddPostPreviewReference(rctx request.CTX, previewedPostID, referencingPostID string) error
 	Get(rctx request.CTX, id string, opts model.GetPostsOptions, userID string, sanitizeOptions map[string]bool) (*model.PostList, error)
 	GetSingle(rctx request.CTX, id string, inclDeleted bool) (*model.Post, error)
 	Delete(rctx request.CTX, postID string, timestamp int64, deleteByID string) error
@@ -1328,10 +1332,13 @@ type UserPostDeliveryStore interface {
 }
 
 type UserPostDeliveryContentReviewStore interface {
-	SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error
-	DeleteByPost(ctx context.Context, postID string) error
-	CountByPost(ctx context.Context, postID string) (int64, error)
-	GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error)
+	// SaveBatch copies source delivery rows into the review of reviewPostID. Each row keeps
+	// its own post_id (the post actually delivered — reviewPostID itself or a post previewing
+	// it); review_post_id is stamped to reviewPostID for the whole batch.
+	SaveBatch(ctx context.Context, reviewPostID string, records []model.UserPostDelivery, jobID string) error
+	DeleteByReviewPost(ctx context.Context, reviewPostID string) error
+	CountByReviewPost(ctx context.Context, reviewPostID string) (int64, error)
+	GetByReviewPost(ctx context.Context, reviewPostID string, after model.UserPostDeliveryReviewCursor, limit int) ([]model.UserPostDeliveryContentReview, error)
 }
 
 // ChannelSearchOpts contains options for searching channels.

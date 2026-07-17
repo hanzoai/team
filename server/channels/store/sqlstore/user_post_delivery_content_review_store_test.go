@@ -55,92 +55,115 @@ func TestUserPostDeliveryContentReviewStore(t *testing.T) {
 	ctx := context.Background()
 	contentReviewStore := ss.UserPostDeliveryContentReview()
 
-	readRows := func(t *testing.T, postID string) []model.UserPostDeliveryContentReview {
+	readRows := func(t *testing.T, reviewPostID string) []model.UserPostDeliveryContentReview {
 		t.Helper()
 		var rows []model.UserPostDeliveryContentReview
 		require.NoError(t, ss.GetMaster().SelectContext(ctx, &rows,
-			`SELECT post_id, target_id, target_type, mechanism, created_at, copied_at, job_id
+			`SELECT review_post_id, post_id, target_id, target_type, mechanism, created_at, copied_at, job_id
 			 FROM `+userPostDeliveryContentReviewTableName+`
-			 WHERE post_id = $1 ORDER BY target_id`, postID))
+			 WHERE review_post_id = $1 ORDER BY target_id, post_id`, reviewPostID))
 		return rows
 	}
 
-	t.Run("SaveBatch preserves source created_at and stamps copied_at/job_id", func(t *testing.T) {
-		postID := model.NewId()
+	t.Run("SaveBatch stamps review_post_id, preserves source created_at, and copied_at/job_id", func(t *testing.T) {
+		reviewPostID := model.NewId()
 		jobID := model.NewId()
 		const delivered = int64(1234567890)
 
 		before := model.GetMillis()
-		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: delivered},
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, reviewPostID, []model.UserPostDelivery{
+			{PostID: reviewPostID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: delivered},
 		}, jobID))
 
-		rows := readRows(t, postID)
+		rows := readRows(t, reviewPostID)
 		require.Len(t, rows, 1)
+		require.Equal(t, reviewPostID, rows[0].ReviewPostID)
+		require.Equal(t, reviewPostID, rows[0].PostID, "a direct delivery keeps the reviewed post as its post_id")
 		require.Equal(t, delivered, rows[0].CreatedAt, "the original delivery time must be preserved")
 		require.Equal(t, jobID, rows[0].JobID)
 		require.GreaterOrEqual(t, rows[0].CopiedAt, before, "copied_at is stamped at copy time")
 	})
 
-	t.Run("SaveBatch dedups in-batch and across calls, keeping the first row", func(t *testing.T) {
-		postID := model.NewId()
+	t.Run("SaveBatch dedups within a review but isolates across reviews", func(t *testing.T) {
+		reviewPostID := model.NewId()
 		target := model.NewId()
 		records := []model.UserPostDelivery{
-			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 111},
-			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 222}, // duplicate key
+			{PostID: reviewPostID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 111},
+			{PostID: reviewPostID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 222}, // duplicate key
 		}
-		require.NoError(t, contentReviewStore.SaveBatch(ctx, records, model.NewId()))
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, reviewPostID, records, model.NewId()))
 		// A re-copy (e.g. a later re-trigger) must be a no-op.
-		require.NoError(t, contentReviewStore.SaveBatch(ctx, records, model.NewId()))
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, reviewPostID, records, model.NewId()))
 
-		rows := readRows(t, postID)
+		rows := readRows(t, reviewPostID)
 		require.Len(t, rows, 1)
 		require.Equal(t, int64(111), rows[0].CreatedAt, "ON CONFLICT DO NOTHING keeps the first-copied row")
+
+		// The same delivered row copied for a DIFFERENT review is a separate row: reviews
+		// are isolated by review_post_id (a previewing post can belong to several reviews).
+		otherReview := model.NewId()
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, otherReview, records, model.NewId()))
+		require.Len(t, readRows(t, otherReview), 1)
+		require.Len(t, readRows(t, reviewPostID), 1, "the first review is unaffected")
 	})
 
 	t.Run("same target/post but different mechanism are distinct rows", func(t *testing.T) {
-		postID := model.NewId()
+		reviewPostID := model.NewId()
 		target := model.NewId()
-		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
-			{PostID: postID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 2},
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, reviewPostID, []model.UserPostDelivery{
+			{PostID: reviewPostID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
+			{PostID: reviewPostID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 2},
 		}, model.NewId()))
-		require.Len(t, readRows(t, postID), 2)
+		require.Len(t, readRows(t, reviewPostID), 2)
 	})
 
-	t.Run("CountByPost", func(t *testing.T) {
-		postID := model.NewId()
-		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
-			{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 2},
+	t.Run("direct and via-preview deliveries coexist under one review", func(t *testing.T) {
+		reviewPostID := model.NewId()
+		previewerID := model.NewId()
+		target := model.NewId()
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, reviewPostID, []model.UserPostDelivery{
+			{PostID: reviewPostID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 10}, // direct
+			{PostID: previewerID, TargetID: target, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 20},  // via a previewing post
 		}, model.NewId()))
 
-		n, err := contentReviewStore.CountByPost(ctx, postID)
-		require.NoError(t, err)
-		require.Equal(t, int64(2), n)
+		rows := readRows(t, reviewPostID)
+		require.Len(t, rows, 2, "the same recipient under two source posts are distinct rows (provenance preserved)")
+		require.ElementsMatch(t, []string{reviewPostID, previewerID}, []string{rows[0].PostID, rows[1].PostID})
+	})
 
-		empty, err := contentReviewStore.CountByPost(ctx, model.NewId())
+	t.Run("CountByReviewPost", func(t *testing.T) {
+		reviewPostID := model.NewId()
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, reviewPostID, []model.UserPostDelivery{
+			{PostID: reviewPostID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
+			{PostID: model.NewId(), TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 2},
+		}, model.NewId()))
+
+		n, err := contentReviewStore.CountByReviewPost(ctx, reviewPostID)
+		require.NoError(t, err)
+		require.Equal(t, int64(2), n, "counts every row for the review, direct and via-preview")
+
+		empty, err := contentReviewStore.CountByReviewPost(ctx, model.NewId())
 		require.NoError(t, err)
 		require.Equal(t, int64(0), empty)
 	})
 
-	t.Run("DeleteByPost scopes to the given post", func(t *testing.T) {
-		post1, post2 := model.NewId(), model.NewId()
-		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: post1, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
+	t.Run("DeleteByReviewPost scopes to the given review", func(t *testing.T) {
+		review1, review2 := model.NewId(), model.NewId()
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, review1, []model.UserPostDelivery{
+			{PostID: review1, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
 		}, model.NewId()))
-		require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: post2, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
+		require.NoError(t, contentReviewStore.SaveBatch(ctx, review2, []model.UserPostDelivery{
+			{PostID: review2, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
 		}, model.NewId()))
 
-		require.NoError(t, contentReviewStore.DeleteByPost(ctx, post1))
+		require.NoError(t, contentReviewStore.DeleteByReviewPost(ctx, review1))
 
-		count1, err := contentReviewStore.CountByPost(ctx, post1)
+		count1, err := contentReviewStore.CountByReviewPost(ctx, review1)
 		require.NoError(t, err)
 		require.Equal(t, int64(0), count1)
-		count2, err := contentReviewStore.CountByPost(ctx, post2)
+		count2, err := contentReviewStore.CountByReviewPost(ctx, review2)
 		require.NoError(t, err)
-		require.Equal(t, int64(1), count2, "other posts are untouched")
+		require.Equal(t, int64(1), count2, "other reviews are untouched")
 	})
 }
 
@@ -196,7 +219,7 @@ func TestUserPostDeliveryStoreGetByPost(t *testing.T) {
 	}
 }
 
-func TestUserPostDeliveryContentReviewStoreGetByPost(t *testing.T) {
+func TestUserPostDeliveryContentReviewStoreGetByReviewPost(t *testing.T) {
 	if testing.Short() {
 		t.Skip("requires live database")
 	}
@@ -207,39 +230,42 @@ func TestUserPostDeliveryContentReviewStoreGetByPost(t *testing.T) {
 	ctx := context.Background()
 	contentReviewStore := ss.UserPostDeliveryContentReview()
 
-	postID := model.NewId()
-	// targetA is delivered via two mechanisms, so a recipient spans multiple rows.
+	reviewPostID := model.NewId()
+	previewerID := model.NewId()
+	// targetA is delivered the reviewed post directly (two mechanisms) AND through a
+	// previewing post, so a recipient spans multiple post_ids and mechanisms.
 	targetA, targetB, targetC := model.NewId(), model.NewId(), model.NewId()
 	records := []model.UserPostDelivery{
-		{PostID: postID, TargetID: targetA, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 10},
-		{PostID: postID, TargetID: targetA, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 20},
-		{PostID: postID, TargetID: targetB, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 30},
-		{PostID: postID, TargetID: targetC, TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechanismPlugin, CreatedAt: 40},
+		{PostID: reviewPostID, TargetID: targetA, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 10},
+		{PostID: reviewPostID, TargetID: targetA, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: 20},
+		{PostID: previewerID, TargetID: targetA, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 15},
+		{PostID: reviewPostID, TargetID: targetB, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 30},
+		{PostID: previewerID, TargetID: targetC, TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechanismPlugin, CreatedAt: 40},
 	}
-	require.NoError(t, contentReviewStore.SaveBatch(ctx, records, model.NewId()))
-	// A different post's rows must never leak into the page.
-	require.NoError(t, contentReviewStore.SaveBatch(ctx, []model.UserPostDelivery{
+	require.NoError(t, contentReviewStore.SaveBatch(ctx, reviewPostID, records, model.NewId()))
+	// A different review's rows must never leak into the page.
+	require.NoError(t, contentReviewStore.SaveBatch(ctx, model.NewId(), []model.UserPostDelivery{
 		{PostID: model.NewId(), TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1},
 	}, model.NewId()))
 
 	var got []model.UserPostDeliveryContentReview
-	seen := map[model.UserPostDeliveryCursor]bool{}
-	var cursor model.UserPostDeliveryCursor
+	seen := map[model.UserPostDeliveryReviewCursor]bool{}
+	var cursor model.UserPostDeliveryReviewCursor
 	for {
-		batch, err := contentReviewStore.GetByPost(ctx, postID, cursor, 2)
+		batch, err := contentReviewStore.GetByReviewPost(ctx, reviewPostID, cursor, 2)
 		require.NoError(t, err)
 		if len(batch) == 0 {
 			break
 		}
 		for _, row := range batch {
-			require.Equal(t, postID, row.PostID)
-			key := model.UserPostDeliveryCursor{TargetID: row.TargetID, TargetType: row.TargetType, Mechanism: row.Mechanism}
+			require.Equal(t, reviewPostID, row.ReviewPostID)
+			key := model.UserPostDeliveryReviewCursor{TargetID: row.TargetID, TargetType: row.TargetType, PostID: row.PostID, Mechanism: row.Mechanism}
 			require.False(t, seen[key], "row returned on more than one page")
 			seen[key] = true
 		}
 		got = append(got, batch...)
 		last := batch[len(batch)-1]
-		cursor = model.UserPostDeliveryCursor{TargetID: last.TargetID, TargetType: last.TargetType, Mechanism: last.Mechanism}
+		cursor = model.UserPostDeliveryReviewCursor{TargetID: last.TargetID, TargetType: last.TargetType, PostID: last.PostID, Mechanism: last.Mechanism}
 		if len(batch) < 2 {
 			break
 		}
@@ -250,11 +276,16 @@ func TestUserPostDeliveryContentReviewStoreGetByPost(t *testing.T) {
 		prev, cur := got[i-1], got[i]
 		require.LessOrEqual(t, prev.TargetID, cur.TargetID, "rows come back in ascending target order")
 		if prev.TargetID == cur.TargetID && prev.TargetType == cur.TargetType {
-			require.Less(t, prev.Mechanism, cur.Mechanism, "a recipient's rows are ordered by mechanism and stay contiguous")
+			// Within a recipient, rows are ordered by (post_id, mechanism) and stay
+			// contiguous, so the receipt aggregator can collapse them in one pass while
+			// still seeing each source post for provenance.
+			require.True(t,
+				prev.PostID < cur.PostID || (prev.PostID == cur.PostID && prev.Mechanism < cur.Mechanism),
+				"a recipient's rows are ordered by (post_id, mechanism)")
 		}
 	}
 
-	empty, err := contentReviewStore.GetByPost(ctx, model.NewId(), model.UserPostDeliveryCursor{}, 10)
+	empty, err := contentReviewStore.GetByReviewPost(ctx, model.NewId(), model.UserPostDeliveryReviewCursor{}, 10)
 	require.NoError(t, err)
 	require.Empty(t, empty)
 }
@@ -289,12 +320,12 @@ func TestUserPostDeliveryFeatureDisabled(t *testing.T) {
 	})
 
 	t.Run("content-review store writes to primary independently of the source pool", func(t *testing.T) {
-		postID := model.NewId()
-		require.NoError(t, ss.UserPostDeliveryContentReview().SaveBatch(ctx, []model.UserPostDelivery{
-			{PostID: postID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 42},
+		reviewPostID := model.NewId()
+		require.NoError(t, ss.UserPostDeliveryContentReview().SaveBatch(ctx, reviewPostID, []model.UserPostDelivery{
+			{PostID: reviewPostID, TargetID: model.NewId(), TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 42},
 		}, model.NewId()))
 
-		n, err := ss.UserPostDeliveryContentReview().CountByPost(ctx, postID)
+		n, err := ss.UserPostDeliveryContentReview().CountByReviewPost(ctx, reviewPostID)
 		require.NoError(t, err)
 		require.Equal(t, int64(1), n)
 	})

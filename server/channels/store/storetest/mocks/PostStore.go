@@ -16,6 +16,24 @@ type PostStore struct {
 	mock.Mock
 }
 
+// AddPostPreviewReference provides a mock function with given fields: rctx, previewedPostID, referencingPostID
+func (_m *PostStore) AddPostPreviewReference(rctx request.CTX, previewedPostID string, referencingPostID string) error {
+	ret := _m.Called(rctx, previewedPostID, referencingPostID)
+
+	if len(ret) == 0 {
+		panic("no return value specified for AddPostPreviewReference")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(request.CTX, string, string) error); ok {
+		r0 = rf(rctx, previewedPostID, referencingPostID)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // AnalyticsPostCount provides a mock function with given fields: options
 func (_m *PostStore) AnalyticsPostCount(options *model.PostCountOptions) (int64, error) {
 	ret := _m.Called(options)

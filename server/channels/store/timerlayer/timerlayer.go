@@ -6800,6 +6800,22 @@ func (s *TimerLayerPluginStore) SetWithOptions(pluginID string, key string, valu
 	return result, err
 }
 
+func (s *TimerLayerPostStore) AddPostPreviewReference(rctx request.CTX, previewedPostID string, referencingPostID string) error {
+	start := time.Now()
+
+	err := s.PostStore.AddPostPreviewReference(rctx, previewedPostID, referencingPostID)
+
+	elapsed := float64(time.Since(start)) / float64(time.Second)
+	if s.Root.Metrics != nil {
+		success := "false"
+		if err == nil {
+			success = "true"
+		}
+		s.Root.Metrics.ObserveStoreMethodDuration("PostStore.AddPostPreviewReference", success, elapsed)
+	}
+	return err
+}
+
 func (s *TimerLayerPostStore) AnalyticsPostCount(options *model.PostCountOptions) (int64, error) {
 	start := time.Now()
 
@@ -14629,10 +14645,10 @@ func (s *TimerLayerUserPostDeliveryStore) MarkBulk(ctx context.Context, records 
 	return err
 }
 
-func (s *TimerLayerUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context, postID string) (int64, error) {
+func (s *TimerLayerUserPostDeliveryContentReviewStore) CountByReviewPost(ctx context.Context, reviewPostID string) (int64, error) {
 	start := time.Now()
 
-	result, err := s.UserPostDeliveryContentReviewStore.CountByPost(ctx, postID)
+	result, err := s.UserPostDeliveryContentReviewStore.CountByReviewPost(ctx, reviewPostID)
 
 	elapsed := float64(time.Since(start)) / float64(time.Second)
 	if s.Root.Metrics != nil {
@@ -14640,15 +14656,15 @@ func (s *TimerLayerUserPostDeliveryContentReviewStore) CountByPost(ctx context.C
 		if err == nil {
 			success = "true"
 		}
-		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.CountByPost", success, elapsed)
+		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.CountByReviewPost", success, elapsed)
 	}
 	return result, err
 }
 
-func (s *TimerLayerUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, postID string) error {
+func (s *TimerLayerUserPostDeliveryContentReviewStore) DeleteByReviewPost(ctx context.Context, reviewPostID string) error {
 	start := time.Now()
 
-	err := s.UserPostDeliveryContentReviewStore.DeleteByPost(ctx, postID)
+	err := s.UserPostDeliveryContentReviewStore.DeleteByReviewPost(ctx, reviewPostID)
 
 	elapsed := float64(time.Since(start)) / float64(time.Second)
 	if s.Root.Metrics != nil {
@@ -14656,15 +14672,15 @@ func (s *TimerLayerUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.
 		if err == nil {
 			success = "true"
 		}
-		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.DeleteByPost", success, elapsed)
+		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.DeleteByReviewPost", success, elapsed)
 	}
 	return err
 }
 
-func (s *TimerLayerUserPostDeliveryContentReviewStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
+func (s *TimerLayerUserPostDeliveryContentReviewStore) GetByReviewPost(ctx context.Context, reviewPostID string, after model.UserPostDeliveryReviewCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
 	start := time.Now()
 
-	result, err := s.UserPostDeliveryContentReviewStore.GetByPost(ctx, postID, after, limit)
+	result, err := s.UserPostDeliveryContentReviewStore.GetByReviewPost(ctx, reviewPostID, after, limit)
 
 	elapsed := float64(time.Since(start)) / float64(time.Second)
 	if s.Root.Metrics != nil {
@@ -14672,15 +14688,15 @@ func (s *TimerLayerUserPostDeliveryContentReviewStore) GetByPost(ctx context.Con
 		if err == nil {
 			success = "true"
 		}
-		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.GetByPost", success, elapsed)
+		s.Root.Metrics.ObserveStoreMethodDuration("UserPostDeliveryContentReviewStore.GetByReviewPost", success, elapsed)
 	}
 	return result, err
 }
 
-func (s *TimerLayerUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error {
+func (s *TimerLayerUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, reviewPostID string, records []model.UserPostDelivery, jobID string) error {
 	start := time.Now()
 
-	err := s.UserPostDeliveryContentReviewStore.SaveBatch(ctx, records, jobID)
+	err := s.UserPostDeliveryContentReviewStore.SaveBatch(ctx, reviewPostID, records, jobID)
 
 	elapsed := float64(time.Since(start)) / float64(time.Second)
 	if s.Root.Metrics != nil {

@@ -6223,6 +6223,10 @@
     "translation": "Delivery mechanisms"
   },
   {
+    "id": "app.data_spillage.delivery_tracking.receipt.column.sources",
+    "translation": "Delivered via"
+  },
+  {
     "id": "app.data_spillage.delivery_tracking.receipt.column.target_id",
     "translation": "ID"
   },
@@ -6285,6 +6289,14 @@
   {
     "id": "app.data_spillage.delivery_tracking.receipt.read.app_error",
     "translation": "Failed to read the delivery tracking records for the receipt."
+  },
+  {
+    "id": "app.data_spillage.delivery_tracking.receipt.source.direct",
+    "translation": "Direct"
+  },
+  {
+    "id": "app.data_spillage.delivery_tracking.receipt.source.preview",
+    "translation": "Preview in {{.PostId}}"
   },
   {
     "id": "app.data_spillage.delivery_tracking.receipt.sync.app_error",

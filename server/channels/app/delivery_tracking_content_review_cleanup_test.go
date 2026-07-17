@@ -20,12 +20,12 @@ func seedContentReviewRows(t *testing.T, th *TestHelper, postID string) {
 		{PostID: postID, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: model.GetMillis()},
 		{PostID: postID, TargetID: "com.example.plugin", TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechanismPlugin, CreatedAt: model.GetMillis()},
 	}
-	require.NoError(t, th.App.Srv().Store().UserPostDeliveryContentReview().SaveBatch(context.Background(), records, model.NewId()))
+	require.NoError(t, th.App.Srv().Store().UserPostDeliveryContentReview().SaveBatch(context.Background(), postID, records, model.NewId()))
 }
 
 func contentReviewCount(t *testing.T, th *TestHelper, postID string) int64 {
 	t.Helper()
-	count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByPost(context.Background(), postID)
+	count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByReviewPost(context.Background(), postID)
 	require.NoError(t, err)
 	return count
 }
@@ -35,7 +35,7 @@ func contentReviewCount(t *testing.T, th *TestHelper, postID string) int64 {
 func requireContentReviewEventuallyEmpty(t *testing.T, th *TestHelper, postID string) {
 	t.Helper()
 	require.Eventually(t, func() bool {
-		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByPost(context.Background(), postID)
+		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByReviewPost(context.Background(), postID)
 		return err == nil && count == 0
 	}, 10*time.Second, 100*time.Millisecond, "expected content-review rows for post %s to be purged", postID)
 }

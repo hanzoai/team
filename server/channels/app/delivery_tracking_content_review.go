@@ -133,7 +133,7 @@ func (a *App) purgeDeliveryTrackingContentReview(rctx request.CTX, postID string
 		}
 	}
 
-	if err := a.Srv().Store().UserPostDeliveryContentReview().DeleteByPost(rctx.Context(), postID); err != nil {
+	if err := a.Srv().Store().UserPostDeliveryContentReview().DeleteByReviewPost(rctx.Context(), postID); err != nil {
 		rctx.Logger().Error("purgeDeliveryTrackingContentReview: failed to delete content-review records", mlog.String("post_id", postID), mlog.Err(err))
 	}
 }

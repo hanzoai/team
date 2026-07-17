@@ -8489,6 +8489,27 @@ func (s *RetryLayerPluginStore) SetWithOptions(pluginID string, key string, valu
 
 }
 
+func (s *RetryLayerPostStore) AddPostPreviewReference(rctx request.CTX, previewedPostID string, referencingPostID string) error {
+
+	tries := 0
+	for {
+		err := s.PostStore.AddPostPreviewReference(rctx, previewedPostID, referencingPostID)
+		if err == nil {
+			return nil
+		}
+		if !isRepeatableError(err) {
+			return err
+		}
+		tries++
+		if tries >= 3 {
+			err = errors.Wrap(err, "giving up after 3 consecutive repeatable transaction failures")
+			return err
+		}
+		timepkg.Sleep(100 * timepkg.Millisecond)
+	}
+
+}
+
 func (s *RetryLayerPostStore) AnalyticsPostCount(options *model.PostCountOptions) (int64, error) {
 
 	tries := 0
@@ -18524,11 +18545,11 @@ func (s *RetryLayerUserPostDeliveryStore) MarkBulk(ctx context.Context, records 
 
 }
 
-func (s *RetryLayerUserPostDeliveryContentReviewStore) CountByPost(ctx context.Context, postID string) (int64, error) {
+func (s *RetryLayerUserPostDeliveryContentReviewStore) CountByReviewPost(ctx context.Context, reviewPostID string) (int64, error) {
 
 	tries := 0
 	for {
-		result, err := s.UserPostDeliveryContentReviewStore.CountByPost(ctx, postID)
+		result, err := s.UserPostDeliveryContentReviewStore.CountByReviewPost(ctx, reviewPostID)
 		if err == nil {
 			return result, nil
 		}
@@ -18545,11 +18566,11 @@ func (s *RetryLayerUserPostDeliveryContentReviewStore) CountByPost(ctx context.C
 
 }
 
-func (s *RetryLayerUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.Context, postID string) error {
+func (s *RetryLayerUserPostDeliveryContentReviewStore) DeleteByReviewPost(ctx context.Context, reviewPostID string) error {
 
 	tries := 0
 	for {
-		err := s.UserPostDeliveryContentReviewStore.DeleteByPost(ctx, postID)
+		err := s.UserPostDeliveryContentReviewStore.DeleteByReviewPost(ctx, reviewPostID)
 		if err == nil {
 			return nil
 		}
@@ -18566,11 +18587,11 @@ func (s *RetryLayerUserPostDeliveryContentReviewStore) DeleteByPost(ctx context.
 
 }
 
-func (s *RetryLayerUserPostDeliveryContentReviewStore) GetByPost(ctx context.Context, postID string, after model.UserPostDeliveryCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
+func (s *RetryLayerUserPostDeliveryContentReviewStore) GetByReviewPost(ctx context.Context, reviewPostID string, after model.UserPostDeliveryReviewCursor, limit int) ([]model.UserPostDeliveryContentReview, error) {
 
 	tries := 0
 	for {
-		result, err := s.UserPostDeliveryContentReviewStore.GetByPost(ctx, postID, after, limit)
+		result, err := s.UserPostDeliveryContentReviewStore.GetByReviewPost(ctx, reviewPostID, after, limit)
 		if err == nil {
 			return result, nil
 		}
@@ -18587,11 +18608,11 @@ func (s *RetryLayerUserPostDeliveryContentReviewStore) GetByPost(ctx context.Con
 
 }
 
-func (s *RetryLayerUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error {
+func (s *RetryLayerUserPostDeliveryContentReviewStore) SaveBatch(ctx context.Context, reviewPostID string, records []model.UserPostDelivery, jobID string) error {
 
 	tries := 0
 	for {
-		err := s.UserPostDeliveryContentReviewStore.SaveBatch(ctx, records, jobID)
+		err := s.UserPostDeliveryContentReviewStore.SaveBatch(ctx, reviewPostID, records, jobID)
 		if err == nil {
 			return nil
 		}

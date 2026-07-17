@@ -16,7 +16,7 @@ import (
 func requireContentReviewEventuallyEmpty(t *testing.T, th *TestHelper, postID string) {
 	t.Helper()
 	require.Eventually(t, func() bool {
-		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByPost(context.Background(), postID)
+		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByReviewPost(context.Background(), postID)
 		return err == nil && count == 0
 	}, 10*time.Second, 100*time.Millisecond, "expected content-review rows for post %s to be purged", postID)
 }
@@ -38,9 +38,9 @@ func TestReviewerActionsPurgeDeliveryTrackingContentReview(t *testing.T) {
 
 		post := th.CreatePost(t)
 		flagPostViaAPI(t, client, post.Id)
-		seedContentReviewRows(t, th, rowsFor(post.Id))
+		seedContentReviewRows(t, th, post.Id, rowsFor(post.Id))
 
-		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByPost(context.Background(), post.Id)
+		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByReviewPost(context.Background(), post.Id)
 		require.NoError(t, err)
 		require.Equal(t, int64(2), count)
 
@@ -57,9 +57,9 @@ func TestReviewerActionsPurgeDeliveryTrackingContentReview(t *testing.T) {
 
 		post := th.CreatePost(t)
 		flagPostViaAPI(t, client, post.Id)
-		seedContentReviewRows(t, th, rowsFor(post.Id))
+		seedContentReviewRows(t, th, post.Id, rowsFor(post.Id))
 
-		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByPost(context.Background(), post.Id)
+		count, err := th.App.Srv().Store().UserPostDeliveryContentReview().CountByReviewPost(context.Background(), post.Id)
 		require.NoError(t, err)
 		require.Equal(t, int64(2), count)
 

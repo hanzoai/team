@@ -406,6 +406,17 @@ func (a *App) CreatePost(rctx request.CTX, post *model.Post, channel *model.Chan
 		}
 	}
 
+	// Maintain the reverse permalink-preview edge now that rpost carries its persisted ID:
+	// record that rpost previews previewPost. Best-effort — never fail post creation on this.
+	if previewPost != nil {
+		if refErr := a.Srv().Store().Post().AddPostPreviewReference(rctx, previewPost.PostID, rpost.Id); refErr != nil {
+			rctx.Logger().Warn("Failed to record permalink preview reference",
+				mlog.String("previewed_post_id", previewPost.PostID),
+				mlog.String("referencing_post_id", rpost.Id),
+				mlog.Err(refErr))
+		}
+	}
+
 	// MessageWillBePosted ran before the post had an ID (it is assigned on Save), so record the
 	// plugin delivery here, now that rpost carries the persisted ID.
 	if len(willBePostedPluginIDs) > 0 && a.shouldTrackDelivery(channel, rpost) {
@@ -539,7 +550,18 @@ func (a *App) addPostPreviewProp(rctx request.CTX, post *model.Post) (*model.Pos
 		updatedPost := post.Clone()
 		updatedPost.AddProp(model.PostPropsPreviewedPost, previewPost.PostID)
 		updatedPost, err := a.Srv().Store().Post().Update(rctx, updatedPost, post)
-		return updatedPost, err
+		if err != nil {
+			return updatedPost, err
+		}
+		// Maintain the reverse permalink-preview edge: record that updatedPost previews
+		// previewPost. Best-effort — never fail the update on this.
+		if refErr := a.Srv().Store().Post().AddPostPreviewReference(rctx, previewPost.PostID, updatedPost.Id); refErr != nil {
+			rctx.Logger().Warn("Failed to record permalink preview reference",
+				mlog.String("previewed_post_id", previewPost.PostID),
+				mlog.String("referencing_post_id", updatedPost.Id),
+				mlog.Err(refErr))
+		}
+		return updatedPost, nil
 	}
 	return post, nil
 }

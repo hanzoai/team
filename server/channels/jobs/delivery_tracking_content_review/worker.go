@@ -25,7 +25,7 @@ type sourceReader interface {
 }
 
 type reviewWriter interface {
-	SaveBatch(ctx context.Context, records []model.UserPostDelivery, jobID string) error
+	SaveBatch(ctx context.Context, reviewPostID string, records []model.UserPostDelivery, jobID string) error
 }
 
 type AppIface interface {
@@ -131,6 +131,18 @@ func (worker *Worker) DoJob(job *model.Job) {
 		return
 	}
 
+	// Discover the posts to copy: the reviewed post plus every post that currently
+	// previews it (A.props.previewed_in). A viewer of a previewing post saw the reviewed
+	// post's content through the embed, so their deliveries belong in the receipt. Read
+	// at run time so previews added between trigger and execution are included.
+	reviewedPost, postErr := worker.store.Post().GetSingle(request.EmptyContext(worker.logger), postID, true)
+	if postErr != nil {
+		logger.Error("Worker: failed to load reviewed post", mlog.Err(postErr))
+		worker.setJobError(logger, job, model.NewAppError("DeliveryTrackingContentReviewWorker", "app.job.error", nil, "", http.StatusInternalServerError).Wrap(postErr))
+		return
+	}
+	postIDs := append([]string{postID}, reviewedPost.GetPreviewedInProp()...)
+
 	batchSize := defaultBatchSize
 	configuredBatchSize := model.SafeDereference(worker.jobServer.Config().DeliveryTrackingSettings.ContentReviewDeliveryReceiptCopyBatchSize)
 	if configuredBatchSize > 0 {
@@ -172,7 +184,7 @@ func (worker *Worker) DoJob(job *model.Job) {
 		return nil
 	}
 
-	copied, canceled, err := copyPostDeliveries(context.Background(), worker.store.UserPostDelivery(), worker.store.UserPostDeliveryContentReview(), postID, job.Id, batchSize, shouldStop, onProgress)
+	copied, canceled, err := copyPostDeliveries(context.Background(), worker.store.UserPostDelivery(), worker.store.UserPostDeliveryContentReview(), postID, postIDs, job.Id, batchSize, shouldStop, onProgress)
 	if err != nil {
 		if errors.Is(err, store.ErrUserPostDeliverySourceUnavailable) {
 			// The feature was enabled at runtime without a restart, so the source
@@ -216,50 +228,55 @@ func overwriteJobData(existing, patch model.StringMap) model.StringMap {
 	return existing
 }
 
-// copyPostDeliveries copies every source delivery row for postID into the review
-// store in keyset-paginated batches. It polls shouldStop between batches (for
-// cancellation/shutdown) and calls onProgress after each written batch. It
-// returns the number of rows copied, whether it stopped early due to shouldStop,
-// and the first error encountered (e.g. store.ErrUserPostDeliverySourceUnavailable
-// when the source pool is not configured).
-func copyPostDeliveries(ctx context.Context, source sourceReader, target reviewWriter, postID, jobID string, batchSize int, shouldStop func() bool, onProgress func(copied int) error) (int, bool, error) {
+// copyPostDeliveries copies the source delivery rows for every post in postIDs (the
+// reviewed post plus the posts that preview it) into the review of reviewPostID, in
+// keyset-paginated batches. Each row keeps its own post_id (provenance) while
+// review_post_id is stamped to reviewPostID. It polls shouldStop between batches (for
+// cancellation/shutdown) and calls onProgress with the running total after each
+// written batch. It returns the number of rows copied, whether it stopped early due
+// to shouldStop, and the first error encountered (e.g.
+// store.ErrUserPostDeliverySourceUnavailable when the source pool is not configured).
+func copyPostDeliveries(ctx context.Context, source sourceReader, target reviewWriter, reviewPostID string, postIDs []string, jobID string, batchSize int, shouldStop func() bool, onProgress func(copied int) error) (int, bool, error) {
 	if batchSize <= 0 {
 		batchSize = defaultBatchSize
 	}
 
-	var cursor model.UserPostDeliveryCursor
 	copied := 0
-	for {
-		if shouldStop != nil && shouldStop() {
-			return copied, true, nil
-		}
+	for _, postID := range postIDs {
+		var cursor model.UserPostDeliveryCursor
+		for {
+			if shouldStop != nil && shouldStop() {
+				return copied, true, nil
+			}
 
-		batch, err := source.GetByPost(ctx, postID, cursor, batchSize)
-		if err != nil {
-			return copied, false, err
-		}
-
-		if len(batch) > 0 {
-			if err := target.SaveBatch(ctx, batch, jobID); err != nil {
+			batch, err := source.GetByPost(ctx, postID, cursor, batchSize)
+			if err != nil {
 				return copied, false, err
 			}
-			copied += len(batch)
 
-			last := batch[len(batch)-1]
-			cursor = model.UserPostDeliveryCursor{TargetID: last.TargetID, TargetType: last.TargetType, Mechanism: last.Mechanism}
-
-			if onProgress != nil {
-				if err := onProgress(copied); err != nil {
+			if len(batch) > 0 {
+				if err := target.SaveBatch(ctx, reviewPostID, batch, jobID); err != nil {
 					return copied, false, err
 				}
+				copied += len(batch)
+
+				last := batch[len(batch)-1]
+				cursor = model.UserPostDeliveryCursor{TargetID: last.TargetID, TargetType: last.TargetType, Mechanism: last.Mechanism}
+
+				if onProgress != nil {
+					if err := onProgress(copied); err != nil {
+						return copied, false, err
+					}
+				}
+			}
+
+			// A short page means this post's source rows are exhausted.
+			if len(batch) < batchSize {
+				break
 			}
 		}
-
-		// A short page means the source is exhausted.
-		if len(batch) < batchSize {
-			return copied, false, nil
-		}
 	}
+	return copied, false, nil
 }
 
 func (worker *Worker) setJobSuccess(logger mlog.LoggerIFace, job *model.Job) {

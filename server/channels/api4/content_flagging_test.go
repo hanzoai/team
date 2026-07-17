@@ -1725,15 +1725,15 @@ func TestTriggerDeliveryTracking(t *testing.T) {
 	})
 }
 
-func seedContentReviewRows(t *testing.T, th *TestHelper, records []model.UserPostDelivery) {
+func seedContentReviewRows(t *testing.T, th *TestHelper, reviewPostID string, records []model.UserPostDelivery) {
 	t.Helper()
-	require.NoError(t, th.App.Srv().Store().UserPostDeliveryContentReview().SaveBatch(context.Background(), records, model.NewId()))
+	require.NoError(t, th.App.Srv().Store().UserPostDeliveryContentReview().SaveBatch(context.Background(), reviewPostID, records, model.NewId()))
 }
 
 func findReceiptRow(t *testing.T, rows [][]string, targetID string) []string {
 	t.Helper()
 	for _, row := range rows {
-		if len(row) == 7 && row[1] == targetID {
+		if len(row) == 8 && row[1] == targetID {
 			return row
 		}
 	}
@@ -1847,9 +1847,12 @@ func TestGenerateDeliveryTrackingReceipt(t *testing.T) {
 		const productAt = int64(1704067200000)
 		const emailAt = int64(1704067260000)
 		deletedUserID := model.NewId()
-		seedContentReviewRows(t, th, []model.UserPostDelivery{
+		previewerID := model.NewId()
+		seedContentReviewRows(t, th, post.Id, []model.UserPostDelivery{
 			{PostID: post.Id, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: productAt},
 			{PostID: post.Id, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismEmail, CreatedAt: emailAt},
+			// BasicUser2 also saw the post through a permalink preview in another post.
+			{PostID: previewerID, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: emailAt},
 			{PostID: post.Id, TargetID: "com.example.plugin", TargetType: model.DeliveryTargetPlugin, Mechanism: model.DeliveryMechanismPlugin, CreatedAt: emailAt},
 			{PostID: post.Id, TargetID: deletedUserID, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: emailAt},
 		})
@@ -1871,7 +1874,7 @@ func TestGenerateDeliveryTrackingReceipt(t *testing.T) {
 			if len(row) == 2 && row[0] == "Post ID" && row[1] == post.Id {
 				sawPostID = true
 			}
-			if len(row) == 2 && row[0] == "Total delivery records" && row[1] == "4" {
+			if len(row) == 2 && row[0] == "Total delivery records" && row[1] == "5" {
 				sawTotal = true
 			}
 		}
@@ -1884,7 +1887,10 @@ func TestGenerateDeliveryTrackingReceipt(t *testing.T) {
 		require.Equal(t, th.BasicUser2.Email, userRow[3])
 		require.Contains(t, userRow[5], "In-product")
 		require.Contains(t, userRow[5], "Email notification")
-		require.Equal(t, "2024-01-01T00:00:00Z", userRow[6])
+		// Sources column: seen both directly and via a preview in previewerID.
+		require.Contains(t, userRow[6], "Direct")
+		require.Contains(t, userRow[6], "Preview in "+previewerID)
+		require.Equal(t, "2024-01-01T00:00:00Z", userRow[7])
 
 		pluginRow := findReceiptRow(t, rows, "com.example.plugin")
 		require.Equal(t, "Plugin", pluginRow[0])
@@ -1905,7 +1911,7 @@ func TestGenerateDeliveryTrackingReceipt(t *testing.T) {
 		post := th.CreatePost(t)
 		flagPostViaAPI(t, client, post.Id)
 		seedDeliveryTrackingJob(t, th, post.Id, model.JobStatusSuccess)
-		seedContentReviewRows(t, th, []model.UserPostDelivery{
+		seedContentReviewRows(t, th, post.Id, []model.UserPostDelivery{
 			{PostID: post.Id, TargetID: th.BasicUser2.Id, TargetType: model.DeliveryTargetUser, Mechanism: model.DeliveryMechanismProduct, CreatedAt: 1704067200000},
 		})
 

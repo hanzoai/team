@@ -454,6 +454,29 @@ func (s *SqlPostStore) Update(rctx request.CTX, newPost *model.Post, oldPost *mo
 	return newPost, nil
 }
 
+// AddPostPreviewReference appends referencingPostID to the previewed post's
+// previewed_in prop (the reverse of previewed_post). It is a single atomic UPDATE:
+// the row lock on the previewed post serialises concurrent appenders, and the
+// containment guard makes it idempotent (an already-present id is a no-op, so no
+// duplicate and no wasted write). A missing previewed post matches 0 rows and is
+// not an error. The whole jsonb value is built in-DB, so no binary-param handling
+// is needed. Uses the jsonb @> containment operator rather than the ? key operator,
+// which would collide with the placeholder rebinder.
+func (s *SqlPostStore) AddPostPreviewReference(rctx request.CTX, previewedPostID, referencingPostID string) error {
+	if _, err := s.GetMaster().Exec(`UPDATE Posts
+		SET Props = jsonb_set(
+			COALESCE(Props, '{}'::jsonb),
+			'{previewed_in}',
+			COALESCE(Props->'previewed_in', '[]'::jsonb) || to_jsonb(?::text),
+			true)
+		WHERE Id = ?
+			AND NOT (COALESCE(Props->'previewed_in', '[]'::jsonb) @> to_jsonb(?::text))`,
+		referencingPostID, previewedPostID, referencingPostID); err != nil {
+		return errors.Wrapf(err, "failed to add preview reference from post=%s to previewed post=%s", referencingPostID, previewedPostID)
+	}
+	return nil
+}
+
 func (s *SqlPostStore) OverwriteMultiple(rctx request.CTX, posts []*model.Post) (_ []*model.Post, _ int, err error) {
 	updateAt := model.GetMillis()
 	maxPostSize := s.GetMaxPostSize()
