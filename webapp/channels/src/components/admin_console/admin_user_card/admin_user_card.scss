@@ -28,8 +28,6 @@
 .AdminUserCard__picture {
     position: relative;
     display: inline-flex;
-    width: 128px;
-    height: 128px;
     flex: 0 0 auto;
 }
 
@@ -40,8 +38,11 @@
 .AdminUserCard__picture-edit {
     position: absolute;
     z-index: 2;
-    right: 2px;
-    bottom: 2px;
+
+    // Anchor to the bottom-right of the 128px (xxl) avatar from the top-left
+    // origin so placement is independent of the avatar wrapper's own box size.
+    top: 94px;
+    left: 94px;
     display: flex;
     width: 32px;
     height: 32px;
