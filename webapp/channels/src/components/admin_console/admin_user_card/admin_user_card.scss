@@ -52,9 +52,9 @@
     border: solid 2px #fff;
     border-radius: 50%;
     background-color: #1c58d9;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
     color: #fff;
     cursor: pointer;
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 
     &:hover:not(:disabled) {
         background-color: #1451c8;
