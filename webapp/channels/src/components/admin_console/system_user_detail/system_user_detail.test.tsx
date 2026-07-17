@@ -305,7 +305,7 @@ describe('SystemUserDetail', () => {
     });
 
     describe('profile picture editing', () => {
-        test('should upload a selected profile picture on behalf of the user', async () => {
+        test('should upload a selected profile picture on behalf of the user and enable removal', async () => {
             const uploadProfileImage = jest.fn().mockResolvedValue({data: true});
             renderWithContext(
                 <SystemUserDetail
@@ -322,6 +322,30 @@ describe('SystemUserDetail', () => {
             await waitFor(() => {
                 expect(uploadProfileImage).toHaveBeenCalledWith(user.id, file);
             });
+
+            // After a successful upload the user now has a custom picture, so removal becomes available.
+            await userEvent.click(screen.getByTestId('adminUserCardPictureButton'));
+            expect(await screen.findByText('Remove Picture')).toBeInTheDocument();
+        });
+
+        test('should surface a server error when the upload fails', async () => {
+            const uploadProfileImage = jest.fn().mockResolvedValue({error: {message: 'Server rejected image'}});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    uploadProfileImage={uploadProfileImage}
+                />,
+            );
+
+            await waitForElementToBeRemoved(() => screen.queryAllByTestId('loadingSpinner'));
+
+            const file = new File(['image-bytes'], 'avatar.png', {type: 'image/png'});
+            fireEvent.change(screen.getByTestId('adminUserCardPictureInput'), {target: {files: [file]}});
+
+            expect(await screen.findByText('Server rejected image')).toBeInTheDocument();
+
+            // The edit control should be usable again after the failure.
+            expect(screen.getByTestId('adminUserCardPictureButton')).toBeEnabled();
         });
 
         test('should reject an unsupported image type without uploading', async () => {
@@ -361,7 +385,7 @@ describe('SystemUserDetail', () => {
             expect(uploadProfileImage).not.toHaveBeenCalled();
         });
 
-        test('should reset the picture to default when removing', async () => {
+        test('should reset the picture to default when removing and hide the removal option', async () => {
             const userWithPicture = {...user, last_picture_update: 12345};
             const getUserWithPicture = jest.fn().mockResolvedValue({data: userWithPicture, error: null});
             const setDefaultProfileImage = jest.fn().mockResolvedValue({data: true});
@@ -381,6 +405,61 @@ describe('SystemUserDetail', () => {
             await waitFor(() => {
                 expect(setDefaultProfileImage).toHaveBeenCalledWith(user.id);
             });
+
+            // The user no longer has a custom picture, so removal is no longer offered.
+            await userEvent.click(screen.getByTestId('adminUserCardPictureButton'));
+            expect(await screen.findByText('Upload Picture')).toBeInTheDocument();
+            expect(screen.queryByText('Remove Picture')).not.toBeInTheDocument();
+        });
+
+        test('should surface a server error when removal fails', async () => {
+            const userWithPicture = {...user, last_picture_update: 12345};
+            const getUserWithPicture = jest.fn().mockResolvedValue({data: userWithPicture, error: null});
+            const setDefaultProfileImage = jest.fn().mockResolvedValue({error: {message: 'Server rejected removal'}});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    getUser={getUserWithPicture}
+                    setDefaultProfileImage={setDefaultProfileImage}
+                />,
+            );
+
+            await waitForElementToBeRemoved(() => screen.queryAllByTestId('loadingSpinner'));
+
+            await userEvent.click(screen.getByTestId('adminUserCardPictureButton'));
+            await userEvent.click(screen.getByText('Remove Picture'));
+
+            expect(await screen.findByText('Server rejected removal')).toBeInTheDocument();
+        });
+
+        test('should not offer picture editing for provider-managed pictures', async () => {
+            const getLdapUser = jest.fn().mockResolvedValue({data: ldapUser, error: null});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    getUser={getLdapUser}
+                    ldapPictureAttributeSet={true}
+                />,
+            );
+
+            await waitForLoadingToFinish();
+
+            expect(screen.queryByTestId('adminUserCardPictureButton')).not.toBeInTheDocument();
+        });
+
+        test('should offer picture editing for provider users when the picture is not synced', async () => {
+            const getLdapUser = jest.fn().mockResolvedValue({data: ldapUser, error: null});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    getUser={getLdapUser}
+                    ldapPictureAttributeSet={false}
+                />,
+            );
+
+            await waitForLoadingToFinish();
+
+            expect(screen.getByTestId('adminUserCardPictureButton')).toBeInTheDocument();
         });
     });
 

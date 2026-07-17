@@ -142,7 +142,7 @@ describe('components/admin_console/admin_user_card/admin_user_card', () => {
             });
         });
 
-        test('should disable the edit control while uploading', () => {
+        test('should disable the edit control and show a spinner while uploading', () => {
             renderWithContext(
                 <AdminUserCard
                     {...defaultProps}
@@ -152,6 +152,8 @@ describe('components/admin_console/admin_user_card/admin_user_card', () => {
             );
 
             expect(screen.getByTestId('adminUserCardPictureButton')).toBeDisabled();
+            expect(screen.getByTestId('adminUserCardPictureInput')).toBeDisabled();
+            expect(screen.getByTitle('Loading Icon')).toBeInTheDocument();
         });
     });
 });
