@@ -169,12 +169,14 @@ func TestChannelMemberMarshalJSON(t *testing.T) {
 	t.Run("keeps a legitimate zero timestamp for the requester", func(t *testing.T) {
 		member := newMember(currentUserId)
 		member.LastViewedAt = 0
+		member.LastUpdateAt = 0
 		member.SanitizeForCurrentUser(currentUserId)
 
 		fields := decode(t, member)
 		assert.Contains(t, fields, "last_viewed_at", "the requester's own last_viewed_at of 0 (never viewed) must be serialized")
 		assert.EqualValues(t, 0, fields["last_viewed_at"])
-		assert.EqualValues(t, 1234567890000, fields["last_update_at"], "a non-zero timestamp is still serialized")
+		assert.Contains(t, fields, "last_update_at", "the requester's own last_update_at of 0 must be serialized")
+		assert.EqualValues(t, 0, fields["last_update_at"])
 	})
 
 	t.Run("omits sanitized timestamps for another user's membership", func(t *testing.T) {
