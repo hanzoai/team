@@ -3,6 +3,7 @@
 
 import '@testing-library/jest-dom';
 
+import {fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import type {IntlShape} from 'react-intl';
@@ -300,6 +301,86 @@ describe('SystemUserDetail', () => {
             expect(firstNameInput).toHaveValue('Old First');
             expect(lastNameInput).toHaveValue('Old Last');
             expect(screen.getByRole('button', {name: 'Save'})).toBeDisabled();
+        });
+    });
+
+    describe('profile picture editing', () => {
+        test('should upload a selected profile picture on behalf of the user', async () => {
+            const uploadProfileImage = jest.fn().mockResolvedValue({data: true});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    uploadProfileImage={uploadProfileImage}
+                />,
+            );
+
+            await waitForElementToBeRemoved(() => screen.queryAllByTestId('loadingSpinner'));
+
+            const file = new File(['image-bytes'], 'avatar.png', {type: 'image/png'});
+            fireEvent.change(screen.getByTestId('adminUserCardPictureInput'), {target: {files: [file]}});
+
+            await waitFor(() => {
+                expect(uploadProfileImage).toHaveBeenCalledWith(user.id, file);
+            });
+        });
+
+        test('should reject an unsupported image type without uploading', async () => {
+            const uploadProfileImage = jest.fn().mockResolvedValue({data: true});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    uploadProfileImage={uploadProfileImage}
+                />,
+            );
+
+            await waitForElementToBeRemoved(() => screen.queryAllByTestId('loadingSpinner'));
+
+            const file = new File(['image-bytes'], 'avatar.gif', {type: 'image/gif'});
+            fireEvent.change(screen.getByTestId('adminUserCardPictureInput'), {target: {files: [file]}});
+
+            expect(await screen.findByText('Only BMP, JPG, JPEG, or PNG images are supported.')).toBeInTheDocument();
+            expect(uploadProfileImage).not.toHaveBeenCalled();
+        });
+
+        test('should reject a file that exceeds the maximum size without uploading', async () => {
+            const uploadProfileImage = jest.fn().mockResolvedValue({data: true});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    maxFileSize={4}
+                    uploadProfileImage={uploadProfileImage}
+                />,
+            );
+
+            await waitForElementToBeRemoved(() => screen.queryAllByTestId('loadingSpinner'));
+
+            const file = new File(['too-many-bytes'], 'avatar.png', {type: 'image/png'});
+            fireEvent.change(screen.getByTestId('adminUserCardPictureInput'), {target: {files: [file]}});
+
+            expect(await screen.findByText(/File is too large/)).toBeInTheDocument();
+            expect(uploadProfileImage).not.toHaveBeenCalled();
+        });
+
+        test('should reset the picture to default when removing', async () => {
+            const userWithPicture = {...user, last_picture_update: 12345};
+            const getUserWithPicture = jest.fn().mockResolvedValue({data: userWithPicture, error: null});
+            const setDefaultProfileImage = jest.fn().mockResolvedValue({data: true});
+            renderWithContext(
+                <SystemUserDetail
+                    {...defaultProps}
+                    getUser={getUserWithPicture}
+                    setDefaultProfileImage={setDefaultProfileImage}
+                />,
+            );
+
+            await waitForElementToBeRemoved(() => screen.queryAllByTestId('loadingSpinner'));
+
+            await userEvent.click(screen.getByTestId('adminUserCardPictureButton'));
+            await userEvent.click(screen.getByText('Remove Picture'));
+
+            await waitFor(() => {
+                expect(setDefaultProfileImage).toHaveBeenCalledWith(user.id);
+            });
         });
     });
 
