@@ -59,6 +59,8 @@ import TeamMenu from './channels/team_menu';
 import TeamSettingsModal from './channels/team_settings/team_settings_modal';
 import ThreadFooter from './channels/thread_footer';
 import UserProfilePopover from './channels/user_profile_popover';
+// Integrations Components
+import OutgoingWebhookForm from './integrations/outgoing_webhook_form';
 // Burn-on-Read Components
 import BurnOnReadBadge from './channels/burn_on_read_badge';
 import BurnOnReadTimerChip from './channels/burn_on_read_timer_chip';
@@ -146,6 +148,9 @@ const components = {
     TeamSettingsModal,
     ThreadFooter,
     UserProfilePopover,
+
+    // Integrations
+    OutgoingWebhookForm,
 
     // Burn-on-Read
     BurnOnReadBadge,
@@ -236,6 +241,9 @@ export {
     TeamSettingsModal,
     ThreadFooter,
     UserProfilePopover,
+
+    // Integrations
+    OutgoingWebhookForm,
 
     // Burn-on-Read
     BurnOnReadBadge,

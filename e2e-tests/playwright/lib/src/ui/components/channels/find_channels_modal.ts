@@ -27,4 +27,16 @@ export default class FindChannelsModal {
     async selectChannel(channelName: string) {
         await this.getResult(channelName).click();
     }
+
+    async search(text: string) {
+        await this.input.fill(text);
+    }
+
+    async expectResultVisible(displayName: string) {
+        await expect(this.container.getByText(displayName, {exact: true})).toBeVisible();
+    }
+
+    async expectNoResults() {
+        await expect(this.container.getByText(/No results for/)).toBeVisible();
+    }
 }

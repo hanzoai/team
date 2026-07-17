@@ -40,9 +40,22 @@ export default class BrowseChannelsModal {
         await this.searchInput.fill(text);
     }
 
+    async close() {
+        await this.container.getByRole('button', {name: 'Close', exact: true}).click();
+        await expect(this.container).not.toBeVisible();
+    }
+
     async toHaveChannelAsNthResult(channelName: string, index: number) {
         const row = this.results.locator('[data-testid^="ChannelRow-"]').nth(index);
 
         expect(await row.getAttribute('data-testid')).toEqual(`ChannelRow-${channelName}`);
+    }
+
+    async expectChannelVisible(displayName: string) {
+        await expect(this.container.getByText(displayName, {exact: true})).toBeVisible();
+    }
+
+    async expectNoResults() {
+        await expect(this.container.getByText(/No results for/)).toBeVisible();
     }
 }

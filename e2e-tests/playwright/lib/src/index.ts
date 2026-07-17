@@ -17,7 +17,9 @@ export {
     isWebhookTestServerReachable,
     setupWebhookTestServer,
     PlaywrightClient4,
+    OpenLdapClient,
 } from './server';
+export type {LdapUser} from './server';
 
 export {
     ChannelsPage,
@@ -70,6 +72,7 @@ export {
     DeletePostConfirmationDialog,
     RestorePostConfirmationDialog,
     ProfileModal,
+    OutgoingWebhookForm,
 } from './ui/components';
 
 export {TextInputSetting} from './ui/components/system_console/base_components';
