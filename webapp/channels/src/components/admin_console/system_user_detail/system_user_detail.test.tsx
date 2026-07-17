@@ -33,6 +33,8 @@ describe('SystemUserDetail', () => {
         showManageUserSettings: false,
         showLockedManageUserSettings: false,
         mfaEnabled: false,
+        maxFileSize: 1024 * 1024,
+        ldapPictureAttributeSet: false,
         customProfileAttributeEnabled: true,
         customProfileAttributeFields: [],
         patchUser: jest.fn(),
@@ -47,6 +49,8 @@ describe('SystemUserDetail', () => {
         getCustomProfileAttributeFields: jest.fn().mockResolvedValue({data: []}),
         getCustomProfileAttributeValues: jest.fn().mockResolvedValue({data: {}}),
         saveCustomProfileAttribute: jest.fn().mockResolvedValue({data: {}}),
+        uploadProfileImage: jest.fn().mockResolvedValue({data: true}),
+        setDefaultProfileImage: jest.fn().mockResolvedValue({data: true}),
         intl: {
             formatMessage: jest.fn().mockImplementation(({defaultMessage}) => defaultMessage),
         } as MockIntl,
