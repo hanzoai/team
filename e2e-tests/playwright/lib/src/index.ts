@@ -10,7 +10,14 @@ export {decomposeKorean, koreanTestPhrase, typeHangulCharacterWithIme, typeHangu
 export {duration, getRandomId, wait, newTestPassword} from './util';
 export {LicenseSkus, appsPluginId, callsPluginId, playbooksPluginId} from './constant';
 
-export {getAdminClient, mergeWithOnPremServerConfig, getOnPremServerConfig} from './server';
+export {
+    getAdminClient,
+    mergeWithOnPremServerConfig,
+    getOnPremServerConfig,
+    isWebhookTestServerReachable,
+    setupWebhookTestServer,
+    PlaywrightClient4,
+} from './server';
 
 export {
     ChannelsPage,
@@ -63,7 +70,10 @@ export {
     DeletePostConfirmationDialog,
     RestorePostConfirmationDialog,
     ProfileModal,
+    WysiwygEditor,
 } from './ui/components';
+
+export {setWysiwygUserPreference, WYSIWYG_PREF_CATEGORY, WYSIWYG_PREF_NAME} from './wysiwyg_helpers';
 
 export {TextInputSetting} from './ui/components/system_console/base_components';
 

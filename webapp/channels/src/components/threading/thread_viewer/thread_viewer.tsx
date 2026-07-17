@@ -54,7 +54,6 @@ export type Props = Attrs & {
     isThreadView: boolean;
     inputPlaceholder?: string;
     rootPostId: string;
-    enableWebSocketEventScope: boolean;
     lastUpdateAt: number;
 };
 
@@ -84,9 +83,7 @@ export default class ThreadViewer extends React.PureComponent<Props, State> {
     }
 
     public componentWillUnmount() {
-        if (this.props.enableWebSocketEventScope) {
-            WebSocketClient.updateActiveThread(this.props.isThreadView, '');
-        }
+        WebSocketClient.updateActiveThread(this.props.isThreadView, '');
     }
 
     public componentDidUpdate(prevProps: Props) {
@@ -202,7 +199,7 @@ export default class ThreadViewer extends React.PureComponent<Props, State> {
             await this.fetchThread();
         }
 
-        if (this.props.channel && this.props.enableWebSocketEventScope) {
+        if (this.props.channel) {
             WebSocketClient.updateActiveThread(this.props.isThreadView, this.props.channel?.id);
         }
         this.setState({isLoading: false});

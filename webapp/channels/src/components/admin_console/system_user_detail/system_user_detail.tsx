@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import React, {PureComponent} from 'react';
 import type {ChangeEvent, KeyboardEvent, MouseEvent} from 'react';
 import type {IntlShape, WrappedComponentProps} from 'react-intl';
-import {FormattedMessage, defineMessage, injectIntl} from 'react-intl';
+import {FormattedList, FormattedMessage, defineMessage, injectIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import type {RouteComponentProps} from 'react-router-dom';
 import ReactSelect from 'react-select';
@@ -16,7 +16,8 @@ import {SyncIcon, PowerPlugOutlineIcon, CheckIcon, ChevronDownIcon} from '@matte
 import {Button} from '@mattermost/shared/components/button';
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
 import type {ServerError} from '@mattermost/types/errors';
-import {supportsOptions, type PropertyFieldOption, type UserPropertyField} from '@mattermost/types/properties';
+import {supportsOptions, type PropertyFieldOption} from '@mattermost/types/properties';
+import type {UserPropertyField} from '@mattermost/types/properties_user';
 import type {Team, TeamMembership} from '@mattermost/types/teams';
 import type {UserProfile} from '@mattermost/types/users';
 
@@ -185,6 +186,109 @@ type PluginDisplayNameProps = {
 const PluginDisplayName: React.FC<PluginDisplayNameProps> = ({pluginId}) => {
     const displayName = useSelector((state: GlobalState) => getPluginDisplayName(state, pluginId));
     return <>{displayName}</>;
+};
+
+type CpaFieldManagementIndicatorProps = {
+    field: UserPropertyField;
+};
+
+const CpaFieldManagementIndicator: React.FC<CpaFieldManagementIndicatorProps> = ({field}) => {
+    const pluginsById = useSelector((state: GlobalState) => state.plugins?.plugins ?? {});
+    const owners = field.attrs?.owners ?? [];
+    const hasSyncedSources = Boolean(field.attrs?.ldap || field.attrs?.saml || owners.length > 0);
+    const isProtected = Boolean(field.attrs?.protected);
+
+    if (hasSyncedSources) {
+        const ownerPills = owners.map((owner, idx) => {
+            const provenance = owner.type === 'plugin' ? (pluginsById[owner.id]?.name || owner.id) : owner.id;
+            const key = `${field.name}-owner-${owner.type}-${owner.id}-${idx}`;
+
+            let content: React.ReactNode;
+            if (owner.scopes?.length) {
+                content = (
+                    <FormattedMessage
+                        id='admin.system_properties.user_properties.table.values.owner.scoped'
+                        defaultMessage='{provenance}: {scopes}'
+                        values={{provenance, scopes: owner.scopes.join(', ')}}
+                    />
+                );
+            } else {
+                content = provenance;
+            }
+
+            return (
+                <span
+                    className='user-detail-cpa-field__chip'
+                    key={key}
+                    data-testid={`user-detail-cpa-field__owner-${field.name}-${owner.id}`}
+                >
+                    {content}
+                </span>
+            );
+        });
+
+        const syncedProperties = [
+            field.attrs?.ldap && (
+                <span
+                    className='user-detail-cpa-field__chip'
+                    key={`${field.name}-ldap`}
+                    data-testid={`user-detail-cpa-field__ldap-${field.name}`}
+                >
+                    <FormattedMessage
+                        id='admin.userManagement.userDetail.ldap'
+                        defaultMessage='AD/LDAP: {propertyName}'
+                        values={{propertyName: field.attrs.ldap}}
+                    />
+                </span>
+            ),
+            field.attrs?.saml && (
+                <span
+                    className='user-detail-cpa-field__chip'
+                    key={`${field.name}-saml`}
+                    data-testid={`user-detail-cpa-field__saml-${field.name}`}
+                >
+                    <FormattedMessage
+                        id='admin.userManagement.userDetail.saml'
+                        defaultMessage='SAML: {propertyName}'
+                        values={{propertyName: field.attrs.saml}}
+                    />
+                </span>
+            ),
+            ...ownerPills,
+        ].filter(Boolean);
+
+        return (
+            <div className='user-property-field-values__sync-indicator'>
+                <SyncIcon size={18}/>
+                <span>
+                    <FormattedMessage
+                        id='admin.system_properties.user_properties.table.values.synced_with'
+                        defaultMessage='Synced with: {syncedProperties}'
+                        values={{syncedProperties: <FormattedList value={syncedProperties}/>}}
+                    />
+                </span>
+            </div>
+        );
+    }
+
+    if (isProtected) {
+        return (
+            <div className='user-property-field-values__sync-indicator'>
+                <PowerPlugOutlineIcon size={18}/>
+                <span>
+                    <FormattedMessage
+                        id='admin.userManagement.userDetail.managedByPlugin'
+                        defaultMessage='Managed by plugin: {pluginId}'
+                        values={{
+                            pluginId: <PluginDisplayName pluginId={field.attrs?.source_plugin_id}/>,
+                        }}
+                    />
+                </span>
+            </div>
+        );
+    }
+
+    return null;
 };
 
 export type Params = {
@@ -607,35 +711,10 @@ export class SystemUserDetail extends PureComponent<Props, State> {
     renderCpaField = (field: UserPropertyField, error: string | undefined) => {
         const value = this.state.customProfileAttributeValues[field.id] || '';
         const isSynced = Boolean(field.attrs?.ldap || field.attrs?.saml);
+        const isOwnerManaged = Boolean(field.attrs?.owners?.length);
         const isProtected = Boolean(field.attrs?.protected);
-        const isLockedFromEditing = isSynced || isProtected;
+        const isLockedFromEditing = isSynced || isProtected || isOwnerManaged;
         const isDisabled = this.state.isSaving || this.state.isLoading || isLockedFromEditing;
-
-        // Render indicator if field is synced or protected
-        const syncIndicator = isLockedFromEditing ? (
-            <div className='user-property-field-values__sync-indicator'>
-                {isSynced ? <SyncIcon size={18}/> : <PowerPlugOutlineIcon size={18}/>}
-                <span>
-                    {isSynced ? (
-                        <FormattedMessage
-                            id='admin.userManagement.userDetail.syncedWith'
-                            defaultMessage='Synced with: {source}'
-                            values={{
-                                source: field.attrs?.ldap ? this.props.intl.formatMessage({id: 'admin.userManagement.userDetail.ldap', defaultMessage: 'AD/LDAP: {propertyName}'}, {propertyName: field.attrs.ldap}) : this.props.intl.formatMessage({id: 'admin.userManagement.userDetail.saml', defaultMessage: 'SAML: {propertyName}'}, {propertyName: field.attrs?.saml}),
-                            }}
-                        />
-                    ) : (
-                        <FormattedMessage
-                            id='admin.userManagement.userDetail.managedByPlugin'
-                            defaultMessage='Managed by plugin: {pluginId}'
-                            values={{
-                                pluginId: <PluginDisplayName pluginId={field.attrs?.source_plugin_id}/>,
-                            }}
-                        />
-                    )}
-                </span>
-            </div>
-        ) : null;
 
         const fieldContent = (() => {
             switch (field.type) {
@@ -725,6 +804,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                             <div
                                 id={field.id + '-error'}
                                 className='field-error'
+                                data-testid='fieldError'
                                 role='alert'
                                 aria-live='polite'
                             >
@@ -749,7 +829,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                     values={{fieldName: getUserPropertyFieldLabel(field)}}
                 />
                 {fieldContent}
-                {syncIndicator}
+                <CpaFieldManagementIndicator field={field}/>
             </label>
         );
     };
@@ -812,6 +892,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                             <div
                                 id='username-error'
                                 className='field-error'
+                                data-testid='fieldError'
                                 role='alert'
                                 aria-live='polite'
                             >
@@ -869,6 +950,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                             <div
                                 id='email-error'
                                 className='field-error'
+                                data-testid='fieldError'
                                 role='alert'
                                 aria-live='polite'
                             >
@@ -887,7 +969,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                     defaultMessage='Authentication Method'
                 />
                 <ShieldOutlineIcon/>
-                <span>{getUserAuthenticationTextField(this.props.intl, this.props.mfaEnabled, this.state.user)}</span>
+                <span data-testid='authenticationMethodValue'>{getUserAuthenticationTextField(this.props.intl, this.props.mfaEnabled, this.state.user)}</span>
             </label>,
         );
 
@@ -918,6 +1000,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                         <div
                             id='authdata-error'
                             className='field-error'
+                            data-testid='fieldError'
                             role='alert'
                             aria-live='polite'
                         >
@@ -955,11 +1038,18 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                         <div
                             key={`${keyPrefix}-row-${Math.trunc(index / 2)}`}
                             className='field-row'
+                            data-testid='fieldRow'
                         >
-                            <div className='field-column left'>
+                            <div
+                                className='field-column left'
+                                data-testid='fieldColumn'
+                            >
                                 {field}
                             </div>
-                            <div className='field-column right'>
+                            <div
+                                className='field-column right'
+                                data-testid='fieldColumn'
+                            >
                                 {fieldList[index + 1]}
                             </div>
                         </div>
@@ -970,7 +1060,10 @@ export class SystemUserDetail extends PureComponent<Props, State> {
         };
 
         return (
-            <div className='two-column-layout'>
+            <div
+                className='two-column-layout'
+                data-testid='twoColumnLayout'
+            >
                 {renderFieldRows(fields, 'standard-field')}
                 {cpaFields.length > 0 && (
                     <>
@@ -1082,7 +1175,10 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                         username: this.state.user?.username ?? '',
                     }}
                 />
-                <ul className='changes-list'>
+                <ul
+                    className='changes-list'
+                    data-testid='changesList'
+                >
                     {fields.map((field, index) => {
                         return (
                             <li key={index}>
@@ -1118,6 +1214,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                                 <div
                                     id='confirm-password-error'
                                     className='field-error'
+                                    data-testid='fieldError'
                                     role='alert'
                                     aria-live='polite'
                                 >
@@ -1422,12 +1519,16 @@ export class SystemUserDetail extends PureComponent<Props, State> {
 
     render() {
         return (
-            <div className='SystemUserDetail wrapper--fixed'>
+            <div
+                className='SystemUserDetail wrapper--fixed'
+                data-testid='systemUserDetail'
+            >
                 <AdminHeader withBackButton={true}>
                     <div>
                         <BlockableLink
                             to='/admin_console/user_management/users'
                             className='fa fa-angle-left back'
+                            data-testid='adminHeader-backLink'
                         />
                         <FormattedMessage
                             id='admin.systemUserDetail.title'
@@ -1555,6 +1656,7 @@ export class SystemUserDetail extends PureComponent<Props, State> {
 
                         {/* User's team details */}
                         <AdminPanel
+                            id='teamMembershipPanel'
                             title={defineMessage({
                                 id: 'admin.userManagement.userDetail.teamsTitle',
                                 defaultMessage: 'Team Membership',
