@@ -28,6 +28,9 @@
 .AdminUserCard__picture {
     position: relative;
     display: inline-flex;
+    width: 128px;
+    height: 128px;
+    flex: 0 0 auto;
 }
 
 .AdminUserCard__picture-input {
@@ -36,23 +39,24 @@
 
 .AdminUserCard__picture-edit {
     position: absolute;
-    right: 0;
-    bottom: 0;
+    z-index: 2;
+    right: 2px;
+    bottom: 2px;
     display: flex;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     align-items: center;
     justify-content: center;
     padding: 0;
     border: solid 2px #fff;
     border-radius: 50%;
-    background-color: var(--button-bg, #1c58d9);
-    color: var(--button-color, #fff);
+    background-color: #1c58d9;
+    color: #fff;
     cursor: pointer;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 
     &:hover:not(:disabled) {
-        background-color: var(--button-bg, #1c58d9);
-        opacity: 0.9;
+        background-color: #1451c8;
     }
 
     &:disabled {
@@ -66,6 +70,7 @@
 
     .LoadingSpinner {
         display: flex;
+        font-size: 16px;
     }
 }
 
