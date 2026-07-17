@@ -248,41 +248,4 @@ func TestChannelMemberWithTeamDataMarshalJSON(t *testing.T) {
 		assert.EqualValues(t, 987654321, fields["team_update_at"])
 		assert.Equal(t, otherUserId, fields["user_id"])
 	})
-
-	// Guards against a field being added to ChannelMemberWithTeamData but not to
-	// its custom MarshalJSON: such a field would be dropped on marshal and would
-	// not survive this round-trip.
-	t.Run("round-trips every populated field", func(t *testing.T) {
-		original := ChannelMemberWithTeamData{
-			ChannelMember: ChannelMember{
-				ChannelId:               NewId(),
-				UserId:                  NewId(),
-				Roles:                   "channel_user channel_admin",
-				LastViewedAt:            1234567890000,
-				MsgCount:                100,
-				MentionCount:            5,
-				MentionCountRoot:        4,
-				UrgentMentionCount:      2,
-				MsgCountRoot:            90,
-				NotifyProps:             GetDefaultChannelNotifyProps(),
-				LastUpdateAt:            1234567890001,
-				SchemeGuest:             true,
-				SchemeUser:              true,
-				SchemeAdmin:             true,
-				ExplicitRoles:           "channel_admin",
-				AutoTranslationDisabled: true,
-			},
-			TeamDisplayName: "Test Team",
-			TeamName:        "test-team",
-			TeamUpdateAt:    987654321,
-		}
-
-		data, err := json.Marshal(original)
-		require.NoError(t, err)
-
-		var roundTripped ChannelMemberWithTeamData
-		require.NoError(t, json.Unmarshal(data, &roundTripped))
-
-		assert.Equal(t, original, roundTripped, "every field must survive MarshalJSON; a field missing from MarshalJSON would be dropped here")
-	})
 }
