@@ -206,6 +206,7 @@ type ChannelStore interface {
 	ClearSidebarOnTeamLeave(userID, teamID string) error
 	Get(id string, allowFromCache bool) (*model.Channel, error)
 	GetBoardChannel(id string) (*model.Channel, error)
+	GetChannelOfType(rctx request.CTX, id string, channelType model.ChannelType) (*model.Channel, error)
 	GetMany(ids []string, allowFromCache bool) (model.ChannelList, error)
 	InvalidateChannel(id string)
 	InvalidateChannelByName(teamID, name string)
@@ -230,6 +231,8 @@ type ChannelStore interface {
 	GetPublicChannelsForTeam(teamID string, offset int, limit int) (model.ChannelList, error)
 	GetPublicChannelsByIdsForTeam(teamID string, channelIds []string) (model.ChannelList, error)
 	GetTeamChannels(teamID string) (model.ChannelList, error)
+	GetTeamSpaceChannels(teamID string) (model.ChannelList, error)
+	GetTeamSpaceChannelsForUser(teamID string, userID string) (model.ChannelList, error)
 	GetAll(teamID string) ([]*model.Channel, error)
 	GetChannelsByIds(channelIds []string, includeDeleted bool) ([]*model.Channel, error)
 	GetChannelsWithTeamDataByIds(channelIds []string, includeDeleted bool) ([]*model.ChannelWithTeamData, error)
@@ -825,7 +828,7 @@ type JobStore interface {
 	// If this method is called concurrently with another job of the same type,
 	// then nil, nil is returned.
 	SaveOnce(job *model.Job) (*model.Job, error)
-	UpdateOptimistically(job *model.Job, currentStatus string) (bool, error)
+	UpdateOptimistically(job *model.Job, currentStatus string) (*model.Job, error)
 	UpdateStatus(id string, status string) (*model.Job, error)
 	UpdateStatusOptimistically(id string, currentStatus string, newStatus string) (*model.Job, error)
 	Get(rctx request.CTX, id string) (*model.Job, error)
@@ -859,6 +862,7 @@ type UserAccessTokenStore interface {
 	Search(term string) ([]*model.UserAccessToken, error)
 	UpdateTokenEnable(tokenID string) error
 	UpdateTokenDisable(tokenID string) error
+	UpdateTokenRotate(tokenID, newToken string, expiresAt int64) error
 	UpdateLastNotifiedAt(tokenID string, notifiedAt int64) error
 }
 
