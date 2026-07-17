@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useState, useEffect, useMemo, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 import {useSelector} from 'react-redux';
@@ -27,10 +27,11 @@ import AdminHeader from 'components/widgets/admin_console/admin_header';
 import TextSetting from 'components/widgets/settings/text_setting';
 
 import {useChannelAccessControlActions} from 'hooks/useChannelAccessControlActions';
+import {useEnabledSessionAttributeFields} from 'hooks/useEnabledSessionAttributeFields';
 import {getHistory} from 'utils/browser_history';
 
 import CELEditor from '../../access_control/editors/cel_editor/editor';
-import {hasUsableAttributes, isSimpleExpression} from '../../access_control/editors/shared';
+import {hasUsableAttributes, isSimpleExpression, mergeSessionAttributes, toCELEditorAttributes} from '../../access_control/editors/shared';
 import TableEditor from '../../access_control/editors/table_editor/table_editor';
 
 import './permission_policy_details.scss';
@@ -165,11 +166,19 @@ function PermissionPolicyDetails({
     // so the editor stays usable even without any configured user attributes when SessionAttributes is on.
     const noUsableAttributes = attributesLoaded && !sessionAttributesEnabled && !hasUsableAttributes(userFields, accessControlSettings.EnableUserManagedAttributes);
 
+    const sessionFields = useEnabledSessionAttributeFields(sessionAttributesEnabled);
+    const mergedAttributes = useMemo(
+        () => mergeSessionAttributes(autocompleteResult, sessionFields),
+        [autocompleteResult, sessionFields],
+    );
+
     useEffect(() => {
         loadPage().finally(() => setPageLoaded(true));
     }, [policyId]);
 
-    // isSimpleExpression imported from ../../access_control/editors/shared
+    // isSimpleExpression imported from ../../access_control/editors/shared so
+    // native user attributes (user.email, user.createat.youngerThanDays(...), etc.)
+    // are recognized as simple and open in table mode.
 
     const loadPage = async (): Promise<void> => {
         // Permission policies can reference resource.attributes.* (the accessed
@@ -313,18 +322,6 @@ function PermissionPolicyDetails({
     const availableToAdd = AVAILABLE_PERMISSIONS.filter(
         (p) => !selectedPermissions.includes(p.value),
     );
-
-    const filteredAttributes = useMemo(() => {
-        return userFields.filter((attr) => {
-            if (accessControlSettings.EnableUserManagedAttributes) {
-                return true;
-            }
-            const isSynced = attr.attrs?.ldap || attr.attrs?.saml;
-            const isAdminManaged = attr.attrs?.managed === 'admin';
-            const isProtected = attr.attrs?.protected;
-            return isSynced || isAdminManaged || isProtected;
-        });
-    }, [userFields, accessControlSettings.EnableUserManagedAttributes]);
 
     return (
         <div className='wrapper--fixed PermissionPolicySettings'>
@@ -562,10 +559,7 @@ function PermissionPolicyDetails({
                                             }}
                                             onValidate={() => {}}
                                             disabled={noUsableAttributes}
-                                            userAttributes={filteredAttributes.map((attr) => ({
-                                                attribute: attr.name,
-                                                values: [],
-                                            }))}
+                                            userAttributes={toCELEditorAttributes(mergeSessionAttributes(userFields, sessionFields), accessControlSettings.EnableUserManagedAttributes)}
                                             resourceAttributes={resourceFields.map((attr) => ({
                                                 attribute: attr.name,
                                                 values: [],
@@ -623,7 +617,7 @@ function PermissionPolicyDetails({
                                             }}
                                             onValidate={() => {}}
                                             disabled={noUsableAttributes}
-                                            userAttributes={autocompleteResult}
+                                            userAttributes={mergedAttributes}
                                             onParseError={() => {
                                                 setEditorMode('cel');
                                             }}
@@ -824,7 +818,7 @@ function PermissionPolicyDetails({
                             }}
                             targetRole={selectedRole}
                             targetScope='system'
-                            accessControlFields={autocompleteResult}
+                            accessControlFields={mergedAttributes}
                         />
                     )}
 

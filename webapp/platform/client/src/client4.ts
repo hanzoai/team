@@ -1347,6 +1347,17 @@ export default class Client4 {
         );
     };
 
+    rotateUserAccessToken = (tokenId: string, expiresAt?: number) => {
+        const body: {token_id: string; expires_at?: number} = {token_id: tokenId};
+        if (expiresAt !== undefined) {
+            body.expires_at = expiresAt;
+        }
+        return this.doFetch<UserAccessToken>(
+            `${this.getUsersRoute()}/tokens/rotate`,
+            {method: 'post', body: JSON.stringify(body)},
+        );
+    };
+
     // Limits Routes
 
     getServerLimits = () => {
@@ -1392,6 +1403,13 @@ export default class Client4 {
         return this.doFetch<Team>(
             `${this.getTeamRoute(team.id)}/patch`,
             {method: 'put', body: JSON.stringify(team)},
+        );
+    };
+
+    updateTeamPrivacy = (teamId: string, privacy: string) => {
+        return this.doFetch<Team>(
+            `${this.getTeamRoute(teamId)}/privacy`,
+            {method: 'put', body: JSON.stringify({privacy})},
         );
     };
 
@@ -2638,6 +2656,13 @@ export default class Client4 {
         );
     };
 
+    getFileInfo = (fileId: string) => {
+        return this.doFetch<FileInfo>(
+            `${this.getFileRoute(fileId)}/info`,
+            {method: 'get'},
+        );
+    };
+
     getFlaggedPosts = (userId: string, channelId = '', teamId = '', page = 0, perPage = PER_PAGE_DEFAULT) => {
         return this.doFetch<PostList>(
             `${this.getUserRoute(userId)}/posts/flagged${buildQueryString({channel_id: channelId, team_id: teamId, page, per_page: perPage})}`,
@@ -3277,6 +3302,13 @@ export default class Client4 {
         );
     };
 
+    executeDialogAction = (url: string, context?: Record<string, string>, channelId?: string, teamId?: string) => {
+        return this.doFetch<PostActionResponse>(
+            `${this.getBaseRoute()}/actions/dialogs/execute`,
+            {method: 'post', body: JSON.stringify({url, context, channel_id: channelId, team_id: teamId})},
+        );
+    };
+
     lookupInteractiveDialog = (data: DialogSubmission) => {
         return this.doFetch<{items: Array<{text: string; value: string}>}>(
             `${this.getBaseRoute()}/actions/dialogs/lookup`,
@@ -3470,10 +3502,13 @@ export default class Client4 {
         );
     };
 
-    getJobsByType = (type: string, page = 0, perPage = PER_PAGE_DEFAULT, teamId?: string) => {
+    getJobsByType = (type: string, page = 0, perPage = PER_PAGE_DEFAULT, teamId?: string, policyId?: string) => {
         const params: Record<string, any> = {page, per_page: perPage};
         if (teamId) {
             params.team_id = teamId;
+        }
+        if (policyId) {
+            params.policy_id = policyId;
         }
         return this.doFetch<Job[]>(
             `${this.getJobsRoute()}/type/${type}${buildQueryString(params)}`,
@@ -4973,6 +5008,13 @@ export default class Client4 {
         );
     };
 
+    getTeamAccessControlAttributes = (teamId: string) => {
+        return this.doFetch<AccessControlAttributes>(
+            `${this.getTeamRoute(teamId)}/access_control/attributes`,
+            {method: 'get'},
+        );
+    };
+
     // getProfilesMatchingTeamPolicy returns only users who satisfy the team's
     // ABAC membership policy and are not yet members, for the policy-filtered
     // invite candidate list.
@@ -4995,6 +5037,14 @@ export default class Client4 {
     createAccessControlSyncJob = (jobData: {[key: string]: string}) => {
         const job = {
             type: 'access_control_sync' as JobType,
+            data: jobData,
+        };
+        return this.createJob(job);
+    };
+
+    createAccessControlTeamSyncJob = (jobData: {[key: string]: string}) => {
+        const job = {
+            type: 'access_control_team_sync' as JobType,
             data: jobData,
         };
         return this.createJob(job);

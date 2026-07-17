@@ -8,7 +8,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
 import type {AccessControlVisualAST} from '@mattermost/types/access_control';
 import type {UserPropertyField} from '@mattermost/types/properties_user';
-import {CHANNEL_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
+import {CHANNEL_ATTRIBUTES_OBJECT_TYPE, SESSION_ATTRIBUTES_OBJECT_TYPE, isSessionAttributeField} from '@mattermost/types/properties_user';
 
 import type {ActionResult} from 'mattermost-redux/types/actions';
 
@@ -22,7 +22,8 @@ import type {TableRow} from './value_selector_menu';
 import ValueSelectorMenu from './value_selector_menu';
 
 import CELHelpModal from '../../modals/cel_help/cel_help_modal';
-import {AddAttributeButton, TestButton, TestChannelSelect, TestResults, referencesResourceAttributes, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator, isMultiselectOperator, isRankOperator, USER_ATTRIBUTES_PREFIX, RESOURCE_ATTRIBUTES_PREFIX, VISUAL_AST_ATTRIBUTE_VALUE_TYPE} from '../shared';
+import TestResultsModal from '../../modals/policy_test/test_modal';
+import {AddAttributeButton, TestButton, TestChannelSelect, TestResults, referencesResourceAttributes, HelpText, OPERATOR_CONFIG, OPERATOR_LABELS, OperatorLabel, isMultiValueOperator, isMultiselectOperator, isRankOperator, isNativeMethodOperator, celPathFor, isNativeField, isNativeBooleanField, allowedOperatorLabelsForField, defaultOperatorForField, isValidYoungerThanDaysValue, RESOURCE_ATTRIBUTES_PREFIX, VISUAL_AST_ATTRIBUTE_VALUE_TYPE, SESSION_ATTRIBUTE_CEL_PREFIX, USER_ATTRIBUTE_CEL_PREFIX} from '../shared';
 
 import './table_editor.scss';
 
@@ -31,6 +32,14 @@ export function celStringLiteral(val: string): string {
 }
 
 export function rowToCEL(row: TableRow): string {
+    const isNative = row.isNative === true;
+    const isSession = row.attribute_object_type === SESSION_ATTRIBUTES_OBJECT_TYPE;
+
+    // Session attributes live under `user.session.<name>`; native attributes
+    // under `user.<name>`; everything else is a custom profile attribute at
+    // `user.attributes.<name>`.
+    const attributeExpr = isSession ? `${SESSION_ATTRIBUTE_CEL_PREFIX}${row.attribute}` : celPathFor(row.attribute, isNative);
+
     // A fully-masked row has no visible values on the client side.  Emit a
     // placeholder "in []" expression so the backend merge can locate this
     // condition by attribute and re-inject the hidden values before persisting.
@@ -38,10 +47,9 @@ export function rowToCEL(row: TableRow): string {
     // the empty expression would be sent to the server, and buildCELFromConditions
     // would return "true" — making the policy wide-open (security regression).
     if (row.hasMaskedValues && row.values.length === 0 && !row.targetAttribute) {
-        return `user.attributes.${row.attribute} in []`;
+        return `${attributeExpr} in []`;
     }
 
-    const attributeExpr = `user.attributes.${row.attribute}`;
     const config = OPERATOR_CONFIG[row.operator];
 
     // Right-hand side is the accessed channel's attribute, not a literal:
@@ -49,6 +57,22 @@ export function rowToCEL(row: TableRow): string {
     // (is / is not / the ranked ordinals) take an attribute target.
     if (row.targetAttribute && config && config.type === 'comparison') {
         return `${attributeExpr} ${config.celOp} resource.attributes.${row.targetAttribute}`;
+    }
+
+    // native_method (e.g. youngerThanDays) takes an unquoted integer argument.
+    // A valid non-negative integer is normalized (stripping leading zeros);
+    // anything else is emitted verbatim so the invalid rule surfaces an error on
+    // save rather than being silently coerced to a different value (e.g. 0).
+    if (config?.type === 'native_method') {
+        const raw = (row.values.length > 0 ? row.values[0] : '').trim();
+        const arg = isValidYoungerThanDaysValue(raw) ? String(parseInt(raw, 10)) : raw;
+        return `${attributeExpr}.${config.celOp}(${arg})`;
+    }
+
+    // Native boolean attributes compare against an unquoted true/false literal.
+    if (row.isBoolean && config?.type === 'comparison') {
+        const value = row.values.length > 0 ? row.values[0] : 'false';
+        return `${attributeExpr} ${config.celOp} ${value}`;
     }
 
     if (!config) {
@@ -83,6 +107,17 @@ export function rowToCEL(row: TableRow): string {
     }
 
     return `${attributeExpr}.${config.celOp}(${celStringLiteral(value)})`;
+}
+
+// A row that forms part of the expression is only valid if its value satisfies
+// the operator's requirements. Today this only constrains native methods such
+// as youngerThanDays, whose argument must be a non-negative integer.
+export function isRowValueValid(row: TableRow): boolean {
+    const config = OPERATOR_CONFIG[row.operator];
+    if (config?.type === 'native_method') {
+        return isValidYoungerThanDaysValue(row.values.length > 0 ? row.values[0] : '');
+    }
+    return true;
 }
 
 interface TableEditorProps {
@@ -139,10 +174,14 @@ export const findFirstAvailableAttributeFromList = (
 ): UserPropertyField | undefined => {
     return userAttributes.find((attr) => {
         const isValidCELIdentifier = CPA_FIELD_NAME_PATTERN.test(attr.name);
+
+        // Mirror AttributeSelectorMenu: session attributes are always
+        // selectable, so a session-only attribute set must yield a usable
+        // default instead of failing rule creation.
         const isSynced = attr.attrs?.ldap || attr.attrs?.saml;
         const isAdminManaged = attr.attrs?.managed === 'admin';
         const isProtected = attr.attrs?.protected;
-        const allowed = isSynced || isAdminManaged || isProtected || enableUserManagedAttributes;
+        const allowed = isSessionAttributeField(attr) || isNativeField(attr) || isSynced || isAdminManaged || isProtected || enableUserManagedAttributes;
         return isValidCELIdentifier && allowed;
     });
 };
@@ -169,7 +208,7 @@ const isOperatorValidForType = (op: string, type?: string): boolean => {
     if (type === 'rank') {
         return isRankOperator(op) || op === OperatorLabel.IS_NOT;
     }
-    return !isMultiselectOperator(op) && !isRankOperator(op);
+    return !isMultiselectOperator(op) && !isRankOperator(op) && !isNativeMethodOperator(op);
 };
 
 // Parses a CEL (Common Expression Language) string into a structured array of TableRow objects.
@@ -182,12 +221,25 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
     }
 
     for (const node of visualAST.conditions) {
-        let attr;
+        let attr: string;
+        let attributeObjectType = 'user';
+        let isNative = false;
 
-        // The left side is always the requesting user's attribute; strip the
-        // 'user.attributes.' prefix.
-        if (node.attribute.startsWith(USER_ATTRIBUTES_PREFIX)) {
-            attr = node.attribute.slice(USER_ATTRIBUTES_PREFIX.length);
+        // Extracts the attribute name, removing the CEL namespace prefix. The
+        // two-segment forms (user.attributes.<name>, user.session.<name>) are
+        // matched before the single-segment native form (user.<name>). The left
+        // side is always the requesting user's attribute; a resource.attributes.*
+        // reference only appears on the right (captured below as targetAttribute).
+        if (node.attribute.startsWith(USER_ATTRIBUTE_CEL_PREFIX)) {
+            attr = node.attribute.slice(USER_ATTRIBUTE_CEL_PREFIX.length);
+        } else if (node.attribute.startsWith(SESSION_ATTRIBUTE_CEL_PREFIX)) {
+            attr = node.attribute.slice(SESSION_ATTRIBUTE_CEL_PREFIX.length);
+            attributeObjectType = SESSION_ATTRIBUTES_OBJECT_TYPE;
+        } else if (node.attribute.startsWith('user.') && !node.attribute.slice(5).includes('.')) {
+            // Native attributes are single-segment (e.g. user.email); a
+            // remaining dot means an unknown multi-segment namespace.
+            attr = node.attribute.slice(5); // Length of 'user.'
+            isNative = true;
         } else {
             throw new Error(`Unknown attribute: ${node.attribute}`);
         }
@@ -208,7 +260,13 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
         // selector means the condition compares the user attribute to the
         // accessed channel's attribute. Capture the target field; values are
         // unused in that case.
+        //
+        // Otherwise the visual AST carries typed values: native booleans arrive
+        // as JS booleans and youngerThanDays arguments as numbers. Normalize to
+        // the string form the table rows store, and remember booleans so
+        // rowToCEL re-emits them unquoted.
         let targetAttribute: string | undefined;
+        let isBoolean = false;
         let values: string[];
         if (node.value_type === VISUAL_AST_ATTRIBUTE_VALUE_TYPE &&
             typeof node.value === 'string' &&
@@ -216,21 +274,38 @@ export const parseExpression = (visualAST: AccessControlVisualAST): TableRow[] =
             targetAttribute = node.value.slice(RESOURCE_ATTRIBUTES_PREFIX.length);
             values = [];
         } else if (Array.isArray(node.value)) {
-            values = node.value;
+            values = node.value.map((v) => String(v));
+        } else if (typeof node.value === 'boolean') {
+            isBoolean = true;
+            values = [String(node.value)];
         } else if (node.value !== null && node.value !== undefined) {
-            values = [node.value];
+            values = [String(node.value)];
         } else {
             values = [];
         }
 
-        tableRows.push({
+        const tableRow: TableRow = {
             attribute: attr,
+            attribute_object_type: attributeObjectType,
             operator: op,
             values,
             attribute_type: node.attribute_type,
             hasMaskedValues: node.has_masked_values === true,
-            targetAttribute,
-        });
+        };
+
+        // Only set the native/target flags when they apply so custom-profile-
+        // attribute rows keep their original shape.
+        if (isNative) {
+            tableRow.isNative = true;
+        }
+        if (isBoolean) {
+            tableRow.isBoolean = true;
+        }
+        if (targetAttribute) {
+            tableRow.targetAttribute = targetAttribute;
+        }
+
+        tableRows.push(tableRow);
     }
 
     return tableRows;
@@ -443,10 +518,15 @@ function TableEditor({
 
         const expr = rowsThatCanFormExpressions.map((row) => rowToCEL(row)).join(' && ');
 
+        // A youngerThanDays row with a non-integer value emits invalid CEL; flag
+        // the whole expression invalid so the rule can't be saved with a value
+        // that would otherwise be silently coerced.
+        const allValuesValid = rowsThatCanFormExpressions.every(isRowValueValid);
+
         isInternalChange.current = true;
         onChange(expr);
         if (onValidate) {
-            onValidate(expr === '' || rowsThatCanFormExpressions.length > 0);
+            onValidate((expr === '' || rowsThatCanFormExpressions.length > 0) && allValuesValid);
         }
     }, [onChange, onValidate]);
 
@@ -469,10 +549,13 @@ function TableEditor({
         setRows((currentRows) => {
             const newRow: TableRow = {
                 attribute: firstAvailableAttribute.name,
-                operator: defaultOperatorForType(firstAvailableAttribute.type),
+                attribute_object_type: firstAvailableAttribute.object_type,
+                operator: isNativeField(firstAvailableAttribute) ? defaultOperatorForField(firstAvailableAttribute) : defaultOperatorForType(firstAvailableAttribute.type),
                 values: [],
                 attribute_type: firstAvailableAttribute.type || '',
                 hasMaskedValues: false,
+                isNative: isNativeField(firstAvailableAttribute),
+                isBoolean: isNativeBooleanField(firstAvailableAttribute),
             };
             const newRows = [...currentRows, newRow];
             updateExpression(newRows); // Ensure expression is updated immediately
@@ -495,26 +578,44 @@ function TableEditor({
         removeRow(index);
     }, [removeRow]);
 
-    const updateRowAttribute = useCallback((index: number, attribute: string) => {
+    const updateRowAttribute = useCallback((index: number, attributeId: string) => {
         setRows((currentRows) => {
-            const newRows = [...currentRows];
-            const oldAttribute = newRows[index].attribute;
-            newRows[index] = {...newRows[index], attribute};
+            // Resolve by unique id, not name: a CPA attribute and a session
+            // attribute can share a name, and only the id pins down the correct
+            // namespace (object_type) for CEL generation.
+            const newAttributeObj = userAttributes.find((attr) => attr.id === attributeId);
+            const newAttribute = newAttributeObj?.name || '';
+            const newObjectType = newAttributeObj?.object_type || 'user';
 
-            if (oldAttribute !== attribute) {
+            const newRows = [...currentRows];
+            const current = newRows[index];
+            const attributeChanged = current.attribute !== newAttribute ||
+                (current.attribute_object_type || 'user') !== newObjectType;
+            newRows[index] = {...current, attribute: newAttribute};
+
+            if (attributeChanged) {
                 newRows[index].values = [];
 
                 // A resource target is type-specific to the old attribute; drop it.
                 newRows[index].targetAttribute = undefined;
 
-                const newAttributeObj = userFields.find((attr) => attr.name === attribute);
                 const newType = newAttributeObj?.type || '';
                 newRows[index].attribute_type = newType;
+                newRows[index].attribute_object_type = newObjectType;
+                newRows[index].isNative = isNativeField(newAttributeObj);
+                newRows[index].isBoolean = isNativeBooleanField(newAttributeObj);
 
-                // Reset the operator to a valid default when the current one
-                // isn't offered for the new attribute type (e.g. switching a
-                // select row to a ranked attribute, or to/from multiselect).
-                if (!isOperatorValidForType(currentRows[index].operator, newType)) {
+                // Reset the operator to a valid default when the current one isn't
+                // offered for the new attribute. Native attributes advertise an
+                // explicit operator set (e.g. native createat only allows "younger
+                // than"); everything else validates against the attribute type
+                // (rank, multiselect, …).
+                const allowedOperators = allowedOperatorLabelsForField(newAttributeObj);
+                if (allowedOperators) {
+                    if (!allowedOperators.includes(newRows[index].operator)) {
+                        newRows[index].operator = defaultOperatorForField(newAttributeObj);
+                    }
+                } else if (!isOperatorValidForType(currentRows[index].operator, newType)) {
                     newRows[index].operator = defaultOperatorForType(newType);
                 }
 
@@ -526,7 +627,7 @@ function TableEditor({
             updateExpression(newRows);
             return newRows;
         });
-    }, [updateExpression, userFields]);
+    }, [updateExpression, userAttributes]);
 
     const updateRowOperator = useCallback((index: number, newOperator: string) => {
         setRows((currentRows) => {
@@ -602,7 +703,10 @@ function TableEditor({
     const effectiveTestChannelId = channelId || testChannelId;
 
     return (
-        <div className='table-editor'>
+        <div
+            className='table-editor'
+            data-testid='table-editor'
+        >
             <table className='table-editor__table'>
                 <thead>
                     <tr className='table-editor__header-row'>
@@ -645,87 +749,114 @@ function TableEditor({
                             </td>
                         </tr>
                     ) : (
-                        rows.map((row, index) => (
-                            <tr
-                                key={index}
-                                className='table-editor__row'
-                            >
-                                <td className='table-editor__cell'>
-                                    <AttributeSelectorMenu
-                                        currentAttribute={row.attribute}
-                                        availableAttributes={userFields}
-                                        disabled={disabled || row.hasMaskedValues}
-                                        onChange={(attribute) => updateRowAttribute(index, attribute)}
-                                        menuId={`attribute-selector-menu-${index}`}
-                                        buttonId={`attribute-selector-button-${index}`}
-                                        autoOpen={index === autoOpenAttributeMenuForRow}
-                                        onMenuOpened={() => setAutoOpenAttributeMenuForRow(null)}
-                                        enableUserManagedAttributes={enableUserManagedAttributes}
-                                    />
-                                </td>
-                                <td className='table-editor__cell'>
-                                    <OperatorSelectorMenu
-                                        currentOperator={row.operator}
-                                        disabled={disabled || row.hasMaskedValues}
-                                        onChange={(operator) => updateRowOperator(index, operator)}
-                                        attributeType={userFields.find((attr) => attr.name === row.attribute)?.type}
-                                    />
-                                </td>
-                                <td className='table-editor__cell'>
-                                    {(() => {
-                                        const userField = userFields.find((attr) => attr.name === row.attribute);
-                                        const targets = comparableChannelFields(userField);
-                                        const isTargetMode = Boolean(row.targetAttribute);
-                                        const supportsTarget = OPERATOR_CONFIG[row.operator]?.type === 'comparison' && targets.length > 0;
-                                        const cellDisabled = disabled || row.hasMaskedValues;
+                        rows.map((row, index) => {
+                            // Resolve by name AND namespace: a CPA and a session
+                            // attribute can share a name, so object_type disambiguates.
+                            // The left picker only offers user attributes, so resolve
+                            // against userFields (channel fields are RHS targets only).
+                            const field = userFields.find((attr) => attr.name === row.attribute && (attr.object_type || 'user') === (row.attribute_object_type || 'user'));
+                            const isYoungerThan = row.operator === OperatorLabel.YOUNGER_THAN;
+                            const youngerThanValue = row.values.length > 0 ? row.values[0] : '';
+                            const youngerThanInvalid = isYoungerThan && youngerThanValue.trim() !== '' && !isValidYoungerThanDaysValue(youngerThanValue);
 
-                                        return (
-                                            <div className='table-editor__value-cell'>
-                                                {supportsTarget && (
-                                                    <RhsKindMenu
-                                                        isAttribute={isTargetMode}
-                                                        disabled={cellDisabled}
-                                                        buttonId={`rhs-kind-button-${index}`}
-                                                        menuId={`rhs-kind-menu-${index}`}
-                                                        onSelectValue={() => clearRowTarget(index)}
-                                                        onSelectAttribute={() => updateRowTarget(index, row.targetAttribute || targets[0].name)}
-                                                    />
-                                                )}
-                                                {isTargetMode ? (
-                                                    <AttributeSelectorMenu
-                                                        currentAttribute={row.targetAttribute || ''}
-                                                        availableAttributes={targets}
-                                                        disabled={cellDisabled}
-                                                        onChange={(attribute) => updateRowTarget(index, attribute)}
-                                                        menuId={`target-selector-menu-${index}`}
-                                                        buttonId={`target-selector-button-${index}`}
-                                                        enableUserManagedAttributes={true}
-                                                    />
-                                                ) : (
+                            // Channel attributes this row's user attribute may be
+                            // compared against, and whether the RHS is currently a
+                            // resource target rather than literal value(s).
+                            const targets = comparableChannelFields(field);
+                            const isTargetMode = Boolean(row.targetAttribute);
+                            const supportsTarget = OPERATOR_CONFIG[row.operator]?.type === 'comparison' && targets.length > 0;
+                            const cellDisabled = disabled || row.hasMaskedValues;
+                            return (
+                                <tr
+                                    key={index}
+                                    className='table-editor__row'
+                                >
+                                    <td className='table-editor__cell'>
+                                        <AttributeSelectorMenu
+                                            currentAttribute={row.attribute}
+                                            currentAttributeObjectType={row.attribute_object_type}
+                                            availableAttributes={userFields}
+                                            disabled={cellDisabled}
+                                            onChange={(attributeId) => updateRowAttribute(index, attributeId)}
+                                            menuId={`attribute-selector-menu-${index}`}
+                                            buttonId={`attribute-selector-button-${index}`}
+                                            autoOpen={index === autoOpenAttributeMenuForRow}
+                                            onMenuOpened={() => setAutoOpenAttributeMenuForRow(null)}
+                                            enableUserManagedAttributes={enableUserManagedAttributes}
+                                        />
+                                    </td>
+                                    <td className='table-editor__cell'>
+                                        <OperatorSelectorMenu
+                                            currentOperator={row.operator}
+                                            disabled={cellDisabled}
+                                            onChange={(operator) => updateRowOperator(index, operator)}
+
+                                            // Use the row's own type, kept in sync by
+                                            // addRow/updateRowAttribute/parseExpression. A name-only
+                                            // lookup could resolve the wrong namespace when a user and
+                                            // a session attribute share a name.
+                                            attributeType={row.attribute_type || undefined}
+                                            allowedOperators={allowedOperatorLabelsForField(field)}
+                                        />
+                                    </td>
+                                    <td className='table-editor__cell'>
+                                        <div className='table-editor__value-cell'>
+                                            {supportsTarget && (
+                                                <RhsKindMenu
+                                                    isAttribute={isTargetMode}
+                                                    disabled={cellDisabled}
+                                                    buttonId={`rhs-kind-button-${index}`}
+                                                    menuId={`rhs-kind-menu-${index}`}
+                                                    onSelectValue={() => clearRowTarget(index)}
+                                                    onSelectAttribute={() => updateRowTarget(index, row.targetAttribute || targets[0].name)}
+                                                />
+                                            )}
+                                            {isTargetMode ? (
+                                                <AttributeSelectorMenu
+                                                    currentAttribute={row.targetAttribute || ''}
+                                                    currentAttributeObjectType={CHANNEL_ATTRIBUTES_OBJECT_TYPE}
+                                                    availableAttributes={targets}
+                                                    disabled={cellDisabled}
+                                                    onChange={(attributeId) => updateRowTarget(index, targets.find((t) => t.id === attributeId)?.name || '')}
+                                                    menuId={`target-selector-menu-${index}`}
+                                                    buttonId={`target-selector-button-${index}`}
+                                                    enableUserManagedAttributes={true}
+                                                />
+                                            ) : (
+                                                <>
                                                     <ValueSelectorMenu
                                                         row={row}
                                                         disabled={cellDisabled}
                                                         updateValues={(values: string[]) => updateRowValues(index, values)}
-                                                        options={userField?.attrs?.options || []}
+                                                        options={row.attribute ? field?.attrs?.options || [] : []}
+                                                        placeholder={isYoungerThan ? formatMessage({id: 'admin.access_control.table_editor.value.days_placeholder', defaultMessage: 'Number of days'}) : undefined}
                                                     />
-                                                )}
-                                            </div>
-                                        );
-                                    })()}
-                                </td>
-                                <td className='table-editor__cell-actions'>
-                                    <button
-                                        type='button'
-                                        className='table-editor__row-remove'
-                                        onClick={() => requestRemoveRow(index)}
-                                        disabled={disabled || row.hasMaskedValues}
-                                        aria-label={formatMessage({id: 'admin.access_control.table_editor.remove_row', defaultMessage: 'Remove row'})}
-                                    >
-                                        <i className='icon icon-trash-can-outline'/>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
+                                                    {youngerThanInvalid && (
+                                                        <div className='table-editor__value-error'>
+                                                            <FormattedMessage
+                                                                id='admin.access_control.table_editor.value.days_invalid'
+                                                                defaultMessage='Enter a whole number of days (e.g. 30).'
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td className='table-editor__cell-actions'>
+                                        <button
+                                            type='button'
+                                            className='table-editor__row-remove'
+                                            onClick={() => requestRemoveRow(index)}
+                                            disabled={cellDisabled}
+                                            aria-label={formatMessage({id: 'admin.access_control.table_editor.remove_row', defaultMessage: 'Remove row'})}
+                                        >
+                                            <i className='icon icon-trash-can-outline'/>
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })
                     )}
                 </tbody>
                 <tfoot>
