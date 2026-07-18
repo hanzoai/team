@@ -70,10 +70,12 @@ github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0 h1:HWRh5R2+9EifMyIHV7ZV+MIZqgz
 github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0/go.mod h1:JfhWUomR1baixubs02l85lZYYOm7LV6om4ceouMv45c=
 github.com/hanzoai/base v0.39.10 h1:vJrARNkil5phinxWieLb2zX09XA0lQ4XKj0d2JTgo+c=
 github.com/hanzoai/base v0.39.10/go.mod h1:OWrc8t6nEWSzO2uewc9DDqYlw1oqDECNUKvtnIFKdaQ=
+github.com/hanzoai/csqlite v0.1.0 h1:suwC3dh0INlfP/U0Es6cDf6JNQ+2+GVLLATPWCUux6k=
+github.com/hanzoai/csqlite v0.1.0/go.mod h1:H31a/O6VXuklR9UBkgY++bmAK5uzVfXPqU0F6P9Wsos=
 github.com/hanzoai/dbx v1.15.0 h1:IjXzivPcPwYCrl1sj+UVIva2nW5QIw2XoOh1IxhMhvM=
 github.com/hanzoai/dbx v1.15.0/go.mod h1:ynP6HSiDDoFZ8M3DC+XvSglBPFRygfTd/gjTWabh4yA=
-github.com/hanzoai/sqlite v0.2.4 h1:P/t/RC4PmpOiV7PviFrXHOg7wAMe4gjqkhunGMd7lVQ=
-github.com/hanzoai/sqlite v0.2.4/go.mod h1:jhU6OMiNmNmjFHOgfIskse/RImYEe7rUTm6+rMKMRzg=
+github.com/hanzoai/sqlite v0.3.0 h1:Siqa7b89CgSCteg5ubXOCQiPRxYIJGb9kMemwjXMIUQ=
+github.com/hanzoai/sqlite v0.3.0/go.mod h1:/eumCoj+3FLbLXr3jZomamv2DdJvh4No2nfYDdlGgUU=
 github.com/hashicorp/golang-lru/v2 v2.0.7 h1:a+bsQ5rvGLjzHuww6tVxozPZFVghXaHOwFs4luLUK2k=
 github.com/hashicorp/golang-lru/v2 v2.0.7/go.mod h1:QeFd9opnmA6QUJc5vARoKUSoFhyfM2/ZepoAG6RGpeM=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
@@ -112,8 +114,6 @@ github.com/mattn/go-colorable v0.1.14 h1:9A9LHSqF/7dyVVX6g0U9cwm9pG3kP9gSzcuIPHP
 github.com/mattn/go-colorable v0.1.14/go.mod h1:6LmQG8QLFO4G5z1gPvYEzlUgJ2wF+stgPZH1UqBm1s8=
 github.com/mattn/go-isatty v0.0.21 h1:xYae+lCNBP7QuW4PUnNG61ffM4hVIfm+zUzDuSzYLGs=
 github.com/mattn/go-isatty v0.0.21/go.mod h1:ZXfXG4SQHsB/w3ZeOYbR0PrPwLy+n6xiMrJlRFqopa4=
-github.com/mattn/go-sqlite3 v1.14.47 h1:jOBI62gS7nKeZv+as1oGEy0+1qISgXwH/QBlR6KbfIo=
-github.com/mattn/go-sqlite3 v1.14.47/go.mod h1:6JTjA44L93a0QCyJef5YvlPoKXntQPjzWv5gtm9sB6w=
 github.com/mr-tron/base58 v1.2.0 h1:T/HDJBh4ZCPbU39/+c3rRvE0uKBQlU27+QI8LJ4t64o=
 github.com/mr-tron/base58 v1.2.0/go.mod h1:BinMc/sQntlIE1frQmRFPUoPA1Zkr8VRgBdjWI2mNwc=
 github.com/ncruces/go-strftime v1.0.0 h1:HMFp8mLCTPp341M/ZnA4qaf7ZlsbTc+miZjCLOFAw7w=

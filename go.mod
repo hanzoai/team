@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/hanzoai/base v0.39.10
 	github.com/hanzoai/dbx v1.15.0
-	github.com/hanzoai/sqlite v0.2.4
+	github.com/hanzoai/sqlite v0.3.0
 	github.com/luxfi/metric v1.5.7
 	golang.org/x/net v0.55.0
 )
@@ -35,6 +35,7 @@ require (
 	github.com/gorilla/rpc v1.2.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.3 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0 // indirect
+	github.com/hanzoai/csqlite v0.1.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
@@ -46,7 +47,6 @@ require (
 	github.com/luxfi/math/big v0.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.21 // indirect
-	github.com/mattn/go-sqlite3 v1.14.47 // indirect
 	github.com/ncruces/go-strftime v1.0.0 // indirect
 	github.com/nexus-rpc/sdk-go v0.6.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
