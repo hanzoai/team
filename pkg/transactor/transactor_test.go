@@ -47,7 +47,7 @@ func TestHelloNegotiatesJSON(t *testing.T) {
 }
 
 // TestHelloServesModelVersion is the decouple guard: the front's version
-// handshake reads serverVersion, which MUST be the Huly MODEL version
+// handshake reads serverVersion, which MUST be the MODEL version
 // (model.Version) — NOT TEAM_VERSION. Default is the front's 0.6.0.
 func TestHelloServesModelVersion(t *testing.T) {
 	out := testSession().handle([]byte(`{"id":-1,"method":"hello","params":[]}`))

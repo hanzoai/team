@@ -9,7 +9,7 @@ import (
 )
 
 // TestWorkspaceInfoVersionTracksModel is the no-drift guard on the account
-// side: getUserWorkspaces' versionMajor/Minor/Patch is the Huly MODEL version
+// side: getUserWorkspaces' versionMajor/Minor/Patch is the MODEL version
 // (the SAME source the transactor reports as serverVersion) — not the old
 // hardcoded 0.7.0. Default is the front's 0.6.0.
 func TestWorkspaceInfoVersionTracksModel(t *testing.T) {

@@ -1,12 +1,12 @@
 /// <reference path="./types.d.ts" />
 //
-// AI assistant — formerly the `ai-bot` + `love-agent` pods in the Huly
+// AI assistant — formerly the `ai-bot` + `love-agent` pods in the upstream
 // Node stack. Now runs inside Goja, one goroutine per request, served
 // by the team binary on /v1/ai/*.
 //
 // Real chat + tool calling is delegated to hanzo.bot via
 // pkg/bot/bot.go (/v1/bot/*). This handler is a small helper that
-// the Huly Svelte UI calls for inline "explain" / "summarize" actions
+// the Svelte UI calls for inline "explain" / "summarize" actions
 // where we want a single completion, not a streaming chat.
 
 routerAdd("POST", "/v1/ai/complete", (e) => {

@@ -120,7 +120,7 @@ func TestBackfillReconcilesRosterDespiteSentinel(t *testing.T) {
 			t.Fatalf("bot %s Person missing avatarType=color: %v", who, ps[0])
 		}
 	}
-	// The bot renders its display name (single token → Huly ",name").
+	// The bot renders its display name (single token → canonical ",name").
 	mp := sess.queryDocs(clPerson, map[string]any{"personUuid": bot1})
 	if mp[0]["name"] != ",maxpower-assistant" {
 		t.Fatalf("bot name = %v, want ,maxpower-assistant", mp[0]["name"])

@@ -10,11 +10,11 @@ import (
 // mirror (and any future in-process subsystem) can project writes into the
 // per-workspace store the SPA reads — WITHOUT holding a client WebSocket. It is
 // the ONE bridge from team-go's Base-collection write plane (REST chat, bots,
-// Slack) into the ZAP plane the Huly front queries.
+// Slack) into the ZAP plane the front queries.
 var live *server
 
 // Contact/chunter class ids the mirror materializes. Kept here (one place) so the
-// Huly-model wire identity lives with the code that builds it.
+// front-model wire identity lives with the code that builds it.
 const (
 	clPerson         = "contact:class:Person"
 	mixinEmployee    = "contact:mixin:Employee"
@@ -64,7 +64,7 @@ func hasDoc(org, workspace, id string) bool {
 	return d != nil
 }
 
-// ── tx builders (the Huly-model knowledge, one place) ────────────────────────
+// ── tx builders (the front-model knowledge, one place) ────────────────────────
 
 func createTx(objectID, objectClass, space, modifiedBy string, attrs map[string]any) map[string]any {
 	now := time.Now().UnixMilli()
@@ -133,7 +133,7 @@ func PersonRef(userID string) string { return "person-" + userID }
 // and fires the PersonSpace trigger.
 func MemberTxes(m Member, exists bool) []map[string]any {
 	pid := PersonRef(m.UserID)
-	name := hulyName(pick(m.Name, m.UserID))
+	name := personName(pick(m.Name, m.UserID))
 	role := strings.ToUpper(pick(m.Role, "member"))
 	position := ""
 	if m.IsBot {
@@ -207,7 +207,7 @@ func MessageRef(messageID string) string { return "msg-" + messageID }
 
 // MessageTx builds the create/update for a chunter:class:ChatMessage AttachedDoc,
 // attached to the channel space so the SPA renders it in that channel's timeline.
-// The body is wrapped as Huly markup (ProseMirror JSON) — the front renders a raw
+// The body is wrapped as Markup (ProseMirror JSON) — the front renders a raw
 // string as empty, so a plain body would silently not display.
 func MessageTx(m Message, exists bool) map[string]any {
 	ch := ChannelRef(m.ChannelID)
@@ -235,11 +235,11 @@ func RemoveMessageTx(messageID, channelID string) map[string]any {
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
-// hulyName formats a display name into Huly's canonical Person.name convention
+// personName formats a display name into the canonical Person.name convention
 // "last,first" (the SPA renders it "first last"; a native SPA person stores ","
 // for an empty name). A single-token name (most bots) has no last name, so it
 // becomes the first name (",token") — rendered verbatim. Empty stays ",".
-func hulyName(display string) string {
+func personName(display string) string {
 	display = strings.TrimSpace(display)
 	if display == "" {
 		return ","
@@ -250,7 +250,7 @@ func hulyName(display string) string {
 	return "," + display
 }
 
-// markup wraps a plain-text body in the minimal Huly Markup (ProseMirror JSON)
+// markup wraps a plain-text body in the minimal Markup (ProseMirror JSON)
 // the front parses. An empty body becomes an empty paragraph.
 func markup(body string) string {
 	if body == "" {

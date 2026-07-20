@@ -1,6 +1,6 @@
 /// <reference path="./types.d.ts" />
 //
-// Notification dispatcher — unifies what the Huly Node stack had as
+// Notification dispatcher — unifies what the upstream Node stack had as
 // mail/, telegram/, telegram-bot/, gmail/, notification/ pods. One
 // handler, one Goja goroutine per request, no microservices.
 //

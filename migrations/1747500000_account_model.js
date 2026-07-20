@@ -1,7 +1,7 @@
 /// <reference path="../functions/types.d.ts" />
-// Account-model fields for the Huly login + workspace-selection protocol.
+// Account-model fields for the front login + workspace-selection protocol.
 //
-// The Huly frontend's account API speaks in UUIDs: a per-workspace token
+// The front SPA's account API speaks in UUIDs: a per-workspace token
 // carries {account, workspace} as UUIDs (foundations/core/packages/token),
 // and the transactor refuses a token missing either. Identity (the account
 // UUID) is the IAM user id (the JWT `sub`, a Casdoor UUID) — so no accounts

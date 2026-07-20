@@ -2,10 +2,10 @@
 
 ## What this is
 
-The Hanzo Team (hanzo.team) backend: account (IAM-bridged OIDC), the Huly
+The Hanzo Team (hanzo.team) backend: account (IAM-bridged OIDC), the
 **transactor** (the ZAP/model wire protocol the SPA speaks), chat/presence, bots,
 Slack, files — all on **Hanzo Base** (`github.com/hanzoai/base`, embedded SQLite).
-The Huly **front** SPA (`~/work/hanzo/team`) is reused unchanged; team-go serves
+The **front** SPA (`~/work/hanzo/team`) is reused unchanged; team-go serves
 the contract it expects.
 
 ## Target architecture — one binary, one deploy
@@ -109,7 +109,7 @@ cloud's DataDir.
   → 401 or transactor handshake); `go build`/`vet`/`test` green.
 - **P2 — full surface under /v1/team.** account/chat/bots/slack/files/subscribe +
   transactor + mirror + migrations + functions, all namespaced; cloud tests green.
-- **P3 — repoint front + ingress.** Huly front `ACCOUNTS_URL`/`TRANSACTOR_URL` →
+- **P3 — repoint front + ingress.** front `ACCOUNTS_URL`/`TRANSACTOR_URL` →
   cloud `/v1/team`; ingress `hanzo.team` → cloud for `/v1/team` + transactor, front
   for the SPA. Run cloud-team in PARALLEL with live team-go 0.4.6 — do not break
   live.

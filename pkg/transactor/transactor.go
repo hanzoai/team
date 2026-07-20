@@ -247,7 +247,7 @@ func (s *session) queryDocs(class string, query map[string]any) []map[string]any
 		if isMixin && !hasMixin(doc, class) {
 			continue
 		}
-		// Mixin queries match the mixin's fields as if top-level (Huly `$as`
+		// Mixin queries match the mixin's fields as if top-level (the `$as`
 		// semantics): overlay the mixin sub-object for matching, but return the
 		// full doc — the client casts it itself.
 		matchDoc := doc
@@ -293,7 +293,7 @@ func (s *session) domainRequest(id int64, params []json.RawMessage) []byte {
 
 // hello answers the handshake. binary:false forces JSON so no msgpack is ever
 // exchanged; lastHash/account let the client build its model + identity.
-// serverVersion is the Huly MODEL version (model.Version, NOT TEAM_VERSION) —
+// serverVersion is the MODEL version (model.Version, NOT TEAM_VERSION) —
 // the number the front's version check compares against.
 func (s *session) hello(id int64) []byte {
 	return mustJSON(map[string]any{
@@ -351,7 +351,7 @@ func hasMixin(doc map[string]any, mixin string) bool {
 }
 
 // mixinView overlays a doc's mixin sub-object onto a shallow copy so a mixin
-// query can match the mixin's fields at top level (Huly `$as`). The original doc
+// query can match the mixin's fields at top level (the `$as`). The original doc
 // is never mutated; the caller returns it unchanged.
 func mixinView(doc map[string]any, mixin string) map[string]any {
 	sub, ok := doc[mixin].(map[string]any)

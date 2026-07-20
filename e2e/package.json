@@ -1,7 +1,7 @@
 {
   "name": "team-go-e2e",
   "private": true,
-  "description": "Functional visual Playwright e2e for the hanzo.team backend (team-go) + Huly front.",
+  "description": "Functional visual Playwright e2e for the hanzo.team backend (team-go) + front.",
   "scripts": {
     "test": "playwright test",
     "test:live": "TEAM_E2E_MODE=live playwright test",

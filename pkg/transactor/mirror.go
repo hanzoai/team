@@ -16,7 +16,7 @@ const backfillMarker = "team:marker:Backfill"
 
 // RegisterMirror binds the ONE plane bridge: every create/update/delete to the
 // Base write-plane collections (members/channels/messages) is projected into the
-// per-workspace transactor store the Huly SPA reads, and broadcast live. This is
+// per-workspace transactor store the front SPA reads, and broadcast live. This is
 // what makes REST-chat, bots-as-members and Slack-relayed messages actually
 // appear in the workbench — the SPA never reads the Base collections directly.
 //

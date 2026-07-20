@@ -1,6 +1,6 @@
 package transactor
 
-// Huly `lookup` support for findAll. The SPA joins related docs in a single
+// `lookup` support for findAll. The SPA joins related docs in a single
 // query via the FindOptions.lookup shape, and populates client-side stores from
 // the joined `$lookup`. The employees query is the load-bearing case:
 //

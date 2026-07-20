@@ -8,7 +8,7 @@
 //     dedicated service-account namespace (distinct from the human-account
 //     namespace, so a bot account can never alias a human's), so a re-sync
 //     always resolves to the SAME row (never a duplicate). The badge +
-//     provenance live inline so the Huly front (and /v1/chat) can render a bot
+//     provenance live inline so the front (and /v1/chat) can render a bot
 //     differently from a human without a second lookup.
 //
 //  2. presence — chat presence. One row per (workspace, user), last_seen bumped

@@ -1,5 +1,5 @@
 // Package chat is the clean REST surface for chunter (channels + messages +
-// presence). It is orthogonal to the Huly transactor (ZAP): the SPA uses the
+// presence). It is orthogonal to the transactor (ZAP): the SPA uses the
 // transactor, but first-party clients (mobile, bots, integrations) get a plain
 // /v1/chat REST API over the SAME `channels`/`messages`/`presence` collections.
 //

@@ -2,9 +2,13 @@
 
 # hanzo-team
 
+> **ARCHIVED.** hanzo.team is served in-process by the unified cloud binary —
+> [`hanzoai/cloud`](https://github.com/hanzoai/cloud) `clients/team`. All
+> hardening and features land there; this standalone repo is retired.
+
 Single-binary Go backend for `hanzo.team`. Replaces the 40+
-TypeScript/Node microservices the Huly fork shipped, while keeping the
-existing Huly Svelte frontend.
+TypeScript/Node microservices the upstream fork shipped, while keeping the
+existing Svelte frontend.
 
 ## What this is
 
@@ -14,7 +18,7 @@ hanzo-team (one Go process, one port)
 ├── platform plugin           # Hanzo IAM auth, KMS, multi-tenant
 ├── jsvm plugin               # Goja runtime, .fn.ts handlers in goroutines
 ├── pkg/iam                   # /v1/iam/*     → IAM_ENDPOINT (OIDC reverse proxy)
-├── pkg/account               # /v1/account/* → login + workspace select (Huly front)
+├── pkg/account               # /v1/account/* → login + workspace select (front SPA)
 ├── pkg/auth                  # /v1/me, /v1/logout
 ├── pkg/billing               # /v1/billing/* → commerce.hanzo.ai
 ├── pkg/bot                   # /v1/bot/*     → hanzo.bot
@@ -23,7 +27,7 @@ hanzo-team (one Go process, one port)
 ├── pkg/slack                 # /v1/slack/*   → bidirectional Slack relay
 ├── pkg/files                 # /v1/files/*   → 307 alias for Base blob API
 ├── pkg/subscribe             # /v1/subscribe → member-scoped WS record stream
-├── pkg/transactor            # /transactor   → Huly data plane over ZAP (WS)
+├── pkg/transactor            # /transactor   → front data plane over ZAP (WS)
 ├── pkg/wsauth                # ONE place: workspace resolve + admin gate
 ├── functions/*.fn.ts         # ai, notify, calendar, github, … (one
 │                             #   .fn.ts per legacy TS pod)
@@ -46,7 +50,7 @@ AI: `/v1/bot/*` proxies to `hanzo.bot`. `/v1/ai/complete` (in
 
 Chat: `/v1/chat/*` is the clean REST surface for chunter over the
 `channels`/`messages`/`presence` collections (member-scoped). It is
-orthogonal to the ZAP transactor the Huly SPA uses. Realtime = clients
+orthogonal to the ZAP transactor the front SPA uses. Realtime = clients
 `GET /v1/subscribe?collection=messages`; the REST layer is the req/resp
 half (structured to later ride the cloud ZAP duplex).
 

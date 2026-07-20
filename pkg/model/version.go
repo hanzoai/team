@@ -1,11 +1,11 @@
-// Package model owns the Huly platform MODEL version — the single number the
+// Package model owns the platform MODEL version — the single number the
 // front SPA handshakes against.
 //
 // This is DISTINCT from TEAM_VERSION (team-go's own release/commit, surfaced on
 // /v1/health and Prometheus). Two concepts that were previously conflated:
 //
 //   - TEAM_VERSION  — the running binary's release identity (health, metrics).
-//   - MODEL_VERSION — the Huly model the front validates against (transactor
+//   - MODEL_VERSION — the model the front validates against (transactor
 //     hello's serverVersion + each workspace's versionMajor/Minor/Patch).
 //
 // Both places that answer the front's model-version handshake read from HERE,
@@ -21,14 +21,14 @@ import (
 
 // DefaultVersion is the front SPA's current model version. Shipping it as the
 // code default keeps the binary in sync with the front with no configuration —
-// HULY_MODEL_VERSION exists only to fast-track a front bump ahead of a team-go
+// MODEL_VERSION exists only to fast-track a front bump ahead of a team-go
 // release.
 const DefaultVersion = "0.6.0"
 
-// Version is the Huly MODEL version string (e.g. "0.6.0"), overridable via
-// HULY_MODEL_VERSION.
+// Version is the MODEL version string (e.g. "0.6.0"), overridable via
+// MODEL_VERSION.
 func Version() string {
-	if v := os.Getenv("HULY_MODEL_VERSION"); v != "" {
+	if v := os.Getenv("MODEL_VERSION"); v != "" {
 		return v
 	}
 	return DefaultVersion

@@ -642,7 +642,7 @@ func (g *api) fail(re *core.RequestEvent, s Status) error {
 }
 
 // toWorkspaceInfo flattens a workspace record for getUserWorkspaces. The
-// version triple is the Huly MODEL version (model.Version) — the SAME source
+// version triple is the MODEL version (model.Version) — the SAME source
 // the transactor reports as serverVersion — so the workspace-model version and
 // the server version can never drift.
 func toWorkspaceInfo(ws *core.Record) WorkspaceInfo {

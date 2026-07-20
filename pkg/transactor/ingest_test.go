@@ -37,7 +37,7 @@ func TestIngestMirrorsMemberToEmployee(t *testing.T) {
 	if len(persons) != 1 {
 		t.Fatalf("contact:class:Person count = %d, want 1", len(persons))
 	}
-	if persons[0]["name"] != ",Zeekay" { // Huly "last,first"; single token → first-name only
+	if persons[0]["name"] != ",Zeekay" { // canonical "last,first"; single token → first-name only
 		t.Fatalf("person name = %v, want ,Zeekay", persons[0]["name"])
 	}
 	if persons[0]["avatarType"] != "color" { // colored placeholder avatar, like a native SPA person
@@ -95,7 +95,7 @@ func TestMemberUpdatePreservesProfile(t *testing.T) {
 	if after["city"] != "Tokyo" {
 		t.Fatalf("city clobbered: %v (want Tokyo)", after["city"])
 	}
-	if after["name"] != "Kanjo,Zeekay" { // "Zeekay Kanjo" → Huly "last,first"
+	if after["name"] != "Kanjo,Zeekay" { // "Zeekay Kanjo" → canonical "last,first"
 		t.Fatalf("name not updated: %v (want Kanjo,Zeekay)", after["name"])
 	}
 	if role, _ := after[mixinEmployee].(map[string]any)["role"].(string); role != "ADMIN" {
@@ -129,7 +129,7 @@ func TestIngestBotDeactivationDropsFromTeam(t *testing.T) {
 // TestIngestMirrorsChannelAndMessage is the BLOCKER-3 core: a channel + message
 // written on the Base plane (REST/Slack/bot) are queryable in the transactor
 // plane the SPA reads — the message attached to its channel space, body wrapped
-// as the Huly markup the front renders (H3).
+// as the Markup the front renders (H3).
 func TestIngestMirrorsChannelAndMessage(t *testing.T) {
 	const org, ws = "hanzo", "e48f81fd-12be-4bcd-aecb-3eaa9a9b5b18"
 	_, sess := ingestServer(t, org, ws)
