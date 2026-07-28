@@ -16,7 +16,7 @@ RUN addgroup -g 65532 -S nonroot && adduser -u 65532 -S nonroot -G nonroot
 #   - --build-arg GH_TOKEN=...      (kaniko, which has no --mount=type=secret)
 # When neither is set (public-dep builds) the git rewrite is a no-op.
 ARG GH_TOKEN=""
-ENV GOPRIVATE=github.com/hanzoai/*,github.com/luxfi/*,github.com/zooai/*
+ENV GOPRIVATE=github.com/hanzoai/*,github.com/lux-private/*,github.com/zooai/*
 WORKDIR /src
 COPY go.mod go.sum ./
 RUN --mount=type=secret,id=gh_token,required=false \
