@@ -17,10 +17,10 @@ import (
 	"github.com/hanzoai/base/plugins/platform"
 	"github.com/hanzoai/base/tools/hook"
 	"github.com/hanzoai/dbx"
-	"github.com/hanzoai/team-go/pkg/bots"
-	"github.com/hanzoai/team-go/pkg/model"
-	"github.com/hanzoai/team-go/pkg/token"
-	"github.com/hanzoai/team-go/pkg/wsauth"
+	"github.com/hanzoai/team/pkg/bots"
+	"github.com/hanzoai/team/pkg/model"
+	"github.com/hanzoai/team/pkg/token"
+	"github.com/hanzoai/team/pkg/wsauth"
 )
 
 // Mount path. The frontend's ACCOUNTS_URL must point here (e.g.

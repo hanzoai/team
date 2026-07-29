@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hanzoai/team-go/pkg/token"
+	"github.com/hanzoai/team/pkg/token"
 	"golang.org/x/net/websocket"
 )
 

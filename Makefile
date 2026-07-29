@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 BIN   := team
-PKG   := github.com/hanzoai/team-go/cmd/team
+PKG   := github.com/hanzoai/team/cmd/team
 
 # Goa CLI provides the TS→JS transpiler. Install via:
 #   go install github.com/<your-org>/goa/cmd/goa@latest

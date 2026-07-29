@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/hanzoai/base/core"
-	"github.com/hanzoai/team-go/pkg/token"
+	"github.com/hanzoai/team/pkg/token"
 )
 
 // ── M1: first-org-wins (confused-deputy defense) ────────────────────────────

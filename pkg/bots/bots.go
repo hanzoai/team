@@ -11,7 +11,7 @@ import (
 	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/base/tools/hook"
 	"github.com/hanzoai/dbx"
-	"github.com/hanzoai/team-go/pkg/wsauth"
+	"github.com/hanzoai/team/pkg/wsauth"
 )
 
 // storeKey stashes the singleton bots service in the app runtime store so the

@@ -10,8 +10,8 @@ import (
 
 	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/base/tools/hook"
-	"github.com/hanzoai/team-go/pkg/model"
-	"github.com/hanzoai/team-go/pkg/token"
+	"github.com/hanzoai/team/pkg/model"
+	"github.com/hanzoai/team/pkg/token"
 	"golang.org/x/net/websocket"
 )
 

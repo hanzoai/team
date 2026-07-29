@@ -14,8 +14,8 @@ import (
 	"github.com/hanzoai/base/core"
 	"github.com/hanzoai/base/tools/hook"
 	"github.com/hanzoai/dbx"
-	"github.com/hanzoai/team-go/pkg/token"
-	"github.com/hanzoai/team-go/pkg/wsauth"
+	"github.com/hanzoai/team/pkg/token"
+	"github.com/hanzoai/team/pkg/wsauth"
 )
 
 // agentTimeout bounds an async agent turn end to end (identity refresh + run +

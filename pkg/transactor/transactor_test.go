@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/hanzoai/team-go/pkg/model"
+	"github.com/hanzoai/team/pkg/model"
 )
 
 func testSession() *session {

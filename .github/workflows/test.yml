@@ -12,7 +12,7 @@ permissions:
 jobs:
   # Hermetic gate: the Go unit + transactor-wire tests, race detector on.
   go-test:
-    if: github.repository == 'hanzoai/team-go'
+    if: github.repository == 'hanzoai/team'
     runs-on: ['hanzo-build-linux-amd64']
     steps:
       - uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
   # (configured as a repo/org secret; CI sources it from KMS). Absent it, the job
   # no-ops cleanly instead of failing the pipeline.
   e2e:
-    if: github.repository == 'hanzoai/team-go'
+    if: github.repository == 'hanzoai/team'
     runs-on: ['hanzo-build-linux-amd64']
     steps:
       - uses: actions/checkout@v4

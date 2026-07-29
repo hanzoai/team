@@ -20,7 +20,7 @@ LLM router) + the transactor at **`/v1/team/transactor`**.
 
 ### Module story (decided)
 
-team-go **stays its own Go module** `github.com/hanzoai/team-go`, mirroring how
+team-go **stays its own Go module** `github.com/hanzoai/team`, mirroring how
 `hanzoai/base` and `hanzoai/ai` are separate modules that cloud imports:
 
 - team-go depends on `github.com/hanzoai/cloud` for the `Mount`/`Register`/`Deps`
@@ -28,7 +28,7 @@ team-go **stays its own Go module** `github.com/hanzoai/team-go`, mirroring how
   team, only `cloud/subsystems` blank-imports it, so there is no cycle).
 - team-go exposes a top-level `team.Mount(app *zip.App, deps cloud.Deps) error`
   + `init()` → `cloud.RegisterWithShutdown("team", 129, mount, Shutdown)`.
-- `cloud/subsystems/subsystems.go` adds `_ "github.com/hanzoai/team-go"`.
+- `cloud/subsystems/subsystems.go` adds `_ "github.com/hanzoai/team"`.
 - team-go upgrades **base v0.39.10 → v1.4.6** (cloud's version — one module graph,
   one base version). This is a compile-alignment pass, not a rewrite: the
   PocketBase-lineage API team uses (`OnServe`, `RequestEvent.JSON/BindBody/*Error`,

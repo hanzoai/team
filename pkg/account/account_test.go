@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/hanzoai/team-go/pkg/token"
+	"github.com/hanzoai/team/pkg/token"
 )
 
 func TestBearer(t *testing.T) {

@@ -13,14 +13,14 @@ permissions:
 
 jobs:
   docker:
-    if: github.repository == 'hanzoai/team-go'
+    if: github.repository == 'hanzoai/team'
     permissions:
       contents: read
       packages: write
       id-token: write
     uses: hanzoai/.github/.github/workflows/docker-build.yml@main
     with:
-      image: ghcr.io/hanzoai/team-go
+      image: ghcr.io/hanzoai/team
       platforms: linux/amd64
       # ARC v2 matches jobs by the runner-scale-set NAME, not arbitrary
       # labels. The reusable workflow defaults runner-amd64 to
