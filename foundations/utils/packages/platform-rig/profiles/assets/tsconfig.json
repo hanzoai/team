@@ -1,8 +1,8 @@
 {  
   "compilerOptions": {
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "target": "esnext",
-    "module": "commonjs",
+    "module": "node16",
     "sourceMap": true,
     "declaration": true,
     "rootDir": "./src",
