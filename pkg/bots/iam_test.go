@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-func TestMapIamUser_CasdoorEnvelope(t *testing.T) {
+func TestMapIamUser_Envelope(t *testing.T) {
 	// owner → organization; forbidden OR deleted → disabled.
 	got := mapIamUser(iamUser{
 		ID: "id1", Name: "hanzo-triage", Owner: "hanzo",
@@ -62,7 +62,7 @@ func TestListServiceAccounts_ParsesEnvelope(t *testing.T) {
 }
 
 func TestListServiceAccounts_ErrorEnvelopeIsError(t *testing.T) {
-	// A 200 with status:"error" (Casdoor unauthorized) is an ERROR, not empty.
+	// A 200 with status:"error" (IAM unauthorized) is an ERROR, not empty.
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte(`{"status":"error","msg":"Unauthorized operation"}`))

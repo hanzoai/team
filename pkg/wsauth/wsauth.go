@@ -66,7 +66,7 @@ func CallerUID(re *core.RequestEvent) string {
 // value whenever it authenticated the request (re.Auth != nil OR an IAM key).
 // The direct record field `org_id` is checked first for the JWT path so the
 // resolution does not depend on middleware ordering; both agree in production.
-// We do NOT read a bare `owner` field — IAM maps the Casdoor owner claim to
+// We do NOT read a bare `owner` field — IAM maps the token's owner claim to
 // `org_id`, never `owner`, so reading `owner` silently yields "".
 func CallerOrg(re *core.RequestEvent) string {
 	if re.Auth != nil {

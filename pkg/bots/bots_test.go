@@ -266,7 +266,7 @@ func mkWorkspace(t *testing.T, app core.App, slug, org string) *core.Record {
 }
 
 // mockIAMOrg serves SAs only for homeOrg; any other ?organization= gets the
-// Casdoor "Unauthorized operation" envelope (HTTP 200, status:"error") — exactly
+// "Unauthorized operation" envelope (HTTP 200, status:"error") — exactly
 // how real IAM refuses a machine identity reading a foreign org's SAs.
 func mockIAMOrg(t *testing.T, homeOrg, sas string) *httptest.Server {
 	t.Helper()

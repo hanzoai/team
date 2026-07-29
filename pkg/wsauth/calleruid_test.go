@@ -16,8 +16,8 @@ func TestAccountID_UuidVerbatim_NonUuidHashed(t *testing.T) {
 	if got := AccountID(sub); got != sub {
 		t.Fatalf("AccountID(uuid) = %q, want the uuid verbatim", got)
 	}
-	want := uuid.NewSHA1(uuid.NameSpaceURL, []byte("iam:casdoor-alice")).String()
-	if got := AccountID("casdoor-alice"); got != want {
+	want := uuid.NewSHA1(uuid.NameSpaceURL, []byte("iam:alice")).String()
+	if got := AccountID("alice"); got != want {
 		t.Fatalf("AccountID(non-uuid) = %q, want stable uuidv5 %q", got, want)
 	}
 	if AccountID("") != "" || AccountID("   ") != "" {

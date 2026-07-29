@@ -4,7 +4,7 @@
 // The front SPA's account API speaks in UUIDs: a per-workspace token
 // carries {account, workspace} as UUIDs (foundations/core/packages/token),
 // and the transactor refuses a token missing either. Identity (the account
-// UUID) is the IAM user id (the JWT `sub`, a Casdoor UUID) — so no accounts
+// UUID) is the IAM user id (the JWT `sub`, a UUID) — so no accounts
 // table is needed; membership already lives in `members` (user_id = sub).
 //
 // Workspaces, however, were created (1747260000) keyed by Base's 15-char

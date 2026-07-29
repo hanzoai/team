@@ -136,12 +136,12 @@ func (g *api) authCallback(re *core.RequestEvent) error {
 	if err != nil {
 		return g.bounce(re, "", q.Get("state"), "userinfo_failed")
 	}
-	// AccountUuid = the IAM sub (Casdoor UUID; derive a stable one if not). The
+	// AccountUuid = the IAM sub (a UUID; derive a stable one if not). The
 	// admin/membership gate resolves the caller with the SAME derivation
 	// (wsauth.AccountID over the JWT's authSub), so a member row and its caller
 	// always resolve to the same key.
 	account := wsauth.AccountID(sub)
-	// Tenant = the IAM org (Casdoor `owner` claim on the access token). It
+	// Tenant = the IAM org (the `owner` claim on the access token). It
 	// scopes every workspace + data file — full multitenancy. The account token
 	// carries it as extra.org so getLoginInfoByToken/selectWorkspace and the
 	// transactor all route to the right tenant.
@@ -434,7 +434,7 @@ func (g *api) account(re *core.RequestEvent) (account, org, tok string, err erro
 	return t.Account, org, tok, nil
 }
 
-// orgFromToken reads the IAM access-token's `owner` claim (the Casdoor org =
+// orgFromToken reads the IAM access-token's `owner` claim (the org =
 // the tenant) without verifying — the token came from a trusted code exchange,
 // so we only decode the JSON payload to learn which org the user belongs to.
 func orgFromToken(jwtTok string) string {

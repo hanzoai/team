@@ -13,7 +13,7 @@
 //
 // This is the Go port of the TypeScript @hanzoteam/iam-client + pod-slack
 // botmembers, with the SAME security properties: admin-gated endpoints, org
-// scoping (never expose another org's SA topology), and the Casdoor response
+// scoping (never expose another org's SA topology), and the IAM response
 // envelope handled explicitly (a 200 with status:"error" is still an error).
 package bots
 
@@ -30,9 +30,9 @@ import (
 	"github.com/google/uuid"
 )
 
-// ServiceAccount is the domain shape this package works in — Casdoor-free. It
-// is produced from an IamUser by mapIamUser (the single reconciliation point
-// between the IAM wire shape and the domain model).
+// ServiceAccount is the domain shape this package works in, free of the IAM
+// wire format. It is produced from an IamUser by mapIamUser (the single
+// reconciliation point between the IAM wire shape and the domain model).
 type ServiceAccount struct {
 	ID           string
 	Name         string
@@ -42,9 +42,9 @@ type ServiceAccount struct {
 	Disabled     bool
 }
 
-// iamUser is a raw IAM (Casdoor) user record for a service-account principal as
-// it appears inside the response envelope's `data` array. Field names are
-// Casdoor's own: `owner` is the organization, `isForbidden`/`isDeleted` are the
+// iamUser is a raw IAM user record for a service-account principal as it
+// appears inside the response envelope's `data` array. Field names are IAM's
+// own wire names: `owner` is the organization, `isForbidden`/`isDeleted` are the
 // disable flags. accessKey/accessSecret are masked by the server and never read.
 type iamUser struct {
 	ID          string `json:"id"`
@@ -57,7 +57,7 @@ type iamUser struct {
 	IsDeleted   bool   `json:"isDeleted"`
 }
 
-// iamEnvelope is the canonical Casdoor response envelope. GET
+// iamEnvelope is the canonical IAM response envelope. GET
 // /v1/iam/service-accounts returns the SA list directly in `data` (there is no
 // {serviceAccounts} key).
 type iamEnvelope struct {
@@ -66,9 +66,9 @@ type iamEnvelope struct {
 	Data   []iamUser `json:"data"`
 }
 
-// mapIamUser maps a raw Casdoor user record to a ServiceAccount. `owner` is the
+// mapIamUser maps a raw IAM user record to a ServiceAccount. `owner` is the
 // organization; a SA is disabled if it is forbidden OR soft-deleted. Single
-// point of Casdoor→domain reconciliation — everything downstream is Casdoor-free.
+// point of wire→domain reconciliation — nothing downstream sees the wire shape.
 func mapIamUser(u iamUser) ServiceAccount {
 	return ServiceAccount{
 		ID:           u.ID,
@@ -98,7 +98,7 @@ func newIAMClient(base string, token tokenFunc) *iamClient {
 }
 
 // listServiceAccounts calls GET /v1/iam/service-accounts?organization=<org>.
-// IAM speaks the Casdoor envelope: {status,msg,data:[]}. A 200 with
+// IAM speaks an envelope: {status,msg,data:[]}. A 200 with
 // status:"error" (e.g. unauthorized) is still an error to us.
 func (c *iamClient) listServiceAccounts(ctx context.Context, org string) ([]ServiceAccount, error) {
 	if c.base == "" {
