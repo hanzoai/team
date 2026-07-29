@@ -1,0 +1,32 @@
+# From-source build of the analytics collector (the team FE error/event sink).
+# The stock services/analytics-collector/pod-analytics-collector/Dockerfile only
+# COPYs a pre-built bundle/; this builds it from the monorepo on the arcd pool
+# so the image carries the CURRENT source — including the Insights fan-out
+# (sendEventsToInsights) and the OTLP error path — which the last
+# build-images.yml publish (v0.7.388) predates.
+FROM node:22-bookworm AS build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 make g++ git ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY . .
+ENV PUPPETEER_SKIP_DOWNLOAD=true \
+    NODE_OPTIONS=--max-old-space-size=12288
+
+# Same rationale as Dockerfile.front-source: the committed pnpm-lock can lag the
+# package.json graph, so regenerate with `rush update` rather than the frozen
+# `rush install`, then build only the collector subtree.
+RUN node common/scripts/install-run-rush.js update
+RUN node common/scripts/install-run-rush.js build --to @hanzo/pod-analytics-collector
+
+# Server bundle (esbuild -> bundle/bundle.js).
+RUN cd services/analytics-collector/pod-analytics-collector \
+ && node ../../../common/scripts/install-run-rushx.js bundle
+
+# Runtime: the same base + layout the stock collector image uses.
+FROM ghcr.io/hanzoai/base-slim:v20250916
+WORKDIR /usr/src/app
+COPY --from=build /app/services/analytics-collector/pod-analytics-collector/bundle/bundle.js ./
+RUN mkdir -p /usr/src/geodb
+COPY --from=build /app/services/analytics-collector/pod-analytics-collector/geodb/ /usr/src/geodb/
+EXPOSE 4007
+CMD ["node", "bundle.js"]

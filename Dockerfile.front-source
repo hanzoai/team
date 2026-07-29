@@ -1,0 +1,37 @@
+# From-source build of the Hanzo Team front (SPA + node static server) with the ZAP
+# transport. The stock pods/front/Dockerfile only COPYs a pre-built dist/; this
+# builds it from the monorepo so an in-cluster build (GitHub Actions is down)
+# can produce a fresh bundle that includes dev/prod/src/zap-*.ts.
+FROM node:22-bookworm AS build
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3 make g++ git ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY . .
+ENV PUPPETEER_SKIP_DOWNLOAD=true \
+    NODE_OPTIONS=--max-old-space-size=12288
+
+# Install the whole workspace. develop's pnpm-lock is stale (mid-rename), so use
+# `rush update` (regenerate the lock from the current package.json graph) rather
+# than the frozen `rush install`. Then build the front subtree's libs.
+RUN node common/scripts/install-run-rush.js update
+RUN node common/scripts/install-run-rush.js build --to @hanzo/prod --to @hanzo/pod-front
+
+# SPA bundle (webpack -> dev/prod/dist).
+RUN cd dev/prod && node ../../common/scripts/install-run-rushx.js package
+
+# Node static-server bundle (esbuild) + assemble dist/ (copies dev/prod/dist).
+# MODEL_VERSION is kept low so the client accepts whatever model team-go serves.
+RUN cd pods/front \
+ && export MODEL_VERSION="$(node ../../common/scripts/show_version.js 2>/dev/null || echo 0.6.0)" \
+ && export VERSION="$(node ../../common/scripts/show_tag.js 2>/dev/null || echo 0.7.389)" \
+ && node ../../common/scripts/install-run-rushx.js bundle \
+ && node ../../common/scripts/install-run-rushx.js package
+
+# Runtime: the same base the stock front image uses.
+FROM ghcr.io/hanzoai/front-base:v20250916
+WORKDIR /app
+COPY --from=build /app/pods/front/bundle/bundle.js ./
+COPY --from=build /app/pods/front/bundle/bundle.js.map ./bundle.js.map
+COPY --from=build /app/pods/front/dist ./dist/
+EXPOSE 8080
+CMD ["node", "./bundle.js"]
