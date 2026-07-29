@@ -64,7 +64,7 @@ func main() {
 		IAMClientSecret: os.Getenv("IAM_CLIENT_SECRET"),
 		IAMOrg:          envOr("IAM_ORG", "hanzo"),
 		IAMApp:          envOr("IAM_APP", "hanzo-team"),
-		KMSEndpoint:     envOr("KMS_ENDPOINT", "https://kms.hanzo.ai"),
+		KMSEndpoint:     os.Getenv("KMS_ENDPOINT"), // empty = base's canonical in-cluster ZAP default
 	})
 
 	// ---- Native-Go services ----

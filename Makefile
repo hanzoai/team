@@ -30,8 +30,12 @@ functions:
 			functions/*.fn.ts; \
 	fi
 
+# -race needs cgo, and a cgo build only has SQLite's math functions behind
+# csqlite's sqlite_math_functions tag — base makes the mismatch a compile
+# error rather than a search that 500s only under cgo. The product itself
+# ships CGO_ENABLED=0 (see Dockerfile), which always has them.
 test:
-	go test -race -cover ./...
+	go test -race -cover -tags sqlite_math_functions ./...
 
 fmt:
 	gofmt -w .
