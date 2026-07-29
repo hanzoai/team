@@ -1,14 +1,24 @@
-<p align="center"><img src=".github/hero.svg" alt="team-go" width="880"></p>
+<p align="center"><img src=".github/hero.svg" alt="team" width="880"></p>
 
 # hanzo-team
 
-> **ARCHIVED.** hanzo.team is served in-process by the unified cloud binary —
-> [`hanzoai/cloud`](https://github.com/hanzoai/cloud) `clients/team`. All
-> hardening and features land there; this standalone repo is retired.
+> **The standalone binary is retired, this module is not.** hanzo.team is served
+> in-process by the unified cloud binary —
+> [`hanzoai/cloud`](https://github.com/hanzoai/cloud) `apps/team` — which imports
+> the packages here. Features and hardening land in both: the behaviour lives
+> here, the process boundary lives there.
+>
+> - backend module — this repo, `github.com/hanzoai/team`
+> - live process — `hanzoai/cloud` `apps/team`
+> - frontend — [`hanzoai/gui`](https://github.com/hanzoai/gui) `apps/team`
+>   (`@hanzogui/team`: web, iOS, Android, desktop)
+> - the Huly-derived TypeScript lineage this replaced —
+>   [`hanzoai/team-v1`](https://github.com/hanzoai/team-v1)
 
 Single-binary Go backend for `hanzo.team`. Replaces the 40+
-TypeScript/Node microservices the upstream fork shipped, while keeping the
-existing Svelte frontend.
+TypeScript/Node microservices the upstream fork shipped. The Svelte frontend it
+was originally built against now lives on in `hanzoai/team-v1`; current clients
+are served by `@hanzogui/team`.
 
 ## What this is
 
