@@ -1,12 +1,13 @@
-module github.com/hanzoai/team
+module github.com/hanzoai/team-go
 
 go 1.26.5
 
 require (
-	github.com/google/uuid v1.6.0
-	github.com/hanzoai/base v1.5.10
+	github.com/google/uuid v1.6.1-0.20241114170450-2d3c2a9cc518
+	github.com/hanzoai/base v1.5.11
 	github.com/hanzoai/dbx v1.17.2
-	github.com/hanzoai/sqlite v0.3.2
+	github.com/hanzoai/sqlite v0.4.0
+	github.com/hanzoai/team v0.4.8
 	github.com/luxfi/metric v1.8.1
 	golang.org/x/net v0.56.0
 )
@@ -40,7 +41,7 @@ require (
 	github.com/go-sourcemap/sourcemap v2.1.4+incompatible // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/pprof v0.0.0-20260302011040-a15ffb7f9dcc // indirect
+	github.com/google/pprof v0.0.0-20260402051712-545e8a4df936 // indirect
 	github.com/gorilla/rpc v1.2.1 // indirect
 	github.com/grandcat/zeroconf v1.0.0 // indirect
 	github.com/gtank/merlin v0.1.1 // indirect
@@ -48,8 +49,8 @@ require (
 	github.com/hanzoai/csqlite v0.1.0 // indirect
 	github.com/hanzoai/orm v0.6.16 // indirect
 	github.com/hanzoai/pubsub-go v1.0.0 // indirect
-	github.com/hanzoai/sqlcipher v0.1.0 // indirect
-	github.com/hanzoai/tasks v1.52.0 // indirect
+	github.com/hanzoai/sqlcipher v0.1.1 // indirect
+	github.com/hanzoai/tasks v1.52.4 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/holiman/uint256 v1.3.2 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -93,8 +94,8 @@ require (
 	github.com/luxfi/sampler v1.1.0 // indirect
 	github.com/luxfi/threshold v1.12.3 // indirect
 	github.com/luxfi/tls v1.1.1 // indirect
-	github.com/luxfi/vm v1.3.1 // indirect
-	github.com/luxfi/zap v1.2.6 // indirect
+	github.com/luxfi/vm v1.3.2 // indirect
+	github.com/luxfi/zap v1.2.7 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
 	github.com/miekg/dns v1.1.72 // indirect
@@ -122,18 +123,22 @@ require (
 	github.com/zeebo/blake3 v0.2.4 // indirect
 	go.uber.org/mock v0.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/crypto v0.53.0 // indirect
+	golang.org/x/crypto v0.54.0 // indirect
 	golang.org/x/exp v0.0.0-20260529124908-c761662dc8c9 // indirect
 	golang.org/x/image v0.38.0 // indirect
-	golang.org/x/mod v0.36.0 // indirect
+	golang.org/x/mod v0.37.0 // indirect
 	golang.org/x/oauth2 v0.36.0 // indirect
-	golang.org/x/sync v0.21.0 // indirect
-	golang.org/x/sys v0.46.0 // indirect
-	golang.org/x/text v0.38.0 // indirect
+	golang.org/x/sync v0.22.0 // indirect
+	golang.org/x/sys v0.47.0 // indirect
+	golang.org/x/text v0.40.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
-	golang.org/x/tools v0.45.0 // indirect
+	golang.org/x/tools v0.47.0 // indirect
 	gonum.org/v1/gonum v0.17.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	modernc.org/libc v1.72.3 // indirect
+	modernc.org/mathutil v1.7.1 // indirect
+	modernc.org/memory v1.11.0 // indirect
+	modernc.org/sqlite v1.51.0 // indirect
 )
