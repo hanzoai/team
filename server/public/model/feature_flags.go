@@ -151,6 +151,9 @@ type FeatureFlags struct {
 	// Enable verifying plugin signatures against the MFI public key, in addition to the
 	// existing hard-coded Mattermost public key and any admin-configured public keys.
 	EnableMFIPluginSignaturePublicKey bool
+
+	// EnableExperienceAPI gates the DDIL experience surface area.
+	EnableExperienceAPI bool
 }
 
 func (f *FeatureFlags) SetDefaults() {
@@ -215,6 +218,8 @@ func (f *FeatureFlags) SetDefaults() {
 	f.EnableConcurrentReact = false
 
 	f.EnableMFIPluginSignaturePublicKey = true
+
+	f.EnableExperienceAPI = true
 }
 
 // IsChannelPermissionPoliciesEnabled reports whether channel-scope

@@ -248,7 +248,8 @@ func (a *App) SessionHasPermissionToCreateJob(session model.Session, job *model.
 		model.JobTypeCloud,
 		model.JobTypeExtractContent,
 		model.JobTypeCleanupExpiredAccessTokens,
-		model.JobTypeNotifyExpiringAccessTokens:
+		model.JobTypeNotifyExpiringAccessTokens,
+		model.JobTypeCleanupPreferenceDeletions:
 		return a.SessionHasPermissionTo(session, model.PermissionManageJobs), model.PermissionManageJobs
 	case model.JobTypeAccessControlTeamSync:
 		if a.SessionHasPermissionTo(session, model.PermissionManageSystem) {
@@ -332,7 +333,8 @@ func (a *App) SessionHasPermissionToManageJob(session model.Session, job *model.
 		model.JobTypeExportDelete,
 		model.JobTypeCloud,
 		model.JobTypeExtractContent,
-		model.JobTypeCleanupExpiredAccessTokens:
+		model.JobTypeCleanupExpiredAccessTokens,
+		model.JobTypeCleanupPreferenceDeletions:
 		permission = model.PermissionManageJobs
 	case model.JobTypeAccessControlSync:
 		permission = model.PermissionManageSystem
@@ -380,7 +382,8 @@ func (a *App) SessionHasPermissionToReadJob(session model.Session, jobType strin
 		model.JobTypeCloud,
 		model.JobTypeMobileSessionMetadata,
 		model.JobTypeExtractContent,
-		model.JobTypeCleanupExpiredAccessTokens:
+		model.JobTypeCleanupExpiredAccessTokens,
+		model.JobTypeCleanupPreferenceDeletions:
 		return a.SessionHasPermissionTo(session, model.PermissionReadJobs), model.PermissionReadJobs
 	case model.JobTypeAccessControlSync:
 		return a.SessionHasPermissionTo(session, model.PermissionManageSystem), model.PermissionManageSystem
