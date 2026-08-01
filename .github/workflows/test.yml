@@ -33,7 +33,11 @@ jobs:
       - name: Install C toolchain for the race detector
         run: sudo apt-get update && sudo apt-get install -y gcc
       # The race detector needs the cgo runtime; enable it just for the test run.
-      - run: CGO_ENABLED=1 go test -race ./...
+      # Under cgo, SQLite's math functions exist only behind csqlite's
+      # sqlite_math_functions tag, and base turns that mismatch into a compile
+      # error rather than a search that 500s only under cgo — so the tag rides
+      # along here exactly as it does in `make test`.
+      - run: CGO_ENABLED=1 go test -race -tags sqlite_math_functions ./...
 
   # Live visual e2e (Playwright) against the deployment. Non-hermetic by nature —
   # it needs a real OIDC login — so it runs only when the login secret is present
