@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Stage 1 — toolchain build (transpile .ts + go build).
-FROM golang:1.26.4-alpine AS build
+FROM golang:1.26.5-alpine AS build
 
 RUN apk add --no-cache git make bash nodejs npm ca-certificates tzdata
 RUN npm install -g esbuild
