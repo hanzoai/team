@@ -72,6 +72,18 @@ jobs:
       NODE_OPTIONS: --max-old-space-size=4096
       # Some workspace dev deps fetch a browser on postinstall. Nothing here runs one.
       PUPPETEER_SKIP_DOWNLOAD: 'true'
+      # caniuse-lite is pinned by the lockfile, so browserslist starts printing an
+      # "N months old" notice once that pin crosses six months. It writes to
+      # stderr, rush scores any stderr from an operation as a warning, and
+      # `_phase:package` sets allowWarningsOnSuccess:false — so rush exits 1 with
+      # "Operations succeeded with warnings" AFTER all three images have already
+      # been built, and the push steps are skipped by `success()`. Silencing the
+      # notice keeps that phase strict for warnings that are about this code: the
+      # resolved target list is byte-identical either way, so the bundles do not
+      # change. Refreshing caniuse-lite instead would regenerate the lockfile the
+      # install step deliberately treats as frozen — that is a reviewed dependency
+      # bump, not a build fix.
+      BROWSERSLIST_IGNORE_OLD_DATA: '1'
 
     steps:
       # Full history + tags: the bundles stamp their version from `git describe`
