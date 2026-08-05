@@ -62,9 +62,14 @@ jobs:
       # exceeding it EVICTS the pod mid-build.
       DOCKER_BUILD_CLEANUP: 'true'
 
-      # dev/prod's webpack bundle (pods/front's `_phase:package` input) needs the
-      # headroom — the repo's own from-source Dockerfiles set the same value.
-      NODE_OPTIONS: --max-old-space-size=12288
+      # Bound the V8 heap to what this POD can hold, not to what the node has.
+      # A job here sees the node's 32 GB, not the pod's 26Gi limit, so an
+      # unbounded (or over-granted) heap lets webpack balloon until the cgroup
+      # kills it — silently, with no output and no kubelet event, because the
+      # process dies inside the pod's own dockerd. 4096 is what actually built
+      # these images: the previous GitHub builder ran this same webpack step on a
+      # 16 GB ubuntu-latest runner with node's default heap and no override.
+      NODE_OPTIONS: --max-old-space-size=4096
       # Some workspace dev deps fetch a browser on postinstall. Nothing here runs one.
       PUPPETEER_SKIP_DOWNLOAD: 'true'
 
@@ -100,11 +105,17 @@ jobs:
       # image: the three pods share most of that closure, and a matrix would
       # install the workspace and compile the shared libraries three times over.
       #
-      # -p 4 bounds the fan-out. `nproc` inside a job here reports the NODE's
+      # -p 2 bounds the fan-out. `nproc` inside a job here reports the NODE's
       # cores, not the runner pod's 6-CPU / 26Gi limit, so rush's default
-      # parallelism oversubscribes the cgroup — the same hole GOFLAGS=-p=2 and
-      # CARGO_BUILD_JOBS=4 close for Go and Rust in the runner's own config. If a
-      # build dies mid-compile, lower this before suspecting the repo.
+      # parallelism oversubscribes the cgroup — the same hole GOFLAGS=-p=2 closes
+      # for Go in the runner's own config, and the same number. It matters most at
+      # the tail, where the webpack package step runs alongside buildkit
+      # extracting base layers for the other two images.
+      #
+      # -v streams each operation's output instead of buffering it until the
+      # operation ends. A process killed by the cgroup writes nothing on its way
+      # out, so buffered mode reports the failure as an empty log; streamed, the
+      # truncation point is visible and the failure is diagnosable.
       - name: Build the images
         run: |
           set -euo pipefail
@@ -114,7 +125,7 @@ jobs:
             to="$to --to @hanzoteam/$project"
           done <<< "$BUILDS"
           echo "building:$to"
-          node common/scripts/install-run-rush.js docker:build -p 4 $to
+          node common/scripts/install-run-rush.js docker:build -v -p 2 $to
 
       # Without this the push is unauthenticated and 403s at the registry.
       - uses: docker/login-action@v3
