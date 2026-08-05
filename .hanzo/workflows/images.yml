@@ -62,13 +62,13 @@ jobs:
       # exceeding it EVICTS the pod mid-build.
       DOCKER_BUILD_CLEANUP: 'true'
 
-      # Bound the V8 heap to what this POD can hold, not to what the node has.
-      # A job here sees the node's 32 GB, not the pod's 26Gi limit, so an
-      # unbounded (or over-granted) heap lets webpack balloon until the cgroup
-      # kills it — silently, with no output and no kubelet event, because the
-      # process dies inside the pod's own dockerd. 4096 is what actually built
-      # these images: the previous GitHub builder ran this same webpack step on a
-      # 16 GB ubuntu-latest runner with node's default heap and no override.
+      # Bound the V8 heap to what this POD can hold, not to what the node has: a
+      # job here sees the node's 32 GB, never the pod's 26Gi limit, so an
+      # unbounded heap sizes itself against memory the cgroup will not give it.
+      # 4096 is measured, not guessed — under it the dev/prod webpack build
+      # compiles the full 91.5 MiB module graph in 161s without ever reaching the
+      # ceiling, and it is the heap the previous GitHub builder had by default on
+      # a 16 GB ubuntu-latest runner when it cut the images now in production.
       NODE_OPTIONS: --max-old-space-size=4096
       # Some workspace dev deps fetch a browser on postinstall. Nothing here runs one.
       PUPPETEER_SKIP_DOWNLOAD: 'true'
@@ -112,10 +112,12 @@ jobs:
       # the tail, where the webpack package step runs alongside buildkit
       # extracting base layers for the other two images.
       #
-      # -v streams each operation's output instead of buffering it until the
-      # operation ends. A process killed by the cgroup writes nothing on its way
-      # out, so buffered mode reports the failure as an empty log; streamed, the
-      # truncation point is visible and the failure is diagnosable.
+      # -v streams each operation's output. It is load-bearing, not decoration:
+      # rush's buffered failure summary reports only the last few lines, which for
+      # this build is a browserslist notice and `Exit code: 1` — no cause at all.
+      # Streamed, the same failure names itself ("compiled with 2 errors" and the
+      # two module paths). Without -v this pipeline reports build breakage as a
+      # blank log, which is indistinguishable from infrastructure failure.
       - name: Build the images
         run: |
           set -euo pipefail
