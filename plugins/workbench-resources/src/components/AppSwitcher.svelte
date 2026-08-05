@@ -1,12 +1,11 @@
 <script lang="ts">
-  import core, { AccountRole, getCurrentAccount, type Ref } from '@hanzoteam/core'
-  import type { Application } from '@hanzoteam/workbench'
-  import { createQuery } from '@hanzoteam/presentation'
-  import workbench from '@hanzoteam/workbench'
-  import { hideApplication, isAllowedToRole, showApplication } from '../utils'
-  import { Loading, IconCheck, Label, Icon } from '@hanzoteam/ui'
-  import { getMetadata } from '@hanzoteam/platform'
-  // import Drag from './icons/Drag.svelte'
+    import core, { getCurrentAccount, type Ref } from '@hanzoteam/core'
+    import { createQuery } from '@hanzoteam/presentation'
+    import { Icon, IconCheck, Label, Loading } from '@hanzoteam/ui'
+    import type { Application } from '@hanzoteam/workbench'
+    import workbench from '@hanzoteam/workbench'
+    import { onMount } from 'svelte'
+    import { hideApplication, showApplication } from '../utils'
 
     export let apps: Application[] = []
     export let plan: string
@@ -107,24 +106,20 @@
             <Label label={app.label} />
           </span>
 
-  const filteredApps = apps.filter(
-    (it) =>
-      !hiddenAppsIds.includes(it._id) &&
-      isAllowedToRole(it.accessLevel, me) &&
-      it.position !== 'top' &&
-      !isExcludedApp(it.alias)
-  )
-
-  function isExcludedApp (alias: string): boolean {
-    const me = getCurrentAccount()
-
-    if (me.role === AccountRole.ReadOnlyGuest || me.role === AccountRole.Guest) {
-      return (getMetadata(workbench.metadata.ExcludedApplicationsForAnonymous) ?? []).includes(alias)
-    } else {
-      return false
-    }
-  }
-</script>
+          <div class="ap-check" on:click={(e) => {
+            if (plan === 'cloud:free' && i >= 2) {
+              e.stopPropagation()
+              showUpgradePopup()
+            }
+          }}>
+            {#if !hiddenAppsIds.includes(app._id)}
+              <IconCheck size={'small'} />
+            {:else if plan === 'cloud:free' && i >= 2}
+              <span style="color: red; font-size: 18px;">🔒</span>
+            {/if}
+          </div>
+        </button>
+      {/each}
 
         {:else}
           <div class="ap-menuItem empty">
