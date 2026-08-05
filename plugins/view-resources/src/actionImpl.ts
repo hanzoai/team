@@ -50,7 +50,7 @@ import {
 } from './selection'
 import { deleteObjects, getObjectId, getObjectLinkFragment, restrictionStore } from './utils'
 import workbenchPlugin from '@hanzoteam/workbench'
-import { CopyAsMarkdownTable } from './copyAsMarkdownTable'
+import converter from '@hanzoteam/converter'
 import { viewletContextStore } from './viewletContextStore'
 
 /**
@@ -749,7 +749,8 @@ async function CopyAsMarkdownTableAction (
     viewOptions: props.viewOptions ?? viewletContext?.viewOptions
   }
 
-  await CopyAsMarkdownTable(doc, evt, mergedProps)
+  const copyFn = await getResource(converter.actionImpl.CopyAsMarkdownTable)
+  await copyFn(doc, evt, mergedProps)
 }
 
 /**
