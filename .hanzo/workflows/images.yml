@@ -1,0 +1,159 @@
+name: images
+# THE builder for the three ghcr.io/hanzoai images this repo owns and
+# hanzoai/universe deploys:
+#
+#   pods/front                                            -> ghcr.io/hanzoai/front
+#   services/love                                         -> ghcr.io/hanzoai/love
+#   services/analytics-collector/pod-analytics-collector  -> ghcr.io/hanzoai/analytics-collector
+#
+# `.github/workflows/build-images.yml` cut them until the native-forge migration
+# deleted it and put nothing in its place, so main has had NO builder: the live
+# pins (front v0.7.404, love v0.7.388, analytics-collector v0.7.390) are the last
+# images GitHub Actions ever produced and every commit since has shipped nothing.
+#
+# This runs on the git.hanzo.ai runner pool; ghcr auth is the hanzoai org's
+# GHCR_USER / GHCR_TOKEN, the same pair every other native pipeline uses.
+#
+# Adding `.hanzo/workflows/` switches this repo's `.github/workflows/` off
+# wholesale — the forge's WORKFLOW_DIRS is first-match, not a union. Nothing is
+# lost here: that directory holds only `integrations._yml`, whose extension is
+# not one the forge reads, so it was already inert.
+#
+# ROLLOUT IS NOT HERE. This cuts images. WHICH image runs is a reviewed pin bump
+# in hanzoai/universe applied by cd.hanzo.ai, whose selfHeal reverts a CI-side
+# patch within minutes.
+
+on:
+  push:
+    branches: [main]
+    # A prose-only commit would rebuild byte-identical images across a ~200-project
+    # workspace on a 10-runner shared pool. Code changes still trigger; use
+    # workflow_dispatch to force one.
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_dispatch:
+
+concurrency:
+  group: images-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  images:
+    # Must name a label the runners actually advertise (git-runner-config
+    # runner.labels). A label nothing carries does not fail — it queues.
+    runs-on: [hanzo-build-linux-amd64]
+    timeout-minutes: 180
+    env:
+      # ONE list, read three times. Left: the Rush project to build
+      # (@hanzoteam/<name>). Right: the image its own package.json `docker:build`
+      # already produces (ghcr.io/hanzoai/<name>). Adding an image is a line here.
+      BUILDS: |
+        pod-front front
+        pod-love love
+        pod-analytics-collector analytics-collector
+
+      # Read by the repo's own common/scripts/docker_build.sh, so the images are
+      # tagged into the ghcr namespace at build time and never re-tagged.
+      DOCKER_REGISTRY: ghcr.io/
+      DOCKER_EXTRA: --platform=linux/amd64
+      # Drop each pod's bundle/ and dist/ once its image exists. The runner's
+      # docker-storage is a 38Gi emptyDir shared by every job on the pod, and
+      # exceeding it EVICTS the pod mid-build.
+      DOCKER_BUILD_CLEANUP: 'true'
+
+      # dev/prod's webpack bundle (pods/front's `_phase:package` input) needs the
+      # headroom — the repo's own from-source Dockerfiles set the same value.
+      NODE_OPTIONS: --max-old-space-size=12288
+      # Some workspace dev deps fetch a browser on postinstall. Nothing here runs one.
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
+
+    steps:
+      # Full history + tags: the bundles stamp their version from `git describe`
+      # (common/scripts/show_tag.js, show_version.js). Shallow silently stamps the
+      # fallback instead of failing.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      # v22 per .nvmrc (rush.json admits >=20 <26). Pinned to the file so the
+      # runner image's own node cannot drift the build.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      # ONE name for this build, defined once and read by three consumers:
+      # docker_build.sh (which applies it as the image tag), the push, the verify.
+      - name: Name the build after the commit
+        run: echo "DOCKER_VERSION=sha-$(echo "$GITHUB_SHA" | cut -c1-7)" >> "$GITHUB_ENV"
+
+      # Frozen install from the committed lockfile. NOT `rush update`: that
+      # regenerates the lock, so CI would build a dependency graph nobody
+      # reviewed. A stale lock must fail here, loudly.
+      - name: Install the workspace
+        run: node common/scripts/install-run-rush.js install
+
+      # `--to` selects each pod plus its dependency closure (292 of the repo's 485
+      # projects), and of those exactly these three declare a `_phase:docker-build`
+      # — so precisely three images are built. One invocation, not one job per
+      # image: the three pods share most of that closure, and a matrix would
+      # install the workspace and compile the shared libraries three times over.
+      #
+      # -p 4 bounds the fan-out. `nproc` inside a job here reports the NODE's
+      # cores, not the runner pod's 6-CPU / 26Gi limit, so rush's default
+      # parallelism oversubscribes the cgroup — the same hole GOFLAGS=-p=2 and
+      # CARGO_BUILD_JOBS=4 close for Go and Rust in the runner's own config. If a
+      # build dies mid-compile, lower this before suspecting the repo.
+      - name: Build the images
+        run: |
+          set -euo pipefail
+          to=""
+          while read -r project _image; do
+            [ -n "$project" ] || continue
+            to="$to --to @hanzoteam/$project"
+          done <<< "$BUILDS"
+          echo "building:$to"
+          node common/scripts/install-run-rush.js docker:build -p 4 $to
+
+      # Without this the push is unauthenticated and 403s at the registry.
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USER }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      # docker_build.sh already applied both tags: `:$DOCKER_VERSION` and the bare
+      # name, which is `:latest`. `latest` MOVES ONLY ON MAIN — a workflow_dispatch
+      # from a branch must not repoint the floating tag production reads.
+      - name: Push the images
+        run: |
+          set -euo pipefail
+          while read -r _project image; do
+            [ -n "$image" ] || continue
+            docker push "ghcr.io/hanzoai/$image:$DOCKER_VERSION"
+            if [ "$GITHUB_REF" = "refs/heads/main" ]; then
+              docker push "ghcr.io/hanzoai/$image:latest"
+            fi
+          done <<< "$BUILDS"
+
+      # A push can return before its manifest resolves, so a green run could still
+      # mean a future ImagePullBackOff. Prove every tag pulls.
+      - name: Verify the pushed images resolve
+        run: |
+          set -euo pipefail
+          while read -r _project image; do
+            [ -n "$image" ] || continue
+            ref="ghcr.io/hanzoai/$image:$DOCKER_VERSION"
+            ok=false
+            for i in 1 2 3 4 5 6; do
+              if docker manifest inspect "$ref" >/dev/null 2>&1; then ok=true; break; fi
+              echo "$ref not visible yet (attempt $i/6) — retrying"
+              sleep 5
+            done
+            if [ "$ok" != true ]; then
+              echo "::error::pushed image never resolved: $ref"
+              exit 1
+            fi
+            echo "resolved $ref"
+          done <<< "$BUILDS"
