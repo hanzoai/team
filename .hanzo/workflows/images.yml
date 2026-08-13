@@ -11,6 +11,10 @@ name: images
 # pins (front v0.7.404, love v0.7.388, analytics-collector v0.7.390) are the last
 # images GitHub Actions ever produced and every commit since has shipped nothing.
 #
+# Every build publishes TWO tags per image — a semver, derived by hanzoai/ci's
+# bin/imgver as the registry's highest plus a patch, and `sha-<sha7>` beside it.
+# The version is the one a universe pin names; the sha says which commit it is.
+#
 # This runs on the git.hanzo.ai runner pool; ghcr auth is the hanzoai org's
 # GHCR_USER / GHCR_TOKEN, the same pair every other native pipeline uses.
 #
@@ -100,10 +104,52 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      # ONE name for this build, defined once and read by three consumers:
-      # docker_build.sh (which applies it as the image tag), the push, the verify.
-      - name: Name the build after the commit
-        run: echo "DOCKER_VERSION=sha-$(echo "$GITHUB_SHA" | cut -c1-7)" >> "$GITHUB_ENV"
+      # THE VERSION THIS BUILD PUBLISHES, and the sha beside it. Two names for one
+      # build: the version a pin can read, the sha to trace it back to a commit.
+      #
+      # This step used to compute `sha-<sha7>` and nothing else, so a sha was the
+      # only tag these three images had ever been given by this lane — which is
+      # why universe still pins front at v0.7.404, cut by the GitHub builder that
+      # the forge migration deleted. A pin cannot name what a build never named.
+      #
+      # bin/imgver is the fleet's ONE implementation of the number (hanzoai/ci@v1,
+      # the same script its build.yml runs): the highest semver already at the
+      # registry for that image, plus a patch, so one name can never cover two
+      # digests. Read once per image and the MAXIMUM taken, because one commit
+      # here cuts three images that move together — one number names the set, and
+      # the max is free on all three (front is furthest along at v0.7.404, love at
+      # v0.7.388, analytics-collector at v0.7.390).
+      #
+      # Nothing backs imgver up if the registry read fails, ON PURPOSE: this repo
+      # declares no version anywhere imgver looks, so it exits non-zero and the
+      # build goes red rather than quietly re-publishing a number already out
+      # there over different bytes.
+      - name: The version this build publishes
+        env:
+          # imgver reads the registry floor over the GitHub Packages API. This is
+          # the credential that pushes these three packages a few steps below, so
+          # it is the one proven to see them.
+          GH_PAT: ${{ secrets.GHCR_TOKEN }}
+        run: |
+          set -euo pipefail
+          # The forge first — it is where hanzoai/ci is written, GitHub is its
+          # mirror — and the break tests for the TOOL, so a host answering with
+          # the wrong tree falls through instead of dead-ending.
+          for url in https://git.hanzo.ai/hanzoai/ci https://github.com/hanzoai/ci; do
+            git clone -q --depth 1 --branch v1 "$url" "$RUNNER_TEMP/ci" \
+              && [ -x "$RUNNER_TEMP/ci/bin/imgver" ] && break
+            rm -rf "$RUNNER_TEMP/ci"
+          done
+          [ -x "$RUNNER_TEMP/ci/bin/imgver" ] \
+            || { echo "::error::could not fetch hanzoai/ci@v1 (bin/imgver) from any host"; exit 1; }
+          version=$(while read -r _project image; do
+            [ -n "$image" ] || continue
+            "$RUNNER_TEMP/ci/bin/imgver" "ghcr.io/hanzoai/$image" .
+          done <<< "$BUILDS" | sort -V | tail -1)
+          [ -n "$version" ] || { echo "::error::imgver named no version"; exit 1; }
+          echo "publishing $version"
+          echo "DOCKER_VERSION=$version" >> "$GITHUB_ENV"
+          echo "SHA_TAG=sha-$(echo "$GITHUB_SHA" | cut -c1-7)" >> "$GITHUB_ENV"
 
       # Frozen install from the committed lockfile. NOT `rush update`: that
       # regenerates the lock, so CI would build a dependency graph nobody
@@ -148,15 +194,19 @@ jobs:
           username: ${{ secrets.GHCR_USER }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      # docker_build.sh already applied both tags: `:$DOCKER_VERSION` and the bare
-      # name, which is `:latest`. `latest` MOVES ONLY ON MAIN — a workflow_dispatch
-      # from a branch must not repoint the floating tag production reads.
+      # docker_build.sh already applied `:$DOCKER_VERSION` and the bare name, which
+      # is `:latest`. The sha is applied here rather than there because it is a
+      # second name for bytes the build has already produced, not an input to it.
+      # `latest` MOVES ONLY ON MAIN — a workflow_dispatch from a branch must not
+      # repoint the floating tag production reads.
       - name: Push the images
         run: |
           set -euo pipefail
           while read -r _project image; do
             [ -n "$image" ] || continue
+            docker tag "ghcr.io/hanzoai/$image:$DOCKER_VERSION" "ghcr.io/hanzoai/$image:$SHA_TAG"
             docker push "ghcr.io/hanzoai/$image:$DOCKER_VERSION"
+            docker push "ghcr.io/hanzoai/$image:$SHA_TAG"
             if [ "$GITHUB_REF" = "refs/heads/main" ]; then
               docker push "ghcr.io/hanzoai/$image:latest"
             fi
@@ -180,5 +230,9 @@ jobs:
               echo "::error::pushed image never resolved: $ref"
               exit 1
             fi
-            echo "resolved $ref"
+            # A pin is repo:tag@digest — the tag is how a human reads the release,
+            # the digest is what the kubelet actually honours. Print both, so the
+            # pin can be read off the run instead of looked up separately later.
+            dig=$(docker inspect --format '{{index .RepoDigests 0}}' "$ref" 2>/dev/null | cut -d@ -f2)
+            echo "resolved $ref${dig:+@$dig}"
           done <<< "$BUILDS"
