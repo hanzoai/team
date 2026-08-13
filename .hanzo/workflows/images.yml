@@ -233,6 +233,9 @@ jobs:
             # A pin is repo:tag@digest — the tag is how a human reads the release,
             # the digest is what the kubelet actually honours. Print both, so the
             # pin can be read off the run instead of looked up separately later.
-            dig=$(docker inspect --format '{{index .RepoDigests 0}}' "$ref" 2>/dev/null | cut -d@ -f2)
+            # `|| true` because this is a courtesy, not a check: the tag has
+            # already been proven to resolve, and an image with no RepoDigests
+            # must not turn a good build red under `set -e`.
+            dig=$(docker inspect --format '{{index .RepoDigests 0}}' "$ref" 2>/dev/null | cut -d@ -f2 || true)
             echo "resolved $ref${dig:+@$dig}"
           done <<< "$BUILDS"
