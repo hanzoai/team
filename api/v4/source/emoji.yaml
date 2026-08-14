@@ -1,4 +1,4 @@
-  /api/v4/emoji:
+  /v1/team/emoji:
     post:
       tags:
         - emoji
@@ -90,7 +90,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/emoji/{emoji_id}":
+  "/v1/team/emoji/{emoji_id}":
     get:
       tags:
         - emoji
@@ -155,7 +155,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/emoji/name/{emoji_name}":
+  "/v1/team/emoji/name/{emoji_name}":
     get:
       tags:
         - emoji
@@ -189,7 +189,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/emoji/{emoji_id}/image":
+  "/v1/team/emoji/{emoji_id}/image":
     get:
       tags:
         - emoji
@@ -219,7 +219,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/emoji/search:
+  /v1/team/emoji/search:
     post:
       tags:
         - emoji
@@ -268,7 +268,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/emoji/autocomplete:
+  /v1/team/emoji/autocomplete:
     get:
       tags:
         - emoji
@@ -306,7 +306,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/emoji/names:
+  /v1/team/emoji/names:
     post:
       tags:
         - emoji

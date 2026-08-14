@@ -22,17 +22,17 @@ func TestCleanRegexp(t *testing.T) {
 		input string
 		want  string
 	}{
-		{"/api/v4/users/{user_id:[0-9]+}", "/api/v4/users/{user_id}"},
-		{"/api/v4/users/{username:[A-Za-z0-9\\_\\-\\.]+}", "/api/v4/users/{username}"},
-		{"/api/v4/jobs/type/{job_type:[A-Za-z0-9_-]+}", "/api/v4/jobs/type/{job_type}"},
+		{"/v1/team/users/{user_id:[0-9]+}", "/v1/team/users/{user_id}"},
+		{"/v1/team/users/{username:[A-Za-z0-9\\_\\-\\.]+}", "/v1/team/users/{username}"},
+		{"/v1/team/jobs/type/{job_type:[A-Za-z0-9_-]+}", "/v1/team/jobs/type/{job_type}"},
 		// Literal-value constraints (e.g., {websocket:websocket}) are stripped like any other.
-		{"/api/v4/{websocket:websocket}", "/api/v4/{websocket}"},
+		{"/v1/team/{websocket:websocket}", "/v1/team/{websocket}"},
 		// Group-alternation patterns must be left intact for splitHandlerByGroup.
-		{"/api/v4/groups/{group_id}/{syncable_type:teams|channels}/{syncable_id}/link", "/api/v4/groups/{group_id}/{syncable_type:teams|channels}/{syncable_id}/link"},
+		{"/v1/team/groups/{group_id}/{syncable_type:teams|channels}/{syncable_id}/link", "/v1/team/groups/{group_id}/{syncable_type:teams|channels}/{syncable_id}/link"},
 		// No constraint — unchanged.
-		{"/api/v4/users/{user_id}/posts", "/api/v4/users/{user_id}/posts"},
+		{"/v1/team/users/{user_id}/posts", "/v1/team/users/{user_id}/posts"},
 		// Multiple constrained params in one path.
-		{"/api/v4/users/{user_id:[0-9]+}/posts/{post_id:[0-9]+}", "/api/v4/users/{user_id}/posts/{post_id}"},
+		{"/v1/team/users/{user_id:[0-9]+}/posts/{post_id:[0-9]+}", "/v1/team/users/{user_id}/posts/{post_id}"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.input, func(t *testing.T) {
@@ -51,44 +51,44 @@ func TestMatchesTemplate(t *testing.T) {
 	}{
 		// Exact match.
 		{
-			"/api/v4/groups/{group_id}/teams/{syncable_id}/link",
-			"/api/v4/groups/{group_id}/teams/{syncable_id}/link",
+			"/v1/team/groups/{group_id}/teams/{syncable_id}/link",
+			"/v1/team/groups/{group_id}/teams/{syncable_id}/link",
 			true,
 		},
 		// Spec param matches handler literal segment.
 		{
-			"/api/v4/groups/{group_id}/{syncable_type}/{syncable_id}/link",
-			"/api/v4/groups/{group_id}/channels/{syncable_id}/link",
+			"/v1/team/groups/{group_id}/{syncable_type}/{syncable_id}/link",
+			"/v1/team/groups/{group_id}/channels/{syncable_id}/link",
 			true,
 		},
 		// Spec literal does not match a different handler literal.
 		{
-			"/api/v4/groups/{group_id}/teams/{syncable_id}/link",
-			"/api/v4/groups/{group_id}/channels/{syncable_id}/link",
+			"/v1/team/groups/{group_id}/teams/{syncable_id}/link",
+			"/v1/team/groups/{group_id}/channels/{syncable_id}/link",
 			false,
 		},
 		// Spec param matches handler param name.
 		{
-			"/api/v4/users/{user_id}",
-			"/api/v4/users/{user_id}",
+			"/v1/team/users/{user_id}",
+			"/v1/team/users/{user_id}",
 			true,
 		},
 		// Spec param matches handler literal "me".
 		{
-			"/api/v4/users/{user_id}",
-			"/api/v4/users/me",
+			"/v1/team/users/{user_id}",
+			"/v1/team/users/me",
 			true,
 		},
 		// Different path lengths.
 		{
-			"/api/v4/users/{user_id}/posts",
-			"/api/v4/users/{user_id}",
+			"/v1/team/users/{user_id}/posts",
+			"/v1/team/users/{user_id}",
 			false,
 		},
 		// Completely different paths.
 		{
-			"/api/v4/teams/{team_id}",
-			"/api/v4/users/{user_id}",
+			"/v1/team/teams/{team_id}",
+			"/v1/team/users/{user_id}",
 			false,
 		},
 	}

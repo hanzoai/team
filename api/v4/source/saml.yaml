@@ -1,4 +1,4 @@
-  /api/v4/saml/metadata:
+  /v1/team/saml/metadata:
     get:
       tags:
         - SAML
@@ -17,7 +17,7 @@
                 type: string
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/saml/metadatafromidp:
+  /v1/team/saml/metadatafromidp:
     post:
       tags:
         - SAML
@@ -45,7 +45,7 @@
                 type: string
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/saml/certificate/idp:
+  /v1/team/saml/certificate/idp:
     post:
       tags:
         - SAML
@@ -112,7 +112,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/saml/certificate/public:
+  /v1/team/saml/certificate/public:
     post:
       tags:
         - SAML
@@ -179,7 +179,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/saml/certificate/private:
+  /v1/team/saml/certificate/private:
     post:
       tags:
         - SAML
@@ -246,7 +246,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/saml/certificate/status:
+  /v1/team/saml/certificate/status:
     get:
       tags:
         - SAML
@@ -270,7 +270,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/saml/reset_auth_data:
+  /v1/team/saml/reset_auth_data:
     post:
       tags:
         - SAML

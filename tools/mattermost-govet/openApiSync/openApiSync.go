@@ -34,7 +34,7 @@ var (
 	// Excludes | so group-alternation patterns like {type:a|b} are left intact for splitHandlerByGroup.
 	pathParamConstraintRegex = regexp.MustCompile(`\{([^:}]+):[^|}]+\}`)
 	openAPIParamRegex        = regexp.MustCompile(`\{[^}]+\}`)
-	IgnoredCases             = []string{"{websocket}", "api/v4/remotecluster"}
+	IgnoredCases             = []string{"{websocket}", "v1/team/remotecluster"}
 )
 
 func init() {
@@ -234,7 +234,7 @@ func parseInitFunction(pass *analysis.Pass, decl *ast.FuncDecl, routerPrefixes m
 				continue
 			}
 			subRouterName := formatNode(pass.Fset, node.Lhs[0])[15:]
-			if subRouterName == "APIRoot" || subRouterName == "APIRoot5" || subRouterName == "Root" {
+			if subRouterName == "APIRoot" || subRouterName == "Root" {
 				continue
 			}
 
@@ -244,7 +244,7 @@ func parseInitFunction(pass *analysis.Pass, decl *ast.FuncDecl, routerPrefixes m
 			prefix := ""
 			switch router {
 			case "APIRoot":
-				prefix = "api/v4"
+				prefix = "v1/team"
 			case "Root":
 				prefix = ""
 			default:

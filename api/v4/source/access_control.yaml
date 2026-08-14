@@ -1,4 +1,4 @@
-  /api/v4/access_control_policies:
+  /v1/team/access_control_policies:
     put:
       tags:
         - access control
@@ -29,7 +29,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/access_control_policies/cel/check:
+  /v1/team/access_control_policies/cel/check:
     post:
       tags:
         - access control
@@ -66,7 +66,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/access_control_policies/cel/validate_requester:
+  /v1/team/access_control_policies/cel/validate_requester:
     post:
       tags:
         - access control
@@ -113,7 +113,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/access_control_policies/cel/test:
+  /v1/team/access_control_policies/cel/test:
     post:
       tags:
         - access control
@@ -144,7 +144,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/access_control_policies/cel/simulate_users:
+  /v1/team/access_control_policies/cel/simulate_users:
     post:
       tags:
         - access control
@@ -195,7 +195,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/access_control_policies/search:
+  /v1/team/access_control_policies/search:
     post:
       tags:
         - access control
@@ -226,7 +226,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/access_control_policies/cel/autocomplete/fields:
+  /v1/team/access_control_policies/cel/autocomplete/fields:
     get:
       tags:
         - access control
@@ -265,7 +265,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/access_control_policies/{policy_id}":
+  "/v1/team/access_control_policies/{policy_id}":
     get:
       tags:
         - access control
@@ -332,7 +332,7 @@
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/access_control_policies/{policy_id}/activate":
+  "/v1/team/access_control_policies/{policy_id}/activate":
     get:
       deprecated: true
       tags:
@@ -342,7 +342,7 @@
         Updates the active status of an access control policy.
 
         **Deprecated:** This endpoint will be removed in a future release. Use the dedicated access control policy update endpoint instead.
-        Link: </api/v4/access_control_policies/activate>; rel="successor-version"
+        Link: </v1/team/access_control_policies/activate>; rel="successor-version"
 
         ##### Permissions
         Must have the `manage_system` permission.
@@ -377,7 +377,7 @@
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/access_control_policies/{policy_id}/assign":
+  "/v1/team/access_control_policies/{policy_id}/assign":
     post:
       tags:
         - access control
@@ -431,7 +431,7 @@
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/access_control_policies/{policy_id}/unassign":
+  "/v1/team/access_control_policies/{policy_id}/unassign":
     delete:
       tags:
         - access control
@@ -485,7 +485,7 @@
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/access_control_policies/{policy_id}/resources/channels":
+  "/v1/team/access_control_policies/{policy_id}/resources/channels":
     get:
       tags:
         - access control
@@ -532,7 +532,7 @@
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/access_control_policies/{policy_id}/resources/channels/search":
+  "/v1/team/access_control_policies/{policy_id}/resources/channels/search":
     post:
       tags:
         - access control
@@ -572,7 +572,7 @@
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/channels/{channel_id}/access_control/attributes":
+  "/v1/team/channels/{channel_id}/access_control/attributes":
     get:
       tags:
         - access control
@@ -610,7 +610,7 @@
           $ref: "#/components/responses/NotFound"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/access_control_policies/cel/visual_ast:
+  /v1/team/access_control_policies/cel/visual_ast:
     post:
       tags:
         - access control
@@ -641,7 +641,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/access_control_policies/activate:
+  /v1/team/access_control_policies/activate:
     put:
       tags:
         - access control

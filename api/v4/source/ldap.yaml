@@ -1,4 +1,4 @@
-  /api/v4/ldap/sync:
+  /v1/team/ldap/sync:
     post:
       tags:
         - LDAP
@@ -20,7 +20,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/ldap/test:
+  /v1/team/ldap/test:
     post:
       tags:
         - LDAP
@@ -44,7 +44,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/ldap/test_connection:
+  /v1/team/ldap/test_connection:
     post:
       tags:
         - LDAP
@@ -81,7 +81,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/ldap/test_diagnostics:
+  /v1/team/ldap/test_diagnostics:
     post:
       tags:
         - LDAP
@@ -133,7 +133,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/ldap/groups:
+  /v1/team/ldap/groups:
     get:
       tags:
         - LDAP
@@ -180,7 +180,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/ldap/groups/{remote_id}/link:
+  /v1/team/ldap/groups/{remote_id}/link:
     post:
       tags:
         - LDAP
@@ -243,7 +243,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/ldap/migrateid:
+  /v1/team/ldap/migrateid:
     post:
       tags:
         - LDAP
@@ -286,7 +286,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/ldap/certificate/public:
+  /v1/team/ldap/certificate/public:
     post:
       tags:
         - LDAP
@@ -350,7 +350,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/ldap/certificate/private:
+  /v1/team/ldap/certificate/private:
     post:
       tags:
         - LDAP
@@ -414,7 +414,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/ldap/users/{user_id}/group_sync_memberships:
+  /v1/team/ldap/users/{user_id}/group_sync_memberships:
     post:
       tags:
         - LDAP

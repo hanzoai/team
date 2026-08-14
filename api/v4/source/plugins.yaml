@@ -1,4 +1,4 @@
-  /api/v4/plugins:
+  /v1/team/plugins:
     post:
       tags:
         - plugins
@@ -89,7 +89,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/plugins/install_from_url:
+  /v1/team/plugins/install_from_url:
     post:
       tags:
         - plugins
@@ -133,7 +133,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/plugins/{plugin_id}":
+  "/v1/team/plugins/{plugin_id}":
     delete:
       tags:
         - plugins
@@ -174,7 +174,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/plugins/{plugin_id}/enable":
+  "/v1/team/plugins/{plugin_id}/enable":
     post:
       tags:
         - plugins
@@ -215,7 +215,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/plugins/{plugin_id}/disable":
+  "/v1/team/plugins/{plugin_id}/disable":
     post:
       tags:
         - plugins
@@ -256,7 +256,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/plugins/webapp:
+  /v1/team/plugins/webapp:
     get:
       tags:
         - plugins
@@ -286,7 +286,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/plugins/statuses:
+  /v1/team/plugins/statuses:
     get:
       tags:
         - plugins
@@ -316,7 +316,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/plugins/marketplace:
+  /v1/team/plugins/marketplace:
     post:
       tags:
         - plugins
@@ -418,7 +418,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/plugins/marketplace/first_admin_visit:
+  /v1/team/plugins/marketplace/first_admin_visit:
     get:
       tags:
         - plugins
@@ -468,7 +468,7 @@
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  /api/v4/plugins/reattach:
+  /v1/team/plugins/reattach:
     post:
       tags:
         - plugins
@@ -495,7 +495,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/plugins/{plugin_id}/detach":
+  "/v1/team/plugins/{plugin_id}/detach":
     post:
       tags:
         - plugins

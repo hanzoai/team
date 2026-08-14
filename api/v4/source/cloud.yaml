@@ -1,4 +1,4 @@
-  /api/v4/cloud/limits:
+  /v1/team/cloud/limits:
     get:
       tags:
         - cloud
@@ -26,7 +26,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/products:
+  /v1/team/cloud/products:
     get:
       tags:
         - cloud
@@ -58,7 +58,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/customer:
+  /v1/team/cloud/customer:
     get:
       tags:
         - cloud
@@ -135,7 +135,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/customer/address:
+  /v1/team/cloud/customer/address:
     put:
       tags:
         - cloud
@@ -172,7 +172,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/validate-business-email:
+  /v1/team/cloud/validate-business-email:
     post:
       tags:
         - cloud
@@ -212,7 +212,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/validate-workspace-business-email:
+  /v1/team/cloud/validate-workspace-business-email:
     post:
       tags:
         - cloud
@@ -239,7 +239,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/subscription:
+  /v1/team/cloud/subscription:
     get:
       tags:
         - cloud
@@ -269,7 +269,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/installation:
+  /v1/team/cloud/installation:
     get:
       tags:
         - cloud
@@ -299,7 +299,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/subscription/invoices:
+  /v1/team/cloud/subscription/invoices:
     get:
       tags:
         - cloud
@@ -331,7 +331,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/subscription/invoices/{invoice_id}/pdf:
+  /v1/team/cloud/subscription/invoices/{invoice_id}/pdf:
     get:
       tags:
         - cloud
@@ -362,7 +362,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/hosted_customer/signup_available:
+  /v1/team/hosted_customer/signup_available:
     get:
       tags:
         - cloud
@@ -378,7 +378,7 @@
           $ref: "#/components/responses/Unauthorized"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/check-cws-connection:
+  /v1/team/cloud/check-cws-connection:
     get:
       tags:
         - cloud
@@ -408,7 +408,7 @@
                     enum:
                       - available
                       - unavailable
-  /api/v4/cloud/webhook:
+  /v1/team/cloud/webhook:
     post:
       tags:
         - cloud
@@ -432,7 +432,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/cloud/preview/modal_data:
+  /v1/team/cloud/preview/modal_data:
     get:
       tags:
         - cloud

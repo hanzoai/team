@@ -1,4 +1,4 @@
-  /api/v4/posts/schedule:
+  /v1/team/posts/schedule:
     post:
       tags:
         - scheduled_post
@@ -66,7 +66,7 @@
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  /api/v4/posts/scheduled/team/{team_id}:
+  /v1/team/posts/scheduled/team/{team_id}:
     get:
       tags:
         - scheduled_post
@@ -108,7 +108,7 @@
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  /api/v4/posts/schedule/{scheduled_post_id}:
+  /v1/team/posts/schedule/{scheduled_post_id}:
     put:
       tags:
         - scheduled_post

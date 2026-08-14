@@ -1,4 +1,4 @@
-  "/api/v4/recaps":
+  "/v1/team/recaps":
     post:
       tags:
         - recaps
@@ -93,7 +93,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  "/api/v4/recaps/limit_status":
+  "/v1/team/recaps/limit_status":
     get:
       tags:
         - recaps
@@ -120,7 +120,7 @@
           $ref: "#/components/responses/Unauthorized"
         "501":
           description: Recaps feature is not enabled
-  "/api/v4/recaps/mark_viewed":
+  "/v1/team/recaps/mark_viewed":
     post:
       tags:
         - recaps
@@ -160,7 +160,7 @@
           $ref: "#/components/responses/Unauthorized"
         "501":
           description: AI Recaps feature flag is disabled
-  "/api/v4/recaps/{recap_id}":
+  "/v1/team/recaps/{recap_id}":
     get:
       tags:
         - recaps
@@ -231,7 +231,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/recaps/{recap_id}/read":
+  "/v1/team/recaps/{recap_id}/read":
     post:
       tags:
         - recaps
@@ -267,7 +267,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/recaps/{recap_id}/regenerate":
+  "/v1/team/recaps/{recap_id}/regenerate":
     post:
       tags:
         - recaps

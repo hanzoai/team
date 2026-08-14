@@ -1,4 +1,4 @@
-  "/api/v4/properties/groups/{group_name}/{object_type}/fields":
+  "/v1/team/properties/groups/{group_name}/{object_type}/fields":
     post:
       tags:
         - properties
@@ -232,7 +232,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/properties/groups/{group_name}/fields/search":
+  "/v1/team/properties/groups/{group_name}/fields/search":
     post:
       tags:
         - properties
@@ -366,7 +366,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/properties/groups/{group_name}/{object_type}/fields/{field_id}":
+  "/v1/team/properties/groups/{group_name}/{object_type}/fields/{field_id}":
     patch:
       tags:
         - properties
@@ -480,7 +480,7 @@
             The field has active linked dependents. Unlink or delete dependent
             fields before deleting the source.
           $ref: "#/components/responses/Conflict"
-  "/api/v4/properties/groups/{group_name}/{object_type}/values/{target_id}":
+  "/v1/team/properties/groups/{group_name}/{object_type}/values/{target_id}":
     get:
       tags:
         - properties
@@ -488,7 +488,7 @@
       description: >
         Get all property values for a specific target within a group. Uses cursor-based pagination.
         The `template` object type cannot have values and will return 400.
-        The `system` object type must use the dedicated `/api/v4/properties/groups/{group_name}/system/values` endpoint and will return 400 on this route.
+        The `system` object type must use the dedicated `/v1/team/properties/groups/{group_name}/system/values` endpoint and will return 400 on this route.
 
 
         **Delta sync via `since`:** When `since > 0`, the endpoint returns only rows whose `update_at` is greater than the cutoff, *including* tombstoned rows.
@@ -575,7 +575,7 @@
       description: >
         Update one or more property values for a specific target within a group. Uses upsert semantics: creates the value if it doesn't exist, updates it if it does. All field IDs must belong to the specified group.
         The `template` object type cannot have values and will return 400.
-        The `system` object type must use the dedicated `/api/v4/properties/groups/{group_name}/system/values` endpoint and will return 400 on this route.
+        The `system` object type must use the dedicated `/v1/team/properties/groups/{group_name}/system/values` endpoint and will return 400 on this route.
       operationId: UpdatePropertyValues
       parameters:
         - name: group_name
@@ -629,7 +629,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/properties/groups/{group_name}/system/values":
+  "/v1/team/properties/groups/{group_name}/system/values":
     get:
       tags:
         - properties

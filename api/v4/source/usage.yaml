@@ -1,4 +1,4 @@
-  /api/v4/usage/posts:
+  /v1/team/usage/posts:
     get:
       tags:
         - usage
@@ -24,7 +24,7 @@
           $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/usage/storage:
+  /v1/team/usage/storage:
     get:
       tags:
         - usage
@@ -50,7 +50,7 @@
           $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/usage/teams:
+  /v1/team/usage/teams:
     get:
       tags:
         - usage

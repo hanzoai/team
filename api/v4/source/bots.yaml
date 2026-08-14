@@ -1,4 +1,4 @@
-  /api/v4/bots:
+  /v1/team/bots:
     post:
       tags:
         - bots
@@ -90,7 +90,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/bots/{bot_user_id}":
+  "/v1/team/bots/{bot_user_id}":
     put:
       tags:
         - bots
@@ -180,7 +180,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/bots/{bot_user_id}/disable":
+  "/v1/team/bots/{bot_user_id}/disable":
     post:
       tags:
         - bots
@@ -211,7 +211,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/bots/{bot_user_id}/enable":
+  "/v1/team/bots/{bot_user_id}/enable":
     post:
       tags:
         - bots
@@ -242,7 +242,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/bots/{bot_user_id}/assign/{user_id}":
+  "/v1/team/bots/{bot_user_id}/assign/{user_id}":
     post:
       tags:
         - bots
@@ -279,7 +279,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/bots/{bot_user_id}/convert_to_user":
+  "/v1/team/bots/{bot_user_id}/convert_to_user":
     post:
       tags:
         - bots

@@ -1,4 +1,4 @@
-  /api/v4/scheduled_recaps:
+  /v1/team/scheduled_recaps:
     post:
       tags:
         - scheduled recaps
@@ -153,7 +153,7 @@
           $ref: "#/components/responses/Unauthorized"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/scheduled_recaps/{scheduled_recap_id}:
+  /v1/team/scheduled_recaps/{scheduled_recap_id}:
     get:
       tags:
         - scheduled recaps
@@ -345,7 +345,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/scheduled_recaps/{scheduled_recap_id}/pause:
+  /v1/team/scheduled_recaps/{scheduled_recap_id}/pause:
     post:
       tags:
         - scheduled recaps
@@ -383,7 +383,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/scheduled_recaps/{scheduled_recap_id}/resume:
+  /v1/team/scheduled_recaps/{scheduled_recap_id}/resume:
     post:
       tags:
         - scheduled recaps

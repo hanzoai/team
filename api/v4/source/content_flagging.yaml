@@ -1,4 +1,4 @@
-  /api/v4/content_flagging/flag/config:
+  /v1/team/content_flagging/flag/config:
     get:
       summary: Get content flagging configuration
       description: |
@@ -29,7 +29,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/team/{team_id}/status:
+  /v1/team/content_flagging/team/{team_id}/status:
     get:
       summary: Get content flagging status for a team
       description: |
@@ -64,7 +64,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/post/{post_id}/flag:
+  /v1/team/content_flagging/post/{post_id}/flag:
     post:
       summary: Flag a post
       description: |
@@ -110,7 +110,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/fields:
+  /v1/team/content_flagging/fields:
     get:
       summary: Get content flagging property fields
       description: |
@@ -135,7 +135,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/post/{post_id}/field_values:
+  /v1/team/content_flagging/post/{post_id}/field_values:
     get:
       summary: Get content flagging property field values for a post
       description: |
@@ -169,7 +169,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/post/{post_id}:
+  /v1/team/content_flagging/post/{post_id}:
     get:
         summary: Get a flagged post with all its content.
         description: |
@@ -200,7 +200,7 @@
               description: Internal server error.
             '501':
               description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/post/{post_id}/remove:
+  /v1/team/content_flagging/post/{post_id}/remove:
     put:
         summary: Remove a flagged post
         description: |
@@ -232,7 +232,7 @@
               description: Internal server error.
             '501':
               description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/post/{post_id}/keep:
+  /v1/team/content_flagging/post/{post_id}/keep:
     put:
       summary: Keep a flagged post
       description: |
@@ -264,7 +264,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/config:
+  /v1/team/content_flagging/config:
     get:
       summary: Get the system content flagging configuration
       description: |
@@ -311,7 +311,7 @@
               description: Internal server error.
             '403':
               description: User does not have permission to manage system configuration.
-  /api/v4/content_flagging/team/{team_id}/reviewers/search:
+  /v1/team/content_flagging/team/{team_id}/reviewers/search:
     get:
       summary: Search content reviewers in a team
       description: |
@@ -352,7 +352,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/post/{post_id}/assign/{content_reviewer_id}:
+  /v1/team/content_flagging/post/{post_id}/assign/{content_reviewer_id}:
     post:
       summary: Assign a content reviewer to a flagged post
       description: |
@@ -391,7 +391,7 @@
           description: Internal server error.
         '501':
           description: Feature is disabled either via config or an Enterprise Advanced license is not available.
-  /api/v4/content_flagging/post/{post_id}/report:
+  /v1/team/content_flagging/post/{post_id}/report:
     post:
       summary: Generate and download a flagged post report
       description: |

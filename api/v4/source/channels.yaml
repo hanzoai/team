@@ -1,4 +1,4 @@
-  /api/v4/channels:
+  /v1/team/channels:
     get:
       tags:
         - channels
@@ -133,7 +133,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/channels/direct:
+  /v1/team/channels/direct:
     post:
       tags:
         - channels
@@ -169,7 +169,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/channels/group:
+  /v1/team/channels/group:
     post:
       tags:
         - channels
@@ -206,7 +206,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/channels/search:
+  /v1/team/channels/search:
     post:
       tags:
         - channels
@@ -361,7 +361,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  /api/v4/channels/group/search:
+  /v1/team/channels/group/search:
     post:
       tags:
         - channels
@@ -400,7 +400,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  "/api/v4/teams/{team_id}/channels/ids":
+  "/v1/team/teams/{team_id}/channels/ids":
     post:
       tags:
         - channels
@@ -441,7 +441,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/timezones":
+  "/v1/team/channels/{channel_id}/timezones":
     get:
       tags:
         - channels
@@ -476,7 +476,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}":
+  "/v1/team/channels/{channel_id}":
     get:
       tags:
         - channels
@@ -608,7 +608,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/patch":
+  "/v1/team/channels/{channel_id}/patch":
     put:
       tags:
         - channels
@@ -711,7 +711,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/privacy":
+  "/v1/team/channels/{channel_id}/privacy":
     put:
       tags:
         - channels
@@ -765,7 +765,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/restore":
+  "/v1/team/channels/{channel_id}/restore":
     post:
       tags:
         - channels
@@ -798,7 +798,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/move":
+  "/v1/team/channels/{channel_id}/move":
     post:
       tags:
         - channels
@@ -848,7 +848,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/stats":
+  "/v1/team/channels/{channel_id}/stats":
     get:
       tags:
         - channels
@@ -878,7 +878,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/pinned":
+  "/v1/team/channels/{channel_id}/pinned":
     get:
       tags:
         - channels
@@ -905,7 +905,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/{team_id}/channels":
+  "/v1/team/teams/{team_id}/channels":
     get:
       tags:
         - channels
@@ -954,7 +954,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/channels/private":
+  "/v1/team/teams/{team_id}/channels/private":
     get:
       tags:
         - channels
@@ -1004,7 +1004,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/channels/recommended":
+  "/v1/team/teams/{team_id}/channels/recommended":
     get:
       tags:
         - channels
@@ -1051,7 +1051,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/channels/deleted":
+  "/v1/team/teams/{team_id}/channels/deleted":
     get:
       tags:
         - channels
@@ -1099,7 +1099,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/channels/autocomplete":
+  "/v1/team/teams/{team_id}/channels/autocomplete":
     get:
       tags:
         - channels
@@ -1146,7 +1146,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/channels/search_autocomplete":
+  "/v1/team/teams/{team_id}/channels/search_autocomplete":
     get:
       tags:
         - channels
@@ -1193,7 +1193,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/channels/managed_categories":
+  "/v1/team/teams/{team_id}/channels/managed_categories":
     get:
       tags:
         - channels
@@ -1235,7 +1235,7 @@
           description: Returned when the `ManagedChannelCategories` feature flag is disabled.
         "501":
           description: Returned when the server does not have an Enterprise license.
-  "/api/v4/teams/{team_id}/channels/search":
+  "/v1/team/teams/{team_id}/channels/search":
     post:
       tags:
         - channels
@@ -1289,7 +1289,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/channels/name/{channel_name}":
+  "/v1/team/teams/{team_id}/channels/name/{channel_name}":
     get:
       tags:
         - channels
@@ -1331,7 +1331,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/name/{team_name}/channels/name/{channel_name}":
+  "/v1/team/teams/name/{team_name}/channels/name/{channel_name}":
     get:
       tags:
         - channels
@@ -1373,7 +1373,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/members":
+  "/v1/team/channels/{channel_id}/members":
     get:
       tags:
         - channels
@@ -1490,7 +1490,7 @@
 
         ```bash
         curl -X PUT \
-          'https://mattermost.example.com/api/v4/channels/channel123/members?batch_size=2&batch_delay_ms=200' \
+          'https://mattermost.example.com/v1/team/channels/channel123/members?batch_size=2&batch_delay_ms=200' \
           -H 'Authorization: Bearer <token>' \
           -H 'Content-Type: application/json' \
           -d '{"members": ["user_id_1", "user_id_2", "user_id_3", "user_id_4"]}'
@@ -1512,7 +1512,7 @@
 
         ```bash
         curl -X PUT \
-          'https://mattermost.example.com/api/v4/channels/channel123/members' \
+          'https://mattermost.example.com/v1/team/channels/channel123/members' \
           -H 'Authorization: Bearer <token>' \
           -H 'Content-Type: application/json' \
           -d '{"members": ["user_id_1", "user_id_2", "user_id_3"], "channel_admins": ["user_id_1"]}'
@@ -1649,7 +1649,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/members/ids":
+  "/v1/team/channels/{channel_id}/members/ids":
     post:
       tags:
         - channels
@@ -1692,7 +1692,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/members/{user_id}":
+  "/v1/team/channels/{channel_id}/members/{user_id}":
     get:
       tags:
         - channels
@@ -1770,7 +1770,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/members/{user_id}/roles":
+  "/v1/team/channels/{channel_id}/members/{user_id}/roles":
     put:
       tags:
         - channels
@@ -1818,7 +1818,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/members/{user_id}/schemeRoles":
+  "/v1/team/channels/{channel_id}/members/{user_id}/schemeRoles":
     put:
       tags:
         - channels
@@ -1878,7 +1878,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/members/{user_id}/notify_props":
+  "/v1/team/channels/{channel_id}/members/{user_id}/notify_props":
     put:
       tags:
         - channels
@@ -1925,7 +1925,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/members/{user_id}/autotranslation":
+  "/v1/team/channels/{channel_id}/members/{user_id}/autotranslation":
     put:
       tags:
         - channels
@@ -1980,7 +1980,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/members/{user_id}/mark_read":
+  "/v1/team/channels/members/{user_id}/mark_read":
     post:
       tags:
         - channels
@@ -2023,7 +2023,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/stats/member_count":
+  "/v1/team/channels/stats/member_count":
     post:
       tags:
         - channels
@@ -2057,7 +2057,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/members/{user_id}/view":
+  "/v1/team/channels/members/{user_id}/view":
     post:
       tags:
         - channels
@@ -2120,7 +2120,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/members/{user_id}/direct/read":
+  "/v1/team/channels/members/{user_id}/direct/read":
     put:
       tags:
         - channels
@@ -2166,7 +2166,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/teams/{team_id}/channels/members":
+  "/v1/team/users/{user_id}/teams/{team_id}/channels/members":
     get:
       tags:
         - channels
@@ -2207,7 +2207,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/teams/{team_id}/channels":
+  "/v1/team/users/{user_id}/teams/{team_id}/channels":
     get:
       tags:
         - channels
@@ -2261,7 +2261,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/channels":
+  "/v1/team/users/{user_id}/channels":
     get:
       tags:
         - channels
@@ -2311,7 +2311,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/channels/{channel_id}/unread":
+  "/v1/team/users/{user_id}/channels/{channel_id}/unread":
     get:
       tags:
         - channels
@@ -2351,7 +2351,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/scheme":
+  "/v1/team/channels/{channel_id}/scheme":
     put:
       tags:
         - channels
@@ -2403,7 +2403,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/channels/{channel_id}/members_minus_group_members":
+  "/v1/team/channels/{channel_id}/members_minus_group_members":
     get:
       tags:
         - channels
@@ -2460,7 +2460,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/member_counts_by_group":
+  "/v1/team/channels/{channel_id}/member_counts_by_group":
     get:
       tags:
         - channels
@@ -2496,7 +2496,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/moderations":
+  "/v1/team/channels/{channel_id}/moderations":
     get:
       tags:
         - channels
@@ -2531,7 +2531,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/channels/{channel_id}/moderations/patch":
+  "/v1/team/channels/{channel_id}/moderations/patch":
     put:
       tags:
         - channels
@@ -2574,7 +2574,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/teams/{team_id}/channels/categories":
+  "/v1/team/users/{user_id}/teams/{team_id}/channels/categories":
     get:
       tags:
         - channels
@@ -2716,7 +2716,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/{team_id}/channels/categories/order":
+  "/v1/team/users/{user_id}/teams/{team_id}/channels/categories/order":
     get:
       tags:
         - channels
@@ -2813,7 +2813,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/{team_id}/channels/categories/{category_id}":
+  "/v1/team/users/{user_id}/teams/{team_id}/channels/categories/{category_id}":
     get:
       tags:
         - channels
@@ -2963,7 +2963,7 @@
         "404":
           $ref: "#/components/responses/NotFound"
 
-  "/api/v4/channels/{channel_id}/common_teams":
+  "/v1/team/channels/{channel_id}/common_teams":
     get:
       tags:
         - channels
@@ -3002,7 +3002,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/convert_to_channel":
+  "/v1/team/channels/{channel_id}/convert_to_channel":
     post:
       tags:
         - channels

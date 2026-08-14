@@ -1,4 +1,4 @@
-  /api/v4/posts:
+  /v1/team/posts:
     post:
       tags:
         - posts
@@ -87,7 +87,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/posts/ephemeral:
+  /v1/team/posts/ephemeral:
     post:
       tags:
         - posts
@@ -139,7 +139,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/posts/search:
+  /v1/team/posts/search:
     post:
       tags:
         - posts
@@ -183,7 +183,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/posts/{post_id}":
+  "/v1/team/posts/{post_id}":
     get:
       tags:
         - posts
@@ -316,7 +316,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/posts/{post_id}/set_unread":
+  "/v1/team/users/{user_id}/posts/{post_id}/set_unread":
     post:
       tags:
         - posts
@@ -361,7 +361,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/posts/{post_id}/patch":
+  "/v1/team/posts/{post_id}/patch":
     put:
       tags:
         - posts
@@ -420,7 +420,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/posts/{post_id}/thread":
+  "/v1/team/posts/{post_id}/thread":
     get:
       tags:
         - posts
@@ -506,7 +506,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/posts/flagged":
+  "/v1/team/users/{user_id}/posts/flagged":
     get:
       tags:
         - posts
@@ -564,7 +564,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/posts/{post_id}/files/info":
+  "/v1/team/posts/{post_id}/files/info":
     get:
       tags:
         - posts
@@ -606,7 +606,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/posts/{post_id}/info":
+  "/v1/team/posts/{post_id}/info":
     get:
       tags:
         - posts
@@ -638,7 +638,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/posts/{post_id}/edit_history":
+  "/v1/team/posts/{post_id}/edit_history":
     get:
       tags:
         - posts
@@ -672,7 +672,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/channels/{channel_id}/posts":
+  "/v1/team/channels/{channel_id}/posts":
     get:
       tags:
         - posts
@@ -750,7 +750,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/channels/{channel_id}/posts/unread":
+  "/v1/team/users/{user_id}/channels/{channel_id}/posts/unread":
     get:
       tags:
         - posts
@@ -828,7 +828,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/{team_id}/posts/search":
+  "/v1/team/teams/{team_id}/posts/search":
     post:
       tags:
         - posts
@@ -896,7 +896,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/posts/{post_id}/pin":
+  "/v1/team/posts/{post_id}/pin":
     post:
       tags:
         - posts
@@ -928,7 +928,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/posts/{post_id}/unpin":
+  "/v1/team/posts/{post_id}/unpin":
     post:
       tags:
         - posts
@@ -961,7 +961,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/posts/{post_id}/actions/{action_id}":
+  "/v1/team/posts/{post_id}/actions/{action_id}":
     post:
       tags:
         - posts
@@ -1022,7 +1022,7 @@
             application/json:
               schema:
                 $ref: "#/components/schemas/AppError"
-  "/api/v4/posts/ids":
+  "/v1/team/posts/ids":
     post:
       tags:
         - posts
@@ -1063,7 +1063,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/posts/{post_id}/reminder":
+  "/v1/team/users/{user_id}/posts/{post_id}/reminder":
     post:
       tags:
         - posts
@@ -1119,7 +1119,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/posts/{post_id}/ack":
+  "/v1/team/users/{user_id}/posts/{post_id}/ack":
     post:
       tags:
         - posts
@@ -1207,7 +1207,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/posts/{post_id}/move":
+  "/v1/team/posts/{post_id}/move":
     post:
       tags:
         - posts
@@ -1263,7 +1263,7 @@
         "501":
           $ref: "#/components/responses/NotImplemented"
 
-  "/api/v4/posts/{post_id}/restore/{restore_version_id}":
+  "/v1/team/posts/{post_id}/restore/{restore_version_id}":
     post:
       tags:
         - posts
@@ -1311,7 +1311,7 @@
         "501":
           $ref: "#/components/responses/NotImplemented"
 
-  "/api/v4/posts/{post_id}/reveal":
+  "/v1/team/posts/{post_id}/reveal":
     get:
       tags:
         - posts
@@ -1362,7 +1362,7 @@
         "501":
           $ref: "#/components/responses/NotImplemented"
 
-  "/api/v4/posts/{post_id}/burn":
+  "/v1/team/posts/{post_id}/burn":
     delete:
       tags:
         - posts
@@ -1414,7 +1414,7 @@
         "501":
           $ref: "#/components/responses/NotImplemented"
 
-  "/api/v4/posts/rewrite":
+  "/v1/team/posts/rewrite":
     post:
       tags:
         - posts

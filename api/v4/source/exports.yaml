@@ -1,4 +1,4 @@
-  "/api/v4/exports":
+  "/v1/team/exports":
     get:
       tags:
         - exports
@@ -21,7 +21,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/exports/{export_name}":
+  "/v1/team/exports/{export_name}":
     get:
       tags:
         - exports
@@ -84,7 +84,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/exports/{export_name}/presign-url":
+  "/v1/team/exports/{export_name}/presign-url":
     post:
       tags:
         - exports

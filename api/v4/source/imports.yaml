@@ -1,4 +1,4 @@
-  "/api/v4/imports":
+  "/v1/team/imports":
     get:
       tags:
         - imports
@@ -22,7 +22,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/imports/{import_name}":
+  "/v1/team/imports/{import_name}":
     delete:
       tags:
         - imports

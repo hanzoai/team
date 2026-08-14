@@ -1,4 +1,4 @@
-  /api/v4/users/login:
+  /v1/team/users/login:
     post:
       tags:
         - users
@@ -46,7 +46,7 @@
           $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/login/desktop_token:
+  /v1/team/users/login/desktop_token:
     post:
       tags:
         - users
@@ -83,7 +83,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/login/cws:
+  /v1/team/users/login/cws:
     post:
       tags:
         - users
@@ -117,7 +117,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/login/sso/code-exchange:
+  /v1/team/users/login/sso/code-exchange:
     post:
       deprecated: true
       tags:
@@ -313,7 +313,7 @@
             application/json:
               schema:
                 $ref: "#/components/schemas/AppError"
-  /api/v4/users/logout:
+  /v1/team/users/logout:
     post:
       tags:
         - users
@@ -334,7 +334,7 @@
           $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/notify-admin:
+  /v1/team/users/notify-admin:
     post:
       tags:
         - users
@@ -362,7 +362,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  /api/v4/users/trigger-notify-admin-posts:
+  /v1/team/users/trigger-notify-admin-posts:
     post:
       tags:
         - users
@@ -393,7 +393,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  /api/v4/users:
+  /v1/team/users:
     post:
       tags:
         - users
@@ -679,7 +679,7 @@
       responses:
         "200":
           description: Delete request was successful
-  /api/v4/users/ids:
+  /v1/team/users/ids:
     post:
       tags:
         - users
@@ -722,7 +722,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  /api/v4/users/group_channels:
+  /v1/team/users/group_channels:
     post:
       tags:
         - users
@@ -764,7 +764,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  /api/v4/users/usernames:
+  /v1/team/users/usernames:
     post:
       tags:
         - users
@@ -796,7 +796,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  /api/v4/users/search:
+  /v1/team/users/search:
     post:
       tags:
         - users
@@ -877,7 +877,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/autocomplete:
+  /v1/team/users/autocomplete:
     get:
       tags:
         - users
@@ -931,7 +931,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/known:
+  /v1/team/users/known:
     get:
       tags:
         - users
@@ -955,7 +955,7 @@
                 $ref: "#/components/schemas/KnownUsers"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  /api/v4/users/stats:
+  /v1/team/users/stats:
     get:
       tags:
         - users
@@ -980,7 +980,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/users/stats/filtered:
+  /v1/team/users/stats/filtered:
     get:
       tags:
         - users
@@ -1056,7 +1056,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}":
+  "/v1/team/users/{user_id}":
     get:
       tags:
         - users
@@ -1191,7 +1191,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/patch":
+  "/v1/team/users/{user_id}/patch":
     put:
       tags:
         - users
@@ -1253,7 +1253,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/roles":
+  "/v1/team/users/{user_id}/roles":
     put:
       tags:
         - users
@@ -1299,7 +1299,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/active":
+  "/v1/team/users/{user_id}/active":
     put:
       tags:
         - users
@@ -1348,7 +1348,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/image":
+  "/v1/team/users/{user_id}/image":
     get:
       tags:
         - users
@@ -1469,7 +1469,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/image/default":
+  "/v1/team/users/{user_id}/image/default":
     get:
       tags:
         - users
@@ -1504,7 +1504,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/username/{username}":
+  "/v1/team/users/username/{username}":
     get:
       tags:
         - users
@@ -1537,7 +1537,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/users/auth_data:
+  /v1/team/users/auth_data:
     get:
       tags:
         - users
@@ -1585,7 +1585,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/users/password/reset:
+  /v1/team/users/password/reset:
     post:
       tags:
         - users
@@ -1627,7 +1627,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/mfa":
+  "/v1/team/users/{user_id}/mfa":
     put:
       tags:
         - users
@@ -1679,7 +1679,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/mfa/generate":
+  "/v1/team/users/{user_id}/mfa/generate":
     post:
       tags:
         - users
@@ -1723,7 +1723,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/demote":
+  "/v1/team/users/{user_id}/demote":
     post:
       tags:
         - users
@@ -1762,7 +1762,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/promote":
+  "/v1/team/users/{user_id}/promote":
     post:
       tags:
         - users
@@ -1801,7 +1801,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/convert_to_bot":
+  "/v1/team/users/{user_id}/convert_to_bot":
     post:
       tags:
         - bots
@@ -1837,7 +1837,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/password":
+  "/v1/team/users/{user_id}/password":
     put:
       tags:
         - users
@@ -1886,7 +1886,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/password/reset/send:
+  /v1/team/users/password/reset/send:
     post:
       tags:
         - users
@@ -1925,7 +1925,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/email/{email}":
+  "/v1/team/users/email/{email}":
     get:
       tags:
         - users
@@ -1960,7 +1960,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/sessions":
+  "/v1/team/users/{user_id}/sessions":
     get:
       tags:
         - users
@@ -1995,7 +1995,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/sessions/revoke":
+  "/v1/team/users/{user_id}/sessions/revoke":
     post:
       tags:
         - users
@@ -2039,7 +2039,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/sessions/revoke/all":
+  "/v1/team/users/{user_id}/sessions/revoke/all":
     post:
       tags:
         - users
@@ -2074,7 +2074,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/sessions/device:
+  /v1/team/users/sessions/device:
     put:
       tags:
         - users
@@ -2124,7 +2124,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  /api/v4/users/sessions/attributes/manifest:
+  /v1/team/users/sessions/attributes/manifest:
     get:
       tags:
         - users
@@ -2163,7 +2163,7 @@
                       type: string
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/audits":
+  "/v1/team/users/{user_id}/audits":
     get:
       tags:
         - users
@@ -2195,7 +2195,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/email/verify/member":
+  "/v1/team/users/{user_id}/email/verify/member":
     post:
       tags:
         - users
@@ -2229,7 +2229,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/users/email/verify:
+  /v1/team/users/email/verify:
     post:
       tags:
         - users
@@ -2260,7 +2260,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "400":
           $ref: "#/components/responses/BadRequest"
-  /api/v4/users/email/verify/send:
+  /v1/team/users/email/verify/send:
     post:
       tags:
         - users
@@ -2295,7 +2295,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "400":
           $ref: "#/components/responses/BadRequest"
-  /api/v4/users/login/switch:
+  /v1/team/users/login/switch:
     post:
       tags:
         - users
@@ -2377,7 +2377,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/users/login/type:
+  /v1/team/users/login/type:
     post:
       tags:
         - users
@@ -2425,7 +2425,7 @@
                     type: string
         "400":
           $ref: "#/components/responses/BadRequest"
-  "/api/v4/users/{user_id}/tokens":
+  "/v1/team/users/{user_id}/tokens":
     post:
       tags:
         - users
@@ -2524,7 +2524,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/tokens:
+  /v1/team/users/tokens:
     get:
       tags:
         - users
@@ -2570,7 +2570,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/tokens/revoke:
+  /v1/team/users/tokens/revoke:
     post:
       tags:
         - users
@@ -2611,7 +2611,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/tokens/non_compliant/count:
+  /v1/team/users/tokens/non_compliant/count:
     get:
       tags:
         - users
@@ -2647,7 +2647,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/tokens/non_compliant/revoke:
+  /v1/team/users/tokens/non_compliant/revoke:
     post:
       tags:
         - users
@@ -2687,7 +2687,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/tokens/{token_id}":
+  "/v1/team/users/tokens/{token_id}":
     get:
       tags:
         - users
@@ -2726,7 +2726,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/users/tokens/disable:
+  /v1/team/users/tokens/disable:
     post:
       tags:
         - users
@@ -2768,7 +2768,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/tokens/enable:
+  /v1/team/users/tokens/enable:
     post:
       tags:
         - users
@@ -2809,7 +2809,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/users/tokens/rotate:
+  /v1/team/users/tokens/rotate:
     post:
       tags:
         - users
@@ -2863,7 +2863,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/users/tokens/search:
+  /v1/team/users/tokens/search:
     post:
       tags:
         - users
@@ -2903,7 +2903,7 @@
                 type: array
                 items:
                   $ref: "#/components/schemas/UserAccessTokenSanitized"
-  "/api/v4/users/{user_id}/auth":
+  "/v1/team/users/{user_id}/auth":
     put:
       tags:
         - users
@@ -2952,7 +2952,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/terms_of_service":
+  "/v1/team/users/{user_id}/terms_of_service":
     post:
       tags:
         - users
@@ -3051,7 +3051,7 @@
             application/json:
               schema:
                 $ref: "#/components/schemas/AppError"
-  /api/v4/users/sessions/revoke/all:
+  /v1/team/users/sessions/revoke/all:
     post:
       tags:
         - users
@@ -3077,7 +3077,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/typing":
+  "/v1/team/users/{user_id}/typing":
     post:
       tags:
         - users
@@ -3122,7 +3122,7 @@
           $ref: "#/components/responses/Unauthorized"
         '403':
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/uploads":
+  "/v1/team/users/{user_id}/uploads":
     get:
       tags:
         - users
@@ -3157,7 +3157,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/channel_members":
+  "/v1/team/users/{user_id}/channel_members":
     get:
       tags:
         - users
@@ -3204,7 +3204,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/users/migrate_auth/ldap:
+  /v1/team/users/migrate_auth/ldap:
     post:
       tags:
         - users
@@ -3252,7 +3252,7 @@
           $ref: "#/components/responses/Forbidden"
         '501':
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/users/migrate_auth/saml:
+  /v1/team/users/migrate_auth/saml:
     post:
       tags:
         - users
@@ -3300,7 +3300,7 @@
           $ref: "#/components/responses/Forbidden"
         '501':
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/teams/{team_id}/threads":
+  "/v1/team/users/{user_id}/teams/{team_id}/threads":
     get:
       tags:
         - threads
@@ -3386,7 +3386,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/{team_id}/read":
+  "/v1/team/users/{user_id}/teams/{team_id}/read":
     put:
       tags:
         - channels
@@ -3440,7 +3440,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/teams/{team_id}/threads/read":
+  "/v1/team/users/{user_id}/teams/{team_id}/threads/read":
     put:
       tags:
         - threads
@@ -3475,7 +3475,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/read/{timestamp}":
+  "/v1/team/users/{user_id}/teams/{team_id}/threads/{thread_id}/read/{timestamp}":
     put:
       tags:
         - threads
@@ -3522,7 +3522,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/set_unread/{post_id}":
+  "/v1/team/users/{user_id}/teams/{team_id}/threads/{thread_id}/set_unread/{post_id}":
     post:
       tags:
         - threads
@@ -3571,7 +3571,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}/following":
+  "/v1/team/users/{user_id}/teams/{team_id}/threads/{thread_id}/following":
     put:
       tags:
         - threads
@@ -3652,7 +3652,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/{team_id}/threads/{thread_id}":
+  "/v1/team/users/{user_id}/teams/{team_id}/threads/{thread_id}":
     get:
       tags:
         - threads
@@ -3693,7 +3693,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/drafts:
+  /v1/team/drafts:
     post:
       tags:
         - users
@@ -3727,7 +3727,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/teams/{team_id}/drafts":
+  "/v1/team/users/{user_id}/teams/{team_id}/drafts":
     get:
       tags:
         - users
@@ -3766,7 +3766,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/channels/{channel_id}/drafts":
+  "/v1/team/users/{user_id}/channels/{channel_id}/drafts":
     delete:
       tags:
         - users
@@ -3803,7 +3803,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/channels/{channel_id}/drafts/{thread_id}":
+  "/v1/team/users/{user_id}/channels/{channel_id}/drafts/{thread_id}":
     delete:
       tags:
         - users
@@ -3846,7 +3846,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/data_retention/team_policies":
+  "/v1/team/users/{user_id}/data_retention/team_policies":
     get:
       tags:
         - data retention
@@ -3896,7 +3896,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/data_retention/channel_policies":
+  "/v1/team/users/{user_id}/data_retention/channel_policies":
     get:
       tags:
         - data retention
@@ -3946,7 +3946,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/users/invalid_emails:
+  /v1/team/users/invalid_emails:
     get:
       tags:
         - users
@@ -3989,7 +3989,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/reset_failed_attempts":
+  "/v1/team/users/{user_id}/reset_failed_attempts":
     post:
       tags:
         - users

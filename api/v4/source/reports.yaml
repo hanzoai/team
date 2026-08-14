@@ -1,4 +1,4 @@
-  /api/v4/reports/users:
+  /v1/team/reports/users:
     get:
       tags:
         - reports
@@ -101,7 +101,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/reports/users/count:
+  /v1/team/reports/users/count:
     get:
       tags:
         - reports
@@ -151,7 +151,7 @@
             application/json:
               schema:
                 type: number
-  /api/v4/reports/users/export:
+  /v1/team/reports/users/export:
     post:
       tags:
         - reports
@@ -187,7 +187,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/reports/posts:
+  /v1/team/reports/posts:
     post:
       tags:
         - reports

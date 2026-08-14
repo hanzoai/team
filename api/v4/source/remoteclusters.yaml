@@ -1,4 +1,4 @@
-  "/api/v4/remotecluster":
+  "/v1/team/remotecluster":
     get:
       tags:
         - remote clusters
@@ -125,7 +125,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/remotecluster/{remote_id}":
+  "/v1/team/remotecluster/{remote_id}":
     get:
       tags:
         - remote clusters
@@ -224,7 +224,7 @@
         "404":
           $ref: "#/components/responses/NotFound"
 
-  "/api/v4/remotecluster/{remote_id}/generate_invite":
+  "/v1/team/remotecluster/{remote_id}/generate_invite":
     post:
       tags:
         - remote clusters
@@ -258,7 +258,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/remotecluster/accept_invite":
+  "/v1/team/remotecluster/accept_invite":
     post:
       tags:
         - remote clusters
@@ -303,7 +303,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/remotecluster/ping":
+  "/v1/team/remotecluster/ping":
     post:
       tags:
         - remote clusters
@@ -333,7 +333,7 @@
         "401":
           $ref: "#/components/responses/Unauthorized"
 
-  "/api/v4/remotecluster/msg":
+  "/v1/team/remotecluster/msg":
     post:
       tags:
         - remote clusters
@@ -363,7 +363,7 @@
         "401":
           $ref: "#/components/responses/Unauthorized"
 
-  "/api/v4/remotecluster/confirm_invite":
+  "/v1/team/remotecluster/confirm_invite":
     post:
       tags:
         - remote clusters
@@ -389,7 +389,7 @@
         "401":
           $ref: "#/components/responses/Unauthorized"
 
-  "/api/v4/remotecluster/upload/{upload_id}":
+  "/v1/team/remotecluster/upload/{upload_id}":
     post:
       tags:
         - remote clusters
@@ -435,7 +435,7 @@
         "401":
           $ref: "#/components/responses/Unauthorized"
 
-  "/api/v4/remotecluster/{user_id}/image":
+  "/v1/team/remotecluster/{user_id}/image":
     post:
       tags:
         - remote clusters

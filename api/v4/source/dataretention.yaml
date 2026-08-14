@@ -1,4 +1,4 @@
-  /api/v4/data_retention/policy:
+  /v1/team/data_retention/policy:
     get:
       tags:
         - data retention
@@ -31,7 +31,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/data_retention/policies_count:
+  /v1/team/data_retention/policies_count:
     get:
       tags:
         - data retention
@@ -67,7 +67,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/data_retention/policies:
+  /v1/team/data_retention/policies:
     get:
       tags:
         - data retention
@@ -151,7 +151,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/data_retention/policies/{policy_id}":
+  "/v1/team/data_retention/policies/{policy_id}":
     get:
       tags:
         - data retention
@@ -270,7 +270,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"  
-  "/api/v4/data_retention/policies/{policy_id}/teams":
+  "/v1/team/data_retention/policies/{policy_id}/teams":
     get:
       tags:
         - data retention
@@ -414,7 +414,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/data_retention/policies/{policy_id}/teams/search":
+  "/v1/team/data_retention/policies/{policy_id}/teams/search":
     post:
       tags:
         - data retention
@@ -464,7 +464,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/data_retention/policies/{policy_id}/channels":
+  "/v1/team/data_retention/policies/{policy_id}/channels":
     get:
       tags:
         - data retention
@@ -606,7 +606,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/data_retention/policies/{policy_id}/channels/search":
+  "/v1/team/data_retention/policies/{policy_id}/channels/search":
     post:
       tags:
         - data retention

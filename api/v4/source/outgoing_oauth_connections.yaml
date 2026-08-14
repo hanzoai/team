@@ -1,4 +1,4 @@
-  /api/v4/oauth/outgoing_connections:
+  /v1/team/oauth/outgoing_connections:
     get:
       tags:
         - oauth
@@ -71,7 +71,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/oauth/outgoing_connections/{outgoing_oauth_connection_id}:
+  /v1/team/oauth/outgoing_connections/{outgoing_oauth_connection_id}:
     get:
       tags:
         - oauth
@@ -191,7 +191,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/oauth/outgoing_connections/validate:
+  /v1/team/oauth/outgoing_connections/validate:
     post:
       tags:
         - oauth
