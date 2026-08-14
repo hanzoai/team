@@ -72,7 +72,7 @@ describe('components/external_link', () => {
 
         expect(linkElement).toHaveAttribute(
             'href',
-            expect.stringMatching('utm_source=mattermost&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid='),
+            expect.stringMatching('utm_source=hanzoteam&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid='),
         );
     });
 
@@ -135,7 +135,7 @@ describe('components/external_link', () => {
 
         expect(screen.queryByText('Click Me')).toHaveAttribute(
             'href',
-            'https://hanzo.ai/?utm_source=mattermost&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=&test=true',
+            'https://hanzo.ai/?utm_source=hanzoteam&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=&test=true',
         );
     });
 
@@ -164,7 +164,7 @@ describe('components/external_link', () => {
 
         expect(screen.queryByText('Click Me')).not.toHaveAttribute(
             'href',
-            'utm_source=mattermost&utm_medium=in-product-cloud&utm_content=&uid=currentUserId&sid=',
+            'utm_source=hanzoteam&utm_medium=in-product-cloud&utm_content=&uid=currentUserId&sid=',
         );
     });
 
@@ -228,7 +228,7 @@ describe('components/external_link', () => {
 
         expect(screen.queryByText('Click Me')).toHaveAttribute(
             'href',
-            'https://hanzo.ai/?utm_source=mattermost&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=#desktop',
+            'https://hanzo.ai/?utm_source=hanzoteam&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=#desktop',
         );
     });
 });

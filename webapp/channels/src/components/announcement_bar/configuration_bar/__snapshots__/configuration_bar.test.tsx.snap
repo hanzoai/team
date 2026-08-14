@@ -110,7 +110,7 @@ exports[`components/ConfigurationBar should match snapshot, expiring, trial lice
             class="advisor-icon"
             src=""
           />
-          This is the last day of your free trial. Purchase a license now to continue using Mattermost Professional and Enterprise features.
+          This is the last day of your free trial. Purchase a license now to continue using Hanzo Team and Enterprise features.
           <button
             class="btn btn-tertiary btn-xs btn-inverted annnouncementBar__purchaseNow"
           >

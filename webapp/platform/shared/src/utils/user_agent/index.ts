@@ -15,10 +15,10 @@ Edge:
     Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586
 
 Desktop App:
-    Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/1.2.1 Chrome/49.0.2623.75 Electron/0.37.8 Safari/537.36
+    Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HanzoTeam/1.2.1 Chrome/49.0.2623.75 Electron/0.37.8 Safari/537.36
     Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586
-    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/3.4.1 Chrome/53.0.2785.113 Electron/1.4.2 Safari/537.36
-    Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/3.4.1 Chrome/51.0.2704.106 Electron/1.2.8 Safari/537.36
+    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) HanzoTeam/3.4.1 Chrome/53.0.2785.113 Electron/1.4.2 Safari/537.36
+    Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HanzoTeam/3.4.1 Chrome/51.0.2704.106 Electron/1.2.8 Safari/537.36
 
 Android App:
     Mozilla/5.0 (Linux; U; Android 4.1.1; en-gb; Build/KLP) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30
@@ -79,7 +79,7 @@ export function isEdge(): boolean {
 }
 
 export function isDesktopApp(): boolean {
-    return userAgent().indexOf('Mattermost') !== -1 && userAgent().indexOf('Electron') !== -1;
+    return userAgent().indexOf('HanzoTeam') !== -1 && userAgent().indexOf('Electron') !== -1;
 }
 
 export function isMacApp(): boolean {
@@ -100,7 +100,7 @@ export function isLinux(): boolean {
 
 export function getDesktopVersion(): string {
     // use if the value window.desktop.version is not set yet
-    const regex = /Mattermost\/(\d+\.\d+\.\d+)/gm;
+    const regex = /HanzoTeam\/(\d+\.\d+\.\d+)/gm;
     const match = regex.exec(window.navigator.appVersion)?.[1] || '';
     return match;
 }

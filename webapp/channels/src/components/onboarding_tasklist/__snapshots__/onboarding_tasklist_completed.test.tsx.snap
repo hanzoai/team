@@ -15,7 +15,7 @@ exports[`components/onboarding_tasklist/onboarding_tasklist_completed.tsx should
     <span
       class="completed-subtitle"
     >
-      We hope Mattermost is more familiar now.
+      We hope Hanzo Team is more familiar now.
     </span>
     <span
       class="start-trial-text"
@@ -42,7 +42,7 @@ exports[`components/onboarding_tasklist/onboarding_tasklist_completed.tsx should
       <span>
         Now that you’re all set up, 
         <a
-          href="https://mattermost.com/download?utm_source=mattermost&utm_medium=in-product&utm_content=onboarding_tasklist_completed&uid=&sid=&edition=team&server_version=#desktop"
+          href="https://hanzo.ai/download?utm_source=hanzoteam&utm_medium=in-product&utm_content=onboarding_tasklist_completed&uid=&sid=&edition=team&server_version=#desktop"
           location="onboarding_tasklist_completed"
           rel="noopener noreferrer"
           target="_blank"
@@ -57,16 +57,16 @@ exports[`components/onboarding_tasklist/onboarding_tasklist_completed.tsx should
       <span>
         By clicking “Start trial”, I agree to the 
         <a
-          href="https://mattermost.com/pl/software-and-services-license-agreement?utm_source=mattermost&utm_medium=in-product&utm_content=onboarding_tasklist_completed&uid=&sid=&edition=team&server_version="
+          href="https://mattermost.com/pl/software-and-services-license-agreement"
           location="onboarding_tasklist_completed"
           rel="noopener noreferrer"
           target="_blank"
         >
-          Mattermost Software Evaluation Agreement
+          Hanzo Team Software Evaluation Agreement
         </a>
         , 
         <a
-          href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=onboarding_tasklist_completed&uid=&sid=&edition=team&server_version="
+          href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=onboarding_tasklist_completed&uid=&sid=&edition=team&server_version="
           location="onboarding_tasklist_completed"
           rel="noopener noreferrer"
           target="_blank"

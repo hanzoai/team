@@ -162,7 +162,7 @@ exports[`components/EditChannelHeaderModal edit direct message channel 1`] = `
                   </button>
                   <a
                     class="textbox-help-link"
-                    href="https://docs.mattermost.com/collaborate/format-messages.html?utm_source=mattermost&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
+                    href="https://docs.hanzo.team/collaborate/format-messages.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
                     location="textbox_links"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -358,7 +358,7 @@ exports[`components/EditChannelHeaderModal error with intl message 1`] = `
                   </button>
                   <a
                     class="textbox-help-link"
-                    href="https://docs.mattermost.com/collaborate/format-messages.html?utm_source=mattermost&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
+                    href="https://docs.hanzo.team/collaborate/format-messages.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
                     location="textbox_links"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -564,7 +564,7 @@ exports[`components/EditChannelHeaderModal error without intl message 1`] = `
                   </button>
                   <a
                     class="textbox-help-link"
-                    href="https://docs.mattermost.com/collaborate/format-messages.html?utm_source=mattermost&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
+                    href="https://docs.hanzo.team/collaborate/format-messages.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
                     location="textbox_links"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -770,7 +770,7 @@ exports[`components/EditChannelHeaderModal should match snapshot, init 1`] = `
                   </button>
                   <a
                     class="textbox-help-link"
-                    href="https://docs.mattermost.com/collaborate/format-messages.html?utm_source=mattermost&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
+                    href="https://docs.hanzo.team/collaborate/format-messages.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
                     location="textbox_links"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -966,7 +966,7 @@ exports[`components/EditChannelHeaderModal submitted 1`] = `
                   </button>
                   <a
                     class="textbox-help-link"
-                    href="https://docs.mattermost.com/collaborate/format-messages.html?utm_source=mattermost&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
+                    href="https://docs.hanzo.team/collaborate/format-messages.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=textbox_links&uid=&sid=&edition=team&server_version="
                     location="textbox_links"
                     rel="noopener noreferrer"
                     target="_blank"

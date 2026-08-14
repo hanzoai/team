@@ -80,7 +80,8 @@ describe('user utils', () => {
             const expectedSuggestions = [
                 'test.user', '.user', 'user',
                 'test', 'user name', 'test user name', 'tester',
-                'software engineer at mattermost', 'engineer at mattermost', 'at mattermost', 'mattermost',
+                'software engineer at hanzo team', 'engineer at hanzo team', 'at hanzo team',
+                'hanzo team', 'team',
                 'test.user_name',
             ];
             expect(suggestions).toEqual(expectedSuggestions);
@@ -91,7 +92,8 @@ describe('user utils', () => {
             const expectedSuggestions = [
                 'test.user', '.user', 'user',
                 'test', 'user name', 'test user name', 'tester',
-                'software engineer at mattermost', 'engineer at mattermost', 'at mattermost', 'mattermost',
+                'software engineer at hanzo team', 'engineer at hanzo team', 'at hanzo team',
+                'hanzo team', 'team',
                 'test.user_name',
                 'test.user_name@example.com',
             ];

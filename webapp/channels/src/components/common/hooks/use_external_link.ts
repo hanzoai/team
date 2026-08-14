@@ -18,9 +18,9 @@ export type ExternalLinkQueryParams = {
 };
 
 /**
- * useExternalLink is used when linking outside of the MM server to add extra tracking parameters when linking to any
- * page on mattermost.com (such as our docs or marketing websites). When passed any URL that isn't on mattermost.com,
- * it returns the original URL unmodified.
+ * useExternalLink adds tracking parameters to links that leave the server for a
+ * site we run -- our docs, or hanzo.ai. Any other URL is returned untouched, so
+ * a link to somewhere we do not own never carries our parameters.
  *
  * @param href The external URL being linked to
  * @param location The location of the link within the app
@@ -46,7 +46,9 @@ export function useExternalLink(href: string, location: string = '', overwriteQu
             return [href, {}];
         }
 
-        if (parsedUrl.hostname !== 'mattermost.com' && !parsedUrl.hostname.endsWith('.mattermost.com')) {
+        const ours = ['hanzo.ai', 'hanzo.team', 'hanzo.id'];
+        const host = parsedUrl.hostname;
+        if (!ours.some((domain) => host === domain || host.endsWith(`.${domain}`))) {
             return [href, {}];
         }
 
@@ -72,7 +74,7 @@ export function useExternalLink(href: string, location: string = '', overwriteQu
         const existingURLSearchParams = parsedUrl.searchParams;
         const existingQueryParamsObj = Object.fromEntries(existingURLSearchParams.entries());
         const queryParams = {
-            utm_source: 'mattermost',
+            utm_source: 'hanzoteam',
             utm_medium: utmMedium,
             utm_content: location,
             uid: userId,

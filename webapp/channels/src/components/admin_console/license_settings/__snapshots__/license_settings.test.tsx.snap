@@ -125,7 +125,7 @@ exports[`components/admin_console/license_settings/LicenseSettings load screen a
                     When using Mattermost Team Edition, the software is offered under a Mattermost MIT Compiled License. See MIT-COMPILED-LICENSE.md in your root install directory for details.
                   </p>
                   <p>
-                    When using Mattermost Enterprise Edition, the software is offered under a commercial license. See 
+                    When using Hanzo Team, the software is offered under a commercial license. See 
                     <a
                       class="openEELicenseModal"
                       role="button"
@@ -145,7 +145,7 @@ exports[`components/admin_console/license_settings/LicenseSettings load screen a
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -155,7 +155,7 @@ exports[`components/admin_console/license_settings/LicenseSettings load screen a
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -605,7 +605,7 @@ exports[`components/admin_console/license_settings/LicenseSettings load screen w
                     When using Mattermost Team Edition, the software is offered under a Mattermost MIT Compiled License. See MIT-COMPILED-LICENSE.md in your root install directory for details.
                   </p>
                   <p>
-                    When using Mattermost Enterprise Edition, the software is offered under a commercial license. See 
+                    When using Hanzo Team, the software is offered under a commercial license. See 
                     <a
                       class="openEELicenseModal"
                       role="button"
@@ -625,7 +625,7 @@ exports[`components/admin_console/license_settings/LicenseSettings load screen w
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -635,7 +635,7 @@ exports[`components/admin_console/license_settings/LicenseSettings load screen w
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -963,7 +963,7 @@ exports[`components/admin_console/license_settings/LicenseSettings load screen w
                     <b>
                       Upgrade
                     </b>
-                    , I agree to the terms of the Mattermost 
+                    , I agree to the terms of the Hanzo Team 
                     <a
                       role="button"
                     >
@@ -1099,7 +1099,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise E10
+                      Hanzo Team Enterprise E10
                     </div>
                   </div>
                   <button
@@ -1201,7 +1201,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise E10
+                        Hanzo Team Enterprise E10
                       </span>
                     </div>
                     <div
@@ -1245,7 +1245,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -1268,7 +1268,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -1289,7 +1289,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -1299,7 +1299,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -1628,7 +1628,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               Curious about upgrading? 
               <a
-                href="https://mattermost.com/pl/pricing/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/pricing/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -1762,7 +1762,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise E20
+                      Hanzo Team Enterprise E20
                     </div>
                   </div>
                   <button
@@ -1864,7 +1864,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise E20
+                        Hanzo Team Enterprise E20
                       </span>
                     </div>
                     <div
@@ -1908,7 +1908,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -1931,7 +1931,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -1952,7 +1952,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -1962,7 +1962,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -2411,7 +2411,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise
+                      Hanzo Team Enterprise
                     </div>
                   </div>
                   <button
@@ -2513,7 +2513,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise
+                        Hanzo Team Enterprise
                       </span>
                     </div>
                     <div
@@ -2557,7 +2557,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -2580,7 +2580,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -2601,7 +2601,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -2611,7 +2611,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -3076,7 +3076,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise E20
+                      Hanzo Team Enterprise E20
                     </div>
                   </div>
                   <button
@@ -3178,7 +3178,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise E20
+                        Hanzo Team Enterprise E20
                       </span>
                     </div>
                     <div
@@ -3222,7 +3222,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -3245,7 +3245,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -3266,7 +3266,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -3276,7 +3276,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -3725,7 +3725,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise E20
+                      Hanzo Team Enterprise E20
                     </div>
                   </div>
                   <button
@@ -3827,7 +3827,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise E20
+                        Hanzo Team Enterprise E20
                       </span>
                     </div>
                     <div
@@ -3871,7 +3871,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -3895,7 +3895,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -3916,7 +3916,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -3926,7 +3926,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -4375,7 +4375,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise E20
+                      Hanzo Team Enterprise E20
                     </div>
                   </div>
                   <button
@@ -4477,7 +4477,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise E20
+                        Hanzo Team Enterprise E20
                       </span>
                     </div>
                     <div
@@ -4521,7 +4521,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -4544,7 +4544,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -4553,7 +4553,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                   class="license-notices"
                 >
                   <p>
-                    When using Mattermost Enterprise Edition, the software is offered under a commercial license. See 
+                    When using Hanzo Team, the software is offered under a commercial license. See 
                     <a
                       class="openEELicenseModal"
                       role="button"
@@ -4571,7 +4571,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -4581,7 +4581,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -4958,7 +4958,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               <div
                 class="AlertBanner__title"
               >
-                You’re currently on a free trial of our Mattermost Enterprise Advanced.
+                You’re currently on a free trial of our Hanzo Team Enterprise Advanced.
               </div>
               <div
                 class="AlertBanner__message"
@@ -4982,7 +4982,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               >
                 <a
                   class="style-button AlertBanner__buttonLeft"
-                  href="https://mattermost.com/contact-sales/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings_user_seat_alert&uid=&sid=&edition=team&server_version="
+                  href="https://hanzo.ai/contact-sales/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings_user_seat_alert&uid=&sid=&edition=team&server_version="
                   location="license_settings_user_seat_alert"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -5013,7 +5013,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise Advanced
+                      Hanzo Team Enterprise Advanced
                       <div
                         class="TagWrapper-kezsCu cA-dXXM Tag Tag--success Tag--sm"
                       >
@@ -5185,7 +5185,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -5478,7 +5478,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               Curious about upgrading? 
               <a
-                href="https://mattermost.com/pl/pricing/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/pricing/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -5540,7 +5540,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               <div
                 class="AlertBanner__title"
               >
-                Start a free 30-day trial of Mattermost Enterprise Advanced
+                Start a free 30-day trial of Hanzo Team
               </div>
               <div
                 class="AlertBanner__message"
@@ -5551,23 +5551,23 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                   <p
                     class="license-trial-legal-terms"
                   >
-                    Experience all that Mattermost Enterprise Advanced has to offer with a free trial for the next 30 days. No obligation to buy and no credit card required. 
+                    Experience all that Hanzo Team has to offer with a free trial for the next 30 days. No obligation to buy and no credit card required. 
                     By clicking 
                     <strong>
                       Start trial
                     </strong>
                     , I agree to the 
                     <a
-                      href="https://mattermost.com/pl/software-and-services-license-agreement?utm_source=mattermost&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
+                      href="https://mattermost.com/pl/software-and-services-license-agreement"
                       location="trial_banner"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Mattermost Software and Services License Agreement
+                      Hanzo Team Software and Services License Agreement
                     </a>
                     , 
                     <a
-                      href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
                       location="trial_banner"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5672,7 +5672,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -5682,7 +5682,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -6019,7 +6019,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               Curious about upgrading? 
               <a
-                href="https://mattermost.com/pl/pricing/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/pricing/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -6081,7 +6081,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               <div
                 class="AlertBanner__title"
               >
-                Start a free 30-day trial of Mattermost Enterprise Advanced
+                Start a free 30-day trial of Hanzo Team
               </div>
               <div
                 class="AlertBanner__message"
@@ -6092,23 +6092,23 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                   <p
                     class="license-trial-legal-terms"
                   >
-                    Experience all that Mattermost Enterprise Advanced has to offer with a free trial for the next 30 days. No obligation to buy and no credit card required. 
+                    Experience all that Hanzo Team has to offer with a free trial for the next 30 days. No obligation to buy and no credit card required. 
                     By clicking 
                     <strong>
                       Start trial
                     </strong>
                     , I agree to the 
                     <a
-                      href="https://mattermost.com/pl/software-and-services-license-agreement?utm_source=mattermost&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
+                      href="https://mattermost.com/pl/software-and-services-license-agreement"
                       location="trial_banner"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Mattermost Software and Services License Agreement
+                      Hanzo Team Software and Services License Agreement
                     </a>
                     , 
                     <a
-                      href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
                       location="trial_banner"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -6177,7 +6177,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                   class="content"
                 >
                   <p>
-                    When using Mattermost Enterprise Edition, the software is offered under a commercial license. See 
+                    When using Hanzo Team, the software is offered under a commercial license. See 
                     <a
                       class="openEELicenseModal"
                       role="button"
@@ -6219,7 +6219,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -6229,7 +6229,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -6566,7 +6566,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
             >
               Curious about upgrading? 
               <a
-                href="https://mattermost.com/pl/pricing/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/pricing/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -6708,7 +6708,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     When using Mattermost Team Edition, the software is offered under a Mattermost MIT Compiled License. See MIT-COMPILED-LICENSE.md in your root install directory for details.
                   </p>
                   <p>
-                    When using Mattermost Enterprise Edition, the software is offered under a commercial license. See 
+                    When using Hanzo Team, the software is offered under a commercial license. See 
                     <a
                       class="openEELicenseModal"
                       role="button"
@@ -6728,7 +6728,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -6738,7 +6738,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -7056,7 +7056,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <b>
                       Upgrade
                     </b>
-                    , I agree to the terms of the Mattermost 
+                    , I agree to the terms of the Hanzo Team 
                     <a
                       role="button"
                     >
@@ -7120,7 +7120,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               <div
                 class="AlertBanner__title"
               >
-                Start a free 30-day trial of Mattermost Enterprise Advanced
+                Start a free 30-day trial of Hanzo Team
               </div>
               <div
                 class="AlertBanner__message"
@@ -7131,7 +7131,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                   <p
                     class="license-trial-legal-terms"
                   >
-                    Upgrade to the Enterprise Edition to unlock a free 30-day trial of Mattermost Enterprise Advanced—our most powerful plan. No credit card required, no obligation to buy. 
+                    Upgrade to the Enterprise Edition to unlock a free 30-day trial of Hanzo Team—our most powerful plan. No credit card required, no obligation to buy. 
                   </p>
                   <div
                     class="trial"
@@ -7152,16 +7152,16 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     </strong>
                     , I agree to the 
                     <a
-                      href="https://mattermost.com/pl/software-and-services-license-agreement?utm_source=mattermost&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
+                      href="https://mattermost.com/pl/software-and-services-license-agreement"
                       location="trial_banner"
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Mattermost Software Evaluation Agreement
+                      Hanzo Team Software Evaluation Agreement
                     </a>
                     , 
                     <a
-                      href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=trial_banner&uid=&sid=&edition=team&server_version="
                       location="trial_banner"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -7169,7 +7169,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       Privacy Policy
                     </a>
                     , and receiving product emails. 
-                    Also, I agree to the terms of the Mattermost 
+                    Also, I agree to the terms of the Hanzo Team 
                     <a
                       role="button"
                     >
@@ -7210,7 +7210,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     When using Mattermost Team Edition, the software is offered under a Mattermost MIT Compiled License. See MIT-COMPILED-LICENSE.md in your root install directory for details.
                   </p>
                   <p>
-                    When using Mattermost Enterprise Edition, the software is offered under a commercial license. See 
+                    When using Hanzo Team, the software is offered under a commercial license. See 
                     <a
                       class="openEELicenseModal"
                       role="button"
@@ -7230,7 +7230,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -7240,7 +7240,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -7558,7 +7558,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <b>
                       Upgrade
                     </b>
-                    , I agree to the terms of the Mattermost 
+                    , I agree to the terms of the Hanzo Team 
                     <a
                       role="button"
                     >
@@ -7574,7 +7574,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
             >
               Curious about upgrading? 
               <a
-                href="https://mattermost.com/pl/pricing/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/pricing/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -7692,7 +7692,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -7702,7 +7702,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -8039,7 +8039,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               Curious about upgrading? 
               <a
-                href="https://mattermost.com/pl/pricing/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/pricing/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -8096,7 +8096,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise E20
+                      Hanzo Team Enterprise E20
                     </div>
                   </div>
                   <button
@@ -8198,7 +8198,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise E20
+                        Hanzo Team Enterprise E20
                       </span>
                     </div>
                     <div
@@ -8242,7 +8242,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -8265,7 +8265,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -8286,7 +8286,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -8296,7 +8296,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -8745,7 +8745,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                     <div
                       class="EnterpriseEditionLeftPanel__Title"
                     >
-                      Mattermost Enterprise E20
+                      Hanzo Team Enterprise E20
                     </div>
                   </div>
                   <button
@@ -8847,7 +8847,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Enterprise E20
+                        Hanzo Team Enterprise E20
                       </span>
                     </div>
                     <div
@@ -8891,7 +8891,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                       <span
                         class="value"
                       >
-                        Mattermost Inc.
+                        Hanzo AI Inc.
                       </span>
                     </div>
                     <hr />
@@ -8914,7 +8914,7 @@ exports[`components/admin_console/license_settings/LicenseSettings should match 
                         id="remove-button"
                         type="button"
                       >
-                        Remove license and downgrade to Mattermost Free
+                        Remove license and downgrade to Hanzo Team Free
                       </button>
                     </div>
                   </div>
@@ -8935,7 +8935,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
             >
               See also 
               <a
-                href="https://mattermost.com/pl/terms-of-use/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/terms-of-use/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"
@@ -8945,7 +8945,7 @@ See ENTERPRISE-EDITION-LICENSE.txt in your root install directory for details. S
               </a>
                and 
               <a
-                href="https://mattermost.com/pl/privacy-policy/?utm_source=mattermost&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
+                href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=license_settings&uid=&sid=&edition=team&server_version="
                 id="privacyLink"
                 location="license_settings"
                 rel="noopener noreferrer"

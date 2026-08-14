@@ -389,7 +389,7 @@ exports[`admin_console/system_role_permissions should match snapshot 1`] = `
               class="PermissionSection_description"
               data-testid="permissionSection-description"
             >
-              Review the configuration around how users can signup and access Mattermost.
+              Review the configuration around how users can signup and access Hanzo Team.
             </div>
             <div
               class="PermissionSubsectionsToggle"
@@ -955,7 +955,7 @@ exports[`admin_console/system_role_permissions should match snapshot with isLice
               class="PermissionSection_description"
               data-testid="permissionSection-description"
             >
-              Review the configuration around how users can signup and access Mattermost.
+              Review the configuration around how users can signup and access Hanzo Team.
             </div>
             <div
               class="PermissionSubsectionsToggle"

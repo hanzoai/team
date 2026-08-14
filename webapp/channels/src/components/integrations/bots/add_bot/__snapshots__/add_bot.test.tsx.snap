@@ -183,7 +183,7 @@ exports[`components/integrations/bots/AddBot blank 1`] = `
           >
             Select additional permissions for the account. 
             <a
-              href="https://mattermost.com/pl/personal-access-tokens?utm_source=mattermost&utm_medium=in-product&utm_content=add_bot&uid=&sid=&edition=team&server_version="
+              href="https://docs.hanzo.team/personal-access-tokens?utm_source=hanzoteam&utm_medium=in-product&utm_content=add_bot&uid=&sid=&edition=team&server_version="
               location="add_bot"
               rel="noopener noreferrer"
               target="_blank"
@@ -221,7 +221,7 @@ exports[`components/integrations/bots/AddBot blank 1`] = `
             <div
               class="form__help"
             >
-              Bot will have access to post to all Mattermost channels including direct messages.
+              Bot will have access to post to all Hanzo Team channels including direct messages.
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ exports[`components/integrations/bots/AddBot blank 1`] = `
             <div
               class="form__help"
             >
-              Bot will have access to post to all Mattermost public channels.
+              Bot will have access to post to all Hanzo Team public channels.
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ exports[`components/FormattedMarkdownMessage should render message 1`] = `
     </em>
      
     <a
-      href="https://mattermost.com/"
+      href="https://hanzo.ai/"
       rel="noopener noreferrer"
       target="_blank"
     >
@@ -47,7 +47,7 @@ exports[`components/FormattedMarkdownMessage should render message 1`] = `
     </a>
      &lt;br/&gt; 
     <a
-      href="https://mattermost.com/"
+      href="https://hanzo.ai/"
       rel="noopener noreferrer"
       target="_blank"
     >

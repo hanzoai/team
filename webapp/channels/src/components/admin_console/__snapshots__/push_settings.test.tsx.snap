@@ -126,9 +126,9 @@ exports[`components/PushSettings should match snapshot, licensed 1`] = `
                 checked=""
                 type="checkbox"
               />
-               I understand and accept the Mattermost Hosted Push Notification Service 
+               I understand and accept the Hanzo Team Hosted Push Notification Service 
               <a
-                href="https://mattermost.com/hpns-terms/?utm_source=mattermost&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
+                href="https://hanzo.ai/hpns-terms/?utm_source=hanzoteam&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
                 location="push_settings"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -137,7 +137,7 @@ exports[`components/PushSettings should match snapshot, licensed 1`] = `
               </a>
                and 
               <a
-                href="https://mattermost.com/data-processing-addendum/?utm_source=mattermost&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
+                href="https://hanzo.ai/data-processing-addendum/?utm_source=hanzoteam&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
                 location="push_settings"
                 rel="noopener noreferrer"
                 target="_blank"
@@ -167,7 +167,7 @@ exports[`components/PushSettings should match snapshot, licensed 1`] = `
                 disabled=""
                 id="pushNotificationServer"
                 maxlength="-1"
-                placeholder="E.g.: \\"https://push-test.mattermost.com\\""
+                placeholder="E.g.: \\"https://push.hanzo.team\\""
                 type="text"
                 value="https://global.push.mattermost.com"
               />
@@ -177,30 +177,30 @@ exports[`components/PushSettings should match snapshot, licensed 1`] = `
               >
                 Download 
                 <a
-                  href="https://mattermost.com/pl/ios-app/?utm_source=mattermost&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
+                  href="https://docs.hanzo.team/ios-app/?utm_source=hanzoteam&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
                   location="push_settings"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Mattermost iOS app
+                  Hanzo Team iOS app
                 </a>
                  from iTunes. Download 
                 <a
-                  href="https://mattermost.com/pl/android-app/?utm_source=mattermost&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
+                  href="https://docs.hanzo.team/android-app/?utm_source=hanzoteam&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
                   location="push_settings"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Mattermost Android app
+                  Hanzo Team Android app
                 </a>
                  from Google Play. Learn more about the 
                 <a
-                  href="https://mattermost.com/pl/setup-push-notifications?utm_source=mattermost&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
+                  href="https://docs.hanzo.team/setup-push-notifications?utm_source=hanzoteam&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
                   location="push_settings"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Mattermost Hosted Push Notification Service
+                  Hanzo Team Hosted Push Notification Service
                 </a>
                 .
               </div>
@@ -342,7 +342,7 @@ exports[`components/PushSettings should match snapshot, unlicensed 1`] = `
                 data-testid="pushNotificationServerinput"
                 id="pushNotificationServer"
                 maxlength="-1"
-                placeholder="E.g.: \\"https://push-test.mattermost.com\\""
+                placeholder="E.g.: \\"https://push.hanzo.team\\""
                 type="text"
                 value="https://global.push.mattermost.com"
               />
@@ -352,7 +352,7 @@ exports[`components/PushSettings should match snapshot, unlicensed 1`] = `
               >
                 Learn more about compiling and deploying your own mobile apps from an 
                 <a
-                  href="https://docs.mattermost.com/?utm_source=mattermost&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
+                  href="https://docs.hanzo.team/?utm_source=hanzoteam&utm_medium=in-product&utm_content=push_settings&uid=&sid=&edition=team&server_version="
                   location="push_settings"
                   rel="noopener noreferrer"
                   target="_blank"
