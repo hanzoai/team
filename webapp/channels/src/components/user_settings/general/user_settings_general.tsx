@@ -739,7 +739,7 @@ export class UserSettingsGeneralTab extends PureComponent<Props, State> {
                 );
 
                 submit = this.submitEmail;
-            } else if (this.props.user.auth_service === Constants.GITLAB_SERVICE) {
+            } else if (this.props.user.auth_service === Constants.HANZO_SERVICE) {
                 inputs.push(
                     <div
                         key='oauthEmailInfo'
@@ -869,7 +869,7 @@ export class UserSettingsGeneralTab extends PureComponent<Props, State> {
         let describe: JSX.Element | string = '';
         if (this.props.user.auth_service === '') {
             describe = this.props.user.email;
-        } else if (this.props.user.auth_service === Constants.GITLAB_SERVICE) {
+        } else if (this.props.user.auth_service === Constants.HANZO_SERVICE) {
             describe = (
                 <FormattedMessage
                     id='user.settings.general.loginGitlab'

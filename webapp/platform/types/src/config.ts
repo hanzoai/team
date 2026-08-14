@@ -105,7 +105,7 @@ export type ClientConfig = {
     EnableSignInWithEmail: string;
     EnableSignInWithUsername: string;
     EnableSignUpWithEmail: string;
-    EnableSignUpWithGitLab: string;
+    EnableSignUpWithHanzo: string;
     EnableSignUpWithGoogle: string;
     EnableSignUpWithOffice365: string;
     EnableSignUpWithOpenId: string;
@@ -168,8 +168,8 @@ export type ClientConfig = {
     MaxNotificationsPerChannel: string;
     MinimumHashtagLength: string;
     NoAccounts: string;
-    GitLabButtonText: string;
-    GitLabButtonColor: string;
+    HanzoButtonText: string;
+    HanzoButtonColor: string;
     OpenIdButtonText: string;
     OpenIdButtonColor: string;
     PasswordEnableForgotLink: string;

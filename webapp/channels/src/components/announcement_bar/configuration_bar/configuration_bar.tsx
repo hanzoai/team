@@ -254,7 +254,7 @@ const ConfigurationAnnouncementBar = (props: Props) => {
         };
 
         let siteURLMessage;
-        if (props.config?.EnableSignUpWithGitLab === 'true') {
+        if (props.config?.EnableSignUpWithHanzo === 'true') {
             siteURLMessage = formatMessage({
                 id: 'announcement_bar.error.site_url_gitlab.full',
                 defaultMessage: 'Please configure your <linkSite>site URL</linkSite> either on the <linkConsole>System Console</linkConsole> or, if you\'re using GitLab Mattermost, in gitlab.rb.',

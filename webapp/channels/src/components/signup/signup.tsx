@@ -40,7 +40,7 @@ import Markdown from 'components/markdown';
 import SaveButton from 'components/save_button';
 import EntraIdIcon from 'components/widgets/icons/entra_id_icon';
 import LockIcon from 'components/widgets/icons/lock_icon';
-import LoginGitlabIcon from 'components/widgets/icons/login_gitlab_icon';
+import BrandMark from 'components/widgets/icons/brand_mark';
 import LoginGoogleIcon from 'components/widgets/icons/login_google_icon';
 import LoginOpenIDIcon from 'components/widgets/icons/login_openid_icon';
 import CheckInput from 'components/widgets/inputs/check';
@@ -82,7 +82,7 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
         EnableUserCreation,
         NoAccounts,
         EnableSignUpWithEmail,
-        EnableSignUpWithGitLab,
+        EnableSignUpWithHanzo,
         EnableSignUpWithGoogle,
         EnableSignUpWithOffice365,
         EnableSignUpWithOpenId,
@@ -92,8 +92,8 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
         LdapLoginFieldName,
         SiteName,
         CustomDescriptionText,
-        GitLabButtonText,
-        GitLabButtonColor,
+        HanzoButtonText,
+        HanzoButtonColor,
         OpenIdButtonText,
         OpenIdButtonColor,
         EnableCustomBrand,
@@ -115,7 +115,7 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
     const enableUserCreation = EnableUserCreation === 'true';
     const noAccounts = NoAccounts === 'true';
     const enableSignUpWithEmail = enableUserCreation && EnableSignUpWithEmail === 'true';
-    const enableSignUpWithGitLab = enableUserCreation && EnableSignUpWithGitLab === 'true';
+    const enableSignUpWithHanzo = enableUserCreation && EnableSignUpWithHanzo === 'true';
     const enableSignUpWithGoogle = enableUserCreation && EnableSignUpWithGoogle === 'true';
     const enableSignUpWithOffice365 = enableUserCreation && EnableSignUpWithOffice365 === 'true';
     const enableSignUpWithOpenId = enableUserCreation && EnableSignUpWithOpenId === 'true';
@@ -141,7 +141,7 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
     const [acceptedTerms, setAcceptedTerms] = useState(false);
     const [submitClicked, setSubmitClicked] = useState(false);
 
-    const enableExternalSignup = enableSignUpWithGitLab || enableSignUpWithOffice365 || enableSignUpWithGoogle || enableSignUpWithOpenId || enableLDAP || enableSAML;
+    const enableExternalSignup = enableSignUpWithHanzo || enableSignUpWithOffice365 || enableSignUpWithGoogle || enableSignUpWithOpenId || enableLDAP || enableSAML;
     const hasError = Boolean(emailError || nameError || passwordError || serverError || alertBanner);
     const canSubmit = Boolean(email && name && password && acceptedTerms) && !hasError && !loading;
     const passwordConfig = useSelector(getPasswordConfig);
@@ -156,14 +156,14 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
             return externalLoginOptions;
         }
 
-        if (enableSignUpWithGitLab) {
-            const url = `${Client4.getOAuthRoute()}/gitlab/signup${search}`;
+        if (enableSignUpWithHanzo) {
+            const url = `${Client4.getOAuthRoute()}/hanzo/signup${search}`;
             externalLoginOptions.push({
-                id: 'gitlab',
+                id: 'hanzo',
                 url,
-                icon: <LoginGitlabIcon/>,
-                label: GitLabButtonText || formatMessage({id: 'login.gitlab', defaultMessage: 'GitLab'}),
-                style: {color: GitLabButtonColor, borderColor: GitLabButtonColor},
+                icon: <BrandMark/>,
+                label: HanzoButtonText || formatMessage({id: 'login.hanzo', defaultMessage: 'Hanzo'}),
+                style: {color: HanzoButtonColor, borderColor: HanzoButtonColor},
                 onClick: desktopExternalAuth(url),
             });
         }
