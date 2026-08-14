@@ -5,7 +5,7 @@ exports[`/components/common/SiteNameAndDescription should match snapshot, defaul
   <h1
     id="site_name"
   >
-    Mattermost
+    Hanzo Team
   </h1>
   <h3
     class="color--light"

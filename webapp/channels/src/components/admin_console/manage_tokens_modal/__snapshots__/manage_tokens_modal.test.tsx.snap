@@ -85,16 +85,16 @@ exports[`components/admin_console/manage_tokens_modal/manage_tokens_modal.tsx in
               >
                 Personal access tokens function similarly to session tokens and can be used by integrations to 
                 <a
-                  href="https://api.mattermost.com/?utm_source=mattermost&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version=#tag/authentication"
+                  href="https://api.mattermost.com/#tag/authentication"
                   location="manage_tokens_modal"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  interact with this Mattermost server
+                  interact with this Hanzo Team server
                 </a>
                 . Tokens are disabled if the user is deactivated. Learn more about 
                 <a
-                  href="https://mattermost.com/pl/personal-access-tokens?utm_source=mattermost&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version="
+                  href="https://docs.hanzo.team/personal-access-tokens?utm_source=hanzoteam&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version="
                   location="manage_tokens_modal"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -223,16 +223,16 @@ exports[`components/admin_console/manage_tokens_modal/manage_tokens_modal.tsx sh
               >
                 Personal access tokens function similarly to session tokens and can be used by integrations to 
                 <a
-                  href="https://api.mattermost.com/?utm_source=mattermost&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version=#tag/authentication"
+                  href="https://api.mattermost.com/#tag/authentication"
                   location="manage_tokens_modal"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  interact with this Mattermost server
+                  interact with this Hanzo Team server
                 </a>
                 . Tokens are disabled if the user is deactivated. Learn more about 
                 <a
-                  href="https://mattermost.com/pl/personal-access-tokens?utm_source=mattermost&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version="
+                  href="https://docs.hanzo.team/personal-access-tokens?utm_source=hanzoteam&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version="
                   location="manage_tokens_modal"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -423,16 +423,16 @@ exports[`components/admin_console/manage_tokens_modal/manage_tokens_modal.tsx sh
               >
                 Personal access tokens function similarly to session tokens and can be used by integrations to 
                 <a
-                  href="https://api.mattermost.com/?utm_source=mattermost&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version=#tag/authentication"
+                  href="https://api.mattermost.com/#tag/authentication"
                   location="manage_tokens_modal"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  interact with this Mattermost server
+                  interact with this Hanzo Team server
                 </a>
                 . Tokens are disabled if the user is deactivated. Learn more about 
                 <a
-                  href="https://mattermost.com/pl/personal-access-tokens?utm_source=mattermost&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version="
+                  href="https://docs.hanzo.team/personal-access-tokens?utm_source=hanzoteam&utm_medium=in-product&utm_content=manage_tokens_modal&uid=&sid=&edition=team&server_version="
                   location="manage_tokens_modal"
                   rel="noopener noreferrer"
                   target="_blank"

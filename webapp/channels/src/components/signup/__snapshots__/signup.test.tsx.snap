@@ -19,7 +19,7 @@ exports[`components/signup/Signup should match snapshot for all signup options e
         <p
           class="signup-body-message-subtitle"
         >
-          Create your Mattermost account to start collaborating with your team
+          Create your Hanzo Team account to start collaborating with your team
         </p>
       </div>
       <div
@@ -166,7 +166,7 @@ exports[`components/signup/Signup should match snapshot for all signup options e
         <p
           class="signup-body-message-subtitle"
         >
-          Create your Mattermost account to start collaborating with your team
+          Create your Hanzo Team account to start collaborating with your team
         </p>
       </div>
       <div
@@ -371,67 +371,38 @@ exports[`components/signup/Signup should match snapshot for all signup options e
               class="signup-body-card-form-login-options"
             >
               <a
-                class="external-login-button gitlab"
-                href="/oauth/gitlab/signup"
-                id="gitlab"
+                class="external-login-button hanzo"
+                href="/oauth/hanzo/signup"
+                id="hanzo"
               >
                 <span>
                   <svg
-                    aria-label="Gitlab Icon"
-                    fill="none"
-                    height="16"
-                    viewBox="0 0 17 16"
-                    width="17"
-                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label="Hanzo Team logo"
+                    fill="currentColor"
+                    role="img"
+                    viewBox="0 0 67 67"
                   >
                     <path
-                      clip-rule="evenodd"
-                      d="M8.83325 15.4909L11.7793 6.45337H5.88745L8.83334 15.4909H8.83325Z"
-                      fill="#E24329"
-                      fill-rule="evenodd"
+                      d="M22.21 67V44.6369H0V67H22.21Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M8.83339 15.4909L5.88737 6.45337H1.75854L8.83347 15.4908L8.83339 15.4909Z"
-                      fill="#FC6D26"
-                      fill-rule="evenodd"
+                      d="M66.7038 22.3184H22.2534L0.0878906 44.6367H44.4634L66.7038 22.3184Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M1.75846 6.45329L0.863125 9.19966C0.781518 9.45021 0.870921 9.72467 1.08477 9.87941L8.83325 15.4908L1.75846 6.45325V6.45329Z"
-                      fill="#FCA326"
-                      fill-rule="evenodd"
+                      d="M22.21 0H0V22.3184H22.21V0Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M1.75859 6.45333H5.88742L4.11296 1.01011C4.02169 0.73003 3.62418 0.73003 3.53296 1.01011L1.75854 6.45333H1.75859Z"
-                      fill="#E24329"
-                      fill-rule="evenodd"
+                      d="M66.7198 0H44.5098V22.3184H66.7198V0Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M8.83325 15.4909L11.7793 6.45337H15.9081L8.83334 15.4908L8.83325 15.4909Z"
-                      fill="#FC6D26"
-                      fill-rule="evenodd"
-                    />
-                    <path
-                      clip-rule="evenodd"
-                      d="M15.908 6.45329L16.8034 9.19966C16.885 9.45021 16.7956 9.72467 16.5817 9.87941L8.83325 15.4908L15.908 6.45325V6.45329Z"
-                      fill="#FCA326"
-                      fill-rule="evenodd"
-                    />
-                    <path
-                      clip-rule="evenodd"
-                      d="M15.9081 6.45333H11.7793L13.5538 1.01011C13.6451 0.73003 14.0426 0.73003 14.1338 1.01011L15.9082 6.45333H15.9081Z"
-                      fill="#E24329"
-                      fill-rule="evenodd"
+                      d="M66.7198 67V44.6369H44.5098V67H66.7198Z"
                     />
                   </svg>
                 </span>
                 <span
                   class="external-login-button-label"
                 >
-                  GitLab
+                  Hanzo
                 </span>
               </a>
             </div>
@@ -462,7 +433,7 @@ exports[`components/signup/Signup should match snapshot for all signup options e
         <p
           class="signup-body-message-subtitle"
         >
-          Create your Mattermost account to start collaborating with your team
+          Create your Hanzo Team account to start collaborating with your team
         </p>
       </div>
       <div
@@ -667,67 +638,38 @@ exports[`components/signup/Signup should match snapshot for all signup options e
               class="signup-body-card-form-login-options"
             >
               <a
-                class="external-login-button gitlab"
-                href="/oauth/gitlab/signup"
-                id="gitlab"
+                class="external-login-button hanzo"
+                href="/oauth/hanzo/signup"
+                id="hanzo"
               >
                 <span>
                   <svg
-                    aria-label="Gitlab Icon"
-                    fill="none"
-                    height="16"
-                    viewBox="0 0 17 16"
-                    width="17"
-                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label="Hanzo Team logo"
+                    fill="currentColor"
+                    role="img"
+                    viewBox="0 0 67 67"
                   >
                     <path
-                      clip-rule="evenodd"
-                      d="M8.83325 15.4909L11.7793 6.45337H5.88745L8.83334 15.4909H8.83325Z"
-                      fill="#E24329"
-                      fill-rule="evenodd"
+                      d="M22.21 67V44.6369H0V67H22.21Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M8.83339 15.4909L5.88737 6.45337H1.75854L8.83347 15.4908L8.83339 15.4909Z"
-                      fill="#FC6D26"
-                      fill-rule="evenodd"
+                      d="M66.7038 22.3184H22.2534L0.0878906 44.6367H44.4634L66.7038 22.3184Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M1.75846 6.45329L0.863125 9.19966C0.781518 9.45021 0.870921 9.72467 1.08477 9.87941L8.83325 15.4908L1.75846 6.45325V6.45329Z"
-                      fill="#FCA326"
-                      fill-rule="evenodd"
+                      d="M22.21 0H0V22.3184H22.21V0Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M1.75859 6.45333H5.88742L4.11296 1.01011C4.02169 0.73003 3.62418 0.73003 3.53296 1.01011L1.75854 6.45333H1.75859Z"
-                      fill="#E24329"
-                      fill-rule="evenodd"
+                      d="M66.7198 0H44.5098V22.3184H66.7198V0Z"
                     />
                     <path
-                      clip-rule="evenodd"
-                      d="M8.83325 15.4909L11.7793 6.45337H15.9081L8.83334 15.4908L8.83325 15.4909Z"
-                      fill="#FC6D26"
-                      fill-rule="evenodd"
-                    />
-                    <path
-                      clip-rule="evenodd"
-                      d="M15.908 6.45329L16.8034 9.19966C16.885 9.45021 16.7956 9.72467 16.5817 9.87941L8.83325 15.4908L15.908 6.45325V6.45329Z"
-                      fill="#FCA326"
-                      fill-rule="evenodd"
-                    />
-                    <path
-                      clip-rule="evenodd"
-                      d="M15.9081 6.45333H11.7793L13.5538 1.01011C13.6451 0.73003 14.0426 0.73003 14.1338 1.01011L15.9082 6.45333H15.9081Z"
-                      fill="#E24329"
-                      fill-rule="evenodd"
+                      d="M66.7198 67V44.6369H44.5098V67H66.7198Z"
                     />
                   </svg>
                 </span>
                 <span
                   class="external-login-button-label"
                 >
-                  GitLab
+                  Hanzo
                 </span>
               </a>
               <a

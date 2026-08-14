@@ -478,7 +478,7 @@ describe('Selectors.Users', () => {
 
     it('searchProfilesInCurrentChannel', () => {
         expect(Selectors.searchProfilesInCurrentChannel(testState, user1.username)).toEqual([user1]);
-        expect(Selectors.searchProfilesInCurrentChannel(testState, 'engineer at mattermost')).toEqual([user1]);
+        expect(Selectors.searchProfilesInCurrentChannel(testState, 'engineer at hanzo team')).toEqual([user1]);
         expect(Selectors.searchProfilesInCurrentChannel(testState, user1.username, true)).toEqual([]);
         expect(Selectors.searchProfilesInCurrentChannel(testState, 'body', true)).toEqual([user8]);
     });

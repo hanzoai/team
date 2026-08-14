@@ -1657,40 +1657,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                           </li>
                           <li
                             class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
                             data-testid="authentication.guest_access_feature_discovery"
                           >
                             <a
@@ -3510,40 +3476,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                                 class="sidebar-section-title__text"
                               >
                                 OpenID Connect
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
                               </span>
                             </a>
                             <ul
@@ -5383,40 +5315,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                           </li>
                           <li
                             class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
                             data-testid="authentication.guest_access_feature_discovery"
                           >
                             <a
@@ -7234,40 +7132,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                           </li>
                           <li
                             class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
                             data-testid="authentication.guest_access_feature_discovery"
                           >
                             <a
@@ -9024,40 +8888,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                                 class="sidebar-section-title__text"
                               >
                                 OpenID Connect
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
                               </span>
                               <span
                                 class="sidebar-section-indicator"
@@ -10969,40 +10799,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                           </li>
                           <li
                             class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
                             data-testid="authentication.guest_access_feature_discovery"
                           >
                             <a
@@ -12759,40 +12555,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                                 class="sidebar-section-title__text"
                               >
                                 OpenID Connect
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
                               </span>
                               <span
                                 class="sidebar-section-indicator"
@@ -16315,40 +16077,6 @@ c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V4z M20,4v5H4V4H20z M22,15v5c0,1.1-0.9,2-2,2H
                                 class="sidebar-section-title__text"
                               >
                                 OpenID Connect
-                              </span>
-                              <span
-                                class="sidebar-section-indicator"
-                              >
-                                <span
-                                  class="RestrictedIndicator__icon-tooltip-container"
-                                >
-                                  <div
-                                    class="RestrictedIndicator__content"
-                                  >
-                                    <i
-                                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                                    />
-                                  </div>
-                                </span>
-                              </span>
-                            </a>
-                            <ul
-                              class="nav nav__sub-menu subsections"
-                            />
-                          </li>
-                          <li
-                            class="sidebar-section"
-                            data-testid="authentication.gitlab_feature_discovery"
-                          >
-                            <a
-                              class="sidebar-section-title"
-                              href="/admin_console/authentication/gitlab"
-                              id="authentication/gitlab"
-                            >
-                              <span
-                                class="sidebar-section-title__text"
-                              >
-                                GitLab
                               </span>
                               <span
                                 class="sidebar-section-indicator"

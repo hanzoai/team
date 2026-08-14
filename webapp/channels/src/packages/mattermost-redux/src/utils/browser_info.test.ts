@@ -29,7 +29,7 @@ describe('utils/browser_info', () => {
         const browserTestCases = [
             {
                 name: 'Hanzo Team Desktop App',
-                userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.6834.83 Electron/34.0.1 Safari/537.36 Hanzo Team/34.0.1',
+                userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.6834.83 Electron/34.0.1 Safari/537.36 HanzoTeam/34.0.1',
                 expectedBrowser: 'Hanzo Team Desktop App',
                 expectedVersion: '34.0.1',
             },

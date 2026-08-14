@@ -39,22 +39,22 @@ describe('useExternalLink', () => {
     });
 
     it('mailto links are untouched even if to mattermost emails', () => {
-        const mailtoURL = 'mailto:example@mattermost.com?subject=123&body=456';
+        const mailtoURL = 'mailto:example@hanzo.ai?subject=123&body=456';
         const {result: {current: [mailtoHref, mailtoQueryParams]}} = renderHookWithContext(() => useExternalLink(mailtoURL), getBaseState());
         expect(mailtoHref).toEqual(mailtoURL);
         expect(mailtoQueryParams).toEqual({});
     });
 
     it('all base queries are set correctly', () => {
-        const url = 'https://www.mattermost.com/some/url';
+        const url = 'https://hanzo.ai/some/url';
         const {result: {current: [href, queryParams]}} = renderHookWithContext(() => useExternalLink(url), getBaseState());
         const parsedLink = new URL(href);
-        expect(parsedLink.searchParams.get('utm_source')).toBe('mattermost');
+        expect(parsedLink.searchParams.get('utm_source')).toBe('hanzoteam');
         expect(parsedLink.searchParams.get('utm_medium')).toBe('in-product-cloud');
         expect(parsedLink.searchParams.get('utm_content')).toBe('');
         expect(parsedLink.searchParams.get('uid')).toBe(baseCurrentUserId);
         expect(parsedLink.searchParams.get('sid')).toBe(baseTelemetryId);
-        expect(queryParams.utm_source).toBe('mattermost');
+        expect(queryParams.utm_source).toBe('hanzoteam');
         expect(queryParams.utm_medium).toBe('in-product-cloud');
         expect(queryParams.utm_content).toBe('');
         expect(queryParams.uid).toBe(baseCurrentUserId);
@@ -63,7 +63,7 @@ describe('useExternalLink', () => {
     });
 
     it('provided location is added to the params', () => {
-        const url = 'https://www.mattermost.com/some/url';
+        const url = 'https://hanzo.ai/some/url';
         const location = 'someLocation';
         const {result: {current: [href, queryParams]}} = renderHookWithContext(() => useExternalLink(url, location), getBaseState());
         const parsedLink = new URL(href);
@@ -72,7 +72,7 @@ describe('useExternalLink', () => {
     });
 
     it('non cloud environments set the proper utm medium', () => {
-        const url = 'https://www.mattermost.com/some/url';
+        const url = 'https://hanzo.ai/some/url';
         const state = getBaseState();
         state.entities!.general!.license!.Cloud = 'false';
         const {result: {current: [href, queryParams]}} = renderHookWithContext(() => useExternalLink(url), state);
@@ -82,7 +82,7 @@ describe('useExternalLink', () => {
     });
 
     it('keep existing query parameters untouched', () => {
-        const url = 'https://www.mattermost.com/some/url?myParameter=true';
+        const url = 'https://hanzo.ai/some/url?myParameter=true';
         const {result: {current: [href, queryParams]}} = renderHookWithContext(() => useExternalLink(url), getBaseState());
         const parsedLink = new URL(href);
         expect(parsedLink.searchParams.get('myParameter')).toBe('true');
@@ -90,14 +90,14 @@ describe('useExternalLink', () => {
     });
 
     it('keep anchors untouched', () => {
-        const url = 'https://www.mattermost.com/some/url?myParameter=true#myAnchor';
+        const url = 'https://hanzo.ai/some/url?myParameter=true#myAnchor';
         const {result: {current: [href]}} = renderHookWithContext(() => useExternalLink(url), getBaseState());
         const parsedLink = new URL(href);
         expect(parsedLink.hash).toBe('#myAnchor');
     });
 
     it('overwriting params gets preference over default params', () => {
-        const url = 'https://www.mattermost.com/some/url';
+        const url = 'https://hanzo.ai/some/url';
         const location = 'someLocation';
         const expectedContent = 'someOtherLocation';
         const expectedSource = 'someOtherSource';
@@ -115,7 +115,7 @@ describe('useExternalLink', () => {
         const overwrittenSource = 'someOtherSource';
         const expectedContent = 'differentLocation';
         const expectedSource = 'differentSource';
-        const url = `https://www.mattermost.com/some/url?utm_content=${expectedContent}&utm_source=${expectedSource}`;
+        const url = `https://hanzo.ai/some/url?utm_content=${expectedContent}&utm_source=${expectedSource}`;
 
         const {result: {current: [href, queryParams]}} = renderHookWithContext(() => useExternalLink(url, location, {utm_content: overwrittenContent, utm_source: overwrittenSource}), getBaseState());
         const parsedLink = new URL(href);
@@ -126,7 +126,7 @@ describe('useExternalLink', () => {
     });
 
     it('results are stable between re-renders', () => {
-        const url = 'https://www.mattermost.com/some/url';
+        const url = 'https://hanzo.ai/some/url';
         const overwriteQueryParams = {utm_content: 'overwrittenContent', utm_source: 'overwrittenSource'};
 
         const {result, rerender} = renderHookWithContext(() => useExternalLink(url, 'someLocation', overwriteQueryParams), getBaseState());
@@ -138,7 +138,7 @@ describe('useExternalLink', () => {
     });
 
     it('do not substitute %20 on query params', () => {
-        const url = 'https://www.mattermost.com/some/url?subject=hello%20world';
+        const url = 'https://hanzo.ai/some/url?subject=hello%20world';
         const {result: {current: [href]}} = renderHookWithContext(() => useExternalLink(url), getBaseState());
         expect(href).toContain('subject=hello%20world');
     });

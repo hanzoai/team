@@ -65,7 +65,7 @@ exports[`messageHtmlToComponent Inline markdown image 1`] = `
         class="image-loaded-container"
       >
         <img
-          alt="Mattermost"
+          alt="Hanzo Team"
           aria-label="file thumbnail"
           class="markdown-inline-img markdown-inline-img--scaled-down-loading"
           src="/images/icon.png"
@@ -105,7 +105,7 @@ exports[`messageHtmlToComponent Inline markdown image where image is link 1`] = 
           class="image-loaded-container"
         >
           <img
-            alt="Mattermost"
+            alt="Hanzo Team"
             aria-label="file thumbnail"
             class="markdown-inline-img markdown-inline-img--scaled-down-loading"
             src="images/icon.png"

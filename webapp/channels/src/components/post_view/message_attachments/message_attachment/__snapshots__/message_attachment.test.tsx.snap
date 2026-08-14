@@ -371,7 +371,7 @@ exports[`components/post_view/MessageAttachment should match snapshot when the a
           <div
             data-testid="markdown-mock"
           >
-            Do you like https://mattermost.com?
+            Do you like https://hanzo.ai?
           </div>
         </h1>
         <div>

@@ -69,9 +69,9 @@ exports[`components/PluginManagement should match snapshot 1`] = `
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -124,9 +124,9 @@ exports[`components/PluginManagement should match snapshot 1`] = `
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -222,9 +222,9 @@ exports[`components/PluginManagement should match snapshot 1`] = `
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -279,7 +279,7 @@ exports[`components/PluginManagement should match snapshot 1`] = `
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -382,7 +382,7 @@ exports[`components/PluginManagement should match snapshot 1`] = `
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -483,9 +483,9 @@ exports[`components/PluginManagement should match snapshot when \`Enable Marketp
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -538,9 +538,9 @@ exports[`components/PluginManagement should match snapshot when \`Enable Marketp
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -636,9 +636,9 @@ exports[`components/PluginManagement should match snapshot when \`Enable Marketp
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -693,7 +693,7 @@ exports[`components/PluginManagement should match snapshot when \`Enable Marketp
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -799,7 +799,7 @@ exports[`components/PluginManagement should match snapshot when \`Enable Marketp
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -872,7 +872,7 @@ exports[`components/PluginManagement should match snapshot when \`Enable Plugins
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -973,9 +973,9 @@ exports[`components/PluginManagement should match snapshot when \`Enable Remote 
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1028,9 +1028,9 @@ exports[`components/PluginManagement should match snapshot when \`Enable Remote 
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1126,9 +1126,9 @@ exports[`components/PluginManagement should match snapshot when \`Enable Remote 
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1183,7 +1183,7 @@ exports[`components/PluginManagement should match snapshot when \`Enable Remote 
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1287,7 +1287,7 @@ exports[`components/PluginManagement should match snapshot when \`Enable Remote 
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -1388,9 +1388,9 @@ exports[`components/PluginManagement should match snapshot when \`Require Signat
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1443,9 +1443,9 @@ exports[`components/PluginManagement should match snapshot when \`Require Signat
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1543,9 +1543,9 @@ exports[`components/PluginManagement should match snapshot when \`Require Signat
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1600,7 +1600,7 @@ exports[`components/PluginManagement should match snapshot when \`Require Signat
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1703,7 +1703,7 @@ exports[`components/PluginManagement should match snapshot when \`Require Signat
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -1804,9 +1804,9 @@ exports[`components/PluginManagement should match snapshot, No installed plugins
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1859,9 +1859,9 @@ exports[`components/PluginManagement should match snapshot, No installed plugins
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1957,9 +1957,9 @@ exports[`components/PluginManagement should match snapshot, No installed plugins
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2014,7 +2014,7 @@ exports[`components/PluginManagement should match snapshot, No installed plugins
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2117,7 +2117,7 @@ exports[`components/PluginManagement should match snapshot, No installed plugins
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                   No installed plugins.
@@ -2219,9 +2219,9 @@ exports[`components/PluginManagement should match snapshot, allow insecure URL e
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2274,9 +2274,9 @@ exports[`components/PluginManagement should match snapshot, allow insecure URL e
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2372,9 +2372,9 @@ exports[`components/PluginManagement should match snapshot, allow insecure URL e
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2429,7 +2429,7 @@ exports[`components/PluginManagement should match snapshot, allow insecure URL e
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2532,7 +2532,7 @@ exports[`components/PluginManagement should match snapshot, allow insecure URL e
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -2633,9 +2633,9 @@ exports[`components/PluginManagement should match snapshot, disabled 1`] = `
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2690,9 +2690,9 @@ exports[`components/PluginManagement should match snapshot, disabled 1`] = `
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2798,7 +2798,7 @@ exports[`components/PluginManagement should match snapshot, disabled 1`] = `
                     </strong>
                      to true. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2855,7 +2855,7 @@ exports[`components/PluginManagement should match snapshot, disabled 1`] = `
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3043,9 +3043,9 @@ exports[`components/PluginManagement should match snapshot, text entered into th
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3098,9 +3098,9 @@ exports[`components/PluginManagement should match snapshot, text entered into th
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3196,9 +3196,9 @@ exports[`components/PluginManagement should match snapshot, text entered into th
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3253,7 +3253,7 @@ exports[`components/PluginManagement should match snapshot, text entered into th
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3356,7 +3356,7 @@ exports[`components/PluginManagement should match snapshot, text entered into th
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -3457,9 +3457,9 @@ exports[`components/PluginManagement should match snapshot, upload disabled 1`] 
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3512,9 +3512,9 @@ exports[`components/PluginManagement should match snapshot, upload disabled 1`] 
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3614,7 +3614,7 @@ exports[`components/PluginManagement should match snapshot, upload disabled 1`] 
                   >
                     Enable plugin uploads in config.json. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3669,7 +3669,7 @@ exports[`components/PluginManagement should match snapshot, upload disabled 1`] 
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3758,7 +3758,7 @@ exports[`components/PluginManagement should match snapshot, upload disabled 1`] 
                     <div>
                       Enable plugin uploads in config.json. See 
                       <a
-                        href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                        href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                         location="plugin_management"
                         rel="noopener noreferrer"
                         target="_blank"
@@ -3784,7 +3784,7 @@ exports[`components/PluginManagement should match snapshot, upload disabled 1`] 
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                 </div>
@@ -3885,9 +3885,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3940,9 +3940,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4038,9 +4038,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4095,7 +4095,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4198,7 +4198,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                   <div
@@ -4582,9 +4582,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4637,9 +4637,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4735,9 +4735,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4792,7 +4792,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4895,7 +4895,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                   <div
@@ -5077,9 +5077,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5132,9 +5132,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5230,9 +5230,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5287,7 +5287,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5390,7 +5390,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                   <div
@@ -5572,9 +5572,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5627,9 +5627,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5725,9 +5725,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5782,7 +5782,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5885,7 +5885,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                   <div
@@ -6067,9 +6067,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="enablehelp-text"
                   >
-                    When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See 
+                    When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -6122,9 +6122,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="requirePluginSignaturehelp-text"
                   >
-                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See 
+                    When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See 
                     <a
-                      href="https://mattermost.com/pl/sign-plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/sign-plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -6220,9 +6220,9 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                     class="help-text"
                     data-testid="undefinedhelp-text"
                   >
-                    Upload a plugin for your Mattermost server. See 
+                    Upload a plugin for your Hanzo Team server. See 
                     <a
-                      href="https://mattermost.com/pl/plugins?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/plugins?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -6277,7 +6277,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://mattermost.com/pl/default-mattermost-marketplace.html?utm_source=mattermost&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -6380,7 +6380,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   <p
                     class="help-text"
                   >
-                    Installed plugins on your Mattermost server.
+                    Installed plugins on your Hanzo Team server.
                   </p>
                   <br />
                   <div

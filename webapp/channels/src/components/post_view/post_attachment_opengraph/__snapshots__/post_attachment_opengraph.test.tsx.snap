@@ -4,13 +4,13 @@ exports[`PostAttachmentOpenGraph should match snapshot 1`] = `
 <div>
   <a
     class="PostAttachmentOpenGraph"
-    href="https://www.mattermost.com/?utm_source=mattermost&utm_medium=in-product&utm_content=post_attachment_opengraph&uid=user-1&sid=&edition=team&server_version="
+    href="https://www.mattermost.com"
     location="post_attachment_opengraph"
     rel="noopener noreferrer"
     role="link"
     style="--open-graph-thumbnail-size: 80px; --open-graph-max-image-width: 392px; --open-graph-max-image-height: 240px;"
     target="_blank"
-    title="Mattermost | Open Source Collaboration for Developers"
+    title="Hanzo Team | Open Source Collaboration for Developers"
   >
     <div
       class="PostAttachmentOpenGraph__body"
@@ -18,17 +18,17 @@ exports[`PostAttachmentOpenGraph should match snapshot 1`] = `
       <span
         class="sitename"
       >
-        Mattermost.com
+        Hanzo Team.com
       </span>
       <span
         class="title"
       >
-        Mattermost | Open Source Collaboration for Developers
+        Hanzo Team | Open Source Collaboration for Developers
       </span>
       <span
         class="description"
       >
-        Mattermost is a secure, open source platform for communication, collaboration, and workflow orchestration across tools and teams.
+        Hanzo Team is a secure, open source platform for communication, collaboration, and workflow orchestration across tools and teams.
       </span>
     </div>
     <div
@@ -87,7 +87,7 @@ exports[`PostAttachmentOpenGraph should match snapshot 1`] = `
               class="image-loaded-container"
             >
               <img
-                alt="Mattermost | Open Source Collaboration for Developers"
+                alt="Hanzo Team | Open Source Collaboration for Developers"
                 aria-label="file thumbnail"
                 class="undefined"
                 src="/api/v4/image?url=http%3A%2F%2Flocalhost%3A8065%2Fapi%2Fv4%2Fimage%3Furl%3Dhttp%253A%252F%252Fmattermo%E2%80%A6t.com%252Fwp-content%252Fuploads%252F2021%252F09%252FHomepage%25402x.png"

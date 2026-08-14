@@ -8,9 +8,9 @@ export function getBrowserInfo() {
     let browserVersion = 'Unknown';
 
     // Check if it's Hanzo Team Desktop App first
-    if (userAgent.includes('mattermost')) {
+    if (userAgent.includes('hanzoteam')) {
         browser = 'Hanzo Team Desktop App';
-        const match = userAgent.match(/mattermost\/(\d+(\.\d+)*)/i);
+        const match = userAgent.match(/hanzoteam\/(\d+(\.\d+)*)/i);
 
         if (match && match[1]) {
             browserVersion = match[1];
@@ -60,12 +60,12 @@ export function getBrowserInfo() {
 }
 
 export function isDesktopApp(): boolean {
-    return window.navigator.userAgent.indexOf('Hanzo Team') !== -1 && window.navigator.userAgent.indexOf('Electron') !== -1;
+    return window.navigator.userAgent.indexOf('HanzoTeam') !== -1 && window.navigator.userAgent.indexOf('Electron') !== -1;
 }
 
 export function getDesktopVersion(): string {
     // use if the value window.desktop.version is not set yet
-    const regex = /Hanzo Team\/(\d+\.\d+\.\d+)/gm;
+    const regex = /HanzoTeam\/(\d+\.\d+\.\d+)/gm;
     const match = regex.exec(window.navigator.appVersion)?.[1] || '';
     return match;
 }
