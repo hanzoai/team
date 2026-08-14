@@ -95,7 +95,6 @@ export {
     ScheduledDraftModal,
     ScheduledPost,
     SendMessageNowModal,
-    SystemConsoleFeatureDiscovery,
     MessagePriority,
     UserProfilePopover,
     UserAccountMenu,

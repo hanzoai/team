@@ -6,7 +6,6 @@ import type {Page} from '@playwright/test';
 import SystemConsoleNavbar from '@/ui/components/system_console/navbar';
 import SystemConsoleSidebar from '@/ui/components/system_console/sidebar';
 import SystemConsoleHeader from '@/ui/components/system_console/header';
-import EditionAndLicense from '@/ui/components/system_console/sections/about/edition_and_license';
 import TeamStatistics from '@/ui/components/system_console/sections/reporting/team_statistics';
 import Users from '@/ui/components/system_console/sections/user_management/users';
 import DelegatedGranularAdministration from '@/ui/components/system_console/sections/user_management/delegated_granular_administration';
@@ -18,7 +17,6 @@ import UsersAndTeams from '@/ui/components/system_console/sections/site_configur
 import BoardAttributes from '@/ui/components/system_console/sections/system_attributes/board_attributes';
 import SystemProperties from '@/ui/components/system_console/sections/system_attributes/system_properties';
 import SessionAttributes from '@/ui/components/system_console/sections/system_attributes/session_attributes';
-import FeatureDiscovery from '@/ui/components/system_console/sections/system_users/feature_discovery';
 import PluginManagement from '@/ui/components/system_console/sections/plugins/plugin_management';
 
 export default class SystemConsolePage {
@@ -28,9 +26,6 @@ export default class SystemConsolePage {
     readonly navbar: SystemConsoleNavbar;
     readonly sidebar: SystemConsoleSidebar;
     readonly header: SystemConsoleHeader;
-
-    // About
-    readonly editionAndLicense: EditionAndLicense;
 
     // Reporting
     readonly teamStatistics: TeamStatistics;
@@ -53,9 +48,6 @@ export default class SystemConsolePage {
     readonly sessionAttributes: SessionAttributes;
     readonly boardAttributes: BoardAttributes;
 
-    // Feature Discovery (license-gated features)
-    readonly featureDiscovery: FeatureDiscovery;
-
     // Plugins
     readonly pluginManagement: PluginManagement;
 
@@ -68,9 +60,6 @@ export default class SystemConsolePage {
 
         const adminConsoleWrapper = page.locator('#adminConsoleWrapper');
         this.header = new SystemConsoleHeader(adminConsoleWrapper);
-
-        // About
-        this.editionAndLicense = new EditionAndLicense(adminConsoleWrapper);
 
         // Reporting
         this.teamStatistics = new TeamStatistics(adminConsoleWrapper);
@@ -92,9 +81,6 @@ export default class SystemConsolePage {
         this.systemProperties = new SystemProperties(adminConsoleWrapper);
         this.sessionAttributes = new SessionAttributes(adminConsoleWrapper);
         this.boardAttributes = new BoardAttributes(adminConsoleWrapper);
-
-        // Feature Discovery
-        this.featureDiscovery = new FeatureDiscovery(adminConsoleWrapper);
 
         // Plugins
         this.pluginManagement = new PluginManagement(adminConsoleWrapper);

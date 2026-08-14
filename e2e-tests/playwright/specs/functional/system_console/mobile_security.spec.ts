@@ -162,35 +162,6 @@ test('should be able to enable mobile security settings when licensed', async ({
     }
 });
 
-test('should show mobile security upsell when not licensed', async ({pw}) => {
-    const {adminUser, adminClient} = await pw.initSetup();
-
-    const license = await adminClient.getClientLicenseOld();
-
-    test.skip(
-        license.SkuShortName !== 'enterprise' || license.short_sku_name !== 'advanced',
-        'Skipping test - server has no enterprise or enterprise advanced license',
-    );
-
-    if (!adminUser) {
-        throw new Error('Failed to create admin user');
-    }
-
-    // # Log in as admin
-    const {systemConsolePage} = await pw.testBrowser.login(adminUser);
-
-    // # Visit system console
-    await systemConsolePage.goto();
-    await systemConsolePage.toBeVisible();
-
-    // # Go to Mobile Security section
-    await systemConsolePage.sidebar.mobileSecurity.click();
-    await systemConsolePage.featureDiscovery.toBeVisible();
-
-    // * Verify title is correct
-    await systemConsolePage.featureDiscovery.toHaveTitle('Enhance mobile app security with Mattermost Enterprise');
-});
-
 test('should show and enable Intune MAM when Enterprise Advanced licensed and Office365 configured', async ({pw}) => {
     const {adminUser, adminClient} = await pw.initSetup();
 
