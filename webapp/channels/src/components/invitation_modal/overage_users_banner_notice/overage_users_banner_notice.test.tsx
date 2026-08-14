@@ -222,7 +222,7 @@ describe('components/invitation_modal/overage_users_banner_notice', () => {
         expect(screen.getByRole('link')).toHaveAttribute(
             'href',
             LicenseLinks.CONTACT_SALES +
-                '?utm_source=mattermost&utm_medium=in-product&utm_content=overage_users_banner&uid=current_user&sid=&edition=team&server_version=',
+                '?utm_source=hanzoteam&utm_medium=in-product&utm_content=overage_users_banner&uid=current_user&sid=&edition=team&server_version=',
         );
     });
 
@@ -323,7 +323,7 @@ describe('components/invitation_modal/overage_users_banner_notice', () => {
         expect(screen.getByRole('link')).toHaveAttribute(
             'href',
             LicenseLinks.CONTACT_SALES +
-                '?utm_source=mattermost&utm_medium=in-product&utm_content=overage_users_banner&uid=current_user&sid=&edition=team&server_version=',
+                '?utm_source=hanzoteam&utm_medium=in-product&utm_content=overage_users_banner&uid=current_user&sid=&edition=team&server_version=',
         );
     });
 
