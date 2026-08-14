@@ -34,7 +34,7 @@ describe('components/user_settings/security/UserSettingsSecurityTab - Auth Servi
         canUseAccessTokens: true,
         enableOAuthServiceProvider: false,
         allowedToSwitchToEmail: true,
-        enableSignUpWithGitLab: true,
+        enableSignUpWithHanzo: true,
         enableSignUpWithGoogle: true,
         enableSignUpWithOpenId: true,
         enableLdap: true,
@@ -54,7 +54,7 @@ describe('components/user_settings/security/UserSettingsSecurityTab - Auth Servi
                 ...baseProps,
                 user: {
                     ...user,
-                    auth_service: Constants.GITLAB_SERVICE,
+                    auth_service: Constants.HANZO_SERVICE,
                 } as UserProfile,
             };
 

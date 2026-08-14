@@ -40,7 +40,7 @@ import Markdown from 'components/markdown';
 import SaveButton from 'components/save_button';
 import EntraIdIcon from 'components/widgets/icons/entra_id_icon';
 import LockIcon from 'components/widgets/icons/lock_icon';
-import LoginGitlabIcon from 'components/widgets/icons/login_gitlab_icon';
+import BrandMark from 'components/widgets/icons/brand_mark';
 import LoginGoogleIcon from 'components/widgets/icons/login_google_icon';
 import LoginOpenIDIcon from 'components/widgets/icons/login_openid_icon';
 import Input, {SIZE} from 'components/widgets/inputs/input/input';
@@ -84,15 +84,15 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
         EnableSignInWithEmail,
         EnableSignInWithUsername,
         EnableSignUpWithEmail,
-        EnableSignUpWithGitLab,
+        EnableSignUpWithHanzo,
         EnableSignUpWithOffice365,
         EnableSignUpWithGoogle,
         EnableSignUpWithOpenId,
         EnableOpenServer,
         EnableUserCreation,
         LdapLoginFieldName,
-        GitLabButtonText,
-        GitLabButtonColor,
+        HanzoButtonText,
+        HanzoButtonColor,
         OpenIdButtonText,
         OpenIdButtonColor,
         SamlLoginButtonText,
@@ -136,7 +136,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
     const enableSignInWithEmail = EnableSignInWithEmail === 'true';
     const enableSignInWithUsername = EnableSignInWithUsername === 'true';
     const enableSignUpWithEmail = enableUserCreation && EnableSignUpWithEmail === 'true';
-    const enableSignUpWithGitLab = EnableSignUpWithGitLab === 'true';
+    const enableSignUpWithHanzo = EnableSignUpWithHanzo === 'true';
     const enableSignUpWithGoogle = EnableSignUpWithGoogle === 'true';
     const enableSignUpWithOffice365 = EnableSignUpWithOffice365 === 'true';
     const enableSignUpWithOpenId = EnableSignUpWithOpenId === 'true';
@@ -146,9 +146,9 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
     const siteName = SiteName ?? '';
 
     const enableBaseLogin = enableSignInWithEmail || enableSignInWithUsername || ldapEnabled;
-    const enableExternalSignup = enableSignUpWithGitLab || enableSignUpWithOffice365 || enableSignUpWithGoogle || enableSignUpWithOpenId || enableSignUpWithSaml;
+    const enableExternalSignup = enableSignUpWithHanzo || enableSignUpWithOffice365 || enableSignUpWithGoogle || enableSignUpWithOpenId || enableSignUpWithSaml;
     const showSignup = enableOpenServer && (enableExternalSignup || enableSignUpWithEmail || enableLdap);
-    const onlyLdapEnabled = enableLdap && !(enableSaml || enableSignInWithEmail || enableSignInWithUsername || enableSignUpWithEmail || enableSignUpWithGitLab || enableSignUpWithGoogle || enableSignUpWithOffice365 || enableSignUpWithOpenId);
+    const onlyLdapEnabled = enableLdap && !(enableSaml || enableSignInWithEmail || enableSignInWithUsername || enableSignUpWithEmail || enableSignUpWithHanzo || enableSignUpWithGoogle || enableSignUpWithOffice365 || enableSignUpWithOpenId);
 
     const [desktopLoginLink, setDesktopLoginLink] = useState('');
 
@@ -159,15 +159,15 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
             return externalLoginOptions;
         }
 
-        if (enableSignUpWithGitLab) {
-            const url = `${Client4.getOAuthRoute()}/gitlab/login${search}`;
+        if (enableSignUpWithHanzo) {
+            const url = `${Client4.getOAuthRoute()}/hanzo/login${search}`;
             externalLoginOptions.push({
-                id: 'gitlab',
+                id: 'hanzo',
                 url,
-                icon: <LoginGitlabIcon/>,
-                label: GitLabButtonText || formatMessage({id: 'login.gitlab', defaultMessage: 'GitLab'}),
-                style: {color: GitLabButtonColor, borderColor: GitLabButtonColor},
-                onClick: handleExternalAuth(url, 'gitlab'),
+                icon: <BrandMark/>,
+                label: HanzoButtonText || formatMessage({id: 'login.hanzo', defaultMessage: 'Hanzo'}),
+                style: {color: HanzoButtonColor, borderColor: HanzoButtonColor},
+                onClick: handleExternalAuth(url, 'hanzo'),
             });
         }
 

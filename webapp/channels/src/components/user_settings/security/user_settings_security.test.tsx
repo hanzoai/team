@@ -44,7 +44,7 @@ describe('components/user_settings/display/UserSettingsDisplay', () => {
         canUseAccessTokens: true,
         enableOAuthServiceProvider: false,
         allowedToSwitchToEmail: true,
-        enableSignUpWithGitLab: false,
+        enableSignUpWithHanzo: false,
         enableSignUpWithGoogle: true,
         enableSignUpWithOpenId: false,
         enableLdap: false,
@@ -63,7 +63,7 @@ describe('components/user_settings/display/UserSettingsDisplay', () => {
     });
 
     test('should match snapshot, enable gitlab', () => {
-        const props = {...requiredProps, enableSignUpWithGoogle: false, enableSaml: false, enableSignUpWithGitLab: true};
+        const props = {...requiredProps, enableSignUpWithGoogle: false, enableSaml: false, enableSignUpWithHanzo: true};
 
         const {container} = renderWithContext(<SecurityTab {...props}/>);
         expect(container).toMatchSnapshot();

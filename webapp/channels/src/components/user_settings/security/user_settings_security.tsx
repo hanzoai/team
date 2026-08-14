@@ -60,7 +60,7 @@ type Props = {
     canUseAccessTokens: boolean;
     enableOAuthServiceProvider: boolean;
     allowedToSwitchToEmail: boolean;
-    enableSignUpWithGitLab: boolean;
+    enableSignUpWithHanzo: boolean;
     enableSignUpWithGoogle: boolean;
     enableSignUpWithOpenId: boolean;
     enableLdap: boolean;
@@ -374,7 +374,7 @@ export class SecurityTab extends React.PureComponent<Props, State> {
             } else {
                 // Map auth service to corresponding formatted message
                 const authServiceMessages: Record<string, string> = {
-                    [Constants.GITLAB_SERVICE]: this.props.intl.formatMessage({
+                    [Constants.HANZO_SERVICE]: this.props.intl.formatMessage({
                         id: 'user.settings.security.passwordGitlabCantUpdate',
                         defaultMessage: 'Login occurs through GitLab. Password cannot be updated.',
                     }),
@@ -462,7 +462,7 @@ export class SecurityTab extends React.PureComponent<Props, State> {
                     }}
                 />
             );
-        } else if (this.props.user.auth_service === Constants.GITLAB_SERVICE) {
+        } else if (this.props.user.auth_service === Constants.HANZO_SERVICE) {
             describe = (
                 <FormattedMessage
                     id='user.settings.security.loginGitlab'
@@ -541,7 +541,7 @@ export class SecurityTab extends React.PureComponent<Props, State> {
             let samlOption;
 
             if (user.auth_service === '') {
-                if (this.props.enableSignUpWithGitLab) {
+                if (this.props.enableSignUpWithHanzo) {
                     gitlabOption = (
                         <div className='pb-3'>
                             <Link
@@ -552,7 +552,7 @@ export class SecurityTab extends React.PureComponent<Props, State> {
                                     '&old_type=' +
                                     user.auth_service +
                                     '&new_type=' +
-                                    Constants.GITLAB_SERVICE
+                                    Constants.HANZO_SERVICE
                                 }
                             >
                                 <FormattedMessage
@@ -771,7 +771,7 @@ export class SecurityTab extends React.PureComponent<Props, State> {
                 defaultMessage='Email and Password'
             />
         );
-        if (this.props.user.auth_service === Constants.GITLAB_SERVICE) {
+        if (this.props.user.auth_service === Constants.HANZO_SERVICE) {
             describe = (
                 <FormattedMessage
                     id='user.settings.security.gitlab'
@@ -991,7 +991,7 @@ export class SecurityTab extends React.PureComponent<Props, State> {
         const passwordSection = this.createPasswordSection();
 
         let numMethods = 0;
-        numMethods = this.props.enableSignUpWithGitLab ? numMethods + 1 : numMethods;
+        numMethods = this.props.enableSignUpWithHanzo ? numMethods + 1 : numMethods;
         numMethods = this.props.enableSignUpWithGoogle ? numMethods + 1 : numMethods;
         numMethods = this.props.enableSignUpWithOffice365 ? numMethods + 1 : numMethods;
         numMethods = this.props.enableSignUpWithOpenId ? numMethods + 1 : numMethods;
