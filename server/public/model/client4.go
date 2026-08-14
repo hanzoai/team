@@ -4450,15 +4450,6 @@ func (c *Client4) GetPingWithOptions(ctx context.Context, options SystemPingOpti
 	return DecodeJSONFromResponse[map[string]any](r)
 }
 
-func (c *Client4) GetServerLimits(ctx context.Context) (*ServerLimits, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.limitsRoute().Join("server"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*ServerLimits](r)
-}
-
 // TestEmail will attempt to connect to the configured SMTP server.
 func (c *Client4) TestEmail(ctx context.Context, config *Config) (*Response, error) {
 	r, err := c.doAPIPostJSON(ctx, c.testEmailRoute(), config)
@@ -7306,150 +7297,6 @@ func (c *Client4) UpdatePassword(ctx context.Context, userId, currentPassword, n
 
 // Cloud Section
 
-func (c *Client4) GetCloudProducts(ctx context.Context) ([]*Product, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.cloudRoute().Join("products"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[[]*Product](r)
-}
-
-func (c *Client4) GetSelfHostedProducts(ctx context.Context) ([]*Product, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.cloudRoute().Join("products", "selfhosted"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[[]*Product](r)
-}
-
-func (c *Client4) GetProductLimits(ctx context.Context) (*ProductLimits, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.cloudRoute().Join("limits"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*ProductLimits](r)
-}
-
-func (c *Client4) GetIPFilters(ctx context.Context) (*AllowedIPRanges, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.ipFiltersRoute(), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*AllowedIPRanges](r)
-}
-
-func (c *Client4) ApplyIPFilters(ctx context.Context, allowedRanges *AllowedIPRanges) (*AllowedIPRanges, *Response, error) {
-	r, err := c.doAPIPostJSON(ctx, c.ipFiltersRoute(), allowedRanges)
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*AllowedIPRanges](r)
-}
-
-func (c *Client4) GetMyIP(ctx context.Context) (*GetIPAddressResponse, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.ipFiltersRoute().Join("my_ip"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*GetIPAddressResponse](r)
-}
-
-func (c *Client4) ValidateWorkspaceBusinessEmail(ctx context.Context) (*Response, error) {
-	r, err := c.doAPIPost(ctx, c.cloudRoute().Join("validate-workspace-business-email"), "")
-	if err != nil {
-		return BuildResponse(r), err
-	}
-	defer closeBody(r)
-
-	return BuildResponse(r), nil
-}
-
-func (c *Client4) NotifyAdmin(ctx context.Context, nr *NotifyAdminToUpgradeRequest) (int, error) {
-	r, err := c.doAPIPostJSON(ctx, c.usersRoute().Join("notify-admin"), nr)
-	if err != nil {
-		return r.StatusCode, err
-	}
-
-	closeBody(r)
-
-	return r.StatusCode, nil
-}
-
-func (c *Client4) TriggerNotifyAdmin(ctx context.Context, nr *NotifyAdminToUpgradeRequest) (int, error) {
-	r, err := c.doAPIPostJSON(ctx, c.usersRoute().Join("trigger-notify-admin-posts"), nr)
-	if err != nil {
-		return r.StatusCode, err
-	}
-
-	closeBody(r)
-
-	return r.StatusCode, nil
-}
-
-func (c *Client4) ValidateBusinessEmail(ctx context.Context, email *ValidateBusinessEmailRequest) (*Response, error) {
-	r, err := c.doAPIPostJSON(ctx, c.cloudRoute().Join("validate-business-email"), email)
-	if err != nil {
-		return BuildResponse(r), err
-	}
-	defer closeBody(r)
-
-	return BuildResponse(r), nil
-}
-
-func (c *Client4) GetCloudCustomer(ctx context.Context) (*CloudCustomer, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.cloudRoute().Join("customer"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*CloudCustomer](r)
-}
-
-func (c *Client4) GetSubscription(ctx context.Context) (*Subscription, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.cloudRoute().Join("subscription"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*Subscription](r)
-}
-
-func (c *Client4) GetInvoicesForSubscription(ctx context.Context) ([]*Invoice, *Response, error) {
-	r, err := c.doAPIGet(ctx, c.cloudRoute().Join("subscription", "invoices"), "")
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[[]*Invoice](r)
-}
-
-func (c *Client4) UpdateCloudCustomer(ctx context.Context, customerInfo *CloudCustomerInfo) (*CloudCustomer, *Response, error) {
-	r, err := c.doAPIPutJSON(ctx, c.cloudRoute().Join("customer"), customerInfo)
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*CloudCustomer](r)
-}
-
-func (c *Client4) UpdateCloudCustomerAddress(ctx context.Context, address *Address) (*CloudCustomer, *Response, error) {
-	r, err := c.doAPIPutJSON(ctx, c.cloudRoute().Join("customer", "address"), address)
-	if err != nil {
-		return nil, BuildResponse(r), err
-	}
-	defer closeBody(r)
-	return DecodeJSONFromResponse[*CloudCustomer](r)
-}
-
 func (c *Client4) ListImports(ctx context.Context) ([]string, *Response, error) {
 	r, err := c.doAPIGet(ctx, c.importsRoute(), "")
 	if err != nil {
@@ -7552,31 +7399,6 @@ func (c *Client4) GetUserThreads(ctx context.Context, userId, teamId string, opt
 	}
 	defer closeBody(r)
 	return DecodeJSONFromResponse[*Threads](r)
-}
-
-func (c *Client4) DownloadComplianceExport(ctx context.Context, jobId string, wr io.Writer) (string, error) {
-	r, err := c.doAPIGet(ctx, c.jobsRoute().Join(jobId, "download"), "")
-	if err != nil {
-		return "", err
-	}
-	defer closeBody(r)
-
-	// Try to get the filename from the Content-Disposition header
-	var filename string
-	if cd := r.Header.Get("Content-Disposition"); cd != "" {
-		var params map[string]string
-		if _, params, err = mime.ParseMediaType(cd); err == nil {
-			if params["filename"] != "" {
-				filename = params["filename"]
-			}
-		}
-	}
-
-	_, err = io.Copy(wr, r.Body)
-	if err != nil {
-		return filename, fmt.Errorf("failed to copy compliance export data to writer: %w", err)
-	}
-	return filename, nil
 }
 
 func (c *Client4) GetUserThread(ctx context.Context, userId, teamId, threadId string, extended bool) (*ThreadResponse, *Response, error) {
@@ -7930,16 +7752,6 @@ func (c *Client4) AddUserToGroupSyncables(ctx context.Context, userID string) (*
 		return BuildResponse(r), err
 	}
 	defer closeBody(r)
-	return BuildResponse(r), nil
-}
-
-func (c *Client4) CheckCWSConnection(ctx context.Context, userId string) (*Response, error) {
-	r, err := c.doAPIGet(ctx, c.cloudRoute().Join("healthz"), "")
-	if err != nil {
-		return BuildResponse(r), err
-	}
-	defer closeBody(r)
-
 	return BuildResponse(r), nil
 }
 

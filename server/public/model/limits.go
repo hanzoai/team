@@ -3,12 +3,25 @@
 
 package model
 
-type ServerLimits struct {
-	MaxUsersLimit           int64 `json:"maxUsersLimit"`           // soft limit for max number of users.
-	MaxUsersHardLimit       int64 `json:"maxUsersHardLimit"`       // hard limit for max number of active users.
-	ActiveUserCount         int64 `json:"activeUserCount"`         // actual number of active users on server. Active = non deleted
-	SingleChannelGuestCount int64 `json:"singleChannelGuestCount"` // count of guests in exactly one channel
-	SingleChannelGuestLimit int64 `json:"singleChannelGuestLimit"` // limit equals licensed seats (1:1 ratio)
-	PostHistoryLimit        int64 `json:"postHistoryLimit"`        // the actual message history limit value (0 if no limits)
-	LastAccessiblePostTime  int64 `json:"lastAccessiblePostTime"`  // timestamp of the last accessible post (0 if no limits reached)
+// The plugin API exposes GetCloudLimits and the OnCloudLimitsUpdated hook, and
+// third-party plugins are compiled against those signatures. The billing
+// product they described is gone; the types stay so the RPC surface a plugin
+// binary was built against still resolves. This server reports no limits.
+
+type FilesLimits struct {
+	TotalStorage *int64 `json:"total_storage"`
+}
+
+type MessagesLimits struct {
+	History *int `json:"history"`
+}
+
+type TeamsLimits struct {
+	Active *int `json:"active"`
+}
+
+type ProductLimits struct {
+	Files    *FilesLimits    `json:"files,omitempty"`
+	Messages *MessagesLimits `json:"messages,omitempty"`
+	Teams    *TeamsLimits    `json:"teams,omitempty"`
 }

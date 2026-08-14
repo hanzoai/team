@@ -51,11 +51,8 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/export_process"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/export_users_to_csv"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/extract_content"
-	"github.com/mattermost/mattermost/server/v8/channels/jobs/hosted_purchase_screening"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/import_delete"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/import_process"
-	"github.com/mattermost/mattermost/server/v8/channels/jobs/last_accessible_file"
-	"github.com/mattermost/mattermost/server/v8/channels/jobs/last_accessible_post"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/migrations"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/mobile_session_metadata"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/notify_admin"
@@ -146,8 +143,6 @@ type Server struct {
 	joinCluster  bool
 	skipPostInit bool
 
-	Cloud                   einterfaces.CloudInterface
-	IPFiltering             einterfaces.IPFilteringInterface
 	OutgoingOAuthConnection einterfaces.OutgoingOAuthConnectionInterface
 	PushProxy               einterfaces.PushProxyInterface
 	AutoTranslation         einterfaces.AutoTranslationInterface
@@ -475,10 +470,6 @@ func NewServer(options ...Option) (*Server, error) {
 
 	s.initJobs()
 
-	if ipFilteringInterface != nil {
-		s.IPFiltering = ipFilteringInterface(app)
-	}
-
 	if outgoingOauthConnectionInterface != nil {
 		s.OutgoingOAuthConnection = outgoingOauthConnectionInterface(app)
 	}
@@ -636,9 +627,6 @@ func (s *Server) runJobs() {
 	})
 	s.Go(func() {
 		runConfigCleanupJob(s)
-	})
-	s.Go(func() {
-		runCloudUserCountReportJob(s)
 	})
 
 	if complianceI := s.Channels().Compliance; complianceI != nil {
@@ -1381,13 +1369,6 @@ func doSecurity(s *Server) {
 	s.DoSecurityUpdateCheck()
 }
 
-// Reports activated user count to the CWS every 24 hours
-func runCloudUserCountReportJob(s *Server) {
-	model.CreateRecurringTask("Report user count for cloud subscription", func() {
-		s.doReportUserCountForCloudSubscriptionJob()
-	}, time.Hour*24)
-}
-
 func doTokenCleanup(s *Server) {
 	expiry := model.GetMillis() - model.MaxTokenExipryTime
 
@@ -1476,25 +1457,6 @@ func (s *Server) sendLicenseUpForRenewalEmail(users map[string]*model.User, lice
 	}
 
 	return nil
-}
-
-func (s *Server) doReportUserCountForCloudSubscriptionJob() {
-	s.LoadLicense()
-
-	if !s.License().IsCloud() {
-		return
-	}
-
-	mlog.Debug("Reporting daily user count for cloud subscription.")
-
-	appInstance := New(ServerConnector(s.Channels()))
-
-	_, err := appInstance.SendSubscriptionHistoryEvent("")
-	if err != nil {
-		mlog.Error("an error occurred during daily user count reporting", mlog.Err(err))
-	}
-
-	mlog.Debug("Daily user count reported for cloud subscription.")
 }
 
 func (s *Server) doLicenseExpirationCheck() {
@@ -1718,18 +1680,6 @@ func (s *Server) initJobs() {
 	)
 
 	s.Jobs.RegisterJobType(
-		model.JobTypeLastAccessiblePost,
-		last_accessible_post.MakeWorker(s.Jobs, s.License(), New(ServerConnector(s.Channels()))),
-		last_accessible_post.MakeScheduler(s.Jobs, s.License()),
-	)
-
-	s.Jobs.RegisterJobType(
-		model.JobTypeLastAccessibleFile,
-		last_accessible_file.MakeWorker(s.Jobs, s.License(), New(ServerConnector(s.Channels()))),
-		last_accessible_file.MakeScheduler(s.Jobs, s.License()),
-	)
-
-	s.Jobs.RegisterJobType(
 		model.JobTypeUpgradeNotifyAdmin,
 		notify_admin.MakeUpgradeNotifyWorker(s.Jobs, s.License(), New(ServerConnector(s.Channels()))),
 		notify_admin.MakeScheduler(s.Jobs, s.License(), model.JobTypeUpgradeNotifyAdmin),
@@ -1751,12 +1701,6 @@ func (s *Server) initJobs() {
 		model.JobTypeInstallPluginNotifyAdmin,
 		notify_admin.MakeInstallPluginNotifyWorker(s.Jobs, New(ServerConnector(s.Channels()))),
 		notify_admin.MakeInstallPluginScheduler(s.Jobs, s.License(), model.JobTypeInstallPluginNotifyAdmin),
-	)
-
-	s.Jobs.RegisterJobType(
-		model.JobTypeHostedPurchaseScreening,
-		hosted_purchase_screening.MakeWorker(s.Jobs, s.License(), s.Store().System()),
-		hosted_purchase_screening.MakeScheduler(s.Jobs, s.License()),
 	)
 
 	s.Jobs.RegisterJobType(

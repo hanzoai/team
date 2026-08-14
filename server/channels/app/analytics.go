@@ -137,17 +137,6 @@ func (a *App) getStandardAnalytics(rctx request.CTX, teamID string, systemUserCo
 		return nil
 	})
 
-	var singleChannelGuestCount int64
-	if a.shouldTrackSingleChannelGuests() {
-		g.Go(func() error {
-			var err error
-			if singleChannelGuestCount, err = a.Srv().Store().User().AnalyticsGetSingleChannelGuestCount(); err != nil {
-				return model.NewAppError("GetAnalytics", "app.user.analytics_get_single_channel_guest_count.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-			}
-			return nil
-		})
-	}
-
 	if err := g.Wait(); err != nil {
 		return nil, err.(*model.AppError)
 	}
@@ -194,7 +183,7 @@ func (a *App) getStandardAnalytics(rctx request.CTX, teamID string, systemUserCo
 
 	rows[8].Value = float64(dailyActiveUsersCount)
 	rows[9].Value = float64(monthlyActiveUsersCount)
-	rows[11].Value = float64(singleChannelGuestCount)
+	rows[11].Value = 0
 
 	return rows, nil
 }

@@ -129,8 +129,6 @@ type Routes struct {
 	TermsOfService *mux.Router // 'api/v4/terms_of_service'
 	Groups         *mux.Router // 'api/v4/groups'
 
-	Cloud *mux.Router // 'api/v4/cloud'
-
 	Imports *mux.Router // 'api/v4/imports'
 	Import  *mux.Router // 'api/v4/imports/{import_name:.+\\.zip}'
 
@@ -150,11 +148,7 @@ type Routes struct {
 
 	Drafts *mux.Router // 'api/v4/drafts'
 
-	IPFiltering *mux.Router // 'api/v4/ip_filtering'
-
 	Reports *mux.Router // 'api/v4/reports'
-
-	Limits *mux.Router // 'api/v4/limits'
 
 	OutgoingOAuthConnections *mux.Router // 'api/v4/oauth/outgoing_connections'
 	OutgoingOAuthConnection  *mux.Router // 'api/v4/oauth/outgoing_connections/{outgoing_oauth_connection_id:[A-Za-z0-9]+}'
@@ -296,8 +290,6 @@ func Init(srv *app.Server) (*API, error) {
 	api.BaseRoutes.TermsOfService = api.BaseRoutes.APIRoot.PathPrefix("/terms_of_service").Subrouter()
 	api.BaseRoutes.Groups = api.BaseRoutes.APIRoot.PathPrefix("/groups").Subrouter()
 
-	api.BaseRoutes.Cloud = api.BaseRoutes.APIRoot.PathPrefix("/cloud").Subrouter()
-
 	api.BaseRoutes.Imports = api.BaseRoutes.APIRoot.PathPrefix("/imports").Subrouter()
 	api.BaseRoutes.Import = api.BaseRoutes.Imports.PathPrefix("/{import_name:.+\\.zip}").Subrouter()
 	api.BaseRoutes.Exports = api.BaseRoutes.APIRoot.PathPrefix("/exports").Subrouter()
@@ -316,11 +308,7 @@ func Init(srv *app.Server) (*API, error) {
 
 	api.BaseRoutes.Drafts = api.BaseRoutes.APIRoot.PathPrefix("/drafts").Subrouter()
 
-	api.BaseRoutes.IPFiltering = api.BaseRoutes.APIRoot.PathPrefix("/ip_filtering").Subrouter()
-
 	api.BaseRoutes.Reports = api.BaseRoutes.APIRoot.PathPrefix("/reports").Subrouter()
-
-	api.BaseRoutes.Limits = api.BaseRoutes.APIRoot.PathPrefix("/limits").Subrouter()
 
 	api.BaseRoutes.OutgoingOAuthConnections = api.BaseRoutes.APIRoot.PathPrefix("/oauth/outgoing_connections").Subrouter()
 	api.BaseRoutes.OutgoingOAuthConnection = api.BaseRoutes.OutgoingOAuthConnections.PathPrefix("/{outgoing_oauth_connection_id:[A-Za-z0-9]+}").Subrouter()
@@ -385,7 +373,6 @@ func Init(srv *app.Server) (*API, error) {
 	api.InitTermsOfService()
 	api.InitGroup()
 	api.InitAction()
-	api.InitCloud()
 	api.InitImport()
 	api.InitRemoteCluster()
 	api.InitSharedChannels()
@@ -394,12 +381,10 @@ func Init(srv *app.Server) (*API, error) {
 	api.InitUsage()
 	api.InitHostedCustomer()
 	api.InitDrafts()
-	api.InitIPFiltering()
 	api.InitChannelBookmarks()
 	api.InitView()
 	api.InitBoard()
 	api.InitReports()
-	api.InitLimits()
 	api.InitOutgoingOAuthConnection()
 	api.InitClientPerformanceMetrics()
 	api.InitScheduledPost()

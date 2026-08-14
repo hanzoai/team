@@ -68,12 +68,6 @@ func RegisterMessageExportInterface(f func(*App) einterfaces.MessageExportInterf
 	messageExportInterface = f
 }
 
-var cloudInterface func(*Server) einterfaces.CloudInterface
-
-func RegisterCloudInterface(f func(*Server) einterfaces.CloudInterface) {
-	cloudInterface = f
-}
-
 var samlInterface func(*App) einterfaces.SamlInterface
 
 func RegisterSamlInterface(f func(*App) einterfaces.SamlInterface) {
@@ -90,12 +84,6 @@ var outgoingOauthConnectionInterface func(*App) einterfaces.OutgoingOAuthConnect
 
 func RegisterOutgoingOAuthConnectionInterface(f func(*App) einterfaces.OutgoingOAuthConnectionInterface) {
 	outgoingOauthConnectionInterface = f
-}
-
-var ipFilteringInterface func(*App) einterfaces.IPFilteringInterface
-
-func RegisterIPFilteringInterface(f func(*App) einterfaces.IPFilteringInterface) {
-	ipFilteringInterface = f
 }
 
 var accessControlServiceInterface func(*App) einterfaces.AccessControlServiceInterface
@@ -135,9 +123,6 @@ func RegisterIntuneInterface(f func(*App) einterfaces.IntuneInterface) {
 }
 
 func (s *Server) initEnterprise() {
-	if cloudInterface != nil {
-		s.Cloud = cloudInterface(s)
-	}
 	if autoTranslationInterface != nil {
 		s.AutoTranslation = autoTranslationInterface(s)
 	}

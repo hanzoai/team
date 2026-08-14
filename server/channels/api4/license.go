@@ -18,7 +18,6 @@ import (
 )
 
 func (api *API) InitLicense() {
-	api.BaseRoutes.APIRoot.Handle("/trial-license", api.APISessionRequired(requestTrialLicense)).Methods(http.MethodPost)
 	api.BaseRoutes.APIRoot.Handle("/trial-license/prev", api.APISessionRequired(getPrevTrialLicense)).Methods(http.MethodGet)
 	api.BaseRoutes.APIRoot.Handle("/license", api.APISessionRequired(addLicense, handlerParamFileAPI)).Methods(http.MethodPost)
 	api.BaseRoutes.APIRoot.Handle("/license", api.APISessionRequired(removeLicense)).Methods(http.MethodDelete)
@@ -149,15 +148,6 @@ func addLicense(c *Context, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if c.App.Channels().License().IsCloud() {
-		// If cloud, invalidate the caches when a new license is loaded
-		defer func() {
-			if err := c.App.Srv().Cloud.HandleLicenseChange(); err != nil {
-				c.Logger.Warn("Error while handling license change", mlog.Err(err))
-			}
-		}()
-	}
-
 	auditRec.Success()
 	c.LogAudit("success")
 
@@ -202,65 +192,6 @@ func removeLicense(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	if err := c.App.Srv().RemoveLicense(); err != nil {
 		c.Err = err
-		return
-	}
-
-	auditRec.Success()
-	c.LogAudit("success")
-
-	ReturnStatusOK(w)
-}
-
-func requestTrialLicense(c *Context, w http.ResponseWriter, r *http.Request) {
-	auditRec := c.MakeAuditRecord(model.AuditEventRequestTrialLicense, model.AuditStatusFail)
-	defer c.LogAuditRec(auditRec)
-	c.LogAudit("attempt")
-
-	if !c.App.SessionHasPermissionToAndNotRestrictedAdmin(*c.AppContext.Session(), model.PermissionManageLicenseInformation) {
-		c.SetPermissionError(model.PermissionManageLicenseInformation)
-		return
-	}
-
-	if c.App.Srv().Platform().LicenseManager() == nil {
-		c.Err = model.NewAppError("requestTrialLicense", "api.license.upgrade_needed.app_error", nil, "", http.StatusForbidden)
-		return
-	}
-
-	canStartTrialLicense, err := c.App.Srv().Platform().LicenseManager().CanStartTrial()
-	if err != nil {
-		c.Err = model.NewAppError("requestTrialLicense", "api.license.request-trial.can-start-trial.error", nil, "", http.StatusInternalServerError).Wrap(err)
-		return
-	}
-
-	if !canStartTrialLicense {
-		c.Err = model.NewAppError("requestTrialLicense", "api.license.request-trial.can-start-trial.not-allowed", nil, "", http.StatusBadRequest)
-		return
-	}
-
-	var trialRequest *model.TrialLicenseRequest
-
-	b, readErr := io.ReadAll(r.Body)
-	if readErr != nil {
-		c.Err = model.NewAppError("requestTrialLicense", "api.license.request-trial.bad-request", nil, "", http.StatusBadRequest)
-		return
-	}
-
-	err = json.Unmarshal(b, &trialRequest)
-	if err != nil {
-		c.Err = model.NewAppError("requestTrialLicense", "api.license.request-trial.bad-request", nil, "", http.StatusBadRequest).Wrap(err)
-		return
-	}
-
-	var appErr *model.AppError
-	// If any of the newly supported trial request fields are set (ie, not a legacy request), process this as a new trial request (requiring the new fields) otherwise fall back on the old method.
-	if !trialRequest.IsLegacy() {
-		appErr = c.App.Channels().RequestTrialLicenseWithExtraFields(c.AppContext, c.AppContext.Session().UserId, trialRequest)
-	} else {
-		appErr = c.App.Channels().RequestTrialLicense(c.AppContext, c.AppContext.Session().UserId, trialRequest.Users, trialRequest.TermsAccepted, trialRequest.ReceiveEmailsAccepted)
-	}
-
-	if appErr != nil {
-		c.Err = appErr
 		return
 	}
 

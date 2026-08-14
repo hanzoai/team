@@ -2191,54 +2191,6 @@ func (a *App) GetLastAccessiblePostTime() (int64, *model.AppError) {
 	return lastAccessiblePostTime, nil
 }
 
-// ComputeLastAccessiblePostTime updates cache with CreateAt time of the last accessible post as per the license limit.
-// Use GetLastAccessiblePostTime() to access the result.
-func (a *App) ComputeLastAccessiblePostTime() error {
-	limit := a.GetPostHistoryLimit()
-
-	if limit == 0 {
-		// All posts are accessible - we must check if a previous value was set so we can clear it
-		systemValue, err := a.Srv().Store().System().GetByName(model.SystemLastAccessiblePostTime)
-		if err != nil {
-			var nfErr *store.ErrNotFound
-			switch {
-			case errors.As(err, &nfErr):
-				// There was no previous value, nothing to do
-				return nil
-			default:
-				return model.NewAppError("ComputeLastAccessiblePostTime", "app.system.get_by_name.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-			}
-		}
-		if systemValue != nil {
-			// Previous value was set, so we must clear it
-			if _, err = a.Srv().Store().System().PermanentDeleteByName(model.SystemLastAccessiblePostTime); err != nil {
-				return model.NewAppError("ComputeLastAccessiblePostTime", "app.system.permanent_delete_by_name.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-			}
-		}
-		// Message history limit is not applicable
-		return nil
-	}
-
-	createdAt, err := a.Srv().GetStore().Post().GetNthRecentPostTime(limit)
-	if err != nil {
-		var nfErr *store.ErrNotFound
-		if !errors.As(err, &nfErr) {
-			return model.NewAppError("ComputeLastAccessiblePostTime", "app.last_accessible_post.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-		}
-	}
-
-	// Update Cache
-	err = a.Srv().Store().System().SaveOrUpdate(&model.System{
-		Name:  model.SystemLastAccessiblePostTime,
-		Value: strconv.FormatInt(createdAt, 10),
-	})
-	if err != nil {
-		return model.NewAppError("ComputeLastAccessiblePostTime", "app.system.save.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-	}
-
-	return nil
-}
-
 func (a *App) SearchPostsInTeam(teamID string, paramsList []*model.SearchParams) (*model.PostList, *model.AppError) {
 	if !*a.Config().ServiceSettings.EnablePostSearch {
 		return nil, model.NewAppError("SearchPostsInTeam", "store.sql_post.search.disabled", nil, fmt.Sprintf("teamId=%v", teamID), http.StatusNotImplemented)

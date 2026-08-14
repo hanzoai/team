@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"image"
 	"io"
-	"math"
 	"net/http"
 	"net/url"
 	"path/filepath"
@@ -1773,77 +1772,6 @@ func (a *App) GetLastAccessibleFileTime() (int64, *model.AppError) {
 	}
 
 	return lastAccessibleFileTime, nil
-}
-
-// ComputeLastAccessibleFileTime updates cache with CreateAt time of the last accessible file as per the cloud plan's limit.
-// Use GetLastAccessibleFileTime() to access the result.
-func (a *App) ComputeLastAccessibleFileTime() error {
-	limit, appErr := a.getCloudFilesSizeLimit()
-	if appErr != nil {
-		return appErr
-	}
-
-	if limit == 0 {
-		// All files are accessible - we must check if a previous value was set so we can clear it
-		systemValue, err := a.Srv().Store().System().GetByName(model.SystemLastAccessibleFileTime)
-		if err != nil {
-			var nfErr *store.ErrNotFound
-			switch {
-			case errors.As(err, &nfErr):
-				// All files are already accessible
-				return nil
-			default:
-				return model.NewAppError("ComputeLastAccessibleFileTime", "app.system.get_by_name.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-			}
-		}
-		if systemValue != nil {
-			// Previous value was set, so we must clear it
-			if _, err := a.Srv().Store().System().PermanentDeleteByName(model.SystemLastAccessibleFileTime); err != nil {
-				return model.NewAppError("ComputeLastAccessibleFileTime", "app.system.permanent_delete_by_name.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-			}
-		}
-		return nil
-	}
-
-	createdAt, err := a.Srv().GetStore().FileInfo().GetUptoNSizeFileTime(limit)
-	if err != nil {
-		var nfErr *store.ErrNotFound
-		if !errors.As(err, &nfErr) {
-			return model.NewAppError("ComputeLastAccessibleFileTime", "app.last_accessible_file.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-		}
-	}
-
-	// Update Cache
-	err = a.Srv().Store().System().SaveOrUpdate(&model.System{
-		Name:  model.SystemLastAccessibleFileTime,
-		Value: strconv.FormatInt(createdAt, 10),
-	})
-	if err != nil {
-		return model.NewAppError("ComputeLastAccessibleFileTime", "app.system.save.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-	}
-
-	return nil
-}
-
-// getCloudFilesSizeLimit returns size in bytes
-func (a *App) getCloudFilesSizeLimit() (int64, *model.AppError) {
-	license := a.Srv().License()
-	if license == nil || !license.IsCloud() {
-		return 0, nil
-	}
-
-	// limits is in bits
-	limits, err := a.Cloud().GetCloudLimits("")
-	if err != nil {
-		return 0, model.NewAppError("getCloudFilesSizeLimit", "api.cloud.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-	}
-
-	if limits == nil || limits.Files == nil || limits.Files.TotalStorage == nil {
-		// Cloud limit is not applicable
-		return 0, nil
-	}
-
-	return int64(math.Ceil(float64(*limits.Files.TotalStorage) / 8)), nil
 }
 
 func getFileExtFromMimeType(mimeType string) string {
