@@ -653,10 +653,10 @@ describe('ClassificationMarkings component', () => {
         const user = userEvent.setup();
         const colorInput = screen.getByTestId('color-inputColorValue');
 
-        await act(async () => {
-            await user.clear(colorInput);
-            await user.type(colorInput, '#1a2b3c');
-        });
+        // userEvent already runs inside act; nesting another act around it races
+        // the two on IS_REACT_ACT_ENVIRONMENT and React warns.
+        await user.clear(colorInput);
+        await user.type(colorInput, '#1a2b3c');
 
         expect(colorInput).toHaveValue('#1a2b3c');
     });

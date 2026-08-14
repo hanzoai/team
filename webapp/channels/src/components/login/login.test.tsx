@@ -294,7 +294,7 @@ describe('components/login/Login', () => {
         expect(screen.queryByText('Your session has expired. Please log in again.')).not.toBeInTheDocument();
     });
 
-    it('should handle gitlab text and color props', () => {
+    it('should handle Hanzo sign-in button text and color props', () => {
         const state = mergeObjects(baseState, {
             entities: {
                 general: {
@@ -313,7 +313,7 @@ describe('components/login/Login', () => {
             state,
         );
 
-        const button = screen.getByRole('link', {name: 'Gitlab Icon GitLab 2'});
+        const button = screen.getByRole('link', {name: 'Hanzo Team logo GitLab 2'});
 
         expect(button.style.color).toBe('rgb(0, 255, 0)');
         expect(button.style.borderColor).toBe('rgb(0, 255, 0)');
