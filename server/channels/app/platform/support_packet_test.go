@@ -1044,14 +1044,14 @@ func TestGetSupportPacketDiagnostics(t *testing.T) {
 		defer idp.Close()
 
 		th.Service.UpdateConfig(func(cfg *model.Config) {
-			cfg.GitLabSettings.Enable = model.NewPointer(true)
-			cfg.GitLabSettings.DiscoveryEndpoint = model.NewPointer("")
-			cfg.GitLabSettings.TokenEndpoint = model.NewPointer(idp.URL + "/oauth/token")
+			cfg.HanzoSettings.Enable = model.NewPointer(true)
+			cfg.HanzoSettings.DiscoveryEndpoint = model.NewPointer("")
+			cfg.HanzoSettings.TokenEndpoint = model.NewPointer(idp.URL + "/oauth/token")
 		})
 		t.Cleanup(func() {
 			th.Service.UpdateConfig(func(cfg *model.Config) {
-				cfg.GitLabSettings.Enable = model.NewPointer(false)
-				cfg.GitLabSettings.TokenEndpoint = model.NewPointer("")
+				cfg.HanzoSettings.Enable = model.NewPointer(false)
+				cfg.HanzoSettings.TokenEndpoint = model.NewPointer("")
 			})
 		})
 
@@ -1063,14 +1063,14 @@ func TestGetSupportPacketDiagnostics(t *testing.T) {
 
 	t.Run("GitLab enabled with unreachable token endpoint", func(t *testing.T) {
 		th.Service.UpdateConfig(func(cfg *model.Config) {
-			cfg.GitLabSettings.Enable = model.NewPointer(true)
-			cfg.GitLabSettings.DiscoveryEndpoint = model.NewPointer("")
-			cfg.GitLabSettings.TokenEndpoint = model.NewPointer("http://127.0.0.1:1/oauth/token")
+			cfg.HanzoSettings.Enable = model.NewPointer(true)
+			cfg.HanzoSettings.DiscoveryEndpoint = model.NewPointer("")
+			cfg.HanzoSettings.TokenEndpoint = model.NewPointer("http://127.0.0.1:1/oauth/token")
 		})
 		t.Cleanup(func() {
 			th.Service.UpdateConfig(func(cfg *model.Config) {
-				cfg.GitLabSettings.Enable = model.NewPointer(false)
-				cfg.GitLabSettings.TokenEndpoint = model.NewPointer("")
+				cfg.HanzoSettings.Enable = model.NewPointer(false)
+				cfg.HanzoSettings.TokenEndpoint = model.NewPointer("")
 			})
 		})
 
@@ -1082,13 +1082,13 @@ func TestGetSupportPacketDiagnostics(t *testing.T) {
 
 	t.Run("GitLab enabled with no endpoints configured", func(t *testing.T) {
 		th.Service.UpdateConfig(func(cfg *model.Config) {
-			cfg.GitLabSettings.Enable = model.NewPointer(true)
-			cfg.GitLabSettings.DiscoveryEndpoint = model.NewPointer("")
-			cfg.GitLabSettings.TokenEndpoint = model.NewPointer("")
+			cfg.HanzoSettings.Enable = model.NewPointer(true)
+			cfg.HanzoSettings.DiscoveryEndpoint = model.NewPointer("")
+			cfg.HanzoSettings.TokenEndpoint = model.NewPointer("")
 		})
 		t.Cleanup(func() {
 			th.Service.UpdateConfig(func(cfg *model.Config) {
-				cfg.GitLabSettings.Enable = model.NewPointer(false)
+				cfg.HanzoSettings.Enable = model.NewPointer(false)
 			})
 		})
 

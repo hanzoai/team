@@ -64,7 +64,7 @@ const (
 	PasswordMinimumLength     = 5
 	PasswordFIPSMinimumLength = 14
 
-	ServiceGitlab = "gitlab"
+	ServiceHanzo = "hanzo"
 
 	ServiceGoogle    = "google"
 	ServiceOffice365 = "office365"
@@ -139,6 +139,11 @@ const (
 	ServiceSettingsDefaultUniqueReactionsPerPost = 50
 	ServiceSettingsDefaultMaxURLLength           = 2048
 	ServiceSettingsMaxUniqueReactionsPerPost     = 500
+
+	HanzoSettingsDefaultScope           = "openid email profile"
+	HanzoSettingsDefaultAuthEndpoint    = "https://hanzo.id/v1/iam/oauth/authorize"
+	HanzoSettingsDefaultTokenEndpoint   = "https://hanzo.id/v1/iam/oauth/token"
+	HanzoSettingsDefaultUserAPIEndpoint = "https://hanzo.id/v1/iam/oauth/userinfo"
 
 	TeamSettingsDefaultSiteName              = "Hanzo Team"
 	TeamSettingsDefaultMaxUsersPerTeam       = 50
@@ -4152,7 +4157,7 @@ type Config struct {
 	SupportSettings             SupportSettings
 	AnnouncementSettings        AnnouncementSettings
 	ThemeSettings               ThemeSettings
-	GitLabSettings              SSOSettings
+	HanzoSettings               SSOSettings
 	GoogleSettings              SSOSettings
 	Office365Settings           Office365Settings
 	OpenIdSettings              SSOSettings
@@ -4219,8 +4224,8 @@ func (o *Config) ToJSONFiltered(tagType, tagValue string) ([]byte, error) {
 
 func (o *Config) GetSSOService(service string) *SSOSettings {
 	switch service {
-	case ServiceGitlab:
-		return &o.GitLabSettings
+	case ServiceHanzo:
+		return &o.HanzoSettings
 	case ServiceGoogle:
 		return &o.GoogleSettings
 	case ServiceOffice365:
@@ -4263,7 +4268,7 @@ func (o *Config) SetDefaults() {
 	o.PrivacySettings.setDefaults()
 	o.Office365Settings.setDefaults()
 	o.Office365Settings.setDefaults()
-	o.GitLabSettings.setDefaults("", "", "", "", "")
+	o.HanzoSettings.setDefaults(HanzoSettingsDefaultScope, HanzoSettingsDefaultAuthEndpoint, HanzoSettingsDefaultTokenEndpoint, HanzoSettingsDefaultUserAPIEndpoint, "#000000")
 	o.GoogleSettings.setDefaults(GoogleSettingsDefaultScope, GoogleSettingsDefaultAuthEndpoint, GoogleSettingsDefaultTokenEndpoint, GoogleSettingsDefaultUserAPIEndpoint, "")
 	o.OpenIdSettings.setDefaults(OpenidSettingsDefaultScope, "", "", "", "#145DBF")
 	o.ServiceSettings.SetDefaults(isUpdate)
@@ -5343,8 +5348,8 @@ func (o *Config) Sanitize(pluginManifests []*Manifest, opts *SanitizeOptions) {
 		*o.EmailSettings.SMTPPassword = FakeSetting
 	}
 
-	if o.GitLabSettings.Secret != nil && *o.GitLabSettings.Secret != "" {
-		*o.GitLabSettings.Secret = FakeSetting
+	if o.HanzoSettings.Secret != nil && *o.HanzoSettings.Secret != "" {
+		*o.HanzoSettings.Secret = FakeSetting
 	}
 
 	if o.GoogleSettings.Secret != nil && *o.GoogleSettings.Secret != "" {

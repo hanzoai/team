@@ -745,11 +745,7 @@ func (a *App) getSSOProvider(service string) (einterfaces.OAuthProvider, *model.
 	if sso == nil || !*sso.Enable {
 		return nil, model.NewAppError("getSSOProvider", "api.user.authorize_oauth_user.unsupported.app_error", nil, "service="+service, http.StatusNotImplemented)
 	}
-	providerType := service
-	if strings.Contains(*sso.Scope, OpenIDScope) {
-		providerType = model.ServiceOpenid
-	}
-	provider := einterfaces.GetOAuthProvider(providerType)
+	provider := einterfaces.GetOAuthProvider(service)
 	if provider == nil {
 		return nil, model.NewAppError("getSSOProvider", "api.user.login_by_oauth.not_available.app_error",
 			map[string]any{"Service": strings.Title(service)}, "", http.StatusNotImplemented)
@@ -813,6 +809,30 @@ func (a *App) LoginByOAuth(rctx request.CTX, service string, userData io.Reader,
 
 	if appErr != nil {
 		return nil, appErr
+	}
+
+	// The org claim is read fresh on every sign-in, so a user moved between
+	// orgs in IAM lands in the right team on their next login rather than
+	// keeping whichever one they first arrived in.
+	if org, ok := authUser.GetProp(model.UserPropOrg); ok && org != "" {
+		if stored, had := user.GetProp(model.UserPropOrg); !had || stored != org {
+			patch := user.ToPatch()
+			props := model.StringMap{}
+			for k, v := range user.Props {
+				props[k] = v
+			}
+			props[model.UserPropOrg] = org
+			patch.Props = props
+			if updated, err := a.PatchUser(rctx, user.Id, patch, true); err == nil {
+				user = updated
+			} else {
+				rctx.Logger().Warn("Failed to record IAM org on user", mlog.Err(err))
+				user.SetProp(model.UserPropOrg, org)
+			}
+		}
+		if appErr = a.EnterOrgTeam(rctx, user); appErr != nil {
+			rctx.Logger().Warn("Failed to place user in their org team", mlog.Err(appErr))
+		}
 	}
 
 	return user, nil
@@ -1153,15 +1173,6 @@ func (a *App) AuthorizeOAuthUser(rctx request.CTX, w http.ResponseWriter, r *htt
 		bodyString := string(bodyBytes)
 
 		rctx.Logger().Error("Error getting OAuth user", mlog.Int("response", resp.StatusCode), mlog.String("body_string", bodyString))
-
-		if service == model.ServiceGitlab && resp.StatusCode == http.StatusForbidden && strings.Contains(bodyString, "Terms of Service") {
-			url, err := url.Parse(*sso.UserAPIEndpoint)
-			if err != nil {
-				return nil, stateProps, nil, model.NewAppError("AuthorizeOAuthUser", model.NoTranslation, nil, "", http.StatusInternalServerError).Wrap(errors.Wrapf(err, "error parsing %s", *sso.UserAPIEndpoint))
-			}
-			// Return a nicer error when the user hasn't accepted GitLab's terms of service
-			return nil, stateProps, nil, model.NewAppError("AuthorizeOAuthUser", "oauth.gitlab.tos.error", map[string]any{"URL": url.Hostname()}, "", http.StatusBadRequest)
-		}
 
 		return nil, stateProps, nil, model.NewAppError("AuthorizeOAuthUser", "api.user.authorize_oauth_user.response.app_error", nil, "response_body="+bodyString, http.StatusInternalServerError)
 	}

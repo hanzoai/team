@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/url"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -23,7 +24,7 @@ import (
 
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/shared/request"
-	oauthgitlab "github.com/mattermost/mattermost/server/v8/channels/app/oauthproviders/gitlab"
+	oauthhanzo "github.com/mattermost/mattermost/server/v8/channels/app/oauthproviders/hanzo"
 	"github.com/mattermost/mattermost/server/v8/channels/app/users"
 	"github.com/mattermost/mattermost/server/v8/channels/store"
 	storemocks "github.com/mattermost/mattermost/server/v8/channels/store/storetest/mocks"
@@ -48,18 +49,18 @@ func TestCreateOAuthUser(t *testing.T) {
 	th := Setup(t).InitBasic(t)
 
 	th.App.UpdateConfig(func(cfg *model.Config) {
-		*cfg.GitLabSettings.Enable = true
+		*cfg.HanzoSettings.Enable = true
 	})
 
 	t.Run("create user successfully", func(t *testing.T) {
-		glUser := oauthgitlab.GitLabUser{Id: 42, Username: "o" + model.NewId(), Email: model.NewId() + "@simulator.amazonses.com", Name: "Joram Wilander"}
+		glUser := oauthhanzo.IAMUser{Sub: model.NewId(), PreferredUsername: "o" + model.NewId(), Email: model.NewId() + "@simulator.amazonses.com", DisplayName: "Joram Wilander", Owner: "acme"}
 		js, jsonErr := json.Marshal(glUser)
 		require.NoError(t, jsonErr)
 
-		user, err := th.App.CreateOAuthUser(th.Context, model.UserAuthServiceGitlab, bytes.NewReader(js), "", "", nil)
+		user, err := th.App.CreateOAuthUser(th.Context, model.UserAuthServiceHanzo, bytes.NewReader(js), "", "", nil)
 		require.Nil(t, err)
 
-		require.Equal(t, glUser.Username, user.Username, "usernames didn't match")
+		require.Equal(t, glUser.PreferredUsername, user.Username, "usernames didn't match")
 
 		appErr := th.App.PermanentDeleteUser(th.Context, user)
 		require.Nil(t, appErr)
@@ -97,7 +98,7 @@ func TestCreateOAuthUser(t *testing.T) {
 
 	t.Run("user creation disabled", func(t *testing.T) {
 		*th.App.Config().TeamSettings.EnableUserCreation = false
-		_, err := th.App.CreateOAuthUser(th.Context, model.UserAuthServiceGitlab, strings.NewReader("{}"), "", "", nil)
+		_, err := th.App.CreateOAuthUser(th.Context, model.UserAuthServiceHanzo, strings.NewReader("{}"), "", "", nil)
 		require.NotNil(t, err, "should have failed - user creation disabled")
 	})
 }
@@ -552,9 +553,9 @@ func TestUpdateOAuthUserAttrs(t *testing.T) {
 	id := model.NewId()
 	id2 := model.NewId()
 	th.App.UpdateConfig(func(cfg *model.Config) {
-		*cfg.GitLabSettings.Enable = true
+		*cfg.HanzoSettings.Enable = true
 	})
-	gitlabProvider := einterfaces.GetOAuthProvider("gitlab")
+	iamProvider := einterfaces.GetOAuthProvider(model.UserAuthServiceHanzo)
 
 	username := "user" + id
 	username2 := "user" + id2
@@ -563,77 +564,77 @@ func TestUpdateOAuthUserAttrs(t *testing.T) {
 	email2 := "user" + id2 + "@nowhere.com"
 
 	var user, user2 *model.User
-	var gitlabUserObj oauthgitlab.GitLabUser
-	user, gitlabUserObj = createGitlabUser(t, th.App, th.Context, 1, username, email)
-	user2, _ = createGitlabUser(t, th.App, th.Context, 2, username2, email2)
+	var iamUserObj oauthhanzo.IAMUser
+	user, iamUserObj = createIAMUser(t, th.App, th.Context, 1, username, email)
+	user2, _ = createIAMUser(t, th.App, th.Context, 2, username2, email2)
 
 	t.Run("UpdateUsername", func(t *testing.T) {
 		t.Run("NoExistingUserWithSameUsername", func(t *testing.T) {
-			gitlabUserObj.Username = "updateduser" + model.NewId()
-			gitlabUser := getGitlabUserPayload(gitlabUserObj, t)
-			data := bytes.NewReader(gitlabUser)
+			iamUserObj.PreferredUsername = "updateduser" + model.NewId()
+			iamUser := getIAMUserPayload(iamUserObj, t)
+			data := bytes.NewReader(iamUser)
 
 			user = getUserFromDB(th.App, user.Id, t)
-			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, gitlabProvider, "gitlab", nil)
+			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, iamProvider, model.UserAuthServiceHanzo, nil)
 			require.Nil(t, appErr)
 			user = getUserFromDB(th.App, user.Id, t)
 
-			require.Equal(t, gitlabUserObj.Username, user.Username, "user's username is not updated")
+			require.Equal(t, iamUserObj.PreferredUsername, user.Username, "user's username is not updated")
 		})
 
 		t.Run("ExistinguserWithSameUsername", func(t *testing.T) {
-			gitlabUserObj.Username = user2.Username
+			iamUserObj.PreferredUsername = user2.Username
 
-			gitlabUser := getGitlabUserPayload(gitlabUserObj, t)
-			data := bytes.NewReader(gitlabUser)
+			iamUser := getIAMUserPayload(iamUserObj, t)
+			data := bytes.NewReader(iamUser)
 
 			user = getUserFromDB(th.App, user.Id, t)
-			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, gitlabProvider, "gitlab", nil)
+			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, iamProvider, model.UserAuthServiceHanzo, nil)
 			require.Nil(t, appErr)
 			user = getUserFromDB(th.App, user.Id, t)
 
-			require.NotEqual(t, gitlabUserObj.Username, user.Username, "user's username is updated though there already exists another user with the same username")
+			require.NotEqual(t, iamUserObj.PreferredUsername, user.Username, "user's username is updated though there already exists another user with the same username")
 		})
 	})
 
 	t.Run("UpdateEmail", func(t *testing.T) {
 		t.Run("NoExistingUserWithSameEmail", func(t *testing.T) {
-			gitlabUserObj.Email = "newuser" + model.NewId() + "@nowhere.com"
-			gitlabUser := getGitlabUserPayload(gitlabUserObj, t)
-			data := bytes.NewReader(gitlabUser)
+			iamUserObj.Email = "newuser" + model.NewId() + "@nowhere.com"
+			iamUser := getIAMUserPayload(iamUserObj, t)
+			data := bytes.NewReader(iamUser)
 
 			user = getUserFromDB(th.App, user.Id, t)
-			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, gitlabProvider, "gitlab", nil)
+			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, iamProvider, model.UserAuthServiceHanzo, nil)
 			require.Nil(t, appErr)
 			user = getUserFromDB(th.App, user.Id, t)
 
-			require.Equal(t, gitlabUserObj.Email, user.Email, "user's email is not updated")
+			require.Equal(t, iamUserObj.Email, user.Email, "user's email is not updated")
 
 			require.True(t, user.EmailVerified, "user's email should have been verified")
 		})
 
 		t.Run("ExistingUserWithSameEmail", func(t *testing.T) {
-			gitlabUserObj.Email = user2.Email
+			iamUserObj.Email = user2.Email
 
-			gitlabUser := getGitlabUserPayload(gitlabUserObj, t)
-			data := bytes.NewReader(gitlabUser)
+			iamUser := getIAMUserPayload(iamUserObj, t)
+			data := bytes.NewReader(iamUser)
 
 			user = getUserFromDB(th.App, user.Id, t)
-			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, gitlabProvider, "gitlab", nil)
+			appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, iamProvider, model.UserAuthServiceHanzo, nil)
 			require.Nil(t, appErr)
 			user = getUserFromDB(th.App, user.Id, t)
 
-			require.NotEqual(t, gitlabUserObj.Email, user.Email, "user's email is updated though there already exists another user with the same email")
+			require.NotEqual(t, iamUserObj.Email, user.Email, "user's email is updated though there already exists another user with the same email")
 		})
 	})
 
 	t.Run("UpdateFirstName", func(t *testing.T) {
-		gitlabUserObj.Name = "Updated User"
-		gitlabUser := getGitlabUserPayload(gitlabUserObj, t)
-		data := bytes.NewReader(gitlabUser)
+		iamUserObj.DisplayName = "Updated User"
+		iamUser := getIAMUserPayload(iamUserObj, t)
+		data := bytes.NewReader(iamUser)
 
 		user = getUserFromDB(th.App, user.Id, t)
-		appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, gitlabProvider, "gitlab", nil)
+		appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, iamProvider, model.UserAuthServiceHanzo, nil)
 		require.Nil(t, appErr)
 		user = getUserFromDB(th.App, user.Id, t)
 
@@ -641,12 +642,12 @@ func TestUpdateOAuthUserAttrs(t *testing.T) {
 	})
 
 	t.Run("UpdateLastName", func(t *testing.T) {
-		gitlabUserObj.Name = "Updated Lastname"
-		gitlabUser := getGitlabUserPayload(gitlabUserObj, t)
-		data := bytes.NewReader(gitlabUser)
+		iamUserObj.DisplayName = "Updated Lastname"
+		iamUser := getIAMUserPayload(iamUserObj, t)
+		data := bytes.NewReader(iamUser)
 
 		user = getUserFromDB(th.App, user.Id, t)
-		appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, gitlabProvider, "gitlab", nil)
+		appErr := th.App.UpdateOAuthUserAttrs(th.Context, data, user, iamProvider, model.UserAuthServiceHanzo, nil)
 		require.Nil(t, appErr)
 		user = getUserFromDB(th.App, user.Id, t)
 
@@ -852,26 +853,26 @@ func getUserFromDB(a *App, id string, t *testing.T) *model.User {
 	return user
 }
 
-func getGitlabUserPayload(gitlabUser oauthgitlab.GitLabUser, t *testing.T) []byte {
+func getIAMUserPayload(iamUser oauthhanzo.IAMUser, t *testing.T) []byte {
 	var payload []byte
 	var err error
-	payload, err = json.Marshal(gitlabUser)
-	require.NoError(t, err, "Serialization of gitlab user to json failed", err)
+	payload, err = json.Marshal(iamUser)
+	require.NoError(t, err, "serializing the IAM user to json failed", err)
 
 	return payload
 }
 
-func createGitlabUser(t *testing.T, a *App, rctx request.CTX, id int64, username string, email string) (*model.User, oauthgitlab.GitLabUser) {
-	gitlabUserObj := oauthgitlab.GitLabUser{Id: id, Username: username, Login: "user1", Email: email, Name: "Test User"}
-	gitlabUser := getGitlabUserPayload(gitlabUserObj, t)
+func createIAMUser(t *testing.T, a *App, rctx request.CTX, id int64, username string, email string) (*model.User, oauthhanzo.IAMUser) {
+	iamUserObj := oauthhanzo.IAMUser{Sub: strconv.FormatInt(id, 10), PreferredUsername: username, Email: email, DisplayName: "Test User", Owner: "acme"}
+	iamUser := getIAMUserPayload(iamUserObj, t)
 
 	var user *model.User
 	var err *model.AppError
 
-	user, err = a.CreateOAuthUser(rctx, "gitlab", bytes.NewReader(gitlabUser), "", "", nil)
+	user, err = a.CreateOAuthUser(rctx, model.UserAuthServiceHanzo, bytes.NewReader(iamUser), "", "", nil)
 	require.Nil(t, err, "unable to create the user", err)
 
-	return user, gitlabUserObj
+	return user, iamUserObj
 }
 
 func TestGetUsersByStatus(t *testing.T) {
@@ -1885,7 +1886,7 @@ func TestUpdateUserAuthRevokesExistingSessions(t *testing.T) {
 
 	authData := model.NewId()
 	_, err = th.App.UpdateUserAuth(th.Context, th.BasicUser.Id, &model.UserAuth{
-		AuthService: model.UserAuthServiceGitlab,
+		AuthService: model.UserAuthServiceHanzo,
 		AuthData:    &authData,
 	})
 	require.Nil(t, err)
@@ -2677,86 +2678,6 @@ func TestCreateUserWithInitialPreferences(t *testing.T) {
 		require.Nil(t, appErr)
 		assert.Equal(t, "GMasDM", gmASdmNoticeViewedPref.Name)
 		assert.Equal(t, "true", gmASdmNoticeViewedPref.Value)
-	})
-}
-
-func TestSendSubscriptionHistoryEvent(t *testing.T) {
-	mainHelper.Parallel(t)
-	cloudProduct := &model.Product{
-		ID:                "prod_test1",
-		Name:              "name1",
-		Description:       "description1",
-		PricePerSeat:      1000,
-		SKU:               "sku1",
-		PriceID:           "price_id1",
-		Family:            "family1",
-		RecurringInterval: "year",
-		BillingScheme:     "billing_scheme1",
-		CrossSellsTo:      "prod_test2",
-	}
-
-	subscription := &model.Subscription{
-		ID:         "MySubscriptionID",
-		CustomerID: "MyCustomer",
-		ProductID:  "SomeProductId",
-		AddOns:     []string{},
-		StartAt:    1000000000,
-		EndAt:      2000000000,
-		CreateAt:   1000000000,
-		Seats:      10,
-		DNS:        "some.dns.server",
-	}
-
-	subscriptionHistory := &model.SubscriptionHistory{
-		ID:             "sub_history",
-		SubscriptionID: "MySubscriptionID",
-		Seats:          10,
-		CreateAt:       1000000000,
-	}
-
-	t.Run("Should not create SubscriptionHistoryEvent if the license is not cloud", func(t *testing.T) {
-		th := Setup(t).InitBasic(t)
-
-		th.App.Srv().SetLicense(model.NewTestLicense(""))
-
-		userID := "123"
-
-		subscriptionHistoryEvent, err := th.App.SendSubscriptionHistoryEvent(userID)
-		require.NoError(t, err)
-		require.Nil(t, subscriptionHistoryEvent)
-	})
-
-	t.Run("Should create SubscriptionHistoryEvent if the license is cloud and the product is yearly", func(t *testing.T) {
-		th := SetupWithStoreMock(t)
-
-		th.App.Srv().SetLicense(model.NewTestLicense("cloud"))
-
-		cloud := mocks.CloudInterface{}
-
-		// mock the cloud functions
-		cloud.Mock.On("GetSubscription", mock.Anything).Return(subscription, nil)
-		cloud.Mock.On("GetCloudProduct", mock.Anything, mock.Anything).Return(cloudProduct, nil)
-		cloud.Mock.On("CreateOrUpdateSubscriptionHistoryEvent", mock.Anything, mock.Anything).Return(subscriptionHistory, nil)
-
-		cloudImpl := th.App.Srv().Cloud
-		defer func() {
-			th.App.Srv().Cloud = cloudImpl
-		}()
-		th.App.Srv().Cloud = &cloud
-
-		// Mock to get the user count
-		mockStore := th.App.Srv().Store().(*storemocks.Store)
-		mockUserStore := storemocks.UserStore{}
-		mockUserStore.On("Count", mock.Anything).Return(int64(10), nil)
-
-		mockStore.On("User").Return(&mockUserStore)
-
-		userID := "123"
-
-		subscriptionHistoryEvent, err := th.App.SendSubscriptionHistoryEvent(userID)
-		require.NoError(t, err)
-		require.Equal(t, subscription.ID, subscriptionHistoryEvent.SubscriptionID, "subscription ID doesn't match")
-		require.Equal(t, 10, subscriptionHistoryEvent.Seats, "Number of seats doesn't match")
 	})
 }
 

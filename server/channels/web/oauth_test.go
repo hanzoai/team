@@ -463,11 +463,11 @@ func TestMobileLoginWithOAuth(t *testing.T) {
 	siteURL := "http://localhost:8065"
 	th.App.UpdateConfig(func(cfg *model.Config) {
 		*cfg.ServiceSettings.SiteURL = siteURL
-		*cfg.GitLabSettings.Enable = true
+		*cfg.HanzoSettings.Enable = true
 	})
 
 	provider := &MattermostTestProvider{}
-	einterfaces.RegisterOAuthProvider(model.ServiceGitlab, provider)
+	einterfaces.RegisterOAuthProvider(model.ServiceHanzo, provider)
 
 	t.Run("Should redirect to the SSO login page when valid URL Scheme is passed as redirect_to parameter", func(t *testing.T) {
 		responseWriter := httptest.NewRecorder()
@@ -479,7 +479,7 @@ func TestMobileLoginWithOAuth(t *testing.T) {
 	})
 
 	t.Run("Should include SiteURL in the output when invalid URL Scheme is passed", func(t *testing.T) {
-		einterfaces.RegisterOAuthProvider(model.ServiceGitlab, provider)
+		einterfaces.RegisterOAuthProvider(model.ServiceHanzo, provider)
 		responseWriter := httptest.NewRecorder()
 		request, err := http.NewRequest(http.MethodGet, th.App.GetSiteURL()+"/oauth/gitlab/mobile_login?redirect_to="+url.QueryEscape("randomScheme://"), nil)
 		require.NoError(t, err)
@@ -518,20 +518,20 @@ func TestOAuthComplete(t *testing.T) {
 	th := Setup(t).InitBasic(t)
 	th.Login(t, apiClient, th.SystemAdminUser)
 
-	gitLabSettingsEnable := th.App.Config().GitLabSettings.Enable
-	gitLabSettingsAuthEndpoint := th.App.Config().GitLabSettings.AuthEndpoint
-	gitLabSettingsId := th.App.Config().GitLabSettings.Id
-	gitLabSettingsSecret := th.App.Config().GitLabSettings.Secret
-	gitLabSettingsTokenEndpoint := th.App.Config().GitLabSettings.TokenEndpoint
-	gitLabSettingsUserAPIEndpoint := th.App.Config().GitLabSettings.UserAPIEndpoint
+	gitLabSettingsEnable := th.App.Config().HanzoSettings.Enable
+	gitLabSettingsAuthEndpoint := th.App.Config().HanzoSettings.AuthEndpoint
+	gitLabSettingsId := th.App.Config().HanzoSettings.Id
+	gitLabSettingsSecret := th.App.Config().HanzoSettings.Secret
+	gitLabSettingsTokenEndpoint := th.App.Config().HanzoSettings.TokenEndpoint
+	gitLabSettingsUserAPIEndpoint := th.App.Config().HanzoSettings.UserAPIEndpoint
 	enableOAuthServiceProvider := th.App.Config().ServiceSettings.EnableOAuthServiceProvider
 	defer func() {
-		th.App.UpdateConfig(func(cfg *model.Config) { cfg.GitLabSettings.Enable = gitLabSettingsEnable })
-		th.App.UpdateConfig(func(cfg *model.Config) { cfg.GitLabSettings.AuthEndpoint = gitLabSettingsAuthEndpoint })
-		th.App.UpdateConfig(func(cfg *model.Config) { cfg.GitLabSettings.Id = gitLabSettingsId })
-		th.App.UpdateConfig(func(cfg *model.Config) { cfg.GitLabSettings.Secret = gitLabSettingsSecret })
-		th.App.UpdateConfig(func(cfg *model.Config) { cfg.GitLabSettings.TokenEndpoint = gitLabSettingsTokenEndpoint })
-		th.App.UpdateConfig(func(cfg *model.Config) { cfg.GitLabSettings.UserAPIEndpoint = gitLabSettingsUserAPIEndpoint })
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.HanzoSettings.Enable = gitLabSettingsEnable })
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.HanzoSettings.AuthEndpoint = gitLabSettingsAuthEndpoint })
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.HanzoSettings.Id = gitLabSettingsId })
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.HanzoSettings.Secret = gitLabSettingsSecret })
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.HanzoSettings.TokenEndpoint = gitLabSettingsTokenEndpoint })
+		th.App.UpdateConfig(func(cfg *model.Config) { cfg.HanzoSettings.UserAPIEndpoint = gitLabSettingsUserAPIEndpoint })
 		th.App.UpdateConfig(func(cfg *model.Config) { cfg.ServiceSettings.EnableOAuthServiceProvider = enableOAuthServiceProvider })
 	}()
 
@@ -539,25 +539,25 @@ func TestOAuthComplete(t *testing.T) {
 	assert.Error(t, err)
 	closeBody(r)
 
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.Enable = true })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Enable = true })
 	r, err = HTTPGet(apiClient.URL+"/login/gitlab/complete?code=123&state=!#$#F@#Yˆ&~ñ", apiClient.HTTPClient, "", true)
 	assert.Error(t, err)
 	closeBody(r)
 
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.AuthEndpoint = apiClient.URL + "/oauth/authorize" })
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.Id = model.NewId() })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.AuthEndpoint = apiClient.URL + "/oauth/authorize" })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Id = model.NewId() })
 
 	stateProps := map[string]string{}
 	stateProps["action"] = model.OAuthActionLogin
 	stateProps["team_id"] = th.BasicTeam.Id
-	stateProps["redirect_to"] = *th.App.Config().GitLabSettings.AuthEndpoint
+	stateProps["redirect_to"] = *th.App.Config().HanzoSettings.AuthEndpoint
 
 	state := base64.StdEncoding.EncodeToString([]byte(model.MapToJSON(stateProps)))
 	r, err = HTTPGet(apiClient.URL+"/login/gitlab/complete?code=123&state="+url.QueryEscape(state), apiClient.HTTPClient, "", true)
 	assert.Error(t, err)
 	closeBody(r)
 
-	stateProps["hash"] = utils.HashSha256(*th.App.Config().GitLabSettings.Id)
+	stateProps["hash"] = utils.HashSha256(*th.App.Config().HanzoSettings.Id)
 	state = base64.StdEncoding.EncodeToString([]byte(model.MapToJSON(stateProps)))
 	r, err = HTTPGet(apiClient.URL+"/login/gitlab/complete?code=123&state="+url.QueryEscape(state), apiClient.HTTPClient, "", true)
 	assert.Error(t, err)
@@ -579,8 +579,8 @@ func TestOAuthComplete(t *testing.T) {
 		Description:  "test",
 		ClientSecret: model.NewId(), // Explicitly set secret to make it confidential
 		CallbackUrls: []string{
-			apiClient.URL + "/signup/" + model.ServiceGitlab + "/complete",
-			apiClient.URL + "/login/" + model.ServiceGitlab + "/complete",
+			apiClient.URL + "/signup/" + model.ServiceHanzo + "/complete",
+			apiClient.URL + "/login/" + model.ServiceHanzo + "/complete",
 		},
 		CreatorId: th.SystemAdminUser.Id,
 		IsTrusted: true,
@@ -588,11 +588,11 @@ func TestOAuthComplete(t *testing.T) {
 	oauthApp, appErr := th.App.CreateOAuthApp(oauthApp)
 	require.Nil(t, appErr)
 
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.Id = oauthApp.Id })
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.Secret = oauthApp.ClientSecret })
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.AuthEndpoint = apiClient.URL + "/oauth/authorize" })
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.TokenEndpoint = apiClient.URL + "/oauth/access_token" })
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.UserAPIEndpoint = apiClient.APIURL + "/users/me" })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Id = oauthApp.Id })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Secret = oauthApp.ClientSecret })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.AuthEndpoint = apiClient.URL + "/oauth/authorize" })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.TokenEndpoint = apiClient.URL + "/oauth/access_token" })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.UserAPIEndpoint = apiClient.APIURL + "/users/me" })
 
 	provider := &MattermostTestProvider{}
 
@@ -612,29 +612,29 @@ func TestOAuthComplete(t *testing.T) {
 	code := rurl.Query().Get("code")
 	stateProps["action"] = model.OAuthActionEmailToSSO
 	delete(stateProps, "team_id")
-	stateProps["redirect_to"] = *th.App.Config().GitLabSettings.AuthEndpoint
-	stateProps["hash"] = utils.HashSha256(*th.App.Config().GitLabSettings.Id)
+	stateProps["redirect_to"] = *th.App.Config().HanzoSettings.AuthEndpoint
+	stateProps["hash"] = utils.HashSha256(*th.App.Config().HanzoSettings.Id)
 	stateProps["redirect_to"] = "/oauth/authorize"
 	state = base64.StdEncoding.EncodeToString([]byte(model.MapToJSON(stateProps)))
-	r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceGitlab+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false)
+	r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceHanzo+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false)
 	if err == nil {
 		closeBody(r)
 	}
 
-	einterfaces.RegisterOAuthProvider(model.ServiceGitlab, provider)
+	einterfaces.RegisterOAuthProvider(model.ServiceHanzo, provider)
 
 	redirect, _, err = apiClient.AuthorizeOAuthApp(context.Background(), authRequest)
 	require.NoError(t, err)
 	rurl, _ = url.Parse(redirect)
 
 	code = rurl.Query().Get("code")
-	r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceGitlab+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false)
+	r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceHanzo+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false)
 	if err == nil {
 		closeBody(r)
 	}
 
 	_, nErr := th.App.Srv().Store().User().UpdateAuthData(
-		th.BasicUser.Id, model.ServiceGitlab, &th.BasicUser.Email, th.BasicUser.Email, true)
+		th.BasicUser.Id, model.ServiceHanzo, &th.BasicUser.Email, th.BasicUser.Email, true)
 	require.NoError(t, nErr)
 
 	redirect, _, err = apiClient.AuthorizeOAuthApp(context.Background(), authRequest)
@@ -644,7 +644,7 @@ func TestOAuthComplete(t *testing.T) {
 	code = rurl.Query().Get("code")
 	stateProps["action"] = model.OAuthActionLogin
 	state = base64.StdEncoding.EncodeToString([]byte(model.MapToJSON(stateProps)))
-	if r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceGitlab+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false); err == nil {
+	if r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceHanzo+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false); err == nil {
 		closeBody(r)
 	}
 
@@ -655,7 +655,7 @@ func TestOAuthComplete(t *testing.T) {
 	code = rurl.Query().Get("code")
 	delete(stateProps, "action")
 	state = base64.StdEncoding.EncodeToString([]byte(model.MapToJSON(stateProps)))
-	if r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceGitlab+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false); err == nil {
+	if r, err = HTTPGet(apiClient.URL+"/login/"+model.ServiceHanzo+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false); err == nil {
 		closeBody(r)
 	}
 
@@ -666,7 +666,7 @@ func TestOAuthComplete(t *testing.T) {
 	code = rurl.Query().Get("code")
 	stateProps["action"] = model.OAuthActionSignup
 	state = base64.StdEncoding.EncodeToString([]byte(model.MapToJSON(stateProps)))
-	if r, err := HTTPGet(apiClient.URL+"/login/"+model.ServiceGitlab+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false); err == nil {
+	if r, err := HTTPGet(apiClient.URL+"/login/"+model.ServiceHanzo+"/complete?code="+url.QueryEscape(code)+"&state="+url.QueryEscape(state), apiClient.HTTPClient, "", false); err == nil {
 		closeBody(r)
 	}
 }
@@ -683,10 +683,10 @@ func TestOAuthComplete_ErrorMessages(t *testing.T) {
 		},
 	}
 
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.Enable = true })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Enable = true })
 	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.ServiceSettings.EnableOAuthServiceProvider = true })
 	provider := &MattermostTestProvider{}
-	einterfaces.RegisterOAuthProvider(model.ServiceGitlab, provider)
+	einterfaces.RegisterOAuthProvider(model.ServiceHanzo, provider)
 
 	responseWriter := httptest.NewRecorder()
 
@@ -760,7 +760,7 @@ func (m *MattermostTestProvider) GetUserFromJSON(_ request.CTX, data io.Reader, 
 }
 
 func (m *MattermostTestProvider) GetSSOSettings(_ request.CTX, config *model.Config, service string) (*model.SSOSettings, error) {
-	return &config.GitLabSettings, nil
+	return &config.HanzoSettings, nil
 }
 
 func (m *MattermostTestProvider) GetUserFromIdToken(_ request.CTX, token string) (*model.User, error) {

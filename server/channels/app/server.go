@@ -55,7 +55,6 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/import_process"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/migrations"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/mobile_session_metadata"
-	"github.com/mattermost/mattermost/server/v8/channels/jobs/notify_admin"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/notify_expiring_access_tokens"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/plugins"
 	"github.com/mattermost/mattermost/server/v8/channels/jobs/post_persistent_notifications"
@@ -1680,27 +1679,9 @@ func (s *Server) initJobs() {
 	)
 
 	s.Jobs.RegisterJobType(
-		model.JobTypeUpgradeNotifyAdmin,
-		notify_admin.MakeUpgradeNotifyWorker(s.Jobs, s.License(), New(ServerConnector(s.Channels()))),
-		notify_admin.MakeScheduler(s.Jobs, s.License(), model.JobTypeUpgradeNotifyAdmin),
-	)
-
-	s.Jobs.RegisterJobType(
-		model.JobTypeTrialNotifyAdmin,
-		notify_admin.MakeTrialNotifyWorker(s.Jobs, s.License(), New(ServerConnector(s.Channels()))),
-		notify_admin.MakeScheduler(s.Jobs, s.License(), model.JobTypeTrialNotifyAdmin),
-	)
-
-	s.Jobs.RegisterJobType(
 		model.JobTypePostPersistentNotifications,
 		post_persistent_notifications.MakeWorker(s.Jobs, New(ServerConnector(s.Channels()))),
 		post_persistent_notifications.MakeScheduler(s.Jobs, func() *model.License { return s.License() }),
-	)
-
-	s.Jobs.RegisterJobType(
-		model.JobTypeInstallPluginNotifyAdmin,
-		notify_admin.MakeInstallPluginNotifyWorker(s.Jobs, New(ServerConnector(s.Channels()))),
-		notify_admin.MakeInstallPluginScheduler(s.Jobs, s.License(), model.JobTypeInstallPluginNotifyAdmin),
 	)
 
 	s.Jobs.RegisterJobType(

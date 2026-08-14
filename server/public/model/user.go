@@ -922,7 +922,7 @@ func (u *User) IsSSOUser() bool {
 }
 
 func (u *User) IsOAuthUser() bool {
-	return u.AuthService == ServiceGitlab ||
+	return u.AuthService == ServiceHanzo ||
 		u.AuthService == ServiceGoogle ||
 		u.AuthService == ServiceOffice365 ||
 		u.AuthService == ServiceOpenid
@@ -942,7 +942,7 @@ func (u *User) IsSAMLUser() bool {
 func IsValidUserAuthService(service string) bool {
 	switch service {
 	case UserAuthServiceEmail,
-		UserAuthServiceGitlab,
+		UserAuthServiceHanzo,
 		UserAuthServiceLdap,
 		UserAuthServiceSaml,
 		ServiceGoogle,

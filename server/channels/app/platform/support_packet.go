@@ -359,7 +359,7 @@ func (ps *PlatformService) getSupportPacketDiagnostics(rctx request.CTX) (*model
 	}
 
 	/* OAuth2 / OpenID Connect Providers */
-	d.OAuthProviders.GitLab = probeOAuthProvider(rctx.Context(), &ps.Config().GitLabSettings)
+	d.OAuthProviders.GitLab = probeOAuthProvider(rctx.Context(), &ps.Config().HanzoSettings)
 	d.OAuthProviders.Google = probeOAuthProvider(rctx.Context(), &ps.Config().GoogleSettings)
 	d.OAuthProviders.Office365 = probeOAuthProvider(rctx.Context(), ps.Config().Office365Settings.SSOSettings())
 	d.OAuthProviders.OpenID = probeOAuthProvider(rctx.Context(), &ps.Config().OpenIdSettings)

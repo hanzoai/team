@@ -288,7 +288,7 @@ func testUserStoreUpdate(t *testing.T, rctx request.CTX, ss store.Store) {
 
 	t.Run("gitlab user", func(t *testing.T) {
 		u3 := &model.User{
-			AuthService:   model.UserAuthServiceGitlab,
+			AuthService:   model.UserAuthServiceHanzo,
 			Email:         MakeEmail(),
 			EmailVerified: true,
 		}
@@ -2514,7 +2514,7 @@ func testUserStoreGetForLogin(t *testing.T, rctx request.CTX, ss store.Store) {
 	u1, err := ss.User().Save(rctx, &model.User{
 		Email:       MakeEmail(),
 		Username:    "u1" + model.NewId(),
-		AuthService: model.UserAuthServiceGitlab,
+		AuthService: model.UserAuthServiceHanzo,
 		AuthData:    &auth,
 	})
 

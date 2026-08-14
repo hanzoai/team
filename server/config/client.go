@@ -317,6 +317,9 @@ func GenerateLimitedClientConfig(c *model.Config, telemetryID string, license *m
 
 	props["EnableSignUpWithEmail"] = strconv.FormatBool(*c.EmailSettings.EnableSignUpWithEmail)
 	props["EnableSignInWithEmail"] = strconv.FormatBool(*c.EmailSettings.EnableSignInWithEmail)
+	props["EnableSignUpWithHanzo"] = strconv.FormatBool(*c.HanzoSettings.Enable)
+	props["HanzoButtonColor"] = *c.HanzoSettings.ButtonColor
+	props["HanzoButtonText"] = *c.HanzoSettings.ButtonText
 	props["EnableSignInWithUsername"] = strconv.FormatBool(*c.EmailSettings.EnableSignInWithUsername)
 
 	props["EmailLoginButtonColor"] = *c.EmailSettings.LoginButtonColor
@@ -422,9 +425,6 @@ func GenerateLimitedClientConfig(c *model.Config, telemetryID string, license *m
 			props["EnableSignUpWithOpenId"] = strconv.FormatBool(*c.OpenIdSettings.Enable)
 			props["OpenIdButtonColor"] = *c.OpenIdSettings.ButtonColor
 			props["OpenIdButtonText"] = *c.OpenIdSettings.ButtonText
-			props["EnableSignUpWithGitLab"] = strconv.FormatBool(*c.GitLabSettings.Enable)
-			props["GitLabButtonColor"] = *c.GitLabSettings.ButtonColor
-			props["GitLabButtonText"] = *c.GitLabSettings.ButtonText
 		}
 
 		if model.MinimumEnterpriseLicense(license) {

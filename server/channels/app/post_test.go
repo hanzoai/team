@@ -4831,58 +4831,6 @@ func TestGetLastAccessiblePostTime(t *testing.T) {
 	assert.Equal(t, int64(1234567890), r)
 }
 
-func TestComputeLastAccessiblePostTime(t *testing.T) {
-	mainHelper.Parallel(t)
-	t.Run("Updates the time, if Entry license limit is applicable", func(t *testing.T) {
-		th := SetupWithStoreMock(t)
-
-		// Set Entry license with post history limit of 100 messages
-		entryLicensePostsLimit := model.NewTestLicenseSKU(model.LicenseShortSkuMattermostEntry)
-		entryLicensePostsLimit.Limits = &model.LicenseLimits{PostHistory: 100}
-		th.App.Srv().SetLicense(entryLicensePostsLimit)
-
-		mockStore := th.App.Srv().Store().(*storemocks.Store)
-		mockPostStore := storemocks.PostStore{}
-		mockPostStore.On("GetNthRecentPostTime", int64(100)).Return(int64(1234567890), nil)
-		mockSystemStore := storemocks.SystemStore{}
-		mockSystemStore.On("SaveOrUpdate", mock.Anything).Return(nil)
-		mockStore.On("Post").Return(&mockPostStore)
-		mockStore.On("System").Return(&mockSystemStore)
-
-		err := th.App.ComputeLastAccessiblePostTime()
-		assert.NoError(t, err)
-
-		// Verify that the system value was saved with the calculated timestamp
-		mockSystemStore.AssertCalled(t, "SaveOrUpdate", &model.System{
-			Name:  model.SystemLastAccessiblePostTime,
-			Value: "1234567890",
-		})
-	})
-
-	t.Run("Remove the time if license limit is NOT applicable", func(t *testing.T) {
-		th := SetupWithStoreMock(t)
-
-		// Set license without post history limits (using test license without limits)
-		license := model.NewTestLicense()
-		license.Limits = nil // No limits
-		th.App.Srv().SetLicense(license)
-
-		mockStore := th.App.Srv().Store().(*storemocks.Store)
-		mockSystemStore := storemocks.SystemStore{}
-		mockSystemStore.On("GetByName", model.SystemLastAccessiblePostTime).Return(&model.System{Name: model.SystemLastAccessiblePostTime, Value: "1234567890"}, nil)
-		mockSystemStore.On("PermanentDeleteByName", model.SystemLastAccessiblePostTime).Return(nil, nil)
-		mockStore.On("System").Return(&mockSystemStore)
-
-		err := th.App.ComputeLastAccessiblePostTime()
-		assert.NoError(t, err)
-
-		// Verify that SaveOrUpdate was not called (no new timestamp calculated)
-		mockSystemStore.AssertNotCalled(t, "SaveOrUpdate", mock.Anything)
-		// Verify that the previous value was deleted
-		mockSystemStore.AssertCalled(t, "PermanentDeleteByName", model.SystemLastAccessiblePostTime)
-	})
-}
-
 func TestGetEditHistoryForPost(t *testing.T) {
 	mainHelper.Parallel(t)
 	th := Setup(t).InitBasic(t)
