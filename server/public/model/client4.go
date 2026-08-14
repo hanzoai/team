@@ -55,10 +55,9 @@ const (
 	// APIURLSuffix is the base path of this server's HTTP API.
 	APIURLSuffix = "/v1/team"
 
-	// PushURLSuffix is the base path of the external push notification
-	// service addressed by EmailSettings.PushNotificationServer. It is that
-	// service's versioning, not ours, and moves only when it does.
-	PushURLSuffix = "/api/v1"
+	// PushURLSuffix is the base path of the push notification service
+	// addressed by EmailSettings.PushNotificationServer.
+	PushURLSuffix = "/v1"
 )
 
 type Response struct {
