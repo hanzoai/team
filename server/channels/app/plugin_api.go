@@ -1560,13 +1560,9 @@ func (api *PluginAPI) RequestTrialLicense(requesterID string, users int, termsAc
 	return api.app.Channels().RequestTrialLicense(api.ctx, requesterID, users, termsAccepted, receiveEmailsAccepted)
 }
 
-// GetCloudLimits returns any limits associated with the cloud instance
+// GetCloudLimits stays because plugin.API declares it. This server caps nothing.
 func (api *PluginAPI) GetCloudLimits() (*model.ProductLimits, error) {
-	if api.app.Cloud() == nil {
-		return &model.ProductLimits{}, nil
-	}
-	limits, err := api.app.Cloud().GetCloudLimits("")
-	return limits, err
+	return &model.ProductLimits{}, nil
 }
 
 // RegisterCollectionAndTopic is no longer supported.

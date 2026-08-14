@@ -7,91 +7,19 @@ import (
 	"net/http"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/pkg/errors"
 
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
 )
 
 func (ch *Channels) License() *model.License {
 	return ch.srv.License()
 }
 
-func (ch *Channels) RequestTrialLicenseWithExtraFields(rctx request.CTX, requesterID string, trialRequest *model.TrialLicenseRequest) *model.AppError {
-	requester, err := ch.srv.userService.GetUser(rctx, requesterID)
-	if err != nil {
-		var nfErr *store.ErrNotFound
-		switch {
-		case errors.As(err, &nfErr):
-			return model.NewAppError("RequestTrialLicense", MissingAccountError, nil, "", http.StatusNotFound).Wrap(err)
-		default:
-			return model.NewAppError("RequestTrialLicense", "app.user.get_by_username.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-		}
-	}
-
-	if ch.srv.Cloud.ValidateBusinessEmail(requesterID, trialRequest.ContactEmail) != nil {
-		return model.NewAppError("RequestTrialLicense", "api.license.request-trial.bad-request.business-email", nil, "", http.StatusBadRequest)
-	}
-
-	// Create a new struct only using the fields from the request that are allowed to be set by the client
-	sanitizedRequest := &model.TrialLicenseRequest{
-		ServerID:              ch.srv.ServerId(),
-		Name:                  requester.GetDisplayName(model.ShowFullName),
-		Email:                 requester.Email,
-		SiteName:              *ch.srv.platform.Config().TeamSettings.SiteName,
-		SiteURL:               *ch.srv.platform.Config().ServiceSettings.SiteURL,
-		Users:                 trialRequest.Users,
-		TermsAccepted:         trialRequest.TermsAccepted,
-		ReceiveEmailsAccepted: trialRequest.ReceiveEmailsAccepted,
-		ContactName:           trialRequest.ContactName,
-		ContactEmail:          trialRequest.ContactEmail,
-		CompanyName:           trialRequest.CompanyName,
-		CompanySize:           trialRequest.CompanySize,
-		CompanyCountry:        trialRequest.CompanyCountry,
-		ServerVersion:         model.CurrentVersion,
-	}
-
-	if !sanitizedRequest.IsValid() {
-		return model.NewAppError("RequestTrialLicense", "api.license.request-trial.bad-request", nil, "", http.StatusBadRequest)
-	}
-
-	return ch.srv.platform.RequestTrialLicense(sanitizedRequest)
-}
-
-// Deprecated: Use RequestTrialLicenseWithExtraFields instead. This function remains to support the Plugin API.
+// RequestTrialLicense stays because plugin.API declares it and plugin binaries
+// are compiled against that signature. There is no licensing here to trial.
 func (ch *Channels) RequestTrialLicense(rctx request.CTX, requesterID string, users int, termsAccepted bool, receiveEmailsAccepted bool) *model.AppError {
-	if !termsAccepted {
-		return model.NewAppError("RequestTrialLicense", "api.license.request-trial.bad-request.terms-not-accepted", nil, "", http.StatusBadRequest)
-	}
-
-	if users == 0 {
-		return model.NewAppError("RequestTrialLicense", "api.license.request-trial.bad-request", nil, "", http.StatusBadRequest)
-	}
-
-	requester, err := ch.srv.userService.GetUser(rctx, requesterID)
-	if err != nil {
-		var nfErr *store.ErrNotFound
-		switch {
-		case errors.As(err, &nfErr):
-			return model.NewAppError("RequestTrialLicense", MissingAccountError, nil, "", http.StatusNotFound).Wrap(err)
-		default:
-			return model.NewAppError("RequestTrialLicense", "app.user.get_by_username.app_error", nil, "", http.StatusInternalServerError).Wrap(err)
-		}
-	}
-
-	trialLicenseRequest := &model.TrialLicenseRequest{
-		ServerID:              ch.srv.ServerId(),
-		Name:                  requester.GetDisplayName(model.ShowFullName),
-		Email:                 requester.Email,
-		SiteName:              *ch.srv.platform.Config().TeamSettings.SiteName,
-		SiteURL:               *ch.srv.platform.Config().ServiceSettings.SiteURL,
-		Users:                 users,
-		TermsAccepted:         termsAccepted,
-		ReceiveEmailsAccepted: receiveEmailsAccepted,
-	}
-
-	return ch.srv.platform.RequestTrialLicense(trialLicenseRequest)
+	return model.NewAppError("RequestTrialLicense", "api.license.request-trial.unsupported", nil, "", http.StatusNotImplemented)
 }
 
 // JWTClaims custom JWT claims with the needed information for the

@@ -299,11 +299,6 @@ const (
 	Office365SettingsDefaultTokenEndpoint   = "https://login.microsoftonline.com/common/oauth2/v2.0/token"
 	Office365SettingsDefaultUserAPIEndpoint = "https://graph.microsoft.com/v1.0/me"
 
-	CloudSettingsDefaultCwsURL        = "https://customers.mattermost.com"
-	CloudSettingsDefaultCwsAPIURL     = "https://portal.internal.prod.cloud.mattermost.com"
-	CloudSettingsDefaultCwsURLTest    = "https://portal.test.cloud.mattermost.com"
-	CloudSettingsDefaultCwsAPIURLTest = "https://api.internal.test.cloud.mattermost.com"
-
 	OpenidSettingsDefaultScope = "profile openid email"
 
 	LocalModeSocketPath = "/var/tmp/mattermost_local.socket"
@@ -3554,47 +3549,6 @@ func (s *JobSettings) SetDefaults() {
 	}
 }
 
-type CloudSettings struct {
-	CWSURL                *string `access:"write_restrictable"`
-	CWSAPIURL             *string `access:"write_restrictable"`
-	CWSMock               *bool   `access:"write_restrictable"`
-	Disable               *bool   `access:"write_restrictable,cloud_restrictable"`
-	PreviewModalBucketURL *string `access:"write_restrictable"`
-}
-
-func (s *CloudSettings) SetDefaults() {
-	serviceEnvironment := GetServiceEnvironment()
-	if s.CWSURL == nil || serviceEnvironment == ServiceEnvironmentProduction {
-		switch serviceEnvironment {
-		case ServiceEnvironmentProduction:
-			s.CWSURL = new(CloudSettingsDefaultCwsURL)
-		case ServiceEnvironmentTest, ServiceEnvironmentDev:
-			s.CWSURL = new(CloudSettingsDefaultCwsURLTest)
-		}
-	}
-
-	if s.CWSAPIURL == nil {
-		switch serviceEnvironment {
-		case ServiceEnvironmentProduction:
-			s.CWSAPIURL = new(CloudSettingsDefaultCwsAPIURL)
-		case ServiceEnvironmentTest, ServiceEnvironmentDev:
-			s.CWSAPIURL = new(CloudSettingsDefaultCwsAPIURLTest)
-		}
-	}
-	if s.CWSMock == nil {
-		isMockCws := MockCWS == "true"
-		s.CWSMock = &isMockCws
-	}
-
-	if s.Disable == nil {
-		s.Disable = new(false)
-	}
-
-	if s.PreviewModalBucketURL == nil {
-		s.PreviewModalBucketURL = new("")
-	}
-}
-
 type PluginState struct {
 	Enable bool
 }
@@ -4222,7 +4176,6 @@ type Config struct {
 	DisplaySettings             DisplaySettings
 	GuestAccountsSettings       GuestAccountsSettings
 	ImageProxySettings          ImageProxySettings
-	CloudSettings               CloudSettings  // telemetry: none
 	FeatureFlags                *FeatureFlags  `access:"*_read" json:",omitempty"`
 	ImportSettings              ImportSettings // telemetry: none
 	ExportSettings              ExportSettings
@@ -4341,7 +4294,6 @@ func (o *Config) SetDefaults() {
 	o.DisplaySettings.SetDefaults()
 	o.GuestAccountsSettings.SetDefaults()
 	o.ImageProxySettings.SetDefaults()
-	o.CloudSettings.SetDefaults()
 	if o.FeatureFlags == nil {
 		o.FeatureFlags = &FeatureFlags{}
 		o.FeatureFlags.SetDefaults()
