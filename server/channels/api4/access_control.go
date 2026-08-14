@@ -834,7 +834,7 @@ func searchAccessControlPolicies(c *Context, w http.ResponseWriter, r *http.Requ
 // updateActiveStatus updates the active status of a single access control policy.
 //
 // Deprecated: This endpoint is deprecated and will be removed in a future release.
-// Use PUT /api/v4/access_control/policies/activate instead, which supports batch updates.
+// Use PUT /v1/team/access_control/policies/activate instead, which supports batch updates.
 func updateActiveStatus(c *Context, w http.ResponseWriter, r *http.Request) {
 	c.RequirePolicyId()
 	if c.Err != nil {
@@ -896,7 +896,7 @@ func updateActiveStatus(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	// Set deprecation header to inform clients
 	w.Header().Set("Deprecation", "true")
-	w.Header().Set("Link", "</api/v4/access_control/policies/activate>; rel=\"successor-version\"")
+	w.Header().Set("Link", "<"+model.APIURLSuffix+"/access_control/policies/activate>; rel=\"successor-version\"")
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(response); err != nil {
 		c.Logger.Warn("Error while writing response", mlog.Err(err))

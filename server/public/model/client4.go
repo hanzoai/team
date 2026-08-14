@@ -52,10 +52,13 @@ const (
 
 	ClientDir = "client"
 
-	APIURLSuffixV1 = "/api/v1"
-	APIURLSuffixV4 = "/api/v4"
-	APIURLSuffixV5 = "/api/v5"
-	APIURLSuffix   = APIURLSuffixV4
+	// APIURLSuffix is the base path of this server's HTTP API.
+	APIURLSuffix = "/v1/team"
+
+	// PushURLSuffix is the base path of the external push notification
+	// service addressed by EmailSettings.PushNotificationServer. It is that
+	// service's versioning, not ours, and moves only when it does.
+	PushURLSuffix = "/api/v1"
 )
 
 type Response struct {
@@ -68,7 +71,7 @@ type Response struct {
 
 type Client4 struct {
 	URL        string       // The location of the server, for example  "http://localhost:8065"
-	APIURL     string       // The api location of the server, for example "http://localhost:8065/api/v4"
+	APIURL     string       // The api location of the server, for example "http://localhost:8065/v1/team"
 	HTTPClient *http.Client // The http client
 	AuthToken  string
 	AuthType   string
@@ -5633,7 +5636,7 @@ func (c *Client4) AuthorizeOAuthApp(ctx context.Context, authRequest *AuthorizeR
 	if err != nil {
 		return "", nil, err
 	}
-	// The request doesn't go to the /api/v4 subpath, so we can't use the usual helper methods
+	// The request doesn't go to the /v1/team subpath, so we can't use the usual helper methods
 	r, err := c.doAPIRequestBytes(ctx, http.MethodPost, c.URL+"/oauth/authorize", buf, "")
 	if err != nil {
 		return "", BuildResponse(r), err
@@ -5654,7 +5657,7 @@ func (c *Client4) DeauthorizeOAuthApp(ctx context.Context, appId string) (*Respo
 	if err != nil {
 		return nil, err
 	}
-	// The request doesn't go to the /api/v4 subpath, so we can't use the usual helper methods
+	// The request doesn't go to the /v1/team subpath, so we can't use the usual helper methods
 	r, err := c.doAPIRequestBytes(ctx, http.MethodPost, c.URL+"/oauth/deauthorize", buf, "")
 	if err != nil {
 		return BuildResponse(r), err
@@ -5665,7 +5668,7 @@ func (c *Client4) DeauthorizeOAuthApp(ctx context.Context, appId string) (*Respo
 
 // GetOAuthAccessToken is a test helper function for the OAuth access token endpoint.
 func (c *Client4) GetOAuthAccessToken(ctx context.Context, data url.Values) (*AccessResponse, *Response, error) {
-	// The request doesn't go to the /api/v4 subpath, so we can't use the usual helper methods
+	// The request doesn't go to the /v1/team subpath, so we can't use the usual helper methods
 	r, err := c.doAPIRequestReader(ctx, http.MethodPost, c.URL+"/oauth/access_token", "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), nil)
 	if err != nil {
 		return nil, BuildResponse(r), err

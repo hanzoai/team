@@ -1767,7 +1767,7 @@ func TestGetPostActionClient(t *testing.T) {
 		{
 			name:       "same host with non-plugin path does not get auth",
 			siteURL:    "http://localhost:8065",
-			requestURL: "http://localhost:8065/api/v4/posts",
+			requestURL: "http://localhost:8065/v1/team/posts",
 			expectAuth: false,
 		},
 		{
@@ -1791,8 +1791,8 @@ func TestGetPostActionClient(t *testing.T) {
 		{
 			name:       "path traversal escaping plugins does not get auth",
 			siteURL:    "http://localhost:8065",
-			requestURL: "http://localhost:8065/plugins/../api/v4/posts",
-			expectAuth: false, // path.Clean normalizes to /api/v4/posts
+			requestURL: "http://localhost:8065/plugins/../v1/team/posts",
+			expectAuth: false, // path.Clean normalizes to /v1/team/posts
 		},
 		{
 			name:       "subpath with plugin path gets auth",
@@ -2395,7 +2395,7 @@ func TestDoPluginRequest(t *testing.T) {
 			},
 			{
 				name:      "non-plugins path",
-				rawURL:    "/api/v4/users",
+				rawURL:    "/v1/team/users",
 				expectErr: true,
 				errDetail: "plugins not in path",
 			},

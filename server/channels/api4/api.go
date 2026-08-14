@@ -16,166 +16,165 @@ import (
 )
 
 type Routes struct {
-	Root     *mux.Router // ''
-	APIRoot  *mux.Router // 'api/v4'
-	APIRoot5 *mux.Router // 'api/v5'
+	Root    *mux.Router // ''
+	APIRoot *mux.Router // 'v1/team'
 
-	Users          *mux.Router // 'api/v4/users'
-	User           *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}'
-	UserByUsername *mux.Router // 'api/v4/users/username/{username:[A-Za-z0-9\\_\\-\\.]+}'
-	UserByEmail    *mux.Router // 'api/v4/users/email/{email:.+}'
+	Users          *mux.Router // 'v1/team/users'
+	User           *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}'
+	UserByUsername *mux.Router // 'v1/team/users/username/{username:[A-Za-z0-9\\_\\-\\.]+}'
+	UserByEmail    *mux.Router // 'v1/team/users/email/{email:.+}'
 
-	Bots *mux.Router // 'api/v4/bots'
-	Bot  *mux.Router // 'api/v4/bots/{bot_user_id:[A-Za-z0-9]+}'
+	Bots *mux.Router // 'v1/team/bots'
+	Bot  *mux.Router // 'v1/team/bots/{bot_user_id:[A-Za-z0-9]+}'
 
-	Teams              *mux.Router // 'api/v4/teams'
-	TeamsForUser       *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/teams'
-	Team               *mux.Router // 'api/v4/teams/{team_id:[A-Za-z0-9]+}'
-	TeamForUser        *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}'
-	UserThreads        *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/threads'
-	UserThread         *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/threads/{thread_id:[A-Za-z0-9]+}'
-	TeamByName         *mux.Router // 'api/v4/teams/name/{team_name:[A-Za-z0-9_-]+}'
-	TeamMembers        *mux.Router // 'api/v4/teams/{team_id:[A-Za-z0-9]+}/members'
-	TeamMember         *mux.Router // 'api/v4/teams/{team_id:[A-Za-z0-9]+}/members/{user_id:[A-Za-z0-9]+}'
-	TeamMembersForUser *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/teams/members'
+	Teams              *mux.Router // 'v1/team/teams'
+	TeamsForUser       *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/teams'
+	Team               *mux.Router // 'v1/team/teams/{team_id:[A-Za-z0-9]+}'
+	TeamForUser        *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}'
+	UserThreads        *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/threads'
+	UserThread         *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/threads/{thread_id:[A-Za-z0-9]+}'
+	TeamByName         *mux.Router // 'v1/team/teams/name/{team_name:[A-Za-z0-9_-]+}'
+	TeamMembers        *mux.Router // 'v1/team/teams/{team_id:[A-Za-z0-9]+}/members'
+	TeamMember         *mux.Router // 'v1/team/teams/{team_id:[A-Za-z0-9]+}/members/{user_id:[A-Za-z0-9]+}'
+	TeamMembersForUser *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/teams/members'
 
-	Channels                 *mux.Router // 'api/v4/channels'
-	Channel                  *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}'
-	ChannelForUser           *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/channels/{channel_id:[A-Za-z0-9]+}'
-	ChannelByName            *mux.Router // 'api/v4/teams/{team_id:[A-Za-z0-9]+}/channels/name/{channel_name:[A-Za-z0-9_-]+}'
-	ChannelByNameForTeamName *mux.Router // 'api/v4/teams/name/{team_name:[A-Za-z0-9_-]+}/channels/name/{channel_name:[A-Za-z0-9_-]+}'
-	ChannelsForTeam          *mux.Router // 'api/v4/teams/{team_id:[A-Za-z0-9]+}/channels'
-	ChannelMembers           *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/members'
-	ChannelMember            *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/members/{user_id:[A-Za-z0-9]+}'
-	ChannelMembersForUser    *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/channels/members'
-	ChannelModerations       *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/moderations'
-	ChannelCategories        *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/channels/categories'
-	ChannelBookmarks         *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/bookmarks'
-	ChannelBookmark          *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/bookmarks/{bookmark_id:[A-Za-z0-9]+}'
-	ChannelViews             *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/views'
-	ChannelView              *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/views/{view_id:[A-Za-z0-9]+}'
-	ChannelViewPosts         *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/views/{view_id:[A-Za-z0-9]+}/posts'
+	Channels                 *mux.Router // 'v1/team/channels'
+	Channel                  *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}'
+	ChannelForUser           *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/channels/{channel_id:[A-Za-z0-9]+}'
+	ChannelByName            *mux.Router // 'v1/team/teams/{team_id:[A-Za-z0-9]+}/channels/name/{channel_name:[A-Za-z0-9_-]+}'
+	ChannelByNameForTeamName *mux.Router // 'v1/team/teams/name/{team_name:[A-Za-z0-9_-]+}/channels/name/{channel_name:[A-Za-z0-9_-]+}'
+	ChannelsForTeam          *mux.Router // 'v1/team/teams/{team_id:[A-Za-z0-9]+}/channels'
+	ChannelMembers           *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/members'
+	ChannelMember            *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/members/{user_id:[A-Za-z0-9]+}'
+	ChannelMembersForUser    *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/channels/members'
+	ChannelModerations       *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/moderations'
+	ChannelCategories        *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/teams/{team_id:[A-Za-z0-9]+}/channels/categories'
+	ChannelBookmarks         *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/bookmarks'
+	ChannelBookmark          *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/bookmarks/{bookmark_id:[A-Za-z0-9]+}'
+	ChannelViews             *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/views'
+	ChannelView              *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/views/{view_id:[A-Za-z0-9]+}'
+	ChannelViewPosts         *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/views/{view_id:[A-Za-z0-9]+}/posts'
 
-	Posts           *mux.Router // 'api/v4/posts'
-	Post            *mux.Router // 'api/v4/posts/{post_id:[A-Za-z0-9]+}'
-	PostsForChannel *mux.Router // 'api/v4/channels/{channel_id:[A-Za-z0-9]+}/posts'
-	PostsForUser    *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/posts'
-	PostForUser     *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/posts/{post_id:[A-Za-z0-9]+}'
+	Posts           *mux.Router // 'v1/team/posts'
+	Post            *mux.Router // 'v1/team/posts/{post_id:[A-Za-z0-9]+}'
+	PostsForChannel *mux.Router // 'v1/team/channels/{channel_id:[A-Za-z0-9]+}/posts'
+	PostsForUser    *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/posts'
+	PostForUser     *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/posts/{post_id:[A-Za-z0-9]+}'
 
-	Files *mux.Router // 'api/v4/files'
-	File  *mux.Router // 'api/v4/files/{file_id:[A-Za-z0-9]+}'
+	Files *mux.Router // 'v1/team/files'
+	File  *mux.Router // 'v1/team/files/{file_id:[A-Za-z0-9]+}'
 
-	Uploads *mux.Router // 'api/v4/uploads'
-	Upload  *mux.Router // 'api/v4/uploads/{upload_id:[A-Za-z0-9]+}'
+	Uploads *mux.Router // 'v1/team/uploads'
+	Upload  *mux.Router // 'v1/team/uploads/{upload_id:[A-Za-z0-9]+}'
 
-	Plugins *mux.Router // 'api/v4/plugins'
-	Plugin  *mux.Router // 'api/v4/plugins/{plugin_id:[A-Za-z0-9\\_\\-\\.]+}'
+	Plugins *mux.Router // 'v1/team/plugins'
+	Plugin  *mux.Router // 'v1/team/plugins/{plugin_id:[A-Za-z0-9\\_\\-\\.]+}'
 
 	PublicFile *mux.Router // '/files/{file_id:[A-Za-z0-9]+}/public'
 
-	Commands *mux.Router // 'api/v4/commands'
-	Command  *mux.Router // 'api/v4/commands/{command_id:[A-Za-z0-9]+}'
+	Commands *mux.Router // 'v1/team/commands'
+	Command  *mux.Router // 'v1/team/commands/{command_id:[A-Za-z0-9]+}'
 
-	Hooks         *mux.Router // 'api/v4/hooks'
-	IncomingHooks *mux.Router // 'api/v4/hooks/incoming'
-	IncomingHook  *mux.Router // 'api/v4/hooks/incoming/{hook_id:[A-Za-z0-9]+}'
-	OutgoingHooks *mux.Router // 'api/v4/hooks/outgoing'
-	OutgoingHook  *mux.Router // 'api/v4/hooks/outgoing/{hook_id:[A-Za-z0-9]+}'
+	Hooks         *mux.Router // 'v1/team/hooks'
+	IncomingHooks *mux.Router // 'v1/team/hooks/incoming'
+	IncomingHook  *mux.Router // 'v1/team/hooks/incoming/{hook_id:[A-Za-z0-9]+}'
+	OutgoingHooks *mux.Router // 'v1/team/hooks/outgoing'
+	OutgoingHook  *mux.Router // 'v1/team/hooks/outgoing/{hook_id:[A-Za-z0-9]+}'
 
-	OAuth     *mux.Router // 'api/v4/oauth'
-	OAuthApps *mux.Router // 'api/v4/oauth/apps'
-	OAuthApp  *mux.Router // 'api/v4/oauth/apps/{app_id:[A-Za-z0-9]+}'
+	OAuth     *mux.Router // 'v1/team/oauth'
+	OAuthApps *mux.Router // 'v1/team/oauth/apps'
+	OAuthApp  *mux.Router // 'v1/team/oauth/apps/{app_id:[A-Za-z0-9]+}'
 
-	SAML       *mux.Router // 'api/v4/saml'
-	Compliance *mux.Router // 'api/v4/compliance'
-	Cluster    *mux.Router // 'api/v4/cluster'
+	SAML       *mux.Router // 'v1/team/saml'
+	Compliance *mux.Router // 'v1/team/compliance'
+	Cluster    *mux.Router // 'v1/team/cluster'
 
-	Image *mux.Router // 'api/v4/image'
+	Image *mux.Router // 'v1/team/image'
 
-	LDAP *mux.Router // 'api/v4/ldap'
+	LDAP *mux.Router // 'v1/team/ldap'
 
-	Elasticsearch *mux.Router // 'api/v4/elasticsearch'
+	Elasticsearch *mux.Router // 'v1/team/elasticsearch'
 
-	DataRetention *mux.Router // 'api/v4/data_retention'
+	DataRetention *mux.Router // 'v1/team/data_retention'
 
-	Brand *mux.Router // 'api/v4/brand'
+	Brand *mux.Router // 'v1/team/brand'
 
-	System *mux.Router // 'api/v4/system'
+	System *mux.Router // 'v1/team/system'
 
-	Jobs *mux.Router // 'api/v4/jobs'
+	Jobs *mux.Router // 'v1/team/jobs'
 
-	Recaps *mux.Router // 'api/v4/recaps'
+	Recaps *mux.Router // 'v1/team/recaps'
 
-	ScheduledRecaps *mux.Router // 'api/v4/scheduled_recaps'
-	ScheduledRecap  *mux.Router // 'api/v4/scheduled_recaps/{scheduled_recap_id:[A-Za-z0-9]+}'
+	ScheduledRecaps *mux.Router // 'v1/team/scheduled_recaps'
+	ScheduledRecap  *mux.Router // 'v1/team/scheduled_recaps/{scheduled_recap_id:[A-Za-z0-9]+}'
 
-	Preferences *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/preferences'
+	Preferences *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/preferences'
 
-	License *mux.Router // 'api/v4/license'
+	License *mux.Router // 'v1/team/license'
 
-	Public *mux.Router // 'api/v4/public'
+	Public *mux.Router // 'v1/team/public'
 
-	Reactions *mux.Router // 'api/v4/reactions'
+	Reactions *mux.Router // 'v1/team/reactions'
 
-	Roles   *mux.Router // 'api/v4/roles'
-	Schemes *mux.Router // 'api/v4/schemes'
+	Roles   *mux.Router // 'v1/team/roles'
+	Schemes *mux.Router // 'v1/team/schemes'
 
-	Emojis      *mux.Router // 'api/v4/emoji'
-	Emoji       *mux.Router // 'api/v4/emoji/{emoji_id:[A-Za-z0-9]+}'
-	EmojiByName *mux.Router // 'api/v4/emoji/name/{emoji_name:[A-Za-z0-9\\_\\-\\+]+}'
+	Emojis      *mux.Router // 'v1/team/emoji'
+	Emoji       *mux.Router // 'v1/team/emoji/{emoji_id:[A-Za-z0-9]+}'
+	EmojiByName *mux.Router // 'v1/team/emoji/name/{emoji_name:[A-Za-z0-9\\_\\-\\+]+}'
 
-	ReactionByNameForPostForUser *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}/posts/{post_id:[A-Za-z0-9]+}/reactions/{emoji_name:[A-Za-z0-9\\_\\-\\+]+}'
+	ReactionByNameForPostForUser *mux.Router // 'v1/team/users/{user_id:[A-Za-z0-9]+}/posts/{post_id:[A-Za-z0-9]+}/reactions/{emoji_name:[A-Za-z0-9\\_\\-\\+]+}'
 
-	TermsOfService *mux.Router // 'api/v4/terms_of_service'
-	Groups         *mux.Router // 'api/v4/groups'
+	TermsOfService *mux.Router // 'v1/team/terms_of_service'
+	Groups         *mux.Router // 'v1/team/groups'
 
-	Imports *mux.Router // 'api/v4/imports'
-	Import  *mux.Router // 'api/v4/imports/{import_name:.+\\.zip}'
+	Imports *mux.Router // 'v1/team/imports'
+	Import  *mux.Router // 'v1/team/imports/{import_name:.+\\.zip}'
 
-	Exports *mux.Router // 'api/v4/exports'
-	Export  *mux.Router // 'api/v4/exports/{export_name:.+\\.zip}'
+	Exports *mux.Router // 'v1/team/exports'
+	Export  *mux.Router // 'v1/team/exports/{export_name:.+\\.zip}'
 
-	RemoteCluster        *mux.Router // 'api/v4/remotecluster'
-	SharedChannels       *mux.Router // 'api/v4/sharedchannels'
-	ChannelForRemote     *mux.Router // 'api/v4/remotecluster/{remote_id:[A-Za-z0-9]+}/channels/{channel_id:[A-Za-z0-9]+}'
-	SharedChannelRemotes *mux.Router // 'api/v4/remotecluster/{remote_id:[A-Za-z0-9]+}/sharedchannelremotes'
+	RemoteCluster        *mux.Router // 'v1/team/remotecluster'
+	SharedChannels       *mux.Router // 'v1/team/sharedchannels'
+	ChannelForRemote     *mux.Router // 'v1/team/remotecluster/{remote_id:[A-Za-z0-9]+}/channels/{channel_id:[A-Za-z0-9]+}'
+	SharedChannelRemotes *mux.Router // 'v1/team/remotecluster/{remote_id:[A-Za-z0-9]+}/sharedchannelremotes'
 
-	Permissions *mux.Router // 'api/v4/permissions'
+	Permissions *mux.Router // 'v1/team/permissions'
 
-	Usage *mux.Router // 'api/v4/usage'
+	Usage *mux.Router // 'v1/team/usage'
 
-	HostedCustomer *mux.Router // 'api/v4/hosted_customer'
+	HostedCustomer *mux.Router // 'v1/team/hosted_customer'
 
-	Drafts *mux.Router // 'api/v4/drafts'
+	Drafts *mux.Router // 'v1/team/drafts'
 
-	Reports *mux.Router // 'api/v4/reports'
+	Reports *mux.Router // 'v1/team/reports'
 
-	OutgoingOAuthConnections *mux.Router // 'api/v4/oauth/outgoing_connections'
-	OutgoingOAuthConnection  *mux.Router // 'api/v4/oauth/outgoing_connections/{outgoing_oauth_connection_id:[A-Za-z0-9]+}'
+	OutgoingOAuthConnections *mux.Router // 'v1/team/oauth/outgoing_connections'
+	OutgoingOAuthConnection  *mux.Router // 'v1/team/oauth/outgoing_connections/{outgoing_oauth_connection_id:[A-Za-z0-9]+}'
 
-	CustomProfileAttributes       *mux.Router // 'api/v4/custom_profile_attributes'
-	CustomProfileAttributesFields *mux.Router // 'api/v4/custom_profile_attributes/fields'
-	CustomProfileAttributesField  *mux.Router // 'api/v4/custom_profile_attributes/fields/{field_id:[A-Za-z0-9]+}'
-	CustomProfileAttributesValues *mux.Router // 'api/v4/custom_profile_attributes/values'
+	CustomProfileAttributes       *mux.Router // 'v1/team/custom_profile_attributes'
+	CustomProfileAttributesFields *mux.Router // 'v1/team/custom_profile_attributes/fields'
+	CustomProfileAttributesField  *mux.Router // 'v1/team/custom_profile_attributes/fields/{field_id:[A-Za-z0-9]+}'
+	CustomProfileAttributesValues *mux.Router // 'v1/team/custom_profile_attributes/values'
 
-	AuditLogs *mux.Router // 'api/v4/audit_logs'
+	AuditLogs *mux.Router // 'v1/team/audit_logs'
 
-	AccessControlPolicies *mux.Router // 'api/v4/access_control_policies'
-	AccessControlPolicy   *mux.Router // 'api/v4/access_control_policies/{policy_id:[A-Za-z0-9]+}'
+	AccessControlPolicies *mux.Router // 'v1/team/access_control_policies'
+	AccessControlPolicy   *mux.Router // 'v1/team/access_control_policies/{policy_id:[A-Za-z0-9]+}'
 
-	ContentFlagging *mux.Router // 'api/v4/content_flagging'
+	ContentFlagging *mux.Router // 'v1/team/content_flagging'
 
-	Agents      *mux.Router // 'api/v4/agents'
-	LLMServices *mux.Router // 'api/v4/llmservices'
+	Agents      *mux.Router // 'v1/team/agents'
+	LLMServices *mux.Router // 'v1/team/llmservices'
 
-	Boards *mux.Router // 'api/v4/boards'
+	Boards *mux.Router // 'v1/team/boards'
 
-	Properties           *mux.Router // 'api/v4/properties'
-	PropertyFields       *mux.Router // 'api/v4/properties/groups/{group_name:[a-z][a-z0-9_]*}/{object_type:[a-z]+}/fields'
-	PropertyField        *mux.Router // 'api/v4/properties/groups/{group_name:[a-z][a-z0-9_]*}/{object_type:[a-z]+}/fields/{field_id:[A-Za-z0-9]+}'
-	PropertyFieldsSearch *mux.Router // 'api/v4/properties/groups/{group_name:[a-z][a-z0-9_]*}/fields/search'
-	PropertyValues       *mux.Router // 'api/v4/properties/groups/{group_name:[a-z][a-z0-9_]*}/{object_type:[a-z]+}/values/{target_id:[A-Za-z0-9]+}'
-	PropertySystemValues *mux.Router // 'api/v4/properties/groups/{group_name:[a-z][a-z0-9_]*}/system/values'
+	Properties           *mux.Router // 'v1/team/properties'
+	PropertyFields       *mux.Router // 'v1/team/properties/groups/{group_name:[a-z][a-z0-9_]*}/{object_type:[a-z]+}/fields'
+	PropertyField        *mux.Router // 'v1/team/properties/groups/{group_name:[a-z][a-z0-9_]*}/{object_type:[a-z]+}/fields/{field_id:[A-Za-z0-9]+}'
+	PropertyFieldsSearch *mux.Router // 'v1/team/properties/groups/{group_name:[a-z][a-z0-9_]*}/fields/search'
+	PropertyValues       *mux.Router // 'v1/team/properties/groups/{group_name:[a-z][a-z0-9_]*}/{object_type:[a-z]+}/values/{target_id:[A-Za-z0-9]+}'
+	PropertySystemValues *mux.Router // 'v1/team/properties/groups/{group_name:[a-z][a-z0-9_]*}/system/values'
 }
 
 type API struct {
@@ -191,7 +190,6 @@ func Init(srv *app.Server) (*API, error) {
 
 	api.BaseRoutes.Root = srv.Router
 	api.BaseRoutes.APIRoot = srv.Router.PathPrefix(model.APIURLSuffix).Subrouter()
-	api.BaseRoutes.APIRoot5 = srv.Router.PathPrefix(model.APIURLSuffixV5).Subrouter()
 
 	api.BaseRoutes.Users = api.BaseRoutes.APIRoot.PathPrefix("/users").Subrouter()
 	api.BaseRoutes.User = api.BaseRoutes.APIRoot.PathPrefix("/users/{user_id:[A-Za-z0-9]+}").Subrouter()
@@ -400,7 +398,7 @@ func Init(srv *app.Server) (*API, error) {
 		api.BaseRoutes.Root.Handle("/manualtest", api.APIHandler(manualtesting.ManualTest)).Methods(http.MethodGet)
 	}
 
-	srv.Router.Handle("/api/v4/{anything:.*}", http.HandlerFunc(api.Handle404))
+	srv.Router.Handle(model.APIURLSuffix+"/{anything:.*}", http.HandlerFunc(api.Handle404))
 
 	InitLocal(srv)
 
@@ -509,7 +507,7 @@ func InitLocal(srv *app.Server) *API {
 	api.InitAccessControlPolicyLocal()
 	api.InitStatusLocal()
 
-	srv.LocalRouter.Handle("/api/v4/{anything:.*}", http.HandlerFunc(api.Handle404))
+	srv.LocalRouter.Handle(model.APIURLSuffix+"/{anything:.*}", http.HandlerFunc(api.Handle404))
 
 	return api
 }

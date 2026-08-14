@@ -132,7 +132,7 @@ services:
       - './../../enterprise:/home/enterprise'
     restart: on-failure
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://leader:8065/api/v4/system/ping"]
+      test: ["CMD", "curl", "-f", "http://leader:8065/v1/team/system/ping"]
       interval: 5s
       timeout: 30s
       retries: 30
@@ -165,7 +165,7 @@ services:
       - './../:/home/mattermost-server:Z'
       - './../../enterprise:/home/enterprise:Z'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://follower:8065/api/v4/system/ping"]
+      test: ["CMD", "curl", "-f", "http://follower:8065/v1/team/system/ping"]
       interval: 5s
       timeout: 30s
       retries: 30
@@ -199,7 +199,7 @@ services:
       - './../:/home/mattermost-server:Z'
       - './../../enterprise:/home/enterprise:Z'
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://follower2:8065/api/v4/system/ping"]
+      test: ["CMD", "curl", "-f", "http://follower2:8065/v1/team/system/ping"]
       interval: 5s
       timeout: 30s
       retries: 30

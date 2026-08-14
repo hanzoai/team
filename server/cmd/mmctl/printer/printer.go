@@ -15,6 +15,8 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
+
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 const (
@@ -219,7 +221,7 @@ func Flush() error {
 		fallthrough
 	case len(printer.Lines) > 0:
 		entity := cmd.Parent().Name()
-		container := strings.TrimSuffix(printer.serverAddr, "api/v4")
+		container := strings.TrimSuffix(printer.serverAddr, model.APIURLSuffix)
 		if container != "" {
 			container = fmt.Sprintf(" on %s", container)
 		}

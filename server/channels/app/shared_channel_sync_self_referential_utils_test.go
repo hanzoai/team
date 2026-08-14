@@ -62,12 +62,12 @@ func NewSelfReferentialSyncHandler(t *testing.T, service *sharedchannel.Service,
 
 // HandleRequest processes incoming HTTP requests for the test server.
 // This handler includes common remote cluster endpoints to simulate a real remote cluster:
-// - /api/v4/remotecluster/msg: Main sync message endpoint
-// - /api/v4/remotecluster/ping: Ping endpoint to maintain online status (prevents offline after 5 minutes)
-// - /api/v4/remotecluster/confirm_invite: Invitation confirmation endpoint
+// - /v1/team/remotecluster/msg: Main sync message endpoint
+// - /v1/team/remotecluster/ping: Ping endpoint to maintain online status (prevents offline after 5 minutes)
+// - /v1/team/remotecluster/confirm_invite: Invitation confirmation endpoint
 func (h *SelfReferentialSyncHandler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
-	case "/api/v4/remotecluster/msg":
+	case "/v1/team/remotecluster/msg":
 		currentCall := h.syncMessageCount.Add(1)
 
 		// Read and process the sync message
@@ -150,10 +150,10 @@ func (h *SelfReferentialSyncHandler) HandleRequest(w http.ResponseWriter, r *htt
 
 		writeOKResponse(w)
 
-	case "/api/v4/remotecluster/ping":
+	case "/v1/team/remotecluster/ping":
 		writeOKResponse(w)
 
-	case "/api/v4/remotecluster/confirm_invite":
+	case "/v1/team/remotecluster/confirm_invite":
 		writeOKResponse(w)
 
 	default:

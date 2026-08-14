@@ -542,7 +542,7 @@ func (a *App) rawSendToPushProxy(msg *model.PushNotification) (model.PushRespons
 		return nil, fmt.Errorf("failed to encode to JSON: %w", err)
 	}
 
-	url := strings.TrimRight(*a.Config().EmailSettings.PushNotificationServer, "/") + model.APIURLSuffixV1 + "/send_push"
+	url := strings.TrimRight(*a.Config().EmailSettings.PushNotificationServer, "/") + model.PushURLSuffix + "/send_push"
 	request, err := http.NewRequest("POST", url, bytes.NewReader(msgJSON))
 	if err != nil {
 		return nil, err
@@ -627,7 +627,7 @@ func (a *App) SendAckToPushProxy(rctx request.CTX, ack *model.PushNotificationAc
 
 	request, err := http.NewRequest(
 		"POST",
-		strings.TrimRight(*a.Config().EmailSettings.PushNotificationServer, "/")+model.APIURLSuffixV1+"/ack",
+		strings.TrimRight(*a.Config().EmailSettings.PushNotificationServer, "/")+model.PushURLSuffix+"/ack",
 		bytes.NewReader(ackJSON),
 	)
 	if err != nil {

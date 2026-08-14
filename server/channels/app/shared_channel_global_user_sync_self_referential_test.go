@@ -329,7 +329,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 
 			idx := i // Capture index for closure
 			testServers[i] = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				if r.URL.Path == "/api/v4/remotecluster/msg" {
+				if r.URL.Path == "/v1/team/remotecluster/msg" {
 					clusterName := fmt.Sprintf("cluster-%d", idx+1)
 					atomic.AddInt32(syncMessagesPerCluster[clusterName], 1)
 
@@ -455,7 +455,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 		// Create test HTTP server
 		testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			switch r.URL.Path {
-			case "/api/v4/remotecluster/msg":
+			case "/v1/team/remotecluster/msg":
 				syncAttempts.Add(1)
 
 				if failureMode.Load() {
@@ -470,7 +470,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 				} else {
 					writeOKResponse(w)
 				}
-			case "/api/v4/remotecluster/ping":
+			case "/v1/team/remotecluster/ping":
 				writeOKResponse(w)
 			default:
 				w.WriteHeader(http.StatusNotFound)
@@ -577,7 +577,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 
 		// Create test HTTP server
 		testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				syncMessageCount.Add(1)
 			}
 			writeOKResponse(w)
@@ -666,7 +666,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 
 		// Create test HTTP server
 		testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				syncMessageCount.Add(1)
 
 				// Parse message to check if it's a user sync
@@ -855,7 +855,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 				return
 			}
 
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				syncAttempts.Add(1)
 				// On second attempt, go offline
 				if syncAttempts.Load() >= 2 {
@@ -1106,7 +1106,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 
 		// Create test HTTP servers for both "servers"
 		serverAHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				// Parse message to track what gets synced back to A
 				bodyBytes, _ := io.ReadAll(r.Body)
 				var frame model.RemoteClusterFrame
@@ -1125,7 +1125,7 @@ func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {
 		})
 
 		serverBHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				// Parse message to track what gets synced to B
 				bodyBytes, _ := io.ReadAll(r.Body)
 				var frame model.RemoteClusterFrame

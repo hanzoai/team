@@ -23,15 +23,15 @@ const (
 	ResultsChanBuffer             = 50
 	ResultQueueDrainTimeoutMillis = 10000
 	MaxConcurrentSends            = 10
-	SendMsgURL                    = "api/v4/remotecluster/msg"
+	SendMsgURL                    = model.APIURLSuffix + "/remotecluster/msg"
 	SendTimeout                   = time.Minute
 	SendFileTimeout               = time.Minute * 5
-	PingURL                       = "api/v4/remotecluster/ping"
+	PingURL                       = model.APIURLSuffix + "/remotecluster/ping"
 	// Raising PingFreq also raises the transport's IdleConnTimeout (PingFreq / 2),
 	// which must stay below peer idle timeouts (60s default). See MM-69982.
 	PingFreq           = time.Minute
 	PingTimeout        = time.Second * 15
-	ConfirmInviteURL   = "api/v4/remotecluster/confirm_invite"
+	ConfirmInviteURL   = model.APIURLSuffix + "/remotecluster/confirm_invite"
 	InvitationTopic    = "invitation"
 	PingTopic          = "ping"
 	ResponseStatusOK   = model.StatusOk

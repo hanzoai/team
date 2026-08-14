@@ -51,7 +51,7 @@ func (w *Web) InitOAuth() {
 	w.MainRouter.Handle("/api/v3/oauth/{service:[A-Za-z0-9]+}/complete", w.APIHandler(completeOAuth)).Methods(http.MethodGet)
 	w.MainRouter.Handle("/signup/{service:[A-Za-z0-9]+}/complete", w.APIHandler(completeOAuth)).Methods(http.MethodGet)
 	w.MainRouter.Handle("/login/{service:[A-Za-z0-9]+}/complete", w.APIHandler(completeOAuth)).Methods(http.MethodGet)
-	w.MainRouter.Handle("/api/v4/oauth_test", w.APISessionRequired(testHandler)).Methods(http.MethodGet)
+	w.MainRouter.Handle(model.APIURLSuffix+"/oauth_test", w.APISessionRequired(testHandler)).Methods(http.MethodGet)
 }
 
 func testHandler(c *Context, w http.ResponseWriter, r *http.Request) {

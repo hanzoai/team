@@ -38,9 +38,9 @@ func TestHandlerServeHTTPErrors(t *testing.T) {
 		redirect bool
 	}{
 		{"redirect on desktop non-api endpoint", "/login/sso/saml", false, true},
-		{"not redirect on desktop api endpoint", "/api/v4/test", false, false},
+		{"not redirect on desktop api endpoint", "/v1/team/test", false, false},
 		{"not redirect on mobile non-api endpoint", "/login/sso/saml", true, false},
-		{"not redirect on mobile api endpoint", "/api/v4/test", true, false},
+		{"not redirect on mobile api endpoint", "/v1/team/test", true, false},
 	}
 
 	for _, tt := range flagtests {
@@ -71,7 +71,7 @@ func TestHandlerServeDefaultSecurityHeaders(t *testing.T) {
 	handler := web.NewHandler(handlerForServeDefaultSecurityHeaders)
 
 	paths := []string{
-		"/api/v4/test",          // API
+		"/v1/team/test",          // API
 		"/static/manifest.json", // this should always exist. Static files have their own handler
 		// Note that the plugin handler isn't tested, also plugins may support arbitrary functionality
 	}
@@ -127,7 +127,7 @@ func TestHandlerServeHTTPSecureTransport(t *testing.T) {
 	web := New(th.Server)
 	handler := web.NewHandler(handlerForHTTPSecureTransport)
 
-	request := httptest.NewRequest("GET", "/api/v4/test", nil)
+	request := httptest.NewRequest("GET", "/v1/team/test", nil)
 
 	response := httptest.NewRecorder()
 	handler.ServeHTTP(response, request)
@@ -145,7 +145,7 @@ func TestHandlerServeHTTPSecureTransport(t *testing.T) {
 		*config.ServiceSettings.TLSStrictTransport = false
 	})
 
-	request = httptest.NewRequest("GET", "/api/v4/test", nil)
+	request = httptest.NewRequest("GET", "/v1/team/test", nil)
 
 	response = httptest.NewRecorder()
 	handler.ServeHTTP(response, request)
@@ -199,7 +199,7 @@ func TestHandlerServeCSRFToken(t *testing.T) {
 
 	// CSRF Token Used - Success Expected
 
-	request := httptest.NewRequest("POST", "/api/v4/test", nil)
+	request := httptest.NewRequest("POST", "/v1/team/test", nil)
 	request.AddCookie(cookie)
 	request.AddCookie(cookie2)
 	request.AddCookie(cookie3)
@@ -213,7 +213,7 @@ func TestHandlerServeCSRFToken(t *testing.T) {
 
 	// No CSRF Token Used - Failure Expected
 
-	request = httptest.NewRequest("POST", "/api/v4/test", nil)
+	request = httptest.NewRequest("POST", "/v1/team/test", nil)
 	request.AddCookie(cookie)
 	request.AddCookie(cookie2)
 	request.AddCookie(cookie3)
@@ -229,7 +229,7 @@ func TestHandlerServeCSRFToken(t *testing.T) {
 	th.App.UpdateConfig(func(config *model.Config) {
 		*config.ServiceSettings.ExperimentalStrictCSRFEnforcement = false
 	})
-	request = httptest.NewRequest("POST", "/api/v4/test", nil)
+	request = httptest.NewRequest("POST", "/v1/team/test", nil)
 	request.AddCookie(cookie)
 	request.AddCookie(cookie2)
 	request.AddCookie(cookie3)
@@ -266,7 +266,7 @@ func TestHandlerServeCSRFToken(t *testing.T) {
 
 	// CSRF Token Used - Success Expected
 
-	request = httptest.NewRequest("POST", "/api/v4/test", nil)
+	request = httptest.NewRequest("POST", "/v1/team/test", nil)
 	request.AddCookie(cookie)
 	request.AddCookie(cookie2)
 	request.AddCookie(cookie3)
@@ -280,7 +280,7 @@ func TestHandlerServeCSRFToken(t *testing.T) {
 
 	// No CSRF Token Used - Failure Expected
 
-	request = httptest.NewRequest("POST", "/api/v4/test", nil)
+	request = httptest.NewRequest("POST", "/v1/team/test", nil)
 	request.AddCookie(cookie)
 	request.AddCookie(cookie2)
 	request.AddCookie(cookie3)
@@ -310,7 +310,7 @@ func TestHandlerServeCSPHeader(t *testing.T) {
 			IsStatic:       false,
 		}
 
-		request := httptest.NewRequest("POST", "/api/v4/test", nil)
+		request := httptest.NewRequest("POST", "/v1/team/test", nil)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
 		assert.Equal(t, 200, response.Code)
@@ -609,7 +609,7 @@ func TestHandlerServeInvalidToken(t *testing.T) {
 				Value: "invalid",
 			}
 
-			request := httptest.NewRequest("POST", "/api/v4/test", nil)
+			request := httptest.NewRequest("POST", "/v1/team/test", nil)
 			request.AddCookie(cookie)
 			response := httptest.NewRecorder()
 			handler.ServeHTTP(response, request)
@@ -670,7 +670,7 @@ func TestHandlerServeCSRFFailureClearsAuthCookie(t *testing.T) {
 				Value: session.Token,
 			}
 
-			request := httptest.NewRequest("POST", "/api/v4/test", nil)
+			request := httptest.NewRequest("POST", "/v1/team/test", nil)
 			request.AddCookie(cookie)
 			request.Header.Add(model.HeaderRequestedWith, model.HeaderRequestedWithXML)
 			response := httptest.NewRecorder()
@@ -1022,7 +1022,7 @@ func TestHandlerServeHTTPBasicSecurityChecks(t *testing.T) {
 		handler := web.NewHandler(noOpHandler)
 
 		// using the default URL length
-		request := httptest.NewRequest("GET", "/api/v4/test?with=not&many=query_params", nil)
+		request := httptest.NewRequest("GET", "/v1/team/test?with=not&many=query_params", nil)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
 		assert.Equal(t, http.StatusOK, response.Code)
@@ -1053,7 +1053,7 @@ func TestHandlerServeHTTPBasicSecurityChecks(t *testing.T) {
 		web := New(th.Server)
 		handler := web.NewHandler(noOpHandler)
 
-		request := httptest.NewRequest("GET", "/api/v4/test?a_url_longer_than_10_characters_including_query_params", nil)
+		request := httptest.NewRequest("GET", "/v1/team/test?a_url_longer_than_10_characters_including_query_params", nil)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
 		assert.Equal(t, http.StatusRequestURITooLong, response.Code)
@@ -1086,7 +1086,7 @@ func TestHandlerServeHTTPBasicSecurityChecks(t *testing.T) {
 
 		// this URL is within the 20 characters limit excluding query params.
 		// but this should still fail as URL length includes query params
-		request := httptest.NewRequest("GET", "/api/v4/test?a_url_longer_than_10_characters_including_query_params", nil)
+		request := httptest.NewRequest("GET", "/v1/team/test?a_url_longer_than_10_characters_including_query_params", nil)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
 		assert.Equal(t, http.StatusRequestURITooLong, response.Code)
@@ -1114,7 +1114,7 @@ func TestHandlerServeHTTPRequestPayloadLimit(t *testing.T) {
 		handler := web.NewHandler(jsonReaderHandler)
 
 		body := strings.NewReader("\"a very small request body\"")
-		request := httptest.NewRequest("POST", "/api/v4/test", body)
+		request := httptest.NewRequest("POST", "/v1/team/test", body)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
 
@@ -1150,7 +1150,7 @@ func TestHandlerServeHTTPRequestPayloadLimit(t *testing.T) {
 		// Even though we have set the max payload size to be 1, we still need at least 513 bytes (1 byte configured + bytes.MinRead = 1 + 512 = 513) bytes.
 		// This is because the buffer will always be at least bytes.MinRead bytes large, so the effective payload limit is bytes.MinRead + the configured value.
 		body := strings.NewReader("\"weunfrwghyajuaqqkrecexurpmrmgpimjieymiwfhfrrrgiqpqrznkjtubwcuybyixyxwtwddpytukritccyugyeuvdtzjkkyiwhquzqkrqkhgyyfqnquzchjqkrkzfrxthduzizqtdxzqirxhzihbivmkdwpbeddepdanzuuzqxbdqfvgkwumervhghywexitbjdnvxcniuamwmqdecbbqbgnjjqwkdcucvnpwynuruztpdtmmvbpkevurpjdwdhpayaindzmnkmyybudfkjdkqwuiviriudtqytybuwfkkwpepwhpekfewnxgpkfctdqjmemngvntnizvfznaiqpbumgtcxidvawtgcdyqijbxzrgezvjmcwikiabbpqabrwfgncrmvqththepffatnhchhnmrhkuqvgrzfugzhuwicaemhcacrazmgzmrgrkuhwucfydhwxfhzfukzjhvdxkuhzjrxwippxadvwzigndxwdxvganxggjjxwdqtgqgnpqqygndviadvttwfntcreitijaqrpfygdehbcftyfcjvrfwvjmbtdptutjgtbyhbyddfecyyujgrxyujzmryymj\"")
-		request := httptest.NewRequest("POST", "/api/v4/test", body)
+		request := httptest.NewRequest("POST", "/v1/team/test", body)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
 
@@ -1172,7 +1172,7 @@ func TestHandlerConnectionIdHeader(t *testing.T) {
 		web := New(th.Server)
 		handler := web.NewHandler(handlerFunc)
 
-		request := httptest.NewRequest("GET", "/api/v4/test", nil)
+		request := httptest.NewRequest("GET", "/v1/team/test", nil)
 		request.Header.Set(model.ConnectionId, connectionId)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
@@ -1193,7 +1193,7 @@ func TestHandlerConnectionIdHeader(t *testing.T) {
 		web := New(th.Server)
 		handler := web.NewHandler(handlerFunc)
 
-		request := httptest.NewRequest("GET", "/api/v4/test", nil)
+		request := httptest.NewRequest("GET", "/v1/team/test", nil)
 		response := httptest.NewRecorder()
 		handler.ServeHTTP(response, request)
 
@@ -1221,7 +1221,7 @@ func TestHandleContextErrorZeroStatusCode(t *testing.T) {
 			Err:        appErr,
 		}
 
-		request := httptest.NewRequest("POST", "/api/v4/test", nil)
+		request := httptest.NewRequest("POST", "/v1/team/test", nil)
 		response := httptest.NewRecorder()
 
 		h := Handler{
@@ -1246,7 +1246,7 @@ func TestHandleContextErrorZeroStatusCode(t *testing.T) {
 			Err:        appErr,
 		}
 
-		request := httptest.NewRequest("POST", "/api/v4/test", nil)
+		request := httptest.NewRequest("POST", "/v1/team/test", nil)
 		response := httptest.NewRecorder()
 
 		h := Handler{

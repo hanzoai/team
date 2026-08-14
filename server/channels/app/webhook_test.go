@@ -680,7 +680,7 @@ func TestCreateWebhookPostWithOverriddenIcon(t *testing.T) {
 
 		clientPost := th.App.PreparePostForClient(th.Context, post, &model.PreparePostForClientOpts{IsNewPost: true})
 
-		assert.Equal(t, fmt.Sprintf("/api/v4/emoji/%s/image", emoji.Id), clientPost.GetProp(model.PostPropsOverrideIconURL))
+		assert.Equal(t, fmt.Sprintf("/v1/team/emoji/%s/image", emoji.Id), clientPost.GetProp(model.PostPropsOverrideIconURL))
 	})
 
 	t.Run("should set props based on icon_emoji (with colons around emoji name)", func(t *testing.T) {

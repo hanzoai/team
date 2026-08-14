@@ -170,7 +170,7 @@ func TestClient4LookupInteractiveDialog(t *testing.T) {
 		server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Verify request method and endpoint
 			assert.Equal(t, "POST", r.Method)
-			assert.Equal(t, "/api/v4/actions/dialogs/lookup", r.URL.Path)
+			assert.Equal(t, "/v1/team/actions/dialogs/lookup", r.URL.Path)
 
 			// Decode and verify request body
 			var submission model.SubmitDialogRequest

@@ -135,7 +135,7 @@ type Params struct {
 	RequestId string
 }
 
-var getChannelMembersForUserRegex = regexp.MustCompile("/api/v4/users/[A-Za-z0-9]{26}/channel_members")
+var getChannelMembersForUserRegex = regexp.MustCompile(model.APIURLSuffix + "/users/[A-Za-z0-9]{26}/channel_members")
 
 func ParamsFromRequest(r *http.Request) *Params {
 	params := &Params{}

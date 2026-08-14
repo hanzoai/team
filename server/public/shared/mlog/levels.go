@@ -38,7 +38,7 @@ var (
 	// audit level and should be applied whenever a REST API endpoint is accessed. It provides
 	// a record of API usage patterns and access.
 	//
-	// Example usage: Logging when a user accesses the /api/v4/posts endpoint.
+	// Example usage: Logging when a user accesses the /v1/team/posts endpoint.
 	LvlAuditAPI = Level{ID: 100, Name: "audit-api"}
 
 	// LvlAuditContent is used for auditing content-generating operations such as creating posts,
