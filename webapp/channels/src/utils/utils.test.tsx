@@ -23,18 +23,18 @@ describe('Utils.getFileType', () => {
     });
 
     test('should identify image files from URLs without extensions', () => {
-        // Test URLs with /api/v4/image and ?url= parameter
-        expect(getFileType('/api/v4/image?url=https://example.com/image-without-extension')).toBe(FileTypes.IMAGE);
-        expect(getFileType('https://hanzo.ai/api/v4/image?url=https://example.com/another-image')).toBe(FileTypes.IMAGE);
+        // Test URLs with /v1/team/image and ?url= parameter
+        expect(getFileType('/v1/team/image?url=https://example.com/image-without-extension')).toBe(FileTypes.IMAGE);
+        expect(getFileType('https://hanzo.ai/v1/team/image?url=https://example.com/another-image')).toBe(FileTypes.IMAGE);
 
-        // Test URLs with /api/v4/image and &url= parameter (in case it's not the first parameter)
-        expect(getFileType('/api/v4/image?param=value&url=https://example.com/image')).toBe(FileTypes.IMAGE);
-        expect(getFileType('https://hanzo.ai/api/v4/image?param=value&url=https://example.com/image')).toBe(FileTypes.IMAGE);
+        // Test URLs with /v1/team/image and &url= parameter (in case it's not the first parameter)
+        expect(getFileType('/v1/team/image?param=value&url=https://example.com/image')).toBe(FileTypes.IMAGE);
+        expect(getFileType('https://hanzo.ai/v1/team/image?param=value&url=https://example.com/image')).toBe(FileTypes.IMAGE);
     });
 
     test('should identify image files from proxied URLs', () => {
-        expect(getFileType('/api/v4/image?url=https://example.com/image.jpg')).toBe(FileTypes.IMAGE);
-        expect(getFileType('https://hanzo.ai/api/v4/image?url=https://example.com/image.png')).toBe(FileTypes.IMAGE);
+        expect(getFileType('/v1/team/image?url=https://example.com/image.jpg')).toBe(FileTypes.IMAGE);
+        expect(getFileType('https://hanzo.ai/v1/team/image?url=https://example.com/image.png')).toBe(FileTypes.IMAGE);
     });
 
     test('should handle invalid image URLs gracefully', () => {
@@ -54,9 +54,9 @@ describe('Utils.getFileType', () => {
     });
 
     test('should only treat proxy image URLs with a url parameter as images', () => {
-        expect(getFileType('/api/v4/image')).toBe(FileTypes.OTHER);
-        expect(getFileType('/api/v4/image?url=')).toBe(FileTypes.IMAGE);
-        expect(getFileType('/api/v4/image?param=value')).toBe(FileTypes.OTHER);
+        expect(getFileType('/v1/team/image')).toBe(FileTypes.OTHER);
+        expect(getFileType('/v1/team/image?url=')).toBe(FileTypes.IMAGE);
+        expect(getFileType('/v1/team/image?param=value')).toBe(FileTypes.OTHER);
     });
 
     test('should not treat path-like filenames with query strings or hashes as direct extensions', () => {
