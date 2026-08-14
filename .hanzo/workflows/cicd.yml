@@ -1,0 +1,20 @@
+# ~7-line canonical caller — all real config lives in /hanzo.yml, which
+# platform.hanzo.ai reads too. The pipeline itself lives in hanzoai/ci and only
+# there; naming a forwarder makes git.hanzo.ai take a second hop it cannot take.
+#
+# It does NOT roll out: app.hanzo.team is pinned to an explicit tag in the
+# universe values file, rolled by a reviewed change there.
+#
+# master, not main: this is a fork of a master-based upstream, and renaming the
+# branch would only make every comparison with upstream need a translation.
+name: CI/CD
+on:
+  push:
+    branches: [master]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+jobs:
+  cicd:
+    uses: hanzoai/ci/.hanzo/workflows/build.yml@v1
+    secrets: inherit
