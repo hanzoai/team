@@ -188,7 +188,7 @@ export default class Client4 {
     token = '';
     csrf = '';
     url = '';
-    urlVersion = '/api/v4';
+    urlVersion = '/v1/team';
     userAgent: string | null = null;
     enableLogging = false;
     defaultHeaders: {[x: string]: string} = {};

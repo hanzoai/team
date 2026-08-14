@@ -223,7 +223,7 @@ export const getFileType = (extin: string): typeof FileTypes[keyof typeof FileTy
 
     // Special handling for image proxy URLs
     // Check for various forms of image proxy URLs
-    if (extin.includes('/api/v4/image') &&
+    if (extin.includes(Client4.getUrlVersion() + '/image') &&
         (extin.includes('?url=') || extin.includes('&url='))) {
         return FileTypes.IMAGE;
     }

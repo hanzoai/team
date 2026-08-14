@@ -485,7 +485,7 @@ if (targetIsDevServer) {
             liveReload: true,
             proxy: [
                 {
-                    context: '/api',
+                    context: '/v1',
                     ...proxyToServer,
                     ws: true,
                 },

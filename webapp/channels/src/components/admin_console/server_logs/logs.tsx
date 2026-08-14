@@ -245,7 +245,7 @@ export default class Logs extends React.PureComponent<Props, State> {
                                 <ExternalLink
                                     location='download_logs'
                                     className={buttonClassNames({emphasis: 'primary'})}
-                                    href={Client4.getUrl() + '/api/v4/logs/download'}
+                                    href={Client4.getBaseRoute() + '/logs/download'}
                                 >
                                     <FormattedMessage
                                         id='admin.logs.DownloadLogs'
