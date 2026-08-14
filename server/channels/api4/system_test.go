@@ -323,7 +323,7 @@ func TestSiteURLTest(t *testing.T) {
 	client := th.Client
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if strings.HasSuffix(r.URL.Path, "/valid/v1/team/system/ping") {
+		if strings.HasSuffix(r.URL.Path, "/valid/v1/workspace/system/ping") {
 			w.WriteHeader(200)
 		} else {
 			w.WriteHeader(400)
@@ -1051,7 +1051,7 @@ func TestPushNotificationAck(t *testing.T) {
 	t.Run("should return error when the ack body is not passed", func(t *testing.T) {
 		handler := api.APIHandler(pushNotificationAck)
 		resp := httptest.NewRecorder()
-		req := httptest.NewRequest("POST", "/v1/team/notifications/ack", nil)
+		req := httptest.NewRequest("POST", "/v1/workspace/notifications/ack", nil)
 		req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 		handler.ServeHTTP(resp, req)
@@ -1065,7 +1065,7 @@ func TestPushNotificationAck(t *testing.T) {
 
 		handler := api.APIHandler(pushNotificationAck)
 		resp := httptest.NewRecorder()
-		req := httptest.NewRequest("POST", "/v1/team/notifications/ack", nil)
+		req := httptest.NewRequest("POST", "/v1/workspace/notifications/ack", nil)
 		req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 		req.Body = io.NopCloser(bytes.NewBufferString(fmt.Sprintf(`{"id":"123", "is_id_loaded":true, "post_id":"%s", "type": "%s"}`, privatePost.Id, model.PushTypeMessage)))
 
@@ -1121,7 +1121,7 @@ func TestPushNotificationAck(t *testing.T) {
 
 			handler := api.APIHandler(pushNotificationAck)
 			resp := httptest.NewRecorder()
-			req := httptest.NewRequest("POST", "/v1/team/notifications/ack", nil)
+			req := httptest.NewRequest("POST", "/v1/workspace/notifications/ack", nil)
 			req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 			req.Body = io.NopCloser(bytes.NewBufferString(fmt.Sprintf(`{"id":"123", "is_id_loaded":true, "platform": "%s", "post_id":"%s", "type": "%s"}`, tc.platform, th.BasicPost.Id, model.PushTypeMessage)))
 

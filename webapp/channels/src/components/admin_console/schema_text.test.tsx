@@ -80,13 +80,13 @@ describe('SchemaText', () => {
         const props = {
             ...baseProps,
             isMarkdown: true,
-            text: 'This is [a link](http://localhost:8065/v1/team/users/src_id)',
+            text: 'This is [a link](http://localhost:8065/v1/workspace/users/src_id)',
         };
 
         const {container} = renderWithContext(<SchemaText {...props}/>);
 
         const span = container.querySelector('span');
-        expect(span).toHaveProperty('innerHTML', 'This is <a href="http://localhost:8065/v1/team/users/src_id">a link</a>');
+        expect(span).toHaveProperty('innerHTML', 'This is <a href="http://localhost:8065/v1/workspace/users/src_id">a link</a>');
     });
 
     test('should support explicit external links like FormattedMarkdownMessage', () => {

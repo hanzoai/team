@@ -9,7 +9,7 @@ exports[`components/FilePreviewModalInfo should match snapshot 1`] = `
       alt=""
       class="Avatar Avatar-lg file-preview-modal__avatar"
       loading="lazy"
-      src="/v1/team/users/user_id/image?_=0"
+      src="/v1/workspace/users/user_id/image?_=0"
     />
     <div
       class="file-preview-modal__info-details"

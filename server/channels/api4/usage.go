@@ -13,11 +13,11 @@ import (
 )
 
 func (api *API) InitUsage() {
-	// GET /v1/team/usage/posts
+	// GET /v1/workspace/usage/posts
 	api.BaseRoutes.Usage.Handle("/posts", api.APISessionRequired(getPostsUsage)).Methods(http.MethodGet)
-	// GET /v1/team/usage/storage
+	// GET /v1/workspace/usage/storage
 	api.BaseRoutes.Usage.Handle("/storage", api.APISessionRequired(getStorageUsage)).Methods(http.MethodGet)
-	// GET /v1/team/usage/teams
+	// GET /v1/workspace/usage/teams
 	api.BaseRoutes.Usage.Handle("/teams", api.APISessionRequired(getTeamsUsage)).Methods(http.MethodGet)
 }
 

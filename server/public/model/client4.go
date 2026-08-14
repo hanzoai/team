@@ -53,7 +53,7 @@ const (
 	ClientDir = "client"
 
 	// APIURLSuffix is the base path of this server's HTTP API.
-	APIURLSuffix = "/v1/team"
+	APIURLSuffix = "/v1/workspace"
 
 	// PushURLSuffix is the base path of the push notification service
 	// addressed by EmailSettings.PushNotificationServer.
@@ -70,7 +70,7 @@ type Response struct {
 
 type Client4 struct {
 	URL        string       // The location of the server, for example  "http://localhost:8065"
-	APIURL     string       // The api location of the server, for example "http://localhost:8065/v1/team"
+	APIURL     string       // The api location of the server, for example "http://localhost:8065/v1/workspace"
 	HTTPClient *http.Client // The http client
 	AuthToken  string
 	AuthType   string
@@ -5635,7 +5635,7 @@ func (c *Client4) AuthorizeOAuthApp(ctx context.Context, authRequest *AuthorizeR
 	if err != nil {
 		return "", nil, err
 	}
-	// The request doesn't go to the /v1/team subpath, so we can't use the usual helper methods
+	// The request doesn't go to the /v1/workspace subpath, so we can't use the usual helper methods
 	r, err := c.doAPIRequestBytes(ctx, http.MethodPost, c.URL+"/oauth/authorize", buf, "")
 	if err != nil {
 		return "", BuildResponse(r), err
@@ -5656,7 +5656,7 @@ func (c *Client4) DeauthorizeOAuthApp(ctx context.Context, appId string) (*Respo
 	if err != nil {
 		return nil, err
 	}
-	// The request doesn't go to the /v1/team subpath, so we can't use the usual helper methods
+	// The request doesn't go to the /v1/workspace subpath, so we can't use the usual helper methods
 	r, err := c.doAPIRequestBytes(ctx, http.MethodPost, c.URL+"/oauth/deauthorize", buf, "")
 	if err != nil {
 		return BuildResponse(r), err
@@ -5667,7 +5667,7 @@ func (c *Client4) DeauthorizeOAuthApp(ctx context.Context, appId string) (*Respo
 
 // GetOAuthAccessToken is a test helper function for the OAuth access token endpoint.
 func (c *Client4) GetOAuthAccessToken(ctx context.Context, data url.Values) (*AccessResponse, *Response, error) {
-	// The request doesn't go to the /v1/team subpath, so we can't use the usual helper methods
+	// The request doesn't go to the /v1/workspace subpath, so we can't use the usual helper methods
 	r, err := c.doAPIRequestReader(ctx, http.MethodPost, c.URL+"/oauth/access_token", "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), nil)
 	if err != nil {
 		return nil, BuildResponse(r), err

@@ -103,9 +103,9 @@ describe('EmojiUtils', () => {
         });
 
         test('return correct url for custom emojis', () => {
-            expect(EmojiUtils.getEmojiImageUrl(TestHelper.getCustomEmojiMock({id: 'custom_emoji', category: 'custom'}))).toBe('/v1/team/emoji/custom_emoji/image');
+            expect(EmojiUtils.getEmojiImageUrl(TestHelper.getCustomEmojiMock({id: 'custom_emoji', category: 'custom'}))).toBe('/v1/workspace/emoji/custom_emoji/image');
 
-            expect(EmojiUtils.getEmojiImageUrl(TestHelper.getCustomEmojiMock({id: 'custom_emoji'}))).toBe('/v1/team/emoji/custom_emoji/image');
+            expect(EmojiUtils.getEmojiImageUrl(TestHelper.getCustomEmojiMock({id: 'custom_emoji'}))).toBe('/v1/workspace/emoji/custom_emoji/image');
         });
     });
 });

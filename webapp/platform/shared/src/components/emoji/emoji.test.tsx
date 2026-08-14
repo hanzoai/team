@@ -39,7 +39,7 @@ describe('Emoji', () => {
         expect(document.querySelector('.emoticon')).toBe(screen.getByLabelText(':custom-emoji-1:'));
         expect(screen.getByLabelText(':custom-emoji-1:')).toBeInTheDocument();
         expect(screen.getByLabelText(':custom-emoji-1:')).toHaveStyle({
-            backgroundImage: '/v1/team/emojis/custom-emoji-id-1/image',
+            backgroundImage: '/v1/workspace/emojis/custom-emoji-id-1/image',
         });
     });
 });

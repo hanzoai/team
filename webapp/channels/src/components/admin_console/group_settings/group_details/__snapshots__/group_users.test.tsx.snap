@@ -32,7 +32,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username0 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id0/image"
+          src="/v1/workspace/users/id0/image"
         />
         <div
           class="user-data"
@@ -73,7 +73,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username1 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id1/image?_=1"
+          src="/v1/workspace/users/id1/image?_=1"
         />
         <div
           class="user-data"
@@ -114,7 +114,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username2 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id2/image?_=2"
+          src="/v1/workspace/users/id2/image?_=2"
         />
         <div
           class="user-data"
@@ -155,7 +155,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username3 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id3/image?_=3"
+          src="/v1/workspace/users/id3/image?_=3"
         />
         <div
           class="user-data"
@@ -196,7 +196,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username4 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id4/image?_=4"
+          src="/v1/workspace/users/id4/image?_=4"
         />
         <div
           class="user-data"
@@ -237,7 +237,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username5 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id5/image?_=5"
+          src="/v1/workspace/users/id5/image?_=5"
         />
         <div
           class="user-data"
@@ -278,7 +278,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username6 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id6/image?_=6"
+          src="/v1/workspace/users/id6/image?_=6"
         />
         <div
           class="user-data"
@@ -319,7 +319,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username7 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id7/image?_=7"
+          src="/v1/workspace/users/id7/image?_=7"
         />
         <div
           class="user-data"
@@ -360,7 +360,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username8 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id8/image?_=8"
+          src="/v1/workspace/users/id8/image?_=8"
         />
         <div
           class="user-data"
@@ -401,7 +401,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username9 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id9/image?_=9"
+          src="/v1/workspace/users/id9/image?_=9"
         />
         <div
           class="user-data"
@@ -442,7 +442,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username10 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id10/image?_=10"
+          src="/v1/workspace/users/id10/image?_=10"
         />
         <div
           class="user-data"
@@ -483,7 +483,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username11 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id11/image?_=11"
+          src="/v1/workspace/users/id11/image?_=11"
         />
         <div
           class="user-data"
@@ -524,7 +524,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username12 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id12/image?_=12"
+          src="/v1/workspace/users/id12/image?_=12"
         />
         <div
           class="user-data"
@@ -565,7 +565,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username13 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id13/image?_=13"
+          src="/v1/workspace/users/id13/image?_=13"
         />
         <div
           class="user-data"
@@ -606,7 +606,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username14 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id14/image?_=14"
+          src="/v1/workspace/users/id14/image?_=14"
         />
         <div
           class="user-data"
@@ -647,7 +647,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username15 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id15/image?_=15"
+          src="/v1/workspace/users/id15/image?_=15"
         />
         <div
           class="user-data"
@@ -688,7 +688,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username16 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id16/image?_=16"
+          src="/v1/workspace/users/id16/image?_=16"
         />
         <div
           class="user-data"
@@ -729,7 +729,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username17 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id17/image?_=17"
+          src="/v1/workspace/users/id17/image?_=17"
         />
         <div
           class="user-data"
@@ -770,7 +770,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username18 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id18/image?_=18"
+          src="/v1/workspace/users/id18/image?_=18"
         />
         <div
           class="user-data"
@@ -811,7 +811,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username19 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id19/image?_=19"
+          src="/v1/workspace/users/id19/image?_=19"
         />
         <div
           class="user-data"
@@ -911,7 +911,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username0 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id0/image"
+          src="/v1/workspace/users/id0/image"
         />
         <div
           class="user-data"
@@ -952,7 +952,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username1 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id1/image?_=1"
+          src="/v1/workspace/users/id1/image?_=1"
         />
         <div
           class="user-data"
@@ -993,7 +993,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username2 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id2/image?_=2"
+          src="/v1/workspace/users/id2/image?_=2"
         />
         <div
           class="user-data"
@@ -1034,7 +1034,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username3 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id3/image?_=3"
+          src="/v1/workspace/users/id3/image?_=3"
         />
         <div
           class="user-data"
@@ -1075,7 +1075,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username4 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id4/image?_=4"
+          src="/v1/workspace/users/id4/image?_=4"
         />
         <div
           class="user-data"
@@ -1116,7 +1116,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username5 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id5/image?_=5"
+          src="/v1/workspace/users/id5/image?_=5"
         />
         <div
           class="user-data"
@@ -1157,7 +1157,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username6 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id6/image?_=6"
+          src="/v1/workspace/users/id6/image?_=6"
         />
         <div
           class="user-data"
@@ -1198,7 +1198,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username7 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id7/image?_=7"
+          src="/v1/workspace/users/id7/image?_=7"
         />
         <div
           class="user-data"
@@ -1239,7 +1239,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username8 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id8/image?_=8"
+          src="/v1/workspace/users/id8/image?_=8"
         />
         <div
           class="user-data"
@@ -1280,7 +1280,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username9 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id9/image?_=9"
+          src="/v1/workspace/users/id9/image?_=9"
         />
         <div
           class="user-data"
@@ -1321,7 +1321,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username10 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id10/image?_=10"
+          src="/v1/workspace/users/id10/image?_=10"
         />
         <div
           class="user-data"
@@ -1362,7 +1362,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username11 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id11/image?_=11"
+          src="/v1/workspace/users/id11/image?_=11"
         />
         <div
           class="user-data"
@@ -1403,7 +1403,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username12 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id12/image?_=12"
+          src="/v1/workspace/users/id12/image?_=12"
         />
         <div
           class="user-data"
@@ -1444,7 +1444,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username13 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id13/image?_=13"
+          src="/v1/workspace/users/id13/image?_=13"
         />
         <div
           class="user-data"
@@ -1485,7 +1485,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username14 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id14/image?_=14"
+          src="/v1/workspace/users/id14/image?_=14"
         />
         <div
           class="user-data"
@@ -1526,7 +1526,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username15 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id15/image?_=15"
+          src="/v1/workspace/users/id15/image?_=15"
         />
         <div
           class="user-data"
@@ -1567,7 +1567,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username16 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id16/image?_=16"
+          src="/v1/workspace/users/id16/image?_=16"
         />
         <div
           class="user-data"
@@ -1608,7 +1608,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username17 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id17/image?_=17"
+          src="/v1/workspace/users/id17/image?_=17"
         />
         <div
           class="user-data"
@@ -1649,7 +1649,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username18 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id18/image?_=18"
+          src="/v1/workspace/users/id18/image?_=18"
         />
         <div
           class="user-data"
@@ -1690,7 +1690,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username19 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id19/image?_=19"
+          src="/v1/workspace/users/id19/image?_=19"
         />
         <div
           class="user-data"
@@ -1789,7 +1789,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username20 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id20/image?_=20"
+          src="/v1/workspace/users/id20/image?_=20"
         />
         <div
           class="user-data"
@@ -1830,7 +1830,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username21 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id21/image?_=21"
+          src="/v1/workspace/users/id21/image?_=21"
         />
         <div
           class="user-data"
@@ -1871,7 +1871,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username22 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id22/image?_=22"
+          src="/v1/workspace/users/id22/image?_=22"
         />
         <div
           class="user-data"
@@ -1912,7 +1912,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username23 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id23/image?_=23"
+          src="/v1/workspace/users/id23/image?_=23"
         />
         <div
           class="user-data"
@@ -1953,7 +1953,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username24 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id24/image?_=24"
+          src="/v1/workspace/users/id24/image?_=24"
         />
         <div
           class="user-data"
@@ -1994,7 +1994,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username25 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id25/image?_=25"
+          src="/v1/workspace/users/id25/image?_=25"
         />
         <div
           class="user-data"
@@ -2035,7 +2035,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username26 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id26/image?_=26"
+          src="/v1/workspace/users/id26/image?_=26"
         />
         <div
           class="user-data"
@@ -2076,7 +2076,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username27 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id27/image?_=27"
+          src="/v1/workspace/users/id27/image?_=27"
         />
         <div
           class="user-data"
@@ -2117,7 +2117,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username28 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id28/image?_=28"
+          src="/v1/workspace/users/id28/image?_=28"
         />
         <div
           class="user-data"
@@ -2158,7 +2158,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username29 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id29/image?_=29"
+          src="/v1/workspace/users/id29/image?_=29"
         />
         <div
           class="user-data"
@@ -2199,7 +2199,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username30 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id30/image?_=30"
+          src="/v1/workspace/users/id30/image?_=30"
         />
         <div
           class="user-data"
@@ -2240,7 +2240,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username31 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id31/image?_=31"
+          src="/v1/workspace/users/id31/image?_=31"
         />
         <div
           class="user-data"
@@ -2281,7 +2281,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username32 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id32/image?_=32"
+          src="/v1/workspace/users/id32/image?_=32"
         />
         <div
           class="user-data"
@@ -2322,7 +2322,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username33 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id33/image?_=33"
+          src="/v1/workspace/users/id33/image?_=33"
         />
         <div
           class="user-data"
@@ -2363,7 +2363,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username34 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id34/image?_=34"
+          src="/v1/workspace/users/id34/image?_=34"
         />
         <div
           class="user-data"
@@ -2404,7 +2404,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username35 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id35/image?_=35"
+          src="/v1/workspace/users/id35/image?_=35"
         />
         <div
           class="user-data"
@@ -2445,7 +2445,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username36 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id36/image?_=36"
+          src="/v1/workspace/users/id36/image?_=36"
         />
         <div
           class="user-data"
@@ -2486,7 +2486,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username37 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id37/image?_=37"
+          src="/v1/workspace/users/id37/image?_=37"
         />
         <div
           class="user-data"
@@ -2527,7 +2527,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username38 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id38/image?_=38"
+          src="/v1/workspace/users/id38/image?_=38"
         />
         <div
           class="user-data"
@@ -2568,7 +2568,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username39 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id39/image?_=39"
+          src="/v1/workspace/users/id39/image?_=39"
         />
         <div
           class="user-data"
@@ -2666,7 +2666,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username40 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id40/image?_=40"
+          src="/v1/workspace/users/id40/image?_=40"
         />
         <div
           class="user-data"
@@ -2707,7 +2707,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username41 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id41/image?_=41"
+          src="/v1/workspace/users/id41/image?_=41"
         />
         <div
           class="user-data"
@@ -2748,7 +2748,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username42 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id42/image?_=42"
+          src="/v1/workspace/users/id42/image?_=42"
         />
         <div
           class="user-data"
@@ -2789,7 +2789,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username43 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id43/image?_=43"
+          src="/v1/workspace/users/id43/image?_=43"
         />
         <div
           class="user-data"
@@ -2830,7 +2830,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username44 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id44/image?_=44"
+          src="/v1/workspace/users/id44/image?_=44"
         />
         <div
           class="user-data"
@@ -2871,7 +2871,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username45 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id45/image?_=45"
+          src="/v1/workspace/users/id45/image?_=45"
         />
         <div
           class="user-data"
@@ -2912,7 +2912,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username46 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id46/image?_=46"
+          src="/v1/workspace/users/id46/image?_=46"
         />
         <div
           class="user-data"
@@ -2953,7 +2953,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username47 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id47/image?_=47"
+          src="/v1/workspace/users/id47/image?_=47"
         />
         <div
           class="user-data"
@@ -2994,7 +2994,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username48 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id48/image?_=48"
+          src="/v1/workspace/users/id48/image?_=48"
         />
         <div
           class="user-data"
@@ -3035,7 +3035,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username49 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id49/image?_=49"
+          src="/v1/workspace/users/id49/image?_=49"
         />
         <div
           class="user-data"
@@ -3076,7 +3076,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username50 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id50/image?_=50"
+          src="/v1/workspace/users/id50/image?_=50"
         />
         <div
           class="user-data"
@@ -3117,7 +3117,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username51 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id51/image?_=51"
+          src="/v1/workspace/users/id51/image?_=51"
         />
         <div
           class="user-data"
@@ -3158,7 +3158,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username52 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id52/image?_=52"
+          src="/v1/workspace/users/id52/image?_=52"
         />
         <div
           class="user-data"
@@ -3199,7 +3199,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username53 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id53/image?_=53"
+          src="/v1/workspace/users/id53/image?_=53"
         />
         <div
           class="user-data"
@@ -3240,7 +3240,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username54 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id54/image?_=54"
+          src="/v1/workspace/users/id54/image?_=54"
         />
         <div
           class="user-data"
@@ -3339,7 +3339,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username0 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id0/image"
+          src="/v1/workspace/users/id0/image"
         />
         <div
           class="user-data"
@@ -3380,7 +3380,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username1 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id1/image?_=1"
+          src="/v1/workspace/users/id1/image?_=1"
         />
         <div
           class="user-data"
@@ -3421,7 +3421,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username2 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id2/image?_=2"
+          src="/v1/workspace/users/id2/image?_=2"
         />
         <div
           class="user-data"
@@ -3462,7 +3462,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username3 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id3/image?_=3"
+          src="/v1/workspace/users/id3/image?_=3"
         />
         <div
           class="user-data"
@@ -3503,7 +3503,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username4 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id4/image?_=4"
+          src="/v1/workspace/users/id4/image?_=4"
         />
         <div
           class="user-data"
@@ -3544,7 +3544,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username5 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id5/image?_=5"
+          src="/v1/workspace/users/id5/image?_=5"
         />
         <div
           class="user-data"
@@ -3585,7 +3585,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username6 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id6/image?_=6"
+          src="/v1/workspace/users/id6/image?_=6"
         />
         <div
           class="user-data"
@@ -3626,7 +3626,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username7 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id7/image?_=7"
+          src="/v1/workspace/users/id7/image?_=7"
         />
         <div
           class="user-data"
@@ -3667,7 +3667,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username8 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id8/image?_=8"
+          src="/v1/workspace/users/id8/image?_=8"
         />
         <div
           class="user-data"
@@ -3708,7 +3708,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username9 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id9/image?_=9"
+          src="/v1/workspace/users/id9/image?_=9"
         />
         <div
           class="user-data"
@@ -3749,7 +3749,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username10 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id10/image?_=10"
+          src="/v1/workspace/users/id10/image?_=10"
         />
         <div
           class="user-data"
@@ -3790,7 +3790,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username11 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id11/image?_=11"
+          src="/v1/workspace/users/id11/image?_=11"
         />
         <div
           class="user-data"
@@ -3831,7 +3831,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username12 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id12/image?_=12"
+          src="/v1/workspace/users/id12/image?_=12"
         />
         <div
           class="user-data"
@@ -3872,7 +3872,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username13 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id13/image?_=13"
+          src="/v1/workspace/users/id13/image?_=13"
         />
         <div
           class="user-data"
@@ -3913,7 +3913,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username14 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id14/image?_=14"
+          src="/v1/workspace/users/id14/image?_=14"
         />
         <div
           class="user-data"
@@ -3954,7 +3954,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username15 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id15/image?_=15"
+          src="/v1/workspace/users/id15/image?_=15"
         />
         <div
           class="user-data"
@@ -3995,7 +3995,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username16 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id16/image?_=16"
+          src="/v1/workspace/users/id16/image?_=16"
         />
         <div
           class="user-data"
@@ -4036,7 +4036,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username17 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id17/image?_=17"
+          src="/v1/workspace/users/id17/image?_=17"
         />
         <div
           class="user-data"
@@ -4077,7 +4077,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username18 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id18/image?_=18"
+          src="/v1/workspace/users/id18/image?_=18"
         />
         <div
           class="user-data"
@@ -4118,7 +4118,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username19 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id19/image?_=19"
+          src="/v1/workspace/users/id19/image?_=19"
         />
         <div
           class="user-data"
@@ -4256,7 +4256,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username0 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id0/image"
+          src="/v1/workspace/users/id0/image"
         />
         <div
           class="user-data"
@@ -4297,7 +4297,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username1 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id1/image?_=1"
+          src="/v1/workspace/users/id1/image?_=1"
         />
         <div
           class="user-data"
@@ -4338,7 +4338,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username2 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id2/image?_=2"
+          src="/v1/workspace/users/id2/image?_=2"
         />
         <div
           class="user-data"
@@ -4379,7 +4379,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username3 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id3/image?_=3"
+          src="/v1/workspace/users/id3/image?_=3"
         />
         <div
           class="user-data"
@@ -4420,7 +4420,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username4 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id4/image?_=4"
+          src="/v1/workspace/users/id4/image?_=4"
         />
         <div
           class="user-data"
@@ -4461,7 +4461,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username5 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id5/image?_=5"
+          src="/v1/workspace/users/id5/image?_=5"
         />
         <div
           class="user-data"
@@ -4502,7 +4502,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username6 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id6/image?_=6"
+          src="/v1/workspace/users/id6/image?_=6"
         />
         <div
           class="user-data"
@@ -4543,7 +4543,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username7 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id7/image?_=7"
+          src="/v1/workspace/users/id7/image?_=7"
         />
         <div
           class="user-data"
@@ -4584,7 +4584,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username8 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id8/image?_=8"
+          src="/v1/workspace/users/id8/image?_=8"
         />
         <div
           class="user-data"
@@ -4625,7 +4625,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username9 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id9/image?_=9"
+          src="/v1/workspace/users/id9/image?_=9"
         />
         <div
           class="user-data"
@@ -4666,7 +4666,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username10 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id10/image?_=10"
+          src="/v1/workspace/users/id10/image?_=10"
         />
         <div
           class="user-data"
@@ -4707,7 +4707,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username11 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id11/image?_=11"
+          src="/v1/workspace/users/id11/image?_=11"
         />
         <div
           class="user-data"
@@ -4748,7 +4748,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username12 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id12/image?_=12"
+          src="/v1/workspace/users/id12/image?_=12"
         />
         <div
           class="user-data"
@@ -4789,7 +4789,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username13 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id13/image?_=13"
+          src="/v1/workspace/users/id13/image?_=13"
         />
         <div
           class="user-data"
@@ -4830,7 +4830,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username14 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id14/image?_=14"
+          src="/v1/workspace/users/id14/image?_=14"
         />
         <div
           class="user-data"
@@ -4871,7 +4871,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username15 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id15/image?_=15"
+          src="/v1/workspace/users/id15/image?_=15"
         />
         <div
           class="user-data"
@@ -4912,7 +4912,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username16 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id16/image?_=16"
+          src="/v1/workspace/users/id16/image?_=16"
         />
         <div
           class="user-data"
@@ -4953,7 +4953,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username17 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id17/image?_=17"
+          src="/v1/workspace/users/id17/image?_=17"
         />
         <div
           class="user-data"
@@ -4994,7 +4994,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username18 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id18/image?_=18"
+          src="/v1/workspace/users/id18/image?_=18"
         />
         <div
           class="user-data"
@@ -5035,7 +5035,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username19 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id19/image?_=19"
+          src="/v1/workspace/users/id19/image?_=19"
         />
         <div
           class="user-data"
@@ -5168,7 +5168,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username0 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id0/image"
+          src="/v1/workspace/users/id0/image"
         />
         <div
           class="user-data"
@@ -5209,7 +5209,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username1 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id1/image?_=1"
+          src="/v1/workspace/users/id1/image?_=1"
         />
         <div
           class="user-data"
@@ -5250,7 +5250,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username2 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id2/image?_=2"
+          src="/v1/workspace/users/id2/image?_=2"
         />
         <div
           class="user-data"
@@ -5291,7 +5291,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username3 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id3/image?_=3"
+          src="/v1/workspace/users/id3/image?_=3"
         />
         <div
           class="user-data"
@@ -5332,7 +5332,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username4 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id4/image?_=4"
+          src="/v1/workspace/users/id4/image?_=4"
         />
         <div
           class="user-data"
@@ -5373,7 +5373,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username5 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id5/image?_=5"
+          src="/v1/workspace/users/id5/image?_=5"
         />
         <div
           class="user-data"
@@ -5414,7 +5414,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username6 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id6/image?_=6"
+          src="/v1/workspace/users/id6/image?_=6"
         />
         <div
           class="user-data"
@@ -5455,7 +5455,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username7 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id7/image?_=7"
+          src="/v1/workspace/users/id7/image?_=7"
         />
         <div
           class="user-data"
@@ -5496,7 +5496,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username8 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id8/image?_=8"
+          src="/v1/workspace/users/id8/image?_=8"
         />
         <div
           class="user-data"
@@ -5537,7 +5537,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username9 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id9/image?_=9"
+          src="/v1/workspace/users/id9/image?_=9"
         />
         <div
           class="user-data"
@@ -5578,7 +5578,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username10 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id10/image?_=10"
+          src="/v1/workspace/users/id10/image?_=10"
         />
         <div
           class="user-data"
@@ -5619,7 +5619,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username11 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id11/image?_=11"
+          src="/v1/workspace/users/id11/image?_=11"
         />
         <div
           class="user-data"
@@ -5660,7 +5660,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username12 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id12/image?_=12"
+          src="/v1/workspace/users/id12/image?_=12"
         />
         <div
           class="user-data"
@@ -5701,7 +5701,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username13 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id13/image?_=13"
+          src="/v1/workspace/users/id13/image?_=13"
         />
         <div
           class="user-data"
@@ -5742,7 +5742,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username14 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id14/image?_=14"
+          src="/v1/workspace/users/id14/image?_=14"
         />
         <div
           class="user-data"
@@ -5783,7 +5783,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username15 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id15/image?_=15"
+          src="/v1/workspace/users/id15/image?_=15"
         />
         <div
           class="user-data"
@@ -5824,7 +5824,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username16 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id16/image?_=16"
+          src="/v1/workspace/users/id16/image?_=16"
         />
         <div
           class="user-data"
@@ -5865,7 +5865,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username17 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id17/image?_=17"
+          src="/v1/workspace/users/id17/image?_=17"
         />
         <div
           class="user-data"
@@ -5906,7 +5906,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username18 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id18/image?_=18"
+          src="/v1/workspace/users/id18/image?_=18"
         />
         <div
           class="user-data"
@@ -5947,7 +5947,7 @@ exports[`components/admin_console/group_settings/group_details/GroupUsers should
           alt="username19 profile image"
           class="Avatar Avatar-lg"
           loading="lazy"
-          src="/v1/team/users/id19/image?_=19"
+          src="/v1/workspace/users/id19/image?_=19"
         />
         <div
           class="user-data"

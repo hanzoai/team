@@ -47,7 +47,7 @@ exports[`SystemUserDetail should match default snapshot 1`] = `
                   alt="user profile image"
                   class="Avatar Avatar-xxl"
                   loading="lazy"
-                  src="/v1/team/users/user_id/image"
+                  src="/v1/workspace/users/user_id/image"
                 />
               </span>
             </button>
@@ -350,7 +350,7 @@ exports[`SystemUserDetail should match snapshot if MFA is enabled 1`] = `
                   alt="user profile image"
                   class="Avatar Avatar-xxl"
                   loading="lazy"
-                  src="/v1/team/users/user_id/image"
+                  src="/v1/workspace/users/user_id/image"
                 />
               </span>
             </button>
@@ -653,7 +653,7 @@ exports[`SystemUserDetail should not fetch CPA data if disabled 1`] = `
                   alt="user profile image"
                   class="Avatar Avatar-xxl"
                   loading="lazy"
-                  src="/v1/team/users/user_id/image"
+                  src="/v1/workspace/users/user_id/image"
                 />
               </span>
             </button>
@@ -956,7 +956,7 @@ exports[`SystemUserDetail should not show manage user settings button when user 
                   alt="user profile image"
                   class="Avatar Avatar-xxl"
                   loading="lazy"
-                  src="/v1/team/users/user_id/image"
+                  src="/v1/workspace/users/user_id/image"
                 />
               </span>
             </button>
@@ -1259,7 +1259,7 @@ exports[`SystemUserDetail should show manage user settings button as activated 1
                   alt="user profile image"
                   class="Avatar Avatar-xxl"
                   loading="lazy"
-                  src="/v1/team/users/user_id/image"
+                  src="/v1/workspace/users/user_id/image"
                 />
               </span>
             </button>
@@ -1568,7 +1568,7 @@ exports[`SystemUserDetail should show manage user settings button as disabled wh
                   alt="user profile image"
                   class="Avatar Avatar-xxl"
                   loading="lazy"
-                  src="/v1/team/users/user_id/image"
+                  src="/v1/workspace/users/user_id/image"
                 />
               </span>
             </button>
@@ -1871,7 +1871,7 @@ exports[`SystemUserDetail should show the activate user button as disabled when 
                   alt="user profile image"
                   class="Avatar Avatar-xxl"
                   loading="lazy"
-                  src="/v1/team/users/user_id/image"
+                  src="/v1/workspace/users/user_id/image"
                 />
               </span>
             </button>

@@ -1128,7 +1128,7 @@ export type AdminConfig = {
     SupportSettings: SupportSettings;
     AnnouncementSettings: AnnouncementSettings;
     ThemeSettings: ThemeSettings;
-    GitLabSettings: SSOSettings;
+    HanzoSettings: SSOSettings;
     GoogleSettings: SSOSettings;
     Office365Settings: Office365Settings;
     OpenIdSettings: SSOSettings;

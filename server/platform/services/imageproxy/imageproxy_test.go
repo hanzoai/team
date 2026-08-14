@@ -19,7 +19,7 @@ func TestGetProxiedImageURL(t *testing.T) {
 	require.NoError(t, err)
 
 	imageURL := "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png"
-	proxiedURL := "https://mattermost.example.com/v1/team/image?url=https%3A%2F%2Fmattermost.com%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
+	proxiedURL := "https://mattermost.example.com/v1/workspace/image?url=https%3A%2F%2Fmattermost.com%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
 
 	proxy := ImageProxy{siteURL: parsedURL}
 
@@ -56,17 +56,17 @@ func TestGetProxiedImageURL(t *testing.T) {
 		{
 			Name:     "should not bypass protocol relative URLs",
 			Input:    "//mattermost.com/static/logo.png",
-			Expected: "https://mattermost.example.com/v1/team/image?url=https%3A%2F%2Fmattermost.com%2Fstatic%2Flogo.png",
+			Expected: "https://mattermost.example.com/v1/workspace/image?url=https%3A%2F%2Fmattermost.com%2Fstatic%2Flogo.png",
 		},
 		{
 			Name:     "should not bypass if the host prefix is same",
 			Input:    "https://mattermost.example.com.anothersite.com/static/logo.png",
-			Expected: "https://mattermost.example.com/v1/team/image?url=https%3A%2F%2Fmattermost.example.com.anothersite.com%2Fstatic%2Flogo.png",
+			Expected: "https://mattermost.example.com/v1/workspace/image?url=https%3A%2F%2Fmattermost.example.com.anothersite.com%2Fstatic%2Flogo.png",
 		},
 		{
 			Name:     "should not bypass for user auth URLs",
 			Input:    "https://mattermost.example.com@anothersite.com/static/logo.png",
-			Expected: "https://mattermost.example.com/v1/team/image?url=https%3A%2F%2Fmattermost.example.com%40anothersite.com%2Fstatic%2Flogo.png",
+			Expected: "https://mattermost.example.com/v1/workspace/image?url=https%3A%2F%2Fmattermost.example.com%40anothersite.com%2Fstatic%2Flogo.png",
 		},
 		{
 			Name:     "should not proxy embedded image",
@@ -86,7 +86,7 @@ func TestGetUnproxiedImageURL(t *testing.T) {
 	// The proxied form embeds the image URL, so the two have to name the same
 	// host or the round-trip this exercises is not being exercised at all.
 	imageURL := "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png"
-	proxiedURL := "https://team.example.com/v1/team/image?url=https%3A%2F%2Fhanzo.ai%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
+	proxiedURL := "https://team.example.com/v1/workspace/image?url=https%3A%2F%2Fhanzo.ai%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
 
 	for _, test := range []struct {
 		Name     string

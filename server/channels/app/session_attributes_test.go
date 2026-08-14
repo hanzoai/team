@@ -120,7 +120,7 @@ func sessionAttributeRawValues(t *testing.T, th *TestHelper, sessionID string) m
 
 func newSessionAttributesRequest(t *testing.T, userAgent, remoteAddr string) *http.Request {
 	t.Helper()
-	r := httptest.NewRequest(http.MethodGet, "/v1/team/test", nil)
+	r := httptest.NewRequest(http.MethodGet, "/v1/workspace/test", nil)
 	if userAgent != "" {
 		r.Header.Set("User-Agent", userAgent)
 	}

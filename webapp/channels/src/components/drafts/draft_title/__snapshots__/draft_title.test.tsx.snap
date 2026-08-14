@@ -35,7 +35,7 @@ exports[`components/drafts/draft_actions should match snapshot for DM channel 1`
     alt="user profile image"
     class="Avatar Avatar-xs DraftTitle__avatar"
     loading="lazy"
-    src="/v1/team/users/undefined/image?_=0"
+    src="/v1/workspace/users/undefined/image?_=0"
   />
    
   <span>
@@ -51,7 +51,7 @@ exports[`components/drafts/draft_actions should match snapshot for DM channel wi
     alt="username profile image"
     class="Avatar Avatar-xs DraftTitle__avatar"
     loading="lazy"
-    src="/v1/team/users/id/image?_=1000"
+    src="/v1/workspace/users/id/image?_=1000"
   />
    
   <span>

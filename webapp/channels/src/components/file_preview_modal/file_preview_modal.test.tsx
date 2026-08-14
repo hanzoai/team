@@ -221,7 +221,7 @@ describe('components/FilePreviewModal', () => {
         const {ref} = renderModal();
 
         // Test proxied image URLs
-        expect(ref.current?.isImageUrl('http://localhost:8065/v1/team/image?url=https%3A%2F%2Fexample.com%2Fimage.jpg')).toBe(true);
+        expect(ref.current?.isImageUrl('http://localhost:8065/v1/workspace/image?url=https%3A%2F%2Fexample.com%2Fimage.jpg')).toBe(true);
 
         // Test URLs with image extensions
         expect(ref.current?.isImageUrl('https://example.com/image.jpg')).toBe(true);
@@ -246,7 +246,7 @@ describe('components/FilePreviewModal', () => {
         });
 
         // Create a LinkInfo object for an external image URL
-        const externalImageUrl = 'http://localhost:8065/v1/team/image?url=https%3A%2F%2Fexample.com%2Fimage.jpg';
+        const externalImageUrl = 'http://localhost:8065/v1/workspace/image?url=https%3A%2F%2Fexample.com%2Fimage.jpg';
         const fileInfos = [
             TestHelper.getFileInfoMock({
                 id: '',

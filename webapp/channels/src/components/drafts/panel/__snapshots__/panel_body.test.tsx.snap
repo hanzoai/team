@@ -24,7 +24,7 @@ exports[`components/drafts/panel/panel_body should have called handleFormattedTe
             alt="username profile image"
             class="Avatar Avatar-md"
             loading="lazy"
-            src="/v1/team/users/user_id/image?_=0"
+            src="/v1/workspace/users/user_id/image?_=0"
           />
         </span>
         <span
@@ -111,7 +111,7 @@ exports[`components/drafts/panel/panel_body should match snapshot 1`] = `
             alt="username profile image"
             class="Avatar Avatar-md"
             loading="lazy"
-            src="/v1/team/users/user_id/image?_=0"
+            src="/v1/workspace/users/user_id/image?_=0"
           />
         </span>
         <span
@@ -198,7 +198,7 @@ exports[`components/drafts/panel/panel_body should match snapshot for priority 1
             alt="username profile image"
             class="Avatar Avatar-md"
             loading="lazy"
-            src="/v1/team/users/user_id/image?_=0"
+            src="/v1/workspace/users/user_id/image?_=0"
           />
         </span>
         <span
@@ -311,7 +311,7 @@ exports[`components/drafts/panel/panel_body should match snapshot for requested_
             alt="username profile image"
             class="Avatar Avatar-md"
             loading="lazy"
-            src="/v1/team/users/user_id/image?_=0"
+            src="/v1/workspace/users/user_id/image?_=0"
           />
         </span>
         <span

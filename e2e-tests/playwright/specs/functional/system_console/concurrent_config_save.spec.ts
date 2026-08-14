@@ -5,12 +5,12 @@ import type {AdminConfig} from '@mattermost/types/config';
 
 import {expect, test} from '@mattermost/playwright-lib';
 
-// Wait for the GET /v1/team/config re-fetch that our config_changed websocket
+// Wait for the GET /v1/workspace/config re-fetch that our config_changed websocket
 // handler triggers. This is the signal that entities.admin.config in the
 // browser's Redux store is now up-to-date with the server's current state.
 async function waitForAdminConfigRefresh(page: import('@playwright/test').Page) {
     return page.waitForResponse(
-        (resp) => resp.url().endsWith('/v1/team/config') && resp.request().method() === 'GET' && resp.status() === 200,
+        (resp) => resp.url().endsWith('/v1/workspace/config') && resp.request().method() === 'GET' && resp.status() === 200,
         {timeout: 10000},
     );
 }
@@ -42,7 +42,7 @@ test.describe('System Console > Concurrent config saves', () => {
 
         // # Simulate another admin saving an unrelated section via API.
         // Set up the response listener before triggering the change so we don't
-        // miss the GET /v1/team/config that our config_changed handler dispatches.
+        // miss the GET /v1/workspace/config that our config_changed handler dispatches.
         const configRefresh = waitForAdminConfigRefresh(page);
         await adminClient.patchConfig({TeamSettings: {MaxUsersPerTeam: 99}} as Partial<AdminConfig>);
 

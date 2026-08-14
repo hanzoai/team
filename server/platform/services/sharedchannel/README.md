@@ -158,50 +158,50 @@ sequenceDiagram
     participant SB as Server B
 
     Note over UA,SB: Phase 1: Generate Invitation
-    UA->>SA: POST /v1/team/remotecluster<br/>{name, display_name, password}
+    UA->>SA: POST /v1/workspace/remotecluster<br/>{name, display_name, password}
     SA->>SA: Generate RemoteId, Token
     SA->>SA: Encrypt invitation (PBKDF2 + AES-GCM)
     SA->>UA: Return encrypted invite code
 
     Note over UA,SB: Phase 2: Accept Invitation
     UA->>UB: Share invite code + password<br/>(out of band)
-    UB->>SB: POST /v1/team/remotecluster/accept_invite<br/>{invite, password}
+    UB->>SB: POST /v1/workspace/remotecluster/accept_invite<br/>{invite, password}
     SB->>SB: Decrypt invitation
     SB->>SB: Create RemoteCluster record
-    SB->>SA: POST /v1/team/remotecluster/confirm_invite<br/>X-MM-RemoteCluster-Token: [token]<br/>{remote_id, site_url, token}
+    SB->>SA: POST /v1/workspace/remotecluster/confirm_invite<br/>X-MM-RemoteCluster-Token: [token]<br/>{remote_id, site_url, token}
     SA->>SA: Update RemoteCluster with SiteURL
     SA->>SB: 200 OK
     SB->>UB: Connection established
 
     Note over UA,SB: Phase 3: Continuous Heartbeat
     loop Every 60 seconds
-        SA->>SB: POST /v1/team/remotecluster/ping<br/>{sent_at}
+        SA->>SB: POST /v1/workspace/remotecluster/ping<br/>{sent_at}
         SB->>SA: {sent_at, recv_at}
-        SB->>SA: POST /v1/team/remotecluster/ping<br/>{sent_at}
+        SB->>SA: POST /v1/workspace/remotecluster/ping<br/>{sent_at}
         SA->>SB: {sent_at, recv_at}
     end
 ```
 
 **Step 1: Create Invitation (Server A)**
-- API: `POST /v1/team/remotecluster`
+- API: `POST /v1/workspace/remotecluster`
 - Generates encrypted invitation with PBKDF2 encryption
 - Returns base64-encoded invite code
 - Creates pending RemoteCluster record
 
 **Step 2: Accept Invitation (Server B)**
-- API: `POST /v1/team/remotecluster/accept_invite`
+- API: `POST /v1/workspace/remotecluster/accept_invite`
 - Decrypts invitation using password
 - Creates local RemoteCluster record
 - Sends confirmation to Server A
 
 **Step 3: Confirm Connection (Server A)**
-- API: `POST /v1/team/remotecluster/confirm_invite`
+- API: `POST /v1/workspace/remotecluster/confirm_invite`
 - Receives confirmation from Server B
 - Updates RemoteCluster with actual SiteURL
 - Connection established
 
 **Step 4: Continuous Heartbeat**
-- API: `POST /v1/team/remotecluster/ping`
+- API: `POST /v1/workspace/remotecluster/ping`
 - Every 60 seconds (default)
 - Updates `LastPingAt` timestamp
 - Remote considered online if pinged within 5 minutes
@@ -219,7 +219,7 @@ sequenceDiagram
     UA->>SA: Invite Remote B to Channel
     SA->>SA: Create SharedChannel (Home=true)
     SA->>SA: Create SharedChannelRemote
-    SA->>SB: POST /v1/team/remotecluster/msg<br/>Topic: sharedchannel_invite<br/>{channel_id, name, type, ...}
+    SA->>SB: POST /v1/workspace/remotecluster/msg<br/>Topic: sharedchannel_invite<br/>{channel_id, name, type, ...}
     SB->>SB: Validate invitation
     SB->>SB: Create local channel
     SB->>SB: Create SharedChannel (Home=false)
@@ -231,7 +231,7 @@ sequenceDiagram
     Note over UA,SB: Initial Sync
     SA->>SA: Queue sync task for channel
     SA->>SA: Collect users, posts, reactions
-    SA->>SB: POST /v1/team/remotecluster/msg<br/>Topic: sharedchannel_sync<br/>{users, posts, reactions, ...}
+    SA->>SB: POST /v1/workspace/remotecluster/msg<br/>Topic: sharedchannel_sync<br/>{users, posts, reactions, ...}
     SB->>SB: Process sync message
     SB->>SB: Create synthetic users
     SB->>SB: Create posts
@@ -247,7 +247,7 @@ sequenceDiagram
 - Contains channel metadata (name, type, permissions)
 
 **Step 2: Receive Invitation (Server B)**
-- API: `POST /v1/team/remotecluster/msg` (topic: `sharedchannel_invite`)
+- API: `POST /v1/workspace/remotecluster/msg` (topic: `sharedchannel_invite`)
 - Creates local channel (regular, DM, or GM)
 - Creates SharedChannel record (`Home=false`)
 - Creates SharedChannelRemote record
@@ -278,13 +278,13 @@ sequenceDiagram
     SA->>SA: Filter & batch (100 posts max)
 
     alt Has file attachments
-        SA->>SB: POST /v1/team/remotecluster/msg<br/>Topic: sharedchannel_upload<br/>{upload_session}
+        SA->>SB: POST /v1/workspace/remotecluster/msg<br/>Topic: sharedchannel_upload<br/>{upload_session}
         SB->>SA: 200 OK {session_id}
-        SA->>SB: POST /v1/team/remotecluster/upload/{id}<br/>multipart file data
+        SA->>SB: POST /v1/workspace/remotecluster/upload/{id}<br/>multipart file data
         SB->>SB: Save file to filestore
     end
 
-    SA->>SB: POST /v1/team/remotecluster/msg<br/>Topic: sharedchannel_sync<br/>Headers: X-MM-RemoteCluster-Id, Token<br/>{SyncMsg}
+    SA->>SB: POST /v1/workspace/remotecluster/msg<br/>Topic: sharedchannel_sync<br/>Headers: X-MM-RemoteCluster-Id, Token<br/>{SyncMsg}
 
     Note over SB: Process Sync Message
     SB->>SB: Validate auth token
@@ -302,7 +302,7 @@ sequenceDiagram
     SB->>SB: Save post
     SB->>UB: WebSocket: posted event
     SB->>SB: Queue sync task
-    SB->>SA: POST /v1/team/remotecluster/msg<br/>Topic: sharedchannel_sync
+    SB->>SA: POST /v1/workspace/remotecluster/msg<br/>Topic: sharedchannel_sync
     SA->>SA: Process sync message
     SA->>UA: WebSocket: posted event
     SA->>SB: 200 OK {timestamps}
@@ -346,7 +346,7 @@ graph LR
 - Attachments: All for synced posts
 
 **Send Sync Message (Server A → Server B)**
-- API: `POST /v1/team/remotecluster/msg` (topic: `sharedchannel_sync`)
+- API: `POST /v1/workspace/remotecluster/msg` (topic: `sharedchannel_sync`)
 - Headers:
   - `X-MM-RemoteCluster-Id`: Remote cluster ID
   - `X-MM-RemoteCluster-Token`: Authentication token
@@ -380,14 +380,14 @@ graph LR
 1. Server A creates upload session
 2. Sends upload creation message (topic: `sharedchannel_upload`)
 3. Server B creates matching session
-4. Server A streams file data: `POST /v1/team/remotecluster/upload/{upload_id}`
+4. Server A streams file data: `POST /v1/workspace/remotecluster/upload/{upload_id}`
 5. Server B saves file and creates FileInfo record
 
 #### 5. Profile Image Synchronization
 
 **Upload Flow:**
 1. Detect user image update (`LastPictureUpdate` changed)
-2. Server A uploads image: `POST /v1/team/remotecluster/{user_id}/image`
+2. Server A uploads image: `POST /v1/workspace/remotecluster/{user_id}/image`
 3. Server B validates user belongs to remote
 4. Saves image and invalidates cache
 
@@ -434,7 +434,7 @@ sequenceDiagram
     SB->>SB: Store RemoteToken = Token_A
 
     Note over SA,SB: Server A sends message to Server B
-    SA->>SB: POST /v1/team/remotecluster/msg<br/>X-MM-RemoteCluster-Id: RemoteId_B<br/>X-MM-RemoteCluster-Token: Token_B
+    SA->>SB: POST /v1/workspace/remotecluster/msg<br/>X-MM-RemoteCluster-Id: RemoteId_B<br/>X-MM-RemoteCluster-Token: Token_B
     SB->>SB: Validate RemoteId_B exists
     SB->>SB: Validate Token matches stored Token_B
     alt Valid Token
@@ -444,7 +444,7 @@ sequenceDiagram
     end
 
     Note over SA,SB: Server B sends message to Server A
-    SB->>SA: POST /v1/team/remotecluster/msg<br/>X-MM-RemoteCluster-Id: RemoteId_A<br/>X-MM-RemoteCluster-Token: Token_A
+    SB->>SA: POST /v1/workspace/remotecluster/msg<br/>X-MM-RemoteCluster-Id: RemoteId_A<br/>X-MM-RemoteCluster-Token: Token_A
     SA->>SA: Validate RemoteId_A exists
     SA->>SA: Validate Token matches stored Token_A
     alt Valid Token
@@ -473,20 +473,20 @@ sequenceDiagram
 ### Key API Endpoints
 
 **Remote Cluster Management:**
-- `POST /v1/team/remotecluster` - Create remote (generate invite)
-- `POST /v1/team/remotecluster/accept_invite` - Accept invitation
-- `POST /v1/team/remotecluster/confirm_invite` - Confirm connection
-- `POST /v1/team/remotecluster/ping` - Heartbeat
-- `POST /v1/team/remotecluster/msg` - Message delivery (all topics)
+- `POST /v1/workspace/remotecluster` - Create remote (generate invite)
+- `POST /v1/workspace/remotecluster/accept_invite` - Accept invitation
+- `POST /v1/workspace/remotecluster/confirm_invite` - Confirm connection
+- `POST /v1/workspace/remotecluster/ping` - Heartbeat
+- `POST /v1/workspace/remotecluster/msg` - Message delivery (all topics)
 
 **Shared Channel Management:**
-- `GET /v1/team/sharedchannels/{team_id}` - List shared channels
-- `POST /v1/team/channels/{channel_id}/remotes/{remote_id}/invite` - Share channel
-- `POST /v1/team/channels/{channel_id}/remotes/{remote_id}/uninvite` - Unshare
+- `GET /v1/workspace/sharedchannels/{team_id}` - List shared channels
+- `POST /v1/workspace/channels/{channel_id}/remotes/{remote_id}/invite` - Share channel
+- `POST /v1/workspace/channels/{channel_id}/remotes/{remote_id}/uninvite` - Unshare
 
 **File Operations:**
-- `POST /v1/team/remotecluster/upload/{upload_id}` - Upload file
-- `POST /v1/team/remotecluster/{user_id}/image` - Upload profile image
+- `POST /v1/workspace/remotecluster/upload/{upload_id}` - Upload file
+- `POST /v1/workspace/remotecluster/{user_id}/image` - Upload profile image
 
 ### Error Handling & Monitoring
 

@@ -68,7 +68,7 @@ describe.skip('PerformanceReporter', () => {
         await waitForReport();
 
         expect(sendBeacon).toHaveBeenCalled();
-        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/team/client_perf');
+        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/workspace/client_perf');
         const report = JSON.parse(await (sendBeacon.mock.calls[0][1] as Blob).text());
         expect(report).toMatchObject({
             histograms: [
@@ -115,7 +115,7 @@ describe.skip('PerformanceReporter', () => {
         await waitForReport();
 
         expect(sendBeacon).toHaveBeenCalled();
-        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/team/client_perf');
+        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/workspace/client_perf');
         const report = JSON.parse(await (sendBeacon.mock.calls[0][1] as Blob).text());
         expect(report).toMatchObject({
             counters: [
@@ -167,7 +167,7 @@ describe.skip('PerformanceReporter', () => {
         await waitForReport();
 
         expect(sendBeacon).toHaveBeenCalled();
-        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/team/client_perf');
+        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/workspace/client_perf');
         const report = JSON.parse(await (sendBeacon.mock.calls[0][1] as Blob).text());
         expect(report).toMatchObject({
             counters: [
@@ -195,7 +195,7 @@ describe.skip('PerformanceReporter', () => {
         await waitForReport();
 
         expect(sendBeacon).toHaveBeenCalled();
-        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/team/client_perf');
+        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/workspace/client_perf');
         let report = JSON.parse(await (sendBeacon.mock.calls[0][1] as Blob).text());
         expect(report).toMatchObject({
             histograms: [
@@ -220,7 +220,7 @@ describe.skip('PerformanceReporter', () => {
         await waitForReport();
 
         expect(sendBeacon).toHaveBeenCalled();
-        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/team/client_perf');
+        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/workspace/client_perf');
         report = JSON.parse(await (sendBeacon.mock.calls[0][1] as Blob).text());
         expect(report).toMatchObject({
             histograms: [
@@ -312,7 +312,7 @@ describe.skip('PerformanceReporter', () => {
         await waitForReport();
 
         expect(sendBeacon).toHaveBeenCalled();
-        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/team/client_perf');
+        expect(sendBeacon.mock.calls[0][0]).toEqual(siteUrl + '/v1/workspace/client_perf');
         const report = JSON.parse(await (sendBeacon.mock.calls[0][1] as Blob).text());
         expect(report).toMatchObject({
             labels: {
@@ -374,7 +374,7 @@ describe('PerformanceReporter.sendReport content-type', () => {
 
         expect(sendBeacon).toHaveBeenCalledTimes(1);
         const [url, body] = sendBeacon.mock.calls[0];
-        expect(url).toContain('/v1/team/client_perf');
+        expect(url).toContain('/v1/workspace/client_perf');
         expect(body).toBeInstanceOf(Blob);
         expect((body as Blob).type).toBe('application/json');
     });
@@ -404,7 +404,7 @@ describe('PerformanceReporter.sendReport content-type', () => {
         (reporter as any).sendReport(sampleReport);
 
         expect(fetchSpy).toHaveBeenCalledWith(
-            expect.stringContaining('/v1/team/client_perf'),
+            expect.stringContaining('/v1/workspace/client_perf'),
             expect.objectContaining({
                 method: 'POST',
                 headers: expect.objectContaining({'Content-Type': 'application/json'}),

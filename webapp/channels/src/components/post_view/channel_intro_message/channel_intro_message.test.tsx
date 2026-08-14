@@ -162,10 +162,10 @@ describe('components/post_view/ChannelIntroMessages', () => {
 
             const image = screen.getAllByAltText('user profile image');
             expect(image).toHaveLength(2);
-            expect(image[0]).toHaveAttribute('src', '/v1/team/users/user1/image?_=0');
+            expect(image[0]).toHaveAttribute('src', '/v1/workspace/users/user1/image?_=0');
             expect(image[0]).toHaveAttribute('loading', 'lazy');
 
-            expect(image[1]).toHaveAttribute('src', '/v1/team/users/guest1/image?_=0');
+            expect(image[1]).toHaveAttribute('src', '/v1/workspace/users/guest1/image?_=0');
             expect(image[1]).toHaveAttribute('loading', 'lazy');
 
             const notificationPreferencesButton = screen.getByText('Notifications');
@@ -214,7 +214,7 @@ describe('components/post_view/ChannelIntroMessages', () => {
             const image = screen.getByRole('img');
 
             expect(image).toBeInTheDocument();
-            expect(image).toHaveAttribute('src', '/v1/team/users/user1/image?_=0');
+            expect(image).toHaveAttribute('src', '/v1/workspace/users/user1/image?_=0');
             expect(image).toHaveAttribute('loading', 'lazy');
 
             const headerDialog = screen.getByLabelText('Set header');

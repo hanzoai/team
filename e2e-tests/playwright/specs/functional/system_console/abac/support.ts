@@ -553,7 +553,7 @@ export async function createBasicPolicy(
     if (applyVisible) {
         // Arm the response interceptor BEFORE the click so we never miss the POST.
         const jobResponsePromise = page
-            .waitForResponse((r) => r.url().includes('/v1/team/jobs') && r.request().method() === 'POST', {
+            .waitForResponse((r) => r.url().includes('/v1/workspace/jobs') && r.request().method() === 'POST', {
                 timeout: 10_000,
             })
             .then(async (r) => (r.ok() ? (((await r.json()) as {id?: string}).id ?? null) : null))
@@ -731,7 +731,7 @@ export async function createMultiAttributePolicy(
     await applyPolicyButton.waitFor({state: 'visible', timeout: 5000});
 
     const jobResponsePromise = page
-        .waitForResponse((r) => r.url().includes('/v1/team/jobs') && r.request().method() === 'POST', {timeout: 10_000})
+        .waitForResponse((r) => r.url().includes('/v1/workspace/jobs') && r.request().method() === 'POST', {timeout: 10_000})
         .then(async (r) => (r.ok() ? (((await r.json()) as {id?: string}).id ?? null) : null))
         .catch(() => null);
 
@@ -901,7 +901,7 @@ export async function createAdvancedPolicy(
 
     // Arm the response interceptor BEFORE the click so we never miss the POST.
     const jobResponsePromise = page
-        .waitForResponse((r) => r.url().includes('/v1/team/jobs') && r.request().method() === 'POST', {timeout: 10_000})
+        .waitForResponse((r) => r.url().includes('/v1/workspace/jobs') && r.request().method() === 'POST', {timeout: 10_000})
         .then(async (r) => (r.ok() ? (((await r.json()) as {id?: string}).id ?? null) : null))
         .catch(() => null);
 
@@ -924,7 +924,7 @@ export async function activatePolicy(client: Client4, policyId: string): Promise
  * Wait for a sync job to complete.
  *
  * When `expectedJobId` is supplied (obtained from `runSyncJob()` which
- * intercepts the POST /v1/team/jobs response), polls GET /v1/team/jobs/{id}
+ * intercepts the POST /v1/workspace/jobs response), polls GET /v1/workspace/jobs/{id}
  * directly — race-free under PW_WORKERS >= 2 because it checks the exact
  * job, not the first row of a shared list.
  *
@@ -948,7 +948,7 @@ export async function waitForLatestSyncJob(
                 async () => {
                     try {
                         const job: any = await page.evaluate(async (id: string) => {
-                            const resp = await fetch(`/v1/team/jobs/${encodeURIComponent(id)}`, {
+                            const resp = await fetch(`/v1/workspace/jobs/${encodeURIComponent(id)}`, {
                                 credentials: 'include',
                             });
                             if (!resp.ok) {

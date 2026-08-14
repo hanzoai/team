@@ -21,7 +21,7 @@ describe('components/SettingItemMin', () => {
     const baseProps = {
         clientError: '',
         serverError: '',
-        src: 'http://localhost:8065/v1/team/users/src_id',
+        src: 'http://localhost:8065/v1/workspace/users/src_id',
         loadingPicture: false,
         submitActive: false,
         onSubmit: jest.fn(),

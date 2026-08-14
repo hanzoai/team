@@ -168,7 +168,7 @@ func TestVerifyCertificates(t *testing.T) {
 func TestNewAPIv4Client(t *testing.T) {
 	t.Run("should take http proxy into account", func(t *testing.T) {
 		router := mux.NewRouter()
-		router.Handle("/v1/team/users/me", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		router.Handle("/v1/workspace/users/me", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			user := &model.User{
 				Id: model.NewId(),
 			}

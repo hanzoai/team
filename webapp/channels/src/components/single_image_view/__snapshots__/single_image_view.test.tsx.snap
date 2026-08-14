@@ -80,7 +80,7 @@ exports[`components/SingleImageView permalink preview should render with permali
                 <img
                   aria-label="file thumbnail name"
                   class="image-permalink"
-                  src="/v1/team/files/file_info_id/preview"
+                  src="/v1/workspace/files/file_info_id/preview"
                   tabindex="0"
                 />
                 <span
@@ -90,7 +90,7 @@ exports[`components/SingleImageView permalink preview should render with permali
                     aria-label="Download"
                     class="style--none size-aware-image__download"
                     download=""
-                    href="/v1/team/files/file_info_id"
+                    href="/v1/workspace/files/file_info_id"
                     rel="noopener noreferrer"
                     role="button"
                     target="_blank"
@@ -200,7 +200,7 @@ exports[`components/SingleImageView should match snapshot 1`] = `
                 <img
                   aria-label="file thumbnail name"
                   class=""
-                  src="/v1/team/files/file_info_id/preview"
+                  src="/v1/workspace/files/file_info_id/preview"
                   tabindex="0"
                 />
                 <span
@@ -210,7 +210,7 @@ exports[`components/SingleImageView should match snapshot 1`] = `
                     aria-label="Download"
                     class="style--none size-aware-image__download"
                     download=""
-                    href="/v1/team/files/file_info_id"
+                    href="/v1/workspace/files/file_info_id"
                     rel="noopener noreferrer"
                     role="button"
                     target="_blank"
@@ -280,7 +280,7 @@ exports[`components/SingleImageView should match snapshot 2`] = `
                 <img
                   aria-label="file thumbnail name"
                   class=""
-                  src="/v1/team/files/file_info_id/preview"
+                  src="/v1/workspace/files/file_info_id/preview"
                   tabindex="0"
                 />
                 <span
@@ -290,7 +290,7 @@ exports[`components/SingleImageView should match snapshot 2`] = `
                     aria-label="Download"
                     class="style--none size-aware-image__download"
                     download=""
-                    href="/v1/team/files/file_info_id"
+                    href="/v1/workspace/files/file_info_id"
                     rel="noopener noreferrer"
                     role="button"
                     target="_blank"
@@ -401,7 +401,7 @@ exports[`components/SingleImageView should match snapshot, SVG image 1`] = `
                 <img
                   aria-label="file thumbnail name_svg"
                   class=""
-                  src="/v1/team/files/svg_file_info_id/preview"
+                  src="/v1/workspace/files/svg_file_info_id/preview"
                   style="width: 350px; height: auto;"
                   tabindex="0"
                 />
@@ -412,7 +412,7 @@ exports[`components/SingleImageView should match snapshot, SVG image 1`] = `
                     aria-label="Download"
                     class="style--none size-aware-image__download"
                     download=""
-                    href="/v1/team/files/svg_file_info_id"
+                    href="/v1/workspace/files/svg_file_info_id"
                     rel="noopener noreferrer"
                     role="button"
                     target="_blank"
@@ -483,7 +483,7 @@ exports[`components/SingleImageView should match snapshot, SVG image 2`] = `
                 <img
                   aria-label="file thumbnail name_svg"
                   class=""
-                  src="/v1/team/files/svg_file_info_id/preview"
+                  src="/v1/workspace/files/svg_file_info_id/preview"
                   style="width: 350px; height: auto;"
                   tabindex="0"
                 />
@@ -494,7 +494,7 @@ exports[`components/SingleImageView should match snapshot, SVG image 2`] = `
                     aria-label="Download"
                     class="style--none size-aware-image__download"
                     download=""
-                    href="/v1/team/files/svg_file_info_id"
+                    href="/v1/workspace/files/svg_file_info_id"
                     rel="noopener noreferrer"
                     role="button"
                     target="_blank"
@@ -564,7 +564,7 @@ exports[`components/SingleImageView should set loaded state on callback of onIma
                 <img
                   aria-label="file thumbnail name"
                   class=""
-                  src="/v1/team/files/file_info_id/preview"
+                  src="/v1/workspace/files/file_info_id/preview"
                   tabindex="0"
                 />
                 <span
@@ -574,7 +574,7 @@ exports[`components/SingleImageView should set loaded state on callback of onIma
                     aria-label="Download"
                     class="style--none size-aware-image__download"
                     download=""
-                    href="/v1/team/files/file_info_id"
+                    href="/v1/workspace/files/file_info_id"
                     rel="noopener noreferrer"
                     role="button"
                     target="_blank"

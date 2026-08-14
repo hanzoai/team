@@ -953,7 +953,7 @@ func TestGetAuthorizationServerMetadata_DCRConfig(t *testing.T) {
 		require.NotNil(t, metadata)
 
 		// Should include registration endpoint when DCR is enabled
-		assert.Equal(t, "https://example.com/v1/team/oauth/apps/register", metadata.RegistrationEndpoint)
+		assert.Equal(t, "https://example.com/v1/workspace/oauth/apps/register", metadata.RegistrationEndpoint)
 
 		// Should include basic OAuth endpoints
 		assert.Equal(t, "https://example.com", metadata.Issuer)

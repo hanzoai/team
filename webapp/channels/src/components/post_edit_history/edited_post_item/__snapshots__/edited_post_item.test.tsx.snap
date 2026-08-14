@@ -101,7 +101,7 @@ exports[`components/post_edit_history/edited_post_item should match snapshot whe
               alt="user profile image"
               class="Avatar Avatar-sm avatar-post-preview"
               loading="lazy"
-              src="/v1/team/users/user_id/image?_=0"
+              src="/v1/workspace/users/user_id/image?_=0"
             />
           </span>
           <div

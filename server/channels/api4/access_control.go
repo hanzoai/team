@@ -834,7 +834,7 @@ func searchAccessControlPolicies(c *Context, w http.ResponseWriter, r *http.Requ
 // updateActiveStatus updates the active status of a single access control policy.
 //
 // Deprecated: This endpoint is deprecated and will be removed in a future release.
-// Use PUT /v1/team/access_control/policies/activate instead, which supports batch updates.
+// Use PUT /v1/workspace/access_control/policies/activate instead, which supports batch updates.
 func updateActiveStatus(c *Context, w http.ResponseWriter, r *http.Request) {
 	c.RequirePolicyId()
 	if c.Err != nil {

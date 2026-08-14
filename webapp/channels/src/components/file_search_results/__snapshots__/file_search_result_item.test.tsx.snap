@@ -11,7 +11,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
     >
       <div
         class="post-image normal"
-        style="background-image: url(\\"/v1/team/files/file_info_id/thumbnail\\"); background-size: cover;"
+        style="background-image: url(\\"/v1/workspace/files/file_info_id/thumbnail\\"); background-size: cover;"
       />
       <div
         class="fileData"
@@ -39,7 +39,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
       </div>
       <a
         class="action-icon download-icon btn btn-icon btn-sm"
-        href="/v1/team/files/file_info_id?download=1"
+        href="/v1/workspace/files/file_info_id?download=1"
       >
         <i
           class="icon icon-download-outline"
@@ -61,7 +61,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
     >
       <div
         class="post-image normal"
-        style="background-image: url(\\"/v1/team/files/file_info_id/thumbnail\\"); background-size: cover;"
+        style="background-image: url(\\"/v1/workspace/files/file_info_id/thumbnail\\"); background-size: cover;"
       />
       <div
         class="fileData"
@@ -98,7 +98,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
       </div>
       <a
         class="action-icon download-icon btn btn-icon btn-sm"
-        href="/v1/team/files/file_info_id?download=1"
+        href="/v1/workspace/files/file_info_id?download=1"
       >
         <i
           class="icon icon-download-outline"
@@ -120,7 +120,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
     >
       <div
         class="post-image normal"
-        style="background-image: url(\\"/v1/team/files/file_info_id/thumbnail\\"); background-size: cover;"
+        style="background-image: url(\\"/v1/workspace/files/file_info_id/thumbnail\\"); background-size: cover;"
       />
       <div
         class="fileData"
@@ -157,7 +157,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
       </div>
       <a
         class="action-icon download-icon btn btn-icon btn-sm"
-        href="/v1/team/files/file_info_id?download=1"
+        href="/v1/workspace/files/file_info_id?download=1"
       >
         <i
           class="icon icon-download-outline"
@@ -179,7 +179,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
     >
       <div
         class="post-image normal"
-        style="background-image: url(\\"/v1/team/files/file_info_id/thumbnail\\"); background-size: cover;"
+        style="background-image: url(\\"/v1/workspace/files/file_info_id/thumbnail\\"); background-size: cover;"
       />
       <div
         class="fileData"
@@ -216,7 +216,7 @@ exports[`components/file_search_result/FileSearchResultItem should match snapsho
       </div>
       <a
         class="action-icon download-icon btn btn-icon btn-sm"
-        href="/v1/team/files/file_info_id?download=1"
+        href="/v1/workspace/files/file_info_id?download=1"
       >
         <i
           class="icon icon-download-outline"

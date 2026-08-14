@@ -14,7 +14,7 @@ exports[`components/widgets/users/Avatars should fetch missing users 1`] = `
         alt="first.last1 profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/1/image?_=1620680333191"
+        src="/v1/workspace/users/1/image?_=1620680333191"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -28,7 +28,7 @@ exports[`components/widgets/users/Avatars should fetch missing users 1`] = `
         alt="user profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/6/image?_=0"
+        src="/v1/workspace/users/6/image?_=0"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -42,7 +42,7 @@ exports[`components/widgets/users/Avatars should fetch missing users 1`] = `
         alt="user profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/7/image?_=0"
+        src="/v1/workspace/users/7/image?_=0"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -71,7 +71,7 @@ exports[`components/widgets/users/Avatars should properly count overflow 1`] = `
         alt="first.last1 profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/1/image?_=1620680333191"
+        src="/v1/workspace/users/1/image?_=1620680333191"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -85,7 +85,7 @@ exports[`components/widgets/users/Avatars should properly count overflow 1`] = `
         alt="first.last2 profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/2/image?_=1620680333191"
+        src="/v1/workspace/users/2/image?_=1620680333191"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -99,7 +99,7 @@ exports[`components/widgets/users/Avatars should properly count overflow 1`] = `
         alt="first.last3 profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/3/image?_=1620680333191"
+        src="/v1/workspace/users/3/image?_=1620680333191"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -128,7 +128,7 @@ exports[`components/widgets/users/Avatars should support userIds 1`] = `
         alt="first.last1 profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/1/image?_=1620680333191"
+        src="/v1/workspace/users/1/image?_=1620680333191"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -142,7 +142,7 @@ exports[`components/widgets/users/Avatars should support userIds 1`] = `
         alt="first.last2 profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/2/image?_=1620680333191"
+        src="/v1/workspace/users/2/image?_=1620680333191"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />
@@ -156,7 +156,7 @@ exports[`components/widgets/users/Avatars should support userIds 1`] = `
         alt="first.last3 profile image"
         class="Avatar Avatar-xl"
         loading="lazy"
-        src="/v1/team/users/3/image?_=1620680333191"
+        src="/v1/workspace/users/3/image?_=1620680333191"
         style="background: rgb(235, 235, 235);"
         tabindex="-1"
       />

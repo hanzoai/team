@@ -20,7 +20,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_direct_channel should match 
           alt="user profile image"
           class="Avatar Avatar-xs"
           loading="lazy"
-          src="/v1/team/users/user_id/image"
+          src="/v1/workspace/users/user_id/image"
         />
       </span>
     </span>
@@ -93,7 +93,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_direct_channel should match 
           alt="user profile image"
           class="Avatar Avatar-xs"
           loading="lazy"
-          src="/v1/team/users/user_id/image"
+          src="/v1/workspace/users/user_id/image"
         />
       </span>
     </span>
@@ -166,7 +166,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_direct_channel should match 
           alt="user profile image"
           class="Avatar Avatar-xs"
           loading="lazy"
-          src="/v1/team/users/user_id/image"
+          src="/v1/workspace/users/user_id/image"
         />
       </span>
     </span>

@@ -20,58 +20,58 @@ import (
 )
 
 func (api *API) InitGroup() {
-	// GET /v1/team/groups
+	// GET /v1/workspace/groups
 	api.BaseRoutes.Groups.Handle("", api.APISessionRequired(getGroups)).Methods(http.MethodGet)
 
-	// POST /v1/team/groups
+	// POST /v1/workspace/groups
 	api.BaseRoutes.Groups.Handle("", api.APISessionRequired(createGroup)).Methods(http.MethodPost)
 
-	// GET /v1/team/groups/:group_id
+	// GET /v1/workspace/groups/:group_id
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}",
 		api.APISessionRequired(getGroup)).Methods(http.MethodGet)
 
-	// PUT /v1/team/groups/:group_id/patch
+	// PUT /v1/workspace/groups/:group_id/patch
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/patch",
 		api.APISessionRequired(patchGroup)).Methods(http.MethodPut)
 
-	// POST /v1/team/groups/:group_id/teams/:team_id/link
-	// POST /v1/team/groups/:group_id/channels/:channel_id/link
+	// POST /v1/workspace/groups/:group_id/teams/:team_id/link
+	// POST /v1/workspace/groups/:group_id/channels/:channel_id/link
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/{syncable_type:teams|channels}/{syncable_id:[A-Za-z0-9]+}/link",
 		api.APISessionRequired(linkGroupSyncable)).Methods(http.MethodPost)
 
-	// DELETE /v1/team/groups/:group_id/teams/:team_id/link
-	// DELETE /v1/team/groups/:group_id/channels/:channel_id/link
+	// DELETE /v1/workspace/groups/:group_id/teams/:team_id/link
+	// DELETE /v1/workspace/groups/:group_id/channels/:channel_id/link
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/{syncable_type:teams|channels}/{syncable_id:[A-Za-z0-9]+}/link",
 		api.APISessionRequired(unlinkGroupSyncable)).Methods(http.MethodDelete)
 
-	// GET /v1/team/groups/:group_id/teams/:team_id
-	// GET /v1/team/groups/:group_id/channels/:channel_id
+	// GET /v1/workspace/groups/:group_id/teams/:team_id
+	// GET /v1/workspace/groups/:group_id/channels/:channel_id
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/{syncable_type:teams|channels}/{syncable_id:[A-Za-z0-9]+}",
 		api.APISessionRequired(getGroupSyncable)).Methods(http.MethodGet)
 
-	// GET /v1/team/groups/:group_id/teams
-	// GET /v1/team/groups/:group_id/channels
+	// GET /v1/workspace/groups/:group_id/teams
+	// GET /v1/workspace/groups/:group_id/channels
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/{syncable_type:teams|channels}",
 		api.APISessionRequired(getGroupSyncables)).Methods(http.MethodGet)
 
-	// PUT /v1/team/groups/:group_id/teams/:team_id/patch
-	// PUT /v1/team/groups/:group_id/channels/:channel_id/patch
+	// PUT /v1/workspace/groups/:group_id/teams/:team_id/patch
+	// PUT /v1/workspace/groups/:group_id/channels/:channel_id/patch
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/{syncable_type:teams|channels}/{syncable_id:[A-Za-z0-9]+}/patch",
 		api.APISessionRequired(patchGroupSyncable)).Methods(http.MethodPut)
 
-	// GET /v1/team/groups/:group_id/stats
+	// GET /v1/workspace/groups/:group_id/stats
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/stats",
 		api.APISessionRequired(getGroupStats)).Methods(http.MethodGet)
 
-	// GET /v1/team/groups/:group_id/members
+	// GET /v1/workspace/groups/:group_id/members
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/members",
 		api.APISessionRequired(getGroupMembers)).Methods(http.MethodGet)
 
-	// GET /v1/team/users/:user_id/groups
+	// GET /v1/workspace/users/:user_id/groups
 	api.BaseRoutes.Users.Handle("/{user_id:[A-Za-z0-9]+}/groups",
 		api.APISessionRequired(getGroupsByUserId)).Methods(http.MethodGet)
 
-	// GET /v1/team/channels/:channel_id/groups
+	// GET /v1/workspace/channels/:channel_id/groups
 	api.BaseRoutes.Channels.Handle("/{channel_id:[A-Za-z0-9]+}/groups",
 		api.APISessionRequired(getGroupsByChannel)).Methods(http.MethodGet)
 
@@ -79,27 +79,27 @@ func (api *API) InitGroup() {
 	api.BaseRoutes.Groups.Handle("/names",
 		api.APISessionRequired(getGroupsByNames)).Methods(http.MethodPost)
 
-	// GET /v1/team/teams/:team_id/groups
+	// GET /v1/workspace/teams/:team_id/groups
 	api.BaseRoutes.Teams.Handle("/{team_id:[A-Za-z0-9]+}/groups",
 		api.APISessionRequired(getGroupsByTeam)).Methods(http.MethodGet)
 
-	// GET /v1/team/teams/:team_id/groups_by_channels
+	// GET /v1/workspace/teams/:team_id/groups_by_channels
 	api.BaseRoutes.Teams.Handle("/{team_id:[A-Za-z0-9]+}/groups_by_channels",
 		api.APISessionRequired(getGroupsAssociatedToChannelsByTeam)).Methods(http.MethodGet)
 
-	// DELETE /v1/team/groups/:group_id
+	// DELETE /v1/workspace/groups/:group_id
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}",
 		api.APISessionRequired(deleteGroup)).Methods(http.MethodDelete)
 
-	// POST /v1/team/groups/:group_id
+	// POST /v1/workspace/groups/:group_id
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/restore",
 		api.APISessionRequired(restoreGroup)).Methods(http.MethodPost)
 
-	// POST /v1/team/groups/:group_id/members
+	// POST /v1/workspace/groups/:group_id/members
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/members",
 		api.APISessionRequired(addGroupMembers)).Methods(http.MethodPost)
 
-	// DELETE /v1/team/groups/:group_id/members
+	// DELETE /v1/workspace/groups/:group_id/members
 	api.BaseRoutes.Groups.Handle("/{group_id:[A-Za-z0-9]+}/members",
 		api.APISessionRequired(deleteGroupMembers)).Methods(http.MethodDelete)
 }

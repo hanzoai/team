@@ -27,13 +27,13 @@ describe('Client4', () => {
 
         test('getPropertyFieldsRoute should build correct URL', () => {
             expect(client.getPropertyFieldsRoute('my_group', 'user')).toBe(
-                'http://mattermost.example.com/v1/team/properties/groups/my_group/user/fields',
+                'http://mattermost.example.com/v1/workspace/properties/groups/my_group/user/fields',
             );
         });
 
         test('getPropertyFieldRoute should build correct URL', () => {
             expect(client.getPropertyFieldRoute('my_group', 'user', 'field123')).toBe(
-                'http://mattermost.example.com/v1/team/properties/groups/my_group/user/fields/field123',
+                'http://mattermost.example.com/v1/workspace/properties/groups/my_group/user/fields/field123',
             );
         });
 
@@ -376,7 +376,7 @@ describe('ClientError', () => {
             message: 'This is a message',
             server_error_id: 'test.app_error',
             status_code: 418,
-            url: 'https://example.com/v1/team/error',
+            url: 'https://example.com/v1/workspace/error',
         });
 
         const copy = {...error};
@@ -393,7 +393,7 @@ describe('ClientError', () => {
             message: 'This is a message',
             server_error_id: 'test.app_error',
             status_code: 418,
-            url: 'https://example.com/v1/team/error',
+            url: 'https://example.com/v1/workspace/error',
         }, cause);
 
         const copy = {...error};

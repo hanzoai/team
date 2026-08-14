@@ -56,7 +56,7 @@ describe('components/audit_table/audit_row/AuditRow', () => {
     };
     test('should describe a row recorded under the current API base', () => {
         const audit: Audit = {
-            action: '/v1/team/channels',
+            action: '/v1/workspace/channels',
             create_at: 50778112674,
             extra_info: `name=${channelName}`,
             id: 'id_2',

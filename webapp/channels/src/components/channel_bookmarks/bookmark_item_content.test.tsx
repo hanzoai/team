@@ -87,7 +87,7 @@ describe('useBookmarkLink', () => {
                 {entities: {files: {files: {f1: fileInfoFixture as FileInfo}}}},
             );
 
-            expect(result.current.href).toContain('/v1/team/files/f1');
+            expect(result.current.href).toContain('/v1/workspace/files/f1');
             expect(result.current.isFile).toBe(true);
         });
 

@@ -615,7 +615,7 @@ test.describe('Channel Settings Modal - Access Control Tab', () => {
         // # Confirm and wait for the access-control sync job that applies the removal
         const [syncJobResponse] = await Promise.all([
             page.waitForResponse(
-                (response) => response.url().includes('/v1/team/jobs') && response.request().method() === 'POST',
+                (response) => response.url().includes('/v1/workspace/jobs') && response.request().method() === 'POST',
                 {timeout: 10000},
             ),
             confirmModal.getByRole('button', {name: 'Save'}).click(),

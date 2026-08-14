@@ -84,16 +84,16 @@ export const validators = {
 };
 
 export const usesLegacyOauth = (config: Partial<AdminConfig>, state: any, license?: ClientLicense, enterpriseReady?: boolean, consoleAccess?: ConsoleAccess, cloud?: CloudState) => {
-    if (!config.GitLabSettings || !config.GoogleSettings || !config.Office365Settings) {
+    if (!config.HanzoSettings || !config.GoogleSettings || !config.Office365Settings) {
         return false;
     }
 
     return it.any(
         it.all(
-            it.not(it.configContains('GitLabSettings', 'Scope', 'openid')),
+            it.not(it.configContains('HanzoSettings', 'Scope', 'openid')),
             it.any(
-                it.configIsTrue('GitLabSettings', 'Id'),
-                it.configIsTrue('GitLabSettings', 'Secret'),
+                it.configIsTrue('HanzoSettings', 'Id'),
+                it.configIsTrue('HanzoSettings', 'Secret'),
             ),
         ),
         it.all(

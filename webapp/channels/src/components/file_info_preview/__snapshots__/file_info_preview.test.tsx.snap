@@ -7,7 +7,7 @@ exports[`components/FileInfoPreview should match snapshot, can download files 1`
   >
     <a
       class="file-details__preview"
-      href="https://pre-release.mattermost.com/v1/team/files/rqir81f7a7ft8m6j6ej7g1txuo"
+      href="https://pre-release.mattermost.com/v1/workspace/files/rqir81f7a7ft8m6j6ej7g1txuo"
     >
       <span
         class="file-details__preview-helper"
