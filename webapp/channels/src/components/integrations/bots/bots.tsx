@@ -317,11 +317,11 @@ export default class Bots extends React.PureComponent<Props, State> {
                     <>
                         <FormattedMessage
                             id='bots.manage.help1'
-                            defaultMessage='Use {botAccounts} to integrate with Mattermost through plugins or the API. Bot accounts are available to everyone on your server. '
+                            defaultMessage='Use {botAccounts} to integrate with Hanzo Team through plugins or the API. Bot accounts are available to everyone on your server. '
                             values={{
                                 botAccounts: (
                                     <ExternalLink
-                                        href='https://mattermost.com/pl/default-bot-accounts'
+                                        href='https://docs.hanzo.team/default-bot-accounts'
                                         location='bots'
                                     >
                                         <FormattedMessage

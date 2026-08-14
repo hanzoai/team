@@ -58,7 +58,7 @@ func TestRenderMobileError(t *testing.T) {
 	cfg := &model.Config{}
 	cfg.SetDefaults()
 	*cfg.ServiceSettings.SiteURL = "http://localhost:8065"
-	*cfg.TeamSettings.SiteName = "Mattermost<test>"
+	*cfg.TeamSettings.SiteName = "Hanzo Team<test>"
 	cfg.NativeAppSettings.AppCustomURLSchemes = []string{"mattermost"}
 
 	appErr := model.NewAppError("test", "api.test.error", nil, "details", http.StatusBadRequest)
@@ -70,8 +70,8 @@ func TestRenderMobileError(t *testing.T) {
 
 		body := w.Body.String()
 		assert.Equal(t, http.StatusOK, w.Code)
-		assert.Contains(t, body, "Mattermost&lt;test&gt;")
-		assert.NotContains(t, body, "Mattermost<test>")
+		assert.Contains(t, body, "Hanzo Team&lt;test&gt;")
+		assert.NotContains(t, body, "Hanzo Team<test>")
 	})
 
 	t.Run("renders html with special characters encoded in error message", func(t *testing.T) {

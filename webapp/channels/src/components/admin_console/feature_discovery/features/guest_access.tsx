@@ -17,13 +17,13 @@ const GuestAccessFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.Professional}
             title={defineMessage({
                 id: 'admin.guest_access_feature_discovery.title',
-                defaultMessage: 'Enable guest accounts with Mattermost Professional',
+                defaultMessage: 'Enable guest accounts with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.guest_access_feature_discovery.copy',
                 defaultMessage: 'Collaborate with users outside of your organization while tightly controlling their access channels and team members.',
             })}
-            learnMoreURL='https://docs.mattermost.com/deployment/guest-accounts.html'
+            learnMoreURL='https://docs.hanzo.team/deployment/guest-accounts.html'
             featureDiscoveryImage={<GuestAccessSVG/>}
         />
     );

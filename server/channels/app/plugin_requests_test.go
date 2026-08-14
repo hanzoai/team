@@ -181,7 +181,7 @@ func TestUnauthRequestsMFAWarningFix(t *testing.T) {
 		// Verify URL path was properly stripped
 		require.Equal(t, "/bar", r.URL.Path)
 		// Verify no user ID header (indicating the request is unauthenticated)
-		require.Empty(t, r.Header.Get("Mattermost-User-Id"))
+		require.Empty(t, r.Header.Get("Hanzo Team-User-Id"))
 	}
 
 	// Call servePluginRequest directly
@@ -233,7 +233,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Empty(t, r.Header.Get("Mattermost-User-Id"))
+			assert.Empty(t, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Empty(t, ctx.SessionId)
 			assert.NotEmpty(t, ctx.RequestId)
 		}
@@ -251,7 +251,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Mattermost-User-Id"))
+			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Equal(t, session.Id, ctx.SessionId)
 		}
 
@@ -274,7 +274,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Mattermost-User-Id"))
+			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Equal(t, session.Id, ctx.SessionId)
 		}
 
@@ -300,7 +300,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Mattermost-User-Id"))
+			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Equal(t, session.Id, ctx.SessionId)
 		}
 
@@ -316,7 +316,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Mattermost-User-Id"))
+			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Equal(t, session.Id, ctx.SessionId)
 			// Verify access_token is removed from query parameters
 			assert.Empty(t, r.URL.Query().Get("access_token"))
@@ -341,7 +341,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Empty(t, r.Header.Get("Mattermost-User-Id"))
+			assert.Empty(t, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Empty(t, ctx.SessionId)
 		}
 
@@ -387,7 +387,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Empty(t, r.Header.Get("Mattermost-User-Id"))
+			assert.Empty(t, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Empty(t, ctx.SessionId)
 		}
 
@@ -399,8 +399,8 @@ func TestServePluginRequest(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "/plugins/testplugin/endpoint", nil)
 		req = mux.SetURLVars(req, map[string]string{"plugin_id": "testplugin"})
 		req.Header.Set(model.HeaderAuth, model.HeaderBearer+" "+session.Token)
-		req.Header.Set("Mattermost-Plugin-ID", "evil-plugin")
-		req.Header.Set("Mattermost-User-Id", "evil-user")
+		req.Header.Set("Hanzo Team-Plugin-ID", "evil-plugin")
+		req.Header.Set("Hanzo Team-User-Id", "evil-user")
 		req.AddCookie(&http.Cookie{Name: "other_cookie", Value: "keep_me"})
 		req.AddCookie(&http.Cookie{Name: "another_cookie", Value: "keep_me_too"})
 		req.Header.Set("Referer", "https://evil.com")
@@ -410,10 +410,10 @@ func TestServePluginRequest(t *testing.T) {
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
 
-			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Mattermost-User-Id"))
+			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Equal(t, session.Id, ctx.SessionId)
 
-			assert.Empty(t, r.Header.Get("Mattermost-Plugin-ID"))
+			assert.Empty(t, r.Header.Get("Hanzo Team-Plugin-ID"))
 			assert.Empty(t, r.Header.Get(model.HeaderAuth))
 			assert.Empty(t, r.Header.Get("Referer"))
 
@@ -465,7 +465,7 @@ func TestServePluginRequest(t *testing.T) {
 			assert.NotEmpty(t, ctx.IPAddress)
 			assert.Equal(t, "en-US,en;q=0.9", ctx.AcceptLanguage)
 			assert.Equal(t, "TestAgent/1.0", ctx.UserAgent)
-			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Mattermost-User-Id"))
+			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Equal(t, session.Id, ctx.SessionId)
 		}
 
@@ -540,7 +540,7 @@ func TestServePluginRequest(t *testing.T) {
 		handlerCalled := false
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
-			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Mattermost-User-Id"))
+			assert.Equal(t, th.BasicUser.Id, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Equal(t, session.Id, ctx.SessionId)
 		}
 
@@ -562,7 +562,7 @@ func TestServePluginRequest(t *testing.T) {
 		mockHandler := func(ctx *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			handlerCalled = true
 			// Should not have user ID header due to CSRF failure
-			assert.Empty(t, r.Header.Get("Mattermost-User-Id"))
+			assert.Empty(t, r.Header.Get("Hanzo Team-User-Id"))
 			assert.Empty(t, ctx.SessionId)
 		}
 

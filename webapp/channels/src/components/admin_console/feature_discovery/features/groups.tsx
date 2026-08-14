@@ -17,13 +17,13 @@ const GroupsFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.Enterprise}
             title={defineMessage({
                 id: 'admin.groups_feature_discovery.title',
-                defaultMessage: 'Synchronize your Active Directory/LDAP groups with Mattermost Enterprise',
+                defaultMessage: 'Synchronize your Active Directory/LDAP groups with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.groups_feature_discovery.copy',
                 defaultMessage: 'Use AD/LDAP groups to organize and apply actions to multiple users at once. Manage team and channel memberships, permissions, and more.',
             })}
-            learnMoreURL='https://docs.mattermost.com/deployment/ldap-group-sync.html'
+            learnMoreURL='https://docs.hanzo.team/deployment/ldap-group-sync.html'
             featureDiscoveryImage={
                 <GroupsSVG
                     width={276}

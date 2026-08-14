@@ -353,7 +353,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 				continue
 			}
 			if users[sPost.User] == nil {
-				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Mattermost.", mlog.String("user", sPost.User))
+				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Hanzo Team.", mlog.String("user", sPost.User))
 				continue
 			}
 			newPost := model.Post{
@@ -394,7 +394,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 				continue
 			}
 			if users[sPost.Comment.User] == nil {
-				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Mattermost.", mlog.String("user", sPost.User))
+				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Hanzo Team.", mlog.String("user", sPost.User))
 				continue
 			}
 			newPost := model.Post{
@@ -439,7 +439,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 				continue
 			}
 			if users[sPost.User] == nil {
-				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Mattermost.", mlog.String("user", sPost.User))
+				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Hanzo Team.", mlog.String("user", sPost.User))
 				continue
 			}
 
@@ -467,7 +467,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 				continue
 			}
 			if users[sPost.User] == nil {
-				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Mattermost.", mlog.String("user", sPost.User))
+				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Hanzo Team.", mlog.String("user", sPost.User))
 				continue
 			}
 			newPost := model.Post{
@@ -487,7 +487,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 				continue
 			}
 			if users[sPost.User] == nil {
-				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Mattermost.", mlog.String("user", sPost.User))
+				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Hanzo Team.", mlog.String("user", sPost.User))
 				continue
 			}
 			newPost := model.Post{
@@ -504,7 +504,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 				continue
 			}
 			if users[sPost.User] == nil {
-				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Mattermost.", mlog.String("user", sPost.User))
+				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Hanzo Team.", mlog.String("user", sPost.User))
 				continue
 			}
 			newPost := model.Post{
@@ -521,7 +521,7 @@ func (si *SlackImporter) slackAddPosts(rctx request.CTX, teamId string, channel 
 				continue
 			}
 			if users[sPost.User] == nil {
-				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Mattermost.", mlog.String("user", sPost.User))
+				rctx.Logger().Debug("Slack Import: Unable to add the message as the Slack user does not exist in Hanzo Team.", mlog.String("user", sPost.User))
 				continue
 			}
 			newPost := model.Post{

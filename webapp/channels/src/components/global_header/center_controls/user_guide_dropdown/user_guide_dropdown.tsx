@@ -16,9 +16,9 @@ import {ModalIdentifiers} from 'utils/constants';
 
 import type {PropsFromRedux} from './index';
 
-const mattermostUserGuideLink = 'https://docs.mattermost.com/guides/use-mattermost.html';
+const mattermostUserGuideLink = 'https://docs.hanzo.team/guides/use-mattermost.html';
 const trainingResourcesLink = 'https://academy.mattermost.com/';
-const askTheCommunityUrl = 'https://mattermost.com/pl/default-ask-mattermost-community/';
+const askTheCommunityUrl = 'https://docs.hanzo.team/default-ask-mattermost-community/';
 
 type Props = WrappedComponentProps & PropsFromRedux;
 
@@ -72,7 +72,7 @@ class UserGuideDropdown extends React.PureComponent<Props, State> {
                     id='mattermostUserGuideLink'
                     iconClassName='icon-file-text-outline'
                     url={mattermostUserGuideLink}
-                    text={intl.formatMessage({id: 'userGuideHelp.mattermostUserGuide', defaultMessage: 'Mattermost user guide'})}
+                    text={intl.formatMessage({id: 'userGuideHelp.mattermostUserGuide', defaultMessage: 'Hanzo Team user guide'})}
                 />
                 {this.props.helpLink && (
                     <Menu.ItemExternalLink

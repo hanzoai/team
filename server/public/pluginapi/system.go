@@ -70,7 +70,7 @@ func (s *SystemService) GetPluginAssetURL(pluginID, asset string) (string, error
 	return u.String(), nil
 }
 
-// GetLicense returns the current license used by the Mattermost server. Returns nil if the
+// GetLicense returns the current license used by the Hanzo Team server. Returns nil if the
 // the server does not have a license.
 //
 // Minimum server version: 5.10
@@ -78,21 +78,21 @@ func (s *SystemService) GetLicense() *model.License {
 	return s.api.GetLicense()
 }
 
-// GetServerVersion return the current Mattermost server version
+// GetServerVersion return the current Hanzo Team server version
 //
 // Minimum server version: 5.4
 func (s *SystemService) GetServerVersion() string {
 	return s.api.GetServerVersion()
 }
 
-// IsEnterpriseReady returns true if the Mattermost server is configured as Enterprise Ready.
+// IsEnterpriseReady returns true if the Hanzo Team server is configured as Enterprise Ready.
 //
 // Minimum server version: 6.1
 func (s *SystemService) IsEnterpriseReady() bool {
 	return s.api.IsEnterpriseReady()
 }
 
-// GetSystemInstallDate returns the time that Mattermost was first installed and ran.
+// GetSystemInstallDate returns the time that Hanzo Team was first installed and ran.
 //
 // Minimum server version: 5.10
 func (s *SystemService) GetSystemInstallDate() (time.Time, error) {

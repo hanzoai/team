@@ -741,7 +741,7 @@ describe('Actions.Integrations', () => {
             reply(200, {errors: {name: 'some error'}});
 
         const submit: DialogSubmission = {
-            url: 'https://mattermost.com',
+            url: 'https://hanzo.ai',
             callback_id: '123',
             state: '123',
             channel_id: TestHelper.generateId(),

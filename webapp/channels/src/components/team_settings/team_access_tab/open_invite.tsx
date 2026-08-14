@@ -28,7 +28,7 @@ const OpenInvite = ({isPublic, isGroupConstrained, onChange}: Props) => {
                 }, {
                     link: (msg: React.ReactNode) => (
                         <ExternalLink
-                            href='https://mattermost.com/pl/default-ldap-group-constrained-team-channel.html'
+                            href='https://docs.hanzo.team/default-ldap-group-constrained-team-channel.html'
                             location='open_invite'
                         >
                             {msg}

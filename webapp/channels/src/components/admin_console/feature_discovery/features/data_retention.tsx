@@ -17,13 +17,13 @@ const DataRetentionFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.Enterprise}
             title={defineMessage({
                 id: 'admin.data_retention_feature_discovery.title',
-                defaultMessage: 'Create data retention schedules with Mattermost Enterprise',
+                defaultMessage: 'Create data retention schedules with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.data_retention_feature_discovery.copy',
                 defaultMessage: 'Hold on to your data only as long as you need to. Create data retention jobs for select channels and teams to automatically delete disposable data.',
             })}
-            learnMoreURL='https://docs.mattermost.com/administration/data-retention.html'
+            learnMoreURL='https://docs.hanzo.team/administration/data-retention.html'
             featureDiscoveryImage={
                 <DataRetentionSVG
                     width={213}

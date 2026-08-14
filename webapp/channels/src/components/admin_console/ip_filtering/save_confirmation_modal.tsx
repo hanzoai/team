@@ -54,7 +54,7 @@ export default function SaveConfirmationModal({onExited, onConfirm, title, subti
                                         customerportal: (msg) => (
                                             <ExternalLink
                                                 location='save_confirmation_modal'
-                                                href='https://customers.mattermost.com/console/ip_filtering'
+                                                href='https://hanzo.ai/console/ip_filtering'
                                             >
                                                 {msg}
                                             </ExternalLink>),

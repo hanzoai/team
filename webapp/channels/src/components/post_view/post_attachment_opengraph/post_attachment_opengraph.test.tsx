@@ -24,15 +24,15 @@ const preferenceKeys = {
 };
 
 const openGraphData = {
-    description: 'Mattermost is a secure, open source platform for communication, collaboration, and workflow orchestration across tools and teams.',
+    description: 'Hanzo Team is a secure, open source platform for communication, collaboration, and workflow orchestration across tools and teams.',
     images: [{
         height: 1256,
         secure_url: 'http://localhost:8065/api/v4/image?url=http%3A%2F%2Fmattermo…t.com%2Fwp-content%2Fuploads%2F2021%2F09%2FHomepage%402x.png',
         type: 'image/png',
         url: '',
         width: 2400}],
-    site_name: 'Mattermost.com',
-    title: 'Mattermost | Open Source Collaboration for Developers',
+    site_name: 'Hanzo Team.com',
+    title: 'Hanzo Team | Open Source Collaboration for Developers',
     type: 'website',
     url: 'https://www.mattermost.com',
 };
@@ -76,7 +76,7 @@ describe('PostAttachmentOpenGraph', () => {
         root_id: 'root_id',
         channel_id: 'channel_id',
         create_at: 1,
-        message: 'https://mattermost.com',
+        message: 'https://hanzo.ai',
         metadata: {
             images: {
                 [imageUrl]: {

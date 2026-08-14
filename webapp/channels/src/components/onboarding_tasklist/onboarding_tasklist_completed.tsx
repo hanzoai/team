@@ -172,7 +172,7 @@ const Completed = (props: Props): JSX.Element => {
                     <span className='completed-subtitle'>
                         <FormattedMessage
                             id={'onboardingTask.checklist.completed_subtitle'}
-                            defaultMessage='We hope Mattermost is more familiar now.'
+                            defaultMessage='We hope Hanzo Team is more familiar now.'
                         />
                     </span>
 
@@ -223,7 +223,7 @@ const Completed = (props: Props): JSX.Element => {
                                         link: (msg: React.ReactNode) => (
                                             <ExternalLink
                                                 location='onboarding_tasklist_completed'
-                                                href='https://mattermost.com/download#desktop'
+                                                href='https://hanzo.ai/download#desktop'
                                             >
                                                 {msg}
                                             </ExternalLink>
@@ -237,7 +237,7 @@ const Completed = (props: Props): JSX.Element => {
                         <span>
                             <FormattedMessage
                                 id='onboardingTask.checklist.disclaimer'
-                                defaultMessage='By clicking “Start trial”, I agree to the <linkEvaluation>Mattermost Software Evaluation Agreement</linkEvaluation>, <linkPrivacy>privacy policy</linkPrivacy> and receiving product emails.'
+                                defaultMessage='By clicking “Start trial”, I agree to the <linkEvaluation>Hanzo Team Software Evaluation Agreement</linkEvaluation>, <linkPrivacy>privacy policy</linkPrivacy> and receiving product emails.'
                                 values={{
                                     linkEvaluation: (msg: React.ReactNode) => (
                                         <ExternalLink

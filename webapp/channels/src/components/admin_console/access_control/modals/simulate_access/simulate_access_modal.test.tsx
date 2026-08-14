@@ -1840,7 +1840,7 @@ describe('SimulateAccessModal — picker UX', () => {
         expect(within(paginator).getByTestId('simulate-access-pagination-prev')).toBeEnabled();
     });
 
-    // Typed search bypasses pagination — Mattermost's search API
+    // Typed search bypasses pagination — Hanzo Team's search API
     // returns top-N matches and isn't cursor-paginated, so showing the
     // paginator would lie about the available navigation. The modal
     // hides the paginator while a search term is active and refetches

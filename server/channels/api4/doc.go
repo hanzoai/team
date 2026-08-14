@@ -2,12 +2,12 @@
 // See LICENSE.txt for license information.
 
 /*
-Package api4 implements the HTTP REST API layer for Mattermost server.
+Package api4 implements the HTTP REST API layer for Hanzo Team server.
 
 This package provides the primary interface between client applications
-(web, mobile, desktop) and the Mattermost server backend. It exposes
+(web, mobile, desktop) and the Hanzo Team server backend. It exposes
 HTTP endpoints that follow REST conventions for managing users, teams,
-channels, posts, and other Mattermost resources.
+channels, posts, and other Hanzo Team resources.
 
 # Architecture
 
@@ -48,7 +48,7 @@ Security is implemented through multiple layers:
   - Multi-factor authentication support
   - Secure session management
 
-The api4 package serves as the HTTP interface layer in Mattermost's
+The api4 package serves as the HTTP interface layer in Hanzo Team's
 layered architecture, providing a stable, versioned API for client
 applications while maintaining clear separation from business logic
 and data persistence concerns.

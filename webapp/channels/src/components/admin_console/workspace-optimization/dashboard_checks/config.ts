@@ -34,7 +34,7 @@ const ssl = (
         }),
         description: formatMessage({
             id: 'admin.reporting.workspace_optimization.configuration.ssl.description',
-            defaultMessage: 'We strongly recommend securing your Mattermost workspace by configuring SSL in production environments.',
+            defaultMessage: 'We strongly recommend securing your Hanzo Team workspace by configuring SSL in production environments.',
         }),
         infoUrl: DocLinks.SSL_CERTIFICATE,
         infoText: formatMessage({id: 'admin.reporting.workspace_optimization.cta.learnMore', defaultMessage: 'Learn more'}),
@@ -78,7 +78,7 @@ const sessionLength = (
 
 /**
  *
- * @description This checks to see if Mattermost is running as root.
+ * @description This checks to see if Hanzo Team is running as root.
  */
 const rootUserCheck = async (
     config: Partial<AdminConfig>,
@@ -96,11 +96,11 @@ const rootUserCheck = async (
         id: 'root_status,',
         title: formatMessage({
             id: 'admin.reporting.workspace_optimization.configuration.root_status.title',
-            defaultMessage: 'Mattermost is running as root',
+            defaultMessage: 'Hanzo Team is running as root',
         }),
         description: formatMessage({
             id: 'admin.reporting.workspace_optimization.configuration.root_status.description',
-            defaultMessage: 'Running Mattermost as root is not recommended. Please use a non-root user.',
+            defaultMessage: 'Running Hanzo Team as root is not recommended. Please use a non-root user.',
         }),
         telemetryAction: 'root_status',
         status,
@@ -130,7 +130,7 @@ const fileStorage = async (
         }),
         description: formatMessage({
             id: 'admin.reporting.workspace_optimization.configuration.file_storage.description',
-            defaultMessage: 'Check your file storage settings to ensure your Mattermost workspace has access to the configured file storage.',
+            defaultMessage: 'Check your file storage settings to ensure your Hanzo Team workspace has access to the configured file storage.',
         }),
         configUrl: ConsolePages.FILE_STORAGE,
         configText: formatMessage({id: 'admin.reporting.workspace_optimization.configuration.file_storage.cta', defaultMessage: 'Config file storage'}),

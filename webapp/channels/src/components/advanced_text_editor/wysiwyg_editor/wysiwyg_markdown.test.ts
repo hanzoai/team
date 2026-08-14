@@ -31,7 +31,7 @@ describe('isRedundantLinkText', () => {
     });
 
     it.each([
-        ['Mattermost', 'https://mattermost.com'],
+        ['Hanzo Team', 'https://hanzo.ai'],
         ['https://example.com', 'https://example.com/other'],
         ['', 'https://example.com'],
         ['https://example.com', ''],
@@ -48,7 +48,7 @@ describe('stripRedundantLinkMarks', () => {
     });
 
     it('keeps the mark when the text is a label', () => {
-        const doc = paragraph(linkText('Mattermost', 'https://mattermost.com'));
+        const doc = paragraph(linkText('Hanzo Team', 'https://hanzo.ai'));
 
         expect(stripRedundantLinkMarks(doc)).toEqual(doc);
     });
@@ -135,8 +135,8 @@ describe('serializeToMarkdown', () => {
     });
 
     it('still serializes labelled links as markdown', () => {
-        editor.commands.setContent(paragraph(linkText('Mattermost', 'https://mattermost.com')));
+        editor.commands.setContent(paragraph(linkText('Hanzo Team', 'https://hanzo.ai')));
 
-        expect(serializeToMarkdown(editor)).toBe('[Mattermost](https://mattermost.com)');
+        expect(serializeToMarkdown(editor)).toBe('[Hanzo Team](https://hanzo.ai)');
     });
 });

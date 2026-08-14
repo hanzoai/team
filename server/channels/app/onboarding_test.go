@@ -16,7 +16,7 @@ func TestOnboardingSavesOrganizationName(t *testing.T) {
 	th := Setup(t)
 
 	appErr := th.App.CompleteOnboarding(th.Context, &mm_model.CompleteOnboardingRequest{
-		Organization: "Mattermost In Tests",
+		Organization: "Hanzo Team In Tests",
 	})
 	require.Nil(t, appErr)
 	defer func() {
@@ -26,5 +26,5 @@ func TestOnboardingSavesOrganizationName(t *testing.T) {
 
 	sys, storeErr := th.App.Srv().Store().System().GetByName(mm_model.SystemOrganizationName)
 	require.NoError(t, storeErr)
-	require.Equal(t, "Mattermost In Tests", sys.Value)
+	require.Equal(t, "Hanzo Team In Tests", sys.Value)
 }

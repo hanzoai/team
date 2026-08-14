@@ -25,7 +25,7 @@ const ErrorMessage: React.FC<Props> = ({type, message, service, isGuest}: Props)
                 <div>
                     <FormattedMessage
                         id='error.local_storage.message'
-                        defaultMessage='Mattermost was unable to load because a setting in your browser prevents the use of its local storage features. To allow Mattermost to load, try the following actions:'
+                        defaultMessage='Hanzo Team was unable to load because a setting in your browser prevents the use of its local storage features. To allow Hanzo Team to load, try the following actions:'
                     />
                     <ul>
                         <li>
@@ -124,7 +124,7 @@ const ErrorMessage: React.FC<Props> = ({type, message, service, isGuest}: Props)
                             values={{
                                 link: (
                                     <ErrorLink
-                                        url={'https://docs.mattermost.com/deployment/sso-google.html'}
+                                        url={'https://docs.hanzo.team/deployment/sso-google.html'}
                                         message={defineMessage({
                                             id: 'error.oauth_missing_code.google.link',
                                             defaultMessage: 'Google Apps',
@@ -137,11 +137,11 @@ const ErrorMessage: React.FC<Props> = ({type, message, service, isGuest}: Props)
                     <p>
                         <FormattedMessage
                             id='error.oauth_missing_code.office365'
-                            defaultMessage='For {link} make sure the administrator of your Microsoft organization has enabled the Mattermost app.'
+                            defaultMessage='For {link} make sure the administrator of your Microsoft organization has enabled the Hanzo Team app.'
                             values={{
                                 link: (
                                     <ErrorLink
-                                        url={'https://docs.mattermost.com/deployment/sso-office.html'}
+                                        url={'https://docs.hanzo.team/deployment/sso-office.html'}
                                         message={defineMessage({
                                             id: 'error.oauth_missing_code.office365.link',
                                             defaultMessage: 'Entra ID',
@@ -158,7 +158,7 @@ const ErrorMessage: React.FC<Props> = ({type, message, service, isGuest}: Props)
                             values={{
                                 link: (
                                     <ErrorLink
-                                        url={'https://docs.mattermost.com/deployment/sso-gitlab.html'}
+                                        url={'https://docs.hanzo.team/deployment/sso-gitlab.html'}
                                         message={defineMessage({
                                             id: 'error.oauth_missing_code.gitlab.link',
                                             defaultMessage: 'GitLab',
@@ -175,7 +175,7 @@ const ErrorMessage: React.FC<Props> = ({type, message, service, isGuest}: Props)
                             values={{
                                 link: (
                                     <ErrorLink
-                                        url={'https://forum.mattermost.com/c/trouble-shoot'}
+                                        url={'https://docs.hanzo.team/c/trouble-shoot'}
                                         message={defineMessage({
                                             id: 'error.oauth_missing_code.forum.link',
                                             defaultMessage: 'Troubleshooting forum',
@@ -193,7 +193,7 @@ const ErrorMessage: React.FC<Props> = ({type, message, service, isGuest}: Props)
                 <p>
                     <FormattedMessage
                         id='error.oauth_access_denied'
-                        defaultMessage='You must authorize Mattermost to log in with {service}.'
+                        defaultMessage='You must authorize Hanzo Team to log in with {service}.'
                         values={{
                             service,
                         }}

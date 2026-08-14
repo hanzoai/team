@@ -532,7 +532,7 @@ export default function AbstractOutgoingOAuthConnection(props: Props) {
                     defaultMessage={'Get help with <link>configuring outgoing OAuth connections</link>.'}
                     values={{
                         link: (text) => (
-                            <a href='https://mattermost.com/pl/outgoing-oauth-connections'>{text}</a>
+                            <a href='https://docs.hanzo.team/outgoing-oauth-connections'>{text}</a>
                         ),
                     }}
                 />

@@ -107,7 +107,7 @@ describe('getReportAProblemLink', () => {
 
         const link = getReportAProblemLink(state);
         expect(link).toContain('mailto:reportaproblem@mattermost.com');
-        expect(link).toContain(encodeURIComponent('Problem with Mattermost app'));
+        expect(link).toContain(encodeURIComponent('Problem with Hanzo Team app'));
         expect(link).toContain(encodeURIComponent('Current User Id: user1'));
         expect(link).toContain(encodeURIComponent('Current Team Id: team1'));
         expect(link).toContain(encodeURIComponent('Server Version: 10.0.0 (Build 99999)'));
@@ -130,7 +130,7 @@ describe('getReportAProblemLink', () => {
             },
         } as unknown as GlobalState;
 
-        expect(getReportAProblemLink(state)).toContain('https://mattermost.com/pl/report_a_problem_unlicensed');
+        expect(getReportAProblemLink(state)).toContain('https://docs.hanzo.team/report_a_problem_unlicensed');
     });
 
     it('should return the default unlicensed URL if licensed with entry SKU', () => {
@@ -150,7 +150,7 @@ describe('getReportAProblemLink', () => {
             },
         } as unknown as GlobalState;
 
-        expect(getReportAProblemLink(state)).toContain('https://mattermost.com/pl/report_a_problem_unlicensed');
+        expect(getReportAProblemLink(state)).toContain('https://docs.hanzo.team/report_a_problem_unlicensed');
     });
 });
 
@@ -175,7 +175,7 @@ describe('getDefaultReportAProblemMailtoLink', () => {
     it('should include correct metadata in the email body', () => {
         const link = getDefaultReportAProblemMailtoLink(baseState);
         expect(link).toContain('mailto:reportaproblem@mattermost.com');
-        expect(link).toContain(encodeURIComponent('Problem with Mattermost app'));
+        expect(link).toContain(encodeURIComponent('Problem with Hanzo Team app'));
         expect(link).toContain(encodeURIComponent('Current User Id: user1'));
         expect(link).toContain(encodeURIComponent('Current Team Id: team1'));
         expect(link).toContain(encodeURIComponent('Server Version: 10.0.0 (Build 99999)'));

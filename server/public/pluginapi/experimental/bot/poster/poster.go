@@ -27,7 +27,7 @@ type Poster interface {
 	// DMUpdatePost substitute one post with another
 	UpdatePost(post *model.Post) error
 
-	// UpdatePosterID updates the Mattermost User ID of the poster
+	// UpdatePosterID updates the Hanzo Team User ID of the poster
 	UpdatePosterID(id string)
 }
 

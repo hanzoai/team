@@ -76,7 +76,7 @@ const TrialLicenseCard: React.FC<Props> = ({license}: Props) => {
     const cardTitle = (
         <FormattedMessage
             id='admin.license.trialCard.licenseExpiring'
-            defaultMessage='You’re currently on a free trial of our Mattermost {licenseType}.'
+            defaultMessage='You’re currently on a free trial of our Hanzo Team {licenseType}.'
             values={{
                 licenseType: getSkuDisplayName(license.SkuShortName, license.IsGovSku === 'true'),
             }}

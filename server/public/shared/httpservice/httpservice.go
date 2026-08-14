@@ -26,7 +26,7 @@ type HTTPService interface {
 	// implementation provides:
 	// - A shorter timeout for dial and TLS handshake (defined as constant "ConnectTimeout")
 	// - A timeout for end-to-end requests
-	// - A Mattermost-specific user agent header
+	// - A Hanzo Team-specific user agent header
 	// - Additional security for untrusted and insecure connections
 	MakeTransport(trustURLs bool) *MattermostTransport
 }

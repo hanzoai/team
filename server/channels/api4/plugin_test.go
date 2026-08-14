@@ -822,7 +822,7 @@ func TestGetInstalledMarketplacePlugins(t *testing.T) {
 				Manifest: &model.Manifest{
 					Id:               "com.mattermost.nps",
 					Name:             "User Satisfaction Surveys",
-					Description:      "This plugin sends quarterly user satisfaction surveys to gather feedback and help improve Mattermost.",
+					Description:      "This plugin sends quarterly user satisfaction surveys to gather feedback and help improve Hanzo Team.",
 					Version:          "1.0.4",
 					MinServerVersion: "5.14.0",
 				},
@@ -959,7 +959,7 @@ func TestSearchGetMarketplacePlugins(t *testing.T) {
 				Manifest: &model.Manifest{
 					Id:               "com.mattermost.nps",
 					Name:             "User Satisfaction Surveys",
-					Description:      "This plugin sends quarterly user satisfaction surveys to gather feedback and help improve Mattermost.",
+					Description:      "This plugin sends quarterly user satisfaction surveys to gather feedback and help improve Hanzo Team.",
 					Version:          "1.0.4",
 					MinServerVersion: "5.14.0",
 				},

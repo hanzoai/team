@@ -29,7 +29,7 @@ type Status struct {
 	LastActivityAt int64  `json:"last_activity_at" xml:"LastActivityAt"`
 	ActiveChannel  string `json:"active_channel,omitempty" db:"-" xml:"ActiveChannel,omitempty"`
 
-	// DNDEndTime is the time that the user's DND status will expire. Unlike other timestamps in Mattermost, this value
+	// DNDEndTime is the time that the user's DND status will expire. Unlike other timestamps in Hanzo Team, this value
 	// is in seconds instead of milliseconds.
 	DNDEndTime int64 `json:"dnd_end_time" xml:"DNDEndTime"`
 

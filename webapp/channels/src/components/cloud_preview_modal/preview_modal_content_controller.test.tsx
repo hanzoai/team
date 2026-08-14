@@ -98,7 +98,7 @@ describe('PreviewModalController', () => {
         );
 
         // Should still render the modal with default content (first item from modalContent)
-        expect(screen.getByText('Welcome to your Mattermost preview')).toBeInTheDocument();
+        expect(screen.getByText('Welcome to your Hanzo Team preview')).toBeInTheDocument();
     });
 
     it('should render first slide initially', () => {

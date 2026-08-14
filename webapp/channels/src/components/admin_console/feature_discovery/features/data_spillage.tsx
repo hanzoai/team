@@ -17,13 +17,13 @@ const DataSpillageFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.EnterpriseAdvanced}
             title={defineMessage({
                 id: 'admin.data_spillage_feature_discovery.title',
-                defaultMessage: 'Handle data spillage with Mattermost Enterprise Advanced',
+                defaultMessage: 'Handle data spillage with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.data_spillage_feature_discovery.desc',
                 defaultMessage: 'Set up the ability for users to quarantine messages so designated Content Reviewers can decide whether to keep or remove them.',
             })}
-            learnMoreURL='https://docs.mattermost.com/administration-guide/manage/admin/content-flagging.html'
+            learnMoreURL='https://docs.hanzo.team/administration-guide/manage/admin/content-flagging.html'
             featureDiscoveryImage={
                 <DataSpillageSVG
                     width={294}

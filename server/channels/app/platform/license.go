@@ -91,7 +91,8 @@ func (ps *PlatformService) LoadLicense() {
 		// Lets attempt to load the file from disk since it was missing from the DB
 		license, licenseBytes, err := utils.GetAndValidateLicenseFileFromDisk(*ps.Config().ServiceSettings.LicenseFileLocation)
 		if err != nil {
-			ps.logger.Warn("Failed to get license from disk", mlog.Err(err))
+			// Running unlicensed is this server's normal state, not a fault.
+			ps.logger.Debug("No license file on disk", mlog.Err(err))
 		} else {
 			if _, err := ps.SaveLicense(licenseBytes); err != nil {
 				ps.logger.Error("Failed to save license key loaded from disk.", mlog.Err(err))
@@ -103,20 +104,8 @@ func (ps *PlatformService) LoadLicense() {
 
 	record, nErr := ps.Store.License().Get(sqlstore.RequestContextWithMaster(c), licenseId)
 	if nErr != nil {
-		if ps.Config().FeatureFlags.EnableMattermostEntry && model.BuildEnterpriseReady == "true" {
-			ps.logger.Info("Mattermost Entry is enabled. Unlocking enterprise features.")
-
-			if ps.LicenseManager() == nil {
-				ps.logger.Warn("License manager not available, setting license to nil.")
-				ps.SetLicense(nil)
-				return
-			}
-
-			ps.SetLicense(ps.LicenseManager().NewMattermostEntryLicense(ps.telemetryId))
-		} else {
-			ps.logger.Warn("License key from https://mattermost.com required to unlock enterprise features.", mlog.Err(nErr))
-			ps.SetLicense(nil)
-		}
+		ps.logger.Debug("Running without a license", mlog.Err(nErr))
+		ps.SetLicense(nil)
 		return
 	}
 

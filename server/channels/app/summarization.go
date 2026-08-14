@@ -52,7 +52,7 @@ func (a *App) SummarizePostsWithInstructions(rctx request.CTX, userID string, po
 	// Build conversation context from posts and collect post IDs
 	conversationText, postIDs := buildConversationTextWithIDs(posts)
 
-	systemPrompt := "You are an expert at analyzing team conversations and extracting key information. Your task is to summarize a conversation from a Mattermost channel, identifying the most important highlights and any actionable items. Return ONLY valid JSON with 'highlights' and 'action_items' keys, each containing an array of strings. If there are no highlights or action items, return empty arrays. Do not make up information - only include items explicitly mentioned in the conversation."
+	systemPrompt := "You are an expert at analyzing team conversations and extracting key information. Your task is to summarize a conversation from a Hanzo Team channel, identifying the most important highlights and any actionable items. Return ONLY valid JSON with 'highlights' and 'action_items' keys, each containing an array of strings. If there are no highlights or action items, return empty arrays. Do not make up information - only include items explicitly mentioned in the conversation."
 	customInstructionsBlock := ""
 	if customInstructions = strings.TrimSpace(customInstructions); customInstructions != "" {
 		customInstructionsBlock = fmt.Sprintf("\nAdditional user instructions:\n%s\n", customInstructions)

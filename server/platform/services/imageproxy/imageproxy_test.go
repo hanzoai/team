@@ -18,7 +18,7 @@ func TestGetProxiedImageURL(t *testing.T) {
 	parsedURL, err := url.Parse(siteURL)
 	require.NoError(t, err)
 
-	imageURL := "https://mattermost.com/wp-content/uploads/2022/02/logoHorizontal.png"
+	imageURL := "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png"
 	proxiedURL := "https://mattermost.example.com/api/v4/image?url=https%3A%2F%2Fmattermost.com%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
 
 	proxy := ImageProxy{siteURL: parsedURL}
@@ -44,7 +44,7 @@ func TestGetProxiedImageURL(t *testing.T) {
 			Expected: siteURL,
 		},
 		{
-			Name:     "should not proxy an image on the Mattermost server",
+			Name:     "should not proxy an image on the Hanzo Team server",
 			Input:    "https://mattermost.example.com/static/logo.png",
 			Expected: "https://mattermost.example.com/static/logo.png",
 		},
@@ -83,7 +83,7 @@ func TestGetProxiedImageURL(t *testing.T) {
 func TestGetUnproxiedImageURL(t *testing.T) {
 	siteURL := "https://mattermost.example.com"
 
-	imageURL := "https://mattermost.com/wp-content/uploads/2022/02/logoHorizontal.png"
+	imageURL := "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png"
 	proxiedURL := "https://mattermost.example.com/api/v4/image?url=https%3A%2F%2Fmattermost.com%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
 
 	for _, test := range []struct {
@@ -102,7 +102,7 @@ func TestGetUnproxiedImageURL(t *testing.T) {
 			Expected: "/static/logo.png",
 		},
 		{
-			Name:     "should not remove proxy from an image on the Mattermost server",
+			Name:     "should not remove proxy from an image on the Hanzo Team server",
 			Input:    "https://mattermost.example.com/static/logo.png",
 			Expected: "https://mattermost.example.com/static/logo.png",
 		},

@@ -119,7 +119,7 @@ const Plugins = (props: Props) => {
                                     checked: props.options.jira,
                                     tooltip: formatMessage({
                                         id: 'onboarding_wizard.plugins.jira.tooltip',
-                                        defaultMessage: 'Create Jira tickets from messages in Mattermost, get notified of important updates in Jira',
+                                        defaultMessage: 'Create Jira tickets from messages in Hanzo Team, get notified of important updates in Jira',
                                     }),
                                 },
                                 {
@@ -133,7 +133,7 @@ const Plugins = (props: Props) => {
                                     checked: props.options.zoom,
                                     tooltip: formatMessage({
                                         id: 'onboarding_wizard.plugins.zoom.tooltip',
-                                        defaultMessage: 'Start Zoom audio and video conferencing calls in Mattermost with a single click',
+                                        defaultMessage: 'Start Zoom audio and video conferencing calls in Hanzo Team with a single click',
                                     }),
                                 },
                                 {
@@ -147,7 +147,7 @@ const Plugins = (props: Props) => {
                                     checked: props.options.servicenow,
                                     tooltip: formatMessage({
                                         id: 'onboarding_wizard.plugins.servicenow.tooltip',
-                                        defaultMessage: 'This plugin serves as an integration between Mattermost and ServiceNow.',
+                                        defaultMessage: 'This plugin serves as an integration between Hanzo Team and ServiceNow.',
                                     }),
                                 },
                             ]}
@@ -161,7 +161,7 @@ const Plugins = (props: Props) => {
                                         a: (chunks: React.ReactNode | React.ReactNodeArray) => (
                                             <strong>
                                                 <ExternalLink
-                                                    href='https://mattermost.com/marketplace/'
+                                                    href='https://hanzo.ai/marketplace/'
                                                     location='preparing_workspace_plugins'
                                                     onClick={props.handleVisitMarketPlaceClick}
                                                 >

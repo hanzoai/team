@@ -30,7 +30,7 @@ describe('components/external_link', () => {
         renderWithContext(
             <ExternalLink
                 location='test'
-                href='https://mattermost.com'
+                href='https://hanzo.ai'
             >
                 {'Click Me'}
             </ExternalLink>,
@@ -42,7 +42,7 @@ describe('components/external_link', () => {
         expect(linkElement).toBeInTheDocument();
         expect(linkElement).toHaveAttribute('target', '_blank');
         expect(linkElement).toHaveAttribute('rel', 'noopener noreferrer');
-        expect(linkElement).toHaveAttribute('href', expect.stringContaining('https://mattermost.com'));
+        expect(linkElement).toHaveAttribute('href', expect.stringContaining('https://hanzo.ai'));
     });
 
     it('should attach parameters', () => {
@@ -61,7 +61,7 @@ describe('components/external_link', () => {
         renderWithContext(
             <ExternalLink
                 location='test'
-                href='https://mattermost.com'
+                href='https://hanzo.ai'
             >
                 {'Click Me'}
             </ExternalLink>,
@@ -97,7 +97,7 @@ describe('components/external_link', () => {
         renderWithContext(
             <ExternalLink
                 location='test'
-                href='https://mattermost.com'
+                href='https://hanzo.ai'
             >
                 {'Click Me'}
             </ExternalLink>,
@@ -126,7 +126,7 @@ describe('components/external_link', () => {
         renderWithContext(
             <ExternalLink
                 location='test'
-                href='https://mattermost.com?test=true'
+                href='https://hanzo.ai?test=true'
             >
                 {'Click Me'}
             </ExternalLink>,
@@ -135,7 +135,7 @@ describe('components/external_link', () => {
 
         expect(screen.queryByText('Click Me')).toHaveAttribute(
             'href',
-            'https://mattermost.com/?utm_source=mattermost&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=&test=true',
+            'https://hanzo.ai/?utm_source=mattermost&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=&test=true',
         );
     });
 
@@ -219,7 +219,7 @@ describe('components/external_link', () => {
         renderWithContext(
             <ExternalLink
                 location='test'
-                href='https://mattermost.com#desktop'
+                href='https://hanzo.ai#desktop'
             >
                 {'Click Me'}
             </ExternalLink>,
@@ -228,7 +228,7 @@ describe('components/external_link', () => {
 
         expect(screen.queryByText('Click Me')).toHaveAttribute(
             'href',
-            'https://mattermost.com/?utm_source=mattermost&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=#desktop',
+            'https://hanzo.ai/?utm_source=mattermost&utm_medium=in-product-cloud&utm_content=test&uid=currentUserId&sid=&edition=team&server_version=#desktop',
         );
     });
 });

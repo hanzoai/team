@@ -6,7 +6,7 @@ import (
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 )
 
-// AuditService exposes methods to emit audit records through the Mattermost server audit pipeline.
+// AuditService exposes methods to emit audit records through the Hanzo Team server audit pipeline.
 type AuditService struct {
 	api plugin.API
 }

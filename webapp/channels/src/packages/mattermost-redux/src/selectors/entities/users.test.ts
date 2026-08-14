@@ -29,7 +29,7 @@ describe('Selectors.Users', () => {
 
     const user1 = TestHelper.fakeUserWithId('');
     user1.username = 'user1';
-    user1.position = 'Software Engineer at Mattermost';
+    user1.position = 'Software Engineer at Hanzo Team';
     user1.notify_props = {mention_keys: 'testkey1,testkey2'} as UserProfile['notify_props'];
     user1.roles = 'system_admin system_user';
     const user2 = TestHelper.fakeUserWithId();

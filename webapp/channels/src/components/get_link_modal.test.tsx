@@ -14,7 +14,7 @@ describe('components/GetLinkModal', () => {
         onHide,
         onExited: jest.fn(),
         title: 'title',
-        link: 'https://mattermost.com',
+        link: 'https://hanzo.ai',
     };
 
     beforeEach(() => {

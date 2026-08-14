@@ -15,7 +15,7 @@ import type {AdminDefinitionSetting, AdminDefinitionSubSectionSchema} from '../t
 
 describe('components/admin_console/ldap_wizard/LDAPBooleanSetting', () => {
     const WARNING_TITLE = 'Skipping certificate verification is not recommended for production environments';
-    const WARNING_TEXT = 'Mattermost will not validate the server certificate.';
+    const WARNING_TEXT = 'Hanzo Team will not validate the server certificate.';
 
     const schema = {id: 'LdapSettings', name: 'ldap'} as AdminDefinitionSubSectionSchema;
 

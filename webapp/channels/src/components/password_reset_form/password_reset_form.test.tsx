@@ -12,7 +12,7 @@ describe('components/PasswordResetForm', () => {
         location: {
             search: '',
         },
-        siteName: 'Mattermost',
+        siteName: 'Hanzo Team',
         actions: {
             resetUserPassword: jest.fn().mockResolvedValue({data: true}),
         },

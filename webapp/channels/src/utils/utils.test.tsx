@@ -25,16 +25,16 @@ describe('Utils.getFileType', () => {
     test('should identify image files from URLs without extensions', () => {
         // Test URLs with /api/v4/image and ?url= parameter
         expect(getFileType('/api/v4/image?url=https://example.com/image-without-extension')).toBe(FileTypes.IMAGE);
-        expect(getFileType('https://mattermost.com/api/v4/image?url=https://example.com/another-image')).toBe(FileTypes.IMAGE);
+        expect(getFileType('https://hanzo.ai/api/v4/image?url=https://example.com/another-image')).toBe(FileTypes.IMAGE);
 
         // Test URLs with /api/v4/image and &url= parameter (in case it's not the first parameter)
         expect(getFileType('/api/v4/image?param=value&url=https://example.com/image')).toBe(FileTypes.IMAGE);
-        expect(getFileType('https://mattermost.com/api/v4/image?param=value&url=https://example.com/image')).toBe(FileTypes.IMAGE);
+        expect(getFileType('https://hanzo.ai/api/v4/image?param=value&url=https://example.com/image')).toBe(FileTypes.IMAGE);
     });
 
     test('should identify image files from proxied URLs', () => {
         expect(getFileType('/api/v4/image?url=https://example.com/image.jpg')).toBe(FileTypes.IMAGE);
-        expect(getFileType('https://mattermost.com/api/v4/image?url=https://example.com/image.png')).toBe(FileTypes.IMAGE);
+        expect(getFileType('https://hanzo.ai/api/v4/image?url=https://example.com/image.png')).toBe(FileTypes.IMAGE);
     });
 
     test('should handle invalid image URLs gracefully', () => {

@@ -2,11 +2,11 @@
 // See LICENSE.txt for license information.
 
 /*
-Package app provides the business logic layer for Mattermost Channels.
+Package app provides the business logic layer for Hanzo Team Channels.
 
 This package serves as the core business logic layer that sits between the API layer (api4)
 and the data access layer (store). It contains the primary application logic for all
-Mattermost functionality including user management, channel operations, post handling,
+Hanzo Team functionality including user management, channel operations, post handling,
 notifications, authentication, authorization, and integrations.
 
 # Architecture
@@ -79,7 +79,7 @@ The package uses model.AppError for consistent error handling across the
 application. Errors include structured information for logging, user
 messages, and HTTP status codes.
 
-This package is central to the Mattermost server architecture and provides
+This package is central to the Hanzo Team server architecture and provides
 the foundation for all collaboration features in the platform.
 */
 package app

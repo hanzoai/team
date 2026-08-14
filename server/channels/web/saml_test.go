@@ -24,7 +24,7 @@ func TestSamlCallbackIncludesSrvParameter(t *testing.T) {
 		// Verify the pattern: when we construct a redirect URL for mobile,
 		// it should include "srv" parameter with the server's site URL
 
-		siteURL := "https://mattermost.example.com"
+		siteURL := "https://team.example.com"
 		sessionToken := "test-session-token"
 		csrfToken := "test-csrf-token"
 

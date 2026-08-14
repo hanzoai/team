@@ -19,7 +19,7 @@ import (
 )
 
 const testUserAgentChrome = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
-const testUserAgentDesktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36"
+const testUserAgentDesktop = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Hanzo Team/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36"
 
 func enableSessionAttributesCollection(t *testing.T, th *TestHelper) {
 	t.Helper()

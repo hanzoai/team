@@ -2378,14 +2378,14 @@ func testSearchURLsPostgres(t *testing.T, th *SearchTestHelper) {
 	// Create posts with various URL formats
 	fullUrlId := createPost("check out https://example.com/path/to/page for more info")
 	urlNoProtocolId := createPost("visit example.org/docs today")
-	urlNoPathId := createPost("go to https://mattermost.com for details")
+	urlNoPathId := createPost("go to https://hanzo.ai for details")
 	urlNoProtocolNoPathId := createPost("see testsite.io now")
 	httpUrlId := createPost("old link http://legacy.example.net/old")
 
 	defer th.deleteUserPosts(th.User.Id)
 
 	// Note: Searching for URLs with the protocol (https://, http://) doesn't work because
-	// Mattermost strips special characters (including ":") from search terms before sending
+	// Hanzo Team strips special characters (including ":") from search terms before sending
 	// them to PostgreSQL. This is defined in specialSearchChars (store.go) and applied in
 	// post_store.go. The colon is stripped because it has special meaning in PostgreSQL's
 	// to_tsquery() function (prefix operator). As a result, "https://example.com" becomes
@@ -2404,7 +2404,7 @@ func testSearchURLsPostgres(t *testing.T, th *SearchTestHelper) {
 		},
 		{
 			name:        "Search URL with protocol but without path does not match",
-			terms:       "https://mattermost.com",
+			terms:       "https://hanzo.ai",
 			expectedIDs: []string{},
 		},
 		{

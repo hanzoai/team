@@ -344,7 +344,7 @@ export const getSearchResults: (state: GlobalState) => Post[] = createSelector(
 );
 
 // Returns the matched text from the search results, if the server has provided them.
-// These matches will only be present if the server is running Mattermost 5.1 or higher
+// These matches will only be present if the server is running Hanzo Team 5.1 or higher
 // with Elasticsearch enabled to search posts. Otherwise, null will be returned.
 export function getSearchMatches(state: GlobalState): {
     [x: string]: string[];

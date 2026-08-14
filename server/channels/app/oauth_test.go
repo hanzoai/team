@@ -336,7 +336,7 @@ func TestAuthorizeOAuthUser(t *testing.T) {
 	}
 
 	makeRequest := func(cookie string) *http.Request {
-		request, err := http.NewRequest(http.MethodGet, "https://mattermost.example.com", nil)
+		request, err := http.NewRequest(http.MethodGet, "https://team.example.com", nil)
 		require.NoError(t, err)
 
 		if cookie != "" {
@@ -731,7 +731,7 @@ func TestGetAuthorizationCode(t *testing.T) {
 					*cfg.ServiceSettings.SiteURL = tc.SiteURL
 				})
 
-				request, _ := http.NewRequest(http.MethodGet, "https://mattermost.example.com", nil)
+				request, _ := http.NewRequest(http.MethodGet, "https://team.example.com", nil)
 
 				stateProps := map[string]string{
 					"email":  "email@example.com",

@@ -38,7 +38,7 @@ const HelpMessaging = (): JSX.Element => {
                     <p>
                         <FormattedMessage
                             id='help.messaging.write.description'
-                            defaultMessage='Use the text input box at the bottom of the Mattermost interface to write a message. Press <b>ENTER</b> to send the message. Use <b>SHIFT+ENTER</b> to create a new line without sending a message.'
+                            defaultMessage='Use the text input box at the bottom of the Hanzo Team interface to write a message. Press <b>ENTER</b> to send the message. Use <b>SHIFT+ENTER</b> to create a new line without sending a message.'
                             values={{
                                 b: (chunks: React.ReactNode) => <b>{chunks}</b>,
                             }}
@@ -160,7 +160,7 @@ const HelpMessaging = (): JSX.Element => {
                                 code: (chunks: React.ReactNode) => <code>{chunks}</code>,
                                 link: (chunks: React.ReactNode) => (
                                     <ExternalLink
-                                        href='https://docs.mattermost.com/end-user-guide/collaborate/react-with-emojis-gifs.html#upload-custom-emojis'
+                                        href='https://docs.hanzo.team/end-user-guide/collaborate/react-with-emojis-gifs.html#upload-custom-emojis'
                                         location='help_messaging'
                                     >
                                         {chunks}
@@ -181,7 +181,7 @@ const HelpMessaging = (): JSX.Element => {
                     <p>
                         <FormattedMessage
                             id='help.messaging.attach.description'
-                            defaultMessage='Drag and drop files into Mattermost, or select the Attachment icon in the text input box.'
+                            defaultMessage='Drag and drop files into Hanzo Team, or select the Attachment icon in the text input box.'
                         />
                     </p>
                 </section>

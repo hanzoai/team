@@ -149,7 +149,7 @@ describe('components/signup/Signup', () => {
             EnableCustomBrand: 'false',
             CustomBrandText: '',
             CustomDescriptionText: '',
-            SiteName: 'Mattermost',
+            SiteName: 'Hanzo Team',
             ExperimentalPrimaryTeam: '',
         };
     });
@@ -457,8 +457,8 @@ describe('components/signup/Signup', () => {
     });
 
     it('should show terms and privacy checkbox', async () => {
-        mockConfig.TermsOfServiceLink = 'https://mattermost.com/terms';
-        mockConfig.PrivacyPolicyLink = 'https://mattermost.com/privacy';
+        mockConfig.TermsOfServiceLink = 'https://hanzo.ai/terms';
+        mockConfig.PrivacyPolicyLink = 'https://hanzo.ai/privacy';
 
         const {container: signupContainer} = renderWithContext(
             <Signup/>,

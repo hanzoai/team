@@ -14,7 +14,7 @@ import webMarketplaceBannerBackground from 'images/marketplace-notice-background
 
 import ExternalLink from '../external_link';
 
-const WEB_MARKETPLACE_LINK = 'https://mattermost.com/marketplace';
+const WEB_MARKETPLACE_LINK = 'https://hanzo.ai/marketplace';
 
 const WebMarketplaceBanner = () => {
     const {formatMessage} = useIntl();
@@ -30,7 +30,7 @@ const WebMarketplaceBanner = () => {
                     <ArrowRightIcon size={24}/>
                 </Title>
                 <Description>
-                    {formatMessage({id: 'marketplace_modal.web_marketplace_link.desc', defaultMessage: 'Connect the tools you use most to Mattermost'})}
+                    {formatMessage({id: 'marketplace_modal.web_marketplace_link.desc', defaultMessage: 'Connect the tools you use most to Hanzo Team'})}
                 </Description>
                 <IconsContainer>
                     <PluginIcon src={pluginIconConfluence}/>

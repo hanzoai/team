@@ -7,9 +7,9 @@ export function getBrowserInfo() {
     let browser = 'Unknown';
     let browserVersion = 'Unknown';
 
-    // Check if it's Mattermost Desktop App first
+    // Check if it's Hanzo Team Desktop App first
     if (userAgent.includes('mattermost')) {
-        browser = 'Mattermost Desktop App';
+        browser = 'Hanzo Team Desktop App';
         const match = userAgent.match(/mattermost\/(\d+(\.\d+)*)/i);
 
         if (match && match[1]) {
@@ -60,12 +60,12 @@ export function getBrowserInfo() {
 }
 
 export function isDesktopApp(): boolean {
-    return window.navigator.userAgent.indexOf('Mattermost') !== -1 && window.navigator.userAgent.indexOf('Electron') !== -1;
+    return window.navigator.userAgent.indexOf('Hanzo Team') !== -1 && window.navigator.userAgent.indexOf('Electron') !== -1;
 }
 
 export function getDesktopVersion(): string {
     // use if the value window.desktop.version is not set yet
-    const regex = /Mattermost\/(\d+\.\d+\.\d+)/gm;
+    const regex = /Hanzo Team\/(\d+\.\d+\.\d+)/gm;
     const match = regex.exec(window.navigator.appVersion)?.[1] || '';
     return match;
 }

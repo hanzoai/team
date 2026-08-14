@@ -34,7 +34,7 @@ describe('components/admin_console/license_settings/enterprise_edition/enterpris
         ExpiresAt: '1620335443650',
         SkuShortName: 'Enterprise',
         Name: 'LicenseName',
-        Company: 'Mattermost Inc.',
+        Company: 'Hanzo AI Inc.',
         Users: '1000',
     };
 
@@ -251,7 +251,7 @@ describe('components/admin_console/license_settings/enterprise_edition/enterpris
         );
 
         // Check for the title section - should only show the plan name, not "Enterprise Edition"
-        expect(screen.getByText('Mattermost Entry')).toBeInTheDocument();
+        expect(screen.getByText('Hanzo Team Entry')).toBeInTheDocument();
 
         // Verify that "Enterprise Edition" pre-title is no longer displayed
         expect(screen.queryByText('Enterprise Edition')).not.toBeInTheDocument();

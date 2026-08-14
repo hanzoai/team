@@ -153,7 +153,7 @@ func TestVerifySignatureMFIPluginPublicKey(t *testing.T) {
 
 // TestVerifyPluginMFIFeatureFlag covers the feature-flagged path in
 // verifyPlugin: gating by EnableMFIPluginSignaturePublicKey, reader
-// rewinding between the hard-coded Mattermost and MFI key attempts, and
+// rewinding between the hard-coded Hanzo Team and MFI key attempts, and
 // falling back to admin-configured keys when the flag is off.
 func TestVerifyPluginMFIFeatureFlag(t *testing.T) {
 	mainHelper.Parallel(t)

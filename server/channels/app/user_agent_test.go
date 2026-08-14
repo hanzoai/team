@@ -62,7 +62,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "MM App 3.7.1",
-		UserAgent:              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36",
+		UserAgent:              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Hanzo Team/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36",
 		ExpectedPlatformName:   "Macintosh",
 		ExpectedOSName:         "Mac OS",
 		ExpectedBrowserName:    "Desktop App",
@@ -150,7 +150,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "Mobile App",
-		UserAgent:              "Mattermost Mobile/2.7.0+482 (Android; 13; sdk_gphone64_arm64)",
+		UserAgent:              "Hanzo Team Mobile/2.7.0+482 (Android; 13; sdk_gphone64_arm64)",
 		ExpectedPlatformName:   "Linux",
 		ExpectedOSName:         "Android",
 		ExpectedBrowserName:    "Mobile App",
@@ -158,7 +158,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "Mobile App (long version, truncated)",
-		UserAgent:              "Mattermost Mobile/233.234441.341234223421341234529099823109834440981234+abcdef3214eafeabc3242331129857301afesfffff1930a84e4bd2348fe129ac1309bd929dca3419af934bfe3089fcd (Android; 13; sdk_gphone64_arm64)",
+		UserAgent:              "Hanzo Team Mobile/233.234441.341234223421341234529099823109834440981234+abcdef3214eafeabc3242331129857301afesfffff1930a84e4bd2348fe129ac1309bd929dca3419af934bfe3089fcd (Android; 13; sdk_gphone64_arm64)",
 		ExpectedPlatformName:   "Linux",
 		ExpectedOSName:         "Android",
 		ExpectedBrowserName:    "Mobile App",
@@ -174,7 +174,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "Desktop App (Mac)",
-		UserAgent:              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.127 Electron/31.2.1 Safari/537.36 Mattermost/5.9.0",
+		UserAgent:              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.6478.127 Electron/31.2.1 Safari/537.36 Hanzo Team/5.9.0",
 		ExpectedPlatformName:   "Macintosh",
 		ExpectedOSName:         "Mac OS",
 		ExpectedBrowserName:    "Desktop App",
@@ -182,7 +182,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "Mobile App (Android, Samsung Galaxy Fold Z)",
-		UserAgent:              "Mattermost Mobile/2.20.0+6000556 (samsung/q4qcsx/q4q:14/UP1A.231005.007/F936WVLU4FXE3:user/release-keys; 14; SM-F936W)",
+		UserAgent:              "Hanzo Team Mobile/2.20.0+6000556 (samsung/q4qcsx/q4q:14/UP1A.231005.007/F936WVLU4FXE3:user/release-keys; 14; SM-F936W)",
 		ExpectedPlatformName:   "Linux",
 		ExpectedOSName:         "Android",
 		ExpectedBrowserName:    "Mobile App",
@@ -198,7 +198,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "iOS App (iPhone 13)",
-		UserAgent:              "Mattermost Mobile/2.20.0+556 (iOS; 17.5.1; iPhone 13)",
+		UserAgent:              "Hanzo Team Mobile/2.20.0+556 (iOS; 17.5.1; iPhone 13)",
 		ExpectedPlatformName:   "iPhone",
 		ExpectedOSName:         "iOS",
 		ExpectedBrowserName:    "Mobile App",
@@ -214,7 +214,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "iOS App (iPad 11 Pro)",
-		UserAgent:              "Mattermost Mobile/2.21.0+567 (iPadOS; 17.6.1; iPad Pro (11-inch) (1st generation))",
+		UserAgent:              "Hanzo Team Mobile/2.21.0+567 (iPadOS; 17.6.1; iPad Pro (11-inch) (1st generation))",
 		ExpectedPlatformName:   "iPad",
 		ExpectedOSName:         "iOS",
 		ExpectedBrowserName:    "Mobile App",
@@ -239,7 +239,7 @@ var testUserAgents = []testUserAgent{
 	// MM-67274: User agents with empty version strings should not panic
 	{
 		Name:                   "Mobile App (no version)",
-		UserAgent:              "Mattermost Mobile/",
+		UserAgent:              "Hanzo Team Mobile/",
 		ExpectedPlatformName:   "Linux",
 		ExpectedOSName:         "Android",
 		ExpectedBrowserName:    "Mobile App",
@@ -247,7 +247,7 @@ var testUserAgents = []testUserAgent{
 	},
 	{
 		Name:                   "Desktop App (no version)",
-		UserAgent:              "Mattermost/",
+		UserAgent:              "Hanzo Team/",
 		ExpectedPlatformName:   "Unknown",
 		ExpectedOSName:         "",
 		ExpectedBrowserName:    "Desktop App",
@@ -321,19 +321,19 @@ func TestGetDesktopAppVersion(t *testing.T) {
 		version string
 		ok      bool
 	}{
-		{"Mattermost/5.0.0", "5.0.0", true},
-		{"Mattermost/5.3.1 Chrome/110.0.5481.177", "5.3.1", true},
-		{"Mozilla/5.0 ... Mattermost/5.9.0", "5.9.0", true},
-		{"Mattermost/5.0.0-alpha", "5.0.0-alpha", true},
-		{"Mattermost/6.0.0-rc.1 Electron/31.2.1", "6.0.0-rc.1", true},
-		{"Mattermost Mobile/1.2.3", "", false},
+		{"Hanzo Team/5.0.0", "5.0.0", true},
+		{"Hanzo Team/5.3.1 Chrome/110.0.5481.177", "5.3.1", true},
+		{"Mozilla/5.0 ... Hanzo Team/5.9.0", "5.9.0", true},
+		{"Hanzo Team/5.0.0-alpha", "5.0.0-alpha", true},
+		{"Hanzo Team/6.0.0-rc.1 Electron/31.2.1", "6.0.0-rc.1", true},
+		{"Hanzo Team Mobile/1.2.3", "", false},
 		{"Mozilla/5.0 Chrome/120.0.0", "", false},
-		{"Mattermost/", "", false},
+		{"Hanzo Team/", "", false},
 		{"", "", false},
 		{"   ", "", false},
-		{"Mattermost", "", false},
-		{"Mattermost  5.0.0", "", false},
-		{"Mattermost/   \t", "", false},
+		{"Hanzo Team", "", false},
+		{"Hanzo Team  5.0.0", "", false},
+		{"Hanzo Team/   \t", "", false},
 		{"MATTERMOST/5.0.0", "", false},
 		{"mattermost/5.0.0", "", false},
 		{"mmctl/1.2.3", "", false},

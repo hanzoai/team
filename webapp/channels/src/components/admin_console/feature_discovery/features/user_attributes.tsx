@@ -17,13 +17,13 @@ const UserAttributesFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.Enterprise}
             title={defineMessage({
                 id: 'admin.user_attributes_feature_discovery.title',
-                defaultMessage: 'Add critical metadata to user profiles using custom user attributes with Mattermost Enterprise',
+                defaultMessage: 'Add critical metadata to user profiles using custom user attributes with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.user_attributes_feature_discovery.desc',
                 defaultMessage: 'Define and manage organization-specific user profile attributes as that can synchronize with your AD/LDAP or SAML identity provider.',
             })}
-            learnMoreURL='https://docs.mattermost.com/manage/admin/user-attributes.html'
+            learnMoreURL='https://docs.hanzo.team/manage/admin/user-attributes.html'
             featureDiscoveryImage={
                 <GroupsSVG
                     width={294}

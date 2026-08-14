@@ -6,13 +6,12 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getConfig} from 'mattermost-redux/selectors/entities/general';
 
 import BackButton from 'components/common/back_button';
-import Logo from 'components/common/svg_images_components/logo_dark_blue_svg';
+import Wordmark from 'components/common/svg_images_components/wordmark';
 
 import './header.scss';
-import {LicenseSkus} from 'utils/constants';
 
 export type HeaderProps = {
     alternateLink?: React.ReactElement;
@@ -22,43 +21,20 @@ export type HeaderProps = {
 
 const Header = ({alternateLink, backButtonURL, onBackButtonClick}: HeaderProps) => {
     const {SiteName} = useSelector(getConfig);
-    const license = useSelector(getLicense);
 
-    const ariaLabel = SiteName || 'Mattermost';
+    const ariaLabel = SiteName || 'Hanzo Team';
 
-    let freeBanner = null;
-    if (license.IsLicensed === 'false') {
-        freeBanner = <><Logo/><span className='freeBadge'>{'TEAM EDITION'}</span></>;
-    } else if (license.SkuShortName === LicenseSkus.Entry) {
-        freeBanner = <><Logo/><span className='freeBadge'>{'ENTRY EDITION'}</span></>;
-    }
-
-    let title: React.ReactNode = SiteName;
-    if (title === 'Mattermost') {
-        if (freeBanner) {
-            title = '';
-        } else {
-            title = <Logo/>;
-        }
-    }
+    // The wordmark stands for the product. An operator who set their own site
+    // name gets that name instead; there is no edition to advertise.
+    const title: React.ReactNode = SiteName && SiteName !== 'Hanzo Team' ? SiteName : <Wordmark/>;
 
     return (
         <div
             data-testid='hfroute-header'
-            className={classNames('hfroute-header', {'has-free-banner': freeBanner, 'has-custom-site-name': title})}
+            className={classNames('hfroute-header', {'has-custom-site-name': title})}
         >
             <div className='header-main'>
                 <div>
-                    {freeBanner &&
-                        <Link
-                            data-testid='header-logo-link'
-                            className='header-logo-link'
-                            to='/'
-                            aria-label={ariaLabel}
-                        >
-                            {freeBanner}
-                        </Link>
-                    }
                     {title &&
                         <Link
                             data-testid='header-logo-link'

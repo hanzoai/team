@@ -10,7 +10,7 @@ export default function NotificationPermissionUnsupportedSectionNotice() {
     const intl = useIntl();
 
     const handleClick = useCallback(async () => {
-        window.open('https://mattermost.com/pl/pc-web-requirements', '_blank', 'noopener,noreferrer');
+        window.open('https://docs.hanzo.team/pc-web-requirements', '_blank', 'noopener,noreferrer');
     }, []);
 
     return (
@@ -23,7 +23,7 @@ export default function NotificationPermissionUnsupportedSectionNotice() {
                 })}
                 text={intl.formatMessage({
                     id: 'user.settings.notifications.desktopAndMobile.notificationSection.permissionUnsupported.message',
-                    defaultMessage: 'You\'re missing important message and call notifications from Mattermost. To start receiving notifications, please update to a supported browser.',
+                    defaultMessage: 'You\'re missing important message and call notifications from Hanzo Team. To start receiving notifications, please update to a supported browser.',
                 })}
                 tertiaryButton={{
                     text: intl.formatMessage({

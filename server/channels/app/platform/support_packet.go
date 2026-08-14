@@ -45,7 +45,7 @@ var diagnosticsYAMLComments = yaml.CommentMap{
 	"$.server.container_cpu_limit":       {yaml.LineComment(" cgroup v2 CPU quota in CPUs; Linux only, omitted if no limit set")},
 	"$.server.container_memory_limit_mb": {yaml.LineComment(" cgroup v2 memory quota in MB; Linux only, omitted if no limit set")},
 	"$.server.process_id":                {yaml.HeadComment(" Process lifecycle")},
-	"$.server.started_at":                {yaml.LineComment(" when Mattermost process started")},
+	"$.server.started_at":                {yaml.LineComment(" when Hanzo Team process started")},
 	"$.server.host_started_at":           {yaml.LineComment(" when the host OS booted; omitted if unavailable")},
 	"$.server.open_file_descriptors":     {yaml.LineComment(" current open FDs for this process")},
 	"$.server.max_file_descriptors":      {yaml.LineComment(" system limit (ulimit -n)")},

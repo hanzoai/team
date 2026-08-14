@@ -201,7 +201,7 @@
   },
   {
     "id": "api.admin.test_email.body",
-    "translation": "It appears your Mattermost email is setup correctly!"
+    "translation": "It appears your Hanzo Team email is setup correctly!"
   },
   {
     "id": "api.admin.test_email.missing_server",
@@ -213,7 +213,7 @@
   },
   {
     "id": "api.admin.test_email.subject",
-    "translation": "Mattermost - Testing Email Settings"
+    "translation": "Hanzo Team - Testing Email Settings"
   },
   {
     "id": "api.admin.test_s3.missing_s3_bucket",
@@ -253,7 +253,7 @@
   },
   {
     "id": "api.bot.teams_channels.add_message_mobile",
-    "translation": "Please add me to teams and channels you want me to interact in. To do this, use the browser or Mattermost Desktop App."
+    "translation": "Please add me to teams and channels you want me to interact in. To do this, use the browser or Hanzo Team Desktop App."
   },
   {
     "id": "api.channel.add_guest.added",
@@ -865,7 +865,7 @@
   },
   {
     "id": "api.command.invite_people.desc",
-    "translation": "Send an email invite to your Mattermost team"
+    "translation": "Send an email invite to your Hanzo Team team"
   },
   {
     "id": "api.command.invite_people.email_invitations_off",
@@ -1220,7 +1220,7 @@
   },
   {
     "id": "api.command_help.desc",
-    "translation": "Show Mattermost help message"
+    "translation": "Show Hanzo Team help message"
   },
   {
     "id": "api.command_help.name",
@@ -1228,7 +1228,7 @@
   },
   {
     "id": "api.command_help.success",
-    "translation": "Mattermost is an open source platform for secure communication, collaboration, and orchestration of work across tools and teams.\r\nMattermost contains two key tools:\r\n\r\n**Channels** - Stay connected with your team via 1:1 and group messaging.\r\n**[Playbooks](/playbooks)** - Build and configure repeatable processes to achieve specific and predictable outcomes.\r\n\r\n[View documentation and guides]({{.HelpLink}})"
+    "translation": "Hanzo Team is an open source platform for secure communication, collaboration, and orchestration of work across tools and teams.\r\nHanzo Team contains two key tools:\r\n\r\n**Channels** - Stay connected with your team via 1:1 and group messaging.\r\n**[Playbooks](/playbooks)** - Build and configure repeatable processes to achieve specific and predictable outcomes.\r\n\r\n[View documentation and guides]({{.HelpLink}})"
   },
   {
     "id": "api.command_invite.channel.app_error",
@@ -1236,7 +1236,7 @@
   },
   {
     "id": "api.command_invite.channel.error",
-    "translation": "Could not find the channel {{.Channel}}. Please use the [channel handle](https://docs.mattermost.com/messaging/managing-channels.html#naming-a-channel) to identify channels."
+    "translation": "Could not find the channel {{.Channel}}. Please use the [channel handle](https://docs.hanzo.team/messaging/managing-channels.html#naming-a-channel) to identify channels."
   },
   {
     "id": "api.command_invite.channel_constrained_user_denied",
@@ -1276,7 +1276,7 @@
   },
   {
     "id": "api.command_invite.private_channel.app_error",
-    "translation": "Could not find the channel {{.Channel}}. Please use the [channel handle](https://docs.mattermost.com/messaging/managing-channels.html#naming-a-channel) to identify channels."
+    "translation": "Could not find the channel {{.Channel}}. Please use the [channel handle](https://docs.hanzo.team/messaging/managing-channels.html#naming-a-channel) to identify channels."
   },
   {
     "id": "api.command_invite.success",
@@ -1351,7 +1351,7 @@
   },
   {
     "id": "api.command_logout.desc",
-    "translation": "Logout of Mattermost"
+    "translation": "Logout of Hanzo Team"
   },
   {
     "id": "api.command_logout.name",
@@ -1463,7 +1463,7 @@
   },
   {
     "id": "api.command_mute.error",
-    "translation": "Could not find the channel {{.Channel}}. Please use the [channel handle](https://docs.mattermost.com/messaging/managing-channels.html#naming-a-channel) to identify channels."
+    "translation": "Could not find the channel {{.Channel}}. Please use the [channel handle](https://docs.hanzo.team/messaging/managing-channels.html#naming-a-channel) to identify channels."
   },
   {
     "id": "api.command_mute.hint",
@@ -1475,7 +1475,7 @@
   },
   {
     "id": "api.command_mute.no_channel.error",
-    "translation": "Could not find the specified channel. Please use the [channel handle](https://docs.mattermost.com/messaging/managing-channels.html#naming-a-channel) to identify channels."
+    "translation": "Could not find the specified channel. Please use the [channel handle](https://docs.hanzo.team/messaging/managing-channels.html#naming-a-channel) to identify channels."
   },
   {
     "id": "api.command_mute.success_mute",
@@ -1523,7 +1523,7 @@
   },
   {
     "id": "api.command_remote.accept.help",
-    "translation": "Accept an invitation from an external Mattermost instance"
+    "translation": "Accept an invitation from an external Hanzo Team instance"
   },
   {
     "id": "api.command_remote.accept_invitation",
@@ -1551,7 +1551,7 @@
   },
   {
     "id": "api.command_remote.desc",
-    "translation": "Invite secure connections for communication across Mattermost instances."
+    "translation": "Invite secure connections for communication across Hanzo Team instances."
   },
   {
     "id": "api.command_remote.displayname.help",
@@ -1599,7 +1599,7 @@
   },
   {
     "id": "api.command_remote.invite_summary",
-    "translation": "Send the following AES 256-bit encrypted invitation to the external Mattermost System Admin along with the password. They will use the `{{.Command}}` slash command to accept the invitation.\n\n```\n{{.Invitation}}\n```\n\n**Ensure the secure connection can access your Mattermost instance via** {{.SiteURL}}"
+    "translation": "Send the following AES 256-bit encrypted invitation to the external Hanzo Team System Admin along with the password. They will use the `{{.Command}}` slash command to accept the invitation.\n\n```\n{{.Invitation}}\n```\n\n**Ensure the secure connection can access your Hanzo Team instance via** {{.SiteURL}}"
   },
   {
     "id": "api.command_remote.missing_command",
@@ -1775,7 +1775,7 @@
   },
   {
     "id": "api.command_share.desc",
-    "translation": "Shares the current channel with an external Mattermost instance."
+    "translation": "Shares the current channel with an external Hanzo Team instance."
   },
   {
     "id": "api.command_share.fetch_remote.error",
@@ -1799,7 +1799,7 @@
   },
   {
     "id": "api.command_share.invite_remote.help",
-    "translation": "Invites an external Mattermost instance to the current shared channel"
+    "translation": "Invites an external Hanzo Team instance to the current shared channel"
   },
   {
     "id": "api.command_share.invite_remote_to_channel.error",
@@ -1943,7 +1943,7 @@
   },
   {
     "id": "api.config.update.elasticsearch.autocomplete_cannot_be_enabled_error",
-    "translation": "Channel autocomplete cannot be enabled as channel index schema is out of date. It is recommended to regenerate your channel index. See the Mattermost changelog for more information"
+    "translation": "Channel autocomplete cannot be enabled as channel index schema is out of date. It is recommended to regenerate your channel index. See the Hanzo Team changelog for more information"
   },
   {
     "id": "api.config.update_config.clear_siteurl.app_error",
@@ -2231,7 +2231,7 @@
   },
   {
     "id": "api.email_batching.send_batched_email_notification.button",
-    "translation": "Open Mattermost"
+    "translation": "Open Hanzo Team"
   },
   {
     "id": "api.email_batching.send_batched_email_notification.messageButton",
@@ -2370,7 +2370,7 @@
   },
   {
     "id": "api.file.cloud_upload.app_error",
-    "translation": "Uploading via mmctl to a Cloud instance is not supported. Please check the documentation here: https://docs.mattermost.com/manage/cloud-data-export.html."
+    "translation": "Uploading via mmctl to a Cloud instance is not supported. Please check the documentation here: https://docs.hanzo.team/manage/cloud-data-export.html."
   },
   {
     "id": "api.file.file_exists.app_error",
@@ -2726,7 +2726,7 @@
   },
   {
     "id": "api.license.request-trial.bad-request.terms-not-accepted",
-    "translation": "You must accept the Mattermost Software Evaluation Agreement and Privacy Policy to request a license."
+    "translation": "You must accept the Hanzo Team Software Evaluation Agreement and Privacy Policy to request a license."
   },
   {
     "id": "api.license.request-trial.can-start-trial.error",
@@ -2734,15 +2734,15 @@
   },
   {
     "id": "api.license.request-trial.can-start-trial.not-allowed",
-    "translation": "Failed to apply new trial license as your workspace has already applied a trial license. If you would like to extend your trial period please [contact our sales team](https://mattermost.com/contact-us/)."
+    "translation": "Failed to apply new trial license as your workspace has already applied a trial license. If you would like to extend your trial period please [contact our sales team](https://hanzo.ai/contact-us/)."
   },
   {
     "id": "api.license.request_trial_license.app_error",
-    "translation": "Unable to get a trial license, please try again or contact with support@mattermost.com."
+    "translation": "Unable to get a trial license, please try again or contact with support@hanzo.ai."
   },
   {
     "id": "api.license.request_trial_license.embargoed",
-    "translation": "We were unable to process the request due to limitations for embargoed countries. [Learn more in our documentation](https://mattermost.com/pl/limitations-for-embargoed-countries), or reach out to legal@mattermost.com for questions around export limitations."
+    "translation": "We were unable to process the request due to limitations for embargoed countries. [Learn more in our documentation](https://docs.hanzo.team/limitations-for-embargoed-countries), or reach out to legal@hanzo.ai for questions around export limitations."
   },
   {
     "id": "api.license.upgrade_needed.app_error",
@@ -3592,11 +3592,11 @@
   },
   {
     "id": "api.server.cws.disabled",
-    "translation": "Interactions with the Mattermost Customer Portal have been disabled by the system admin."
+    "translation": "Interactions with the Hanzo Team Customer Portal have been disabled by the system admin."
   },
   {
     "id": "api.server.cws.needs_enterprise_edition",
-    "translation": "Service only available in Mattermost Enterprise edition"
+    "translation": "Service only available in Hanzo Team edition"
   },
   {
     "id": "api.server.hosted_signup_unavailable.error",
@@ -3680,7 +3680,7 @@
   },
   {
     "id": "api.slackimport.slack_add_channels.merge",
-    "translation": "The Slack channel {{.DisplayName}} already exists as an active Mattermost channel. Both channels have been merged.\r\n"
+    "translation": "The Slack channel {{.DisplayName}} already exists as an active Hanzo Team channel. Both channels have been merged.\r\n"
   },
   {
     "id": "api.slackimport.slack_add_users.created",
@@ -3692,11 +3692,11 @@
   },
   {
     "id": "api.slackimport.slack_add_users.merge_existing",
-    "translation": "Slack user merged with an existing Mattermost user with matching email {{.Email}} and username {{.Username}}.\r\n"
+    "translation": "Slack user merged with an existing Hanzo Team user with matching email {{.Email}} and username {{.Username}}.\r\n"
   },
   {
     "id": "api.slackimport.slack_add_users.merge_existing_failed",
-    "translation": "Slack user merged with an existing Mattermost user with matching email {{.Email}} and username {{.Username}}, but was unable to add the user to their team.\r\n"
+    "translation": "Slack user merged with an existing Hanzo Team user with matching email {{.Email}} and username {{.Username}}, but was unable to add the user to their team.\r\n"
   },
   {
     "id": "api.slackimport.slack_add_users.missing_email_address",
@@ -3712,7 +3712,7 @@
   },
   {
     "id": "api.slackimport.slack_import.log",
-    "translation": "Mattermost Slack Import Log\r\n"
+    "translation": "Hanzo Team Slack Import Log\r\n"
   },
   {
     "id": "api.slackimport.slack_import.note1",
@@ -4112,11 +4112,11 @@
   },
   {
     "id": "api.templates.cloud_welcome_email.button",
-    "translation": "Open Mattermost"
+    "translation": "Open Hanzo Team"
   },
   {
     "id": "api.templates.cloud_welcome_email.download_mm_info",
-    "translation": "Download the Mattermost App"
+    "translation": "Download the Hanzo Team App"
   },
   {
     "id": "api.templates.cloud_welcome_email.info",
@@ -4216,7 +4216,7 @@
   },
   {
     "id": "api.templates.email_footer_v2",
-    "translation": "© 2015 - {{ .CurrentYear }} Mattermost, Inc. 2100 Geng Road, Suite 210, Palo Alto, CA, 94303"
+    "translation": "© 2015 - {{ .CurrentYear }} Hanzo AI Inc. 2100 Geng Road, Suite 210, Palo Alto, CA, 94303"
   },
   {
     "id": "api.templates.email_info1",
@@ -4244,7 +4244,7 @@
   },
   {
     "id": "api.templates.guest_magic_link_body.footer.info",
-    "translation": "This email was sent to you because someone requested a login link for Mattermost. If you did not request this, you can safely ignore this email."
+    "translation": "This email was sent to you because someone requested a login link for Hanzo Team. If you did not request this, you can safely ignore this email."
   },
   {
     "id": "api.templates.guest_magic_link_body.footer.title",
@@ -4256,7 +4256,7 @@
   },
   {
     "id": "api.templates.guest_magic_link_body.title",
-    "translation": "Sign in to Mattermost"
+    "translation": "Sign in to Hanzo Team"
   },
   {
     "id": "api.templates.guest_magic_link_subject",
@@ -4268,7 +4268,7 @@
   },
   {
     "id": "api.templates.invite_body.subTitle",
-    "translation": "Start collaborating with your team on Mattermost"
+    "translation": "Start collaborating with your team on Hanzo Team"
   },
   {
     "id": "api.templates.invite_body.title",
@@ -4280,7 +4280,7 @@
   },
   {
     "id": "api.templates.invite_body_footer.info",
-    "translation": "Mattermost is a flexible, open source messaging platform that enables secure team collaboration."
+    "translation": "Hanzo Team is a flexible, open source messaging platform that enables secure team collaboration."
   },
   {
     "id": "api.templates.invite_body_footer.learn_more",
@@ -4288,7 +4288,7 @@
   },
   {
     "id": "api.templates.invite_body_footer.title",
-    "translation": "What is Mattermost?"
+    "translation": "What is Hanzo Team?"
   },
   {
     "id": "api.templates.invite_body_guest.subTitle",
@@ -4352,7 +4352,7 @@
   },
   {
     "id": "api.templates.license_need_help.info",
-    "translation": "<a href=\"https://mattermost.com/contact-sales/\">Talk to a Mattermost expert</a> for help with plans and renewal options."
+    "translation": "<a href=\"https://hanzo.ai/contact-sales/\">Talk to a Hanzo Team expert</a> for help with plans and renewal options."
   },
   {
     "id": "api.templates.license_need_help.title",
@@ -4368,7 +4368,7 @@
   },
   {
     "id": "api.templates.license_up_for_renewal_subtitle",
-    "translation": "Your {{.SkuName}} license for <a href=\"{{.SiteURL}}\">{{.SiteName}}</a> is due to expire in {{.Days}} days. We hope you’re enjoying the secure, mission-critical collaboration that Mattermost enables."
+    "translation": "Your {{.SkuName}} license for <a href=\"{{.SiteURL}}\">{{.SiteName}}</a> is due to expire in {{.Days}} days. We hope you’re enjoying the secure, mission-critical collaboration that Hanzo Team enables."
   },
   {
     "id": "api.templates.license_up_for_renewal_subtitle_two",
@@ -4376,7 +4376,7 @@
   },
   {
     "id": "api.templates.license_up_for_renewal_title",
-    "translation": "Your Mattermost license is up for renewal"
+    "translation": "Your Hanzo Team license is up for renewal"
   },
   {
     "id": "api.templates.mfa_activated_body.info",
@@ -4412,7 +4412,7 @@
   },
   {
     "id": "api.templates.post_body.button",
-    "translation": "Reply in Mattermost"
+    "translation": "Reply in Hanzo Team"
   },
   {
     "id": "api.templates.questions_footer.info",
@@ -4424,7 +4424,7 @@
   },
   {
     "id": "api.templates.remove_expired_license.body.heading",
-    "translation": "Your Mattermost license has expired"
+    "translation": "Your Hanzo Team license has expired"
   },
   {
     "id": "api.templates.remove_expired_license.body.subtitle",
@@ -4432,7 +4432,7 @@
   },
   {
     "id": "api.templates.remove_expired_license.body.subtitle_two",
-    "translation": "Please renew your license now to continue using the full capabilities of Mattermost."
+    "translation": "Please renew your license now to continue using the full capabilities of Hanzo Team."
   },
   {
     "id": "api.templates.remove_expired_license.subject",
@@ -4516,7 +4516,7 @@
   },
   {
     "id": "api.templates.verify_body.info",
-    "translation": "This email address was used to create an account with Mattermost."
+    "translation": "This email address was used to create an account with Hanzo Team."
   },
   {
     "id": "api.templates.verify_body.info1",
@@ -4560,7 +4560,7 @@
   },
   {
     "id": "api.templates.welcome_body.info",
-    "translation": "This email address was used to create an account with Mattermost."
+    "translation": "This email address was used to create an account with Hanzo Team."
   },
   {
     "id": "api.templates.welcome_body.info1",
@@ -4596,43 +4596,43 @@
   },
   {
     "id": "api.upgrade_to_enterprise.already-done.app_error",
-    "translation": "You have already upgraded to Mattermost Enterprise Edition. Please restart the server to finish the upgrade."
+    "translation": "You have already upgraded to Hanzo Team. Please restart the server to finish the upgrade."
   },
   {
     "id": "api.upgrade_to_enterprise.already-enterprise.app_error",
-    "translation": "You cannot upgrade because you are already running Mattermost Enterprise Edition."
+    "translation": "You cannot upgrade because you are already running Hanzo Team."
   },
   {
     "id": "api.upgrade_to_enterprise.app_error",
-    "translation": "An upgrade to Mattermost Enterprise Edition is already running."
+    "translation": "An upgrade to Hanzo Team is already running."
   },
   {
     "id": "api.upgrade_to_enterprise.generic_error.app_error",
-    "translation": "Mattermost was unable to upgrade to Enterprise Edition."
+    "translation": "Hanzo Team was unable to upgrade to Enterprise Edition."
   },
   {
     "id": "api.upgrade_to_enterprise.invalid-permission.app_error",
-    "translation": "Mattermost was unable to upgrade to Enterprise Edition. The Mattermost system user {{.MattermostUsername}} does not have write access to the necessary binary file. A system administrator can update the file permissions by executing the following command on the server where Mattermost is installed:\n\n```\nchmod +w \"{{.Path}}\"\n```\n\nAfter changing the file permissions, try to upgrade Mattermost again. When you have upgraded and restarted, remember to restore the original binary file permissions:\n\n```\nchmod -w \"{{.Path}}\"\n```"
+    "translation": "Hanzo Team was unable to upgrade to Enterprise Edition. The Hanzo Team system user {{.MattermostUsername}} does not have write access to the necessary binary file. A system administrator can update the file permissions by executing the following command on the server where Hanzo Team is installed:\n\n```\nchmod +w \"{{.Path}}\"\n```\n\nAfter changing the file permissions, try to upgrade Hanzo Team again. When you have upgraded and restarted, remember to restore the original binary file permissions:\n\n```\nchmod -w \"{{.Path}}\"\n```"
   },
   {
     "id": "api.upgrade_to_enterprise.invalid-user-and-permission.app_error",
-    "translation": "Mattermost was unable to upgrade to Enterprise Edition. The Mattermost system user {{.MattermostUsername}} does not have write access to the necessary binary file. A system administrator can update the file permissions by executing the following command on the server where Mattermost is installed:\n\n```\nchown {{.MattermostUsername}} \"{{.Path}}\"\nchmod +w \"{{.Path}}\"\n```\n\nAfter changing the file permissions, try to upgrade Mattermost again. When you have upgraded and restarted, remember to restore the original binary file permissions:\n\n```\nchown {{.FileUsername}} \"{{.Path}}\"\nchmod -w \"{{.Path}}\"\n```"
+    "translation": "Hanzo Team was unable to upgrade to Enterprise Edition. The Hanzo Team system user {{.MattermostUsername}} does not have write access to the necessary binary file. A system administrator can update the file permissions by executing the following command on the server where Hanzo Team is installed:\n\n```\nchown {{.MattermostUsername}} \"{{.Path}}\"\nchmod +w \"{{.Path}}\"\n```\n\nAfter changing the file permissions, try to upgrade Hanzo Team again. When you have upgraded and restarted, remember to restore the original binary file permissions:\n\n```\nchown {{.FileUsername}} \"{{.Path}}\"\nchmod -w \"{{.Path}}\"\n```"
   },
   {
     "id": "api.upgrade_to_enterprise.invalid-user.app_error",
-    "translation": "Mattermost was unable to upgrade to Enterprise Edition. The Mattermost system user {{.MattermostUsername}} does not have write access to the necessary binary file. A system administrator can update the file permissions by executing the following command on the server where Mattermost is installed:\n\n```\nchown {{.MattermostUsername}} \"{{.Path}}\"\n```\n\nAfter changing the file permissions, try to upgrade Mattermost again. When you have upgraded and restarted, remember to restore the original binary file permissions:\n\n```\nchown {{.FileUsername}} \"{{.Path}}\"\n```"
+    "translation": "Hanzo Team was unable to upgrade to Enterprise Edition. The Hanzo Team system user {{.MattermostUsername}} does not have write access to the necessary binary file. A system administrator can update the file permissions by executing the following command on the server where Hanzo Team is installed:\n\n```\nchown {{.MattermostUsername}} \"{{.Path}}\"\n```\n\nAfter changing the file permissions, try to upgrade Hanzo Team again. When you have upgraded and restarted, remember to restore the original binary file permissions:\n\n```\nchown {{.FileUsername}} \"{{.Path}}\"\n```"
   },
   {
     "id": "api.upgrade_to_enterprise.system_not_supported.app_error",
-    "translation": "Mattermost was unable to upgrade to Enterprise Edition. This feature will only work on Linux systems with x86-64 architecture."
+    "translation": "Hanzo Team was unable to upgrade to Enterprise Edition. This feature will only work on Linux systems with x86-64 architecture."
   },
   {
     "id": "api.upgrade_to_enterprise_status.app_error",
-    "translation": "Mattermost was unable to upgrade to Enterprise Edition."
+    "translation": "Hanzo Team was unable to upgrade to Enterprise Edition."
   },
   {
     "id": "api.upgrade_to_enterprise_status.signature.app_error",
-    "translation": "Mattermost was unable to upgrade to Enterprise Edition. The digital signature of the downloaded binary file could not be verified."
+    "translation": "Hanzo Team was unable to upgrade to Enterprise Edition. The digital signature of the downloaded binary file could not be verified."
   },
   {
     "id": "api.upload.create.check_directory.app_error",
@@ -4852,7 +4852,7 @@
   },
   {
     "id": "api.user.delete_channel.not_enabled.for_admin.app_error",
-    "translation": "Permanent channel deletion feature is not enabled. ServiceSettings.EnableAPIChannelDeletion must be set to true to use this command. See https://mattermost.com/pl/environment-configuration-settings for more information"
+    "translation": "Permanent channel deletion feature is not enabled. ServiceSettings.EnableAPIChannelDeletion must be set to true to use this command. See https://docs.hanzo.team/environment-configuration-settings for more information"
   },
   {
     "id": "api.user.delete_team.not_enabled.app_error",
@@ -4860,7 +4860,7 @@
   },
   {
     "id": "api.user.delete_team.not_enabled.for_admin.app_error",
-    "translation": "Permanent team deletion feature is not enabled. ServiceSettings.EnableAPITeamDeletion must be set to true to use this command. See https://mattermost.com/pl/environment-configuration-settings for more information."
+    "translation": "Permanent team deletion feature is not enabled. ServiceSettings.EnableAPITeamDeletion must be set to true to use this command. See https://docs.hanzo.team/environment-configuration-settings for more information."
   },
   {
     "id": "api.user.delete_user.not_enabled.app_error",
@@ -4868,7 +4868,7 @@
   },
   {
     "id": "api.user.delete_user.not_enabled.for_admin.app_error",
-    "translation": "Permanent user deletion feature is not enabled. ServiceSettings.EnableAPIUserDeletion must be set to true to use this command. See https://mattermost.com/pl/environment-configuration-settings for more information."
+    "translation": "Permanent user deletion feature is not enabled. ServiceSettings.EnableAPIUserDeletion must be set to true to use this command. See https://docs.hanzo.team/environment-configuration-settings for more information."
   },
   {
     "id": "api.user.demote_user_to_guest.already_guest.app_error",
@@ -5584,7 +5584,7 @@
   },
   {
     "id": "app.bot.get_disable_bot_sysadmin_message",
-    "translation": "{{if .disableBotsSetting}}{{if .printAllBots}}{{.UserName}} was deactivated. They managed the following bot accounts which have now been disabled.\n\n{{.BotNames}}{{else}}{{.UserName}} was deactivated. They managed {{.NumBots}} bot accounts which have now been disabled, including the following:\n\n{{.BotNames}}{{end}}You can take ownership of each bot by enabling it at **Integrations > Bot Accounts** and creating new tokens for the bot.\n\nFor more information, see our [documentation](https://docs.mattermost.com/developer/bot-accounts.html#what-happens-when-a-user-who-owns-bot-accounts-is-disabled).{{else}}{{if .printAllBots}}{{.UserName}} was deactivated. They managed the following bot accounts which are still enabled.\n\n{{.BotNames}}\n{{else}}{{.UserName}} was deactivated. They managed {{.NumBots}} bot accounts which are still enabled, including the following:\n\n{{.BotNames}}{{end}}We strongly recommend you to take ownership of each bot by re-enabling it at **Integrations > Bot Accounts** and creating new tokens for the bot.\n\nFor more information, see our [documentation](https://docs.mattermost.com/developer/bot-accounts.html#what-happens-when-a-user-who-owns-bot-accounts-is-disabled).\n\nIf you want bot accounts to disable automatically after owner deactivation, set “Disable bot accounts when owner is deactivated” in **System Console > Integrations > Bot Accounts** to true.{{end}}"
+    "translation": "{{if .disableBotsSetting}}{{if .printAllBots}}{{.UserName}} was deactivated. They managed the following bot accounts which have now been disabled.\n\n{{.BotNames}}{{else}}{{.UserName}} was deactivated. They managed {{.NumBots}} bot accounts which have now been disabled, including the following:\n\n{{.BotNames}}{{end}}You can take ownership of each bot by enabling it at **Integrations > Bot Accounts** and creating new tokens for the bot.\n\nFor more information, see our [documentation](https://docs.hanzo.team/developer/bot-accounts.html#what-happens-when-a-user-who-owns-bot-accounts-is-disabled).{{else}}{{if .printAllBots}}{{.UserName}} was deactivated. They managed the following bot accounts which are still enabled.\n\n{{.BotNames}}\n{{else}}{{.UserName}} was deactivated. They managed {{.NumBots}} bot accounts which are still enabled, including the following:\n\n{{.BotNames}}{{end}}We strongly recommend you to take ownership of each bot by re-enabling it at **Integrations > Bot Accounts** and creating new tokens for the bot.\n\nFor more information, see our [documentation](https://docs.hanzo.team/developer/bot-accounts.html#what-happens-when-a-user-who-owns-bot-accounts-is-disabled).\n\nIf you want bot accounts to disable automatically after owner deactivation, set “Disable bot accounts when owner is deactivated” in **System Console > Integrations > Bot Accounts** to true.{{end}}"
   },
   {
     "id": "app.bot.get_system_bot.empty_admin_list.app_error",
@@ -7714,7 +7714,7 @@
   },
   {
     "id": "app.notification.footer.infoLogin",
-    "translation": "Login to Mattermost"
+    "translation": "Login to Hanzo Team"
   },
   {
     "id": "app.notification.footer.title",
@@ -10368,7 +10368,7 @@
   },
   {
     "id": "ent.elasticsearch.analysis_icu_required",
-    "translation": "Mattermost requires the analysis-icu plugin on every {{.Backend}} node. Install it on all nodes, then restart {{.Backend}}."
+    "translation": "Hanzo Team requires the analysis-icu plugin on every {{.Backend}} node. Install it on all nodes, then restart {{.Backend}}."
   },
   {
     "id": "ent.elasticsearch.backfill_posts_channel_type.error",
@@ -10612,7 +10612,7 @@
   },
   {
     "id": "ent.elasticsearch.test_config.license.error",
-    "translation": "Your Mattermost license doesn't support indexed search."
+    "translation": "Your Hanzo Team license doesn't support indexed search."
   },
   {
     "id": "ent.elasticsearch.test_config.reenter_password",
@@ -10628,7 +10628,7 @@
   },
   {
     "id": "ent.intune.login.account_not_found.app_error",
-    "translation": "Your account isn't fully set up yet. Please sign in to Mattermost via the web or desktop app first."
+    "translation": "Your account isn't fully set up yet. Please sign in to Hanzo Team via the web or desktop app first."
   },
   {
     "id": "ent.intune.login.extract_auth_data.app_error",
@@ -10720,7 +10720,7 @@
   },
   {
     "id": "ent.ldap.do_login.user_filtered.app_error",
-    "translation": "Your AD/LDAP account does not have permission to use this Mattermost server. Please ask your System Administrator to check the AD/LDAP user filter."
+    "translation": "Your AD/LDAP account does not have permission to use this Hanzo Team server. Please ask your System Administrator to check the AD/LDAP user filter."
   },
   {
     "id": "ent.ldap.do_login.user_not_registered.app_error",
@@ -10760,11 +10760,11 @@
   },
   {
     "id": "ent.ldap.syncronize.search_failure.app_error",
-    "translation": "Failed to search users in AD/LDAP. Test if the Mattermost server can connect to your AD/LDAP server and try again."
+    "translation": "Failed to search users in AD/LDAP. Test if the Hanzo Team server can connect to your AD/LDAP server and try again."
   },
   {
     "id": "ent.ldap.syncronize.search_failure_size_exceeded.app_error",
-    "translation": "Size Limit Exceeded. Try increasing your Maximum page size setting. Check out https://docs.mattermost.com/onboard/ad-ldap.html#i-see-the-log-error-ldap-result-code-4-size-limit-exceeded for more details."
+    "translation": "Size Limit Exceeded. Try increasing your Maximum page size setting. Check out https://docs.hanzo.team/onboard/ad-ldap.html#i-see-the-log-error-ldap-result-code-4-size-limit-exceeded for more details."
   },
   {
     "id": "ent.ldap.update_cpa.empty_attribute",
@@ -10848,7 +10848,7 @@
   },
   {
     "id": "ent.migration.migratetosaml.username_already_used_by_other_user",
-    "translation": "Username already used by another Mattermost user."
+    "translation": "Username already used by another Hanzo Team user."
   },
   {
     "id": "ent.outgoing_oauth_connections.authenticate.app_error",
@@ -11128,7 +11128,7 @@
   },
   {
     "id": "mattermost.bulletin.subject",
-    "translation": "Mattermost Security Bulletin"
+    "translation": "Hanzo Team Security Bulletin"
   },
   {
     "id": "mfa.activate.app_error",
@@ -13748,7 +13748,7 @@
   },
   {
     "id": "oauth.gitlab.tos.error",
-    "translation": "GitLab's Terms of Service have updated. Please go to {{.URL}} to accept them and then try logging into Mattermost again."
+    "translation": "GitLab's Terms of Service have updated. Please go to {{.URL}} to accept them and then try logging into Hanzo Team again."
   },
   {
     "id": "plugin.api.get_users_in_channel",
@@ -13932,7 +13932,7 @@
   },
   {
     "id": "web.error.unsupported_browser.download_app_or_upgrade_browser",
-    "translation": "Download the Mattermost app or use a supported browser for a better experience."
+    "translation": "Download the Hanzo Team app or use a supported browser for a better experience."
   },
   {
     "id": "web.error.unsupported_browser.download_the_app",
@@ -13976,11 +13976,11 @@
   },
   {
     "id": "web.error.unsupported_browser.no_longer_support",
-    "translation": "This browser is no longer supported by Mattermost"
+    "translation": "This browser is no longer supported by Hanzo Team"
   },
   {
     "id": "web.error.unsupported_browser.no_longer_support_version",
-    "translation": "This version of your browser is no longer supported by Mattermost"
+    "translation": "This version of your browser is no longer supported by Hanzo Team"
   },
   {
     "id": "web.error.unsupported_browser.open_system_browser.edge",

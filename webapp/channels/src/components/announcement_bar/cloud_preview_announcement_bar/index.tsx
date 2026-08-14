@@ -105,7 +105,7 @@ const CloudPreviewAnnouncementBar: React.FC = () => {
     const message = (
         <FormattedMessage
             id='announcement_bar.cloud_preview.message'
-            defaultMessage='This is your Mattermost preview environment. Time left: {timeLeft}'
+            defaultMessage='This is your Hanzo Team preview environment. Time left: {timeLeft}'
             values={{timeLeft: timeLeft || '00:00'}}
         />
     );

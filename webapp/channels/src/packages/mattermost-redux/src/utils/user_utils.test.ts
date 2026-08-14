@@ -71,7 +71,7 @@ describe('user utils', () => {
             nickname: 'tester',
             first_name: 'Test',
             last_name: 'UsEr NaMe',
-            position: 'Software Engineer at Mattermost',
+            position: 'Software Engineer at Hanzo Team',
             email: 'test.user_name@example.com',
         });
 

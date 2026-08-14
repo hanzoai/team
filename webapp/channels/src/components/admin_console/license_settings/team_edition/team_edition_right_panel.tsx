@@ -104,7 +104,7 @@ const TeamEditionRightPanel: React.FC<TeamEditionRightPanelProps> = ({
                 <p className='upgrade-legal-terms'>
                     <FormattedMessage
                         id='admin.licenseSettings.teamEdition.teamEditionRightPanel.acceptTermsInitial'
-                        defaultMessage='By clicking <b>Upgrade</b>, I agree to the terms of the Mattermost '
+                        defaultMessage='By clicking <b>Upgrade</b>, I agree to the terms of the Hanzo Team '
                         values={{
                             b: (chunks) => <b>{chunks}</b>,
                         }}

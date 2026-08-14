@@ -8,7 +8,7 @@ jest.mock('utils/browser_history', () => ({
 }));
 
 jest.mock('utils/url', () => ({
-    getSiteURL: () => 'https://mattermost.example.com',
+    getSiteURL: () => 'https://team.example.com',
     isUrlSafe: (url: string) => url.startsWith('https://'),
 }));
 

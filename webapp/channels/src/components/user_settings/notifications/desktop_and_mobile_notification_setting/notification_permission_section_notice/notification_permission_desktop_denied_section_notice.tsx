@@ -25,7 +25,7 @@ export default function NotificationPermissionDesktopDeniedSectionNotice(props: 
     }
 
     const handleInstructionButtonClick = useCallback(() => {
-        window.open('https://mattermost.com/pl/manage-notifications', '_blank', 'noopener,noreferrer');
+        window.open('https://docs.hanzo.team/manage-notifications', '_blank', 'noopener,noreferrer');
     }, []);
 
     const title = checkedPermissionDenied ? intl.formatMessage({
@@ -38,10 +38,10 @@ export default function NotificationPermissionDesktopDeniedSectionNotice(props: 
 
     const text = checkedPermissionDenied ? intl.formatMessage({
         id: 'user.settings.notifications.desktopAndMobile.notificationSection.permissionDeniedDesktop.messageDenied',
-        defaultMessage: 'Notifications for this Mattermost server are blocked. To receive notifications, please enable them manually.',
+        defaultMessage: 'Notifications for this Hanzo Team server are blocked. To receive notifications, please enable them manually.',
     }) : intl.formatMessage({
         id: 'user.settings.notifications.desktopAndMobile.notificationSection.permissionDeniedDesktop.message',
-        defaultMessage: "You're missing important message and call notifications from Mattermost. To start receiving them, please enable them manually.",
+        defaultMessage: "You're missing important message and call notifications from Hanzo Team. To start receiving them, please enable them manually.",
     });
 
     return (

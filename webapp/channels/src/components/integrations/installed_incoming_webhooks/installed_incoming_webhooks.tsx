@@ -163,7 +163,7 @@ export default class InstalledIncomingWebhooks extends React.PureComponent<Props
                 helpText={
                     <FormattedMessage
                         id='installed_incoming_webhooks.help'
-                        defaultMessage='Use incoming webhooks to connect external tools to Mattermost. {buildYourOwn} or visit the {appDirectory} to find self-hosted, third-party apps and integrations.'
+                        defaultMessage='Use incoming webhooks to connect external tools to Hanzo Team. {buildYourOwn} or visit the {appDirectory} to find self-hosted, third-party apps and integrations.'
                         values={{
                             buildYourOwn: (
                                 <ExternalLink
@@ -178,7 +178,7 @@ export default class InstalledIncomingWebhooks extends React.PureComponent<Props
                             ),
                             appDirectory: (
                                 <ExternalLink
-                                    href='https://mattermost.com/marketplace'
+                                    href='https://hanzo.ai/marketplace'
                                     location='installed_incoming_webhooks'
                                 >
                                     <FormattedMessage

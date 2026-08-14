@@ -206,11 +206,11 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
             pushServerHelpText = (
                 <FormattedMessage
                     id='admin.email.mhpnsHelp'
-                    defaultMessage='Download <linkIOS>Mattermost iOS app</linkIOS> from iTunes. Download <linkAndroid>Mattermost Android app</linkAndroid> from Google Play. Learn more about the <linkHPNS>Mattermost Hosted Push Notification Service</linkHPNS>.'
+                    defaultMessage='Download <linkIOS>Hanzo Team iOS app</linkIOS> from iTunes. Download <linkAndroid>Hanzo Team Android app</linkAndroid> from Google Play. Learn more about the <linkHPNS>Hanzo Team Hosted Push Notification Service</linkHPNS>.'
                     values={{
                         linkIOS: (msg) => (
                             <ExternalLink
-                                href='https://mattermost.com/pl/ios-app/'
+                                href='https://docs.hanzo.team/ios-app/'
                                 location='push_settings'
                             >
                                 {msg}
@@ -218,7 +218,7 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
                         ),
                         linkAndroid: (msg) => (
                             <ExternalLink
-                                href='https://mattermost.com/pl/android-app/'
+                                href='https://docs.hanzo.team/android-app/'
                                 location='push_settings'
                             >
                                 {msg}
@@ -239,11 +239,11 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
             pushServerHelpText = (
                 <FormattedMessage
                     id='admin.email.mtpnsHelp'
-                    defaultMessage='Download <linkIOS>Mattermost iOS app</linkIOS> from iTunes. Download <linkAndroid>Mattermost Android app</linkAndroid> from Google Play. Learn more about the <linkHPNS>Mattermost Hosted Push Notification Service</linkHPNS>.'
+                    defaultMessage='Download <linkIOS>Hanzo Team iOS app</linkIOS> from iTunes. Download <linkAndroid>Hanzo Team Android app</linkAndroid> from Google Play. Learn more about the <linkHPNS>Hanzo Team Hosted Push Notification Service</linkHPNS>.'
                     values={{
                         linkIOS: (msg) => (
                             <ExternalLink
-                                href='https://mattermost.com/pl/ios-app/'
+                                href='https://docs.hanzo.team/ios-app/'
                                 location='push_settings'
                             >
                                 {msg}
@@ -251,7 +251,7 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
                         ),
                         linkAndroid: (msg) => (
                             <ExternalLink
-                                href='https://mattermost.com/pl/android-app/'
+                                href='https://docs.hanzo.team/android-app/'
                                 location='push_settings'
                             >
                                 {msg}
@@ -276,7 +276,7 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
                     values={{
                         link: (msg) => (
                             <ExternalLink
-                                href='https://docs.mattermost.com/'
+                                href='https://docs.hanzo.team/'
                                 location='push_settings'
                             >
                                 {msg}
@@ -301,11 +301,11 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
                         />
                         <FormattedMessage
                             id='admin.email.agreeHPNS'
-                            defaultMessage=' I understand and accept the Mattermost Hosted Push Notification Service <linkTerms>Terms of Service</linkTerms> and <linkPrivacy>Privacy Policy</linkPrivacy>.'
+                            defaultMessage=' I understand and accept the Hanzo Team Hosted Push Notification Service <linkTerms>Terms of Service</linkTerms> and <linkPrivacy>Privacy Policy</linkPrivacy>.'
                             values={{
                                 linkTerms: (msg) => (
                                     <ExternalLink
-                                        href='https://mattermost.com/hpns-terms/'
+                                        href='https://hanzo.ai/hpns-terms/'
                                         location='push_settings'
                                     >
                                         {msg}
@@ -313,7 +313,7 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
                                 ),
                                 linkPrivacy: (msg) => (
                                     <ExternalLink
-                                        href='https://mattermost.com/data-processing-addendum/'
+                                        href='https://hanzo.ai/data-processing-addendum/'
                                         location='push_settings'
                                     >
                                         {msg}
@@ -376,7 +376,7 @@ export class PushSettings extends OLDAdminSettings<Props, State> {
                 <TextSetting
                     id='pushNotificationServer'
                     label={<FormattedMessage {...messages.pushServerTitle}/>}
-                    placeholder={defineMessage({id: 'admin.email.pushServerEx', defaultMessage: 'E.g.: "https://push-test.mattermost.com"'})}
+                    placeholder={defineMessage({id: 'admin.email.pushServerEx', defaultMessage: 'E.g.: "https://push.hanzo.team"'})}
                     helpText={pushServerHelpText}
                     value={this.state.pushNotificationServer}
                     onChange={this.handleChange}

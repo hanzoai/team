@@ -969,7 +969,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'ServiceSettings.SiteURL',
                             label: defineMessage({id: 'admin.service.siteURL', defaultMessage: 'Site URL:'}),
-                            help_text: defineMessage({id: 'admin.service.siteURLDescription', defaultMessage: 'The URL that users will use to access Mattermost. Standard ports, such as 80 and 443, can be omitted, but non-standard ports are required. For example: http://example.com:8065. This setting is required.\n \nMattermost may be hosted at a subpath. For example: http://example.com:8065/company/mattermost. A restart is required before the server will work correctly.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
+                            help_text: defineMessage({id: 'admin.service.siteURLDescription', defaultMessage: 'The URL that users will use to access Hanzo Team. Standard ports, such as 80 and 443, can be omitted, but non-standard ports are required. For example: http://example.com:8065. This setting is required.\n \nHanzo Team may be hosted at a subpath. For example: http://example.com:8065/company/mattermost. A restart is required before the server will work correctly.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
                             help_text_markdown: true,
                             placeholder: defineMessage({id: 'admin.service.siteURLExample', defaultMessage: 'E.g.: "http://example.com:8065"'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.WEB_SERVER)),
@@ -989,7 +989,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'ServiceSettings.ListenAddress',
                             label: defineMessage({id: 'admin.service.listenAddress', defaultMessage: 'Listen Address:'}),
                             placeholder: defineMessage({id: 'admin.service.listenExample', defaultMessage: 'E.g.: ":8065"'}),
-                            help_text: defineMessage({id: 'admin.service.listenDescription', defaultMessage: 'The address and port to which to bind and listen. Specifying ":8065" will bind to all network interfaces. Specifying "127.0.0.1:8065" will only bind to the network interface having that IP address. If you choose a port of a lower level (called "system ports" or "well-known ports", in the range of 0-1023), you must have permissions to bind to that port. On Linux you can use: "sudo setcap cap_net_bind_service=+ep ./bin/mattermost" to allow Mattermost to bind to well-known ports.'}),
+                            help_text: defineMessage({id: 'admin.service.listenDescription', defaultMessage: 'The address and port to which to bind and listen. Specifying ":8065" will bind to all network interfaces. Specifying "127.0.0.1:8065" will only bind to the network interface having that IP address. If you choose a port of a lower level (called "system ports" or "well-known ports", in the range of 0-1023), you must have permissions to bind to that port. On Linux you can use: "sudo setcap cap_net_bind_service=+ep ./bin/mattermost" to allow Hanzo Team to bind to well-known ports.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.WEB_SERVER)),
                         },
                         {
@@ -1114,7 +1114,7 @@ const AdminDefinition: AdminDefinitionType = {
                             production_warning: {
                                 isEnabled: it.stateIsTrue('ServiceSettings.EnableInsecureOutgoingConnections'),
                                 title: defineMessage({id: 'admin.service.insecureTlsProductionWarning.title', defaultMessage: 'Insecure outgoing connections are not recommended for production environments'}),
-                                text: defineMessage({id: 'admin.service.insecureTlsProductionWarning.text', defaultMessage: 'Mattermost will not verify TLS certificates for outbound connections, exposing them to man-in-the-middle attacks. Enable only for testing.'}),
+                                text: defineMessage({id: 'admin.service.insecureTlsProductionWarning.text', defaultMessage: 'Hanzo Team will not verify TLS certificates for outbound connections, exposing them to man-in-the-middle attacks. Enable only for testing.'}),
                             },
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.WEB_SERVER)),
                         },
@@ -1122,7 +1122,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'ServiceSettings.ManagedResourcePaths',
                             label: defineMessage({id: 'admin.service.managedResourcePaths', defaultMessage: 'Managed Resource Paths:'}),
-                            help_text: defineMessage({id: 'admin.service.managedResourcePathsDescription', defaultMessage: 'A comma-separated list of paths on the Mattermost server that are managed by another service. See <link>here</link> for more information.'}), // eslint-disable-line formatjs/enforce-placeholders -- link provided via help_text_values
+                            help_text: defineMessage({id: 'admin.service.managedResourcePathsDescription', defaultMessage: 'A comma-separated list of paths on the Hanzo Team server that are managed by another service. See <link>here</link> for more information.'}), // eslint-disable-line formatjs/enforce-placeholders -- link provided via help_text_values
                             help_text_markdown: false,
                             help_text_values: {
                                 link: (msg: string) => (
@@ -1141,7 +1141,7 @@ const AdminDefinition: AdminDefinitionType = {
                             action: reloadConfig,
                             key: 'ReloadConfigButton',
                             label: defineMessage({id: 'admin.reload.button', defaultMessage: 'Reload Configuration From Disk'}),
-                            help_text: defineMessage({id: 'admin.reload.reloadDescription', defaultMessage: 'Deployments using multiple databases can switch from one master database to another without restarting the Mattermost server by updating "config.json" to the new desired configuration and using the {featureName} feature to load the new settings while the server is running. The administrator should then use the {recycleDatabaseConnections} feature to recycle the database connections based on the new settings.'}), // eslint-disable-line formatjs/enforce-placeholders -- featureName, recycleDatabaseConnections provided via help_text_values
+                            help_text: defineMessage({id: 'admin.reload.reloadDescription', defaultMessage: 'Deployments using multiple databases can switch from one master database to another without restarting the Hanzo Team server by updating "config.json" to the new desired configuration and using the {featureName} feature to load the new settings while the server is running. The administrator should then use the {recycleDatabaseConnections} feature to recycle the database connections based on the new settings.'}), // eslint-disable-line formatjs/enforce-placeholders -- featureName, recycleDatabaseConnections provided via help_text_values
                             help_text_values: {
                                 featureName: (
                                     <b>
@@ -1331,7 +1331,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'FileSettings.AmazonS3Region',
                             label: defineMessage({id: 'admin.image.amazonS3RegionTitle', defaultMessage: 'Amazon S3 Region:'}),
-                            help_text: defineMessage({id: 'admin.image.amazonS3RegionDescription', defaultMessage: 'AWS region you selected when creating your S3 bucket. If no region is set, Mattermost attempts to get the appropriate region from AWS, or sets it to "us-east-1" if none found.'}),
+                            help_text: defineMessage({id: 'admin.image.amazonS3RegionDescription', defaultMessage: 'AWS region you selected when creating your S3 bucket. If no region is set, Hanzo Team attempts to get the appropriate region from AWS, or sets it to "us-east-1" if none found.'}),
                             placeholder: defineMessage({id: 'admin.image.amazonS3RegionExample', defaultMessage: 'E.g.: "us-east-1"'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.FILE_STORAGE)),
@@ -1548,7 +1548,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'FileSettings.AzureEndpoint',
                             label: defineMessage({id: 'admin.image.azureEndpointTitle', defaultMessage: 'Custom Azure Endpoint:'}),
-                            help_text: defineMessage({id: 'admin.image.azureEndpointDescription', defaultMessage: 'Full Blob service URL, including scheme and storage account. Mattermost does not modify this URL, so the storage account must already be embedded in the hostname (vhost-style, e.g. "https://acmemattermost.blob.core.chinacloudapi.cn/") or in the path (path-style, e.g. "http://localhost:10000/devstoreaccount1/"). Shared-key auth signs against the host this URL points at, so make sure it actually serves the storage account named above.'}),
+                            help_text: defineMessage({id: 'admin.image.azureEndpointDescription', defaultMessage: 'Full Blob service URL, including scheme and storage account. Hanzo Team does not modify this URL, so the storage account must already be embedded in the hostname (vhost-style, e.g. "https://acmemattermost.blob.core.chinacloudapi.cn/") or in the path (path-style, e.g. "http://localhost:10000/devstoreaccount1/"). Shared-key auth signs against the host this URL points at, so make sure it actually serves the storage account named above.'}),
                             placeholder: defineMessage({id: 'admin.image.azureEndpointExample', defaultMessage: 'E.g.: "http://localhost:10000/devstoreaccount1/"'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.FILE_STORAGE)),
@@ -1768,11 +1768,11 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'EmailSettings.SkipServerCertificateVerification',
                             label: defineMessage({id: 'admin.environment.smtp.skipServerCertificateVerification.title', defaultMessage: 'Skip Server Certificate Verification:'}),
-                            help_text: defineMessage({id: 'admin.environment.smtp.skipServerCertificateVerification.description', defaultMessage: 'When true, Mattermost will not verify the email server certificate.'}),
+                            help_text: defineMessage({id: 'admin.environment.smtp.skipServerCertificateVerification.description', defaultMessage: 'When true, Hanzo Team will not verify the email server certificate.'}),
                             production_warning: {
                                 isEnabled: it.stateIsTrue('EmailSettings.SkipServerCertificateVerification'),
                                 title: defineMessage({id: 'admin.environment.smtp.skipServerCertificateVerificationProductionWarning.title', defaultMessage: 'Skipping certificate verification is not recommended for production environments'}),
-                                text: defineMessage({id: 'admin.environment.smtp.skipServerCertificateVerificationProductionWarning.text', defaultMessage: "Mattermost will not validate the SMTP server's TLS certificate, exposing email delivery to man-in-the-middle attacks. Enable only while troubleshooting."}),
+                                text: defineMessage({id: 'admin.environment.smtp.skipServerCertificateVerificationProductionWarning.text', defaultMessage: "Hanzo Team will not validate the SMTP server's TLS certificate, exposing email delivery to man-in-the-middle attacks. Enable only while troubleshooting."}),
                             },
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.SMTP)),
                         },
@@ -2073,7 +2073,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'LogSettings.FileLocation',
                             label: defineMessage({id: 'admin.log.locationTitle', defaultMessage: 'File Log Directory:'}),
-                            help_text: defineMessage({id: 'admin.log.locationDescription', defaultMessage: 'The location of the log files. If blank, they are stored in the ./logs directory. The path that you set must exist and Mattermost must have write permissions in it. Changing this setting requires a server restart before taking effect.'}),
+                            help_text: defineMessage({id: 'admin.log.locationDescription', defaultMessage: 'The location of the log files. If blank, they are stored in the ./logs directory. The path that you set must exist and Hanzo Team must have write permissions in it. Changing this setting requires a server restart before taking effect.'}),
                             placeholder: defineMessage({id: 'admin.log.locationPlaceholder', defaultMessage: 'Enter your file location'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.LOGGING)),
@@ -2101,7 +2101,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'LogSettings.EnableDiagnostics',
                             label: defineMessage({id: 'admin.log.enableDiagnostics', defaultMessage: 'Enable Diagnostics and Error Reporting:'}),
-                            help_text: defineMessage({id: 'admin.log.enableDiagnosticsDescription', defaultMessage: 'Enable this feature to improve the quality and performance of Mattermost by sending error reporting and diagnostic information to Mattermost, Inc. Read our <link>privacy policy</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.log.enableDiagnosticsDescription', defaultMessage: 'Enable this feature to improve the quality and performance of Hanzo Team by sending error reporting and diagnostic information to Hanzo AI Inc. Read our <link>privacy policy</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_markdown: false,
                             help_text_values: {
                                 link: (msg: string) => (
@@ -2190,7 +2190,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'MetricsSettings.Enable',
                             label: defineMessage({id: 'admin.metrics.enableTitle', defaultMessage: 'Enable Performance Monitoring:'}),
-                            help_text: defineMessage({id: 'admin.metrics.enableDescription', defaultMessage: 'When true, Mattermost will enable performance monitoring collection and profiling. Please see <link>documentation</link> to learn more about configuring performance monitoring for Mattermost.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.metrics.enableDescription', defaultMessage: 'When true, Hanzo Team will enable performance monitoring collection and profiling. Please see <link>documentation</link> to learn more about configuring performance monitoring for Hanzo Team.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_markdown: false,
                             help_text_values: {
                                 link: (msg: string) => (
@@ -2208,7 +2208,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'MetricsSettings.EnableClientMetrics',
                             label: defineMessage({id: 'admin.metrics.enableClientMetricsTitle', defaultMessage: 'Enable Client Performance Monitoring:'}),
-                            help_text: defineMessage({id: 'admin.metrics.enableClientMetricsDescription', defaultMessage: 'When true, Mattermost will enable performance monitoring collection for web and desktop app users. Please see <link>documentation</link> to learn more about configuring performance monitoring for Mattermost.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.metrics.enableClientMetricsDescription', defaultMessage: 'When true, Hanzo Team will enable performance monitoring collection for web and desktop app users. Please see <link>documentation</link> to learn more about configuring performance monitoring for Hanzo Team.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_markdown: false,
                             help_text_values: {
                                 link: (msg: string) => (
@@ -2293,12 +2293,12 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'ServiceSettings.AllowedUntrustedInternalConnections',
                             label: defineMessage({id: 'admin.service.internalConnectionsTitle', defaultMessage: 'Allow untrusted internal connections to: '}),
                             placeholder: defineMessage({id: 'admin.service.internalConnectionsEx', defaultMessage: 'webhooks.internal.example.com 127.0.0.1 10.0.16.0/28'}),
-                            help_text: defineMessage({id: 'admin.service.internalConnectionsDesc', defaultMessage: 'A whitelist of local network addresses that can be requested by the Mattermost server on behalf of a client. Care should be used when configuring this setting to prevent unintended access to your local network. See <link>documentation</link> to learn more. Changing this requires a server restart before taking effect.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.service.internalConnectionsDesc', defaultMessage: 'A whitelist of local network addresses that can be requested by the Hanzo Team server on behalf of a client. Care should be used when configuring this setting to prevent unintended access to your local network. See <link>documentation</link> to learn more. Changing this requires a server restart before taking effect.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (msg: string) => (
                                     <ExternalLink
                                         location='admin_console'
-                                        href='https://mattermost.com/pl/default-allow-untrusted-internal-connections'
+                                        href='https://docs.hanzo.team/default-allow-untrusted-internal-connections'
                                     >
                                         {msg}
                                     </ExternalLink>
@@ -2384,8 +2384,8 @@ const AdminDefinition: AdminDefinitionType = {
                                 featureDiscoveryConfig: {
                                     featureName: 'intune_mam',
                                     title: defineMessage({id: 'admin.intune_feature_discovery.title', defaultMessage: 'Protect mobile data with Microsoft Intune App Protection Policies (MAM) and Entra ID authentication'}),
-                                    description: defineMessage({id: 'admin.intune_feature_discovery.description', defaultMessage: 'With Mattermost Enterprise Advanced, you can enable Microsoft Intune Mobile Application Management (MAM) to enforce App Protection Policies (APP) on Mattermost Mobile. Users sign in with Microsoft Entra ID (Azure AD), and Intune MAM applies data protection, selective wipe, and compliance policies on supported iOS devices.'}),
-                                    learnMoreURL: 'https://docs.mattermost.com/deployment-guide/mobile/configure-microsoft-intune-mam.html',
+                                    description: defineMessage({id: 'admin.intune_feature_discovery.description', defaultMessage: 'With Hanzo Team, you can enable Microsoft Intune Mobile Application Management (MAM) to enforce App Protection Policies (APP) on Hanzo Team Mobile. Users sign in with Microsoft Entra ID (Azure AD), and Intune MAM applies data protection, selective wipe, and compliance policies on supported iOS devices.'}),
+                                    learnMoreURL: 'https://docs.hanzo.team/deployment-guide/mobile/configure-microsoft-intune-mam.html',
                                     svgImage: IntuneMAMSvg,
                                 },
                             },
@@ -2394,13 +2394,13 @@ const AdminDefinition: AdminDefinitionType = {
                                     type: 'bool',
                                     key: 'IntuneSettings.Enable',
                                     label: defineMessage({id: 'admin.intune.enableTitle', defaultMessage: 'Enable Microsoft Intune MAM:'}),
-                                    help_text: defineMessage({id: 'admin.intune.enableDescription', defaultMessage: 'When enabled, Mattermost Mobile uses Microsoft Entra ID (Azure AD) for app authentication and policy enforcement. Users authenticate using MSAL tokens, and Intune MAM policies (App Protection Policies) are applied to protect corporate data.'}),
+                                    help_text: defineMessage({id: 'admin.intune.enableDescription', defaultMessage: 'When enabled, Hanzo Team Mobile uses Microsoft Entra ID (Azure AD) for app authentication and policy enforcement. Users authenticate using MSAL tokens, and Intune MAM policies (App Protection Policies) are applied to protect corporate data.'}),
                                 },
                                 {
                                     type: 'dropdown',
                                     key: 'IntuneSettings.AuthService',
                                     label: defineMessage({id: 'admin.intune.authServiceTitle', defaultMessage: 'Auth Provider:'}),
-                                    help_text: defineMessage({id: 'admin.intune.authServiceDescription', defaultMessage: 'Select how users authenticate into Mattermost.\n* **OpenID Connect** – Use when users sign in to Mattermost via Microsoft 365 / Entra ID using OIDC.\n* **SAML 2.0** – Use when users authenticate via a SAML provider that ultimately maps to Microsoft Entra ID.\nChoose the option that matches how your organization already authenticates users into Mattermost on other clients.'}),
+                                    help_text: defineMessage({id: 'admin.intune.authServiceDescription', defaultMessage: 'Select how users authenticate into Hanzo Team.\n* **OpenID Connect** – Use when users sign in to Hanzo Team via Microsoft 365 / Entra ID using OIDC.\n* **SAML 2.0** – Use when users authenticate via a SAML provider that ultimately maps to Microsoft Entra ID.\nChoose the option that matches how your organization already authenticates users into Hanzo Team on other clients.'}),
                                     help_text_markdown: true,
                                     options: [
                                         {
@@ -2424,7 +2424,7 @@ const AdminDefinition: AdminDefinitionType = {
                                     type: 'text',
                                     key: 'IntuneSettings.TenantId',
                                     label: defineMessage({id: 'admin.intune.tenantIdTitle', defaultMessage: 'Tenant ID:'}),
-                                    help_text: defineMessage({id: 'admin.intune.tenantIdDescription', defaultMessage: 'The Microsoft Entra ID (Azure AD) Tenant ID (also called the Directory ID).\nThis is the globally unique identifier that represents your organization in Microsoft Entra ID.\nMattermost uses this ID to validate tokens issued for Intune MAM.'}),
+                                    help_text: defineMessage({id: 'admin.intune.tenantIdDescription', defaultMessage: 'The Microsoft Entra ID (Azure AD) Tenant ID (also called the Directory ID).\nThis is the globally unique identifier that represents your organization in Microsoft Entra ID.\nHanzo Team uses this ID to validate tokens issued for Intune MAM.'}),
                                     placeholder: defineMessage({id: 'admin.intune.tenantIdPlaceholder', defaultMessage: 'E.g.: "12345678-1234-1234-1234-123456789012"'}),
                                     isDisabled: it.stateIsFalse('IntuneSettings.Enable'),
                                     default: (value, config, state) => {
@@ -2440,7 +2440,7 @@ const AdminDefinition: AdminDefinitionType = {
                                     type: 'text',
                                     key: 'IntuneSettings.ClientId',
                                     label: defineMessage({id: 'admin.intune.clientIdTitle', defaultMessage: 'Application (Client) ID:'}),
-                                    help_text: defineMessage({id: 'admin.intune.clientIdDescription', defaultMessage: 'The Application (Client) ID of your Intune MAM–enabled app registration in Microsoft Entra ID.\nThis is the client identifier that the Mattermost Mobile app uses to request MSAL tokens for Intune MAM enrollment and policy evaluation.'}),
+                                    help_text: defineMessage({id: 'admin.intune.clientIdDescription', defaultMessage: 'The Application (Client) ID of your Intune MAM–enabled app registration in Microsoft Entra ID.\nThis is the client identifier that the Hanzo Team Mobile app uses to request MSAL tokens for Intune MAM enrollment and policy evaluation.'}),
                                     placeholder: defineMessage({id: 'admin.intune.clientIdPlaceholder', defaultMessage: 'E.g.: "87654321-4321-4321-4321-210987654321"'}),
                                     isDisabled: it.stateIsFalse('IntuneSettings.Enable'),
                                     default: (value, config, state) => {
@@ -2465,8 +2465,8 @@ const AdminDefinition: AdminDefinitionType = {
                                 featureDiscoveryConfig: {
                                     featureName: 'mobile_ephemeral_mode',
                                     title: defineMessage({id: 'admin.mobileSecurity.ephemeralMode_feature_discovery.title', defaultMessage: 'Control mobile data persistence with Mobile Ephemeral Mode'}),
-                                    description: defineMessage({id: 'admin.mobileSecurity.ephemeralMode_feature_discovery.description', defaultMessage: 'With Mattermost Enterprise Advanced, you can enable Mobile Ephemeral Mode to enforce data persistence policies on mobile devices. Configure disconnection timeouts, offline data retention, and automatic cache cleanup.'}),
-                                    learnMoreURL: 'https://docs.mattermost.com/configure/environment-configuration-settings.html#mobile-security',
+                                    description: defineMessage({id: 'admin.mobileSecurity.ephemeralMode_feature_discovery.description', defaultMessage: 'With Hanzo Team, you can enable Mobile Ephemeral Mode to enforce data persistence policies on mobile devices. Configure disconnection timeouts, offline data retention, and automatic cache cleanup.'}),
+                                    learnMoreURL: 'https://docs.hanzo.team/configure/environment-configuration-settings.html#mobile-security',
                                 },
                             },
                             isHidden: it.configIsFalse('FeatureFlags', 'MobileEphemeralMode'),
@@ -2573,8 +2573,8 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'TeamSettings.SiteName',
                             label: defineMessage({id: 'admin.team.siteNameTitle', defaultMessage: 'Site Name:'}),
-                            help_text: defineMessage({id: 'admin.team.siteNameDescription', defaultMessage: 'Name of service shown in login screens and UI. When not specified, it defaults to "Mattermost".'}),
-                            placeholder: defineMessage({id: 'admin.team.siteNameExample', defaultMessage: 'E.g.: "Mattermost"'}),
+                            help_text: defineMessage({id: 'admin.team.siteNameDescription', defaultMessage: 'Name of service shown in login screens and UI. When not specified, it defaults to "Hanzo Team".'}),
+                            placeholder: defineMessage({id: 'admin.team.siteNameExample', defaultMessage: 'E.g.: "Hanzo Team"'}),
                             max_length: Constants.MAX_SITENAME_LENGTH,
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                         },
@@ -2616,21 +2616,21 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SupportSettings.EnableAskCommunityLink',
                             label: defineMessage({id: 'admin.support.enableAskCommunityTitle', defaultMessage: 'Enable Ask Community Link:'}),
-                            help_text: defineMessage({id: 'admin.support.enableAskCommunityDesc', defaultMessage: 'When true, "Ask the community" link appears on the Mattermost user interface and Help Menu, which allows users to join the Mattermost Community to ask questions and help others troubleshoot issues. When false, the link is hidden from users.'}),
+                            help_text: defineMessage({id: 'admin.support.enableAskCommunityDesc', defaultMessage: 'When true, "Ask the community" link appears on the Hanzo Team user interface and Help Menu, which allows users to join the Hanzo Team Community to ask questions and help others troubleshoot issues. When false, the link is hidden from users.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                         },
                         {
                             type: 'text',
                             key: 'SupportSettings.HelpLink',
                             label: defineMessage({id: 'admin.support.helpTitle', defaultMessage: 'Help Link:'}),
-                            help_text: defineMessage({id: 'admin.support.helpDesc', defaultMessage: 'The URL for the Help link on the Mattermost login page, sign-up pages, and Help Menu. If this field is empty, the Help link is hidden from users.'}),
+                            help_text: defineMessage({id: 'admin.support.helpDesc', defaultMessage: 'The URL for the Help link on the Hanzo Team login page, sign-up pages, and Help Menu. If this field is empty, the Help link is hidden from users.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                         },
                         {
                             type: 'text',
                             key: 'SupportSettings.TermsOfServiceLink',
                             label: defineMessage({id: 'admin.support.termsTitle', defaultMessage: 'Terms of Use Link:'}),
-                            help_text: defineMessage({id: 'admin.support.termsDesc', defaultMessage: 'Link to the terms under which users may use your online service. By default, this includes the "Mattermost Acceptable Use Policy" explaining the terms under which Mattermost software is provided to end users. If you change the default link to add your own terms for using the service you provide, your new terms must include a link to the default terms so end users are aware of the Mattermost Acceptable Use Policy for Mattermost software.'}),
+                            help_text: defineMessage({id: 'admin.support.termsDesc', defaultMessage: 'Link to the terms under which users may use your online service. By default, this includes the "Hanzo Team Acceptable Use Policy" explaining the terms under which Hanzo Team software is provided to end users. If you change the default link to add your own terms for using the service you provide, your new terms must include a link to the default terms so end users are aware of the Hanzo Team Acceptable Use Policy for Hanzo Team software.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                             isHidden: it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
                         },
@@ -2646,7 +2646,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'SupportSettings.AboutLink',
                             label: defineMessage({id: 'admin.support.aboutTitle', defaultMessage: 'About Link:'}),
-                            help_text: defineMessage({id: 'admin.support.aboutDesc', defaultMessage: 'The URL for the About link on the Mattermost login and sign-up pages. If this field is empty, the About link is hidden from users.'}),
+                            help_text: defineMessage({id: 'admin.support.aboutDesc', defaultMessage: 'The URL for the About link on the Hanzo Team login and sign-up pages. If this field is empty, the About link is hidden from users.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                             isHidden: it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
                         },
@@ -2654,7 +2654,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'SupportSettings.ForgotPasswordLink',
                             label: defineMessage({id: 'admin.support.forgotPasswordTitle', defaultMessage: 'Forgot Password Custom Link:'}),
-                            help_text: defineMessage({id: 'admin.support.forgotPasswordDesc', defaultMessage: 'The URL for the Forgot Password link on the Mattermost login page. If this field is empty the Forgot Password link takes users to the Password Reset page.'}),
+                            help_text: defineMessage({id: 'admin.support.forgotPasswordDesc', defaultMessage: 'The URL for the Forgot Password link on the Hanzo Team login page. If this field is empty the Forgot Password link takes users to the Password Reset page.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                             isHidden: it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
                         },
@@ -2662,7 +2662,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'dropdown',
                             key: 'SupportSettings.ReportAProblemType',
                             label: defineMessage({id: 'admin.support.reportAProblemTypeTitle', defaultMessage: 'Report a Problem:'}),
-                            help_text: defineMessage({id: 'admin.support.reportAProblemTypeDescriptionLicensed', defaultMessage: 'By default, selecting "Report a Problem" from the help menu opens a pre-filled email draft to the Mattermost technical support team. You may provide a custom URL or email address for end user support by choosing "Custom link" or "Email address". "Hide link" removes the "Report a Problem" option from the app.'}),
+                            help_text: defineMessage({id: 'admin.support.reportAProblemTypeDescriptionLicensed', defaultMessage: 'By default, selecting "Report a Problem" from the help menu opens a pre-filled email draft to the Hanzo Team technical support team. You may provide a custom URL or email address for end user support by choosing "Custom link" or "Email address". "Hide link" removes the "Report a Problem" option from the app.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                             isHidden: it.any(
                                 it.isFreeEdition,
@@ -2674,7 +2674,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'dropdown',
                             key: 'SupportSettings.ReportAProblemType',
                             label: defineMessage({id: 'admin.support.reportAProblemTypeTitle', defaultMessage: 'Report a Problem:'}),
-                            help_text: defineMessage({id: 'admin.support.reportAProblemTypeDescriptionUnlicensed', defaultMessage: 'By default, selecting "Report a Problem" from the help menu opens the [Mattermost troubleshooting forums](https://mattermost.com/pl/report_a_problem_unlicensed). You may provide a custom URL or email address for end user support by choosing "Custom link" or "Email address". "Hide link" removes the "Report a Problem" option from the app.'}),
+                            help_text: defineMessage({id: 'admin.support.reportAProblemTypeDescriptionUnlicensed', defaultMessage: 'By default, selecting "Report a Problem" from the help menu opens the [Hanzo Team troubleshooting forums](https://docs.hanzo.team/report_a_problem_unlicensed). You may provide a custom URL or email address for end user support by choosing "Custom link" or "Email address". "Hide link" removes the "Report a Problem" option from the app.'}),
                             help_text_markdown: true,
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                             isHidden: it.any(
@@ -2729,8 +2729,8 @@ const AdminDefinition: AdminDefinitionType = {
                         {
                             type: 'text',
                             key: 'NativeAppSettings.AppDownloadLink',
-                            label: defineMessage({id: 'admin.customization.appDownloadLinkTitle', defaultMessage: 'Mattermost Apps Download Page Link:'}),
-                            help_text: defineMessage({id: 'admin.customization.appDownloadLinkDesc', defaultMessage: 'Add a link to a download page for the Mattermost apps. When a link is present, an option to "Download Mattermost Apps" will be added in the Product Menu so users can find the download page. Leave this field blank to hide the option from the Product Menu.'}),
+                            label: defineMessage({id: 'admin.customization.appDownloadLinkTitle', defaultMessage: 'Hanzo Team Apps Download Page Link:'}),
+                            help_text: defineMessage({id: 'admin.customization.appDownloadLinkDesc', defaultMessage: 'Add a link to a download page for the Hanzo Team apps. When a link is present, an option to "Download Hanzo Team Apps" will be added in the Product Menu so users can find the download page. Leave this field blank to hide the option from the Product Menu.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                             isHidden: it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
                         },
@@ -2754,7 +2754,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ServiceSettings.EnableDesktopLandingPage',
                             label: defineMessage({id: 'admin.customization.enableDesktopLandingPageTitle', defaultMessage: 'Enable Desktop App Landing Page:'}),
-                            help_text: defineMessage({id: 'admin.customization.enableDesktopLandingPageDesc', defaultMessage: 'Whether or not to prompt a user to use the Desktop App when they first use Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.customization.enableDesktopLandingPageDesc', defaultMessage: 'Whether or not to prompt a user to use the Desktop App when they first use Hanzo Team.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                         },
                         {
@@ -2770,7 +2770,7 @@ const AdminDefinition: AdminDefinitionType = {
                             }),
                             help_text: defineMessage({
                                 id: 'admin.customization.minimumDesktopAppVersionDesc',
-                                defaultMessage: 'Specify the minimum version of the Mattermost Desktop App required to connect to this server (e.g., 5.10.0). Users connecting with a Desktop App version below this minimum will be shown an update required page and will not be able to use the application until they update. Leave this field blank to allow all Desktop App versions to connect without restriction.',
+                                defaultMessage: 'Specify the minimum version of the Hanzo Team Desktop App required to connect to this server (e.g., 5.10.0). Users connecting with a Desktop App version below this minimum will be shown an update required page and will not be able to use the application until they update. Leave this field blank to allow all Desktop App versions to connect without restriction.',
                             }),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.CUSTOMIZATION)),
                             validate: (value) => {
@@ -2869,11 +2869,11 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'dropdown',
                             key: 'TeamSettings.RestrictDirectMessage',
                             label: defineMessage({id: 'admin.team.restrictDirectMessage', defaultMessage: 'Enable users to open Direct Message channels with:'}),
-                            help_text: defineMessage({id: 'admin.team.restrictDirectMessageDesc', defaultMessage: "'Any user on the Mattermost server' enables users to open a Direct Message channel with any user on the server, even if they are not on any teams together. 'Any member of the team' limits the ability in the Direct Messages 'More' menu to only open Direct Message channels with users who are in the same team."}),
+                            help_text: defineMessage({id: 'admin.team.restrictDirectMessageDesc', defaultMessage: "'Any user on the Hanzo Team server' enables users to open a Direct Message channel with any user on the server, even if they are not on any teams together. 'Any member of the team' limits the ability in the Direct Messages 'More' menu to only open Direct Message channels with users who are in the same team."}),
                             options: [
                                 {
                                     value: 'any',
-                                    display_name: defineMessage({id: 'admin.team.restrict_direct_message_any', defaultMessage: 'Any user on the Mattermost server'}),
+                                    display_name: defineMessage({id: 'admin.team.restrict_direct_message_any', defaultMessage: 'Any user on the Hanzo Team server'}),
                                 },
                                 {
                                     value: 'team',
@@ -3021,7 +3021,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'EmailSettings.SendEmailNotifications',
                             label: defineMessage({id: 'admin.environment.notifications.enable.label', defaultMessage: 'Enable Email Notifications:'}),
-                            help_text: defineMessage({id: 'admin.environment.notifications.enable.help', defaultMessage: 'Typically set to true in production. When true, Mattermost attempts to send email notifications. When false, email invitations and user account setting change emails are still sent as long as the SMTP server is configured. Developers may set this field to false to skip email setup for faster development.'}),
+                            help_text: defineMessage({id: 'admin.environment.notifications.enable.help', defaultMessage: 'Typically set to true in production. When true, Hanzo Team attempts to send email notifications. When false, email invitations and user account setting change emails are still sent as long as the SMTP server is configured. Developers may set this field to false to skip email setup for faster development.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.NOTIFICATIONS)),
                             isHidden: it.licensedForFeature('Cloud'),
                         },
@@ -3053,7 +3053,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'dropdown',
                             key: 'EmailSettings.EmailNotificationContentsType',
                             label: defineMessage({id: 'admin.environment.notifications.contents.label', defaultMessage: 'Email Notification Contents:'}),
-                            help_text: defineMessage({id: 'admin.environment.notifications.contents.help', defaultMessage: '**Send full message contents** - Sender name and channel are included in email notifications.\n  **Send generic description with only sender name** - Only the name of the person who sent the message, with no information about channel name or message contents are included in email notifications. Typically used for compliance reasons if Mattermost contains confidential information and policy dictates it cannot be stored in email.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
+                            help_text: defineMessage({id: 'admin.environment.notifications.contents.help', defaultMessage: '**Send full message contents** - Sender name and channel are included in email notifications.\n  **Send generic description with only sender name** - Only the name of the person who sent the message, with no information about channel name or message contents are included in email notifications. Typically used for compliance reasons if Hanzo Team contains confidential information and policy dictates it cannot be stored in email.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
                             help_text_markdown: true,
                             options: [
                                 {
@@ -3072,8 +3072,8 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'EmailSettings.FeedbackName',
                             label: defineMessage({id: 'admin.environment.notifications.notificationDisplay.label', defaultMessage: 'Notification Display Name:'}),
-                            placeholder: defineMessage({id: 'admin.environment.notifications.notificationDisplay.placeholder', defaultMessage: 'Ex: "Mattermost Notification", "System", "No-Reply"'}),
-                            help_text: defineMessage({id: 'admin.environment.notifications.notificationDisplay.help', defaultMessage: 'Display name on email account used when sending notification emails from Mattermost.'}),
+                            placeholder: defineMessage({id: 'admin.environment.notifications.notificationDisplay.placeholder', defaultMessage: 'Ex: "Hanzo Team Notification", "System", "No-Reply"'}),
+                            help_text: defineMessage({id: 'admin.environment.notifications.notificationDisplay.help', defaultMessage: 'Display name on email account used when sending notification emails from Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.NOTIFICATIONS)),
                                 it.stateIsFalse('EmailSettings.SendEmailNotifications'),
@@ -3084,8 +3084,8 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'EmailSettings.FeedbackEmail',
                             label: defineMessage({id: 'admin.environment.notifications.feedbackEmail.label', defaultMessage: 'Notification From Address:'}),
-                            placeholder: defineMessage({id: 'admin.environment.notifications.feedbackEmail.placeholder', defaultMessage: 'Ex: "mattermost@yourcompany.com", "admin@yourcompany.com"'}),
-                            help_text: defineMessage({id: 'admin.environment.notifications.feedbackEmail.help', defaultMessage: 'Email address displayed on email account used when sending notification emails from Mattermost.'}),
+                            placeholder: defineMessage({id: 'admin.environment.notifications.feedbackEmail.placeholder', defaultMessage: 'Ex: "team@yourcompany.com", "admin@yourcompany.com"'}),
+                            help_text: defineMessage({id: 'admin.environment.notifications.feedbackEmail.help', defaultMessage: 'Email address displayed on email account used when sending notification emails from Hanzo Team.'}),
                             isHidden: it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.NOTIFICATIONS)),
@@ -3106,8 +3106,8 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'EmailSettings.ReplyToAddress',
                             label: defineMessage({id: 'admin.environment.notifications.replyToAddress.label', defaultMessage: 'Notification Reply-To Address:'}),
-                            placeholder: defineMessage({id: 'admin.environment.notifications.replyToAddress.placeholder', defaultMessage: 'Ex: "mattermost@yourcompany.com", "admin@yourcompany.com"'}),
-                            help_text: defineMessage({id: 'admin.environment.notifications.replyToAddress.help', defaultMessage: 'Email address used in the Reply-To header when sending notification emails from Mattermost.'}),
+                            placeholder: defineMessage({id: 'admin.environment.notifications.replyToAddress.placeholder', defaultMessage: 'Ex: "team@yourcompany.com", "admin@yourcompany.com"'}),
+                            help_text: defineMessage({id: 'admin.environment.notifications.replyToAddress.help', defaultMessage: 'Email address used in the Reply-To header when sending notification emails from Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.NOTIFICATIONS)),
                                 it.stateIsFalse('EmailSettings.SendEmailNotifications'),
@@ -3118,7 +3118,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'EmailSettings.FeedbackOrganization',
                             label: defineMessage({id: 'admin.environment.notifications.feedbackOrganization.label', defaultMessage: 'Notification Footer Mailing Address:'}),
                             placeholder: defineMessage({id: 'admin.environment.notifications.feedbackOrganization.placeholder', defaultMessage: 'Ex: "© ABC Corporation, 565 Knight Way, Palo Alto, California, 94305, USA"'}),
-                            help_text: defineMessage({id: 'admin.environment.notifications.feedbackOrganization.help', defaultMessage: 'Organization name and address displayed on email notifications from Mattermost, such as "© ABC Corporation, 565 Knight Way, Palo Alto, California, 94305, USA". If the field is left empty, the organization name and address will not be displayed.'}),
+                            help_text: defineMessage({id: 'admin.environment.notifications.feedbackOrganization.help', defaultMessage: 'Organization name and address displayed on email notifications from Hanzo Team, such as "© ABC Corporation, 565 Knight Way, Palo Alto, California, 94305, USA". If the field is left empty, the organization name and address will not be displayed.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.SITE.NOTIFICATIONS)),
                                 it.stateIsFalse('EmailSettings.SendEmailNotifications'),
@@ -3178,7 +3178,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'MetricsSettings.EnableNotificationMetrics',
                             label: defineMessage({id: 'admin.metrics.enableNotificationMetricsTitle', defaultMessage: 'Enable Notification Monitoring:'}),
-                            help_text: defineMessage({id: 'admin.metrics.enableNotificationMetricsDescription', defaultMessage: 'When true, Mattermost will enable notification data collection for web and Desktop App users.'}),
+                            help_text: defineMessage({id: 'admin.metrics.enableNotificationMetricsDescription', defaultMessage: 'When true, Hanzo Team will enable notification data collection for web and Desktop App users.'}),
                             isDisabled: it.any(
                                 it.configIsFalse('MetricsSettings', 'Enable'),
                             ),
@@ -3433,7 +3433,7 @@ const AdminDefinition: AdminDefinitionType = {
                                         link: (msg: string) => (
                                             <ExternalLink
                                                 location='admin_console'
-                                                href='https://mattermost.com/pl/message-priority/'
+                                                href='https://docs.hanzo.team/message-priority/'
                                             >
                                                 {msg}
                                             </ExternalLink>
@@ -3451,7 +3451,7 @@ const AdminDefinition: AdminDefinitionType = {
                                         link: (msg: string) => (
                                             <ExternalLink
                                                 location='admin_console'
-                                                href='https://mattermost.com/pl/message-priority/'
+                                                href='https://docs.hanzo.team/message-priority/'
                                             >
                                                 {msg}
                                             </ExternalLink>
@@ -3470,7 +3470,7 @@ const AdminDefinition: AdminDefinitionType = {
                                         link: (msg: string) => (
                                             <ExternalLink
                                                 location='admin_console'
-                                                href='https://mattermost.com/pl/message-priority/'
+                                                href='https://docs.hanzo.team/message-priority/'
                                             >
                                                 {msg}
                                             </ExternalLink>
@@ -3492,7 +3492,7 @@ const AdminDefinition: AdminDefinitionType = {
                                         link: (msg: string) => (
                                             <ExternalLink
                                                 location='admin_console'
-                                                href='https://mattermost.com/pl/message-priority/'
+                                                href='https://docs.hanzo.team/message-priority/'
                                             >
                                                 {msg}
                                             </ExternalLink>
@@ -3515,7 +3515,7 @@ const AdminDefinition: AdminDefinitionType = {
                                         link: (msg: string) => (
                                             <ExternalLink
                                                 location='admin_console'
-                                                href='https://mattermost.com/pl/message-priority/'
+                                                href='https://docs.hanzo.team/message-priority/'
                                             >
                                                 {msg}
                                             </ExternalLink>
@@ -3537,7 +3537,7 @@ const AdminDefinition: AdminDefinitionType = {
                                         link: (msg: string) => (
                                             <ExternalLink
                                                 location='admin_console'
-                                                href='https://mattermost.com/pl/message-priority/'
+                                                href='https://docs.hanzo.team/message-priority/'
                                             >
                                                 {msg}
                                             </ExternalLink>
@@ -3564,8 +3564,8 @@ const AdminDefinition: AdminDefinitionType = {
                                 featureDiscoveryConfig: {
                                     featureName: 'burn_on_read',
                                     title: defineMessage({id: 'admin.burn_on_read_feature_discovery.title', defaultMessage: 'Send burn-on-read messages that are automatically deleted after being read'}),
-                                    description: defineMessage({id: 'admin.burn_on_read_feature_discovery.description', defaultMessage: 'With Mattermost Enterprise Advanced, users can send transient messages that are automatically deleted a fixed time after they are read by a recipient.'}),
-                                    learnMoreURL: 'https://docs.mattermost.com/end-user-guide/collaborate/send-messages.html#send-burn-on-read-messages',
+                                    description: defineMessage({id: 'admin.burn_on_read_feature_discovery.description', defaultMessage: 'With Hanzo Team, users can send transient messages that are automatically deleted a fixed time after they are read by a recipient.'}),
+                                    learnMoreURL: 'https://docs.hanzo.team/end-user-guide/collaborate/send-messages.html#send-burn-on-read-messages',
                                     svgImage: BurnOnReadSVG,
                                 },
                             },
@@ -3690,7 +3690,7 @@ const AdminDefinition: AdminDefinitionType = {
                                     type: 'bool',
                                     key: 'ServiceSettings.EnablePermalinkPreviews',
                                     label: defineMessage({id: 'admin.customization.enablePermalinkPreviewsTitle', defaultMessage: 'Enable message link previews:'}),
-                                    help_text: defineMessage({id: 'admin.customization.enablePermalinkPreviewsDesc', defaultMessage: 'When enabled, links to Mattermost messages will generate a preview for any users that have access to the original message. Please review our <link>documentation</link> for details.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    help_text: defineMessage({id: 'admin.customization.enablePermalinkPreviewsDesc', defaultMessage: 'When enabled, links to Hanzo Team messages will generate a preview for any users that have access to the original message. Please review our <link>documentation</link> for details.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_values: {
                                         link: (msg: string) => (
                                             <ExternalLink
@@ -4267,14 +4267,14 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'EmailSettings.EnableSignUpWithEmail',
                             label: defineMessage({id: 'admin.email.allowSignupTitle', defaultMessage: 'Enable account creation with email:'}),
-                            help_text: defineMessage({id: 'admin.email.allowSignupDescription', defaultMessage: 'When true, Mattermost allows account creation using email and password. This value should be false only when you want to limit sign up to a single sign-on service like AD/LDAP, SAML or GitLab.'}),
+                            help_text: defineMessage({id: 'admin.email.allowSignupDescription', defaultMessage: 'When true, Hanzo Team allows account creation using email and password. This value should be false only when you want to limit sign up to a single sign-on service like AD/LDAP, SAML or GitLab.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.EMAIL)),
                         },
                         {
                             type: 'bool',
                             key: 'EmailSettings.RequireEmailVerification',
                             label: defineMessage({id: 'admin.email.requireVerificationTitle', defaultMessage: 'Require Email Verification: '}),
-                            help_text: defineMessage({id: 'admin.email.requireVerificationDescription', defaultMessage: 'Typically set to true in production. When true, Mattermost requires email verification after account creation prior to allowing login. Developers may set this field to false to skip sending verification emails for faster development.'}),
+                            help_text: defineMessage({id: 'admin.email.requireVerificationDescription', defaultMessage: 'Typically set to true in production. When true, Hanzo Team requires email verification after account creation prior to allowing login. Developers may set this field to false to skip sending verification emails for faster development.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.EMAIL)),
                             isHidden: it.licensedForFeature('Cloud'),
                         },
@@ -4282,7 +4282,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'EmailSettings.EnableSignInWithEmail',
                             label: defineMessage({id: 'admin.email.allowEmailSignInTitle', defaultMessage: 'Enable sign-in with email:'}),
-                            help_text: defineMessage({id: 'admin.email.allowEmailSignInDescription', defaultMessage: 'When true, Mattermost allows users to sign in using their email and password.'}),
+                            help_text: defineMessage({id: 'admin.email.allowEmailSignInDescription', defaultMessage: 'When true, Hanzo Team allows users to sign in using their email and password.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.EMAIL)),
                         },
                         {
@@ -4340,7 +4340,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ServiceSettings.EnforceMultifactorAuthentication',
                             label: defineMessage({id: 'admin.service.enforceMfaTitle', defaultMessage: 'Enforce Multi-factor Authentication:'}),
-                            help_text: defineMessage({id: 'admin.service.enforceMfaDesc', defaultMessage: 'When true, <link>multi-factor authentication</link> is required for login. New users will be required to configure MFA on signup. Logged in users without MFA configured are redirected to the MFA setup page until configuration is complete.\n \nIf your system has users with login methods other than AD/LDAP and email, MFA must be enforced with the authentication provider outside of Mattermost.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.service.enforceMfaDesc', defaultMessage: 'When true, <link>multi-factor authentication</link> is required for login. New users will be required to configure MFA on signup. Logged in users without MFA configured are redirected to the MFA setup page until configuration is complete.\n \nIf your system has users with login methods other than AD/LDAP and email, MFA must be enforced with the authentication provider outside of Hanzo Team.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_markdown: false,
                             help_text_values: {
                                 link: (msg: string) => (
@@ -4409,7 +4409,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SamlSettings.Enable',
                             label: defineMessage({id: 'admin.saml.enableTitle', defaultMessage: 'Enable Login With SAML 2.0:'}),
-                            help_text: defineMessage({id: 'admin.saml.enableDescription', defaultMessage: 'When true, Mattermost allows login using SAML 2.0. Please see <link>documentation</link> to learn more about configuring SAML for Mattermost.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.saml.enableDescription', defaultMessage: 'When true, Hanzo Team allows login using SAML 2.0. Please see <link>documentation</link> to learn more about configuring SAML for Hanzo Team.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_markdown: false,
                             help_text_values: {
                                 link: (msg: string) => (
@@ -4427,7 +4427,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SamlSettings.EnableSyncWithLdap',
                             label: defineMessage({id: 'admin.saml.enableSyncWithLdapTitle', defaultMessage: 'Enable Synchronizing SAML Accounts With AD/LDAP:'}),
-                            help_text: defineMessage({id: 'admin.saml.enableSyncWithLdapDescription', defaultMessage: 'When true, Mattermost periodically synchronizes SAML user attributes, including user deactivation and removal, from AD/LDAP. Enable and configure synchronization settings at <strong>Authentication > AD/LDAP</strong>. When false, user attributes are updated from SAML during user login. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.saml.enableSyncWithLdapDescription', defaultMessage: 'When true, Hanzo Team periodically synchronizes SAML user attributes, including user deactivation and removal, from AD/LDAP. Enable and configure synchronization settings at <strong>Authentication > AD/LDAP</strong>. When false, user attributes are updated from SAML during user login. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (msg: string) => (
                                     <ExternalLink
@@ -4449,7 +4449,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SamlSettings.IgnoreGuestsLdapSync',
                             label: defineMessage({id: 'admin.saml.ignoreGuestsLdapSyncTitle', defaultMessage: 'Ignore Guest Users when Synchronizing with AD/LDAP'}),
-                            help_text: defineMessage({id: 'admin.saml.ignoreGuestsLdapSyncDesc', defaultMessage: 'When true, Mattermost will ignore Guest Users who are identified by the Guest Attribute, when synchronizing with AD/LDAP for user deactivation and removal and Guest deactivation will need to be managed manually via System Console > Users.'}),
+                            help_text: defineMessage({id: 'admin.saml.ignoreGuestsLdapSyncDesc', defaultMessage: 'When true, Hanzo Team will ignore Guest Users who are identified by the Guest Attribute, when synchronizing with AD/LDAP for user deactivation and removal and Guest deactivation will need to be managed manually via System Console > Users.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.configIsFalse('GuestAccountsSettings', 'Enable'),
@@ -4461,7 +4461,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SamlSettings.EnableSyncWithLdapIncludeAuth',
                             label: defineMessage({id: 'admin.saml.enableSyncWithLdapIncludeAuthTitle', defaultMessage: 'Override SAML bind data with AD/LDAP information:'}),
-                            help_text: defineMessage({id: 'admin.saml.enableSyncWithLdapIncludeAuthDescription', defaultMessage: 'When true, Mattermost will override the SAML ID attribute with the AD/LDAP ID attribute if configured or override the SAML Email attribute with the AD/LDAP Email attribute if SAML ID attribute is not present. This will allow you automatically migrate users from Email binding to ID binding to prevent creation of new users when an email address changes for a user. Moving from true to false, will remove the override from happening. <strong>Note:</strong> SAML IDs must match the LDAP IDs to prevent disabling of user accounts. Please review <link>documentation</link> for more information.'}), // eslint-disable-line formatjs/no-multiple-whitespaces, formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.saml.enableSyncWithLdapIncludeAuthDescription', defaultMessage: 'When true, Hanzo Team will override the SAML ID attribute with the AD/LDAP ID attribute if configured or override the SAML Email attribute with the AD/LDAP Email attribute if SAML ID attribute is not present. This will allow you automatically migrate users from Email binding to ID binding to prevent creation of new users when an email address changes for a user. Moving from true to false, will remove the override from happening. <strong>Note:</strong> SAML IDs must match the LDAP IDs to prevent disabling of user accounts. Please review <link>documentation</link> for more information.'}), // eslint-disable-line formatjs/no-multiple-whitespaces, formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (msg: string) => (
                                     <ExternalLink
@@ -4484,7 +4484,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'SamlSettings.IdpMetadataURL',
                             label: defineMessage({id: 'admin.saml.idpMetadataUrlTitle', defaultMessage: 'Identity Provider Metadata URL:'}),
-                            help_text: defineMessage({id: 'admin.saml.idpMetadataUrlDesc', defaultMessage: 'The URL where Mattermost sends a request to obtain metadata'}),
+                            help_text: defineMessage({id: 'admin.saml.idpMetadataUrlDesc', defaultMessage: 'The URL where Hanzo Team sends a request to obtain metadata'}),
                             placeholder: defineMessage({id: 'admin.saml.idpMetadataUrlEx', defaultMessage: 'E.g.: "https://idp.example.org/SAML2/saml/metadata"'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
@@ -4511,7 +4511,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'SamlSettings.IdpURL',
                             label: defineMessage({id: 'admin.saml.idpUrlTitle', defaultMessage: 'SAML SSO URL:'}),
-                            help_text: defineMessage({id: 'admin.saml.idpUrlDesc', defaultMessage: 'The URL where Mattermost sends a SAML request to start login sequence.'}),
+                            help_text: defineMessage({id: 'admin.saml.idpUrlDesc', defaultMessage: 'The URL where Hanzo Team sends a SAML request to start login sequence.'}),
                             placeholder: defineMessage({id: 'admin.saml.idpUrlEx', defaultMessage: 'E.g.: "https://idp.example.org/SAML2/SSO/Login"'}),
                             setFromMetadataField: 'idp_url',
                             isDisabled: it.any(
@@ -4554,7 +4554,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SamlSettings.Verify',
                             label: defineMessage({id: 'admin.saml.verifyTitle', defaultMessage: 'Verify Signature:'}),
-                            help_text: defineMessage({id: 'admin.saml.verifyDescription', defaultMessage: 'When false, Mattermost will not verify that the signature sent from a SAML Response matches the Service Provider Login URL. Disabling verification is not recommended for production environments.'}),
+                            help_text: defineMessage({id: 'admin.saml.verifyDescription', defaultMessage: 'When false, Hanzo Team will not verify that the signature sent from a SAML Response matches the Service Provider Login URL. Disabling verification is not recommended for production environments.'}),
                             production_warning: {
                                 isEnabled: it.stateIsFalse('SamlSettings.Verify'),
                                 title: defineMessage({id: 'admin.saml.verifyProductionWarning.title', defaultMessage: 'Disabling verification is not recommended for production environments'}),
@@ -4570,7 +4570,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.AssertionConsumerServiceURL',
                             label: defineMessage({id: 'admin.saml.assertionConsumerServiceURLTitle', defaultMessage: 'Service Provider Login URL:'}),
                             help_text: defineMessage({id: 'admin.saml.assertionConsumerServiceURLPopulatedDesc', defaultMessage: 'This field is also known as the Assertion Consumer Service URL.'}),
-                            placeholder: defineMessage({id: 'admin.saml.assertionConsumerServiceURLEx', defaultMessage: 'E.g.: "<urlChunk>your-mattermost-url</urlChunk>"'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            placeholder: defineMessage({id: 'admin.saml.assertionConsumerServiceURLEx', defaultMessage: 'E.g.: "<urlChunk>your-hanzo-team-url</urlChunk>"'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             placeholder_values: {
                                 urlChunk: (chunk: string) => `https://'<${chunk}>'/login/sso/saml`,
                             },
@@ -4592,7 +4592,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.ServiceProviderIdentifier',
                             label: defineMessage({id: 'admin.saml.serviceProviderIdentifierTitle', defaultMessage: 'Service Provider Identifier:'}),
                             help_text: defineMessage({id: 'admin.saml.serviceProviderIdentifierDesc', defaultMessage: 'The unique identifier for the Service Provider, usually the same as Service Provider Login URL. In ADFS, this MUST match the Relying Party Identifier.'}),
-                            placeholder: defineMessage({id: 'admin.saml.serviceProviderIdentifierEx', defaultMessage: 'E.g.: "<urlChunk>your-mattermost-url</urlChunk>"'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            placeholder: defineMessage({id: 'admin.saml.serviceProviderIdentifierEx', defaultMessage: 'E.g.: "<urlChunk>your-hanzo-team-url</urlChunk>"'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             placeholder_values: {
                                 urlChunk: (chunk: string) => `https://'<${chunk}>'/login/sso/saml`,
                             },
@@ -4605,7 +4605,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SamlSettings.Encrypt',
                             label: defineMessage({id: 'admin.saml.encryptTitle', defaultMessage: 'Enable Encryption:'}),
-                            help_text: defineMessage({id: 'admin.saml.encryptDescription', defaultMessage: 'When false, Mattermost will not decrypt SAML Assertions encrypted with your Service Provider Public Certificate. Disabling encryption is not recommended for production environments.'}),
+                            help_text: defineMessage({id: 'admin.saml.encryptDescription', defaultMessage: 'When false, Hanzo Team will not decrypt SAML Assertions encrypted with your Service Provider Public Certificate. Disabling encryption is not recommended for production environments.'}),
                             production_warning: {
                                 isEnabled: it.stateIsFalse('SamlSettings.Encrypt'),
                                 title: defineMessage({id: 'admin.saml.encryptProductionWarning.title', defaultMessage: 'Disabling encryption is not recommended for production environments'}),
@@ -4638,8 +4638,8 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'fileupload',
                             key: 'SamlSettings.PublicCertificateFile',
                             label: defineMessage({id: 'admin.saml.publicCertificateFileTitle', defaultMessage: 'Service Provider Public Certificate:'}),
-                            help_text: defineMessage({id: 'admin.saml.publicCertificateFileDesc', defaultMessage: 'The certificate used to generate the signature on a SAML request to the Identity Provider for a service provider initiated SAML login, when Mattermost is the Service Provider.'}),
-                            remove_help_text: defineMessage({id: 'admin.saml.publicCertificateFileRemoveDesc', defaultMessage: 'Remove the certificate used to generate the signature on a SAML request to the Identity Provider for a service provider initiated SAML login, when Mattermost is the Service Provider.'}),
+                            help_text: defineMessage({id: 'admin.saml.publicCertificateFileDesc', defaultMessage: 'The certificate used to generate the signature on a SAML request to the Identity Provider for a service provider initiated SAML login, when Hanzo Team is the Service Provider.'}),
+                            remove_help_text: defineMessage({id: 'admin.saml.publicCertificateFileRemoveDesc', defaultMessage: 'Remove the certificate used to generate the signature on a SAML request to the Identity Provider for a service provider initiated SAML login, when Hanzo Team is the Service Provider.'}),
                             remove_button_text: defineMessage({id: 'admin.saml.remove.sp_certificate', defaultMessage: 'Remove Service Provider Certificate'}),
                             removing_text: defineMessage({id: 'admin.saml.removing.certificate', defaultMessage: 'Removing Certificate...'}),
                             uploading_text: defineMessage({id: 'admin.saml.uploading.certificate', defaultMessage: 'Uploading Certificate...'}),
@@ -4656,7 +4656,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'SamlSettings.SignRequest',
                             label: defineMessage({id: 'admin.saml.signRequestTitle', defaultMessage: 'Sign Request:'}),
-                            help_text: defineMessage({id: 'admin.saml.signRequestDescription', defaultMessage: 'When true, Mattermost will sign the SAML request using your private key. When false, Mattermost will not sign the SAML request.'}),
+                            help_text: defineMessage({id: 'admin.saml.signRequestDescription', defaultMessage: 'When true, Hanzo Team will sign the SAML request using your private key. When false, Hanzo Team will not sign the SAML request.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Encrypt'),
@@ -4723,7 +4723,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.EmailAttribute',
                             label: defineMessage({id: 'admin.saml.emailAttrTitle', defaultMessage: 'Email Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.emailAttrEx', defaultMessage: 'E.g.: "Email" or "PrimaryEmail"'}),
-                            help_text: defineMessage({id: 'admin.saml.emailAttrDesc', defaultMessage: 'The attribute in the SAML Assertion that will be used to populate the email addresses of users in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.emailAttrDesc', defaultMessage: 'The attribute in the SAML Assertion that will be used to populate the email addresses of users in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4734,7 +4734,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.UsernameAttribute',
                             label: defineMessage({id: 'admin.saml.usernameAttrTitle', defaultMessage: 'Username Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.usernameAttrEx', defaultMessage: 'E.g.: "Username"'}),
-                            help_text: defineMessage({id: 'admin.saml.usernameAttrDesc', defaultMessage: 'The attribute in the SAML Assertion that will be used to populate the username field in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.usernameAttrDesc', defaultMessage: 'The attribute in the SAML Assertion that will be used to populate the username field in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4745,7 +4745,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.IdAttribute',
                             label: defineMessage({id: 'admin.saml.idAttrTitle', defaultMessage: 'Id Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.idAttrEx', defaultMessage: 'E.g.: "Id"'}),
-                            help_text: defineMessage({id: 'admin.saml.idAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to bind users from SAML to users in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.idAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to bind users from SAML to users in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4756,7 +4756,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.GuestAttribute',
                             label: defineMessage({id: 'admin.saml.guestAttrTitle', defaultMessage: 'Guest Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.guestAttrEx', defaultMessage: 'E.g.: "usertype=Guest" or "isGuest=true"'}),
-                            help_text: defineMessage({id: 'admin.saml.guestAttrDesc', defaultMessage: '(Optional) Requires Guest Access to be enabled before being applied. The attribute in the SAML Assertion that will be used to apply a guest role to users in Mattermost. Guests are prevented from accessing teams or channels upon logging in until they are assigned a team and at least one channel.\n \nNote: If this attribute is removed/changed from your guest user in SAML and the user is still active, they will not be promoted to a member and will retain their Guest role. Guests can be promoted in **System Console > User Management**.\n \n \nExisting members that are identified by this attribute as a guest will be demoted from a member to a guest when they are asked to login next. The next login is based upon Session lengths set in **System Console > Session Lengths**. It is highly recommend to manually demote users to guests in **System Console > User Management ** to ensure access is restricted immediately.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
+                            help_text: defineMessage({id: 'admin.saml.guestAttrDesc', defaultMessage: '(Optional) Requires Guest Access to be enabled before being applied. The attribute in the SAML Assertion that will be used to apply a guest role to users in Hanzo Team. Guests are prevented from accessing teams or channels upon logging in until they are assigned a team and at least one channel.\n \nNote: If this attribute is removed/changed from your guest user in SAML and the user is still active, they will not be promoted to a member and will retain their Guest role. Guests can be promoted in **System Console > User Management**.\n \n \nExisting members that are identified by this attribute as a guest will be demoted from a member to a guest when they are asked to login next. The next login is based upon Session lengths set in **System Console > Session Lengths**. It is highly recommend to manually demote users to guests in **System Console > User Management ** to ensure access is restricted immediately.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
                             help_text_markdown: true,
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
@@ -4778,7 +4778,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.AdminAttribute',
                             label: defineMessage({id: 'admin.saml.adminAttrTitle', defaultMessage: 'Admin Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.adminAttrEx', defaultMessage: 'E.g.: "usertype=Admin" or "isAdmin=true"'}),
-                            help_text: defineMessage({id: 'admin.saml.adminAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion for designating System Admins. The users selected by the query will have access to your Mattermost server as System Admins. By default, System Admins have complete access to the Mattermost System Console.\n \nExisting members that are identified by this attribute will be promoted from member to System Admin upon next login. The next login is based upon Session lengths set in **System Console > Session Lengths**. It is highly recommend to manually demote users to members in **System Console > User Management** to ensure access is restricted immediately.\n \nNote: If this filter is removed/changed, System Admins that were promoted via this filter will be demoted to members and will not retain access to the System Console. When this filter is not in use, System Admins can be manually promoted/demoted in **System Console > User Management**.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
+                            help_text: defineMessage({id: 'admin.saml.adminAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion for designating System Admins. The users selected by the query will have access to your Hanzo Team server as System Admins. By default, System Admins have complete access to the Hanzo Team System Console.\n \nExisting members that are identified by this attribute will be promoted from member to System Admin upon next login. The next login is based upon Session lengths set in **System Console > Session Lengths**. It is highly recommend to manually demote users to members in **System Console > User Management** to ensure access is restricted immediately.\n \nNote: If this filter is removed/changed, System Admins that were promoted via this filter will be demoted to members and will not retain access to the System Console. When this filter is not in use, System Admins can be manually promoted/demoted in **System Console > User Management**.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
                             help_text_markdown: true,
                             isDisabled: it.any(
                                 it.not(it.isSystemAdmin),
@@ -4791,7 +4791,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.FirstNameAttribute',
                             label: defineMessage({id: 'admin.saml.firstnameAttrTitle', defaultMessage: 'First Name Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.firstnameAttrEx', defaultMessage: 'E.g.: "FirstName"'}),
-                            help_text: defineMessage({id: 'admin.saml.firstnameAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the first name of users in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.firstnameAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the first name of users in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4802,7 +4802,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.LastNameAttribute',
                             label: defineMessage({id: 'admin.saml.lastnameAttrTitle', defaultMessage: 'Last Name Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.lastnameAttrEx', defaultMessage: 'E.g.: "LastName"'}),
-                            help_text: defineMessage({id: 'admin.saml.lastnameAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the last name of users in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.lastnameAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the last name of users in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4813,7 +4813,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.NicknameAttribute',
                             label: defineMessage({id: 'admin.saml.nicknameAttrTitle', defaultMessage: 'Nickname Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.nicknameAttrEx', defaultMessage: 'E.g.: "Nickname"'}),
-                            help_text: defineMessage({id: 'admin.saml.nicknameAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the nickname of users in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.nicknameAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the nickname of users in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4824,7 +4824,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.PositionAttribute',
                             label: defineMessage({id: 'admin.saml.positionAttrTitle', defaultMessage: 'Position Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.positionAttrEx', defaultMessage: 'E.g.: "Role"'}),
-                            help_text: defineMessage({id: 'admin.saml.positionAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the position of users in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.positionAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the position of users in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4841,7 +4841,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'SamlSettings.LocaleAttribute',
                             label: defineMessage({id: 'admin.saml.localeAttrTitle', defaultMessage: 'Preferred Language Attribute:'}),
                             placeholder: defineMessage({id: 'admin.saml.localeAttrEx', defaultMessage: 'E.g.: "Locale" or "PrimaryLanguage"'}),
-                            help_text: defineMessage({id: 'admin.saml.localeAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the language of users in Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.saml.localeAttrDesc', defaultMessage: '(Optional) The attribute in the SAML Assertion that will be used to populate the language of users in Hanzo Team.'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.SAML)),
                                 it.stateIsFalse('SamlSettings.Enable'),
@@ -4964,7 +4964,7 @@ const AdminDefinition: AdminDefinitionType = {
                                 {
                                     value: Constants.HANZO_SERVICE,
                                     display_name: defineMessage({id: 'admin.oauth.gitlab', defaultMessage: 'GitLab'}),
-                                    help_text: defineMessage({id: 'admin.gitlab.EnableMarkdownDesc', defaultMessage: '1. Log in to your GitLab account and go to Profile Settings -> Applications.\n2. Enter Redirect URIs "<loginUrlChunk>your-mattermost-url</loginUrlChunk>" (example: http://localhost:8065/login/gitlab/complete) and "<signupUrlChunk>your-mattermost-url</signupUrlChunk>".\n3. Then use "Application Secret Key" and "Application ID" fields from GitLab to complete the options below.\n4. Complete the Endpoint URLs below.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    help_text: defineMessage({id: 'admin.gitlab.EnableMarkdownDesc', defaultMessage: '1. Log in to your GitLab account and go to Profile Settings -> Applications.\n2. Enter Redirect URIs "<loginUrlChunk>your-hanzo-team-url</loginUrlChunk>" (example: http://localhost:8065/login/gitlab/complete) and "<signupUrlChunk>your-hanzo-team-url</signupUrlChunk>".\n3. Then use "Application Secret Key" and "Application ID" fields from GitLab to complete the options below.\n4. Complete the Endpoint URLs below.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_values: {
                                         loginUrlChunk: (chunk: string) => `<${chunk}>/login/gitlab/complete`,
                                         signupUrlChunk: (chunk: string) => `<${chunk}>/signup/gitlab/complete`,
@@ -4975,7 +4975,7 @@ const AdminDefinition: AdminDefinitionType = {
                                     value: Constants.GOOGLE_SERVICE,
                                     display_name: defineMessage({id: 'admin.oauth.google', defaultMessage: 'Google Apps'}),
                                     isHidden: it.all(it.not(it.licensedForFeature('GoogleOAuth')), it.not(it.cloudLicensed)),
-                                    help_text: defineMessage({id: 'admin.google.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Google account.\n2. Go to <linkConsole>https://console.developers.google.com</linkConsole>, click <strong>Credentials</strong> in the left hand side.\n 3. Under the <strong>Credentials</strong> header, click <strong>Create credentials</strong>, choose <strong>OAuth client ID</strong> and select <strong>Web Application</strong>.\n 4. Enter "Mattermost - your-company-name" as the <strong>Name</strong>.\n 5. Under <strong>Authorized redirect URIs</strong> enter <strong>"your-mattermost-url/signup/google/complete"</strong> (example: http://localhost:8065/signup/google/complete). Click <strong>Create</strong>.\n 6. Paste the <strong>Client ID</strong> and <strong>Client Secret</strong> to the fields below, then click <strong>Save</strong>.\n 7. Go to the <linkAPI>Google People API</linkAPI> and click <strong>Enable</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    help_text: defineMessage({id: 'admin.google.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Google account.\n2. Go to <linkConsole>https://console.developers.google.com</linkConsole>, click <strong>Credentials</strong> in the left hand side.\n 3. Under the <strong>Credentials</strong> header, click <strong>Create credentials</strong>, choose <strong>OAuth client ID</strong> and select <strong>Web Application</strong>.\n 4. Enter "Hanzo Team - your-company-name" as the <strong>Name</strong>.\n 5. Under <strong>Authorized redirect URIs</strong> enter <strong>"your-hanzo-team-url/signup/google/complete"</strong> (example: http://localhost:8065/signup/google/complete). Click <strong>Create</strong>.\n 6. Paste the <strong>Client ID</strong> and <strong>Client Secret</strong> to the fields below, then click <strong>Save</strong>.\n 7. Go to the <linkAPI>Google People API</linkAPI> and click <strong>Enable</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_markdown: false,
                                     help_text_values: {
                                         linkLogin: (msg: string) => (
@@ -5009,7 +5009,7 @@ const AdminDefinition: AdminDefinitionType = {
                                     value: Constants.OFFICE365_SERVICE,
                                     display_name: defineMessage({id: 'admin.oauth.office365', defaultMessage: 'Entra ID'}),
                                     isHidden: it.all(it.not(it.licensedForFeature('Office365OAuth')), it.not(it.cloudLicensed)),
-                                    help_text: defineMessage({id: 'admin.office365.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Microsoft account. \n2. In Microsoft, go to <strong>Applications</strong> and <strong>App Registrations</strong> in the left pane.\n3. Select <strong>New registration</strong>, then enter "Mattermost - your-company-name" as the <strong>Application Name</strong>. \n4. Under <strong>Redirect URI</strong>, select <strong>Web</strong>, and enter "your-mattermost-url/signup/office365/complete" as the <strong>Redirect URI</strong>. Select <strong>Register</strong>.\n5. Copy the Microsoft <strong>Application (client) ID</strong> value, and paste it below as the <strong>Client ID</strong> value. \n6. Copy the Microsoft <strong>Directory (tenant) ID</strong> value, and paste it below as the <strong>Directory (tenant) ID</strong> value. \n7. In Microsoft, create a new client secret. Copy the resulting client secret value, and paste it below as the <strong>Client Secret</strong> value. Select <strong>Save</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    help_text: defineMessage({id: 'admin.office365.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Microsoft account. \n2. In Microsoft, go to <strong>Applications</strong> and <strong>App Registrations</strong> in the left pane.\n3. Select <strong>New registration</strong>, then enter "Hanzo Team - your-company-name" as the <strong>Application Name</strong>. \n4. Under <strong>Redirect URI</strong>, select <strong>Web</strong>, and enter "your-hanzo-team-url/signup/office365/complete" as the <strong>Redirect URI</strong>. Select <strong>Register</strong>.\n5. Copy the Microsoft <strong>Application (client) ID</strong> value, and paste it below as the <strong>Client ID</strong> value. \n6. Copy the Microsoft <strong>Directory (tenant) ID</strong> value, and paste it below as the <strong>Directory (tenant) ID</strong> value. \n7. In Microsoft, create a new client secret. Copy the resulting client secret value, and paste it below as the <strong>Client Secret</strong> value. Select <strong>Save</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_markdown: false,
                                     help_text_values: {
                                         linkLogin: (msg: string) => (
@@ -5303,7 +5303,7 @@ const AdminDefinition: AdminDefinitionType = {
                                 {
                                     value: Constants.HANZO_SERVICE,
                                     display_name: defineMessage({id: 'admin.openid.gitlab', defaultMessage: 'GitLab'}),
-                                    help_text: defineMessage({id: 'admin.gitlab.EnableMarkdownDesc', defaultMessage: '1. Log in to your GitLab account and go to Profile Settings -> Applications.\n2. Enter Redirect URIs "<loginUrlChunk>your-mattermost-url</loginUrlChunk>" (example: http://localhost:8065/login/gitlab/complete) and "<signupUrlChunk>your-mattermost-url</signupUrlChunk>".\n3. Then use "Application Secret Key" and "Application ID" fields from GitLab to complete the options below.\n4. Complete the Endpoint URLs below.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    help_text: defineMessage({id: 'admin.gitlab.EnableMarkdownDesc', defaultMessage: '1. Log in to your GitLab account and go to Profile Settings -> Applications.\n2. Enter Redirect URIs "<loginUrlChunk>your-hanzo-team-url</loginUrlChunk>" (example: http://localhost:8065/login/gitlab/complete) and "<signupUrlChunk>your-hanzo-team-url</signupUrlChunk>".\n3. Then use "Application Secret Key" and "Application ID" fields from GitLab to complete the options below.\n4. Complete the Endpoint URLs below.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_values: {
                                         loginUrlChunk: (chunk: string) => `<${chunk}>/login/gitlab/complete`,
                                         signupUrlChunk: (chunk: string) => `<${chunk}>/signup/gitlab/complete`,
@@ -5313,7 +5313,7 @@ const AdminDefinition: AdminDefinitionType = {
                                 {
                                     value: Constants.GOOGLE_SERVICE,
                                     display_name: defineMessage({id: 'admin.openid.google', defaultMessage: 'Google Apps'}),
-                                    help_text: defineMessage({id: 'admin.google.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Google account.\n2. Go to <linkConsole>https://console.developers.google.com</linkConsole>, click <strong>Credentials</strong> in the left hand side.\n 3. Under the <strong>Credentials</strong> header, click <strong>Create credentials</strong>, choose <strong>OAuth client ID</strong> and select <strong>Web Application</strong>.\n 4. Enter "Mattermost - your-company-name" as the <strong>Name</strong>.\n 5. Under <strong>Authorized redirect URIs</strong> enter <strong>"your-mattermost-url/signup/google/complete"</strong> (example: http://localhost:8065/signup/google/complete). Click <strong>Create</strong>.\n 6. Paste the <strong>Client ID</strong> and <strong>Client Secret</strong> to the fields below, then click <strong>Save</strong>.\n 7. Go to the <linkAPI>Google People API</linkAPI> and click <strong>Enable</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    help_text: defineMessage({id: 'admin.google.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Google account.\n2. Go to <linkConsole>https://console.developers.google.com</linkConsole>, click <strong>Credentials</strong> in the left hand side.\n 3. Under the <strong>Credentials</strong> header, click <strong>Create credentials</strong>, choose <strong>OAuth client ID</strong> and select <strong>Web Application</strong>.\n 4. Enter "Hanzo Team - your-company-name" as the <strong>Name</strong>.\n 5. Under <strong>Authorized redirect URIs</strong> enter <strong>"your-hanzo-team-url/signup/google/complete"</strong> (example: http://localhost:8065/signup/google/complete). Click <strong>Create</strong>.\n 6. Paste the <strong>Client ID</strong> and <strong>Client Secret</strong> to the fields below, then click <strong>Save</strong>.\n 7. Go to the <linkAPI>Google People API</linkAPI> and click <strong>Enable</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_markdown: false,
                                     help_text_values: {
                                         linkLogin: (msg: string) => (
@@ -5346,7 +5346,7 @@ const AdminDefinition: AdminDefinitionType = {
                                 {
                                     value: Constants.OFFICE365_SERVICE,
                                     display_name: defineMessage({id: 'admin.openid.office365', defaultMessage: 'Entra ID'}),
-                                    help_text: defineMessage({id: 'admin.office365.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Microsoft account. \n2. In Microsoft, go to <strong>Applications</strong> and <strong>App Registrations</strong> in the left pane.\n3. Select <strong>New registration</strong>, then enter "Mattermost - your-company-name" as the <strong>Application Name</strong>. \n4. Under <strong>Redirect URI</strong>, select <strong>Web</strong>, and enter "your-mattermost-url/signup/office365/complete" as the <strong>Redirect URI</strong>. Select <strong>Register</strong>.\n5. Copy the Microsoft <strong>Application (client) ID</strong> value, and paste it below as the <strong>Client ID</strong> value. \n6. Copy the Microsoft <strong>Directory (tenant) ID</strong> value, and paste it below as the <strong>Directory (tenant) ID</strong> value. \n7. In Microsoft, create a new client secret. Copy the resulting client secret value, and paste it below as the <strong>Client Secret</strong> value. Select <strong>Save</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    help_text: defineMessage({id: 'admin.office365.EnableMarkdownDesc', defaultMessage: '1. <linkLogin>Log in</linkLogin> to your Microsoft account. \n2. In Microsoft, go to <strong>Applications</strong> and <strong>App Registrations</strong> in the left pane.\n3. Select <strong>New registration</strong>, then enter "Hanzo Team - your-company-name" as the <strong>Application Name</strong>. \n4. Under <strong>Redirect URI</strong>, select <strong>Web</strong>, and enter "your-hanzo-team-url/signup/office365/complete" as the <strong>Redirect URI</strong>. Select <strong>Register</strong>.\n5. Copy the Microsoft <strong>Application (client) ID</strong> value, and paste it below as the <strong>Client ID</strong> value. \n6. Copy the Microsoft <strong>Directory (tenant) ID</strong> value, and paste it below as the <strong>Directory (tenant) ID</strong> value. \n7. In Microsoft, create a new client secret. Copy the resulting client secret value, and paste it below as the <strong>Client Secret</strong> value. Select <strong>Save</strong>.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_markdown: false,
                                     help_text_values: {
                                         linkLogin: (msg: string) => (
@@ -5379,7 +5379,7 @@ const AdminDefinition: AdminDefinitionType = {
                                 {
                                     value: Constants.OPENID_SERVICE,
                                     display_name: defineMessage({id: 'admin.oauth.openid', defaultMessage: 'OpenID Connect (Other)'}),
-                                    help_text: defineMessage({id: 'admin.openid.EnableMarkdownDesc', defaultMessage: 'Follow provider directions for creating an OpenID Application. Most OpenID Connect providers require authorization of all redirect URIs. In the appropriate field, enter "your-mattermost-url/signup/openid/complete" (example: http://domain.com/signup/openid/complete)'}),
+                                    help_text: defineMessage({id: 'admin.openid.EnableMarkdownDesc', defaultMessage: 'Follow provider directions for creating an OpenID Application. Most OpenID Connect providers require authorization of all redirect URIs. In the appropriate field, enter "your-hanzo-team-url/signup/openid/complete" (example: http://domain.com/signup/openid/complete)'}),
                                     help_text_markdown: false,
                                 },
                             ],
@@ -5548,7 +5548,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'GitLabSettings.UsePreferredUsername',
                             label: defineMessage({id: 'admin.openid.usePreferredUsernameTitle', defaultMessage: 'Use Preferred Username:'}),
-                            help_text: defineMessage({id: 'admin.openid.usePreferredUsernameDescription', defaultMessage: 'When true, use the `preferred_username` claim as the Mattermost username for the user. The scope must include `profile` and `openid` to use this feature.'}),
+                            help_text: defineMessage({id: 'admin.openid.usePreferredUsernameDescription', defaultMessage: 'When true, use the `preferred_username` claim as the Hanzo Team username for the user. The scope must include `profile` and `openid` to use this feature.'}),
                             help_text_markdown: true,
                             isHidden: it.not(it.stateEquals('openidType', Constants.HANZO_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
@@ -5557,7 +5557,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'Office365Settings.UsePreferredUsername',
                             label: defineMessage({id: 'admin.openid.usePreferredUsernameTitle', defaultMessage: 'Use Preferred Username:'}),
-                            help_text: defineMessage({id: 'admin.openid.usePreferredUsernameDescription', defaultMessage: 'When true, use the `preferred_username` claim as the Mattermost username for the user. The scope must include `profile` and `openid` to use this feature.'}),
+                            help_text: defineMessage({id: 'admin.openid.usePreferredUsernameDescription', defaultMessage: 'When true, use the `preferred_username` claim as the Hanzo Team username for the user. The scope must include `profile` and `openid` to use this feature.'}),
                             help_text_markdown: true,
                             isHidden: it.not(it.stateEquals('openidType', Constants.OFFICE365_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
@@ -5566,7 +5566,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'OpenIdSettings.UsePreferredUsername',
                             label: defineMessage({id: 'admin.openid.usePreferredUsernameTitle', defaultMessage: 'Use Preferred Username:'}),
-                            help_text: defineMessage({id: 'admin.openid.usePreferredUsernameDescription', defaultMessage: 'When true, use the `preferred_username` claim as the Mattermost username for the user. The scope must include `profile` and `openid` to use this feature.'}),
+                            help_text: defineMessage({id: 'admin.openid.usePreferredUsernameDescription', defaultMessage: 'When true, use the `preferred_username` claim as the Hanzo Team username for the user. The scope must include `profile` and `openid` to use this feature.'}),
                             help_text_markdown: true,
                             isHidden: it.not(it.stateEquals('openidType', Constants.OPENID_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
@@ -5625,7 +5625,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'GuestAccountsSettings.HideTags',
                             label: defineMessage({id: 'admin.guest_access.hideTags', defaultMessage: 'Hide guest tag'}),
-                            help_text: defineMessage({id: 'admin.guest_access.hideTagsDescription', defaultMessage: 'When true, the "guest" tag will not be shown next to the name of all guest users in the Mattermost chat interface.'}),
+                            help_text: defineMessage({id: 'admin.guest_access.hideTagsDescription', defaultMessage: 'When true, the "guest" tag will not be shown next to the name of all guest users in the Hanzo Team chat interface.'}),
                             help_text_markdown: false,
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.GUEST_ACCESS)),
                         },
@@ -5663,7 +5663,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'GuestAccountsSettings.EnforceMultifactorAuthentication',
                             label: defineMessage({id: 'admin.guest_access.mfaTitle', defaultMessage: 'Enforce Multi-factor Authentication: '}),
-                            help_text: defineMessage({id: 'admin.guest_access.mfaDescription', defaultMessage: 'When true, <link>multi-factor authentication</link> for guests is required for login. New guest users will be required to configure MFA on signup. Logged in guest users without MFA configured are redirected to the MFA setup page until configuration is complete.\n \nIf your system has guest users with login methods other than AD/LDAP and email, MFA must be enforced with the authentication provider outside of Mattermost.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.guest_access.mfaDescription', defaultMessage: 'When true, <link>multi-factor authentication</link> for guests is required for login. New guest users will be required to configure MFA on signup. Logged in guest users without MFA configured are redirected to the MFA setup page until configuration is complete.\n \nIf your system has guest users with login methods other than AD/LDAP and email, MFA must be enforced with the authentication provider outside of Hanzo Team.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (msg: string) => (
                                     <ExternalLink
@@ -5809,7 +5809,7 @@ const AdminDefinition: AdminDefinitionType = {
                             help_text: defineMessage({id: 'admin.service.outgoingOAuthConnectionsDesc', defaultMessage: 'When true, outgoing webhooks and slash commands will use set up oauth connections to authenticate with third party services. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (text: string) => (
-                                    <a href='https://mattermost.com/pl/outgoing-oauth-connections'>{text}</a>
+                                    <a href='https://docs.hanzo.team/outgoing-oauth-connections'>{text}</a>
                                 ),
                             },
                             help_text_markdown: false,
@@ -5837,7 +5837,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ServiceSettings.EnableOAuthServiceProvider',
                             label: defineMessage({id: 'admin.oauth.providerTitle', defaultMessage: 'Enable OAuth 2.0 Service Provider: '}),
-                            help_text: defineMessage({id: 'admin.oauth.providerDescription', defaultMessage: 'When true, Mattermost can act as an OAuth 2.0 service provider allowing Mattermost to authorize API requests from external applications. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.oauth.providerDescription', defaultMessage: 'When true, Hanzo Team can act as an OAuth 2.0 service provider allowing Hanzo Team to authorize API requests from external applications. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (msg: string) => (
                                     <ExternalLink
@@ -5856,7 +5856,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ServiceSettings.EnableDynamicClientRegistration',
                             label: defineMessage({id: 'admin.oauth.dcrTitle', defaultMessage: 'Enable OAuth 2.0 Dynamic Client Registration: '}),
-                            help_text: defineMessage({id: 'admin.oauth.dcrDescription', defaultMessage: 'When true, external applications can dynamically register as OAuth 2.0 clients with Mattermost. Only enable this if you need third-party applications to register OAuth clients programmatically.'}),
+                            help_text: defineMessage({id: 'admin.oauth.dcrDescription', defaultMessage: 'When true, external applications can dynamically register as OAuth 2.0 clients with Hanzo Team. Only enable this if you need third-party applications to register OAuth clients programmatically.'}),
                             help_text_markdown: false,
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.INTEGRATIONS.INTEGRATION_MANAGEMENT)),
@@ -6000,7 +6000,7 @@ const AdminDefinition: AdminDefinitionType = {
                                 linkDocumentation: (msg: string) => (
                                     <ExternalLink
                                         location='admin_console'
-                                        href='https://mattermost.com/pl/default-bot-accounts'
+                                        href='https://docs.hanzo.team/default-bot-accounts'
                                     >
                                         {msg}
                                     </ExternalLink>
@@ -6109,7 +6109,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'ServiceSettings.FrameAncestors',
                             label: defineMessage({id: 'admin.customization.frameAncestorTitle', defaultMessage: 'Frame Ancestors:'}),
-                            help_text: defineMessage({id: 'admin.customization.frameAncestorDesc', defaultMessage: 'Allows the Mattermost web client to be embedded in other websites. Enter a space-separated list of domains that are allowed to embed the Mattermost web client. Leave blank to disallow embedding.'}),
+                            help_text: defineMessage({id: 'admin.customization.frameAncestorDesc', defaultMessage: 'Allows the Hanzo Team web client to be embedded in other websites. Enter a space-separated list of domains that are allowed to embed the Hanzo Team web client. Leave blank to disallow embedding.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.INTEGRATIONS.CORS)),
                         },
                     ],
@@ -6273,7 +6273,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ComplianceSettings.Enable',
                             label: defineMessage({id: 'admin.compliance.enableTitle', defaultMessage: 'Enable Compliance Reporting:'}),
-                            help_text: defineMessage({id: 'admin.compliance.enableDesc', defaultMessage: 'When true, Mattermost allows compliance reporting from the <strong>Compliance and Auditing</strong> tab. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.compliance.enableDesc', defaultMessage: 'When true, Hanzo Team allows compliance reporting from the <strong>Compliance and Auditing</strong> tab. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (msg: string) => (
                                     <ExternalLink
@@ -6305,7 +6305,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ComplianceSettings.EnableDaily',
                             label: defineMessage({id: 'admin.compliance.enableDailyTitle', defaultMessage: 'Enable Daily Report:'}),
-                            help_text: defineMessage({id: 'admin.compliance.enableDailyDesc', defaultMessage: 'When true, Mattermost will generate a daily compliance report.'}),
+                            help_text: defineMessage({id: 'admin.compliance.enableDailyDesc', defaultMessage: 'When true, Hanzo Team will generate a daily compliance report.'}),
                             isHidden: it.not(it.licensedForFeature('Compliance')),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.COMPLIANCE.COMPLIANCE_MONITORING)),
@@ -6558,7 +6558,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ServiceSettings.ExperimentalEnableHardenedMode',
                             label: defineMessage({id: 'admin.experimental.experimentalEnableHardenedMode.title', defaultMessage: 'Enable Hardened Mode:'}),
-                            help_text: defineMessage({id: 'admin.experimental.experimentalEnableHardenedMode.desc', defaultMessage: 'Enables a hardened mode for Mattermost that makes user experience trade-offs in the interest of security. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                            help_text: defineMessage({id: 'admin.experimental.experimentalEnableHardenedMode.desc', defaultMessage: 'Enables a hardened mode for Hanzo Team that makes user experience trade-offs in the interest of security. See <link>documentation</link> to learn more.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                             help_text_values: {
                                 link: (msg: string) => (
                                     <ExternalLink
@@ -6637,7 +6637,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ServiceSettings.EnableTutorial',
                             label: defineMessage({id: 'admin.experimental.enableTutorial.title', defaultMessage: 'Enable Tutorial:'}),
-                            help_text: defineMessage({id: 'admin.experimental.enableTutorial.desc', defaultMessage: 'When true, users are prompted with a tutorial when they open Mattermost for the first time after account creation. When false, the tutorial is disabled, and users are placed in Town Square when they open Mattermost for the first time after account creation.'}),
+                            help_text: defineMessage({id: 'admin.experimental.enableTutorial.desc', defaultMessage: 'When true, users are prompted with a tutorial when they open Hanzo Team for the first time after account creation. When false, the tutorial is disabled, and users are placed in Town Square when they open Hanzo Team for the first time after account creation.'}),
                             help_text_markdown: false,
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.EXPERIMENTAL.FEATURES)),
                         },
@@ -6699,7 +6699,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'number',
                             key: 'TeamSettings.UserStatusAwayTimeout',
                             label: defineMessage({id: 'admin.experimental.userStatusAwayTimeout.title', defaultMessage: 'User Status Away Timeout:'}),
-                            help_text: defineMessage({id: 'admin.experimental.userStatusAwayTimeout.desc', defaultMessage: 'This setting defines the number of seconds after which the user\'s status indicator changes to "Away", when they are away from Mattermost.'}),
+                            help_text: defineMessage({id: 'admin.experimental.userStatusAwayTimeout.desc', defaultMessage: 'This setting defines the number of seconds after which the user\'s status indicator changes to "Away", when they are away from Hanzo Team.'}),
                             help_text_markdown: false,
                             placeholder: defineMessage({id: 'admin.experimental.userStatusAwayTimeout.example', defaultMessage: 'E.g.: "300"'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.EXPERIMENTAL.FEATURES)),
@@ -6717,14 +6717,14 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'bool',
                             key: 'ExperimentalSettings.DisableRefetchingOnBrowserFocus',
                             label: defineMessage({id: 'admin.experimental.disableRefetchingOnBrowserFocus.title', defaultMessage: 'Disable data refetching on browser refocus:'}),
-                            help_text: defineMessage({id: 'admin.experimental.disableRefetchingOnBrowserFocus.desc', defaultMessage: 'When true, Mattermost will not refetch channels and channel members when the browser regains focus. This may result in improved performance for users with many channels and channel members.'}),
+                            help_text: defineMessage({id: 'admin.experimental.disableRefetchingOnBrowserFocus.desc', defaultMessage: 'When true, Hanzo Team will not refetch channels and channel members when the browser regains focus. This may result in improved performance for users with many channels and channel members.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.EXPERIMENTAL.FEATURES)),
                         },
                         {
                             type: 'bool',
                             key: 'ExperimentalSettings.DisableWakeUpReconnectHandler',
                             label: defineMessage({id: 'admin.experimental.disableWakeUpReconnectHandler.title', defaultMessage: 'Disable Wake Up Reconnect Handler:'}),
-                            help_text: defineMessage({id: 'admin.experimental.disableWakeUpReconnectHandler.desc', defaultMessage: 'When true, Mattermost will not attempt to detect when the computer has woken up and refetch data. This might reduce the amount of regular network traffic the app is sending.'}),
+                            help_text: defineMessage({id: 'admin.experimental.disableWakeUpReconnectHandler.desc', defaultMessage: 'When true, Hanzo Team will not attempt to detect when the computer has woken up and refetch data. This might reduce the amount of regular network traffic the app is sending.'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.EXPERIMENTAL.FEATURES)),
                         },
                         {

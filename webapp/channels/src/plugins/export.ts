@@ -48,7 +48,7 @@ import Textbox from './textbox';
 // Note: We can't directly use the hook here, but we can create a function that opens the external pricing page
 // For plugins, we'll always try to open the external page and let the browser handle if it's blocked
 const openPricingModalForPlugins = () => {
-    (window as any).open('https://mattermost.com/pricing', '_blank', 'noopener,noreferrer');
+    (window as any).open('https://hanzo.ai/pricing', '_blank', 'noopener,noreferrer');
 };
 
 interface WindowWithLibraries {

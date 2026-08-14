@@ -245,12 +245,12 @@ export class ManageLanguage extends React.PureComponent<Props, State> {
                     <br/>
                     <FormattedMessage
                         id='user.settings.languages.promote1'
-                        defaultMessage='Select which language Mattermost displays in the user interface.'
+                        defaultMessage='Select which language Hanzo Team displays in the user interface.'
                     />
                     <p/>
                     <FormattedMessage
                         id='user.settings.languages.promote2'
-                        defaultMessage='Would you like to help with translations? Join the <link>Mattermost Translation Server</link> to contribute.'
+                        defaultMessage='Would you like to help with translations? Join the <link>Hanzo Team Translation Server</link> to contribute.'
                         values={{
                             link: (msg: React.ReactNode) => (
                                 <ExternalLink

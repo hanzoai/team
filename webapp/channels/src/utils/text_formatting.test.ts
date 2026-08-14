@@ -332,18 +332,18 @@ describe('linkOnlyMarkdown', () => {
             'https://www.mattermost.com</a>?');
     });
     test('link with a title', () => {
-        const text = 'Do you like [Mattermost](https://www.mattermost.com)?';
+        const text = 'Do you like [Hanzo Team](https://www.mattermost.com)?';
         const output = formatText(text, options, emptyEmojiMap);
         expect(output).toBe(
             'Do you like <a class="theme markdown__link" href="https://www.mattermost.com" target="_blank">' +
-            'Mattermost</a>?');
+            'Hanzo Team</a>?');
     });
     test('link with header signs to skip', () => {
-        const text = '#### Do you like [Mattermost](https://www.mattermost.com)?';
+        const text = '#### Do you like [Hanzo Team](https://www.mattermost.com)?';
         const output = formatText(text, options, emptyEmojiMap);
         expect(output).toBe(
             'Do you like <a class="theme markdown__link" href="https://www.mattermost.com" target="_blank">' +
-            'Mattermost</a>?');
+            'Hanzo Team</a>?');
     });
 });
 
@@ -353,11 +353,11 @@ describe('highlightCurrentMentions', () => {
         {key: '메터모스트'}, // Korean word
         {key: 'マッターモスト'}, // Japanese word
         {key: 'маттермост'}, // Russian word
-        {key: 'Mattermost'}, // Latin word
+        {key: 'Hanzo Team'}, // Latin word
     ];
 
     it('should find and match Korean, Japanese, latin and Russian words', () => {
-        const text = '메터모스트, notinkeys, マッターモスト, маттермост!, Mattermost, notinkeys';
+        const text = '메터모스트, notinkeys, マッターモスト, маттермост!, Hanzo Team, notinkeys';
         const highlightedText = highlightCurrentMentions(text, tokens, mentionKeys);
 
         const expectedOutput = '$MM_SELFMENTION0$, notinkeys, $MM_SELFMENTION1$, $MM_SELFMENTION2$!, $MM_SELFMENTION3$, notinkeys';

@@ -27,7 +27,7 @@ var platformNames = map[uasurfer.Platform]string{
 func getPlatformName(ua *uasurfer.UserAgent, userAgentString string) string {
 	platform := ua.OS.Platform
 
-	if platform == uasurfer.PlatformUnknown && strings.Contains(userAgentString, "Mattermost Mobile/") {
+	if platform == uasurfer.PlatformUnknown && strings.Contains(userAgentString, "Hanzo Team Mobile/") {
 		if strings.Contains(userAgentString, "iPhone") {
 			platform = uasurfer.PlatformiPhone
 		} else if strings.Contains(userAgentString, "iPad") {
@@ -89,7 +89,7 @@ func getOSName(ua *uasurfer.UserAgent, userAgentString string) string {
 
 	osName := os.Name
 
-	if osName == uasurfer.OSUnknown && strings.Contains(userAgentString, "Mattermost Mobile/") {
+	if osName == uasurfer.OSUnknown && strings.Contains(userAgentString, "Hanzo Team Mobile/") {
 		if strings.Contains(userAgentString, "iPhone") {
 			osName = uasurfer.OSiOS
 		} else if strings.Contains(userAgentString, "iPad") {
@@ -107,10 +107,10 @@ func getOSName(ua *uasurfer.UserAgent, userAgentString string) string {
 	return osNames[uasurfer.OSUnknown]
 }
 
-const desktopAppVersionPrefix = "Mattermost/"
+const desktopAppVersionPrefix = "Hanzo Team/"
 
 var versionPrefixes = []string{
-	"Mattermost Mobile/",
+	"Hanzo Team Mobile/",
 	desktopAppVersionPrefix,
 	"mmctl/",
 	"Franz/",
@@ -170,11 +170,11 @@ func getBrowserName(ua *uasurfer.UserAgent, userAgentString string) string {
 	browser := ua.Browser.Name
 
 	if strings.Contains(userAgentString, "Electron") ||
-		(strings.Contains(userAgentString, "Mattermost") && !strings.Contains(userAgentString, "Mattermost Mobile")) {
+		(strings.Contains(userAgentString, "Hanzo Team") && !strings.Contains(userAgentString, "Hanzo Team Mobile")) {
 		return "Desktop App"
 	}
 
-	if strings.Contains(userAgentString, "Mattermost Mobile") {
+	if strings.Contains(userAgentString, "Hanzo Team Mobile") {
 		return "Mobile App"
 	}
 

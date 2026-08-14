@@ -24,7 +24,7 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/utils"
 )
 
-var usage = `Mattermost testing commands to help configure the system
+var usage = `Hanzo Team testing commands to help configure the system
 
 	COMMANDS:
 

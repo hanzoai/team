@@ -11405,7 +11405,7 @@ func TestGetSessionAttributesManifest(t *testing.T) {
 	})
 
 	t.Run("enabled field carries its seeded display name", func(t *testing.T) {
-		const desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36"
+		const desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Hanzo Team/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36"
 
 		group, appErr := th.App.GetPropertyGroup(th.Context, model.SessionAttributesPropertyGroupName)
 		require.Nil(t, appErr)
@@ -11451,7 +11451,7 @@ func TestGetSessionAttributesManifest(t *testing.T) {
 // hardware_id, so the next request reports that device ID.
 func setSessionAttributeDeviceID(t *testing.T, th *TestHelper, deviceID string) {
 	t.Helper()
-	const desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36"
+	const desktopUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Hanzo Team/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36"
 	attrs, err := json.Marshal(map[string]any{model.SessionAttributesPropertyFieldHardwareID: deviceID})
 	require.NoError(t, err)
 	th.Client.HTTPHeader = map[string]string{

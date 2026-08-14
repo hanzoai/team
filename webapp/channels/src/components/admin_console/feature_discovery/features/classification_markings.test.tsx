@@ -38,7 +38,7 @@ describe('components/admin_console/feature_discovery/features/ClassificationMark
     it('renders the Classification Markings discovery card', () => {
         renderWithContext(<ClassificationMarkingsFeatureDiscovery/>);
 
-        expect(screen.getByText('Apply classification markings with Mattermost Enterprise Advanced')).toBeInTheDocument();
+        expect(screen.getByText('Apply classification markings with Hanzo Team')).toBeInTheDocument();
         expect(screen.getByText(
             'Set up global and channel-specific classification banners with built-in presets or custom levels, ensuring that users consistently view the appropriate classification level for their workspace.',
         )).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe('components/admin_console/feature_discovery/features/ClassificationMark
         expect(screen.getByRole('button', {name: 'Contact sales'})).toBeInTheDocument();
         expect(screen.getByRole('link', {name: 'Learn more'})).toHaveAttribute(
             'href',
-            expect.stringContaining('https://docs.mattermost.com/end-user-guide/collaborate/display-channel-banners.html'),
+            expect.stringContaining('https://docs.hanzo.team/end-user-guide/collaborate/display-channel-banners.html'),
         );
         expect(screen.getByRole('link', {name: 'Learn more'})).toHaveAttribute(
             'href',

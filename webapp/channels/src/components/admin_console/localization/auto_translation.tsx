@@ -211,14 +211,14 @@ export default function AutoTranslation(props: SystemConsoleCustomSettingsCompon
                                 disabled={props.disabled || props.setByEnv}
                             >
                                 <option value='libretranslate'>{'LibreTranslate'}</option>
-                                <option value='agents'>{'Mattermost Agents'}</option>
+                                <option value='agents'>{'Hanzo Team Agents'}</option>
                             </select>
                             {showAgentsError && (
                                 <div className='auto-translation-provider-error-message'>
                                     <i className='icon icon-alert-outline'/>
                                     <FormattedMessage
                                         id={agentsBridgeUnavailableReason || 'admin.site.localization.autoTranslationAgentsError'}
-                                        defaultMessage={agentsBridgeUnavailableReason ? 'Mattermost AI plugin is unavailable.' : 'Mattermost Agents plugin is either disabled or not configured properly.'}
+                                        defaultMessage={agentsBridgeUnavailableReason ? 'Hanzo Team AI plugin is unavailable.' : 'Hanzo Team Agents plugin is either disabled or not configured properly.'}
                                     />
                                 </div>
                             )}

@@ -840,7 +840,7 @@ func TestSupportedTimezones(t *testing.T) {
 
 func TestRedirectLocation(t *testing.T) {
 	mainHelper.Parallel(t)
-	expected := "https://mattermost.com/wp-content/themes/mattermostv2/img/logo-light.svg"
+	expected := "https://hanzo.ai/wp-content/themes/mattermostv2/img/logo-light.svg"
 
 	testServer := httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 		res.Header().Set("Location", expected)
@@ -862,7 +862,7 @@ func TestRedirectLocation(t *testing.T) {
 	*th.App.Config().ServiceSettings.EnableLinkPreviews = true
 	*th.App.Config().ServiceSettings.AllowedUntrustedInternalConnections = "127.0.0.1"
 
-	_, _, err := th.SystemAdminClient.GetRedirectLocation(context.Background(), "https://mattermost.com/", "")
+	_, _, err := th.SystemAdminClient.GetRedirectLocation(context.Background(), "https://hanzo.ai/", "")
 	require.NoError(t, err)
 
 	_, resp, err := th.SystemAdminClient.GetRedirectLocation(context.Background(), "", "")
@@ -879,7 +879,7 @@ func TestRedirectLocation(t *testing.T) {
 	assert.Equal(t, expected, actual)
 
 	*th.App.Config().ServiceSettings.EnableLinkPreviews = false
-	actual, _, err = th.SystemAdminClient.GetRedirectLocation(context.Background(), "https://mattermost.com/", "")
+	actual, _, err = th.SystemAdminClient.GetRedirectLocation(context.Background(), "https://hanzo.ai/", "")
 	require.NoError(t, err)
 	assert.Equal(t, actual, "")
 

@@ -20,7 +20,7 @@ import (
 
 var ErrNotEnabled = Error{errors.New("imageproxy.ImageProxy: image proxy not enabled")}
 
-// An ImageProxy is the public interface for Mattermost's image proxy. An instance of ImageProxy should be created
+// An ImageProxy is the public interface for Hanzo Team's image proxy. An instance of ImageProxy should be created
 // using MakeImageProxy which requires a configService and an HTTPService provided by the server.
 type ImageProxy struct {
 	ConfigService    configservice.ConfigService

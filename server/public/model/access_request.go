@@ -106,7 +106,7 @@ func (s *Subject) RoleForScope(scope string) string {
 //
 // The current PDP only ever populates one entry per scope, so this
 // helper returns at most a single-element slice today. It exists to
-// give multi-role-per-scope consumers (a future capability — Mattermost
+// give multi-role-per-scope consumers (a future capability — Hanzo Team
 // users can carry multiple system roles like "system_user system_admin")
 // a stable accessor that won't change shape when the underlying
 // invariant is relaxed.

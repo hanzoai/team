@@ -17,13 +17,13 @@ const SessionAttributesFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.EnterpriseAdvanced}
             title={defineMessage({
                 id: 'admin.session_attributes_feature_discovery.title',
-                defaultMessage: 'Evaluate per-session context in access policies with Mattermost Enterprise Advanced',
+                defaultMessage: 'Evaluate per-session context in access policies with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.session_attributes_feature_discovery.desc',
                 defaultMessage: 'Define and tune session attributes such as network status, client type, and device posture for use in attribute-based access control policies.',
             })}
-            learnMoreURL='https://docs.mattermost.com/administration-guide/manage/admin/attribute-based-access-control.html'
+            learnMoreURL='https://docs.hanzo.team/administration-guide/manage/admin/attribute-based-access-control.html'
             featureDiscoveryImage={
                 <GroupsSVG
                     width={294}

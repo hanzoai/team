@@ -121,6 +121,8 @@ type ThemeTypeMap = Record<ThemeType | LegacyThemeType, ThemeKey>;
 // object mapping theme types to their respective keys for retrieving the source themes directly
 // - supports mapping old themes to new themes
 const themeTypeMap: ThemeTypeMap = {
+    Hanzo: 'hanzo',
+    'Hanzo Dark': 'hanzoDark',
     Mattermost: 'denim',
     Organization: 'sapphire',
     'Mattermost Dark': 'indigo',
@@ -134,7 +136,7 @@ const themeTypeMap: ThemeTypeMap = {
 
 // setThemeDefaults will set defaults on the theme for any unset properties.
 export function setThemeDefaults(theme: Partial<Theme>): Theme {
-    const defaultTheme = Preferences.THEMES.denim;
+    const defaultTheme = Preferences.THEMES.hanzo;
 
     const processedTheme = {...theme};
 

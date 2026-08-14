@@ -48,7 +48,7 @@ describe('components/admin_console/feature_discovery/features/MobileSecurityFeat
         expect(screen.getByTestId('minimum-sku')).toHaveTextContent(LicenseSkus.Enterprise);
 
         // Verify title
-        expect(screen.getByTestId('title')).toHaveTextContent('Enhance mobile app security with Mattermost Enterprise');
+        expect(screen.getByTestId('title')).toHaveTextContent('Enhance mobile app security with Hanzo Team');
 
         // Verify copy text
         expect(screen.getByTestId('copy')).toHaveTextContent(
@@ -57,7 +57,7 @@ describe('components/admin_console/feature_discovery/features/MobileSecurityFeat
 
         // Verify learn more URL
         expect(screen.getByTestId('learn-more-url')).toHaveTextContent(
-            'https://docs.mattermost.com/configure/environment-configuration-settings.html#mobile-security',
+            'https://docs.hanzo.team/configure/environment-configuration-settings.html#mobile-security',
         );
 
         // Verify SVG is rendered

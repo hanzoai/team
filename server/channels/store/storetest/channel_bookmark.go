@@ -45,7 +45,7 @@ func testSaveChannelBookmark(t *testing.T, rctx request.CTX, ss store.Store) {
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Link bookmark test",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 		Emoji:       ":smile:",
 	}
@@ -223,7 +223,7 @@ func testUpdateChannelBookmark(t *testing.T, rctx request.CTX, ss store.Store) {
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Link bookmark test",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 	}
 
@@ -235,7 +235,7 @@ func testUpdateChannelBookmark(t *testing.T, rctx request.CTX, ss store.Store) {
 		bookmark2 := bookmarkResp.ChannelBookmark.Clone()
 		bookmark2.DisplayName = "Updated display name"
 		bookmark2.Emoji = ":smile:"
-		bookmark2.LinkUrl = "https://mattermost.com/about"
+		bookmark2.LinkUrl = "https://hanzo.ai/about"
 
 		time.Sleep(time.Millisecond * 250)
 
@@ -272,7 +272,7 @@ func testUpdateSortOrderChannelBookmark(t *testing.T, rctx request.CTX, ss store
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Bookmark 0",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 		Emoji:       ":smile:",
 	}
@@ -310,7 +310,7 @@ func testUpdateSortOrderChannelBookmark(t *testing.T, rctx request.CTX, ss store
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Bookmark 2",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 	}
 
@@ -318,7 +318,7 @@ func testUpdateSortOrderChannelBookmark(t *testing.T, rctx request.CTX, ss store
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Bookmark 3",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 	}
 
@@ -326,7 +326,7 @@ func testUpdateSortOrderChannelBookmark(t *testing.T, rctx request.CTX, ss store
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Bookmark 4",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 	}
 
@@ -460,7 +460,7 @@ func testDeleteChannelBookmark(t *testing.T, rctx request.CTX, ss store.Store) {
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Link bookmark test",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 		Emoji:       ":smile:",
 	}
@@ -534,7 +534,7 @@ func testGetChannelBookmark(t *testing.T, rctx request.CTX, ss store.Store) {
 		ChannelId:   channelID,
 		OwnerId:     userID,
 		DisplayName: "Link bookmark test",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 		Emoji:       ":smile:",
 	}

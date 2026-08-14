@@ -146,7 +146,7 @@ const HelpFormatting = (): JSX.Element => {
                     <p>
                         <FormattedMessage
                             id='help.formatting.syntax.description'
-                            defaultMessage='To add syntax highlighting, type the language to be highlighted after the <code>```</code> at the beginning of the code block. Mattermost also offers four different code themes (GitHub, Solarized Dark, Solarized Light, Monokai) that can be changed in <b>Settings > Display > Theme > Custom Theme > Center Channel Styles > Code Theme</b>.'
+                            defaultMessage='To add syntax highlighting, type the language to be highlighted after the <code>```</code> at the beginning of the code block. Hanzo Team also offers four different code themes (GitHub, Solarized Dark, Solarized Light, Monokai) that can be changed in <b>Settings > Display > Theme > Custom Theme > Center Channel Styles > Code Theme</b>.'
                             values={{
                                 b: (chunks: React.ReactNode) => <b>{chunks}</b>,
                                 code: (chunks: React.ReactNode) => <code>{chunks}</code>,
@@ -284,8 +284,8 @@ const HelpFormatting = (): JSX.Element => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><code>{'[Check out Mattermost!](https://mattermost.com/)'}</code></td>
-                                <td><a href='https://mattermost.com/'>{'Check out Mattermost!'}</a></td>
+                                <td><code>{'[Check out Hanzo Team!](https://hanzo.ai/)'}</code></td>
+                                <td><a href='https://hanzo.ai/'>{'Check out Hanzo Team!'}</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -306,7 +306,7 @@ const HelpFormatting = (): JSX.Element => {
                                 code: (chunks: React.ReactNode) => <code>{chunks}</code>,
                                 link: (chunks: React.ReactNode) => (
                                     <ExternalLink
-                                        href='https://docs.mattermost.com/end-user-guide/collaborate/format-messages.html'
+                                        href='https://docs.hanzo.team/end-user-guide/collaborate/format-messages.html'
                                         location='help_formatting'
                                     >
                                         {chunks}
@@ -340,11 +340,11 @@ const HelpFormatting = (): JSX.Element => {
                         </thead>
                         <tbody>
                             <tr>
-                                <td><code>{'![Mattermost Logo](/static/images/logo_email_dark.png)'}</code></td>
+                                <td><code>{'![Hanzo Team Logo](/static/images/logo_email_dark.png)'}</code></td>
                                 <td>
                                     <img
                                         src='/static/images/logo_email_dark.png'
-                                        alt='Mattermost Logo'
+                                        alt='Hanzo Team Logo'
                                         className='Help__inline-image'
                                     />
                                 </td>
@@ -368,7 +368,7 @@ const HelpFormatting = (): JSX.Element => {
                                 code: (chunks: React.ReactNode) => <code>{chunks}</code>,
                                 link: (chunks: React.ReactNode) => (
                                     <ExternalLink
-                                        href='https://docs.mattermost.com/end-user-guide/collaborate/react-with-emojis-gifs.html#upload-custom-emojis'
+                                        href='https://docs.hanzo.team/end-user-guide/collaborate/react-with-emojis-gifs.html#upload-custom-emojis'
                                         location='help_formatting'
                                     >
                                         {chunks}
